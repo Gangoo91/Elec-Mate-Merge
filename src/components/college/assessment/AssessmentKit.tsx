@@ -1,10 +1,14 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
 import type { MyLearners } from '@/components/college/assessment/useMyLearners';
-import { narrowIfCollege, useCollegeScope, type CollegeScopeLevel } from '@/components/college/scope/useCollegeScope';
+import {
+  narrowIfCollege,
+  useCollegeScope,
+  type CollegeScopeLevel,
+} from '@/components/college/scope/useCollegeScope';
 import { CollegeScopeTabs } from '@/components/college/scope/CollegeScopeSwitch';
 
 /* ==========================================================================
@@ -56,7 +60,8 @@ export function ScopeToggle({
 }) {
   const { level } = useCollegeScope();
   const counts: Partial<Record<CollegeScopeLevel, number>> = {};
-  if (typeof mineCount === 'number') counts[scope === 'mine' && level === 'cohorts' ? 'cohorts' : 'mine'] = mineCount;
+  if (typeof mineCount === 'number')
+    counts[scope === 'mine' && level === 'cohorts' ? 'cohorts' : 'mine'] = mineCount;
   if (typeof allCount === 'number') counts.college = allCount;
   return <CollegeScopeTabs counts={counts} />;
 }
@@ -105,6 +110,7 @@ export function QueueRow({
   avatar,
   trailing,
   stackTrailing,
+  unread,
 }: {
   name: string;
   kind?: string;
@@ -124,24 +130,20 @@ export function QueueRow({
   trailing?: ReactNode;
   /** Below sm, put `trailing` on its own row under the name (wide buttons). */
   stackTrailing?: boolean;
+  /** A yellow dot: not opened yet. */
+  unread?: boolean;
 }) {
   return (
+    // The tick box, the open button and any trailing buttons are siblings: a
+    // control inside a role="button" row is hidden from screen readers (axe
+    // nested-interactive, ELE-1972). A click anywhere on the row still opens it.
     <div
-      role="button"
-      tabIndex={0}
       data-focused={focused || undefined}
       onClick={onOpen}
-      onKeyDown={(e) => {
-        if (e.target !== e.currentTarget) return;
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onOpen();
-        }
-      }}
       className={cn(
-        'flex w-full cursor-pointer items-center gap-3 px-4 py-4 text-left',
+        'flex w-full cursor-pointer items-center gap-3 px-4 py-3.5 text-left',
         stackTrailing && 'flex-wrap sm:flex-nowrap',
-        'outline-none transition-colors touch-manipulation hover:bg-white/[0.04] focus-visible:bg-white/[0.06] sm:gap-4 sm:px-5',
+        'outline-none transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] focus-within:bg-white/[0.06] sm:gap-4 sm:px-5',
         focused && 'bg-white/[0.06] shadow-[inset_3px_0_0_0_hsl(47_100%_50%)]',
         selected && 'bg-white/[0.05]'
       )}
@@ -168,48 +170,89 @@ export function QueueRow({
           </span>
         </button>
       )}
-      <span
-        aria-hidden="true"
-        className={cn(
-          'flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[13.5px] font-bold',
-          urgent ? 'bg-orange-500 text-black' : 'bg-white/[0.1] text-white'
-        )}
+      {/* 10 Oct 2026 (docs/college-mobile-standard.md): the name gets its own
+          line, never cut to "Tom Blackwell (fi…"; the kind and "Yours" sit
+          with the wait underneath. Initials stay neutral (orange text says
+          what is overdue), and with a tick box on a phone they give way so
+          the words have the width. */}
+      <button
+        type="button"
+        className="flex min-w-0 flex-1 items-center gap-3 text-left outline-none touch-manipulation sm:gap-4"
       >
-        {avatar ?? initialsOf(name)}
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span className="truncate text-[15px] font-semibold text-white">{name}</span>
-          {kind && (
-            <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[10.5px] font-semibold text-white">
-              {kind}
+        <span className={cn('relative shrink-0', selectable && 'max-sm:hidden')}>
+          <span
+            aria-hidden="true"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.1] text-[13px] font-bold text-white sm:h-11 sm:w-11"
+          >
+            {avatar ?? initialsOf(name)}
+          </span>
+          {unread && (
+            <span
+              className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-[hsl(0_0%_14%)] bg-elec-yellow"
+              aria-label="Not seen yet"
+            />
+          )}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="flex items-start gap-2">
+            {unread && selectable && (
+              <span
+                aria-hidden="true"
+                className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-elec-yellow sm:hidden"
+              />
+            )}
+            <span className="min-w-0 break-words text-[15px] font-semibold leading-snug text-white">
+              {name}
+            </span>
+          </span>
+          {(title || body) && (
+            <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-white">
+              {title && <span className="font-semibold">{title}</span>}
+              {title && body ? ' · ' : null}
+              {body}
             </span>
           )}
-          {mine && <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10.5px] font-bold text-black">Yours</span>}
+          {(meta || kind || mine) && (
+            <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+              {meta && (
+                <span
+                  className={cn(
+                    'text-[12.5px] leading-snug text-white',
+                    urgent && '[&>b]:text-orange-300'
+                  )}
+                >
+                  {meta}
+                </span>
+              )}
+              {kind && (
+                <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-px text-[12px] font-medium text-white">
+                  {kind}
+                </span>
+              )}
+              {mine && (
+                <span className="shrink-0 rounded-full border border-white/[0.4] px-2 py-px text-[12px] font-semibold text-white">
+                  Yours
+                </span>
+              )}
+            </span>
+          )}
         </span>
-        {(title || body) && (
-          <span className="mt-1 line-clamp-2 block text-[13px] leading-snug text-white">
-            {title && <span className="font-semibold">{title}</span>}
-            {title && body ? ' · ' : null}
-            {body}
-          </span>
-        )}
-        {meta && <span className={cn('mt-1 block text-[12px] text-white', urgent && '[&>b]:text-orange-300')}>{meta}</span>}
-      </span>
+      </button>
       {trailing && stackTrailing ? (
         <div className="order-last flex w-full justify-end sm:order-none sm:w-auto">{trailing}</div>
       ) : (
-        trailing ??
+        (trailing ??
         (action ? (
           <span
             className={cn(
-              'hidden h-11 min-w-[104px] shrink-0 items-center justify-center rounded-xl px-3 text-[13px] font-bold sm:inline-flex',
-              urgent ? 'bg-elec-yellow text-black' : 'border border-white/[0.18] text-white'
+              // Outlined on every row: one solid yellow action per screen.
+              'hidden h-11 min-w-[104px] shrink-0 items-center justify-center rounded-xl border px-3 text-[13px] font-semibold text-white sm:inline-flex',
+              urgent ? 'border-orange-400/60' : 'border-white/[0.18]'
             )}
           >
             {action}
           </span>
-        ) : null)
+        ) : null))
       )}
       <ChevronRight className="h-4 w-4 shrink-0 text-white sm:hidden" aria-hidden="true" />
     </div>
@@ -233,10 +276,14 @@ export function QueueGroup({
   return (
     <div className="space-y-2">
       <div className="flex items-baseline justify-between gap-3 px-1">
-        <h2 className={cn('text-[13px] font-semibold', urgent ? 'text-orange-300' : 'text-white')}>{title}</h2>
+        <h2 className={cn('text-[13px] font-semibold', urgent ? 'text-orange-300' : 'text-white')}>
+          {title}
+        </h2>
         <span className="flex items-center gap-2">
           {action}
-          {typeof count === 'number' && <span className="text-[12px] tabular-nums text-white">{count}</span>}
+          {typeof count === 'number' && (
+            <span className="text-[12px] tabular-nums text-white">{count}</span>
+          )}
         </span>
       </div>
       <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x">
@@ -269,7 +316,15 @@ const coarsePointer = () => {
  * left for the second one (tick, seen, return). The same verbs are on the
  * row and in the bulk bar, so swiping is a shortcut, never the only way.
  */
-export function SwipeRow({ children, right, left }: { children: ReactNode; right?: SwipeAct; left?: SwipeAct }) {
+export function SwipeRow({
+  children,
+  right,
+  left,
+}: {
+  children: ReactNode;
+  right?: SwipeAct;
+  left?: SwipeAct;
+}) {
   const [touch] = useState(coarsePointer);
   if (!touch || (!right && !left)) return <>{children}</>;
   const toAction = (a: SwipeAct | undefined) =>
@@ -281,7 +336,12 @@ export function SwipeRow({ children, right, left }: { children: ReactNode; right
       textColor: a.tone === 'go' ? 'text-black' : 'text-white',
     };
   return (
-    <SwipeableCard className="rounded-none" rightAction={toAction(right)} leftAction={toAction(left)} threshold={90}>
+    <SwipeableCard
+      className="rounded-none"
+      rightAction={toAction(right)}
+      leftAction={toAction(left)}
+      threshold={90}
+    >
       {children}
     </SwipeableCard>
   );
@@ -393,7 +453,9 @@ export function useQueueKeys<T extends string>({
         e.preventDefault();
         const next = keys[Math.max(0, Math.min(keys.length - 1, idx + d))] ?? keys[0];
         setFocus(next);
-        document.querySelector(`[data-qkey="${CSS.escape(next)}"]`)?.scrollIntoView({ block: 'nearest' });
+        document
+          .querySelector(`[data-qkey="${CSS.escape(next)}"]`)
+          ?.scrollIntoView({ block: 'nearest' });
       };
       // j/k always work; the arrow keys only move between rows once a row is
       // focused, so they still scroll the page the rest of the time.
@@ -430,7 +492,9 @@ export function KeyHint({ items }: { items: Array<[string, string]> }) {
     <p className="hidden flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-white lg:flex">
       {items.map(([k, label]) => (
         <span key={k} className="inline-flex items-center gap-1.5">
-          <kbd className="rounded-md border border-white/[0.2] px-1.5 py-0.5 font-mono text-[11px] text-white">{k}</kbd>
+          <kbd className="rounded-md border border-white/[0.2] px-1.5 py-0.5 font-mono text-[12px] text-white">
+            {k}
+          </kbd>
           {label}
         </span>
       ))}
@@ -465,7 +529,9 @@ export function Bars({
                 transition={{ duration: 0.7, ease: 'easeOut' }}
               />
             </span>
-            <span className="text-right text-[13px] font-semibold tabular-nums text-white">{r.n}</span>
+            <span className="text-right text-[13px] font-semibold tabular-nums text-white">
+              {r.n}
+            </span>
           </>
         );
         const grid = { gridTemplateColumns: `minmax(0,${labelWidth}) 1fr 2.5rem` };
@@ -501,13 +567,24 @@ export function Pipeline({
   onPick?: (key: string) => void;
 }) {
   return (
-    <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${stages.length}, minmax(0, 1fr))` }}>
+    // More than four stages wrap to three a row on a phone so the labels have room.
+    <div
+      className={cn(
+        'grid gap-2',
+        stages.length > 4
+          ? 'grid-cols-3 gap-y-4 sm:[grid-template-columns:repeat(var(--stages),minmax(0,1fr))]'
+          : '[grid-template-columns:repeat(var(--stages),minmax(0,1fr))]'
+      )}
+      style={{ '--stages': stages.length } as CSSProperties}
+    >
       {stages.map((st) => {
         const body = (
           <>
             <div className={cn('h-2 rounded-full', st.n > 0 ? st.cls : 'bg-white/[0.08]')} />
-            <p className="mt-2 text-[22px] font-bold leading-none tabular-nums text-white">{st.n}</p>
-            <p className="mt-1 text-[11.5px] leading-tight text-white">{st.label}</p>
+            <p className="mt-2 text-[22px] font-bold leading-none tabular-nums text-white">
+              {st.n}
+            </p>
+            <p className="mt-1 text-[12px] leading-tight text-white">{st.label}</p>
           </>
         );
         return onPick ? (

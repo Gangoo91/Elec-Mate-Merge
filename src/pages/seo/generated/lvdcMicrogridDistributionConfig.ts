@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Protection against electric shock).
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const lvdcMicrogridDistributionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/lvdc-dc-microgrid-distribution',
@@ -530,7 +530,7 @@ export const lvdcMicrogridDistributionConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
-      description: 'The headline changes in the 18th Edition, A4:2026 — AFDD, TN-C-S (PNB), new schedule columns and Type B RCD provisions for DC residual current.',
+      description: 'The headline changes in A4:2026: protective neutral bonding (PNB), Table 52.1 for cables in walls, new Section 545, new Chapter 57 for batteries and new Section 716 for PoE.',
       icon: 'BookOpen',
       category: 'Guide',
     },

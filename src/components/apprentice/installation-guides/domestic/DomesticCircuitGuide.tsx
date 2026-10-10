@@ -371,7 +371,7 @@ const DomesticCircuitGuide = () => {
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {circuitTypes.map((circuit, index) => (
-            <div key={index} className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
+            <div key={index} className="bg-white/10 p-4 rounded-lg border border-white/[0.14]">
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-white text-base mb-1">{circuit.type}</h4>

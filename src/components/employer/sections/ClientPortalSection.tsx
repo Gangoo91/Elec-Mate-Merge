@@ -4,17 +4,22 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  EmptyState,
   LoadingBlocks,
   PrimaryButton,
-  type Tone,
 } from '@/components/employer/editorial';
+import {
+  PanelTitle,
+  PlainEmpty,
+  Row,
+  RowList,
+  StatusPill,
+  Initials,
+  colClass,
+  frameClass,
+  heroPrimaryClass,
+  twoColClass,
+  type PillTone,
+} from '@/components/employer/pageParts/PageParts';
 import {
   PageHelpButton,
   HowItWorks,
@@ -85,17 +90,22 @@ const HELP: PageHelpContent = {
         'Tap the client, then Create portal link in the Client portal card.',
         'Tap Copy, Share, WhatsApp or Email, or QR code to show it on site.',
       ],
-      after: 'WhatsApp needs a mobile number on the client, Email needs an email address. The link shows here as Live.',
-      tour: [{ target: 'clientportal.share', caption: 'Tap Share with a client, then open the client.' }],
+      after:
+        'WhatsApp needs a mobile number on the client, Email needs an email address. The link shows here as Live.',
+      tour: [
+        { target: 'clientportal.share', caption: 'Tap Share with a client, then open the client.' },
+      ],
     },
     {
       title: 'Reply to a client message',
       steps: [
-        'Under Messages, tap the client. Unread ones show a purple pill.',
+        'Under Messages, tap the client. Unread ones show a yellow pill.',
         'Their record opens with the thread in view.',
         'Type in the box and tap Send.',
       ],
-      tour: [{ target: 'clientportal.messages', caption: 'Tap a conversation to open it and reply.' }],
+      tour: [
+        { target: 'clientportal.messages', caption: 'Tap a conversation to open it and reply.' },
+      ],
     },
     {
       title: 'Check a client has opened it',
@@ -104,7 +114,12 @@ const HELP: PageHelpContent = {
         'Each client shows how many times they opened it and when, or Not shared or opened yet.',
         'Live, Paused or Expired shows on the right.',
       ],
-      tour: [{ target: 'clientportal.links', caption: 'Opened counts and Live, Paused or Expired show here.' }],
+      tour: [
+        {
+          target: 'clientportal.links',
+          caption: 'Opened counts and Live, Paused or Expired show here.',
+        },
+      ],
     },
     {
       title: 'Pause, expire or switch off a link',
@@ -130,20 +145,11 @@ const ago = (d: string) => {
   return shortDate(d);
 };
 
-const initialsOf = (name: string) =>
-  name
-    .split(' ')
-    .map((p) => p[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join('')
-    .toUpperCase() || '?';
-
-function linkStatus(l: FirmPortalLinkRow): { label: string; tone: Tone } {
+function linkStatus(l: FirmPortalLinkRow): { label: string; tone: PillTone } {
   if (l.expires_at && new Date(l.expires_at).getTime() <= Date.now())
     return { label: 'Expired', tone: 'red' };
-  if (l.is_active === false) return { label: 'Paused', tone: 'amber' };
-  return { label: 'Live', tone: 'emerald' };
+  if (l.is_active === false) return { label: 'Paused', tone: 'neutral' };
+  return { label: 'Live', tone: 'green' };
 }
 
 export function ClientPortalSection() {
@@ -178,18 +184,26 @@ export function ClientPortalSection() {
         ]
       : [];
 
+  const headline =
+    linksLoading || inboxLoading
+      ? 'Loading your client portals.'
+      : waiting > 0
+        ? `${waiting} client${waiting === 1 ? '' : 's'} waiting on a reply, ${unread} unread message${unread === 1 ? '' : 's'}.`
+        : links.length === 0
+          ? 'Nothing shared yet. Each client gets one private page with their jobs, certificates and invoices.'
+          : `${live} live link${live === 1 ? '' : 's'}, ${opened} opened. No messages waiting.`;
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="Clients"
         title="Client portal"
-        description="One private page per client: jobs, who is coming, certificates, invoices with Pay now, and messages to you."
-        tone="blue"
+        description={headline}
         actions={
           <>
             <PrimaryButton
               data-help="clientportal.share"
               onClick={() => setSearchParams({ section: 'clients' })}
+              className={heroPrimaryClass}
             >
               Share with a client
             </PrimaryButton>
@@ -204,104 +218,108 @@ export function ClientPortalSection() {
 
       <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'clientportal' }} />
 
-      <StatStrip
-        columns={4}
-        stats={[
-          { label: 'Clients with a live link', value: live, accent: true },
-          { label: 'Links opened', value: opened, tone: 'cyan' },
-          {
-            label: 'Unread messages',
-            value: unread,
-            tone: unread > 0 ? 'purple' : 'emerald',
-          },
-          { label: 'Clients waiting on you', value: waiting, tone: waiting > 0 ? 'amber' : 'emerald' },
-        ]}
-      />
+      {(links.length > 0 || inbox.length > 0) && (
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Live links', value: live, sub: 'Clients with a page' },
+            { label: 'Opened', value: opened, sub: 'Links a client has opened' },
+            {
+              label: 'Unread messages',
+              value: unread,
+              sub: unread > 0 ? 'Reply from the record' : 'All read',
+              tone: unread > 0 ? 'yellow' : undefined,
+            },
+            {
+              label: 'Waiting on you',
+              value: waiting,
+              sub: waiting > 0 ? 'Clients to answer' : 'Nobody waiting',
+              tone: waiting > 0 ? 'yellow' : undefined,
+            },
+          ]}
+        />
+      )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-        <div data-help="clientportal.messages">
-        <ListCard>
-          <ListCardHeader
-            tone="purple"
-            title="Messages"
-            meta={unread > 0 ? <Pill tone="purple">{unread} new</Pill> : undefined}
-          />
-          {inboxLoading ? (
-            <div className="p-4">
+      <div className={twoColClass}>
+        <section className={colClass} data-help="clientportal.messages">
+          <div>
+            <PanelTitle title="Messages" meta={unread > 0 ? `${unread} new` : undefined} />
+            {inboxLoading ? (
               <LoadingBlocks />
-            </div>
-          ) : inbox.length === 0 ? (
-            <div className="p-4">
-              <EmptyState
-                title="No messages yet"
-                description="When a client writes to you from their portal, it shows here, on their record and in your notifications."
+            ) : inbox.length === 0 ? (
+              <PlainEmpty
+                stacked
+                text="When a client writes to you from their portal, it shows here, on their record and in your notifications."
               />
-            </div>
-          ) : (
-            <ListBody>
-              {inbox.map((t) => (
-                <ListRow
-                  key={t.customer_id}
-                  onClick={() => openClient(t.customer_id, true)}
-                  lead={<Avatar initials={initialsOf(t.customer_name)} />}
-                  title={t.customer_name}
-                  subtitle={`${t.last_from === 'employer' ? 'You: ' : ''}${t.last_message}`}
-                  trailing={
-                    <span className="flex items-center gap-2">
-                      <span className="text-[11.5px] text-white">{ago(t.last_at)}</span>
-                      {t.unread > 0 && <Pill tone="purple">{t.unread} new</Pill>}
-                    </span>
-                  }
-                />
-              ))}
-            </ListBody>
-          )}
-        </ListCard>
-        </div>
+            ) : (
+              <RowList>
+                {inbox.map((t) => (
+                  <Row
+                    wrapDetail
+                    key={t.customer_id}
+                    onClick={() => openClient(t.customer_id, true)}
+                    lead={<Initials name={t.customer_name} />}
+                    title={t.customer_name}
+                    detail={`${t.last_from === 'employer' ? 'You: ' : ''}${t.last_message}`}
+                    trailing={
+                      <>
+                        <span className="hidden text-[12.5px] text-white sm:inline">
+                          {ago(t.last_at)}
+                        </span>
+                        {t.unread > 0 && <StatusPill tone="volt">{t.unread} new</StatusPill>}
+                      </>
+                    }
+                  />
+                ))}
+              </RowList>
+            )}
+          </div>
+        </section>
 
-        <div data-help="clientportal.links">
-        <ListCard>
-          <ListCardHeader tone="blue" title="Portal links" meta={<Pill tone="cyan">{links.length}</Pill>} />
-          {linksLoading ? (
-            <div className="p-4">
+        <section className={colClass} data-help="clientportal.links">
+          <div>
+            <PanelTitle
+              title="Portal links"
+              meta={links.length > 0 ? `${links.length}` : undefined}
+              action={links.length > 0 ? 'Clients' : undefined}
+              onAction={() => setSearchParams({ section: 'clients' })}
+            />
+            {linksLoading ? (
               <LoadingBlocks />
-            </div>
-          ) : links.length === 0 ? (
-            <div className="p-4">
-              <EmptyState
-                title="No client has a link yet"
-                description="Open a client and tap Create portal link. It takes a second and you can switch it off at any time."
+            ) : links.length === 0 ? (
+              <PlainEmpty
+                stacked
+                text="Open a client and tap Create portal link. You can switch it off at any time."
                 action="Go to Clients"
                 onAction={() => setSearchParams({ section: 'clients' })}
               />
-            </div>
-          ) : (
-            <ListBody>
-              {links.map((l) => {
-                const name = nameById.get(l.customer_id) ?? 'Client';
-                const st = linkStatus(l);
-                const views = l.views_count ?? 0;
-                return (
-                  <ListRow
-                    key={l.id}
-                    onClick={() => openClient(l.customer_id)}
-                    lead={<Avatar initials={initialsOf(name)} />}
-                    title={name}
-                    subtitle={
-                      views > 0
-                        ? `Opened ${views} time${views === 1 ? '' : 's'}, last ${shortDate(l.last_accessed_at)}`
-                        : l.last_shared_at
-                          ? `Shared ${shortDate(l.last_shared_at)}, not opened yet`
-                          : 'Not shared or opened yet'
-                    }
-                    trailing={<Pill tone={st.tone}>{st.label}</Pill>}
-                  />
-                );
-              })}
-            </ListBody>
-          )}
-        </ListCard>
-        </div>
+            ) : (
+              <RowList>
+                {links.map((l) => {
+                  const name = nameById.get(l.customer_id) ?? 'Client';
+                  const st = linkStatus(l);
+                  const views = l.views_count ?? 0;
+                  return (
+                    <Row
+                      wrapDetail
+                      key={l.id}
+                      onClick={() => openClient(l.customer_id)}
+                      title={name}
+                      detail={
+                        views > 0
+                          ? `Opened ${views} time${views === 1 ? '' : 's'}, last ${shortDate(l.last_accessed_at)}`
+                          : l.last_shared_at
+                            ? `Shared ${shortDate(l.last_shared_at)}, not opened yet`
+                            : 'Not shared or opened yet'
+                      }
+                      trailing={<StatusPill tone={st.tone}>{st.label}</StatusPill>}
+                    />
+                  );
+                })}
+              </RowList>
+            )}
+          </div>
+        </section>
       </div>
     </PageFrame>
   );

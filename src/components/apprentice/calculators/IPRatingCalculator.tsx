@@ -638,8 +638,8 @@ const IPRatingCalculator = () => {
               <div
                 className="rounded-xl p-4 border transition-all"
                 style={{
-                  borderColor: `${config.gradientFrom}20`,
-                  background: `${config.gradientFrom}08`,
+                  borderColor: 'rgba(255, 255, 255, 0.12)',
+                  background: 'rgba(255, 255, 255, 0.04)',
                 }}
               >
                 <div className="flex items-center justify-between gap-4">
@@ -785,8 +785,8 @@ const IPRatingCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <p className="text-sm text-white">
@@ -826,8 +826,8 @@ const IPRatingCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <ul className="space-y-2">
@@ -842,7 +842,7 @@ const IPRatingCalculator = () => {
                               )}
                               style={
                                 isCurrentRating
-                                  ? { outline: `1px solid ${config.gradientFrom}40` }
+                                  ? { outline: '1px solid rgba(255, 255, 255, 0.12)' }
                                   : undefined
                               }
                             >
@@ -856,7 +856,7 @@ const IPRatingCalculator = () => {
                                   <span
                                     className="ml-2 text-xs font-medium px-1.5 py-0.5 rounded"
                                     style={{
-                                      backgroundColor: `${config.gradientFrom}20`,
+                                      backgroundColor: 'rgba(255, 255, 255, 0.04)',
                                       color: config.gradientFrom,
                                     }}
                                   >

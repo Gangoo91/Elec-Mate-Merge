@@ -13,9 +13,14 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { App } from '@capacitor/app';
 import { supabase } from '@/integrations/supabase/client';
+import type { FeatureMinimums } from '@/utils/featureGate';
 
 export interface VersionCheckResult {
   currentVersion: string;
+  /** Native build number (iOS CFBundleVersion / Android versionCode). */
+  currentBuild: string;
+  /** Per-feature floors from app_versions.feature_minimums (ELE-1969). */
+  featureMinimums: FeatureMinimums;
   latestVersion: string;
   minimumVersion: string;
   needsForceUpdate: boolean;
@@ -55,12 +60,13 @@ export function compareVersions(a: string, b: string): number {
 async function fetchVersionConfig(): Promise<{
   minimumVersion: string;
   latestVersion: string;
+  featureMinimums: FeatureMinimums;
 } | null> {
   const platform = Capacitor.getPlatform() as 'ios' | 'android';
 
   const { data, error } = await supabase
     .from('app_versions')
-    .select('version, min_supported_version')
+    .select('version, min_supported_version, feature_minimums')
     .eq('platform', platform)
     .eq('is_current', true)
     .maybeSingle();
@@ -70,7 +76,12 @@ async function fetchVersionConfig(): Promise<{
     return null;
   }
 
-  const row = data as { version: string; min_supported_version?: string };
+  // feature_minimums (ELE-1969) is newer than the generated types.
+  const row = data as unknown as {
+    version: string;
+    min_supported_version?: string;
+    feature_minimums?: FeatureMinimums | null;
+  };
   const latestVersion = row.version;
   // If min_supported_version isn't set, default to the current version so
   // we never accidentally force-update everyone.
@@ -81,7 +92,10 @@ async function fetchVersionConfig(): Promise<{
     return null;
   }
 
-  return { minimumVersion, latestVersion };
+  const featureMinimums =
+    row.feature_minimums && typeof row.feature_minimums === 'object' ? row.feature_minimums : {};
+
+  return { minimumVersion, latestVersion, featureMinimums };
 }
 
 /**
@@ -102,10 +116,12 @@ export async function checkAppVersion(): Promise<VersionCheckResult | null> {
     if (!versionConfig) return null;
 
     const currentVersion = appInfo.version; // e.g. "1.0.1"
-    const { minimumVersion, latestVersion } = versionConfig;
+    const { minimumVersion, latestVersion, featureMinimums } = versionConfig;
 
     const result: VersionCheckResult = {
       currentVersion,
+      currentBuild: appInfo.build,
+      featureMinimums,
       latestVersion,
       minimumVersion,
       needsForceUpdate: compareVersions(currentVersion, minimumVersion) < 0,

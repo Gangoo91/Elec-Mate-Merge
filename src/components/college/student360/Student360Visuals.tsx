@@ -58,10 +58,23 @@ const TOOLTIP = {
 };
 
 function fmtShort(iso: string) {
-  return new Date(`${iso.slice(0, 10)}T12:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  return new Date(`${iso.slice(0, 10)}T12:00`).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+  });
 }
 
-export function VisHead({ title, sub, aside, onOpen }: { title: string; sub?: string; aside?: ReactNode; onOpen?: () => void }) {
+export function VisHead({
+  title,
+  sub,
+  aside,
+  onOpen,
+}: {
+  title: string;
+  sub?: string;
+  aside?: ReactNode;
+  onOpen?: () => void;
+}) {
   return (
     <div className="flex items-start justify-between gap-3">
       <div className="min-w-0">
@@ -144,6 +157,110 @@ export function Ring({
   );
 }
 
+/* ── Measure: one headline figure, in its own unit, read against plan ──
+   Showcase pass (10 Oct): four identical rings mixed %, % of plan, % rate and
+   days, so "102%" and "24d" looked like the same kind of thing. Each measure
+   now shows its figure in its own unit, a thin bar with a tick where the
+   learner should be by now (when there is a plan to read against), and one
+   plain status line coloured by meaning: green fine, orange needs action. */
+
+export type MeasureTone = 'good' | 'behind' | 'neutral';
+
+const MEASURE_FILL: Record<MeasureTone, string> = {
+  good: 'bg-emerald-400',
+  behind: 'bg-orange-400',
+  neutral: 'bg-elec-yellow',
+};
+const MEASURE_TEXT: Record<MeasureTone, string> = {
+  good: 'text-emerald-300',
+  behind: 'text-orange-300',
+  neutral: 'text-white',
+};
+
+export function Measure({
+  label,
+  figure,
+  unit,
+  fill,
+  expected,
+  dots,
+  status,
+  detail,
+  tone,
+  onClick,
+}: {
+  label: string;
+  figure: string;
+  unit?: string;
+  /** 0–100, how full the bar is. Omit for no bar. */
+  fill?: number | null;
+  /** 0–100, a white tick on the bar where the learner should be by now. */
+  expected?: number | null;
+  /** One small block per session instead of a bar (attendance). */
+  dots?: MeasureTone[];
+  status: string;
+  detail?: string;
+  tone: MeasureTone;
+  onClick?: () => void;
+}) {
+  const f = fill == null ? null : Math.max(0, Math.min(100, fill));
+  const x = expected == null ? null : Math.max(0, Math.min(100, expected));
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex min-w-0 flex-col rounded-2xl p-3 text-left touch-manipulation transition-colors hover:bg-white/[0.04] active:bg-white/[0.06] sm:p-4"
+    >
+      <span className="text-[13px] font-semibold text-white">{label}</span>
+      <span className="mt-1.5 flex flex-wrap items-baseline gap-x-1.5">
+        <span className="text-[26px] font-bold leading-none tracking-tight tabular-nums text-white sm:text-[30px]">
+          {figure}
+        </span>
+        {unit && <span className="text-[13px] text-white">{unit}</span>}
+      </span>
+      {dots && dots.length > 0 ? (
+        <span className="mt-3.5 flex h-2 gap-1" aria-hidden>
+          {dots.map((d, i) => (
+            <span key={i} className={cn('h-2 flex-1 rounded-full', MEASURE_FILL[d])} />
+          ))}
+        </span>
+      ) : f !== null ? (
+        <span className="relative mt-3.5 block h-2 rounded-full bg-white/[0.08]" aria-hidden>
+          <motion.span
+            className={cn('absolute inset-y-0 left-0 rounded-full', MEASURE_FILL[tone])}
+            initial={{ width: 0 }}
+            animate={{ width: `${Math.max(f, f > 0 ? 2 : 0)}%` }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          />
+          {x !== null && (
+            <span
+              className="absolute -top-1 h-4 w-[3px] -translate-x-1/2 rounded-full bg-white ring-2 ring-[hsl(0_0%_14%)]"
+              style={{ left: `${x}%` }}
+            />
+          )}
+        </span>
+      ) : (
+        <span className="mt-3.5 block h-2" aria-hidden />
+      )}
+      <span
+        className={cn(
+          'mt-3 flex items-start gap-1.5 text-[13px] font-semibold leading-snug',
+          MEASURE_TEXT[tone]
+        )}
+      >
+        <span
+          className={cn('mt-[5px] h-2 w-2 shrink-0 rounded-full', MEASURE_FILL[tone])}
+          aria-hidden
+        />
+        {status}
+      </span>
+      {detail && (
+        <span className="mt-1 pl-3.5 text-[12.5px] leading-snug text-white">{detail}</span>
+      )}
+    </button>
+  );
+}
+
 /* ── Programme journey: start → today → planned end ─────────────────── */
 
 export function ProgrammeJourney({
@@ -175,13 +292,14 @@ export function ProgrammeJourney({
     <div>
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-[13px] text-white">
-          <span className="text-[22px] font-bold tabular-nums text-white">{through}%</span> through the programme
+          <span className="text-[22px] font-bold tabular-nums text-white">{through}%</span> through
+          the programme
         </p>
         <p className="text-[12.5px] text-white">{monthsLeft} months to go</p>
       </div>
       <div className="relative mt-4 h-3 rounded-full bg-white/[0.08]">
         <motion.div
-          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-elec-yellow/60 to-elec-yellow"
+          className="absolute inset-y-0 left-0 rounded-full bg-elec-yellow"
           initial={{ width: 0 }}
           animate={{ width: `${through}%` }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
@@ -204,13 +322,17 @@ export function ProgrammeJourney({
         )}
       </div>
       <div className="mt-2.5 flex justify-between text-[12px] text-white">
-        <span>Started {fmtShort(start)} {new Date(start).getFullYear()}</span>
+        <span>
+          Started {fmtShort(start)} {new Date(start).getFullYear()}
+        </span>
         {review !== null && (
           <span className={cn('hidden sm:inline', reviewLate && 'text-orange-300')}>
             ◆ Review {reviewLate ? 'was due' : 'due'} {fmtShort(reviewDueBy!)}
           </span>
         )}
-        <span>Ends {fmtShort(end)} {new Date(end).getFullYear()}</span>
+        <span>
+          Ends {fmtShort(end)} {new Date(end).getFullYear()}
+        </span>
       </div>
     </div>
   );
@@ -239,11 +361,17 @@ export function HoursChart({
     <motion.section variants={itemVariants} className={VIS_CARD}>
       <VisHead
         title="Off-the-job hours"
-        sub={t.required_total ? `Counted against the planned line · goal ${t.required_total}h` : 'Counted hours over time'}
+        sub={
+          t.required_total
+            ? `Counted against the planned line · goal ${t.required_total}h`
+            : 'Counted hours over time'
+        }
         onOpen={onOpen}
       />
       {!userId ? (
-        <NotLinked text={`${first} hasn't signed in to the app with their college email yet, so off-the-job time and app learning can't be counted.`} />
+        <NotLinked
+          text={`${first} hasn't signed in to the app with their college email yet, so off-the-job time and app learning can't be counted.`}
+        />
       ) : !t.loading && data.length === 0 ? (
         <NotLinked text="Needs a programme start date and some off-the-job time before there is a line to draw." />
       ) : (
@@ -251,7 +379,11 @@ export function HoursChart({
           <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
             <Figure label="Counted" value={`${t.current_actual}h`} />
             <Figure label="Planned by now" value={`${t.current_required}h`} />
-            <Figure label={t.current_delta >= 0 ? 'Ahead' : 'Behind'} value={`${Math.abs(t.current_delta)}h`} warn={behind} />
+            <Figure
+              label={t.current_delta >= 0 ? 'Ahead' : 'Behind'}
+              value={`${Math.abs(t.current_delta)}h`}
+              warn={behind}
+            />
           </div>
           <div className="-mx-2 mt-4 h-56 sm:h-64">
             {t.loading ? (
@@ -266,11 +398,37 @@ export function HoursChart({
                     </linearGradient>
                   </defs>
                   <CartesianGrid stroke={AXIS} vertical={false} />
-                  <XAxis dataKey="label" tick={{ fontSize: 11, fill: WHITE }} tickLine={false} axisLine={false} minTickGap={28} />
-                  <YAxis tick={{ fontSize: 11, fill: WHITE }} tickLine={false} axisLine={false} width={44} />
+                  <XAxis
+                    dataKey="label"
+                    tick={{ fontSize: 11, fill: WHITE }}
+                    tickLine={false}
+                    axisLine={false}
+                    minTickGap={28}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 11, fill: WHITE }}
+                    tickLine={false}
+                    axisLine={false}
+                    width={44}
+                  />
                   <Tooltip {...TOOLTIP} formatter={(v: number, n: string) => [`${v}h`, n]} />
-                  <Area type="monotone" dataKey="required_hours" name="Planned" stroke={GUIDE} strokeDasharray="5 5" strokeWidth={1.5} fill="none" />
-                  <Area type="monotone" dataKey="cumulative_hours" name="Counted" stroke={VOLT} strokeWidth={2.5} fill="url(#s360-hours)" />
+                  <Area
+                    type="monotone"
+                    dataKey="required_hours"
+                    name="Planned"
+                    stroke={GUIDE}
+                    strokeDasharray="5 5"
+                    strokeWidth={1.5}
+                    fill="none"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="cumulative_hours"
+                    name="Counted"
+                    stroke={VOLT}
+                    strokeWidth={2.5}
+                    fill="url(#s360-hours)"
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             )}
@@ -310,7 +468,15 @@ function fmtMins(m: number) {
   return h ? `${h}h ${r}m` : `${r}m`;
 }
 
-export function ActivityChart({ userId, first, onOpen }: { userId: string | null; first: string; onOpen?: () => void }) {
+export function ActivityChart({
+  userId,
+  first,
+  onOpen,
+}: {
+  userId: string | null;
+  first: string;
+  onOpen?: () => void;
+}) {
   const { data, loading } = useAppLearningBreakdown(userId, 30);
   const days = useMemo(() => {
     const byDay = new Map((data?.days ?? []).map((d) => [d.day.slice(0, 10), d.minutes]));
@@ -327,52 +493,79 @@ export function ActivityChart({ userId, first, onOpen }: { userId: string | null
   }, [data]);
   const active = days.filter((d) => d.minutes > 0).length;
   const total = data?.total_minutes ?? 0;
-  const areas = (data?.areas ?? []).slice().sort((a, b) => b.minutes - a.minutes).slice(0, 4);
+  const areas = (data?.areas ?? [])
+    .slice()
+    .sort((a, b) => b.minutes - a.minutes)
+    .slice(0, 4);
   const max = Math.max(1, ...areas.map((a) => a.minutes));
   return (
     <motion.section variants={itemVariants} className={VIS_CARD}>
-      <VisHead title="Learning in the app" sub="Last 30 days, every minute recorded automatically" onOpen={onOpen} />
+      <VisHead
+        title="Learning in the app"
+        sub="Last 30 days, every minute recorded automatically"
+        onOpen={onOpen}
+      />
       {!userId ? (
-        <NotLinked text={`Once ${first} signs in to the app, every minute of learning shows here by day and by area.`} />
+        <NotLinked
+          text={`Once ${first} signs in to the app, every minute of learning shows here by day and by area.`}
+        />
       ) : (
-      <>
-      <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
-        <Figure label="Time learning" value={fmtMins(total)} />
-        <Figure label="Active days" value={`${active} of 30`} warn={active < 4} />
-      </div>
-      <div className={cn('-mx-2 mt-4', !loading && total === 0 ? 'h-20' : 'h-36')}>
-        {loading ? (
-          <div className="h-full animate-pulse rounded-2xl bg-white/[0.04]" />
-        ) : total === 0 ? (
-          <Empty text={`No learning in the app in the last 30 days.`} />
-        ) : (
-          <ResponsiveContainer>
-            <BarChart data={days} margin={{ top: 4, right: 14, left: 14, bottom: 0 }}>
-              <XAxis dataKey="label" tick={{ fontSize: 10, fill: WHITE }} tickLine={false} axisLine={false} interval={6} />
-              <Tooltip {...TOOLTIP} cursor={{ fill: 'rgba(255,255,255,0.05)' }} formatter={(v: number) => [fmtMins(v), 'Learning']} />
-              <Bar dataKey="minutes" radius={[4, 4, 0, 0]}>
-                {days.map((d) => (
-                  <Cell key={d.day} fill={d.minutes > 0 ? VOLT : TRACK} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        )}
-      </div>
-      {areas.length > 0 && (
-        <ul className="mt-4 space-y-2.5 border-t border-white/[0.06] pt-4">
-          {areas.map((a) => (
-            <li key={a.area} className="grid grid-cols-[minmax(0,8rem)_1fr_auto] items-center gap-3">
-              <span className="truncate text-[12.5px] text-white">{areaName(a.area)}</span>
-              <span className="h-2 overflow-hidden rounded-full bg-white/[0.08]">
-                <span className="block h-full rounded-full bg-elec-yellow" style={{ width: `${(a.minutes / max) * 100}%` }} />
-              </span>
-              <span className="text-right text-[12.5px] font-semibold tabular-nums text-white">{fmtMins(a.minutes)}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      </>
+        <>
+          <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
+            <Figure label="Time learning" value={fmtMins(total)} />
+            <Figure label="Active days" value={`${active} of 30`} warn={active < 4} />
+          </div>
+          <div className={cn('-mx-2 mt-4', !loading && total === 0 ? 'h-20' : 'h-36')}>
+            {loading ? (
+              <div className="h-full animate-pulse rounded-2xl bg-white/[0.04]" />
+            ) : total === 0 ? (
+              <Empty text={`No learning in the app in the last 30 days.`} />
+            ) : (
+              <ResponsiveContainer>
+                <BarChart data={days} margin={{ top: 4, right: 14, left: 14, bottom: 0 }}>
+                  <XAxis
+                    dataKey="label"
+                    tick={{ fontSize: 10, fill: WHITE }}
+                    tickLine={false}
+                    axisLine={false}
+                    interval={6}
+                  />
+                  <Tooltip
+                    {...TOOLTIP}
+                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                    formatter={(v: number) => [fmtMins(v), 'Learning']}
+                  />
+                  <Bar dataKey="minutes" radius={[4, 4, 0, 0]}>
+                    {days.map((d) => (
+                      <Cell key={d.day} fill={d.minutes > 0 ? VOLT : TRACK} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            )}
+          </div>
+          {areas.length > 0 && (
+            <ul className="mt-4 space-y-2.5 border-t border-white/[0.06] pt-4">
+              {areas.map((a) => (
+                <li
+                  key={a.area}
+                  className="grid grid-cols-[minmax(0,8rem)_1fr_auto] items-center gap-3"
+                >
+                  <span className="truncate text-[12.5px] text-white">{areaName(a.area)}</span>
+                  <span className="h-2 overflow-hidden rounded-full bg-white/[0.08]">
+                    <span
+                      className="block h-full rounded-full bg-elec-yellow"
+                      style={{ width: `${(a.minutes / max) * 100}%` }}
+                    />
+                  </span>
+                  <span className="text-right text-[12.5px] font-semibold tabular-nums text-white">
+                    {fmtMins(a.minutes)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
     </motion.section>
   );
@@ -387,7 +580,15 @@ const AC_STATES: Array<{ key: AcCoverageRow['status']; label: string; cls: strin
   { key: 'in_progress', label: 'In progress', cls: 'bg-white/40' },
 ];
 
-export function CriteriaByUnit({ rows, onOpen, limit = 8 }: { rows: AcCoverageRow[]; onOpen?: () => void; limit?: number }) {
+export function CriteriaByUnit({
+  rows,
+  onOpen,
+  limit = 8,
+}: {
+  rows: AcCoverageRow[];
+  onOpen?: () => void;
+  limit?: number;
+}) {
   const units = useMemo(() => {
     const m = new Map<string, Record<string, number>>();
     for (const r of rows) {
@@ -403,7 +604,11 @@ export function CriteriaByUnit({ rows, onOpen, limit = 8 }: { rows: AcCoverageRo
         counts: c,
         done: (c.evidenced ?? 0) + (c.assessed ?? 0) + (c.confirmed ?? 0),
       }))
-      .sort((a, b) => b.done / b.total - a.done / a.total || a.code.localeCompare(b.code, undefined, { numeric: true }));
+      .sort(
+        (a, b) =>
+          b.done / b.total - a.done / a.total ||
+          a.code.localeCompare(b.code, undefined, { numeric: true })
+      );
   }, [rows]);
   const shown = units.slice(0, limit);
   return (
@@ -423,7 +628,9 @@ export function CriteriaByUnit({ rows, onOpen, limit = 8 }: { rows: AcCoverageRo
             {shown.map((u) => (
               <li key={u.code}>
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="truncate text-[12.5px] font-semibold text-white">Unit {u.code}</span>
+                  <span className="truncate text-[12.5px] font-semibold text-white">
+                    Unit {u.code}
+                  </span>
                   <span className="shrink-0 text-[12px] tabular-nums text-white">
                     {u.done} / {u.total}
                   </span>
@@ -446,7 +653,9 @@ export function CriteriaByUnit({ rows, onOpen, limit = 8 }: { rows: AcCoverageRo
             ))}
           </ul>
           {units.length > shown.length && (
-            <p className="mt-3 text-[12px] text-white">and {units.length - shown.length} more units</p>
+            <p className="mt-3 text-[12px] text-white">
+              and {units.length - shown.length} more units
+            </p>
           )}
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-[12px] text-white">
             {AC_STATES.map((s) => (
@@ -462,7 +671,14 @@ export function CriteriaByUnit({ rows, onOpen, limit = 8 }: { rows: AcCoverageRo
 /* ── Criteria by unit, from the one criterion state (ELE-1917) ─────── */
 
 /** Legend order for the criterion state, done first. Not started is the track. */
-export const AC_STATE_BAR: AcState[] = ['iqa_confirmed', 'passed', 'submitted', 'referred', 'claimed', 'suggested'];
+export const AC_STATE_BAR: AcState[] = [
+  'iqa_confirmed',
+  'passed',
+  'submitted',
+  'referred',
+  'claimed',
+  'suggested',
+];
 
 /** Needs more, not yet and an IQA query all read as "needs more" on a bar. */
 export function barCount(counts: Record<AcState, number>, s: AcState): number {
@@ -474,7 +690,15 @@ export function barCount(counts: Record<AcState, number>, s: AcState): number {
  * The learner's units read from get_portfolio_ac_state: "N / M" is criteria
  * PASSED, the same figure the learner sees on their Coverage view.
  */
-export function AcStateByUnit({ units, onOpen, limit = 8 }: { units: UnitGroup[]; onOpen?: () => void; limit?: number }) {
+export function AcStateByUnit({
+  units,
+  onOpen,
+  limit = 8,
+}: {
+  units: UnitGroup[];
+  onOpen?: () => void;
+  limit?: number;
+}) {
   const sorted = useMemo(
     () =>
       [...units].sort((a, b) => {
@@ -492,7 +716,9 @@ export function AcStateByUnit({ units, onOpen, limit = 8 }: { units: UnitGroup[]
     <motion.section variants={itemVariants} className={VIS_CARD}>
       <VisHead
         title="Criteria by unit"
-        sub={units.length ? `${units.length} units · passed of total, furthest along first` : undefined}
+        sub={
+          units.length ? `${units.length} units · passed of total, furthest along first` : undefined
+        }
         onOpen={onOpen}
       />
       {units.length === 0 ? (
@@ -505,8 +731,11 @@ export function AcStateByUnit({ units, onOpen, limit = 8 }: { units: UnitGroup[]
             {shown.map((u) => (
               <li key={u.unit_code}>
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="min-w-0 truncate text-[12.5px] font-semibold text-white">
-                    {u.unit_code} <span className="font-normal">{u.unit_title.replace(/^Unit\s+\S+\s*/, '')}</span>
+                  <span className="min-w-0 line-clamp-2 text-[13px] font-semibold leading-snug text-white">
+                    {u.unit_code}{' '}
+                    <span className="font-normal">
+                      {u.unit_title.replace(/^Unit\s+\S+\s*/, '')}
+                    </span>
                   </span>
                   <span className="shrink-0 text-[12px] tabular-nums text-white">
                     {u.passed} / {u.total}
@@ -530,7 +759,9 @@ export function AcStateByUnit({ units, onOpen, limit = 8 }: { units: UnitGroup[]
             ))}
           </ul>
           {units.length > shown.length && (
-            <p className="mt-3 text-[12px] text-white">and {units.length - shown.length} more units</p>
+            <p className="mt-3 text-[12px] text-white">
+              and {units.length - shown.length} more units
+            </p>
           )}
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-[12px] text-white">
             {AC_STATE_BAR.map((s) => (
@@ -553,12 +784,42 @@ function attTone(status: string) {
   return { cls: 'bg-white/40', label: status.replace(/_/g, ' ') };
 }
 
-export function AttendanceStrip({ rows, rate, onOpen }: { rows: AttendanceRow[]; rate: number | null; onOpen?: () => void }) {
+export function AttendanceStrip({
+  rows,
+  rate,
+  onOpen,
+}: {
+  rows: AttendanceRow[];
+  rate: number | null;
+  onOpen?: () => void;
+}) {
   const last = rows.slice(0, 28).reverse();
+  // A status line under the strip so the card reads the same height as its
+  // neighbours even with one session marked (Andrew, 10 Oct: no empty blocks).
+  const tally = (s: string) => last.filter((r) => r.status.toLowerCase() === s).length;
+  const counts = [
+    { label: last.length === 1 ? 'session' : 'sessions', value: last.length },
+    { label: 'present', value: tally('present') },
+    { label: 'late', value: tally('late') },
+    { label: 'absent', value: tally('absent') },
+  ];
   return (
-    <motion.section variants={itemVariants} className={VIS_CARD}>
-      <VisHead title="Attendance" sub={last.length ? `Last ${last.length === 1 ? 'session' : `${last.length} sessions, oldest first`}` : undefined} onOpen={onOpen} />
-      <p className={cn('mt-4 text-[32px] font-bold leading-none tabular-nums', rate !== null && rate < 85 ? 'text-orange-400' : 'text-white')}>
+    <motion.section variants={itemVariants} className={cn(VIS_CARD, 'flex flex-col')}>
+      <VisHead
+        title="Attendance"
+        sub={
+          last.length
+            ? `Last ${last.length === 1 ? 'session' : `${last.length} sessions, oldest first`}`
+            : undefined
+        }
+        onOpen={onOpen}
+      />
+      <p
+        className={cn(
+          'mt-4 text-[32px] font-bold leading-none tabular-nums',
+          rate !== null && rate < 85 ? 'text-orange-400' : 'text-white'
+        )}
+      >
         {rate === null ? '—' : `${rate}%`}
       </p>
       {last.length === 0 ? (
@@ -577,12 +838,32 @@ export function AttendanceStrip({ rows, rate, onOpen }: { rows: AttendanceRow[];
               );
             })}
           </div>
-          <div className="mt-4 flex flex-wrap gap-4 text-[12px] text-white">
+          <div className="mb-4 mt-4 flex flex-wrap gap-4 text-[12px] text-white">
             <Key swatch="bg-emerald-400" label="Present" />
             <Key swatch="bg-elec-yellow" label="Late" />
             <Key swatch="bg-red-400" label="Absent" />
-            {last.some((r) => r.status.toLowerCase() === 'authorised') && <Key swatch="bg-white/40" label="Authorised" />}
+            {last.some((r) => r.status.toLowerCase() === 'authorised') && (
+              <Key swatch="bg-white/40" label="Authorised" />
+            )}
           </div>
+          <dl className="mt-auto grid grid-cols-2 gap-x-4 gap-y-3 border-t border-white/[0.08] pt-4 sm:grid-cols-4">
+            {counts.map((c) => (
+              <div key={c.label} className="min-w-0">
+                <dt className="sr-only">{c.label}</dt>
+                <dd className="text-[13px] text-white">
+                  <span
+                    className={cn(
+                      'text-[17px] font-bold tabular-nums',
+                      c.label === 'absent' && c.value > 0 ? 'text-orange-400' : 'text-white'
+                    )}
+                  >
+                    {c.value}
+                  </span>{' '}
+                  {c.label}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </>
       )}
     </motion.section>
@@ -603,14 +884,38 @@ export function PortfolioDonut({
   onOpen?: () => void;
 }) {
   const slices = [
-    { name: 'Signed off', value: (byStatus.approved ?? 0) + (byStatus.signed_off ?? 0) + (byStatus.iqa_verified ?? 0) + (byStatus.iqa_sampled ?? 0), fill: GREEN },
-    { name: 'Waiting on you', value: (byStatus.submitted ?? 0) + (byStatus.in_review ?? 0) + (byStatus.under_review ?? 0) + (byStatus.resubmitted ?? 0), fill: VOLT },
-    { name: 'With the learner', value: (byStatus.feedback_given ?? 0) + (byStatus.returned ?? 0) + (byStatus.rejected ?? 0), fill: ORANGE },
+    {
+      name: 'Signed off',
+      value:
+        (byStatus.approved ?? 0) +
+        (byStatus.signed_off ?? 0) +
+        (byStatus.iqa_verified ?? 0) +
+        (byStatus.iqa_sampled ?? 0),
+      fill: GREEN,
+    },
+    {
+      name: 'Waiting on you',
+      value:
+        (byStatus.submitted ?? 0) +
+        (byStatus.in_review ?? 0) +
+        (byStatus.under_review ?? 0) +
+        (byStatus.resubmitted ?? 0),
+      fill: VOLT,
+    },
+    {
+      name: 'With the learner',
+      value: (byStatus.feedback_given ?? 0) + (byStatus.returned ?? 0) + (byStatus.rejected ?? 0),
+      fill: ORANGE,
+    },
   ];
   const total = slices.reduce((n, s) => n + s.value, 0);
   return (
     <motion.section variants={itemVariants} className={VIS_CARD}>
-      <VisHead title="Portfolio" sub={`${items} evidence items · ${verifiedItems} supervisor verified`} onOpen={onOpen} />
+      <VisHead
+        title="Portfolio"
+        sub={`${items} evidence items · ${verifiedItems} supervisor verified`}
+        onOpen={onOpen}
+      />
       <div className="mt-2 flex items-center gap-5">
         <div className="relative h-32 w-32 shrink-0">
           <ResponsiveContainer>
@@ -632,15 +937,20 @@ export function PortfolioDonut({
             </PieChart>
           </ResponsiveContainer>
           <span className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-[24px] font-bold leading-none tabular-nums text-white">{total}</span>
-            <span className="mt-1 text-[11px] text-white">submitted</span>
+            <span className="text-[24px] font-bold leading-none tabular-nums text-white">
+              {total}
+            </span>
+            <span className="mt-1 text-[12px] text-white">submitted</span>
           </span>
         </div>
         <ul className="min-w-0 flex-1 space-y-2.5">
           {slices.map((s) => (
             <li key={s.name} className="flex items-center justify-between gap-3">
               <span className="flex min-w-0 items-center gap-2 text-[12.5px] text-white">
-                <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: s.fill }} />
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full"
+                  style={{ background: s.fill }}
+                />
                 <span className="truncate">{s.name}</span>
               </span>
               <span className="text-[14px] font-semibold tabular-nums text-white">{s.value}</span>
@@ -676,8 +986,17 @@ export function RiskTrend({
   const bad = level === 'high' || level === 'critical';
   return (
     <motion.section variants={itemVariants} className={VIS_CARD}>
-      <VisHead title="Risk" sub={factor ?? 'Score from attendance, progress, hours and contact'} onOpen={onOpen} />
-      <p className={cn('mt-4 text-[32px] font-bold capitalize leading-none', bad ? 'text-orange-400' : 'text-white')}>
+      <VisHead
+        title="Risk"
+        sub={factor ?? 'Score from attendance, progress, hours and contact'}
+        onOpen={onOpen}
+      />
+      <p
+        className={cn(
+          'mt-4 text-[32px] font-bold capitalize leading-none',
+          bad ? 'text-orange-400' : 'text-white'
+        )}
+      >
         {level ?? '—'}
       </p>
       <div className="-mx-2 mt-3 h-24">
@@ -689,7 +1008,13 @@ export function RiskTrend({
               <XAxis dataKey="label" hide />
               <YAxis hide domain={[0, 100]} />
               <Tooltip {...TOOLTIP} formatter={(v: number) => [v, 'Score']} />
-              <Line type="monotone" dataKey="score" stroke={bad ? ORANGE : VOLT} strokeWidth={2.5} dot={false} />
+              <Line
+                type="monotone"
+                dataKey="score"
+                stroke={bad ? ORANGE : VOLT}
+                strokeWidth={2.5}
+                dot={false}
+              />
             </LineChart>
           </ResponsiveContainer>
         )}
@@ -730,7 +1055,11 @@ export function GoalsCard({
   ];
   return (
     <motion.section variants={itemVariants} className={VIS_CARD}>
-      <VisHead title="Learning plan goals" sub={overdue ? `${overdue} past their target date` : 'Goals set in the learning plan'} onOpen={onOpen} />
+      <VisHead
+        title="Learning plan goals"
+        sub={overdue ? `${overdue} past their target date` : 'Goals set in the learning plan'}
+        onOpen={onOpen}
+      />
       <p className="mt-4 text-[32px] font-bold leading-none tabular-nums text-white">
         {completed}
         <span className="text-[16px] font-semibold"> of {total} met</span>
@@ -754,7 +1083,10 @@ export function GoalsCard({
           </div>
           <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
             {parts.map((p) => (
-              <div key={p.label} className="flex items-center justify-between gap-2 text-[12.5px] text-white">
+              <div
+                key={p.label}
+                className="flex items-center justify-between gap-2 text-[12.5px] text-white"
+              >
                 <span className="flex items-center gap-2">
                   <span className={cn('h-2.5 w-2.5 rounded-full', p.cls)} />
                   {p.label}
@@ -775,7 +1107,14 @@ function Figure({ label, value, warn }: { label: string; value: string; warn?: b
   return (
     <div>
       <p className="text-[12px] text-white">{label}</p>
-      <p className={cn('mt-0.5 text-[22px] font-bold leading-none tabular-nums', warn ? 'text-orange-400' : 'text-white')}>{value}</p>
+      <p
+        className={cn(
+          'mt-0.5 text-[22px] font-bold leading-none tabular-nums',
+          warn ? 'text-orange-400' : 'text-white'
+        )}
+      >
+        {value}
+      </p>
     </div>
   );
 }
@@ -783,7 +1122,10 @@ function Figure({ label, value, warn }: { label: string; value: string; warn?: b
 function Key({ swatch, label, dashed }: { swatch: string; label: string; dashed?: boolean }) {
   return (
     <span className="flex items-center gap-1.5">
-      <span className={cn('h-2 w-4 rounded-full', swatch, dashed && 'h-0.5 rounded-none')} aria-hidden />
+      <span
+        className={cn('h-2 w-4 rounded-full', swatch, dashed && 'h-0.5 rounded-none')}
+        aria-hidden
+      />
       {label}
     </span>
   );

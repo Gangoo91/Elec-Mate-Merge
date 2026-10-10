@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Is EAL Level 3 Electrical Installation equivalent to City & Guilds 2365?',
     answer:
-      "Yes. The EAL Level 3 Diploma in Electrical Installation is equivalent to the City & Guilds 2365 Level 3 Diploma in terms of level, content, and industry recognition. Both qualifications cover the same knowledge and skills as required by the Level 3 Electrical Installation apprenticeship standard (ST0145). Both are regulated at Level 3 by Ofqual and appear on the Regulated Qualifications Framework (RQF). JIB treats both equivalently for ECS Gold Card applications. The qualification number is different (EAL has its own qualification number), but the outcome — a recognised Level 3 electrical installation qualification — is identical.",
+      "Yes. The EAL Level 3 Diploma in Electrical Installation is equivalent to the City & Guilds 2365 Level 3 Diploma in terms of level, content, and industry recognition. Both qualifications cover the same knowledge and skills as required by the Level 3 Electrical Installation apprenticeship standard (ST0152). Both are regulated at Level 3 by Ofqual and appear on the Regulated Qualifications Framework (RQF). JIB treats both equivalently for ECS Gold Card applications. The qualification number is different (EAL has its own qualification number), but the outcome — a recognised Level 3 electrical installation qualification — is identical.",
   },
   {
     question: 'How do employers view EAL vs City & Guilds qualifications?',
@@ -154,7 +154,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved EPAO:</strong> EAL is an approved End-Point Assessment
-                Organisation for the Level 3 Electrical Installation apprenticeship (ST0145),
+                Organisation for the Level 3 Electrical Installation apprenticeship (ST0152),
                 meaning it can assess apprentices at the final stage of their apprenticeship,
                 alongside City & Guilds.
               </span>
@@ -643,7 +643,7 @@ export default function EALLevel3GuidePage() {
       title="EAL Level 3 Electrical Installation Guide"
       description="Complete guide to the EAL Level 3 Electrical Installation qualification. What EAL is, qualification structure, units covered."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualification Guide"

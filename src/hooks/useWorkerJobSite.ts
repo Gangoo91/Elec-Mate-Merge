@@ -10,6 +10,7 @@
  */
 import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { OFFLINE_FIRST, offlineSnapshot } from '@/lib/workerOfflineCache';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface JobContact {
@@ -70,7 +71,9 @@ export function useMyJobDetail(jobId: string | null | undefined) {
   const queryClient = useQueryClient();
   const query = useQuery<MyJobDetail>({
     queryKey: ['my-job-detail', jobId],
-    queryFn: async () => {
+    // ELE-1828: the job page (and its pack text) opens with no signal.
+    ...OFFLINE_FIRST,
+    queryFn: () => offlineSnapshot(`my-job-detail:${jobId}`, async () => {
       const { data, error } = await supabase.rpc(
         'get_my_job_detail' as never,
         { p_job_id: jobId } as never
@@ -83,7 +86,7 @@ export function useMyJobDetail(jobId: string | null | undefined) {
         notes: (d.notes ?? []).map((n) => ({ ...n, photos: n.photos ?? [] })),
         crew: d.crew ?? [],
       };
-    },
+    }),
     enabled: !!jobId,
     staleTime: 30 * 1000,
     retry: 1,

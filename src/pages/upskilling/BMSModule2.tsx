@@ -1,4 +1,4 @@
-import { ToggleLeft, Thermometer, Settings, MapPin, Cable, Shield } from 'lucide-react';
+import { ToggleLeft, Thermometer, Settings, MapPin, Cable, Cpu, Power } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
 import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
@@ -6,47 +6,60 @@ import useSEO from '@/hooks/useSEO';
 const sections = [
   {
     id: 1,
-    title: 'Digital vs analogue inputs and outputs',
+    title: 'Points: digital and analogue, inputs and outputs',
     icon: ToggleLeft,
-    description: 'Signal types, processing methods and resolution considerations.',
+    description:
+      'Every wire you land on an outstation is a point. Four kinds of point, which way the signal travels, and what each one should do when something breaks.',
   },
   {
     id: 2,
-    title: 'Sensor types: temperature, humidity, CO2, occupancy',
+    title: 'Sensors',
     icon: Thermometer,
-    description: 'Common sensor technologies and their typical applications.',
+    description:
+      'What each common BMS sensor measures, what it hands to the controller, and the choices that decide whether its reading can be trusted.',
   },
   {
     id: 3,
     title: 'Actuators, valves and dampers',
     icon: Settings,
-    description: 'Control devices and mechanical components driven by the BMS.',
+    description:
+      'The output end of every control loop: the devices that turn a BMS signal into water or air actually moving, and how to wire and prove them.',
   },
   {
     id: 4,
-    title: 'Sensor placement and accuracy considerations',
+    title: 'Siting sensors and getting true readings',
     icon: MapPin,
-    description: 'Installation best practices for reliable measurements.',
+    description:
+      'A good sensor in a bad place gives the BMS a confident wrong answer. Where it goes, how it is fitted and how you prove what it says.',
   },
   {
     id: 5,
-    title: 'I/O modules and expansion devices',
-    icon: Cable,
-    description: 'Input/output expansion, addressing and connectivity options.',
+    title: 'Controllers and I/O modules',
+    icon: Cpu,
+    description:
+      'The box the field wiring lands on: what a BMS controller does, how its inputs and outputs are set up, how it grows, and what keeps it alive when the power goes.',
   },
   {
     id: 6,
-    title: 'Cabling, interference and shielding practices',
-    icon: Shield,
-    description: 'Signal integrity, separation and shielding for BMS field cabling.',
+    title: 'Control wiring',
+    icon: Cable,
+    description:
+      'The cable between a controller and a sensor carries a measurement. How to choose, route, screen and label it so the reading arrives intact.',
+  },
+  {
+    id: 7,
+    title: 'Motor control and the plant interface',
+    icon: Power,
+    description:
+      'The few terminals where the BMS stops and the starter panel starts: what crosses that line, what comes back, and what must never depend on it.',
   },
 ];
 
 export default function BMSModule2() {
   useSEO({
-    title: 'Module 2: Control Devices & Field Sensors | BMS Course | Elec-Mate',
+    title: 'Module 2: Field devices and signals | BMS course | Elec-Mate',
     description:
-      'Field devices, sensors, actuators, I/O modules and cabling practices for BMS installations.',
+      'Points, sensors, actuators, controllers and control wiring, through to where the BMS meets the motor starter.',
   });
 
   return (
@@ -54,15 +67,15 @@ export default function BMSModule2() {
       backTo="../bms-course"
       backLabel="Building management systems"
       moduleNumber={2}
-      title="Control devices and field sensors"
-      description="Field devices, sensors and the control equipment behind every BMS."
+      title="Field devices and signals"
+      description="Points, sensors, actuators, controllers and the wiring between them, through to where the BMS meets the motor starter."
       tone="yellow"
       sectionsCount={sections.length}
-      duration="60 mins"
+      duration="3 hrs 20 mins"
       prevModuleHref="../bms-module-1"
-      prevModuleLabel="BMS overview and industry applications"
+      prevModuleLabel="What a BMS is, and the rules around it"
       nextModuleHref="../bms-module-3"
-      nextModuleLabel="HVAC integration and scheduling logic"
+      nextModuleLabel="Controlling heating, ventilation and air conditioning"
     >
       {sections.map((section, index) => (
         <SectionCard

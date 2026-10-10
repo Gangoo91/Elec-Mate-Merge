@@ -6,15 +6,16 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { itemVariants, LoadingState } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  CollegeStats,
-} from '@/components/college/ui/CollegeUi';
-import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
+  AiMarker,
+  TEACH_BTN_PRIMARY,
+  TeachingEmpty as CollegeEmpty,
+  TeachingHeader,
+  TeachingScreen,
+  plural,
+} from '@/components/college/teaching/TeachingKit';
+import { cn } from '@/lib/utils';
 
 /* ==========================================================================
    TutorNotebookSection — in-hub launcher into the real AI Notebook page
@@ -27,7 +28,8 @@ import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
    prompt pre-selected.
 
    Renders CONTENT ONLY under the CollegeDashboard masthead: one solid volt
-   "Open notebook" → quick prompts → learners.
+   "Open notebook" → quick prompts → learners. 8 Oct 2026: a "Uses AI"
+   marker on the title, the three figure tiles folded into the sentence.
    ========================================================================== */
 
 interface LearnerRow {
@@ -49,19 +51,34 @@ const QUICK_PROMPTS: Array<{ label: string; prompt: string }> = [
 
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
-const ROW =
-  'flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6';
+/** A learner or a ready question as a card: the observation learner picker's shape. */
+const PICK_CARD =
+  'flex h-full min-h-[64px] w-full items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-3 text-left transition-colors touch-manipulation hover:border-white/[0.22] hover:bg-white/[0.06] active:bg-white/[0.09]';
 
 const HELP: PageHelpContent = {
   id: 'college-tutor-notebook',
   title: 'Learner notebook',
   what: 'Ask a question about a learner and get an answer written from their real record: criteria met, quizzes, off-the-job hours, observations and end-point judgements. It is AI, so check anything you act on.',
   steps: [
-    { title: 'Pick a learner', body: 'Tap a learner to open the notebook with their record loaded.' },
-    { title: 'Ask, or use a ready question', body: 'Gateway readiness, biggest gaps, a 1-2-1 agenda or what to observe next.' },
-    { title: 'Check and use it', body: 'Answers say where they came from. Copy what is useful into a review, a learning plan or your notes.' },
+    {
+      title: 'Pick a learner',
+      body: 'Tap a learner to open the notebook with their record loaded.',
+    },
+    {
+      title: 'Ask, or use a ready question',
+      body: 'Gateway readiness, biggest gaps, a 1-2-1 agenda or what to observe next.',
+    },
+    {
+      title: 'Check and use it',
+      body: 'Answers say where they came from. Copy what is useful into a review, a learning plan or your notes.',
+    },
   ],
-  notes: [{ title: 'Who you see', body: 'Your assigned learners first. If none are assigned to you, everyone at the college.' }],
+  notes: [
+    {
+      title: 'Who you see',
+      body: 'Your assigned learners first. If none are assigned to you, everyone at the college.',
+    },
+  ],
 };
 
 export function TutorNotebookSection() {
@@ -165,6 +182,23 @@ export function TutorNotebookSection() {
     );
   }, [learners, search]);
 
+  // Grouped by cohort like the observation learner picker: a grid of cards.
+  const groups = useMemo(() => {
+    const map = new Map<string, LearnerRow[]>();
+    for (const l of filtered) {
+      const k = l.cohort_name ?? 'No cohort';
+      map.set(k, [...(map.get(k) ?? []), l]);
+    }
+    return [...map.entries()]
+      .sort(([a], [b]) => (a === 'No cohort' ? 1 : b === 'No cohort' ? -1 : a.localeCompare(b)))
+      .map(([name, rows]) => ({ name, rows }));
+  }, [filtered]);
+
+  const cohortCount = useMemo(
+    () => new Set(learners.map((l) => l.cohort_name).filter(Boolean)).size,
+    [learners]
+  );
+
   const openNotebook = (studentId?: string, prompt?: string) => {
     const params = new URLSearchParams();
     if (studentId) params.set('student', studentId);
@@ -174,101 +208,142 @@ export function TutorNotebookSection() {
 
   return (
     <TeachingScreen>
-      <CollegePageHeader
+      <TeachingHeader
         eyebrow="Teaching"
-        title="Learner notebook"
-        description="Ask about a learner and get an answer written from their record: criteria, quizzes, off-the-job hours, observations and end-point judgements."
+        title={
+          <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+            Learner notebook <AiMarker className="align-middle" />
+          </span>
+        }
         help={HELP}
+        summary="Ask about one learner and get an answer written from their record: criteria, quizzes, off-the-job hours, observations and end-point judgements."
+        sub={
+          loading || error
+            ? undefined
+            : learners.length === 0
+              ? 'No learners to ask about yet.'
+              : `${plural(learners.length, assigned ? 'learner' : 'learner')} ${assigned ? 'assigned to you' : 'at the college'}, in ${plural(cohortCount, 'cohort')}. AI can be wrong, so check anything you act on.`
+        }
         actions={
-          <button type="button" onClick={() => openNotebook()} className={COLLEGE_BTN_PRIMARY}>
+          <button
+            type="button"
+            onClick={() => openNotebook()}
+            className={cn(TEACH_BTN_PRIMARY, 'w-full sm:w-auto')}
+          >
             Open the notebook
           </button>
         }
       />
 
-      {!loading && !error && learners.length > 0 && (
-        <CollegeStats
-          items={[
-            { label: assigned ? 'Your learners' : 'Learners', value: String(learners.length), sub: assigned ? 'assigned to you' : 'at the college' },
-            { label: 'Cohorts', value: String(new Set(learners.map((l) => l.cohort_name).filter(Boolean)).size), sub: 'across these learners' },
-            { label: 'Ready questions', value: String(QUICK_PROMPTS.length), sub: 'one tap to ask' },
-          ]}
+      <section className="space-y-4">
+        <CollegeSectionTitle
+          title="Ready questions"
+          sub="Opens the notebook with the question filled in. Pick the learner there."
         />
-      )}
-
-      <div className="grid grid-cols-1 items-start gap-8 xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-        <section className="space-y-4">
-          <CollegeSectionTitle title="Ready questions" sub="Opens the notebook with the question filled in. Pick the learner there." />
-          <motion.ul variants={itemVariants} className={COLLEGE_LIST}>
-            {QUICK_PROMPTS.map((p) => (
-              <li key={p.label}>
-                <button type="button" onClick={() => openNotebook(undefined, p.prompt)} className={ROW}>
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">{p.label}</span>
-                    <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">{p.prompt}</span>
+        <motion.ul
+          variants={itemVariants}
+          className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4"
+        >
+          {QUICK_PROMPTS.map((p) => (
+            <li key={p.label}>
+              <button
+                type="button"
+                onClick={() => openNotebook(undefined, p.prompt)}
+                className={PICK_CARD}
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[14.5px] font-semibold leading-snug text-white">
+                    {p.label}
                   </span>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                </button>
-              </li>
-            ))}
-          </motion.ul>
-        </section>
+                  <span className="mt-1 block text-[12.5px] leading-snug text-white">
+                    {p.prompt}
+                  </span>
+                </span>
+                <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+              </button>
+            </li>
+          ))}
+        </motion.ul>
+      </section>
 
-        <section className="space-y-4">
-          <CollegeSectionTitle
-            title={assigned ? 'Your learners' : 'Learners'}
-            sub={!loading && !error ? (filtered.length === learners.length ? `${learners.length} learners` : `${filtered.length} of ${learners.length}`) : undefined}
+      <section className="space-y-4">
+        <CollegeSectionTitle
+          title={assigned ? 'Your learners' : 'Learners'}
+          sub={
+            !loading && !error
+              ? filtered.length === learners.length
+                ? `${learners.length} learners`
+                : `${filtered.length} of ${learners.length}`
+              : undefined
+          }
+        />
+
+        {learners.length > 3 && (
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by name or cohort"
+            aria-label="Search learners"
+            className={cn(SEARCH, 'lg:max-w-md')}
           />
+        )}
 
-          {learners.length > 3 && (
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by name or cohort"
-              aria-label="Search learners"
-              className={SEARCH}
-            />
-          )}
-
-          {error ? (
-            <CollegeEmpty title="Could not load learners" body={error} />
-          ) : loading ? (
-            <LoadingState />
-          ) : learners.length === 0 ? (
-            <CollegeEmpty
-              title="No learners yet"
-              body="When learners join your college, or are assigned to you, they appear here and the notebook can answer about them."
-            />
-          ) : filtered.length === 0 ? (
-            <CollegeEmpty title="No learner matches that search" />
-          ) : (
-            <motion.ul variants={itemVariants} className={COLLEGE_LIST + ' lg:grid lg:grid-cols-2 lg:divide-y-0'}>
-              {filtered.map((learner) => (
-                <li key={learner.id} className="lg:border-b lg:border-white/[0.06] lg:odd:border-r">
-                  <button type="button" onClick={() => openNotebook(learner.id)} className={ROW}>
-                    <span
-                      aria-hidden="true"
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.1] text-[12px] font-bold text-white"
-                    >
-                      {learner.name
-                        .split(' ')
-                        .map((n) => n[0])
-                        .slice(0, 2)
-                        .join('')}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">{learner.name}</span>
-                      <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">{learner.cohort_name ?? 'No cohort'}</span>
-                    </span>
-                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                  </button>
-                </li>
-              ))}
-            </motion.ul>
-          )}
-        </section>
-      </div>
+        {error ? (
+          <CollegeEmpty title="Could not load learners" body={error} />
+        ) : loading ? (
+          <LoadingState />
+        ) : learners.length === 0 ? (
+          <CollegeEmpty
+            title="No learners yet"
+            body="When learners join your college, or are assigned to you, they appear here and the notebook can answer about them."
+          />
+        ) : filtered.length === 0 ? (
+          <CollegeEmpty title="No learner matches that search" />
+        ) : (
+          <div className="space-y-5">
+            {groups.map((g) => (
+              <section key={g.name} aria-label={g.name} className="space-y-2.5">
+                {groups.length > 1 && (
+                  <h3 className="flex items-baseline gap-2 text-[14px] font-semibold text-white">
+                    {g.name}
+                    <span className="text-[12.5px] font-medium tabular-nums">{g.rows.length}</span>
+                  </h3>
+                )}
+                <motion.ul
+                  variants={itemVariants}
+                  className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                >
+                  {g.rows.map((learner) => (
+                    <li key={learner.id}>
+                      <button
+                        type="button"
+                        onClick={() => openNotebook(learner.id)}
+                        className={PICK_CARD}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[13px] font-semibold text-white"
+                        >
+                          {learner.name
+                            .split(' ')
+                            .map((n) => n[0])
+                            .slice(0, 2)
+                            .join('')}
+                        </span>
+                        <span className="min-w-0 flex-1 text-[15px] font-semibold leading-snug text-white">
+                          {learner.name}
+                        </span>
+                        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                      </button>
+                    </li>
+                  ))}
+                </motion.ul>
+              </section>
+            ))}
+          </div>
+        )}
+      </section>
     </TeachingScreen>
   );
 }

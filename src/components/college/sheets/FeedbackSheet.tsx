@@ -11,6 +11,7 @@ import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useToast } from '@/hooks/use-toast';
 import { LoadingState, SuccessCheckmark } from '@/components/college/primitives';
 import { formatUKDateShort } from '@/utils/collegeHelpers';
+import { keyLabel } from '@/lib/college/labels';
 
 interface FeedbackSheetProps {
   gradeId: string | null;
@@ -80,7 +81,7 @@ export function FeedbackSheet({ gradeId, open, onOpenChange }: FeedbackSheetProp
     ? [
         ['Learner', student?.name ?? 'Unknown learner'],
         ['Unit', grade.unit_name ?? 'Unassigned unit'],
-        ['Assessment type', grade.assessment_type ?? 'Not specified'],
+        ['Assessment type', keyLabel(grade.assessment_type) || 'Not specified'],
         ['Grade', grade.grade ?? 'Not yet graded'],
         ['Score', grade.score != null ? `${grade.score}%` : 'No score'],
         ['Assessed', grade.assessed_at ? formatUKDateShort(grade.assessed_at) : 'Not yet'],

@@ -193,7 +193,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       {/* Calculator Selection */}
       <Label
         htmlFor="calculator-select"
-        className="text-[10px] font-medium uppercase tracking-[0.18em] text-white block"
+        className="text-[12px] font-medium text-white block"
       >
         Select calculator
       </Label>
@@ -211,7 +211,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
 
             return (
               <div key={category}>
-                <div className="px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white bg-white/[0.02] sticky top-0 border-b border-white/[0.06]">
+                <div className="px-3 py-2 text-[12px] font-medium text-white bg-white/[0.02] sticky top-0 border-b border-white/[0.06]">
                   {category}
                 </div>
                 {calcs.map((calc) => (

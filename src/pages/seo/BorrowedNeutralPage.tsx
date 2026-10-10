@@ -210,12 +210,13 @@ const sections = [
             </p>
             <p className="text-white text-sm leading-relaxed mt-3">
               Under BS 7671:2018+A4:2026, modern domestic boards must satisfy significantly broader
-              RCD and protective-device requirements than older installations. Reg 411.3.4 now
-              requires that AC final circuits supplying luminaires in domestic premises be provided
+              RCD and protective-device requirements than older installations. Reg 411.3.4, in
+              force since 2018, requires that AC final circuits supplying luminaires in domestic premises be provided
               with additional protection by an RCD rated at or below 30 mA — meaning lighting
               circuits that previously had no RCD coverage are now individually monitored. Reg
               421.1.7 recommends arc fault detection devices (AFDDs) for socket-outlet circuits in
-              domestic premises. The combined effect is that a compliant A4:2026 consumer unit
+              most domestic premises, and requires them in HMOs and similar premises. The combined
+              effect is that a compliant consumer unit
               upgrade places every circuit — including previously unprotected lighting circuits —
               under close residual-current supervision, making pre-existing borrowed neutrals that
               were invisible for decades almost certain to surface during or immediately after
@@ -801,7 +802,7 @@ export default function BorrowedNeutralPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-11-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

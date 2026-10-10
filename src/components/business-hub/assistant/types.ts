@@ -11,6 +11,18 @@ import type { Customer } from '@/hooks/inspection/useCustomers';
 
 export type ChatRole = 'user' | 'assistant';
 
+/** A new enquiry Mate proposes for the Enquiries inbox (tasks-ai-assistant create_enquiries). */
+export interface EnquiryDraft {
+  name: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  postcode?: string;
+  jobType?: string;
+  details?: string;
+  source?: 'website' | 'email' | 'phone' | 'other';
+}
+
 export interface RecentChat {
   id: string;
   title: string | null;
@@ -84,6 +96,11 @@ export type ProposedAction = HasRationale &
         type: 'create-customer';
         tempId: string;
         payload: CustomerInput;
+      }
+    | {
+        type: 'create-enquiry';
+        tempId: string;
+        payload: EnquiryDraft;
       }
     | {
         type: 'draft-message';

@@ -9,6 +9,13 @@ export interface BundleLineItem {
   unit: string;
   unitPrice: number;
   category: 'materials' | 'labour' | 'equipment';
+  /**
+   * ELE-2026 — a material line's time allowance (ELE-1780), kept so a bundle
+   * saved from a quote brings its labour back. The labour itself is NOT
+   * stored: replaying the line through `addItem` re-derives it at today's
+   * rates, exactly as when it was first typed.
+   */
+  timeAllowance?: { grade: string; hours: number }[];
 }
 
 export interface PriceBookBundle {

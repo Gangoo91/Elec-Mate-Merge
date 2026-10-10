@@ -6,7 +6,7 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   grid2Cn,
   inputCn,
   labelCn,
@@ -117,7 +117,12 @@ export function StudentInclusionSheet({ open, onOpenChange, studentId, studentNa
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
             Cancel
           </button>
-          <button type="button" onClick={handleSave} disabled={saving || loading} className={buttonPrimaryCn}>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={saving || loading}
+            className={buttonPrimaryCn}
+          >
             {saving ? 'Saving…' : 'Save'}
           </button>
         </div>
@@ -139,7 +144,11 @@ export function StudentInclusionSheet({ open, onOpenChange, studentId, studentNa
                     type="button"
                     aria-pressed={active}
                     onClick={() => toggle(k)}
-                    className={cn(chipBase, 'h-auto min-h-[44px] px-3 py-2 text-left text-[13px] leading-snug', active ? chipOn : chipOff)}
+                    className={cn(
+                      chipBase,
+                      'h-auto min-h-[44px] px-3 py-2 text-left text-[13px] leading-snug',
+                      active ? chipOn : chipOff
+                    )}
                   >
                     {SEND_FLAG_LABEL[k]}
                   </button>
@@ -167,7 +176,9 @@ export function StudentInclusionSheet({ open, onOpenChange, studentId, studentNa
                   </button>
                 ))}
               </div>
-              <p className="mt-1.5 text-[12px] text-white">Yes turns on EAL-aware differentiation.</p>
+              <p className="mt-1.5 text-[12px] text-white">
+                Yes turns on EAL-aware differentiation.
+              </p>
             </div>
 
             <div className={grid2Cn}>

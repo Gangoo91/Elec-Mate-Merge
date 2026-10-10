@@ -12,12 +12,12 @@ import { Plus, Loader2, Target, Trash2, Minus, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useOJTGoals, type OJTGoal } from '@/hooks/time-tracking/useOJTGoals';
 import AddGoalDialog from '@/components/apprentice/ojt/AddGoalDialog';
-import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow } from '@/components/apprentice/shared/GuideKit';
 import { OjtSectionHeader as SectionHeader } from './ojtSection';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const STATUS_TONE: Record<OJTGoal['status'], string> = {
-  completed: 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow',
+  completed: 'border-white/[0.08] bg-white/[0.05] text-elec-yellow',
   in_progress: 'border-white/[0.10] bg-white/[0.04] text-white',
   pending: 'border-white/[0.10] bg-white/[0.04] text-white',
   cancelled: 'border-white/[0.08] bg-white/[0.02] text-white',
@@ -105,12 +105,12 @@ export function OjtGoalsSection() {
       ) : activeGoals.length === 0 ? (
         <div
           className={cn(
-            'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
+            'rounded-2xl border border-white/[0.08] p-6 text-center space-y-2',
             CARD_SURFACE
           )}
         >
           <Target className="h-7 w-7 text-white mx-auto" />
-          <p className="text-[13px] text-white leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             No goals yet. Set a target — e.g. "20 portfolio entries this term" — and track it here
             alongside your hours.
           </p>
@@ -126,7 +126,7 @@ export function OjtGoalsSection() {
               <li
                 key={goal.id}
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
                   CARD_SURFACE
                 )}
               >
@@ -142,16 +142,14 @@ export function OjtGoalsSection() {
                       />
                       <span
                         className={cn(
-                          'text-[9.5px] font-medium uppercase tracking-[0.14em] px-1.5 py-[1px] rounded-md border whitespace-nowrap',
+                          'text-[13px] font-semibold px-1.5 py-[1px] rounded-md border whitespace-nowrap',
                           STATUS_TONE[goal.status]
                         )}
                       >
                         {STATUS_LABEL[goal.status]}
                       </span>
                       {goal.category && (
-                        <span className="text-[10px] uppercase tracking-[0.14em] text-white">
-                          {goal.category}
-                        </span>
+                        <span className="text-[13px] text-white">{goal.category}</span>
                       )}
                     </div>
                     <p className="text-[14px] font-medium text-white leading-snug break-words">
@@ -176,12 +174,12 @@ export function OjtGoalsSection() {
                 {/* Progress */}
                 <div className="space-y-1.5">
                   <div className="flex items-baseline justify-between gap-2">
-                    <span className="text-[11.5px] text-white tabular-nums">
+                    <span className="text-[12.5px] text-white tabular-nums">
                       {current} / {target} {goal.unit}
                     </span>
                     <span
                       className={cn(
-                        'text-[11.5px] tabular-nums',
+                        'text-[12.5px] tabular-nums',
                         done ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
@@ -223,7 +221,7 @@ export function OjtGoalsSection() {
                       <button
                         type="button"
                         onClick={() => void updateProgress(goal.id, target)}
-                        className="inline-flex items-center gap-1 h-11 px-3 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-elec-yellow text-[11px] font-semibold hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation"
+                        className="inline-flex items-center gap-1 h-11 px-3 rounded-md border border-white/[0.08] bg-white/[0.05] text-elec-yellow text-[12.5px] font-semibold hover:bg-white/[0.08] transition-colors touch-manipulation"
                       >
                         <Check className="h-3 w-3" />
                         Done
@@ -231,7 +229,7 @@ export function OjtGoalsSection() {
                     )}
                   </div>
                   {goal.deadline && (
-                    <span className="text-[11px] text-white whitespace-nowrap">
+                    <span className="text-[12.5px] text-white whitespace-nowrap">
                       Due {fmtDate(goal.deadline)}
                     </span>
                   )}

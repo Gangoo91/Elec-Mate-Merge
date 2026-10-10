@@ -6,47 +6,53 @@ import useSEO from '@/hooks/useSEO';
 const sections = [
   {
     id: 1,
-    title: 'Alarm priorities and escalation logic',
+    title: 'Alarms',
     icon: AlertTriangle,
-    description: 'Alarm classification, priorities and escalation procedures.',
+    description:
+      'Alarms that reach someone who can act, in time, with enough to go on, and the habits that stop them turning into noise.',
   },
   {
     id: 2,
-    title: 'Trend logging and historical data collection',
+    title: 'Trend logging',
     icon: TrendingUp,
-    description: 'Data logging strategies and historical trend analysis.',
+    description:
+      'What to record, how often, where the data ends up, and how to read the line on the screen so it tells you what the plant has really been doing.',
   },
   {
     id: 3,
-    title: 'BMS dashboards and visualisation platforms',
+    title: 'Graphics and dashboards',
     icon: Monitor,
-    description: 'User interfaces, mimics and data visualisation patterns.',
+    description:
+      'Most people meet the BMS through its graphics. How to read them, and how to tell when a graphic is wrong.',
   },
   {
     id: 4,
-    title: 'Event triggers and auto-reporting',
+    title: 'Energy monitoring and reporting',
     icon: Zap,
-    description: 'Automated reports, triggered events and notification rules.',
+    description:
+      'Meter data is only useful when it leads to a decision. How to turn sub-meter readings into reports and actions that save energy.',
   },
   {
     id: 5,
-    title: 'Integration with fire panels and emergency shutdowns',
+    title: 'Fire alarm and life safety interfaces',
     icon: Shield,
-    description: 'Safety system integration and interlocks for life-safety events.',
+    description:
+      'Who stops the plant when there is a fire, what the BMS is allowed to do about it, and how to wire and test the boundary between the two.',
   },
   {
     id: 6,
-    title: 'Remote monitoring and fault alerts',
+    title: 'Remote access and monitoring',
     icon: Smartphone,
-    description: 'Remote access, mobile alerts and out-of-hours notification.',
+    description:
+      'Why a BMS is watched from off site, how to let people in without letting everyone in, who actually answers the alarm, and what you install to make it all work.',
   },
 ];
 
 export default function BMSModule6() {
   useSEO({
-    title: 'Module 6: Alarms, Monitoring & Data Logging | BMS Course | Elec-Mate',
+    title: 'Module 6: Alarms, data and monitoring | BMS course | Elec-Mate',
     description:
-      'Alarm management, trend logging, dashboards, event triggers and remote monitoring for building management systems.',
+      'Alarms, trend logging, graphics, energy reporting, fire alarm interfaces and secure remote access.',
   });
 
   return (
@@ -54,15 +60,15 @@ export default function BMSModule6() {
       backTo="../bms-course"
       backLabel="Building management systems"
       moduleNumber={6}
-      title="Alarms, monitoring and data logging"
-      description="System monitoring, alarm management and historical data analysis."
+      title="Alarms, data and monitoring"
+      description="Alarms that get acted on, trends that find faults, graphics, energy reporting, fire alarm interfaces and safe remote access."
       tone="yellow"
       sectionsCount={sections.length}
-      duration="45 mins"
+      duration="2 hrs 55 mins"
       prevModuleHref="../bms-module-5"
-      prevModuleLabel="Communication protocols: BACnet, Modbus, KNX"
+      prevModuleLabel="Networks and protocols"
       nextModuleHref="../bms-module-7"
-      nextModuleLabel="BMS design, programming and commissioning"
+      nextModuleLabel="Design, installation, commissioning and handover"
     >
       {sections.map((section, index) => (
         <SectionCard

@@ -264,15 +264,15 @@ const sections = [
           connection does not necessarily draw enough current to operate either of them.
         </p>
         <p>
-          BS 7671:2018+A4:2026 Regulation 421.1.7 was redrafted at Amendment 4. AFDDs conforming to
-          BS EN 62606 are now <strong>required</strong> for single-phase AC final circuits supplying
-          socket-outlets rated up to 32 A in high-rise residential buildings, houses in multiple
-          occupation, purpose-built student accommodation and care homes. For all other premises,
-          including an ordinary house, the regulation <strong>recommends</strong> them rather than
-          requiring them. Where they are used they must be placed at the origin of the circuit
-          protected (Reg 421.1.7, and Reg 532.6 for AC single-phase circuits not exceeding 230 V) —
-          in practice, in the consumer unit. Fitting one does not remove the need for the other
-          protective measures BS 7671 requires.
+          BS 7671:2018+A4:2026 Regulation 421.1.7 was redrafted at Amendment 2:2022. AFDDs
+          conforming to BS EN 62606 are <strong>required</strong> for single-phase AC final circuits
+          supplying socket-outlets rated up to 32 A in high-rise residential buildings, houses in
+          multiple occupation, purpose-built student accommodation and care homes. For all other
+          premises, including an ordinary house, the regulation <strong>recommends</strong> them
+          rather than requiring them. Where they are used they must be placed at the origin of the
+          circuit protected (Reg 421.1.7, and Reg 532.6 for AC single-phase circuits not exceeding
+          230 V) — in practice, in the consumer unit. Fitting one does not remove the need for the
+          other protective measures BS 7671 requires.
         </p>
       </>
     ),
@@ -293,8 +293,9 @@ const sections = [
         </p>
         <h3 className={subHead}>What Regulation 411.3.3 actually requires</h3>
         <p>
-          Amendment 4 redrafted Reg 411.3.3 into three indents. In AC systems, additional protection
-          by an RCD rated not more than 30 mA shall be provided for:
+          Amendment 2 (2022) redrafted Reg 411.3.3 into three indents, and A4:2026 left it
+          unchanged. In AC systems, additional protection by an RCD rated not more than 30 mA shall
+          be provided for:
         </p>
         <div className={tableWrap}>
           <table className="w-full min-w-[560px] border-collapse text-[14.5px]">
@@ -607,7 +608,7 @@ export default function ExtensionLeadSafetyPage() {
       title="Extension Lead Safety: 13A Max, 30mA RCD, IP44"
       description="Never exceed 13 A (about 3,000 W) on one extension lead, never daisy-chain leads, fully uncoil cable drums, and use IP44 with a 30 mA RCD outdoors."
       datePublished="2026-03-27"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

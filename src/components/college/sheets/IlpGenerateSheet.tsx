@@ -95,7 +95,7 @@ export function IlpGenerateSheet({
 
       toast({
         title: 'ILP saved',
-        description: `New v${newIlp.version} with ${ai.draft.goals.length} goals — visible in ${studentName.split(' ')[0]}'s app.`,
+        description: `New v${newIlp.version} with ${ai.draft.goals.length} goals, visible in ${studentName.split(' ')[0]}'s app.`,
       });
       onSaved?.();
       onOpenChange(false);
@@ -220,8 +220,8 @@ function StreamingState() {
 
 function ErrorState({ message }: { message: string | null }) {
   return (
-    <div className="border-l-2 border-orange-300 pl-4">
-      <h3 className="text-[15px] font-semibold text-orange-300">The draft failed</h3>
+    <div className="card-surface rounded-2xl border-orange-400/40 p-4">
+      <h3 className="text-[15px] font-semibold text-white">The draft failed</h3>
       <p className="mt-1 text-[13px] leading-relaxed text-white">
         {message ?? 'Something went wrong. Try again.'}
       </p>

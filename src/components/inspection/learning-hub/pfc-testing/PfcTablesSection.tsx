@@ -59,7 +59,7 @@ const PfcTablesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Quick reference */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Quick Reference — Common Domestic Circuits</p>
+          <p className="text-[12px] font-medium text-white mb-3">Quick Reference — Common Domestic Circuits</p>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Lighting (6A Type B)</p>
@@ -96,7 +96,7 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* MCB Tables */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">MCB Minimum PFC for Magnetic Operation</p>
+          <p className="text-[12px] font-medium text-white mb-3">MCB Minimum PFC for Magnetic Operation</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -113,7 +113,7 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* Fuse tables */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Fuse Minimum PFC (0.4s Disconnection)</p>
+          <p className="text-[12px] font-medium text-white mb-3">Fuse Minimum PFC (0.4s Disconnection)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -126,22 +126,22 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* Assessment guide */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Assessment Guide</p>
+          <p className="text-[12px] font-medium text-white mb-3">Assessment Guide</p>
           <div className="grid grid-cols-3 gap-2">
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3">
               <p className="text-xs text-green-400 font-semibold">Excellent</p>
               <p className="text-sm font-bold text-white">&gt;10× min</p>
-              <p className="text-[10px] text-white mt-1">Large safety margin. Future-proof.</p>
+              <p className="text-[12px] text-white mt-1">Large safety margin. Future-proof.</p>
             </div>
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3">
               <p className="text-xs text-yellow-400 font-semibold">Acceptable</p>
               <p className="text-sm font-bold text-white">2-10× min</p>
-              <p className="text-[10px] text-white mt-1">Meets BS 7671. Monitor.</p>
+              <p className="text-[12px] text-white mt-1">Meets BS 7671. Monitor.</p>
             </div>
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3">
               <p className="text-xs text-red-400 font-semibold">Investigate</p>
               <p className="text-sm font-bold text-white">&lt;2× min</p>
-              <p className="text-[10px] text-white mt-1">Marginal. Remedial action.</p>
+              <p className="text-[12px] text-white mt-1">Marginal. Remedial action.</p>
             </div>
           </div>
         </motion.div>

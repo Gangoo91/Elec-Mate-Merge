@@ -43,8 +43,8 @@ const tocItems = [
 const keyTakeaways = [
   'The schedule of test results is the part of an EIC or EICR that records the measured value for every circuit, and it is what proves the testing was actually carried out.',
   'Regulation 644.3 requires an Electrical Installation Certificate to include Schedule(s) of Inspection and Schedule(s) of Circuit Details and Schedule(s) of Test Results, based on the models in Appendix 6. Regulation 653.2 imposes the same requirement on a Condition Report, at item (f).',
-  'BS 7671:2018+A4:2026 redrafted the old single-page generic schedule into two pages: a Schedule of Circuit Details and a Schedule of Test Results. The Appendix 6 model forms also gained fields for recording SPD and AFDD details.',
-  'A4:2026 was issued on 15 April 2026 and may be implemented immediately. A2:2022 + Corrigendum (May 2023) + A3:2024 remains current but is withdrawn on 15 October 2026.',
+  'BS 7671:2018+A4:2026 redrafted the old single-page generic schedule into two pages: a Schedule of Circuit Details and a Schedule of Test Results. The model-form fields for recording SPD and AFDD details date from A2:2022.',
+  'A4:2026 was issued on 15 April 2026 and may be implemented immediately. A2:2022 + Corrigendum (May 2023) + A3:2024 is withdrawn on 15 October 2026.',
   'Regulation 643.1 fixes the order: the tests of Regulations 643.2 to 643.6 are carried out in that order before the installation is energised, along with the earth electrode test of 643.7.2 where an electrode is part of the installation.',
   'For RCDs, Regulation 643.8 requires verification with an alternating current test at rated residual operating current (IΔn). Regardless of RCD Type, effectiveness is deemed verified at 300 ms maximum for a general non-delay type, and between 130 ms and 500 ms for a delay "S" type.',
   'The single most common failing is inconsistency: copied values, vague circuit labels, or readings that do not line up with the protective device, the earthing arrangement, or the observations raised elsewhere on the certificate.',
@@ -85,13 +85,13 @@ const sections = [
             BS 7671:2018+A4:2026 redrafted the single-page generic schedule of test results used for
             the EIC and EICR. There is now a separate page for the <strong>schedule of circuit
             details</strong> and a separate page for the <strong>schedule of test results</strong>.
-            The Appendix 6 model forms also gained fields for recording the details of SPDs and
-            AFDDs, and the schedule of inspections was simplified for initial verification.
+            The model-form fields for recording the details of SPDs and AFDDs were added earlier,
+            at A2:2022.
           </p>
           <p className="mt-3 text-white">
             A4:2026 was issued on 15 April 2026 and may be implemented immediately. BS
-            7671:2018+A2:2022 + Corrigendum (May 2023) + A3:2024 remains current but will be
-            withdrawn on <strong>15 October 2026</strong> — so the two-page format is the one to
+            7671:2018+A2:2022 + Corrigendum (May 2023) + A3:2024 is withdrawn on{' '}
+            <strong>15 October 2026</strong> — so the two-page format is the one to
             move onto now.
           </p>
         </div>
@@ -128,7 +128,7 @@ const sections = [
             <li>
               RCD: BS (EN) number, type, rated residual operating current (IΔn) and rated time delay.
             </li>
-            <li>SPD and AFDD details — fields added to the model forms at A4:2026.</li>
+            <li>SPD and AFDD details — fields added to the model forms at A2:2022.</li>
           </ul>
         </div>
         <p>
@@ -520,7 +520,7 @@ const faqs = [
   {
     question: 'Has the schedule of test results changed in BS 7671:2018+A4:2026?',
     answer:
-      'Yes. A4:2026 redrafted the single-page generic schedule of test results used for the EIC and EICR into two pages: a separate schedule of circuit details and a separate schedule of test results. The Appendix 6 model forms also gained fields for recording SPD and AFDD details. A4:2026 was issued on 15 April 2026 and may be implemented immediately; A2:2022 with its corrigendum and A3:2024 remains current but is withdrawn on 15 October 2026.',
+      'Yes. A4:2026 redrafted the single-page generic schedule of test results used for the EIC and EICR into two pages: a separate schedule of circuit details and a separate schedule of test results. The SPD and AFDD fields on the model forms date from A2:2022. A4:2026 was issued on 15 April 2026 and may be implemented immediately; A2:2022 with its corrigendum and A3:2024 remains current but is withdrawn on 15 October 2026.',
   },
   {
     question: 'What is the difference between the schedule of circuit details and the schedule of test results?',
@@ -601,7 +601,7 @@ export default function ScheduleOfTestResultsPage() {
       title="Schedule of Test Results Guide for Electricians"
       description="What the schedule of test results records: Appendix 6 fields, Regulation 643 test order, RCD and insulation limits, and the A4:2026 two-schedule split."
       datePublished="2026-04-12"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

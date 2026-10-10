@@ -29,6 +29,29 @@ export interface SafetyToolLaunch {
   siteAddress?: string;
   /** The job's title, for forms that ask for a site or job name. */
   siteName?: string;
+  /**
+   * Employer Hub only: the firm job (employer_jobs.id) the record is filed
+   * against, and the job pack it was started from.
+   */
+  employerJobId?: string;
+  jobPackId?: string;
+  /** A brief to start from (the job pack's scope). */
+  description?: string;
+  /**
+   * Employer Hub only: the firm's real people for this job (ELE-1941), from
+   * the roster and competence records. Filled into the RAMS; still editable.
+   */
+  people?: SafetyLaunchPeople;
+}
+
+/** Who to name on a firm RAMS, from get_job_safety_people. All optional. */
+export interface SafetyLaunchPeople {
+  contractor?: string;
+  supervisor?: string;
+  siteManagerName?: string;
+  siteManagerPhone?: string;
+  firstAiderName?: string;
+  firstAiderPhone?: string;
 }
 
 /** Site Safety tools that can be opened straight into a new record. */

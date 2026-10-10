@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cleanLessonDeep, cleanLessonText } from '@/lib/lessons/cleanLessonText';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { HubMasthead } from '@/components/hub/HubPrimitives';
+import { useSmartBack } from '@/lib/navHistory';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { useLessonPlan, type GeneratedActivity } from '@/hooks/useCurriculum';
 import { supabase } from '@/integrations/supabase/client';
@@ -50,7 +52,6 @@ const HELP: PageHelpContent = {
 
 export default function LessonDeliverPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { plan: rawPlan, loading, error } = useLessonPlan(id ?? null);
   // Older plans can carry the generator's internal ids ("(facet 2,14)") in
   // any field; every string is cleaned before it is shown.
@@ -133,7 +134,10 @@ export default function LessonDeliverPage() {
     }
   }, []);
 
-  const exitToPlan = useCallback(() => navigate(`/college/lessons/${id}`), [navigate, id]);
+  // Back to the plan it was started from (not a new entry on top of Deliver,
+  // which made the plan's own Back step into Deliver again).
+  const smartBack = useSmartBack();
+  const exitToPlan = useCallback(() => smartBack(`/college/lessons/${id}`), [smartBack, id]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -212,7 +216,7 @@ export default function LessonDeliverPage() {
                 <button
                   type="button"
                   onClick={() => setRegisterOpen(true)}
-                  className="h-11 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black touch-manipulation"
+                  className="h-11 rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black touch-manipulation"
                 >
                   Take the register
                 </button>
@@ -220,7 +224,7 @@ export default function LessonDeliverPage() {
               <button
                 type="button"
                 onClick={exitToPlan}
-                className="h-11 rounded-full border border-white/[0.12] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
+                className="h-11 rounded-xl border border-white/[0.14] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
               >
                 Back to the lesson
               </button>
@@ -272,11 +276,15 @@ export default function LessonDeliverPage() {
         }
       />
 
-      {/* Session progress bar */}
-      <div className="px-5 pt-4 sm:px-8">
+      {/* Session progress bar. On a phone the masthead cuts the plan title
+          to a stub, so it gets its own line here. */}
+      <div className="px-4 pt-4 sm:px-8">
+        <p className="mb-3 text-[14px] font-semibold leading-snug text-white sm:hidden">
+          {plan.title}
+        </p>
         <div className="mb-2 flex items-baseline justify-between gap-3">
           <div className="text-[12px] font-semibold text-white">Session progress</div>
-          <div className="font-mono text-[11px] tabular-nums text-white">
+          <div className="font-mono text-[12px] tabular-nums text-white">
             {formatClock(elapsedSeconds)} / {formatClock(totalSeconds)}
           </div>
         </div>
@@ -290,19 +298,22 @@ export default function LessonDeliverPage() {
       </div>
 
       {/* Main stage — full-bleed teaching surface, unchanged on purpose */}
-      <main className="flex flex-1 items-stretch justify-center px-5 py-8 sm:px-8">
+      <main className="flex flex-1 items-stretch justify-center px-4 py-6 sm:px-8 sm:py-8">
         <div className="grid w-full max-w-5xl grid-rows-[auto_1fr_auto] gap-8">
           {/* Activity header */}
           {current && (
             <div>
-              <div className="mb-3 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+              <p className="mb-3 flex items-center gap-2 text-[13px] font-semibold text-white">
                 <span className="tabular-nums text-elec-yellow">
-                  {String(index + 1).padStart(2, '0')} /{' '}
-                  {String(activities.length).padStart(2, '0')}
+                  {index + 1} of {activities.length}
                 </span>
-                <span aria-hidden>·</span>
-                <span>{current.phase}</span>
-              </div>
+                {current.phase && (
+                  <>
+                    <span aria-hidden>·</span>
+                    <span>{sentence(current.phase)}</span>
+                  </>
+                )}
+              </p>
               <h2 className="text-[28px] font-semibold leading-[1.05] tracking-tight text-white sm:text-[44px] lg:text-[56px]">
                 {current.title}
               </h2>
@@ -318,14 +329,12 @@ export default function LessonDeliverPage() {
 
               {current.teacher_moves && current.teacher_moves.length > 0 && (
                 <div className="mt-8">
-                  <div className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-                    Teacher moves
-                  </div>
+                  <h3 className="mb-3 text-[15px] font-semibold text-white">Teacher moves</h3>
                   <ul className="max-w-[62ch] space-y-3">
                     {current.teacher_moves.map((m, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <span
-                          className="mt-[12px] h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
+                          className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-white"
                           aria-hidden
                         />
                         <span className="text-[15px] leading-relaxed text-white sm:text-[16px]">
@@ -338,10 +347,10 @@ export default function LessonDeliverPage() {
               )}
 
               {current.check_for_understanding && (
-                <div className="mt-8 max-w-[62ch] rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-5 py-4">
-                  <div className="mb-2 text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+                <div className="-mx-4 mt-8 max-w-[62ch] card-surface px-4 py-4 max-sm:!rounded-none max-sm:!border-x-0 sm:mx-0 sm:rounded-2xl sm:px-5">
+                  <h3 className="mb-1.5 text-[15px] font-semibold text-white">
                     Check for understanding
-                  </div>
+                  </h3>
                   <div className="text-[15px] leading-relaxed text-white sm:text-[16px]">
                     {current.check_for_understanding}
                   </div>
@@ -349,7 +358,7 @@ export default function LessonDeliverPage() {
               )}
 
               {current.resources_needed && current.resources_needed.length > 0 && (
-                <div className="mt-8 text-[12.5px] leading-relaxed text-white">
+                <div className="mt-8 text-[13.5px] leading-relaxed text-white">
                   <span className="font-semibold">Resources · </span>
                   {current.resources_needed.map(cleanLessonText).join(' · ')}
                 </div>
@@ -357,34 +366,51 @@ export default function LessonDeliverPage() {
             </div>
           )}
 
-          {/* Transport controls */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <TransportBtn label="← Prev" onClick={goPrev} disabled={index === 0} />
-              <TransportBtn
-                label={running ? 'Pause ❙❙' : 'Play ►'}
-                onClick={() => setRunning((r) => !r)}
-                primary
-              />
-              <TransportBtn
-                label="Next →"
-                onClick={goNext}
-                disabled={index === activities.length - 1}
-              />
-              <TransportBtn label="Reset" onClick={resetTimer} subtle />
+          {/* Transport controls: one joined control, Play the one solid action.
+              Full width on a phone, the ring and Reset beside it. */}
+          <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+              <div
+                role="group"
+                aria-label="Activity"
+                className="grid w-full grid-cols-[1fr_1.4fr_1fr] rounded-xl border border-white/[0.12] p-0.5 sm:inline-grid sm:w-auto"
+              >
+                <TransportBtn label="Prev" icon="prev" onClick={goPrev} disabled={index === 0} />
+                <TransportBtn
+                  label={running ? 'Pause' : 'Play'}
+                  icon={running ? 'pause' : 'play'}
+                  onClick={() => setRunning((r) => !r)}
+                  primary
+                />
+                <TransportBtn
+                  label="Next"
+                  icon="next"
+                  onClick={goNext}
+                  disabled={index === activities.length - 1}
+                />
+              </div>
             </div>
 
-            <CountdownRing
-              remaining={remaining}
-              total={current ? current.time_mins * 60 : 0}
-              running={running}
-            />
+            <div className="flex items-center justify-between gap-4 sm:justify-end">
+              <CountdownRing
+                remaining={remaining}
+                total={current ? current.time_mins * 60 : 0}
+                running={running}
+              />
+              <button
+                type="button"
+                onClick={resetTimer}
+                className="inline-flex h-11 items-center rounded-xl border border-white/[0.14] px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06]"
+              >
+                Reset the clock
+              </button>
+            </div>
           </div>
         </div>
       </main>
 
       {/* Bottom hint strip */}
-      <footer className="hidden flex-wrap items-center justify-center gap-5 border-t border-white/[0.06] px-5 py-2.5 font-mono text-[10.5px] tracking-wide text-white sm:flex sm:px-8">
+      <footer className="hidden flex-wrap items-center justify-center gap-5 border-t border-white/[0.06] px-5 py-2.5 font-mono text-[11px] tracking-wide text-white sm:flex sm:px-8">
         <span>space play/pause</span>
         <span>← → nav</span>
         <span>r reset</span>
@@ -427,42 +453,50 @@ function SegmentedTimeline({
   onJump: (idx: number) => void;
 }) {
   return (
-    <div className="flex h-11 items-center">
-      <div className="flex h-6 w-full overflow-hidden rounded-lg border border-white/[0.10] bg-white/[0.06]">
-        {activities.map((a, i) => {
-          const pct = Math.max(2, (a.time_mins / total) * 100);
-          const isActive = i === activeIndex;
-          const isDone = i < activeIndex;
-          const innerFill = isActive
-            ? Math.min(1, currentElapsed / (a.time_mins * 60))
-            : isDone
-              ? 1
-              : 0;
-          return (
-            <button
-              key={i}
-              type="button"
-              onClick={() => onJump(i)}
-              style={{ width: `${pct}%` }}
+    <div className="flex h-11 w-full items-stretch">
+      {activities.map((a, i) => {
+        const pct = Math.max(2, (a.time_mins / total) * 100);
+        const isActive = i === activeIndex;
+        const isDone = i < activeIndex;
+        const innerFill = isActive
+          ? Math.min(1, currentElapsed / (a.time_mins * 60))
+          : isDone
+            ? 1
+            : 0;
+        return (
+          <button
+            key={i}
+            type="button"
+            onClick={() => onJump(i)}
+            style={{ width: `${pct}%` }}
+            className="group relative h-11 touch-manipulation"
+            title={`${a.title} · ${a.time_mins} min`}
+            aria-label={`Jump to ${a.title}`}
+            aria-current={isActive ? 'step' : undefined}
+          >
+            {/* The visible bar is 24px; the whole 44px column is the target. */}
+            <span
+              aria-hidden
               className={cn(
-                'relative border-r border-elec-dark last:border-r-0 transition-colors touch-manipulation',
-                isActive ? 'bg-white/[0.14]' : 'bg-transparent hover:bg-white/[0.10]'
+                'absolute inset-x-0 top-1/2 h-6 -translate-y-1/2 overflow-hidden border-y border-white/[0.10] transition-colors',
+                i === 0 && 'rounded-l-lg border-l',
+                i === activities.length - 1
+                  ? 'rounded-r-lg border-r'
+                  : 'border-r border-r-elec-dark',
+                isActive ? 'bg-white/[0.14]' : 'bg-white/[0.06] group-hover:bg-white/[0.10]'
               )}
-              title={`${a.title} · ${a.time_mins} min`}
-              aria-label={`Jump to ${a.title}`}
-              aria-current={isActive ? 'step' : undefined}
             >
-              <div
+              <span
                 className={cn(
                   'absolute inset-y-0 left-0 bg-elec-yellow',
                   !isDone && 'transition-[width] duration-500'
                 )}
                 style={{ width: `${innerFill * 100}%` }}
               />
-            </button>
-          );
-        })}
-      </div>
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -527,34 +561,49 @@ function CountdownRing({
 
 function TransportBtn({
   label,
+  icon,
   onClick,
   disabled,
   primary,
-  subtle,
 }: {
   label: string;
+  icon: 'prev' | 'next' | 'play' | 'pause';
   onClick: () => void;
   disabled?: boolean;
   primary?: boolean;
-  subtle?: boolean;
 }) {
+  const Icon = { prev: ChevronLeft, next: ChevronRight, play: Play, pause: Pause }[icon];
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'h-11 rounded-full px-5 text-[13px] font-medium transition-colors touch-manipulation disabled:cursor-not-allowed disabled:opacity-40',
+        'inline-flex h-12 items-center justify-center gap-1.5 rounded-[10px] px-5 text-[14px] font-semibold transition-colors touch-manipulation disabled:cursor-not-allowed disabled:opacity-40',
         primary
-          ? 'bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90'
-          : subtle
-            ? 'text-white hover:bg-white/[0.06]'
-            : 'border border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.09]'
+          ? 'bg-elec-yellow text-black hover:opacity-90'
+          : 'text-white hover:bg-white/[0.06] active:bg-white/[0.1]'
       )}
     >
-      {label}
+      {icon === 'next' ? (
+        <>
+          {label}
+          <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+        </>
+      ) : (
+        <>
+          <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+          {label}
+        </>
+      )}
     </button>
   );
+}
+
+/** "starter" / "STARTER" → "Starter" for the phase label. */
+function sentence(t: string): string {
+  const s = t.trim().toLowerCase();
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 function formatClock(seconds: number): string {

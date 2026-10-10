@@ -19,13 +19,13 @@ const OverloadPage = ({ onBack }: Props) => (
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
+          <p className="text-[12px] font-medium text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">An overload occurs when a circuit carries more current than its rated capacity for a sustained period. Unlike a short circuit (instant), an overload trips the thermal element of the MCB after minutes or hours of operation. The circuit heats up progressively, degrading insulation and creating fire risk before the protective device eventually operates.</p>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <p className="text-[12px] font-medium text-white mb-3">Symptoms</p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['MCB trips after running under load for a period — not immediately on energisation', 'Cables warm or hot to touch, especially at terminations and in trunking', 'Discolouration of cable sheath near accessories — browning or yellowing of PVC', 'Burning smell from overheated insulation — may precede MCB trip by hours', 'MCB body is hot to touch when the circuit is loaded', 'Appliances running slowly or underperforming due to voltage drop under excessive load'].map((s, i) => (
@@ -39,7 +39,7 @@ const OverloadPage = ({ onBack }: Props) => (
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
+        <p className="text-[12px] font-medium text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -60,7 +60,7 @@ const OverloadPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
+        <p className="text-[12px] font-medium text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {['Note when the MCB trips — a thermal trip occurs after sustained load, not instantly. Record the time between energisation and trip.', 'Measure load current with a clamp meter under normal operating conditions. Clamp around the line conductor at the MCB.', 'Compare measured current against the MCB rating AND the cable current-carrying capacity (with derating factors applied).', 'If load exceeds rating: identify the heaviest loads. Calculate total connected load. Determine if the circuit can be split.', 'If load is within rating but MCB still trips: check for loose connections. Use thermal imaging under load — hot spots indicate high-resistance joints.', 'Check cable route for bunching with other cables — grouping derating (Table F3) may reduce the effective cable capacity below the MCB rating.', 'After repair: recheck load current, retorque all connections, verify thermal performance under load.'].map((step, i) => (
@@ -76,7 +76,7 @@ const OverloadPage = ({ onBack }: Props) => (
 
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
+          <p className="text-[12px] font-medium text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Kitchen Ring — Clamp Meter Reveals Overload</p>
           <p className="text-sm text-white">Client complains MCB trips every evening around dinner time. Never trips during the day.</p>
           <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">

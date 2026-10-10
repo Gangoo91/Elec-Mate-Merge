@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { SuccessCheckmark } from '@/components/college/primitives';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ==========================================================================
    PolicyAcknowledgeSheet — full-screen read-and-sign experience for staff.
@@ -237,7 +238,7 @@ export function PolicyAcknowledgeSheet({ open, onOpenChange, policyId, onSigned 
               {policy.owner_role && (
                 <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.08] pt-3">
                   <dt className="text-white">Owned by</dt>
-                  <dd className="font-medium text-white">{policy.owner_role}</dd>
+                  <dd className="font-medium text-white">{keyLabel(policy.owner_role)}</dd>
                 </div>
               )}
               {policy.approved_at && (

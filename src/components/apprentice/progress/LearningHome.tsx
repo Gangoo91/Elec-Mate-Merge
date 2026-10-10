@@ -23,7 +23,11 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { CollegeStats } from '@/components/college/ui/CollegeUi';
-import { ActivityChart, VisHead, VIS_CARD } from '@/components/college/student360/Student360Visuals';
+import {
+  ActivityChart,
+  VisHead,
+  VIS_CARD,
+} from '@/components/college/student360/Student360Visuals';
 import { P_BTN, P_BTN_PRIMARY } from '@/components/apprentice-hub/portfolio2/ui';
 import { useQuizResults } from '@/hooks/useQuizResults';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
@@ -46,9 +50,18 @@ export const LEARNING_HELP: PageHelpContent = {
       title: 'Practise what you got wrong',
       body: 'Practise next lists the topics where you have the lowest share of right answers across every quiz and mock. Practise your weak spots builds a paper from them.',
     },
-    { title: 'Clear your flashcards', body: 'Cards come back when they are due. Reviewing them little and often is what makes them stick.' },
-    { title: 'Do what your tutor set', body: 'Quizzes your tutor set appear here with their date. Open one to start or carry on.' },
-    { title: 'Keep the AM2 in view', body: 'The AM2 card shows how many sections you have at the practice bar. Open the simulator to run one.' },
+    {
+      title: 'Clear your flashcards',
+      body: 'Cards come back when they are due. Reviewing them little and often is what makes them stick.',
+    },
+    {
+      title: 'Do what your tutor set',
+      body: 'Quizzes your tutor set appear here with their date. Open one to start or carry on.',
+    },
+    {
+      title: 'Keep the AM2 in view',
+      body: 'The AM2 card shows how many sections you have at the practice bar. Open the simulator to run one.',
+    },
   ],
   notes: [
     {
@@ -82,7 +95,8 @@ export function LearningHome() {
   const { quizzes: assigned, loading: assignedLoading } = useMyAssignedQuizzes();
   const { data: am2, isLoading: am2Loading } = useAM2Sections();
   const { daysToGo } = useAm2ExamDate();
-  const { checkAchievements, getAllAchievements, getUnlockedCount, getTotalCount, nextUp } = useAchievementChecker();
+  const { checkAchievements, getAllAchievements, getUnlockedCount, getTotalCount, nextUp } =
+    useAchievementChecker();
 
   useEffect(() => {
     checkAchievements();
@@ -104,18 +118,25 @@ export function LearningHome() {
       const t = Date.parse(m.created_at);
       const dup = out.some(
         (r) =>
-          r.pct === pct &&
-          r.name === paperName(m) &&
-          Math.abs(Date.parse(r.at) - t) < 2 * 60_000
+          r.pct === pct && r.name === paperName(m) && Math.abs(Date.parse(r.at) - t) < 2 * 60_000
       );
       if (!dup)
-        out.push({ key: `m-${m.id}`, name: paperName(m), pct, questions: m.total_questions, at: m.created_at, passed: m.passed });
+        out.push({
+          key: `m-${m.id}`,
+          name: paperName(m),
+          pct,
+          questions: m.total_questions,
+          at: m.created_at,
+          passed: m.passed,
+        });
     }
     return out.sort((a, b) => b.at.localeCompare(a.at));
   }, [quizResults, mocks.rows]);
 
   const last10 = results.slice(0, 10);
-  const avg10 = last10.length ? Math.round(last10.reduce((n, r) => n + r.pct, 0) / last10.length) : null;
+  const avg10 = last10.length
+    ? Math.round(last10.reduce((n, r) => n + r.pct, 0) / last10.length)
+    : null;
   const chart = useMemo(
     () =>
       results
@@ -127,7 +148,10 @@ export function LearningHome() {
 
   /* ── Topics: share of right answers per topic ───────────────────────── */
   const topics = useMemo(() => {
-    const by = new Map<string, { topic: string; answered: number; right: number; link: { label: string; to: string } | null }>();
+    const by = new Map<
+      string,
+      { topic: string; answered: number; right: number; link: { label: string; to: string } | null }
+    >();
     for (const r of quizResults ?? []) {
       const b = r.category_breakdown as Record<string, { total?: number; correct?: number }> | null;
       if (!b || typeof b !== 'object') continue;
@@ -184,7 +208,9 @@ export function LearningHome() {
       <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <h1 className="text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">Your learning</h1>
+            <h1 className="text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
+              Your learning
+            </h1>
             <PageHelpButton help={LEARNING_HELP} />
           </div>
           <p className="mt-1 max-w-3xl text-[14px] leading-snug text-white">
@@ -192,7 +218,11 @@ export function LearningHome() {
           </p>
         </div>
         <div className="grid shrink-0 grid-cols-2 gap-2 sm:flex">
-          <button type="button" className={P_BTN} onClick={() => navigate('/study-centre/mock-exams')}>
+          <button
+            type="button"
+            className={P_BTN}
+            onClick={() => navigate('/study-centre/mock-exams')}
+          >
             Mock exams
           </button>
           <button type="button" className={P_BTN} onClick={() => navigate('/study-centre')}>
@@ -223,7 +253,9 @@ export function LearningHome() {
           {
             label: 'AM2 sections ready',
             value: am2Loading ? '–' : `${am2?.readyCount ?? 0} of ${am2?.sections.length ?? 5}`,
-            sub: am2Runs ? `${am2Runs} ${am2Runs === 1 ? 'run' : 'runs'} in the simulator` : 'Not started',
+            sub: am2Runs
+              ? `${am2Runs} ${am2Runs === 1 ? 'run' : 'runs'} in the simulator`
+              : 'Not started',
             onClick: () => navigate('/apprentice/am2-simulator'),
           },
         ]}
@@ -251,14 +283,28 @@ export function LearningHome() {
               {weakest.map((t) => (
                 <li key={t.topic} className="min-w-0">
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="truncate text-[13.5px] font-semibold text-white">{t.topic}</span>
-                    <span className={cn('shrink-0 text-[13px] font-semibold tabular-nums', t.pct < 50 ? 'text-orange-300' : 'text-white')}>
+                    <span className="min-w-0 text-[13.5px] font-semibold leading-snug text-white">
+                      {t.topic}
+                    </span>
+                    <span
+                      className={cn(
+                        'shrink-0 text-[13px] font-semibold tabular-nums',
+                        t.pct < 50 ? 'text-orange-300' : 'text-white'
+                      )}
+                    >
                       {t.pct}%
                     </span>
                   </div>
                   <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-white/[0.08]">
                     <div
-                      className={cn('h-full rounded-full', t.pct < 50 ? 'bg-orange-400' : t.pct < 75 ? 'bg-elec-yellow' : 'bg-emerald-400')}
+                      className={cn(
+                        'h-full rounded-full',
+                        t.pct < 50
+                          ? 'bg-orange-400'
+                          : t.pct < 75
+                            ? 'bg-elec-yellow'
+                            : 'bg-emerald-400'
+                      )}
                       style={{ width: `${Math.max(3, t.pct)}%` }}
                     />
                   </div>
@@ -281,10 +327,18 @@ export function LearningHome() {
             </ul>
           )}
           <div className="mt-5 flex flex-wrap gap-2">
-            <button type="button" className={P_BTN_PRIMARY} onClick={() => navigate('/study-centre/mock-exams/targeted')}>
+            <button
+              type="button"
+              className={P_BTN_PRIMARY}
+              onClick={() => navigate('/study-centre/mock-exams/targeted')}
+            >
               Practise your weak spots
             </button>
-            <button type="button" className={P_BTN} onClick={() => navigate('/study-centre/mock-exams/history')}>
+            <button
+              type="button"
+              className={P_BTN}
+              onClick={() => navigate('/study-centre/mock-exams/history')}
+            >
               Mock exam history
             </button>
           </div>
@@ -295,7 +349,12 @@ export function LearningHome() {
           <section className={VIS_CARD}>
             <VisHead title="Flashcards" sub="Spaced review: cards come back when they are due" />
             <p className="mt-4 flex items-baseline gap-2">
-              <span className={cn('text-[34px] font-bold leading-none tabular-nums', due > 20 ? 'text-orange-400' : 'text-white')}>
+              <span
+                className={cn(
+                  'text-[34px] font-bold leading-none tabular-nums',
+                  due > 20 ? 'text-orange-400' : 'text-white'
+                )}
+              >
                 {cardsLoading ? '–' : due}
               </span>
               <span className="text-[13.5px] text-white">due for review</span>
@@ -303,11 +362,14 @@ export function LearningHome() {
             <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/[0.08]">
               <div
                 className="h-full rounded-full bg-elec-yellow"
-                style={{ width: `${cards.total ? Math.max(cards.mastered ? 2 : 0, (cards.mastered / cards.total) * 100) : 0}%` }}
+                style={{
+                  width: `${cards.total ? Math.max(cards.mastered ? 2 : 0, (cards.mastered / cards.total) * 100) : 0}%`,
+                }}
               />
             </div>
             <p className="mt-1.5 text-[12px] text-white">
-              {cards.mastered.toLocaleString('en-GB')} of {cards.total.toLocaleString('en-GB')} cards mastered
+              {cards.mastered.toLocaleString('en-GB')} of {cards.total.toLocaleString('en-GB')}{' '}
+              cards mastered
             </p>
             <button
               type="button"
@@ -321,11 +383,18 @@ export function LearningHome() {
           <button
             type="button"
             onClick={() => navigate('/apprentice/am2-simulator')}
-            className={cn(VIS_CARD, 'group block w-full text-left touch-manipulation transition-colors hover:border-white/[0.2]')}
+            // VIS_CARD is -mx-4; a bare w-full on a button cancelled the bleed, so
+            // this card sat 16px in from its neighbours on a phone (10 Oct).
+            className={cn(
+              VIS_CARD,
+              'group block w-[calc(100%+2rem)] text-left touch-manipulation transition-colors hover:border-white/[0.2] active:bg-white/[0.04] sm:w-full'
+            )}
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <h3 className="text-[15px] font-semibold tracking-tight text-white">AM2 practice</h3>
+                <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                  AM2 practice
+                </h3>
                 <p className="mt-0.5 text-[12.5px] leading-snug text-white">
                   {daysToGo !== null && daysToGo >= 0
                     ? `Your AM2 is in ${daysToGo} ${daysToGo === 1 ? 'day' : 'days'}`
@@ -341,7 +410,11 @@ export function LearningHome() {
                   title={`${s.title}: ${s.status === 'ready' ? 'ready' : s.status === 'practising' ? 'practising' : 'not tried'}`}
                   className={cn(
                     'h-2.5 flex-1 rounded-full',
-                    s.status === 'ready' ? 'bg-emerald-400' : s.status === 'practising' ? 'bg-elec-yellow' : 'bg-white/[0.12]'
+                    s.status === 'ready'
+                      ? 'bg-emerald-400'
+                      : s.status === 'practising'
+                        ? 'bg-elec-yellow'
+                        : 'bg-white/[0.12]'
                   )}
                 />
               ))}
@@ -360,7 +433,11 @@ export function LearningHome() {
         <section className={cn(VIS_CARD, 'lg:col-span-2')}>
           <VisHead
             title="Quiz and mock results"
-            sub={results.length ? `Your last ${Math.min(12, results.length)}, oldest on the left` : undefined}
+            sub={
+              results.length
+                ? `Your last ${Math.min(12, results.length)}, oldest on the left`
+                : undefined
+            }
             onOpen={results.length ? () => navigate('/study-centre/mock-exams/history') : undefined}
           />
           {results.length === 0 ? (
@@ -372,18 +449,49 @@ export function LearningHome() {
               <div className="-mx-2 h-48">
                 <ResponsiveContainer>
                   <BarChart data={chart} margin={{ top: 12, right: 8, left: 0, bottom: 0 }}>
-                    <XAxis dataKey="label" tick={{ fontSize: 11, fill: 'rgba(255,255,255,0.95)' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: 'rgba(255,255,255,0.95)' }} tickLine={false} axisLine={false} width={48} unit="%" ticks={[0, 25, 50, 75, 100]} />
+                    <XAxis
+                      dataKey="label"
+                      tick={{ fontSize: 11, fill: 'rgba(255,255,255,0.95)' }}
+                      tickLine={false}
+                      axisLine={false}
+                      interval="preserveStartEnd"
+                    />
+                    <YAxis
+                      domain={[0, 100]}
+                      tick={{ fontSize: 11, fill: 'rgba(255,255,255,0.95)' }}
+                      tickLine={false}
+                      axisLine={false}
+                      width={48}
+                      unit="%"
+                      ticks={[0, 25, 50, 75, 100]}
+                    />
                     <Tooltip
                       cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                      contentStyle={{ backgroundColor: 'hsl(0 0% 8%)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: '0.75rem', fontSize: 12 }}
+                      contentStyle={{
+                        backgroundColor: 'hsl(0 0% 8%)',
+                        border: '1px solid rgba(255,255,255,0.14)',
+                        borderRadius: '0.75rem',
+                        fontSize: 12,
+                      }}
                       labelStyle={{ color: 'rgba(255,255,255,0.95)' }}
                       itemStyle={{ color: 'rgba(255,255,255,0.95)' }}
-                      formatter={(v: number, _n: string, p: { payload?: { name?: string } }) => [`${v}%`, p?.payload?.name ?? 'Score']}
+                      formatter={(v: number, _n: string, p: { payload?: { name?: string } }) => [
+                        `${v}%`,
+                        p?.payload?.name ?? 'Score',
+                      ]}
                     />
                     <Bar dataKey="pct" radius={[5, 5, 0, 0]}>
                       {chart.map((d) => (
-                        <Cell key={d.i} fill={d.pct >= 75 ? 'hsl(142 69% 58%)' : d.pct >= 50 ? 'hsl(47 100% 50%)' : 'hsl(27 96% 61%)'} />
+                        <Cell
+                          key={d.i}
+                          fill={
+                            d.pct >= 75
+                              ? 'hsl(142 69% 58%)'
+                              : d.pct >= 50
+                                ? 'hsl(47 100% 50%)'
+                                : 'hsl(27 96% 61%)'
+                          }
+                        />
                       ))}
                     </Bar>
                   </BarChart>
@@ -393,7 +501,9 @@ export function LearningHome() {
                 {results.slice(0, 5).map((r) => (
                   <li key={r.key} className="flex items-center gap-3 py-2.5 first:pt-0">
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[13.5px] font-semibold text-white">{r.name}</span>
+                      <span className="block text-[13.5px] font-semibold leading-snug text-white">
+                        {r.name}
+                      </span>
                       <span className="block text-[12px] text-white">
                         {fmtDay(r.at)} · {r.questions} questions
                       </span>
@@ -401,7 +511,11 @@ export function LearningHome() {
                     <span
                       className={cn(
                         'shrink-0 text-[15px] font-bold tabular-nums',
-                        r.pct >= 75 ? 'text-emerald-300' : r.pct >= 50 ? 'text-white' : 'text-orange-300'
+                        r.pct >= 75
+                          ? 'text-emerald-300'
+                          : r.pct >= 50
+                            ? 'text-white'
+                            : 'text-orange-300'
                       )}
                     >
                       {r.pct}%
@@ -441,9 +555,20 @@ export function LearningHome() {
                     className="group flex min-h-[56px] w-full items-center gap-3 py-2.5 text-left touch-manipulation"
                   >
                     <span className="min-w-0 flex-1">
-                      <span className="block line-clamp-2 text-[13.5px] font-semibold leading-snug text-white">{q.title}</span>
-                      <span className={cn('block text-[12px]', q.status === 'overdue' ? 'text-orange-300' : 'text-white')}>
-                        {q.status === 'overdue' ? 'Late' : q.status === 'in_progress' ? 'Started' : 'Not started'}
+                      <span className="block line-clamp-2 text-[13.5px] font-semibold leading-snug text-white">
+                        {q.title}
+                      </span>
+                      <span
+                        className={cn(
+                          'block text-[12px]',
+                          q.status === 'overdue' ? 'text-orange-300' : 'text-white'
+                        )}
+                      >
+                        {q.status === 'overdue'
+                          ? 'Late'
+                          : q.status === 'in_progress'
+                            ? 'Started'
+                            : 'Not started'}
                         {q.due_date ? ` · due ${fmtDay(q.due_date)}` : ''}
                         {q.tutor_name ? ` · ${q.tutor_name}` : ''}
                       </span>

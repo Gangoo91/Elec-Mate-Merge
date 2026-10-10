@@ -44,7 +44,7 @@ const keyTakeaways = [
   'Type C MCBs trip magnetically between 5 and 10 times rated current — designed for moderately inductive loads such as motors, discharge lighting, and fluorescent fittings with magnetic ballasts.',
   'Type D MCBs trip magnetically between 10 and 20 times rated current — reserved for highly inductive loads with very high inrush currents such as transformers, X-ray machines, and welding equipment.',
   'Using a higher-type MCB than necessary (e.g. Type C where Type B would suffice) reduces the maximum permitted Zs, making it harder to achieve compliant earth fault loop impedance readings.',
-  'A4:2026 Reg 411.3.4: all domestic AC final circuits supplying luminaires must have additional protection by a 30 mA RCD — this applies regardless of MCB type and affects every domestic lighting circuit design.',
+  'Reg 411.3.4 (since BS 7671:2018): all domestic AC final circuits supplying luminaires must have additional protection by a 30 mA RCD — this applies regardless of MCB type and affects every domestic lighting circuit design.',
   'Maximum Zs values for MCBs to BS EN 60898 are given in Tables 41.3 and 41.6 of BS 7671. The x 0.8 corrected column in Zs tables is the on-site acceptance limit (GN3 / Appendix 3), accounting for conductors measured cold at ambient temperature.',
   'Elec-Mate includes 70+ calculators that automatically look up the correct maximum Zs for any MCB type and rating, and the AI board scanner identifies MCB types from a photograph of the consumer unit.',
 ];
@@ -264,13 +264,13 @@ const sections = [
             <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">
-                A4:2026 — Reg 411.3.4: 30 mA RCD now mandatory on domestic lighting circuits
+                Reg 411.3.4: 30 mA RCD mandatory on domestic lighting circuits (since 2018)
               </h4>
               <p className="text-white text-sm leading-relaxed">
                 BS 7671:2018+A4:2026 Regulation 411.3.4 requires that, within domestic premises, all
                 AC final circuits supplying luminaires shall have additional protection by an RCD
-                with a rated residual operating current not exceeding 30 mA. This is a mandatory
-                requirement introduced by A4:2026 — the MCB type (B, C, or D) does not affect this
+                with a rated residual operating current not exceeding 30 mA. This has been a mandatory
+                requirement since BS 7671:2018, and the MCB type (B, C, or D) does not affect this
                 obligation. In practice, domestic lighting circuits must be protected by an RCBO or
                 placed on an RCD-protected way in the consumer unit, regardless of which MCB type is
                 fitted.
@@ -615,7 +615,7 @@ export default function MCBTypesBCDPage() {
       title="MCB Types B, C, D Explained: Trip Ratings"
       description="Complete guide to MCB types B, C, and D for UK electricians. Magnetic trip characteristics (Type B 3-5x, Type C 5-10x, Type D 10-20x)."
       datePublished="2025-06-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Protection Devices"

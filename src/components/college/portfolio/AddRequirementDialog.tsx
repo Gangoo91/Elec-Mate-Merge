@@ -1,17 +1,10 @@
 /**
  * AddRequirementDialog
- * ResponsiveDialog for tutors to create or edit custom evidence requirements.
+ * Wide sheet (bottom sheet on phone) for tutors to create or edit custom evidence requirements.
  */
 
 import React, { useState, useEffect } from 'react';
-import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
@@ -144,21 +137,39 @@ export function AddRequirementDialog({
   };
 
   return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent hideCloseButton className="bg-[hsl(0_0%_12%)] border-white/[0.08] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
-        <ResponsiveDialogHeader>
-          <Eyebrow>Portfolio</Eyebrow>
-          <ResponsiveDialogTitle className="mt-1 text-white">
-            {isEditing ? 'Edit requirement' : 'Add custom requirement'}
-          </ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="text-[12.5px] text-white">
-            {isEditing
-              ? 'Update the evidence requirement for this student.'
-              : 'Create a specific evidence requirement for this student.'}
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
-
-        <form onSubmit={handleSubmit} className="space-y-5 pt-2">
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Portfolio"
+      title={isEditing ? 'Edit requirement' : 'Add custom requirement'}
+      description={
+        isEditing
+          ? 'Update the evidence requirement for this learner.'
+          : 'Ask this learner for a specific piece of evidence, on top of the qualification criteria.'
+      }
+      footer={
+        <div className="flex items-center justify-end gap-3">
+          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
+          <PrimaryButton
+            disabled={isSubmitting}
+            onClick={() =>
+              (
+                document.getElementById('add-requirement-form') as HTMLFormElement | null
+              )?.requestSubmit()
+            }
+          >
+            {isSubmitting ? 'Saving…' : isEditing ? 'Update requirement' : 'Add requirement'}
+          </PrimaryButton>
+        </div>
+      }
+    >
+      <form
+        id="add-requirement-form"
+        onSubmit={handleSubmit}
+        className="grid gap-6 lg:grid-cols-2 lg:gap-10"
+      >
+        <div className="space-y-5">
           <Field label="Title" required>
             <Input
               id="title"
@@ -170,7 +181,7 @@ export function AddRequirementDialog({
               placeholder="e.g. Site visit photos"
               className={inputClass}
             />
-            {errors.title && <p className="text-[11px] text-red-400">{errors.title}</p>}
+            {errors.title && <p className="text-[12px] text-red-400">{errors.title}</p>}
           </Field>
 
           <Field label="Description">
@@ -184,14 +195,26 @@ export function AddRequirementDialog({
             />
           </Field>
 
+          <Field label="Guidance for student">
+            <Textarea
+              id="guidance"
+              value={formData.guidance}
+              onChange={(e) => setFormData((prev) => ({ ...prev, guidance: e.target.value }))}
+              placeholder="Tips or specific instructions for the student…"
+              rows={2}
+              className={textareaClass}
+            />
+          </Field>
+        </div>
+        <div className="space-y-5">
           <div className="space-y-2">
             <label className={fieldLabelClass}>
               Evidence types<span className="ml-1 text-elec-yellow">*</span>
             </label>
-            <p className="text-[11px] text-white">
+            <p className="text-[12px] text-white">
               Select the types of evidence the student can upload.
             </p>
-            <div className="grid grid-cols-2 gap-1.5 mt-1">
+            <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {evidenceTypes.map((type) => {
                 const isSelected = formData.evidenceTypeCodes.includes(
                   type.code as EvidenceTypeCode
@@ -204,15 +227,15 @@ export function AddRequirementDialog({
                     className={cn(
                       'flex items-center justify-center gap-2 h-11 px-3 rounded-xl border transition-colors text-[12.5px] font-medium touch-manipulation',
                       isSelected
-                        ? 'border-elec-yellow/60 bg-elec-yellow/[0.08] text-white'
-                        : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white hover:text-white'
+                        ? 'border-white bg-white font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] text-white'
                     )}
                   >
                     <span
                       aria-hidden
                       className={cn(
                         'w-1.5 h-1.5 rounded-full',
-                        isSelected ? 'bg-elec-yellow' : 'bg-white/30'
+                        isSelected ? 'bg-black' : 'bg-white/30'
                       )}
                     />
                     {type.name}
@@ -224,12 +247,16 @@ export function AddRequirementDialog({
               <div className="flex flex-wrap gap-1 mt-2">
                 {formData.evidenceTypeCodes.map((code) => {
                   const type = evidenceTypes.find((t) => t.code === code);
-                  return type ? <Pill key={code} tone="yellow">{type.name}</Pill> : null;
+                  return type ? (
+                    <Pill key={code} tone="yellow">
+                      {type.name}
+                    </Pill>
+                  ) : null;
                 })}
               </div>
             )}
             {errors.evidenceTypeCodes && (
-              <p className="text-[11px] text-red-400">{errors.evidenceTypeCodes}</p>
+              <p className="text-[12px] text-red-400">{errors.evidenceTypeCodes}</p>
             )}
           </div>
 
@@ -250,7 +277,7 @@ export function AddRequirementDialog({
                 className={cn(inputClass, 'tabular-nums')}
               />
               {errors.quantityRequired && (
-                <p className="text-[11px] text-red-400">{errors.quantityRequired}</p>
+                <p className="text-[12px] text-red-400">{errors.quantityRequired}</p>
               )}
             </Field>
 
@@ -279,31 +306,9 @@ export function AddRequirementDialog({
               min={new Date().toISOString().split('T')[0]}
             />
           </Field>
-
-          <Field label="Guidance for student">
-            <Textarea
-              id="guidance"
-              value={formData.guidance}
-              onChange={(e) => setFormData((prev) => ({ ...prev, guidance: e.target.value }))}
-              placeholder="Tips or specific instructions for the student…"
-              rows={2}
-              className={textareaClass}
-            />
-          </Field>
-
-          <ResponsiveDialogFooter className="flex items-center justify-end gap-4 pt-3">
-            <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
-            <PrimaryButton type="submit" disabled={isSubmitting}>
-              {isSubmitting
-                ? 'Saving…'
-                : isEditing
-                  ? 'Update requirement →'
-                  : 'Add requirement →'}
-            </PrimaryButton>
-          </ResponsiveDialogFooter>
-        </form>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+        </div>
+      </form>
+    </FormSheet>
   );
 }
 

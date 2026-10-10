@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Oxford City Council enforces these requirements with fines of up to £30,000 for non-compliance.',
   'Oxford has one of the highest proportions of Victorian and Edwardian terraced housing in England, much of it converted into student HMOs. The city also contains a significant number of listed buildings in and around the city centre.',
   'Oxford City Council operates one of the most proactive HMO licensing and enforcement regimes in England. The council actively investigates complaints and has issued substantial civil penalties to non-compliant landlords.',
-  'EICRs produced under BS 7671:2018+A4:2026 include new model form fields confirming AFDD operational status (Regulations 421.1.7, 532.6, 651.2(e)) and SPD functional indication (Regulation 651.4). Oxford landlords receiving post-A4:2026 reports will see these fields for the first time; inspectors must be able to explain them.',
+  'EICRs produced under BS 7671:2018+A4:2026 include model form fields (added at A2:2022) confirming AFDD operational status (Regulations 421.1.7, 532.6, 651.2(e)) and SPD functional indication (Regulation 651.4). Landlords whose last report predates A2:2022 will see these fields for the first time; inspectors must be able to explain them.',
 ];
 
 const faqs = [
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Oxford properties?',
     answer:
-      "Oxford's large stock of Victorian terraced properties converted into student HMOs produces characteristic EICR findings. Absent RCD protection on socket-outlet circuits (Regulation 411.3.3, BS 7671:2018+A4:2026 — rated current not exceeding 32 A) is the most common C2 finding. Under the A4:2026 amendment, absent RCD protection on domestic lighting circuits (Regulation 411.3.4 — 30 mA RCD required on AC luminaire circuits in dwellings) is also now a codified C2 finding. Rubber-insulated cables in unmodernised properties are a C1 or C2 concern. Multi-era wiring in Victorian conversions, inadequate earthing and bonding, overloaded circuits, and poorly documented circuit arrangements are all common findings. Properties in East Oxford, Cowley, and Headington with 1960s and 1970s wiring may have ageing PVC insulation showing signs of degradation.",
+      "Oxford's large stock of Victorian terraced properties converted into student HMOs produces characteristic EICR findings. Absent RCD protection on socket-outlet circuits (Regulation 411.3.3, BS 7671:2018+A4:2026 — rated current not exceeding 32 A) is the most common C2 finding. Absent RCD protection on domestic lighting circuits (Regulation 411.3.4, a requirement since BS 7671:2018 for 30 mA RCD protection on AC luminaire circuits in dwellings) is also a common C2 finding. Rubber-insulated cables in unmodernised properties are a C1 or C2 concern. Multi-era wiring in Victorian conversions, inadequate earthing and bonding, overloaded circuits, and poorly documented circuit arrangements are all common findings. Properties in East Oxford, Cowley, and Headington with 1960s and 1970s wiring may have ageing PVC insulation showing signs of degradation.",
   },
   {
     question: 'How long does an EICR take in Oxford?',
@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-cost-oxford',
     title: 'EICR Cost in Oxford',
-    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Oxford.',
+    description:
+      'Local EICR price bands by property size, hourly rates, and remedial costs for Oxford.',
     icon: Home,
     category: 'Guide',
   },
@@ -299,15 +300,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>
-                  Absent RCD protection on lighting circuits (new A4:2026 requirement)
-                </strong>{' '}
-                — Regulation 411.3.4 of BS 7671:2018+A4:2026 now mandates additional RCD protection
+                <strong>Absent RCD protection on lighting circuits (Regulation 411.3.4)</strong> —
+                Regulation 411.3.4, in force since BS 7671:2018, mandates additional RCD protection
                 (rated residual operating current not exceeding 30 mA) on all AC final circuits
                 supplying luminaires in domestic premises. This is a codified C2 finding alongside
-                absent socket RCD protection. The majority of pre-2026 EICRs in Oxford's Victorian
-                HMOs will not have captured this deficiency, making it one of the most significant
-                new findings inspectors will encounter post-A4:2026.
+                absent socket RCD protection. It is not a new A4:2026 rule, but older lighting
+                circuits in Oxford's Victorian HMOs often still lack this protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -544,14 +542,14 @@ const sections = [
                   AFDD Observations (Regulation 421.1.7)
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  BS 7671:2018+A4:2026 Regulation 421.1.7 recommends installation of arc fault
-                  detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate
-                  the risk of fire from arc fault currents. The wording is advisory rather than
-                  mandatory, so inspectors in Oxford's older Victorian HMOs may raise an FI or C3
-                  observation where boards lack AFDD provision — particularly where the risk profile
-                  (aged wiring, multi-circuit boards in converted terraces) supports the
-                  recommendation. Be familiar with this regulation: it is a growing area of
-                  observation on post-A4:2026 EICRs.
+                  BS 7671:2018+A4:2026 Regulation 421.1.7 covers arc fault detection devices (AFDDs)
+                  in AC final circuits of a fixed installation, to mitigate the risk of fire from
+                  arc fault currents. Since A2:2022 AFDDs shall be provided on single-phase
+                  socket-outlet circuits up to 32 A in HMOs, purpose-built student accommodation,
+                  care homes and high rise residential buildings, so in Oxford&apos;s converted
+                  Victorian HMOs they are a requirement for new work, not a recommendation. In
+                  ordinary dwellings the wording is advisory, and inspectors may raise a C3
+                  observation where boards lack AFDD provision and the risk profile supports it.
                 </p>
               </div>
             </div>
@@ -592,7 +590,7 @@ export default function EICROxfordPage() {
       title="EICR Oxford: Cost & Safety Certificate 2026"
       description="EICR costs in Oxford for 2026. Landlord legal requirements, Oxford City Council enforcement, Victorian HMO housing stock findings, observation codes."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

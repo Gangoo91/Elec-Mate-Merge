@@ -80,10 +80,8 @@ const MyDocumentsTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Upload documents
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Upload documents</span>
         <div className="border-2 border-dashed border-white/15 rounded-xl p-8 text-center space-y-3">
           <Upload className="h-10 w-10 text-white mx-auto" />
           <h3 className="text-[16px] font-semibold text-white">Upload your documents</h3>
@@ -108,23 +106,21 @@ const MyDocumentsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Storage overview
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Storage overview</span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
-            <div className="text-2xl font-mono text-white">{documents.length}</div>
+            <div className="text-2xl text-white">{documents.length}</div>
             <div className="text-[12px] text-white">Total documents</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
-            <div className="text-2xl font-mono text-white">
+            <div className="text-2xl text-white">
               {documents.reduce((acc, doc) => acc + parseFloat(doc.size), 0).toFixed(1)} MB
             </div>
             <div className="text-[12px] text-white">Total size</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
-            <div className="text-2xl font-mono text-white">2.5 GB</div>
+            <div className="text-2xl text-white">2.5 GB</div>
             <div className="text-[12px] text-white">Available space</div>
           </div>
         </div>
@@ -148,7 +144,7 @@ const MyDocumentsTab = () => {
                 <FileText className="h-5 w-5 text-white flex-shrink-0" />
                 <div className="min-w-0">
                   <h4 className="text-[14px] font-semibold text-white truncate">{doc.name}</h4>
-                  <p className="text-[12px] text-white font-mono">
+                  <p className="text-[12px] text-white">
                     {doc.type} · {doc.size} · {doc.uploadDate}
                   </p>
                 </div>
@@ -157,7 +153,7 @@ const MyDocumentsTab = () => {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Edit className="h-3 w-3 mr-1" />
                   Rename
@@ -165,7 +161,7 @@ const MyDocumentsTab = () => {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Share className="h-3 w-3 mr-1" />
                   Share
@@ -174,7 +170,7 @@ const MyDocumentsTab = () => {
                   size="sm"
                   variant="outline"
                   onClick={() => handleDeleteDocument(doc.id)}
-                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Trash2 className="h-3 w-3 mr-1" />
                   Delete

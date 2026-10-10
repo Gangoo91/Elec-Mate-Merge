@@ -7,7 +7,7 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   inputCn,
   labelCn,
   selectTriggerCn,
@@ -221,7 +221,7 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
         .select('invite_code');
       if (error) throw error;
       if (!data || data.length === 0) {
-        throw new Error('Could not create the invite — you may not have permission.');
+        throw new Error('Could not create the invite. You may not have permission.');
       }
 
       setCreatedCode(code);

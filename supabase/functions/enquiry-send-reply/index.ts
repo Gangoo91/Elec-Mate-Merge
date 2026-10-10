@@ -22,7 +22,7 @@ import {
   htmlToPlainText,
   isSendableEmail,
 } from '../_shared/mailer.ts';
-import { isSuppressed } from '../_shared/suppressions.ts';
+import { isUndeliverable } from '../_shared/suppressions.ts';
 import { buildReplyEmail } from './email.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { corsHeaders } from '../_shared/cors.ts';
@@ -101,12 +101,14 @@ Deno.serve(async (req) => {
         400
       );
     }
+    // Only a bounce, a bad address or a spam report blocks a firm's reply to
+    // its own customer; an unsubscribe from Elec-Mate's marketing does not.
     // Escaped, case-insensitive, and fails closed (throws) if the list can't be read
-    if (await isSuppressed(supabase, to)) {
+    if (await isUndeliverable(supabase, to)) {
       return json(
         {
           error:
-            "That address can't be emailed (it unsubscribed or bounced before). Send a text or WhatsApp instead.",
+            "Email to that address bounced before, so it won't arrive. Send a text or WhatsApp instead.",
           suppressed: true,
         },
         409

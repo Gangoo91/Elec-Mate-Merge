@@ -53,7 +53,7 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671:2018+A4:2026</p>
+          <p className="text-[12px] font-medium text-white mb-3">BS 7671:2018+A4:2026</p>
         </motion.div>
 
         {bs7671Regs.map((reg, i) => (
@@ -73,7 +73,7 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Electricity at Work Regulations 1989</p>
+          <p className="text-[12px] font-medium text-white mb-3">Electricity at Work Regulations 1989</p>
         </motion.div>
 
         {eawRegs.map((reg, i) => (
@@ -93,7 +93,7 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Other Standards</p>
+          <p className="text-[12px] font-medium text-white mb-3">Other Standards</p>
         </motion.div>
 
         {otherStandards.map((item, i) => (
@@ -106,7 +106,7 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">EICR Coding for Faults</p>
+          <p className="text-[12px] font-medium text-white mb-3">EICR Coding for Faults</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

@@ -2,19 +2,8 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import {
-  inputClass,
-  FormCard,
-  FormGrid,
-  Field,
-  Eyebrow,
-} from '@/components/employer/editorial';
-import {
-  salaryPeriods,
-  commonBenefits,
-  type VacancyFormData,
-  type SalaryPeriod,
-} from '../schema';
+import { inputClass, FormCard, FormGrid, Field, Eyebrow } from '@/components/employer/editorial';
+import { salaryPeriods, commonBenefits, type VacancyFormData, type SalaryPeriod } from '../schema';
 
 export function CompensationStep() {
   const {
@@ -49,7 +38,7 @@ export function CompensationStep() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
       {/* Salary */}
       <FormCard index={1} eyebrow="Salary range">
         {/* Salary Period Selector */}
@@ -112,10 +101,16 @@ export function CompensationStep() {
       <FormCard>
         <div className="flex items-center justify-between">
           <div className="flex items-baseline gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· Benefits &amp; perks</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+              02
+            </span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              · Benefits &amp; perks
+            </span>
           </div>
-          <span className="text-[11px] text-white tabular-nums">{selectedBenefits.length} selected</span>
+          <span className="text-[11px] text-white tabular-nums">
+            {selectedBenefits.length} selected
+          </span>
         </div>
 
         {/* Benefits Grid */}
@@ -168,12 +163,9 @@ export function CompensationStep() {
       </FormCard>
 
       {/* Helper tip */}
-      <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25">
-        <p className="text-[13px] text-white">
-          <strong className="text-emerald-400">Tip:</strong> Jobs with clear salary ranges get 3x
-          more applications. Be transparent about compensation to attract quality candidates.
-        </p>
-      </div>
+      <p className="text-[13px] leading-snug text-white lg:col-span-2">
+        A clear pay range helps people decide to apply.
+      </p>
     </div>
   );
 }

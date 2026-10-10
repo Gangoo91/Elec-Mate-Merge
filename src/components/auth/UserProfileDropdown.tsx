@@ -108,7 +108,7 @@ const UserProfileDropdown = () => {
       <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <button
-            className="relative touch-manipulation h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-full active:scale-95 transition-transform duration-150"
+            className="relative touch-manipulation h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-full active:scale-95 transition-transform duration-150 after:absolute after:-inset-1 after:rounded-full"
             aria-label="User profile"
           >
             <Avatar className="h-[30px] w-[30px] sm:h-[34px] sm:w-[34px] ring-2 ring-white/20 hover:ring-elec-yellow/40 transition-all">
@@ -121,7 +121,7 @@ const UserProfileDropdown = () => {
             {totalUnread > 0 && (
               <span className="absolute -top-1 -right-1 flex items-center justify-center">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-50" />
-                <span className="relative flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                <span className="relative flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[12px] leading-none font-bold text-white">
                   {totalUnread > 9 ? '9+' : totalUnread}
                 </span>
               </span>

@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Can I specialise during my apprenticeship?',
     answer:
-      'The apprenticeship itself (ST0215) covers general installation and maintenance work. Specialisation typically happens after qualification, not during the apprenticeship. However, the type of employer you work for will shape your experience. Working for a domestic contractor gives you experience in house rewires, consumer unit changes, and kitchen installations. Working for a commercial contractor gives you experience in office fit-outs, retail installations, and larger-scale projects. Working for an industrial contractor gives you experience in three-phase systems, motor control, and heavy industrial equipment. After completing your apprenticeship and gaining the AM2, you can specialise in areas like EV charging, solar PV, fire alarm systems, data cabling, building management systems, or inspection and testing.',
+      'The apprenticeship itself (ST0152) covers general installation and maintenance work. Specialisation typically happens after qualification, not during the apprenticeship. However, the type of employer you work for will shape your experience. Working for a domestic contractor gives you experience in house rewires, consumer unit changes, and kitchen installations. Working for a commercial contractor gives you experience in office fit-outs, retail installations, and larger-scale projects. Working for an industrial contractor gives you experience in three-phase systems, motor control, and heavy industrial equipment. After completing your apprenticeship and gaining the AM2, you can specialise in areas like EV charging, solar PV, fire alarm systems, data cabling, building management systems, or inspection and testing.',
   },
 ];
 
@@ -641,7 +641,7 @@ export default function WhatToExpectAsApprenticePage() {
       title="What to Expect as an Electrical Apprentice"
       description="The honest guide to life as an electrical apprentice in the UK. Day-to-day reality, early starts, physical demands, site culture, the hard parts."
       datePublished="2025-12-10"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

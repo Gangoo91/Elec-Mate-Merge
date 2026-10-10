@@ -623,9 +623,9 @@ const EVChargingGuide = () => {
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {chargingModes.map((mode, idx) => (
-            <div key={idx} className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
+            <div key={idx} className="p-4 rounded-lg border border-white/[0.14] bg-white/[0.06]">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full border border-elec-yellow/40 bg-white/[0.06] flex items-center justify-center">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full border border-white/[0.14] bg-white/[0.06] flex items-center justify-center">
                   <mode.icon className="h-6 w-6 text-elec-yellow" />
                 </div>
                 <div className="flex-1">
@@ -1072,11 +1072,11 @@ const EVChargingGuide = () => {
         </CardHeader>
         <CardContent className="p-0">
           <Tabs defaultValue="tests" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="pre">Pre-Install</TabsTrigger>
-              <TabsTrigger value="tests">Circuit Tests</TabsTrigger>
-              <TabsTrigger value="open">O-PEN Testing</TabsTrigger>
-              <TabsTrigger value="docs">Documentation</TabsTrigger>
+            <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="pre">Pre-Install</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="tests">Circuit Tests</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="open">O-PEN Testing</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="docs">Documentation</TabsTrigger>
             </TabsList>
 
             <TabsContent value="pre" className="space-y-2">
@@ -1146,7 +1146,7 @@ const EVChargingGuide = () => {
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {installationScenarios.map((scenario, idx) => (
-            <div key={idx} className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
+            <div key={idx} className="p-4 rounded-lg border border-white/[0.14] bg-white/[0.06]">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-medium text-white">{scenario.scenario}</h4>
                 <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-xs">

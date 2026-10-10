@@ -10,10 +10,13 @@ import { useAssignLabel } from '@/hooks/useJobLabels';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { SheetShell, PrimaryButton } from './editorial';
+import type { Job } from '@/services/jobService';
 
 interface JobTemplatesSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Called with the new job (e.g. New job closes itself and opens it). */
+  onCreated?: (job: Job) => void;
 }
 
 interface TemplateJob {
@@ -25,13 +28,18 @@ interface TemplateJob {
   description: string | null;
 }
 
-export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps) {
+export function JobTemplatesSheet({ open, onOpenChange, onCreated }: JobTemplatesSheetProps) {
   const [creatingFromId, setCreatingFromId] = useState<string | null>(null);
   const createJob = useCreateJob();
   const addChecklistItem = useAddChecklistItem();
   const assignLabel = useAssignLabel();
 
-  const { data: templates = [], isLoading, isError, refetch } = useQuery({
+  const {
+    data: templates = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ['job-templates'],
     queryFn: async (): Promise<TemplateJob[]> => {
       const { data, error } = await supabase
@@ -70,6 +78,9 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
       const newJob = await createJob.mutateAsync({
         title: `New ${template.title}`,
         client: template.client,
+        // A template holds no client contact; the office adds it on the new job
+        client_phone: null,
+        client_email: null,
         location: template.location,
         lat: null,
         lng: null,
@@ -98,6 +109,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
 
       toast.success('Job created from template');
       onOpenChange(false);
+      onCreated?.(newJob);
     } catch {
       toast.error('Failed to create job from template');
     } finally {
@@ -107,13 +119,10 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <SheetShell
           eyebrow="Templates"
-          title="Job Templates"
+          title="Job templates"
           description="Pick a template to scaffold a new job"
         >
           {isLoading ? (
@@ -137,7 +146,8 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
               <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-white" />
               <p className="text-white">No templates yet</p>
               <p className="text-sm text-white mt-1">
-                Long-press (or right-click) a job card and choose "Save as template"
+                On the Job board, long-press (or right-click) a job card and choose Save as
+                template.
               </p>
             </div>
           ) : (

@@ -45,7 +45,7 @@ const tocItems = [
 const keyTakeaways = [
   'Amendment 4 to BS 7671:2018 is expected in 2026 — the IET has not confirmed a precise publication date, but consultation processes are under way.',
   'A4 is anticipated to be more substantial than Amendment 4, addressing energy storage, EV charging infrastructure, smart home installations, and harmonised European standards.',
-  'Electricians should prepare now by studying the current edition thoroughly, understanding A3:2024 changes, and staying current with CPD on emerging technologies.',
+  'Work to BS 7671:2018+A4:2026 now: it was issued on 15 April 2026, and A2:2022 and A3:2024 are withdrawn on 15 October 2026. Keep your CPD current on the A4:2026 changes.',
   'There will typically be a transition period after publication during which both the current and amended versions are acceptable for compliance purposes.',
   'Elec-Mate will update its AI agents, regulation references, calculators, and training content as soon as Amendment 4 is officially published.',
 ];
@@ -641,7 +641,7 @@ export default function BS7671Amendment4Page() {
       title="BS 7671 Amendment 4 2026: Upcoming Changes UK"
       description="Everything we know about BS 7671 Amendment 4 expected in 2026. Anticipated changes to energy storage, EV charging, smart installations."
       datePublished="2025-11-01"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

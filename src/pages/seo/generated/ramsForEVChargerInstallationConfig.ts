@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-ev-charger-installation',
@@ -27,7 +27,7 @@ export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
   keyTakeaways: [
     'EV charger installs combine several high-risk activities: drilling external walls, working at height, working outdoors in changing weather, isolating the consumer\u2019s mains and commissioning a new circuit \u2014 a single generic RAMS will not cover them all.',
     'BS 7671:2018+A4:2026 Section 722 governs EV charging installations. A4:2026 retains the PME-supply restrictions of Regulation 722.411.4.1 and now expressly distinguishes PME from PNB (TN-C-S where the neutral is bonded to earth only at the origin).',
-    'Regulation 722.421.1.7.201 in A4:2026 permits the AFDD requirement for final circuits supplying EV charging points to be relaxed where a risk assessment justifies it \u2014 the justification must be recorded.',
+    'Regulation 722.421.1.7.201 says AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. Record the charger standard in the design file so the omission is evidenced.',
     'CDM 2015 Regulation 15 applies even on a single-day domestic EV install: the contractor must plan, manage and monitor the work, and provide site-specific information to anyone affected.',
     'EAWR 1989 Regulation 4 (systems, work activities and protective equipment) and Regulation 14 (work on or near live conductors) drive the safe-isolation and proving-dead elements of the method statement.',
     'Customer property protection is part of the RAMS \u2014 dust sheets, drilling debris, drive-paving reinstatement and post-install commissioning evidence all belong in the method statement before work starts.',
@@ -97,7 +97,7 @@ export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
           type: 'list',
           items: [
             'Regulation 722.411.4.1 \u2014 PME supplies: a PME earth must not be used for the EV charging point unless one of the listed conditions is met (integral open-PEN device, separate TT arrangement for the EV final circuit, or other measure permitted by the regulation).',
-            'Regulation 722.421.1.7.201 \u2014 AFDD: an AFDD is required for the final circuit supplying the EV charging point unless the designer can justify omission on the basis of a documented risk assessment. See [the A4:2026 AFDD changes guide](/guides/bs-7671-a4-2026-afdd-changes) for the exemption wording.',
+            'Regulation 722.421.1.7.201 \u2014 AFDD: AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. Confirm the charger conforms and record it. See [the AFDD rules guide](/guides/bs-7671-a4-2026-afdd-changes) for the general Reg 421.1.7 position.',
             'Regulation 722.531.3 \u2014 RCD protection: each EV charging connection point must be protected by an RCD of Type A or higher; Type B is required where the charge point does not provide its own DC fault current detection. The manufacturer\u2019s data sheet for the charge point must be consulted before specifying the RCD type.',
             'Regulation 722.55.101 \u2014 plug, socket and connector standards: the connection point must comply with the relevant part of BS EN 62196.',
             'Regulation 722.512.2 \u2014 external influences: enclosures must be rated for the location (typically IPX4 minimum for outdoor units; IK rating for impact resistance).',
@@ -183,7 +183,7 @@ export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
     {
       name: 'Site survey and design',
       text:
-        'Carry out a site survey covering supply arrangement (TN-S, TN-C-S/PME, TN-C-S/PNB, TT), prospective fault current, earth fault loop impedance, maximum demand, available consumer-unit ways, the proposed location of the charge point, and the cable route. Confirm DNO notification path (G98 connect-and-notify, or G99 pre-notification). Record the design decisions \u2014 earthing arrangement selected, RCD type, AFDD inclusion or documented exemption under 722.421.1.7.201 \u2014 in the design file.',
+        'Carry out a site survey covering supply arrangement (TN-S, TN-C-S/PME, TN-C-S/PNB, TT), prospective fault current, earth fault loop impedance, maximum demand, available consumer-unit ways, the proposed location of the charge point, and the cable route. Confirm DNO notification path (G98 connect-and-notify, or G99 pre-notification). Record the design decisions \u2014 earthing arrangement selected, RCD type, AFDD inclusion or reliance on the 722.421.1.7.201 exemption for BS EN 61851 chargers \u2014 in the design file.',
     },
     {
       name: 'Generate the RAMS',
@@ -228,7 +228,7 @@ export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
     {
       question: 'Does an EV charger final circuit have to have an AFDD under A4:2026?',
       answer:
-        'A4:2026 introduced an exemption mechanism. Regulation 722.421.1.7.201 permits the AFDD requirement for a final circuit supplying an EV charging point to be relaxed where the designer documents a risk assessment justifying omission. If the assessment does not justify omission, an AFDD is required. The decision \u2014 and the justification \u2014 must be recorded in the design file and referenced in the certificate.',
+        'Usually not. Regulation 722.421.1.7.201 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. Confirm the charger\u2019s conformity from the manufacturer\u2019s documentation, record it in the design file and reference it on the certificate. Where the charger does not conform, the general Reg 421.1.7 position applies.',
     },
     {
       question: 'When does an EV install need G99 notification rather than G98?',
@@ -243,7 +243,7 @@ export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
     {
       question: 'Do I need to test the AFDD as part of commissioning?',
       answer:
-        'Where an AFDD is fitted, BS 7671:2018+A4:2026 expects a functional test using the device\u2019s test facility, and this should be recorded on the schedule of test results alongside the RCD test. Where the design has documented an exemption under Regulation 722.421.1.7.201 and no AFDD is fitted, the schedule should record the exemption and reference the design risk assessment rather than leaving the test field blank.',
+        'Where an AFDD is fitted, BS 7671:2018+A4:2026 expects a functional test using the device\u2019s test facility, and this should be recorded on the schedule of test results alongside the RCD test. Where no AFDD is fitted because the charger conforms to the BS EN 61851 series (Regulation 722.421.1.7.201), the schedule should record that rather than leaving the test field blank.',
     },
   ],
   faqHeading: 'EV charger RAMS \u2014 frequently asked questions',
@@ -271,8 +271,8 @@ export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'BS 7671 A4:2026 \u2014 AFDD Changes',
-      description: 'What changed for AFDDs in A4:2026, including the new exemption mechanism for EV final circuits.',
+      title: 'BS 7671 AFDD Rules (Reg 421.1.7)',
+      description: 'Where AFDDs are required or recommended under Reg 421.1.7, and how that sits with EV final circuits.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },

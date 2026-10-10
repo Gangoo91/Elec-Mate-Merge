@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Do radial circuits need RCD protection?',
     answer:
-      'Under BS 7671:2018+A4:2026, Regulation 411.3.3 requires 30mA RCD additional protection for socket-outlets with a rated current not exceeding 32A. Note that the 32A threshold is the rating of the socket-outlet, not of the circuit — a 13A socket on a 32A radial is squarely within scope. The only exception is a documented risk assessment, and that exception is not available for a dwelling. This applies to radial circuits serving socket outlets just as it does to ring circuits. For lighting circuits, Regulation 411.3.4 (introduced in A4:2026) now requires 30mA RCD additional protection on all AC final circuits supplying luminaires in domestic (household) premises — not only those in bathrooms or with cables concealed at less than 50mm depth. Radial lighting circuits are explicitly included. In practice, this means RCBO boards or split-load consumer units with RCD protection on every lighting circuit are now required for all new domestic installations and alterations.',
+      'Under BS 7671:2018+A4:2026, Regulation 411.3.3 requires 30mA RCD additional protection for socket-outlets with a rated current not exceeding 32A. Note that the 32A threshold is the rating of the socket-outlet, not of the circuit — a 13A socket on a 32A radial is squarely within scope. The only exception is a documented risk assessment, and that exception is not available for a dwelling. This applies to radial circuits serving socket outlets just as it does to ring circuits. For lighting circuits, Regulation 411.3.4 (in force since BS 7671:2018) requires 30mA RCD additional protection on all AC final circuits supplying luminaires in domestic (household) premises — not only those in bathrooms or with cables concealed at less than 50mm depth. Radial lighting circuits are explicitly included. In practice, this means RCBO boards or split-load consumer units with RCD protection on every lighting circuit are required for all new domestic installations and alterations.',
   },
   {
     question: 'How do I test a radial circuit?',
@@ -735,7 +735,7 @@ export default function RadialCircuitGuidePage() {
       title="What Is a Radial Circuit? 20A 2.5mm², 32A 4mm²"
       description="A radial runs from the board to the last outlet — no return leg. 20A on 2.5mm² covers up to 50m² floor area, 32A on 4mm² up to 75m². Cable, MCB, testing."
       datePublished="2025-06-15"
-      dateModified="2026-08-06"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

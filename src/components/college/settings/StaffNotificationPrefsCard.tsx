@@ -13,9 +13,15 @@ import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { COLLEGE_LIST } from '@/components/college/ui/CollegeUi';
+import { PEOPLE_LIST, StatusChip } from '@/components/college/people/peopleKit';
 
-type Key = 'college_marking' | 'college_hours' | 'college_messages' | 'college_reviews' | 'college_safeguarding' | 'quiet_hours';
+type Key =
+  | 'college_marking'
+  | 'college_hours'
+  | 'college_messages'
+  | 'college_reviews'
+  | 'college_safeguarding'
+  | 'quiet_hours';
 
 const ROWS: Array<{ key: Key; label: string; body: string; locked?: boolean }> = [
   {
@@ -65,7 +71,10 @@ export function StaffNotificationPrefsCard() {
         .from('notification_preferences')
         .select('category, enabled')
         .eq('user_id', user.id)
-        .in('category', ROWS.map((r) => r.key));
+        .in(
+          'category',
+          ROWS.map((r) => r.key)
+        );
       if (cancelled) return;
       if (!error) {
         const next: Partial<Record<Key, boolean>> = {};
@@ -98,7 +107,7 @@ export function StaffNotificationPrefsCard() {
   };
 
   return (
-    <div className={COLLEGE_LIST}>
+    <div className={PEOPLE_LIST}>
       {ROWS.map((r) => {
         const checked = r.locked ? true : prefs[r.key] !== false;
         return (
@@ -107,21 +116,27 @@ export function StaffNotificationPrefsCard() {
             key={r.key}
             htmlFor={`staff-notif-${r.key}`}
             className={`flex min-h-[64px] items-center gap-4 px-5 py-3.5 touch-manipulation sm:px-6 ${
-              r.locked || !loaded ? 'cursor-default' : 'cursor-pointer hover:bg-white/[0.03] active:bg-white/[0.05]'
+              r.locked || !loaded
+                ? 'cursor-default'
+                : 'cursor-pointer hover:bg-white/[0.03] active:bg-white/[0.05]'
             }`}
           >
             <div className="min-w-0 flex-1">
               <div className="text-[14.5px] font-semibold text-white">{r.label}</div>
               <div className="mt-0.5 text-[12.5px] leading-relaxed text-white">{r.body}</div>
             </div>
-            <Switch
-              id={`staff-notif-${r.key}`}
-              checked={checked}
-              disabled={r.locked || !loaded}
-              onCheckedChange={(v) => void set(r.key, v)}
-              aria-label={r.label}
-              className="touch-manipulation"
-            />
+            {r.locked ? (
+              <StatusChip tone="done">Always on</StatusChip>
+            ) : (
+              <Switch
+                id={`staff-notif-${r.key}`}
+                checked={checked}
+                disabled={r.locked || !loaded}
+                onCheckedChange={(v) => void set(r.key, v)}
+                aria-label={r.label}
+                className="relative touch-manipulation after:absolute after:-inset-x-2 after:-inset-y-2.5 after:content-['']"
+              />
+            )}
           </label>
         );
       })}

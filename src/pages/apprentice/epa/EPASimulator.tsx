@@ -14,12 +14,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Send, Check } from 'lucide-react';
+import { Send, Check } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { CALLOUT, PANEL, PANEL_LABEL, PANEL_LABEL_ACCENT } from '@/components/ui/panel-recipe';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+} from '@/components/college/ui/CollegeUi';
+import { P_TAB_LINE, P_TAB_RAIL, pTab } from '@/components/apprentice-hub/portfolio2/ui';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
@@ -32,6 +38,9 @@ import type { PortfolioEntry } from '@/types/portfolio';
 import { AM2_BANDS, gradeDisplay, pointsToNextBand, verdictForMockScore } from '@/lib/epa/grading';
 import { EPA_FACTS } from '@/lib/epa/facts';
 import { epaRouteFor } from '@/lib/epa/readiness';
+import { Am2TaskReadiness } from '@/components/epa/Am2TaskReadiness';
+import { ElectricalEpaPanel } from '@/components/epa/ElectricalEpaPanel';
+import { routeForPlan, usePlanVersion } from '@/hooks/epa/useElectricalEpa';
 
 type TabId = 'readiness' | 'discussion' | 'knowledge' | 'history';
 
@@ -53,21 +62,19 @@ const TABS: { id: TabId; label: string }[] = [
 function SetupNeeded() {
   const navigate = useNavigate();
   return (
-    <div className={cn(CALLOUT, 'max-w-xl space-y-3')}>
-      <span className={PANEL_LABEL_ACCENT}>Setup needed</span>
-      <p className="text-[14px] leading-relaxed text-white">
-        Choose your qualification first — the readiness check, the questions on your portfolio and
-        every knowledge question are built from its units and ACs, so the simulator can’t generate
-        anything useful without it.
-      </p>
-      <Button
-        onClick={() => navigate('/apprentice/hub')}
-        className="h-11 bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
-      >
-        Choose your qualification
-        <ArrowRight className="ml-2 h-4 w-4" />
-      </Button>
-    </div>
+    <CollegeEmpty
+      title="Choose your qualification first"
+      body="The readiness check, the questions on your portfolio and every knowledge question are built from its units and ACs, so the simulator can’t generate anything useful without it."
+      action={
+        <button
+          type="button"
+          onClick={() => navigate('/apprentice/hub')}
+          className={COLLEGE_BTN_PRIMARY}
+        >
+          Choose your qualification
+        </button>
+      }
+    />
   );
 }
 
@@ -83,6 +90,8 @@ const EPASimulator = () => {
   const { user } = useAuth();
   const { qualificationCode, qualificationId, enrolmentCode } = useStudentQualification();
   const route = epaRouteFor(enrolmentCode ?? qualificationCode);
+  // ELE-2054: the plan version by start date decides which NET task list applies.
+  const { data: planVersion } = usePlanVersion(user?.id);
 
   /*
    * A live mock session must survive a tab switch.
@@ -221,85 +230,74 @@ const EPASimulator = () => {
       <HubMasthead section="Apprentice · EPA" title="EPA simulator" backTo="/apprentice" />
 
       <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {qualificationCode ? `${route.summary} ` : ''}Everything here is built from your own
-          portfolio and your qualification’s units and ACs.
-        </p>
+        <CollegePageHeader
+          eyebrow="End-point assessment"
+          title="EPA simulator"
+          description={`${qualificationCode ? `${route.summary} ` : ''}Everything here is built from your own portfolio and your qualification’s units and ACs.`}
+        />
 
         {/*
-         * What the marks actually mean.
-         *
-         * The simulator scored and graded every session without ever saying what
-         * it was grading against, so a percentage had no meaning attached to it.
-         * Both mocks now use the AM2 bands, and this says so — including the
-         * retake rule, which is the single most consequential thing an
-         * apprentice can know before their first attempt and was nowhere in the
-         * app.
+         * What the marks actually mean: the AM2 bands and the retake rule,
+         * which is the single most consequential thing an apprentice can know
+         * before their first attempt. A status line of figures, not chips.
          */}
         {route.graded && (
-          <div className={cn(PANEL, 'space-y-3')}>
-            <span className={PANEL_LABEL}>What you are aiming at</span>
-            <div className="flex flex-wrap gap-2">
+          <motion.section
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            className={COLLEGE_CARD}
+            aria-label="Grade boundaries"
+          >
+            <h2 className="text-[16px] font-semibold text-white">What you are aiming at</h2>
+            <dl className="mt-3 grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-0">
               {[
                 { label: 'Pass', pct: AM2_BANDS.pass },
                 { label: 'Merit', pct: AM2_BANDS.merit },
                 { label: 'Distinction', pct: AM2_BANDS.distinction },
-              ].map((b) => (
-                <span
-                  key={b.label}
-                  className="inline-flex items-baseline gap-1.5 rounded-full border border-elec-yellow px-3 py-1.5"
-                >
-                  <span className="font-mono text-[13px] font-semibold tabular-nums text-white">
-                    {b.pct}%
-                  </span>
-                  <span className="text-[12px] font-medium text-white">{b.label}</span>
-                </span>
+              ].map((b, i) => (
+                <div key={b.label} className="flex min-w-0 items-center">
+                  {i > 0 && (
+                    <span aria-hidden className="mx-5 hidden h-8 w-px bg-white/[0.14] sm:block" />
+                  )}
+                  <div>
+                    <dt className="text-[13px] font-medium text-white">{b.label}</dt>
+                    <dd className="mt-0.5 text-[24px] font-bold leading-none tabular-nums text-white">
+                      {b.pct}%
+                    </dd>
+                  </div>
+                </div>
               ))}
-            </div>
-            <p className="text-[13px] leading-relaxed text-white">
+            </dl>
+            <p className="mt-4 max-w-3xl text-[13.5px] leading-relaxed text-white">
               These are the AM2S grade boundaries, so a mock score here means the same thing it
               would on the day. {EPA_FACTS.retake} {EPA_FACTS.overallGrade}
             </p>
-          </div>
+          </motion.section>
         )}
 
-        {/*
-         * Tabs. Were 36px tall (under the 44px touch minimum) on a
-         * `bg-white/[0.02]` surface you could not see, in a sticky bar with its
-         * own border that fought the masthead above it. Now the same pill row
-         * the rest of the apprentice hub uses.
-         */}
-        <motion.div variants={itemVariants} className="-mx-4 px-4 sm:mx-0 sm:px-0">
-          <div
-            role="tablist"
-            aria-label="EPA simulator sections"
-            className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:overflow-visible"
-          >
-            {TABS.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={cn(
-                    'inline-flex h-11 shrink-0 items-center rounded-full px-4 text-[13px]',
-                    'transition-colors touch-manipulation active:scale-[0.98]',
-                    isActive
-                      ? 'bg-elec-yellow font-semibold text-black'
-                      : 'border border-white/[0.16] font-medium text-white hover:border-white/[0.32]'
-                  )}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
-        </motion.div>
+        {/* Sections: quiet text tabs with a yellow underline, not pills. */}
+        <div role="tablist" aria-label="EPA simulator sections" className={P_TAB_RAIL}>
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveTab(tab.id)}
+                className={pTab(isActive)}
+              >
+                {tab.label}
+                {isActive && <span aria-hidden className={P_TAB_LINE} />}
+              </button>
+            );
+          })}
+        </div>
 
         {/* Tab Content */}
-        <div className="min-h-[50vh]">
+        <div className="-mt-2 min-h-[50vh] sm:-mt-4">
           {activeTab === 'readiness' && qualificationCode && (
             <EPAReadinessDashboard
               key={readinessKey}
@@ -310,6 +308,19 @@ const EPASimulator = () => {
               onStartKnowledgeTest={() => setActiveTab('knowledge')}
               onTargetAC={handleTargetAC}
             />
+          )}
+
+          {/* ELE-1907: AM2 practice against NET's task list, the same view the tutor sees. */}
+          {activeTab === 'readiness' && qualificationCode && user && (
+            <div className="mt-8 space-y-5">
+              <Am2TaskReadiness
+                userId={user.id}
+                routeKind={routeForPlan(route.kind, planVersion)}
+                audience="learner"
+              />
+              {/* ELE-2049/2050/2054/2055: on-site practice, NET checklist, plan version, Gold Card. */}
+              <ElectricalEpaPanel learnerId={user.id} audience="learner" plan={planVersion} />
+            </div>
           )}
 
           {activeTab === 'readiness' && !qualificationCode && <SetupNeeded />}
@@ -488,20 +499,15 @@ function HistoryTab({
   if (items.length === 0) {
     /* Also a dead end before — it described the empty state and stopped. */
     return (
-      <div className={cn(PANEL, 'max-w-xl space-y-3')}>
-        <span className={PANEL_LABEL}>No sessions yet</span>
-        <p className="text-[14px] leading-relaxed text-white">
-          Once you have run a mock discussion or knowledge test, every attempt lands here with its
-          score, predicted grade and how you are moving between attempts.
-        </p>
-        <Button
-          onClick={onStartSession}
-          className="h-11 bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
-        >
-          Run your first mock
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
+      <CollegeEmpty
+        title="No sessions yet"
+        body="Once you have run a mock discussion or knowledge test, every attempt lands here with its score, predicted grade and how you are moving between attempts."
+        action={
+          <button type="button" onClick={onStartSession} className={COLLEGE_BTN_PRIMARY}>
+            Run your first mock
+          </button>
+        }
+      />
     );
   }
 
@@ -514,118 +520,99 @@ function HistoryTab({
   // showed swings like ▲35 that meant nothing.
   const prevScore = items.slice(1).find((x) => x.type === latest.type)?.score ?? null;
   const delta = prevScore !== null ? latest.score - prevScore : null;
+  const next = pointsToNextBand(best.score);
 
   return (
-    <div className="space-y-3">
-      <span className={PANEL_LABEL}>
-        Your trajectory · {items.length} session{items.length === 1 ? '' : 's'}
-      </span>
-
-      {/*
-       * Trajectory strip. The three cells were `bg-[hsl(0_0%_10%)]` separated by
-       * 2px of pure black — invisible cells divided by a seam darker than the
-       * page. Now the standard lit surface with a hairline between, so the
-       * figures sit on something.
-       */}
-      <div className="grid grid-cols-3 gap-2">
-        {[
-          { label: 'Best', value: best.score, foot: bestG.label, footCn: bestG.className },
-          {
-            label: 'Latest',
-            value: latest.score,
-            foot:
-              delta === null
-                ? 'first of its kind'
-                : delta > 0
-                  ? `▲ +${delta}`
-                  : delta < 0
-                    ? `▼ ${delta}`
-                    : 'no change',
-            footCn: cn(
-              'tabular-nums',
-              delta === null
-                ? 'text-white'
-                : delta > 0
-                  ? 'text-white'
-                  : delta < 0
-                    ? 'text-red-400'
-                    : 'text-white'
-            ),
-          },
-          { label: 'Sessions', value: items.length, foot: 'logged', footCn: 'text-white' },
-        ].map((cell) => (
-          <div
-            key={cell.label}
-            className={cn(
-              'flex flex-col items-center gap-1 rounded-2xl border border-white/[0.14] px-3 py-3.5 text-center',
-              CARD_SURFACE
-            )}
-          >
-            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-              {cell.label}
-            </span>
-            <span className="font-mono text-[24px] font-semibold leading-none tabular-nums text-white">
-              {cell.value}
-            </span>
-            <span className={cn('text-[11px] font-medium', cell.footCn)}>{cell.foot}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Distance to the next band — a score on its own does not tell you how
-          much work is left. `next` is null once you are at distinction. */}
-      {(() => {
-        const next = pointsToNextBand(best.score);
-        return next ? (
-          <p className="text-[13px] leading-relaxed text-white">
-            Your best is <span className="text-white">{best.score}%</span> —{' '}
-            <span className="text-white">
-              {next.points} {next.points === 1 ? 'point' : 'points'}
-            </span>{' '}
-            off a {next.target}.
-          </p>
-        ) : (
-          <p className="text-[13px] leading-relaxed text-white">
-            Your best is <span className="text-white">{best.score}%</span> — distinction standard on
-            the AM2 bands.
-          </p>
-        );
-      })()}
-
-      {collegeStudent && (
-        <p className="text-[13px] leading-relaxed text-white">
-          Your tutor sees the same readiness you do. Submit a full sitting to log it as your
-          self-assessment alongside the tutor and AI verdicts — drills (fewer than 30 questions, one
-          difficulty or one AC) can’t be submitted.
+    <div className="space-y-5">
+      {/* Trajectory: one card, figures as a status line with hairlines between. */}
+      <section className={COLLEGE_CARD} aria-label="Your trajectory">
+        <h2 className="text-[16px] font-semibold text-white">
+          Your trajectory · {items.length} session{items.length === 1 ? '' : 's'}
+        </h2>
+        <dl className="mt-3 grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-0">
+          {[
+            { label: 'Best', value: `${best.score}%`, foot: bestG.label, footCn: bestG.className },
+            {
+              label: 'Latest',
+              value: `${latest.score}%`,
+              foot:
+                delta === null
+                  ? 'First of its kind'
+                  : delta > 0
+                    ? `Up ${delta}`
+                    : delta < 0
+                      ? `Down ${Math.abs(delta)}`
+                      : 'No change',
+              footCn: delta !== null && delta < 0 ? 'text-orange-300' : 'text-white',
+            },
+            {
+              label: 'Sessions',
+              value: String(items.length),
+              foot: 'logged',
+              footCn: 'text-white',
+            },
+          ].map((cell, i) => (
+            <div key={cell.label} className="flex min-w-0 items-center">
+              {i > 0 && (
+                <span aria-hidden className="mx-5 hidden h-10 w-px bg-white/[0.14] sm:block" />
+              )}
+              <div className="min-w-0">
+                <dt className="text-[13px] font-medium text-white">{cell.label}</dt>
+                <dd className="mt-0.5 text-[24px] font-bold leading-none tabular-nums text-white">
+                  {cell.value}
+                </dd>
+                <dd className={cn('mt-1 text-[12.5px] font-medium', cell.footCn)}>{cell.foot}</dd>
+              </div>
+            </div>
+          ))}
+        </dl>
+        {/* Distance to the next band — a score on its own does not tell you how
+            much work is left. `next` is null once you are at distinction. */}
+        <p className="mt-4 text-[13.5px] leading-relaxed text-white">
+          {next
+            ? `Your best is ${best.score}%, ${next.points} ${next.points === 1 ? 'point' : 'points'} off a ${next.target}.`
+            : `Your best is ${best.score}%, distinction standard on the AM2 bands.`}
         </p>
-      )}
-      <ul className="space-y-2">
+        {collegeStudent && (
+          <p className="mt-2 text-[13px] leading-relaxed text-white">
+            Your tutor sees the same readiness you do. Submit a full sitting to log it as your
+            self-assessment alongside the tutor and AI verdicts. Drills (fewer than 30 questions,
+            one difficulty or one AC) can’t be submitted.
+          </p>
+        )}
+      </section>
+
+      <ul className={COLLEGE_LIST}>
         {items.map((item) => {
           const isSubmitted = submittedSessionId === item.id;
           const isWorking = submitting === item.id;
           const g = gradeDisplay(item.grade);
           return (
-            <li key={item.id} className={cn(PANEL, 'space-y-3')}>
-              <div className="flex items-baseline gap-3">
-                <span className="text-[11px] font-mono text-white flex-shrink-0">
-                  {item.completedAt.toLocaleDateString('en-GB', {
-                    day: '2-digit',
-                    month: 'short',
-                  })}
-                </span>
-                <div className="flex-1 min-w-0 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white block">
-                    {item.type === 'professional_discussion' ? 'Portfolio questions' : 'Knowledge'}{' '}
-                    · {Math.floor(item.timeSpent / 60)}m{item.full ? '' : ' · drill'}
-                  </span>
-                  <span className={cn('text-[13px] font-medium', g.className)}>{g.label}</span>
+            <li key={item.id} className="px-5 py-4 sm:px-6">
+              <div className="flex items-start gap-4">
+                <div className="w-11 shrink-0 rounded-xl border border-white/[0.1] py-1.5 text-center">
+                  <p className="text-[12px] font-medium leading-none text-white">
+                    {item.completedAt.toLocaleDateString('en-GB', { month: 'short' })}
+                  </p>
+                  <p className="mt-1 text-[17px] font-bold leading-none tabular-nums text-white">
+                    {item.completedAt.getDate()}
+                  </p>
                 </div>
-                <div className="text-right shrink-0">
-                  <span className="text-[24px] font-mono font-semibold text-white tabular-nums leading-none">
-                    {item.score}
-                  </span>
-                  <span className="text-[11px] text-white font-mono ml-0.5">/100</span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[14.5px] font-semibold leading-snug text-white">
+                    {item.type === 'professional_discussion'
+                      ? 'Questions on your portfolio'
+                      : 'Knowledge test'}
+                    {item.full ? '' : ' · drill'}
+                  </p>
+                  <p className="mt-0.5 text-[13px] text-white">
+                    <span className={g.className}>{g.label}</span> ·{' '}
+                    {Math.floor(item.timeSpent / 60)} min
+                  </p>
                 </div>
+                <p className="shrink-0 text-[22px] font-bold leading-none tabular-nums text-white">
+                  {item.score}%
+                </p>
               </div>
               {collegeStudent && item.full && (
                 <button
@@ -633,22 +620,22 @@ function HistoryTab({
                   onClick={() => submit(item)}
                   disabled={isSubmitted || isWorking}
                   className={cn(
-                    'w-full h-11 rounded-md text-[13px] font-semibold inline-flex items-center justify-center gap-1.5 transition-colors touch-manipulation',
-                    isSubmitted
-                      ? 'border border-elec-yellow text-white cursor-default'
-                      : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                    COLLEGE_BTN,
+                    'mt-3 w-full sm:w-auto',
+                    isSubmitted &&
+                      'cursor-default border-emerald-400/60 hover:border-emerald-400/60'
                   )}
                 >
                   {isSubmitted ? (
                     <>
-                      <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-                      Submitted to tutor
+                      <Check className="h-4 w-4 text-emerald-300" strokeWidth={2.5} />
+                      Submitted to your tutor
                     </>
                   ) : isWorking ? (
                     'Submitting…'
                   ) : (
                     <>
-                      <Send className="h-3.5 w-3.5" />
+                      <Send className="h-4 w-4" strokeWidth={1.75} />
                       Submit as my self-assessment
                     </>
                   )}

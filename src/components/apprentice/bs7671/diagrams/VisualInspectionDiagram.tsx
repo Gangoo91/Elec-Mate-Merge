@@ -164,7 +164,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           EICR outcome classifications
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
@@ -175,7 +175,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             >
               <div className="text-[18px] font-bold text-white">{outcome.code}</div>
               <div className="text-[12px] font-medium text-white">{outcome.label}</div>
-              <div className="text-[11px] text-white leading-snug">{outcome.description}</div>
+              <div className="text-[12px] text-white leading-snug">{outcome.description}</div>
             </div>
           ))}
         </div>
@@ -189,10 +189,10 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
           >
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[12px] font-medium text-white">
                   {area.area}
                 </span>
-                <p className="text-[11px] text-white font-mono">{area.regulation}</p>
+                <p className="text-[12px] text-white font-mono">{area.regulation}</p>
               </div>
               {area.critical && (
                 <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
@@ -216,12 +216,12 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
       </div>
 
       <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+        <span className="text-[12px] font-medium text-red-300">
           Critical safety requirements
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Before starting
             </span>
             <ul className="space-y-1.5">
@@ -242,7 +242,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               During inspection
             </span>
             <ul className="space-y-1.5">
@@ -266,12 +266,12 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Professional documentation standards
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Recording
             </span>
             <ul className="space-y-1.5">
@@ -291,7 +291,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Classification
             </span>
             <ul className="space-y-1.5">
@@ -311,7 +311,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Follow-up
             </span>
             <ul className="space-y-1.5">

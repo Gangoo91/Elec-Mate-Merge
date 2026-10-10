@@ -40,8 +40,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'On-the-job training (OJT) must make up at least 80% of your apprenticeship time. The remaining 20% is off-the-job training at college or with your training provider.',
-  'OJT includes any productive work activity where you are developing the knowledge, skills, and behaviours defined in the apprenticeship standard (ST0215).',
+  'On-the-job training (OJT) is most of your apprenticeship time. Alongside it you must complete at least the off-the-job training hours published on your apprenticeship standard, at college or with your training provider (DfE funding rules 2026 to 2027, rules 85 to 86). It is no longer a 20% share for starts from August 2025.',
+  'OJT includes any productive work activity where you are developing the knowledge, skills, and behaviours defined in the apprenticeship standard (ST0152).',
   'You need a mix of evidence types: photos of completed work, work logs, witness testimonies from supervisors, reflective accounts, and signed skills observation records.',
   'Your supervisor or employer plays a critical role in OJT by providing structured work opportunities, observing your progress, and signing off completed skills.',
   'Elec-Mate provides a dedicated OJT tracker that maps your daily work to the apprenticeship standard criteria, so you always know what skills you have covered and what gaps remain.',
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What is the difference between on-the-job and off-the-job training?',
     answer:
-      'On-the-job training (OJT) is the practical work you do with your employer on real job sites and installations. It accounts for at least 80% of your apprenticeship time. Off-the-job training (OTJ) is the structured learning that takes place away from your normal work duties, typically at college or with your training provider. This accounts for at least 20% of your apprenticeship time. Off-the-job training includes classroom teaching, workshops, online learning, and study activities that directly relate to the apprenticeship standard. Both types of training are mandatory under the apprenticeship funding rules. Your employer must allow you time for off-the-job training, and your training provider must ensure the content is relevant to the apprenticeship standard. The 20% off-the-job requirement is a minimum; some apprentices spend more time in training depending on their programme structure.',
+      'On-the-job training (OJT) is the practical work you do with your employer on real job sites and installations. It makes up most of your apprenticeship time. Off-the-job training (OTJ) is the structured learning that takes place away from your normal work duties, typically at college or with your training provider. For apprenticeships starting from 1 August 2025 it is a fixed minimum number of hours published on each standard, not a percentage (DfE funding rules 2026 to 2027, rules 85 to 86). Off-the-job training includes classroom teaching, workshops, online learning, and study activities that directly relate to the apprenticeship standard. Both types of training are mandatory under the apprenticeship funding rules. Your employer must allow you time for off-the-job training, and your training provider must ensure the content is relevant to the apprenticeship standard. The off-the-job hours on your standard are a minimum; some apprentices spend more time in training depending on their programme structure.',
   },
   {
     question: 'Does travel time or routine work count as OJT?',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'How many OJT hours do I need to complete?',
     answer:
-      'The total number of OJT hours depends on the length of your apprenticeship. For the Installation Electrician / Maintenance Electrician standard (ST0215), the typical duration is 42 to 48 months. At 80% on-the-job time, this equates to approximately 5,500 to 6,400 hours of OJT over the full apprenticeship. However, the focus is on demonstrating competence against the apprenticeship standard, not on accumulating a specific number of hours. Your training provider and employer will track your progress against the standard criteria. You need to demonstrate competence across all knowledge, skills, and behaviours defined in the standard, regardless of how many hours it takes. Some apprentices achieve competence in certain areas faster than others, and the programme should be adapted to focus on areas where additional development is needed.',
+      'The total number of OJT hours depends on the length of your apprenticeship. For the Installation Electrician / Maintenance Electrician standard (ST0152), the typical duration is 42 to 48 months, so most of several thousand working hours are on the job. However, the focus is on demonstrating competence against the apprenticeship standard, not on accumulating a specific number of hours. Your training provider and employer will track your progress against the standard criteria. You need to demonstrate competence across all knowledge, skills, and behaviours defined in the standard, regardless of how many hours it takes. Some apprentices achieve competence in certain areas faster than others, and the programme should be adapted to focus on areas where additional development is needed.',
   },
   {
     question: 'What if my employer does not give me varied enough work for OJT?',
@@ -145,17 +145,18 @@ const sections = [
           classroom learning alone cannot provide.
         </p>
         <p>
-          Under the apprenticeship funding rules, OJT must account for at least 80% of your
-          apprenticeship time. For a typical 4-year electrical apprenticeship, that is roughly 3 to
-          4 days per week on site with your employer. The remaining 20% is off-the-job training,
-          usually at college or with an independent training provider, covering the theoretical
-          knowledge and formal qualifications.
+          OJT makes up most of your apprenticeship time. For a typical 4-year electrical
+          apprenticeship, that is roughly 3 to 4 days per week on site with your employer. The rest
+          is off-the-job training, usually at college or with an independent training provider,
+          covering the theoretical knowledge and formal qualifications. For starts from 1 August
+          2025 the off-the-job minimum is a fixed number of hours published on each standard, not a
+          percentage (DfE funding rules 2026 to 2027, rules 85 to 86).
         </p>
         <p>
           OJT is not just "being at work." It is structured development where you are actively
           building the knowledge, skills, and behaviours defined in the{' '}
           <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
-            apprenticeship standard (ST0215)
+            apprenticeship standard (ST0152)
           </SEOInternalLink>
           . Every task you carry out on site is an opportunity to develop competence, and the
           evidence you collect during OJT forms the foundation of your{' '}
@@ -603,7 +604,7 @@ export default function OJTHubGuidePage() {
       title="On-the-Job Training Guide: Electrical Apprentice"
       description="Complete guide to on-the-job training for electrical apprentices. What counts as OJT, evidence types, skills sign-off process, supervisor role."
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"
@@ -614,7 +615,7 @@ export default function OJTHubGuidePage() {
           <span className="text-elec-yellow">Making Every Day on Site Count</span>
         </>
       }
-      heroSubtitle="On-the-job training makes up at least 80% of your electrical apprenticeship. This guide explains what counts as OJT, the evidence you need to collect, how skills sign-off works, the role of your supervisor, and how to track your progress so you reach the gateway fully prepared."
+      heroSubtitle="On-the-job training makes up most of your electrical apprenticeship. This guide explains what counts as OJT, the evidence you need to collect, how skills sign-off works, the role of your supervisor, and how to track your progress so you reach the gateway fully prepared."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

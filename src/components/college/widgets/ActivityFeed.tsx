@@ -102,7 +102,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
           Recent activity
         </h3>
         {shown.length > 0 && (
-          <span className="text-[11px] font-semibold tabular-nums text-white">{shown.length}</span>
+          <span className="text-[12px] font-semibold tabular-nums text-white">{shown.length}</span>
         )}
       </div>
 

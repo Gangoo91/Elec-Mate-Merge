@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import { useSmartBack } from '@/lib/navHistory';
 import { useCollegeScope } from '@/components/college/scope/useCollegeScope';
 import { CollegeScopeTabs } from '@/components/college/scope/CollegeScopeSwitch';
 import { useNavigate } from 'react-router-dom';
@@ -7,26 +8,20 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
-import { HowItWorks, PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-} from '@/components/hub/HubPrimitives';
-import { CollegeHeading } from '@/components/college/ui/CollegeUi';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegePageHeader,
+  CollegeSectionTitle,
+} from '@/components/college/ui/CollegeUi';
 import { FormSheet } from '@/components/forms/FormSheet';
+import { QuietTabs } from '@/components/college/otj/hoursUi';
 import { LeaveOutSheet } from '@/components/college/otj/LeaveOutSheet';
 import { ConfirmedHoursSection } from '@/components/college/otj/ConfirmedHoursSection';
-import {
-  buttonPrimaryCn,
-  buttonSecondaryCn,
-  chipBase,
-  chipOff,
-  inputCn,
-} from '@/components/forms/fieldStyles';
+import { buttonPrimaryCn, buttonSecondaryCn, inputCn } from '@/components/forms/fieldStyles';
 import {
   approveAppLearning,
   undoAppLearningDecision,
@@ -77,14 +72,20 @@ const AREA_ORDER = [
   'Site diary',
 ];
 
-const neutralButtonCn =
-  'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] active:scale-[0.98] disabled:opacity-60';
+// The words the off-the-job section uses for get_otj_summary's risk, so a
+// learner reads the same on both screens.
+const STATUS_WORD: Record<CollegeOtjRow['summary']['risk'], string> = {
+  on_track: 'On track',
+  slightly_behind: 'Behind',
+  behind: 'At risk',
+  unknown: 'Not judged',
+};
 
 function fmtH(h: number | null | undefined): string {
   const v = Number(h ?? 0);
   if (v <= 0) return '0h';
   if (v < 1) return `${Math.round(v * 60)}m`;
-  return v < 10 ? `${v.toFixed(1)}h` : `${Math.round(v)}h`;
+  return v < 10 ? `${v.toFixed(1)}h` : `${Math.round(v).toLocaleString('en-GB')}h`;
 }
 
 function fmtMins(m: number): string {
@@ -125,13 +126,28 @@ const HELP: PageHelpContent = {
   title: 'Off-the-job hours',
   what: 'Every learner’s off-the-job training against the total their standard requires. Time spent learning in Elec-Mate is measured as it happens and counts; you approve it.',
   steps: [
-    { title: 'Approve app learning', body: 'One tap approves a learner, a day or the whole view. It is marked verified with your name.' },
-    { title: 'Leave out what does not count', body: 'Open a learner’s days and leave out time that does not meet the rules, with a reason they will see.' },
-    { title: 'Watch the monthly check', body: 'The rules expect some training every month. Learners with none this month are flagged.' },
+    {
+      title: 'Approve app learning',
+      body: 'One tap approves a learner, a day or the whole view. It is marked verified with your name.',
+    },
+    {
+      title: 'Leave out what does not count',
+      body: 'Open a learner’s days and leave out time that does not meet the rules, with a reason they will see.',
+    },
+    {
+      title: 'Watch the monthly check',
+      body: 'The rules expect some training every month. Learners with none this month are flagged.',
+    },
   ],
   notes: [
-    { title: 'Diary and work activities', body: 'What learners log themselves waits in the sign-off inbox for you to verify.' },
-    { title: 'Confirmed by apprentices', body: 'Register days and site diary days come to the apprentice as hours to confirm, so nobody types them twice. A register day kept to the lesson length counts straight away with the register marker’s name; anything else waits in the sign-off inbox. Each row says where it came from.' },
+    {
+      title: 'Diary and work activities',
+      body: 'What learners log themselves waits in Hours to verify.',
+    },
+    {
+      title: 'Confirmed by apprentices',
+      body: 'Register days and site diary days come to the apprentice as hours to confirm, so nobody types them twice. A register day kept to the lesson length counts straight away with the register marker’s name; anything else waits in Hours to verify. Each row says where it came from.',
+    },
   ],
   source: 'Apprenticeship funding rules 2025/26, paragraphs 77 to 94.',
 };
@@ -156,9 +172,23 @@ export default function CollegeOtjPage() {
     if (learnerOpened || rows.length === 0) return;
     const id = new URLSearchParams(window.location.search).get('learner');
     const hit = id ? rows.find((r) => r.college_student_id === id) : null;
-    if (hit) setOpenRow(hit);
+    if (hit) {
+      setOpenRow(hit);
+      openedFromLink.current = true;
+    }
     setLearnerOpened(true);
   }, [rows, learnerOpened]);
+  // Closing a sheet the inbox opened goes straight back to the inbox, not to
+  // the hours list underneath (opened cold, it just drops the ?learner).
+  const openedFromLink = useRef(false);
+  const smartBack = useSmartBack();
+  const closeLearner = () => {
+    setOpenRow(null);
+    if (openedFromLink.current) {
+      openedFromLink.current = false;
+      smartBack('/college/otj');
+    }
+  };
   const [confirmBulk, setConfirmBulk] = useState(false);
   const [approving, setApproving] = useState(false);
 
@@ -181,7 +211,12 @@ export default function CollegeOtjPage() {
   // whole-view approve follow it.
   const scope = useCollegeScope();
   const scopedRows = useMemo(
-    () => (scope.set ? rows.filter((r) => scope.inScope({ studentId: r.college_student_id, cohortId: r.cohort_id })) : rows),
+    () =>
+      scope.set
+        ? rows.filter((r) =>
+            scope.inScope({ studentId: r.college_student_id, cohortId: r.cohort_id })
+          )
+        : rows,
     [rows, scope]
   );
 
@@ -219,11 +254,13 @@ export default function CollegeOtjPage() {
   const totals = useMemo(() => {
     let week = 0;
     let toApprove = 0;
+    let signOff = 0;
     let toApproveLearners = 0;
     let behind = 0;
     let quiet = 0;
     for (const r of inCohort) {
       week += r.summary.app_learning_this_week_hours ?? 0;
+      signOff += r.summary.pending_hours ?? 0;
       if (r.unapproved_app_hours > 0) {
         toApprove += r.unapproved_app_hours;
         toApproveLearners += 1;
@@ -231,7 +268,7 @@ export default function CollegeOtjPage() {
       if (isBehind(r)) behind += 1;
       if (isQuiet(r)) quiet += 1;
     }
-    return { week, toApprove, toApproveLearners, behind, quiet };
+    return { week, toApprove, toApproveLearners, behind, quiet, signOff };
   }, [inCohort]);
 
   const countFor = (key: Filter) =>
@@ -291,7 +328,7 @@ export default function CollegeOtjPage() {
       'Counted hours',
       'Approved or verified hours',
       'App learning awaiting approval',
-      'Waiting in sign-off inbox',
+      'Waiting in Hours to verify',
       'App learning this week',
       'App learning last 30 days',
       'Forecast at end',
@@ -346,112 +383,69 @@ export default function CollegeOtjPage() {
 
   return (
     <HubPage ground="landing">
-      <HubMasthead
-        section="College"
-        title="Off-the-job hours"
-        backTo="/college?section=assessmenthub"
-        trailing={<PageHelpButton help={HELP} compact />}
-      />
+      <HubMasthead section="College" title="Off-the-job hours" backTo="/college" />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-        <HowItWorks help={HELP} />
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-2 gap-2.5 sm:flex sm:items-center"
-        >
-          <button
-            type="button"
-            onClick={() => setConfirmBulk(true)}
-            disabled={loading || totals.toApprove <= 0}
-            className="col-span-2 inline-flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white sm:w-auto"
-          >
-            {totals.toApprove > 0
-              ? `Approve ${fmtH(totals.toApprove)} of app learning`
-              : 'Nothing waiting to approve'}
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate('/college/otj/inbox')}
-            className={cn(neutralButtonCn, 'w-full px-2 sm:w-auto sm:px-4')}
-          >
-            Sign-off inbox
-          </button>
-          <button
-            type="button"
-            onClick={handleExport}
-            disabled={inCohort.length === 0}
-            className={cn(neutralButtonCn, 'w-full px-2 sm:w-auto sm:px-4')}
-          >
-            Export CSV
-          </button>
-        </motion.div>
-
-        <CollegeScopeTabs onChange={() => setCohort('all')} />
+        <CollegePageHeader
+          eyebrow="Off-the-job"
+          title={
+            loading
+              ? 'Gathering hours…'
+              : totals.toApprove > 0
+                ? `${fmtH(totals.toApprove)} of app learning to approve`
+                : 'All app learning approved'
+          }
+          description={
+            loading
+              ? 'Every learner’s off-the-job hours against the total their standard requires.'
+              : [
+                  `${inCohort.length} ${inCohort.length === 1 ? 'learner' : 'learners'}, ${fmtH(totals.week)} learning in the app this week`,
+                  totals.behind > 0
+                    ? `${totals.behind} behind the planned hours to date`
+                    : 'nobody behind',
+                  totals.quiet > 0 ? `${totals.quiet} with no training in ${MONTH_NAME}` : null,
+                  totals.signOff > 0
+                    ? `${fmtH(totals.signOff)} logged by learners waiting in Hours to verify`
+                    : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ') + '.'
+          }
+          help={HELP}
+          actions={
+            <>
+              <CollegeScopeTabs onChange={() => setCohort('all')} />
+              <button
+                type="button"
+                onClick={() => navigate('/college/otj/inbox')}
+                className={COLLEGE_BTN}
+              >
+                Hours to verify
+              </button>
+              {totals.toApprove > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setConfirmBulk(true)}
+                  disabled={loading}
+                  className={COLLEGE_BTN_PRIMARY}
+                >
+                  Approve {fmtH(totals.toApprove)}
+                </button>
+              )}
+            </>
+          }
+        />
 
         {cohorts.length > 1 && (
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-            {[['all', 'All cohorts'] as [string, string], ...cohorts].map(([id, label]) => {
-              const active = cohort === id;
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => setCohort(id)}
-                  aria-pressed={active}
-                  className={cn(
-                    chipBase,
-                    'inline-flex shrink-0 items-center px-3.5 text-[12.5px]',
-                    active ? 'border-elec-yellow bg-elec-yellow font-semibold text-black' : chipOff
-                  )}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
+          <QuietTabs
+            label="Filter by cohort"
+            value={cohort}
+            onChange={setCohort}
+            tabs={[
+              { key: 'all', label: 'All cohorts' },
+              ...cohorts.map(([id, label]) => ({ key: id, label })),
+            ]}
+          />
         )}
-
-        <HubKpiRow>
-          <HubKpi
-            accent
-            label="Learning this week"
-            value={loading ? '—' : fmtH(totals.week)}
-            verdict={
-              loading ? undefined : `across ${inCohort.length} learners, recorded by the app`
-            }
-          />
-          <HubKpi
-            label="To approve"
-            value={loading ? '—' : fmtH(totals.toApprove)}
-            verdict={
-              loading
-                ? undefined
-                : totals.toApproveLearners > 0
-                  ? `${totals.toApproveLearners} learners`
-                  : 'All approved'
-            }
-            onClick={() => setFilter('approve')}
-          />
-          <HubKpi
-            label="Behind"
-            value={loading ? '—' : String(totals.behind)}
-            verdict={loading ? undefined : 'below the planned hours to date'}
-            sentiment={totals.behind > 0 ? 'bad' : 'neutral'}
-            onClick={() => setFilter('behind')}
-          />
-          <HubKpi
-            label={`No training in ${MONTH_NAME}`}
-            value={loading ? '—' : String(totals.quiet)}
-            verdict={
-              loading
-                ? undefined
-                : 'the rules expect some every month; two months without needs a break in learning'
-            }
-            sentiment={totals.quiet > 0 ? 'bad' : 'neutral'}
-            onClick={() => setFilter('quiet')}
-          />
-        </HubKpiRow>
 
         <motion.section
           variants={containerVariants}
@@ -459,36 +453,21 @@ export default function CollegeOtjPage() {
           animate="visible"
           className="space-y-3"
         >
-          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <CollegeHeading>Learners</CollegeHeading>
-            <span className="text-[11px] font-semibold tabular-nums text-white">
-              {filtered.length} {filtered.length === 1 ? 'learner' : 'learners'}
-            </span>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
-          >
-            {FILTERS.map((f) => {
-              const active = filter === f.key;
-              return (
+          <motion.div variants={itemVariants}>
+            <CollegeSectionTitle
+              title="Learners"
+              sub="Behind first, then most waiting to approve. Tap one for their days."
+              action={
                 <button
-                  key={f.key}
                   type="button"
-                  onClick={() => setFilter(f.key)}
-                  aria-pressed={active}
-                  className={cn(
-                    chipBase,
-                    'inline-flex shrink-0 items-center gap-2 px-3.5 text-[12.5px]',
-                    active ? 'border-white bg-white font-semibold text-black' : chipOff
-                  )}
+                  onClick={handleExport}
+                  disabled={inCohort.length === 0}
+                  className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation disabled:opacity-50"
                 >
-                  {f.label}
-                  <span className="tabular-nums">{countFor(f.key)}</span>
+                  Export CSV
                 </button>
-              );
-            })}
+              }
+            />
           </motion.div>
 
           <motion.div variants={itemVariants}>
@@ -498,17 +477,24 @@ export default function CollegeOtjPage() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Find a learner"
               aria-label="Find a learner"
+              enterKeyHint="search"
               className={inputCn}
             />
           </motion.div>
 
-          <motion.div
-            variants={itemVariants}
-            className={cn(
-              '-mx-4 overflow-hidden border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x',
-              CARD_SURFACE
-            )}
-          >
+          <motion.div variants={itemVariants} className={COLLEGE_LIST}>
+            <QuietTabs
+              label="Filter learners"
+              value={filter}
+              onChange={setFilter}
+              className="mx-0 border-white/[0.06] px-2 sm:px-3"
+              tabs={FILTERS.map((f) => ({
+                key: f.key,
+                label: f.label,
+                count: countFor(f.key),
+                warn: f.key !== 'all',
+              }))}
+            />
             {loading ? (
               <div className="space-y-px animate-pulse">
                 {[0, 1, 2, 3, 4].map((i) => (
@@ -526,9 +512,14 @@ export default function CollegeOtjPage() {
                   : 'No learners match this view.'}
               </p>
             ) : (
-              <ul className="divide-y divide-white/[0.10]">
+              // One column on a phone; two on a wide screen so a long list
+              // doesn't stretch each bar across the whole page.
+              <ul className="-mb-px grid grid-cols-1 xl:grid-cols-2">
                 {filtered.map((r) => (
-                  <li key={r.college_student_id}>
+                  <li
+                    key={r.college_student_id}
+                    className="border-b border-white/[0.06] xl:odd:border-r"
+                  >
                     <LearnerRow row={r} onClick={() => setOpenRow(r)} />
                   </li>
                 ))}
@@ -539,7 +530,7 @@ export default function CollegeOtjPage() {
           <p className="text-[12px] leading-relaxed text-white">
             Time a learner spends learning in Elec-Mate is recorded as it happens and counts towards
             their off-the-job hours. Approving it marks it verified with your name. Site diary and
-            work activities they send you are in the sign-off inbox.
+            work activities they send you are in Hours to verify.
           </p>
         </motion.section>
 
@@ -548,7 +539,7 @@ export default function CollegeOtjPage() {
 
       <LearnerHoursSheet
         row={openRow}
-        onOpenChange={(o) => !o && setOpenRow(null)}
+        onOpenChange={(o) => !o && closeLearner()}
         onChanged={() => void load()}
         onOpenStudent={(id) =>
           navigate(`/college?section=student360&studentId=${encodeURIComponent(id)}#otj`)
@@ -556,7 +547,7 @@ export default function CollegeOtjPage() {
       />
 
       <FormSheet
-      width="wide"
+        width="wide"
         open={confirmBulk}
         onOpenChange={setConfirmBulk}
         eyebrow="Approve app learning"
@@ -617,53 +608,55 @@ function LearnerRow({ row, onClick }: { row: CollegeOtjRow; onClick: () => void 
   const behind = isBehind(row);
   const required = s.required_hours ?? 0;
   const pct = required > 0 ? Math.min(100, (s.counted_hours / required) * 100) : 0;
+  const status = !row.trained_this_month ? `No training in ${MONTH_NAME}` : STATUS_WORD[s.risk];
+  const statusWarn = behind || !row.trained_this_month;
 
+  // The name gets its own line (never cut to "Harvey Patel (fi…"); status,
+  // what's waiting and this week's time sit on the line under it in words.
   return (
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-5"
     >
       <span className="min-w-0 flex-1">
         <span className="flex items-baseline justify-between gap-3">
-          <span className="truncate text-[14px] font-semibold leading-tight text-white">
+          <span className="min-w-0 break-words text-[15px] font-semibold leading-snug text-white">
             {row.name}
           </span>
+          <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+            {fmtH(s.counted_hours)}
+            {required > 0 ? ` of ${fmtH(required)}` : ''}
+          </span>
+        </span>
+        <span className="mt-1 flex flex-wrap items-baseline gap-x-1 gap-y-0.5 text-[13px] leading-snug">
           <span
             className={cn(
-              'shrink-0 text-[13px] font-semibold tabular-nums',
-              behind ? 'text-elec-yellow' : 'text-white'
+              'font-semibold',
+              statusWarn
+                ? 'text-orange-300'
+                : s.risk === 'on_track'
+                  ? 'text-emerald-300'
+                  : 'text-white'
             )}
           >
-            {fmtH(s.counted_hours)}
-            {required > 0 ? ` / ${Math.round(required)}h` : ''}
+            {status}
           </span>
-        </span>
-        <span className="mt-1 block truncate text-[12px] leading-tight text-white">
-          {fmtH(s.app_learning_this_week_hours)} this week · {areasLine(row.areas_30_days)}
-        </span>
-        <span className="mt-2 flex items-center gap-2">
-          <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.10]">
-            <span
-              className={cn('block h-full rounded-full', behind ? 'bg-elec-yellow' : 'bg-white')}
-              style={{ width: `${pct}%` }}
-            />
-          </span>
-          {row.unapproved_app_hours > 0 ? (
-            <span className="shrink-0 rounded-full bg-elec-yellow px-2 py-0.5 text-[11px] font-semibold text-black">
-              {fmtH(row.unapproved_app_hours)} to approve
-            </span>
-          ) : (
-            <span className="shrink-0 text-[11px] font-medium text-white">
-              {!row.trained_this_month
-                ? `No training in ${MONTH_NAME}`
-                : behind
-                  ? 'Behind'
-                  : s.risk === 'on_track'
-                    ? 'On track'
-                    : (row.cohort_name ?? '')}
+          {row.unapproved_app_hours > 0 && (
+            <span className="font-semibold text-white">
+              · {fmtH(row.unapproved_app_hours)} to approve
             </span>
           )}
+          <span className="text-white">· {fmtH(s.app_learning_this_week_hours)} this week</span>
+        </span>
+        <span className="mt-0.5 line-clamp-2 block text-[12.5px] leading-snug text-white">
+          {areasLine(row.areas_30_days)}
+        </span>
+        <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-white/[0.10]">
+          <span
+            className={cn('block h-full rounded-full', behind ? 'bg-orange-500' : 'bg-white')}
+            style={{ width: `${pct}%` }}
+          />
         </span>
       </span>
       <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
@@ -768,19 +761,25 @@ function LearnerHoursSheet({
         }}
       />
       <FormSheet
-      width="wide"
+        width="wide"
         open={!!row}
         onOpenChange={onOpenChange}
         eyebrow={row.cohort_name ?? 'Off-the-job hours'}
         title={row.name}
         description={
           s.required_hours
-            ? `${fmtH(s.counted_hours)} of ${Math.round(s.required_hours)}h counted${
+            ? [
+                `${fmtH(s.counted_hours)} counted of ${fmtH(s.required_hours)} required`,
+                s.planned_to_date_hours != null
+                  ? `${fmtH(s.planned_to_date_hours)} planned by now`
+                  : null,
                 s.forecast_at_end_hours != null
-                  ? ` · on this pace ${fmtH(s.forecast_at_end_hours)} by the end`
-                  : ''
-              }`
-            : `${fmtH(s.counted_hours)} counted`
+                  ? `on this pace ${fmtH(s.forecast_at_end_hours)} by the end`
+                  : null,
+              ]
+                .filter(Boolean)
+                .join(' · ')
+            : `${fmtH(s.counted_hours)} counted. No required total is set for this learner.`
         }
         footer={
           <div className="grid grid-cols-2 gap-2.5">
@@ -811,52 +810,50 @@ function LearnerHoursSheet({
           </div>
         }
       >
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-            {[
-              ['Counted', fmtH(s.counted_hours)],
-              ['Approved or verified', fmtH(s.verified_hours)],
-              ['App learning to approve', fmtH(s.app_learning_hours)],
-              ['Waiting in sign-off inbox', fmtH(s.pending_hours)],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3"
-              >
-                <p className="text-[11px] font-medium text-white">{label}</p>
-                <p className="mt-1 text-[17px] font-semibold tabular-nums text-white">{value}</p>
-              </div>
-            ))}
+        {/* Wide screens: the summary and areas on the left, the days to
+            decide on the right, so neither runs the full sheet width. */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-8">
+          <div className="min-w-0 space-y-6 lg:sticky lg:top-0 lg:self-start">
+            {/* Said in words: the header already gives counted against the target. */}
+            <p className="text-[14px] leading-relaxed text-white">
+              {fmtH(s.verified_hours)} approved or verified.{' '}
+              {Number(s.app_learning_hours) > 0
+                ? `${fmtH(s.app_learning_hours)} of app learning waiting for your approval below`
+                : 'No app learning waiting for approval'}
+              {Number(s.pending_hours) > 0
+                ? `, and ${fmtH(s.pending_hours)} of work activities in Hours to verify.`
+                : '.'}
+            </p>
+
+            <div>
+              <h3 className="mb-2 text-[13px] font-semibold text-white">Last 30 days in the app</h3>
+              {areas.length === 0 ? (
+                <p className="text-[13px] text-white">No app learning in the last 30 days.</p>
+              ) : (
+                <ul className="space-y-2">
+                  {areas.map(([area, hours]) => {
+                    const max = Math.max(...areas.map(([, h]) => h));
+                    return (
+                      <li key={area} className="flex items-center gap-3">
+                        <span className="w-28 shrink-0 text-[13px] text-white">{area}</span>
+                        <span className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.08]">
+                          <span
+                            className="block h-full rounded-full bg-white"
+                            style={{ width: `${max > 0 ? (hours / max) * 100 : 0}%` }}
+                          />
+                        </span>
+                        <span className="w-12 shrink-0 text-right text-[13px] font-semibold tabular-nums text-white">
+                          {fmtH(hours)}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
           </div>
 
-          <div>
-            <h3 className="mb-2 text-[13px] font-semibold text-white">Last 30 days in the app</h3>
-            {areas.length === 0 ? (
-              <p className="text-[13px] text-white">No app learning in the last 30 days.</p>
-            ) : (
-              <ul className="space-y-2">
-                {areas.map(([area, hours]) => {
-                  const max = Math.max(...areas.map(([, h]) => h));
-                  return (
-                    <li key={area} className="flex items-center gap-3">
-                      <span className="w-28 shrink-0 text-[13px] text-white">{area}</span>
-                      <span className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.08]">
-                        <span
-                          className="block h-full rounded-full bg-elec-yellow"
-                          style={{ width: `${max > 0 ? (hours / max) * 100 : 0}%` }}
-                        />
-                      </span>
-                      <span className="w-12 shrink-0 text-right text-[13px] font-semibold tabular-nums text-white">
-                        {fmtH(hours)}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-
-          <div>
+          <div className="min-w-0">
             <h3 className="mb-2 text-[13px] font-semibold text-white">Waiting for your approval</h3>
             {loading ? (
               <p className="text-[13px] text-white">Loading…</p>
@@ -867,7 +864,10 @@ function LearnerHoursSheet({
             ) : (
               <ul className="divide-y divide-white/[0.10] rounded-2xl border border-white/[0.12]">
                 {days.map((d) => (
-                  <li key={d.day} className="flex items-start gap-3 px-3.5 py-3">
+                  <li
+                    key={d.day}
+                    className="flex flex-col gap-2 px-3.5 py-3 sm:flex-row sm:items-center sm:gap-3"
+                  >
                     <span className="min-w-0 flex-1">
                       <span className="flex items-baseline justify-between gap-3">
                         <span className="text-[14px] font-semibold text-white">
@@ -877,7 +877,7 @@ function LearnerHoursSheet({
                           {fmtMins(d.minutes)}
                         </span>
                       </span>
-                      <span className="mt-1 block text-[12px] leading-snug text-white">
+                      <span className="mt-1 block text-[12.5px] leading-snug text-white">
                         {d.activities
                           .slice(0, 4)
                           .map((a) => `${a.activity} · ${fmtMins(a.minutes)}`)
@@ -885,12 +885,12 @@ function LearnerHoursSheet({
                         {d.activities.length > 4 ? `  ·  ${d.activities.length - 4} more` : ''}
                       </span>
                     </span>
-                    <span className="flex shrink-0 gap-1.5">
+                    <span className="grid shrink-0 grid-cols-2 gap-2 sm:flex sm:gap-1.5">
                       <button
                         type="button"
                         onClick={() => setLeaveOut(d)}
                         disabled={busy !== null}
-                        className="h-11 touch-manipulation rounded-xl px-2.5 text-[12.5px] font-semibold text-white disabled:opacity-60"
+                        className="h-11 touch-manipulation rounded-xl px-3 text-[13px] font-semibold text-white hover:bg-white/[0.06] active:bg-white/[0.08] disabled:opacity-60"
                       >
                         Leave out
                       </button>
@@ -898,7 +898,7 @@ function LearnerHoursSheet({
                         type="button"
                         onClick={() => approve(d.day, d.time_entry_ids)}
                         disabled={busy !== null}
-                        className="h-11 touch-manipulation rounded-xl border border-white/[0.14] px-3 text-[12.5px] font-semibold text-white disabled:opacity-60"
+                        className="h-11 touch-manipulation rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white hover:border-elec-yellow active:bg-white/[0.06] disabled:opacity-60"
                       >
                         {busy === d.day ? '…' : 'Approve'}
                       </button>

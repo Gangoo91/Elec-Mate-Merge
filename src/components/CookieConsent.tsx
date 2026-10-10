@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { isDemoMode } from '@/lib/demoMode';
 import { Link, useLocation } from 'react-router-dom';
 import {
   storageGetSync,
@@ -29,8 +30,16 @@ const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
  */
 const NO_BANNER = /^\/(briefing-sign|safety-sign|permit-sign)\//;
 
+/*
+ * ELE-2079: the booking widget inside a firm's own website (?embed=1) is a
+ * frame on their page; a bar there covers the form and is about our site, not
+ * theirs. Not asking sets nothing, as above.
+ */
+const isEmbeddedBooking = (pathname: string, search: string) =>
+  pathname.startsWith('/book-visit/') && new URLSearchParams(search).get('embed') === '1';
+
 export const CookieConsent = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [showBanner, setShowBanner] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
@@ -85,7 +94,14 @@ export const CookieConsent = () => {
     });
   };
 
-  if (!showBanner || NO_BANNER.test(pathname)) return null;
+  // Demo accounts (ELE-1856) never see the bar; the demo is about the product.
+  if (
+    !showBanner ||
+    NO_BANNER.test(pathname) ||
+    isEmbeddedBooking(pathname, search) ||
+    isDemoMode()
+  )
+    return null;
 
   return (
     <AnimatePresence>

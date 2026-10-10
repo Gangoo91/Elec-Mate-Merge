@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { P_SEG_GROUP, pSeg } from '@/components/apprentice-hub/portfolio2/ui';
 import {
   getCategoriesBySection,
   sectionLabels,
@@ -41,32 +42,24 @@ const SiteAssessmentWizard = ({ progress }: SiteAssessmentWizardProps) => {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setCriticalOnly(false)}
-          aria-pressed={!criticalOnly}
-          className={cn(
-            'h-11 rounded-xl border px-3.5 text-[13px] transition-colors touch-manipulation',
-            !criticalOnly
-              ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-              : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/25'
-          )}
-        >
-          All checks
-        </button>
-        <button
-          type="button"
-          onClick={() => setCriticalOnly(true)}
-          aria-pressed={criticalOnly}
-          className={cn(
-            'h-11 rounded-xl border px-3.5 text-[13px] transition-colors touch-manipulation',
-            criticalOnly
-              ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-              : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/25'
-          )}
-        >
-          Critical only · {criticalCount}
-        </button>
+        <div className={P_SEG_GROUP} role="group" aria-label="Which checks">
+          <button
+            type="button"
+            onClick={() => setCriticalOnly(false)}
+            aria-pressed={!criticalOnly}
+            className={pSeg(!criticalOnly)}
+          >
+            All checks
+          </button>
+          <button
+            type="button"
+            onClick={() => setCriticalOnly(true)}
+            aria-pressed={criticalOnly}
+            className={pSeg(criticalOnly)}
+          >
+            Critical only · {criticalCount}
+          </button>
+        </div>
         {criticalOnly && (
           <span className="text-[12px] leading-snug text-white">
             Showing the checks that injure people. Work the rest when you have time.
@@ -91,10 +84,8 @@ const SiteAssessmentWizard = ({ progress }: SiteAssessmentWizardProps) => {
         return (
           <section key={section} className="space-y-4">
             <div className="flex items-baseline gap-2.5 border-b border-white/[0.08] pb-2">
-              <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                {sectionConfig.label}
-              </h2>
-              <span className="font-mono text-[11px] tabular-nums text-white">{sectionTotal}</span>
+              <h2 className="text-[13px] font-semibold text-elec-yellow">{sectionConfig.label}</h2>
+              <span className="text-[12.5px] tabular-nums text-white">{sectionTotal}</span>
             </div>
 
             {categories.map((category) => (

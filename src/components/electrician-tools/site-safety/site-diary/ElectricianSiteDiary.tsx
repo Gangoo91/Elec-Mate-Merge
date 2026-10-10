@@ -43,6 +43,13 @@ import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { JobLinkField } from '../common/JobLinkField';
+import { FirmRecordBar } from '../common/FirmRecordBar';
+import {
+  isFirmScope,
+  useFirmManagerIds,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '../common/SafetyScope';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface ElectricianSiteDiaryProps {
@@ -170,6 +177,10 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
   const [recorderName, setRecorderName] = useState('');
   const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the entry with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
 
   const { data: activePermits = [] } = useActivePermits();
   const { data: approvedRams = [] } = useRAMSDocumentsByStatus('approved');
@@ -224,6 +235,13 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
   const { data: entries = [], isLoading, refetch } = useElectricianSiteDiary();
   const createEntry = useCreateDiaryEntry();
   const deleteEntry = useDeleteDiaryEntry();
+
+  // Employer Hub: a worker's shared entry is read and countersigned, not
+  // changed. Same rule as useFirmRecordAccess, applied per row of the list.
+  const safetyScope = useSafetyScope();
+  const { ids: firmManagerIds } = useFirmManagerIds();
+  const canEditEntry = (entry: FirmRecordFields) =>
+    !isFirmScope(safetyScope) || !entry.user_id || firmManagerIds.has(entry.user_id);
 
   const calendarDays = useMemo(() => generateCalendarDays(today), [today]);
 
@@ -312,6 +330,8 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
     setRecorderName('');
     setLinkedJobId(null);
     setLinkedJobTitle(null);
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
     clearDraft();
   };
 
@@ -324,6 +344,8 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
     setSelectedPermitIds(entry.permit_ids ?? []);
     setLinkedJobId(entry.job_id ?? null);
     setLinkedJobTitle(jobTitleFor(entry.job_id ?? null));
+    setEmployerJobId(entry.employer_job_id ?? null);
+    setEmployerJobTitle(null);
     setStartTime('');
     setEndTime('');
     setWorkCompleted('');
@@ -349,7 +371,12 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
   const duplicateEntry =
     siteNameValue.length > 0 &&
     entries.some(
-      (e: SiteDiaryEntry) => e.entry_date === selectedDateKey && e.site_name === siteNameValue
+      (e: SiteDiaryEntry) =>
+        e.entry_date === selectedDateKey &&
+        e.site_name === siteNameValue &&
+        // The rule is per person: in the Employer Hub a teammate's shared entry
+        // for the same site and day is not a clash.
+        (!e.user_id || !user?.id || e.user_id === user.id)
     );
 
   const canSubmit = validation.isValid && timeValid && !duplicateEntry;
@@ -379,6 +406,7 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
       // signature had no name against it on any entry ever recorded.
       recorder_name: recorderName.trim() || null,
       job_id: linkedJobId,
+      ...(employerJobId ? { employer_job_id: employerJobId } : {}),
     });
     haptic.success();
     resetForm();
@@ -543,6 +571,15 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
                     onSelect={(id, title) => {
                       setLinkedJobId(id);
                       setLinkedJobTitle(title);
+                      if (title && !(validation.fields.siteName?.value ?? '').trim()) {
+                        validation.setValue('siteName', title);
+                      }
+                    }}
+                    employerJobId={employerJobId}
+                    employerJobTitle={employerJobTitle}
+                    onSelectEmployerJob={(id, title) => {
+                      setEmployerJobId(id);
+                      setEmployerJobTitle(title);
                       if (title && !(validation.fields.siteName?.value ?? '').trim()) {
                         validation.setValue('siteName', title);
                       }
@@ -824,15 +861,19 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
                               onAction: () => handleDuplicate(entry),
                             },
                           ]}
-                          rightActions={[
-                            {
-                              icon: Trash2,
-                              label: 'Delete',
-                              color: 'bg-red-500',
-                              textColor: 'text-white',
-                              onAction: () => setDeleteTarget(entry.id),
-                            },
-                          ]}
+                          rightActions={
+                            canEditEntry(entry)
+                              ? [
+                                  {
+                                    icon: Trash2,
+                                    label: 'Delete',
+                                    color: 'bg-red-500',
+                                    textColor: 'text-white',
+                                    onAction: () => setDeleteTarget(entry.id),
+                                  },
+                                ]
+                              : []
+                          }
                         >
                           <SafetyListCard>
                             <SafetyListRow
@@ -861,6 +902,12 @@ export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryPro
                                   )}
                                 </>
                               }
+                            />
+                            <FirmRecordBar
+                              table="electrician_site_diary"
+                              row={entry}
+                              invalidate={[['electrician-site-diary']]}
+                              className="mx-5 mb-3 block sm:mx-6"
                             />
                           </SafetyListCard>
                         </SwipeableListItem>

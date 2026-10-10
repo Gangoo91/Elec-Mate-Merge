@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
+import { CARD_BASE, CARD_SURFACE } from '@/components/ui/card-recipe';
 import type { Tool } from '@/data/professional-tools/types';
 
 interface ToolListSectionProps {
@@ -15,7 +15,7 @@ const PRIORITY: Record<Tool['priority'], { label: string; className: string }> =
   essential: {
     label: 'Essential',
     // The one thing an apprentice is scanning for: what do I have to own.
-    className: 'border-elec-yellow/45 bg-elec-yellow/10 text-elec-yellow',
+    className: 'border-white/[0.08] bg-white/[0.06] text-elec-yellow',
   },
   recommended: {
     label: 'Recommended',
@@ -30,7 +30,7 @@ const PRIORITY: Record<Tool['priority'], { label: string; className: string }> =
 const Chip = ({ children, className }: { children: React.ReactNode; className?: string }) => (
   <span
     className={cn(
-      'rounded-md border px-2 py-0.5 text-[11px] font-medium leading-tight whitespace-nowrap',
+      'rounded-md border px-2 py-0.5 text-[12.5px] font-medium leading-tight whitespace-nowrap',
       'border-white/10 bg-white/[0.03] text-white',
       className
     )}
@@ -71,7 +71,12 @@ const ToolListSection = ({ title, tools }: ToolListSectionProps) => {
           return (
             <article
               key={tool.name}
-              className={cn(CARD_BASE, CARD_NEUTRAL, 'flex flex-col gap-2.5 p-4 sm:p-5')}
+              className={cn(
+                CARD_BASE,
+                CARD_SURFACE,
+                'border-white/[0.08]',
+                'flex flex-col gap-2.5 p-4 sm:p-5'
+              )}
             >
               <div className="flex items-start justify-between gap-2">
                 <h4 className="text-[14.5px] font-semibold leading-tight tracking-tight text-white">
@@ -80,7 +85,7 @@ const ToolListSection = ({ title, tools }: ToolListSectionProps) => {
                 <Chip className={priority.className}>{priority.label}</Chip>
               </div>
 
-              <p className="text-[13.5px] leading-relaxed text-white">{tool.description}</p>
+              <p className="text-[14px] leading-relaxed text-white">{tool.description}</p>
 
               {/* Price and standard are the two facts people came for, so they
                   get their own row rather than being lost in the prose. */}
@@ -99,10 +104,8 @@ const ToolListSection = ({ title, tools }: ToolListSectionProps) => {
 
               {tool.apprenticeTip && (
                 <div className="mt-auto rounded-lg border-l-[3px] border-l-elec-yellow border-y border-r border-white/[0.08] bg-white/[0.03] p-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                    On site
-                  </span>
-                  <p className="mt-1 text-[13px] leading-relaxed text-white">
+                  <span className="text-[13px] font-semibold text-elec-yellow">On site</span>
+                  <p className="mt-1 text-[14px] leading-relaxed text-white">
                     {tool.apprenticeTip}
                   </p>
                 </div>

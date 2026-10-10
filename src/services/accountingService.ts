@@ -41,6 +41,7 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
     'Gross Pay',
     'Leave Days',
     'Leave Detail',
+    ...PAY_LAW_HEADERS,
   ];
 
   const rows = entries.map((e) => [
@@ -54,6 +55,7 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
     e.grossPay.toFixed(2),
     e.leaveDays.toFixed(1),
     csvCell(e.leaveDetail),
+    ...payLawCells(e),
   ]);
 
   return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
@@ -71,6 +73,7 @@ export const formatForSage = (entries: PayrollEntry[]): string => {
     'Rate',
     'Total',
     'Hol Days',
+    ...PAY_LAW_HEADERS,
   ];
 
   const rows = entries.map((e) => [
@@ -83,6 +86,7 @@ export const formatForSage = (entries: PayrollEntry[]): string => {
     e.hourlyRate.toFixed(2),
     e.grossPay.toFixed(2),
     e.leaveDays.toFixed(1),
+    ...payLawCells(e),
   ]);
 
   return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
@@ -99,6 +103,7 @@ export const formatForQuickBooks = (entries: PayrollEntry[]): string => {
     'Gross Wages',
     'Leave Days',
     'Job Allocations',
+    ...PAY_LAW_HEADERS,
   ];
 
   const rows = entries.map((e) => {
@@ -113,6 +118,7 @@ export const formatForQuickBooks = (entries: PayrollEntry[]): string => {
       e.grossPay.toFixed(2),
       e.leaveDays.toFixed(1),
       csvCell(jobAllocations),
+      ...payLawCells(e),
     ];
   });
 
@@ -136,6 +142,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
     'Gross Pay',
     'Leave Days',
     'Leave Detail',
+    ...PAY_LAW_HEADERS,
   ];
 
   const payTypeLabel: Record<PayrollEntry['payType'], string> = {
@@ -163,6 +170,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
       e.grossPay.toFixed(2),
       e.leaveDays.toFixed(1),
       csvCell(e.leaveDetail),
+      ...payLawCells(e),
     ];
   });
 
@@ -200,6 +208,7 @@ export const formatHoursOnlyCSV = (entries: PayrollEntry[]): string => {
     'Leave Days',
     'Leave Detail',
     'Job Allocations',
+    ...HOURS_LAW_HEADERS,
   ];
   const rows = entries.map((e) => [
     e.employeeId,
@@ -212,9 +221,41 @@ export const formatHoursOnlyCSV = (entries: PayrollEntry[]): string => {
     e.leaveDays.toFixed(1),
     csvCell(e.leaveDetail),
     csvCell(e.jobBreakdown.map((j) => `${j.jobTitle}: ${j.hours.toFixed(2)}h`).join('; ')),
+    ...hoursLawCells(e),
   ]);
   return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
 };
+
+/* ELE-2062: holiday and SSP columns, added at the END of every file so an
+   import mapping set up on the old columns keeps working. */
+const num2 = (n: number | null | undefined) => (n == null ? '' : n.toFixed(2));
+const PAY_LAW_HEADERS = [
+  'Holiday Hours',
+  'Holiday Pay',
+  'Holiday Accrued Hours',
+  'Rolled-up Holiday Pay',
+  'SSP Days',
+  'SSP Pay',
+  'Holiday/SSP Estimate',
+  'Holiday/SSP Notes',
+];
+const payLawCells = (e: PayrollEntry): string[] => [
+  num2(e.holidayHours),
+  num2(e.holidayPay),
+  num2(e.holidayAccruedHours),
+  num2(e.rolledUpHolidayPay),
+  e.sspDays != null ? String(e.sspDays) : '',
+  num2(e.sspPay),
+  e.payLawEstimate ? 'Estimate' : '',
+  csvCell(e.payLawNotes ?? ''),
+];
+const HOURS_LAW_HEADERS = ['Holiday Hours', 'Holiday Accrued Hours', 'SSP Days', 'Notes'];
+const hoursLawCells = (e: PayrollEntry): string[] => [
+  num2(e.holidayHours),
+  num2(e.holidayAccruedHours),
+  e.sspDays != null ? String(e.sspDays) : '',
+  csvCell(e.payLawNotes ?? ''),
+];
 
 /** Quote a CSV cell — names like "Smith, J" or a job called 'Unit 4 "B"' must
  *  not split the row in Excel/Xero. */

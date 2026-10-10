@@ -20,6 +20,7 @@ const Walkthrough = lazyWithRetry(() => import('@/pages/Walkthrough'));
 const LandingPage = lazyWithRetry(() => import('@/pages/LandingPage'));
 const Index = lazyWithRetry(() => import('@/pages/Index'));
 const SignIn = lazyWithRetry(() => import('@/pages/auth/SignIn'));
+const MicrosoftSignInComplete = lazyWithRetry(() => import('@/pages/auth/MicrosoftSignInComplete'));
 const SignUp = lazyWithRetry(() => import('@/pages/auth/SignUp'));
 const InviteLanding = lazyWithRetry(() => import('@/pages/InviteLanding'));
 const ForgotPassword = lazyWithRetry(() => import('@/pages/auth/ForgotPassword'));
@@ -76,6 +77,8 @@ const LegacyStudentRedirect = () => {
 };
 
 const PublicBooking = lazyWithRetry(() => import('@/pages/public/PublicBooking'));
+// ELE-2079 firm online booking: Google profile Book link and website embed.
+const BookVisitPage = lazyWithRetry(() => import('@/pages/public/BookVisitPage'));
 const AgreementSignPage = lazyWithRetry(() => import('@/pages/public/AgreementSignPage'));
 const PublicElecIdView = lazyWithRetry(() => import('@/pages/public/PublicElecIdView'));
 const SupervisorVerificationPage = lazyWithRetry(
@@ -83,12 +86,25 @@ const SupervisorVerificationPage = lazyWithRetry(
 );
 const PhotoSharePage = lazyWithRetry(() => import('@/pages/public/PhotoSharePage'));
 const ScopeSharePage = lazyWithRetry(() => import('@/pages/public/ScopeSharePage'));
+const FirmPackSharePage = lazyWithRetry(() => import('@/pages/public/FirmPackSharePage'));
 const CompletionSignOffPage = lazyWithRetry(() => import('@/pages/public/CompletionSignOffPage'));
 const DangerNoticeSignPage = lazyWithRetry(() => import('@/pages/public/DangerNoticeSignPage'));
 const SharedPortfolioView = lazyWithRetry(() => import('@/pages/public/SharedPortfolioView'));
 const WitnessStatementPage = lazyWithRetry(() => import('@/pages/public/WitnessStatementPage'));
 const OtjStatementPage = lazyWithRetry(() => import('@/pages/public/OtjStatementPage'));
+const TrainingPlanSignPage = lazyWithRetry(() => import('@/pages/public/TrainingPlanSignPage'));
+// ELE-2088: onboarding links (learner and employer) and the college's ready-to-start list
+const OnboardingStartPage = lazyWithRetry(() => import('@/pages/public/OnboardingStartPage'));
+const CollegeOnboardingPage = lazyWithRetry(() => import('@/pages/college/CollegeOnboardingPage'));
 const GatewayDeclarationPage = lazyWithRetry(() => import('@/pages/public/GatewayDeclarationPage'));
+// ELE-2050 / ELE-2049: NET's AM2S checklist (employer link, college page) and AM2 practice on site
+const NetChecklistSignPage = lazyWithRetry(() => import('@/pages/public/NetChecklistSignPage'));
+const CollegeNetChecklistPage = lazyWithRetry(
+  () => import('@/pages/college/CollegeNetChecklistPage')
+);
+const CollegeAm2ExposurePage = lazyWithRetry(
+  () => import('@/pages/college/CollegeAm2ExposurePage')
+);
 const AssessorInvitePage = lazyWithRetry(() => import('@/pages/public/AssessorInvitePage'));
 const AssessorWorkspacePage = lazyWithRetry(() => import('@/pages/assessor/AssessorWorkspacePage'));
 const InvoiceMarkPaid = lazyWithRetry(() => import('@/pages/public/InvoiceMarkPaid'));
@@ -99,6 +115,7 @@ const InvoiceMarkPaid = lazyWithRetry(() => import('@/pages/public/InvoiceMarkPa
 // success_urls that reference the old path don't 404.
 const BookingSlotPickerRedirect = lazyWithRetry(() => import('@/pages/public/BookingSlotRedirect'));
 const ForCollegesPage = lazyWithRetry(() => import('@/pages/public/ForCollegesPage'));
+const DemoTryPage = lazyWithRetry(() => import('@/pages/public/DemoTryPage'));
 const StoryPage = lazyWithRetry(() => import('@/pages/public/StoryPage'));
 const LaTeXPDFGeneratorPage = lazyWithRetry(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazyWithRetry(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
@@ -134,6 +151,7 @@ const AdminRevenue = lazyWithRetry(() => import('@/pages/Admin/AdminRevenue'));
 const AdminMate = lazyWithRetry(() => import('@/pages/Admin/AdminMate'));
 const AdminColleges = lazyWithRetry(() => import('@/pages/Admin/AdminColleges'));
 const AdminWebsites = lazyWithRetry(() => import('@/pages/Admin/AdminWebsites'));
+const AdminMigrations = lazyWithRetry(() => import('@/pages/Admin/AdminMigrations'));
 const AdminEmployers = lazyWithRetry(() => import('@/pages/Admin/AdminEmployers'));
 const AdminMateUser = lazyWithRetry(() => import('@/pages/Admin/AdminMateUser'));
 const AdminEmailLogs = lazyWithRetry(() => import('@/pages/Admin/AdminEmailLogs'));
@@ -194,7 +212,11 @@ const CollegeOtjPage = lazyWithRetry(() => import('@/pages/college/CollegeOtjPag
 const OtjInboxPage = lazyWithRetry(() => import('@/pages/college/OtjInboxPage'));
 const CollegeReviewsPage = lazyWithRetry(() => import('@/pages/college/CollegeReviewsPage'));
 const CollegeValuePage = lazyWithRetry(() => import('@/pages/college/CollegeValuePage'));
+const CollegeTryOnPhonePage = lazyWithRetry(() => import('@/pages/college/CollegeTryOnPhonePage'));
+const CollegeBillingPage = lazyWithRetry(() => import('@/pages/college/CollegeBillingPage'));
 const CollegeHelpPage = lazyWithRetry(() => import('@/pages/college/CollegeHelpPage'));
+// ELE-1972 / ELE-1915 — security and procurement pack for college IT, DPO and procurement
+const CollegeTrustPage = lazyWithRetry(() => import('@/pages/college/CollegeTrustPage'));
 const CollegeEvidencePackPage = lazyWithRetry(
   () => import('@/pages/college/CollegeEvidencePackPage')
 );
@@ -211,6 +233,13 @@ const CurriculumSettingsPage = lazyWithRetry(
 );
 const OperationalSettingsPage = lazyWithRetry(
   () => import('@/pages/college/OperationalSettingsPage')
+);
+// ELE-1884 exports + read API + ILR fields; ELE-1974 evidence import.
+const CollegeDataPage = lazyWithRetry(() => import('@/pages/college/CollegeDataPage'));
+const CollegeMisSyncPage = lazyWithRetry(() => import('@/pages/college/CollegeMisSyncPage'));
+const CollegeUnitsPage = lazyWithRetry(() => import('@/pages/college/CollegeUnitsPage'));
+const CollegeEvidenceImportPage = lazyWithRetry(
+  () => import('@/pages/college/CollegeEvidenceImportPage')
 );
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazyWithRetry(() => import('@/pages/legal/PrivacyPolicy'));
@@ -558,6 +587,15 @@ const AppRouter = () => {
               </LazyRoute>
             }
           />
+          {/* ELE-1971: return from Sign in with Microsoft */}
+          <Route
+            path="/auth/microsoft"
+            element={
+              <LazyRoute>
+                <MicrosoftSignInComplete />
+              </LazyRoute>
+            }
+          />
           <Route
             path="/auth/signup"
             element={
@@ -771,6 +809,14 @@ const AppRouter = () => {
               </LazyRoute>
             }
           />
+          <Route
+            path="/book-visit/:key"
+            element={
+              <LazyRoute>
+                <BookVisitPage />
+              </LazyRoute>
+            }
+          />
           {/* ELE-430 — public signing page for maintenance agreements. The
               token addresses one contract; nothing else is reachable. */}
           <Route
@@ -811,6 +857,24 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <ForCollegesPage />
+              </LazyRoute>
+            }
+          />
+          {/* ELE-1854 — "Try it on your phone": a visitor's phone opens the
+            presenter's QR here; /try alone is the end-of-visit page. */}
+          <Route
+            path="/try/:token"
+            element={
+              <LazyRoute>
+                <DemoTryPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/try"
+            element={
+              <LazyRoute>
+                <DemoTryPage />
               </LazyRoute>
             }
           />
@@ -866,10 +930,35 @@ const AppRouter = () => {
             }
           />
           <Route
+            path="/training-plan/sign/:token"
+            element={
+              <LazyRoute>
+                <TrainingPlanSignPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/start/:token"
+            element={
+              <LazyRoute>
+                <OnboardingStartPage />
+              </LazyRoute>
+            }
+          />
+          <Route
             path="/gateway-declaration/:token"
             element={
               <LazyRoute>
                 <GatewayDeclarationPage />
+              </LazyRoute>
+            }
+          />
+          {/* ELE-2050 — the employer signs NET's AM2S v1 checklist, no account */}
+          <Route
+            path="/net-checklist-sign/:token"
+            element={
+              <LazyRoute>
+                <NetChecklistSignPage />
               </LazyRoute>
             }
           />
@@ -919,6 +1008,14 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <ScopeSharePage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/firm-pack/:token"
+            element={
+              <LazyRoute>
+                <FirmPackSharePage />
               </LazyRoute>
             }
           />
@@ -1837,6 +1934,14 @@ const AppRouter = () => {
                 }
               />
               <Route
+                path="migrations"
+                element={
+                  <LazyRoute>
+                    <AdminMigrations />
+                  </LazyRoute>
+                }
+              />
+              <Route
                 path="employers"
                 element={
                   <LazyRoute>
@@ -2622,6 +2727,40 @@ const AppRouter = () => {
               }
             />
 
+            {/* ELE-2050 — NET's AM2S v1 checklist and booking pack for one learner */}
+            <Route
+              path="college/net-checklist/:studentId"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeNetChecklistPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+            {/* ELE-2088 — ready to start: enrolment and eligibility, every learner */}
+            <Route
+              path="college/onboarding"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeOnboardingPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+            {/* ELE-2049 — AM2 practice on site, every learner */}
+            <Route
+              path="college/am2-exposure"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeAm2ExposurePage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+
             {/* ELE-1980 — help for college staff: answers + message support */}
             <Route
               path="college/help"
@@ -2633,6 +2772,17 @@ const AppRouter = () => {
                 </LazyRoute>
               }
             />
+            {/* ELE-1972 — security and procurement pack (DPIA, sub-processors, accessibility) */}
+            <Route
+              path="college/trust"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeTrustPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
             {/* ELE-1858 — what Elec-Mate did for the college this month */}
             <Route
               path="college/value"
@@ -2640,6 +2790,28 @@ const AppRouter = () => {
                 <LazyRoute>
                   <CollegeGuard>
                     <CollegeValuePage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+            {/* ELE-1854 — presenter's QR for "Try it on your phone" (demo college only) */}
+            <Route
+              path="college/try-on-phone"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeTryOnPhonePage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+            {/* ELE-1922 — learners counted once a year, invoices, renewal */}
+            <Route
+              path="college/billing"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeBillingPage />
                   </CollegeGuard>
                 </LazyRoute>
               }
@@ -2722,6 +2894,54 @@ const AppRouter = () => {
                 <LazyRoute>
                   <CollegeGuard>
                     <OperationalSettingsPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+
+            {/* ELE-1884 Data and API: exports, ILR fields, read API keys. */}
+            <Route
+              path="college/settings/data"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeDataPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+
+            {/* ELE-2058 MIS sync: saved import mappings for MIS export files. */}
+            <Route
+              path="college/settings/mis"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeMisSyncPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+
+            {/* ELE-2053 Apprenticeship Units (ILR programme type 34). */}
+            <Route
+              path="college/units"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeUnitsPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+
+            {/* ELE-1974 Bring evidence across from another e-portfolio's export. */}
+            <Route
+              path="college/import"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeEvidenceImportPage />
                   </CollegeGuard>
                 </LazyRoute>
               }

@@ -106,10 +106,8 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   const radiusOptions = [5, 10, 25, 50, 100];
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        Find courses near you
-      </span>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+      <span className="text-[13px] font-semibold text-white">Find courses near you</span>
 
       <div className="space-y-2">
         <Label htmlFor="location-search" className="text-[12px] text-white">
@@ -200,9 +198,9 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
         </div>
       </div>
 
-      <p className="text-[12px] text-white leading-relaxed">
-        Use the search above to find training courses and colleges near your location. Results
-        will be filtered based on your selected radius.
+      <p className="text-[14px] text-white leading-relaxed">
+        Use the search above to find training courses and colleges near your location. Results will
+        be filtered based on your selected radius.
       </p>
     </div>
   );

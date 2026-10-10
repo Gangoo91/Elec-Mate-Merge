@@ -2,6 +2,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ChevronRight, Download, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { QuietTabs } from '@/components/college/quality/QualityChoices';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import { HowItWorks, PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { inputCn } from '@/components/forms/fieldStyles';
@@ -39,9 +40,9 @@ const HELP: PageHelpContent = {
   title: 'The evidence pack',
   what: (
     <>
-      Everything the apprenticeship funding rules say a college must hold for each apprentice, checked live against
-      your records. It replaces the folder you keep for an audit: what is in place, what is missing, and who it affects.
-      Nothing to keep up to date by hand.
+      Everything the apprenticeship funding rules say a college must hold for each apprentice,
+      checked live against your records. It replaces the folder you keep for an audit: what is in
+      place, what is missing, and who it affects. Nothing to keep up to date by hand.
     </>
   ),
   steps: [
@@ -67,8 +68,16 @@ const HELP: PageHelpContent = {
     { swatch: 'bg-red-500', label: 'Missing', body: 'The rules need it now.' },
     { swatch: 'bg-orange-500', label: 'Needs action', body: 'Unsigned, expired or out of step.' },
     { swatch: 'bg-white', label: 'Due soon', body: 'For example a training plan by day 42.' },
-    { swatch: 'border border-white/[0.3]', label: 'Not yet due', body: 'Comes later in the programme.' },
-    { swatch: 'border border-dashed border-white/[0.3]', label: 'Not needed', body: 'Does not apply to this learner.' },
+    {
+      swatch: 'border border-white/[0.3]',
+      label: 'Not yet due',
+      body: 'Comes later in the programme.',
+    },
+    {
+      swatch: 'border border-dashed border-white/[0.3]',
+      label: 'Not needed',
+      body: 'Does not apply to this learner.',
+    },
   ],
   notes: [
     {
@@ -82,9 +91,10 @@ const HELP: PageHelpContent = {
   ],
   source: (
     <>
-      Built from the Apprenticeship funding rules, August 2025 to July 2026: paragraphs 309 to 318 on evidence, and the
-      evidence requirements throughout (eligibility, the agreement, the training plan, off-the-job training, progress
-      reviews, gateway and completion).
+      Built from the Apprenticeship funding rules of each learner&apos;s start year (2026/27:
+      paragraphs 344 to 354 on evidence; 2025/26: 309 to 318; 2024/25: 282 to 291), and the evidence
+      requirements throughout (eligibility, the agreement, the training plan, off-the-job training,
+      progress reviews, gateway and completion).
     </>
   ),
 };
@@ -148,26 +158,34 @@ export default function CollegeEvidencePackPage() {
   const collegeId = profile?.college_id ?? null;
   const { rows, loading, error, reload } = useEvidenceBoard(collegeId);
   const [view, setView] = useState<View>(() =>
-    typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches ? 'matrix' : 'evidence'
+    typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches
+      ? 'matrix'
+      : 'evidence'
   );
   const [cohort, setCohort] = useState('all');
   const [search, setSearch] = useState('');
   // ?requirements=1 opens the college's requirements straight away.
-  const [reqOpen, setReqOpen] = useState(() => new URLSearchParams(window.location.search).get('requirements') === '1');
+  const [reqOpen, setReqOpen] = useState(
+    () => new URLSearchParams(window.location.search).get('requirements') === '1'
+  );
 
   const cohorts = useMemo(() => {
     const m = new Map<string, string>();
     for (const r of rows) if (r.cohort_id) m.set(r.cohort_id, r.cohort ?? 'Cohort');
     return [...m.entries()].sort((a, b) => a[1].localeCompare(b[1]));
   }, [rows]);
-  const inScope = useMemo(() => (cohort === 'all' ? rows : rows.filter((r) => r.cohort_id === cohort)), [rows, cohort]);
+  const inScope = useMemo(
+    () => (cohort === 'all' ? rows : rows.filter((r) => r.cohort_id === cohort)),
+    [rows, cohort]
+  );
 
   // Every evidence item seen across the learners in view, in stage order.
   const catalog = useMemo(() => {
     const m = new Map<string, { key: string; title: string; stage: ItemGroup | 'custom' }>();
     for (const r of inScope)
       for (const c of r.catalog ?? [])
-        if (!m.has(c.key)) m.set(c.key, { key: c.key, title: c.title, stage: c.custom ? 'custom' : c.group });
+        if (!m.has(c.key))
+          m.set(c.key, { key: c.key, title: c.title, stage: c.custom ? 'custom' : c.group });
     return STAGE_ORDER.flatMap((st) => [...m.values()].filter((c) => c.stage === st));
   }, [inScope]);
 
@@ -175,7 +193,15 @@ export default function CollegeEvidencePackPage() {
   const perItem = useMemo(() => {
     const out = new Map<string, Record<ItemStatus, number> & { applicable: number }>();
     for (const c of catalog) {
-      const tally = { ok: 0, missing: 0, attention: 0, due: 0, not_yet_due: 0, not_applicable: 0, applicable: 0 };
+      const tally = {
+        ok: 0,
+        missing: 0,
+        attention: 0,
+        due: 0,
+        not_yet_due: 0,
+        not_applicable: 0,
+        applicable: 0,
+      };
       for (const r of inScope) {
         const st = r.statuses?.[c.key];
         if (!st) continue;
@@ -223,7 +249,15 @@ export default function CollegeEvidencePackPage() {
     };
     const lines = [['Learner', 'Cohort', ...catalog.map((c) => c.title)].map(q).join(',')];
     for (const r of inScope)
-      lines.push([r.name, r.cohort, ...catalog.map((c) => (r.statuses?.[c.key] ? STATUS_LABEL[r.statuses[c.key]] : ''))].map(q).join(','));
+      lines.push(
+        [
+          r.name,
+          r.cohort,
+          ...catalog.map((c) => (r.statuses?.[c.key] ? STATUS_LABEL[r.statuses[c.key]] : '')),
+        ]
+          .map(q)
+          .join(',')
+      );
     try {
       const blob = new Blob(['﻿', lines.join('\n')], { type: 'text/csv;charset=utf-8' });
       const url = URL.createObjectURL(blob);
@@ -248,16 +282,18 @@ export default function CollegeEvidencePackPage() {
         {/* Hero: where the college stands, what this is, the two actions */}
         <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0 max-w-2xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">Funding evidence</p>
+            <p className="text-[13px] font-semibold text-elec-yellow">Funding evidence</p>
             <div className="mt-2 flex items-start gap-3">
               <h1 className="text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[36px]">
-                {loading ? 'Building the pack…' : `${totals.ready} of ${inScope.length} learners audit-ready`}
+                {loading
+                  ? 'Building the pack…'
+                  : `${totals.ready} of ${inScope.length} learners audit-ready`}
               </h1>
               <PageHelpButton help={HELP} className="mt-0.5" />
             </div>
             <p className="mt-3 text-[15px] leading-relaxed text-white">
-              What the funding rules need on file for every apprentice, checked live against your records. Close the
-              gaps here before an auditor or inspector asks.
+              What the funding rules need on file for every apprentice, checked live against your
+              records. Close the gaps here before an auditor or inspector asks.
             </p>
           </div>
           <div className="grid shrink-0 grid-cols-2 gap-2.5 sm:flex">
@@ -266,7 +302,12 @@ export default function CollegeEvidencePackPage() {
               <span className="sm:hidden">Requirements</span>
               <span className="hidden sm:inline">Your requirements</span>
             </button>
-            <button type="button" onClick={exportCsv} disabled={inScope.length === 0} className={toolCn}>
+            <button
+              type="button"
+              onClick={exportCsv}
+              disabled={inScope.length === 0}
+              className={toolCn}
+            >
               <Download className="h-4 w-4" aria-hidden="true" />
               Export
             </button>
@@ -293,13 +334,22 @@ export default function CollegeEvidencePackPage() {
                   items due now
                 </p>
               </div>
-              <div className="mt-5 flex h-3.5 gap-[3px] overflow-hidden rounded-full" aria-hidden="true">
+              <div
+                className="mt-5 flex h-3.5 gap-[3px] overflow-hidden rounded-full"
+                aria-hidden="true"
+              >
                 {totals.applicable === 0 ? (
                   <div className="flex-1 bg-white/[0.08]" />
                 ) : (
                   SEGMENTS.map((g) => {
                     const n = totals[g.s as 'ok' | 'missing' | 'attention' | 'due'];
-                    return n > 0 ? <div key={g.s} className={cn(g.cn, 'first:rounded-l-full last:rounded-r-full')} style={{ flexGrow: n }} /> : null;
+                    return n > 0 ? (
+                      <div
+                        key={g.s}
+                        className={cn(g.cn, 'first:rounded-l-full last:rounded-r-full')}
+                        style={{ flexGrow: n }}
+                      />
+                    ) : null;
                   })
                 )}
               </div>
@@ -307,7 +357,9 @@ export default function CollegeEvidencePackPage() {
                 {SEGMENTS.map((g) => (
                   <li key={g.s} className="flex items-center gap-2 text-[13px] text-white">
                     <span className={cn('h-2.5 w-2.5 rounded-full', g.cn)} />
-                    <span className="font-semibold tabular-nums">{totals[g.s as 'ok' | 'missing' | 'attention' | 'due']}</span>
+                    <span className="font-semibold tabular-nums">
+                      {totals[g.s as 'ok' | 'missing' | 'attention' | 'due']}
+                    </span>
                     {g.label.toLowerCase()}
                   </li>
                 ))}
@@ -315,7 +367,7 @@ export default function CollegeEvidencePackPage() {
             </div>
             <div className="flex flex-col justify-between gap-4 rounded-2xl border border-white/[0.08] bg-background p-5">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">Start here</p>
+                <p className="text-[13px] font-semibold text-elec-yellow">Start here</p>
                 <p className="mt-2 text-[19px] font-semibold leading-snug text-white">
                   {biggest ? biggest.title : 'Everything due is in place'}
                 </p>
@@ -330,7 +382,13 @@ export default function CollegeEvidencePackPage() {
                   type="button"
                   onClick={() => {
                     setView('evidence');
-                    window.setTimeout(() => document.getElementById(`ev-${biggest.key}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+                    window.setTimeout(
+                      () =>
+                        document
+                          .getElementById(`ev-${biggest.key}`)
+                          ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+                      50
+                    );
                   }}
                   className="inline-flex h-12 items-center justify-center gap-1.5 rounded-2xl bg-elec-yellow px-5 text-[14px] font-bold text-black touch-manipulation active:scale-[0.98]"
                 >
@@ -344,7 +402,10 @@ export default function CollegeEvidencePackPage() {
 
         {/* View and cohort */}
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="inline-flex self-start rounded-xl border border-white/[0.12] p-1" role="tablist">
+          <div
+            className="inline-flex self-start rounded-xl border border-white/[0.12] p-1"
+            role="tablist"
+          >
             {(
               [
                 ['evidence', 'By evidence'],
@@ -369,22 +430,16 @@ export default function CollegeEvidencePackPage() {
             ))}
           </div>
           {cohorts.length > 1 && (
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:mx-0 lg:px-0 lg:pb-0">
-              {[['all', 'All cohorts'] as [string, string], ...cohorts].map(([id, label]) => (
-                <button
-                  key={id}
-                  type="button"
-                  aria-pressed={cohort === id}
-                  onClick={() => setCohort(id)}
-                  className={cn(
-                    'h-11 shrink-0 rounded-full border px-3.5 text-[12.5px] touch-manipulation',
-                    cohort === id ? 'border-elec-yellow bg-elec-yellow font-semibold text-black' : 'border-white/[0.14] text-white'
-                  )}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+            <QuietTabs
+              className="lg:min-w-0 lg:flex-1 lg:border-b-0"
+              label="Filter by cohort"
+              tabs={[['all', 'All cohorts'] as [string, string], ...cohorts].map(([id, label]) => ({
+                key: id,
+                label,
+              }))}
+              value={cohort}
+              onChange={setCohort}
+            />
           )}
         </div>
 
@@ -397,7 +452,11 @@ export default function CollegeEvidencePackPage() {
         ) : error ? (
           <p className="py-8 text-center text-[13px] text-white">
             Could not build the pack. {error}{' '}
-            <button type="button" onClick={() => void reload()} className="font-semibold text-elec-yellow underline">
+            <button
+              type="button"
+              onClick={() => void reload()}
+              className="font-semibold text-elec-yellow underline"
+            >
               Try again
             </button>
           </p>
@@ -406,13 +465,26 @@ export default function CollegeEvidencePackPage() {
         ) : view === 'matrix' ? (
           <Matrix catalog={catalog} rows={inScope} onOpen={openLearner} />
         ) : view === 'learners' ? (
-          <LearnerList rows={inScope} catalog={catalog} search={search} setSearch={setSearch} onOpen={openLearner} />
+          <LearnerList
+            rows={inScope}
+            catalog={catalog}
+            search={search}
+            setSearch={setSearch}
+            onOpen={openLearner}
+          />
         ) : (
-          <EvidenceByStage catalog={catalog} perItem={perItem} rows={inScope} onOpen={openLearner} />
+          <EvidenceByStage
+            catalog={catalog}
+            perItem={perItem}
+            rows={inScope}
+            onOpen={openLearner}
+          />
         )}
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-white">
-          {(['ok', 'attention', 'due', 'missing', 'not_yet_due', 'not_applicable'] as ItemStatus[]).map((s) => (
+          {(
+            ['ok', 'attention', 'due', 'missing', 'not_yet_due', 'not_applicable'] as ItemStatus[]
+          ).map((s) => (
             <span key={s} className="inline-flex items-center gap-2">
               <span className={cn('h-3 w-3 rounded-[3px]', CELL[s])} />
               {STATUS_LABEL[s]}
@@ -421,7 +493,14 @@ export default function CollegeEvidencePackPage() {
         </div>
       </HubBody>
 
-      {collegeId && <RequirementsSheet open={reqOpen} onOpenChange={setReqOpen} collegeId={collegeId} onChanged={() => void reload()} />}
+      {collegeId && (
+        <RequirementsSheet
+          open={reqOpen}
+          onOpenChange={setReqOpen}
+          collegeId={collegeId}
+          onChanged={() => void reload()}
+        />
+      )}
     </HubPage>
   );
 }
@@ -455,10 +534,18 @@ function EvidenceByStage({
         if (!items.length) return null;
         return (
           <section key={stage}>
-            <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{STAGE_TITLE[stage]}</h2>
+            <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+              {STAGE_TITLE[stage]}
+            </h2>
             <ul className={cn(surfaceCn, 'divide-y divide-white/[0.08] overflow-hidden')}>
               {items.map((c) => (
-                <EvidenceRow key={c.key} item={c} tally={perItem.get(c.key)} rows={rows} onOpen={onOpen} />
+                <EvidenceRow
+                  key={c.key}
+                  item={c}
+                  tally={perItem.get(c.key)}
+                  rows={rows}
+                  onOpen={onOpen}
+                />
               ))}
             </ul>
           </section>
@@ -480,7 +567,15 @@ function EvidenceRow({
   onOpen: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const t = tally ?? { ok: 0, missing: 0, attention: 0, due: 0, not_yet_due: 0, not_applicable: 0, applicable: 0 };
+  const t = tally ?? {
+    ok: 0,
+    missing: 0,
+    attention: 0,
+    due: 0,
+    not_yet_due: 0,
+    not_applicable: 0,
+    applicable: 0,
+  };
   const gaps = t.missing + t.attention + t.due;
   const affected = rows.filter((r) => {
     const st = r.statuses?.[item.key];
@@ -493,10 +588,15 @@ function EvidenceRow({
         type="button"
         onClick={() => gaps > 0 && setOpen((v) => !v)}
         aria-expanded={gaps > 0 ? open : undefined}
-        className={cn('grid w-full grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 px-4 py-4 text-left sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_auto] sm:px-5', gaps > 0 && 'touch-manipulation hover:bg-white/[0.04]')}
+        className={cn(
+          'grid w-full grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 px-4 py-4 text-left sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_auto] sm:px-5',
+          gaps > 0 && 'touch-manipulation hover:bg-white/[0.04]'
+        )}
       >
         <span className="min-w-0">
-          <span className="block text-[15px] font-semibold leading-snug text-white">{item.title}</span>
+          <span className="block text-[15px] font-semibold leading-snug text-white">
+            {item.title}
+          </span>
           <span className="mt-0.5 block text-[12.5px] text-white">
             {notYet
               ? 'Not yet due for anyone in view'
@@ -506,20 +606,39 @@ function EvidenceRow({
                 (t.due ? ` · ${t.due} due` : '')}
           </span>
         </span>
-        <span className="col-span-2 row-start-2 flex h-2 overflow-hidden rounded-full bg-white/[0.08] sm:col-span-1 sm:row-start-1" aria-hidden="true">
+        <span
+          className="col-span-2 row-start-2 flex h-2 overflow-hidden rounded-full bg-white/[0.08] sm:col-span-1 sm:row-start-1"
+          aria-hidden="true"
+        >
           {!notYet &&
             SEGMENTS.map((g) =>
-              t[g.s] > 0 ? <span key={g.s} className={g.cn} style={{ width: `${(100 * t[g.s]) / t.applicable}%` }} /> : null
+              t[g.s] > 0 ? (
+                <span
+                  key={g.s}
+                  className={g.cn}
+                  style={{ width: `${(100 * t[g.s]) / t.applicable}%` }}
+                />
+              ) : null
             )}
         </span>
         <span className="flex items-center gap-2">
           {gaps > 0 ? (
             <>
-              <span className="rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-semibold tabular-nums text-white">{gaps}</span>
-              <ChevronDown className={cn('h-4 w-4 text-white transition-transform', open && 'rotate-180')} aria-hidden="true" />
+              <span className="rounded-full border border-orange-400/70 px-2.5 py-1 text-[12px] font-semibold tabular-nums text-orange-300">
+                {gaps} {gaps === 1 ? 'gap' : 'gaps'}
+              </span>
+              <ChevronDown
+                className={cn('h-4 w-4 text-white transition-transform', open && 'rotate-180')}
+                aria-hidden="true"
+              />
             </>
           ) : (
-            <span className={cn('rounded-full px-2.5 py-1 text-[11px] font-semibold', notYet ? STATUS_PILL.not_yet_due : STATUS_PILL.ok)}>
+            <span
+              className={cn(
+                'rounded-full px-2.5 py-1 text-[12px] font-semibold',
+                notYet ? STATUS_PILL.not_yet_due : STATUS_PILL.ok
+              )}
+            >
               {notYet ? 'Later' : 'All in place'}
             </span>
           )}
@@ -539,10 +658,16 @@ function EvidenceRow({
                 >
                   <span className={cn('h-2.5 w-2.5 shrink-0 rounded-full', CELL[st])} />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14px] font-semibold text-white">{r.name}</span>
-                    {detail && <span className="block truncate text-[12px] text-white">{detail}</span>}
+                    <span className="block truncate text-[14px] font-semibold text-white">
+                      {r.name}
+                    </span>
+                    {detail && (
+                      <span className="block truncate text-[12px] text-white">{detail}</span>
+                    )}
                   </span>
-                  <span className="hidden shrink-0 text-[12px] text-white sm:inline">{r.cohort}</span>
+                  <span className="hidden shrink-0 text-[12px] text-white sm:inline">
+                    {r.cohort}
+                  </span>
                   <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                 </button>
               </li>
@@ -556,7 +681,15 @@ function EvidenceRow({
 
 /* ── Matrix: learners down, evidence across (desktop) ───────────────── */
 
-function Matrix({ catalog, rows, onOpen }: { catalog: Catalog; rows: BoardRow[]; onOpen: (id: string) => void }) {
+function Matrix({
+  catalog,
+  rows,
+  onOpen,
+}: {
+  catalog: Catalog;
+  rows: BoardRow[];
+  onOpen: (id: string) => void;
+}) {
   return (
     // Solid, so the pinned learner column can cover cells scrolling under it;
     // 14% is the middle of the landing card gradient the other cards use.
@@ -564,13 +697,20 @@ function Matrix({ catalog, rows, onOpen }: { catalog: Catalog; rows: BoardRow[];
       <table className="w-full border-collapse text-left">
         <thead>
           <tr>
-            <th rowSpan={2} className="sticky left-0 z-10 min-w-[220px] border-r border-white/[0.08] bg-[hsl(0_0%_14%)] px-5 py-3 align-bottom text-[12px] font-semibold text-white">
+            <th
+              rowSpan={2}
+              className="sticky left-0 z-10 min-w-[220px] border-r border-white/[0.08] bg-[hsl(0_0%_14%)] px-5 py-3 align-bottom text-[12px] font-semibold text-white"
+            >
               Learner
             </th>
             {STAGE_ORDER.map((st) => {
               const n = catalog.filter((c) => c.stage === st).length;
               return n ? (
-                <th key={st} colSpan={n} className="border-l border-white/[0.08] px-3 pt-4 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+                <th
+                  key={st}
+                  colSpan={n}
+                  className="border-l border-white/[0.08] px-3 pt-4 text-left text-[12px] font-semibold text-white"
+                >
                   {STAGE_TITLE[st]}
                 </th>
               ) : null;
@@ -586,7 +726,7 @@ function Matrix({ catalog, rows, onOpen }: { catalog: Catalog; rows: BoardRow[];
                   (i === 0 || catalog[i - 1].stage !== c.stage) && 'border-l border-white/[0.1]'
                 )}
               >
-                <span className="mx-auto block max-h-[80px] w-4 overflow-hidden text-[11px] font-medium text-white [writing-mode:vertical-rl] rotate-180">
+                <span className="mx-auto block max-h-[80px] w-4 overflow-hidden text-[12px] font-medium text-white [writing-mode:vertical-rl] rotate-180">
                   {SHORT[c.key] ?? c.title}
                 </span>
               </th>
@@ -597,11 +737,20 @@ function Matrix({ catalog, rows, onOpen }: { catalog: Catalog; rows: BoardRow[];
           {rows.map((r) => {
             const gaps = (r.items ?? []).length;
             return (
-              <tr key={r.student_id} className="group border-b border-white/[0.06] last:border-b-0 hover:bg-[hsl(0_0%_16%)]">
+              <tr
+                key={r.student_id}
+                className="group border-b border-white/[0.06] last:border-b-0 hover:bg-[hsl(0_0%_16%)]"
+              >
                 <td className="sticky left-0 z-10 border-r border-white/[0.08] bg-[hsl(0_0%_14%)] px-5 py-2.5 group-hover:bg-[hsl(0_0%_16%)]">
-                  <button type="button" onClick={() => onOpen(r.student_id)} className="block w-full text-left">
-                    <span className="block truncate text-[13.5px] font-semibold text-white">{r.name}</span>
-                    <span className="block truncate text-[11.5px] text-white">
+                  <button
+                    type="button"
+                    onClick={() => onOpen(r.student_id)}
+                    className="block w-full text-left"
+                  >
+                    <span className="block truncate text-[13.5px] font-semibold text-white">
+                      {r.name}
+                    </span>
+                    <span className="block truncate text-[12px] text-white">
                       {gaps ? `${gaps} to do` : 'Audit-ready'}
                       {r.cohort ? ` · ${r.cohort}` : ''}
                     </span>
@@ -612,7 +761,11 @@ function Matrix({ catalog, rows, onOpen }: { catalog: Catalog; rows: BoardRow[];
                   return (
                     <td
                       key={c.key}
-                      className={cn('px-0.5 py-2 text-center', (i === 0 || catalog[i - 1].stage !== c.stage) && 'border-l border-white/[0.1]')}
+                      className={cn(
+                        'px-0.5 py-2 text-center',
+                        (i === 0 || catalog[i - 1].stage !== c.stage) &&
+                          'border-l border-white/[0.1]'
+                      )}
                     >
                       {st ? (
                         <button
@@ -620,7 +773,10 @@ function Matrix({ catalog, rows, onOpen }: { catalog: Catalog; rows: BoardRow[];
                           onClick={() => onOpen(r.student_id)}
                           title={`${r.name} · ${c.title}: ${STATUS_LABEL[st]}`}
                           aria-label={`${r.name}, ${c.title}: ${STATUS_LABEL[st]}`}
-                          className={cn('mx-auto block h-5 w-5 rounded-[4px] transition-transform hover:scale-125', CELL[st])}
+                          className={cn(
+                            'mx-auto block h-5 w-5 rounded-[4px] transition-transform hover:scale-125',
+                            CELL[st]
+                          )}
                         />
                       ) : (
                         <span className="mx-auto block h-5 w-5" />
@@ -656,7 +812,9 @@ function LearnerList({
     const needle = search.trim().toLowerCase();
     return rows
       .filter((r) => !needle || r.name.toLowerCase().includes(needle))
-      .sort((a, b) => (b.items ?? []).length - (a.items ?? []).length || a.name.localeCompare(b.name));
+      .sort(
+        (a, b) => (b.items ?? []).length - (a.items ?? []).length || a.name.localeCompare(b.name)
+      );
   }, [rows, search]);
   return (
     <section className="space-y-3">
@@ -690,11 +848,23 @@ function LearnerList({
                   <span className="mt-2 flex gap-[3px]" aria-hidden="true">
                     {catalog.map((c) => {
                       const st = r.statuses?.[c.key];
-                      return st ? <span key={c.key} className={cn('h-2.5 min-w-0 flex-1 rounded-[2px]', CELL[st])} /> : <Fragment key={c.key} />;
+                      return st ? (
+                        <span
+                          key={c.key}
+                          className={cn('h-2.5 min-w-0 flex-1 rounded-[2px]', CELL[st])}
+                        />
+                      ) : (
+                        <Fragment key={c.key} />
+                      );
                     })}
                   </span>
                   <span className="mt-1.5 block truncate text-[12px] text-white">
-                    {gaps === 0 ? 'Audit-ready' : (r.items ?? []).slice(0, 3).map((i) => i.title).join(' · ') + (gaps > 3 ? ` · +${gaps - 3} more` : '')}
+                    {gaps === 0
+                      ? 'Audit-ready'
+                      : (r.items ?? [])
+                          .slice(0, 3)
+                          .map((i) => i.title)
+                          .join(' · ') + (gaps > 3 ? ` · +${gaps - 3} more` : '')}
                   </span>
                 </span>
                 <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />

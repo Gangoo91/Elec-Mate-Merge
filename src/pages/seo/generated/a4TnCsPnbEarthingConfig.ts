@@ -7,7 +7,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',
@@ -230,7 +230,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       href: '/guides/bs-7671-amendment-4-2026',
       title: 'BS 7671 Amendment 4 (2026) — All Changes',
       description:
-        'Overview of every A4:2026 change including AFDD, luminaire RCD and new model forms.',
+        'Overview of every A4:2026 change including PNB earthing, the AFDD inspection item and new model forms.',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -244,7 +244,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'A4:2026 AFDD Changes',
+      title: 'AFDDs in A4:2026 (Reg 421.1.7, Item 4.23)',
       description: 'New inspection item 4.23 and test results column 30 for AFDD recording.',
       icon: 'Zap',
       category: 'Guide',

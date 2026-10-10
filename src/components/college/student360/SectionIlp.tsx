@@ -56,7 +56,7 @@ const ACTION_BTN =
   '-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
 
 const CHIP =
-  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[12px] font-semibold tabular-nums';
 const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
 const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
 const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
@@ -131,10 +131,11 @@ export function SectionIlp({
 
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
-      <div className="flex items-end justify-between gap-4">
+      {/* Actions wrap under the heading on a phone (they ran off the edge). */}
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
         <CollegeHeading>Individual learning plan</CollegeHeading>
         {ilp && (
-          <div className="flex items-center gap-1 no-print">
+          <div className="-ml-2 flex flex-wrap items-center gap-1 no-print sm:ml-0">
             <button type="button" onClick={() => setGenerateOpen(true)} className={ACTION_BTN}>
               Sharpen the wording
               <UsesAi className="ml-1.5" />
@@ -351,7 +352,7 @@ function HeadlineCard({
             </p>
           )}
           {ilp.tutor_name_snapshot && (
-            <div className="border-t border-white/[0.10] pt-2.5 text-[11px] text-white">
+            <div className="border-t border-white/[0.10] pt-2.5 text-[12px] text-white">
               Owned by {ilp.tutor_name_snapshot}
               {aiProvenanceLine(
                 ilp.narrative_source,
@@ -388,7 +389,7 @@ function MetaRow({ label, value, tone }: { label: string; value: string; tone?: 
 function Block({ label, text }: { label: string; text: string }) {
   return (
     <div>
-      <div className="text-[11px] font-semibold text-elec-yellow">{label}</div>
+      <div className="text-[12px] font-semibold text-elec-yellow">{label}</div>
       <p className="mt-0.5 whitespace-pre-line text-[12.5px] leading-relaxed text-white">{text}</p>
     </div>
   );
@@ -430,7 +431,7 @@ function GoalsList({
         <Skeleton />
       ) : goals.length === 0 ? (
         <p className="px-4 py-6 text-[12.5px] leading-relaxed text-white sm:px-5">
-          No goals on this plan yet. Add the first one — it appears in {first}'s app for them to
+          No goals on this plan yet. Add the first one; it appears in {first}'s app for them to
           acknowledge and work on.
         </p>
       ) : (
@@ -485,7 +486,7 @@ function GoalRow({
       >
         <span
           className={cn(
-            'flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold transition-colors',
+            'flex h-5 w-5 items-center justify-center rounded-full border text-[12px] font-bold transition-colors',
             isComplete
               ? 'border-emerald-400 bg-emerald-500/20 text-emerald-300'
               : 'border-white/40 text-transparent'
@@ -503,14 +504,14 @@ function GoalRow({
           <span className={cn(CHIP, isProblem ? CHIP_RED : isComplete ? CHIP_GOOD : CHIP_NEUTRAL)}>
             {STATUS_LABEL[status]}
           </span>
-          <span className="text-[11px] text-white">{CATEGORY_LABEL[goal.category]}</span>
+          <span className="text-[12px] text-white">{CATEGORY_LABEL[goal.category]}</span>
           {goal.priority === 'high' && !isComplete && (
-            <span className="text-[11px] font-semibold text-elec-yellow">High priority</span>
+            <span className="text-[12px] font-semibold text-elec-yellow">High priority</span>
           )}
           {goal.target_date && (
             <span
               className={cn(
-                'text-[11px] tabular-nums',
+                'text-[12px] tabular-nums',
                 overdue ? 'font-semibold text-red-300' : 'text-white'
               )}
             >
@@ -521,7 +522,7 @@ function GoalRow({
           {goal.source === 'student' && (
             <span
               className={cn(CHIP, CHIP_VOLT)}
-              title="Apprentice proposed this goal — review and accept, edit, or reject."
+              title="Apprentice proposed this goal. Review and accept, edit, or reject."
             >
               Apprentice proposed
             </span>
@@ -549,7 +550,7 @@ function GoalRow({
         )}
         {goal.student_comment && (
           <div className="mt-2 border-l-2 border-white/[0.25] pl-3">
-            <div className="text-[10.5px] font-semibold text-white">Learner reply</div>
+            <div className="text-[12px] font-semibold text-white">Learner reply</div>
             <p className="mt-0.5 whitespace-pre-line text-[12px] leading-snug text-white">
               {goal.student_comment}
             </p>

@@ -46,8 +46,8 @@ export const OjtSectionHeader = ({
  * which is why a screen of them read as one continuous dark panel.
  */
 export const OjtEmptyState = ({ icon, children }: { icon?: ReactNode; children: ReactNode }) => (
-  <div className="flex flex-col items-center gap-2 rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-6 text-center shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)]">
+  <div className="flex flex-col items-center gap-2 rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-6 text-center shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)]">
     {icon}
-    <p className="text-[13px] leading-relaxed text-white">{children}</p>
+    <p className="text-[14px] leading-relaxed text-white">{children}</p>
   </div>
 );

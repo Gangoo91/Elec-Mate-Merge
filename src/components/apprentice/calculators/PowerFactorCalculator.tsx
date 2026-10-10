@@ -190,7 +190,7 @@ const PowerFactorCalculator = () => {
             dangerous charge is behind a barrier or in an enclosure; Reg 559.7
             requires discharge resistors over 0.5 uF and compliance with BS EN 61048. */}
         {showCorrection && (
-          <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-3">
+          <div className="rounded-xl border border-orange-500/30 bg-white/[0.04] p-3">
             <p className="text-[12.5px] leading-relaxed text-white">
               <strong>Before you fit it</strong> — a capacitor can hold a dangerous charge after
               switch-off. Reg 416.2.5 requires a warning label where such a capacitor is behind a

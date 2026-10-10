@@ -1,38 +1,33 @@
 /**
- * ApprenticeHub — editorial redesign matching ElectricianHub / SiteSafety /
- * BusinessHub / Inspection & Testing / Study Centre.
+ * ApprenticeHub — the apprentice's home (/apprentice).
  *
- * Sticky text-only masthead, date-eyebrow Hero with rotating thematic
- * two-tone tagline + verdict + CTA, numbered hairline-grid sections:
- *   01 · AT A GLANCE        (Streak / Progress / XP / Diary)
- *   02 · FROM YOUR COLLEGE  (College plan + assigned quizzes)
- *   03 · CORE LEARNING      (Study Centre · Inspection & Testing)
- *   04 · EXAM PREP          (EPA Simulator · AM2 Simulator)
- *   05 · PORTFOLIO & OJT    (Evidence · OJT hours)
- *   06 · LEARNING VIDEOS    (existing widget, unchanged)
- *   07 · TOOLS              (8 quick-access tiles)
- *
- * Black 2px hairline gaps, single yellow accent per row, mobile-flat per the
- * project working agreement.
+ * Redesigned 10 Oct 2026 to read like the College Hub home: a greeting with
+ * one status line of figures (streak, criteria passed, XP, diary), "Do next",
+ * four quick actions, the college row, then the places to go — a hairline
+ * list on a phone and a grid of same-size cards on desktop. Headings are
+ * white; the one solid yellow action is the first row of "Do next".
  */
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubQuickStart,
-  HubToolGrid,
-  HubKpi,
-  HubKpiRow,
-  type HubTool,
-  type HubQuickAction,
-} from '@/components/hub/HubPrimitives';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+import {
+  Directory,
+  HomeRowCard,
+  HomeSectionTitle,
+  ProgressPanel,
+  StartCards,
+  longDate,
+  partOfDay,
+  type DirectoryGroup,
+  type HomeLink,
+  type ProgressCell,
+  type StartCard,
+} from '@/components/apprentice/ApprenticeHomeUi';
 import useSEO from '@/hooks/useSEO';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useMyIlp } from '@/hooks/useMyIlp';
@@ -57,12 +52,11 @@ import { DoNextList } from '@/components/apprentice-hub/do-next/DoNextList';
 
 /**
  * A tool entry as this page models it: a title, a line of description, and
- * either a route or a click handler. `toHubTool` maps it onto the shared
- * HubTool so these render as the same card as every other hub.
+ * either a route or a click handler. `toLink` maps it onto a HomeLink.
  */
 interface ToolCard {
   id?: string;
-  /** Category word. Carried through from the old grid; toHubTool drops it —
+  /** Category word. Carried through from the old grid; toLink drops it —
       every one restated the title ("LEARN · Study Centre"). */
   eyebrow?: string;
   title: string;
@@ -93,28 +87,8 @@ const TOUR_STEPS = [
   },
 ] as const;
 
-/**
- * ToolCard → HubTool. `meta` on these cards is mostly a verb ("Open portfolio",
- * "Browse guidance") rather than a figure, so it is dropped: the description
- * already says what the tool does, and a card either reports a number or says
- * what it is for, never both.
- */
+/** A meta like "6 modules" is a figure; anything else ("Open tools") is dropped. */
 const NUMERIC_META = /^([\d,.]+)\s+(.+)$/;
-
-const toHubTool = (c: ToolCard): HubTool => {
-  const m = c.meta ? NUMERIC_META.exec(c.meta) : null;
-  return {
-    id: c.id ?? c.title,
-    title: c.title,
-    description: c.description,
-    to: c.to,
-    // External cards (e.g. TradeFox) carry href, not to — without this
-    // mapping the card renders but a tap does nothing.
-    onClick: c.onClick ?? (c.href ? () => window.open(c.href, '_blank', 'noopener') : undefined),
-    value: m ? m[1] : undefined,
-    valueLabel: m ? m[2] : undefined,
-  };
-};
 
 export default function ApprenticeHub() {
   useSEO({
@@ -131,13 +105,13 @@ export default function ApprenticeHub() {
   });
 
   const navigate = useNavigate();
-  const { stats, isLoading: appLoading } = useApprenticeData();
+  const { stats, isLoading: appLoading, user: apprentice } = useApprenticeData();
   const { ilp, rollUp, hasCollegeLink, loading: ilpLoading } = useMyIlp();
   // Names the college and cohort on the "From your college" card.
   const { learner: collegeLearner } = useMyCollegeContext();
   const { quizzes, loading: quizzesLoading } = useMyAssignedQuizzes();
   const { entries, isLoading: diaryLoading } = useSiteDiaryEntries();
-  const { totalXP, level: xpLevel } = useLearningXP();
+  const { totalXP, level: xpLevel, xpProgress, xpToNextLevel } = useLearningXP();
   // On a firm's roster (ELE-2011): their jobs, clock, sign-offs and hours live
   // here too, through the same Worker Tools pages an electrician uses.
   const { onTeam, home: firmHome } = useOnTeam();
@@ -235,7 +209,7 @@ export default function ApprenticeHub() {
       id: 'study-centre',
       eyebrow: 'Apprenticeship',
       title: 'Study Centre',
-      description: 'Level 2 & 3 courses, practice questions and exam prep — at your own pace.',
+      description: 'Level 2 and 3 courses, practice questions and mock exams.',
       to: '/study-centre/apprentice',
       meta: 'Active course',
     },
@@ -243,7 +217,7 @@ export default function ApprenticeHub() {
       id: 'inspection-testing',
       eyebrow: 'BS 7671',
       title: 'Inspection & Testing',
-      description: 'Comprehensive guides, quizzes and BS 7671 regulations.',
+      description: 'Guides, quizzes and the BS 7671 regulations.',
       to: '/apprentice/inspection-testing-hub',
       meta: '6 modules',
     },
@@ -254,7 +228,7 @@ export default function ApprenticeHub() {
       id: 'epa',
       eyebrow: 'EPA',
       title: 'EPA Simulator',
-      description: 'Mock professional discussions and knowledge tests with AI scoring.',
+      description: 'Practise the professional discussion and knowledge test.',
       to: '/apprentice/epa-simulator',
       meta: 'AI-scored',
     },
@@ -262,7 +236,7 @@ export default function ApprenticeHub() {
       id: 'am2',
       eyebrow: 'AM2',
       title: 'AM2 Simulator',
-      description: 'Safe isolation, fault finding and testing simulations.',
+      description: 'Safe isolation, fault finding and testing practice.',
       to: '/apprentice/am2-simulator',
       meta: 'Practice tasks',
     },
@@ -273,8 +247,7 @@ export default function ApprenticeHub() {
       id: 'portfolio',
       eyebrow: 'Evidence',
       title: 'Portfolio',
-      description:
-        'Your evidence, the criteria it covers, where it stands with your assessor and your EPA gateway readiness.',
+      description: 'Your evidence and the criteria it covers.',
       to: '/apprentice/hub',
       meta: 'Open portfolio',
     },
@@ -285,7 +258,7 @@ export default function ApprenticeHub() {
       description:
         // Not "20%" — the off-the-job requirement is a fixed number of hours
         // set by the standard, not a share of the week.
-        'Track your off-the-job hours against the total your programme needs, with evidence behind every entry.',
+        'Your off-the-job hours against the total your programme needs.',
       to: '/apprentice/ojt-hub',
       meta: 'Open OJT hub',
     },
@@ -296,7 +269,7 @@ export default function ApprenticeHub() {
       id: 'ai-tutor',
       eyebrow: 'AI tutor',
       title: 'Study assistant',
-      description: 'Instant help with theory and exams.',
+      description: 'Ask anything about theory or exams.',
       to: '/apprentice/advanced-help',
       meta: 'Ask anything',
     },
@@ -304,7 +277,7 @@ export default function ApprenticeHub() {
       id: 'site-diary',
       eyebrow: 'Logbook',
       title: 'Site diary',
-      description: 'What you did on site, training time and evidence.',
+      description: 'What you did on site, day by day.',
       to: '/apprentice/site-diary',
       meta: `${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}`,
     },
@@ -312,7 +285,7 @@ export default function ApprenticeHub() {
       id: 'calculators',
       eyebrow: 'Calculations',
       title: 'Calculators',
-      description: 'Cable sizing, voltage drop, and more.',
+      description: 'Cable sizing, voltage drop and more.',
       to: '/apprentice/calculators',
       meta: 'Open tools',
     },
@@ -336,7 +309,7 @@ export default function ApprenticeHub() {
       id: 'progression',
       eyebrow: 'Career',
       title: 'Progression',
-      description: 'Plan your career pathway.',
+      description: 'Plan your next steps in the trade.',
       to: '/apprentice/professional-development',
       meta: 'Open',
     },
@@ -344,7 +317,7 @@ export default function ApprenticeHub() {
       id: 'toolbox',
       eyebrow: 'Reference',
       title: 'Guidance area',
-      description: 'Tips, guides and best practices.',
+      description: 'Tips, guides and good practice.',
       to: '/apprentice/toolbox',
       meta: 'Browse',
     },
@@ -352,121 +325,236 @@ export default function ApprenticeHub() {
       id: 'tradefox',
       eyebrow: 'Partner app',
       title: 'TradeFox',
-      description:
-        'Build skills with risk-free trade simulations and courses — practise wiring, GS38 and more.',
+      description: 'Practise wiring and GS38 in a trade simulator.',
       href: 'https://tradefoxapp.com/',
       logo: '/logos/tradefox.png',
       meta: 'Opens TradeFox',
     },
   ];
-
   /*
    * ── Tool groups ──────────────────────────────────────────────────────
    *
-   * Was five sections of two, two, two, one and eight — `03 · CORE LEARNING`
-   * through `07 · TOOLS`, each with its own numbered eyebrow. Three
-   * consecutive two-card sections is not structure, it is fragmentation: the
-   * page spent more height on headings than on cards, and the grid is
-   * auto-fit at four tracks so a pair left half a row empty every time.
-   *
-   * Regrouped into fours (and one three) around what an apprentice is
-   * actually doing: learning, proving it, working, and their own record.
+   * Grouped around what an apprentice is doing: learning, proving it,
+   * working, and their own record. A hairline list on a phone (a name line
+   * and a detail line, figure on the right), a grid of same-size cards on
+   * desktop (10 Oct: the 2-up tiles cut every description to a stub and
+   * left an odd card alone on its row).
    */
-  const learnCards: HubTool[] = [...coreLearning, ...examPrep].map(toHubTool);
-  const evidenceCards: HubTool[] = [
-    ...[...portfolio, ...tools.filter((t) => t.title === 'Site diary')].map(toHubTool),
-    // The fourth card in this row only while on a team (ELE-2011).
-    ...(onTeam
-      ? [
-          {
-            id: 'worker-tools',
-            title: 'Worker Tools',
-            description: firmHome?.firm
-              ? `${firmHome.firm}: your jobs, timesheets and sign-offs.`
-              : 'Your firm’s jobs, timesheets and sign-offs.',
-            to: WORKER_TOOLS_BASE,
-            alert: (firmHome?.to_sign ?? 0) > 0 || (firmHome?.timesheets_sent_back ?? 0) > 0,
-          } satisfies HubTool,
-        ]
-      : []),
-  ];
-  const toolCards: HubTool[] = tools
-    .filter((t) =>
-      ['Calculators', 'On-the-job tools', 'Study assistant', 'Guidance area'].includes(t.title)
-    )
-    .map(toHubTool);
-  /*
-   * "You" is where My Elec-ID belongs.
-   *
-   * It was a standalone full-width banner under the tool grids — but the
-   * component is built as a GRID CARD (min-h-[110px], flex-col, a flex-grow
-   * spacer to push its footer down), so stretching it across the page left
-   * ~1,900px of empty card and put "Open" and its chevron at opposite ends of
-   * the screen: two affordances for one action, as far apart as they could be.
-   *
-   * As the fourth card here it fills the row exactly, sheds a whole section,
-   * and can say something useful — whether the credential exists yet.
-   */
-  const youCards: HubTool[] = [
-    ...tools
-      .filter((t) => ['Progression', 'Mental health', 'TradeFox'].includes(t.title))
-      .map(toHubTool),
+  const toLink = (c: ToolCard): HomeLink => {
+    const m = c.meta ? NUMERIC_META.exec(c.meta) : null;
+    return {
+      id: c.id ?? c.title,
+      title: c.title,
+      detail: c.description,
+      figure: m ? m[1] : undefined,
+      figureLabel: m ? m[2] : undefined,
+      onClick:
+        c.onClick ??
+        (c.href ? () => window.open(c.href, '_blank', 'noopener') : () => c.to && navigate(c.to)),
+    };
+  };
+  const toDir = toLink;
+  const byTitle = (titles: string[]) =>
+    titles.map((t) => tools.find((x) => x.title === t)).filter((x): x is ToolCard => !!x);
+
+  const directory: DirectoryGroup[] = [
     {
-      id: 'elec-id',
-      title: 'My Elec-ID',
-      to: '/elec-id',
-      description: hasElecId
-        ? 'Worker-owned professional identity.'
-        : 'Get your free digital credential.',
-      alert: !hasElecId,
+      title: 'Learn',
+      sub: 'Courses, guides and exam practice',
+      items: [...coreLearning, ...examPrep].map(toDir),
+    },
+    {
+      title: 'Evidence and hours',
+      sub: 'What proves your apprenticeship',
+      items: [
+        ...[...portfolio, ...byTitle(['Site diary'])].map(toDir),
+        {
+          id: 'progress',
+          title: 'Your progress',
+          detail: 'Course progress, badges and your XP level.',
+          onClick: () => navigate('/apprentice/hub?tab=progress'),
+        } satisfies HomeLink,
+        // The fourth row only while on a team (ELE-2011).
+        ...(onTeam
+          ? [
+              {
+                id: 'worker-tools',
+                title: 'Worker Tools',
+                detail: firmHome?.firm
+                  ? `${firmHome.firm}: your jobs, timesheets and sign-offs.`
+                  : 'Your firm’s jobs, timesheets and sign-offs.',
+                alert: (firmHome?.to_sign ?? 0) > 0 || (firmHome?.timesheets_sent_back ?? 0) > 0,
+                onClick: () => navigate(WORKER_TOOLS_BASE),
+              } satisfies HomeLink,
+            ]
+          : []),
+      ],
+    },
+    {
+      title: 'Tools',
+      sub: 'For college and on site',
+      items: byTitle(['Study assistant', 'Calculators', 'On-the-job tools', 'Guidance area']).map(
+        toDir
+      ),
+    },
+    {
+      title: 'You',
+      sub: 'Your career and wellbeing',
+      items: [
+        ...byTitle(['Progression', 'Mental health', 'TradeFox']).map(toDir),
+        {
+          id: 'elec-id',
+          title: 'My Elec-ID',
+          detail: hasElecId
+            ? 'Worker-owned professional identity.'
+            : 'Get your free digital credential.',
+          alert: !hasElecId,
+          onClick: () => navigate('/elec-id'),
+        },
+      ],
     },
   ];
 
   // ── Start something ──────────────────────────────────────────────────
-  // The hero's CTA was the only actionable thing above the fold; it is the
-  // primary card here, with the three other things an apprentice starts.
-  const quickStart: HubQuickAction[] = [
+  const quickStart: StartCard[] = [
     {
       title: 'Study now',
-      description: hasOverdue ? 'Catch up on your tutor’s work' : 'Pick up your course',
+      detail: hasOverdue ? 'Catch up on your tutor’s work' : 'Pick up your course',
       onClick: () =>
         hasOverdue ? navigate('/apprentice/college-plan') : navigate('/study-centre/apprentice'),
-      primary: true,
     },
     {
       title: 'Log a diary entry',
-      description: 'What you did on site today',
+      detail: 'What you did on site today',
       // Straight into the entry sheet — it used to land on the diary page
       // and leave you to find the button.
       onClick: () => navigate('/apprentice/site-diary?new=1'),
     },
     {
       title: 'Add evidence',
-      description: 'Photo or note for your portfolio',
+      detail: 'Photo or note for your portfolio',
       onClick: () => navigate('/apprentice/hub'),
     },
     {
-      title: 'Log OTJ hours',
-      description: 'Off-the-job training time',
+      title: 'Log off-the-job hours',
+      detail: 'Training time away from the tools',
       onClick: () => navigate('/apprentice/ojt-hub'),
     },
   ];
 
+  // ── Progress: four figures, each opens its detail ────────────────────
+  const streak = stats.learning.currentStreak;
+  const pct = stats.progress.overallPercent;
+  const progress: ProgressCell[] = [
+    {
+      colour: 'bg-orange-400',
+      value: streak === 1 ? '1 day' : `${streak} days`,
+      label: 'Study streak',
+      meta: streak > 0 ? 'Study today to keep it going' : 'Study today to start one',
+      onClick: () => setStreakOpen(true),
+    },
+    {
+      colour: 'bg-emerald-400',
+      pct,
+      // Words over a bare percentage (showcase pass, 10 Oct): "4 of 340"
+      // says more than "1%", and never leads with a 0% figure.
+      value:
+        stats.progress.criteriaTotal > 0
+          ? `${stats.progress.criteriaPassed} of ${stats.progress.criteriaTotal}`
+          : `${pct}%`,
+      label: 'Criteria signed off',
+      meta:
+        stats.progress.criteriaPassed === 0
+          ? 'Your first sign-off starts this'
+          : `${pct}% of your whole course`,
+      onClick: () => setProgressOpen(true),
+    },
+    {
+      colour: 'bg-elec-yellow',
+      pct: xpProgress,
+      value: totalXP.toLocaleString('en-GB'),
+      label: `XP · level ${xpLevel}`,
+      meta: `${xpToNextLevel.toLocaleString('en-GB')} XP to level ${xpLevel + 1}`,
+      onClick: () => navigate('/apprentice/hub?tab=progress'),
+    },
+    {
+      colour: 'bg-teal-300',
+      value: String(entries.length),
+      label: entries.length === 1 ? 'Diary entry' : 'Diary entries',
+      meta: entries.length === 0 ? 'Log what you did on site' : 'What you did on site',
+      onClick: () => setDiaryOpen(true),
+    },
+  ];
+
+  // Accounts that came in as "ANDREW" read as shouting; show the name as a name.
+  const rawName =
+    apprentice.firstName && apprentice.firstName !== 'there' ? apprentice.firstName.trim() : '';
+  const firstName =
+    rawName.length > 1 && rawName === rawName.toUpperCase()
+      ? rawName.charAt(0) + rawName.slice(1).toLowerCase()
+      : rawName;
+
+  const collegeCount = hasOverdue ? (
+    <span className="shrink-0 text-[13px] font-semibold tabular-nums text-orange-300">
+      {overdueQuizzes.length} overdue
+    </span>
+  ) : newCount > 0 ? (
+    <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+      {newCount} new
+    </span>
+  ) : null;
+
   return (
-    <HubPage>
+    <HubPage ground="landing">
       <HubMasthead section="Apprentice" title="Apprentice Hub" backTo="/dashboard" />
 
       <HubBody>
-        {/* August Referral Race — everyone, whole campaign, not dismissible.
-            Self-hides after 31 Aug. */}
+        {/* Greeting, then the four figures as one designed strip. */}
+        <header className="min-w-0">
+          <p className="text-[13px] font-medium text-white">{longDate()}</p>
+          <h2 className="mt-1.5 text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[34px]">
+            {partOfDay()}
+            {firstName ? `, ${firstName}` : ''}
+          </h2>
+        </header>
+        <ProgressPanel items={progress} loading={statsLoading} />
 
-        {/* ELE-1896: the learner's home starts with "Do next" — one ranked
-            list (plan items, referred criteria, hours, quizzes, goals,
-            messages, reviews…), the same list as Today and the college area. */}
-        <DoNextList />
-
-        {/* Start something — see the other hubs. */}
-        <HubQuickStart label="Start something" items={quickStart} />
+        {/* ELE-1896: "Do next" (the same ranked list as Today and the college
+            area) beside the things to start and the college. Desktop: the
+            list takes the width, the side column stays narrow. */}
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)] lg:gap-6">
+          <DoNextList />
+          <div className="space-y-8 lg:sticky lg:top-24 lg:space-y-6 lg:pt-5">
+            <section className="space-y-3" aria-label="Start something">
+              <HomeSectionTitle title="Start something" sub="Log your day in a tap." />
+              <StartCards items={quickStart} />
+            </section>
+            <section className="space-y-3">
+              <HomeSectionTitle
+                title="Your college"
+                action={
+                  !hasCollegeLink && !soloMode && !ilpLoading ? (
+                    <button
+                      type="button"
+                      onClick={dismissCollegeCard}
+                      className="flex h-11 items-center px-2 text-[13px] font-semibold text-white touch-manipulation"
+                    >
+                      Not now
+                    </button>
+                  ) : undefined
+                }
+              />
+              <HomeRowCard
+                title={collegeTitle}
+                detail={collegeDescription}
+                meta={collegeMeta}
+                trailing={collegeCount}
+                onClick={() => navigate('/apprentice/college-plan')}
+                className={cn(hasOverdue && 'border-orange-400/40')}
+              />
+            </section>
+          </div>
+        </div>
 
         {/* Your firm + your hours — rostered apprentices only (ELE-2011). */}
         {onTeam && (
@@ -476,151 +564,60 @@ export default function ApprenticeHub() {
           </div>
         )}
 
-        <HubKpiRow>
-          <HubKpi
-            accent
-            label="Streak"
-            value={
-              stats.learning.currentStreak === 1 ? '1 day' : `${stats.learning.currentStreak} days`
-            }
-            verdict={stats.learning.currentStreak >= 7 ? 'On a roll' : 'Keep it going'}
-            onClick={() => setStreakOpen(true)}
-          />
-          <HubKpi
-            label="Progress"
-            value={`${stats.progress.overallPercent}%`}
-            verdict="Criteria passed"
-            onClick={() => setProgressOpen(true)}
-          />
-          <HubKpi
-            label="XP"
-            value={totalXP.toLocaleString()}
-            verdict={`Level ${xpLevel}`}
-            onClick={() => navigate('/apprentice/hub?tab=progress')}
-          />
-          <HubKpi
-            label="Diary"
-            value={String(entries.length)}
-            verdict="Site logbook"
-            onClick={() => setDiaryOpen(true)}
-          />
-        </HubKpiRow>
-
         {/* First week — brand-new accounts only, dismissable forever. */}
         {showTour && (
           <section className="space-y-3">
-            <div className="flex items-center justify-between gap-4">
-              <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-                Your first week
-              </h2>
-              <button
-                type="button"
-                onClick={dismissTour}
-                className="-my-2 -mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-white touch-manipulation"
-              >
-                Got it — hide
-              </button>
-            </div>
-            <div
+            <HomeSectionTitle
+              title="Your first week"
+              action={
+                <button
+                  type="button"
+                  onClick={dismissTour}
+                  className="flex h-11 items-center px-2 text-[13px] font-semibold text-white touch-manipulation"
+                >
+                  Got it, hide
+                </button>
+              }
+            />
+            <ol
               className={cn(
-                '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+                '-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x',
                 CARD_SURFACE
               )}
             >
-              <ul className="divide-y divide-white/[0.10]">
-                {TOUR_STEPS.map((step, i) => (
-                  <li key={step.to}>
-                    <button
-                      type="button"
-                      onClick={() => navigate(step.to)}
-                      className="group flex w-full items-center gap-3.5 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] sm:px-5"
-                    >
-                      <span className="w-4 shrink-0 text-[13px] font-semibold tabular-nums text-elec-yellow">
-                        {i + 1}
+              {TOUR_STEPS.map((step, i) => (
+                <li key={step.to}>
+                  <button
+                    type="button"
+                    onClick={() => navigate(step.to)}
+                    className="group flex min-h-[64px] w-full items-center gap-3.5 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-5"
+                  >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/[0.2] text-[13px] font-semibold tabular-nums text-white">
+                      {i + 1}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[15px] font-semibold leading-snug text-white">
+                        {step.title}
                       </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {step.title}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {step.sub}
-                        </span>
+                      <span className="mt-0.5 block text-[13px] leading-snug text-white">
+                        {step.sub}
                       </span>
-                      <ArrowRight className="h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                  </button>
+                </li>
+              ))}
+            </ol>
           </section>
         )}
 
-        {/* From your college */}
         <section className="space-y-3">
-          <div className="flex items-center justify-between gap-4">
-            <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-              From your college
-            </h2>
-            {!hasCollegeLink && !soloMode && !ilpLoading && (
-              <button
-                type="button"
-                onClick={dismissCollegeCard}
-                className="-my-2 -mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-white touch-manipulation"
-              >
-                Not now
-              </button>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => navigate('/apprentice/college-plan')}
-            className={cn(
-              CARD_BASE,
-              CARD_NEUTRAL,
-              'relative overflow-hidden p-4 sm:p-5',
-              hasOverdue && 'border-elec-yellow/70'
-            )}
-          >
-            <span
-              aria-hidden
-              className={cn(
-                'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
-                hasOverdue ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
-              )}
-            />
-            <span className="flex items-center justify-between gap-3">
-              <span className="text-[14.5px] font-semibold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
-                {collegeTitle}
-              </span>
-              {hasOverdue ? (
-                <span className="shrink-0 rounded border border-elec-yellow/50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-elec-yellow">
-                  {overdueQuizzes.length} overdue
-                </span>
-              ) : newCount > 0 ? (
-                <span className="shrink-0 rounded border border-white/[0.30] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                  {newCount} new
-                </span>
-              ) : null}
-            </span>
-            <span className="mt-1.5 text-[12px] leading-snug text-white">{collegeDescription}</span>
-            <span className="flex-grow" />
-            <span className="mt-3 text-[11.5px] font-medium text-white">{collegeMeta}</span>
-          </button>
+          <HomeSectionTitle title="Everything in your hub" />
+          <Directory groups={directory} />
         </section>
 
-        <HubToolGrid label="Learn" cards={learnCards} columns="four" />
-
-        <HubToolGrid label="Evidence & hours" cards={evidenceCards} columns="four" />
-
-        <HubToolGrid label="Tools" cards={toolCards} columns="four" />
-
-        <HubToolGrid label="You" cards={youCards} columns="four" />
-
         <section className="space-y-3">
-          <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-            Learning videos
-          </h2>
+          <HomeSectionTitle title="Learning videos" />
           <LearningVideosSection />
         </section>
       </HubBody>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDemoMode } from '@/lib/demoMode';
 import { BellRing, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
@@ -21,6 +22,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
   context = 'Never miss important messages',
 }) => {
   const { user } = useAuth();
+  const demo = useDemoMode();
   const { isSupported, isSubscribed, isLoading, subscribe } = usePushNotifications();
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -64,7 +66,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
     }
   };
 
-  if (!visible || isSubscribed || !isSupported || !user) {
+  if (demo || !visible || isSubscribed || !isSupported || !user) {
     return null;
   }
 

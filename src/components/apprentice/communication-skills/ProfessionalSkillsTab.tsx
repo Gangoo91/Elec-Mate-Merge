@@ -7,11 +7,9 @@ const Section = ({
   description?: string;
   children: React.ReactNode;
 }) => (
-  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {eyebrow}
-      </span>
+      <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
       {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
@@ -188,19 +186,17 @@ const ProfessionalSkillsTab = () => {
             >
               <div className="space-y-1">
                 <h3 className="text-[16px] font-semibold text-white">{skill.skill}</h3>
-                <p className="text-[13px] text-white leading-relaxed">{skill.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{skill.description}</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Key techniques
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Key techniques</span>
                   <ul className="space-y-1">
                     {skill.techniques.map((technique, techIndex) => (
                       <li
                         key={techIndex}
-                        className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{technique}</span>
@@ -210,10 +206,8 @@ const ProfessionalSkillsTab = () => {
                 </div>
 
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Practice exercise
-                  </span>
-                  <p className="text-[13px] text-white leading-relaxed">{skill.practice}</p>
+                  <span className="text-[13px] font-semibold text-white">Practice exercise</span>
+                  <p className="text-[14px] text-white leading-relaxed">{skill.practice}</p>
                 </div>
               </div>
             </div>
@@ -230,18 +224,14 @@ const ProfessionalSkillsTab = () => {
                 {category.examples.map((example, exampleIndex) => (
                   <div key={exampleIndex} className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                        Avoid saying
-                      </span>
-                      <p className="text-[13px] text-white italic leading-relaxed">
+                      <span className="text-[13px] font-semibold text-white">Avoid saying</span>
+                      <p className="text-[14px] text-white italic leading-relaxed">
                         &ldquo;{example.poor}&rdquo;
                       </p>
                     </div>
                     <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                        Better approach
-                      </span>
-                      <p className="text-[13px] text-white italic leading-relaxed">
+                      <span className="text-[13px] font-semibold text-white">Better approach</span>
+                      <p className="text-[14px] text-white italic leading-relaxed">
                         &ldquo;{example.better}&rdquo;
                       </p>
                     </div>
@@ -295,7 +285,7 @@ const ProfessionalSkillsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
             >
               <h4 className="text-[14px] text-white">{item.title}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
             </div>
           ))}
         </div>
@@ -307,7 +297,7 @@ const ProfessionalSkillsTab = () => {
       >
         <div className="space-y-3">
           <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[13px] font-semibold text-white">
               What the assessor looks for
             </span>
             <ul className="space-y-1.5">
@@ -329,9 +319,7 @@ const ProfessionalSkillsTab = () => {
             </ul>
           </div>
           <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              How to prepare
-            </span>
+            <span className="text-[13px] font-semibold text-white">How to prepare</span>
             <ul className="space-y-1.5">
               {[
                 'Rehearse explaining your safe isolation procedure out loud, step by step',

@@ -27,7 +27,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'Consumer Unit Regulations: 18th Edition A4 Guide';
 const PAGE_DESCRIPTION =
-  'Consumer unit regulations under BS 7671:2018+A4:2026: metal CU rules, RCDs, RCBO vs split-load, A4 Section 530 bidirectional devices, SPDs.';
+  'Consumer unit regulations under BS 7671:2018+A4:2026: metal CU rules, RCDs, RCBO vs split-load, Section 530 bidirectional devices, SPDs.';
 
 const faqs = [
   {
@@ -38,7 +38,7 @@ const faqs = [
   {
     question: 'What did Amendment 4 (A4:2026) change for consumer units?',
     answer:
-      'Amendment 4 to BS 7671:2018 introduced several changes relevant to consumer units. Regulation 530.3.201 requires that protective devices be selected and erected with the appropriate use of either a unidirectional or a bidirectional device, and notes that products such as RCBOs, RCCBs, circuit-breakers and AFDDs must be marked to show direction — important where battery storage, solar PV with battery backup or vehicle-to-grid charging can drive current in reverse. Regulation 421.1.7 was redrafted to make AFDDs a requirement for socket-outlet final circuits up to 32 A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes (and a recommendation elsewhere). Regulation 443.4 on transient overvoltage protection was also redrafted, with the previous risk-assessment method (Regulation 443.5) deleted. Amendment 4 adds to the requirements rather than replacing the fundamentals of consumer unit design.',
+      'Less than is often claimed. Several consumer unit rules credited to A4 came in earlier. Regulation 530.3.201 (Amendment 3:2024) requires that protective devices be selected and erected with the appropriate use of either a unidirectional or a bidirectional device, and notes that products such as RCBOs, RCCBs, circuit-breakers and AFDDs must be marked to show direction — important where battery storage, solar PV with battery backup or vehicle-to-grid charging can drive current in reverse. Amendment 2:2022 redrafted Regulation 421.1.7 to make AFDDs a requirement for socket-outlet final circuits up to 32 A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes (and a recommendation elsewhere), and redrafted Regulation 443.4, deleting the Regulation 443.5 risk-assessment method. Amendment 4 reworded 421.1.7(a) to high rise residential buildings and redrafted Regulation 536.4.202 on coordination between the assembly and the overload protective device.',
   },
   {
     question: 'Should I use RCBOs or a split-load board with dual RCDs?',
@@ -106,7 +106,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2024-08-01',
-  dateModified: '2026-06-10',
+  dateModified: '2026-10-10',
   author: {
     '@type': 'Person',
     name: 'Elec-Mate Editorial Team',
@@ -192,8 +192,8 @@ export default function ConsumerUnitRegulationsPage() {
               set by BS&nbsp;7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition). They
               require metal (non-combustible) enclosures under Regulation&nbsp;421.1.201, 30&nbsp;mA
               RCD protection for almost all domestic circuits (Regulations&nbsp;411.3.3 and 411.3.4),
-              and transient overvoltage (surge) protection under Regulation&nbsp;443.4. Amendment&nbsp;4
-              (A4:2026) makes arc fault detection devices (AFDDs) a requirement for socket-outlet
+              and transient overvoltage (surge) protection under Regulation&nbsp;443.4. Since
+              Amendment&nbsp;2 (A2:2022), arc fault detection devices (AFDDs) are a requirement for socket-outlet
               final circuits up to 32&nbsp;A in higher-risk residential buildings, HMOs, student
               accommodation and care homes under Regulation&nbsp;421.1.7, and requires devices to be
               selected for the correct current direction under Regulation&nbsp;530.3.201.
@@ -201,8 +201,8 @@ export default function ConsumerUnitRegulationsPage() {
           </div>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The definitive guide to consumer unit regulations under BS 7671:2018+A4:2026. Metal
-            enclosures, RCD protection, RCBO design, SPD requirements, AFDDs, and the Amendment 4
-            bidirectional device rule (Regulation 530.3.201).
+            enclosures, RCD protection, RCBO design, SPD requirements, AFDDs, and the bidirectional
+            device rule (Regulation 530.3.201).
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -259,7 +259,7 @@ export default function ConsumerUnitRegulationsPage() {
                 Electrical Installation Certificate (EIC)
               </SEOInternalLink>
               , and involves decisions about RCD architecture, SPD provision, circuit labelling and
-              (since Amendment 4) the suitability of protective devices for bidirectional current
+              (since Amendment 3) the suitability of protective devices for bidirectional current
               flow. Getting it right requires a thorough understanding of the current regulations.
             </p>
           </div>
@@ -430,8 +430,8 @@ export default function ConsumerUnitRegulationsPage() {
                       </td>
                       <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">411.3.4</td>
                       <td className="px-5 py-3 align-top">
-                        30 mA RCD required — added by Amendment&nbsp;4 era updates; applies to all
-                        household lighting final circuits.
+                        30 mA RCD required since BS&nbsp;7671:2018 (not an Amendment&nbsp;4 change);
+                        applies to all household lighting final circuits.
                       </td>
                     </tr>
                     <tr className="bg-white/[0.02]">
@@ -614,16 +614,17 @@ export default function ConsumerUnitRegulationsPage() {
               <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Amendment 4 (A4:2026) — Key Changes
+              Amendments A2 to A4 — Key Changes for Consumer Units
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               BS 7671:2018+A4:2026 is an amendment document that modifies and adds to the existing
-              18th Edition rather than being a new book. The most significant changes for consumer
-              unit design are the bidirectional device rule in Regulation 530.3.201, the redrafted
-              AFDD requirement in Regulation 421.1.7, and the redrafted surge protection criteria in
-              Regulation 443.4.
+              18th Edition rather than being a new book. The most significant recent changes for
+              consumer unit design came in over three amendments: the redrafted AFDD requirement in
+              Regulation 421.1.7 and the redrafted surge protection criteria in Regulation 443.4
+              (both A2:2022), and the bidirectional device rule in Regulation 530.3.201 (A3:2024).
+              A4:2026 reworded 421.1.7(a) to high rise residential buildings.
             </p>
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
               <h3 className="font-bold text-elec-yellow text-lg mb-3">
@@ -648,7 +649,7 @@ export default function ConsumerUnitRegulationsPage() {
                   the fault and allowing it to persist.
                 </p>
                 <p>
-                  Regulation 530.3.201 (Amendment 4) requires that the selection and erection of
+                  Regulation 530.3.201 (Amendment 3:2024) requires that the selection and erection of
                   equipment for protection takes account of the appropriate use of either a
                   unidirectional or a bidirectional protective device. The accompanying note records
                   that product standards for devices such as RCCBs, RCBOs, circuit-breakers and
@@ -668,8 +669,10 @@ export default function ConsumerUnitRegulationsPage() {
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
                   Regulation 421.1.7 sits in Part&nbsp;4 — Protection for Safety, Chapter&nbsp;42.
-                  Amendment&nbsp;4 redrafted it so that arc fault detection devices (AFDDs) are now a
-                  firm requirement for some premises and a recommendation for others. AFDDs mitigate
+                  BS&nbsp;7671:2018 introduced it as a recommendation, and Amendment&nbsp;2 (A2:2022)
+                  redrafted it so that arc fault detection devices (AFDDs) are a firm requirement for
+                  some premises and a recommendation for others. Amendment&nbsp;4 reworded the first
+                  premises type to high rise residential buildings. AFDDs mitigate
                   the risk of fire caused by arc fault currents in AC final circuits.
                 </p>
                 <div className="rounded-xl border border-white/10 overflow-hidden my-2">
@@ -718,8 +721,8 @@ export default function ConsumerUnitRegulationsPage() {
               </div>
             </div>
             <p>
-              Beyond the Section 530 bidirectional device requirements and the new AFDD
-              recommendation (Reg&nbsp;421.1.7), Amendment 4 includes various corrections,
+              Beyond the rewording of Reg&nbsp;421.1.7(a) and the redraft of Reg&nbsp;536.4.202,
+              Amendment 4 includes various corrections,
               clarifications, and editorial amendments to the standard. It is important to note that
               Amendment 4 does not change the fundamental requirements for consumer unit design —
               metal enclosures, RCD protection, circuit protection, and labelling requirements all
@@ -745,7 +748,7 @@ export default function ConsumerUnitRegulationsPage() {
             <p>
               BS 7671 Section 443 covers protection against transient overvoltages — voltage spikes
               caused by lightning strikes (direct or nearby) and switching events on the supply
-              network. Amendment 4 redrafted Regulation 443.4. Protection against transient
+              network. Amendment 2 (A2:2022) redrafted Regulation 443.4. Protection against transient
               overvoltages must now be provided wherever an overvoltage could result in either of the
               two consequences below; for all other cases protection is still required unless the
               owner of the installation declares it is not required because any loss or damage is

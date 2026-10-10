@@ -63,7 +63,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Procedure</p>
+          <p className="text-[12px] font-medium text-white mb-3">Test Procedure</p>
         </motion.div>
 
         {testProcedure.map((item, i) => (
@@ -83,7 +83,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Defects</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             {commonDefects.map((item, i) => (
               <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
@@ -96,7 +96,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
 
         {/* Alternative electrode types */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Alternative Electrode Types</p>
+          <p className="text-[12px] font-medium text-white mb-3">Alternative Electrode Types</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white mb-2">Where driven rods cannot achieve adequate resistance (e.g., rocky ground, high-resistivity soil), consider:</p>
             {[

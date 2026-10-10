@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
   pagePath: '/guides/minor-works-certificate-how-to-fill-in',
@@ -132,8 +132,8 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
             'Record continuity, insulation resistance, polarity, EFLI, and RCD time for every modified circuit.',
             'Date the certificate with the day of the work, not the day you fill in the paperwork.',
             'Sign only after every box is filled and every value verified against the test instrument readout.',
-            'Where RCD protection has been omitted on a socket-outlet circuit (non-dwelling only), attach the documented risk assessment required by Reg 411.3.3 before sign-off.',
-            'Complete the SPD and AFDD fields on the A4:2026 Appendix 6 form where surge protective devices or arc fault detection devices are present — leaving these blank is non-compliant under the updated model form.',
+            'Where RCD protection has been omitted on a socket-outlet circuit (never permitted where sockets are liable to be used by ordinary persons or children), attach the documented risk assessment required by Reg 411.3.3 before sign-off.',
+            'Complete the SPD and AFDD fields (on the Appendix 6 model forms since A2:2022) where surge protective devices or arc fault detection devices are present — a certificate with these left blank is incomplete.',
           ],
         },
       ],

@@ -67,7 +67,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
           </div>
         ))}
 
-        <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/30">
+        <div className="p-4 rounded-xl bg-white/[0.06] border border-white/[0.14]">
           <div className="flex items-start gap-3">
             <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
               <Shield className="h-4 w-4 text-elec-yellow" />

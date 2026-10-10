@@ -226,7 +226,7 @@ const ContinuityTestingEquipmentCard = () => {
 
                   {/* Specifications */}
                   <div className="space-y-1 mb-3">
-                    <h5 className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+                    <h5 className="text-xs font-medium text-gray-400">
                       Specifications
                     </h5>
                     {item.specifications.map((spec, index) => (

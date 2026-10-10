@@ -46,6 +46,9 @@ import {
   workerTextareaCn,
 } from '@/components/worker-tools/WorkerUi';
 import { WorkerPhotoPicker, WorkerPhotoStrip } from '@/components/worker-tools/WorkerPhotos';
+import { OutboxWaitingList } from '@/components/worker-tools/WorkerOutbox';
+import { useWorkerOutbox } from '@/hooks/useWorkerOutbox';
+import { queuedToast } from '@/components/worker-tools/outboxToast';
 import { DictateButton } from '@/components/worker-tools/DictateButton';
 import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
 
@@ -90,10 +93,13 @@ export default function ProgressNotesPage() {
   const {
     recentNotes = [],
     isLoading: notesLoading,
-    submitNote,
-    isSubmitting,
+    sendNote,
     deleteNote,
   } = useProgressNotes(jobId || undefined);
+  const [heldPhotos, setHeldPhotos] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { pending: outboxPending } = useWorkerOutbox();
+  const waitingHere = outboxPending.some((o) => o.kind === 'progress_note' && o.jobId === jobId);
 
   // Live: a colleague or the office adding a note on this job.
   useRealtimeInvalidate(
@@ -120,14 +126,26 @@ export default function ProgressNotesPage() {
   const handleSubmit = async () => {
     if (!jobId) return toast.error('Pick the job first');
     if (trimmed.length < MIN_NOTE_LENGTH) return toast.error('Add a few words about what’s done');
+    setIsSubmitting(true);
     try {
-      await submitNote({ jobId, content: trimmed, photos });
-      toast.success('Sent to the office');
+      // ELE-1828: through the outbox, so a note (and its photos) works with no signal.
+      const result = await sendNote({
+        jobId,
+        jobTitle: selectedJob?.title,
+        content: trimmed,
+        paths: photos,
+        heldFiles: heldPhotos,
+      });
+      if (result === 'sent') toast.success('Sent to the office');
+      else queuedToast('Note saved');
       setNote('');
       setPhotos([]);
+      setHeldPhotos([]);
       setPickerKey((k) => k + 1);
     } catch (e) {
       toast.error(rpcErrorMessage(e, 'Couldn’t send the note. Try again'));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -177,6 +195,7 @@ export default function ProgressNotesPage() {
               jobId={jobId}
               onChange={setPhotos}
               onBusyChange={setUploading}
+              onHeldChange={setHeldPhotos}
             />
           ) : null}
         </div>
@@ -225,9 +244,11 @@ export default function ProgressNotesPage() {
           ) : undefined
         }
       />
+      {/* ELE-1828: notes still on the phone, waiting for signal */}
+      <OutboxWaitingList kinds={['progress_note']} jobId={jobId} className="mb-3" />
       {notesLoading ? (
         <LoadingState className="py-10" />
-      ) : shown.length === 0 ? (
+      ) : shown.length === 0 && waitingHere ? null : shown.length === 0 ? (
         <WorkerPanel className="px-4 py-4 sm:px-5">
           <p className="text-[13.5px] text-white">
             {recentNotes.length === 0

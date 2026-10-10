@@ -66,7 +66,7 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
       />
 
       {/* Glow effect on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-gradient-to-br from-elec-yellow/10 to-transparent" />
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-gradient-to-br from-white/[0.08] to-transparent" />
 
       <CardHeader className="relative space-y-3 p-4 sm:p-6">
         {/* Category Badge & Icon */}

@@ -7,7 +7,7 @@ const ComingSoonCalculator = ({ title, description }: ComingSoonCalculatorProps)
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 min-h-[300px] flex items-center justify-center">
       <div className="text-center space-y-3 max-w-md">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white block">
+        <span className="text-[12px] font-medium text-white block">
           Under development
         </span>
         <h3 className="text-[20px] font-semibold text-white">{title}</h3>

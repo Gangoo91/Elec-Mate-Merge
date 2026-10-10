@@ -438,7 +438,7 @@ const MaximumDemandCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
                 Loads
                 <span
                   className="text-xs font-medium px-2 py-0.5 rounded-full"
-                  style={{ background: `${config.gradientFrom}20`, color: config.gradientFrom }}
+                  style={{ background: 'rgba(255, 255, 255, 0.04)', color: config.gradientFrom }}
                 >
                   {loads.length}
                 </span>
@@ -537,7 +537,7 @@ const MaximumDemandCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
                   <button
                     key={type}
                     onClick={() => addLoad(type)}
-                    className="h-9 px-3 text-xs font-medium rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation flex items-center gap-1.5"
+                    className="h-11 px-3.5 text-[13px] font-medium rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation flex items-center gap-1.5"
                   >
                     <Plus className="h-3 w-3" />
                     {option?.label}
@@ -685,7 +685,7 @@ const MaximumDemandCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
                     protection." Stated explicitly so the figure is not read as an
                     assembly rating.
                   */}
-                      <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                      <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/30">
                         <p className="text-sm text-white">
                           <strong>Reg 536.4.202 — the assembly rating is a separate check.</strong>{' '}
                           The device protecting a consumer unit or distribution board against
@@ -697,7 +697,7 @@ const MaximumDemandCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
                         </p>
                       </div>
                       {supplyInfo.estimatedCurrent > 60 && (
-                        <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                        <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/20">
                           <p className="text-xs text-white">
                             <strong>Note:</strong> For loads exceeding 60A per phase, notify the DNO
                             before installation.

@@ -84,7 +84,11 @@ const SidebarFooter = () => {
           <Crown className="h-[18px] w-[18px] shrink-0 text-elec-yellow" aria-hidden />
           <div className="min-w-0">
             <p className="truncate text-[13px] font-semibold leading-tight text-white">
-              {collegeCover ? 'College access' : tierLabel(subscriptionTier)}
+              {collegeCover
+                ? 'College access'
+                : /lifetime/i.test(reason)
+                  ? 'Lifetime'
+                  : tierLabel(subscriptionTier)}
             </p>
             <p className="mt-0.5 truncate text-[11px] leading-tight text-white">
               {collegeCover ? 'Provided by your college' : 'Active subscription'}

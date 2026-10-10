@@ -1,4 +1,4 @@
-import { CALLOUT_DANGER, PANEL } from '@/components/ui/panel-recipe';
+import { LEARN_CALLOUT_DANGER, LEARN_CARD } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 import CommonIssuesCard from '../../CommonIssuesCard';
 import { polarityIssues } from '../../commonIssues';
@@ -15,7 +15,7 @@ const PolarityTestingTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className={cn(PANEL, "space-y-4")}>
+      <div className={cn(LEARN_CARD, "space-y-4")}>
         <div className="space-y-1">
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Polarity testing
@@ -41,8 +41,8 @@ const PolarityTestingTab = () => {
         <PolarityDiagram />
       </div>
 
-      <div className={cn(PANEL, "space-y-1")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className={cn(LEARN_CARD, "space-y-1")}>
+        <span className="text-[13px] font-semibold text-white">
           The lampholder exception worth knowing
         </span>
         <p className="text-[14px] text-white leading-relaxed">
@@ -55,8 +55,8 @@ const PolarityTestingTab = () => {
         </p>
       </div>
 
-      <div className={cn(CALLOUT_DANGER, "space-y-1")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-400">
+      <div className={cn(LEARN_CALLOUT_DANGER, "space-y-1")}>
+        <span className="text-[13px] font-semibold text-red-300">
           Safety warning
         </span>
         <p className="text-[14px] text-white leading-relaxed">

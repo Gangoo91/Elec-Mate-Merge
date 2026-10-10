@@ -935,13 +935,13 @@ const EnergyEfficiencyModule2Section4 = () => {
             asChild
             className="text-white hover:text-elec-yellow hover:bg-transparent"
           >
-            <Link to="../section-3" className="flex items-center gap-2">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-2-section-3" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Previous: Section 3
             </Link>
           </Button>
           <Button asChild className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-            <Link to="../section-5" className="flex items-center gap-2">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-2-section-5" className="flex items-center gap-2">
               Next: Section 5
               <ArrowLeft className="h-4 w-4 rotate-180" />
             </Link>

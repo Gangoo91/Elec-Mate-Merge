@@ -235,6 +235,9 @@ export function useCollegeMembership(): CollegeMembership {
     queryKey: ['college-scope-membership', uid],
     enabled: !!uid,
     staleTime: 60_000,
+    // Mounted by the masthead switch and by every scoped screen: one load
+    // per minute, not one per mount (ELE-1912).
+    refetchOnMount: true,
     queryFn: () => loadMembership(uid as string),
   });
 

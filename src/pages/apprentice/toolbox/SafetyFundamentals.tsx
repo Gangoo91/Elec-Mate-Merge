@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, Shield, AlertTriangle, Zap, Eye, Star, Phone, Heart } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 
 const SafetyFundamentals = () => {
   const safetyPrinciples = [
@@ -73,7 +73,7 @@ const SafetyFundamentals = () => {
       icon: Eye,
       color: 'text-elec-yellow',
       bg: 'from-white/[0.06] to-white/[0.03]',
-      border: 'border-elec-yellow/35',
+      border: 'border-white/[0.08]',
     },
     {
       label: 'Isolation Steps',
@@ -88,8 +88,8 @@ const SafetyFundamentals = () => {
       value: '6',
       icon: Shield,
       color: 'text-elec-yellow',
-      bg: 'from-elec-yellow/10 to-elec-yellow/5',
-      border: 'border-elec-yellow/30',
+      bg: 'from-white/[0.06] to-white/[0.02]',
+      border: 'border-white/[0.08]',
     },
     {
       label: 'Priority',
@@ -102,7 +102,7 @@ const SafetyFundamentals = () => {
   ];
 
   return (
-    <HubSubPage
+    <GuidePage
       title="Safety fundamentals"
       backTo="/apprentice/toolbox"
       description="The principles, PPE standards, isolation procedures and emergency responses every electrician has to know."
@@ -121,7 +121,7 @@ const SafetyFundamentals = () => {
       </div>
 
       {/* Core Safety Principles */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
+      <Card className="border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.02]">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-elec-yellow" />
@@ -149,7 +149,7 @@ const SafetyFundamentals = () => {
       </Card>
 
       {/* PPE Requirements */}
-      <Card className="border-elec-yellow/35 bg-gradient-to-br from-white/[0.06] to-white/[0.03]">
+      <Card className="border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.03]">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Eye className="h-6 w-6 text-elec-yellow" />
@@ -173,7 +173,7 @@ const SafetyFundamentals = () => {
                   </div>
                   <Badge
                     variant="outline"
-                    className="border-elec-yellow/40 text-elec-yellow w-fit text-xs"
+                    className="border-white/[0.08] text-elec-yellow w-fit text-xs"
                   >
                     {ppe.standard}
                   </Badge>
@@ -240,7 +240,7 @@ const SafetyFundamentals = () => {
 
       {/* Quick Reference Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-white/5">
+        <Card className="border-white/[0.08] bg-white/5">
           <CardHeader className="pb-2">
             <CardTitle className="text-elec-yellow text-base">Risk Assessment</CardTitle>
           </CardHeader>
@@ -252,7 +252,7 @@ const SafetyFundamentals = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-white/5">
+        <Card className="border-white/[0.08] bg-white/5">
           <CardHeader className="pb-2">
             <CardTitle className="text-elec-yellow text-base">Permit to Work</CardTitle>
           </CardHeader>
@@ -264,7 +264,7 @@ const SafetyFundamentals = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-white/5">
+        <Card className="border-white/[0.08] bg-white/5">
           <CardHeader className="pb-2">
             <CardTitle className="text-elec-yellow text-base">Tool Safety</CardTitle>
           </CardHeader>
@@ -350,7 +350,7 @@ const SafetyFundamentals = () => {
           </div>
         </CardContent>
       </Card>
-    </HubSubPage>
+    </GuidePage>
   );
 };
 

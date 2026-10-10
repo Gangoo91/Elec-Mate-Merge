@@ -220,7 +220,7 @@ const ContinuityWhyTestSection = ({ onBack }: Props) => {
 
         {/* Case Studies */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-purple-400 uppercase tracking-wider px-0.5 mb-2 mt-4">Case Studies</p>
+          <p className="text-xs font-medium text-purple-400 px-0.5 mb-2 mt-4">Case Studies</p>
         </motion.div>
         {caseStudies.map((cs, i) => {
           const isOpen = expandedCase === i;

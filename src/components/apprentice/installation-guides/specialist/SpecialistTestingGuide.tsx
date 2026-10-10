@@ -609,7 +609,7 @@ const SpecialistTestingGuide = () => {
         badge: 'border-white/10 text-white',
       },
       yellow: {
-        border: 'border-elec-yellow/30',
+        border: 'border-white/[0.14]',
         bg: 'bg-white/[0.06]',
         text: 'text-elec-yellow',
         badge: 'border-elec-yellow text-elec-yellow',
@@ -668,24 +668,24 @@ const SpecialistTestingGuide = () => {
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-3">
               Standard Test Sequence (All Installations)
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
-              <div className="p-2 rounded border border-elec-yellow/40 text-center">
+              <div className="p-2 rounded border border-white/[0.14] text-center">
                 <span className="text-elec-yellow font-medium">1. Continuity</span>
               </div>
-              <div className="p-2 rounded border border-elec-yellow/40 text-center">
+              <div className="p-2 rounded border border-white/[0.14] text-center">
                 <span className="text-elec-yellow font-medium">2. Insulation</span>
               </div>
-              <div className="p-2 rounded border border-elec-yellow/40 text-center">
+              <div className="p-2 rounded border border-white/[0.14] text-center">
                 <span className="text-elec-yellow font-medium">3. Polarity</span>
               </div>
-              <div className="p-2 rounded border border-elec-yellow/40 text-center">
+              <div className="p-2 rounded border border-white/[0.14] text-center">
                 <span className="text-elec-yellow font-medium">4. EFLI (Zs)</span>
               </div>
-              <div className="p-2 rounded border border-elec-yellow/40 text-center">
+              <div className="p-2 rounded border border-white/[0.14] text-center">
                 <span className="text-elec-yellow font-medium">5. RCD</span>
               </div>
             </div>
@@ -975,7 +975,7 @@ const SpecialistTestingGuide = () => {
       </Card>
 
       {/* Critical Safety Notice */}
-      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5">
         <CardHeader className="p-0 pb-3">
           <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
             <Shield className="h-6 w-6" />

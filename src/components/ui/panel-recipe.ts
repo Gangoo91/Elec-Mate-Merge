@@ -23,8 +23,8 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
  * so it stays gold or red instead of turning to sludge.
  */
 
-/** The everyday panel. Gold hairline, lit neutral surface. */
-export const PANEL = cn('rounded-xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE);
+/** The everyday panel. White hairline, lit neutral surface (10 Oct: was a gold edge). */
+export const PANEL = cn('rounded-xl border border-white/[0.10] p-4 sm:p-5', CARD_SURFACE);
 
 /** A panel nested inside another — white edge, so it reads as a level down. */
 export const PANEL_INSET = cn('rounded-lg border border-white/[0.12] p-3 sm:p-4', CARD_SURFACE);
@@ -66,12 +66,9 @@ export const CALLOUT_INSET = cn(
  * small scale. Edge and text only.
  */
 export const CHIP_ACCENT =
-  'ml-2 rounded border border-elec-yellow/50 px-1.5 py-0.5 align-middle text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow';
+  'ml-2 rounded border border-elec-yellow/50 px-1.5 py-0.5 align-middle text-[12px] font-medium text-elec-yellow';
 
-/** Small uppercase label that heads a panel. */
-export const PANEL_LABEL =
-  'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70';
-export const PANEL_LABEL_ACCENT =
-  'text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow';
-export const PANEL_LABEL_DANGER =
-  'text-[10px] font-medium uppercase tracking-[0.18em] text-red-300';
+/** The label that heads a panel: 12.5px, sentence case, full white (10 Oct). */
+export const PANEL_LABEL = 'text-[12.5px] font-semibold text-white';
+export const PANEL_LABEL_ACCENT = 'text-[12.5px] font-semibold text-elec-yellow';
+export const PANEL_LABEL_DANGER = 'text-[12.5px] font-semibold text-red-300';

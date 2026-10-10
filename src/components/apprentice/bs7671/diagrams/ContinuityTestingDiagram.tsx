@@ -22,24 +22,24 @@ const ContinuityTestingDiagram = ({
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           MFT configuration
         </span>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Function
             </span>
             <p className="text-[14px] text-white leading-relaxed">Low resistance / continuity</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Test current
             </span>
             <p className="text-[14px] text-white leading-relaxed">≥200mA DC</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Lead nulling
             </span>
             <p className="text-[14px] text-white leading-relaxed">
@@ -47,7 +47,7 @@ const ContinuityTestingDiagram = ({
             </p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Range
             </span>
             <p className="text-[14px] text-white leading-relaxed">0.01Ω to 200Ω</p>
@@ -56,7 +56,7 @@ const ContinuityTestingDiagram = ({
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Test lead connections
         </span>
         <div className="space-y-2">
@@ -75,12 +75,12 @@ const ContinuityTestingDiagram = ({
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Ring circuit testing sequence
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Step 1 — end-to-end
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -91,7 +91,7 @@ const ContinuityTestingDiagram = ({
             <p className="text-[14px] text-white leading-relaxed">Values should be similar.</p>
           </div>
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Step 2 — cross-connect
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -102,7 +102,7 @@ const ContinuityTestingDiagram = ({
             <p className="text-[14px] text-white leading-relaxed">Detects spurs and breaks.</p>
           </div>
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Step 3 — R1+R2 test
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -115,12 +115,12 @@ const ContinuityTestingDiagram = ({
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Typical R1+R2 values
         </span>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               2.5mm² T&E
             </span>
             <p className="text-[14px] text-white leading-relaxed font-mono">
@@ -128,7 +128,7 @@ const ContinuityTestingDiagram = ({
             </p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               1.5mm² T&E
             </span>
             <p className="text-[14px] text-white leading-relaxed font-mono">

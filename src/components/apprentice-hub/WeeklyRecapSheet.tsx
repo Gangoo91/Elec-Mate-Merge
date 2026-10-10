@@ -4,7 +4,7 @@
  * with real activity (the hook gates a flat week out entirely).
  */
 
-import { FormSheet } from '@/components/forms/FormSheet';
+import { ContentSheet } from '@/components/apprentice/ApprenticeHomeUi';
 import { buttonPrimaryCn } from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import { Flame } from 'lucide-react';
@@ -42,7 +42,7 @@ export function WeeklyRecapSheet({ open, onClose, recap }: Props) {
     {
       value: (
         <span className="inline-flex items-center gap-1">
-          {recap.streak >= 2 && <Flame className="h-4 w-4 text-elec-yellow" />}
+          {recap.streak >= 2 && <Flame className="h-5 w-5 text-elec-yellow" strokeWidth={1.75} />}
           {recap.streak}
         </span>
       ),
@@ -50,40 +50,46 @@ export function WeeklyRecapSheet({ open, onClose, recap }: Props) {
     },
   ];
 
+  // Sized to its content (10 Oct): four figures and one button sat at the top
+  // of an 85vh FormSheet with half a screen of nothing under them.
   return (
-    <FormSheet
+    <ContentSheet
       open={open}
       onOpenChange={(v) => !v && onClose()}
       eyebrow="Your week"
       title={headline(recap)}
+      description="What you did in the app this week."
       footer={
-        <button type="button" onClick={onClose} className={cn(buttonPrimaryCn, 'w-full')}>
+        <button
+          type="button"
+          onClick={onClose}
+          className={cn(
+            buttonPrimaryCn,
+            'w-full lg:ml-auto lg:flex lg:max-w-sm lg:items-center lg:justify-center'
+          )}
+        >
           Crack on
         </button>
       }
     >
-      <div className="grid grid-cols-4 gap-[2px] overflow-hidden rounded-2xl border border-white/[0.08] bg-black">
+      {/* Status figures: a 2x2 on a phone, one row from sm: */}
+      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-4">
         {cells.map((c) => (
-          <div
-            key={c.label}
-            className="flex flex-col items-center justify-center gap-1 bg-white/[0.06] px-2 py-4 text-center"
-          >
-            <span className="text-[20px] font-semibold leading-none tabular-nums text-white">
+          <div key={c.label} className="bg-[hsl(0_0%_11%)] px-4 py-3.5">
+            <p className="text-[24px] font-semibold leading-none tabular-nums text-white">
               {c.value}
-            </span>
-            <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white">
-              {c.label}
-            </span>
+            </p>
+            <p className="mt-1.5 text-[13px] font-medium text-white">{c.label}</p>
           </div>
         ))}
       </div>
 
       {recap.flashcards > 0 && (
-        <p className="text-center text-[12px] text-white">
-          + {recap.flashcards} flashcard {recap.flashcards === 1 ? 'session' : 'sessions'} along the
-          way.
+        <p className="mt-3 text-[13px] text-white">
+          Plus {recap.flashcards} flashcard {recap.flashcards === 1 ? 'session' : 'sessions'} along
+          the way.
         </p>
       )}
-    </FormSheet>
+    </ContentSheet>
   );
 }

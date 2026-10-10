@@ -6,14 +6,7 @@ import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { studySpinesFor } from '@/lib/collegeStudyMap';
 
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-  HubToolGrid,
-} from '@/components/hub/HubPrimitives';
+import { CatalogueShell } from '@/components/study-centre/course-catalogue';
 
 type Level = 'Essential' | 'Foundation' | 'Intermediate' | 'Advanced';
 
@@ -149,14 +142,6 @@ export default function ApprenticeCoursesIndex() {
     return map;
   }, [allProgress]);
 
-  const totalCompleted = Object.values(completedById).reduce((a, b) => a + b, 0);
-  const levelCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    for (const c of COURSES) counts[c.level] = (counts[c.level] || 0) + 1;
-    return counts;
-  }, []);
-  const dominantLevel = Object.entries(levelCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? '—';
-
   // A college-linked learner sees the course(s) that cover their enrolled
   // qualification first, marked with the code. Only spines the map vouches
   // for — an unknown code marks nothing rather than guessing.
@@ -176,53 +161,23 @@ export default function ApprenticeCoursesIndex() {
   }, [yourRouteKeys]);
 
   return (
-    <HubPage>
-      <HubMasthead section="Study centre" title="Apprentice training" backTo="/study-centre" />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          Level 2 & 3 qualifications, AM2 prep, HNC, MOET and the fundamentals every electrician
-          needs.
-        </p>
-
-        <HubKpiRow>
-          <HubKpi
-            label="Courses"
-            value={String(COURSES.length)}
-            context="Available now"
-            accent
-          />
-          <HubKpi label="Completed" value={String(totalCompleted)} context="Sections done" />
-          <HubKpi
-            label="Levels"
-            value={String(Object.keys(levelCounts).length)}
-            context="Foundation → Advanced"
-          />
-          <HubKpi label="Pathway" value={String(dominantLevel)} context="Most courses at" />
-        </HubKpiRow>
-
-        <HubToolGrid
-          label="All courses"
-          columns="three"
-          cards={orderedCourses.map((c) => {
-            const completed = completedById[c.id] ?? 0;
-            const yourCode = yourRouteKeys.has(c.routeKey) ? learner?.qualification_code : null;
-            // `inDevelopment` badges the card; it no longer locks it. The
-            // Welsh course is open to everyone, and a card that refuses to
-            // open onto a live course reads as a broken link.
-            return {
-              id: c.id,
-              eyebrow: c.level,
-              title: c.title,
-              description: c.description,
-              meta: yourCode
-                ? `Your qualification · ${yourCode}${completed > 0 ? ` · ${completed} done` : ''}`
-                : `${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`,
-              to: c.link,
-              badge: c.inDevelopment ? 'In review' : undefined,
-            };
-          })}
-        />
-      </HubBody>
-    </HubPage>
+    <CatalogueShell
+      title="Apprentice training"
+      description="Level 2 & 3 qualifications, AM2 prep, HNC, MOET and the fundamentals every electrician needs."
+      courses={orderedCourses.map((c) => ({
+        id: c.id,
+        title: c.title,
+        description: c.description,
+        level: c.level,
+        duration: c.duration,
+        to: c.link,
+        done: completedById[c.id] ?? 0,
+        tag:
+          yourRouteKeys.has(c.routeKey) && learner?.qualification_code
+            ? `Your qualification · ${learner.qualification_code}`
+            : undefined,
+        badge: c.inDevelopment ? 'In review' : undefined,
+      }))}
+    />
   );
 }

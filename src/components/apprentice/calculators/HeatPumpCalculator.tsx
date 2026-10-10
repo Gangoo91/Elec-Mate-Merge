@@ -704,7 +704,7 @@ const HeatPumpCalculator = () => {
 
                 {/* Review findings */}
                 {result.reviewFindings.length > 0 && (
-                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30 space-y-2">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/30 space-y-2">
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0" />
                       <p className="text-sm font-medium text-white">
@@ -730,7 +730,7 @@ const HeatPumpCalculator = () => {
                         <p className="text-xs text-white">{finding.description}</p>
                         <p className="text-xs text-white">{finding.recommendation}</p>
                         {finding.regulation && (
-                          <p className="text-xs text-green-400 italic">{finding.regulation}</p>
+                          <p className="text-xs text-white italic">{finding.regulation}</p>
                         )}
                       </div>
                     ))}
@@ -824,8 +824,8 @@ const HeatPumpCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="grid grid-cols-2 gap-3 text-sm">

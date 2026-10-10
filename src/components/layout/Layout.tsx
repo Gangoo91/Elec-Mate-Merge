@@ -10,6 +10,7 @@ import FailedPaymentBanner from '@/components/billing/FailedPaymentBanner';
 import MaintenanceBanner from '@/components/layout/MaintenanceBanner';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { AchievementListener } from '@/components/study-centre/AchievementListener';
+import { XpToastHost } from '@/components/study-centre/XpToastHost';
 import { CoAdminInvitePrompt } from '@/components/employer/managers/CoAdminInvitePrompt';
 import { TeamInvitePrompt } from '@/components/employer/managers/TeamInvitePrompt';
 
@@ -97,9 +98,16 @@ const Layout = () => {
   // page. `clip` stops horizontal overflow without establishing a scroll
   // container, so sticky resolves against the viewport as intended.
   return (
-    <div className="flex min-h-screen overflow-x-clip bg-elec-dark text-slate-50">
+    // The ground is --shell-ground when the page publishes one (HubPage), so
+    // the gutter round a hub page is the page's own grey, not a darker frame
+    // (Andrew, 10 Oct: "it should be grey throughout").
+    <div
+      className="flex min-h-screen overflow-x-clip text-slate-50"
+      style={{ backgroundColor: 'hsl(var(--shell-ground, var(--elec-dark)))' }}
+    >
       {/* Global achievement checker — listens for activity events */}
       <AchievementListener />
+      <XpToastHost />
       <CoAdminInvitePrompt />
       <TeamInvitePrompt />
 

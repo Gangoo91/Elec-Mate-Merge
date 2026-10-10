@@ -14,6 +14,12 @@ interface SafetyTemplateViewerProps {
   template: SafetyTemplate;
   onBack: () => void;
   isAdopted: boolean;
+  /**
+   * Read the template only — no adopt form. The Employer Hub opens templates
+   * this way: an adopted template is a personal document, and firm documents
+   * do not exist yet.
+   */
+  browseOnly?: boolean;
 }
 
 /** Section icon based on type */
@@ -29,7 +35,12 @@ const SECTION_ICONS: Record<DocumentSection['type'], string> = {
   key_value: 'Information',
 };
 
-export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemplateViewerProps) {
+export function SafetyTemplateViewer({
+  template,
+  onBack,
+  isAdopted,
+  browseOnly = false,
+}: SafetyTemplateViewerProps) {
   const adoptMutation = useAdoptTemplate();
   const sc = template.structured_content;
   // Prefer v2 (AI-regenerated full-depth content) when present.
@@ -247,8 +258,15 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
           </div>
         )}
 
+        {browseOnly && (
+          <p className="text-[13px] leading-relaxed text-white">
+            To make your own copy with your company details, adopt this template from Site Safety in
+            the Electrical Hub.
+          </p>
+        )}
+
         {/* Adopt form */}
-        {!isAdopted && (
+        {!isAdopted && !browseOnly && (
           <motion.div
             id="adopt-template-form"
             initial={{ opacity: 0, y: 8 }}
@@ -376,7 +394,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
           on arrival. This bar keeps it under the thumb and takes you to the
           form; it does not adopt on its own, because the form's required
           fields still have to be filled. */}
-      {!isAdopted && (
+      {!isAdopted && !browseOnly && (
         <div
           className="sticky bottom-0 z-40 border-t border-white/[0.08] bg-[hsl(0_0%_7%)] px-4 pt-3"
           style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}

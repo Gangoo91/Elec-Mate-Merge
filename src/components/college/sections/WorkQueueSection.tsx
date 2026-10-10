@@ -15,21 +15,17 @@
  * portfolio) and the per-tutor state in useWorkQueueState.
  */
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MoreHorizontal, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
   COLLEGE_BTN,
   COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  COLLEGE_LINK,
   CollegeEmpty,
   CollegePageHeader,
-  CollegeStats,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
 import {
-  Bars,
   BulkBar,
   KeyHint,
   QueueGroup,
@@ -56,6 +52,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { JoinedToggle, QuietTabs } from '@/components/college/otj/hoursUi';
 
 interface WorkQueueSectionProps {
   onNavigate: (section: CollegeSection) => void;
@@ -68,7 +65,7 @@ const typeLabel = (type: WorkQueueItem['type']) =>
       ? 'Plan review'
       : type === 'gateway'
         ? 'Gateway'
-        : 'Portfolio';
+        : 'Evidence';
 
 const typeVerb = (type: WorkQueueItem['type']) =>
   type === 'grade' ? 'Grade' : type === 'ilp' ? 'Review' : type === 'gateway' ? 'Check' : 'Assess';
@@ -80,19 +77,19 @@ function shortDate(iso: string): string {
 const HELP: PageHelpContent = {
   id: 'college-work-queue',
   title: 'Work queue',
-  what: 'The assessment jobs waiting on tutors: grades to record, learning plan reviews that are overdue, learners near gateway and portfolio work to assess. Ranked so the overdue and urgent ones come first.',
+  what: 'The assessment jobs waiting on tutors: grades to record, learning plan reviews that are overdue, learners near gateway and evidence to assess. It reads like the inbox, longest waiting first.',
   steps: [
     {
       title: 'Start at the top',
-      body: 'Overdue items are orange and come first, then urgent, then the oldest.',
+      body: 'Anything past its due date, marked urgent or waiting a week or more is under Waiting too long, the same rule the inbox uses.',
     },
     {
       title: 'Open the item',
-      body: 'Tap a row to go where the work is done: grading, learning plans, EPA or portfolios.',
+      body: 'The button says what to do: Grade, Review, Check or Assess. Evidence opens the submission itself; the others open the screen where the work is done.',
     },
     {
       title: 'Keep your own place',
-      body: 'Mark items as started or done, or add a note. That is your own record; the item leaves the queue when the work itself is done.',
+      body: 'Mark items as started or done, or add a note, from the ... menu. That is your own record; the item leaves the queue when the work itself is done.',
     },
     {
       title: 'Many at once',
@@ -100,13 +97,20 @@ const HELP: PageHelpContent = {
     },
   ],
   legend: [
-    { swatch: 'bg-orange-500', label: 'Overdue', body: 'Past its due date.' },
-    { swatch: 'bg-elec-yellow', label: 'Urgent', body: 'Overdue learning plan reviews.' },
+    {
+      swatch: 'bg-orange-500',
+      label: 'Waiting too long',
+      body: 'Past its due date, urgent, or waiting a week or more.',
+    },
   ],
   notes: [
     {
-      title: 'My learners or everyone',
-      body: 'My learners is the cohorts you lead. Everyone is the whole college.',
+      title: 'Whose work',
+      body: 'The switch at the top picks Mine, My cohorts or Whole college for the whole College Hub.',
+    },
+    {
+      title: 'The inbox',
+      body: 'Off-the-job hours, messages, comments and progress reviews are in the inbox, not here.',
     },
   ],
 };
@@ -116,6 +120,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
   const { stateMap, setStatus, saveNotes, staffId } = useWorkQueueState();
   const canPersist = !!staffId;
   const { toast } = useToast();
+  const navigate = useNavigate();
   const my = useMyLearners();
   const [scope, setScope] = useScope('workqueue', my);
   const [searchQuery, setSearchQuery] = useState('');
@@ -150,6 +155,12 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
     !!item.dueDate &&
     new Date(item.dueDate).getTime() < Date.now() &&
     getItemStatus(item) !== 'Completed';
+
+  // The inbox's rule, so the two pages agree on what "waiting too long"
+  // means: past its due date, marked urgent, or waiting a week or more.
+  const isLate = (item: WorkQueueItem) =>
+    getItemStatus(item) !== 'Completed' &&
+    (isOverdue(item) || item.priority === 'Urgent' || (daysSince(item.createdAt) ?? 0) >= 7);
 
   const persistStatus = async (
     item: WorkQueueItem,
@@ -199,11 +210,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
     }
   };
 
-  const overdueCount = items.filter(isOverdue).length;
-  const urgentCount = items.filter(
-    (i) => i.priority === 'Urgent' && getItemStatus(i) !== 'Completed'
-  ).length;
-  const highCount = items.filter((i) => i.priority === 'High').length;
+  const lateCount = items.filter(isLate).length;
   const inProgressCount = items.filter((i) => getItemStatus(i) === 'In Progress').length;
   const completedCount = items.filter((i) => getItemStatus(i) === 'Completed').length;
   const openCount = items.filter((i) => getItemStatus(i) === 'Pending').length;
@@ -223,8 +230,8 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
         return matchesSearch && matchesStatus && matchesType;
       })
       .sort((a, b) => {
-        const oa = isOverdue(a) ? 0 : 1;
-        const ob = isOverdue(b) ? 0 : 1;
+        const oa = isLate(a) ? 0 : 1;
+        const ob = isLate(b) ? 0 : 1;
         if (oa !== ob) return oa - ob;
         if (priorityOrder[a.priority] !== priorityOrder[b.priority])
           return priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -280,15 +287,13 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
       : undefined,
   });
 
-  const urgentRows = sortedItems.filter(
-    (i) => isOverdue(i) || (i.priority === 'Urgent' && getItemStatus(i) !== 'Completed')
-  );
+  const urgentRows = sortedItems.filter(isLate);
   const otherRows = sortedItems.filter((i) => !urgentRows.includes(i));
 
   const renderRow = (item: WorkQueueItem) => {
     const currentStatus = getItemStatus(item);
     const overdue = isOverdue(item);
-    const urgent = item.priority === 'Urgent' && currentStatus !== 'Completed';
+    const urgent = isLate(item);
     const noteOpen = noteItemId === item.id;
     const saving = savingItemId === item.id;
     const note = stateMap.get(`${item.type}:${item.sourceId}`)?.notes;
@@ -332,10 +337,9 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                 type="button"
                 onClick={() => handleViewDetails(item)}
                 className={cn(
-                  'hidden h-11 min-w-[96px] items-center justify-center rounded-xl px-3 text-[13px] font-bold touch-manipulation sm:inline-flex',
-                  overdue || urgent
-                    ? 'bg-elec-yellow text-black'
-                    : 'border border-white/[0.18] text-white'
+                  // Outlined on every row: one solid yellow action per screen.
+                  'hidden h-11 min-w-[96px] items-center justify-center rounded-xl border px-3 text-[13px] font-semibold text-white touch-manipulation sm:inline-flex',
+                  overdue || urgent ? 'border-orange-400/60' : 'border-white/[0.18]'
                 )}
               >
                 {typeVerb(item.type)}
@@ -438,223 +442,136 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
     );
   };
 
-  const typeRows = (['grade', 'ilp', 'gateway', 'portfolio'] as const).map((t) => ({
-    key: t,
-    label: typeLabel(t),
-    n: items.filter((i) => i.type === t && getItemStatus(i) !== 'Completed').length,
-    cls: t === 'ilp' ? 'bg-elec-yellow' : 'bg-white',
-  }));
-  const ageRows = (() => {
-    const open = items
-      .filter((i) => getItemStatus(i) !== 'Completed')
-      .map((i) => daysSince(i.createdAt) ?? 0);
-    return [
-      { label: 'Under a week', n: open.filter((d) => d < 7).length, cls: 'bg-emerald-500' },
-      { label: '1 to 4 weeks', n: open.filter((d) => d >= 7 && d < 28).length, cls: 'bg-white' },
-      { label: 'Over 4 weeks', n: open.filter((d) => d >= 28).length, cls: 'bg-orange-500' },
-    ];
-  })();
-
   return (
-    <PullToRefresh onRefresh={handleRefresh} className="space-y-8 sm:space-y-10">
-      <CollegePageHeader
-        eyebrow="Assessment"
-        title={
-          isLoading
-            ? 'Gathering the queue…'
-            : openCount + inProgressCount === 0
-              ? 'Nothing in the queue'
-              : `${openCount + inProgressCount} ${openCount + inProgressCount === 1 ? 'job' : 'jobs'} waiting`
-        }
-        description={
-          isLoading
-            ? 'Grades, plan reviews, gateway checks and portfolio work.'
-            : `${overdueCount ? `${overdueCount} overdue. ` : ''}Grades, plan reviews, gateway checks and portfolio work, overdue and urgent first.`
-        }
-        help={HELP}
-        actions={
-          <>
-            <ScopeToggle
-              scope={scope}
-              onChange={setScope}
-              my={my}
-              mineCount={mineItems.length}
-              allCount={allItems.length}
+    <PullToRefresh onRefresh={handleRefresh}>
+      <div className="space-y-8 sm:space-y-10">
+        <CollegePageHeader
+          eyebrow="Assessment"
+          title={
+            isLoading
+              ? 'Gathering the queue…'
+              : openCount + inProgressCount === 0
+                ? 'Nothing in the queue'
+                : `${openCount + inProgressCount} ${openCount + inProgressCount === 1 ? 'job' : 'jobs'} waiting`
+          }
+          description={
+            isLoading
+              ? 'Grades, plan reviews, gateway checks and evidence to assess.'
+              : `${lateCount ? `${lateCount} waiting too long. ` : ''}Grades, plan reviews, gateway checks and evidence to assess, longest waiting first. Hours, messages and progress reviews are in the inbox.`
+          }
+          help={HELP}
+          actions={
+            <>
+              <ScopeToggle
+                scope={scope}
+                onChange={setScope}
+                my={my}
+                mineCount={mineItems.filter((i) => getItemStatus(i) !== 'Completed').length}
+                allCount={allItems.filter((i) => getItemStatus(i) !== 'Completed').length}
+              />
+              <button
+                type="button"
+                onClick={() => navigate('/college/inbox')}
+                className={COLLEGE_BTN}
+              >
+                Open the inbox
+              </button>
+            </>
+          }
+        />
+
+        <section className="space-y-4">
+          <div className="relative">
+            <Search
+              className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+              aria-hidden="true"
             />
-            <button type="button" onClick={refresh} className={COLLEGE_LINK}>
-              Refresh
-            </button>
-          </>
-        }
-      />
-
-      <CollegeStats
-        items={[
-          {
-            label: 'Urgent',
-            value: String(urgentCount),
-            sub: urgentCount
-              ? 'Overdue plan reviews: do these first'
-              : highCount
-                ? `${highCount} high priority`
-                : 'Nothing urgent',
-            warn: urgentCount > 0,
-            onClick: () => {
-              setFilterStatus('Pending');
-              setFilterType('ilp');
-            },
-          },
-          {
-            label: 'Overdue',
-            value: String(overdueCount),
-            sub: overdueCount ? 'Past their due date' : 'Nothing past due',
-            warn: overdueCount > 0,
-          },
-          {
-            label: 'Started',
-            value: String(inProgressCount),
-            sub: inProgressCount ? 'Started, not finished' : 'Nothing started',
-            onClick: () => setFilterStatus('In Progress'),
-          },
-          {
-            label: 'Done',
-            value: String(completedCount),
-            sub: canPersist ? 'Marked complete by you' : 'Sign in as staff to track',
-            good: completedCount > 0,
-            onClick: () => setFilterStatus('Completed'),
-          },
-        ]}
-      />
-
-      {!isLoading && items.length > 0 && (
-        <section className={cn(COLLEGE_CARD, 'grid gap-6 lg:grid-cols-2')}>
-          <div className="min-w-0">
-            <p className="mb-3 text-[13px] font-semibold text-white">Open jobs by kind</p>
-            <Bars
-              rows={typeRows}
-              onPick={(k) => {
-                setFilterType(k as WorkQueueItem['type']);
-                setFilterStatus('all');
-              }}
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Find a learner or job"
+              aria-label="Search the queue"
+              className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
             />
           </div>
-          <div className="min-w-0">
-            <p className="mb-3 text-[13px] font-semibold text-white">
-              How long open jobs have waited
-            </p>
-            <Bars rows={ageRows} />
-          </div>
-        </section>
-      )}
-
-      <section className="space-y-4">
-        <div className="relative">
-          <Search
-            className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
-            aria-hidden="true"
-          />
-          <input
-            type="search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Find a learner or job"
-            aria-label="Search the queue"
-            className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
-          />
-        </div>
-        <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
-          <div className="-mx-4 flex min-w-0 gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-            {(
-              [
-                ['Pending', 'Open'],
-                ['In Progress', 'Started'],
-                ['Completed', 'Done'],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setFilterStatus(value)}
-                className={chipCn(filterStatus === value)}
-              >
-                {label} {countOfStatus(value)}
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => setFilterStatus('all')}
-              className={chipCn(filterStatus === 'all')}
-            >
-              All {items.length}
-            </button>
-            <span className="mx-1 hidden w-px self-stretch bg-white/[0.12] sm:block" aria-hidden />
-            <button
-              type="button"
-              onClick={() => setFilterType('all')}
-              className={chipCn(filterType === 'all')}
-            >
-              Every kind
-            </button>
-            {(['grade', 'ilp', 'gateway', 'portfolio'] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setFilterType(t)}
-                className={chipCn(filterType === t)}
-              >
-                {typeLabel(t)} {countOfType(t)}
-              </button>
-            ))}
-          </div>
-          <div className="shrink-0">
-            <KeyHint
-              items={[
-                ['j k', 'move'],
-                ['s', 'start'],
-                ['c', 'complete'],
-                ['x', 'tick'],
+          <div className="flex flex-col gap-2">
+            {/* Status: a joined toggle (four choices). Kind: quiet text tabs. */}
+            <JoinedToggle
+              label="Filter by status"
+              value={filterStatus}
+              onChange={setFilterStatus}
+              className="w-full sm:max-w-md"
+              options={[
+                { key: 'Pending', label: `Open ${countOfStatus('Pending')}` },
+                { key: 'In Progress', label: `Started ${countOfStatus('In Progress')}` },
+                { key: 'Completed', label: `Done ${countOfStatus('Completed')}` },
+                { key: 'all', label: `All ${items.length}` },
               ]}
             />
+            <QuietTabs
+              label="Filter by kind"
+              value={filterType}
+              onChange={setFilterType}
+              tabs={[
+                { key: 'all', label: 'Every kind' },
+                ...(['grade', 'ilp', 'gateway', 'portfolio'] as const).map((t) => ({
+                  key: t,
+                  label: typeLabel(t),
+                  count: countOfType(t),
+                })),
+              ]}
+            />
+            <div className="hidden justify-end lg:flex">
+              <KeyHint
+                items={[
+                  ['j k', 'move'],
+                  ['s', 'start'],
+                  ['c', 'complete'],
+                  ['x', 'tick'],
+                ]}
+              />
+            </div>
           </div>
-        </div>
 
-        {isLoading ? (
-          <div className="space-y-2">
-            {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="h-[84px] animate-pulse rounded-2xl bg-white/[0.04]" />
-            ))}
-          </div>
-        ) : sortedItems.length === 0 ? (
-          <CollegeEmpty
-            title={items.length === 0 ? 'The queue is clear' : 'Nothing matches this view'}
-            body={
-              items.length === 0
-                ? scope === 'mine'
-                  ? 'Nothing is waiting for your learners. Switch to Everyone to see the whole college.'
-                  : 'Grades to record, overdue plan reviews, learners near gateway and portfolio work land here.'
-                : filterStatus === 'Pending' && filterType === 'all' && !q
-                  ? 'Nothing open: everything is started or done.'
-                  : 'Try another status or kind, or clear the search.'
-            }
-          />
-        ) : (
-          <>
-            {urgentRows.length > 0 && (
-              <QueueGroup title="Overdue and urgent" urgent count={urgentRows.length}>
-                {urgentRows.map(renderRow)}
-              </QueueGroup>
-            )}
-            {otherRows.length > 0 && (
-              <QueueGroup
-                title={urgentRows.length ? 'Everything else' : 'The queue'}
-                count={otherRows.length}
-              >
-                {otherRows.map(renderRow)}
-              </QueueGroup>
-            )}
-          </>
-        )}
-      </section>
+          {isLoading ? (
+            <div className="space-y-2">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-[84px] animate-pulse rounded-2xl bg-white/[0.04]" />
+              ))}
+            </div>
+          ) : sortedItems.length === 0 ? (
+            <CollegeEmpty
+              title={items.length === 0 ? 'The queue is clear' : 'Nothing matches this view'}
+              body={
+                items.length === 0
+                  ? scope === 'mine'
+                    ? 'Nothing is waiting for your learners. Pick Whole college at the top to see everyone’s.'
+                    : 'Grades to record, overdue plan reviews, learners near gateway and evidence to assess land here.'
+                  : filterStatus === 'Pending' && filterType === 'all' && !q
+                    ? 'Nothing open: everything is started or done.'
+                    : 'Try another status or kind, or clear the search.'
+              }
+            />
+          ) : (
+            <>
+              {urgentRows.length > 0 && (
+                <QueueGroup title="Waiting too long" urgent count={urgentRows.length}>
+                  {urgentRows.map(renderRow)}
+                </QueueGroup>
+              )}
+              {otherRows.length > 0 && (
+                <QueueGroup
+                  title={urgentRows.length ? 'Everything else' : 'To do'}
+                  count={otherRows.length}
+                >
+                  {otherRows.map(renderRow)}
+                </QueueGroup>
+              )}
+            </>
+          )}
+        </section>
+      </div>
 
       <BulkBar count={sel.count} onClear={sel.clear}>
         <button

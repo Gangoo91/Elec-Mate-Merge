@@ -84,7 +84,7 @@ export function MyComplianceWidget() {
           </h3>
           <span
             className={cn(
-              'shrink-0 text-[11px] font-semibold',
+              'shrink-0 text-[12px] font-semibold',
               hasExpired ? 'text-red-300' : 'text-white'
             )}
           >
@@ -99,7 +99,7 @@ export function MyComplianceWidget() {
             </div>
             <div className="mt-0.5 text-[12px] leading-snug text-white">
               {allMissing ? (
-                `${totals.missing} document${totals.missing === 1 ? '' : 's'} to upload — DBS, ID, qualifications.`
+                `${totals.missing} document${totals.missing === 1 ? '' : 's'} to upload: DBS, ID and qualifications.`
               ) : nextExpiry && totals.expiring > 0 ? (
                 <>
                   Next expiry{' '}
@@ -108,7 +108,7 @@ export function MyComplianceWidget() {
               ) : needsAction ? (
                 'Open the vault to upload missing evidence.'
               ) : (
-                'Fully covered — keep CPD ticking over.'
+                'Fully covered. Keep CPD ticking over.'
               )}
             </div>
           </div>
@@ -193,7 +193,7 @@ function Cell({ value, label, bad = false }: { value: number; label: string; bad
       >
         {value}
       </div>
-      <div className="mt-1 text-[11px] text-white">{label}</div>
+      <div className="mt-1 text-[12px] text-white">{label}</div>
     </div>
   );
 }

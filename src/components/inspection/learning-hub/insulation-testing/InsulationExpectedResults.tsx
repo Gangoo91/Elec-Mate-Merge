@@ -50,7 +50,7 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Expected by scenario */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Typical Readings by Installation Age</p>
+          <p className="text-[12px] font-medium text-white mb-3">Typical Readings by Installation Age</p>
         </motion.div>
 
         {expectedByScenario.map((item, i) => (
@@ -67,7 +67,7 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
 
         {/* Fault indicators */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Readings Tell You</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Readings Tell You</p>
         </motion.div>
 
         {faultIndicators.map((item, i) => (
@@ -75,7 +75,7 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center gap-2 mb-2">
                 <p className="text-sm font-semibold text-white">{item.indicator}</p>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${
+                <span className={`text-[12px] font-bold px-2 py-0.5 rounded-lg ${
                   item.severity === 'Fail' ? 'text-red-400 bg-red-400/10' :
                   item.severity === 'Monitor' ? 'text-yellow-400 bg-yellow-400/10' :
                   'text-orange-400 bg-orange-400/10'
@@ -88,7 +88,7 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
 
         {/* Troubleshooting by test combination */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Fault Diagnosis by Test Combination</p>
+          <p className="text-[12px] font-medium text-white mb-3">Fault Diagnosis by Test Combination</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (

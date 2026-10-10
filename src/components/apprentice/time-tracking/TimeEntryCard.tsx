@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { TimeEntry } from '@/types/time-tracking';
 import { Button } from '@/components/ui/button';
-import { Activity, Plus, Zap, ShieldCheck } from 'lucide-react';
-import { useTimeToPortfolio } from '@/hooks/portfolio/useTimeToPortfolio';
-import { useUniversalPortfolio } from '@/hooks/portfolio/useUniversalPortfolio';
+import { Activity, ShieldCheck } from 'lucide-react';
 import { useTimeEntryVerification } from '@/hooks/time-tracking/useTimeEntryVerification';
 import { useAuth } from '@/contexts/AuthContext';
-import TimeEntryToPortfolioDialog from '@/components/apprentice/portfolio/TimeEntryToPortfolioDialog';
-import UniversalPortfolioButton from '@/components/apprentice/portfolio/UniversalPortfolioButton';
+import { AddHoursToPortfolio } from './AddHoursToPortfolio';
 import TimeEntryVerificationQRSheet from './TimeEntryVerificationQRSheet';
 
 interface TimeEntryCardProps {
@@ -15,11 +12,7 @@ interface TimeEntryCardProps {
 }
 
 const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
-  const [showPortfolioDialog, setShowPortfolioDialog] = useState(false);
   const [showVerificationSheet, setShowVerificationSheet] = useState(false);
-  const { convertTimeEntryToPortfolio, quickConvertTimeEntry, isConverting, categories } =
-    useTimeToPortfolio();
-  const { convertTimeEntryToUniversal } = useUniversalPortfolio();
   const { createVerification, getVerificationUrl, getVerificationForTimeEntry } =
     useTimeEntryVerification();
   const { profile } = useAuth();
@@ -44,23 +37,6 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
     return 'Manual';
   };
 
-  const handleAddToPortfolio = async (portfolioData: any) => {
-    try {
-      await convertTimeEntryToPortfolio(entry, portfolioData);
-      setShowPortfolioDialog(false);
-    } catch (error) {
-      // Error handling is done in the hook
-    }
-  };
-
-  const handleQuickAdd = async () => {
-    try {
-      await quickConvertTimeEntry(entry);
-    } catch (error) {
-      // Error handling is done in the hook
-    }
-  };
-
   const handleVerify = async () => {
     if (existingVerification) {
       setShowVerificationSheet(true);
@@ -81,8 +57,6 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
   const badgeLabel = getBadgeLabel();
   const hours = Math.floor(entry.duration / 60);
   const minutes = entry.duration % 60;
-
-  const universalActivity = convertTimeEntryToUniversal(entry);
 
   return (
     <>
@@ -133,48 +107,19 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
         )}
 
         <div className="mt-3 flex justify-between gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={handleQuickAdd}
-            disabled={isConverting}
-            className="gap-1 h-9 border-white/15 text-white hover:bg-white/[0.05] flex-1 touch-manipulation"
-          >
-            <Zap className="h-3 w-3" />
-            Quick add
-          </Button>
+          <AddHoursToPortfolio entry={entry} />
 
           <Button
             size="sm"
             variant="outline"
             onClick={handleVerify}
-            className="gap-1 h-9 border-white/15 text-white hover:bg-white/[0.05] flex-1 touch-manipulation"
+            className="gap-1 h-11 border-white/15 text-white hover:bg-white/[0.05] flex-1 touch-manipulation"
           >
             <ShieldCheck className="h-3 w-3" />
             {isVerified ? 'Verified' : 'Verify'}
           </Button>
-
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => setShowPortfolioDialog(true)}
-            className="gap-1 h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
-          >
-            <Plus className="h-3 w-3" />
-            Custom
-          </Button>
         </div>
       </div>
-
-      {/* Portfolio Dialog */}
-      <TimeEntryToPortfolioDialog
-        timeEntry={entry}
-        categories={categories}
-        isOpen={showPortfolioDialog}
-        onClose={() => setShowPortfolioDialog(false)}
-        onSubmit={handleAddToPortfolio}
-        isLoading={isConverting}
-      />
 
       {/* Verification QR Sheet */}
       {existingVerification && (

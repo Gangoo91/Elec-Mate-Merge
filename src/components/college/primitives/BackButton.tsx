@@ -1,5 +1,5 @@
 import { ChevronLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useSmartBack } from '@/lib/navHistory';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -12,22 +12,24 @@ import { cn } from '@/lib/utils';
    ========================================================================== */
 
 interface BackButtonProps {
-  /** Defaults to history back. Provide for an explicit destination. */
+  /** Defaults to where the page was opened from. Provide for an explicit destination. */
   onBack?: () => void;
+  /** Where Back goes when the page was opened cold (a link or a refresh). */
+  fallback?: string;
   /** Visible label — default "Back". Use e.g. "Exit College" for mode-switches. */
   label?: string;
   className?: string;
 }
 
-export function BackButton({ onBack, label = 'Back', className }: BackButtonProps) {
-  const navigate = useNavigate();
+export function BackButton({ onBack, fallback = '/college', label = 'Back', className }: BackButtonProps) {
+  const smartBack = useSmartBack();
   return (
     <button
       type="button"
-      onClick={() => (onBack ? onBack() : navigate(-1))}
+      onClick={() => (onBack ? onBack() : smartBack(fallback))}
       className={cn(
         'inline-flex h-11 items-center gap-1 -ml-1 pr-2 pl-1 rounded-lg',
-        'text-[13px] font-medium text-white/70 hover:text-white active:text-white',
+        'text-[13px] font-medium text-white',
         'transition-colors touch-manipulation',
         className
       )}

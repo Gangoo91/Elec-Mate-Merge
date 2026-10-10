@@ -3,10 +3,8 @@ import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
 import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { GUIDE_CARD, GuideIndex, GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface Section {
   number: string;
@@ -72,87 +70,79 @@ const KEY_FACTS = [
 export default function RightsAndPay() {
   const navigate = useNavigate();
   return (
-    <HubSubPage
+    <GuidePage
+      area="Rights and pay"
       title="Know your rights"
       backTo="/apprentice"
       description="Your apprenticeship should be a positive learning experience. Understanding your legal rights, wage entitlements and where to get help keeps you treated fairly across all four years."
     >
-      <motion.div
-        variants={itemVariants}
-        className={cn(
-          'border-0 bg-transparent px-0 py-0 -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5 sm:py-5 px-4 py-4 sm:p-5',
-          CARD_SURFACE
-        )}
-      >
-        <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Key facts
-          </span>
-        </div>
-        <ul className="space-y-2.5">
-          {KEY_FACTS.map((item) => (
-            <li
-              key={item}
-              className="flex items-start gap-2.5 text-[13px] text-white leading-relaxed"
-            >
-              <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </motion.div>
+      <GuideIndex
+        title="Four chapters"
+        columns={2}
+        items={SECTIONS.map((s) => ({
+          id: s.slug,
+          title: s.title,
+          description: s.description,
+          meta: s.meta,
+          onClick: () => navigate(`/apprentice/rights-and-pay/${s.slug}`),
+        }))}
+      />
 
-      <motion.div
-        variants={itemVariants}
-        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05] sm:px-5 sm:py-5"
-      >
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-            Off-the-job training
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            · Fixed hours, not 20%
-          </span>
-        </div>
-        <p className="text-[13px] leading-relaxed text-white max-w-3xl">
-          Since 1 August 2025, off-the-job training is a fixed number of hours set by your
-          apprenticeship standard — not 20% of your working hours. The {DEFAULT_OTJ_STANDARD.name} (
-          {DEFAULT_OTJ_STANDARD.code}) carries{' '}
-          <span className="text-elec-yellow font-semibold tabular-nums">
-            {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString('en-GB')} hours
-          </span>
-          , delivered over the apprenticeship. The absolute floor for any standard is{' '}
-          {OTJ_HOURS_FLOOR} hours. This is paid time — it counts as part of your working week.
-        </p>
-      </motion.div>
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+        <motion.div variants={itemVariants} className={GUIDE_CARD}>
+          <div className="flex items-baseline gap-2 mb-3">
+            <span className="text-[13px] font-semibold text-white">Key facts</span>
+          </div>
+          <ul className="space-y-2.5">
+            {KEY_FACTS.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2.5 text-[14px] text-white leading-relaxed"
+              >
+                <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        className={cn(
-          'border-0 bg-transparent px-0 py-0 -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5 sm:py-5 space-y-4 px-4 py-4 sm:p-5',
-          CARD_SURFACE
-        )}
-      >
+        <motion.div variants={itemVariants} className={GUIDE_CARD}>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[13px] font-semibold text-elec-yellow">Off-the-job training</span>
+            <span className="text-[13px] font-semibold text-white">· Fixed hours, not 20%</span>
+          </div>
+          <p className="text-[14px] leading-relaxed text-white max-w-3xl">
+            Since 1 August 2025, off-the-job training is a fixed number of hours set by your
+            apprenticeship standard — not 20% of your working hours. The {DEFAULT_OTJ_STANDARD.name}{' '}
+            ({DEFAULT_OTJ_STANDARD.code}) carries{' '}
+            <span className="text-elec-yellow font-semibold tabular-nums">
+              {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString('en-GB')} hours
+            </span>
+            , delivered over the apprenticeship. The absolute floor for any standard is{' '}
+            {OTJ_HOURS_FLOOR} hours. This is paid time — it counts as part of your working week.
+          </p>
+        </motion.div>
+      </div>
+
+      <motion.div variants={itemVariants} className={cn(GUIDE_CARD, 'space-y-4')}>
         <div className="flex items-baseline gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Essentials
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          <span className="text-[13px] font-semibold text-white">Essentials</span>
+          <span className="text-[13px] font-semibold text-elec-yellow">
             · The basics worth knowing
           </span>
         </div>
-        <dl className="space-y-3.5">
+        <dl className="space-y-3.5 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-5 lg:space-y-0">
           <div>
-            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Holiday pay</dt>
-            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
+            <dt className="mb-0.5 text-[13px] font-semibold text-elec-yellow">Holiday pay</dt>
+            <dd className="text-[14px] leading-relaxed text-white max-w-3xl">
               You build up paid holiday from your first day. The statutory minimum is 5.6 weeks a
               year — 28 days for a five-day week, which your employer can count bank holidays
               towards. Holiday is paid at your normal rate, not a reduced one.
             </dd>
           </div>
           <div>
-            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Sick pay</dt>
-            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
+            <dt className="mb-0.5 text-[13px] font-semibold text-elec-yellow">Sick pay</dt>
+            <dd className="text-[14px] leading-relaxed text-white max-w-3xl">
               If you're off sick and meet the earnings threshold, you're entitled to Statutory Sick
               Pay from the fourth qualifying day, for up to 28 weeks. Many employers pay more than
               the statutory minimum — check your contract. Report sickness the way your contract
@@ -160,10 +150,10 @@ export default function RightsAndPay() {
             </dd>
           </div>
           <div>
-            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">
+            <dt className="mb-0.5 text-[13px] font-semibold text-elec-yellow">
               If you're not being trained
             </dt>
-            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
+            <dd className="text-[14px] leading-relaxed text-white max-w-3xl">
               Being used as cheap labour instead of being taught is a genuine problem, not just bad
               luck. Raise it first with your training provider — they're responsible for the quality
               of your on-the-job learning and can speak to your employer. Keep your own dated notes
@@ -172,8 +162,8 @@ export default function RightsAndPay() {
             </dd>
           </div>
           <div>
-            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Unions & ACAS</dt>
-            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
+            <dt className="mb-0.5 text-[13px] font-semibold text-elec-yellow">Unions & ACAS</dt>
+            <dd className="text-[14px] leading-relaxed text-white max-w-3xl">
               You have the right to join a trade union — Unite the Union represents many electrical
               workers and can advise and represent you. For free, impartial guidance on any
               workplace issue before it escalates, ACAS is on{' '}
@@ -189,35 +179,15 @@ export default function RightsAndPay() {
         </dl>
       </motion.div>
 
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Four chapters</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="two"
-          cards={SECTIONS.map((s) => ({
-            id: s.slug,
-            eyebrow: s.eyebrow,
-            title: s.title,
-            description: s.description,
-            meta: s.meta,
-            onClick: () => navigate(`/apprentice/rights-and-pay/${s.slug}`),
-          }))}
-        />
-      </motion.section>
-
       <motion.div
         variants={itemVariants}
-        className="rounded-2xl border border-red-500/20 bg-red-500/[0.04] px-5 py-4 sm:px-6 sm:py-5"
+        className="-mx-4 border-y border-red-500/30 bg-red-500/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5"
       >
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300/85">
-            Emergency
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            · Immediate help
-          </span>
+          <span className="text-[13px] font-semibold text-red-300">Emergency</span>
+          <span className="text-[13px] font-semibold text-white">· Immediate help</span>
         </div>
-        <p className="text-[13px] leading-relaxed text-white max-w-3xl">
+        <p className="text-[14px] leading-relaxed text-white max-w-3xl">
           In immediate danger? Call{' '}
           <a
             href="tel:999"
@@ -236,6 +206,6 @@ export default function RightsAndPay() {
           strength, not weakness.
         </p>
       </motion.div>
-    </HubSubPage>
+    </GuidePage>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Clock, ChevronRight, X, CheckCircle2, XCircle, ArrowLeft, BookOpen } from 'lucide-react';
 import { QuizQuestion, Assessment } from '@/types/quiz';
@@ -35,6 +35,10 @@ const EnhancedQuizInterface = ({
   const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
   const [totalElapsed, setTotalElapsed] = useState(0);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  // Finishing must happen once. Every tap of Next after the last question used
+  // to call onComplete again — up to 134 saved results and XP awards for one
+  // sitting (XP audit, 9 Oct 2026).
+  const completedRef = useRef(false);
 
   useEffect(() => {
     startQuiz(assessment.id, questions);
@@ -82,8 +86,10 @@ const EnhancedQuizInterface = ({
   const handleNext = () => {
     if (!hasAnswered) return;
 
+    if (completedRef.current) return;
     const hasNext = nextQuestion();
     if (!hasNext) {
+      completedRef.current = true;
       const result = finishQuiz();
       if (result) {
         onComplete(result);

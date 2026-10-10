@@ -484,7 +484,7 @@ const TestingProceduresGrid = ({
               </div>
               <Button
                 onClick={() => onStartTestSequence?.()}
-                className="w-full bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 hover:bg-elec-yellow/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
+                className="w-full bg-white/[0.06] text-elec-yellow border border-white/[0.14] hover:bg-white/[0.08] min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
                 Open Test Sequence
               </Button>
@@ -500,7 +500,7 @@ const TestingProceduresGrid = ({
               </div>
               <Button
                 onClick={() => onStartQuickReference?.()}
-                className="w-full bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 hover:bg-elec-yellow/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
+                className="w-full bg-white/[0.06] text-elec-yellow border border-white/[0.14] hover:bg-white/[0.08] min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
                 Open Quick Reference
               </Button>

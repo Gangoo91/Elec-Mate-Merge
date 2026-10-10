@@ -5,17 +5,20 @@
  * is the caller's own at their current firm.
  */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { OFFLINE_FIRST, offlineSnapshot } from '@/lib/workerOfflineCache';
 import { supabase } from '@/integrations/supabase/client';
 
 export function useMyTimeSettings() {
   return useQuery({
     queryKey: ['my-time-settings'],
-    queryFn: async () => {
-      const { data, error } = await supabase.rpc('get_my_time_settings' as never);
-      if (error) throw error;
-      const d = data as unknown as { default_break_minutes?: number } | null;
-      return { defaultBreakMinutes: d?.default_break_minutes ?? 30 };
-    },
+    ...OFFLINE_FIRST,
+    queryFn: () =>
+      offlineSnapshot('my-time-settings', async () => {
+        const { data, error } = await supabase.rpc('get_my_time_settings' as never);
+        if (error) throw error;
+        const d = data as unknown as { default_break_minutes?: number } | null;
+        return { defaultBreakMinutes: d?.default_break_minutes ?? 30 };
+      }),
     staleTime: 10 * 60 * 1000,
   });
 }

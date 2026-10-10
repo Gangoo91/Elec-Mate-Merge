@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { AiUseRecord } from '@/components/college/ui/AiUseRecord';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { textareaCn } from '@/components/forms/fieldStyles';
 import { COLLEGE_BTN_PRIMARY, chipCn } from '@/components/college/ui/CollegeUi';
@@ -21,6 +22,7 @@ import {
   type SubmissionStatus,
   type IqaOutcome,
 } from '@/hooks/useStudentPortfolio';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ==========================================================================
    PortfolioSubmissionDrawer — one submission for staff: what was sent, the
@@ -110,7 +112,7 @@ function StateChip({ tone, children }: { tone: StateTone; children: React.ReactN
   return (
     <span
       className={cn(
-        'inline-flex h-6 items-center rounded-full border px-2.5 text-[11.5px] font-semibold',
+        'inline-flex h-6 items-center rounded-full border px-2.5 text-[12px] font-semibold',
         TONE_CHIP[tone]
       )}
     >
@@ -316,7 +318,7 @@ export function PortfolioSubmissionDrawer({
             >
               {requiresAction ? 'Needs action: on' : 'Mark as needing action'}
             </button>
-            <span className="hidden text-[11.5px] text-white sm:inline">
+            <span className="hidden text-[12px] text-white sm:inline">
               {first} sees this in their portfolio straight away. ⌘ + Enter sends.
             </span>
           </div>
@@ -641,7 +643,7 @@ export function SubmissionDrawerById({
         return;
       }
       const { data: prof } = await supabase
-        .from('profiles')
+        .from('public_profiles')
         .select('full_name')
         .eq('id', sub.user_id)
         .maybeSingle();
@@ -702,7 +704,7 @@ function CommentBubble({
       <div className="flex items-start gap-3">
         <div
           className={cn(
-            'flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-[11px] font-semibold tabular-nums',
+            'flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-[12px] font-semibold tabular-nums',
             isStaff ? 'bg-white/[0.1] text-white' : 'bg-elec-yellow text-black'
           )}
         >
@@ -714,16 +716,16 @@ function CommentBubble({
               {comment.author_name ?? 'Unknown'}
             </span>
             {comment.author_role && (
-              <span className="text-[11.5px] capitalize text-white">{comment.author_role}</span>
+              <span className="text-[12px] text-white">{keyLabel(comment.author_role)}</span>
             )}
-            <span className="text-[11.5px] tabular-nums text-white">
+            <span className="text-[12px] tabular-nums text-white">
               {formatRelative(comment.created_at)}
             </span>
             {comment.requires_action && !comment.is_resolved && (
-              <span className="text-[11.5px] font-semibold text-elec-yellow">Needs action</span>
+              <span className="text-[12px] font-semibold text-elec-yellow">Needs action</span>
             )}
             {comment.is_resolved && (
-              <span className="text-[11.5px] font-semibold text-emerald-300">
+              <span className="text-[12px] font-semibold text-emerald-300">
                 Resolved{comment.resolved_by_name ? ` by ${comment.resolved_by_name}` : ''}
               </span>
             )}
@@ -737,7 +739,7 @@ function CommentBubble({
                 <button
                   type="button"
                   onClick={() => onResolve(comment.id, !comment.is_resolved)}
-                  className="inline-flex h-9 items-center px-1 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+                  className="inline-flex h-11 items-center px-1 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
                 >
                   {comment.is_resolved ? 'Reopen' : 'Mark resolved'}
                 </button>
@@ -746,7 +748,7 @@ function CommentBubble({
                 <button
                   type="button"
                   onClick={() => onDelete(comment.id)}
-                  className="ml-2 inline-flex h-9 items-center px-1 text-[12.5px] font-medium text-white hover:text-red-300 touch-manipulation"
+                  className="ml-2 inline-flex h-11 items-center px-1 text-[12.5px] font-medium text-white hover:text-red-300 touch-manipulation"
                 >
                   Delete
                 </button>
@@ -843,6 +845,9 @@ interface SentItem {
   title: string;
   content_hash: string | null;
   files: { name: string; sha256: string | null }[];
+  /** ELE-2048: AI drafted words in this item, and the record of it. */
+  ai_assisted: boolean;
+  ai_use: unknown;
   /** ELE-1863: the criteria the learner claimed on this item, with where each stands now. */
   criteria: { unit_code: string; ac_code: string; decision: string | null }[];
 }
@@ -912,7 +917,7 @@ function useSubmissionEvidence(submissionId: string) {
         const [{ data: rows }, { data: crit }] = await Promise.all([
           supabase
             .from('portfolio_items')
-            .select('id, user_id, title, content_hash, storage_urls')
+            .select('id, user_id, title, content_hash, storage_urls, ai_assisted, ai_use')
             .in('id', ids),
           supabase
             .from('portfolio_item_criteria' as never)
@@ -926,6 +931,8 @@ function useSubmissionEvidence(submissionId: string) {
           title: string | null;
           content_hash: string | null;
           storage_urls: unknown;
+          ai_assisted: boolean | null;
+          ai_use: unknown;
         }>;
         const claims = (crit ?? []) as unknown as Array<{
           portfolio_item_id: string;
@@ -967,6 +974,8 @@ function useSubmissionEvidence(submissionId: string) {
           title: r.title ?? 'Untitled evidence',
           content_hash: r.content_hash,
           files: filesFrom(r.storage_urls),
+          ai_assisted: !!r.ai_assisted,
+          ai_use: r.ai_use ?? null,
           criteria: claims
             .filter((c) => c.portfolio_item_id === r.id)
             .sort((a, b) =>
@@ -1001,7 +1010,7 @@ function useSubmissionEvidence(submissionId: string) {
         let signerName: string | null = null;
         if (d.signer_id) {
           const { data: prof } = await supabase
-            .from('profiles')
+            .from('public_profiles')
             .select('full_name')
             .eq('id', d.signer_id)
             .maybeSingle();
@@ -1046,7 +1055,7 @@ function Hash({ value }: { value: string | null | undefined }) {
   const short = shortHash(value);
   if (!short) return <span className="text-[12px] text-white">No fingerprint</span>;
   return (
-    <code title={value ?? undefined} className="font-mono text-[11.5px] text-white">
+    <code title={value ?? undefined} className="font-mono text-[12px] text-white">
       {short}
     </code>
   );
@@ -1114,7 +1123,7 @@ function EvidenceAndDeclaration({ submissionId }: { submissionId: string }) {
                           <li
                             key={`${c.unit_code}:${c.ac_code}`}
                             className={cn(
-                              'rounded-full border px-2 py-0.5 text-[11.5px] font-semibold tabular-nums',
+                              'rounded-full border px-2 py-0.5 text-[12px] font-semibold tabular-nums',
                               c.decision === 'passed'
                                 ? 'border-emerald-400/40 bg-emerald-500/[0.12] text-emerald-300'
                                 : c.decision === 'referred' || c.decision === 'not_yet'
@@ -1149,6 +1158,7 @@ function EvidenceAndDeclaration({ submissionId }: { submissionId: string }) {
                       <span>Fingerprint</span>
                       <Hash value={it.content_hash} />
                     </div>
+                    <AiUseRecord aiAssisted={it.ai_assisted} aiUse={it.ai_use} className="mt-2" />
                     {it.files.length > 0 && (
                       <ul className="mt-1.5 space-y-0.5">
                         {it.files.map((f, i) => (
@@ -1373,7 +1383,7 @@ function AuditTrail({ submissionId }: { submissionId: string }) {
           <li key={r.id} className="flex flex-wrap items-baseline justify-between gap-x-3 py-2">
             <span className="text-[13px] text-white">
               {auditLabel(r.action)}
-              <span className="ml-1.5 text-[12px] capitalize text-white">· {r.actor_role}</span>
+              <span className="ml-1.5 text-[12px] text-white">· {keyLabel(r.actor_role)}</span>
             </span>
             <span className="text-[12px] tabular-nums text-white">
               {formatDateTime(r.created_at)}
@@ -1385,7 +1395,7 @@ function AuditTrail({ submissionId }: { submissionId: string }) {
         <button
           type="button"
           onClick={() => setShowAll((v) => !v)}
-          className="inline-flex h-9 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+          className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
         >
           {showAll ? 'Show fewer' : `Show all ${rows.length}`}
         </button>

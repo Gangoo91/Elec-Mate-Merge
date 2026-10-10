@@ -60,6 +60,8 @@ const activityLabelFor = (pathname: string): string => {
   return tail ? `${area}: ${tail}` : area;
 };
 
+const ANNOUNCED_KEY = 'elecmate_otj_tracking_announced';
+
 const isLearningPath = (pathname: string) =>
   LEARNING_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 
@@ -85,13 +87,24 @@ const TrainingActivityMonitor = () => {
       // switching labels.
       startTracking(activityLabelFor(pathname));
 
+      // Said once per device, not on every app load (10 Oct): on a phone the
+      // toast sat over the page header for three seconds each visit.
       if (!hasAnnounced.current) {
         hasAnnounced.current = true;
-        toast({
-          title: 'Training time recording',
-          description: 'Your off-the-job training time is being recorded',
-          duration: 3000,
-        });
+        let seen = false;
+        try {
+          seen = localStorage.getItem(ANNOUNCED_KEY) === '1';
+          localStorage.setItem(ANNOUNCED_KEY, '1');
+        } catch {
+          /* storage blocked: announce as before */
+        }
+        if (!seen) {
+          toast({
+            title: 'Recording your training time',
+            description: 'Time on learning pages counts towards your off-the-job hours.',
+            duration: 3000,
+          });
+        }
       }
       return;
     }

@@ -39,7 +39,7 @@ export const CalculatorFormula = ({
           'hover:bg-white/[0.04] transition-colors touch-manipulation'
         )}
       >
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[14px] font-semibold text-white">
           {title}
         </span>
         <ChevronDown
@@ -78,7 +78,7 @@ const FormulaStepItem = ({ step, stepNumber, isLast = false }: FormulaStepItemPr
       {!isLast && <div className="absolute left-3 top-7 bottom-0 w-px bg-white/[0.06]" />}
 
       <div className="flex gap-3">
-        <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[11px] font-mono bg-white/[0.04] text-white">
+        <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[12px] font-mono bg-white/[0.04] text-white">
           {stepNumber}
         </div>
 
@@ -96,7 +96,7 @@ const FormulaStepItem = ({ step, stepNumber, isLast = false }: FormulaStepItemPr
           )}
 
           {step.description && (
-            <p className="text-[12px] text-white leading-relaxed">{step.description}</p>
+            <p className="text-[13px] text-white leading-relaxed">{step.description}</p>
           )}
         </div>
       </div>
@@ -147,7 +147,7 @@ export const FormulaReference = ({
         className
       )}
     >
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{name}</span>
+      <span className="text-[12px] font-medium text-white">{name}</span>
 
       <div className="text-center py-3 px-4 rounded-lg bg-black/30">
         <code className="text-[18px] sm:text-[20px] font-mono text-white">{formula}</code>

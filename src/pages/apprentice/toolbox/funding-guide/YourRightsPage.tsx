@@ -16,8 +16,7 @@ import {
   Phone,
 } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -45,7 +44,7 @@ const rights = [
   {
     title: 'Employer covers co-investment',
     description:
-      'If your employer is a non-levy SME, they pay the 5% co-investment (max £1,150 for Level 3). Must never be passed on to you in any form.',
+      'If your employer is a non-levy SME and you were 25 or over at the start, they pay the 5% co-investment (max £1,150 for Level 3). If you were 16 to 24 (starts from 1 August 2026) there is nothing to pay. It must never be passed on to you in any form.',
   },
   {
     title: 'No additional provider fees',
@@ -175,213 +174,209 @@ const links = [
 const YourRightsPage = () => {
   const navigate = useNavigate();
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Rights"
-        title="Your funding rights"
-        backTo="/apprentice/toolbox/apprenticeship-funding"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'What you should never have to pay for, the warning signs, and the escalation route if your training provider or employer breaks the apprenticeship funding rules.'
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Rights"
+      area="Apprenticeship funding"
+      title="Your funding rights"
+      backTo="/apprentice/toolbox/apprenticeship-funding"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          'What you should never have to pay for, the warning signs, and the escalation route if your training provider or employer breaks the apprenticeship funding rules.'
+        }
+      </p>
 
-        {/* ── Key message ─────────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0" />
-              <Eyebrow className="text-red-300">The headline</Eyebrow>
-            </div>
-            <p className="text-[15px] font-semibold text-red-300 leading-snug">
-              You should NEVER be asked to pay for your training.
-            </p>
-            <p className="text-[13px] text-white leading-relaxed">
-              Apprenticeship training is funded by the government and/or your employer. If anyone
-              asks you to pay, this is a breach of the apprenticeship funding rules — and should be
-              reported.
+      {/* ── Key message ─────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0" />
+            <Eyebrow className="text-red-300">The headline</Eyebrow>
+          </div>
+          <p className="text-[15px] font-semibold text-red-300 leading-snug">
+            You should NEVER be asked to pay for your training.
+          </p>
+          <p className="text-[14px] text-white leading-relaxed">
+            Apprenticeship training is funded by the government and/or your employer. If anyone asks
+            you to pay, this is a breach of the apprenticeship funding rules — and should be
+            reported.
+          </p>
+        </div>
+      </motion.div>
+
+      {/* ── Link to Rights & Pay ────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <button
+          onClick={() => navigate('/apprentice/rights-and-pay')}
+          className="w-full flex items-center gap-3 p-4 rounded-xl border border-white/[0.08] bg-white/[0.05] active:bg-white/[0.05] active:scale-[0.99] transition-all touch-manipulation text-left"
+        >
+          <Scale className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+          <div className="flex-1 min-w-0 space-y-0.5">
+            <Eyebrow className="text-elec-yellow">Full guide</Eyebrow>
+            <p className="text-[13.5px] font-medium text-white leading-snug">
+              Rights & Pay — wages, employment rights, support resources & tools
             </p>
           </div>
-        </motion.div>
+          <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+        </button>
+      </motion.div>
 
-        {/* ── Link to Rights & Pay ────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <button
-            onClick={() => navigate('/apprentice/rights-and-pay')}
-            className="w-full flex items-center gap-3 p-4 rounded-xl border border-elec-yellow/25 bg-white/[0.05] active:bg-white/[0.05] active:scale-[0.99] transition-all touch-manipulation text-left"
-          >
-            <Scale className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div className="flex-1 min-w-0 space-y-0.5">
-              <Eyebrow className="text-elec-yellow/85">Full guide</Eyebrow>
-              <p className="text-[13.5px] font-medium text-white leading-snug">
-                Rights & Pay — wages, employment rights, support resources & tools
-              </p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-          </button>
-        </motion.div>
-
-        {/* ── Your funding rights ─────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Your funding rights"
-            title="Eight things the law guarantees"
-            meta="Print these. Save them. Show them to anyone who tries to charge you."
-          />
-          <ul className="space-y-2">
-            {rights.map((right) => (
-              <li
-                key={right.title}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                      {right.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{right.description}</p>
-                  </div>
+      {/* ── Your funding rights ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Your funding rights"
+          title="Eight things the law guarantees"
+          meta="Print these. Save them. Show them to anyone who tries to charge you."
+        />
+        <ul className="space-y-2">
+          {rights.map((right) => (
+            <li
+              key={right.title}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {right.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{right.description}</p>
                 </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Warning signals ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Warning signs — red flags"
+          title={`${warningSignals.length} situations to escalate`}
+          meta="If any of these happen, your funding rights may be being breached"
+        />
+        <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <ul className="space-y-2">
+            {warningSignals.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-        </motion.section>
+        </div>
+      </motion.section>
 
-        {/* ── Warning signals ─────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Warning signs — red flags"
-            title={`${warningSignals.length} situations to escalate`}
-            meta="If any of these happen, your funding rights may be being breached"
-          />
-          <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
-            <ul className="space-y-2">
-              {warningSignals.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
-                >
-                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── Complaint template ──────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="What to include in a complaint"
-            title="10 items for your complaint"
-            meta="Build the file before you escalate"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-              CARD_SURFACE
-            )}
-          >
-            <ul className="space-y-1.5">
-              {complaintTemplate.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
-              <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Email to:</span>{' '}
-                <span className="font-mono">complaints.esfa@education.gov.uk</span>
-              </p>
-              <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Or call:</span>{' '}
-                <span className="font-mono">0800 015 0600</span> (free, Mon–Fri 8am–8pm)
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── Escalation ──────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Escalation steps"
-            title="Six escalation routes — in order"
-            meta="Start internal, build evidence, then escalate externally"
-          />
-          <ol className="space-y-2">
-            {escalation.map((item) => (
+      {/* ── Complaint template ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="What to include in a complaint"
+          title="10 items for your complaint"
+          meta="Build the file before you escalate"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+            CARD_SURFACE
+          )}
+        >
+          <ul className="space-y-1.5">
+            {complaintTemplate.map((item) => (
               <li
-                key={item.step}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
               >
-                <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                    {item.step}
-                  </span>
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
               </li>
             ))}
-          </ol>
-        </motion.section>
+          </ul>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 space-y-1 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Email to:</span>{' '}
+              <span className="">complaints.esfa@education.gov.uk</span>
+            </p>
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Or call:</span>{' '}
+              <span className="">0800 015 0600</span> (free, Mon–Fri 8am–8pm)
+            </p>
+          </div>
+        </div>
+      </motion.section>
 
-        {/* ── Useful links ────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Useful links"
-            title={`${links.length} official resources`}
-            meta="All open in a new tab"
-          />
-          <ul className="space-y-2">
-            {links.map((link) => (
-              <li key={link.title}>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    'block w-full p-4 rounded-2xl border border-elec-yellow/35 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation',
-                    CARD_SURFACE
-                  )}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-start gap-2.5 min-w-0">
-                      <ExternalLink className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      <div className="min-w-0 space-y-0.5">
-                        <p className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                          {link.title}
-                        </p>
-                        <p className="text-[12.5px] text-white leading-relaxed">
-                          {link.description}
-                        </p>
-                      </div>
+      {/* ── Escalation ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Escalation steps"
+          title="Six escalation routes — in order"
+          meta="Start internal, build evidence, then escalate externally"
+        />
+        <ol className="space-y-2">
+          {escalation.map((item) => (
+            <li
+              key={item.step}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12px] font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  {item.step}
+                </span>
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
+
+      {/* ── Useful links ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Useful links"
+          title={`${links.length} official resources`}
+          meta="All open in a new tab"
+        />
+        <ul className="space-y-2">
+          {links.map((link) => (
+            <li key={link.title}>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  'block w-full p-4 rounded-2xl border border-white/[0.08] active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation',
+                  CARD_SURFACE
+                )}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-start gap-2.5 min-w-0">
+                    <ExternalLink className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                    <div className="min-w-0 space-y-0.5">
+                      <p className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                        {link.title}
+                      </p>
+                      <p className="text-[14px] text-white leading-relaxed">{link.description}</p>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+                  <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        <span className="hidden">
-          <Phone />
-        </span>
-      </HubBody>
-    </HubPage>
+      <span className="hidden">
+        <Phone />
+      </span>
+    </GuidePage>
   );
 };
 

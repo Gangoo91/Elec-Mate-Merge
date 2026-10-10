@@ -36,9 +36,111 @@ export interface MockAttemptRow {
   pass_mark?: number | null;
   /** Rows written before 7 Oct 2026 have no review snapshot. */
   has_review?: boolean;
+  /**
+   * Where the sitting came from (10 Oct 2026 history backfill):
+   * 'mock' = seo_mock_attempts (has review from 7 Oct), 'test' = an in-app
+   * topic test in quiz_results with no mock twin, 'am2' = an AM2 assessment.
+   * Non-mock ids are prefixed 'q:' / 'am2:'.
+   */
+  kind?: 'mock' | 'test' | 'am2';
+  /** Per-topic results for 'test' rows (quiz_results.category_breakdown). */
+  topics?: Record<string, { total: number; correct: number }> | null;
+}
+
+const AM2_NAMES: Record<string, string> = {
+  knowledge_test: 'AM2 knowledge test',
+  mock_am2: 'AM2 full mock',
+  safe_isolation: 'AM2 safe isolation',
+  testing_sequence: 'AM2 testing sequence',
+  fault_diagnosis: 'AM2 fault diagnosis',
+};
+
+/**
+ * Everything the learner has sat, newest first: mock exams, plus the topic
+ * tests and AM2 assessments that live in their own tables and never showed
+ * here before. A topic test saved alongside a mock attempt (the mock exam
+ * screen writes both) is the same sitting and is dropped.
+ */
+async function loadAllSittings(uid: string, limit: number): Promise<MockAttemptRow[]> {
+  const [mocks, tests, am2] = await Promise.all([
+    supabase
+      .from('seo_mock_attempts')
+      .select(LIGHT_COLS)
+      .eq('user_id', uid)
+      .order('created_at', { ascending: false })
+      .limit(limit),
+    supabase
+      .from('quiz_results')
+      .select('id,assessment_id,score,total_questions,percentage,time_spent,completed_at,category_breakdown')
+      .eq('user_id', uid)
+      .order('completed_at', { ascending: false })
+      .limit(limit),
+    supabase
+      .from('am2_mock_sessions')
+      .select('id,session_type,overall_score,component_scores,time_spent_seconds,completed_at')
+      .eq('user_id', uid)
+      .eq('status', 'completed')
+      .order('completed_at', { ascending: false })
+      .limit(limit),
+  ]);
+  if (mocks.error) throw mocks.error;
+  const mockRows = ((mocks.data ?? []) as MockAttemptRow[]).map((r) => ({ ...r, kind: 'mock' as const }));
+  const mockTimes = mockRows.map((r) => new Date(r.created_at).getTime());
+
+  const testRows: MockAttemptRow[] = ((tests.data ?? []) as any[])
+    .filter((q) => q.completed_at && !mockTimes.some((t) => Math.abs(t - new Date(q.completed_at).getTime()) < 120000))
+    .map((q) => {
+      const pct = Math.round(Number(q.percentage) || 0);
+      return {
+        id: `q:${q.id}`,
+        // Same slug as the mock paper where there is one, so a sitting from
+        // before mock tracking (27 Jul) groups with the later ones.
+        exam_slug: q.assessment_id,
+        exam_name: paperName({ exam_name: null, exam_slug: q.assessment_id }),
+        retake_path: null,
+        score: q.score ?? 0,
+        total_questions: q.total_questions ?? 0,
+        percentage: pct,
+        passed: pct >= 70,
+        time_taken_seconds: q.time_spent ?? 0,
+        created_at: q.completed_at,
+        pass_mark: 70,
+        has_review: false,
+        kind: 'test' as const,
+        topics: (q.category_breakdown && typeof q.category_breakdown === 'object' ? q.category_breakdown : null) as MockAttemptRow['topics'],
+      };
+    });
+
+  const am2Rows: MockAttemptRow[] = ((am2.data ?? []) as any[])
+    // Learn mode is practice with hints, not a sitting.
+    .filter((a) => a.completed_at && a.component_scores?.mode !== 'learn')
+    .map((a) => {
+      const pct = Math.round(Number(a.overall_score) || 0);
+      return {
+        id: `am2:${a.id}`,
+        exam_slug: `am2:${a.session_type}`,
+        exam_name: AM2_NAMES[a.session_type] ?? 'AM2 practice',
+        retake_path: '/apprentice/am2-simulator',
+        score: Number(a.component_scores?.correct ?? 0),
+        total_questions: Number(a.component_scores?.total ?? 0),
+        percentage: pct,
+        passed: pct >= 60,
+        time_taken_seconds: a.time_spent_seconds ?? 0,
+        created_at: a.completed_at,
+        pass_mark: 60,
+        has_review: false,
+        kind: 'am2' as const,
+      };
+    });
+
+  return [...mockRows, ...testRows, ...am2Rows]
+    .sort((a, b) => b.created_at.localeCompare(a.created_at))
+    .slice(0, limit);
 }
 
 export interface MockAttemptFull extends MockAttemptRow {
+  /** Per-topic right/total for this sitting, from whichever store has it. */
+  topicBreakdown?: { topic: string; right: number; total: number }[];
   user_id?: string;
   review: MockReviewItem[] | null;
   served_keys: string[] | null;
@@ -53,7 +155,10 @@ export function paperName(row: Pick<MockAttemptRow, 'exam_name' | 'exam_slug'>):
   return s
     .replace(/[-_]+/g, ' ')
     .replace(/\b(\w)/g, (c) => c.toUpperCase())
-    .replace(/\bAm2\b/, 'AM2');
+    .replace(/\b(Am2s?|Osg|Bs|Ev|Pv|Eicr|Eic|Rcd|Afdd|Cpc|Hnc|Moet|Ipaf|Pasma|Cscs|Coshh|Cdm|Gn3)\b/g, (w) =>
+      w.toUpperCase()
+    )
+    .replace(/\bBS 7671\b|\bBS7671\b/i, 'BS 7671');
 }
 
 const LIGHT_COLS =
@@ -73,16 +178,11 @@ export function useMockHistory(limit = 200, enabled = true) {
       return;
     }
     setLoading(true);
-    const { data, error: e } = await supabase
-      .from('seo_mock_attempts')
-      .select(LIGHT_COLS)
-      .eq('user_id', uid)
-      .order('created_at', { ascending: false })
-      .limit(limit);
-    if (e) setError('Couldn’t load your mock exams.');
-    else {
+    try {
+      setRows(await loadAllSittings(uid, limit));
       setError(null);
-      setRows((data ?? []) as MockAttemptRow[]);
+    } catch {
+      setError('Couldn’t load your mock exams.');
     }
     setLoading(false);
   }, [uid, limit]);
@@ -258,7 +358,7 @@ export interface TopicStat {
 }
 
 /** Accuracy per topic across every mock in the window (mock_topic_stats). */
-export function useTopicStats(days = 120) {
+export function useTopicStats(days = 365) {
   const { user } = useAuth();
   const uid = user?.id ?? null;
   const [stats, setStats] = useState<TopicStat[]>([]);
@@ -321,18 +421,89 @@ export function useMockAttempt(id: string | undefined) {
     setLoading(true);
     setRow(null);
     setNotFound(false);
-    void supabase
-      .from('seo_mock_attempts')
-      .select(`${LIGHT_COLS},user_id,review,served_keys,question_ids,wrong_ids`)
-      .eq('id', id)
-      .eq('user_id', uid)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (cancelled) return;
-        setRow((data as MockAttemptFull | null) ?? null);
-        setNotFound(!data);
-        setLoading(false);
-      });
+    const done = (r: MockAttemptFull | null) => {
+      if (cancelled) return;
+      setRow(r);
+      setNotFound(!r);
+      setLoading(false);
+    };
+    const toBreakdown = (o: unknown, right = 'r', total = 'n') =>
+      o && typeof o === 'object'
+        ? Object.entries(o as Record<string, any>)
+            .filter(([, v]) => v && typeof v[right] === 'number' && typeof v[total] === 'number')
+            .map(([topic, v]) => ({ topic, right: v[right] as number, total: v[total] as number }))
+        : [];
+
+    if (id.startsWith('q:')) {
+      // A topic test (quiz_results): score and topics, no question list.
+      void supabase
+        .from('quiz_results')
+        .select('id,assessment_id,score,total_questions,percentage,time_spent,completed_at,category_breakdown')
+        .eq('id', id.slice(2))
+        .eq('user_id', uid)
+        .maybeSingle()
+        .then(({ data: q }) => {
+          if (!q) return done(null);
+          const pct = Math.round(Number((q as any).percentage) || 0);
+          done({
+            id,
+            exam_slug: (q as any).assessment_id,
+            exam_name: paperName({ exam_name: null, exam_slug: (q as any).assessment_id }),
+            retake_path: null,
+            score: (q as any).score ?? 0,
+            total_questions: (q as any).total_questions ?? 0,
+            percentage: pct,
+            passed: pct >= 70,
+            time_taken_seconds: (q as any).time_spent ?? 0,
+            created_at: (q as any).completed_at,
+            pass_mark: 70,
+            kind: 'test',
+            review: null,
+            served_keys: null,
+            topicBreakdown: toBreakdown((q as any).category_breakdown, 'correct', 'total'),
+          });
+        });
+    } else if (id.startsWith('am2:')) {
+      void supabase
+        .from('am2_mock_sessions')
+        .select('id,session_type,overall_score,component_scores,time_spent_seconds,completed_at')
+        .eq('id', id.slice(4))
+        .eq('user_id', uid)
+        .maybeSingle()
+        .then(({ data: a }) => {
+          if (!a) return done(null);
+          const pct = Math.round(Number((a as any).overall_score) || 0);
+          done({
+            id,
+            exam_slug: `am2:${(a as any).session_type}`,
+            exam_name: AM2_NAMES[(a as any).session_type] ?? 'AM2 practice',
+            retake_path: '/apprentice/am2-simulator',
+            score: Number((a as any).component_scores?.correct ?? 0),
+            total_questions: Number((a as any).component_scores?.total ?? 0),
+            percentage: pct,
+            passed: pct >= 60,
+            time_taken_seconds: (a as any).time_spent_seconds ?? 0,
+            created_at: (a as any).completed_at,
+            pass_mark: 60,
+            kind: 'am2',
+            review: null,
+            served_keys: null,
+            topicBreakdown: [],
+          });
+        });
+    } else {
+      void supabase
+        .from('seo_mock_attempts')
+        .select(`${LIGHT_COLS},user_id,review,served_keys,question_ids,wrong_ids,topic_stats`)
+        .eq('id', id)
+        .eq('user_id', uid)
+        .maybeSingle()
+        .then(({ data }) => {
+          if (!data) return done(null);
+          const r = data as any;
+          done({ ...(r as MockAttemptFull), kind: 'mock', topicBreakdown: toBreakdown(r.topic_stats) });
+        });
+    }
     return () => {
       cancelled = true;
     };

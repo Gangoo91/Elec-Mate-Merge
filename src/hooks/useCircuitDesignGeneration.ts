@@ -13,6 +13,7 @@ interface CircuitDesignJob {
   created_at: string;
   started_at: string | null;
   completed_at: string | null;
+  updated_at?: string | null;
   designer_progress: number;
   designer_status: string;
 }
@@ -27,12 +28,26 @@ interface UseCircuitDesignGenerationReturn {
   error: string | null;
 }
 
+// A worker that dies (edge wall-clock limit, deploy, crash) never writes
+// 'failed', so the row sits on 'processing' for good — six did, the oldest
+// since Nov 2025. No row update for this long means nobody is working on it:
+// the edge runtime ends a worker well inside it.
+const STALLED_AFTER_MS = 7 * 60 * 1000;
+const STALLED_MESSAGE = 'The designer stopped responding before it finished. Please try again.';
+
+const isStalled = (j: CircuitDesignJob | null) =>
+  !!j &&
+  (j.status === 'pending' || j.status === 'processing') &&
+  Date.now() - new Date(j.updated_at ?? j.started_at ?? j.created_at).getTime() > STALLED_AFTER_MS;
+
 export const useCircuitDesignGeneration = (
   jobId: string | null
 ): UseCircuitDesignGenerationReturn => {
   const [job, setJob] = useState<CircuitDesignJob | null>(null);
+  const [stalled, setStalled] = useState(false);
 
   useEffect(() => {
+    setStalled(false);
     if (!jobId) {
       setJob(null);
       return;
@@ -86,6 +101,9 @@ export const useCircuitDesignGeneration = (
         if (jobStatus === 'complete' || jobStatus === 'failed' || jobStatus === 'cancelled') {
           console.log('✅ Job finished, stopping poll interval');
           clearInterval(pollInterval);
+        } else if (isStalled(data as any as CircuitDesignJob)) {
+          setStalled(true);
+          clearInterval(pollInterval);
         }
       }
     }, 3000);
@@ -109,6 +127,9 @@ export const useCircuitDesignGeneration = (
           });
 
           setJob(updatedJob);
+          // A late update means the worker is alive after all — drop the
+          // stall verdict so a completion still shows.
+          setStalled(false);
 
           if (
             updatedJob.status === 'complete' ||
@@ -181,10 +202,10 @@ export const useCircuitDesignGeneration = (
   return {
     job,
     progress: Math.max(job?.progress ?? 0, 0),
-    status: jobId ? (job?.status as any) || 'pending' : 'idle',
+    status: !jobId ? 'idle' : stalled ? 'failed' : (job?.status as any) || 'pending',
     currentStep: getProgressMessage(),
     estimatedTimeRemaining: getEstimatedTimeRemaining(),
     designData: job?.design_data,
-    error: job?.error_message,
+    error: stalled ? STALLED_MESSAGE : job?.error_message,
   };
 };

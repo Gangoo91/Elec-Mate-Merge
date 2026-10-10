@@ -1,5 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import {
+  applySafetyScope,
+  safetyScopeKey,
+  useSafetyScope,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 /**
  * The user's most recent AI-generated RAMS, newest first.
@@ -16,13 +21,17 @@ export interface RecentGeneratedRams {
   status: string;
   createdAt: string;
   projectId: string | null;
+  /** The firm job it was generated for (Employer Hub), if any. */
+  employerJobId: string | null;
   /** Filed (issued) version in Site Safety, if it has been exported. */
   issuedVersion: number | null;
 }
 
 export function useRecentGeneratedRams(limit = 3) {
+  // Personal: the user's own. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['recent-generated-rams', limit],
+    queryKey: ['recent-generated-rams', limit, ...safetyScopeKey(scope)],
     queryFn: async (): Promise<RecentGeneratedRams[]> => {
       const {
         data: { user },
@@ -31,11 +40,12 @@ export function useRecentGeneratedRams(limit = 3) {
       // Widened to string: the literal JSON-path select sends the generated
       // types into infinite instantiation (TS2589).
       const cols: string =
-        'id, status, created_at, project_id, job_description, project_name:rams_data->>projectName';
-      const { data, error } = await supabase
-        .from('rams_generation_jobs')
-        .select(cols)
-        .eq('user_id', user.id)
+        'id, status, created_at, project_id, employer_job_id, job_description, project_name:rams_data->>projectName';
+      const { data, error } = await applySafetyScope(
+        supabase.from('rams_generation_jobs').select(cols),
+        scope,
+        user.id
+      )
         .in('status', ['complete', 'partial', 'pending', 'processing'])
         .order('created_at', { ascending: false })
         .limit(limit);
@@ -45,6 +55,7 @@ export function useRecentGeneratedRams(limit = 3) {
         status: string;
         created_at: string;
         project_id: string | null;
+        employer_job_id: string | null;
         job_description: string | null;
         project_name: string | null;
       };
@@ -53,14 +64,14 @@ export function useRecentGeneratedRams(limit = 3) {
       // filing happens in rams_documents, keyed by the generation job id.
       const issued = new Map<string, number>();
       if (rows.length) {
-        const { data: docs } = await supabase
-          .from('rams_documents')
-          .select('version, ai_generation_metadata')
-          .eq('user_id', user.id)
-          .in(
-            'ai_generation_metadata->>generation_job_id',
-            rows.map((r) => r.id)
-          );
+        const { data: docs } = await applySafetyScope(
+          supabase.from('rams_documents').select('version, ai_generation_metadata'),
+          scope,
+          user.id
+        ).in(
+          'ai_generation_metadata->>generation_job_id',
+          rows.map((r) => r.id)
+        );
         for (const d of (docs ?? []) as {
           version: number | null;
           ai_generation_metadata: unknown;
@@ -81,6 +92,7 @@ export function useRecentGeneratedRams(limit = 3) {
           status: r.status,
           createdAt: r.created_at,
           projectId: r.project_id ?? null,
+          employerJobId: r.employer_job_id ?? null,
           issuedVersion: issued.get(r.id) ?? null,
         };
       });

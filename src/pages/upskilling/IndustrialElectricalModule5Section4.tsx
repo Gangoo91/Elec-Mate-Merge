@@ -1054,7 +1054,7 @@ const IndustrialElectricalModule5Section4: React.FC = () => {
             className="flex items-center gap-2 border-white/20 text-foreground hover:bg-white/5 min-h-[44px] touch-manipulation"
             asChild
           >
-            <Link to="../section-3">
+            <Link to="/study-centre/upskilling/industrial-electrical-module-5-section-3">
               <ChevronLeft className="w-5 h-5" />
               <span className="hidden sm:inline">Previous: Loop Testing</span>
               <span className="sm:hidden">Previous</span>
@@ -1067,7 +1067,7 @@ const IndustrialElectricalModule5Section4: React.FC = () => {
             className="flex items-center gap-2 bg-elec-yellow text-background hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
             asChild
           >
-            <Link to="../section-5">
+            <Link to="/study-centre/upskilling/industrial-electrical-module-5-section-5">
               <span className="hidden sm:inline">Next: Module Assessment</span>
               <span className="sm:hidden">Next</span>
               <ChevronRight className="w-5 h-5" />

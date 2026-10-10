@@ -39,6 +39,7 @@ import {
   type BookingNotificationMetadata,
 } from '@/lib/bookingToProject';
 import { cn } from '@/lib/utils';
+import { OtjQuickAttest, otjEntryIdOf } from '@/components/notifications/OtjQuickAttest';
 
 /** How long a dismissed row can be brought back before it is really deleted. */
 const UNDO_MS = 5000;
@@ -151,6 +152,8 @@ function NotificationRow({
             </p>
           )}
 
+          {otjEntryIdOf(n) && <OtjQuickAttest entryId={otjEntryIdOf(n)!} />}
+
           {isBooking ? (
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <button
@@ -175,12 +178,10 @@ function NotificationRow({
                 </button>
               )}
             </div>
-          ) : (
-            // No "Open →" line. It cost a whole row of height to name the one
-            // thing the row already is; the chevron on the right edge says it
-            // in the space the timestamp was already using.
-            null
-          )}
+          ) : // No "Open →" line. It cost a whole row of height to name the one
+          // thing the row already is; the chevron on the right edge says it
+          // in the space the timestamp was already using.
+          null}
         </div>
 
         {n.link && (
@@ -318,94 +319,94 @@ const NotificationsPage = () => {
         {/* Capped. Full-bleed rows at 1600px put the timestamp a foot from
             the title and make a short message look like an error. */}
         <div className="theme-v2 flex w-full max-w-[54rem] flex-col gap-4">
-        {visible.length > 0 && (
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-[13px] font-medium text-white">
-              {unreadCount > 0 ? `${unreadCount} unread` : 'All caught up'}
-            </p>
-            <div className="flex items-center gap-1.5">
-              {unreadCount > 0 && (
-                <button
-                  onClick={() => markAllAsRead.mutate()}
-                  className="inline-flex h-11 touch-manipulation items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-medium text-white transition-colors hover:bg-white/[0.08]"
-                >
-                  <CheckCheck aria-hidden className="h-3.5 w-3.5" />
-                  Read all
-                </button>
-              )}
-              <button
-                onClick={() => clearAll.mutate()}
-                aria-label="Clear all notifications"
-                className="flex h-11 w-11 touch-manipulation items-center justify-center rounded-xl text-white transition-colors hover:bg-red-500/15"
-              >
-                <Trash2 aria-hidden className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {chips.length > 2 && (
-          <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-            {chips.map((c) => (
-              <button
-                key={c}
-                onClick={() => setFilter(c)}
-                className={cn(
-                  'h-9 shrink-0 touch-manipulation rounded-full border px-3.5 text-[12px] transition-colors',
-                  filter === c
-                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                    : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]'
+          {visible.length > 0 && (
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[13px] font-medium text-white">
+                {unreadCount > 0 ? `${unreadCount} unread` : 'All caught up'}
+              </p>
+              <div className="flex items-center gap-1.5">
+                {unreadCount > 0 && (
+                  <button
+                    onClick={() => markAllAsRead.mutate()}
+                    className="inline-flex h-11 touch-manipulation items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-medium text-white transition-colors hover:bg-white/[0.08]"
+                  >
+                    <CheckCheck aria-hidden className="h-3.5 w-3.5" />
+                    Read all
+                  </button>
                 )}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {visible.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-16 text-center">
-            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.05]">
-              <Bell aria-hidden className="h-6 w-6 text-white" />
+                <button
+                  onClick={() => clearAll.mutate()}
+                  aria-label="Clear all notifications"
+                  className="flex h-11 w-11 touch-manipulation items-center justify-center rounded-xl text-white transition-colors hover:bg-red-500/15"
+                >
+                  <Trash2 aria-hidden className="h-3.5 w-3.5" />
+                </button>
+              </div>
             </div>
-            <p className="text-[15px] font-semibold text-white">Nothing here</p>
-            <p className="mt-1 max-w-[28rem] text-[13px] leading-relaxed text-white">
-              Job reminders, certificate expiries, study nudges and messages all land here. You can
-              choose which of those you want in settings.
-            </p>
-            <button
-              onClick={() => navigate('/settings?tab=notifications')}
-              className="mt-5 inline-flex h-11 touch-manipulation items-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-transform active:scale-[0.98]"
-            >
-              Notification settings
-            </button>
-          </div>
-        ) : filtered.length === 0 ? (
-          <p className="py-14 text-center text-[13px] text-white">Nothing in “{filter}”.</p>
-        ) : (
-          <div className="space-y-6">
-            {groups.map(({ bucket, rows }) => (
-              <section key={bucket}>
-                <h2 className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
-                  {bucket}
-                </h2>
-                <ul className="flex flex-col gap-1.5">
-                  <AnimatePresence initial={false}>
-                    {rows.map((n) => (
-                      <NotificationRow
-                        key={n.id}
-                        n={n}
-                        onOpen={() => handleOpen(n)}
-                        onDismiss={() => handleDismiss(n)}
-                        onConvertToProject={() => handleConvertToProject(n)}
-                      />
-                    ))}
-                  </AnimatePresence>
-                </ul>
-              </section>
-            ))}
-          </div>
-        )}
+          )}
+
+          {chips.length > 2 && (
+            <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+              {chips.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setFilter(c)}
+                  className={cn(
+                    'h-9 shrink-0 touch-manipulation rounded-full border px-3.5 text-[12px] transition-colors',
+                    filter === c
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                      : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]'
+                  )}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {visible.length === 0 ? (
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-16 text-center">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.05]">
+                <Bell aria-hidden className="h-6 w-6 text-white" />
+              </div>
+              <p className="text-[15px] font-semibold text-white">Nothing here</p>
+              <p className="mt-1 max-w-[28rem] text-[13px] leading-relaxed text-white">
+                Job reminders, certificate expiries, study nudges and messages all land here. You
+                can choose which of those you want in settings.
+              </p>
+              <button
+                onClick={() => navigate('/settings?tab=notifications')}
+                className="mt-5 inline-flex h-11 touch-manipulation items-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-transform active:scale-[0.98]"
+              >
+                Notification settings
+              </button>
+            </div>
+          ) : filtered.length === 0 ? (
+            <p className="py-14 text-center text-[13px] text-white">Nothing in “{filter}”.</p>
+          ) : (
+            <div className="space-y-6">
+              {groups.map(({ bucket, rows }) => (
+                <section key={bucket}>
+                  <h2 className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
+                    {bucket}
+                  </h2>
+                  <ul className="flex flex-col gap-1.5">
+                    <AnimatePresence initial={false}>
+                      {rows.map((n) => (
+                        <NotificationRow
+                          key={n.id}
+                          n={n}
+                          onOpen={() => handleOpen(n)}
+                          onDismiss={() => handleDismiss(n)}
+                          onConvertToProject={() => handleConvertToProject(n)}
+                        />
+                      ))}
+                    </AnimatePresence>
+                  </ul>
+                </section>
+              ))}
+            </div>
+          )}
         </div>
       </HubBody>
     </HubPage>

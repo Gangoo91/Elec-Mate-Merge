@@ -4,10 +4,8 @@ import ToolChecklistGenerator from './ToolChecklistGenerator';
 const InteractiveToolsTab = () => {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Interactive tools
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Interactive tools</span>
         <p className="text-[14px] text-white leading-relaxed">
           Use these tools to plan your toolkit investment and create project-specific equipment
           lists.
@@ -18,10 +16,8 @@ const InteractiveToolsTab = () => {
 
       <ToolChecklistGenerator />
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Pro tip
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Pro tip</span>
         <p className="text-[14px] text-white leading-relaxed">
           Download your checklists before heading to site to ensure you have all necessary tools.
           Update your budget calculator as your toolkit grows.

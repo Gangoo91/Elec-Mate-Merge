@@ -6,7 +6,7 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   DndContext,
@@ -32,8 +32,8 @@ import {
   COLLEGE_BTN_PRIMARY,
   CollegeHeading,
   CollegePageHeader,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
+import { choiceCn } from '@/components/college/teaching/TeachingKit';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
 import { useSlideDeck, type Slide, type DeckPreflight, type DeckTheme } from '@/hooks/useSlideDeck';
@@ -51,6 +51,7 @@ import {
 } from '@/components/college/slides/slideContent';
 import { exportSlideDeckToPptx } from '@/lib/exportSlideDeckToPptx';
 import { cn } from '@/lib/utils';
+import { useSmartBack } from '@/lib/navHistory';
 
 /* ==========================================================================
    LessonSlideDeckPage — /college/lessons/:id/slides
@@ -135,7 +136,6 @@ function plural(n: number, one: string, many = `${one}s`): string {
 
 export default function LessonSlideDeckPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const {
     plan,
@@ -283,10 +283,10 @@ export default function LessonSlideDeckPage() {
     [slides, generateSlideImage, quality]
   );
 
-  const goBack = useCallback(() => {
-    if (window.history.length > 1) navigate(-1);
-    else navigate(planPath);
-  }, [navigate, planPath]);
+  // window.history.length counts pages before the app too, so it could step
+  // out of Elec-Mate. Back goes to where the deck was opened from, else the plan.
+  const smartBack = useSmartBack();
+  const goBack = useCallback(() => smartBack(planPath), [smartBack, planPath]);
 
   if (presentFrom != null && slides.length > 0) {
     return (
@@ -1164,7 +1164,9 @@ function PresentMode({
       // that control, not to "next slide": otherwise a keyboard user can
       // never press Exit.
       const t = e.target as HTMLElement | null;
-      const onControl = !!t?.closest('button, a, input, textarea, select, [contenteditable="true"]');
+      const onControl = !!t?.closest(
+        'button, a, input, textarea, select, [contenteditable="true"]'
+      );
       if (onControl && (k === ' ' || k === 'Enter')) return;
       if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(k)) {
         e.preventDefault();
@@ -1331,15 +1333,13 @@ function PresentMode({
               />
             </div>
             <div className="rounded-2xl border border-white/[0.14] p-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
-              <div className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                Notes
-              </div>
+              <div className="text-[13px] font-semibold text-white">Notes</div>
               <p className="mt-2 whitespace-pre-line text-[20px] leading-relaxed text-white">
                 {notes || 'No speaker notes on this slide.'}
               </p>
             </div>
             <div className="rounded-2xl border border-white/[0.14] p-3">
-              <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-white">
+              <div className="mb-2 text-[13px] font-semibold text-white">
                 {next ? 'Next slide' : 'End of the deck'}
               </div>
               {next ? (
@@ -1449,7 +1449,7 @@ function DeckSettingsSheet({
                 key={t}
                 type="button"
                 onClick={() => onTheme(t)}
-                className={cn(chipCn(theme === t), 'px-5')}
+                className={cn(choiceCn(theme === t), 'px-5')}
               >
                 {t === 'dark' ? 'Dark' : 'Light'}
               </button>
@@ -1468,7 +1468,7 @@ function DeckSettingsSheet({
                 key={o.value}
                 type="button"
                 onClick={() => onQuality(o.value)}
-                className={cn(chipCn(quality === o.value), 'px-5')}
+                className={cn(choiceCn(quality === o.value), 'px-5')}
               >
                 {o.label}
               </button>
@@ -1609,7 +1609,7 @@ function RegenerateSlideSheet({
                 key={q}
                 type="button"
                 onClick={() => setNote(q)}
-                className={chipCn(note === q)}
+                className={choiceCn(note === q)}
               >
                 {q}
               </button>

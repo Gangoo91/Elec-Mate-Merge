@@ -29,13 +29,13 @@ export function AssessorDriftPanel() {
   if (reds.length === 0 && ambers.length === 0) {
     if (rows.length === 0) return null;
     return (
-      <div className="rounded-2xl border border-emerald-400/20 bg-emerald-500/[0.04] px-4 py-3 flex items-center gap-3">
-        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/[0.15] text-emerald-300">
+      <div className="rounded-2xl border border-emerald-400/20 px-4 py-3 flex items-center gap-3">
+        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full text-emerald-300">
           ✓
         </span>
-        <div className="text-[12.5px] text-emerald-100">
-          <span className="font-semibold">No assessor drift</span>{' '}
-          <span className="text-emerald-100/70">— {rows.length} assessor{rows.length === 1 ? '' : 's'} tracked, all steady.</span>
+        <div className="text-[13px] text-white">
+          <span className="font-semibold">No assessor drift.</span> {rows.length} assessor
+          {rows.length === 1 ? '' : 's'} tracked, all steady.
         </div>
       </div>
     );
@@ -44,25 +44,23 @@ export function AssessorDriftPanel() {
   const visible = expanded ? rows : [...reds, ...ambers];
 
   return (
-    <div className="rounded-2xl border border-amber-400/30 bg-amber-500/[0.04] overflow-hidden">
+    <div className="rounded-2xl border border-amber-400/30 overflow-hidden">
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
-        className="w-full px-4 py-3 flex items-center justify-between gap-3 text-left hover:bg-amber-500/[0.06] transition-colors touch-manipulation"
+        className="w-full min-h-[56px] px-4 py-3 flex items-center justify-between gap-3 text-left transition-colors touch-manipulation active:bg-white/[0.05]"
       >
         <div className="flex items-center gap-2.5 min-w-0">
           <AlertTriangle className="h-4 w-4 text-amber-300 flex-shrink-0" />
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-200/85">
-              Assessor drift · 90 days
-            </div>
+            <div className="text-[13px] font-semibold text-white">Assessor drift, last 90 days</div>
             <div className="text-[13px] text-white font-semibold mt-0.5">
               {reds.length > 0 && (
                 <>
                   <span className="text-red-300">{reds.length}</span> needs intervention
                 </>
               )}
-              {reds.length > 0 && ambers.length > 0 && <span className="text-white/70"> · </span>}
+              {reds.length > 0 && ambers.length > 0 && <span className="text-white"> · </span>}
               {ambers.length > 0 && (
                 <>
                   <span className="text-amber-300">{ambers.length}</span> to watch
@@ -71,9 +69,9 @@ export function AssessorDriftPanel() {
             </div>
           </div>
         </div>
-        <span className="inline-flex items-center gap-1 text-[11px] text-amber-200/70 flex-shrink-0">
+        <span className="inline-flex h-11 items-center gap-1 text-[13px] font-semibold text-white flex-shrink-0">
           {expanded ? 'Hide all' : 'Show'} {rows.length}
-          {expanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+          {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </span>
       </button>
 
@@ -96,45 +94,40 @@ function DriftRow({ row }: { row: AssessorDriftRow }) {
         ? 'text-amber-200'
         : row.drift_level === 'green'
           ? 'text-emerald-200'
-          : 'text-white/55';
+          : 'text-white';
 
   const pctBg =
     row.drift_level === 'red'
-      ? 'bg-red-500/[0.10] border-red-400/30'
+      ? 'border-red-400/30'
       : row.drift_level === 'amber'
-        ? 'bg-amber-500/[0.10] border-amber-400/30'
+        ? 'border-amber-400/30'
         : row.drift_level === 'green'
-          ? 'bg-emerald-500/[0.10] border-emerald-400/30'
+          ? 'border-emerald-400/30'
           : 'bg-white/[0.04] border-white/[0.10]';
 
-  const TrendIcon =
-    row.delta_pp === null
-      ? null
-      : row.delta_pp >= 0
-        ? TrendingUp
-        : TrendingDown;
+  const TrendIcon = row.delta_pp === null ? null : row.delta_pp >= 0 ? TrendingUp : TrendingDown;
 
   return (
     <div className="px-4 py-3 flex items-center gap-3 flex-wrap">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[13.5px] font-semibold text-white">{row.assessor_name}</span>
-          <span className="text-[10.5px] text-white/55 tabular-nums">
+          <span className="text-[12px] text-white tabular-nums">
             {row.recent_samples} verdict{row.recent_samples === 1 ? '' : 's'}
           </span>
         </div>
-        <div className={cn('mt-0.5 text-[11.5px] leading-snug', tone)}>{row.drift_reason}</div>
+        <div className={cn('mt-0.5 text-[12px] leading-snug', tone)}>{row.drift_reason}</div>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
         {row.delta_pp !== null && TrendIcon && (
           <span
             className={cn(
-              'inline-flex items-center gap-0.5 text-[11px] tabular-nums',
+              'inline-flex items-center gap-0.5 text-[12px] tabular-nums',
               row.delta_pp > 0
                 ? 'text-emerald-300'
                 : row.delta_pp < 0
                   ? 'text-red-300'
-                  : 'text-white/55'
+                  : 'text-white'
             )}
           >
             <TrendIcon className="h-3 w-3" />

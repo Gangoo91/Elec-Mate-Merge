@@ -48,15 +48,15 @@ const keyTakeaways = [
   'Full RCBO boards cost approximately £60 to £150 more than equivalent split-load boards, but the improved discrimination eliminates nuisance tripping and reduces call-back costs.',
   'Consumer unit design in the UK is trending strongly towards full RCBO boards — most major manufacturers now offer RCBO boards as their standard domestic product.',
   'Elec-Mate captures the protection arrangement (RCBO, RCD+MCB, or fuse) for every circuit on the EICR and EIC, and the AI board scanner identifies the devices from a photo.',
-  'BS 7671:2018+A4:2026 Regulation 411.3.4 now requires 30 mA RCD additional protection on every AC final circuit supplying luminaires in domestic premises — meaning every domestic lighting circuit needs RCD protection, not just socket outlets.',
-  'Regulation 421.1.7 (A4:2026) recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc faults. The RCBO board is the only practical architecture that can accommodate a per-circuit AFDD+RCBO combination.',
+  'BS 7671 Regulation 411.3.4, in force since 2018, requires 30 mA RCD additional protection on every AC final circuit supplying luminaires in domestic premises — meaning every domestic lighting circuit needs RCD protection, not just socket outlets.',
+  'Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on socket-outlet final circuits, and since A2:2022 requires them in HMOs and other named higher-risk premises. The RCBO board is the only practical architecture that can accommodate a per-circuit AFDD+RCBO combination.',
 ];
 
 const faqs = [
   {
     question: 'Is an RCBO board required by BS 7671?',
     answer:
-      'No. BS 7671 does not mandate RCBO boards. The regulations require that circuits have appropriate overcurrent protection (MCB or fuse) and, where required, RCD protection. Under BS 7671:2018+A4:2026, 30 mA RCD additional protection is required for socket outlets (with certain exceptions — OSG Reg 4.6.4), for mobile equipment used outdoors, for cables concealed in walls, and — new under A4:2026 — for every AC final circuit supplying luminaires in domestic premises (Reg 411.3.4). This last change means every domestic lighting circuit now needs RCD protection, making the argument for an RCBO board even stronger: every domestic circuit effectively requires its own RCD. How you achieve that compliance — with individual RCBOs or with shared RCDs and separate MCBs — remains a design choice. Both arrangements can be compliant. However, BS 7671 Regulation 314.1 requires that the design minimises inconvenience in the event of a fault, which favours RCBO boards because a fault on one circuit does not affect others. In practice, both arrangements are widely accepted by competent person schemes and building control.',
+      'No. BS 7671 does not mandate RCBO boards. The regulations require that circuits have appropriate overcurrent protection (MCB or fuse) and, where required, RCD protection. Under BS 7671:2018+A4:2026, 30 mA RCD additional protection is required for socket outlets (with certain exceptions — OSG Reg 4.6.4), for mobile equipment used outdoors, for cables concealed in walls, and, since BS 7671:2018, for every AC final circuit supplying luminaires in domestic premises (Reg 411.3.4). This last requirement means every domestic lighting circuit needs RCD protection, making the argument for an RCBO board even stronger: every domestic circuit effectively requires its own RCD. How you achieve that compliance — with individual RCBOs or with shared RCDs and separate MCBs — remains a design choice. Both arrangements can be compliant. However, BS 7671 Regulation 314.1 requires that the design minimises inconvenience in the event of a fault, which favours RCBO boards because a fault on one circuit does not affect others. In practice, both arrangements are widely accepted by competent person schemes and building control.',
   },
   {
     question: 'How much more does an RCBO board cost than a split-load board?',
@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Can I mix RCBOs and MCBs in the same consumer unit?',
     answer:
-      'Yes, and this is a common and practical approach. Some circuits require 30 mA RCD protection under BS 7671 — socket outlets (with certain exceptions per OSG Reg 4.6.4), outdoor circuits, cables concealed in walls, and under A4:2026, all AC luminaire circuits in domestic premises (Reg 411.3.4). You can install RCBOs on circuits that need RCD protection and standard MCBs on circuits that do not. However, with A4:2026 extending RCD requirements to domestic lighting, virtually every domestic circuit now requires some form of RCD protection, so many electricians install RCBOs throughout. Some consumer unit enclosures are specifically designed for a mix of RCBOs and MCBs — for example, with RCBO positions on one side and MCB positions (behind a shared RCD) on the other.',
+      'Yes, and this is a common and practical approach. Some circuits require 30 mA RCD protection under BS 7671 — socket outlets (with certain exceptions per OSG Reg 4.6.4), outdoor circuits, cables concealed in walls, and all AC luminaire circuits in domestic premises (Reg 411.3.4, since 2018). You can install RCBOs on circuits that need RCD protection and standard MCBs on circuits that do not. However, with RCD requirements covering domestic lighting as well as sockets, virtually every domestic circuit requires some form of RCD protection, so many electricians install RCBOs throughout. Some consumer unit enclosures are specifically designed for a mix of RCBOs and MCBs — for example, with RCBO positions on one side and MCB positions (behind a shared RCD) on the other.',
   },
   {
     question: 'Do RCBOs take up more space in the consumer unit?',
@@ -522,9 +522,10 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault detection
-          devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire
-          due to arc fault currents. An arc fault — caused by damaged, deteriorated, or poorly
+          BS 7671 Regulation 421.1.7 covers arc fault detection devices (AFDDs) on single-phase AC
+          final circuits supplying socket-outlets up to 32 A. Since A2:2022 they are required in high
+          rise residential buildings, HMOs, purpose-built student accommodation and care homes, and
+          recommended elsewhere, to mitigate the risk of fire due to arc fault currents. An arc fault — caused by damaged, deteriorated, or poorly
           connected wiring — can generate sustained sparking that ignites surrounding material
           without exceeding the overcurrent threshold of an MCB. An AFDD detects the characteristic
           current signature of an arc fault and disconnects the circuit before ignition occurs.
@@ -557,7 +558,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conclusion:</strong> The RCBO board is the only consumer unit architecture
-                that cleanly implements the full A4:2026 protection stack — RCD additional
+                that cleanly implements the full BS 7671:2018+A4:2026 protection stack — RCD additional
                 protection per Reg 411.3.4, arc fault protection per Reg 421.1.7, per-circuit
                 discrimination per Reg 314.1 — in a single, coherent design.
               </span>
@@ -565,9 +566,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Regulation 421.1.7 uses recommendatory rather than mandatory wording — it says
-          &apos;recommending&apos; rather than &apos;shall&apos; — so AFDDs are not yet a compliance
-          requirement in all cases. However, where a client or specifier wants the highest level of
+          Outside those named premises, Regulation 421.1.7 uses recommendatory rather than mandatory
+          wording, so AFDDs are not a compliance requirement in an ordinary home. However, where a client or specifier wants the highest level of
           fire protection in a fixed installation, AFDDs fitted to an RCBO board represent current
           best practice under BS 7671:2018+A4:2026.
         </p>
@@ -638,7 +638,7 @@ export default function RCBOvsRCDMCBPage() {
       title="RCBO vs RCD + MCB: Which Is Better?"
       description="Complete comparison of RCBO boards vs split-load RCD+MCB consumer units for UK electricians. Cost comparison, nuisance tripping advantage."
       datePublished="2025-07-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Protection Design"

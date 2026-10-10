@@ -9,13 +9,10 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 export type ObservationOutcome = 'passed' | 'partial' | 'referred' | 'not_yet';
 /** ELE-1873: a professional discussion is recorded the same way as an observation. */
-export type ObservationKind = 'observation' | 'professional_discussion';
+/** Batch 2 (10 Oct): questioning (oral or written questions, the answers summarised). */
+export type ObservationKind = 'observation' | 'professional_discussion' | 'questioning';
 export type ObservationLocationType =
-  | 'classroom'
-  | 'workshop'
-  | 'employer_site'
-  | 'remote'
-  | 'other';
+  'classroom' | 'workshop' | 'employer_site' | 'remote' | 'other';
 
 export interface CollegeObservation {
   id: string;
@@ -52,12 +49,23 @@ export interface CollegeObservation {
   // ELE-1873 (first-class evidence)
   kind: ObservationKind;
   criteria: { unit_code: string; ac_code: string }[];
-  media: { url: string; path: string; name: string; type: string; size: number; sha256: string | null }[];
+  media: {
+    url: string;
+    path: string;
+    name: string;
+    type: string;
+    size: number;
+    sha256: string | null;
+  }[];
   transcript: string | null;
   portfolio_item_id: string | null;
   sent_at: string | null;
   content_hash: string | null;
   learner_comment: string | null;
+  // Batch 2: kind = questioning
+  questions?: { question: string; answer: string }[] | null;
+  question_mode?: 'oral' | 'written' | null;
+  question_delivery?: 'face_to_face' | 'remote' | null;
   created_by: string | null;
 }
 
@@ -86,7 +94,7 @@ export interface NewObservationInput {
 }
 
 const COLS =
-  'id, college_id, college_student_id, student_name_snapshot, college_staff_id, assessor_name_snapshot, observed_at, observed_time, duration_minutes, location, location_type, activity_title, activity_summary, qualification_code, unit_code, acs_evidenced, ksbs_observed, outcome, grade, feedback_strengths, feedback_areas, action_points, follow_up_required, follow_up_date, evidence_path, assessor_signed, assessor_signed_at, learner_acknowledged, learner_acknowledged_at, created_at, updated_at, kind, criteria, media, transcript, portfolio_item_id, sent_at, content_hash, learner_comment, created_by';
+  'id, college_id, college_student_id, student_name_snapshot, college_staff_id, assessor_name_snapshot, observed_at, observed_time, duration_minutes, location, location_type, activity_title, activity_summary, qualification_code, unit_code, acs_evidenced, ksbs_observed, outcome, grade, feedback_strengths, feedback_areas, action_points, follow_up_required, follow_up_date, evidence_path, assessor_signed, assessor_signed_at, learner_acknowledged, learner_acknowledged_at, created_at, updated_at, kind, criteria, media, transcript, portfolio_item_id, sent_at, content_hash, learner_comment, created_by, questions, question_mode, question_delivery';
 
 export function useCollegeObservations(studentId: string | null) {
   const [observations, setObservations] = useState<CollegeObservation[]>([]);

@@ -13,13 +13,7 @@ import {
   COLLEGE_BTN_PRIMARY,
   CollegeHeading as HubSectionHeading,
 } from '@/components/college/ui/CollegeUi';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { TeachMenu } from '@/components/college/teaching/TeachingKit';
 import { StartLessonPlanSheet } from '@/components/college/sheets/StartLessonPlanSheet';
 import { cleanLessonDeep, cleanLessonShown, cleanLessonText } from '@/lib/lessons/cleanLessonText';
 import { duplicateLessonPlan } from '@/lib/lessons/duplicateLessonPlan';
@@ -91,7 +85,7 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
 /** One content card: the landing page's card surface, as on the plans list. */
 const CARD =
-  '-mx-4 overflow-hidden card-surface rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border';
+  '-mx-4 overflow-hidden card-surface max-sm:!rounded-none max-sm:!border-x-0 border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border';
 
 const HELP: PageHelpContent = {
   id: 'college-lesson-plan',
@@ -124,7 +118,7 @@ const HELP: PageHelpContent = {
 };
 const ROW = 'px-4 py-4 sm:px-5';
 /** In-card sub-label. Sentence case, white, small and bold — never an eyebrow. */
-const SUB = 'text-[11.5px] font-semibold text-white';
+const SUB = 'text-[12px] font-semibold text-white';
 const BODY = 'text-[13.5px] leading-relaxed text-white';
 const MONO = 'font-mono tabular-nums';
 
@@ -619,7 +613,7 @@ function PlanHeader({
         className="no-print space-y-5"
       >
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+          <p className="text-[13px] font-semibold text-elec-yellow">
             {meta?.cohort_name ?? (hasCohort ? 'Cohort' : 'No cohort yet')}
           </p>
           <h1 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
@@ -660,34 +654,21 @@ function PlanHeader({
                 {a.label}
               </button>
             ))}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <TeachMenu
+              title={title}
+              items={menuItems}
+              trigger={(p) => (
                 <button
                   type="button"
+                  {...p}
                   className={cn(COLLEGE_BTN, 'px-3')}
                   aria-label="More for this plan"
                 >
                   <MoreHorizontal className="h-5 w-5" aria-hidden />
                   <span className="sm:hidden">More</span>
                 </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-[210px]">
-                {menuItems.map((m, i) => (
-                  <div key={m.label}>
-                    {m.destructive && i > 0 && <DropdownMenuSeparator />}
-                    <DropdownMenuItem
-                      className={cn(
-                        'h-11 touch-manipulation',
-                        m.destructive && 'text-red-300 focus:text-red-300'
-                      )}
-                      onClick={m.onClick}
-                    >
-                      {m.label}
-                    </DropdownMenuItem>
-                  </div>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              )}
+            />
           </div>
         </div>
       </motion.header>
@@ -1070,7 +1051,7 @@ function StreamingView({
         >
           <div className="flex items-end justify-between gap-4">
             <HubSectionHeading>Grounded in</HubSectionHeading>
-            <span className={cn('text-[11px] font-semibold text-white', MONO)}>
+            <span className={cn('text-[12px] font-semibold text-white', MONO)}>
               {ragPreview.facets.length} references
             </span>
           </div>
@@ -1385,7 +1366,7 @@ function PlanView({
                     <span
                       className={cn(
                         MONO,
-                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/[0.16] text-[11.5px] font-semibold text-white'
+                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/[0.16] text-[12px] font-semibold text-white'
                       )}
                     >
                       {i + 1}
@@ -1766,28 +1747,34 @@ function SectionIndex({ groups }: { groups: GroupId[] }) {
       {/* Phone and tablet: chips under the masthead. */}
       <nav
         aria-label="Sections"
-        className="no-print sticky z-30 -mx-4 mb-8 border-b border-white/[0.06] px-4 py-2 backdrop-blur-sm lg:hidden"
+        className="no-print sticky z-30 -mx-4 mb-8 border-b border-white/[0.06] px-4 backdrop-blur-sm lg:hidden"
         style={{
           // Under the app header and the 48px masthead, which stick the same way.
           top: STICKY_TOP,
           backgroundColor: 'hsl(var(--hub-ground, 0 0% 10%) / 0.95)',
         }}
       >
-        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar">
+        <div className="-mx-4 flex overflow-x-auto px-2 hide-scrollbar">
           {groups.map((g) => (
             <button
               key={g}
               id={`plan-chip-${g}`}
               type="button"
               onClick={() => go(g)}
+              aria-current={active === g ? 'true' : undefined}
               className={cn(
-                'h-11 shrink-0 rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation',
-                active === g
-                  ? 'border-white bg-white font-semibold text-black'
-                  : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                'relative inline-flex h-11 shrink-0 items-center whitespace-nowrap px-3 text-[13px] text-white transition-colors touch-manipulation',
+                active === g ? 'font-semibold' : 'font-medium'
               )}
             >
               {GROUP_LABEL[g]}
+              <span
+                aria-hidden
+                className={cn(
+                  'absolute inset-x-3 bottom-0 h-[2px] rounded-full',
+                  active === g ? 'bg-elec-yellow' : 'bg-transparent'
+                )}
+              />
             </button>
           ))}
         </div>
@@ -1796,9 +1783,7 @@ function SectionIndex({ groups }: { groups: GroupId[] }) {
       {/* Desktop: a rail beside the plan. */}
       <nav aria-label="Sections" className="no-print hidden lg:block">
         <div className="sticky" style={{ top: `calc(${STICKY_TOP} + 24px)` }}>
-          <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
-            In this plan
-          </p>
+          <p className="mb-2 px-3 text-[13px] font-semibold text-white">In this plan</p>
           <ul className="space-y-0.5">
             {groups.map((g) => (
               <li key={g}>
@@ -1983,7 +1968,7 @@ function Timeline({ activities, total }: { activities: GeneratedActivity[]; tota
               style={{ width: `${pct}%` }}
               title={`${a.title} · ${a.time_mins} min`}
             >
-              <span className={cn(MONO, 'truncate px-1 text-[10.5px] font-semibold text-white')}>
+              <span className={cn(MONO, 'truncate px-1 text-[12px] font-semibold text-white')}>
                 {a.time_mins}′
               </span>
             </div>
@@ -1994,7 +1979,7 @@ function Timeline({ activities, total }: { activities: GeneratedActivity[]; tota
         {[0, 0.25, 0.5, 0.75, 1].map((p) => (
           <span
             key={p}
-            className={cn(MONO, 'absolute top-0 -translate-x-1/2 text-[10.5px] text-white')}
+            className={cn(MONO, 'absolute top-0 -translate-x-1/2 text-[12px] text-white')}
             style={{ left: `${p * 100}%` }}
           >
             {Math.round(p * total)}′
@@ -2069,13 +2054,21 @@ function ActivityList({
               key={i}
               className={cn(
                 ROW,
-                'grid grid-cols-[60px_minmax(0,1fr)] gap-x-4 py-5 sm:grid-cols-[88px_minmax(0,1fr)] sm:gap-x-6 sm:py-6'
+                'grid grid-cols-1 gap-y-2 py-5 sm:grid-cols-[88px_minmax(0,1fr)] sm:gap-x-6 sm:py-6'
               )}
             >
-              <div className={cn(MONO, 'text-[12px] leading-tight text-white')}>
+              {/* A phone gets the times on one line above the activity; the
+                  narrow time column squeezed the title. */}
+              <div
+                className={cn(
+                  MONO,
+                  'flex flex-wrap items-baseline gap-x-2 text-[13px] leading-tight text-white sm:block sm:text-[12px]'
+                )}
+              >
                 <div className="text-[15px] font-semibold">{formatClock(start)}</div>
-                <div className="mt-0.5">to {formatClock(end)}</div>
-                <div className="mt-2 inline-flex h-6 items-center rounded-full border border-white/[0.16] px-2 text-[11.5px] font-semibold">
+                <div className="sm:mt-0.5">to {formatClock(end)}</div>
+                <div className="font-semibold sm:mt-2 sm:inline-flex sm:h-6 sm:items-center sm:rounded-full sm:border sm:border-white/[0.16] sm:px-2 sm:text-[12px]">
+                  <span className="sm:hidden">· </span>
                   {a.time_mins} min
                 </div>
               </div>
@@ -2136,7 +2129,7 @@ function ActivityList({
                           <span
                             key={r.key}
                             title={r.note ?? undefined}
-                            className="inline-flex h-6 items-center gap-1 rounded-full border border-white/[0.16] px-2.5 text-[11.5px] text-white"
+                            className="inline-flex h-6 items-center gap-1 rounded-full border border-white/[0.16] px-2.5 text-[12px] text-white"
                           >
                             {r.doc}
                             {r.num && <span className={cn(MONO, 'font-semibold')}>{r.num}</span>}
@@ -2224,7 +2217,7 @@ function BoardWorkList({ items }: Items<NonNullable<GeneratedLessonPlan['board_w
               <div className="text-[14px] font-semibold text-white">{b.title}</div>
               <p className={cn(BODY, 'mt-1')}>{b.description}</p>
               {b.labels?.length > 0 && (
-                <div className={cn(MONO, 'mt-1.5 text-[11.5px] text-white')}>
+                <div className={cn(MONO, 'mt-1.5 text-[12px] text-white')}>
                   {b.labels.join(' · ')}
                 </div>
               )}
@@ -2259,7 +2252,7 @@ function WorkedExamplesList({
               ))}
             </ol>
             <div className="rounded-xl bg-white/[0.05] px-3.5 py-2.5">
-              <div className="text-[11.5px] font-semibold text-white">Answer</div>
+              <div className="text-[12px] font-semibold text-white">Answer</div>
               <p className={cn(BODY, 'mt-0.5 font-medium')}>{w.answer}</p>
             </div>
           </li>
@@ -2451,7 +2444,7 @@ function BloomLabel({ level }: { level: BloomLevel }) {
     create: 'Create',
   };
   return (
-    <span className="shrink-0 text-[11px] font-semibold text-white">{labels[level] ?? level}</span>
+    <span className="shrink-0 text-[12px] font-semibold text-white">{labels[level] ?? level}</span>
   );
 }
 
@@ -2484,7 +2477,7 @@ const REFINE_PRESETS: Record<string, { label: string; instruction: string }[]> =
       instruction: 'Expand with more concrete detail and specific examples.',
     },
     { label: 'Simpler', instruction: 'Simplify the language for Level 2 apprentices.' },
-    { label: 'Harder', instruction: 'Raise the challenge — Level 3 / HND depth.' },
+    { label: 'Harder', instruction: 'Raise the challenge to Level 3 / HND depth.' },
     {
       label: 'More practical',
       instruction: 'Lean into practical, hands-on content rather than theory.',
@@ -2492,7 +2485,7 @@ const REFINE_PRESETS: Record<string, { label: string; instruction: string }[]> =
     { label: 'Add an example', instruction: 'Add one more concrete worked example.' },
   ],
   cold_call_questions: [
-    { label: 'Harder', instruction: 'Make the questions harder — push into analyse and evaluate.' },
+    { label: 'Harder', instruction: 'Make the questions harder: push into analyse and evaluate.' },
     { label: 'Simpler', instruction: 'Simpler questions for early apprentices.' },
     { label: 'Add 3 more', instruction: 'Add three more questions covering different ACs.' },
     {
@@ -2505,7 +2498,8 @@ const REFINE_PRESETS: Record<string, { label: string; instruction: string }[]> =
     { label: 'Simpler definitions', instruction: 'Simpler one-line definitions for apprentices.' },
     {
       label: 'Link to the regulations',
-      instruction: 'Tie each term to the regulation or guidance section it comes from, using only the references already cited in this plan.',
+      instruction:
+        'Tie each term to the regulation or guidance section it comes from, using only the references already cited in this plan.',
     },
   ],
   tutor_brief_markdown: [

@@ -19,12 +19,8 @@ import {
   validateCircuit,
 } from '@/utils/circuit-calculations';
 import { cn } from '@/lib/utils';
-import { Eyebrow } from '@/components/college/primitives';
 import { DesignVisionUpload, type VisionExtractionResult } from '../DesignVisionUpload';
-import {
-  floorPlanToCircuitSuggestions,
-  scheduleToCircuits,
-} from '../vision-to-wizard';
+import { floorPlanToCircuitSuggestions, scheduleToCircuits } from '../vision-to-wizard';
 
 interface StructuredDesignWizardProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -131,7 +127,11 @@ export const StructuredDesignWizard = ({
     if (result.kind === 'floor-plan') {
       // Building type → installation type heuristic.
       const bt = String(e.buildingType ?? '').toLowerCase();
-      if (/office|shop|reception|retail|kitchen|restaurant|cafe|bar|salon|clinic|gym|hotel|warehouse(?!.*industrial)/.test(bt)) {
+      if (
+        /office|shop|reception|retail|kitchen|restaurant|cafe|bar|salon|clinic|gym|hotel|warehouse(?!.*industrial)/.test(
+          bt
+        )
+      ) {
         setInstallationType('commercial');
       } else if (/factory|industrial|workshop|production/.test(bt)) {
         setInstallationType('industrial');
@@ -180,7 +180,7 @@ export const StructuredDesignWizard = ({
     if (result.kind === 'bom') {
       const items = Array.isArray(e.items) ? e.items.length : 0;
       toast.message('BoQ recorded', {
-        description: `${items} line items extracted — these are reference for the cost engineer step. Add circuits manually below.`,
+        description: `${items} line items extracted. These are reference for the cost engineer step. Add circuits manually below.`,
       });
       return;
     }
@@ -188,7 +188,7 @@ export const StructuredDesignWizard = ({
     if (result.kind === 'photo') {
       const findings = Array.isArray(e.findings) ? e.findings.length : 0;
       toast.message('Photo notes captured', {
-        description: `${findings} finding${findings === 1 ? '' : 's'} — informational only, no auto-fill applied.`,
+        description: `${findings} finding${findings === 1 ? '' : 's'}. Informational only, no auto-fill applied.`,
       });
       return;
     }
@@ -332,8 +332,6 @@ export const StructuredDesignWizard = ({
     await onGenerate(inputs);
   };
 
-  const progressPercentage = ((currentStep + 1) / STEPS.length) * 100;
-
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
@@ -431,93 +429,85 @@ export const StructuredDesignWizard = ({
     }
   };
 
+  const totalKw =
+    circuits.reduce((sum, c) => sum + (typeof c.loadPower === 'number' ? c.loadPower : 0), 0) /
+    1000;
+  const supplyLabel = phases === 'three' ? `${voltage}V three phase` : `${voltage}V single phase`;
+  const summaryRows: { label: string; value: string; missing?: boolean }[] = [
+    { label: 'Project', value: projectName.trim() || 'Not set', missing: !projectName.trim() },
+    { label: 'Location', value: location.trim() || 'Not set', missing: !location.trim() },
+    {
+      label: 'Installation',
+      value: installationType.charAt(0).toUpperCase() + installationType.slice(1),
+    },
+    { label: 'Supply', value: supplyLabel },
+    { label: 'Earthing', value: `${earthingSystem}, Ze ${ze} Ω` },
+    { label: 'Main switch', value: mainSwitchRating ? `${mainSwitchRating}A` : 'Auto' },
+    {
+      label: 'Circuits',
+      value:
+        circuits.length > 0
+          ? `${circuits.length}${totalKw > 0 ? ` · ${totalKw.toFixed(2)} kW` : ''}`
+          : 'None yet',
+      missing: circuits.length === 0,
+    },
+  ];
+
+  const isLastStep = currentStep === STEPS.length - 1;
+
   return (
     <div className="space-y-6">
-      {/* Editorial Step Indicator */}
-      <div className="space-y-3">
-        <div className="flex items-baseline justify-between gap-3">
-          <Eyebrow>
-            STEP {String(currentStep + 1).padStart(2, '0')} · {STEPS[currentStep].label.toUpperCase()}
-          </Eyebrow>
-          <span className="text-[11px] text-white/50 tabular-nums">
-            {currentStep + 1} of {STEPS.length}
-          </span>
-        </div>
-
-        {/* Numbered step row — desktop/tablet */}
-        <div className="hidden sm:grid grid-cols-6 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
+      {/* Step indicator: plain sentence plus a segmented bar. Earlier steps
+          are tappable to go back. */}
+      <nav aria-label="Design steps" className="space-y-2">
+        <p className="text-[14px] text-white">
+          <span className="font-semibold">
+            Step {currentStep + 1} of {STEPS.length}
+          </span>{' '}
+          · {STEPS[currentStep].label}
+        </p>
+        <ol className="grid grid-cols-6 gap-1.5">
           {STEPS.map((step, index) => {
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
-            const isClickable = index < currentStep;
             return (
-              <button
-                key={step.id}
-                type="button"
-                disabled={!isClickable}
-                onClick={() => isClickable && handleStepClick(index)}
-                className={cn(
-                  'group relative bg-[hsl(0_0%_10%)] px-3 py-3 lg:px-4 lg:py-4 text-left touch-manipulation transition-all',
-                  isClickable && 'hover:bg-[hsl(0_0%_15%)] active:scale-[0.99]',
-                  isActive &&
-                    'bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent'
-                )}
-              >
-                <div
+              <li key={step.id}>
+                <button
+                  type="button"
+                  disabled={!isCompleted}
+                  onClick={() => isCompleted && handleStepClick(index)}
+                  aria-current={isActive ? 'step' : undefined}
+                  aria-label={`Step ${index + 1}: ${step.label}${isCompleted ? ' (done)' : ''}`}
                   className={cn(
-                    'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums',
-                    isActive
-                      ? 'text-elec-yellow'
-                      : isCompleted
-                        ? 'text-white/80'
-                        : 'text-white/40'
+                    'group flex h-11 w-full flex-col justify-center gap-1.5 text-left touch-manipulation sm:h-auto sm:min-h-[44px] sm:justify-start sm:pt-1',
+                    isCompleted ? 'cursor-pointer' : 'cursor-default'
                   )}
                 >
-                  {String(index + 1).padStart(2, '0')}
-                </div>
-                <div
-                  className={cn(
-                    'mt-1 text-[12.5px] font-semibold leading-tight tracking-tight',
-                    isActive
-                      ? 'text-elec-yellow'
-                      : isCompleted
-                        ? 'text-white'
-                        : 'text-white/40'
-                  )}
-                >
-                  {step.label}
-                </div>
-                <div
-                  className={cn(
-                    'mt-0.5 text-[11px] leading-snug truncate',
-                    isActive
-                      ? 'text-white/85'
-                      : isCompleted
-                        ? 'text-white/60'
-                        : 'text-white/30'
-                  )}
-                >
-                  {step.description}
-                </div>
-              </button>
+                  <span
+                    className={cn(
+                      'block h-1 w-full rounded-full transition-colors',
+                      isActive || isCompleted ? 'bg-elec-yellow' : 'bg-white/[0.12]',
+                      isCompleted && 'group-hover:bg-elec-yellow/80'
+                    )}
+                  />
+                  <span
+                    className={cn(
+                      'hidden truncate text-[13px] text-white sm:block',
+                      isActive ? 'font-semibold' : 'font-normal'
+                    )}
+                  >
+                    {step.label}
+                  </span>
+                </button>
+              </li>
             );
           })}
-        </div>
+        </ol>
+      </nav>
 
-        {/* Hairline progress */}
-        <div className="h-px bg-white/[0.06] overflow-hidden">
-          <motion.div
-            className="h-full bg-elec-yellow"
-            initial={{ width: 0 }}
-            animate={{ width: `${progressPercentage}%` }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-          />
-        </div>
-      </div>
-
-      {/* Step Content — flat on mobile, editorial cell on tablet+ */}
-      <div className="sm:bg-[hsl(0_0%_10%)] sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden">
-        <div className="py-4 sm:p-6 lg:p-8">
+      <div className="lg:grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-start lg:gap-8 xl:gap-10">
+        <div className="space-y-6 min-w-0">
+          {/* Step content */}
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentStep}
@@ -534,79 +524,141 @@ export const StructuredDesignWizard = ({
               {renderStepContent()}
             </motion.div>
           </AnimatePresence>
-        </div>
-      </div>
 
-      {/* Editorial Navigation — flat sticky on mobile, card on tablet+ */}
-      <div className="pb-safe">
-        <div className="sticky bottom-0 sm:static z-30 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 sm:p-4 bg-elec-dark/95 backdrop-blur-sm sm:bg-[hsl(0_0%_10%)] sm:border sm:border-white/[0.08] sm:rounded-2xl border-t border-white/[0.06] sm:border-t">
-          <div className="flex items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={handleBack}
-              disabled={currentStep === 0 || isProcessing}
-              className={cn(
-                'inline-flex items-center gap-2 h-11 px-4 rounded-xl text-[13px] font-medium',
-                'bg-white/[0.03] border border-white/[0.08] text-white',
-                'hover:bg-white/[0.06] hover:border-white/15 transition-colors',
-                'disabled:opacity-30 disabled:cursor-not-allowed',
-                'touch-manipulation'
-              )}
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span>Back</span>
-            </button>
+          {/* Navigation: sticky on a phone so the primary action stays in reach */}
+          <div className="pb-safe">
+            <div className="sticky bottom-0 z-30 -mx-4 border-t border-white/[0.08] bg-elec-dark/95 px-4 py-3 backdrop-blur-sm sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:pt-5 sm:backdrop-blur-none">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={handleBack}
+                  disabled={currentStep === 0 || isProcessing}
+                  className={cn(
+                    'inline-flex h-11 items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4',
+                    'text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08]',
+                    'disabled:cursor-not-allowed disabled:opacity-40',
+                    'touch-manipulation active:scale-[0.98]'
+                  )}
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  <span>Back</span>
+                </button>
 
-            <div className="flex-1 flex justify-center">
-              <span className="text-[11px] uppercase tracking-[0.18em] text-white/60 tabular-nums">
-                {Math.round(progressPercentage)}% Complete
-              </span>
-            </div>
+                <span className="text-[13px] tabular-nums text-white sm:hidden">
+                  {currentStep + 1} of {STEPS.length}
+                </span>
 
-            {currentStep < STEPS.length - 1 ? (
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={!canProceed() || isProcessing}
-                className={cn(
-                  'inline-flex items-center gap-2 h-11 px-5 rounded-xl text-[13px] font-semibold',
-                  'bg-elec-yellow text-black',
-                  'hover:bg-elec-yellow/90 transition-colors',
-                  'disabled:opacity-30 disabled:bg-white/[0.05] disabled:text-white/50 disabled:cursor-not-allowed',
-                  'active:scale-[0.98] touch-manipulation'
-                )}
-              >
-                <span>Next</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleGenerate}
-                disabled={!canProceed() || isProcessing}
-                className={cn(
-                  'inline-flex items-center gap-2 h-11 px-5 rounded-xl text-[13px] font-semibold',
-                  'bg-elec-yellow text-black',
-                  'hover:bg-elec-yellow/90 transition-colors',
-                  'disabled:opacity-30 disabled:bg-white/[0.05] disabled:text-white/50 disabled:cursor-not-allowed',
-                  'active:scale-[0.98] touch-manipulation'
-                )}
-              >
-                {isProcessing ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-black/20 border-t-black" />
-                    <span>Generating</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Generate Design</span>
+                {!isLastStep ? (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    disabled={!canProceed() || isProcessing}
+                    className={cn(
+                      'inline-flex h-11 items-center gap-2 rounded-xl px-6',
+                      'bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90',
+                      'disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white',
+                      'touch-manipulation active:scale-[0.98]'
+                    )}
+                  >
+                    <span>Next</span>
                     <ArrowRight className="h-4 w-4" />
-                  </>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleGenerate}
+                    disabled={!canProceed() || isProcessing}
+                    className={cn(
+                      'inline-flex h-11 items-center gap-2 rounded-xl px-6',
+                      'bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90',
+                      'disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white',
+                      'touch-manipulation active:scale-[0.98]'
+                    )}
+                  >
+                    {isProcessing ? (
+                      <>
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-black/20 border-t-black" />
+                        <span>Generating</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Generate design</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
+                  </button>
                 )}
-              </button>
-            )}
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Desktop: what has been entered so far, and where each step stands */}
+        <aside className="hidden lg:block lg:sticky lg:top-24">
+          <div className="rounded-2xl border border-white/[0.10] bg-[hsl(0_0%_10%)] p-5">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Design so far</h3>
+            <dl className="mt-3 divide-y divide-white/[0.08]">
+              {summaryRows.map((row) => (
+                <div key={row.label} className="flex items-baseline justify-between gap-4 py-2.5">
+                  <dt className="shrink-0 text-[13px] text-white">{row.label}</dt>
+                  <dd
+                    className={cn(
+                      'min-w-0 truncate text-right text-[14px] tabular-nums text-white',
+                      row.missing ? 'font-normal' : 'font-medium'
+                    )}
+                    title={row.value}
+                  >
+                    {row.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <h3 className="mt-6 text-[15px] font-semibold tracking-tight text-white">Steps</h3>
+            <ol className="mt-2 divide-y divide-white/[0.08]">
+              {STEPS.map((step, index) => {
+                const isActive = index === currentStep;
+                const isCompleted = index < currentStep;
+                return (
+                  <li key={step.id}>
+                    <button
+                      type="button"
+                      disabled={!isCompleted}
+                      onClick={() => isCompleted && handleStepClick(index)}
+                      className={cn(
+                        'flex min-h-[44px] w-full items-center justify-between gap-3 text-left touch-manipulation',
+                        isCompleted ? 'cursor-pointer hover:bg-white/[0.03]' : 'cursor-default'
+                      )}
+                    >
+                      <span className="min-w-0">
+                        <span
+                          className={cn(
+                            'block text-[14px] text-white',
+                            isActive ? 'font-semibold' : 'font-normal'
+                          )}
+                        >
+                          {step.label}
+                        </span>
+                        <span className="block text-[12px] text-white">{step.description}</span>
+                      </span>
+                      <span
+                        className={cn(
+                          'shrink-0 text-[13px] font-medium',
+                          isCompleted
+                            ? 'text-emerald-400'
+                            : isActive
+                              ? 'text-elec-yellow'
+                              : 'text-white'
+                        )}
+                      >
+                        {isCompleted ? 'Done' : isActive ? 'Now' : 'To do'}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </aside>
       </div>
 
       {/* Clear Cache Confirmation Dialog */}

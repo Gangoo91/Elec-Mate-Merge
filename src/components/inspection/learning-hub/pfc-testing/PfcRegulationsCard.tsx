@@ -49,7 +49,7 @@ const PfcRegulationsCard = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671:2018+A4:2026</p>
+          <p className="text-[12px] font-medium text-white mb-3">BS 7671:2018+A4:2026</p>
         </motion.div>
 
         {coreRegulations.map((reg, i) => (
@@ -69,7 +69,7 @@ const PfcRegulationsCard = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Other Standards</p>
+          <p className="text-[12px] font-medium text-white mb-3">Other Standards</p>
         </motion.div>
 
         {otherStandards.map((item, i) => (
@@ -82,7 +82,7 @@ const PfcRegulationsCard = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Certification Requirements</p>
+          <p className="text-[12px] font-medium text-white mb-3">Certification Requirements</p>
         </motion.div>
 
         {certificationRequirements.map((item, i) => (

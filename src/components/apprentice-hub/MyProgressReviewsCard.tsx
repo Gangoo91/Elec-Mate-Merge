@@ -5,7 +5,6 @@ import { FormSheet } from '@/components/forms/FormSheet';
 import {
   buttonPrimaryCn,
   buttonSecondaryCn,
-  cardCn,
   labelCn,
   textareaCn,
 } from '@/components/forms/fieldStyles';
@@ -25,6 +24,7 @@ import {
   type ProgressView,
 } from '@/hooks/useTripartiteReviews';
 import { Chips, SignatureLine } from '@/components/college/reviews/reviewUi';
+import { LC_CARD } from '@/components/apprentice-hub/college-hub/learnerUi';
 
 /* ==========================================================================
    MyProgressReviewsCard — the apprentice's progress reviews on My college.
@@ -41,7 +41,11 @@ const PROGRESS_OPTIONS = (Object.keys(PROGRESS_LABEL) as ProgressView[]).map((v)
   value: v,
   label: PROGRESS_LABEL[v],
 }));
-const CHECK: Record<string, string> = { done: 'Done', not_done: 'Not done', dropped: 'No longer needed' };
+const CHECK: Record<string, string> = {
+  done: 'Done',
+  not_done: 'Not done',
+  dropped: 'No longer needed',
+};
 
 export function MyProgressReviewsCard() {
   const { data, loading, reload } = useMyReviews();
@@ -64,7 +68,11 @@ export function MyProgressReviewsCard() {
       // Opened once; signing reloads the list and must not reopen it.
       params.delete('review');
       const q = params.toString();
-      window.history.replaceState(window.history.state, '', `${window.location.pathname}${q ? `?${q}` : ''}`);
+      window.history.replaceState(
+        window.history.state,
+        '',
+        `${window.location.pathname}${q ? `?${q}` : ''}`
+      );
     }
   }, [data, search]);
 
@@ -73,17 +81,28 @@ export function MyProgressReviewsCard() {
   const upcoming =
     data.reviews
       .filter((r) => !r.locked)
-      .sort((a, b) => (a.scheduled_at ?? '9999').localeCompare(b.scheduled_at ?? '9999'))[0] ?? null;
+      .sort((a, b) => (a.scheduled_at ?? '9999').localeCompare(b.scheduled_at ?? '9999'))[0] ??
+    null;
   const toSign = data.reviews.find((r) => r.locked && !r.signatures.student_signed_at) ?? null;
   const past = data.reviews.filter((r) => r.locked);
   const days = daysUntil(data.due_by);
 
   return (
-    <section className={cardCn}>
+    <section className={cn(LC_CARD, 'space-y-4')}>
       <div className="flex items-baseline justify-between gap-3">
-        <h2 className="text-[15px] font-semibold tracking-tight text-white">Progress reviews</h2>
+        <div className="min-w-0">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">Progress reviews</h2>
+          <p className="text-[12.5px] text-white">
+            Every three months, with your tutor and employer
+          </p>
+        </div>
         {data.due_by && !upcoming && (
-          <span className={cn('text-[12px] font-semibold', days != null && days < 0 ? 'text-orange-300' : 'text-white')}>
+          <span
+            className={cn(
+              'text-[12px] font-semibold',
+              days != null && days < 0 ? 'text-orange-300' : 'text-white'
+            )}
+          >
             Next due by {fmtReviewDate(data.due_by)}
           </span>
         )}
@@ -93,16 +112,16 @@ export function MyProgressReviewsCard() {
         <button
           type="button"
           onClick={() => setReadFor(toSign)}
-          className="flex min-h-[64px] w-full items-center justify-between gap-3 rounded-xl bg-elec-yellow px-4 py-3 text-left text-black touch-manipulation"
+          className="flex min-h-[64px] w-full items-center justify-between gap-3 rounded-xl border border-orange-400/60 px-4 py-3 text-left text-white touch-manipulation transition-colors hover:border-orange-300"
         >
           <span>
             <span className="block text-[15px] font-semibold">Read and sign your review</span>
-            <span className="block text-[12.5px]">
+            <span className="block text-[12.5px] text-white">
               Held {fmtReviewDate(toSign.held_on)}
               {toSign.tutor_name ? ` with ${toSign.tutor_name}` : ''}
             </span>
           </span>
-          <span className="text-[13px] font-semibold">Open</span>
+          <span className="text-[13px] font-semibold text-orange-300">Open</span>
         </button>
       )}
 
@@ -110,10 +129,17 @@ export function MyProgressReviewsCard() {
         <div className="space-y-3">
           <div>
             <p className="text-[15px] font-semibold text-white">
-              {upcoming.scheduled_at ? fmtReviewDate(upcoming.scheduled_at, true) : 'Date to be set'}
+              {upcoming.scheduled_at
+                ? fmtReviewDate(upcoming.scheduled_at, true)
+                : 'Date to be set'}
             </p>
             <p className="text-[13px] text-white">
-              {[upcoming.mode && MODE_LABEL[upcoming.mode], upcoming.location, upcoming.tutor_name && `with ${upcoming.tutor_name}`, 'and your employer']
+              {[
+                upcoming.mode && MODE_LABEL[upcoming.mode],
+                upcoming.location,
+                upcoming.tutor_name && `with ${upcoming.tutor_name}`,
+                'and your employer',
+              ]
                 .filter(Boolean)
                 .join(' · ')}
             </p>
@@ -122,7 +148,11 @@ export function MyProgressReviewsCard() {
             <button
               type="button"
               onClick={() => setViewFor(upcoming)}
-              className={cn(upcoming.learner_input ? buttonSecondaryCn : buttonPrimaryCn, 'h-11 text-[13px]', !upcoming.meeting_url && 'col-span-2')}
+              className={cn(
+                buttonSecondaryCn,
+                'h-11 text-[13px]',
+                !upcoming.meeting_url && 'col-span-2'
+              )}
             >
               {upcoming.learner_input ? 'Change your view' : 'Add your view'}
             </button>
@@ -131,7 +161,10 @@ export function MyProgressReviewsCard() {
                 href={upcoming.meeting_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(buttonSecondaryCn, 'inline-flex h-11 items-center justify-center text-[13px]')}
+                className={cn(
+                  buttonSecondaryCn,
+                  'inline-flex h-11 items-center justify-center text-[13px]'
+                )}
               >
                 Join the call
               </a>
@@ -146,8 +179,8 @@ export function MyProgressReviewsCard() {
       ) : (
         !toSign && (
           <p className="text-[13px] leading-relaxed text-white">
-            Every three months you, your tutor and your employer review how your apprenticeship is going. Your tutor
-            books it; it shows here.
+            Every three months you, your tutor and your employer review how your apprenticeship is
+            going. Your tutor books it; it shows here.
           </p>
         )
       )}
@@ -182,7 +215,11 @@ export function MyProgressReviewsCard() {
                 >
                   <span className="text-[14px] text-white">{fmtReviewDate(r.held_on)}</span>
                   <span className="text-[12px] font-semibold text-white">
-                    {r.signatures.student_signed_at ? (r.signatures.employer_signed_at ? 'Signed by all' : 'Signed') : 'To sign'}
+                    {r.signatures.student_signed_at
+                      ? r.signatures.employer_signed_at
+                        ? 'Signed by all'
+                        : 'Signed'
+                      : 'To sign'}
                   </span>
                 </button>
               </li>
@@ -191,8 +228,22 @@ export function MyProgressReviewsCard() {
         </div>
       )}
 
-      <MyViewSheet review={viewFor} onOpenChange={(o) => !o && setViewFor(null)} onSaved={() => { void reload(); notifyDoNextChanged(); }} />
-      <ReadAndSignSheet review={readFor} onOpenChange={(o) => !o && setReadFor(null)} onSigned={() => { void reload(); notifyDoNextChanged(); }} />
+      <MyViewSheet
+        review={viewFor}
+        onOpenChange={(o) => !o && setViewFor(null)}
+        onSaved={() => {
+          void reload();
+          notifyDoNextChanged();
+        }}
+      />
+      <ReadAndSignSheet
+        review={readFor}
+        onOpenChange={(o) => !o && setReadFor(null)}
+        onSigned={() => {
+          void reload();
+          notifyDoNextChanged();
+        }}
+      />
     </section>
   );
 }
@@ -255,7 +306,12 @@ function MyViewSheet({
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
             Cancel
           </button>
-          <button type="button" onClick={save} disabled={!progress || saving} className={buttonPrimaryCn}>
+          <button
+            type="button"
+            onClick={save}
+            disabled={!progress || saving}
+            className={buttonPrimaryCn}
+          >
             {saving ? 'Sending…' : 'Send'}
           </button>
         </div>
@@ -263,25 +319,48 @@ function MyViewSheet({
     >
       <div>
         <p className={labelCn}>How do you think your apprenticeship is going?</p>
-        <Chips<ProgressView> value={progress} options={PROGRESS_OPTIONS} onChange={setProgress} cols={3} />
+        <Chips<ProgressView>
+          value={progress}
+          options={PROGRESS_OPTIONS}
+          onChange={setProgress}
+          cols={3}
+        />
       </div>
       <div>
         <label className={labelCn} htmlFor="mv-well">
           What is going well?
         </label>
-        <textarea id="mv-well" rows={3} value={well} onChange={(e) => setWell(e.target.value)} className={textareaCn} />
+        <textarea
+          id="mv-well"
+          rows={3}
+          value={well}
+          onChange={(e) => setWell(e.target.value)}
+          className={textareaCn}
+        />
       </div>
       <div>
         <label className={labelCn} htmlFor="mv-next">
           What do you want to get better at next?
         </label>
-        <textarea id="mv-next" rows={3} value={next} onChange={(e) => setNext(e.target.value)} className={textareaCn} />
+        <textarea
+          id="mv-next"
+          rows={3}
+          value={next}
+          onChange={(e) => setNext(e.target.value)}
+          className={textareaCn}
+        />
       </div>
       <div>
         <label className={labelCn} htmlFor="mv-con">
           Anything worrying you? (optional)
         </label>
-        <textarea id="mv-con" rows={2} value={concerns} onChange={(e) => setConcerns(e.target.value)} className={textareaCn} />
+        <textarea
+          id="mv-con"
+          rows={2}
+          value={concerns}
+          onChange={(e) => setConcerns(e.target.value)}
+          className={textareaCn}
+        />
       </div>
     </FormSheet>
   );
@@ -327,7 +406,11 @@ function ReadAndSignSheet({
     try {
       await downloadLearnerDocument({ kind: 'review_record', reviewId: review.id });
     } catch (e) {
-      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not make the PDF',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setPdfBusy(false);
     }
@@ -354,12 +437,22 @@ function ReadAndSignSheet({
             <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
               Later
             </button>
-            <button type="button" onClick={sign} disabled={!confirm || saving} className={buttonPrimaryCn}>
+            <button
+              type="button"
+              onClick={sign}
+              disabled={!confirm || saving}
+              className={buttonPrimaryCn}
+            >
               {saving ? 'Signing…' : 'Sign'}
             </button>
           </div>
         ) : review ? (
-          <button type="button" onClick={downloadPdf} disabled={pdfBusy} className={cn(buttonSecondaryCn, 'w-full')}>
+          <button
+            type="button"
+            onClick={downloadPdf}
+            disabled={pdfBusy}
+            className={cn(buttonSecondaryCn, 'w-full')}
+          >
             {pdfBusy ? 'Making the PDF…' : 'Download the review record (PDF)'}
           </button>
         ) : undefined
@@ -371,7 +464,9 @@ function ReadAndSignSheet({
           .map(([l, v]) => (
             <div key={l}>
               <dt className="text-[12px] font-medium text-white">{l}</dt>
-              <dd className="mt-0.5 whitespace-pre-wrap text-[15px] leading-relaxed text-white">{v}</dd>
+              <dd className="mt-0.5 whitespace-pre-wrap text-[15px] leading-relaxed text-white">
+                {v}
+              </dd>
             </div>
           ))}
       </dl>
@@ -383,7 +478,9 @@ function ReadAndSignSheet({
             {s.checked_actions.map((a, i) => (
               <li key={i} className="py-2.5">
                 <p className="text-[14px] text-white">{a.action}</p>
-                <p className="text-[12px] font-semibold text-white">{CHECK[a.status] ?? a.status}</p>
+                <p className="text-[12px] font-semibold text-white">
+                  {CHECK[a.status] ?? a.status}
+                </p>
               </li>
             ))}
           </ul>
@@ -409,8 +506,18 @@ function ReadAndSignSheet({
 
       {review && (
         <div className="divide-y divide-white/[0.1] border-t border-white/[0.1]">
-          <SignatureLine party="College" name={review.signatures.tutor_name} at={review.signatures.tutor_signed_at} waiting="Not signed" />
-          <SignatureLine party="You" name="Signed" at={review.signatures.student_signed_at} waiting="Your signature" />
+          <SignatureLine
+            party="College"
+            name={review.signatures.tutor_name}
+            at={review.signatures.tutor_signed_at}
+            waiting="Not signed"
+          />
+          <SignatureLine
+            party="You"
+            name="Signed"
+            at={review.signatures.student_signed_at}
+            waiting="Your signature"
+          />
           <SignatureLine
             party="Employer"
             name={review.signatures.employer_name}

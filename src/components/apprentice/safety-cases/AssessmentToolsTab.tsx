@@ -140,9 +140,7 @@ const AssessmentToolsTab = () => {
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Assessment centre
-        </span>
+        <span className="text-[13px] font-semibold text-white">Assessment centre</span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Assessment tools
         </h2>
@@ -153,29 +151,21 @@ const AssessmentToolsTab = () => {
       </div>
 
       {/* Stats strip */}
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Tools
-          </span>
+          <span className="text-[13px] font-semibold text-white">Tools</span>
           <p className="text-[20px] font-semibold text-white">{assessmentTools.length}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Completed
-          </span>
+          <span className="text-[13px] font-semibold text-white">Completed</span>
           <p className="text-[20px] font-semibold text-white">{completedCount}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Average
-          </span>
+          <span className="text-[13px] font-semibold text-white">Average</span>
           <p className="text-[20px] font-semibold text-white">{Math.round(averageScore)}%</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Certificates
-          </span>
+          <span className="text-[13px] font-semibold text-white">Certificates</span>
           <p className="text-[20px] font-semibold text-white">{certificatesEarned}</p>
         </div>
       </div>
@@ -192,7 +182,7 @@ const AssessmentToolsTab = () => {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 space-y-2">
-                  <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <div className="flex items-baseline gap-3 text-[13px] font-semibold text-white">
                     <span>{tool.difficulty}</span>
                     <span className="text-white">·</span>
                     <span>{tool.type}</span>
@@ -214,22 +204,16 @@ const AssessmentToolsTab = () => {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-3 pt-2 border-t border-white/[0.10]">
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Questions
-                  </p>
-                  <p className="text-[14px] text-white font-mono">{tool.questions}</p>
+                  <p className="text-[13px] font-semibold text-white">Questions</p>
+                  <p className="text-[14px] text-white">{tool.questions}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Pass score
-                  </p>
-                  <p className="text-[14px] text-white font-mono">{tool.passingScore}%</p>
+                  <p className="text-[13px] font-semibold text-white">Pass score</p>
+                  <p className="text-[14px] text-white">{tool.passingScore}%</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Attempts
-                  </p>
-                  <p className="text-[14px] text-white font-mono">{tool.attempts}</p>
+                  <p className="text-[13px] font-semibold text-white">Attempts</p>
+                  <p className="text-[14px] text-white">{tool.attempts}</p>
                 </div>
               </div>
 
@@ -237,10 +221,8 @@ const AssessmentToolsTab = () => {
               {tool.bestScore > 0 && (
                 <div className="space-y-2">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Best score
-                    </span>
-                    <span className="text-[12px] text-white font-mono">{tool.bestScore}%</span>
+                    <span className="text-[13px] font-semibold text-white">Best score</span>
+                    <span className="text-[12px] text-white">{tool.bestScore}%</span>
                   </div>
                   <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                     <div
@@ -253,9 +235,7 @@ const AssessmentToolsTab = () => {
 
               {/* Topics */}
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Topics
-                </span>
+                <span className="text-[13px] font-semibold text-white">Topics</span>
                 <div className="flex flex-wrap gap-1.5">
                   {tool.topics.map((topic, topicIndex) => (
                     <span
@@ -300,10 +280,8 @@ const AssessmentToolsTab = () => {
       </div>
 
       {/* Performance summary */}
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 pt-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Performance
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 pt-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Performance</span>
         <p className="text-[14px] text-white leading-relaxed">
           Track your assessment performance over time and identify areas for improvement. Regular
           assessment helps reinforce learning and ensures knowledge retention.
@@ -332,10 +310,8 @@ const AssessmentToolsTab = () => {
               className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2"
             >
               <div className="flex items-baseline justify-between">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  {metric.label}
-                </span>
-                <span className="text-[12px] text-white font-mono">{metric.value}</span>
+                <span className="text-[13px] font-semibold text-white">{metric.label}</span>
+                <span className="text-[12px] text-white">{metric.value}</span>
               </div>
               <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                 <div

@@ -66,7 +66,7 @@ export function StudentAssessmentConfidence({ studentId }: { studentId: string }
             key={a.assessorId}
             className="flex items-center justify-between gap-3 px-4 py-2.5 text-[12.5px] sm:px-5"
           >
-            <span className="min-w-0 truncate text-white">
+            <span className="min-w-0 line-clamp-2 text-white">
               {a.assessorName ?? 'Unknown assessor'}
             </span>
             <span className="shrink-0 font-semibold capitalize tabular-nums text-white">

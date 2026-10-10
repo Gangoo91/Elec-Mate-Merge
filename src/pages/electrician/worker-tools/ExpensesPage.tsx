@@ -9,7 +9,9 @@
  * office Expenses page and My pay. Every write the worker can't do through RLS
  * goes through an own-row, Pending-only server function.
  */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { queuedToast } from '@/components/worker-tools/outboxToast';
 import { Plus, Receipt, Route } from 'lucide-react';
 import { useMyJobs } from '@/hooks/useWorkerSelfService';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
@@ -41,6 +43,7 @@ import {
 } from '@/components/worker-tools/expenses/expenseShared';
 import { toast } from 'sonner';
 import { WT_EXPENSES_HELP } from '@/components/worker-tools/help/worker-help-2';
+import { ReceiptsPanel } from '@/components/receipts/ReceiptsPanel';
 import { expensePayState, shortPayday } from '@/utils/expensePayroll';
 
 const FILTERS = [
@@ -92,6 +95,33 @@ export default function ExpensesPage() {
   const [sheetKind, setSheetKind] = useState<ClaimKind>('mileage');
   const [editing, setEditing] = useState<WorkerExpenseClaim | null>(null);
   const [viewingId, setViewingId] = useState<string | null>(null);
+  const [snapOpen, setSnapOpen] = useState(false);
+  // Gap #3 / #21: from a job page (?job=<id>&new=mileage), the claim opens
+  // with that job already picked, so it isn't picked again.
+  const [params, setParams] = useSearchParams();
+  const [presetJobId, setPresetJobId] = useState<string | null>(null);
+  useEffect(() => {
+    const job = params.get('job');
+    const kind = params.get('new');
+    if (!job && !kind) return;
+    setPresetJobId(job);
+    setEditing(null);
+    if (kind === 'receipt') {
+      setSnapOpen(true);
+    } else {
+      setSheetKind('mileage');
+      setSheetOpen(true);
+    }
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('job');
+        next.delete('new');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [params, setParams]);
   // Derived, so an office decision arriving live updates the open sheet too.
   const viewing = useMemo(
     () => (viewingId ? (expenses.find((e) => e.id === viewingId) ?? null) : null),
@@ -144,6 +174,7 @@ export default function ExpensesPage() {
 
   const openNew = (kind: ClaimKind) => {
     setEditing(null);
+    setPresetJobId(null);
     setSheetKind(kind);
     setSheetOpen(true);
   };
@@ -319,10 +350,28 @@ export default function ExpensesPage() {
                 icon={Receipt}
                 label="Claim a receipt"
                 hint="Photo or PDF"
-                onClick={() => openNew('receipt')}
+                onClick={() => {
+                  setPresetJobId(null);
+                  setSnapOpen(true);
+                }}
               />
             </div>
           </div>
+
+          {/* ELE-2071: snap a receipt or bill, read for you, checked before it posts.
+              One entry: the "Claim a receipt" tile above opens its snap sheet. */}
+          <ReceiptsPanel
+            firmId={firmId}
+            mode="worker"
+            jobs={jobs.map((j) => ({ id: j.id, title: j.title }))}
+            showSnap={false}
+            snapOpen={snapOpen}
+            onSnapOpenChange={(o) => {
+              setSnapOpen(o);
+              if (!o) setPresetJobId(null);
+            }}
+            snapJobId={presetJobId}
+          />
 
           {expenses.length > 0 && (
             <StatStrip
@@ -359,6 +408,7 @@ export default function ExpensesPage() {
           setSheetOpen(o);
           if (!o) setEditing(null);
         }}
+        initialJobId={presetJobId}
         employeeId={employeeId}
         firmRatePence={firmRate}
         jobs={jobs}
@@ -371,8 +421,9 @@ export default function ExpensesPage() {
             await updateClaim({ claim: editing, plain: input });
             toast.success('Claim updated');
           } else {
-            await submitClaim(input);
-            toast.success('Claim sent', { description: 'The office will approve it or ask you about it.' });
+            const r = await submitClaim(input);
+            if (r && 'queued' in r) queuedToast('Claim saved');
+            else toast.success('Claim sent', { description: 'The office will approve it or ask you about it.' });
           }
         }}
         onSubmitMileage={async (input) => {
@@ -380,10 +431,12 @@ export default function ExpensesPage() {
             await updateClaim({ claim: editing, mileage: input });
             toast.success('Mileage claim updated');
           } else {
-            await submitMileage(input);
-            toast.success('Mileage claim sent', {
-              description: 'The office will approve it or ask you about it.',
-            });
+            const r = await submitMileage(input);
+            if (r && 'queued' in r) queuedToast('Mileage claim saved');
+            else
+              toast.success('Mileage claim sent', {
+                description: 'The office will approve it or ask you about it.',
+              });
           }
         }}
       />

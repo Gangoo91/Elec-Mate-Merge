@@ -4,14 +4,7 @@ import useSEO from '@/hooks/useSEO';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-  HubToolGrid,
-} from '@/components/hub/HubPrimitives';
+import { CatalogueShell } from '@/components/study-centre/course-catalogue';
 
 type Level = 'Essential' | 'Foundation' | 'Intermediate' | 'Advanced' | 'Specialist' | 'Expert';
 
@@ -180,46 +173,21 @@ export default function UpskillingIndex() {
     return map;
   }, [allProgress]);
 
-  const totalCompleted = Object.values(completedById).reduce((a, b) => a + b, 0);
   const expertCount = COURSES.filter((c) => c.level === 'Expert' || c.level === 'Advanced').length;
 
   return (
-    <HubPage>
-      <HubMasthead section="Study centre" title="Professional upskilling" backTo="/study-centre" />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          BS 7671, EV charging, solar PV, smart home and the specialist tracks that take you from
-          qualified to in-demand.
-        </p>
-
-        <HubKpiRow>
-          <HubKpi
-            label="Courses"
-            value={String(COURSES.length)}
-            context="Specialist tracks"
-            accent
-          />
-          <HubKpi label="Completed" value={String(totalCompleted)} context="Sections done" />
-          <HubKpi label="Advanced" value={String(expertCount)} context="Advanced + Expert" />
-          <HubKpi label="Tier" value="Pro" context="Subscription" />
-        </HubKpiRow>
-
-        <HubToolGrid
-          label="All courses"
-          columns="three"
-          cards={COURSES.map((c) => {
-            const completed = completedById[c.id] ?? 0;
-            return {
-              id: c.id,
-              eyebrow: c.level,
-              title: c.title,
-              description: c.description,
-              meta: `${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`,
-              to: c.link,
-            };
-          })}
-        />
-      </HubBody>
-    </HubPage>
+    <CatalogueShell
+      title="Professional upskilling"
+      description="BS 7671, EV charging, solar PV, smart home and the specialist tracks that take you from qualified to in-demand."
+      courses={COURSES.map((c) => ({
+        id: c.id,
+        title: c.title,
+        description: c.description,
+        level: c.level,
+        duration: c.duration,
+        to: c.link,
+        done: completedById[c.id] ?? 0,
+      }))}
+    />
   );
 }

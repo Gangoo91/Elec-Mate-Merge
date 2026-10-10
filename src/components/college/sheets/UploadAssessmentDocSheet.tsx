@@ -8,7 +8,7 @@ import {
   checkRowCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   inputCn,
   labelCn,
   selectTriggerCn,
@@ -146,7 +146,11 @@ export function UploadAssessmentDocSheet({
   }, [targetKind]);
 
   const canRun =
-    !!file && title.trim().length > 0 && ai.phase !== 'extracting' && ai.phase !== 'uploading' && ai.phase !== 'authoring';
+    !!file &&
+    title.trim().length > 0 &&
+    ai.phase !== 'extracting' &&
+    ai.phase !== 'uploading' &&
+    ai.phase !== 'authoring';
 
   const handleRun = async () => {
     if (!file) return;
@@ -165,9 +169,8 @@ export function UploadAssessmentDocSheet({
         description: description.trim() || undefined,
         source_kind: sourceKind,
         target_kind: targetKind,
-        college_student_id:
-          targetMode === 'learner' ? collegeStudentId ?? undefined : undefined,
-        cohort_id: targetMode === 'cohort' ? selectedCohortId ?? undefined : undefined,
+        college_student_id: targetMode === 'learner' ? (collegeStudentId ?? undefined) : undefined,
+        cohort_id: targetMode === 'cohort' ? (selectedCohortId ?? undefined) : undefined,
         qualification_code: qualificationCode ?? undefined,
         count,
         difficulty,
@@ -263,7 +266,11 @@ export function UploadAssessmentDocSheet({
           : 'grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]'
       }
       eyebrow={studentName ? `From your document · ${studentName}` : 'From your document'}
-      title={ai.result ? `Preview: ${labelForTarget(ai.result.kind).toLowerCase()}` : 'Make a quiz from a document'}
+      title={
+        ai.result
+          ? `Preview: ${labelForTarget(ai.result.kind).toLowerCase()}`
+          : 'Make a quiz from a document'
+      }
       description={
         ai.result
           ? 'Check every question before you publish. Each maps to an AC and cites BS 7671. It is saved as a draft until you publish.'
@@ -275,7 +282,12 @@ export function UploadAssessmentDocSheet({
             <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
               Save as draft
             </button>
-            <button type="button" onClick={handlePublish} disabled={publishing} className={buttonPrimaryCn}>
+            <button
+              type="button"
+              onClick={handlePublish}
+              disabled={publishing}
+              className={buttonPrimaryCn}
+            >
               {publishing
                 ? 'Publishing…'
                 : `Publish to ${studentName ? studentName : cohortId ? 'cohort' : 'learner'}`}
@@ -286,8 +298,17 @@ export function UploadAssessmentDocSheet({
             <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
               Cancel
             </button>
-            <button type="button" onClick={handleRun} disabled={!canRun} className={buttonPrimaryCn}>
-              {working ? (ai.progress ?? 'Working…') : missing && missing !== 'Pick a cohort' ? missing : `Generate ${targetLabel}`}
+            <button
+              type="button"
+              onClick={handleRun}
+              disabled={!canRun}
+              className={buttonPrimaryCn}
+            >
+              {working
+                ? (ai.progress ?? 'Working…')
+                : missing && missing !== 'Pick a cohort'
+                  ? missing
+                  : `Generate ${targetLabel}`}
             </button>
           </div>
         )
@@ -330,7 +351,9 @@ export function UploadAssessmentDocSheet({
                 {file ? (
                   <div className="flex items-center gap-3">
                     <div className="min-w-0 flex-1 text-left">
-                      <div className="truncate text-[14px] font-semibold text-white">{file.name}</div>
+                      <div className="truncate text-[14px] font-semibold text-white">
+                        {file.name}
+                      </div>
                       <div className="text-[12px] tabular-nums text-white">
                         {(file.size / 1024 / 1024).toFixed(2)} MB · ready
                       </div>
@@ -350,10 +373,16 @@ export function UploadAssessmentDocSheet({
                 ) : (
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0 text-left">
-                      <div className="text-[14px] font-semibold text-white">Drop a file or tap to choose</div>
-                      <div className="mt-0.5 text-[12px] text-white">PDF, DOCX, TXT or MD, up to 25 MB</div>
+                      <div className="text-[14px] font-semibold text-white">
+                        Drop a file or tap to choose
+                      </div>
+                      <div className="mt-0.5 text-[12px] text-white">
+                        PDF, DOCX, TXT or MD, up to 25 MB
+                      </div>
                     </div>
-                    <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Choose</span>
+                    <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">
+                      Choose
+                    </span>
                   </div>
                 )}
               </div>
@@ -399,7 +428,11 @@ export function UploadAssessmentDocSheet({
                       type="button"
                       aria-pressed={sourceKind === s.value}
                       onClick={() => setSourceKind(s.value)}
-                      className={cn(chipBase, 'px-2 text-[13px] leading-tight', sourceKind === s.value ? chipOn : chipOff)}
+                      className={cn(
+                        chipBase,
+                        'px-2 text-[13px] leading-tight',
+                        sourceKind === s.value ? chipOn : chipOff
+                      )}
                     >
                       {s.label}
                     </button>
@@ -454,7 +487,9 @@ export function UploadAssessmentDocSheet({
                     min={1}
                     max={30}
                     value={count}
-                    onChange={(e) => setCount(Math.max(1, Math.min(30, Number(e.target.value) || 1)))}
+                    onChange={(e) =>
+                      setCount(Math.max(1, Math.min(30, Number(e.target.value) || 1)))
+                    }
                     className={cn(inputCn, 'tabular-nums')}
                   />
                 </div>
@@ -469,7 +504,9 @@ export function UploadAssessmentDocSheet({
                     min={1}
                     max={240}
                     value={timeLimit}
-                    onChange={(e) => setTimeLimit(Math.max(1, Math.min(240, Number(e.target.value) || 1)))}
+                    onChange={(e) =>
+                      setTimeLimit(Math.max(1, Math.min(240, Number(e.target.value) || 1)))
+                    }
                     className={cn(inputCn, 'tabular-nums')}
                   />
                 </div>
@@ -484,7 +521,9 @@ export function UploadAssessmentDocSheet({
                     min={0}
                     max={100}
                     value={passMark}
-                    onChange={(e) => setPassMark(Math.max(0, Math.min(100, Number(e.target.value) || 0)))}
+                    onChange={(e) =>
+                      setPassMark(Math.max(0, Math.min(100, Number(e.target.value) || 0)))
+                    }
                     className={cn(inputCn, 'tabular-nums')}
                   />
                 </div>
@@ -593,8 +632,14 @@ export function UploadAssessmentDocSheet({
                 <SummaryRow label="Type" value={labelForTarget(targetKind)} />
                 <SummaryRow label="Questions" value={`${count}, ${difficulty}`} />
                 <SummaryRow label="Time and pass mark" value={`${timeLimit} min · ${passMark}%`} />
-                <SummaryRow label="For" value={forWho} warn={targetMode === 'cohort' && !chosenCohort} />
-                {isHomework && <SummaryRow label="Homework" value={dueDate ? `Due ${dueDate}` : 'No due date'} />}
+                <SummaryRow
+                  label="For"
+                  value={forWho}
+                  warn={targetMode === 'cohort' && !chosenCohort}
+                />
+                {isHomework && (
+                  <SummaryRow label="Homework" value={dueDate ? `Due ${dueDate}` : 'No due date'} />
+                )}
               </dl>
               <p className="mt-3 text-[12px] leading-relaxed text-white">
                 Nothing is sent until you review the questions and press Publish.
@@ -689,7 +734,7 @@ function PreviewBlock({
         .insert({
           quiz_id: result.quiz_id,
           question_kind: 'multi_choice',
-          question_text: 'New question — tap Edit to write it.',
+          question_text: 'New question. Tap Edit to write it.',
           options: ['Option A', 'Option B', 'Option C', 'Option D'],
           correct_answer_index: 0,
           expected_answer: {},
@@ -706,11 +751,8 @@ function PreviewBlock({
         )
         .single();
       if (error) throw new Error(error.message);
-      setQuestions((prev) => [
-        ...prev,
-        data as unknown as PreviewQuestion,
-      ]);
-      addToast({ title: 'Question added — edit it now' });
+      setQuestions((prev) => [...prev, data as unknown as PreviewQuestion]);
+      addToast({ title: 'Question added. Edit it now' });
     } catch (e) {
       addToast({
         title: 'Could not add question',
@@ -728,7 +770,9 @@ function PreviewBlock({
       <div className="flex flex-col gap-3 rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
           <p className="text-[12.5px] font-semibold text-emerald-300">Drafted from your document</p>
-          <p className="mt-1 text-[17px] font-semibold leading-snug text-white">{result.quiz.title}</p>
+          <p className="mt-1 text-[17px] font-semibold leading-snug text-white">
+            {result.quiz.title}
+          </p>
           <p className="mt-1 text-[13px] tabular-nums text-white">
             {questions.length} questions
             {kindCounts && <> · {kindCounts}</>}
@@ -736,7 +780,8 @@ function PreviewBlock({
           </p>
         </div>
         <p className="max-w-sm text-[12.5px] leading-relaxed text-white sm:text-right">
-          Edit or remove any question. Changes save straight away, so what you publish is what you reviewed.
+          Edit or remove any question. Changes save straight away, so what you publish is what you
+          reviewed.
         </p>
       </div>
 
@@ -917,7 +962,11 @@ function QuestionPreviewCard({
           <div className="-my-1 flex shrink-0 items-center gap-3">
             {!confirmDelete ? (
               <>
-                <button type="button" onClick={enterEdit} className={cn(linkBtn, 'text-elec-yellow')}>
+                <button
+                  type="button"
+                  onClick={enterEdit}
+                  className={cn(linkBtn, 'text-elec-yellow')}
+                >
                   Edit
                 </button>
                 <button
@@ -930,7 +979,11 @@ function QuestionPreviewCard({
               </>
             ) : (
               <>
-                <button type="button" onClick={() => setConfirmDelete(false)} className={cn(linkBtn, 'text-white')}>
+                <button
+                  type="button"
+                  onClick={() => setConfirmDelete(false)}
+                  className={cn(linkBtn, 'text-white')}
+                >
                   Keep
                 </button>
                 <button
@@ -951,12 +1004,17 @@ function QuestionPreviewCard({
             {q.options.map((opt, j) => {
               const right = j === q.correct_answer_index;
               return (
-                <li key={j} className="flex items-baseline gap-2 text-[13px] leading-snug text-white">
+                <li
+                  key={j}
+                  className="flex items-baseline gap-2 text-[13px] leading-snug text-white"
+                >
                   <span className={cn('font-semibold tabular-nums', right && 'text-emerald-300')}>
                     {String.fromCharCode(65 + j)}.
                   </span>
                   <span className={cn(right && 'font-semibold')}>{opt}</span>
-                  {right && <span className="text-[12px] font-semibold text-emerald-300">Answer</span>}
+                  {right && (
+                    <span className="text-[12px] font-semibold text-emerald-300">Answer</span>
+                  )}
                 </li>
               );
             })}
@@ -969,7 +1027,11 @@ function QuestionPreviewCard({
               {q.bs7671_citations.map((c, k) => (
                 <li key={k} className="break-words border-l-2 border-white/[0.2] pl-3">
                   <div className="break-all text-[12px] font-semibold text-white">{c.ref}</div>
-                  {c.snippet && <p className="mt-0.5 break-words text-[13px] leading-relaxed text-white">{c.snippet}</p>}
+                  {c.snippet && (
+                    <p className="mt-0.5 break-words text-[13px] leading-relaxed text-white">
+                      {c.snippet}
+                    </p>
+                  )}
                 </li>
               ))}
             </ul>
@@ -995,7 +1057,8 @@ function QuestionPreviewCard({
   return (
     <div className={cn(cardCn, 'space-y-4 sm:border-elec-yellow/60')}>
       <p className="text-[12px] text-white">
-        <span className="font-semibold tabular-nums">Question {index + 1}</span> · {labelForKind(q.question_kind)} ·{' '}
+        <span className="font-semibold tabular-nums">Question {index + 1}</span> ·{' '}
+        {labelForKind(q.question_kind)} ·{' '}
         <span className="font-semibold text-elec-yellow">Editing</span>
       </p>
 
@@ -1057,7 +1120,11 @@ function QuestionPreviewCard({
               </div>
             ))}
             {options.length < 6 && (
-              <button type="button" onClick={() => setOptions([...options, ''])} className={cn(linkBtn, 'text-elec-yellow')}>
+              <button
+                type="button"
+                onClick={() => setOptions([...options, ''])}
+                className={cn(linkBtn, 'text-elec-yellow')}
+              >
                 Add an option
               </button>
             )}
@@ -1103,7 +1170,11 @@ function QuestionPreviewCard({
             onChange={(e) => setExpectedJson(e.target.value)}
             rows={3}
             className={cn(textareaCn, 'font-mono text-[13px] md:text-[13px]')}
-            placeholder={q.question_kind === 'calculation' ? '{"numeric_value": 24.5, "tolerance": 0.5, "units": "A"}' : '{"min_words": 60}'}
+            placeholder={
+              q.question_kind === 'calculation'
+                ? '{"numeric_value": 24.5, "tolerance": 0.5, "units": "A"}'
+                : '{"min_words": 60}'
+            }
           />
         </div>
       )}
@@ -1174,7 +1245,12 @@ function QuestionPreviewCard({
         <button type="button" onClick={() => setEditing(false)} className={buttonSecondaryCn}>
           Cancel
         </button>
-        <button type="button" onClick={handleSave} disabled={saving || !text.trim()} className={buttonPrimaryCn}>
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={saving || !text.trim()}
+          className={buttonPrimaryCn}
+        >
           {saving ? 'Saving…' : 'Save changes'}
         </button>
       </div>

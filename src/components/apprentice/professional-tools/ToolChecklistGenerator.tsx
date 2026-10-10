@@ -97,11 +97,9 @@ const ToolChecklistGenerator = () => {
   const completedCount = checklist.filter((item) => item.checked).length;
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Tool checklist generator
-        </span>
+        <span className="text-[13px] font-semibold text-white">Tool checklist generator</span>
         <p className="text-[13px] text-white">
           Create customised tool lists for any type of project
         </p>
@@ -158,9 +156,7 @@ const ToolChecklistGenerator = () => {
         {checklist.length > 0 && (
           <div className="space-y-3 pt-3 border-t border-white/[0.06]">
             <div className="flex items-center justify-between gap-3 flex-wrap">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Your tool checklist
-              </span>
+              <span className="text-[13px] font-semibold text-white">Your tool checklist</span>
               <div className="flex items-center gap-2">
                 <div className="h-1 w-20 bg-white/5 rounded-full overflow-hidden">
                   <div
@@ -168,7 +164,7 @@ const ToolChecklistGenerator = () => {
                     style={{ width: `${(completedCount / checklist.length) * 100}%` }}
                   />
                 </div>
-                <span className="text-[12px] text-white font-mono">
+                <span className="text-[12px] text-white">
                   {completedCount}/{checklist.length}
                 </span>
               </div>

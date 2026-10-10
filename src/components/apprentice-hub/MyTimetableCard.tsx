@@ -1,6 +1,6 @@
+import { LC_FRAME } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
@@ -66,6 +66,14 @@ function dayLabel(iso: string): string {
   if (cmp.getTime() === today.getTime()) return 'Today';
   if (cmp.getTime() === tomorrow.getTime()) return 'Tomorrow';
   return DAY_FMT.format(cmp);
+}
+
+/** 330 → "5h 30m", 45 → "45 min". */
+function fmtMinutes(m: number): string {
+  if (m < 60) return `${m} min`;
+  const h = Math.floor(m / 60);
+  const r = m % 60;
+  return r ? `${h}h ${r}m` : `${h}h`;
 }
 
 export function MyTimetableCard() {
@@ -191,7 +199,7 @@ export function MyTimetableCard() {
         title: g.title,
         detail:
           g.status === 'blocked'
-            ? 'Blocked — reply to your tutor'
+            ? 'Blocked: reply to your tutor'
             : g.priority === 'high'
               ? 'High priority'
               : null,
@@ -224,16 +232,12 @@ export function MyTimetableCard() {
 
   if (grouped.length === 0) {
     return (
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-      >
+      <section className={LC_FRAME}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            This fortnight
-          </div>
+          <div className="text-[15px] font-semibold tracking-tight text-white">This fortnight</div>
           {!hasCohort ? (
             <p className="mt-3 text-[12.5px] leading-snug text-white">
-              You're not in a cohort yet — your tutor needs to add you to one before lessons appear
+              You're not in a cohort yet. Your tutor needs to add you to one before lessons appear
               here.
             </p>
           ) : lastTaught ? (
@@ -248,13 +252,14 @@ export function MyTimetableCard() {
                   const days = Math.round(
                     (Date.now() - new Date(lastTaught.scheduled_date).getTime()) / 86_400_000
                   );
-                  return days > 21 ? ` — ${days} days ago.` : '.';
+                  return days > 21 ? `, ${days} days ago.` : '.';
                 })()}
               </p>
             </div>
           ) : (
             <p className="mt-3 text-[12.5px] leading-snug text-white">
-              No lessons or ILP deadlines scheduled in the next 14 days.
+              No lessons or learning plan deadlines in the next 14 days. They appear here as soon as
+              your tutor books them, so use the time to add evidence to your portfolio.
             </p>
           )}
         </div>
@@ -263,34 +268,39 @@ export function MyTimetableCard() {
   }
 
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            This fortnight
-          </div>
-          <span className="text-[10.5px] tabular-nums text-white">
+          <div className="text-[15px] font-semibold tracking-tight text-white">This fortnight</div>
+          <span className="text-[12px] tabular-nums text-white">
             {lessons.length} {lessons.length === 1 ? 'lesson' : 'lessons'}
             {targets.length > 0 &&
-              ` · ${targets.length} ILP ${targets.length === 1 ? 'target' : 'targets'}`}
+              ` · ${targets.length} ${targets.length === 1 ? 'goal' : 'goals'} due`}
           </span>
         </div>
 
-        <div className="mt-3 space-y-4">
-          {grouped.map((day) => (
-            <div key={day.dateKey}>
-              <div className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
-                {day.label}
+        <div className="-mx-4 mt-3 divide-y divide-white/[0.06] border-t border-white/[0.06] sm:-mx-5">
+          {grouped.map((day) => {
+            const d = new Date(`${day.dateKey}T12:00:00`);
+            return (
+              <div key={day.dateKey} className="flex gap-4 px-4 py-3 sm:px-5">
+                {/* A small day block: "Wed / 14". */}
+                <div className="w-10 shrink-0 pt-2.5 text-center" aria-label={day.label}>
+                  <span className="block text-[12px] font-medium leading-none text-white">
+                    {d.toLocaleDateString('en-GB', { weekday: 'short' })}
+                  </span>
+                  <span className="mt-1 block text-[19px] font-bold leading-none tabular-nums text-white">
+                    {d.getDate()}
+                  </span>
+                </div>
+                <ul className="min-w-0 flex-1 divide-y divide-white/[0.05]">
+                  {day.items.map((item) => (
+                    <AgendaRow key={item.key} item={item} />
+                  ))}
+                </ul>
               </div>
-              <ul className="mt-1.5 -mx-1 divide-y divide-white/[0.05]">
-                {day.items.map((item) => (
-                  <AgendaRow key={item.key} item={item} />
-                ))}
-              </ul>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -301,33 +311,31 @@ function AgendaRow({ item }: { item: AgendaItem }) {
   // start_time is a `time` column (HH:MM:SS). Trim to HH:MM for display.
   const time = item.start_time ? item.start_time.slice(0, 5) : null;
   const tone = 'text-white';
-  const kindLabel = item.kind === 'lesson' ? 'Lesson' : 'ILP target';
+  const kindLabel = item.kind === 'lesson' ? 'Lesson' : 'Learning plan goal';
   return (
-    <li className="px-1 py-2.5 flex items-baseline justify-between gap-3">
+    <li className="py-2.5 flex items-baseline justify-between gap-3">
       <div className="min-w-0 flex-1">
-        <div className={cn('text-[10.5px] font-medium uppercase tracking-[0.14em]', tone)}>
+        <div className={cn('text-[12.5px] font-medium', tone)}>
           {kindLabel}
-          {item.duration_minutes ? ` · ${item.duration_minutes}m` : ''}
+          {item.duration_minutes ? ` · ${fmtMinutes(item.duration_minutes)}` : ''}
         </div>
-        <div className="mt-0.5 text-[13px] font-medium text-white leading-snug truncate">
+        <div className="mt-0.5 text-[14px] font-semibold text-white leading-snug line-clamp-2">
           {item.title}
         </div>
         {item.detail && (
-          <div className="mt-1 text-[11.5px] text-white leading-snug line-clamp-2">
-            {item.detail}
-          </div>
+          <div className="mt-1 text-[12px] text-white leading-snug line-clamp-2">{item.detail}</div>
         )}
       </div>
-      {time && <span className="shrink-0 text-[11.5px] tabular-nums text-white">{time}</span>}
+      {time && (
+        <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">{time}</span>
+      )}
     </li>
   );
 }
 
 function Skeleton() {
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         {[0, 1, 2].map((i) => (

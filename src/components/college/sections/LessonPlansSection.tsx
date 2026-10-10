@@ -15,17 +15,10 @@ import {
 } from 'lucide-react';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { itemVariants } from '@/components/college/primitives';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
-import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
+import { TeachMenu, TeachingScreen } from '@/components/college/teaching/TeachingKit';
 import { QuickRegisterSheet } from '@/components/college/teaching/QuickRegisterSheet';
 import { StartLessonPlanSheet } from '@/components/college/sheets/StartLessonPlanSheet';
 import { ScheduleLessonDialog } from '@/components/college/dialogs/ScheduleLessonDialog';
@@ -484,7 +477,10 @@ export function LessonPlansSection() {
         scheduled_room: null,
       });
       await queryClient.invalidateQueries({ queryKey: ['college-lesson-plans'] });
-      toast({ title: 'Plan duplicated', description: 'Opening the copy. It is a draft with no date yet.' });
+      toast({
+        title: 'Plan duplicated',
+        description: 'Opening the copy. It is a draft with no date yet.',
+      });
       navigate(`/college/lessons/${newId}`);
     } catch (e) {
       toast({
@@ -544,7 +540,10 @@ export function LessonPlansSection() {
       `${counts.ready} ready to teach`,
       counts.draft === 0 ? 'no drafts' : plural(counts.draft, 'draft', 'drafts'),
     ];
-    if (counts.unmarked > 0) bits.push(`${counts.unmarked} past ${counts.unmarked === 1 ? 'its date' : 'their dates'} and not marked delivered`);
+    if (counts.unmarked > 0)
+      bits.push(
+        `${counts.unmarked} past ${counts.unmarked === 1 ? 'its date' : 'their dates'} and not marked delivered`
+      );
     const first =
       bits.length === 2
         ? `${bits[0]} and ${bits[1]}`
@@ -679,7 +678,7 @@ export function LessonPlansSection() {
               {lesson.title}
             </h3>
             <div className="flex-1" />
-            <p className="mt-1.5 truncate text-[13px] text-white">{meta}</p>
+            <p className="mt-1.5 text-[13px] leading-snug text-white">{meta}</p>
           </div>
           <div className="relative z-10 flex items-center gap-1 border-t border-white/[0.08] px-3 py-1 sm:px-3.5">
             {action ? (
@@ -708,64 +707,48 @@ export function LessonPlansSection() {
               Open
               <ChevronRight className="h-4 w-4" aria-hidden />
             </button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <TeachMenu
+              title={lesson.title}
+              items={[
+                {
+                  label: 'Slides',
+                  onClick: () => navigate(`/college/lessons/${lesson.id}/slides`),
+                },
+                ...(status === 'draft' || status === 'ready' || status === 'unmarked'
+                  ? [
+                      {
+                        label: lesson.scheduled_date ? 'Reschedule' : 'Schedule',
+                        onClick: () => setToSchedule(lesson),
+                      },
+                    ]
+                  : []),
+                ...(lesson.cohort_id
+                  ? [{ label: 'Take the register', onClick: () => openRegister(lesson) }]
+                  : []),
+                ...(status !== 'delivered' &&
+                status !== 'archived' &&
+                action?.label !== 'Mark delivered'
+                  ? [
+                      {
+                        label: 'Mark delivered',
+                        onClick: () => void setStatus(lesson, 'delivered'),
+                      },
+                    ]
+                  : []),
+                { label: 'Duplicate', onClick: () => void duplicate(lesson) },
+                { label: 'Delete', onClick: () => setToDelete(lesson), destructive: true },
+              ]}
+              trigger={(p) => (
                 <button
                   type="button"
-                  className="-mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                  {...p}
+                  className="-mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.1]"
                   aria-label={`More for ${lesson.title}`}
                 >
                   <MoreHorizontal className="h-5 w-5" aria-hidden />
                 </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-[210px]">
-                <DropdownMenuItem
-                  className="h-11 touch-manipulation"
-                  onClick={() => navigate(`/college/lessons/${lesson.id}/slides`)}
-                >
-                  Slides
-                </DropdownMenuItem>
-                {(status === 'draft' || status === 'ready' || status === 'unmarked') && (
-                  <DropdownMenuItem
-                    className="h-11 touch-manipulation"
-                    onClick={() => setToSchedule(lesson)}
-                  >
-                    {lesson.scheduled_date ? 'Reschedule' : 'Schedule'}
-                  </DropdownMenuItem>
-                )}
-                {lesson.cohort_id && (
-                  <DropdownMenuItem
-                    className="h-11 touch-manipulation"
-                    onClick={() => openRegister(lesson)}
-                  >
-                    Take the register
-                  </DropdownMenuItem>
-                )}
-                {status !== 'delivered' &&
-                  status !== 'archived' &&
-                  action?.label !== 'Mark delivered' && (
-                    <DropdownMenuItem
-                      className="h-11 touch-manipulation"
-                      onClick={() => void setStatus(lesson, 'delivered')}
-                    >
-                      Mark delivered
-                    </DropdownMenuItem>
-                  )}
-                <DropdownMenuItem
-                  className="h-11 touch-manipulation"
-                  onClick={() => void duplicate(lesson)}
-                >
-                  Duplicate
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="h-11 text-red-300 touch-manipulation focus:text-red-300"
-                  onClick={() => setToDelete(lesson)}
-                >
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              )}
+            />
           </div>
         </div>
       </motion.li>
@@ -776,7 +759,7 @@ export function LessonPlansSection() {
     <motion.ul
       initial="hidden"
       animate="visible"
-      className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3"
+      className="grid grid-cols-1 gap-3 md:grid-cols-[repeat(auto-fit,minmax(380px,1fr))]"
     >
       {rows.map(renderCard)}
     </motion.ul>
@@ -807,7 +790,7 @@ export function LessonPlansSection() {
                   <span className="text-[12.5px] text-white">Mark it ready before the class.</span>
                 )}
               </div>
-              <h3 className="mt-1.5 line-clamp-2 text-[18px] font-semibold leading-tight tracking-tight text-white sm:text-[21px]">
+              <h3 className="mt-1.5 line-clamp-3 text-[18px] sm:line-clamp-2 font-semibold leading-tight tracking-tight text-white sm:text-[21px]">
                 {next.title}
               </h3>
               <p className="mt-1 text-[13px] font-medium text-white">
@@ -1049,9 +1032,7 @@ export function LessonPlansSection() {
         <div className="min-w-0">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                Teaching
-              </p>
+              <p className="text-[13px] font-semibold text-elec-yellow">Teaching</p>
               <h1 className="mt-2 text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[36px]">
                 Lesson plans
               </h1>
@@ -1092,21 +1073,22 @@ export function LessonPlansSection() {
                 disabled={disabled}
                 className={cn(
                   CARD,
-                  'items-start gap-3 p-4 text-left touch-manipulation disabled:cursor-default sm:flex-row sm:items-center sm:p-5'
+                  'items-start p-4 text-left touch-manipulation active:bg-white/[0.04] disabled:cursor-default sm:p-5'
                 )}
               >
                 <span aria-hidden className={TOP_LINE} />
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06]">
-                  <Icon
-                    className={cn('h-5 w-5', disabled ? 'text-white' : 'text-elec-yellow')}
-                    aria-hidden
-                  />
-                </span>
                 <span className="w-full min-w-0 flex-1">
-                  <span className="block text-[14px] font-semibold leading-tight text-white sm:truncate">
+                  <span className="flex items-center gap-2 text-[14px] font-semibold leading-tight text-white">
+                    <Icon
+                      className="h-[18px] w-[18px] shrink-0 text-white"
+                      strokeWidth={1.5}
+                      aria-hidden
+                    />
                     {label}
                   </span>
-                  <span className="mt-1 block truncate text-[12px] text-white">{hint}</span>
+                  <span className="mt-1.5 line-clamp-2 text-[12.5px] leading-snug text-white">
+                    {hint}
+                  </span>
                 </span>
               </button>
             ))}
@@ -1174,7 +1156,7 @@ function StatusWord({ status, className }: { status: DisplayStatus; className?: 
   return (
     <span
       className={cn(
-        'inline-flex h-6 shrink-0 items-center whitespace-nowrap rounded-full border px-2.5 text-[11.5px] font-semibold',
+        'inline-flex h-6 shrink-0 items-center whitespace-nowrap rounded-full border px-2.5 text-[12px] font-semibold',
         status === 'unmarked'
           ? 'border-orange-400/50 text-orange-300'
           : status === 'ready'

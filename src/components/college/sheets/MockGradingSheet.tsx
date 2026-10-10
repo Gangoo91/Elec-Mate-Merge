@@ -6,7 +6,7 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   inputCn,
   labelCn,
   textareaCn,
@@ -43,7 +43,7 @@ const SESSION_TYPES: { value: string; label: string; description: string }[] = [
     value: 'am2_section',
     label: 'Timed AM2 section',
     description:
-      'A tutor-run AM2 section on a real rig — inspection and testing, safe isolation or fault diagnosis.',
+      'A tutor-run AM2 section on a real rig: inspection and testing, safe isolation or fault diagnosis.',
   },
   {
     value: 'practical_observation',

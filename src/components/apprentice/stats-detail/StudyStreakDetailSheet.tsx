@@ -10,7 +10,7 @@
  * used across Portfolio / OJT Hub / Diary.
  */
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Flame,
   Trophy,
@@ -27,6 +27,7 @@ import {
   TrendingUp,
   Target,
   X,
+  Check,
   type LucideIcon,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -105,6 +106,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
+        hideCloseButton
         className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >
         <div className="flex flex-col h-full">
@@ -133,8 +135,8 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               <div className="flex items-center gap-2">
                 <Eyebrow>Study streak</Eyebrow>
                 {studiedToday && (
-                  <span className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-                    <Flame className="h-3 w-3" />
+                  <span className="inline-flex items-center gap-1 text-[13px] font-medium text-white">
+                    <Flame className="h-3.5 w-3.5 text-elec-yellow" strokeWidth={1.75} />
                     Active today
                   </span>
                 )}
@@ -144,7 +146,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                   'No streak — yet'
                 ) : (
                   <>
-                    <span className="font-mono tabular-nums">{currentStreak}</span> day
+                    <span className=" tabular-nums">{currentStreak}</span> day
                     {currentStreak === 1 ? '' : 's'} on the trot
                   </>
                 )}
@@ -187,47 +189,55 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     ? `${nextMilestone.days - currentStreak} more day${nextMilestone.days - currentStreak === 1 ? '' : 's'} to go`
                     : 'Legendary streaker'
                 }
-                action={nextMilestone && <span className="text-[18px]">{nextMilestone.emoji}</span>}
               />
-              <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
-                {milestones.map((m, i) => (
-                  <motion.div
+              {/* Plain steps, no emoji (10 Oct): a tick on the ones you have reached. */}
+              <ol className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+                {milestones.map((m) => (
+                  <li
                     key={m.days}
-                    initial={{ scale: 0.7, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.25, delay: 0.05 * i }}
                     className={cn(
-                      'flex flex-col items-center gap-1 py-2.5 rounded-lg border transition-all',
+                      'flex min-h-11 items-center gap-2 rounded-xl border px-3 py-2',
                       m.unlocked
-                        ? 'border-elec-yellow/25 bg-white/[0.05]'
-                        : 'border-white/[0.06] bg-white/[0.02] opacity-50'
+                        ? 'border-white/[0.2] bg-white/[0.05]'
+                        : 'border-dashed border-white/[0.14]'
                     )}
                   >
-                    <span className="text-[16px] sm:text-[18px]">{m.emoji}</span>
+                    {m.unlocked ? (
+                      <Check
+                        className="h-4 w-4 shrink-0 text-emerald-400"
+                        strokeWidth={2}
+                        aria-label="Reached"
+                      />
+                    ) : (
+                      <span
+                        className="h-4 w-4 shrink-0 rounded-full border border-white/[0.3]"
+                        aria-hidden
+                      />
+                    )}
                     <span
                       className={cn(
-                        'text-[9.5px] font-medium uppercase tracking-[0.12em]',
-                        m.unlocked ? 'text-elec-yellow' : 'text-white'
+                        'text-[13px] leading-tight text-white',
+                        m.unlocked ? 'font-semibold' : 'font-medium'
                       )}
                     >
-                      {m.label}
+                      {m.label.charAt(0).toUpperCase() + m.label.slice(1).toLowerCase()}
                     </span>
-                  </motion.div>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </section>
 
             {/* ── Last 7 days + best day ──────────────────────────── */}
             <section className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
               <div
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
                   CARD_SURFACE
                 )}
               >
                 <div className="flex items-baseline justify-between gap-2">
                   <Eyebrow>Last 7 days</Eyebrow>
-                  <span className="text-[12px] font-mono text-white tabular-nums">
+                  <span className="text-[12px] text-white tabular-nums">
                     {daysStudiedLast7} / 7
                   </span>
                 </div>
@@ -245,7 +255,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     />
                   ))}
                 </div>
-                <span className="text-[11px] text-white block leading-snug">
+                <span className="text-[12.5px] text-white block leading-snug">
                   {daysStudiedLast7 >= 5
                     ? 'Strong consistency'
                     : daysStudiedLast7 >= 3
@@ -255,7 +265,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               </div>
               <div
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
                   CARD_SURFACE
                 )}
               >
@@ -263,7 +273,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 <p className="text-[22px] sm:text-[24px] font-semibold tracking-tight text-white leading-none">
                   {bestStudyDay || '—'}
                 </p>
-                <span className="text-[11px] text-white block leading-snug">
+                <span className="text-[12.5px] text-white block leading-snug">
                   {bestStudyDay
                     ? 'Your most consistent day of the week'
                     : 'Need more sessions to surface'}
@@ -275,11 +285,11 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
             <section className="space-y-3">
               <SectionHeader
                 eyebrow="Activity"
-                title="Last 90 days"
+                title="Last 4 weeks"
                 meta="Quizzes · flashcards · diary · OJT all roll up here"
               />
               <div
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
+                className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
               >
                 <ActivityGrid activityMap={activityMap} variant="yellow" />
               </div>
@@ -291,9 +301,9 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-1.5"
+                className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 space-y-1.5"
               >
-                <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
+                <Eyebrow>Insight</Eyebrow>
                 <p className="text-[13.5px] text-white leading-relaxed">{insightText}</p>
               </motion.div>
             )}
@@ -302,7 +312,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
             {currentStreak === 0 && !studiedToday && (
               <div
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-6 sm:p-7 text-center space-y-3',
+                  'rounded-2xl border border-white/[0.08] p-6 sm:p-7 text-center space-y-3',
                   CARD_SURFACE
                 )}
               >
@@ -313,7 +323,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 </p>
                 <button
                   onClick={goToStudyCentre}
-                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border border-white/[0.14] text-white text-[13.5px] font-semibold hover:border-white/[0.3] active:bg-white/[0.06] transition-colors touch-manipulation"
                 >
                   Start now
                   <ChevronRight className="h-4 w-4" />
@@ -325,7 +335,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
             {(smartRecs.length > 0 || recommendations.length > 0) && (
               <section className="space-y-3">
                 <SectionHeader eyebrow="What to do next" title="Smart suggestions" />
-                <div className="space-y-2.5">
+                <div className="grid gap-2.5 sm:grid-cols-2">
                   {smartRecs.length > 0
                     ? smartRecs.map((rec) => {
                         const Icon = smartIconMap[rec.icon] || BookOpen;
@@ -393,25 +403,23 @@ function KpiCell({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-elec-yellow/35 p-3.5 sm:p-5 space-y-1.5',
+        'rounded-2xl border border-white/[0.08] p-3.5 sm:p-5 space-y-1.5',
         CARD_SURFACE
       )}
     >
       <div className="flex items-center gap-1.5">
         {Icon && <Icon className="h-3 w-3 text-white" />}
-        <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
+        <Eyebrow className="text-[12.5px] text-white">{label}</Eyebrow>
       </div>
       <div
         className={cn(
-          'text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none',
+          'text-[22px] sm:text-[26px] font-semibold tabular-nums leading-none',
           highlight ? 'text-elec-yellow' : 'text-white'
         )}
       >
         {value}
       </div>
-      {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white block leading-snug">{sub}</span>
-      )}
+      {sub && <span className="text-[12.5px] text-white block leading-snug">{sub}</span>}
     </div>
   );
 }

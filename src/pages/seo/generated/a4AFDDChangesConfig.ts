@@ -5,37 +5,36 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // AFDD requirements, prohibitions and exemptions match the canonical text.
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const a4AFDDChangesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-afdd-changes',
-  title:
-    'BS 7671 A4:2026 AFDD Changes (Reg 421.1.7)',
+  title: 'AFDDs in BS 7671 A4:2026: Reg 421.1.7 and Item 4.23',
   description:
-    "Amendment 4 added Regulation 421.1.7 recommending AFDDs and EICR item 4.23. Where they're required, prohibited, and what evidence inspectors need.",
+    'AFDDs have been required in HMOs and care homes since A2:2022. A4 rewords 421.1.7(a) and adds EICR item 4.23. Where required, prohibited, and evidence.',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,
-  badge: 'A4:2026 Change',
+  badge: 'A4:2026 Guide',
   badgeIcon: 'Zap',
-  breadcrumbLabel: 'A4 AFDD Changes',
+  breadcrumbLabel: 'AFDDs in A4',
   heroPrefix: 'BS 7671 A4:2026',
   heroHighlight: 'AFDD',
   heroSuffix: 'Changes (Reg 421.1.7 + Item 4.23)',
   heroSubtitle:
-    'Amendment 4 introduced Regulation 421.1.7, which recommends AFDDs (Arc Fault Detection Devices) conforming to BS EN 62606. The wording is advisory rather than mandatory, and it is not scoped to particular premises types, and added a dedicated AFDD line to the redrafted Condition Report inspection schedule (item 4.23). This guide maps every A4 AFDD touch-point: where required, where recommended, where prohibited, and how to record it.',
+    'Regulation 421.1.7 is not new in Amendment 4. It first recommended AFDDs (to BS EN 62606) in 2018, and since A2:2022 it has required them on socket-outlet circuits up to 32 A in four named premises types. A4:2026 rewords 421.1.7(a) to "high rise residential buildings" and adds a dedicated AFDD line (item 4.23) to the Condition Report inspection schedule. This guide maps every AFDD touch-point: where required, where recommended, where prohibited, and how to record it.',
   answerBox: {
     question: 'What did BS 7671 Amendment 4 (A4:2026) change for AFDDs?',
     answer:
-      'A4:2026 introduced Regulation 421.1.7 recommending AFDDs (to BS EN 62606) to mitigate the risk of fire in AC final circuits of a fixed installation. It is a recommendation, not a requirement, and it is not limited to high-rise residential buildings, HMOs, purpose-built student accommodation and care homes. For all other premises they are recommended. A4 also added EICR inspection item 4.23 to confirm AFDD operation.',
+      'Less than often claimed. The requirement for AFDDs (to BS EN 62606) on single-phase socket-outlet circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes came in with A2:2022; elsewhere they are recommended. A4:2026 rewords 421.1.7(a) to "high rise residential buildings" and adds EICR item 4.23 to confirm AFDD operation.',
   },
   keyTakeaways: [
-    'A4:2026 introduced Regulation 421.1.7: AFDDs conforming to BS EN 62606 are RECOMMENDED (the wording is "recommending", not "shall") in AC final circuits of a fixed installation. Beware the widespread claim that they became mandatory on socket-outlets rated up to 32 A in four named premises types — previously this was only a recommendation.',
-    'There is no list of premises types in Regulation 421.1.7 — the widely repeated claim that AFDDs became mandatory in HRRBs, HMOs, student accommodation and care homes is not what the regulation says. For all other premises AFDDs are recommended, not required.',
+    'Regulation 421.1.7 first recommended AFDDs in BS 7671:2018. A2:2022 made them a REQUIREMENT on single-phase AC final circuits supplying socket-outlets up to 32 A in four named premises types. A4:2026 did not introduce either rule.',
+    'The four named premises types are high rise residential buildings (the wording A4:2026 gives 421.1.7(a)), HMOs, purpose-built student accommodation and care homes. For all other premises AFDDs are recommended, not required.',
     'AFDDs detect series and parallel arcing faults that conventional MCBs (overload/short-circuit) and RCDs (residual current) cannot — they protect against fire from arcing in installation wiring.',
     'Where used, AFDDs shall be placed at the origin of the circuit they protect (Regulation 421.1.7), and shall conform to BS EN 62606.',
     'AFDDs are prohibited in medical locations of group 0, 1 and 2 (Regulation 710.421.1.7) and in any circuit supplied by a medical IT system (Regulation 710.421.1.7.101). EV charging equipment conforming to the BS EN 61851 series is exempt under Regulation 722.421.1.7.201.',
-    'A4 redrafted the model forms: the EICR inspection schedule now carries item 4.23 — "Confirmation of indication that AFDD(s) are operational" (cross-referencing 421.1.7, 532.6 and 651.2(e)) — and the schedule of test results was split into a separate schedule of circuit details and schedule of test results.',
+    'The current EICR inspection schedule carries item 4.23 — "Confirmation of indication that AFDD(s) are operational" (cross-referencing 421.1.7, 532.6 and 651.2(e)). The split into a separate schedule of circuit details and schedule of test results, and the SPD and AFDD fields, came in at A2:2022.',
   ],
   sections: [
     {
@@ -45,13 +44,11 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'An Arc Fault Detection Device (AFDD) is a protective device that detects the characteristic high-frequency current signatures of arcing faults — both series arcs (loose terminals, broken conductors) and parallel arcs (cable damage, line-to-line or line-to-neutral arcing). Conventional MCBs trip on overload or short-circuit; RCDs trip on residual current. Neither reliably detects the low-current, intermittent arcs that cause most electrical fires.',
+          text: 'An Arc Fault Detection Device (AFDD) is a protective device that detects the characteristic high-frequency current signatures of arcing faults — both series arcs (loose terminals, broken conductors) and parallel arcs (cable damage, line-to-line or line-to-neutral arcing). Conventional MCBs trip on overload or short-circuit; RCDs trip on residual current. Neither reliably detects the low-current, intermittent arcs that cause most electrical fires.',
         },
         {
           type: 'paragraph',
-          text:
-            'BS 7671 has recognised AFDD as a protective device for some years, but A4:2026 went further: it redrafted Regulation 421.1.7 to make AFDDs a requirement (not just a recommendation) in named premises, and it added a dedicated AFDD line to the redrafted Condition Report inspection schedule — item 4.23, "Confirmation of indication that AFDD(s) are operational". So every A4-compliant EICR now explicitly records whether AFDD operation has been confirmed, and flags where AFDDs should have been fitted but were not.',
+          text: 'BS 7671 has recommended AFDDs since 2018, and A2:2022 redrafted Regulation 421.1.7 to make them a requirement (not just a recommendation) in named premises. A4:2026 keeps that requirement, rewords 421.1.7(a) to "high rise residential buildings", and adds a dedicated AFDD line to the redrafted Condition Report inspection schedule: item 4.23, "Confirmation of indication that AFDD(s) are operational". So every A4-compliant EICR now explicitly records whether AFDD operation has been confirmed, and flags where AFDDs should have been fitted but were not.',
         },
         {
           type: 'list',
@@ -66,20 +63,18 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Series vs parallel arcs',
-          text:
-            'A series arc forms in line with the load — a loose terminal, a broken strand, a damaged flex — and the current stays at or below the load current, so overcurrent protection never operates. A parallel arc forms between conductors (line-to-line or line-to-neutral), often from crushed or nailed cable. An AFDD is designed to recognise both signatures.',
+          text: 'A series arc forms in line with the load — a loose terminal, a broken strand, a damaged flex — and the current stays at or below the load current, so overcurrent protection never operates. A parallel arc forms between conductors (line-to-line or line-to-neutral), often from crushed or nailed cable. An AFDD is designed to recognise both signatures.',
         },
       ],
     },
     {
       id: 'where-afdd-required',
-      heading: 'Where AFDDs are Required Under A4',
+      heading: 'Where AFDDs are Required',
       tocLabel: 'Where required',
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Regulation 421.1.7 of BS 7671:2018+A4:2026 is the controlling rule. The wording recommends that AFDDs conforming to BS EN 62606 be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in four specific premises types. "Shall" makes this a requirement, not a recommendation, in those premises.',
+          text: 'Regulation 421.1.7 of BS 7671:2018+A4:2026 is the controlling rule, and the requirement dates from A2:2022. AFDDs conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in four specific premises types. "Shall" makes this a requirement, not a recommendation, in those premises.',
         },
         {
           type: 'list',
@@ -93,20 +88,17 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'The requirement is scope-limited: it applies to single-phase AC final circuits supplying socket-outlets rated up to 32 A. Where AFDDs are used, Regulation 421.1.7 requires them to be placed at the origin of the circuit being protected (for busbar systems to BS EN 61439-6 and powertrack to BS EN 61534, the AFDD may sit elsewhere). Fitting an AFDD does not remove the need for the other protective measures in BS 7671.',
+          text: 'The requirement is scope-limited: it applies to single-phase AC final circuits supplying socket-outlets rated up to 32 A. Where AFDDs are used, Regulation 421.1.7 requires them to be placed at the origin of the circuit being protected (for busbar systems to BS EN 61439-6 and powertrack to BS EN 61534, the AFDD may sit elsewhere). Fitting an AFDD does not remove the need for the other protective measures in BS 7671.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'Recommendation vs requirement',
-          text:
-            'For all premises other than the four named above, Regulation 421.1.7 recommends AFDDs for single-phase AC final circuits supplying socket-outlets up to 32 A — it does not mandate them. On an EICR, a missing AFDD where 421.1.7 requires one (e.g. an HMO socket circuit) is typically a C2; where AFDDs are only recommended, their absence is usually an improvement recommendation (C3). See [EICR Code C2 — Potentially Dangerous](/guides/eicr-code-c2-potentially-dangerous) for how these are coded.',
+          text: 'For all premises other than the four named above, Regulation 421.1.7 recommends AFDDs for single-phase AC final circuits supplying socket-outlets up to 32 A — it does not mandate them. On an EICR, a missing AFDD where 421.1.7 requires one (e.g. an HMO socket circuit) is typically a C2; where AFDDs are only recommended, their absence is usually an improvement recommendation (C3). See [EICR Code C2 — Potentially Dangerous](/guides/eicr-code-c2-potentially-dangerous) for how these are coded.',
         },
         {
           type: 'paragraph',
-          text:
-            'Outside the standard installations covered by 421.1.7, specific Part 7 locations have their own AFDD rules — for example, Regulation 710.421.1.201 sets installation requirements for AFDDs within medical locations (Section 710), and the EV charging rules in Section 722 (below) provide a conditional exemption.',
+          text: 'Outside the standard installations covered by 421.1.7, specific Part 7 locations have their own AFDD rules — for example, Regulation 710.421.1.201 sets installation requirements for AFDDs within medical locations (Section 710), and the EV charging rules in Section 722 (below) provide a conditional exemption.',
         },
       ],
     },
@@ -117,8 +109,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 strengthened the medical-location prohibitions. AFDDs are explicitly prohibited in:',
+          text: 'A4:2026 strengthened the medical-location prohibitions. AFDDs are explicitly prohibited in:',
         },
         {
           type: 'list',
@@ -132,8 +123,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'If you find an AFDD on a prohibited circuit',
-          text:
-            'When an AFDD is discovered on a medical IT system circuit during EICR, the responsible person or installer shall remove or disable the AFDD to comply with Regulation 710.421.1.7.101. The change is recorded on the circuit documentation and the client informed.',
+          text: 'When an AFDD is discovered on a medical IT system circuit during EICR, the responsible person or installer shall remove or disable the AFDD to comply with Regulation 710.421.1.7.101. The change is recorded on the circuit documentation and the client informed.',
         },
       ],
     },
@@ -144,21 +134,19 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Regulation 722.421.1.7.201 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. The exemption reflects the fault-detection capability built into compliant charge-point electronics.',
+          text: 'Regulation 722.421.1.7.201 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. The exemption reflects the fault-detection capability built into compliant charge-point electronics.',
         },
         {
           type: 'list',
           items: [
             'Conformity to the BS EN 61851 series, with socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2 — this is the condition the exemption is built on.',
-            'Acceptable evidence includes the manufacturer\'s declaration of conformity, markings on the charge point, and datasheets or test reports.',
+            "Acceptable evidence includes the manufacturer's declaration of conformity, markings on the charge point, and datasheets or test reports.",
             'Where that evidence is not available, the standard AFDD requirements re-apply to that EV charging final circuit.',
           ],
         },
         {
           type: 'paragraph',
-          text:
-            'For the wider EV charging picture — RCD types, PEN-fault protection and the rest of Section 722 — see the [BS 7671 Amendment 4 (2026) overview](/guides/bs-7671-amendment-4-2026).',
+          text: 'For the wider EV charging picture — RCD types, PEN-fault protection and the rest of Section 722 — see the [BS 7671 Amendment 4 (2026) overview](/guides/bs-7671-amendment-4-2026).',
         },
       ],
     },
@@ -169,8 +157,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'On the A4:2026 Condition Report inspection schedule, item 4.23 reads "Confirmation of indication that AFDD(s) are operational" and cross-references Regulations 421.1.7, 532.6 and 651.2(e). The inspector confirms, across the inspected installation, that fitted AFDDs are operational — and identifies where AFDDs are required but absent. Item 4.23 is typically completed as one of:',
+          text: 'On the A4:2026 Condition Report inspection schedule, item 4.23 reads "Confirmation of indication that AFDD(s) are operational" and cross-references Regulations 421.1.7, 532.6 and 651.2(e). The inspector confirms, across the inspected installation, that fitted AFDDs are operational — and identifies where AFDDs are required but absent. Item 4.23 is typically completed as one of:',
         },
         {
           type: 'list',
@@ -186,8 +173,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Why three cross-references',
-          text:
-            'Item 4.23 ties three regulations together: 421.1.7 (the requirement to provide AFDDs), 532.6 (the selection and erection rules for AFDDs — installed at the origin of the final circuit, in AC single-phase circuits not exceeding 230 V, conforming to BS EN 62606) and 651.2 (periodic inspection). The inspection item is the point where all three are checked on a Condition Report.',
+          text: 'Item 4.23 ties three regulations together: 421.1.7 (the requirement to provide AFDDs), 532.6 (the selection and erection rules for AFDDs — installed at the origin of the final circuit, in AC single-phase circuits not exceeding 230 V, conforming to BS EN 62606) and 651.2 (periodic inspection). The inspection item is the point where all three are checked on a Condition Report.',
         },
       ],
     },
@@ -198,15 +184,14 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 redrafted the model forms so that the single-page generic schedule of test results was split into a separate schedule of circuit details and a separate schedule of test results. AFDD information is captured per circuit alongside the rest of the protective-device data. Practically, that means recording, circuit by circuit:',
+          text: 'A4:2026 redrafted the model forms so that the single-page generic schedule of test results was split into a separate schedule of circuit details and a separate schedule of test results. AFDD information is captured per circuit alongside the rest of the protective-device data. Practically, that means recording, circuit by circuit:',
         },
         {
           type: 'list',
           items: [
             'Whether an AFDD is fitted to the circuit, and its type / model where it is.',
-            'Confirmation of operational indication — the status indication is present (and, where the device has a manual test facility, that the test facility operates per the manufacturer\'s instructions).',
-            'For an AFDD with an automatic self-test function, the manufacturer\'s instructions should be taken into account when interpreting the test-button behaviour.',
+            "Confirmation of operational indication — the status indication is present (and, where the device has a manual test facility, that the test facility operates per the manufacturer's instructions).",
+            "For an AFDD with an automatic self-test function, the manufacturer's instructions should be taken into account when interpreting the test-button behaviour.",
             'Where an AFDD is required by Regulation 421.1.7 but absent, a cross-reference to the corresponding observation on the Condition Report (item 4.23).',
           ],
         },
@@ -214,8 +199,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Form layout differs by certificate body',
-          text:
-            'A4 standardised the data to be captured, but the exact box layout and any internal numbering vary between certificate templates and software. The key is that the schedule of test results carries the per-circuit AFDD status and that it agrees with item 4.23 on the inspection schedule.',
+          text: 'A4 standardised the data to be captured, but the exact box layout and any internal numbering vary between certificate templates and software. The key is that the schedule of test results carries the per-circuit AFDD status and that it agrees with item 4.23 on the inspection schedule.',
         },
       ],
     },
@@ -226,8 +210,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Functional testing of AFDDs falls under the functional-testing requirements of Part 6 (Regulation 643.10): where an AFDD is installed, the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturer\'s recommendations. This functional check does not replace the type-test carried out to the device\'s product standard. The On-Site Guide also advises that an AFDD with a manual test facility should be operated six-monthly by the user.',
+          text: "Functional testing of AFDDs falls under the functional-testing requirements of Part 6 (Regulation 643.10): where an AFDD is installed, the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturer's recommendations. This functional check does not replace the type-test carried out to the device's product standard. The On-Site Guide also advises that an AFDD with a manual test facility should be operated six-monthly by the user.",
         },
         {
           type: 'list',
@@ -235,7 +218,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
           items: [
             'Visually confirm the AFDD status indication is showing operational (green LED, "ready" indication, or equivalent per the manufacturer).',
             'Operate the test button — the device should disconnect and the indication should change state.',
-            'Reset the device and confirm it returns to the operational state. Where the AFDD also has an automatic self-test function, follow the manufacturer\'s instructions on test-button behaviour.',
+            "Reset the device and confirm it returns to the operational state. Where the AFDD also has an automatic self-test function, follow the manufacturer's instructions on test-button behaviour.",
             'Record the per-circuit result on the schedule of test results and confirm item 4.23 ("AFDD(s) operational") on the inspection schedule.',
             'If indication is absent or the test fails, record the AFDD as defective, raise an observation on the Condition Report with the appropriate classification code, and advise remedial action.',
           ],
@@ -244,8 +227,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'success',
           title: 'User instruction: six-monthly test',
-          text:
-            'Where an installation includes an AFDD with a manual test facility, the user instructions should tell the occupier to test it six-monthly by pressing the test button — and to seek expert advice if the device does not disconnect. It is good practice to leave a clear AFDD test notice with the documentation at handover.',
+          text: 'Where an installation includes an AFDD with a manual test facility, the user instructions should tell the occupier to test it six-monthly by pressing the test button — and to seek expert advice if the device does not disconnect. It is good practice to leave a clear AFDD test notice with the documentation at handover.',
         },
       ],
     },
@@ -254,35 +236,35 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
     {
       question: 'Do I need an AFDD on every domestic circuit under A4:2026?',
       answer:
-        'No. A4:2026 does not introduce a blanket "AFDD on every circuit" rule. Regulation 421.1.7 recommends AFDDs for AC final circuits of a fixed installation, including those supplying socket-outlets up to 32 A in four premises types: high-rise residential buildings, HMOs, purpose-built student accommodation and care homes. For a standard owner-occupied house they are recommended, not required. Many electricians fit AFDD-RCBOs as a future-proof default, but it is not mandated for every domestic circuit.',
+        'No. Neither A4:2026 nor any earlier amendment introduces a blanket "AFDD on every circuit" rule. Since A2:2022, Regulation 421.1.7 requires AFDDs on single-phase socket-outlet circuits up to 32 A in four premises types: high rise residential buildings, HMOs, purpose-built student accommodation and care homes. For a standard owner-occupied house they are recommended, not required. Many electricians fit AFDD-RCBOs as a future-proof default, but it is not mandated for every domestic circuit.',
     },
     {
       question: 'Which premises must have AFDDs under A4:2026?',
       answer:
-        'Regulation 421.1.7 names no premises types at all. The often-quoted list — high-rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes — does not appear in the regulation, which simply recommends AFDDs to mitigate the risk of fire in AC final circuits of a fixed installation. Those building types are of course higher-risk in practice, and fitting AFDDs there is sound engineering, but do not present it as a BS 7671 requirement.',
+        'Strictly, the list is not new in A4:2026: it came in with A2:2022. Regulation 421.1.7 requires AFDDs on single-phase AC final circuits supplying socket-outlets up to 32 A in high rise residential buildings (the A4:2026 wording of 421.1.7(a)), houses in multiple occupation, purpose-built student accommodation and care homes. In all other premises it recommends them.',
     },
     {
       question: 'Can I retrofit AFDDs to an existing consumer unit?',
       answer:
-        'Sometimes. Many modern AFDDs are dimensioned to fit a standard DIN-rail slot in a current-standards consumer unit — an MCB or RCBO can often be swapped for an AFDD-RCBO combination device. Older consumer units may not have the depth or busbar configuration to accept an AFDD. Where retrofit is not practical, full consumer unit replacement is the cleaner path, especially as A4 also brings the luminaire RCD requirement (411.3.4) and other model-form changes — a single consumer unit replacement addresses multiple A4 compliance gaps at once.',
+        'Sometimes. Many modern AFDDs are dimensioned to fit a standard DIN-rail slot in a current-standards consumer unit — an MCB or RCBO can often be swapped for an AFDD-RCBO combination device. Older consumer units may not have the depth or busbar configuration to accept an AFDD. Where retrofit is not practical, full consumer unit replacement is the cleaner path, especially where lighting circuits also lack the 30 mA RCD protection Regulation 411.3.4 has required in dwellings since 2018, or the board predates the A4 model-form changes. A single consumer unit replacement can close several gaps at once.',
     },
     {
       question: 'Does an AFDD replace the need for an RCD?',
       answer:
-        'No — they protect against different fault modes. RCDs detect residual (earth-leakage) current; under A4 Regulation 411.3.3 applies to socket-outlets rated up to 32 A, and the new Regulation 411.3.4 requires 30 mA RCD additional protection for luminaire final circuits in domestic (household) premises. AFDDs detect arcing fault current and are required where Regulation 421.1.7 applies. Modern consumer-unit devices often combine RCD and AFDD functions in one DIN-rail unit, but they remain functionally separate protective measures.',
+        'No — they protect against different fault modes. RCDs detect residual (earth-leakage) current; Regulation 411.3.3 applies to socket-outlets rated up to 32 A, and Regulation 411.3.4 (in place since BS 7671:2018) requires 30 mA RCD additional protection for luminaire final circuits in domestic (household) premises. AFDDs detect arcing fault current and are required where Regulation 421.1.7 applies. Modern consumer-unit devices often combine RCD and AFDD functions in one DIN-rail unit, but they remain functionally separate protective measures.',
     },
     {
-      question: 'How do I record an AFDD on a circuit that\'s prohibited from having one?',
+      question: "How do I record an AFDD on a circuit that's prohibited from having one?",
       answer:
         'If during an inspection you find an AFDD on a circuit where AFDDs are prohibited — a medical location of group 0, 1 or 2, or a circuit supplied by a medical IT system — record an observation on the Condition Report citing Regulation 710.421.1.7 or 710.421.1.7.101 as applicable. The remedial action is to remove or disable the AFDD; the change is recorded on the circuit documentation and the client informed.',
     },
     {
       question: 'Are AFDDs required for EV chargers under A4:2026?',
       answer:
-        'EV charging equipment conforming to the BS EN 61851 series is exempt from AFDD requirements under Regulation 722.421.1.7.201 — the charge point\'s internal protection electronics provide equivalent fault-detection capability. The exemption is conditional on evidence of conformity to BS EN 61851 (manufacturer declaration, datasheet, test report). For charge points without that evidence, the standard AFDD requirements re-apply.',
+        "EV charging equipment conforming to the BS EN 61851 series is exempt from AFDD requirements under Regulation 722.421.1.7.201 — the charge point's internal protection electronics provide equivalent fault-detection capability. The exemption is conditional on evidence of conformity to BS EN 61851 (manufacturer declaration, datasheet, test report). For charge points without that evidence, the standard AFDD requirements re-apply.",
     },
     {
-      question: 'What\'s the cost implication of A4 AFDD changes for a typical EICR?',
+      question: "What's the cost implication of A4 AFDD changes for a typical EICR?",
       answer:
         'For a domestic owner-occupied EICR, the extra time to verify and record AFDD status under item 4.23 and on the schedule of test results is minor — a few minutes per circuit. The real cost comes with remedial work. As indicative market guidance only (not a quote), AFDD-RCBO retrofits are often in the region of £40-£80 per circuit at trade prices, and a full consumer unit replacement frequently lands around £700-£1,500. Under the PRS electrical safety regulations, an EICR with a C2 on a required-but-missing AFDD starts a 28-day remedial window.',
     },
@@ -291,14 +273,16 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-amendment-4-2026',
       title: 'BS 7671 Amendment 4 (2026) — All Changes',
-      description: 'Overview of every A4:2026 change including luminaire RCD, TN-C-S and the new model forms.',
+      description:
+        'Overview of every A4:2026 change including luminaire RCD, TN-C-S and the new model forms.',
       icon: 'BookOpen',
       category: 'Guide',
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection (411.3.4)',
-      description: 'The other major Chapter 41 change in Amendment 4 — 30 mA RCD on AC luminaire final circuits.',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
+      description:
+        'The 30 mA RCD rule for AC luminaire final circuits in dwellings, in place since BS 7671:2018.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
@@ -312,14 +296,16 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-section-710-medical-locations',
       title: 'BS 7671 Section 710 Medical Locations',
-      description: 'Where AFDDs are explicitly prohibited — and the related medical IT system rules.',
+      description:
+        'Where AFDDs are explicitly prohibited — and the related medical IT system rules.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
     {
       href: '/tools/eicr-certificate',
       title: 'EICR Certificate Tool',
-      description: 'Digital A4:2026 EICR with item 4.23 AFDD inspection and per-circuit AFDD status on the schedule of test results.',
+      description:
+        'Digital A4:2026 EICR with item 4.23 AFDD inspection and per-circuit AFDD status on the schedule of test results.',
       icon: 'FileCheck2',
       category: 'Tool',
     },
@@ -333,5 +319,5 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Issue A4:2026-compliant EICRs',
   ctaSubheading:
-    'Elec-Mate\'s digital EICR ships the A4:2026 model form: item 4.23 AFDD inspection, the redrafted schedule of test results, and per-circuit AFDD status.',
+    "Elec-Mate's digital EICR ships the A4:2026 model form: item 4.23 AFDD inspection, the redrafted schedule of test results, and per-circuit AFDD status.",
 };

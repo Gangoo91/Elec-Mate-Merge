@@ -37,6 +37,8 @@ import { LoadMoreButton } from './common/LoadMoreButton';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { JobLinkField } from './common/JobLinkField';
+import { FirmRecordBar } from './common/FirmRecordBar';
+import type { FirmRecordFields } from './common/SafetyScope';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
@@ -91,6 +93,8 @@ interface CompletedInspection {
   additional_notes: string;
   job_id: string | null;
   created_at: string;
+  /** The firm an inspection is shared with (Site Safety in both hubs). */
+  firm: FirmRecordFields;
 }
 
 // ─── Templates ───
@@ -856,6 +860,14 @@ export function InspectionChecklists({
     additional_notes: r.additional_notes ?? '',
     job_id: r.job_id ?? null,
     created_at: r.created_at,
+    firm: {
+      user_id: r.user_id,
+      employer_id: r.employer_id ?? null,
+      employer_job_id: r.employer_job_id ?? null,
+      firm_countersigned_by: r.firm_countersigned_by ?? null,
+      firm_countersigned_name: r.firm_countersigned_name ?? null,
+      firm_countersigned_at: r.firm_countersigned_at ?? null,
+    },
   }));
 
   // View / filter state
@@ -913,6 +925,10 @@ export function InspectionChecklists({
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the inspection with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
@@ -1118,6 +1134,8 @@ export function InspectionChecklists({
     setPhotoUrls([]);
     setLinkedJobId(null);
     setLinkedJobTitle(null);
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
   };
 
   const submitInspection = async () => {
@@ -1146,6 +1164,7 @@ export function InspectionChecklists({
         total_items: totalItems,
         additional_notes: additionalNotes || null,
         job_id: linkedJobId,
+        ...(employerJobId ? { employer_job_id: employerJobId } : {}),
         photos: photoUrls,
         inspector_signature: inspectorSigData || undefined,
         inspector_signature_name: inspectorSigName.trim() || undefined,
@@ -1242,6 +1261,12 @@ export function InspectionChecklists({
             onSelect={(id, title) => {
               setLinkedJobId(id);
               setLinkedJobTitle(title);
+            }}
+            employerJobId={employerJobId}
+            employerJobTitle={employerJobTitle}
+            onSelectEmployerJob={(id, title) => {
+              setEmployerJobId(id);
+              setEmployerJobTitle(title);
             }}
           />
         </FormCard>
@@ -1719,6 +1744,12 @@ export function InspectionChecklists({
                       '-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r',
                       toneAccent[detailTone]
                     )}
+                  />
+
+                  <FirmRecordBar
+                    table="inspection_records"
+                    row={{ id: viewingInspection.id, ...viewingInspection.firm }}
+                    invalidate={[['inspection-records']]}
                   />
 
                   {/* Result summary */}

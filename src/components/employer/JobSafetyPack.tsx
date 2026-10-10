@@ -55,6 +55,10 @@ import {
 interface JobSafetyPackProps {
   onNavigate: (section: Section) => void;
   onBack: () => void;
+  /** Open on this job (the export of a job pack, ELE-1962). */
+  initialJobId?: string | null;
+  /** The back link's word: where onBack returns to. */
+  backLabel?: string;
 }
 
 interface PackBriefing {
@@ -115,8 +119,13 @@ const complianceStatusMeta = (doc: {
   return { label: 'Current', tone: 'emerald', kind: 'good' };
 };
 
-export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
-  const [jobId, setJobId] = useState<string>('');
+export function JobSafetyPack({
+  onNavigate,
+  onBack,
+  initialJobId,
+  backLabel = 'Safety',
+}: JobSafetyPackProps) {
+  const [jobId, setJobId] = useState<string>(initialJobId ?? '');
   const [exporting, setExporting] = useState(false);
 
   const { data: jobs = [], isLoading: jobsLoading } = useJobs();
@@ -387,10 +396,10 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
       <div className="space-y-5">
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 h-11 -ml-2 px-2 text-[13px] font-medium text-white/60 hover:text-white transition-colors touch-manipulation"
+          className="inline-flex items-center gap-1.5 h-11 -ml-2 px-2 text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation"
         >
           <ChevronLeft className="h-4 w-4" aria-hidden />
-          Safety
+          {backLabel}
         </button>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
@@ -398,7 +407,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
             <h1 className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-tight">
               Job safety pack
             </h1>
-            <p className="mt-2 text-[13px] text-white/60 max-w-xl leading-relaxed">
+            <p className="mt-2 text-[13px] text-white max-w-xl leading-relaxed">
               Crew competence, RAMS, briefings and compliance for one site — built entirely from
               your live records.
             </p>
@@ -469,10 +478,10 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
                   <div className="text-lg sm:text-xl font-semibold text-white leading-tight">
                     {job.title}
                   </div>
-                  <div className="mt-1 text-[12.5px] text-white/60">
+                  <div className="mt-1 text-[12.5px] text-white">
                     {[job.client, job.location].filter(Boolean).join(' · ')}
                   </div>
-                  <div className="mt-0.5 text-[12.5px] text-white/60">
+                  <div className="mt-0.5 text-[12.5px] text-white">
                     {job.start_date ? `Starts ${fmt(job.start_date)}` : 'No start date set'}
                   </div>
                 </div>
@@ -483,20 +492,20 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
                 </Pill>
               </div>
               {ready ? (
-                <p className="text-[12.5px] text-white/55 leading-relaxed">
+                <p className="text-[12.5px] text-white leading-relaxed">
                   No gaps found in the linked records — crew, RAMS, briefings and compliance are
                   all in order for this job.
                 </p>
               ) : (
                 <ul className="space-y-1.5">
                   {gaps.slice(0, 8).map((g, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[12.5px] text-white/70">
+                    <li key={i} className="flex items-start gap-2 text-[12.5px] text-white">
                       <Dot tone="red" className="mt-1.5" />
                       <span className="min-w-0">{g.text}</span>
                     </li>
                   ))}
                   {gaps.length > 8 && (
-                    <li className="text-[12px] text-white/45 pl-3.5">
+                    <li className="text-[12px] text-white pl-3.5">
                       +{gaps.length - 8} more — all listed in the PDF export
                     </li>
                   )}
@@ -523,7 +532,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
               />
               {crewTotal === 0 ? (
                 <div className="px-5 py-8 text-center">
-                  <p className="text-[13px] text-white/60">No crew assigned to this job yet.</p>
+                  <p className="text-[13px] text-white">No crew assigned to this job yet.</p>
                   <button
                     onClick={() => onNavigate('jobs')}
                     className="mt-3 inline-flex h-11 items-center text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
@@ -568,7 +577,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
                       );
                     })}
                   </ListBody>
-                  <div className="px-5 py-3 border-t border-white/[0.06] text-[11px] text-white/45 leading-relaxed">
+                  <div className="px-5 py-3 border-t border-white/[0.06] text-[11px] text-white leading-relaxed">
                     Required: {requiredLabels.join(', ')}.{' '}
                     {readiness?.referenceIsJobStart
                       ? `Expiries judged against the job start (${fmt(readiness.referenceDate)}).`
@@ -599,7 +608,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
               />
               {jobRams.length === 0 ? (
                 <div className="px-5 py-8 text-center">
-                  <p className="text-[13px] text-white/60">No RAMS linked to this job.</p>
+                  <p className="text-[13px] text-white">No RAMS linked to this job.</p>
                   <button
                     onClick={() => onNavigate('rams')}
                     className="mt-3 inline-flex h-11 items-center text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
@@ -647,7 +656,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
               />
               {briefings.length === 0 ? (
                 <div className="px-5 py-8 text-center">
-                  <p className="text-[13px] text-white/60">
+                  <p className="text-[13px] text-white">
                     No briefings linked to this job yet.
                   </p>
                   <button
@@ -701,7 +710,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
               />
               {jobCompliance.length === 0 ? (
                 <div className="px-5 py-8 text-center">
-                  <p className="text-[13px] text-white/60">
+                  <p className="text-[13px] text-white">
                     No compliance documents linked to this job.
                   </p>
                   <button

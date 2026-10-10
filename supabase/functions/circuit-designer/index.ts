@@ -81,8 +81,25 @@ Deno.serve(async (req) => {
           installationConstraints: jobInputs.installationConstraints || {},
         },
       })
-      .then(() => {
+      .then(async ({ error }) => {
         console.log(`✅ Designer HTTP response received for job ${jobId}`);
+        // invoke() returns HTTP errors rather than throwing. A designer that
+        // failed before its first progress write (boot error, resource limit)
+        // left the job on 'Starting designer…' for good — one did, 24 Aug.
+        // Only a job the designer never touched is failed here; once it has
+        // started, it records its own failure.
+        if (error) {
+          await supabase
+            .from('circuit_design_jobs')
+            .update({
+              status: 'failed',
+              error_message: 'The designer could not start. Please try again.',
+              current_step: 'Failed to start',
+            })
+            .eq('id', jobId)
+            .eq('status', 'processing')
+            .eq('current_step', 'Starting designer…');
+        }
       })
       .catch((error) => {
         console.log(`ℹ️ Designer HTTP connection closed for job ${jobId}:`, error.message);

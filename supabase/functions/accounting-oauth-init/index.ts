@@ -1,9 +1,10 @@
 /**
  * Accounting OAuth Initialization
- * Starts the OAuth flow for Xero, Sage, QuickBooks, or FreshBooks
+ * Starts the OAuth flow for Xero, Sage, QuickBooks, FreshBooks or FreeAgent
  */
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
+import { freeagentAuthorizeUrl, freeagentConfigured } from '../_shared/freeagent.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -15,9 +16,9 @@ const FRESHBOOKS_CLIENT_ID = Deno.env.get('FRESHBOOKS_CLIENT_ID');
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
-type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
+type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks' | 'freeagent';
 
-const VALID_PROVIDERS: AccountingProvider[] = ['xero', 'sage', 'quickbooks', 'freshbooks'];
+const VALID_PROVIDERS: AccountingProvider[] = ['xero', 'sage', 'quickbooks', 'freshbooks', 'freeagent'];
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
@@ -144,6 +145,15 @@ serve(async (req: Request) => {
         });
 
         authUrl = `https://auth.freshbooks.com/oauth/authorize?${params}`;
+        break;
+      }
+
+      case 'freeagent': {
+        // ELE-2077. FreeAgent has no scopes: access follows the approving user.
+        if (!freeagentConfigured()) {
+          throw new ValidationError('FreeAgent integration not configured');
+        }
+        authUrl = freeagentAuthorizeUrl(redirectUri, state);
         break;
       }
 

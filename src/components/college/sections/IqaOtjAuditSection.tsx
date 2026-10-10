@@ -11,17 +11,20 @@ import { buttonPrimaryCn, buttonSecondaryCn, textareaCn } from '@/components/for
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  COLLEGE_BTN,
-  COLLEGE_CARD,
   COLLEGE_LINK,
-  COLLEGE_LIST,
-  COLLEGE_ROW,
   CollegeEmpty,
-  CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
   chipCn,
 } from '@/components/college/ui/CollegeUi';
+import {
+  QBTN as COLLEGE_BTN,
+  QBTN_PRIMARY,
+  QCARD as COLLEGE_CARD,
+  QLIST as COLLEGE_LIST,
+  QROW as COLLEGE_ROW,
+  QualityHeader,
+} from '@/components/college/quality/QualityHubKit';
+import { plural } from '@/components/college/quality/qualityText';
 import { BarList, Donut } from '@/components/college/quality/QualityKit';
 import { uniqueLabels } from '@/components/college/quality/IqaVisuals';
 
@@ -33,6 +36,11 @@ import { uniqueLabels } from '@/components/college/quality/IqaVisuals';
    tapping a row opens the verdict form in place, and "Record verdict" is the
    single solid volt control on the page. Agreement: below 70% red, 70–89%
    orange, 90%+ green (College Hub redesign, 7 Oct 2026).
+
+   8 Oct 2026: the header sentence carries the counts (no figure tiles);
+   "Sample one at random" opens a random waiting entry, so the sample is not
+   always the oldest; the list shows 15 at a time. The queue read is capped
+   at 100 rows (useIqaOtjAudit), so a full queue says "100 or more".
    ========================================================================== */
 
 const VERDICT_LABEL: Record<IqaVerdict, string> = {
@@ -47,12 +55,24 @@ const HELP: PageHelpContent = {
   title: 'Off-the-job audit',
   what: 'An internal quality check on off-the-job hours. You sample entries an assessor has already verified and say whether you agree with their decision, so the hours you claim for funding stand up.',
   steps: [
-    { title: 'Pick an entry', body: 'The list shows verified entries waiting for an IQA check, oldest sign-off first by days. Tap one to read it and what the assessor said.' },
-    { title: 'Give your verdict', body: 'Agree, partial agreement, disagree or escalate. Add feedback for the assessor. You cannot record a disagree or escalate verdict without it.' },
-    { title: 'Flag a follow-up', body: 'Switch on follow-up required when something needs doing. It marks the verdict as needing follow-up on the audit record; it does not create a task, so agree the next step with the assessor.' },
+    {
+      title: 'Pick an entry',
+      body: 'The list shows verified entries waiting for an IQA check, oldest sign-off first by days. Tap one to read it and what the assessor said.',
+    },
+    {
+      title: 'Give your verdict',
+      body: 'Agree, partial agreement, disagree or escalate. Add feedback for the assessor. You cannot record a disagree or escalate verdict without it.',
+    },
+    {
+      title: 'Flag a follow-up',
+      body: 'Switch on follow-up required when something needs doing. It marks the verdict as needing follow-up on the audit record; it does not create a task, so agree the next step with the assessor.',
+    },
   ],
   notes: [
-    { title: 'Assessor agreement', body: 'How often you agreed with each assessor over the last 90 days. Below 70% is a sign they need standardisation or support.' },
+    {
+      title: 'Assessor agreement',
+      body: 'How often you agreed with each assessor over the last 90 days. Below 70% is a sign they need standardisation or support.',
+    },
   ],
   legend: [
     { swatch: 'bg-emerald-500', label: '90% agreement or more' },
@@ -91,6 +111,7 @@ export function IqaOtjAuditSection() {
   const [feedback, setFeedback] = useState('');
   const [followup, setFollowup] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [shown, setShown] = useState(15);
 
   const openRow = (row: IqaOtjQueueRow) => {
     if (activeEntry?.id === row.id) {
@@ -109,7 +130,11 @@ export function IqaOtjAuditSection() {
       return;
     }
     if (feedbackRequired(verdict) && !feedback.trim()) {
-      toast({ title: 'Add feedback for the assessor', description: 'It is needed when you disagree or escalate.', variant: 'destructive' });
+      toast({
+        title: 'Add feedback for the assessor',
+        description: 'It is needed when you disagree or escalate.',
+        variant: 'destructive',
+      });
       return;
     }
     setSaving(true);
@@ -151,51 +176,96 @@ export function IqaOtjAuditSection() {
     }),
     { sampled: 0, agree: 0, partial: 0, disagree: 0, escalate: 0 }
   );
-  const overallAgree = totals.sampled > 0 ? Math.round((totals.agree / totals.sampled) * 100) : null;
+  const overallAgree =
+    totals.sampled > 0 ? Math.round((totals.agree / totals.sampled) * 100) : null;
   const oldest = queue.reduce<number | null>(
-    (m, r) => (r.days_since_verified !== null && (m === null || r.days_since_verified > m) ? r.days_since_verified : m),
+    (m, r) =>
+      r.days_since_verified !== null && (m === null || r.days_since_verified > m)
+        ? r.days_since_verified
+        : m,
     null
   );
 
+  const capped = queue.length >= 100;
+  /* IQA sampling should not always take the oldest entry: pick one at random
+     and bring it into view, opened. */
+  const sampleRandom = () => {
+    if (queue.length === 0) return;
+    const i = Math.floor(Math.random() * queue.length);
+    const row = queue[i];
+    if (i >= shown) setShown(i + 1);
+    setActiveEntry(row);
+    setVerdict(null);
+    setFeedback('');
+    setFollowup(false);
+    window.setTimeout(
+      () =>
+        document
+          .getElementById(`otj-${row.id}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      120
+    );
+  };
+
   return (
     <div className="space-y-8 sm:space-y-10">
-      <CollegePageHeader
+      <QualityHeader
         eyebrow="Quality and compliance"
         title="Off-the-job audit"
-        description="Sample off-the-job entries an assessor has already verified and record whether you agree, so the hours claimed for funding stand up."
+        summary={
+          queue.length === 0
+            ? 'Nothing waiting. Verified off-the-job entries appear here for you to check.'
+            : `${capped ? '100 or more' : queue.length} verified ${queue.length === 1 ? 'entry is' : 'entries are'} waiting for an IQA check${
+                oldest !== null
+                  ? `; the oldest was verified ${plural(Math.round(oldest), 'day')} ago`
+                  : ''
+              }.`
+        }
+        sub={
+          totals.sampled === 0
+            ? 'No verdicts in the last 90 days.'
+            : `Last 90 days: ${plural(totals.sampled, 'entry', 'entries')} checked, you agreed with the assessor on ${overallAgree}%${
+                drifting > 0
+                  ? `; ${plural(drifting, 'assessor')} below 70% need standardisation`
+                  : ''
+              }.`
+        }
         help={HELP}
         actions={
           <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_BTN}>
             Open the IQA dashboard
           </button>
         }
+        primary={
+          queue.length > 0 ? (
+            <button type="button" onClick={sampleRandom} className={QBTN_PRIMARY}>
+              Sample one at random
+            </button>
+          ) : undefined
+        }
       />
 
       {error && (
-        <div className="rounded-2xl border border-red-400/40 px-4 py-3 text-[13px] text-white">{error}</div>
+        <div className="rounded-2xl border border-orange-400/50 px-4 py-3 text-[13px] text-white">
+          {error}
+        </div>
       )}
-
-      <CollegeStats
-        items={[
-          { label: 'To sample', value: String(queue.length), sub: queue.length === 0 ? 'Nothing waiting' : 'Verified, not yet checked', warn: queue.length > 0 },
-          { label: 'Oldest waiting', value: oldest === null ? '—' : `${Math.round(oldest)}d`, sub: 'Since the assessor verified it', warn: oldest !== null && oldest > 30 },
-          { label: 'Sampled · 90 days', value: String(totals.sampled), sub: `${sampledRollup.length} assessor${sampledRollup.length === 1 ? '' : 's'} sampled` },
-          {
-            label: 'Agreement',
-            value: overallAgree === null ? '—' : `${overallAgree}%`,
-            sub: drifting > 0 ? `${drifting} assessor${drifting === 1 ? '' : 's'} below 70%` : 'Agree with the assessor',
-            warn: drifting > 0,
-            good: overallAgree !== null && overallAgree >= 90,
-          },
-        ]}
-      />
 
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-5">
         {/* The queue first — it is the work. */}
-        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="space-y-3">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
+        >
           <CollegeSectionTitle
             title="To sample"
-            sub={queue.length === 0 ? 'Nothing waiting' : 'Tap an entry to read it and record your verdict'}
+            sub={
+              queue.length === 0
+                ? 'Nothing waiting'
+                : 'Oldest sign-off first. Tap an entry to read it and record your verdict.'
+            }
           />
 
           {queue.length === 0 ? (
@@ -205,46 +275,79 @@ export function IqaOtjAuditSection() {
             />
           ) : (
             <motion.ul variants={itemVariants} className={COLLEGE_LIST}>
-              {queue.map((row) => {
+              {queue.slice(0, shown).map((row) => {
                 const open = activeEntry?.id === row.id;
-                const age = row.days_since_verified !== null ? `${Math.round(row.days_since_verified)}d` : undefined;
+                const age =
+                  row.days_since_verified !== null
+                    ? plural(Math.round(row.days_since_verified), 'day')
+                    : undefined;
                 return (
-                  <li key={row.id} className={cn(open && 'bg-white/[0.03]')}>
-                    <button type="button" onClick={() => openRow(row)} aria-expanded={open} className={COLLEGE_ROW}>
-                      <span
-                        aria-hidden="true"
-                        className={cn('h-9 w-[3px] shrink-0 rounded-full', open ? 'bg-elec-yellow' : 'bg-white/[0.25]')}
-                      />
+                  <li
+                    key={row.id}
+                    id={`otj-${row.id}`}
+                    className={cn('scroll-mt-24', open && 'bg-white/[0.03]')}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => openRow(row)}
+                      aria-expanded={open}
+                      className={COLLEGE_ROW}
+                    >
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {row.student_name ?? 'Learner'} · {row.title}
+                        <span className="block text-[14px] font-semibold leading-snug text-white sm:truncate">
+                          {row.title}
                         </span>
-                        <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-white">
+                        <span className="mt-0.5 block text-[12.5px] leading-snug text-white sm:truncate">
                           {[
-                            new Date(row.activity_date).toLocaleDateString('en-GB'),
+                            row.student_name ?? 'Learner',
+                            new Date(row.activity_date).toLocaleDateString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric',
+                            }),
                             fmtDuration(row.duration_minutes),
-                            row.unit_codes && row.unit_codes.length > 0 ? row.unit_codes.join(', ') : null,
+                            row.unit_codes && row.unit_codes.length > 0
+                              ? row.unit_codes.join(', ')
+                              : null,
                           ]
                             .filter(Boolean)
                             .join(' · ')}
                         </span>
+                        {/* Phone: how long since sign-off is its own line, so the
+                            title keeps the width. */}
+                        {age && (
+                          <span className="mt-0.5 block text-[12.5px] font-semibold text-white sm:hidden">
+                            Verified {age} ago
+                          </span>
+                        )}
                       </span>
                       {age && (
-                        <span className="shrink-0 text-right">
-                          <span className="block text-[13px] font-semibold tabular-nums text-white">{age}</span>
-                          <span className="block text-[11px] text-white">waiting</span>
+                        <span className="hidden shrink-0 text-right sm:block">
+                          <span className="block text-[13px] font-semibold tabular-nums text-white">
+                            {age}
+                          </span>
+                          <span className="block text-[12px] text-white">since verified</span>
                         </span>
                       )}
                       <ChevronRight
-                        className={cn('h-4 w-4 shrink-0 text-white transition-transform', open && 'rotate-90')}
+                        className={cn(
+                          'h-4 w-4 shrink-0 text-white transition-transform',
+                          open && 'rotate-90'
+                        )}
                         aria-hidden="true"
                       />
                     </button>
 
                     {open && (
-                      <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 px-5 pb-5 sm:px-6">
+                      <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="space-y-4 px-4 pb-5 sm:px-5"
+                      >
                         {row.description && (
-                          <p className="whitespace-pre-wrap text-[13px] leading-relaxed text-white">{row.description}</p>
+                          <p className="whitespace-pre-wrap text-[13px] leading-relaxed text-white">
+                            {row.description}
+                          </p>
                         )}
                         {row.verification_rationale && (
                           <p className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-[13px] leading-relaxed text-white">
@@ -254,13 +357,22 @@ export function IqaOtjAuditSection() {
                         )}
 
                         <div>
-                          <p className="mb-2 text-[12.5px] font-semibold text-white">Your verdict</p>
+                          <p className="mb-2 text-[12.5px] font-semibold text-white">
+                            Your verdict
+                          </p>
                           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                            {(['agree', 'partial', 'disagree', 'escalate'] as IqaVerdict[]).map((v) => (
-                              <button key={v} type="button" onClick={() => setVerdict(v)} className={cn(chipCn(verdict === v), 'h-11')}>
-                                {VERDICT_LABEL[v]}
-                              </button>
-                            ))}
+                            {(['agree', 'partial', 'disagree', 'escalate'] as IqaVerdict[]).map(
+                              (v) => (
+                                <button
+                                  key={v}
+                                  type="button"
+                                  onClick={() => setVerdict(v)}
+                                  className={cn(chipCn(verdict === v), 'h-11')}
+                                >
+                                  {VERDICT_LABEL[v]}
+                                </button>
+                              )
+                            )}
                           </div>
                         </div>
 
@@ -277,20 +389,30 @@ export function IqaOtjAuditSection() {
                         />
 
                         <div className="flex min-h-11 items-center gap-3">
-                          <Switch id={`followup-${row.id}`} checked={followup} onCheckedChange={setFollowup} />
+                          <Switch
+                            id={`followup-${row.id}`}
+                            checked={followup}
+                            onCheckedChange={setFollowup}
+                          />
                           <Label htmlFor={`followup-${row.id}`} className="text-[13px] text-white">
                             Follow-up required (marked on the audit record)
                           </Label>
                         </div>
 
                         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                          <button type="button" onClick={() => setActiveEntry(null)} className={cn(buttonSecondaryCn, 'w-full px-5 sm:w-auto')}>
+                          <button
+                            type="button"
+                            onClick={() => setActiveEntry(null)}
+                            className={cn(buttonSecondaryCn, 'w-full px-5 sm:w-auto')}
+                          >
                             Cancel
                           </button>
                           <button
                             type="button"
                             onClick={handleSave}
-                            disabled={!verdict || saving || (feedbackRequired(verdict) && !feedback.trim())}
+                            disabled={
+                              !verdict || saving || (feedbackRequired(verdict) && !feedback.trim())
+                            }
                             className={cn(buttonPrimaryCn, 'w-full px-5 sm:w-auto')}
                           >
                             {saving ? 'Saving…' : 'Record verdict'}
@@ -303,18 +425,36 @@ export function IqaOtjAuditSection() {
               })}
             </motion.ul>
           )}
+          {queue.length > shown && (
+            <button type="button" onClick={() => setShown((n) => n + 15)} className={COLLEGE_BTN}>
+              Show 15 more ({queue.length - shown}
+              {capped ? '+' : ''} left)
+            </button>
+          )}
         </motion.section>
 
         {/* Per-assessor agreement over 90 days. */}
-        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="space-y-3">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
+        >
           <CollegeSectionTitle
             title="Assessor agreement"
-            sub={drifting > 0 ? `${drifting} below 70% · last 90 days` : sampledRollup.length > 0 ? 'How often you agreed · last 90 days' : 'No samples yet'}
+            sub={
+              drifting > 0
+                ? `${drifting} below 70% · last 90 days`
+                : sampledRollup.length > 0
+                  ? 'How often you agreed · last 90 days'
+                  : 'No samples yet'
+            }
           />
           <motion.div variants={itemVariants} className={COLLEGE_CARD}>
             {sampledRollup.length === 0 ? (
               <p className="text-[13px] leading-snug text-white">
-                No verdicts in the last 90 days. Agreement rates appear here once you record a verdict on an entry from the list.
+                No verdicts in the last 90 days. Agreement rates appear here once you record a
+                verdict on an entry from the list.
               </p>
             ) : (
               <>
@@ -346,7 +486,11 @@ export function IqaOtjAuditSection() {
             {/* Sampling plans, findings, standardisation and the coverage
                 matrix live on the IQA dashboard. Router navigation. */}
             <div className="mt-4 border-t border-white/[0.06] pt-2">
-              <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_LINK}>
+              <button
+                type="button"
+                onClick={() => navigate('/college/iqa')}
+                className={COLLEGE_LINK}
+              >
                 Open the IQA dashboard
               </button>
             </div>

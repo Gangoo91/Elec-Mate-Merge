@@ -35,6 +35,14 @@ import { BriefingShareSheet } from './briefings';
 import { BriefingPDFActions } from './BriefingPDFActions';
 import { SignaturePad } from './common/SignaturePad';
 import { useBriefingAttendees, useSignOffAttendee } from '@/hooks/useBriefingSignatures';
+import { isFirmScope, useFirmRecordAccess, useSafetyScope } from './common/SafetyScope';
+import { BriefingCrewSendSheet } from './briefings/BriefingCrewSendSheet';
+import {
+  BriefingRepeatSheet,
+  describeSchedule,
+  useBriefingSchedule,
+} from './briefings/BriefingRepeatSheet';
+import { DeleteBriefingDialog } from './DeleteBriefingDialog';
 
 const HAZARD_LABELS: Record<string, string> = {
   electrical: 'Electrical',
@@ -113,6 +121,8 @@ interface BriefingDetailViewProps {
   companyProfile?: any;
   onClose: () => void;
   onEdit: () => void;
+  /** After a delete: leave the record and refresh the list. */
+  onDeleted?: () => void;
 }
 
 export function BriefingDetailView({
@@ -120,8 +130,19 @@ export function BriefingDetailView({
   companyProfile,
   onClose,
   onEdit,
+  onDeleted,
 }: BriefingDetailViewProps) {
   const [showShare, setShowShare] = useState(false);
+  // ELE-1944: send to the crew (firm), repeat on a schedule, delete in a sheet.
+  const scope = useSafetyScope();
+  const access = useFirmRecordAccess(briefing);
+  const firmBriefing = isFirmScope(scope) && !!briefing.employer_id;
+  const [showSend, setShowSend] = useState(false);
+  const [showRepeat, setShowRepeat] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [crewSentAt, setCrewSentAt] = useState<string | null>(briefing.crew_notified_at ?? null);
+  const { data: schedule } = useBriefingSchedule(briefing.id, briefing.schedule_id);
+  const repeatLine = describeSchedule(schedule);
   const [showPDF, setShowPDF] = useState(false);
   const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
 
@@ -213,197 +234,287 @@ export function BriefingDetailView({
         </div>
       </div>
 
-      <div className="space-y-6 px-4 pb-32 pt-5">
-        {/* Title block — the document announces itself in type, not in a badge. */}
-        <div>
-          <h1 className="text-[22px] font-bold leading-tight tracking-tight text-white">{title}</h1>
-          <p className="mt-1 text-[13px] text-white">{typeLabel} briefing · HSG250</p>
-        </div>
-
-        {/* Facts */}
-        <div className={cardCn}>
-          <dl className="divide-y divide-white/[0.08]">
-            {facts.map(({ term, value, className }) => (
-              <div key={term} className="flex items-baseline gap-4 py-2.5 first:pt-0 last:pb-0">
-                <dt className="w-24 shrink-0 text-[13px] text-white">{term}</dt>
-                <dd className={cn('min-w-0 flex-1 text-[14px] font-medium text-white', className)}>
-                  {value ?? <span className="font-normal text-white">Not recorded</span>}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        {/* What was briefed */}
-        {description && (
-          <section>
-            <SectionHeading>What was briefed</SectionHeading>
-            <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-white">
-              {description}
-            </p>
-          </section>
-        )}
-
-        {/* Hazards — one treatment for all twelve. The rainbow encoded nothing. */}
-        {hazards.length > 0 && (
-          <section>
-            <SectionHeading>Hazards identified</SectionHeading>
-            <div className="flex flex-wrap gap-2">
-              {hazards.map((h: string) => (
-                <span
-                  key={h}
-                  className="rounded-full border border-white/[0.14] bg-white/[0.06] px-3 py-1.5 text-[13px] font-medium text-white"
-                >
-                  {HAZARD_LABELS[h] || h.replace(/^custom-/, '').replace(/-/g, ' ')}
-                </span>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Photos */}
-        {photos.length > 0 && (
-          <section>
-            <SectionHeading>
-              Site photos <span className="font-normal tabular-nums">({photos.length})</span>
-            </SectionHeading>
-            <div className="grid grid-cols-3 gap-2">
-              {photos.map((photo: any, idx: number) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setPreviewPhoto(photo.url)}
-                  className="aspect-square touch-manipulation overflow-hidden rounded-xl border border-white/10"
-                >
-                  <img
-                    src={photoSrcs[photo.url] ?? photo.url}
-                    alt={`Site photo ${idx + 1}`}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </button>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Sign-off register — a ruled signing sheet. Each attendee used to sit
-            in their own bordered pill with a numbered tile inside it; a register
-            is a list, so it is ruled like one. */}
-        <section>
-          <div className="mb-3 flex items-baseline justify-between gap-3">
-            <h2 className="text-[15px] font-semibold tracking-tight text-white">
-              Sign-off register
-            </h2>
-            <span
-              className={cn(
-                'shrink-0 text-[13px] font-semibold tabular-nums',
-                allSigned ? 'text-elec-yellow' : 'text-white'
-              )}
-            >
-              {signedCount} of {totalAttendees} signed
-            </span>
+      {/* Desktop: the record on the left, the register and actions on the right. */}
+      <div className="px-4 pb-32 pt-5 lg:grid lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-8 lg:px-6">
+        <div className="min-w-0 space-y-6">
+          {/* Title block — the document announces itself in type, not in a badge. */}
+          <div>
+            <h1 className="text-[22px] font-bold leading-tight tracking-tight text-white">
+              {title}
+            </h1>
+            <p className="mt-1 text-[13px] text-white">{typeLabel} briefing · HSG250</p>
           </div>
 
-          {totalAttendees > 0 && (
-            <div className="mb-1 h-0.5 overflow-hidden bg-white/10">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${progressPercent}%` }}
-                transition={{ delay: 0.15, duration: 0.4 }}
-                className="h-full bg-elec-yellow"
-              />
-            </div>
+          {/* Facts */}
+          <div className={cardCn}>
+            <dl className="divide-y divide-white/[0.08]">
+              {facts.map(({ term, value, className }) => (
+                <div key={term} className="flex items-baseline gap-4 py-2.5 first:pt-0 last:pb-0">
+                  <dt className="w-24 shrink-0 text-[13px] text-white">{term}</dt>
+                  <dd
+                    className={cn('min-w-0 flex-1 text-[14px] font-medium text-white', className)}
+                  >
+                    {value ?? <span className="font-normal text-white">Not recorded</span>}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* What was briefed */}
+          {description && (
+            <section>
+              <SectionHeading>What was briefed</SectionHeading>
+              <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-white">
+                {description}
+              </p>
+            </section>
           )}
 
-          {attendees.length > 0 ? (
-            <div className="divide-y divide-white/[0.08] border-b border-white/[0.08]">
-              {attendees.map((attendee: any, idx: number) => {
-                const isSigned =
-                  !!attendee.signature || !!attendee.signature_url || !!attendee.acknowledged;
-                // Say HOW it was acknowledged: a drawn signature through the
-                // link is a different record from being marked present.
-                const signedLabel = attendee.how
-                  ? `${attendee.how}${
-                      attendee.at
-                        ? ` · ${new Date(attendee.at).toLocaleString('en-GB', {
-                            day: 'numeric',
-                            month: 'short',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}`
-                        : ''
-                    }`
-                  : 'Signed';
-                const canSign = !isSigned && !!attendee._dbId;
-                return (
-                  <button
-                    key={attendee._dbId || idx}
-                    type="button"
-                    disabled={!canSign}
-                    onClick={() => {
-                      if (canSign) {
-                        setSigningAttendee(attendee);
-                        setSignOffName(attendee.name || '');
-                        setSignOffDate(new Date().toISOString().split('T')[0]);
-                        setSignOffDataUrl('');
-                      }
-                    }}
-                    className={cn(
-                      'flex w-full touch-manipulation items-center gap-3 py-3 text-left transition-colors',
-                      canSign && 'active:bg-white/[0.04]'
-                    )}
+          {/* Hazards — one treatment for all twelve. The rainbow encoded nothing. */}
+          {hazards.length > 0 && (
+            <section>
+              <SectionHeading>Hazards identified</SectionHeading>
+              <div className="flex flex-wrap gap-2">
+                {hazards.map((h: string) => (
+                  <span
+                    key={h}
+                    className="rounded-full border border-white/[0.14] bg-white/[0.06] px-3 py-1.5 text-[13px] font-medium text-white"
                   >
-                    <span className="w-5 shrink-0 text-[13px] font-semibold tabular-nums text-white">
-                      {idx + 1}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-[15px] font-medium text-white">{attendee.name}</p>
-                      {attendee.role && (
-                        <p className="truncate text-[12px] text-white">{attendee.role}</p>
-                      )}
-                    </div>
-                    <span
+                    {HAZARD_LABELS[h] || h.replace(/^custom-/, '').replace(/-/g, ' ')}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Photos */}
+          {photos.length > 0 && (
+            <section>
+              <SectionHeading>
+                Site photos <span className="font-normal tabular-nums">({photos.length})</span>
+              </SectionHeading>
+              <div className="grid grid-cols-3 gap-2">
+                {photos.map((photo: any, idx: number) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setPreviewPhoto(photo.url)}
+                    className="aspect-square touch-manipulation overflow-hidden rounded-xl border border-white/10"
+                  >
+                    <img
+                      src={photoSrcs[photo.url] ?? photo.url}
+                      alt={`Site photo ${idx + 1}`}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+        <div className="mt-6 min-w-0 space-y-6 lg:mt-0">
+          {/* Sign-off register — a ruled signing sheet. Each attendee used to sit
+            in their own bordered pill with a numbered tile inside it; a register
+            is a list, so it is ruled like one. */}
+          <section>
+            <div className="mb-3 flex items-baseline justify-between gap-3">
+              <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                Sign-off register
+              </h2>
+              <span
+                className={cn(
+                  'shrink-0 text-[13px] font-semibold tabular-nums',
+                  allSigned ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {signedCount} of {totalAttendees} signed
+              </span>
+            </div>
+
+            {totalAttendees > 0 && (
+              <div className="mb-1 h-0.5 overflow-hidden bg-white/10">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPercent}%` }}
+                  transition={{ delay: 0.15, duration: 0.4 }}
+                  className="h-full bg-elec-yellow"
+                />
+              </div>
+            )}
+
+            {attendees.length > 0 ? (
+              <div className="divide-y divide-white/[0.08] border-b border-white/[0.08]">
+                {attendees.map((attendee: any, idx: number) => {
+                  const isSigned =
+                    !!attendee.signature || !!attendee.signature_url || !!attendee.acknowledged;
+                  // Say HOW it was acknowledged: a drawn signature through the
+                  // link is a different record from being marked present.
+                  const signedLabel = attendee.how
+                    ? `${attendee.how}${
+                        attendee.at
+                          ? ` · ${new Date(attendee.at).toLocaleString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}`
+                          : ''
+                      }`
+                    : 'Signed';
+                  const canSign = !isSigned && !!attendee._dbId;
+                  return (
+                    <button
+                      key={attendee._dbId || idx}
+                      type="button"
+                      disabled={!canSign}
+                      onClick={() => {
+                        if (canSign) {
+                          setSigningAttendee(attendee);
+                          setSignOffName(attendee.name || '');
+                          setSignOffDate(new Date().toISOString().split('T')[0]);
+                          setSignOffDataUrl('');
+                        }
+                      }}
                       className={cn(
-                        'shrink-0 text-[13px] font-medium',
-                        canSign ? 'text-elec-yellow' : 'text-white'
+                        'flex w-full touch-manipulation items-center gap-3 py-3 text-left transition-colors',
+                        canSign && 'active:bg-white/[0.04]'
                       )}
                     >
-                      {isSigned ? signedLabel : canSign ? 'Tap to sign' : 'Not signed'}
+                      <span className="w-5 shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                        {idx + 1}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-[15px] font-medium text-white">
+                          {attendee.name}
+                        </p>
+                        {attendee.role && (
+                          <p className="truncate text-[12px] text-white">{attendee.role}</p>
+                        )}
+                      </div>
+                      <span
+                        className={cn(
+                          'shrink-0 text-[13px] font-medium',
+                          canSign ? 'text-elec-yellow' : 'text-white'
+                        )}
+                      >
+                        {isSigned ? signedLabel : canSign ? 'Tap to sign' : 'Not signed'}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="py-6 text-center text-[13px] text-white">
+                No one on the register. Nobody has been recorded as attending this briefing.
+              </p>
+            )}
+
+            {/* A briefing with nobody listed yet is exactly when a link helps —
+              the old guard hid the button until someone was on the register. */}
+            {!allSigned && briefing.status !== 'cancelled' && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => setShowShare(true)}
+                className="mt-4 h-11 w-full touch-manipulation border border-elec-yellow/35 font-semibold text-elec-yellow hover:border-elec-yellow/60"
+              >
+                Share for signing
+              </Button>
+            )}
+          </section>
+
+          {/* Send, repeat and delete. Only for the person who can change it:
+            the maker, or a manager for a firm-made talk. */}
+          {access.canEdit && (
+            <section>
+              <SectionHeading>Send and repeat</SectionHeading>
+              <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                {firmBriefing && briefing.status !== 'cancelled' && (
+                  <button
+                    type="button"
+                    onClick={() => setShowSend(true)}
+                    className="flex min-h-[3.25rem] w-full touch-manipulation items-center gap-3 py-3 text-left active:bg-white/[0.04]"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[15px] font-medium text-white">Send to the crew</p>
+                      <p className="text-[12.5px] text-white">
+                        {crewSentAt
+                          ? `Last sent ${new Date(crewSentAt).toLocaleString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}. Send again to chase anyone who has not signed`
+                          : 'A notification to everyone it is for, to read and sign in the app'}
+                      </p>
+                    </div>
+                    <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">
+                      Send
                     </span>
                   </button>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="py-6 text-center text-[13px] text-white">
-              No one on the register. Nobody has been recorded as attending this briefing.
-            </p>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setShowRepeat(true)}
+                  className="flex min-h-[3.25rem] w-full touch-manipulation items-center gap-3 py-3 text-left active:bg-white/[0.04]"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[15px] font-medium text-white">Repeat this talk</p>
+                    <p className="text-[12.5px] text-white">
+                      {repeatLine ?? 'Weekly, fortnightly or monthly, made on the day'}
+                    </p>
+                  </div>
+                  <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">
+                    {repeatLine ? 'Change' : 'Set up'}
+                  </span>
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowDelete(true)}
+                className="mt-4 h-11 touch-manipulation px-1 text-[14px] font-medium text-red-400 underline-offset-4 hover:underline"
+              >
+                Delete this briefing
+              </button>
+            </section>
           )}
-
-          {/* A briefing with nobody listed yet is exactly when a link helps —
-              the old guard hid the button until someone was on the register. */}
-          {!allSigned && briefing.status !== 'cancelled' && (
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setShowShare(true)}
-              className="mt-4 h-11 w-full touch-manipulation border border-elec-yellow/35 font-semibold text-elec-yellow hover:border-elec-yellow/60"
-            >
-              Share for signing
-            </Button>
-          )}
-        </section>
+        </div>
       </div>
+
+      {showSend && (
+        <BriefingCrewSendSheet
+          open={showSend}
+          onOpenChange={setShowSend}
+          briefingId={briefing.id}
+          briefingName={title}
+          onSent={() => setCrewSentAt(new Date().toISOString())}
+        />
+      )}
+      <BriefingRepeatSheet
+        open={showRepeat}
+        onOpenChange={setShowRepeat}
+        briefingId={briefing.id}
+        briefingDate={briefing.briefing_date}
+        scheduleId={briefing.schedule_id}
+        firm={firmBriefing}
+      />
+      <DeleteBriefingDialog
+        open={showDelete}
+        onOpenChange={setShowDelete}
+        briefing={briefing}
+        onSuccess={() => (onDeleted ? onDeleted() : onClose())}
+      />
 
       {/* Sticky bottom bar — three equal actions, labelled. */}
       <div className="safe-area-pb fixed bottom-0 left-0 right-0 border-t border-white/10 bg-elec-dark/95 p-4 backdrop-blur">
-        <div className="flex gap-2">
+        <div className="flex gap-2 lg:justify-end">
           <Button
             type="button"
             variant="outline"
             onClick={onEdit}
-            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white"
+            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white lg:w-44 lg:flex-none"
           >
             Edit
           </Button>
@@ -411,7 +522,7 @@ export function BriefingDetailView({
             type="button"
             variant="outline"
             onClick={() => setShowShare(true)}
-            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white"
+            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white lg:w-44 lg:flex-none"
           >
             Share
           </Button>
@@ -419,7 +530,7 @@ export function BriefingDetailView({
             type="button"
             variant="outline"
             onClick={() => setShowPDF(!showPDF)}
-            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white"
+            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white lg:w-44 lg:flex-none"
           >
             PDF
           </Button>

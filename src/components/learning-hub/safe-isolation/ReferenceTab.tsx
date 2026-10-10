@@ -49,7 +49,7 @@ const ReferenceTab = ({ onBack }: { onBack: () => void }) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Regulations & Reference</h1>
-              <p className="text-[10px] text-white">BS 7671 · EAW 1989 · GS38</p>
+              <p className="text-[12px] text-white">BS 7671 · EAW 1989 · GS38</p>
             </div>
           </div>
         </div>

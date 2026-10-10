@@ -79,14 +79,10 @@ export function AddStandardisationMeetingDialog({ open, onOpenChange }: Props) {
     if (open) setForm({ ...EMPTY, attendee_ids: new Set() });
   }, [open]);
 
-  const update = (patch: Partial<FormState>) =>
-    setForm((p) => ({ ...p, ...patch }));
+  const update = (patch: Partial<FormState>) => setForm((p) => ({ ...p, ...patch }));
 
   const eligibleStaff = useMemo(
-    () =>
-      staff
-        .filter((s) => s.status !== 'Archived')
-        .sort((a, b) => a.name.localeCompare(b.name)),
+    () => staff.filter((s) => s.status !== 'Archived').sort((a, b) => a.name.localeCompare(b.name)),
     [staff]
   );
 
@@ -121,7 +117,7 @@ export function AddStandardisationMeetingDialog({ open, onOpenChange }: Props) {
       return;
     }
     if (form.date > todayIso()) {
-      toast({ title: 'Date can\'t be in the future', variant: 'destructive' });
+      toast({ title: "Date can't be in the future", variant: 'destructive' });
       return;
     }
     setSubmitting(true);
@@ -182,7 +178,7 @@ export function AddStandardisationMeetingDialog({ open, onOpenChange }: Props) {
         <div className="space-y-6">
           {/* Pre-fills topic, decisions and actions with the four-item awarding
               body agenda. Non-destructive: only fills fields that are empty. */}
-          <button type="button" onClick={applyTemplate} className={cn(chipCn(false), 'h-10')}>
+          <button type="button" onClick={applyTemplate} className={cn(chipCn(false), 'h-11')}>
             Use the standard agenda
           </button>
           <section className="space-y-5">
@@ -316,9 +312,13 @@ export function AddStandardisationMeetingDialog({ open, onOpenChange }: Props) {
               onChange={(e) => update({ action_items_text: e.target.value })}
               rows={5}
               className={cn(textareaCn, 'min-h-[130px]')}
-              placeholder={'Update marking scheme by 15 May\nRe-sample 5 portfolios from Sarah\'s cohort\nNext review at end of term'}
+              placeholder={
+                "Update marking scheme by 15 May\nRe-sample 5 portfolios from Sarah's cohort\nNext review at end of term"
+              }
             />
-            <p className="mt-1.5 text-[12px] text-white">Each line becomes an action you can track.</p>
+            <p className="mt-1.5 text-[12px] text-white">
+              Each line becomes an action you can track.
+            </p>
           </div>
         </div>
       </div>

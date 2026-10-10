@@ -596,7 +596,7 @@ function Field({
     <label className="block">
       <div className="mb-1 flex items-baseline justify-between gap-2">
         <span className={cn(labelCn, 'mb-0')}>{label}</span>
-        {hint && <span className="text-[11px] text-white">{hint}</span>}
+        {hint && <span className="text-[12px] text-white">{hint}</span>}
       </div>
       {children}
     </label>

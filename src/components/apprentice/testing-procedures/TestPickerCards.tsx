@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
+import { LEARN_LIST, learnTag } from '@/components/apprentice/learn-ui/learnUi';
 import { TEST_OPTIONS } from './data/testOptions';
 
 interface TestPickerCardsProps {
@@ -7,63 +7,66 @@ interface TestPickerCardsProps {
   onSelect: (value: string) => void;
 }
 
+/**
+ * The four tests as one list of rows (edge to edge on a phone, two columns
+ * from sm:). They were four separate gold-edged cards, so the choice read as
+ * four billboards; the chosen test now carries a volt bar and a volt title.
+ */
 const TestPickerCards = ({ active, onSelect }: TestPickerCardsProps) => (
-  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+  <ul
+    className={cn(
+      LEARN_LIST,
+      'sm:grid sm:grid-cols-2 sm:divide-y-0 sm:[&>li]:border-b sm:[&>li]:border-white/[0.06] sm:[&>li:nth-child(odd)]:border-r'
+    )}
+  >
     {TEST_OPTIONS.map((t) => {
       const Icon = t.icon;
       const isActive = active === t.value;
       const isLive = t.state === 'live';
 
       return (
-        <button
-          key={t.value}
-          type="button"
-          onClick={() => onSelect(t.value)}
-          aria-pressed={isActive}
-          className={cn(
-            CARD_BASE,
-            CARD_NEUTRAL,
-            'flex flex-col gap-2 p-4 text-left sm:p-5 touch-manipulation',
-            'lg:hover:-translate-y-0.5',
-            isActive && 'border-elec-yellow'
-          )}
-        >
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Icon
-                aria-hidden
-                className={cn('h-4 w-4 shrink-0', isActive ? 'text-elec-yellow' : 'text-white')}
-              />
-              <span className="font-mono text-[11px] tabular-nums text-white">{t.reg}</span>
-            </div>
-            {/* The safety fact, not a decoration. */}
-            <span
-              className={cn(
-                'shrink-0 rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em]',
-                isLive
-                  ? 'border-red-500/50 bg-red-500/[0.12] text-red-300'
-                  : 'border-white/15 bg-white/[0.05] text-white'
-              )}
-            >
-              {isLive ? 'Live test' : 'Dead test'}
-            </span>
-          </div>
-
-          <h3
+        <li key={t.value} className="h-full">
+          <button
+            type="button"
+            onClick={() => onSelect(t.value)}
+            aria-pressed={isActive}
             className={cn(
-              'text-[15px] font-semibold leading-tight tracking-tight',
-              isActive ? 'text-elec-yellow' : 'text-white'
+              'flex h-full w-full flex-col gap-1.5 px-5 py-4 text-left transition-colors touch-manipulation sm:px-6',
+              'hover:bg-white/[0.04] active:bg-white/[0.07]',
+              isActive && 'bg-white/[0.04] shadow-[inset_3px_0_0_0_hsl(var(--elec-yellow))]'
             )}
           >
-            {t.label}
-          </h3>
+            <span className="flex items-center justify-between gap-2">
+              <span className="flex items-center gap-2">
+                <Icon
+                  aria-hidden
+                  strokeWidth={1.5}
+                  className={cn('h-4 w-4 shrink-0', isActive ? 'text-elec-yellow' : 'text-white')}
+                />
+                <span className="font-mono text-[12px] tabular-nums text-white">{t.reg}</span>
+              </span>
+              {/* The safety fact, not a decoration. */}
+              <span className={learnTag(isLive ? 'danger' : 'neutral')}>
+                {isLive ? 'Live test' : 'Dead test'}
+              </span>
+            </span>
 
-          <p className="text-[13.5px] font-medium leading-snug text-white">{t.plain}</p>
-          <p className="text-[12.5px] leading-snug text-white opacity-80">{t.proves}</p>
-        </button>
+            <span
+              className={cn(
+                'text-[15px] font-semibold leading-tight tracking-tight',
+                isActive ? 'text-elec-yellow' : 'text-white'
+              )}
+            >
+              {t.label}
+            </span>
+
+            <span className="text-[13.5px] font-medium leading-snug text-white">{t.plain}</span>
+            <span className="text-[13px] leading-snug text-white">{t.proves}</span>
+          </button>
+        </li>
       );
     })}
-  </div>
+  </ul>
 );
 
 export default TestPickerCards;

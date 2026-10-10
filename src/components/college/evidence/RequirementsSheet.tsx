@@ -6,7 +6,6 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
   inputCn,
   labelCn,
   textareaCn,
@@ -22,6 +21,9 @@ import {
   type CollegeRequirement,
   type ItemGroup,
 } from '@/hooks/useEvidencePack';
+
+/** A picked choice is white, not yellow: one solid yellow action per screen (10 Oct 2026). */
+const PICKED = 'border-white bg-white font-semibold text-black';
 
 /* ==========================================================================
    RequirementsSheet — the college's own evidence requirements (ELE-1908).
@@ -39,7 +41,11 @@ const STAGE_LABEL: Record<ItemGroup, string> = {
   during: 'During',
   end: 'At the end',
 };
-const ROLE_LABEL: Record<string, string> = { apprentice: 'Apprentice', employer: 'Employer', provider: 'College' };
+const ROLE_LABEL: Record<string, string> = {
+  apprentice: 'Apprentice',
+  employer: 'Employer',
+  provider: 'College',
+};
 
 /** Requirements colleges commonly keep, beyond the funding rules. */
 const TEMPLATES: Array<Draft & { title: string; stage: ItemGroup; why: string }> = [
@@ -53,7 +59,8 @@ const TEMPLATES: Array<Draft & { title: string; stage: ItemGroup; why: string }>
   },
   {
     title: 'Workplace health and safety check',
-    description: 'The college’s check that the employer’s workplace is safe for an apprentice, renewed each year.',
+    description:
+      'The college’s check that the employer’s workplace is safe for an apprentice, renewed each year.',
     stage: 'start',
     renew_months: 12,
     needs_signature_from: ['provider'],
@@ -61,7 +68,8 @@ const TEMPLATES: Array<Draft & { title: string; stage: ItemGroup; why: string }>
   },
   {
     title: 'Safeguarding and Prevent briefing',
-    description: 'The apprentice has had the safeguarding and Prevent briefing and knows who to contact.',
+    description:
+      'The apprentice has had the safeguarding and Prevent briefing and knows who to contact.',
     stage: 'start',
     due_within_days: 28,
     needs_signature_from: ['apprentice'],
@@ -77,7 +85,8 @@ const TEMPLATES: Array<Draft & { title: string; stage: ItemGroup; why: string }>
   },
   {
     title: 'PPE issued',
-    description: 'Record of personal protective equipment issued to the apprentice for workshop practice.',
+    description:
+      'Record of personal protective equipment issued to the apprentice for workshop practice.',
     stage: 'start',
     due_within_days: 7,
     needs_signature_from: ['apprentice'],
@@ -99,7 +108,8 @@ const TEMPLATES: Array<Draft & { title: string; stage: ItemGroup; why: string }>
   },
   {
     title: 'DBS check',
-    description: 'A current DBS check, where the apprentice works in homes, schools or with vulnerable people.',
+    description:
+      'A current DBS check, where the apprentice works in homes, schools or with vulnerable people.',
     stage: 'start',
     renew_months: 36,
     why: 'For apprentices working in sensitive settings',
@@ -190,9 +200,9 @@ export function RequirementsSheet({
 
   const scopeLabel = (r: Draft) =>
     r.cohort_id
-      ? cohorts.find((c) => c.id === r.cohort_id)?.name ?? 'One cohort'
+      ? (cohorts.find((c) => c.id === r.cohort_id)?.name ?? 'One cohort')
       : r.course_id
-        ? courses.find((c) => c.id === r.course_id)?.name ?? 'One course'
+        ? (courses.find((c) => c.id === r.course_id)?.name ?? 'One course')
         : 'Every learner';
 
   const facts = (r: Draft) =>
@@ -200,7 +210,9 @@ export function RequirementsSheet({
       STAGE_LABEL[r.stage ?? 'start'],
       r.due_within_days != null ? `within ${r.due_within_days} days` : null,
       r.renew_months ? `renew every ${r.renew_months} months` : null,
-      r.needs_signature_from?.length ? `signed by ${r.needs_signature_from.map((x) => ROLE_LABEL[x].toLowerCase()).join(' and ')}` : null,
+      r.needs_signature_from?.length
+        ? `signed by ${r.needs_signature_from.map((x) => ROLE_LABEL[x].toLowerCase()).join(' and ')}`
+        : null,
     ].filter(Boolean) as string[];
 
   const e = editing;
@@ -258,11 +270,18 @@ export function RequirementsSheet({
                       className="flex h-full w-full flex-col rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-4 text-left touch-manipulation hover:border-white/[0.2]"
                     >
                       <span className="flex items-start justify-between gap-3">
-                        <span className="text-[15px] font-semibold leading-snug text-white">{r.title}</span>
-                        <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                        <span className="text-[15px] font-semibold leading-snug text-white">
+                          {r.title}
+                        </span>
+                        <ChevronRight
+                          className="mt-0.5 h-4 w-4 shrink-0 text-white"
+                          aria-hidden="true"
+                        />
                       </span>
                       {r.description && (
-                        <span className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-white">{r.description}</span>
+                        <span className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-white">
+                          {r.description}
+                        </span>
                       )}
                       <span className="mt-3 flex flex-wrap gap-1.5">
                         <Tag strong>{scopeLabel(r)}</Tag>
@@ -281,16 +300,20 @@ export function RequirementsSheet({
           {templates.length > 0 && (
             <section>
               <h3 className="text-[15px] font-semibold text-white">
-                {active.length ? 'More you could add' : 'Start with one colleges commonly keep'}
+                {active.length ? 'More you could add' : 'Start with ones colleges commonly keep'}
               </h3>
-              <p className="mt-1 text-[13px] text-white">One tap adds it to every learner’s pack. You can change it after.</p>
+              <p className="mt-1 text-[13px] text-white">
+                One tap adds it to every learner’s pack. You can change it after.
+              </p>
               <ul className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                 {templates.map((t) => (
                   <li
                     key={t.title}
                     className="flex flex-col rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-4"
                   >
-                    <span className="text-[15px] font-semibold leading-snug text-white">{t.title}</span>
+                    <span className="text-[15px] font-semibold leading-snug text-white">
+                      {t.title}
+                    </span>
                     <span className="mt-1 text-[12.5px] leading-relaxed text-white">{t.why}</span>
                     <span className="mt-3 flex flex-wrap gap-1.5">
                       {facts(t).map((f) => (
@@ -309,7 +332,7 @@ export function RequirementsSheet({
                         type="button"
                         disabled={saving}
                         onClick={() => void save({ ...t, active: true })}
-                        className="inline-flex h-11 items-center justify-center gap-1.5 rounded-xl bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation"
+                        className="inline-flex h-11 items-center justify-center gap-1.5 rounded-xl border border-white/[0.14] text-[13px] font-semibold text-white touch-manipulation hover:border-elec-yellow active:bg-white/[0.06]"
                       >
                         <Plus className="h-4 w-4" aria-hidden="true" />
                         Add
@@ -329,12 +352,17 @@ export function RequirementsSheet({
               className="flex min-h-11 w-full items-center justify-between gap-3 text-left touch-manipulation"
             >
               <span>
-                <span className="block text-[15px] font-semibold text-white">Always included: the funding rules</span>
+                <span className="block text-[15px] font-semibold text-white">
+                  Always included: the funding rules
+                </span>
                 <span className="block text-[12.5px] text-white">
-                  {BUILT_IN.length} items, from eligibility to the assessment result, checked automatically
+                  {BUILT_IN.length} items, from eligibility to the assessment result, checked
+                  automatically
                 </span>
               </span>
-              <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">{showBuiltIn ? 'Hide' : 'Show'}</span>
+              <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">
+                {showBuiltIn ? 'Hide' : 'Show'}
+              </span>
             </button>
             {showBuiltIn && (
               <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
@@ -360,7 +388,9 @@ export function RequirementsSheet({
                       className="flex min-h-11 w-full items-center justify-between text-left text-[13.5px] text-white touch-manipulation"
                     >
                       {r.title}
-                      <span className="text-[12.5px] font-semibold text-elec-yellow">Bring back</span>
+                      <span className="text-[12.5px] font-semibold text-elec-yellow">
+                        Bring back
+                      </span>
                     </button>
                   </li>
                 ))}
@@ -406,7 +436,7 @@ export function RequirementsSheet({
                     type="button"
                     aria-pressed={e.stage === s}
                     onClick={() => setEditing({ ...e, stage: s })}
-                    className={cn(chipBase, 'px-2 text-[13px]', e.stage === s ? chipOn : chipOff)}
+                    className={cn(chipBase, 'px-2 text-[13px]', e.stage === s ? PICKED : chipOff)}
                   >
                     {STAGE_LABEL[s]}
                   </button>
@@ -423,7 +453,12 @@ export function RequirementsSheet({
                   id="rq-due"
                   inputMode="numeric"
                   value={e.due_within_days ?? ''}
-                  onChange={(ev) => setEditing({ ...e, due_within_days: ev.target.value ? Number(ev.target.value) : null })}
+                  onChange={(ev) =>
+                    setEditing({
+                      ...e,
+                      due_within_days: ev.target.value ? Number(ev.target.value) : null,
+                    })
+                  }
                   className={inputCn}
                   placeholder="Optional"
                 />
@@ -436,7 +471,12 @@ export function RequirementsSheet({
                   id="rq-renew"
                   inputMode="numeric"
                   value={e.renew_months ?? ''}
-                  onChange={(ev) => setEditing({ ...e, renew_months: ev.target.value ? Number(ev.target.value) : null })}
+                  onChange={(ev) =>
+                    setEditing({
+                      ...e,
+                      renew_months: ev.target.value ? Number(ev.target.value) : null,
+                    })
+                  }
                   className={inputCn}
                   placeholder="Never"
                 />
@@ -461,7 +501,7 @@ export function RequirementsSheet({
                             : [...(e.needs_signature_from ?? []), v],
                         })
                       }
-                      className={cn(chipBase, 'px-2 text-[13px]', on ? chipOn : chipOff)}
+                      className={cn(chipBase, 'px-2 text-[13px]', on ? PICKED : chipOff)}
                     >
                       {label}
                     </button>
@@ -477,7 +517,11 @@ export function RequirementsSheet({
                   type="button"
                   aria-pressed={!e.cohort_id && !e.course_id}
                   onClick={() => setEditing({ ...e, cohort_id: null, course_id: null })}
-                  className={cn(chipBase, 'px-3 text-[13px]', !e.cohort_id && !e.course_id ? chipOn : chipOff)}
+                  className={cn(
+                    chipBase,
+                    'px-3 text-[13px]',
+                    !e.cohort_id && !e.course_id ? PICKED : chipOff
+                  )}
                 >
                   Every learner
                 </button>
@@ -487,7 +531,11 @@ export function RequirementsSheet({
                     type="button"
                     aria-pressed={e.cohort_id === c.id}
                     onClick={() => setEditing({ ...e, cohort_id: c.id, course_id: null })}
-                    className={cn(chipBase, 'px-3 text-[13px]', e.cohort_id === c.id ? chipOn : chipOff)}
+                    className={cn(
+                      chipBase,
+                      'px-3 text-[13px]',
+                      e.cohort_id === c.id ? PICKED : chipOff
+                    )}
                   >
                     {c.name}
                   </button>
@@ -498,7 +546,11 @@ export function RequirementsSheet({
                     type="button"
                     aria-pressed={e.course_id === c.id}
                     onClick={() => setEditing({ ...e, course_id: c.id, cohort_id: null })}
-                    className={cn(chipBase, 'px-3 text-[13px]', e.course_id === c.id ? chipOn : chipOff)}
+                    className={cn(
+                      chipBase,
+                      'px-3 text-[13px]',
+                      e.course_id === c.id ? PICKED : chipOff
+                    )}
                   >
                     {c.name}
                   </button>
@@ -524,17 +576,28 @@ export function RequirementsSheet({
 
           {/* Live preview */}
           <aside className="lg:sticky lg:top-0 lg:self-start">
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">On a learner’s pack</p>
+            <p className="mb-2 text-[13px] font-semibold text-elec-yellow">On a learner’s pack</p>
             <div className="rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-4">
               <div className="flex items-start justify-between gap-3">
-                <p className="text-[15px] font-semibold leading-snug text-white">{e.title?.trim() || 'Your requirement'}</p>
-                <span className={cn('shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold', STATUS_PILL[e.due_within_days != null ? 'due' : 'missing'])}>
+                <p className="text-[15px] font-semibold leading-snug text-white">
+                  {e.title?.trim() || 'Your requirement'}
+                </p>
+                <span
+                  className={cn(
+                    'shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold',
+                    STATUS_PILL[e.due_within_days != null ? 'due' : 'missing']
+                  )}
+                >
                   {STATUS_LABEL[e.due_within_days != null ? 'due' : 'missing']}
                 </span>
               </div>
-              <p className="mt-1 text-[13px] leading-relaxed text-white">{e.description?.trim() || 'Required by the college.'}</p>
-              <p className="mt-1 text-[11.5px] text-white">College requirement · {scopeLabel(e).toLowerCase()}</p>
-              <span className="mt-3 inline-flex h-10 items-center gap-1.5 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black">
+              <p className="mt-1 text-[13px] leading-relaxed text-white">
+                {e.description?.trim() || 'Required by the college.'}
+              </p>
+              <p className="mt-1 text-[12px] text-white">
+                College requirement · {scopeLabel(e).toLowerCase()}
+              </p>
+              <span className="mt-3 inline-flex h-10 items-center gap-1.5 rounded-xl border border-white/[0.14] px-4 text-[13px] font-semibold text-white">
                 File
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </span>
@@ -542,13 +605,19 @@ export function RequirementsSheet({
             <ul className="mt-3 space-y-1.5 text-[12.5px] leading-relaxed text-white">
               {facts(e).map((f) => (
                 <li key={f} className="flex gap-2">
-                  <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden="true" />
+                  <Check
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400"
+                    aria-hidden="true"
+                  />
                   {f.charAt(0).toUpperCase() + f.slice(1)}
                 </li>
               ))}
               {e.renew_months ? (
                 <li className="flex gap-2">
-                  <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden="true" />
+                  <Check
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400"
+                    aria-hidden="true"
+                  />
                   Turns orange when it needs renewing
                 </li>
               ) : null}
@@ -564,7 +633,7 @@ function Tag({ children, strong }: { children: React.ReactNode; strong?: boolean
   return (
     <span
       className={cn(
-        'rounded-full px-2.5 py-1 text-[11.5px] font-medium',
+        'rounded-full px-2.5 py-1 text-[12px] font-medium',
         strong ? 'bg-white text-black' : 'border border-white/[0.16] text-white'
       )}
     >

@@ -362,7 +362,7 @@ const sections = [
             Regulation 411.3.4 of BS 7671:2018+A4:2026, which requires that, in domestic premises,
             AC final circuits supplying luminaires shall be provided with additional protection by
             an RCD with a rated residual operating current not exceeding 30 mA. Because domestic
-            lighting circuits now require the same 30 mA RCD protection as socket circuits, both
+            lighting circuits require the same 30 mA RCD protection as socket circuits, both
             circuit types sit behind the same RCD on a split-load board — so an earth leakage fault
             on any one circuit, whether a socket or a light fitting, can trip the RCD protecting
             both.
@@ -517,8 +517,8 @@ const sections = [
               </p>
               <p className="text-sm text-white leading-relaxed">
                 Arcing at a loose socket terminal is precisely the hazard that arc fault detection
-                devices (AFDDs) are designed to detect. Regulation 421.1.7 of BS 7671:2018+A4:2026
-                now <strong className="text-white">requires</strong> AFDDs conforming to BS EN 62606
+                devices (AFDDs) are designed to detect. Since A2:2022, Regulation 421.1.7 of BS 7671
+                has <strong className="text-white">required</strong> AFDDs conforming to BS EN 62606
                 for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high
                 rise residential buildings, houses in multiple occupation, purpose-built student
                 accommodation and care homes. For all other premises — including ordinary domestic
@@ -793,7 +793,7 @@ export default function NoPowerToSocketsPage() {
       title="No Power to Sockets: Troubleshooting Guide"
       description="Complete guide to diagnosing dead sockets. Covers tripped MCBs and RCDs, broken ring circuits, loose connections, spur faults."
       datePublished="2025-07-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

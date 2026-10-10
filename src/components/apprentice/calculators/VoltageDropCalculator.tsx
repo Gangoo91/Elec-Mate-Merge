@@ -552,8 +552,8 @@ const VoltageDropCalculator = () => {
                 <div
                   className="p-3 rounded-xl border"
                   style={{
-                    background: `${config.gradientFrom}08`,
-                    borderColor: `${config.gradientFrom}20`,
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    borderColor: 'rgba(255, 255, 255, 0.12)',
                   }}
                 >
                   <div className="flex items-center gap-2">
@@ -765,7 +765,7 @@ const VoltageDropCalculator = () => {
 
                   {/* Reg 433.1.1 — voltage drop is only one of the two sizing checks. This calculator
                   evaluates the App 4 §6.4 limit only; it does not know Iz or the device rating. */}
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-amber-500/20">
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                       <div className="text-sm text-white">
@@ -857,8 +857,8 @@ const VoltageDropCalculator = () => {
                     <div
                       className="space-y-2 font-mono text-xs rounded-lg p-3 border"
                       style={{
-                        background: `${config.gradientFrom}08`,
-                        borderColor: `${config.gradientFrom}20`,
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
                       }}
                     >
                       <p className="text-white">
@@ -927,8 +927,8 @@ const VoltageDropCalculator = () => {
                             style={
                               alt.size === Number(cableSize)
                                 ? {
-                                    background: `${config.gradientFrom}15`,
-                                    borderColor: `${config.gradientFrom}40`,
+                                    background: 'rgba(255, 255, 255, 0.04)',
+                                    borderColor: 'rgba(255, 255, 255, 0.12)',
                                   }
                                 : undefined
                             }

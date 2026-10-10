@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { Lock, Phone, Send } from 'lucide-react';
+import {
+  ChevronRight,
+  Lock,
+  MessageCircle,
+  NotebookPen,
+  Phone,
+  Send,
+  SmilePlus,
+  Wind,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { MentalHealthProvider } from '@/contexts/MentalHealthContext';
@@ -11,20 +21,15 @@ import { useWellbeingScore } from '@/hooks/useWellbeingScore';
 import { useWellbeingInsights } from '@/hooks/useWellbeingInsights';
 import { cn } from '@/lib/utils';
 
-import { Eyebrow, EmptyState, type Tone } from '@/components/college/primitives';
+import { EmptyState, type Tone } from '@/components/college/primitives';
+import { HubBody, HubMasthead, HubPage, HubWorkList } from '@/components/hub/HubPrimitives';
 import {
-  HubBody,
-  HubKpi,
-  HubKpiRow,
-  HubMasthead,
-  HubPage,
-  HubQuickStart,
-  HubSectionHeading,
-  HubToolGrid,
-  HubWorkList,
-} from '@/components/hub/HubPrimitives';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
-import { buttonSecondaryCn } from '@/components/forms/fieldStyles';
+  ContactButton,
+  ContactRow,
+  WB_CARD,
+  WB_LIST,
+  WellbeingSection,
+} from '@/components/mental-health/wellbeingUi';
 
 import BreathingExercise from '@/components/mental-health/BreathingExercise';
 import QuickMoodCheck from '@/components/mental-health/QuickMoodCheck';
@@ -44,76 +49,7 @@ import PodcastsTab from '@/components/mental-health/podcasts/PodcastsTab';
 import DailyAffirmation from '@/components/mental-health/DailyAffirmation';
 import { recordCrisisEvent } from '@/services/mentalHealthService';
 
-/* ── Wellbeing ring (re-uses the ComplianceRing pattern) ───────────── */
-
-function WellbeingRing({
-  score,
-  band,
-  size = 56,
-}: {
-  score: number;
-  band: 'critical' | 'low' | 'fair' | 'good' | 'great';
-  size?: number;
-}) {
-  const stroke =
-    band === 'great'
-      ? 'hsl(var(--elec-yellow))'
-      : band === 'good'
-        ? '#34d399'
-        : band === 'fair'
-          ? '#fbbf24'
-          : band === 'low'
-            ? '#fb923c'
-            : '#f87171';
-  const r = (size - 5) / 2;
-  const circ = 2 * Math.PI * r;
-  const offset = circ - (score / 100) * circ;
-  return (
-    <div className="flex items-center gap-2.5">
-      <svg width={size} height={size} className="shrink-0">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={r}
-          fill="none"
-          stroke="rgba(255,255,255,0.08)"
-          strokeWidth={3}
-        />
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={r}
-          fill="none"
-          stroke={stroke}
-          strokeWidth={3}
-          strokeLinecap="round"
-          strokeDasharray={circ}
-          strokeDashoffset={offset}
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        />
-        <text
-          x="50%"
-          y="50%"
-          dominantBaseline="central"
-          textAnchor="middle"
-          fill={stroke}
-          fontSize={size * 0.3}
-          fontWeight="700"
-        >
-          {score}
-        </text>
-      </svg>
-      <div className="flex flex-col items-start">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Wellbeing
-        </span>
-        <span className="text-[12px] text-white capitalize">{band}</span>
-      </div>
-    </div>
-  );
-}
-
-/* ── Crisis card (sticky-able, one-tap dial/text) ──────────────────── */
+/* ── Crisis card (one-tap dial / text) ─────────────────────────────── */
 
 // One-shot haptic for crisis taps. Fails silently if the browser doesn't
 // support it (desktop, older Safari) — never blocks the dial intent.
@@ -125,62 +61,62 @@ const buzz = (ms = 30) => {
   }
 };
 
+/**
+ * Help now: always first on a phone. A neutral card with a red edge and three
+ * full-width buttons (10 Oct: was pills on a red wash with a spaced-capitals
+ * label).
+ */
 function CrisisCard({ onCallLogged }: { onCallLogged: (label: string) => void }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-red-500/25 bg-gradient-to-br from-red-500/[0.08] via-rose-500/[0.04] to-transparent p-5">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-red-500/70 via-rose-400/70 to-red-500/70 opacity-70" />
-      <div className="flex items-center gap-2 mb-1.5">
-        <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
-        <Eyebrow>Need help right now?</Eyebrow>
-      </div>
-      <p className="text-[13px] sm:text-sm text-white leading-relaxed mb-4 max-w-2xl">
+    <section aria-label="Need help right now" className={cn(WB_CARD, '!border-red-400/40')}>
+      <p className="text-[15px] font-semibold text-red-300">Need help right now?</p>
+      <p className="mt-1 text-[14px] leading-relaxed text-white">
         Free, confidential, 24/7. None of these calls leave a record on your account beyond a
         private "checking-in" reminder for you tomorrow.
       </p>
-      <div className="flex flex-wrap gap-2">
-        <a
+      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3">
+        <ContactButton
+          urgent
           href="tel:116123"
+          label="Call Samaritans 116 123"
           onClick={() => {
             buzz(40);
             onCallLogged('Samaritans 116 123');
           }}
-          className="inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[13px] font-semibold touch-manipulation active:scale-[0.98]"
-        >
-          <Phone className="h-3.5 w-3.5" /> Call 116 123
-        </a>
-        <a
+        />
+        <ContactButton
+          kind="text"
           href="sms:85258?body=SHOUT"
+          label="Text SHOUT to 85258"
           onClick={() => {
             buzz(40);
             onCallLogged('SHOUT 85258');
           }}
-          className="inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[13px] font-medium touch-manipulation active:scale-[0.98]"
-        >
-          <Send className="h-3.5 w-3.5" /> Text SHOUT to 85258
-        </a>
-        <a
+        />
+        <ContactButton
+          urgent
           href="tel:999"
+          label="999 emergency"
           onClick={() => {
             buzz(60);
             onCallLogged('999 Emergency');
           }}
-          className="inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.04] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation active:scale-[0.98]"
-        >
-          <Phone className="h-3.5 w-3.5" /> 999 emergency
-        </a>
+        />
       </div>
-    </div>
+    </section>
   );
 }
 
-/* ── Today's mood quick-pill row ───────────────────────────────────── */
+/* ── Mood check-in ──────────────────────────────────────────────────── */
 
-const moodPills: { value: number; emoji: string; label: string; tone: Tone }[] = [
-  { value: 1, emoji: '😞', label: 'Low', tone: 'red' },
-  { value: 2, emoji: '😕', label: 'Off', tone: 'orange' },
-  { value: 3, emoji: '😐', label: 'OK', tone: 'amber' },
-  { value: 4, emoji: '🙂', label: 'Good', tone: 'emerald' },
-  { value: 5, emoji: '😄', label: 'Great', tone: 'yellow' },
+// Words, not emoji (10 Oct: icons look designed, not generated). Five equal
+// buttons; the chosen one turns white.
+const moodPills: { value: number; label: string }[] = [
+  { value: 1, label: 'Low' },
+  { value: 2, label: 'Off' },
+  { value: 3, label: 'OK' },
+  { value: 4, label: 'Good' },
+  { value: 5, label: 'Great' },
 ];
 
 function timeAwareGreeting(hasLoggedToday: boolean) {
@@ -197,63 +133,80 @@ function timeAwareGreeting(hasLoggedToday: boolean) {
   return 'Late night. How are you holding up?';
 }
 
-function TodayMoodRow({
+function MoodCheckCard({
   todaysMood,
+  firstRun,
+  flash,
   onLog,
   onOpen,
 }: {
   todaysMood: number | null;
+  firstRun: boolean;
+  flash: boolean;
   onLog: (mood: number) => void;
   onOpen: () => void;
 }) {
+  const chosen = moodPills.find((p) => p.value === todaysMood);
   return (
-    <div className={cn('rounded-2xl border border-elec-yellow/35 p-5', CARD_SURFACE)}>
-      <div className="flex items-center justify-between gap-3 mb-3">
-        <div className="min-w-0 flex-1">
-          <Eyebrow>Today</Eyebrow>
-          <div className="mt-1 text-[18px] sm:text-[20px] font-semibold text-white leading-snug">
-            {timeAwareGreeting(todaysMood !== null)}
-          </div>
+    <section aria-label="Check in" className={WB_CARD}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h3 className="text-[17px] font-semibold leading-snug text-white">
+            {firstRun
+              ? 'Take 30 seconds: how do you feel today?'
+              : chosen
+                ? `Today: ${chosen.label}`
+                : 'How do you feel today?'}
+          </h3>
+          <p className="mt-1 text-[13.5px] leading-snug text-white">
+            {flash
+              ? 'Saved.'
+              : firstRun
+                ? 'One tap. The more you log, the better we can spot what helps and what drags you down.'
+                : chosen
+                  ? 'Tap another to change it.'
+                  : 'One tap is all it takes.'}
+          </p>
         </div>
-        <button
-          onClick={onOpen}
-          className="h-11 shrink-0 px-2 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
-        >
-          Notes →
-        </button>
+        {!firstRun && (
+          <button
+            type="button"
+            onClick={onOpen}
+            className="-mr-2 -mt-2 inline-flex h-11 shrink-0 items-center px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+          >
+            Add a note
+          </button>
+        )}
       </div>
-      <div className="grid grid-cols-5 gap-2">
+      <div className="mt-4 grid grid-cols-5 gap-1.5 sm:gap-2" role="group" aria-label="Your mood">
         {moodPills.map((p) => {
           const selected = todaysMood === p.value;
           return (
             <button
               key={p.value}
+              type="button"
+              aria-pressed={selected}
               onClick={() => {
                 buzz(20);
                 onLog(p.value);
               }}
               className={cn(
-                'group flex flex-col items-center gap-1 py-3 rounded-xl border transition-all touch-manipulation active:scale-[0.94]',
+                'h-12 min-w-0 rounded-xl border text-[14px] font-semibold transition-colors touch-manipulation active:scale-[0.97]',
                 selected
-                  ? 'border-elec-yellow bg-elec-yellow'
-                  : 'border-white/[0.12] bg-white/[0.06]'
+                  ? 'border-white bg-white text-black'
+                  : 'border-white/[0.14] text-white hover:border-white/[0.35]'
               )}
             >
-              <span className="text-[22px] leading-none">{p.emoji}</span>
-              <span
-                className={cn('text-[10.5px] font-medium', selected ? 'text-black' : 'text-white')}
-              >
-                {p.label}
-              </span>
+              {p.label}
             </button>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }
 
-/* ── 7-day mood heatmap (small editorial strip) ───────────────────── */
+/* ── 7-day mood strip ──────────────────────────────────────────────── */
 
 function MoodHeatmap({
   moodHistory,
@@ -279,32 +232,40 @@ function MoodHeatmap({
     return out;
   }, [moodHistory]);
 
+  // Solid colours only (a translucent wash goes brown on this ground).
   const moodColour = (m: number | null) => {
-    if (m === null) return 'bg-white/[0.04] border-white/[0.06]';
-    if (m <= 1) return 'bg-red-500/30 border-red-500/40';
-    if (m <= 2) return 'bg-orange-500/30 border-orange-500/40';
-    if (m <= 3) return 'bg-amber-500/30 border-amber-500/40';
-    if (m <= 4) return 'bg-emerald-500/30 border-emerald-500/40';
-    return 'bg-elec-yellow border-elec-yellow';
+    if (m === null) return 'border border-white/[0.14]';
+    if (m <= 1) return 'bg-red-400';
+    if (m <= 2) return 'bg-orange-400';
+    if (m <= 3) return 'bg-amber-300';
+    if (m <= 4) return 'bg-emerald-400';
+    return 'bg-elec-yellow';
   };
 
   return (
-    <button onClick={onTap} className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full p-4 sm:p-5')}>
-      <div className="flex items-center justify-between mb-3">
-        <Eyebrow>Last 7 days</Eyebrow>
-        <span className="text-[11px] text-white">Tap for insights →</span>
-      </div>
-      <div className="grid grid-cols-7 gap-1.5">
+    <button
+      type="button"
+      onClick={onTap}
+      className={cn(WB_CARD, 'block w-[calc(100%+2rem)] text-left touch-manipulation sm:w-full')}
+    >
+      <span className="flex items-center justify-between gap-3">
+        <span className="text-[15px] font-semibold text-white">Last 7 days</span>
+        <span className="inline-flex items-center gap-0.5 text-[13px] font-semibold text-elec-yellow">
+          Mood insights
+          <ChevronRight className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+        </span>
+      </span>
+      <span className="mt-3 grid grid-cols-7 gap-1.5">
         {days.map((d) => (
-          <div key={d.key} className="flex flex-col items-center gap-1.5">
-            <div
-              className={cn('h-9 w-full rounded-lg border transition-colors', moodColour(d.mood))}
+          <span key={d.key} className="flex flex-col items-center gap-1.5">
+            <span
+              className={cn('h-8 w-full rounded-lg', moodColour(d.mood))}
               aria-label={d.mood ? `Mood ${d.mood}/5 on ${d.key}` : `No log on ${d.key}`}
             />
-            <span className="text-[10px] text-white">{d.label}</span>
-          </div>
+            <span className="text-[12px] text-white">{d.label}</span>
+          </span>
         ))}
-      </div>
+      </span>
     </button>
   );
 }
@@ -341,7 +302,7 @@ const buildToolkit = (): ToolCard[] => {
   const cards: ToolCard[] = [
     {
       id: 'tools',
-      title: 'Interactive Tools',
+      title: 'Interactive tools',
       description: 'Breathing, grounding and focus tools.',
       tone: 'yellow',
       number: '01',
@@ -355,7 +316,7 @@ const buildToolkit = (): ToolCard[] => {
     },
     {
       id: 'support',
-      title: 'Support Network',
+      title: 'Support network',
       description: 'Charities, peer groups and helplines.',
       tone: 'purple',
       number: '03',
@@ -372,28 +333,28 @@ const buildToolkit = (): ToolCard[] => {
   cards.unshift(
     {
       id: 'journal',
-      title: 'Wellbeing Journal',
+      title: 'Wellbeing journal',
       description: 'Track thoughts, gratitude and triggers.',
       tone: 'emerald',
       number: '01',
     },
     {
       id: 'safety-plan',
-      title: 'My Safety Plan',
+      title: 'My safety plan',
       description: 'A personal plan for difficult moments.',
       tone: 'red',
       number: '02',
     },
     {
       id: 'sleep',
-      title: 'Sleep Tracker',
+      title: 'Sleep tracker',
       description: 'See how rest affects your wellbeing.',
       tone: 'indigo',
       number: '03',
     },
     {
       id: 'insights',
-      title: 'Mood Insights',
+      title: 'Mood insights',
       description: 'Spot patterns early.',
       tone: 'cyan',
       number: '04',
@@ -521,14 +482,14 @@ interface QuickAction {
   id: string;
   label: string;
   sub: string;
-  tone: Tone;
+  icon: LucideIcon;
 }
 
 const quickActions: QuickAction[] = [
-  { id: 'breathing', label: 'Breathe', sub: '2-min reset', tone: 'blue' },
-  { id: 'mood', label: 'Check in', sub: 'How you feel', tone: 'emerald' },
-  { id: 'gratitude', label: 'Journal', sub: 'One good thing', tone: 'amber' },
-  { id: 'talk', label: 'Talk', sub: 'Peer support', tone: 'purple' },
+  { id: 'breathing', label: 'Breathe', sub: 'A two-minute reset', icon: Wind },
+  { id: 'mood', label: 'Check in', sub: 'How you feel, with notes', icon: SmilePlus },
+  { id: 'gratitude', label: 'Journal', sub: 'One good thing', icon: NotebookPen },
+  { id: 'talk', label: 'Talk', sub: 'Peer support', icon: MessageCircle },
 ];
 
 /* ── Main page ─────────────────────────────────────────────────────── */
@@ -727,7 +688,7 @@ function MentalHealthHubInner() {
 
     return (
       <MentalHealthProvider>
-        <HubPage>
+        <HubPage ground="landing">
           <HubMasthead
             section="Wellbeing"
             title={SECTION_TITLES[activeSection] ?? 'Mental health'}
@@ -742,215 +703,232 @@ function MentalHealthHubInner() {
   /* ── Hub landing ───────────────────────────────────────────────── */
 
   const toolkit = buildToolkit();
+  const isApprentice = role === 'apprentice';
+
+  // One status line of figures (10 Oct): bold number, plain word, hairline
+  // between; a 2x2 grid on a phone. Replaces the score ring and four tiles.
+  const figures: { n: string; label: string; warn?: boolean }[] =
+    scoreLoading || isFirstRun
+      ? []
+      : [
+          {
+            n: String(score),
+            label: `wellbeing, ${band}`,
+            warn: band === 'low' || band === 'critical',
+          },
+          ...(streak >= 2 ? [{ n: String(streak), label: 'days in a row' }] : []),
+          ...(pillars.mood.n > 0
+            ? [{ n: pillars.mood.avg.toFixed(1), label: 'average mood, 7 days' }]
+            : []),
+          ...(pillars.sleep.n > 0
+            ? [{ n: `${pillars.sleep.avgHours.toFixed(1)}h`, label: 'sleep a night' }]
+            : []),
+          ...(pillars.journal.n > 0
+            ? [
+                {
+                  n: String(pillars.journal.n),
+                  label: pillars.journal.n === 1 ? 'journal entry' : 'journal entries',
+                },
+              ]
+            : []),
+        ].slice(0, 4);
+
+  const tradeSupportList = (
+    <WellbeingSection
+      title="Support built for the trade"
+      sub="Suicide is the biggest killer of men under 50 in the UK, and in construction and the trades the risk runs almost four times the national average. That is why this page exists. Talking is the strong move."
+    >
+      <ul className={WB_LIST}>
+        {tradeSupport.map((t) => (
+          <ContactRow
+            key={t.id}
+            title={t.title}
+            detail={t.subtitle}
+            action={
+              <ContactButton
+                href={t.href}
+                kind={t.isPhone ? 'call' : 'visit'}
+                label={t.ctaLabel}
+                ariaLabel={`${t.isPhone ? 'Call' : 'Visit'} ${t.title}`}
+              />
+            }
+          />
+        ))}
+      </ul>
+    </WellbeingSection>
+  );
 
   return (
     <MentalHealthProvider>
-      <HubPage>
+      <HubPage ground="landing">
         <HubMasthead section="Wellbeing" title="Mental health" backTo={backTo} />
         <HubBody>
-          {/* Crisis — always visible, always first */}
-          <CrisisCard onCallLogged={onCallLogged} />
-
-          {/* Score + streak — the one row of figures */}
-          {!scoreLoading && !isFirstRun && (
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <WellbeingRing score={score} band={band} />
-              {streak >= 2 && (
-                <span className="inline-flex h-11 items-center rounded-full border border-elec-yellow/50 px-3.5 text-[12.5px] font-semibold tabular-nums text-elec-yellow">
-                  {streak}-day streak
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* First-run — overrides the today/heatmap rows when no data */}
-          {isFirstRun ? (
-            <div
-              className={cn(
-                'rounded-2xl border border-elec-yellow/35 p-6 text-center sm:p-8',
-                CARD_SURFACE
-              )}
-            >
-              <Eyebrow>Start here</Eyebrow>
-              <div className="mt-2 text-[22px] font-semibold tracking-tight text-white sm:text-[26px]">
-                Take 30 seconds — log how you feel today
-              </div>
-              <p className="mx-auto mt-2 max-w-md text-[13px] leading-relaxed text-white sm:text-sm">
-                One tap is all it takes. The more you log, the better we can spot what helps and
-                what drags you down.
-              </p>
-              <div className="mx-auto mt-6 grid max-w-sm grid-cols-5 gap-2">
-                {moodPills.map((p) => (
-                  <button
-                    key={p.value}
-                    onClick={() => {
-                      buzz(20);
-                      onLogMood(p.value);
-                    }}
-                    className="flex flex-col items-center gap-1 rounded-xl border border-white/[0.12] bg-white/[0.06] py-3 transition-all active:scale-[0.94] touch-manipulation"
-                  >
-                    <span className="text-[26px] leading-none">{p.emoji}</span>
-                    <span className="text-[10.5px] font-medium text-white">{p.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="relative">
-                <TodayMoodRow
-                  todaysMood={todaysMood}
-                  onLog={onLogMood}
-                  onOpen={() => setActiveSection('mood')}
-                />
-                {flashSuccess && (
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-elec-yellow bg-elec-yellow animate-in zoom-in duration-200">
-                      <span className="text-[28px] font-semibold leading-none text-black">✓</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <MoodHeatmap moodHistory={moodHistory} onTap={() => setActiveSection('insights')} />
-            </>
-          )}
-
-          {/* Quick reset — four actions, the check-in is the one solid card */}
-          <HubQuickStart
-            label="Quick reset"
-            items={quickActions.map((q) => ({
-              title: q.label,
-              description:
-                q.id === 'talk' && matesAvailable > 0
-                  ? `${matesAvailable} mate${matesAvailable === 1 ? '' : 's'} open to a chat`
-                  : q.sub,
-              onClick: () => setActiveSection(q.id),
-              primary: q.id === 'mood',
-            }))}
-          />
-
-          {/* Smart insights — only when there is something to say */}
-          {insights.length > 0 && (
-            <HubWorkList
-              label="Patterns we've noticed"
-              unit="pattern"
-              items={insights.map((i) => ({
-                id: i.id,
-                title: i.title,
-                reason: i.body,
-                trailing: i.cta?.label,
-                urgent: i.tone === 'red' || i.tone === 'orange',
-                onClick: i.cta ? () => setActiveSection(i.cta!.sectionId) : undefined,
-              }))}
-            />
-          )}
-
-          <DailyAffirmation />
-
-          {/* Wellbeing pillars */}
-          {!scoreLoading &&
-            (pillars.mood.n > 0 || pillars.sleep.n > 0 || pillars.journal.n > 0) && (
-              <HubKpiRow>
-                <HubKpi
-                  label="Mood · 7 days"
-                  value={pillars.mood.n > 0 ? pillars.mood.avg.toFixed(1) : '—'}
-                  context={pillars.mood.n > 0 ? `${pillars.mood.n} check-ins` : 'Log to track'}
-                  accent
-                />
-                <HubKpi
-                  label="Sleep · 7 days"
-                  value={pillars.sleep.n > 0 ? `${pillars.sleep.avgHours.toFixed(1)}h` : '—'}
-                  context={pillars.sleep.n > 0 ? `${pillars.sleep.n} nights` : 'Open the tracker'}
-                />
-                <HubKpi
-                  label="Journal · 7 days"
-                  value={`${pillars.journal.n}`}
-                  context={pillars.journal.n > 0 ? 'entries' : 'Try one prompt'}
-                />
-                <HubKpi
-                  label="Consistency"
-                  value={`${pillars.consistency.score}%`}
-                  context={`${pillars.consistency.days} of 7 days`}
-                />
-              </HubKpiRow>
-            )}
-
-          {/* Toolkit */}
-          <HubToolGrid
-            label="Your toolkit"
-            columns="four"
-            cards={toolkit.map((c) => ({
-              id: c.id,
-              title: c.title,
-              description: c.description,
-              meta: c.meta,
-              onClick: () => setActiveSection(c.id),
-            }))}
-          />
-
-          {/* Trade support — ranked by role so the most-relevant org leads */}
-          <section className="space-y-3">
-            <HubSectionHeading>Support built for the trade</HubSectionHeading>
-            <p className="max-w-2xl text-[13px] leading-relaxed text-white">
-              Suicide is the biggest killer of men under 50 in the UK, and in construction and the
-              trades the risk runs almost four times the national average. That is why this page
-              exists. Talking is the strong move.
+          <header className="min-w-0">
+            <p className="text-[13px] font-semibold text-elec-yellow">Wellbeing</p>
+            <h2 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
+              {timeAwareGreeting(todaysMood !== null)}
+            </h2>
+            <p className="mt-2 max-w-3xl text-[14.5px] leading-relaxed text-white">
+              Private to you. Check in, take a two-minute reset, or find someone to talk to.
             </p>
-            <ul
-              className={cn(
-                '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-                CARD_SURFACE
-              )}
-            >
-              {tradeSupport.map((t) => (
-                <li key={t.id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-                  <div className="min-w-0 flex-1">
-                    <div className="text-[14px] font-medium text-white">{t.title}</div>
-                    <div className="mt-0.5 text-[12px] leading-snug text-white">{t.subtitle}</div>
-                  </div>
-                  <a
-                    href={t.href}
-                    {...(t.isPhone ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-                    className={cn(
-                      buttonSecondaryCn,
-                      'inline-flex h-11 shrink-0 items-center gap-1.5 px-3.5 text-[12.5px] font-semibold text-elec-yellow'
+            {figures.length > 0 && (
+              <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 text-[13.5px] text-white sm:flex sm:flex-wrap sm:items-center sm:gap-x-5">
+                {figures.map((f, i) => (
+                  <div key={f.label} className="flex min-w-0 items-baseline gap-1.5">
+                    {i > 0 && (
+                      <span
+                        aria-hidden
+                        className="mr-3.5 hidden h-3.5 w-px self-center bg-white/[0.18] sm:block"
+                      />
                     )}
-                  >
-                    {t.isPhone && <Phone className="h-3.5 w-3.5" />}
-                    {t.ctaLabel}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
+                    <dt
+                      className={cn(
+                        'text-[17px] font-semibold tabular-nums',
+                        f.warn ? 'text-orange-300' : 'text-white'
+                      )}
+                    >
+                      {f.n}
+                    </dt>
+                    <dd className={cn('min-w-0', f.warn && 'text-orange-300')}>{f.label}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </header>
+
+          {/* Crisis — always first on a phone; top of the right column on a desktop */}
+          <div className="lg:hidden">
+            <CrisisCard onCallLogged={onCallLogged} />
+          </div>
+
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-6">
+            <div className="min-w-0 space-y-6">
+              <MoodCheckCard
+                todaysMood={todaysMood}
+                firstRun={isFirstRun}
+                flash={flashSuccess}
+                onLog={onLogMood}
+                onOpen={() => setActiveSection('mood')}
+              />
+              {!isFirstRun && (
+                <MoodHeatmap moodHistory={moodHistory} onTap={() => setActiveSection('insights')} />
+              )}
+
+              {/* Quick reset — four equal tiles, a line icon beside each label */}
+              <WellbeingSection title="Quick reset">
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-2 2xl:grid-cols-4">
+                  {quickActions.map((q) => (
+                    <button
+                      key={q.id}
+                      type="button"
+                      onClick={() => setActiveSection(q.id)}
+                      className="flex min-h-[76px] flex-col justify-center rounded-2xl card-surface-interactive px-4 py-3 text-left touch-manipulation active:bg-white/[0.08]"
+                    >
+                      <span className="flex items-center gap-2 text-[15px] font-semibold text-white">
+                        <q.icon
+                          className="h-[18px] w-[18px] shrink-0"
+                          strokeWidth={1.5}
+                          aria-hidden
+                        />
+                        {q.label}
+                      </span>
+                      <span className="mt-1 text-[13px] leading-snug text-white">
+                        {q.id === 'talk' && matesAvailable > 0
+                          ? `${matesAvailable} mate${matesAvailable === 1 ? '' : 's'} open to a chat`
+                          : q.sub}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </WellbeingSection>
+
+              {/* Smart insights — only when there is something to say */}
+              {insights.length > 0 && (
+                <HubWorkList
+                  label="Patterns we've noticed"
+                  unit="pattern"
+                  items={insights.map((i) => ({
+                    id: i.id,
+                    title: i.title,
+                    reason: i.body,
+                    trailing: i.cta?.label,
+                    urgent: i.tone === 'red' || i.tone === 'orange',
+                    onClick: i.cta ? () => setActiveSection(i.cta!.sectionId) : undefined,
+                  }))}
+                />
+              )}
+
+              <DailyAffirmation />
+
+              {/* Toolkit — a list on a phone, same-size cards from sm: up */}
+              <WellbeingSection title="Your toolkit">
+                <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.06] bg-[hsl(0_0%_12%)] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 sm:bg-transparent">
+                  {toolkit.map((c) => (
+                    <li key={c.id} className="sm:flex">
+                      <button
+                        type="button"
+                        onClick={() => setActiveSection(c.id)}
+                        className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3.5 text-left transition-colors touch-manipulation active:bg-white/[0.07] sm:min-h-[104px] sm:items-start sm:rounded-2xl sm:border sm:border-white/[0.1] sm:bg-[hsl(0_0%_15%)] sm:p-5 sm:hover:border-white/[0.16] sm:hover:bg-[hsl(0_0%_17%)]"
+                      >
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[15px] font-semibold text-white">
+                            {c.title}
+                          </span>
+                          <span className="mt-0.5 block text-[13px] leading-snug text-white">
+                            {c.description}
+                          </span>
+                        </span>
+                        <ChevronRight
+                          className="h-4 w-4 shrink-0 text-white sm:mt-0.5"
+                          strokeWidth={1.75}
+                          aria-hidden
+                        />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </WellbeingSection>
+            </div>
+
+            <div className="min-w-0 space-y-8">
+              <div className="hidden lg:block">
+                <CrisisCard onCallLogged={onCallLogged} />
+              </div>
+              {tradeSupportList}
+            </div>
+          </div>
 
           {/* Privacy footer */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-center">
-            <Lock className="h-3.5 w-3.5 text-elec-yellow" />
-            <span className="text-[12px] text-white">
-              Your mood, journal and sleep entries are private to you. Never shared with your
-              employer, never sold, never used for ads.
-            </span>
-          </div>
+          <p className="flex items-start gap-2 text-[13px] leading-relaxed text-white">
+            <Lock className="mt-0.5 h-4 w-4 shrink-0 text-white" strokeWidth={1.5} aria-hidden />
+            Your mood, journal and sleep entries are private to you. Never shared with your
+            employer, never sold, never used for ads.
+          </p>
         </HubBody>
 
-        {/* Sticky bottom crisis bar — appears once user scrolls past the
-            top crisis card so help is always one tap away. Mobile-only. */}
+        {/* Sticky crisis bar — appears once you scroll past the crisis card so
+            help is always one tap away. Phones only. For an apprentice it sits
+            above their bottom tab bar instead of under it. */}
         {showStickyCrisis && (
-          <div className="fixed inset-x-0 bottom-0 z-40 sm:hidden bg-[hsl(0_0%_8%)]/95 backdrop-blur border-t border-white/[0.08] px-3 py-2.5 pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
+          <div
+            className={cn(
+              'fixed inset-x-0 z-40 border-t border-white/[0.08] bg-[hsl(0_0%_8%)]/95 px-4 py-2 backdrop-blur sm:hidden',
+              isApprentice
+                ? 'bottom-[calc(3.5rem+env(safe-area-inset-bottom))]'
+                : 'bottom-0 pb-[calc(env(safe-area-inset-bottom)+0.5rem)]'
+            )}
+          >
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-red-400 shrink-0 pl-1">
-                Crisis
-              </span>
+              <span className="shrink-0 text-[13px] font-semibold text-red-300">Help now</span>
               <a
                 href="tel:116123"
                 onClick={() => {
                   buzz(40);
                   onCallLogged('Samaritans 116 123');
                 }}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 h-12 px-3 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[12.5px] font-semibold touch-manipulation"
+                className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-red-400/50 px-3 text-[13.5px] font-semibold text-red-300 touch-manipulation"
               >
-                <Phone className="h-3.5 w-3.5" /> 116 123
+                <Phone className="h-4 w-4" strokeWidth={1.5} /> 116 123
               </a>
               <a
                 href="sms:85258?body=SHOUT"
@@ -958,9 +936,9 @@ function MentalHealthHubInner() {
                   buzz(40);
                   recordCrisisEvent({ kind: 'text', label: 'SHOUT 85258' }).catch(() => {});
                 }}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 h-12 px-3 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[12.5px] font-medium touch-manipulation"
+                className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-white/[0.14] px-3 text-[13.5px] font-semibold text-white touch-manipulation"
               >
-                <Send className="h-3.5 w-3.5" /> SHOUT
+                <Send className="h-4 w-4" strokeWidth={1.5} /> SHOUT
               </a>
             </div>
           </div>

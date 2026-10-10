@@ -30,7 +30,7 @@ interface QuickReferencePanelProps {
 function TipBanner({ text }: { text: string }) {
   return (
     <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">Tip</span>
+      <span className="text-[12px] font-medium text-white">Tip</span>
       <p className="text-[14px] text-white leading-relaxed">{text}</p>
     </div>
   );
@@ -214,7 +214,7 @@ function CableColoursPanel() {
       <ColourTable title="Old colours (pre-2004)" rows={oldColours} />
 
       <div className="rounded-xl border border-red-500/30 bg-white/[0.06] p-3 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+        <span className="text-[12px] font-medium text-red-300">
           Key safety points
         </span>
         <ul className="space-y-1.5">
@@ -261,7 +261,7 @@ function SafeIsolationPanel() {
       </div>
 
       <div className="rounded-xl border border-red-500/30 bg-white/[0.06] p-3 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+        <span className="text-[12px] font-medium text-red-300">
           Critical rules
         </span>
         <ul className="space-y-1.5">

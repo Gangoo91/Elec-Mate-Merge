@@ -25,7 +25,15 @@ export interface PickedCriterion {
 }
 
 const k = (c: PickedCriterion) => `${c.unit_code}::${c.ac_code}`;
-const OPEN_STATES = new Set(['not_started', 'suggested', 'claimed', 'submitted', 'referred', 'not_yet', 'iqa_rejected']);
+const OPEN_STATES = new Set([
+  'not_started',
+  'suggested',
+  'claimed',
+  'submitted',
+  'referred',
+  'not_yet',
+  'iqa_rejected',
+]);
 
 export function CriteriaPicker({
   learnerUserId,
@@ -60,7 +68,9 @@ export function CriteriaPicker({
             (r) =>
               (scope === 'all' || t || OPEN_STATES.has(r.state) || picked.has(k(r))) &&
               (!t ||
-                `${u.unit_code} ${u.unit_title} ac ${r.ac_code} ${r.ac_text ?? ''}`.toLowerCase().includes(t))
+                `${u.unit_code} ${u.unit_title} ac ${r.ac_code} ${r.ac_text ?? ''}`
+                  .toLowerCase()
+                  .includes(t))
           ),
         }))
         .filter((u) => u.shown.length > 0),
@@ -91,8 +101,8 @@ export function CriteriaPicker({
   if (units.length === 0) {
     return (
       <p className="rounded-2xl border border-dashed border-white/[0.2] p-4 text-[13px] text-white">
-        This learner has no qualification set, so there are no criteria to tick. Set their course in Student 360,
-        then come back.
+        This learner has no qualification set, so there are no criteria to tick. Set their course in
+        Student 360, then come back.
       </p>
     );
   }
@@ -108,7 +118,7 @@ export function CriteriaPicker({
                 key={k(c)}
                 type="button"
                 onClick={() => onChange(value.filter((x) => k(x) !== k(c)))}
-                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-elec-yellow bg-elec-yellow px-3 text-[12.5px] font-semibold text-black touch-manipulation"
+                className="inline-flex h-11 items-center gap-1.5 rounded-full border border-elec-yellow bg-elec-yellow px-3 text-[12.5px] font-semibold text-black touch-manipulation"
                 title={row?.ac_text ?? undefined}
                 aria-label={`Remove ${c.unit_code} AC ${c.ac_code}`}
               >
@@ -121,7 +131,10 @@ export function CriteriaPicker({
       )}
 
       <div className="relative">
-        <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
+        <Search
+          className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+          aria-hidden
+        />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -133,7 +146,11 @@ export function CriteriaPicker({
       </div>
       {!t && (
         <div className="flex gap-2">
-          <button type="button" className={chipCn(scope === 'open')} onClick={() => setScope('open')}>
+          <button
+            type="button"
+            className={chipCn(scope === 'open')}
+            onClick={() => setScope('open')}
+          >
             Not passed yet
           </button>
           <button type="button" className={chipCn(scope === 'all')} onClick={() => setScope('all')}>
@@ -152,7 +169,10 @@ export function CriteriaPicker({
             const isOpen = !!t || openUnit === u.unit_code || shown.length === 1;
             const ticked = u.rows.filter((r) => picked.has(k(r))).length;
             return (
-              <li key={u.unit_code} className="overflow-hidden rounded-2xl border border-white/[0.1] bg-white/[0.03]">
+              <li
+                key={u.unit_code}
+                className="overflow-hidden rounded-2xl border border-white/[0.1] bg-white/[0.03]"
+              >
                 <button
                   type="button"
                   onClick={() => setOpenUnit(isOpen && !t ? null : u.unit_code)}
@@ -160,14 +180,21 @@ export function CriteriaPicker({
                   className="flex min-h-[56px] w-full items-center gap-3 px-4 py-2.5 text-left touch-manipulation"
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[12px] font-semibold text-elec-yellow">Unit {u.unit_code}</span>
-                    <span className="block truncate text-[14px] font-semibold text-white">{u.unit_title}</span>
+                    <span className="block text-[12px] font-semibold text-elec-yellow">
+                      Unit {u.unit_code}
+                    </span>
+                    <span className="block truncate text-[14px] font-semibold text-white">
+                      {u.unit_title}
+                    </span>
                   </span>
                   <span className="shrink-0 text-[12px] tabular-nums text-white">
                     {ticked > 0 ? `${ticked} ticked` : `${u.passed}/${u.total} passed`}
                   </span>
                   <ChevronDown
-                    className={cn('h-4 w-4 shrink-0 text-white transition-transform', isOpen && 'rotate-180')}
+                    className={cn(
+                      'h-4 w-4 shrink-0 text-white transition-transform',
+                      isOpen && 'rotate-180'
+                    )}
                     aria-hidden
                   />
                 </button>
@@ -184,28 +211,39 @@ export function CriteriaPicker({
                             onClick={() => toggle(r)}
                             className={cn(
                               'flex min-h-[56px] w-full items-start gap-3 px-4 py-3 text-left transition-colors touch-manipulation',
-                              on ? 'bg-elec-yellow/[0.08]' : 'active:bg-white/[0.06]'
+                              on ? 'bg-white/[0.06]' : 'active:bg-white/[0.06]'
                             )}
                           >
                             <span
                               aria-hidden
                               className={cn(
                                 'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2',
-                                on ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/40'
+                                on
+                                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                                  : 'border-white/40'
                               )}
                             >
                               {on && <Check className="h-4 w-4" strokeWidth={3} />}
                             </span>
                             <span className="min-w-0 flex-1">
                               <span className="flex flex-wrap items-center gap-1.5">
-                                <span className="font-mono text-[12.5px] font-semibold text-white">AC {r.ac_code}</span>
+                                <span className="font-mono text-[12.5px] font-semibold text-white">
+                                  AC {r.ac_code}
+                                </span>
                                 {r.state !== 'not_started' && (
-                                  <span className={cn('rounded-full border px-2 py-0.5 text-[11px] font-medium', STATE_CHIP[r.state])}>
+                                  <span
+                                    className={cn(
+                                      'rounded-full border px-2 py-0.5 text-[12px] font-medium',
+                                      STATE_CHIP[r.state]
+                                    )}
+                                  >
                                     {STATE_LABEL[r.state]}
                                   </span>
                                 )}
                               </span>
-                              <span className="mt-0.5 block text-[13.5px] leading-snug text-white">{r.ac_text}</span>
+                              <span className="mt-0.5 block text-[13.5px] leading-snug text-white">
+                                {r.ac_text}
+                              </span>
                             </span>
                           </button>
                         </li>

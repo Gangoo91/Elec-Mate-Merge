@@ -647,12 +647,12 @@ const ThreePhasePowerCalculator = () => {
                 <div className="space-y-4 animate-fade-in">
                   {/* Status Chips */}
                   <div className="flex flex-wrap gap-2">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-amber-400/20">
                       <span className="text-xs font-semibold text-amber-300">
                         {connection === 'star' ? 'Star (Y)' : 'Delta (Δ)'}
                       </span>
                     </div>
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-amber-400/20">
                       <span className="text-xs font-semibold text-amber-300">PF</span>
                       <span className={cn('text-sm font-semibold', getPfStatusColour())}>
                         {result.pfQuality}
@@ -798,7 +798,7 @@ const ThreePhasePowerCalculator = () => {
 
                   {/* Leading PF — shunt capacitance is the wrong correction (see engine comment) */}
                   {result.correctionNote !== undefined && (
-                    <div className="rounded-xl p-3 bg-orange-500/10 border border-orange-500/30">
+                    <div className="rounded-xl p-3 bg-white/[0.04] border border-orange-500/30">
                       <h4 className="text-sm font-medium text-orange-300 mb-1">
                         Power Factor Correction
                       </h4>
@@ -808,7 +808,7 @@ const ThreePhasePowerCalculator = () => {
 
                   {/* Frequency — Reg 512.1.3 */}
                   {result.frequencyMismatch && (
-                    <div className="rounded-xl p-3 bg-orange-500/10 border border-orange-500/30">
+                    <div className="rounded-xl p-3 bg-white/[0.04] border border-orange-500/30">
                       <p className="text-sm text-white">
                         <strong className="text-orange-300">Frequency</strong> {'—'} {frequency} Hz
                         is not the UK nominal supply frequency of 50 Hz. None of the figures above

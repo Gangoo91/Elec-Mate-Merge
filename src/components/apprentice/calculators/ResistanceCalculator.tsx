@@ -168,7 +168,7 @@ const ResistanceCalculator: React.FC = () => {
               className={cn(
                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                 useTemp
-                  ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                  ? 'bg-white/[0.04] text-amber-400 border border-amber-500/30'
                   : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
               )}
             >
@@ -468,7 +468,7 @@ const ResistanceCalculator: React.FC = () => {
       )}
 
       {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+      <div className="p-3 rounded-xl bg-white/[0.04] border border-amber-500/20">
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
           <div className="text-sm text-amber-200">

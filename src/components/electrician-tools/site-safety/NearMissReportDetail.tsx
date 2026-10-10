@@ -15,6 +15,13 @@ import { AuditTimeline } from './common/AuditTimeline';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { FiveWhysAnalysis, type FiveWhysEntry } from './common/FiveWhysAnalysis';
+import { FirmRecordBar } from './common/FirmRecordBar';
+import {
+  isFirmScope,
+  useFirmRecordAccess,
+  useSafetyScope,
+  type FirmRecordFields,
+} from './common/SafetyScope';
 
 interface NearMissReportDetailProps {
   report: NearMissReport;
@@ -159,12 +166,26 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
   onUpdate,
 }) => {
   const navigate = useNavigate();
+  const scope = useSafetyScope();
   const { toast } = useToast();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [showShare, setShowShare] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const rootCause = report as NearMissWithRootCause;
+  // The firm a report is shared with (Site Safety in both hubs). The columns
+  // are live but not on the shared NearMissReport type.
+  const shared = report as NearMissReport & FirmRecordFields;
+  const firm: FirmRecordFields = {
+    user_id: shared.user_id,
+    employer_id: shared.employer_id ?? null,
+    employer_job_id: shared.employer_job_id ?? null,
+    firm_countersigned_by: shared.firm_countersigned_by ?? null,
+    firm_countersigned_name: shared.firm_countersigned_name ?? null,
+    firm_countersigned_at: shared.firm_countersigned_at ?? null,
+  };
+  // Employer Hub: a worker's shared report is read and countersigned, not changed.
+  const access = useFirmRecordAccess(firm);
   const categoryLabel = CATEGORY_LABELS[report.category] || CATEGORY_LABELS.other;
   const severity = SEVERITY_LABELS[report.severity] || SEVERITY_LABELS.low;
 
@@ -270,7 +291,11 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
     };
 
     sessionStorage.setItem(`nearMissData_${sessionId}`, JSON.stringify(nearMissData));
-    navigate(`/electrician/site-safety?tab=briefings&nearMissSessionId=${sessionId}`);
+    navigate(
+      isFirmScope(scope)
+        ? `/employer?section=site-safety&tool=team-briefing&nearMissSessionId=${sessionId}`
+        : `/electrician/site-safety?tab=briefings&nearMissSessionId=${sessionId}`
+    );
   };
 
   const witnesses = Array.isArray(report.witnesses) ? (report.witnesses as Witness[]) : [];
@@ -345,6 +370,8 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
             )}
           </div>
         </DetailCard>
+
+        <FirmRecordBar table="near_miss_reports" row={{ id: report.id, ...firm }} />
 
         {(report.potential_consequences ||
           report.immediate_actions ||
@@ -463,13 +490,34 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
           )}
         </DetailCard>
 
-        <FiveWhysAnalysis
-          table="near_miss_reports"
-          recordId={report.id}
-          existingWhys={rootCause.five_whys ?? []}
-          existingCategory={rootCause.root_cause_category ?? ''}
-          existingSummary={rootCause.root_cause_analysis ?? ''}
-        />
+        {access.canEdit ? (
+          <FiveWhysAnalysis
+            table="near_miss_reports"
+            recordId={report.id}
+            existingWhys={rootCause.five_whys ?? []}
+            existingCategory={rootCause.root_cause_category ?? ''}
+            existingSummary={rootCause.root_cause_analysis ?? ''}
+          />
+        ) : (
+          // A worker's shared report (Employer Hub): the investigation is
+          // theirs to write, so the firm reads it here instead.
+          (() => {
+            const whys = (rootCause.five_whys ?? []).filter((w) => (w?.answer || '').trim());
+            if (whys.length === 0 && !rootCause.root_cause_analysis) return null;
+            return (
+              <DetailCard eyebrow="Root cause analysis">
+                {rootCause.root_cause_analysis && (
+                  <DataRow label="Root cause">{rootCause.root_cause_analysis}</DataRow>
+                )}
+                {whys.map((w, i) => (
+                  <DataRow key={i} label={w.why || `Why ${i + 1}`}>
+                    {w.answer}
+                  </DataRow>
+                ))}
+              </DetailCard>
+            );
+          })()
+        )}
 
         <CorrectiveActionsPanel sourceType="near_miss" sourceId={report.id} />
 
@@ -506,15 +554,17 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
       >
         <div className="mx-auto max-w-3xl space-y-2">
-          <button
-            type="button"
-            onClick={() => handleStatusChange(nextStatus.to)}
-            disabled={isUpdating}
-            className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:bg-white/[0.08] disabled:text-white"
-          >
-            {isUpdating && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
-            {nextStatus.label}
-          </button>
+          {access.canEdit && (
+            <button
+              type="button"
+              onClick={() => handleStatusChange(nextStatus.to)}
+              disabled={isUpdating}
+              className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:bg-white/[0.08] disabled:text-white"
+            >
+              {isUpdating && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
+              {nextStatus.label}
+            </button>
+          )}
           <div className="flex gap-2">
             <button type="button" onClick={handleCreateTeamBriefing} className={secondaryBtn}>
               Team briefing

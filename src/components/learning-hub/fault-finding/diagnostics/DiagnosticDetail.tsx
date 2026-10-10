@@ -107,7 +107,7 @@ const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps
       {/* Test Measurement */}
       <Card className="border-slate-500/20 bg-slate-500/5">
         <CardContent className="p-4">
-          <h3 className="font-semibold text-xs text-muted-foreground mb-2 uppercase tracking-wide">
+          <h3 className="font-semibold text-xs text-muted-foreground mb-2">
             Test Measurement
           </h3>
           <p className="text-sm font-mono text-foreground">{diagnostic.measurement}</p>
@@ -117,7 +117,7 @@ const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps
       {/* Interpretation */}
       <Card className="border-yellow-500/20 bg-yellow-500/5">
         <CardContent className="p-4">
-          <h3 className="font-semibold text-xs text-yellow-400 mb-2 uppercase tracking-wide">
+          <h3 className="font-semibold text-xs text-yellow-400 mb-2">
             Technical Interpretation
           </h3>
           <p className="text-sm text-foreground">{diagnostic.interpretation}</p>
@@ -186,7 +186,7 @@ const DiagnosticDetail = ({ categoryId, diagnosticIndex }: DiagnosticDetailProps
       {/* Regulation Reference */}
       <Card className="border-blue-500/20 bg-blue-500/5">
         <CardContent className="p-4">
-          <h3 className="font-semibold text-xs text-blue-400 mb-2 uppercase tracking-wide flex items-center gap-2">
+          <h3 className="font-semibold text-xs text-blue-400 mb-2 flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
             Regulatory Compliance
           </h3>

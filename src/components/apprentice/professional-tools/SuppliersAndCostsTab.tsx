@@ -58,11 +58,7 @@ const SuppliersAndCostsTab = () => {
       strategy: 'Priority-based purchasing',
       description: 'Buy essential tools first, then upgrade',
       monthlyBudget: '£150–300',
-      benefits: [
-        'Immediate functionality',
-        'Shorter setup time',
-        'Professional appearance',
-      ],
+      benefits: ['Immediate functionality', 'Shorter setup time', 'Professional appearance'],
       timeline: [
         'Week 1: PPE and basic safety',
         'Month 1: Essential hand tools',
@@ -152,21 +148,17 @@ const SuppliersAndCostsTab = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Smart purchasing guide
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Smart purchasing guide</span>
         <p className="text-[14px] text-white leading-relaxed">
           Smart supplier selection and budgeting can save you hundreds of pounds on your
           professional toolkit while ensuring you get quality tools.
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Major UK tool suppliers
-          </span>
+          <span className="text-[13px] font-semibold text-white">Major UK tool suppliers</span>
           <p className="text-[13px] text-white">
             Key suppliers for electrical tools and equipment across the UK
           </p>
@@ -199,15 +191,13 @@ const SuppliersAndCostsTab = () => {
               </div>
 
               <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Apprentice support
-                </span>
+                <span className="text-[13px] font-semibold text-white">Apprentice support</span>
                 <p className="text-[13px] text-white">{supplier.apprenticeSupport}</p>
               </div>
 
               <div className="flex items-center gap-2 text-[12px] text-white">
                 <Globe className="h-3.5 w-3.5" />
-                <span className="font-mono">{supplier.website}</span>
+                <span className="">{supplier.website}</span>
               </div>
             </div>
           ))}
@@ -216,9 +206,9 @@ const SuppliersAndCostsTab = () => {
 
       <BudgetPlanningCalculator />
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Budgeting strategies for apprentices
           </span>
           <p className="text-[13px] text-white">
@@ -233,7 +223,7 @@ const SuppliersAndCostsTab = () => {
             >
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{strategy.strategy}</h3>
-                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {strategy.monthlyBudget}/month
                 </span>
               </div>
@@ -241,9 +231,7 @@ const SuppliersAndCostsTab = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Benefits
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Benefits</span>
                   <ul className="space-y-1.5">
                     {strategy.benefits.map((benefit, idx) => (
                       <li
@@ -257,9 +245,7 @@ const SuppliersAndCostsTab = () => {
                   </ul>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Timeline
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Timeline</span>
                   <ul className="space-y-1.5">
                     {strategy.timeline.map((phase, idx) => (
                       <li
@@ -278,9 +264,9 @@ const SuppliersAndCostsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Money-saving tips for tool purchases
           </span>
           <p className="text-[13px] text-white">
@@ -295,7 +281,7 @@ const SuppliersAndCostsTab = () => {
             >
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{tip.tip}</h3>
-                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   Save {tip.savings}
                 </span>
               </div>
@@ -316,9 +302,9 @@ const SuppliersAndCostsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Financing options for larger purchases
           </span>
           <p className="text-[13px] text-white">
@@ -333,37 +319,29 @@ const SuppliersAndCostsTab = () => {
             >
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{option.option}</h3>
-                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {option.rate}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-[13px]">
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-2 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Amount
-                  </span>
-                  <p className="text-white font-mono">{option.amount}</p>
+                  <span className="text-[13px] font-semibold text-white">Amount</span>
+                  <p className="text-white">{option.amount}</p>
                 </div>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-2 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Term
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Term</span>
                   <p className="text-white">{option.term}</p>
                 </div>
                 <div className="col-span-2 rounded-md border border-white/[0.06] bg-white/[0.02] p-2 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Eligibility
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Eligibility</span>
                   <p className="text-white">{option.eligibility}</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Pros
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Pros</span>
                   <ul className="space-y-1">
                     {option.pros.map((pro, idx) => (
                       <li
@@ -377,9 +355,7 @@ const SuppliersAndCostsTab = () => {
                   </ul>
                 </div>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Cons
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Cons</span>
                   <ul className="space-y-1">
                     {option.cons.map((con, idx) => (
                       <li
@@ -398,10 +374,8 @@ const SuppliersAndCostsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-          Financial warning
-        </span>
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-red-300">Financial warning</span>
         <p className="text-[14px] text-white leading-relaxed">
           Only borrow what you can afford to repay. Tool purchases are an investment, but debt can
           impact your financial future. Consider starting with essential items and upgrading

@@ -179,7 +179,7 @@ function LoadingState() {
 
 function ErrorState({ message }: { message: string | null }) {
   return (
-    <div className="border-l-2 border-red-500 pl-4">
+    <div className="card-surface rounded-2xl border-orange-400/40 p-4">
       <div className="text-[14px] font-semibold text-white">Could not generate the brief</div>
       <p className="mt-1 text-[13px] leading-relaxed text-white">
         {message ?? 'Try again in a moment.'}

@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Lock, Gauge, Search, BookOpen, Loader2, RotateCcw, ArrowRight } from 'lucide-react';
+import { Lock, Gauge, Search, BookOpen, Loader2, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AM2_EYEBROW, AM2_LIST, AM2_SPLIT, AM2_TITLE } from '@/components/am2/layout';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -191,34 +191,33 @@ export function AM2HistoryTab({ onNavigateToTab }: AM2HistoryTabProps) {
       { tab: 'knowledge', label: 'Start knowledge test', cfg: SESSION_CONFIG.knowledge_test },
     ];
     return (
-      <div className="mx-auto max-w-md px-4 py-12 sm:py-16 text-center space-y-5">
-        <div className="h-14 w-14 mx-auto rounded-2xl bg-white/[0.06] border border-elec-yellow/20 flex items-center justify-center">
-          <RotateCcw className="h-7 w-7 text-elec-yellow" />
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-base font-semibold text-white">No sessions completed yet</p>
-          <p className="text-[12.5px] text-white max-w-xs mx-auto leading-relaxed">
-            Complete a simulation to see your history here. Start with safe isolation in Learn mode
-            — it’s the shortest section, and every other section relies on it.
+      <div className="mx-auto w-full max-w-[1300px] space-y-5 py-5">
+        <div>
+          <p className={AM2_EYEBROW}>AM2 practice</p>
+          <h1 className={AM2_TITLE}>Your runs</h1>
+          <p className="mt-2 max-w-2xl text-[14.5px] leading-relaxed text-white">
+            Nothing finished yet. Complete a run and it shows here with its result and time. Start
+            with safe isolation in Learn mode: it’s the shortest section, and every other section
+            relies on it.
           </p>
         </div>
-        <div className="flex flex-col gap-2 max-w-xs mx-auto">
+        <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.06] bg-[hsl(0_0%_12%)] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 sm:bg-transparent lg:grid-cols-4">
           {starters.map((s) => (
-            <button
-              key={s.tab}
-              type="button"
-              onClick={() => onNavigateToTab(s.tab)}
-              className={cn(
-                'w-full h-11 rounded-xl border text-[12.5px] font-semibold touch-manipulation inline-flex items-center justify-between px-4 transition-colors',
-                s.cfg.pill,
-                'hover:brightness-125'
-              )}
-            >
-              <span>{s.label}</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </button>
+            <li key={s.tab}>
+              <button
+                type="button"
+                onClick={() => onNavigateToTab(s.tab)}
+                className="group flex min-h-[56px] w-full items-center justify-between gap-3 px-5 py-3 text-left text-[15px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:rounded-2xl sm:border sm:border-white/[0.08] sm:bg-[hsl(0_0%_12%)] sm:py-4 sm:hover:border-white/[0.18]"
+              >
+                <span>{s.label}</span>
+                <ChevronRight
+                  className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5"
+                  aria-hidden
+                />
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     );
   }

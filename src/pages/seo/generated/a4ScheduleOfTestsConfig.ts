@@ -5,12 +5,11 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-schedule-of-tests',
-  title:
-    'BS 7671 A4:2026: New Schedule of Test Columns',
+  title: 'BS 7671 A4:2026: New Schedule of Test Columns',
   description:
     'Amendment 4 (January 2026) added new columns to the BS 7671 Schedule of Test Results: reference method, maximum permitted Zs, SPD type per board…',
   datePublished: published,
@@ -30,7 +29,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
     'New column on the Schedule of Test Results: column 30 for AFDD test recording.',
     'Section D of the EIC / EICR now requires a safety alerts and product recalls disclaimer — the certificate is point-in-time and post-issue alerts must be checked separately.',
     '"Consumer\'s isolator" terminology was replaced with "Consumer\'s means of isolation" across the model forms — same concept, more precise language.',
-    'The A3:2024 model form was formally withdrawn on 15 October 2026 — certificates issued after that date on the old form are non-compliant with the current edition.',
+    'BS 7671:2018+A2:2022 (incorporating A3:2024) is withdrawn on 15 October 2026. From then on, certificates should be produced on the A4:2026 model forms so they record everything the current edition asks for.',
   ],
   sections: [
     {
@@ -40,15 +39,13 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'BS 7671:2018+A4:2026 published 15 April 2026. The most visible day-to-day change for inspecting electricians is the new model form layout — every BS 7671 certificate, including the Schedule of Circuit Details and Schedule of Test Results, was redesigned. The A3:2024 form was formally withdrawn six months later, on 15 October 2026, after which it should not be used.',
+          text: 'BS 7671:2018+A4:2026 published 15 April 2026. The most visible day-to-day change for inspecting electricians is the new model form layout — every BS 7671 certificate, including the Schedule of Circuit Details and Schedule of Test Results, was redesigned. The previous edition (incorporating A3:2024) is withdrawn six months later, on 15 October 2026, after which certificates should be produced on the A4:2026 forms.',
         },
         {
           type: 'callout',
           tone: 'pricing',
           title: 'A3 → A4 transition window',
-          text:
-            'Between 15 April and 15 October 2026 either A3:2024 or A4:2026 forms were acceptable. From 15 October 2026 onwards, certificates must use the A4:2026 layout. Software providers (Elec-Mate included) shipped A4-compliant templates aligned to the April 2026 effective date.',
+          text: 'Between 15 April and 15 October 2026 both editions were current, so either set of forms could be used. From 15 October 2026 onwards, certificates should be produced on the A4:2026 model forms. Software providers (Elec-Mate included) shipped A4-compliant templates aligned to the April 2026 effective date.',
         },
       ],
     },
@@ -59,8 +56,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 added a "Reference method" column to the Schedule of Circuit Details. The column records the BS 7671 Appendix 4 installation reference method (A, B, C, D, E, F or G) used to size the cable. Previously this was sometimes recorded narratively in the Description column; A4 makes it a dedicated field.',
+          text: 'A4:2026 added a "Reference method" column to the Schedule of Circuit Details. The column records the BS 7671 Appendix 4 installation reference method (A, B, C, D, E, F or G) used to size the cable. Previously this was sometimes recorded narratively in the Description column; A4 makes it a dedicated field.',
         },
         {
           type: 'list',
@@ -78,8 +74,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Why this matters for verification',
-          text:
-            'The reference method directly governs the current-carrying capacity (Iz) of the cable. By making it a dedicated column, inspectors can verify at a glance that the protective device rating (In) doesn\'t exceed Iz after any grouping or temperature derating — a quick check that often surfaces cable-sizing non-compliance.',
+          text: "The reference method directly governs the current-carrying capacity (Iz) of the cable. By making it a dedicated column, inspectors can verify at a glance that the protective device rating (In) doesn't exceed Iz after any grouping or temperature derating — a quick check that often surfaces cable-sizing non-compliance.",
         },
       ],
     },
@@ -90,8 +85,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The new "Maximum permitted Zs" column on the Schedule of Circuit Details records the highest acceptable earth fault loop impedance for that protective device at the relevant disconnection time. The inspector then compares this value to the measured Zs in the Schedule of Test Results column.',
+          text: 'The new "Maximum permitted Zs" column on the Schedule of Circuit Details records the highest acceptable earth fault loop impedance for that protective device at the relevant disconnection time. The inspector then compares this value to the measured Zs in the Schedule of Test Results column.',
         },
         {
           type: 'list',
@@ -111,8 +105,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 added an SPD declaration field per distribution board on the Schedule of Circuit Details. Each board records which type(s) of surge protective device are fitted (or that none are fitted), using the standard SPD type codes:',
+          text: 'A4:2026 added an SPD declaration field per distribution board on the Schedule of Circuit Details. Each board records which type(s) of surge protective device are fitted (or that none are fitted), using the standard SPD type codes:',
         },
         {
           type: 'list',
@@ -127,8 +120,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'A4:2026 risk assessment for SPDs',
-          text:
-            'A4 retained the risk-assessment approach to SPD selection (Regulation 443.4) but the new column makes the actual fitted type a visible field. For installations where the risk assessment shows SPD is required and the column shows "N/A", the EICR raises a coded observation.',
+          text: 'A4 retained the risk-assessment approach to SPD selection (Regulation 443.4) but the new column makes the actual fitted type a visible field. For installations where the risk assessment shows SPD is required and the column shows "N/A", the EICR raises a coded observation.',
         },
       ],
     },
@@ -139,8 +131,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 added a "Supplied from" field per distribution board on the Schedule of Circuit Details. The field records the upstream source of the board\'s supply — typically the upstream distribution board reference, or "Mains" / "Origin" for the main board.',
+          text: 'A4:2026 added a "Supplied from" field per distribution board on the Schedule of Circuit Details. The field records the upstream source of the board\'s supply — typically the upstream distribution board reference, or "Mains" / "Origin" for the main board.',
         },
         {
           type: 'list',
@@ -153,8 +144,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'This change makes the upstream/downstream topology of the installation explicit on the certificate — invaluable for fault investigation, future modification, and inspection planning.',
+          text: 'This change makes the upstream/downstream topology of the installation explicit on the certificate — invaluable for fault investigation, future modification, and inspection planning.',
         },
       ],
     },
@@ -165,8 +155,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 added a Maximum Demand field per distribution board. The field records the designed or measured maximum load on the board, expressed in kVA, kW, or amperes per phase as appropriate.',
+          text: 'A4:2026 added a Maximum Demand field per distribution board. The field records the designed or measured maximum load on the board, expressed in kVA, kW, or amperes per phase as appropriate.',
         },
         {
           type: 'list',
@@ -186,8 +175,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Column 30 of the Schedule of Test Results records the AFDD test outcome for each circuit. For a full explanation of the AFDD test procedure and acceptance criteria, see the A4 AFDD Changes guide. In summary, column 30 records:',
+          text: 'Column 30 of the Schedule of Test Results records the AFDD test outcome for each circuit. For a full explanation of the AFDD test procedure and acceptance criteria, see the A4 AFDD Changes guide. In summary, column 30 records:',
         },
         {
           type: 'list',
@@ -207,8 +195,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 added a standard disclaimer to Section D of the EIC and EICR. The disclaimer makes explicit that the certificate is a point-in-time record and that the responsible person must check independently for post-issue safety alerts and product recalls affecting the installation.',
+          text: 'A4:2026 added a standard disclaimer to Section D of the EIC and EICR. The disclaimer makes explicit that the certificate is a point-in-time record and that the responsible person must check independently for post-issue safety alerts and product recalls affecting the installation.',
         },
         {
           type: 'list',
@@ -228,8 +215,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A4:2026 tightened terminology across the model forms. Key change visible on every certificate:',
+          text: 'A4:2026 tightened terminology across the model forms. Key change visible on every certificate:',
         },
         {
           type: 'list',
@@ -246,17 +232,17 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
     {
       question: 'Do I have to use the A4:2026 form on every certificate from 15 April 2026?',
       answer:
-        'Strictly, A3:2024 forms remained acceptable until 15 October 2026 — a six-month transition window. From 15 October 2026 onwards, certificates issued on the A3 form are non-compliant with the current edition. Best practice is to switch to A4 templates immediately when your software provider issues them, which is what most certificate platforms (including Elec-Mate) did at the April 2026 effective date.',
+        'The previous edition, BS 7671:2018+A2:2022 (incorporating A3:2024), remains current until it is withdrawn on 15 October 2026, so its forms could still be used during that six-month window. After that, use the A4:2026 model forms so the certificate records everything the current edition asks for. Best practice is to switch to A4 templates immediately when your software provider issues them, which is what most certificate platforms (including Elec-Mate) did at the April 2026 effective date.',
     },
     {
       question: 'Where do I get the reference method letter for an existing installation?',
       answer:
-        'For existing installations, the original design documentation should specify the reference method. Where that\'s not available, infer it from physical inspection: cable in conduit chased into a plaster wall is typically Method A or B; cable direct in plaster is Method C; SWA buried in ground is Method D; cables on a tray run is Method E. Record the inferred method in the column with a note that it\'s based on physical inspection (not original design records) — this becomes part of the as-installed evidence.',
+        "For existing installations, the original design documentation should specify the reference method. Where that's not available, infer it from physical inspection: cable in conduit chased into a plaster wall is typically Method A or B; cable direct in plaster is Method C; SWA buried in ground is Method D; cables on a tray run is Method E. Record the inferred method in the column with a note that it's based on physical inspection (not original design records) — this becomes part of the as-installed evidence.",
     },
     {
       question: 'What if the maximum permitted Zs from the table is lower than measured?',
       answer:
-        'That\'s a non-compliance — the earth fault loop impedance is too high for the protective device to achieve the required disconnection time. Record the measured Zs in the test results column, the permitted maximum in the new column, and raise a Section K observation. The classification is typically C2 (potentially dangerous — fault disconnection may not occur within required time, exposing persons to dangerous voltages under fault conditions). Remedial action: investigate the cause (long cable run, high resistance joint, poor earthing) and remediate before re-test.',
+        "That's a non-compliance — the earth fault loop impedance is too high for the protective device to achieve the required disconnection time. Record the measured Zs in the test results column, the permitted maximum in the new column, and raise a Section K observation. The classification is typically C2 (potentially dangerous — fault disconnection may not occur within required time, exposing persons to dangerous voltages under fault conditions). Remedial action: investigate the cause (long cable run, high resistance joint, poor earthing) and remediate before re-test.",
     },
     {
       question: 'How do I record maximum demand on an EICR for an existing installation?',
@@ -264,7 +250,7 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
         'For periodic inspection, you record the measured or estimated maximum demand at the time of inspection. Methods: instantaneous reading from a fitted maximum-demand indicator at the supply; calculated from a connected-load schedule with diversity factors applied per Appendix 9; or the original design figure where measurement and recalculation are not practicable. Document the method used. For three-phase boards, record per-phase to show balance — phase imbalance can flag a need for re-balancing during remedial work.',
     },
     {
-      question: 'What\'s the difference between SPD Type 1, 2 and 3?',
+      question: "What's the difference between SPD Type 1, 2 and 3?",
       answer:
         'Type 1 SPDs protect against direct lightning strikes — fitted at the origin of installations with a lightning protection system. They handle the highest energy levels. Type 2 SPDs protect against indirect lightning effects (induced surges from nearby strikes) and switching transients — typical fit at the main consumer unit in standard domestic and commercial installations. Type 3 SPDs provide fine protection for sensitive electronic equipment and are fitted at sub-distribution boards or local to specific equipment. Many modern installations use a coordinated cascade (T1 at origin → T2 at main DB → T3 at sub-DBs near sensitive loads).',
     },
@@ -278,21 +264,23 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-amendment-4-2026',
       title: 'BS 7671 Amendment 4 (2026) — All Changes',
-      description: 'Overview of every A4:2026 change including AFDD, luminaire RCD, terminology updates.',
+      description:
+        'Overview of every A4:2026 change including PNB earthing, the AFDD inspection item and the new model forms.',
       icon: 'BookOpen',
       category: 'Guide',
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'A4:2026 AFDD Changes (Item 4.23 + Column 30)',
+      title: 'AFDDs in A4:2026 (Item 4.23 + Column 30)',
       description: 'Deep dive on the new AFDD inspection item and test results column.',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection (411.3.4)',
-      description: 'The 30 mA RCD requirement added to domestic luminaire final circuits.',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
+      description:
+        'The 30 mA RCD requirement for domestic luminaire final circuits, in force since 2018.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
@@ -306,14 +294,16 @@ export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
     {
       href: '/tools/earth-loop-impedance-calculator',
       title: 'Earth Loop Impedance (Zs) Calculator',
-      description: 'Auto-derives the maximum permitted Zs from device type, rating and disconnection time.',
+      description:
+        'Auto-derives the maximum permitted Zs from device type, rating and disconnection time.',
       icon: 'Calculator',
       category: 'Tool',
     },
     {
       href: '/tools/cable-sizing-calculator',
       title: 'Cable Sizing Calculator',
-      description: 'Built on BS 7671 Appendix 4 reference methods A-G — populates the new column directly.',
+      description:
+        'Built on BS 7671 Appendix 4 reference methods A-G — populates the new column directly.',
       icon: 'Calculator',
       category: 'Tool',
     },

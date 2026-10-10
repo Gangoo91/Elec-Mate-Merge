@@ -76,7 +76,7 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
 
         {/* Details for key premises */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Notes</p>
+          <p className="text-[12px] font-medium text-white mb-3">Notes</p>
         </motion.div>
 
         {intervals.filter(i => i.notes.length > 50).map((item, i) => (
@@ -84,7 +84,7 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center justify-between mb-1">
                 <p className="text-sm font-semibold text-white">{item.premises}</p>
-                <span className="text-[10px] font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{item.interval}</span>
+                <span className="text-[12px] font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{item.interval}</span>
               </div>
               <p className="text-xs text-white">{item.notes}</p>
             </div>

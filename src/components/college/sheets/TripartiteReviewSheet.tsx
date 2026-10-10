@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { FormSheet } from '@/components/forms/FormSheet';
 import {
   buttonPrimaryCn,
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
   inputCn,
   labelCn,
 } from '@/components/forms/fieldStyles';
@@ -58,8 +57,13 @@ export function TripartiteReviewSheet({
       .rpc('tripartite_due_by' as never, { p_student: studentId } as never)
       .then(({ data }) => setDueBy((data as unknown as string) ?? null));
 
+  // A review opened straight from a link (inbox row, alert) closes the whole
+  // sheet when it closes; one picked from the list goes back to the list.
+  const openedDirect = useRef(false);
+
   useEffect(() => {
     if (!open) return;
+    openedDirect.current = !!initialReviewId;
     setSelected(initialReviewId ?? undefined);
     void loadDue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,6 +77,10 @@ export function TripartiteReviewSheet({
           if (!o) {
             setSelected(undefined);
             void reload();
+            if (openedDirect.current) {
+              openedDirect.current = false;
+              onOpenChange(false);
+            }
           }
         }}
         reviewId={selected}
@@ -123,14 +131,17 @@ export function TripartiteReviewSheet({
         </div>
       ) : reviews.length === 0 ? (
         <p className="py-8 text-center text-[14px] leading-relaxed text-white">
-          No reviews yet. Schedule the first one; everything the record already knows is filled in for you.
+          No reviews yet. Schedule the first one; everything the record already knows is filled in
+          for you.
         </p>
       ) : (
         <div className="grid items-start gap-6 lg:grid-cols-2">
           {upcoming.length > 0 && (
             <ReviewGroup title="Coming up" reviews={upcoming} onOpen={setSelected} />
           )}
-          {signed.length > 0 && <ReviewGroup title="Signed reviews" reviews={signed} onOpen={setSelected} />}
+          {signed.length > 0 && (
+            <ReviewGroup title="Signed reviews" reviews={signed} onOpen={setSelected} />
+          )}
         </div>
       )}
     </FormSheet>
@@ -165,7 +176,7 @@ function ReviewGroup({
                       ? fmtReviewDate(r.scheduled_at, true)
                       : 'Not dated'}
                 </span>
-                <span className="block truncate text-[12.5px] text-white">
+                <span className="block text-[12.5px] leading-snug text-white">
                   {r.mode ? MODE_LABEL[r.mode] : 'Mode not set'}
                   {r.employer_input ? ' · employer view in' : ''}
                   {r.learner_input ? ' · apprentice view in' : ''}
@@ -192,8 +203,12 @@ function StatePill({ review }: { review: TripartiteReview }) {
   return (
     <span
       className={cn(
-        'shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold',
-        tone === 'green' ? 'bg-emerald-500 text-black' : tone === 'amber' ? 'bg-orange-500 text-black' : 'border border-white/[0.2] text-white'
+        'shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold',
+        tone === 'green'
+          ? 'bg-emerald-500 text-black'
+          : tone === 'amber'
+            ? 'bg-orange-500 text-black'
+            : 'border border-white/[0.2] text-white'
       )}
     >
       {label}
@@ -207,7 +222,11 @@ const MONTH_OPTIONS = [1, 2, 3, 4, 6];
 
 function FrequencyRow({ studentId, onChanged }: { studentId: string; onChanged: () => void }) {
   const { toast } = useToast();
-  const [current, setCurrent] = useState<{ months: number | null; reason: string | null; agreed: string | null } | null>(null);
+  const [current, setCurrent] = useState<{
+    months: number | null;
+    reason: string | null;
+    agreed: string | null;
+  } | null>(null);
   const [editing, setEditing] = useState(false);
   const [months, setMonths] = useState(3);
   const [reason, setReason] = useState('');
@@ -217,7 +236,9 @@ function FrequencyRow({ studentId, onChanged }: { studentId: string; onChanged: 
   const load = () =>
     supabase
       .from('college_students')
-      .select('review_frequency_months, review_frequency_reason, review_frequency_agreed_at' as never)
+      .select(
+        'review_frequency_months, review_frequency_reason, review_frequency_agreed_at' as never
+      )
       .eq('id', studentId)
       .maybeSingle()
       .then(({ data }) => {
@@ -239,10 +260,22 @@ function FrequencyRow({ studentId, onChanged }: { studentId: string; onChanged: 
 
   const save = async (reset = false) => {
     setSaving(true);
-    const patch = reset || months === 3
-      ? { review_frequency_months: null, review_frequency_reason: null, review_frequency_agreed_at: null }
-      : { review_frequency_months: months, review_frequency_reason: reason.trim(), review_frequency_agreed_at: new Date().toISOString() };
-    const { error } = await supabase.from('college_students').update(patch as never).eq('id', studentId);
+    const patch =
+      reset || months === 3
+        ? {
+            review_frequency_months: null,
+            review_frequency_reason: null,
+            review_frequency_agreed_at: null,
+          }
+        : {
+            review_frequency_months: months,
+            review_frequency_reason: reason.trim(),
+            review_frequency_agreed_at: new Date().toISOString(),
+          };
+    const { error } = await supabase
+      .from('college_students')
+      .update(patch as never)
+      .eq('id', studentId);
     setSaving(false);
     if (error) {
       toast({ title: 'Not saved', description: error.message, variant: 'destructive' });
@@ -292,7 +325,11 @@ function FrequencyRow({ studentId, onChanged }: { studentId: string; onChanged: 
               type="button"
               aria-pressed={months === m}
               onClick={() => setMonths(m)}
-              className={cn(chipBase, 'text-[13px]', months === m ? chipOn : chipOff)}
+              className={cn(
+                chipBase,
+                'text-[13px]',
+                months === m ? 'border-white bg-white font-semibold text-black' : chipOff
+              )}
             >
               {m} mo
             </button>
@@ -305,7 +342,12 @@ function FrequencyRow({ studentId, onChanged }: { studentId: string; onChanged: 
             <label className={labelCn} htmlFor="freq-reason">
               Delivery reason (for example, module length)
             </label>
-            <input id="freq-reason" value={reason} onChange={(e) => setReason(e.target.value)} className={inputCn} />
+            <input
+              id="freq-reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              className={inputCn}
+            />
           </div>
           <button
             type="button"
@@ -327,16 +369,25 @@ function FrequencyRow({ studentId, onChanged }: { studentId: string; onChanged: 
             The employer has agreed this frequency
           </button>
           <p className="text-[12px] leading-relaxed text-white">
-            The funding rules allow another frequency only for an evidenced delivery reason agreed with the employer.
-            Learning support must still be reviewed every 3 months.
+            The funding rules allow another frequency only for an evidenced delivery reason agreed
+            with the employer. Learning support must still be reviewed every 3 months.
           </p>
         </>
       )}
       <div className="grid grid-cols-2 gap-2.5">
-        <button type="button" onClick={() => setEditing(false)} className={cn(buttonSecondaryCn, 'h-11')}>
+        <button
+          type="button"
+          onClick={() => setEditing(false)}
+          className={cn(buttonSecondaryCn, 'h-11')}
+        >
           Cancel
         </button>
-        <button type="button" disabled={!valid || saving} onClick={() => void save()} className={cn(buttonPrimaryCn, 'h-11')}>
+        <button
+          type="button"
+          disabled={!valid || saving}
+          onClick={() => void save()}
+          className={cn(buttonPrimaryCn, 'h-11')}
+        >
           {saving ? 'Saving…' : 'Save'}
         </button>
       </div>

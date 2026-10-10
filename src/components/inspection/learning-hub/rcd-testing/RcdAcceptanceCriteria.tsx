@@ -55,7 +55,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* General type table */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">General Type RCD (30mA) — GN3 Table 2.17</p>
+          <p className="text-[12px] font-medium text-white mb-3">General Type RCD (30mA) — GN3 Table 2.17</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -82,7 +82,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
 
         {/* S-type table */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">S-Type (Time Delayed) RCD (30mA)</p>
+          <p className="text-[12px] font-medium text-white mb-3">S-Type (Time Delayed) RCD (30mA)</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -109,7 +109,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
 
         {/* Typical healthy values */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Healthy RCDs Typically Read</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Healthy RCDs Typically Read</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -141,7 +141,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
 
         {/* Failure indicators */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Failure Indicators & EICR Coding</p>
+          <p className="text-[12px] font-medium text-white mb-3">Failure Indicators & EICR Coding</p>
         </motion.div>
 
         {failureIndicators.map((item, i) => (
@@ -150,7 +150,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
               <div className="flex items-center gap-2 mb-2">
                 <p className="text-sm font-semibold text-white">{item.indicator}</p>
                 {item.severity !== 'Investigate' && (
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${item.severity === 'C1' ? 'text-red-400 bg-red-400/10' : 'text-orange-400 bg-orange-400/10'}`}>{item.severity}</span>
+                  <span className={`text-[12px] font-bold px-2 py-0.5 rounded-lg ${item.severity === 'C1' ? 'text-red-400 bg-red-400/10' : 'text-orange-400 bg-orange-400/10'}`}>{item.severity}</span>
                 )}
               </div>
               <p className="text-sm text-white leading-relaxed">{item.action}</p>

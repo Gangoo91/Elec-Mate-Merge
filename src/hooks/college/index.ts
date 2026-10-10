@@ -13,5 +13,4 @@ export * from './useCollegeEPA';
 export * from './useCollegeLessonPlans';
 export * from './useCollegeActivity';
 export * from './usePortfolioSubmissions';
-export * from './useAssessorActions';
 export * from './useEPAGateway';

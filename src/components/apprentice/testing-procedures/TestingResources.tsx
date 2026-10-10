@@ -1,4 +1,4 @@
-import { PANEL } from '@/components/ui/panel-recipe';
+import { LEARN_CARD } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 /**
  * Source note for the testing procedures.
@@ -12,8 +12,8 @@ import { cn } from '@/lib/utils';
  */
 const TestingResources = () => {
   return (
-    <div className={cn(PANEL, "space-y-1")}>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+    <div className={cn(LEARN_CARD, "space-y-1")}>
+      <span className="text-[13px] font-semibold text-white">
         Source
       </span>
       <p className="text-[14px] text-white leading-relaxed">

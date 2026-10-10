@@ -23,6 +23,7 @@ import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
+import { CourseTile } from '@/components/study-centre/course-catalogue';
 
 import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
@@ -129,17 +130,15 @@ export default function BrowseCoursesPage() {
                   onClick={() => setFilter(f.key)}
                   aria-pressed={active}
                   className={cn(
-                    'inline-flex h-9 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation',
+                    'inline-flex h-11 items-center gap-1.5 rounded-full border px-4 text-[13px] transition-colors touch-manipulation',
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
                     active
                       ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                      : 'border-white/[0.12] bg-white/[0.05] font-medium text-white hover:border-white/[0.25]'
+                      : 'border-white/[0.12] bg-white/[0.05] font-medium text-white hover:border-white/[0.25] active:bg-white/[0.1]'
                   )}
                 >
                   {f.label}
-                  <span className={cn('tabular-nums', active ? 'text-black/60' : 'text-white/55')}>
-                    {counts[f.key]}
-                  </span>
+                  <span className="tabular-nums">{counts[f.key]}</span>
                 </button>
               );
             })}
@@ -176,57 +175,22 @@ export default function BrowseCoursesPage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] sm:gap-3">
-              {results.map((c) => {
-                const done = progressFor[c.id] ?? 0;
-                const inDev = Boolean(c.inDevelopment);
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => navigate(c.path)}
-                    className={cn(
-                      CARD_BASE,
-                      CARD_NEUTRAL,
-                      'p-4 text-left',
-                      'lg:hover:-translate-y-0.5'
-                    )}
-                  >
-                    <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-                      {TRACKS[c.track].short}
-                      <span className="h-2.5 w-px bg-white/20" aria-hidden />
-                      {c.level}
-                      {inDev && (
-                        <span className="whitespace-nowrap rounded-full border border-elec-yellow/30 bg-elec-yellow/10 px-2 py-0.5 text-[9.5px] font-semibold tracking-wider text-elec-yellow">
-                          In review
-                        </span>
-                      )}
-                    </span>
-
-                    <span className="mt-1.5 text-[15px] font-semibold leading-tight tracking-tight text-white">
-                      {c.title}
-                    </span>
-
-                    <span className="mt-1.5 line-clamp-2 text-[12.5px] leading-snug text-white">
-                      {c.description}
-                    </span>
-
-                    <span className="mt-3 flex items-center justify-between gap-2 text-[11.5px]">
-                      <span className="text-white">{c.duration}</span>
-                      {/* Volt only when there's actual progress — an accent on
-                          every card means nothing. */}
-                      <span
-                        className={cn(
-                          'font-semibold tabular-nums',
-                          done > 0 ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      >
-                        {done > 0 ? `${done} done` : 'Start'}
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
+            <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
+              {results.map((c) => (
+                <CourseTile
+                  key={c.id}
+                  c={{
+                    id: c.id,
+                    title: c.title,
+                    description: c.description,
+                    level: `${TRACKS[c.track].short} · ${c.level}`,
+                    duration: c.duration,
+                    to: c.path,
+                    done: progressFor[c.id] ?? 0,
+                    badge: c.inDevelopment ? 'In review' : undefined,
+                  }}
+                />
+              ))}
             </div>
           )}
         </section>

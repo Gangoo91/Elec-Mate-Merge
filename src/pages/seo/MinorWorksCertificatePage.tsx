@@ -752,20 +752,19 @@ export default function MinorWorksCertificatePage() {
                 <Shield className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-elec-yellow text-base mb-2">
-                    A4:2026 Change — 30 mA RCD on Domestic Lighting Circuits (Reg 411.3.4)
+                    30 mA RCD on Domestic Lighting Circuits (Reg 411.3.4)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    BS 7671:2018+A4:2026 introduced Regulation 411.3.4, which requires that within
+                    Regulation 411.3.4 of BS 7671 requires that within
                     domestic (household) premises, additional protection by an RCD with a rated
                     residual operating current not exceeding 30 mA shall be provided for all AC
-                    final circuits supplying luminaires. This is a new A4:2026 requirement. If you
+                    final circuits supplying luminaires. It has applied since BS 7671:2018. If you
                     carry out minor works on a domestic lighting circuit — for example extending a
                     lighting circuit or adding a light point — you must confirm that 30 mA RCD
                     additional protection is already in place for that circuit. If it is absent,
                     record this as a C2 (potentially dangerous) or C3 (improvement recommended)
                     observation on the certificate, depending on the age and condition of the
-                    installation. Failure to identify this is increasingly flagged on scheme
-                    inspections following the A4:2026 amendment.
+                    installation.
                   </p>
                 </div>
               </div>

@@ -7,7 +7,6 @@ import {
   cardCn,
   chipBase,
   chipOff,
-  chipOn,
   grid2Cn,
   fieldFullCn,
   infoPanelCn,
@@ -58,6 +57,8 @@ import {
   type TripartiteReview,
 } from '@/hooks/useTripartiteReviews';
 import { Chips, InputView, SectionTitle, SignatureLine, Stat, fmtHours } from './reviewUi';
+import { ReviewAiDraftPanel, SummaryProvenance } from './ReviewAiDraftPanel';
+import { UsesAi } from '@/components/college/ui/UsesAi';
 
 /* ==========================================================================
    ReviewWorkspaceSheet — one tripartite progress review, start to finish.
@@ -85,8 +86,14 @@ const STEPS: Array<{ key: Step; label: string }> = [
   { key: 'signoff', label: 'Sign off' },
 ];
 
-const MODE_OPTIONS = (Object.keys(MODE_LABEL) as ReviewMode[]).map((v) => ({ value: v, label: MODE_LABEL[v] }));
-const OWNER_OPTIONS = (Object.keys(OWNER_LABEL) as ActionOwner[]).map((v) => ({ value: v, label: OWNER_LABEL[v] }));
+const MODE_OPTIONS = (Object.keys(MODE_LABEL) as ReviewMode[]).map((v) => ({
+  value: v,
+  label: MODE_LABEL[v],
+}));
+const OWNER_OPTIONS = (Object.keys(OWNER_LABEL) as ActionOwner[]).map((v) => ({
+  value: v,
+  label: OWNER_LABEL[v],
+}));
 const ATTENDANCE_OPTIONS = (Object.keys(ATTENDANCE_LABEL) as EmployerAttendance[]).map((v) => ({
   value: v,
   label: ATTENDANCE_LABEL[v],
@@ -142,7 +149,10 @@ export function ReviewWorkspaceSheet({
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
   const saveTimer = useRef<number | null>(null);
   // The latest outcomes and the review they belong to, for the autosave.
-  const latest = useRef<{ id: string | null; outcomes: ReviewOutcomes }>({ id: null, outcomes: {} });
+  const latest = useRef<{ id: string | null; outcomes: ReviewOutcomes }>({
+    id: null,
+    outcomes: {},
+  });
   const pending = useRef(false);
   const currentId = useRef<string | null>(reviewId);
 
@@ -172,7 +182,11 @@ export function ReviewWorkspaceSheet({
     const forId = id;
     setLoading(true);
     try {
-      const [r, p, a] = await Promise.all([fetchReview(forId), fetchReviewPrefill(forId), fetchReviewActions(forId)]);
+      const [r, p, a] = await Promise.all([
+        fetchReview(forId),
+        fetchReviewPrefill(forId),
+        fetchReviewActions(forId),
+      ]);
       if (currentId.current !== forId) return; // a later review was opened meanwhile
       setReview(r);
       setPrefill(r?.snapshot?.prefill ?? p);
@@ -184,7 +198,11 @@ export function ReviewWorkspaceSheet({
       }
     } catch (e) {
       if (currentId.current === forId) {
-        toast({ title: 'Could not open the review', description: (e as Error).message, variant: 'destructive' });
+        toast({
+          title: 'Could not open the review',
+          description: (e as Error).message,
+          variant: 'destructive',
+        });
       }
     } finally {
       if (currentId.current === forId) setLoading(false);
@@ -281,26 +299,43 @@ export function ReviewWorkspaceSheet({
       title={title}
       headerTrailing={
         !locked && saveState !== 'idle' ? (
-          <span className="text-[12px] font-medium text-white">{saveState === 'saving' ? 'Saving…' : 'Saved'}</span>
+          <span className="text-[12px] font-medium text-white">
+            {saveState === 'saving' ? 'Saving…' : 'Saved'}
+          </span>
         ) : undefined
       }
       subheader={
         review && !locked ? (
-          <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
-            {STEPS.map((s, i) => (
-              <button
-                key={s.key}
-                type="button"
-                onClick={() => goto(s.key)}
-                aria-current={s.key === step}
-                className={cn(
-                  'h-9 shrink-0 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
-                  s.key === step ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white'
-                )}
-              >
-                <span className="tabular-nums">{i + 1}</span> {s.label}
-              </button>
-            ))}
+          // Quiet text tabs with a yellow underline (10 Oct 2026), 48px tall.
+          <div
+            role="group"
+            aria-label="Review steps"
+            className="-mx-1 flex overflow-x-auto border-b border-white/[0.08] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {STEPS.map((s, i) => {
+              const on = s.key === step;
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  onClick={() => goto(s.key)}
+                  aria-current={on}
+                  className={cn(
+                    'relative inline-flex h-12 shrink-0 items-center gap-1.5 whitespace-nowrap px-3 text-[13.5px] text-white touch-manipulation transition-colors active:bg-white/[0.04]',
+                    on ? 'font-semibold' : 'font-medium hover:text-elec-yellow'
+                  )}
+                >
+                  <span className="tabular-nums">{i + 1}</span> {s.label}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'absolute inset-x-3 bottom-0 h-[2px] rounded-full',
+                      on ? 'bg-elec-yellow' : 'bg-transparent'
+                    )}
+                  />
+                </button>
+              );
+            })}
           </div>
         ) : undefined
       }
@@ -310,12 +345,18 @@ export function ReviewWorkspaceSheet({
             <button
               type="button"
               className={buttonSecondaryCn}
-              onClick={() => (stepIndex === 0 ? onOpenChange(false) : goto(STEPS[stepIndex - 1].key))}
+              onClick={() =>
+                stepIndex === 0 ? onOpenChange(false) : goto(STEPS[stepIndex - 1].key)
+              }
             >
               {stepIndex === 0 ? 'Close' : 'Back'}
             </button>
             {stepIndex < STEPS.length - 1 ? (
-              <button type="button" className={buttonPrimaryCn} onClick={() => goto(STEPS[stepIndex + 1].key)}>
+              <button
+                type="button"
+                className={buttonPrimaryCn}
+                onClick={() => goto(STEPS[stepIndex + 1].key)}
+              >
                 Next: {STEPS[stepIndex + 1].label}
               </button>
             ) : (
@@ -336,16 +377,46 @@ export function ReviewWorkspaceSheet({
           <ReviewRecord review={review} prefill={prefill} actions={actions} onChanged={changed} />
         </div>
       ) : (
-        <div key={step} className={cn('grid items-start gap-5 lg:grid-cols-2', dir === 1 ? 'animate-mw-step-in' : 'animate-mw-step-back')}>
+        <div
+          key={step}
+          className={cn(
+            'grid items-start gap-5 lg:grid-cols-2',
+            dir === 1 ? 'animate-mw-step-in' : 'animate-mw-step-back'
+          )}
+        >
           {step === 'prepare' && (
-            <PrepareStep review={review} prefill={prefill} studentName={studentName} onChanged={changed} />
+            <PrepareStep
+              review={review}
+              prefill={prefill}
+              studentName={studentName}
+              onChanged={changed}
+            />
           )}
           {step === 'since' && (
-            <SinceStep review={review} prefill={prefill} outcomes={outcomes} patch={patchOutcomes} onChanged={changed} />
+            <SinceStep
+              review={review}
+              prefill={prefill}
+              outcomes={outcomes}
+              patch={patchOutcomes}
+              onChanged={changed}
+            />
           )}
-          {step === 'progress' && <ProgressStep prefill={prefill} outcomes={outcomes} patch={patchOutcomes} />}
-          {step === 'plan' && <PlanStep prefill={prefill} outcomes={outcomes} patch={patchOutcomes} />}
-          {step === 'actions' && <ActionsStep review={review} actions={actions} onChanged={changed} />}
+          {step === 'progress' && (
+            <ProgressStep prefill={prefill} outcomes={outcomes} patch={patchOutcomes} />
+          )}
+          {step === 'plan' && (
+            <PlanStep prefill={prefill} outcomes={outcomes} patch={patchOutcomes} />
+          )}
+          {step === 'actions' && (
+            <ActionsStep
+              review={review}
+              actions={actions}
+              outcomes={outcomes}
+              patch={patchOutcomes}
+              flush={saveNow}
+              onChanged={changed}
+            />
+          )}
           {step === 'signoff' && (
             <SignOffStep
               review={review}
@@ -406,13 +477,25 @@ function ScheduleSheet({
   const [time, setTime] = useState('10:00');
   const [mode, setMode] = useState<ReviewMode>('in_person');
   const [place, setPlace] = useState('');
-  const [employer, setEmployer] = useState<{ id: string; company_name: string; contact_name: string | null; contact_email: string | null } | null>(null);
+  const [employer, setEmployer] = useState<{
+    id: string;
+    company_name: string;
+    contact_name: string | null;
+    contact_email: string | null;
+  } | null>(null);
   const [company, setCompany] = useState('');
   const [contact, setContact] = useState('');
   const [email, setEmail] = useState('');
   const [dueBy, setDueBy] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const [known, setKnown] = useState<Array<{ id: string; company_name: string; contact_name: string | null; contact_email: string | null }>>([]);
+  const [known, setKnown] = useState<
+    Array<{
+      id: string;
+      company_name: string;
+      contact_name: string | null;
+      contact_email: string | null;
+    }>
+  >([]);
   const [pickedId, setPickedId] = useState<string | null>(null);
   const [addingNew, setAddingNew] = useState(false);
 
@@ -440,7 +523,11 @@ function ScheduleSheet({
     setDueBy(null);
     setKnown([]);
     void (async () => {
-      const { data: s } = await supabase.from('college_students').select('employer_id').eq('id', studentId).maybeSingle();
+      const { data: s } = await supabase
+        .from('college_students')
+        .select('employer_id')
+        .eq('id', studentId)
+        .maybeSingle();
       if (!live) return;
       const empId = (s as { employer_id: string | null } | null)?.employer_id;
       if (empId) {
@@ -452,7 +539,10 @@ function ScheduleSheet({
         if (!live) return;
         setEmployer((e as never) ?? null);
       }
-      const { data: due } = await supabase.rpc('tripartite_due_by' as never, { p_student: studentId } as never);
+      const { data: due } = await supabase.rpc(
+        'tripartite_due_by' as never,
+        { p_student: studentId } as never
+      );
       if (!live) return;
       setDueBy((due as unknown as string) ?? null);
       if (!empId) {
@@ -502,7 +592,13 @@ function ScheduleSheet({
   const newOk = company.trim().length >= 2 && /\S+@\S+\.\S+/.test(email.trim());
   const pastTime =
     day === today &&
-    time <= new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/London' });
+    time <=
+      new Date().toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'Europe/London',
+      });
   const valid = !!when && !pastTime && urlOk && (!needEmployer || !!picked || (addingNew && newOk));
 
   const save = async () => {
@@ -542,7 +638,10 @@ function ScheduleSheet({
         location: mode === 'video' ? null : place.trim() || null,
         meeting_url: mode === 'video' ? place.trim() || null : null,
       });
-      toast({ title: 'Review booked', description: `${studentName} has been told. Next, send the employer their link.` });
+      toast({
+        title: 'Review booked',
+        description: `${studentName} has been told. Next, send the employer their link.`,
+      });
       onScheduled(newId);
     } catch (e) {
       toast({ title: 'Not booked', description: (e as Error).message, variant: 'destructive' });
@@ -551,13 +650,23 @@ function ScheduleSheet({
     }
   };
 
-  const panel = 'rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 sm:p-6';
+  const panel =
+    'rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 sm:p-6';
   const chosen = employer ?? picked;
   const first = studentName.split(' ')[0];
-  const nowHm = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/London' });
+  const nowHm = new Date().toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Europe/London',
+  });
   const inGrid = weeks.some((w) => w.some((d) => d.iso === day));
   const dayLong = day
-    ? new Date(`${day}T12:00`).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
+    ? new Date(`${day}T12:00`).toLocaleDateString('en-GB', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+      })
     : null;
   const WEEK_LABEL = ['This week', 'Next week', 'Week after'];
   const MODE_HINT: Record<ReviewMode, string> = {
@@ -566,8 +675,17 @@ function ScheduleSheet({
     phone: 'A three-way call',
     email: 'Each adds their view in writing',
   };
-  const missing = !day ? 'Pick a day' : !time ? 'Pick a time' : day === today && time <= nowHm ? 'Pick a later time' : !urlOk ? 'Fix the meeting link' : needEmployer && !picked && !(addingNew && newOk) ? 'Add the employer' : null;
-
+  const missing = !day
+    ? 'Pick a day'
+    : !time
+      ? 'Pick a time'
+      : day === today && time <= nowHm
+        ? 'Pick a later time'
+        : !urlOk
+          ? 'Fix the meeting link'
+          : needEmployer && !picked && !(addingNew && newOk)
+            ? 'Add the employer'
+            : null;
 
   return (
     <FormSheet
@@ -584,8 +702,13 @@ function ScheduleSheet({
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
             Cancel
           </button>
-          <button type="button" onClick={save} disabled={!valid || saving} className={buttonPrimaryCn}>
-            {saving ? 'Booking…' : missing ?? 'Book review'}
+          <button
+            type="button"
+            onClick={save}
+            disabled={!valid || saving}
+            className={buttonPrimaryCn}
+          >
+            {saving ? 'Booking…' : (missing ?? 'Book review')}
           </button>
         </div>
       }
@@ -599,8 +722,15 @@ function ScheduleSheet({
               title="Pick a day"
               aside={
                 dueBy ? (
-                  <span className={cn('text-[12.5px] font-semibold', overdue ? 'text-orange-300 lg:hidden' : 'text-white')}>
-                    {overdue ? `Overdue since ${fmtReviewDate(dueBy)}` : `Due by ${fmtReviewDate(dueBy)}`}
+                  <span
+                    className={cn(
+                      'text-[12.5px] font-semibold',
+                      overdue ? 'text-orange-300 lg:hidden' : 'text-white'
+                    )}
+                  >
+                    {overdue
+                      ? `Overdue since ${fmtReviewDate(dueBy)}`
+                      : `Due by ${fmtReviewDate(dueBy)}`}
                   </span>
                 ) : null
               }
@@ -608,7 +738,7 @@ function ScheduleSheet({
             <div className="mt-4 space-y-3">
               {weeks.map((row, wi) => (
                 <div key={wi}>
-                  <p className="mb-1.5 text-[11.5px] font-medium text-white">{WEEK_LABEL[wi]}</p>
+                  <p className="mb-1.5 text-[12px] font-medium text-white">{WEEK_LABEL[wi]}</p>
                   <div className="grid grid-cols-5 gap-2">
                     {row.map((d) => {
                       const past = d.iso < today;
@@ -625,18 +755,23 @@ function ScheduleSheet({
                           className={cn(
                             'relative flex h-16 flex-col items-center justify-center rounded-2xl border text-center touch-manipulation transition-colors',
                             on
-                              ? 'border-elec-yellow bg-elec-yellow text-black'
+                              ? 'border-white bg-white text-black'
                               : past
                                 ? 'border-transparent text-white opacity-30'
                                 : 'border-white/[0.12] bg-white/[0.03] text-white hover:border-white/[0.3]',
                             isDue && !on && 'border-orange-400/70'
                           )}
                         >
-                          <span className="text-[11px] font-semibold uppercase tracking-wide">{d.wd}</span>
-                          <span className="text-[19px] font-bold leading-tight tabular-nums">{d.dayNum}</span>
-                          <span className="text-[10.5px]">{isDue ? 'Due' : d.month}</span>
+                          <span className="text-[12px] font-semibold">{d.wd}</span>
+                          <span className="text-[19px] font-bold leading-tight tabular-nums">
+                            {d.dayNum}
+                          </span>
+                          <span className="text-[12px]">{isDue ? 'Due' : d.month}</span>
                           {late && !on && !overdue && (
-                            <span aria-hidden className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-orange-400" />
+                            <span
+                              aria-hidden
+                              className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-orange-400"
+                            />
                           )}
                         </button>
                       );
@@ -660,7 +795,9 @@ function ScheduleSheet({
                 />
               </div>
               {afterDue && !overdue && (
-                <p className="pb-3 text-[12.5px] text-orange-300">After the due date of {fmtReviewDate(dueBy)}</p>
+                <p className="pb-3 text-[12.5px] text-orange-300">
+                  After the due date of {fmtReviewDate(dueBy)}
+                </p>
               )}
             </div>
           </section>
@@ -671,16 +808,20 @@ function ScheduleSheet({
               {TIMES.map((t) => {
                 const gone = day === today && t <= nowHm;
                 return (
-                <button
-                  key={t}
-                  type="button"
-                  disabled={gone}
-                  aria-pressed={time === t}
-                  onClick={() => setTime(t)}
-                  className={cn(chipBase, 'px-1 text-[13.5px] tabular-nums disabled:opacity-30', time === t ? chipOn : chipOff)}
-                >
-                  {t}
-                </button>
+                  <button
+                    key={t}
+                    type="button"
+                    disabled={gone}
+                    aria-pressed={time === t}
+                    onClick={() => setTime(t)}
+                    className={cn(
+                      chipBase,
+                      'px-1 text-[13.5px] tabular-nums disabled:opacity-30',
+                      time === t ? 'border-white bg-white font-semibold text-black' : chipOff
+                    )}
+                  >
+                    {t}
+                  </button>
                 );
               })}
             </div>
@@ -688,7 +829,13 @@ function ScheduleSheet({
               <label className={labelCn} htmlFor="rv-time">
                 Another time
               </label>
-              <input id="rv-time" type="time" value={time} onChange={(e) => setTime(e.target.value)} className={inputCn} />
+              <input
+                id="rv-time"
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className={inputCn}
+              />
             </div>
           </section>
 
@@ -705,11 +852,13 @@ function ScheduleSheet({
                     onClick={() => setMode(m.value)}
                     className={cn(
                       'flex min-h-[72px] flex-col justify-center rounded-2xl border px-3.5 py-3 text-left touch-manipulation transition-colors',
-                      on ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.12] bg-white/[0.03] text-white hover:border-white/[0.3]'
+                      on
+                        ? 'border-white bg-white text-black'
+                        : 'border-white/[0.12] bg-white/[0.03] text-white hover:border-white/[0.3]'
                     )}
                   >
                     <span className="text-[14px] font-semibold">{m.label}</span>
-                    <span className="mt-0.5 text-[11.5px] leading-snug">{MODE_HINT[m.value]}</span>
+                    <span className="mt-0.5 text-[12px] leading-snug">{MODE_HINT[m.value]}</span>
                   </button>
                 );
               })}
@@ -723,38 +872,59 @@ function ScheduleSheet({
                   id="rv-place"
                   value={place}
                   onChange={(e) => setPlace(e.target.value)}
-                  placeholder={mode === 'video' ? 'https://… Teams or Zoom link' : 'The workplace, college or site'}
+                  placeholder={
+                    mode === 'video'
+                      ? 'https://… Teams or Zoom link'
+                      : 'The workplace, college or site'
+                  }
                   className={inputCn}
                 />
-                {!urlOk && <p className="mt-2 text-[13px] text-orange-300">Paste the full link, starting https://</p>}
+                {!urlOk && (
+                  <p className="mt-2 text-[13px] text-orange-300">
+                    Paste the full link, starting https://
+                  </p>
+                )}
               </div>
             )}
             {mode === 'email' && (
               <p className="mt-4 text-[13px] leading-relaxed text-white">
-                The funding rules allow a review by email. Each of you adds your view, then you write it up and everyone signs.
+                The funding rules allow a review by email. Each of you adds your view, then you
+                write it up and everyone signs.
               </p>
             )}
           </section>
 
           {!employer && (
             <section className={panel}>
-              <StepHead n={4} title="Employer" aside={<span className="text-[11px] font-medium text-white">Para 97.2</span>} />
+              <StepHead
+                n={4}
+                title="Employer"
+                aside={<span className="text-[12px] font-medium text-white">Para 97.2</span>}
+              />
               {picked ? (
                 <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl border border-elec-yellow/60 bg-background p-4">
                   <span className="min-w-0">
-                    <span className="block truncate text-[15px] font-semibold text-white">{picked.company_name}</span>
-                    <span className="block truncate text-[12.5px] text-white">
-                      {[picked.contact_name, picked.contact_email].filter(Boolean).join(' · ') || 'No contact recorded yet'}
+                    <span className="block break-words text-[15px] font-semibold text-white">
+                      {picked.company_name}
+                    </span>
+                    <span className="block text-[12.5px] text-white [overflow-wrap:anywhere]">
+                      {[picked.contact_name, picked.contact_email].filter(Boolean).join(' · ') ||
+                        'No contact recorded yet'}
                     </span>
                   </span>
-                  <button type="button" onClick={() => setPickedId(null)} className="h-11 shrink-0 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+                  <button
+                    type="button"
+                    onClick={() => setPickedId(null)}
+                    className="h-11 shrink-0 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  >
                     Change
                   </button>
                 </div>
               ) : (
                 <>
                   <p className="mt-2 text-[13px] leading-relaxed text-white">
-                    No employer is recorded for {first} yet. Add them once and every review after this uses it.
+                    No employer is recorded for {first} yet. Add them once and every review after
+                    this uses it.
                   </p>
                   {known.length > 0 && !addingNew && (
                     <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -766,10 +936,16 @@ function ScheduleSheet({
                             className="flex min-h-[60px] w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.03] px-4 py-2.5 text-left touch-manipulation hover:border-white/[0.3]"
                           >
                             <span className="min-w-0">
-                              <span className="block truncate text-[14px] font-semibold text-white">{k.company_name}</span>
-                              <span className="block truncate text-[12px] text-white">{k.contact_email ?? 'No email yet'}</span>
+                              <span className="block break-words text-[14px] font-semibold text-white">
+                                {k.company_name}
+                              </span>
+                              <span className="block text-[12.5px] text-white [overflow-wrap:anywhere]">
+                                {k.contact_email ?? 'No email yet'}
+                              </span>
                             </span>
-                            <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Use</span>
+                            <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">
+                              Use
+                            </span>
                           </button>
                         </li>
                       ))}
@@ -781,24 +957,45 @@ function ScheduleSheet({
                         <label className={labelCn} htmlFor="rv-co">
                           Company
                         </label>
-                        <input id="rv-co" value={company} onChange={(e) => setCompany(e.target.value)} className={inputCn} autoComplete="organization" />
+                        <input
+                          id="rv-co"
+                          value={company}
+                          onChange={(e) => setCompany(e.target.value)}
+                          className={inputCn}
+                          autoComplete="organization"
+                        />
                       </div>
                       <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
                         <div>
                           <label className={labelCn} htmlFor="rv-cn">
                             Contact name
                           </label>
-                          <input id="rv-cn" value={contact} onChange={(e) => setContact(e.target.value)} className={inputCn} />
+                          <input
+                            id="rv-cn"
+                            value={contact}
+                            onChange={(e) => setContact(e.target.value)}
+                            className={inputCn}
+                          />
                         </div>
                         <div>
                           <label className={labelCn} htmlFor="rv-ce">
                             Contact email
                           </label>
-                          <input id="rv-ce" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputCn} />
+                          <input
+                            id="rv-ce"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className={inputCn}
+                          />
                         </div>
                       </div>
                       {known.length > 0 && (
-                        <button type="button" onClick={() => setAddingNew(false)} className="h-11 text-[13px] font-semibold text-elec-yellow">
+                        <button
+                          type="button"
+                          onClick={() => setAddingNew(false)}
+                          className="h-11 text-[13px] font-semibold text-elec-yellow"
+                        >
                           Pick an existing employer instead
                         </button>
                       )}
@@ -822,14 +1019,21 @@ function ScheduleSheet({
         <aside className="space-y-4 lg:sticky lg:top-0">
           <div className="overflow-hidden rounded-3xl border border-white/[0.1] bg-gradient-to-b from-white/[0.09] to-white/[0.03]">
             <div className="border-b border-white/[0.08] px-5 py-5 sm:px-6">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">Your booking</p>
-              <p className="mt-2 text-[22px] font-bold leading-tight tracking-tight text-white">{dayLong ?? 'Pick a day'}</p>
+              <p className="text-[13px] font-semibold text-white">Your booking</p>
+              <p className="mt-2 text-[22px] font-bold leading-tight tracking-tight text-white">
+                {dayLong ?? 'Pick a day'}
+              </p>
               <p className="mt-1 text-[15px] font-semibold tabular-nums text-white">
                 {time}
                 <span className="font-medium"> · {MODE_LABEL[mode]}</span>
               </p>
               {dueBy && (
-                <p className={cn('mt-3 text-[12.5px] font-medium', overdue || afterDue ? 'text-orange-300' : 'text-white')}>
+                <p
+                  className={cn(
+                    'mt-3 text-[12.5px] font-medium',
+                    overdue || afterDue ? 'text-orange-300' : 'text-white'
+                  )}
+                >
                   {overdue
                     ? `Overdue since ${fmtReviewDate(dueBy)}, so book the earliest day you can`
                     : afterDue
@@ -841,45 +1045,68 @@ function ScheduleSheet({
             <dl className="divide-y divide-white/[0.06] px-5 sm:px-6">
               <div className="flex items-baseline justify-between gap-4 py-3">
                 <dt className="text-[12.5px] text-white">Apprentice</dt>
-                <dd className="truncate text-right text-[13.5px] font-semibold text-white">{studentName}</dd>
+                <dd className="min-w-0 break-words text-right text-[13.5px] font-semibold text-white">
+                  {studentName}
+                </dd>
               </div>
               <div className="flex items-baseline justify-between gap-4 py-3">
                 <dt className="text-[12.5px] text-white">Employer</dt>
-                <dd className="min-w-0 truncate text-right text-[13.5px] font-semibold text-white">
-                  {chosen ? chosen.company_name : addingNew && company.trim() ? company.trim() : <span className="text-orange-300">Not chosen yet</span>}
+                <dd className="min-w-0 text-right text-[13.5px] font-semibold text-white [overflow-wrap:anywhere]">
+                  {chosen ? (
+                    chosen.company_name
+                  ) : addingNew && company.trim() ? (
+                    company.trim()
+                  ) : (
+                    <span className="text-orange-300">Not chosen yet</span>
+                  )}
                 </dd>
               </div>
               {(mode === 'in_person' || mode === 'video') && (
                 <div className="flex items-baseline justify-between gap-4 py-3">
-                  <dt className="text-[12.5px] text-white">{mode === 'video' ? 'Link' : 'Where'}</dt>
-                  <dd className="min-w-0 truncate text-right text-[13.5px] font-semibold text-white">{place.trim() || 'Add it when you know'}</dd>
+                  <dt className="text-[12.5px] text-white">
+                    {mode === 'video' ? 'Link' : 'Where'}
+                  </dt>
+                  <dd className="min-w-0 text-right text-[13.5px] font-semibold text-white [overflow-wrap:anywhere]">
+                    {place.trim() || 'Add it when you know'}
+                  </dd>
                 </div>
               )}
             </dl>
             <div className="hidden gap-2.5 px-5 pb-5 pt-2 sm:px-6 lg:grid lg:grid-cols-[auto_1fr]">
-              <button type="button" onClick={() => onOpenChange(false)} className={cn(buttonSecondaryCn, 'px-5')}>
+              <button
+                type="button"
+                onClick={() => onOpenChange(false)}
+                className={cn(buttonSecondaryCn, 'px-5')}
+              >
                 Cancel
               </button>
-              <button type="button" onClick={save} disabled={!valid || saving} className={buttonPrimaryCn}>
-                {saving ? 'Booking…' : missing ?? 'Book review'}
+              <button
+                type="button"
+                onClick={save}
+                disabled={!valid || saving}
+                className={buttonPrimaryCn}
+              >
+                {saving ? 'Booking…' : (missing ?? 'Book review')}
               </button>
             </div>
           </div>
 
           <section className="rounded-3xl border border-white/[0.08] p-5 sm:p-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">What happens next</p>
+            <p className="text-[15px] font-semibold text-white">What happens next</p>
             <ol className="mt-3 space-y-3 text-[13px] leading-relaxed text-white">
               <li className="flex gap-3">
-                <span className="font-bold text-elec-yellow">1</span>
+                <span className="font-bold text-white">1</span>
                 {first} is told and can add their view before you meet.
               </li>
               <li className="flex gap-3">
-                <span className="font-bold text-elec-yellow">2</span>
-                You send the employer their link: three questions, no account. Sending it is your evidence they were asked.
+                <span className="font-bold text-white">2</span>
+                You send the employer their link: three questions, no account. Sending it is your
+                evidence they were asked.
               </li>
               <li className="flex gap-3">
-                <span className="font-bold text-elec-yellow">3</span>
-                On the day, the review opens filled in from the record: hours, attendance, evidence and last time's actions.
+                <span className="font-bold text-white">3</span>
+                On the day, the review opens filled in from the record: hours, attendance, evidence
+                and last time's actions.
               </li>
             </ol>
           </section>
@@ -917,7 +1144,9 @@ function PrepareStep({
   const { toast } = useToast();
   const [busy, setBusy] = useState<string | null>(null);
   const [when, setWhen] = useState(toLocalInput(review.scheduled_at));
-  const [place, setPlace] = useState(review.mode === 'video' ? review.meeting_url ?? '' : review.location ?? '');
+  const [place, setPlace] = useState(
+    review.mode === 'video' ? (review.meeting_url ?? '') : (review.location ?? '')
+  );
 
   const saveWhenHow = async (patch: Parameters<typeof updateReview>[1]) => {
     try {
@@ -953,7 +1182,10 @@ function PrepareStep({
       navigator.clipboard
         .writeText(link)
         .then(() => {
-          toast({ title: 'Link copied', description: 'Send it to the employer. Sharing it is recorded as an invitation.' });
+          toast({
+            title: 'Link copied',
+            description: 'Send it to the employer. Sharing it is recorded as an invitation.',
+          });
           void logEmployerContact(review.id, 'shared_link', 'Link copied').then(onChanged);
         })
         .catch(() => toast({ title: 'Could not copy', description: link, variant: 'destructive' }));
@@ -993,7 +1225,9 @@ function PrepareStep({
               type="datetime-local"
               value={when}
               onChange={(e) => setWhen(e.target.value)}
-              onBlur={() => when && void saveWhenHow({ scheduled_at: new Date(when).toISOString() })}
+              onBlur={() =>
+                when && void saveWhenHow({ scheduled_at: new Date(when).toISOString() })
+              }
               className={inputCn}
             />
           </div>
@@ -1015,8 +1249,16 @@ function PrepareStep({
                 value={place}
                 onChange={(e) => setPlace(e.target.value)}
                 onBlur={() => {
-                  if (review.mode === 'video' && place.trim() && !/^https:\/\//i.test(place.trim())) {
-                    toast({ title: 'Use the full meeting link', description: 'It starts with https://', variant: 'destructive' });
+                  if (
+                    review.mode === 'video' &&
+                    place.trim() &&
+                    !/^https:\/\//i.test(place.trim())
+                  ) {
+                    toast({
+                      title: 'Use the full meeting link',
+                      description: 'It starts with https://',
+                      variant: 'destructive',
+                    });
                     return;
                   }
                   void saveWhenHow(
@@ -1033,7 +1275,7 @@ function PrepareStep({
         {prefill.due_by && (
           <p className="text-[13px] text-white">
             Due by {fmtReviewDate(prefill.due_by)}
-            {review.scheduled_at && (londonDate(review.scheduled_at) ?? "") > prefill.due_by ? (
+            {review.scheduled_at && (londonDate(review.scheduled_at) ?? '') > prefill.due_by ? (
               <span className="text-orange-300"> · this date is after it</span>
             ) : null}
           </p>
@@ -1044,8 +1286,9 @@ function PrepareStep({
         <SectionTitle rule="Para 97.2.1">Employer</SectionTitle>
         <p className="text-[14px] leading-relaxed text-white">
           {prefill.learner.employer ?? 'Employer'}
-          {review.employer_contact_name ? `, ${review.employer_contact_name}` : ''}. Their link lets them add their
-          view before the review and sign the summary after it. No account, nothing to learn.
+          {review.employer_contact_name ? `, ${review.employer_contact_name}` : ''}. Their link lets
+          them add their view before the review and sign the summary after it. No account, nothing
+          to learn.
         </p>
         <div className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap">
           {email && (
@@ -1062,10 +1305,20 @@ function PrepareStep({
                   : `Email the link to ${email}`}
             </button>
           )}
-          <button type="button" disabled={!!busy} onClick={() => share('copy')} className={neutralCn}>
+          <button
+            type="button"
+            disabled={!!busy}
+            onClick={() => share('copy')}
+            className={neutralCn}
+          >
             Copy link
           </button>
-          <button type="button" disabled={!!busy} onClick={() => share('whatsapp')} className={neutralCn}>
+          <button
+            type="button"
+            disabled={!!busy}
+            onClick={() => share('whatsapp')}
+            className={neutralCn}
+          >
             WhatsApp
           </button>
         </div>
@@ -1104,8 +1357,8 @@ function PrepareStep({
           <InputView input={review.learner_input} who="Apprentice" />
         ) : (
           <p className="text-[13px] leading-relaxed text-white">
-            Not added yet. {studentName} sees the review on their My college page and can answer the same three
-            questions before you meet.
+            Not added yet. {studentName} sees the review on their My college page and can answer the
+            same three questions before you meet.
           </p>
         )}
       </section>
@@ -1121,11 +1374,17 @@ function PrepareStep({
           <Stat
             label="Planned by now"
             value={otj?.planned_to_date_hours != null ? fmtHours(otj.planned_to_date_hours) : '—'}
-            note={otj && otj.slippage_hours > 0 ? `${fmtHours(otj.slippage_hours)} behind` : 'on plan'}
+            note={
+              otj && otj.slippage_hours > 0 ? `${fmtHours(otj.slippage_hours)} behind` : 'on plan'
+            }
           />
           <Stat
             label="Attendance"
-            value={prefill.attendance_since?.percent != null ? `${prefill.attendance_since.percent}%` : '—'}
+            value={
+              prefill.attendance_since?.percent != null
+                ? `${prefill.attendance_since.percent}%`
+                : '—'
+            }
             note={`since ${fmtReviewDate(prefill.since)}`}
           />
           <Stat
@@ -1152,8 +1411,10 @@ function ContactTimeline({ review }: { review: TripartiteReview }) {
             : 'Link shared';
     items.push({ at: c.at, text: `${what}${c.to ? ` · ${c.to}` : ''}${c.by ? ` · ${c.by}` : ''}` });
   }
-  if (review.employer_viewed_at) items.push({ at: review.employer_viewed_at, text: 'Employer opened the link' });
-  if (review.employer_input?.at) items.push({ at: review.employer_input.at, text: 'Employer added their view' });
+  if (review.employer_viewed_at)
+    items.push({ at: review.employer_viewed_at, text: 'Employer opened the link' });
+  if (review.employer_input?.at)
+    items.push({ at: review.employer_input.at, text: 'Employer added their view' });
   if (items.length === 0) return null;
   items.sort((a, b) => a.at.localeCompare(b.at));
   return (
@@ -1161,7 +1422,12 @@ function ContactTimeline({ review }: { review: TripartiteReview }) {
       {items.map((i, n) => (
         <li key={n} className="text-[12.5px] leading-snug text-white">
           <span className="font-semibold tabular-nums">
-            {new Date(i.at).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+            {new Date(i.at).toLocaleString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
           </span>{' '}
           {i.text}
         </li>
@@ -1204,7 +1470,9 @@ function SinceStep({
         <SectionTitle rule="Para 98.1">Actions from the last review</SectionTitle>
         {prefill.open_actions.length === 0 ? (
           <p className="text-[13px] text-white">
-            {prefill.previous_review_id ? 'Every earlier action is already closed.' : 'This is the first review.'}
+            {prefill.previous_review_id
+              ? 'Every earlier action is already closed.'
+              : 'This is the first review.'}
           </p>
         ) : (
           <ul className="space-y-5">
@@ -1217,7 +1485,12 @@ function SinceStep({
                     {OWNER_LABEL[a.owner_party]}
                     {a.due_date ? ` · by ${fmtReviewDate(a.due_date)}` : ''}
                   </p>
-                  <Chips value={decided} options={CHECK_OPTIONS} onChange={(s) => void setCheck(a.id, s)} cols={3} />
+                  <Chips
+                    value={decided}
+                    options={CHECK_OPTIONS}
+                    onChange={(s) => void setCheck(a.id, s)}
+                    cols={3}
+                  />
                   <input
                     value={notes[a.id] ?? ''}
                     onChange={(e) => setNotes((n) => ({ ...n, [a.id]: e.target.value }))}
@@ -1235,11 +1508,16 @@ function SinceStep({
       <section className={cardCn}>
         <SectionTitle rule="Para 98.1">Training since {fmtReviewDate(prefill.since)}</SectionTitle>
         {prefill.training_since.length === 0 ? (
-          <p className="text-[13px] text-white">No verified off-the-job training recorded since then.</p>
+          <p className="text-[13px] text-white">
+            No verified off-the-job training recorded since then.
+          </p>
         ) : (
           <ul className="divide-y divide-white/[0.1]">
             {prefill.training_since.map((t) => (
-              <li key={t.type} className="flex items-center justify-between py-2.5 text-[14px] text-white">
+              <li
+                key={t.type}
+                className="flex items-center justify-between py-2.5 text-[14px] text-white"
+              >
                 <span>{otjActivityLabel(t.type)}</span>
                 <span className="font-semibold tabular-nums">{fmtHours(t.hours)}</span>
               </li>
@@ -1267,9 +1545,9 @@ function SinceStep({
       <section className={cardCn}>
         <SectionTitle rule="Para 98.2">Evidence</SectionTitle>
         <p className="text-[13px] leading-relaxed text-white">
-          Since {fmtReviewDate(prefill.since)}: {prefill.evidence_since.signed_off} portfolio items signed off,{' '}
-          {prefill.evidence_since.awaiting_assessment} waiting for assessment, {prefill.evidence_since.witness_statements}{' '}
-          witness statements signed.
+          Since {fmtReviewDate(prefill.since)}: {prefill.evidence_since.signed_off} portfolio items
+          signed off, {prefill.evidence_since.awaiting_assessment} waiting for assessment,{' '}
+          {prefill.evidence_since.witness_statements} witness statements signed.
         </p>
         <div>
           <label className={labelCn} htmlFor="rv-evidence">
@@ -1335,7 +1613,8 @@ function ProgressStep({
           />
           {behind && !(outcomes.otj_review ?? '').trim() && (
             <p className="mt-2 text-[13px] text-orange-300">
-              {fmtHours(otj?.slippage_hours)} behind the plan. The funding rules ask for slippage to be documented.
+              {fmtHours(otj?.slippage_hours)} behind the plan. The funding rules ask for slippage to
+              be documented.
             </p>
           )}
         </div>
@@ -1355,10 +1634,20 @@ function ProgressStep({
             ))}
           </ul>
         )}
-        <p className="text-[13px] text-white">
-          Course progress {prefill.learner.progress_percent}%
-          {prefill.learner.expected_end_date ? ` · planned end ${fmtReviewDate(prefill.learner.expected_end_date)}` : ''}
-        </p>
+        {(prefill.learner.criteria?.total || prefill.learner.expected_end_date) && (
+          <p className="text-[13px] text-white">
+            {[
+              prefill.learner.criteria?.total
+                ? `${prefill.learner.criteria.passed} of ${prefill.learner.criteria.total} criteria passed`
+                : null,
+              prefill.learner.expected_end_date
+                ? `planned end ${fmtReviewDate(prefill.learner.expected_end_date)}`
+                : null,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+          </p>
+        )}
         <div>
           <label className={labelCn} htmlFor="rv-progress">
             Progress discussed
@@ -1389,16 +1678,21 @@ function PlanStep({
 }) {
   const ls = outcomes.learning_support ?? {};
   const lsApplies = ls.applies ?? prefill.support_needs;
-  const needsEmployer = outcomes.plan_change && PLAN_CHANGE_NEEDS_EMPLOYER.includes(outcomes.plan_change);
+  const needsEmployer =
+    outcomes.plan_change && PLAN_CHANGE_NEEDS_EMPLOYER.includes(outcomes.plan_change);
   return (
     <>
       <section className={cardCn}>
         <SectionTitle rule="Para 98.4">Training plan</SectionTitle>
-        <Chips value={outcomes.plan_change} options={PLAN_OPTIONS} onChange={(v) => patch({ plan_change: v })} />
+        <Chips
+          value={outcomes.plan_change}
+          options={PLAN_OPTIONS}
+          onChange={(v) => patch({ plan_change: v })}
+        />
         {needsEmployer && (
           <p className="text-[13px] leading-relaxed text-orange-300">
-            The employer needs to re-sign the training plan for this change. They are asked to sign the review summary
-            through their link.
+            The employer needs to re-sign the training plan for this change. They are asked to sign
+            the review summary through their link.
           </p>
         )}
         {outcomes.plan_change && outcomes.plan_change !== 'none' && (
@@ -1420,9 +1714,10 @@ function PlanStep({
       <section className={cardCn}>
         <SectionTitle rule="Para 98.5">Concerns and new information</SectionTitle>
         <p className="text-[13px] leading-relaxed text-white">
-          Changes of circumstance, prior learning, and anything else that has come up since the start. Shared with the
-          employer and apprentice: record learning difficulties, disability and support needs under Learning support,
-          where the apprentice decides whether the employer sees them.
+          Changes of circumstance, prior learning, and anything else that has come up since the
+          start. Shared with the employer and apprentice: record learning difficulties, disability
+          and support needs under Learning support, where the apprentice decides whether the
+          employer sees them.
         </p>
         <textarea
           aria-label="Concerns and new information"
@@ -1452,7 +1747,9 @@ function PlanStep({
                 { value: 'yes', label: 'Apprentice agrees the employer can know' },
                 { value: 'no', label: 'Keep it from the employer' },
               ]}
-              onChange={(v) => patch({ learning_support: { ...ls, applies: true, employer_consent: v === 'yes' } })}
+              onChange={(v) =>
+                patch({ learning_support: { ...ls, applies: true, employer_consent: v === 'yes' } })
+              }
               cols={2}
             />
             <div>
@@ -1464,13 +1761,20 @@ function PlanStep({
                 rows={3}
                 value={ls.note ?? ''}
                 onChange={(e) =>
-                  patch({ learning_support: { ...ls, applies: true, discussed: e.target.value.trim().length > 0, note: e.target.value } })
+                  patch({
+                    learning_support: {
+                      ...ls,
+                      applies: true,
+                      discussed: e.target.value.trim().length > 0,
+                      note: e.target.value,
+                    },
+                  })
                 }
                 className={textareaCn}
               />
               <p className="mt-2 text-[12px] leading-relaxed text-white">
-                Kept as a separate record of the learning support check. The employer only sees it if the apprentice
-                agrees.
+                Kept as a separate record of the learning support check. The employer only sees it
+                if the apprentice agrees.
               </p>
             </div>
           </>
@@ -1514,10 +1818,16 @@ function PlanStep({
 function ActionsStep({
   review,
   actions,
+  outcomes,
+  patch,
+  flush,
   onChanged,
 }: {
   review: TripartiteReview;
   actions: ReviewAction[];
+  outcomes: ReviewOutcomes;
+  patch: (p: Partial<ReviewOutcomes>) => void;
+  flush: () => Promise<void>;
   onChanged: () => void;
 }) {
   const { toast } = useToast();
@@ -1542,72 +1852,105 @@ function ActionsStep({
   };
 
   return (
-    <section className={cardCn}>
-      <SectionTitle rule="Para 98.6">Actions for the next review</SectionTitle>
-      {actions.length > 0 && (
-        <ul className="divide-y divide-white/[0.1]">
-          {actions.map((a) => (
-            <li key={a.id} className="flex items-start justify-between gap-3 py-3">
-              <div className="min-w-0">
-                <p className="text-[15px] font-semibold leading-snug text-white">{a.action}</p>
-                <p className="mt-0.5 text-[12px] text-white">
-                  {OWNER_LABEL[a.owner_party]}
-                  {a.due_date ? ` · by ${fmtReviewDate(a.due_date)}` : ''}
-                </p>
-              </div>
+    <>
+      {/* ELE-2051: an AI draft of the summary and SMART targets, used only when the tutor confirms it. */}
+      <ReviewAiDraftPanel
+        review={review}
+        actions={actions}
+        outcomes={outcomes}
+        patch={patch}
+        flush={flush}
+        onChanged={onChanged}
+      />
+      <section className={cardCn}>
+        <SectionTitle rule="Para 98.6">Actions for the next review</SectionTitle>
+        {actions.length > 0 && (
+          <ul className="divide-y divide-white/[0.1]">
+            {actions.map((a) => (
+              <li key={a.id} className="flex items-start justify-between gap-3 py-3">
+                <div className="min-w-0">
+                  <p className="text-[15px] font-semibold leading-snug text-white">{a.action}</p>
+                  <p className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[12px] text-white">
+                    <span>
+                      {OWNER_LABEL[a.owner_party]}
+                      {a.due_date ? ` · by ${fmtReviewDate(a.due_date)}` : ''}
+                    </span>
+                    {a.source === 'ai_draft_confirmed' && (
+                      <span>· from an AI draft you confirmed</span>
+                    )}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    void removeReviewAction(a.id)
+                      .then(onChanged)
+                      .catch((e) =>
+                        toast({
+                          title: 'Not removed',
+                          description: (e as Error).message,
+                          variant: 'destructive',
+                        })
+                      )
+                  }
+                  className="h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="space-y-4 border-t border-white/[0.1] pt-4">
+          <div>
+            <label className={labelCn} htmlFor="rv-act">
+              New action
+            </label>
+            <input
+              id="rv-act"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && void add()}
+              placeholder="e.g. Complete three supervised safe isolations and log them"
+              className={inputCn}
+            />
+          </div>
+          <div>
+            <p className={labelCn}>Who</p>
+            <Chips<ActionOwner>
+              value={owner}
+              options={OWNER_OPTIONS}
+              onChange={setOwner}
+              cols={3}
+            />
+          </div>
+          <div className={grid2Cn}>
+            <div>
+              <label className={labelCn} htmlFor="rv-due">
+                By
+              </label>
+              <input
+                id="rv-due"
+                type="date"
+                value={due}
+                onChange={(e) => setDue(e.target.value)}
+                className={inputCn}
+              />
+            </div>
+            <div className="flex items-end">
               <button
                 type="button"
-                onClick={() =>
-                  void removeReviewAction(a.id)
-                    .then(onChanged)
-                    .catch((e) => toast({ title: 'Not removed', description: (e as Error).message, variant: 'destructive' }))
-                }
-                className="h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
+                onClick={() => void add()}
+                disabled={text.trim().length < 3 || busy}
+                className={cn(buttonPrimaryCn, 'h-11 w-full text-[13px]')}
               >
-                Remove
+                Add action
               </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      <div className="space-y-4 border-t border-white/[0.1] pt-4">
-        <div>
-          <label className={labelCn} htmlFor="rv-act">
-            New action
-          </label>
-          <input
-            id="rv-act"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && void add()}
-            placeholder="e.g. Complete three supervised safe isolations and log them"
-            className={inputCn}
-          />
-        </div>
-        <div>
-          <p className={labelCn}>Who</p>
-          <Chips<ActionOwner> value={owner} options={OWNER_OPTIONS} onChange={setOwner} cols={3} />
-        </div>
-        <div className={grid2Cn}>
-          <div>
-            <label className={labelCn} htmlFor="rv-due">
-              By
-            </label>
-            <input id="rv-due" type="date" value={due} onChange={(e) => setDue(e.target.value)} className={inputCn} />
-          </div>
-          <div className="flex items-end">
-            <button
-              type="button"
-              onClick={() => void add()}
-              disabled={text.trim().length < 3 || busy}
-              className={cn(buttonPrimaryCn, 'h-11 w-full text-[13px]')}
-            >
-              Add action
-            </button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
@@ -1668,8 +2011,16 @@ function SignOffStep({
       },
       { ok: !!outcomes.plan_change, text: 'Training plan question answered', step: 'plan' as Step },
       { ok: actions.length > 0, text: 'At least one action agreed', step: 'actions' as Step },
-      { ok: !!review.employer_attendance, text: 'Employer attendance recorded', step: 'signoff' as Step },
-      { ok: (outcomes.summary ?? '').trim().length >= 20, text: 'Summary written', step: 'signoff' as Step },
+      {
+        ok: !!review.employer_attendance,
+        text: 'Employer attendance recorded',
+        step: 'signoff' as Step,
+      },
+      {
+        ok: (outcomes.summary ?? '').trim().length >= 20,
+        text: 'Summary written',
+        step: 'signoff' as Step,
+      },
       { ok: heldOn <= todayIso(), text: 'Date held is today or earlier', step: 'signoff' as Step },
     ],
     [review, prefill, outcomes, actions]
@@ -1684,7 +2035,11 @@ function SignOffStep({
       await flush();
       const res = await signOffReview(review.id, heldOn);
       if (res.error || !res.success) {
-        toast({ title: 'Not signed off', description: res.error ?? 'Try again.', variant: 'destructive' });
+        toast({
+          title: 'Not signed off',
+          description: res.error ?? 'Try again.',
+          variant: 'destructive',
+        });
         return;
       }
       toast({
@@ -1703,10 +2058,16 @@ function SignOffStep({
     <>
       <section className={cardCn}>
         <SectionTitle rule="Para 97.2.1">Did the employer attend?</SectionTitle>
-        <Chips value={review.employer_attendance} options={ATTENDANCE_OPTIONS} onChange={(v) => void setAttendance(v)} cols={3} />
+        <Chips
+          value={review.employer_attendance}
+          options={ATTENDANCE_OPTIONS}
+          onChange={(v) => void setAttendance(v)}
+          cols={3}
+        />
         <p className="text-[12px] leading-relaxed text-white">
-          The employer must attend, in person or by video, in most of each apprentice's reviews. When they cannot, the
-          link they were sent is the evidence they were given the chance to contribute.
+          The employer must attend, in person or by video, in most of each apprentice's reviews.
+          When they cannot, the link they were sent is the evidence they were given the chance to
+          contribute.
         </p>
       </section>
 
@@ -1734,6 +2095,7 @@ function SignOffStep({
           placeholder="What was discussed and agreed, in plain words. The apprentice and employer both receive this."
           className={textareaCn}
         />
+        <SummaryProvenance outcomes={outcomes} />
         <div>
           <label className={labelCn} htmlFor="rv-held">
             Held on
@@ -1761,24 +2123,31 @@ function SignOffStep({
               >
                 <span
                   className={cn(
-                    'flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold',
+                    'flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[12px] font-bold',
                     c.ok ? 'bg-emerald-500 text-black' : 'border border-white/40 text-white'
                   )}
                 >
                   {c.ok ? '✓' : ''}
                 </span>
                 <span className="text-[14px] text-white">{c.text}</span>
-                {!c.ok && c.step !== 'signoff' && <span className="ml-auto text-[12px] font-semibold text-elec-yellow">Go</span>}
+                {!c.ok && c.step !== 'signoff' && (
+                  <span className="ml-auto text-[12px] font-semibold text-elec-yellow">Go</span>
+                )}
               </button>
             </li>
           ))}
         </ul>
-        <button type="button" onClick={signOff} disabled={!ready || busy} className={cn(buttonPrimaryCn, 'w-full')}>
+        <button
+          type="button"
+          onClick={signOff}
+          disabled={!ready || busy}
+          className={cn(buttonPrimaryCn, 'w-full')}
+        >
           {busy ? 'Signing off…' : `Sign off and send to ${studentName.split(' ')[0]}`}
         </button>
         <p className="text-[12px] leading-relaxed text-white">
-          Signing off records your signature, freezes the review as it stands and asks the apprentice to sign. It cannot
-          be edited afterwards.
+          Signing off records your signature, freezes the review as it stands and asks the
+          apprentice to sign. It cannot be edited afterwards.
         </p>
       </section>
 
@@ -1792,7 +2161,13 @@ function SignOffStep({
           }
           void deleteReview(review.id)
             .then(onDeleted)
-            .catch((e) => toast({ title: 'Not removed', description: (e as Error).message, variant: 'destructive' }));
+            .catch((e) =>
+              toast({
+                title: 'Not removed',
+                description: (e as Error).message,
+                variant: 'destructive',
+              })
+            );
         }}
         className={cn(
           'h-11 w-full rounded-xl text-[13px] font-semibold touch-manipulation',
@@ -1825,8 +2200,15 @@ function ReviewRecord({
   const o = review.outcomes ?? {};
   const s = review.signatures ?? {};
   const mustSign = !!review.snapshot?.employer_must_sign;
-  const checked = (review.snapshot as { checked_actions?: Array<{ action: string; status: ActionStatus; outcome_note: string | null }> } | null)
-    ?.checked_actions;
+  const checked = (
+    review.snapshot as {
+      checked_actions?: Array<{
+        action: string;
+        status: ActionStatus;
+        outcome_note: string | null;
+      }>;
+    } | null
+  )?.checked_actions;
 
   const link = useEmployerLink(review.id);
   const sendSummary = async () => {
@@ -1836,10 +2218,17 @@ function ReviewRecord({
       try {
         await navigator.clipboard.writeText(link);
         await logEmployerContact(review.id, 'summary', 'Link copied');
-        toast({ title: 'Link copied', description: 'Send it to the employer so they can read and sign.' });
+        toast({
+          title: 'Link copied',
+          description: 'Send it to the employer so they can read and sign.',
+        });
         onChanged();
       } catch (e) {
-        toast({ title: 'Could not copy', description: (e as Error).message, variant: 'destructive' });
+        toast({
+          title: 'Could not copy',
+          description: (e as Error).message,
+          variant: 'destructive',
+        });
       }
       return;
     }
@@ -1877,7 +2266,12 @@ function ReviewRecord({
     ['Evidence', o.evidence_notes],
     ['Progress', o.progress_notes],
     ['Off-the-job hours', o.otj_review],
-    ['Training plan', o.plan_change ? `${PLAN_CHANGE_LABEL[o.plan_change]}${o.ilp_updates ? `. ${o.ilp_updates}` : ''}` : undefined],
+    [
+      'Training plan',
+      o.plan_change
+        ? `${PLAN_CHANGE_LABEL[o.plan_change]}${o.ilp_updates ? `. ${o.ilp_updates}` : ''}`
+        : undefined,
+    ],
     ['Concerns and new information', o.concerns],
     ['Learning support', o.learning_support?.note],
     ['Wellbeing (college only)', o.wellbeing_check],
@@ -1889,7 +2283,12 @@ function ReviewRecord({
       <section className={cardCn}>
         <SectionTitle>Signatures</SectionTitle>
         <div className="divide-y divide-white/[0.1]">
-          <SignatureLine party="College" name={s.tutor_name} at={s.tutor_signed_at} waiting="Not signed" />
+          <SignatureLine
+            party="College"
+            name={s.tutor_name}
+            at={s.tutor_signed_at}
+            waiting="Not signed"
+          />
           <SignatureLine
             party={s.student_signed_via === 'paper' ? 'Apprentice (paper copy)' : 'Apprentice'}
             name={s.student_name}
@@ -1898,7 +2297,11 @@ function ReviewRecord({
           />
           <SignatureLine
             party={mustSign ? 'Employer (plan changed, must sign)' : 'Employer'}
-            name={s.employer_name ? `${s.employer_name}${s.employer_role ? `, ${s.employer_role}` : ''}` : null}
+            name={
+              s.employer_name
+                ? `${s.employer_name}${s.employer_role ? `, ${s.employer_role}` : ''}`
+                : null
+            }
             at={s.employer_signed_at}
             waiting={review.shared_at ? 'Summary sent' : 'Send them the summary'}
           />
@@ -1906,29 +2309,53 @@ function ReviewRecord({
         {noAccount && !s.student_signed_at && (
           <div className="space-y-3 rounded-xl border border-white/[0.14] p-3.5">
             <p className="text-[13px] leading-relaxed text-white">
-              The apprentice has no Elec-Mate account. Print the copy below, have them sign it, and record it here.
+              The apprentice has no Elec-Mate account. Print the copy below, have them sign it, and
+              record it here.
             </p>
             <div className={grid2Cn}>
               <div>
                 <label className={labelCn} htmlFor="pp-on">
                   Signed on
                 </label>
-                <input id="pp-on" type="date" value={paperOn} max={londonToday()} onChange={(e) => setPaperOn(e.target.value)} className={inputCn} />
+                <input
+                  id="pp-on"
+                  type="date"
+                  value={paperOn}
+                  max={londonToday()}
+                  onChange={(e) => setPaperOn(e.target.value)}
+                  className={inputCn}
+                />
               </div>
               <div>
                 <label className={labelCn} htmlFor="pp-note">
                   Where the signed copy is kept
                 </label>
-                <input id="pp-note" value={paperNote} onChange={(e) => setPaperNote(e.target.value)} placeholder="e.g. Learner file, scanned" className={inputCn} />
+                <input
+                  id="pp-note"
+                  value={paperNote}
+                  onChange={(e) => setPaperNote(e.target.value)}
+                  placeholder="e.g. Learner file, scanned"
+                  className={inputCn}
+                />
               </div>
             </div>
-            <button type="button" onClick={() => void recordPaper()} disabled={paperNote.trim().length < 5} className={cn(buttonPrimaryCn, 'h-11 w-full text-[13px]')}>
+            <button
+              type="button"
+              onClick={() => void recordPaper()}
+              disabled={paperNote.trim().length < 5}
+              className={cn(buttonPrimaryCn, 'h-11 w-full text-[13px]')}
+            >
               Record the paper signature
             </button>
           </div>
         )}
         {!s.employer_signed_at && (
-          <button type="button" onClick={sendSummary} disabled={busy} className={cn(buttonPrimaryCn, 'w-full')}>
+          <button
+            type="button"
+            onClick={sendSummary}
+            disabled={busy}
+            className={cn(buttonPrimaryCn, 'w-full')}
+          >
             {busy
               ? 'Sending…'
               : review.employer_contact_email
@@ -1939,8 +2366,11 @@ function ReviewRecord({
           </button>
         )}
         <p className="text-[12px] leading-relaxed text-white">
-          Held {fmtReviewDate(review.held_on)} · {review.mode ? MODE_LABEL[review.mode] : ''} · Employer{' '}
-          {review.employer_attendance ? ATTENDANCE_LABEL[review.employer_attendance].toLowerCase() : 'not recorded'}
+          Held {fmtReviewDate(review.held_on)} · {review.mode ? MODE_LABEL[review.mode] : ''} ·
+          Employer{' '}
+          {review.employer_attendance
+            ? ATTENDANCE_LABEL[review.employer_attendance].toLowerCase()
+            : 'not recorded'}
         </p>
         <ContactTimeline review={review} />
         <button
@@ -1949,7 +2379,9 @@ function ReviewRecord({
           onClick={() =>
             link &&
             window.open(
-              window.location.origin.startsWith('http') ? link.replace('https://elec-mate.com', window.location.origin) : link,
+              window.location.origin.startsWith('http')
+                ? link.replace('https://elec-mate.com', window.location.origin)
+                : link,
               '_blank',
               'noopener'
             )
@@ -1959,8 +2391,8 @@ function ReviewRecord({
           Printable copy for the evidence pack
         </button>
         <p className="text-[12px] leading-relaxed text-white">
-          The shared summary, as the apprentice and employer see it. Opening it yourself is not recorded as the
-          employer viewing it. Wellbeing and safeguarding notes stay here.
+          The shared summary, as the apprentice and employer see it. Opening it yourself is not
+          recorded as the employer viewing it. Wellbeing and safeguarding notes stay here.
         </p>
       </section>
 
@@ -1972,7 +2404,10 @@ function ReviewRecord({
             .map(([l, v]) => (
               <div key={l}>
                 <dt className="text-[12px] font-medium text-white">{l}</dt>
-                <dd className="mt-0.5 whitespace-pre-wrap text-[14px] leading-relaxed text-white">{v}</dd>
+                <dd className="mt-0.5 whitespace-pre-wrap text-[14px] leading-relaxed text-white">
+                  {v}
+                </dd>
+                {l === 'Summary' && <SummaryProvenance outcomes={o} />}
               </div>
             ))}
         </dl>
@@ -2002,9 +2437,17 @@ function ReviewRecord({
             <li key={a.id} className="py-2.5">
               <p className="text-[14px] font-semibold text-white">{a.action}</p>
               <p className="text-[12px] text-white">
+                {a.source === 'ai_draft_confirmed' && (
+                  <>
+                    <UsesAi className="mr-1.5" />
+                    AI draft, confirmed ·{' '}
+                  </>
+                )}
                 {OWNER_LABEL[a.owner_party]}
                 {a.due_date ? ` · by ${fmtReviewDate(a.due_date)}` : ''}
-                {a.status !== 'open' ? ` · ${CHECK_OPTIONS.find((c) => c.value === a.status)?.label}` : ''}
+                {a.status !== 'open'
+                  ? ` · ${CHECK_OPTIONS.find((c) => c.value === a.status)?.label}`
+                  : ''}
               </p>
             </li>
           ))}
@@ -2014,16 +2457,32 @@ function ReviewRecord({
       <section className={cardCn}>
         <SectionTitle>The record at the time</SectionTitle>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <Stat label="Off-the-job" value={prefill.otj ? fmtHours(prefill.otj.counted_hours) : '—'} />
+          <Stat
+            label="Off-the-job"
+            value={prefill.otj ? fmtHours(prefill.otj.counted_hours) : '—'}
+          />
           <Stat
             label="Planned by then"
-            value={prefill.otj?.planned_to_date_hours != null ? fmtHours(prefill.otj.planned_to_date_hours) : '—'}
+            value={
+              prefill.otj?.planned_to_date_hours != null
+                ? fmtHours(prefill.otj.planned_to_date_hours)
+                : '—'
+            }
           />
           <Stat
             label="Attendance"
-            value={prefill.attendance_since?.percent != null ? `${prefill.attendance_since.percent}%` : '—'}
+            value={
+              prefill.attendance_since?.percent != null
+                ? `${prefill.attendance_since.percent}%`
+                : '—'
+            }
           />
-          <Stat label="Progress" value={`${prefill.learner.progress_percent}%`} />
+          {prefill.learner.criteria?.total ? (
+            <Stat
+              label="Criteria passed"
+              value={`${prefill.learner.criteria.passed} of ${prefill.learner.criteria.total}`}
+            />
+          ) : null}
         </div>
         {review.employer_input && (
           <div className={infoPanelCn}>
@@ -2054,7 +2513,10 @@ function draftSummary(
   const parts: string[] = [];
   const otj = prefill.otj;
   if (otj) {
-    const slip = otj.slippage_hours > 0 ? `, ${fmtHours(otj.slippage_hours)} behind the plan to date` : ', on plan';
+    const slip =
+      otj.slippage_hours > 0
+        ? `, ${fmtHours(otj.slippage_hours)} behind the plan to date`
+        : ', on plan';
     parts.push(
       `${first} has ${fmtHours(otj.counted_hours)} of off-the-job training${otj.required_hours ? ` of ${fmtHours(otj.required_hours)}` : ''}${slip}.`
     );
@@ -2063,7 +2525,12 @@ function draftSummary(
   if (o.progress_notes?.trim()) parts.push(o.progress_notes.trim());
   if (o.training_notes?.trim()) parts.push(o.training_notes.trim());
   if (review.employer_input) {
-    const p = review.employer_input.progress === 'behind' ? 'behind' : review.employer_input.progress === 'ahead' ? 'ahead' : 'on track';
+    const p =
+      review.employer_input.progress === 'behind'
+        ? 'behind'
+        : review.employer_input.progress === 'ahead'
+          ? 'ahead'
+          : 'on track';
     parts.push(`The employer sees ${first} as ${p} at work.`);
   }
   if (o.plan_change) {
@@ -2095,13 +2562,22 @@ function ReviewPdfButton({ reviewId }: { reviewId: string }) {
     try {
       await downloadLearnerDocument({ kind: 'review_record', reviewId });
     } catch (e) {
-      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not make the PDF',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setBusy(false);
     }
   };
   return (
-    <button type="button" className={cn(buttonSecondaryCn, 'w-full')} onClick={download} disabled={busy}>
+    <button
+      type="button"
+      className={cn(buttonSecondaryCn, 'w-full')}
+      onClick={download}
+      disabled={busy}
+    >
       {busy ? 'Making the PDF…' : 'Download the review record (PDF)'}
     </button>
   );

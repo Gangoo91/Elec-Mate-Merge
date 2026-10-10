@@ -11,7 +11,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Briefcase, Send, Loader2, MapPin, Check, AlertCircle } from 'lucide-react';
+import { Send, Loader2, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { panel, PlainEmpty } from '@/components/employer/pageParts/PageParts';
 import { supabase } from '@/integrations/supabase/client';
 import { createInvitation } from '@/services/conversationService';
 import { useAuth } from '@/contexts/AuthContext';
@@ -19,10 +21,8 @@ import { toast } from '@/hooks/use-toast';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 import {
   Field,
-  FormCard,
   PrimaryButton,
   SecondaryButton,
-  Pill,
   textareaClass,
 } from '@/components/employer/editorial';
 
@@ -162,138 +162,123 @@ export function InviteToApplyDialog({
       <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08] text-white">
         <ResponsiveFormModalHeader>
           <ResponsiveFormModalTitle className="text-white">
-            <Briefcase className="h-5 w-5 text-elec-yellow" />
-            Invite to Apply
+            Invite {electrician.name} to apply
           </ResponsiveFormModalTitle>
         </ResponsiveFormModalHeader>
 
         <ResponsiveFormModalBody className="pb-6">
-        <div className="space-y-4">
-          {/* Electrician Info */}
-          <FormCard eyebrow="Sparky">
-            <div className="flex items-center gap-3">
-              <Avatar className="w-10 h-10">
+          <div className="space-y-4">
+            <div className={cn(panel, 'flex items-center gap-3 px-4 py-3 sm:px-5')}>
+              <Avatar className="h-10 w-10">
                 <AvatarImage src={electrician.avatar} alt={electrician.name} />
-                <AvatarFallback className="bg-white/[0.06] text-elec-yellow font-bold">
-                  {initials}
+                <AvatarFallback className="bg-white/[0.1] text-[12.5px] font-bold text-white">
+                  {initials.toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div>
-                <p className="font-medium text-white">{electrician.name}</p>
-                <p className="text-sm text-white">{electrician.location}</p>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[15px] font-semibold text-white">{electrician.name}</p>
+                <p className="truncate text-[13px] text-white">{electrician.location}</p>
               </div>
             </div>
-          </FormCard>
 
-          {/* Vacancy Selection */}
-          <Field label="Select a vacancy">
-            {isLoading ? (
-              <div className="space-y-2">
-                <Skeleton className="h-16 w-full" />
-                <Skeleton className="h-16 w-full" />
-              </div>
-            ) : availableVacancies.length === 0 ? (
-              <div className="bg-[hsl(0_0%_9%)] border border-dashed border-white/[0.12] rounded-xl p-4 text-center">
-                <AlertCircle className="h-8 w-8 text-white mx-auto mb-2" />
-                <p className="text-sm text-white">
-                  {vacancies.length === 0
-                    ? 'No active vacancies. Create a job posting first.'
-                    : 'This person has been invited to all your active vacancies.'}
-                </p>
-              </div>
-            ) : (
-              <ScrollArea className="h-48">
-                <div className="space-y-2 pr-4">
-                  {availableVacancies.map((vacancy) => {
-                    const isSelected = selectedVacancy === vacancy.id;
-                    return (
-                      <button
-                        type="button"
-                        key={vacancy.id}
-                        onClick={() => setSelectedVacancy(vacancy.id)}
-                        className={`w-full text-left rounded-xl border p-3 flex items-center gap-3 touch-manipulation transition-colors ${
-                          isSelected
-                            ? 'border-elec-yellow/60 bg-white/[0.06]'
-                            : 'border-white/[0.08] bg-[hsl(0_0%_9%)] hover:bg-white/[0.04]'
-                        }`}
-                      >
-                        <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+            {/* Vacancy Selection */}
+            <Field label="Select a vacancy">
+              {isLoading ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-16 w-full" />
+                  <Skeleton className="h-16 w-full" />
+                </div>
+              ) : availableVacancies.length === 0 ? (
+                <PlainEmpty
+                  text={
+                    vacancies.length === 0
+                      ? 'No live vacancies. Post one under Job vacancies first.'
+                      : 'This person has been invited to all your live vacancies.'
+                  }
+                />
+              ) : (
+                <ScrollArea className="h-48">
+                  <div className="space-y-2 pr-4">
+                    {availableVacancies.map((vacancy) => {
+                      const isSelected = selectedVacancy === vacancy.id;
+                      return (
+                        <button
+                          type="button"
+                          key={vacancy.id}
+                          onClick={() => setSelectedVacancy(vacancy.id)}
+                          className={`w-full text-left rounded-xl border p-3 flex items-center gap-3 touch-manipulation transition-colors ${
                             isSelected
-                              ? 'border-elec-yellow bg-elec-yellow'
-                              : 'border-white/[0.2]'
+                              ? 'border-elec-yellow bg-white/[0.06]'
+                              : 'border-white/[0.1] bg-white/[0.04] hover:bg-white/[0.07]'
                           }`}
                         >
-                          {isSelected && <Check className="h-3 w-3 text-black" />}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-white truncate">{vacancy.title}</p>
-                          <div className="flex items-center gap-1 text-sm text-white">
-                            <MapPin className="h-3 w-3" />
-                            <span className="truncate">{vacancy.location}</span>
+                          <div
+                            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                              isSelected
+                                ? 'border-elec-yellow bg-elec-yellow'
+                                : 'border-white/[0.2]'
+                            }`}
+                          >
+                            {isSelected && <Check className="h-3 w-3 text-black" />}
                           </div>
-                        </div>
-                        <Pill tone="yellow" className="shrink-0 capitalize">
-                          {vacancy.status}
-                        </Pill>
-                      </button>
-                    );
-                  })}
-                </div>
-              </ScrollArea>
-            )}
-          </Field>
-
-          {/* Personal Message (Optional) */}
-          {selectedVacancy && (
-            <Field label="Personal message (optional)">
-              <Textarea
-                id="invite-message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Add a personal note to make your invitation stand out..."
-                rows={3}
-                className={textareaClass}
-              />
-            </Field>
-          )}
-
-          {/* Already Invited Info */}
-          {alreadyInvited.size > 0 && (
-            <p className="text-xs text-white">
-              {alreadyInvited.size} vacancy invitation{alreadyInvited.size > 1 ? 's' : ''} already
-              sent to this person.
-            </p>
-          )}
-
-          {/* Actions */}
-          <div className="flex gap-2">
-            <SecondaryButton
-              fullWidth
-              onClick={() => onOpenChange(false)}
-              disabled={isSending}
-            >
-              Cancel
-            </SecondaryButton>
-            <PrimaryButton
-              fullWidth
-              onClick={handleSendInvite}
-              disabled={isSending || !selectedVacancy}
-            >
-              {isSending ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send className="h-4 w-4 mr-2" />
-                  Send Invitation
-                </>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-white truncate">{vacancy.title}</p>
+                            <p className="truncate text-[13px] text-white">{vacancy.location}</p>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </ScrollArea>
               )}
-            </PrimaryButton>
+            </Field>
+
+            {/* Personal Message (Optional) */}
+            {selectedVacancy && (
+              <Field label="Personal message (optional)">
+                <Textarea
+                  id="invite-message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Say what the work is and when it starts"
+                  rows={3}
+                  className={textareaClass}
+                />
+              </Field>
+            )}
+
+            {/* Already Invited Info */}
+            {alreadyInvited.size > 0 && (
+              <p className="text-xs text-white">
+                {alreadyInvited.size} vacancy invitation{alreadyInvited.size > 1 ? 's' : ''} already
+                sent to this person.
+              </p>
+            )}
+
+            {/* Actions */}
+            <div className="flex gap-2">
+              <SecondaryButton fullWidth onClick={() => onOpenChange(false)} disabled={isSending}>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                fullWidth
+                onClick={handleSendInvite}
+                disabled={isSending || !selectedVacancy}
+              >
+                {isSending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Sending…
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4 mr-2" />
+                    Send invitation
+                  </>
+                )}
+              </PrimaryButton>
+            </div>
           </div>
-        </div>
         </ResponsiveFormModalBody>
       </ResponsiveFormModalContent>
     </ResponsiveFormModal>

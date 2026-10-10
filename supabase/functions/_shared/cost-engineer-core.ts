@@ -27,6 +27,7 @@
 
 import {
   cheapestForItemsBatch,
+  searchMaterials,
   getActiveDeals,
   getActiveCoupons,
   freshnessLabel,
@@ -114,6 +115,10 @@ interface PricedMaterial {
   } | {
     table: 'estimated';
     reason: string;
+  } | {
+    /** The electrician's own trade cost from their Price Book. */
+    table: 'price_book';
+    name: string;
   };
   category: string | null;
 }
@@ -237,7 +242,7 @@ export async function runEstimate(supabase: any, jobId: string): Promise<void> {
     await updateProgress(supabase, jobId, { progress: 30, current_step: 'Pricing against UK supplier marketplace' });
 
     const [pricedMaterials, labourTasks] = await Promise.all([
-      priceMaterials(supabase, candidates),
+      priceMaterials(supabase, candidates, job.user_id ?? null),
       estimateLabour(supabase, candidates, settings, job.query ?? ''),
     ]);
     await writePartial(supabase, jobId, 'materials', { items: pricedMaterials });
@@ -973,28 +978,205 @@ function fallbackExtraction(query: string): ItemCandidate[] {
   ];
 }
 
-async function priceMaterials(
+export async function priceMaterials(
   supabase: any,
-  candidates: ItemCandidate[]
+  candidates: ItemCandidate[],
+  userId: string | null = null
 ): Promise<PricedMaterial[]> {
   // Only price MATERIAL candidates against the marketplace. Labour items
   // have no marketplace counterpart — pricing them produces nonsense
   // matches (e.g. "Install 34m cable" → £251 cable drum × 34 = £8.5K).
   const materialCandidates = candidates.filter((c) => c.kind === 'material');
 
-  const matches = await cheapestForItemsBatch(
-    supabase,
-    materialCandidates.map((c) => ({
-      key: c.key,
-      query: c.searchQuery || c.description,
-      category: c.category,
-    }))
+  // Cable by the metre gets its own picker (10 Oct 2026): the top-ranked hit
+  // was routinely a short length or the wrong size, so look at several and
+  // take the cheapest TRUE per-metre price that is the right size.
+  const isMetreCable = (c: ItemCandidate) =>
+    /metre|meter|^m$/i.test(c.unit ?? '') &&
+    (c.category === 'cables' ||
+      /\bcable\b|twin\s*(?:&|and)\s*earth|\bt&e\b/i.test(c.description ?? '') ||
+      isEarthConductorLine(c.description ?? ''));
+  // The electrician's own cost prices come first (10 Oct 2026): what they
+  // actually pay beats a scraped retail price. Only Price Book items with an
+  // explicit cost_price, matched strictly — see matchPriceBook.
+  const book = userId ? await loadPriceBookCosts(supabase, userId) : [];
+  const fromBook = new Map<string, PricedMaterial>();
+  for (const c of materialCandidates) {
+    if (isNonProductLine(c.description ?? '')) continue;
+    const hit = matchPriceBook(c, book);
+    if (hit) fromBook.set(c.key, hit);
+  }
+
+  const priceable = materialCandidates.filter(
+    (c) => !isNonProductLine(c.description ?? '') && !fromBook.has(c.key)
   );
+  const cableCandidates = priceable.filter(isMetreCable);
+  const otherCandidates = priceable.filter((c) => !isMetreCable(c));
+
+  const [matches, cableMatches] = await Promise.all([
+    cheapestForItemsBatch(
+      supabase,
+      otherCandidates.map((c) => ({
+        key: c.key,
+        query: c.searchQuery || c.description,
+        category: c.category,
+      }))
+    ),
+    Promise.all(cableCandidates.map((c) => bestCableMatch(supabase, c))),
+  ]);
+  const cableByKey = new Map(cableCandidates.map((c, i) => [c.key, cableMatches[i]]));
 
   return materialCandidates.map((c) => {
-    const m = matches[c.key];
+    if (isNonProductLine(c.description ?? '')) {
+      return materialFromEstimate(c, 'Not a product — enter your own figure.');
+    }
+    const own = fromBook.get(c.key);
+    if (own) return own;
+    const m = cableByKey.has(c.key) ? cableByKey.get(c.key) : matches[c.key];
     return m ? materialFromMatch(c, m) : materialFromEstimate(c);
   });
+}
+
+export interface PriceBookCost {
+  name: string;
+  unit: string;
+  cost: number;
+}
+
+/** Every Price Book item the user has given an explicit trade cost. */
+async function loadPriceBookCosts(supabase: any, userId: string): Promise<PriceBookCost[]> {
+  try {
+    const { data } = await supabase.from('materials_lists').select('items').eq('user_id', userId);
+    const out: PriceBookCost[] = [];
+    for (const list of (data ?? []) as Array<{ items: unknown }>) {
+      for (const it of (Array.isArray(list.items) ? list.items : []) as Array<Record<string, unknown>>) {
+        const cost = Number(it?.cost_price);
+        const name = typeof it?.name === 'string' ? it.name : '';
+        if (name && cost > 0) out.push({ name, unit: String(it?.unit ?? 'item'), cost });
+      }
+    }
+    return out;
+  } catch {
+    return []; // never block an estimate on the Price Book
+  }
+}
+
+// Packaging words and colours say nothing about WHAT the item is; product
+// codes and sizes (anything with a digit) are checked separately (size) or
+// are supplier-specific (H6242Y), so neither may decide a match.
+const BOOK_STOP = new Set([
+  'and', 'the', 'with', 'for', 'each', 'item', 'grey', 'white', 'black', 'cable', 'pvc',
+  'drum', 'coil', 'reel', 'roll', 'length', 'pack', 'box', 'metre', 'meter', 'metres',
+]);
+const SPEC_WORDS: RegExp[] = [
+  /weather\s*proof|outdoor|external|exterior/, /\bip\s?\d{2}\b/, /\busb\b/, /\bsmart\b/,
+  /\bmetal(clad)?\b|\bbrushed\b|\bchrome\b|\bbrass\b|\bsteel\b|\bnickel\b|\bblack\b/,
+  /\bdimmer\b|\bdimmable\b/, /fire\s*rated|\bfire\b/, /\blsoh\b|\blszh\b|\blow smoke\b/,
+  /\barmoured\b|\bswa\b/, /\bemergency\b/, /\brcd\b/, /\bfused\b/, /\bthree phase\b|\b3 phase\b/,
+];
+const bookTokens = (s: string) =>
+  (s ?? '')
+    .toLowerCase()
+    .replace(/²/g, '2')
+    .split(/[^a-z0-9]+/)
+    .filter((t) => t.length >= 3 && !BOOK_STOP.has(t) && !/\d/.test(t));
+
+/**
+ * A Price Book cost for this line, or null. Strict on purpose — Price Book
+ * names are free text ("2.5mm twin & earth" at £86.95 per drum, whole-job
+ * lines at £260), so a loose match would put nonsense on a quote:
+ *   - every significant word of the book item (at least two) is in the line;
+ *   - the conductor size agrees when either names one;
+ *   - per-metre lines take a metre-priced item, or one stating its length;
+ *   - the result passes the same price band as a catalogue price.
+ */
+export function matchPriceBook(c: ItemCandidate, book: PriceBookCost[]): PricedMaterial | null {
+  if (!book.length) return null;
+  const desc = (c.description ?? '').toLowerCase();
+  const descTokens = new Set(bookTokens(desc));
+  const wantsMetres = /metre|meter|^m$/i.test(c.unit ?? '');
+  const wantSize = cableSizeOf(desc);
+  let best: { cost: number; name: string; score: number } | null = null;
+  for (const b of book) {
+    const tokens = bookTokens(b.name);
+    if (tokens.length < 2 || !tokens.every((t) => descTokens.has(t))) continue;
+    // A spec word on the line that the book item lacks makes it a different
+    // product: "White Double Socket" at £2.52 is not the IP66 weatherproof one.
+    const bookLower = b.name.toLowerCase();
+    if (SPEC_WORDS.some((w) => w.test(desc) && !w.test(bookLower))) continue;
+    // Ratings must agree — amps, ways, watts, sizes ("10 way" is not "6 way",
+    // review). Compared only when the book item states any.
+    const ratings = (t: string) =>
+      new Set((t.replace(/²/g, '2').match(/\d+(?:\.\d+)?\s*(?:a|amp|amps|way|w|kw|mm2?|ma)\b/g) ?? []).map((x) => x.replace(/\s+/g, '')));
+    const bookRatings = ratings(bookLower);
+    if ([...bookRatings].some((r) => !ratings(desc).has(r))) continue;
+    if (ratings(desc).size > 0 && bookRatings.size === 0 && /\b(way|kw)\b/.test(desc)) continue;
+    // RCD/RCBO type: A, AC, B, F are different devices.
+    const typeOf = (t: string) => (t.match(/\btype\s*(ac|a|b|f)\b/) ?? [])[1] ?? null;
+    if (typeOf(desc) && typeOf(bookLower) && typeOf(desc) !== typeOf(bookLower)) continue;
+    // A line naming anything the book item doesn't is a fuller or different
+    // product ("Cooker switch with socket" ≠ "Cooker switch", "Smoke alarm
+    // mounting base" ≠ "Smoke alarm"). A few words never change the item.
+    const extra = [...descTokens].filter(
+      (t) => !tokens.includes(t) && !['outlet', 'moulded', 'switched', 'type', 'pole'].includes(t)
+    );
+    if (extra.length >= 1) continue;
+    if (/^(install|supply|fit|labour|replace)\b/i.test(b.name.trim())) continue;
+    const gotSize = cableSizeOf(b.name);
+    if ((wantSize || gotSize) && wantSize !== gotSize) continue;
+    let unitCost = b.cost;
+    if (wantsMetres) {
+      const isMetre = /metre|meter|^m$/i.test(b.unit);
+      const stated = isMetre ? 1 : statedCableLength(b.name);
+      if (!stated) continue;
+      unitCost = b.cost / stated;
+    } else if (/metre|meter|^m$/i.test(b.unit)) {
+      continue;
+    }
+    const range = lookupPriceRange(c);
+    if (range && (unitCost < range.min || unitCost > range.max)) continue;
+    const score = tokens.length;
+    if (!best || score > best.score) best = { cost: unitCost, name: b.name, score };
+  }
+  if (!best) return null;
+  return {
+    description: c.description,
+    quantity: c.quantity,
+    unit: c.unit,
+    unitPrice: roundCurrency(best.cost),
+    total: roundCurrency(best.cost * c.quantity),
+    supplier: 'Your price book',
+    source: { table: 'price_book', name: best.name },
+    category: c.category ?? null,
+  };
+}
+
+/**
+ * The cheapest sensible per-metre listing for a cable line: same conductor
+ * size, divided down by its length, inside the category's price band.
+ * Null when none qualifies, so the line falls back to the typical price and
+ * says so rather than quoting a 3 m length as a per-metre rate.
+ */
+async function bestCableMatch(supabase: any, c: ItemCandidate): Promise<MarketplaceMatch | null> {
+  const hits = await searchMaterials(supabase, {
+    query: c.searchQuery || c.description,
+    category: c.category ?? 'cables',
+    limit: 12,
+  });
+  const range = lookupPriceRange(c);
+  let best: { m: MarketplaceMatch; perMetre: number } | null = null;
+  for (const m of hits) {
+    if (isCategoryMismatch(c, m)) continue;
+    // Only listings that SAY how much cable they are. "2.5mm2 Coil" at £19.49
+    // has no length in its name; guessing 50 m would price it at £0.39/m —
+    // an under-quote is worse than a typical price marked as estimated.
+    const length = statedCableLength(m.name ?? '');
+    if (!length) continue;
+    const perMetre = m.unitPrice / length;
+    if (range && (perMetre < range.min || perMetre > range.max)) continue;
+    if (!best || perMetre < best.perMetre) best = { m, perMetre };
+  }
+  return best?.m ?? null;
 }
 
 /**
@@ -1013,18 +1195,29 @@ async function priceMaterials(
  * produce a sensible per-unit rate. Defaults to 1 when nothing parses
  * (i.e. the matched product is genuinely sold as a single unit).
  */
-function parseContainerSize(name: string, candidateUnit: string): number {
+export function parseContainerSize(name: string, candidateUnit: string): number {
   if (!name) return 1;
   const n = name.toLowerCase();
   const wantsMetres = /metre|meter|^m$/i.test(candidateUnit);
 
   // ── Length-based containers (cable / sleeving / conduit / tape) ──
   if (wantsMetres) {
-    // "50m drum", "100m coil", "25m reel", "10m roll", "50m length"
-    const m = n.match(/(\d{1,4})\s*m(?:tr|etre|eter|r)?\s*(?:drum|coil|reel|roll|length|pack|box|carton)?/);
-    if (m) {
+    // "50m drum", "100m coil", "25m reel", "10m roll", "3m length".
+    //
+    // 10 Oct 2026 — this used to take the FIRST "<digits>m" in the name, and
+    // a cable's own size comes first: in "2.5mm² … 50m Drum" that is the "5m"
+    // inside "2.5mm", so a 50 m drum was divided by 5 (10× too dear). And
+    // anything under 5 m was ignored, so a "6.0mm2 3m" length was priced as
+    // one metre. Now: every candidate, skipping ones that are part of a
+    // decimal or of "mm", and 1 m upwards counts.
+    // A per-metre listing is priced per metre whatever max length it quotes
+    // ("Cut to length (Max. 100Mtrs)") — same rule as statedCableLength.
+    if (/cut to length|per metre|per meter|\/m\b|price per m\b/.test(n)) return 1;
+    // Sizes out first: in "25mm2 meter tails 1m" the "2 meter" is not a length.
+    const noSizes = n.replace(/\d+(?:\.\d+)?\s*mm(?:2|²|sq)?/g, ' ');
+    for (const m of noSizes.matchAll(/(?<![\d.])(\d{1,4})\s*m(?:etres?|eters?|tr)?(?![a-z²\d])/g)) {
       const len = Number(m[1]);
-      if (len >= 5 && len <= 1000) return len;
+      if (len >= 1 && len <= 1000) return len;
     }
     // Bare "drum" / "coil" with no length → industry default sizes
     if (/\bdrum\b/.test(n)) return 50;   // typical T&E drum
@@ -1105,7 +1298,7 @@ const CATEGORY_PRICE_RANGES: Record<string, { min: number; max: number; typical:
   'fixings.cable-tie':                 { min: 0.005, max: 0.30, typical: 0.03, unit: 'item' },
   'fixings.connector':                 { min: 0.10, max: 3.00,  typical: 0.50, unit: 'item' },
   'fixings.tape':                      { min: 0.80, max: 8.00,  typical: 2.00, unit: 'item' },
-  'fixings.sealant':                   { min: 3.00, max: 18.00, typical: 7.00, unit: 'item' },
+  'fixings.sealant':                   { min: 1.00, max: 18.00, typical: 5.00, unit: 'item' },
   // Fire/security
   'fire-security.smoke-alarm':         { min: 12.00, max: 120.0, typical: 35.0, unit: 'item' },
   'fire-security.heat-alarm':          { min: 15.00, max: 130.0, typical: 40.0, unit: 'item' },
@@ -1122,7 +1315,63 @@ const CATEGORY_PRICE_RANGES: Record<string, { min: number; max: number; typical:
  * product name as extra signal — useful when the candidate's category
  * is null or the description is sparse.
  */
-function lookupPriceRange(
+/**
+ * Metres of cable a listing states: "50m Drum" → 50, "(2 Meter)" → 2,
+ * "cut to length" / "per metre" → 1. Null when the name doesn't say.
+ */
+export function statedCableLength(name: string): number | null {
+  const n = (name ?? '').toLowerCase();
+  if (/cut to length|per metre|per meter|\/m\b|price per m\b/.test(n)) return 1;
+  const noSizes = n.replace(/\d+(?:\.\d+)?\s*mm(?:2|²|sq)?/g, ' ');
+  for (const m of noSizes.matchAll(/(?<![\d.])(\d{1,4})\s*m(?:etres?|eters?|tr)?(?![a-z²\d])/g)) {
+    const len = Number(m[1]);
+    if (len >= 1 && len <= 1000) return len;
+  }
+  return null;
+}
+
+/**
+ * A line that is not a product at all — a fee, a hire, a permit. Searching
+ * the catalogue for "Part P notification fee" matched a fire-cable P-clip and
+ * priced it £1.10 (17 times in 45 days). These get no catalogue price; the
+ * line says so and the electrician enters their own figure.
+ */
+export function isNonProductLine(description: string): boolean {
+  const d = (description ?? '').toLowerCase();
+  if (/wastage/.test(d)) return false; // a quantity of cable, priced as cable
+  return /\b(fee|fees|notification|hire|permit|parking|congestion|disposal|skip|waste carrier|scaffold)\b/.test(d);
+}
+
+/**
+ * A line that is a whole pack — "Cable ties pack", "WAGO assortment". Its
+ * matched price is the pack price: no dividing by the count in the product
+ * name, and no per-piece price band (a £0.99 pack of 100 ties was rejected
+ * as "too dear per tie").
+ */
+export function isPackLine(description: string): boolean {
+  // Not "set"/"kit": "Service Tail Set", "Gland Kit", "Pendant Lamp Holder
+  // Set" are ONE product, and losing the price band let a £17.99 decorative
+  // pendant through for a plain lamp holder (replay, 10 Oct).
+  // Not bare "box" either: "Junction box", "Metal back box 35mm" are single
+  // items (review: 20 back boxes priced at a 10-pack's £15 EACH = £300).
+  return /\b(pack|packs|assortment|assorted|tub|bag)\b|\bbox of\b|\bset of\b/i.test(description ?? '');
+}
+
+/** A single-core earth or bonding conductor (6491X green/yellow), not T&E. */
+export function isEarthConductorLine(description: string): boolean {
+  const d = (description ?? '').toLowerCase();
+  return /(earthing conductor|bonding (cable|conductor)|protective bonding|6491|single core|green\s*(?:and|&|\/)\s*yellow|\bg\/y\b|earth cable)/.test(d) && !/twin|t&e/.test(d);
+}
+
+/** Conductor size in mm² named in a string, e.g. "2.5mm²" → "2.5". */
+export function cableSizeOf(text: string): string | null {
+  const t = (text ?? '').toLowerCase().replace(/²/g, '2');
+  const m = t.match(/(?<![\d.])(1\.0|1\.5|2\.5|4\.0|4|6\.0|6|10|16|25|35)\s*mm(?:2|sq)?\b/);
+  if (!m) return null;
+  return ({ '1.0': '1', '4.0': '4', '6.0': '6' } as Record<string, string>)[m[1]] ?? m[1];
+}
+
+export function lookupPriceRange(
   c: ItemCandidate,
   productName?: string | null,
 ): { min: number; max: number; typical: number; unit: string } | null {
@@ -1136,6 +1385,15 @@ function lookupPriceRange(
     if (has('swa') || has('armoured')) return CATEGORY_PRICE_RANGES['cables.swa'];
     if (has('heat resistant') || has('3093') || has('3094')) return CATEGORY_PRICE_RANGES['cables.heat'];
     if (has('three core') || has('3 core') || has('3-core')) return CATEGORY_PRICE_RANGES['cables.3core'];
+    // 10 Oct 2026 — the size of the thing being PRICED decides the band. The
+    // haystack also holds the matched product's name and the checks run
+    // largest first, so a 2.5mm² line matched to a 6.0mm² product got the
+    // 6mm² band (up to £12/m) and £10.98/m sailed through on every rewire.
+    const wanted = cableSizeOf(c.description ?? '');
+    if (wanted) {
+      const key = wanted === '1' ? 'cables.1.0' : wanted === '4' ? 'cables.4.0' : wanted === '6' ? 'cables.6.0' : `cables.${wanted}`;
+      if (CATEGORY_PRICE_RANGES[key]) return CATEGORY_PRICE_RANGES[key];
+    }
     if (/\b16\s*mm/.test(desc)) return CATEGORY_PRICE_RANGES['cables.16'];
     if (/\b10\s*mm/.test(desc)) return CATEGORY_PRICE_RANGES['cables.10'];
     if (/\b6(\.0)?\s*mm/.test(desc)) return CATEGORY_PRICE_RANGES['cables.6.0'];
@@ -1201,7 +1459,8 @@ function materialFromMatch(c: ItemCandidate, m: MarketplaceMatch): PricedMateria
   // Step 2: parse the product name for drum length / pack size and divide
   // the price down to a true per-unit rate. £53.99 for a "50m Drum" of
   // 2.5mm T&E becomes £1.08/m, not £53.99 × 550 = £29,694.
-  const containerSize = parseContainerSize(m.name ?? '', c.unit);
+  const pack = isPackLine(c.description ?? '') && !/metre|meter|^m$/i.test(c.unit ?? '');
+  const containerSize = pack ? 1 : parseContainerSize(m.name ?? '', c.unit);
   let effectiveUnit = containerSize > 1 ? m.unitPrice / containerSize : m.unitPrice;
 
   // Step 3: sanity-check against typical UK trade ranges. We use a
@@ -1210,7 +1469,7 @@ function materialFromMatch(c: ItemCandidate, m: MarketplaceMatch): PricedMateria
   // enough to cover legitimate variation; if we're outside them, the
   // match is almost certainly wrong (wrong product, wrong pack-size
   // parse, weird sale price, etc.).
-  const range = lookupPriceRange(c, m.name);
+  const range = pack ? null : lookupPriceRange(c, m.name);
   let unmatchedReason: string | null = null;
   if (range && (effectiveUnit < range.min || effectiveUnit > range.max)) {
     unmatchedReason = `Matched price £${m.unitPrice.toFixed(2)} (${m.name}) implausible for ${c.description} — using typical £${range.typical.toFixed(2)}/${range.unit}.`;
@@ -1275,7 +1534,7 @@ function materialFromEstimate(c: ItemCandidate, contextReason?: string): PricedM
  * Returns true when the candidate's description and the matched
  * product name describe categorically different things.
  */
-function isCategoryMismatch(c: ItemCandidate, m: MarketplaceMatch): boolean {
+export function isCategoryMismatch(c: ItemCandidate, m: MarketplaceMatch): boolean {
   const desc = (c.description ?? '').toLowerCase();
   const prod = (m.name ?? '').toLowerCase();
   if (!desc || !prod) return false;
@@ -1283,6 +1542,32 @@ function isCategoryMismatch(c: ItemCandidate, m: MarketplaceMatch): boolean {
   const wantsCable = /\bcable\b/.test(desc) && !/\bclip|tie|grommet|gland|cleat|sleeve\b/.test(desc);
   const productIsAccessory = /\bclip|cable tie|grommet|gland|cleat|sleeve|label|sticker|marker\b/.test(prod) && !/\bcable\b\s*\d/.test(prod);
   if (wantsCable && productIsAccessory) return true;
+
+  // A finish or style the line didn't ask for is a different (dearer)
+  // product: a plain pendant set is not "Vintage Antique Copper".
+  const FINISH = /\b(vintage|antique|copper|brass|chrome|gold|bronze|designer|decorative|industrial|retro)\b/;
+  const fp = prod.match(FINISH);
+  if (fp && !desc.includes(fp[1])) return true;
+
+  // A label is not a blanking plate (replay: "Consumer Unit Label Set" → a
+  // £0.50 "Blank for Consumer Unit").
+  if (/\b(label|labels|schedule|sticker|legend)\b/.test(desc) && /\bblank(s|ing)?\b/.test(prod) && !/\blabel/.test(prod)) {
+    return true;
+  }
+
+  // An earth/bonding conductor is single-core green/yellow, never twin &
+  // earth — "10mm main earthing conductor" was matching 6242Y.
+  if (isEarthConductorLine(c.description ?? '') && /twin|6242|6243|3 core|three core|swa|armoured/.test(prod)) {
+    return true;
+  }
+
+  // A different conductor size is a different product: 2.5mm² priced off a
+  // 6.0mm² length is wrong whatever the per-metre maths says (10 Oct 2026).
+  if (wantsCable) {
+    const wantSize = cableSizeOf(desc);
+    const gotSize = cableSizeOf(prod);
+    if (wantSize && gotSize && wantSize !== gotSize) return true;
+  }
 
   const wantsAlarm = /\b(smoke|heat|co|carbon)\s*alarm\b/.test(desc);
   const productIsBattery = /\bbattery\b/.test(prod) && !/\balarm\b/.test(prod.replace(/battery/g, ''));
@@ -1883,9 +2168,7 @@ function assembleOutput(args: {
         // confidence. Shown as a single chip in the UI.
         materials: {
           level: computeMaterialsConfidence(skeleton.materials),
-          matched: skeleton.materials.filter(
-            (m) => (m.source as any)?.table === 'marketplace_products'
-          ).length,
+          matched: skeleton.materials.filter((m) => isKnownPrice(m)).length,
           total: skeleton.materials.length,
         },
         // Labour confidence still comes from the AI — it knows when its
@@ -2043,12 +2326,16 @@ function inferPhase(labourTask: string | undefined, description: string): Phase 
  *
  * Bounded [0, 100]. Empty list returns 100 (nothing to be unsure of).
  */
+/** A live catalogue price or the electrician's own cost — not a typical-price guess. */
+function isKnownPrice(m: PricedMaterial): boolean {
+  const t = (m.source as any)?.table;
+  return t === 'marketplace_products' || t === 'price_book';
+}
+
 function computeMaterialsConfidence(materials: PricedMaterial[]): number {
   if (materials.length === 0) return 100;
   const total = materials.length;
-  const matched = materials.filter(
-    (m) => (m.source as any)?.table === 'marketplace_products'
-  ).length;
+  const matched = materials.filter((m) => isKnownPrice(m)).length;
   const unmatched = total - matched;
   const baseRatio = (matched / total) * 100;
   const unmatchedPenalty = Math.min(unmatched * 12, 60);

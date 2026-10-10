@@ -59,7 +59,7 @@ export function DayRail({
               isWeekend(d) && !on && 'opacity-60'
             )}
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+            <span className="text-[11.5px] font-semibold text-white">
               {fmtDay(d, { weekday: 'narrow' })}
             </span>
             <span
@@ -77,7 +77,10 @@ export function DayRail({
               />
             </span>
             {clash && (
-              <span aria-hidden className="absolute top-1 right-1.5 h-2 w-2 rounded-full bg-red-400" />
+              <span
+                aria-hidden
+                className="absolute top-1 right-1.5 h-2 w-2 rounded-full bg-red-400"
+              />
             )}
           </button>
         );
@@ -152,7 +155,10 @@ export function DiaryDayView({
           {people.map(({ person, pd }) => (
             <div key={person.id} className="px-4 py-3.5 space-y-2.5">
               <div className="flex items-center gap-3">
-                <Avatar initials={initialsOf(person.name, person.initials)} photo={person.photo_url} />
+                <Avatar
+                  initials={initialsOf(person.name, person.initials)}
+                  photo={person.photo_url}
+                />
                 <div className="min-w-0 flex-1">
                   <div className="text-[14px] font-semibold text-white truncate">{person.name}</div>
                   <div

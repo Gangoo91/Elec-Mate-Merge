@@ -59,7 +59,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Socket Outlets */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Socket Outlets</p>
+          <p className="text-[12px] font-medium text-white mb-3">Socket Outlets</p>
         </motion.div>
 
         {socketChecks.map((item, i) => (
@@ -67,7 +67,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-yellow-400">{item.terminal.split(' ')[0]}</span>
+                  <span className="text-[12px] font-bold text-yellow-400">{item.terminal.split(' ')[0]}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-white">{item.terminal}</p>
@@ -81,7 +81,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Lighting Circuits */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Lighting Circuits</p>
+          <p className="text-[12px] font-medium text-white mb-3">Lighting Circuits</p>
         </motion.div>
 
         {lightingChecks.map((item, i) => (
@@ -98,7 +98,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Isolators & Protection */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Isolators & Protection</p>
+          <p className="text-[12px] font-medium text-white mb-3">Isolators & Protection</p>
         </motion.div>
 
         {isolatorChecks.map((item, i) => (
@@ -115,7 +115,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Troubleshooting */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
+          <p className="text-[12px] font-medium text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
@@ -138,7 +138,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Common defects found during inspections — from RAG */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects Found During Inspections</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Defects Found During Inspections</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -166,7 +166,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Pro tips */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
+          <p className="text-[12px] font-medium text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

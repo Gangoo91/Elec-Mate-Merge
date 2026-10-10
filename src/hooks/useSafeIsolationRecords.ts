@@ -2,6 +2,17 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useRef } from 'react';
+import {
+  applySafetyScope,
+  firmWriteErrorMessage,
+  isFirmScope,
+  PERSONAL_SAFETY_SCOPE,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+  type SafetyScope,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 /**
  * Prove-dead readings.
@@ -86,7 +97,7 @@ export interface IsolationStep {
   testerProvedOk?: boolean;
 }
 
-export interface SafeIsolationRecord {
+export interface SafeIsolationRecord extends FirmRecordFields {
   id: string;
   user_id: string;
   rams_id: string | null;
@@ -180,20 +191,27 @@ const GS38_STEPS: Omit<IsolationStep, 'completed' | 'completedAt'>[] = [
   },
 ];
 
-export function useSafeIsolationRecords() {
+/**
+ * Personal: the user's own isolations. Employer Hub: the firm's (employer_id).
+ * `scopeOverride` pins a caller to a scope regardless of the hub, which is how
+ * the expiry check stays on the person's own isolations.
+ */
+export function useSafeIsolationRecords(scopeOverride?: SafetyScope) {
+  const contextScope = useSafetyScope();
+  const scope = scopeOverride ?? contextScope;
   return useQuery({
-    queryKey: ['safe-isolation-records'],
+    queryKey: ['safe-isolation-records', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<SafeIsolationRecord[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('safe_isolation_records')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('safe_isolation_records').select('*'),
+        scope,
+        user.id
+      ).order('created_at', { ascending: false });
 
       if (error) throw error;
       return (data ?? []) as unknown as SafeIsolationRecord[];
@@ -205,6 +223,7 @@ export function useSafeIsolationRecords() {
 export function useCreateIsolationRecord() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (record: {
@@ -221,6 +240,8 @@ export function useCreateIsolationRecord() {
       isolator_signature?: string;
       verifier_name?: string;
       verifier_signature?: string;
+      /** Firm job (employer_jobs) — shares the isolation with the firm. */
+      employer_job_id?: string | null;
     }) => {
       const {
         data: { user },
@@ -234,12 +255,19 @@ export function useCreateIsolationRecord() {
 
       const { data, error } = await supabase
         .from('safe_isolation_records')
-        .insert({
-          user_id: user.id,
-          ...record,
-          steps,
-          status: 'in_progress',
-        })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(
+          stampSafetyInsert(
+            {
+              user_id: user.id,
+              ...record,
+              steps,
+              status: 'in_progress',
+            },
+            scope
+          ) as never
+        )
         .select()
         .single();
 
@@ -268,12 +296,13 @@ export function useCreateIsolationRecord() {
 export function useUpdateIsolationRecord() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async ({ id, ...updates }: Partial<SafeIsolationRecord> & { id: string }) => {
       const { data, error } = await supabase
         .from('safe_isolation_records')
-        .update({ ...updates, updated_at: new Date().toISOString() })
+        .update({ ...updates, updated_at: new Date().toISOString() } as never)
         .eq('id', id)
         .select()
         .single();
@@ -286,10 +315,15 @@ export function useUpdateIsolationRecord() {
         queryKey: ['safe-isolation-records'],
       });
     },
-    onError: () => {
+    onError: (error) => {
       toast({
         title: 'Step not saved',
-        description: 'Check your signal and complete the step again. The record has not changed.',
+        // Firm scope: a worker's shared record is read only, so say that
+        // rather than blaming the signal. Personal scope reads as before.
+        description:
+          isFirmScope(scope) && (error as { code?: string } | null)?.code === 'PGRST116'
+            ? firmWriteErrorMessage(scope, error)
+            : 'Check your signal and complete the step again. The record has not changed.',
         variant: 'destructive',
       });
     },
@@ -352,7 +386,8 @@ export function hasRequiredSignatures(record: SafeIsolationRecord): boolean {
  */
 export function useIsolationExpiryCheck() {
   const { toast } = useToast();
-  const { data: records = [] } = useSafeIsolationRecords();
+  // Always the person's own isolations, in either hub.
+  const { data: records = [] } = useSafeIsolationRecords(PERSONAL_SAFETY_SCOPE);
   const warnedRecords = useRef<Set<string>>(new Set());
 
   useEffect(() => {

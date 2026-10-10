@@ -340,7 +340,7 @@ export default function EICRCertificatePage() {
       { name: 'EICR Certificate', url: '/tools/eicr-certificate' },
     ],
     datePublished: '2024-09-15',
-    dateModified: '2026-06-10',
+    dateModified: '2026-10-10',
     author: 'Andrew Moore',
   });
 
@@ -663,11 +663,11 @@ export default function EICRCertificatePage() {
           </p>
         </div>
 
-        {/* A4:2026 changes relevant to EICR inspectors */}
+        {/* BS 7671 rules that commonly generate EICR observations */}
         <div className="mt-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-elec-yellow shrink-0" />
-            New A4:2026 Rules That Generate EICR Observations
+            BS 7671 Rules That Commonly Generate EICR Observations
           </h3>
           <ul className="space-y-3 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-2">
@@ -676,7 +676,8 @@ export default function EICRCertificatePage() {
               </span>
               <span>
                 <strong>Reg&nbsp;411.3.4 — 30&nbsp;mA RCD on domestic lighting circuits.</strong>{' '}
-                A4:2026 introduces a mandatory requirement (&#39;shall&#39;) for additional
+                A mandatory requirement (&#39;shall&#39;) since BS&nbsp;7671:2018, not new in
+                A4:2026, for additional
                 30&nbsp;mA RCD protection on AC final circuits supplying luminaires in domestic
                 premises. An existing domestic installation without this protection does not comply
                 — typically coded C2.
@@ -687,11 +688,12 @@ export default function EICRCertificatePage() {
                 C3
               </span>
               <span>
-                <strong>Reg&nbsp;421.1.7 — AFDD recommended for AC final circuits.</strong> A4:2026
-                recommends (advisory, not mandatory) the installation of arc fault detection devices
-                (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. Absence
-                of AFDDs on a domestic installation is typically coded C3 (improvement recommended)
-                since the wording is recommendatory rather than prescriptive.
+                <strong>Reg&nbsp;421.1.7 — AFDDs on socket-outlet circuits.</strong> Since A2:2022
+                AFDDs are required on single-phase socket-outlet circuits up to 32&nbsp;A in high
+                rise residential buildings, HMOs, purpose-built student accommodation and care
+                homes, and recommended elsewhere. Absence of AFDDs on an ordinary domestic
+                installation is typically coded C3 (improvement recommended) since the wording
+                there is recommendatory rather than prescriptive.
               </span>
             </li>
             <li className="flex items-start gap-2">
@@ -699,11 +701,10 @@ export default function EICRCertificatePage() {
                 App&nbsp;6
               </span>
               <span>
-                <strong>Appendix&nbsp;6 model forms updated.</strong> The schedule of items
-                inspected now includes dedicated fields for recording the presence of SPDs (surge
-                protective devices) and AFDDs. Elec-Mate&#39;s EICR form includes these columns in
-                line with the updated BS&nbsp;7671:2018+A4:2026 model forms
-                (Reg&nbsp;722.826.3.201).
+                <strong>Appendix&nbsp;6 model forms.</strong> Since A2:2022 the model forms have
+                included dedicated fields for recording the details of SPDs (surge protective
+                devices) and AFDDs. Elec-Mate&#39;s EICR form includes these columns in line with
+                the current BS&nbsp;7671:2018+A4:2026 model forms.
               </span>
             </li>
           </ul>

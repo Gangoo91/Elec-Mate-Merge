@@ -30,9 +30,7 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/70 via-emerald-400/70 to-green-400/70 opacity-70" />
 
-      <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
-        Learning outcomes
-      </div>
+      <div className="text-[13px] font-semibold text-white">Learning outcomes</div>
 
       {/* Two columns from lg; the row divider moves to the item so it does
           not cut across the gap between the columns. */}

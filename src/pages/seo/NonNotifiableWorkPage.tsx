@@ -107,7 +107,7 @@ const sections = [
           Non-notifiable work falls below this threshold. It can be carried out by anyone —
           qualified electrician, general builder, or homeowner — without the need for building
           control notification. However, and this is critically important, non-notifiable work must
-          still comply with BS 7671:2018+A2:2022 (the Wiring Regulations). The fact that
+          still comply with BS 7671:2018+A4:2026 (the Wiring Regulations). The fact that
           notification is not required does not mean the work can be done to a lower standard or
           without following the regulations.
         </p>
@@ -656,7 +656,7 @@ export default function NonNotifiableWorkPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-15"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

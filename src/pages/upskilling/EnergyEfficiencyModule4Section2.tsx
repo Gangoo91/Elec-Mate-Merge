@@ -1085,7 +1085,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
             asChild
             className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow"
           >
-            <Link to="../section-1">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-4-section-1">
               <ArrowLeft className="w-5 h-5" />
               <span>Previous: Section 1</span>
             </Link>
@@ -1095,7 +1095,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
             asChild
             className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-500"
           >
-            <Link to="../section-3">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-4-section-3">
               <span>Next: Section 3</span>
               <ArrowRight className="w-5 h-5" />
             </Link>

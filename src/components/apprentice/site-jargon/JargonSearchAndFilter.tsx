@@ -94,15 +94,11 @@ const JargonSearchAndFilter = ({
           variant="outline"
           size="sm"
           onClick={() => setShowFilters(!showFilters)}
-          className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation flex items-center gap-2"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation flex items-center gap-2"
         >
           <Filter className="h-4 w-4" />
           Filters
-          {hasActiveFilters && (
-            <span className="text-[10px] uppercase tracking-[0.18em] text-elec-yellow ml-1">
-              Active
-            </span>
-          )}
+          {hasActiveFilters && <span className="text-[13px] text-elec-yellow ml-1">Active</span>}
         </Button>
 
         <span className="text-[12px] text-white">
@@ -114,9 +110,7 @@ const JargonSearchAndFilter = ({
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Category
-              </span>
+              <span className="text-[13px] font-semibold text-white">Category</span>
               <Select value={selectedCategory} onValueChange={onCategoryChange}>
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="All categories" />
@@ -133,9 +127,7 @@ const JargonSearchAndFilter = ({
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Difficulty
-              </span>
+              <span className="text-[13px] font-semibold text-white">Difficulty</span>
               <Select value={selectedDifficulty} onValueChange={onDifficultyChange}>
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="All levels" />
@@ -152,9 +144,7 @@ const JargonSearchAndFilter = ({
 
           {availableTags.length > 0 && (
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Tags
-              </span>
+              <span className="text-[13px] font-semibold text-white">Tags</span>
               <div className="flex flex-wrap gap-1.5">
                 {availableTags.map((tag) => {
                   const active = selectedTags.includes(tag);
@@ -183,7 +173,7 @@ const JargonSearchAndFilter = ({
                 variant="outline"
                 size="sm"
                 onClick={clearFilters}
-                className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
               >
                 Clear all filters
               </Button>

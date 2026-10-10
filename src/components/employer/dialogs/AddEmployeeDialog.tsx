@@ -39,6 +39,10 @@ import { SelectField } from '@/components/forms';
 import { autoCompleteOff } from '@/lib/textEntry';
 import { TEAM_ROLES, TEAM_ROLE_HINT, TEAM_ROLE_SEAT, type TeamRole } from '@/lib/teamRoles';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useSavePayProfile } from '@/hooks/usePayLaw';
+import { useHrSettings } from '@/hooks/useRightToWork';
+import { useSavePersonHr } from '@/hooks/useHrRecords';
+import { addDays, addMonths, format, parseISO } from 'date-fns';
 import {
   CIS_STATUS_OPTIONS,
   saveSubcontractorDetails,
@@ -109,6 +113,11 @@ export function AddEmployeeDialog({
   const canSeeMoney = roleInfo?.canSeeMoney ?? false;
   const createEmployee = useCreateEmployee();
   const createElecId = useCreateElecIdProfile();
+  const savePayProfile = useSavePayProfile();
+  // Gap §3C #25: probation from the firm's HR settings, from the chosen start date.
+  const { data: hrSettings } = useHrSettings();
+  const savePersonHr = useSavePersonHr();
+  const today = () => new Date().toISOString().split('T')[0];
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Comped employers (e.g. build partners) get free seats — so the pricing copy
@@ -156,6 +165,9 @@ export function AddEmployeeDialog({
     ecsCardType: 'Installation Electrician',
     ecsCardNumber: '',
     ecsExpiryDate: '',
+    dateOfBirth: '',
+    apprenticeshipStart: '',
+    startDate: new Date().toISOString().split('T')[0],
   });
 
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -278,7 +290,7 @@ export function AddEmployeeDialog({
         hourly_rate: noRosterPay ? 0 : hourlyRate,
         annual_salary: noRosterPay ? null : annualSalary,
         pay_type: formData.workerType === 'subcontractor' ? 'day_rate' : formData.payType,
-        join_date: new Date().toISOString().split('T')[0],
+        join_date: formData.startDate || today(),
         photo_url: null,
         certifications_count: 0,
         active_jobs_count: 0,
@@ -325,6 +337,45 @@ export function AddEmployeeDialog({
         });
       }
 
+      // ELE-2063: date of birth and apprenticeship start (owner/admin only).
+      if (
+        canSeeMoney &&
+        employee.id &&
+        formData.workerType !== 'subcontractor' &&
+        (formData.dateOfBirth || formData.apprenticeshipStart)
+      ) {
+        try {
+          await savePayProfile.mutateAsync({
+            employeeId: employee.id,
+            dateOfBirth: formData.dateOfBirth || null,
+            apprenticeshipStart:
+              formData.workerType === 'apprentice' ? formData.apprenticeshipStart || null : null,
+          });
+        } catch {
+          toast({
+            title: 'Added, but date of birth not saved',
+            description: 'Add it on their record under Pay and holiday rules.',
+            variant: 'destructive',
+          });
+        }
+      }
+
+      // Probation from the firm's HR settings (owner/admin only, as the record is).
+      const probationMonths = hrSettings?.default_probation_months ?? 6;
+      if (canSeeMoney && employee.id && formData.workerType !== 'subcontractor' && formData.startDate) {
+        try {
+          const end = format(addMonths(parseISO(formData.startDate), probationMonths), 'yyyy-MM-dd');
+          await savePersonHr.mutateAsync({
+            rosterId: employee.id,
+            start_date: formData.startDate,
+            probation_end_date: end,
+            probation_review_date: format(addDays(parseISO(end), -14), 'yyyy-MM-dd'),
+          });
+        } catch {
+          // Not fatal: the probation card on their record still offers it.
+        }
+      }
+
       toast({
         title: 'Team member added',
         description: `${formData.name} has been added to your team.${formData.createElecId ? ' Elec-ID created.' : ''}`,
@@ -368,6 +419,9 @@ export function AddEmployeeDialog({
       ecsCardType: 'Installation Electrician',
       ecsCardNumber: '',
       ecsExpiryDate: '',
+      dateOfBirth: '',
+      apprenticeshipStart: '',
+      startDate: today(),
     });
     setPhotoPreview(null);
     setPhotoFile(null);
@@ -716,6 +770,27 @@ export function AddEmployeeDialog({
                         </p>
                       )}
                     </Field>
+                    <Field
+                      label="Start date"
+                      hint={
+                        formData.workerType === 'subcontractor'
+                          ? 'When they start working for you.'
+                          : canSeeMoney
+                            ? `Their contract starts on this date. Probation runs ${
+                                hrSettings?.default_probation_months ?? 6
+                              } months from it, as set in your HR settings.`
+                            : 'Their contract starts on this date.'
+                      }
+                    >
+                      <Input
+                        type="date"
+                        value={formData.startDate}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, startDate: e.target.value }))
+                        }
+                        className={inputClass}
+                      />
+                    </Field>
                   </FormCard>
 
                   {formData.workerType === 'subcontractor' && (
@@ -874,6 +949,33 @@ export function AddEmployeeDialog({
                     <p className="text-[11.5px] text-white">
                       Used for job costing and timesheet labour costs. Only the owner and admins
                       see it.
+                    </p>
+                    <Field label="Date of birth (optional)">
+                      <Input
+                        type="date"
+                        value={formData.dateOfBirth}
+                        max={new Date().toISOString().split('T')[0]}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, dateOfBirth: e.target.value }))
+                        }
+                        className={inputClass}
+                      />
+                    </Field>
+                    {formData.workerType === 'apprentice' && (
+                      <Field label="Apprenticeship start date (optional)">
+                        <Input
+                          type="date"
+                          value={formData.apprenticeshipStart}
+                          onChange={(e) =>
+                            setFormData((prev) => ({ ...prev, apprenticeshipStart: e.target.value }))
+                          }
+                          className={inputClass}
+                        />
+                      </Field>
+                    )}
+                    <p className="text-[11.5px] text-white">
+                      Checks their pay against the legal minimum, warns about under-18 hours and
+                      shows the apprentice funding you can claim.
                     </p>
                   </FormCard>
                   )}

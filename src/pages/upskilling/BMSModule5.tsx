@@ -1,4 +1,4 @@
-import { Globe, Settings, Cable, Wifi, Network, Activity } from 'lucide-react';
+import { Globe, Share2, Cable, Wifi, Network, Activity } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
 import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
@@ -6,47 +6,53 @@ import useSEO from '@/hooks/useSEO';
 const sections = [
   {
     id: 1,
-    title: 'Overview of BMS protocols',
+    title: 'How BMS devices talk',
     icon: Globe,
-    description: 'Communication protocol fundamentals and how they fit into a BMS.',
+    description:
+      'Before BACnet, Modbus or KNX in detail: the cables, the languages, and why a BMS only works when every device agrees on both.',
   },
   {
     id: 2,
-    title: 'BACnet devices and network types',
-    icon: Settings,
-    description: 'BACnet architecture, object models and network variants.',
+    title: 'BACnet',
+    icon: Share2,
+    description:
+      'The open protocol most UK building controls now speak: how it describes a building, how devices ask each other for things, and what you must get right when you wire it.',
   },
   {
     id: 3,
-    title: 'Modbus RTU and TCP/IP use cases',
+    title: 'Modbus RTU and Modbus TCP',
     icon: Cable,
-    description: 'Modbus serial vs IP and where each is best applied.',
+    description:
+      'The protocol behind most meters, drives and plant controllers you will connect to a BMS, and the RS-485 wiring rules that decide whether it works on the day.',
   },
   {
     id: 4,
-    title: 'KNX topology and bus devices',
+    title: 'KNX, LonWorks, M-Bus and DALI as networks',
     icon: Wifi,
-    description: 'KNX bus topology, addressing and device configuration.',
+    description:
+      'Four networks you will meet beside BACnet and Modbus: what each one is for, how it is wired and powered, and what the electrician has to get right for it to work.',
   },
   {
     id: 5,
-    title: 'Gateways and interoperability between protocols',
+    title: 'Gateways and integration',
     icon: Network,
-    description: 'Protocol integration, translation and gateway selection.',
+    description:
+      'How a gateway turns one protocol’s data into another’s, why the points schedule is the contract for an integration, and how to prove it works.',
   },
   {
     id: 6,
-    title: 'Network planning, segmentation and latency management',
+    title: 'Network design and cyber security',
     icon: Activity,
-    description: 'Network design and performance optimisation for BMS traffic.',
+    description:
+      'A BMS network can be reached, misused and switched off like any other. What the electrician can do to keep it separate, locked down and properly owned.',
   },
 ];
 
 export default function BMSModule5() {
   useSEO({
-    title: 'Module 5: BACnet, Modbus & KNX Protocols | BMS Course | Elec-Mate',
+    title: 'Module 5: Networks and protocols | BMS course | Elec-Mate',
     description:
-      'BACnet, Modbus, KNX and gateway interoperability — protocol selection, topology and network planning for BMS.',
+      'How BMS devices talk: BACnet, Modbus, KNX, LonWorks, M-Bus and DALI, gateways and network security.',
   });
 
   return (
@@ -54,15 +60,15 @@ export default function BMSModule5() {
       backTo="../bms-course"
       backLabel="Building management systems"
       moduleNumber={5}
-      title="Communication protocols: BACnet, Modbus, KNX"
-      description="Industry communication standards and how to make them interoperate."
+      title="Networks and protocols"
+      description="How BMS devices talk: BACnet, Modbus, KNX, LonWorks, M-Bus and DALI, gateways, and keeping the network secure."
       tone="yellow"
       sectionsCount={sections.length}
-      duration="70 mins"
+      duration="3 hrs"
       prevModuleHref="../bms-module-4"
-      prevModuleLabel="Lighting, access and environmental control"
+      prevModuleLabel="Lighting, access, blinds and metering"
       nextModuleHref="../bms-module-6"
-      nextModuleLabel="Alarms, monitoring and data logging"
+      nextModuleLabel="Alarms, data and monitoring"
     >
       {sections.map((section, index) => (
         <SectionCard

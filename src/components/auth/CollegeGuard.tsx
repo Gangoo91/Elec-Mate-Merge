@@ -7,10 +7,13 @@ import { CollegeInviteAccept } from '@/components/college/CollegeInviteAccept';
 import { CollegeActButton } from '@/components/college/CollegeActSheet';
 import { CollegeScopeSwitch } from '@/components/college/scope/CollegeScopeSwitch';
 import { HubMastheadExtraContext } from '@/components/hub/HubPrimitives';
+import { CollegeAreaNav } from '@/components/college/nav/CollegeAreaNav';
 import { CollegeAccessFrame } from '@/components/college/access/CollegeAccessFrame';
 import { useActingCollege } from '@/hooks/college/useCollegeAccess';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
+import { StaffMfaGate } from '@/components/college/security/StaffMfaGate';
+import { CollegeRouteBoundary } from '@/components/college/security/CollegeRouteMonitor';
 
 interface CollegeGuardProps {
   children: ReactNode;
@@ -41,6 +44,7 @@ const MASTHEAD = {
     </>
   ),
   stickBelowHeader: true,
+  nav: <CollegeAreaNav />,
 };
 
 export default function CollegeGuard({ children }: CollegeGuardProps) {
@@ -50,9 +54,16 @@ export default function CollegeGuard({ children }: CollegeGuardProps) {
   // White-glove: a platform admin acting for a college goes straight in as it.
   const { data: acting } = useActingCollege();
 
-  if (profile?.college_id || acting) return (
+  // ELE-1915: every College Hub page reports crashes to Sentry and asks staff
+  // for their two-step code when the college (or they) require it.
+  if (profile?.college_id || acting)
+    return (
       <HubMastheadExtraContext.Provider value={MASTHEAD}>
-        <CollegeAccessFrame>{children}</CollegeAccessFrame>
+        <CollegeRouteBoundary>
+          <StaffMfaGate>
+            <CollegeAccessFrame>{children}</CollegeAccessFrame>
+          </StaffMfaGate>
+        </CollegeRouteBoundary>
       </HubMastheadExtraContext.Provider>
     );
 
@@ -66,9 +77,14 @@ export default function CollegeGuard({ children }: CollegeGuardProps) {
 
   // Staff row exists but the profile hasn't caught up yet (e.g. right after a
   // join) — let them in rather than ask for a code they've already used.
-  if (isStaff) return (
+  if (isStaff)
+    return (
       <HubMastheadExtraContext.Provider value={MASTHEAD}>
-        <CollegeAccessFrame>{children}</CollegeAccessFrame>
+        <CollegeRouteBoundary>
+          <StaffMfaGate>
+            <CollegeAccessFrame>{children}</CollegeAccessFrame>
+          </StaffMfaGate>
+        </CollegeRouteBoundary>
       </HubMastheadExtraContext.Provider>
     );
 
@@ -80,8 +96,7 @@ export default function CollegeGuard({ children }: CollegeGuardProps) {
         <div className={cn('rounded-2xl border border-white/[0.10] p-5 sm:p-6', CARD_SURFACE)}>
           <h1 className="text-[17px] font-semibold tracking-tight text-white">College Hub</h1>
           <p className="mt-1.5 text-[13px] leading-relaxed text-white">
-            College Hub is for college staff. If your college gave you a staff code, enter it
-            here.
+            College Hub is for college staff. If your college gave you a staff code, enter it here.
           </p>
           <div className="mt-5 border-t border-white/[0.10] pt-5">
             <CollegeInviteAccept

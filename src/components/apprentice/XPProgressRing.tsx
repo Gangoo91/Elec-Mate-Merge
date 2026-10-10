@@ -110,11 +110,7 @@ export function XPProgressRing({
             >
               {level}
             </span>
-            {!compact && (
-              <span className="text-[10px] text-white font-medium uppercase tracking-wider">
-                Level
-              </span>
-            )}
+            {!compact && <span className="text-[12px] font-medium text-white">Level</span>}
           </div>
         )}
 
@@ -141,7 +137,7 @@ export function XPProgressRing({
             <span className={goalMet ? 'text-green-400' : 'text-elec-yellow'}>{xpToday}</span>
             <span className="text-white"> / {dailyGoal} XP</span>
           </div>
-          <div className="text-[11px] text-white">{levelTitle}</div>
+          <div className="text-[12px] text-white">{levelTitle}</div>
         </div>
       )}
     </button>

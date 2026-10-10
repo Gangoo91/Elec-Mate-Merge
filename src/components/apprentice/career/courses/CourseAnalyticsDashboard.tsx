@@ -2,38 +2,28 @@ import { courseAnalytics } from './enhancedCoursesData';
 
 const CourseAnalyticsDashboard = () => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        UK course market insights
-      </span>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+      <span className="text-[13px] font-semibold text-white">UK course market insights</span>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Available courses
-          </span>
+          <span className="text-[13px] font-semibold text-white">Available courses</span>
           <div className="text-[18px] font-semibold text-white">{courseAnalytics.totalCourses}</div>
         </div>
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Training providers
-          </span>
+          <span className="text-[13px] font-semibold text-white">Training providers</span>
           <div className="text-[18px] font-semibold text-white">
             {courseAnalytics.totalProviders}
           </div>
         </div>
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Average rating
-          </span>
+          <span className="text-[13px] font-semibold text-white">Average rating</span>
           <div className="text-[18px] font-semibold text-white">
             {courseAnalytics.averageRating}
           </div>
         </div>
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            High demand
-          </span>
+          <span className="text-[13px] font-semibold text-white">High demand</span>
           <div className="text-[18px] font-semibold text-white">
             {courseAnalytics.highDemandCourses}
           </div>
@@ -42,9 +32,7 @@ const CourseAnalyticsDashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            High demand skills
-          </span>
+          <span className="text-[13px] font-semibold text-white">High demand skills</span>
           <div className="text-[18px] font-semibold text-white">
             {courseAnalytics.highDemandCourses}
           </div>
@@ -54,9 +42,7 @@ const CourseAnalyticsDashboard = () => {
         </div>
 
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Emerging tech
-          </span>
+          <span className="text-[13px] font-semibold text-white">Emerging tech</span>
           <div className="text-[18px] font-semibold text-white">
             {courseAnalytics.emergingTechCourses}
           </div>
@@ -66,9 +52,7 @@ const CourseAnalyticsDashboard = () => {
         </div>
 
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Salary impact
-          </span>
+          <span className="text-[13px] font-semibold text-white">Salary impact</span>
           <div className="text-[16px] font-semibold text-white">
             {courseAnalytics.averageSalaryImpact}
           </div>
@@ -77,9 +61,7 @@ const CourseAnalyticsDashboard = () => {
       </div>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Most popular course categories
-        </span>
+        <span className="text-[13px] font-semibold text-white">Most popular course categories</span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {courseAnalytics.topCategories.map((category, idx) => (
             <div
@@ -87,16 +69,14 @@ const CourseAnalyticsDashboard = () => {
               className="flex items-baseline justify-between rounded-md border border-white/10 bg-white/[0.03] px-3 py-2"
             >
               <span className="text-[13px] text-white">{category.name}</span>
-              <span className="text-[12px] text-white font-mono">{category.count}</span>
+              <span className="text-[12px] text-white">{category.count}</span>
             </div>
           ))}
         </div>
       </div>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          UK market trends
-        </span>
+        <span className="text-[13px] font-semibold text-white">UK market trends</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="space-y-2">
             <p className="text-[13px] text-white">Growing demand</p>

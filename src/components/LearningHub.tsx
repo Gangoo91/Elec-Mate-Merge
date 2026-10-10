@@ -1,7 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
-import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
-import { cn } from '@/lib/utils';
+import { LEARN_SEG_GROUP, learnSeg } from '@/components/apprentice/learn-ui/learnUi';
 import RegulationsProcedure from '@/components/inspection/learning-hub/regulations/RegulationsProcedure';
 import FaultFindingProcedure from '@/components/inspection/learning-hub/fault-finding/FaultFindingProcedure';
 import TestingProceduresSection from './learning-hub/TestingProceduresSection';
@@ -86,29 +85,31 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
 
   return (
     <HubPage>
-      <HubMasthead
-        section="Apprentice"
-        title="Inspection & Testing · BS 7671:2018+A4:2026"
-        onBack={onBack}
-      />
+      {/* The edition moved out of the masthead title, where it was cut to
+          "BS 7671:2…" on every phone, into the line under it. */}
+      <HubMasthead section="Apprentice" title="Inspection & Testing" onBack={onBack} />
       <HubBody>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setMode('learn')}
-            aria-pressed={mode === 'learn'}
-            className={cn(chipBase, 'flex-1', mode === 'learn' ? chipOn : chipOff)}
-          >
-            Learn
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode('onsite')}
-            aria-pressed={mode === 'onsite'}
-            className={cn(chipBase, 'flex-1', mode === 'onsite' ? chipOn : chipOff)}
-          >
-            On site
-          </button>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[13px] leading-relaxed text-white">BS 7671:2018+A4:2026</p>
+          {/* Two choices: one joined toggle, chosen option white. */}
+          <div role="group" aria-label="Mode" className={LEARN_SEG_GROUP}>
+            <button
+              type="button"
+              onClick={() => setMode('learn')}
+              aria-pressed={mode === 'learn'}
+              className={learnSeg(mode === 'learn')}
+            >
+              Learn
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode('onsite')}
+              aria-pressed={mode === 'onsite'}
+              className={learnSeg(mode === 'onsite')}
+            >
+              On site
+            </button>
+          </div>
         </div>
 
         {mode === 'learn' ? <LearnPath onNavigateToSection={setSection} /> : <OnSiteReference />}

@@ -39,6 +39,7 @@ import type { UnifiedJobListing } from '@/types/unified-jobs';
 // Apply dialog for employer jobs
 import { ApplyToVacancyDialog } from '@/components/electrician/vacancies/ApplyToVacancyDialog';
 import type { InternalVacancy } from '@/components/electrician/vacancies/InternalVacancyCard';
+import { InvitedToApplyStrip } from '@/components/electrician/vacancies/InvitedToApplyStrip';
 
 type TabId = 'explore' | 'saved' | 'insights';
 
@@ -448,6 +449,9 @@ const PremiumJobsHub = () => {
               exit={{ opacity: 0, x: 20 }}
               className="px-2 sm:px-4 py-3 space-y-3"
             >
+              {/* Firms that invited this person from the talent pool (ELE-1957) */}
+              <InvitedToApplyStrip className="pt-1" />
+
               {/* Hero Card */}
               <JobsHeroCard
                 totalJobs={stats.totalJobs}

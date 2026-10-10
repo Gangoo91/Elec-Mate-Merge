@@ -29,7 +29,7 @@ export function Under18Badge({
   return (
     <span
       className={cn(
-        'inline-flex h-5 shrink-0 items-center rounded-full border border-sky-400/60 bg-sky-500/[0.12] px-2 text-[11px] font-semibold text-white',
+        'inline-flex h-5 shrink-0 items-center rounded-full border border-sky-400/60 bg-sky-500/[0.12] px-2 text-[12px] font-semibold text-white',
         className
       )}
       title={`Under 18 (age ${age}). Follow the procedures for a minor.`}

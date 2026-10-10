@@ -1,0 +1,14 @@
+{
+  "baseUrl": "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/firm-api/v1",
+  "headers": {
+    "Authorization": "Bearer {{connection.apiKey}}",
+    "Accept": "application/json"
+  },
+  "response": {
+    "error": {
+      "message": "[{{statusCode}}] {{body.error.message}}",
+      "429": { "type": "RateLimitError", "message": "Elec-Mate rate limit reached for this key. Try again in a minute." }
+    }
+  },
+  "log": { "sanitize": ["request.headers.authorization"] }
+}

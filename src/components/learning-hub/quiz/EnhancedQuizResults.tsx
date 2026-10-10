@@ -85,17 +85,17 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
             <div className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-3.5 text-center">
               <Clock className="h-4 w-4 text-white mx-auto mb-1.5" />
               <p className="text-lg font-bold text-white">{formatTime(result.timeSpent)}</p>
-              <p className="text-[10px] text-white">Time Taken</p>
+              <p className="text-[12px] text-white">Time Taken</p>
             </div>
             <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-3.5 text-center">
               <CheckCircle className="h-4 w-4 text-green-400 mx-auto mb-1.5" />
               <p className="text-lg font-bold text-green-400">{totalCorrect}</p>
-              <p className="text-[10px] text-white">Correct</p>
+              <p className="text-[12px] text-white">Correct</p>
             </div>
             <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-3.5 text-center">
               <XCircle className="h-4 w-4 text-red-400 mx-auto mb-1.5" />
               <p className="text-lg font-bold text-red-400">{totalWrong}</p>
-              <p className="text-[10px] text-white">Incorrect</p>
+              <p className="text-[12px] text-white">Incorrect</p>
             </div>
           </div>
         </motion.div>
@@ -103,7 +103,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
         {/* Wrong answers review */}
         {wrongAnswers.length > 0 && (
           <motion.div variants={itemVariants}>
-            <p className="text-[11px] font-bold text-white uppercase tracking-widest mb-3">Review Wrong Answers</p>
+            <p className="text-[12px] font-bold text-white mb-3">Review Wrong Answers</p>
             <div className="space-y-2.5">
               {wrongAnswers.map((wa, i) => (
                 <div key={i} className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-4 space-y-2">
@@ -123,7 +123,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                   <div className="rounded-xl bg-white/[0.04] p-2.5">
                     <p className="text-xs text-white">{wa.question.explanation}</p>
                     {wa.question.regulation && (
-                      <p className="text-[10px] text-yellow-400 mt-1 flex items-center gap-1">
+                      <p className="text-[12px] text-yellow-400 mt-1 flex items-center gap-1">
                         <BookOpen className="h-2.5 w-2.5" /> {wa.question.regulation}
                       </p>
                     )}
@@ -148,7 +148,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.04] border border-white/[0.08] p-4 text-center">
             <p className="text-xs text-white">{assessment.title} — {assessment.regulation}</p>
-            <p className="text-[10px] text-white mt-1">Pass mark: 70% — {result.totalQuestions} questions from a bank of 50</p>
+            <p className="text-[12px] text-white mt-1">Pass mark: 70% — {result.totalQuestions} questions from a bank of 50</p>
           </div>
         </motion.div>
       </motion.div>

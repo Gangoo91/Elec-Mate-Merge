@@ -45,8 +45,8 @@ const keyTakeaways = [
   'Part P of the Building Regulations (England and Wales) requires certain types of electrical work to be notified to building control — either through a competent person scheme or directly.',
   'Competent person self-certification (via NICEIC, NAPIT, ELECSA, etc.) allows registered electricians to certify their own notifiable work without involving building control directly.',
   'Elec-Mate generates all three certificate types on your phone with AI assistance, auto-populates test results, and sends the completed certificate to the client and building control notification body in one tap.',
-  'A4:2026 (Reg 411.3.4): all AC lighting circuits in domestic premises now require RCD protection at or below 30 mA — inspectors must code the absence C2 on an EICR, and new EICs must record that protection is provided.',
-  'A4:2026 updated Appendix 6 model forms to include mandatory fields for SPDs and AFDDs — pre-A4:2026 certificate templates are missing these fields.',
+  'Reg 411.3.4 (since BS 7671:2018): all AC lighting circuits in domestic premises require RCD protection at or below 30 mA — inspectors must code the absence C2 on an EICR, and new EICs must record that protection is provided.',
+  'Amendment 2:2022 added fields for SPDs and AFDDs to the Appendix 6 model forms, and A4:2026 revised the forms again — older certificate templates are missing these fields.',
 ];
 
 const faqs = [
@@ -238,15 +238,15 @@ const sections = [
             <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white text-sm mb-1">
-                A4:2026 — Domestic lighting circuits: RCD protection now mandatory (Reg 411.3.4)
+                Domestic lighting circuits: RCD protection mandatory since 2018 (Reg 411.3.4)
               </p>
               <p className="text-white text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 introduced Reg 411.3.4, which requires all AC final circuits
-                supplying luminaires in domestic premises to have additional protection by an RCD
-                rated at or below 30 mA. For new work, the EIC must record that RCD protection is
-                provided. On an EICR of an existing installation, the absence of RCD protection on
-                lighting circuits in a domestic property is a C2 observation (potentially
-                dangerous).
+                Reg 411.3.4, in BS 7671 since the 2018 edition and unchanged in A4:2026, requires
+                all AC final circuits supplying luminaires in domestic premises to have additional
+                protection by an RCD rated at or below 30 mA. For new work, the EIC must record that
+                RCD protection is provided. On an EICR of an existing installation, the absence of
+                RCD protection on lighting circuits in a domestic property is a C2 observation
+                (potentially dangerous).
               </p>
             </div>
           </div>
@@ -256,10 +256,7 @@ const sections = [
           <SEOInternalLink href="/ev-charger-certificate">
             EV Charger Installation Certificate
           </SEOInternalLink>
-          ,{' '}
-          <SEOInternalLink href="/fire-alarm-certificate">
-            Fire Alarm Certificate
-          </SEOInternalLink>
+          , <SEOInternalLink href="/fire-alarm-certificate">Fire Alarm Certificate</SEOInternalLink>
           , and{' '}
           <SEOInternalLink href="/emergency-lighting-certificate">
             Emergency Lighting Certificate
@@ -626,7 +623,7 @@ export default function ElectricalComplianceCertificatePage() {
       title="Electrical Compliance Certificate: What You Need"
       description="Complete guide to UK electrical compliance certificates (EIC, MEIWC, EICR), Part P building regulations, competent person schemes and landlord duties."
       datePublished="2025-07-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

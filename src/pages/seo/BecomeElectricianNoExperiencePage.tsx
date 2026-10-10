@@ -391,8 +391,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Apprenticeship levy / co-investment:</strong> Apprenticeship training costs
-                are fully funded for employers who pay the levy, and 95% funded (government
-                co-investment) for smaller employers. You pay nothing as the apprentice.
+                are paid from the levy for employers who pay it. For smaller employers the
+                government funds 100% for apprentices aged 16 to 24 and 95% for those aged 25 or
+                over (starts from 1 August 2026). You pay nothing as the apprentice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -627,7 +628,7 @@ export default function BecomeElectricianNoExperiencePage() {
       title="How to Become an Electrician, No Experience: UK"
       description="Complete guide to becoming an electrician in the UK with no prior experience. Adult apprenticeships, domestic installer courses, fast-track options."
       datePublished="2024-08-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

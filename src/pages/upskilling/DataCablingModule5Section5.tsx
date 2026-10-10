@@ -813,7 +813,7 @@ const DataCablingModule5Section5 = () => {
             </li>
             <li>
               <strong>§444 — Measures against electromagnetic disturbances.</strong> Carried forward
-              from earlier editions — not new in A4:2026, but directly relevant. §444.410 cites BS
+              from earlier editions — not new in A4:2026, but directly relevant. §444.4.10 cites BS
               EN 50174-1, BS EN 50174-2 and BS EN 50310 as the applicable standards. §444.6.2 sets
               the 130 mm minimum separation between ICT cables and HID lamps. Annex A444 Tables
               A444.1 / A444.2 give the segregation distances against containment type and supply

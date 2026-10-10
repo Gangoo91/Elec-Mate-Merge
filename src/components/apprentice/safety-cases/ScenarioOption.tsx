@@ -30,7 +30,7 @@ const ScenarioOption = ({
         ? 'border-elec-yellow/50 bg-white/[0.06]'
         : 'border-white/[0.10] hover:border-white/15 bg-white/[0.06]';
     }
-    if (isCorrect) return 'border-elec-yellow/40 bg-white/[0.06]';
+    if (isCorrect) return 'border-white/[0.08] bg-white/[0.06]';
     if (isSelected && !isCorrect) return 'border-red-500/30 bg-white/[0.06]';
     return 'border-white/[0.10] bg-white/[0.06] opacity-60';
   };
@@ -76,25 +76,19 @@ const ScenarioOption = ({
       {showFeedback && (isCorrect || isSelected) && (
         <div className="mt-4 ml-10 space-y-3">
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-3 sm:p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Feedback
-            </span>
+            <span className="text-[13px] font-semibold text-white">Feedback</span>
             <p className="text-[14px] text-white leading-relaxed">{feedback}</p>
           </div>
 
           {regulation && (
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-3 sm:p-4 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Regulation
-              </span>
+              <span className="text-[13px] font-semibold text-white">Regulation</span>
               <p className="text-[14px] text-white leading-relaxed">{regulation}</p>
             </div>
           )}
 
-          <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] p-3 sm:p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-              Outcome
-            </span>
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.06] p-3 sm:p-4 space-y-2">
+            <span className="text-[13px] font-semibold text-elec-yellow">Outcome</span>
             <p className="text-[14px] text-white leading-relaxed">{outcome}</p>
           </div>
         </div>

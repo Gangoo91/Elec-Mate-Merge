@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Reg 530.3.201 also prohibits placing a unidirectional device where bidirectional current flow may occur. Additionally, Reg 551.7.1(d) (introduced in A4:2026) prohibits connecting a source to the load side of an RCD under certain conditions — relevant for any PV or BESS circuit protected by an RCD.',
   'Electricians working on solar PV, battery storage, EV charger, and generator installations must understand the distinction between bidirectional and unidirectional devices to ensure correct device selection.',
   'Existing installations that are safe and compliant with BS 7671:2018+A2:2022 do not need to be retrospectively upgraded to meet A3:2024 requirements.',
-  "BS 7671:2018+A4:2026 was issued on 15 April 2026 and may be used immediately. A3:2024 remains current but will be withdrawn on 15 October 2026. A4 introduces Chapter 82 — Prosumer's Electrical Installations — as the comprehensive framework for solar PV and BESS sites.",
+  "BS 7671:2018+A4:2026 was issued on 15 April 2026 and may be used immediately. A2:2022 and A3:2024 are withdrawn on 15 October 2026. A4 adds a new Chapter 57 for stationary batteries; Chapter 82 (prosumer's installations) dates from A2:2022.",
   'Elec-Mate includes updated regulation references for A3:2024 and A4:2026, and the AI circuit designer accounts for bidirectional device requirements when designing solar PV and battery storage circuits.',
 ];
 
@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'Has Amendment 4 been published, and when does A3 become obsolete?',
     answer:
-      'Yes — BS 7671:2018+A4:2026 was issued on 15 April 2026 and may be used immediately. The previous version (BS 7671:2018+A2:2022+Corrigendum+A3:2024) remains current but will be withdrawn on 15 October 2026, giving a six-month transition window. Amendment 4 is more substantial than Amendment 3: the headline change is a new Chapter 82 — Prosumer\'s Electrical Installations (PEIs) — which provides a consolidated framework for the design, erection and verification of installations that include local production or storage of energy (solar PV, BESS, V2G). A4 also redrafts Reg 551.7.1 to add explicit indents on bidirectional device protection and the prohibition on connecting a source to the load side of an RCD under certain conditions. See our <a href="/guides/bs-7671-amendment-4-2026" class="underline">BS 7671 Amendment 4 guide</a> for full details. Elec-Mate updates its regulation references and training content with every amendment.',
+      'Yes — BS 7671:2018+A4:2026 was issued on 15 April 2026 and may be used immediately. The previous version (BS 7671:2018+A2:2022+Corrigendum+A3:2024) is withdrawn on 15 October 2026, giving a six-month transition window. Amendment 4 is more substantial than Amendment 3: headline changes include a new Chapter 57 for stationary secondary batteries, a new Section 545 for ICT functional earthing, a new Section 716 for Power over Ethernet and a new Chapter 81 on energy efficiency (Chapter 82 for prosumer\'s installations dates from A2:2022). A4 also redrafts Reg 551.7.1 to add explicit indents on bidirectional device protection and the prohibition on connecting a source to the load side of an RCD under certain conditions. See our <a href="/guides/bs-7671-amendment-4-2026" class="underline">BS 7671 Amendment 4 guide</a> for full details. Elec-Mate updates its regulation references and training content with every amendment.',
   },
   {
     question:
@@ -502,8 +502,7 @@ const sections = [
             <SEOInternalLink href="/guides/bs-7671-amendment-4-2026">
               BS 7671 Amendment 4 guide
             </SEOInternalLink>{' '}
-            for the full A4 framework, including the new Chapter 82 — Prosumer&apos;s Electrical
-            Installations.
+            for the full A4 framework, including the new Chapter 57 for stationary batteries.
           </p>
         </div>
         <SEOAppBridge
@@ -663,7 +662,7 @@ export default function BS7671Amendment3Page() {
       title="BS 7671 Amendment 3 (A3:2024): Changes Explained"
       description="Complete guide to BS 7671:2018+A3:2024: Reg 530.3.201 bidirectional device requirements for solar PV, battery storage and V2G installations explained."
       datePublished="2025-08-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

@@ -37,7 +37,7 @@ const keyTakeaways = [
   'Electric shower installation in a bathroom is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or notified to Building Control.',
   "Elec-Mate's cable sizing calculator handles shower circuit design including correction factors, voltage drop, and Zs verification against BS 7671 tables.",
   'Typical UK installation cost (2026): £180–£500 per job depending on region — £270 average in the North West / Yorkshire, £285 in the West Midlands, £315 in Scotland, £375 in London. Labour time 1.5–2 hours on a straightforward swap.',
-  'A4:2026 Reg 411.3.4: within domestic premises, bathroom lighting circuits now also require 30mA RCD protection. When working on a shower circuit, check whether the existing lighting circuit is RCD-protected — the absence of RCD protection on a lighting circuit is a C2 defect under current regulations.',
+  'Reg 411.3.4 (since BS 7671:2018): within domestic premises, lighting circuits, including bathroom lighting, require 30mA RCD protection. When working on a shower circuit, check whether the existing lighting circuit is RCD-protected — the absence of RCD protection on a lighting circuit is a C2 defect under current regulations.',
 ];
 
 const faqs = [
@@ -475,7 +475,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <p className="text-white text-sm">
-            <strong>A4:2026 — Reg 411.3.4 (lighting circuits):</strong> Within domestic premises, AC
+            <strong>Reg 411.3.4 (lighting circuits, since 2018):</strong> Within domestic premises, AC
             final circuits supplying luminaires must also have 30mA RCD additional protection. When
             installing a new shower circuit in an older home, check whether the existing bathroom
             lighting circuit is RCD-protected. An unprotected lighting circuit is a C2 observation
@@ -677,7 +677,7 @@ export default function ElectricShowerInstallationPage() {
       title="Electric Shower Cable Size: 8.5 & 9.5kW = 10mm²"
       description="8.5kW: 10mm² on 40A. 9.5kW: 10mm² on 45A. 10.8–12kW: 16mm² on 50A. Cable and MCB size for every shower rating from 7.5kW, plus RCD, isolator and zones."
       datePublished="2025-06-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

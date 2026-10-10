@@ -3,8 +3,28 @@ import { supabase } from '@/integrations/supabase/client';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { useToast } from '@/hooks/use-toast';
 import { getActingEmployerId } from '@/lib/actingEmployer';
+import { EMPLOYER_HOME_KEY } from '@/hooks/useEmployerHome';
+import { londonParts } from '@/lib/safetyIncidentRows';
 
-// Types based on database schema
+/* ==========================================================================
+   The firm's incidents (ELE-1945, ELE-2031).
+
+   One incident model for both hubs: Site Safety's near_miss_reports and
+   accident_records. The Employer Hub reads them through get_firm_incidents(),
+   which also returns any rows in the older employer_incidents table (live
+   builds before ELE-2031 still write there), normalised to one shape.
+
+     source 'near_miss'  near misses and incidents where nobody was hurt
+     source 'accident'   injuries (the accident book)
+     source 'legacy'     employer_incidents, edited as before
+
+   A worker's own report (filed against a firm job) stays theirs: the office
+   reads it, countersigns it and records its follow-up (seen, investigation,
+   actions, RIDDOR, close-out) through firm_incident_update(), never by
+   editing what the worker wrote. A report the office made itself is the
+   firm's, and the office can edit it.
+   ========================================================================== */
+
 export type IncidentType =
   | 'near_miss'
   | 'unsafe_practice'
@@ -13,22 +33,34 @@ export type IncidentType =
   | 'property_damage'
   | 'environmental'
   | 'security'
+  | 'dangerous_occurrence'
   | 'other';
 
 export type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
 
-// 'open' is written by worker-side safety reports (useWorkerSelfService) —
-// treat it as a first-class open state alongside the employer-side vocabulary.
+// 'open' is written by worker-side safety reports — treat it as a first-class
+// open state alongside the employer-side vocabulary.
 export type IncidentStatus =
   'open' | 'draft' | 'submitted' | 'under_review' | 'investigating' | 'resolved' | 'closed';
 
+export type IncidentSource = 'legacy' | 'near_miss' | 'accident';
+
 export interface Incident {
   id: string;
+  source: IncidentSource;
   employer_id: string;
   job_id?: string | null;
-  /** employer_employees.id (worker reports) or a display name (employer reports) */
+  job_title?: string | null;
+  /** employer_employees.id (worker reports) or a display name (office reports) */
   reported_by?: string | null;
   reported_by_id?: string | null;
+  /** Who reported it, resolved on the server. */
+  reporter_name?: string | null;
+  reporter_employee_id?: string | null;
+  /** The office made this record (it can edit it). False = a worker's own report. */
+  firm_made: boolean;
+  /** The office may change what the report says (not just its follow-up). */
+  can_edit: boolean;
   incident_type: IncidentType;
   title: string;
   description: string;
@@ -50,11 +82,13 @@ export interface Incident {
   created_at: string;
   updated_at: string;
   resolved_at?: string;
-  // Investigation, close-out and RIDDOR (ELE-1945, 6 Oct)
-  /** Storage paths in the private visual-uploads bucket. */
+  /** Storage paths (private visual-uploads) or safety-photos URLs. */
   photos?: string[];
   injured_person?: string | null;
   injured_employee_id?: string | null;
+  /** Accident book vocabulary (DigitalAccidentBook), injuries only. */
+  injury_type?: string | null;
+  body_part?: string | null;
   hospital_visit?: boolean;
   days_off?: number | null;
   root_cause?: string | null;
@@ -68,6 +102,10 @@ export interface Incident {
   riddor_category?: RiddorCategory | null;
   riddor_reported_at?: string | null;
   riddor_reference?: string | null;
+  /** Site Safety record number, e.g. NM-2026-0012. */
+  record_number?: string | null;
+  countersigned_name?: string | null;
+  countersigned_at?: string | null;
 }
 
 export interface CorrectiveAction {
@@ -128,6 +166,88 @@ export const RIDDOR_CATEGORIES: { value: RiddorCategory; label: string; descript
     description: 'You have checked and none of the above apply',
   },
 ];
+
+export const INCIDENT_TYPE_LABEL: Record<string, string> = {
+  near_miss: 'Near miss',
+  unsafe_practice: 'Unsafe practice',
+  faulty_equipment: 'Faulty equipment',
+  injury: 'Injury',
+  property_damage: 'Property damage',
+  environmental: 'Environmental',
+  security: 'Security',
+  dangerous_occurrence: 'Dangerous occurrence',
+  incident: 'Incident',
+  other: 'Other',
+};
+
+/** Accident book injury types (same ids as DigitalAccidentBook). */
+export const INJURY_TYPES: { value: string; label: string }[] = [
+  { value: 'cut-laceration', label: 'Cut or laceration' },
+  { value: 'burn', label: 'Burn (heat or chemical)' },
+  { value: 'electric-shock', label: 'Electric shock' },
+  { value: 'fracture', label: 'Fracture or break' },
+  { value: 'sprain-strain', label: 'Sprain or strain' },
+  { value: 'bruise-contusion', label: 'Bruise' },
+  { value: 'eye-injury', label: 'Eye injury' },
+  { value: 'chemical-exposure', label: 'Chemical exposure' },
+  { value: 'fall-injury', label: 'Fall injury' },
+  { value: 'crush-injury', label: 'Crush injury' },
+  { value: 'head-injury', label: 'Head injury' },
+  { value: 'respiratory', label: 'Breathing problem' },
+  { value: 'other', label: 'Other' },
+];
+
+/** Accident book body parts (same ids as DigitalAccidentBook). */
+export const BODY_PARTS: { value: string; label: string }[] = [
+  { value: 'head', label: 'Head' },
+  { value: 'face', label: 'Face' },
+  { value: 'eyes', label: 'Eyes' },
+  { value: 'neck', label: 'Neck' },
+  { value: 'shoulder', label: 'Shoulder' },
+  { value: 'arm', label: 'Arm or elbow' },
+  { value: 'hand-fingers', label: 'Hand or fingers' },
+  { value: 'chest', label: 'Chest' },
+  { value: 'back', label: 'Back' },
+  { value: 'abdomen', label: 'Abdomen' },
+  { value: 'hip', label: 'Hip or pelvis' },
+  { value: 'leg', label: 'Leg or thigh' },
+  { value: 'knee', label: 'Knee' },
+  { value: 'foot-toes', label: 'Foot or toes' },
+  { value: 'multiple', label: 'More than one area' },
+];
+
+/** The four severities as the accident book names them, for an injury. */
+export const INJURY_SEVERITY_LABEL: Record<SeverityLevel, string> = {
+  low: 'Minor',
+  medium: 'Moderate',
+  high: 'Major',
+  critical: 'Fatal',
+};
+
+const TO_ACCIDENT_SEVERITY: Record<SeverityLevel, string> = {
+  low: 'minor',
+  medium: 'moderate',
+  high: 'major',
+  critical: 'fatal',
+};
+
+/** near_miss_reports.incident_kind values (database check constraint). */
+const NEAR_MISS_KINDS: string[] = [
+  'near_miss',
+  'unsafe_practice',
+  'faulty_equipment',
+  'property_damage',
+  'environmental',
+  'security',
+  'dangerous_occurrence',
+  'other',
+];
+
+/** Near-miss register category for an Employer Hub incident type. */
+const NEAR_MISS_CATEGORY: Partial<Record<IncidentType, string>> = {
+  faulty_equipment: 'tool_equipment',
+  unsafe_practice: 'worksite_hazard',
+};
 
 export const isRiddorReportable = (c?: RiddorCategory | null) => !!c && c !== 'not_reportable';
 
@@ -193,61 +313,321 @@ export function overdueActions(i: Incident): CorrectiveAction[] {
 
 export type CreateIncidentInput = Omit<
   Incident,
-  'id' | 'employer_id' | 'created_at' | 'updated_at'
->;
+  'id' | 'source' | 'employer_id' | 'created_at' | 'updated_at' | 'firm_made' | 'can_edit' | 'title'
+> & { title?: string };
 export type UpdateIncidentInput = Partial<CreateIncidentInput>;
 
-// witnesses / injuries_sustained / first_aid_given / supervisor_* are live
-// first-class columns on employer_incidents — written and read as such.
-// Fields the table genuinely lacks (equipment, consequences, follow-up) are
-// folded into the description on write. Legacy rows that predate the columns
-// keep their detail inside the description text, which still renders.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const rowToIncident = (row: any): Incident => ({
-  id: row.id,
-  employer_id: row.employer_id,
-  job_id: row.job_id ?? null,
-  reported_by: row.reported_by ?? null,
-  reported_by_id: row.reported_by_id ?? null,
-  // The table defaults ('Near Miss', 'Low', 'Open') predate the hub's
-  // lowercase vocabulary; normalise so filters and pills never miss a row.
-  incident_type: String(row.incident_type || 'other')
-    .toLowerCase()
-    .replace(/\s+/g, '_') as IncidentType,
-  title: row.title,
-  description: row.description || '',
-  location: row.location || '',
-  date_occurred: row.reported_at || row.created_at,
-  severity: String(row.severity || 'low').toLowerCase() as SeverityLevel,
-  status: String(row.status || 'open')
-    .toLowerCase()
-    .replace(/\s+/g, '_') as IncidentStatus,
-  immediate_action_taken: row.actions_taken || undefined,
-  witnesses: row.witnesses || undefined,
-  supervisor_notified: row.supervisor_notified ?? undefined,
-  supervisor_name: row.supervisor_name || undefined,
-  injuries_sustained: row.injuries_sustained || undefined,
-  first_aid_given: row.first_aid_given ?? undefined,
-  created_at: row.created_at,
-  updated_at: row.updated_at,
-  photos: row.photos ?? [],
-  injured_person: row.injured_person ?? null,
-  injured_employee_id: row.injured_employee_id ?? null,
-  hospital_visit: row.hospital_visit ?? false,
-  days_off: row.days_off ?? null,
-  root_cause: row.root_cause ?? null,
-  investigation_notes: row.investigation_notes ?? null,
-  corrective_actions: Array.isArray(row.corrective_actions) ? row.corrective_actions : [],
-  acknowledged_at: row.acknowledged_at ?? null,
-  closed_at: row.closed_at ?? null,
-  closeout_summary: row.closeout_summary ?? null,
-  riddor_category: row.riddor_category ?? null,
-  riddor_reported_at: row.riddor_reported_at ?? null,
-  riddor_reference: row.riddor_reference ?? null,
-});
+/* ── Reading ─────────────────────────────────────────────────────────── */
 
-const incidentToRow = (input: Partial<CreateIncidentInput>) => {
-  // Only fields with no column of their own get folded into the description.
+const str = (v: unknown) => (typeof v === 'string' ? v : '');
+
+/** A short title: the injury and who, or the first sentence of a near miss. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function titleFor(row: any, source: IncidentSource): string {
+  if (source === 'accident') {
+    const injury = INJURY_TYPES.find((t) => t.value === row.injury_type)?.label ?? 'Injury';
+    return row.injured_person ? `${injury} · ${row.injured_person}` : injury;
+  }
+  if (source === 'near_miss') {
+    const text = str(row.description).replace(/\s+/g, ' ').trim();
+    const sentence = (text.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? text).trim();
+    if (sentence.length <= 80) return sentence || 'Near miss';
+    const cut = sentence.slice(0, 78);
+    return `${cut.slice(0, Math.max(cut.lastIndexOf(' '), 40)).trimEnd()}…`;
+  }
+  return str(row.title) || INCIDENT_TYPE_LABEL[row.incident_type] || 'Safety report';
+}
+
+/** "Cut or laceration to hand or fingers. <what the book says>" for an accident. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function injuriesFor(row: any, source: IncidentSource): string | undefined {
+  if (source !== 'accident') return row.injuries_sustained || undefined;
+  const injury = INJURY_TYPES.find((t) => t.value === row.injury_type)?.label ?? 'Injury';
+  const part = BODY_PARTS.find((b) => b.value === row.body_part)?.label.toLowerCase();
+  const raw = str(row.injuries_sustained);
+  const at = raw.indexOf('. ');
+  const rest = at === -1 ? '' : raw.slice(at + 2);
+  return [`${injury}${part ? ` to ${part}` : ''}`, rest].filter(Boolean).join('. ');
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const rowToIncident = (row: any): Incident => {
+  const source: IncidentSource =
+    row.source === 'near_miss' || row.source === 'accident' ? row.source : 'legacy';
+  const firmMade = !!row.firm_made;
+  return {
+    id: row.id,
+    source,
+    employer_id: row.employer_id,
+    job_id: row.job_id ?? null,
+    job_title: row.job_title ?? null,
+    reported_by: row.reported_by ?? null,
+    reported_by_id: row.reporter_user_id ?? null,
+    reporter_name: row.reporter_name ?? null,
+    reporter_employee_id: row.reporter_employee_id ?? null,
+    firm_made: firmMade,
+    can_edit: source === 'legacy' || firmMade,
+    incident_type: String(row.incident_type || 'other')
+      .toLowerCase()
+      .replace(/\s+/g, '_') as IncidentType,
+    title: titleFor(row, source),
+    description: str(row.description),
+    location: str(row.location),
+    date_occurred: row.reported_at || row.created_at,
+    severity: String(row.severity || 'low').toLowerCase() as SeverityLevel,
+    status: String(row.status || 'open')
+      .toLowerCase()
+      .replace(/\s+/g, '_') as IncidentStatus,
+    immediate_action_taken: row.actions_taken || undefined,
+    witnesses: row.witnesses || undefined,
+    supervisor_notified: row.supervisor_notified ?? undefined,
+    supervisor_name: row.supervisor_name || undefined,
+    injuries_sustained: injuriesFor(row, source),
+    first_aid_given: row.first_aid_given ?? undefined,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+    photos: Array.isArray(row.photos)
+      ? (row.photos as unknown[]).filter((p): p is string => typeof p === 'string' && !!p)
+      : [],
+    injured_person: row.injured_person ?? null,
+    injured_employee_id: row.injured_employee_id ?? null,
+    injury_type: row.injury_type ?? null,
+    body_part: row.body_part ?? null,
+    hospital_visit: row.hospital_visit ?? false,
+    days_off: row.days_off ?? null,
+    root_cause: row.root_cause ?? null,
+    investigation_notes: row.investigation_notes ?? null,
+    corrective_actions: Array.isArray(row.corrective_actions) ? row.corrective_actions : [],
+    acknowledged_at: row.acknowledged_at ?? null,
+    closed_at: row.closed_at ?? null,
+    closeout_summary: row.closeout_summary ?? null,
+    riddor_category: row.riddor_category ?? null,
+    riddor_reported_at: row.riddor_reported_at ?? null,
+    riddor_reference: row.riddor_reference ?? null,
+    record_number: row.record_number ?? null,
+    countersigned_name: row.countersigned_name ?? null,
+    countersigned_at: row.countersigned_at ?? null,
+  };
+};
+
+async function currentFirm(): Promise<{ userId: string; firmId: string } | null> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+  return { userId: user.id, firmId: (await getActingEmployerId(user.id)) ?? user.id };
+}
+
+/** The firm's incidents from every source (managers of the firm only; throws otherwise). */
+export async function fetchFirmIncidents(): Promise<Incident[]> {
+  const ctx = await currentFirm();
+  if (!ctx) return [];
+  const { data, error } = await supabase.rpc(
+    'get_firm_incidents' as never,
+    { p_firm: ctx.firmId } as never
+  );
+  // Surface real failures: a safety register must never render a reassuring
+  // empty state on an RLS or network error.
+  if (error) throw error;
+  return (Array.isArray(data) ? data : []).map(rowToIncident);
+}
+
+const INCIDENT_TABLES = [
+  { table: 'employer_incidents' },
+  { table: 'near_miss_reports' },
+  { table: 'accident_records' },
+];
+
+/** Every incident the firm can see: Site Safety records and employer_incidents. */
+export function useIncidents() {
+  // Live: a worker reporting from site refreshes the list straight away. RLS
+  // scopes the realtime events; the refetch goes through the firm RPC.
+  useRealtimeInvalidate('incidents', INCIDENT_TABLES, [['incidents']]);
+  return useQuery({ queryKey: ['incidents'], queryFn: fetchFirmIncidents });
+}
+
+export function useIncident(id: string | undefined) {
+  return useQuery({
+    queryKey: ['incidents'],
+    queryFn: fetchFirmIncidents,
+    enabled: !!id,
+    select: (rows: Incident[]) => rows.find((r) => r.id === id) ?? null,
+  });
+}
+
+export function useIncidentsByStatus(status: IncidentStatus) {
+  return useQuery({
+    queryKey: ['incidents'],
+    queryFn: fetchFirmIncidents,
+    select: (rows: Incident[]) => rows.filter((r) => r.status === status),
+  });
+}
+
+export interface IncidentStats {
+  total: number;
+  open: number;
+  resolved: number;
+  closed: number;
+  nearMisses: number;
+  critical: number;
+  high: number;
+}
+
+export function useIncidentStats() {
+  return useQuery({
+    queryKey: ['incidents'],
+    queryFn: fetchFirmIncidents,
+    select: (rows: Incident[]): IncidentStats => ({
+      total: rows.length,
+      open: rows.filter((i) => !isIncidentClosed(i)).length,
+      resolved: rows.filter((i) => i.status === 'resolved').length,
+      closed: rows.filter((i) => i.status === 'closed').length,
+      nearMisses: rows.filter((i) => i.incident_type === 'near_miss').length,
+      critical: rows.filter((i) => i.severity === 'critical').length,
+      high: rows.filter((i) => i.severity === 'high').length,
+    }),
+  });
+}
+
+/* ── Writing: shared helpers ─────────────────────────────────────────── */
+
+/** The accident book's own RIDDOR flags, so the Site Safety view agrees. */
+function accidentRiddor(input: {
+  severity: string;
+  days_off: number;
+  hospital_visit: boolean;
+  incident_date: string;
+}) {
+  const reportable =
+    input.severity === 'fatal' ||
+    input.severity === 'major' ||
+    input.days_off > 7 ||
+    input.hospital_visit;
+  let deadline: string | null = null;
+  if (input.severity === 'fatal' || input.severity === 'major') deadline = input.incident_date;
+  else if (input.days_off > 7) {
+    const d = new Date(`${input.incident_date}T12:00:00`);
+    d.setDate(d.getDate() + 15);
+    deadline = d.toISOString().slice(0, 10);
+  }
+  return { is_riddor_reportable: reportable, riddor_deadline: reportable ? deadline : null };
+}
+
+const FOLLOW_UP_KEYS = [
+  'status',
+  'root_cause',
+  'investigation_notes',
+  'corrective_actions',
+  'closeout_summary',
+  'riddor_category',
+  'riddor_reported_at',
+  'riddor_reference',
+] as const;
+
+/** Office follow-up on a Site Safety record, through the server (firm_* columns). */
+async function saveFollowUp(id: string, input: UpdateIncidentInput) {
+  const patch: Record<string, unknown> = {};
+  for (const k of FOLLOW_UP_KEYS) {
+    if (input[k] !== undefined) patch[k] = input[k] ?? null;
+  }
+  if (patch.riddor_category && !RIDDOR_CATEGORIES.some((c) => c.value === patch.riddor_category))
+    throw new Error('Pick one of the RIDDOR decisions in the list.');
+  if (Object.keys(patch).length === 0) return;
+  const { error } = await supabase.rpc(
+    'firm_incident_update' as never,
+    { p_id: id, p_patch: patch } as never
+  );
+  if (error) throw error;
+}
+
+const hasContent = (input: UpdateIncidentInput) =>
+  Object.keys(input).some(
+    (k) =>
+      !(FOLLOW_UP_KEYS as readonly string[]).includes(k) &&
+      input[k as keyof UpdateIncidentInput] !== undefined
+  );
+
+/** What the report says, for a record the office made (near_miss_reports). */
+function nearMissContent(input: UpdateIncidentInput) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const row: any = {};
+  if (input.incident_type !== undefined) {
+    // The picker also takes a typed value; anything unknown files as Other.
+    row.incident_kind = NEAR_MISS_KINDS.includes(input.incident_type)
+      ? input.incident_type
+      : 'other';
+    row.category = NEAR_MISS_CATEGORY[input.incident_type] ?? 'other';
+  }
+  if (input.severity !== undefined) row.severity = input.severity;
+  if (input.description !== undefined) row.description = input.description;
+  if (input.location !== undefined) row.location = input.location || 'Not recorded';
+  if (input.date_occurred !== undefined) {
+    const p = londonParts(input.date_occurred);
+    row.incident_date = p.date;
+    row.incident_time = p.time;
+  }
+  if (input.immediate_action_taken !== undefined)
+    row.immediate_actions = input.immediate_action_taken || null;
+  if (input.witnesses !== undefined)
+    row.witnesses = input.witnesses?.trim()
+      ? [{ name: input.witnesses.trim(), contact: '' }]
+      : null;
+  if (input.supervisor_notified !== undefined) row.supervisor_notified = input.supervisor_notified;
+  if (input.supervisor_name !== undefined) row.supervisor_name = input.supervisor_name || null;
+  if (input.job_id !== undefined) row.employer_job_id = input.job_id || null;
+  if (input.photos !== undefined) row.photos = input.photos ?? [];
+  return row;
+}
+
+/** What the report says, for an injury the office recorded (accident_records). */
+function accidentContent(input: UpdateIncidentInput, current?: Incident) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const row: any = {};
+  if (input.injured_person !== undefined)
+    row.injured_name = input.injured_person?.trim() || 'Not recorded';
+  if (input.injured_employee_id !== undefined)
+    row.injured_employee_id = input.injured_employee_id || null;
+  if (input.injury_type !== undefined) row.injury_type = input.injury_type || 'other';
+  if (input.body_part !== undefined) row.body_part = input.body_part || 'multiple';
+  if (input.severity !== undefined) row.severity = TO_ACCIDENT_SEVERITY[input.severity] ?? 'minor';
+  if (input.injuries_sustained !== undefined)
+    row.injury_description = input.injuries_sustained || null;
+  if (input.description !== undefined) row.incident_description = input.description;
+  if (input.location !== undefined) row.location = input.location || 'Not recorded';
+  if (input.date_occurred !== undefined) {
+    const p = londonParts(input.date_occurred);
+    row.incident_date = p.date;
+    row.incident_time = p.time;
+  }
+  if (input.witnesses !== undefined) row.witnesses = input.witnesses || null;
+  if (input.first_aid_given !== undefined) row.first_aid_given = input.first_aid_given;
+  if (input.immediate_action_taken !== undefined)
+    row.first_aid_details = input.immediate_action_taken || null;
+  if (input.hospital_visit !== undefined) row.hospital_visit = input.hospital_visit;
+  if (input.days_off !== undefined) {
+    row.days_off = input.days_off ?? 0;
+    row.time_off_work = (input.days_off ?? 0) > 0;
+  }
+  if (input.supervisor_notified !== undefined || input.supervisor_name !== undefined)
+    row.reported_to = input.supervisor_notified ? input.supervisor_name || 'Supervisor' : null;
+  if (input.job_id !== undefined) row.employer_job_id = input.job_id || null;
+  if (input.photos !== undefined) row.photos = input.photos ?? [];
+
+  const severity =
+    row.severity ?? TO_ACCIDENT_SEVERITY[(current?.severity ?? 'low') as SeverityLevel];
+  const days = row.days_off ?? current?.days_off ?? 0;
+  const hospital = row.hospital_visit ?? current?.hospital_visit ?? false;
+  const date =
+    row.incident_date ?? londonParts(current?.date_occurred ?? new Date().toISOString()).date;
+  Object.assign(
+    row,
+    accidentRiddor({ severity, days_off: days, hospital_visit: hospital, incident_date: date })
+  );
+  return row;
+}
+
+/** Legacy employer_incidents row (unchanged from ELE-1945). */
+const legacyRow = (input: UpdateIncidentInput) => {
   const extras: string[] = [];
   if (input.equipment_involved) extras.push(`Equipment involved: ${input.equipment_involved}`);
   if (input.potential_consequences)
@@ -269,7 +649,6 @@ const incidentToRow = (input: Partial<CreateIncidentInput>) => {
   if (input.location !== undefined) row.location = input.location;
   if (input.date_occurred !== undefined) row.reported_at = input.date_occurred;
   if (input.immediate_action_taken !== undefined) row.actions_taken = input.immediate_action_taken;
-  // Structured columns — live on employer_incidents
   if (input.witnesses !== undefined) row.witnesses = input.witnesses || null;
   if (input.injuries_sustained !== undefined)
     row.injuries_sustained = input.injuries_sustained || null;
@@ -299,181 +678,152 @@ const incidentToRow = (input: Partial<CreateIncidentInput>) => {
   return row;
 };
 
-// Fetch all incidents for the current user
-export function useIncidents() {
-  // Live: a worker reporting an incident (any change to the team's rows) refreshes
-  // the employer Safety list instantly — no manual reload. RLS scopes both the
-  // refetch and the realtime events to the user's company, so no filter is needed.
-  useRealtimeInvalidate('incidents', [{ table: 'employer_incidents' }], [['incidents']]);
+/** The cached row, or a fresh read, so a write knows which table it is. */
+async function findIncident(
+  queryClient: ReturnType<typeof useQueryClient>,
+  id: string
+): Promise<Incident> {
+  const cached = (queryClient.getQueryData(['incidents']) as Incident[] | undefined)?.find(
+    (i) => i.id === id
+  );
+  if (cached) return cached;
+  const fresh = (await fetchFirmIncidents()).find((i) => i.id === id);
+  if (!fresh) throw new Error('This report is no longer available.');
+  return fresh;
+}
 
-  return useQuery({
+async function writeUpdate(current: Incident, input: UpdateIncidentInput) {
+  if (current.source === 'legacy') {
+    const { error } = await supabase
+      .from('employer_incidents')
+      .update(legacyRow(input))
+      .eq('id', current.id);
+    if (error) throw error;
+    return;
+  }
+  if (hasContent(input)) {
+    if (!current.can_edit)
+      throw new Error(
+        'This report belongs to the person who made it. You can add the follow-up and countersign it.'
+      );
+    const table = current.source === 'accident' ? 'accident_records' : 'near_miss_reports';
+    const row =
+      current.source === 'accident' ? accidentContent(input, current) : nearMissContent(input);
+    const { error } = await supabase
+      .from(table as never)
+      .update(row as never)
+      .eq('id', current.id);
+    if (error) throw error;
+  }
+  await saveFollowUp(current.id, input);
+}
+
+async function refetchOne(
+  queryClient: ReturnType<typeof useQueryClient>,
+  id: string
+): Promise<Incident> {
+  await queryClient.invalidateQueries({ queryKey: ['incidents'] });
+  const rows = await queryClient.fetchQuery({
     queryKey: ['incidents'],
-    queryFn: async (): Promise<Incident[]> => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return [];
-
-      const { data, error } = await supabase
-        .from('employer_incidents')
-        .select('*')
-        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
-        .order('reported_at', { ascending: false });
-
-      // Surface real failures — a safety register must never render a
-      // reassuring empty state on an RLS/network error.
-      if (error) throw error;
-      return (data || []).map(rowToIncident);
-    },
+    queryFn: fetchFirmIncidents,
   });
+  const row = rows.find((r) => r.id === id);
+  if (!row) throw new Error('Saved, but the report could not be reloaded.');
+  return row;
 }
 
-// Fetch a single incident by ID
-export function useIncident(id: string | undefined) {
-  return useQuery({
-    queryKey: ['incidents', id],
-    queryFn: async (): Promise<Incident | null> => {
-      if (!id) return null;
+/* ── Mutations ───────────────────────────────────────────────────────── */
 
-      const { data, error } = await supabase
-        .from('employer_incidents')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error) throw error;
-      return rowToIncident(data);
-    },
-    enabled: !!id,
-  });
-}
-
-// Fetch incidents filtered by status
-export function useIncidentsByStatus(status: IncidentStatus) {
-  return useQuery({
-    queryKey: ['incidents', 'status', status],
-    queryFn: async (): Promise<Incident[]> => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const { data, error } = await supabase
-        .from('employer_incidents')
-        .select('*')
-        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
-        .eq('status', status)
-        .order('reported_at', { ascending: false });
-
-      if (error) throw error;
-      return (data || []).map(rowToIncident);
-    },
-  });
-}
-
-// Get incident statistics
-export function useIncidentStats() {
-  return useQuery({
-    queryKey: ['incidents', 'stats'],
-    queryFn: async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user)
-        return {
-          total: 0,
-          open: 0,
-          resolved: 0,
-          closed: 0,
-          nearMisses: 0,
-          critical: 0,
-          high: 0,
-        };
-
-      const { data, error } = await supabase
-        .from('employer_incidents')
-        .select('status, severity, incident_type')
-        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id);
-
-      // Surface real failures instead of fabricating an all-zero safety record.
-      if (error) throw error;
-
-      // Normalise the legacy capitalised defaults ('Open', 'Low').
-      const rows = (data || []).map((i) => ({
-        status: String(i.status || '').toLowerCase(),
-        severity: String(i.severity || '').toLowerCase(),
-        incident_type: i.incident_type,
-      }));
-      const stats = {
-        total: rows.length,
-        open: rows.filter((i) => !['resolved', 'closed'].includes(i.status)).length,
-        resolved: rows.filter((i) => i.status === 'resolved').length,
-        closed: rows.filter((i) => i.status === 'closed').length,
-        nearMisses: rows.filter(
-          (i) => (i.incident_type || '').toLowerCase().replace(' ', '_') === 'near_miss'
-        ).length,
-        critical: rows.filter((i) => i.severity === 'critical').length,
-        high: rows.filter((i) => i.severity === 'high').length,
-      };
-
-      return stats;
-    },
-  });
-}
-
-// Create a new incident
+/**
+ * Log a report from the office. It is filed in Site Safety under the firm:
+ * an injury in the accident book, anything else in the near-miss register.
+ */
 export function useCreateIncident() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (input: CreateIncidentInput): Promise<Incident> => {
+      const ctx = await currentFirm();
+      if (!ctx) throw new Error('Not authenticated');
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', ctx.userId)
+        .maybeSingle();
+      const recorder =
+        (profile?.full_name as string | undefined)?.trim() ||
+        (user?.user_metadata?.full_name as string | undefined) ||
+        user?.email ||
+        'Office';
+      const when = londonParts(input.date_occurred || new Date().toISOString());
 
-      const row = incidentToRow(input);
-      if (!row.reported_at) row.reported_at = new Date().toISOString();
-      // Record who reported it — employer-side reports come from the logged-in
-      // account (worker-side reports write their employer_employees.id instead).
-      row.reported_by =
-        (user.user_metadata?.full_name as string | undefined) ||
-        (user.user_metadata?.name as string | undefined) ||
-        user.email ||
-        'Employer';
-      row.reported_by_id = user.id;
-      // A manager logs it under the firm, not their own id, or the owner
-      // never sees it (the column default is only auth.uid()).
-      row.employer_id = (await getActingEmployerId(user.id)) ?? user.id;
-
-      const { data, error } = await supabase
-        .from('employer_incidents')
-        .insert(row)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return rowToIncident(data);
+      let id: string;
+      if (input.incident_type === 'injury') {
+        const row = {
+          user_id: ctx.userId,
+          employer_id: ctx.firmId,
+          recorded_by: recorder,
+          incident_date: when.date,
+          incident_time: when.time,
+          ...accidentContent({ ...input, date_occurred: input.date_occurred }),
+        };
+        if (!row.injured_name) row.injured_name = 'Not recorded';
+        if (!row.injury_type) row.injury_type = 'other';
+        if (!row.body_part) row.body_part = 'multiple';
+        if (!row.incident_description) row.incident_description = input.description || '';
+        if (!row.location) row.location = 'Not recorded';
+        const { data, error } = await supabase
+          .from('accident_records')
+          .insert(row as never)
+          .select('id')
+          .single();
+        if (error) throw error;
+        id = (data as { id: string }).id;
+      } else {
+        const row = {
+          user_id: ctx.userId,
+          employer_id: ctx.firmId,
+          reporter_name: recorder,
+          status: 'open',
+          incident_date: when.date,
+          incident_time: when.time,
+          follow_up_required: input.severity === 'high' || input.severity === 'critical',
+          ...nearMissContent(input),
+        };
+        if (!row.category) row.category = 'other';
+        if (!row.location) row.location = 'Not recorded';
+        const { data, error } = await supabase
+          .from('near_miss_reports')
+          .insert(row as never)
+          .select('id')
+          .single();
+        if (error) throw error;
+        id = (data as { id: string }).id;
+      }
+      // Logged by the office = seen by the office.
+      await supabase.rpc(
+        'firm_incident_update' as never,
+        {
+          p_id: id,
+          p_patch: { acknowledge: true },
+        } as never
+      );
+      return refetchOne(queryClient, id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['incidents'] });
-      toast({
-        title: 'Incident reported',
-        description: 'The incident has been logged successfully.',
-      });
+      queryClient.invalidateQueries({ queryKey: [...EMPLOYER_HOME_KEY] });
+      toast({ title: 'Report logged', description: 'It is in the firm’s Site Safety records.' });
     },
     onError: (error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast({ title: 'Not saved', description: error.message, variant: 'destructive' });
     },
   });
 }
 
-// Update an existing incident
 export function useUpdateIncident() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -488,34 +838,22 @@ export function useUpdateIncident() {
       /** Toast on success. false = silent (inline saves show their own state). */
       toastTitle?: string | false;
     }): Promise<Incident> => {
-      const { data, error } = await supabase
-        .from('employer_incidents')
-        .update(incidentToRow(input))
-        .eq('id', id)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return rowToIncident(data);
+      const current = await findIncident(queryClient, id);
+      await writeUpdate(current, input);
+      return refetchOne(queryClient, id);
     },
-    onSuccess: (data, vars) => {
-      queryClient.invalidateQueries({ queryKey: ['incidents'] });
-      queryClient.invalidateQueries({ queryKey: ['incidents', data.id] });
+    onSuccess: (_data, vars) => {
       queryClient.invalidateQueries({ queryKey: ['employer-overview'] });
+      queryClient.invalidateQueries({ queryKey: [...EMPLOYER_HOME_KEY] });
       if (vars.toastTitle === false) return;
       toast({ title: vars.toastTitle || 'Saved' });
     },
     onError: (error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast({ title: 'Not saved', description: error.message, variant: 'destructive' });
     },
   });
 }
 
-// Update incident status
 export function useUpdateIncidentStatus() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -528,20 +866,13 @@ export function useUpdateIncidentStatus() {
       id: string;
       status: IncidentStatus;
     }): Promise<Incident> => {
-      // closed_at / acknowledged_at / updated_at are stamped by trigger.
-      const { data, error } = await supabase
-        .from('employer_incidents')
-        .update({ status })
-        .eq('id', id)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return rowToIncident(data);
+      const current = await findIncident(queryClient, id);
+      // closed_at / acknowledged_at are stamped on the server.
+      await writeUpdate(current, { status });
+      return refetchOne(queryClient, id);
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['incidents'] });
-      queryClient.invalidateQueries({ queryKey: ['incidents', data.id] });
+      queryClient.invalidateQueries({ queryKey: [...EMPLOYER_HOME_KEY] });
       toast({
         title:
           data.status === 'closed' || data.status === 'resolved'
@@ -552,45 +883,44 @@ export function useUpdateIncidentStatus() {
       });
     },
     onError: (error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast({ title: 'Not saved', description: error.message, variant: 'destructive' });
     },
   });
 }
 
-// Delete an incident
+/** Delete a report the office made. A worker's own report cannot be deleted here. */
 export function useDeleteIncident() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase.from('employer_incidents').delete().eq('id', id);
-
+      const current = await findIncident(queryClient, id);
+      if (!current.can_edit) throw new Error('Only the person who made this report can delete it.');
+      const table =
+        current.source === 'legacy'
+          ? 'employer_incidents'
+          : current.source === 'accident'
+            ? 'accident_records'
+            : 'near_miss_reports';
+      const { error } = await supabase
+        .from(table as never)
+        .delete()
+        .eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['incidents'] });
-      toast({
-        title: 'Incident deleted',
-        description: 'The incident has been removed.',
-      });
+      toast({ title: 'Report deleted' });
     },
     onError: (error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast({ title: 'Not deleted', description: error.message, variant: 'destructive' });
     },
   });
 }
 
 /**
- * The office has opened the report. Stamps acknowledged_at once and tells the
+ * The office has opened the report. Stamps it as seen once and tells the
  * worker who reported it (server side). Safe to call on every open.
  */
 export function useAcknowledgeIncident() {
@@ -607,6 +937,33 @@ export function useAcknowledgeIncident() {
     onSuccess: (res) => {
       if (res?.already) return;
       queryClient.invalidateQueries({ queryKey: ['incidents'] });
+    },
+  });
+}
+
+/** Countersign (or withdraw) a Site Safety record for the firm. */
+export function useCountersignIncident() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  return useMutation({
+    mutationFn: async ({ incident, withdraw }: { incident: Incident; withdraw?: boolean }) => {
+      if (incident.source === 'legacy') throw new Error('This report cannot be countersigned.');
+      const { error } = await supabase.rpc(
+        'safety_countersign' as never,
+        {
+          p_table: incident.source === 'accident' ? 'accident_records' : 'near_miss_reports',
+          p_id: incident.id,
+          p_withdraw: !!withdraw,
+        } as never
+      );
+      if (error) throw error;
+    },
+    onSuccess: (_d, vars) => {
+      queryClient.invalidateQueries({ queryKey: ['incidents'] });
+      toast({ title: vars.withdraw ? 'Countersignature withdrawn' : 'Countersigned' });
+    },
+    onError: (error) => {
+      toast({ title: 'Not countersigned', description: error.message, variant: 'destructive' });
     },
   });
 }

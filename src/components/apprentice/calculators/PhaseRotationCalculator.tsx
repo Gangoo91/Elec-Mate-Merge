@@ -315,7 +315,7 @@ const PhaseRotationCalculator = () => {
                   ]}
                   placeholder="Select rotation direction"
                 />
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                   <p className="text-sm text-white">
                     Only use this method with a small test motor. Ensure proper isolation and PPE
@@ -355,7 +355,7 @@ const PhaseRotationCalculator = () => {
                     placeholder="e.g. 400"
                   />
                 </CalculatorSection>
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                   <p className="text-sm text-white">
                     Voltage measurement only checks balance, not actual phase sequence. A phase
@@ -577,7 +577,7 @@ const PhaseRotationCalculator = () => {
                     'p-3 rounded-lg border',
                     result.isCorrect
                       ? 'bg-green-500/5 border-green-500/20'
-                      : 'bg-amber-500/5 border-amber-500/20'
+                      : 'bg-white/[0.04] border-amber-500/20'
                   )}
                 >
                   <p className="text-sm text-white font-medium mb-1">
@@ -654,8 +654,8 @@ const PhaseRotationCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">
@@ -714,8 +714,8 @@ const PhaseRotationCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">

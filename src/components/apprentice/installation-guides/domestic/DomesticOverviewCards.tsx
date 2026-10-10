@@ -292,11 +292,11 @@ const DomesticOverviewCards = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {overviewStats.map((stat, index) => (
-          <Card key={index} className="border-elec-yellow/30 bg-white/5">
-            <CardContent className="p-4 p-0">
-              <div className="flex items-center gap-2 mb-2">
-                <stat.icon className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs text-white">{stat.label}</span>
+          <Card key={index} className="border-white/[0.14] bg-white/5">
+            <CardContent className="p-3.5 sm:p-4">
+              <div className="mb-1.5 flex items-start gap-2">
+                <stat.icon className="h-4 w-4 shrink-0 text-white" strokeWidth={1.5} />
+                <span className="text-[12.5px] leading-snug text-white">{stat.label}</span>
               </div>
               <p className="text-lg font-semibold text-white">{stat.value}</p>
             </CardContent>
@@ -432,7 +432,7 @@ const DomesticOverviewCards = () => {
                     : zone.color === 'orange'
                       ? 'bg-white/[0.06] border-white/[0.10]'
                       : zone.color === 'yellow'
-                        ? 'bg-white/[0.06] border-elec-yellow/30'
+                        ? 'bg-white/[0.06] border-white/[0.14]'
                         : 'bg-white/[0.06] border-white/[0.10]'
                 }`}
               >
@@ -676,7 +676,7 @@ const DomesticOverviewCards = () => {
                     safety.level === 'Critical'
                       ? 'border-red-500 text-red-400'
                       : safety.level === 'Legal'
-                        ? 'border-elec-yellow/40 text-elec-yellow'
+                        ? 'border-white/[0.14] text-elec-yellow'
                         : 'border-white/10 text-white'
                   }`}
                 >

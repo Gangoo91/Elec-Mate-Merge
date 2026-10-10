@@ -12,14 +12,14 @@ const ZsReferenceValuesCard = () => (
     </div>
 
     <Tabs defaultValue="mcb" className="w-full">
-      <TabsList className="grid w-full grid-cols-3 mb-3">
-        <TabsTrigger value="mcb" className="text-xs">
+      <TabsList className="mb-3 grid h-auto w-full grid-cols-3 gap-1">
+        <TabsTrigger value="mcb" className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
           MCB/RCBO
         </TabsTrigger>
-        <TabsTrigger value="fuse04" className="text-xs">
+        <TabsTrigger value="fuse04" className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
           Fuses 0.4s
         </TabsTrigger>
-        <TabsTrigger value="fuse5" className="text-xs">
+        <TabsTrigger value="fuse5" className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
           Fuses 5s
         </TabsTrigger>
       </TabsList>

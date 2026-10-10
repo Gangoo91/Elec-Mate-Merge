@@ -9886,6 +9886,7 @@ export type Database = {
           archived_by: string | null
           archived_reason: string | null
           assessor_qual: string | null
+          assessor_status: string | null
           college_id: string | null
           created_at: string | null
           department: string | null
@@ -9914,6 +9915,7 @@ export type Database = {
           archived_by?: string | null
           archived_reason?: string | null
           assessor_qual?: string | null
+          assessor_status?: string | null
           college_id?: string | null
           created_at?: string | null
           department?: string | null
@@ -9942,6 +9944,7 @@ export type Database = {
           archived_by?: string | null
           archived_reason?: string | null
           assessor_qual?: string | null
+          assessor_status?: string | null
           college_id?: string | null
           created_at?: string | null
           department?: string | null
@@ -42588,6 +42591,18 @@ export type Database = {
         }
         Relationships: []
       }
+      public_profiles: {
+        Row: {
+          avatar_url: string | null
+          college_id: string | null
+          full_name: string | null
+          id: string
+          is_assessor: boolean | null
+          leaderboard_visible: boolean | null
+          role: string | null
+        }
+        Relationships: []
+      }
       schema_map: {
         Row: {
           approx_rows: number | null
@@ -44284,6 +44299,13 @@ export type Database = {
         }[]
       }
       get_fire_log_shared: { Args: { p_token: string }; Returns: Json }
+      get_firm_seat_terms: {
+        Args: { p_firm: string }
+        Returns: {
+          employer_seat_cap: number
+          free_access_granted: boolean
+        }[]
+      }
       get_job_ad_companies: {
         Args: { p_employer_ids: string[] }
         Returns: Json
@@ -44344,6 +44366,10 @@ export type Database = {
         }[]
       }
       get_lead_page: { Args: { p_slug: string }; Returns: Json }
+      get_learner_am2_exam_date: {
+        Args: { p_user: string }
+        Returns: string
+      }
       get_learner_app_days: {
         Args: { p_since?: string; p_user?: string }
         Returns: {
@@ -45233,6 +45259,7 @@ export type Database = {
         }[]
       }
       get_subscribed_profiles_json: { Args: never; Returns: Json }
+      get_support_admin_id: { Args: never; Returns: string }
       get_suppressed_emails: {
         Args: never
         Returns: {

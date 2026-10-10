@@ -844,7 +844,7 @@ export function WindPowerCalculator() {
 
                 {/* NOABL warning */}
                 {result.noablWarning && (
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-amber-500/30">
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                       <div>
@@ -865,7 +865,7 @@ export function WindPowerCalculator() {
                     'p-3 rounded-xl border',
                     result.planningEligibility.permittedDevelopment
                       ? 'bg-green-500/10 border-green-500/30'
-                      : 'bg-amber-500/10 border-amber-500/30'
+                      : 'bg-white/[0.04] border-amber-500/30'
                   )}
                 >
                   <p className="text-sm font-medium text-white mb-1">
@@ -953,8 +953,8 @@ export function WindPowerCalculator() {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="text-center pb-3 border-b border-white/10">
@@ -1016,8 +1016,8 @@ export function WindPowerCalculator() {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">
@@ -1071,8 +1071,8 @@ export function WindPowerCalculator() {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2 text-sm text-white">

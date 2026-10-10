@@ -155,9 +155,9 @@ const sections = [
         <p>
           An Electrical Installation Condition Report (EICR) is not a legal requirement for a
           residential property sale. Unlike a Gas Safety Record, which must be provided for rented
-          properties, there is no obligation on a vendor to commission or provide an EICR to a buyer.
-          A standard homebuyer's survey does not test the electrics either, so without a separate
-          EICR you have no reliable information about the condition of the wiring.
+          properties, there is no obligation on a vendor to commission or provide an EICR to a
+          buyer. A standard homebuyer's survey does not test the electrics either, so without a
+          separate EICR you have no reliable information about the condition of the wiring.
         </p>
         <p>
           For most properties, commissioning an EICR before exchange of contracts is strongly
@@ -171,9 +171,11 @@ const sections = [
               detail: (
                 <>
                   Installations from before the year 2000 commonly lack RCD protection on socket
-                  circuits. Regulation 411.3.3 of BS 7671, as revised at Amendment 4, requires RCD
-                  protection for socket-outlets rated up to 32&nbsp;A, and the risk-assessment
-                  exception that allows it to be omitted is expressly not available for dwellings.
+                  circuits. Regulation 411.3.3 of BS 7671 (in force since the 2018 edition,
+                  redrafted at Amendment 2) requires RCD protection for socket-outlets rated up to
+                  32&nbsp;A, and the risk-assessment exception does not cover sockets liable to be
+                  used by ordinary persons or children, so in practice it is not available in a
+                  home.
                 </>
               ),
             },
@@ -238,11 +240,11 @@ const sections = [
                 <>
                   Regulation 701.415.2 requires supplementary protective equipotential bonding in a
                   room containing a bath or shower. It may be omitted only where all three of the
-                  following are met: every final circuit in the room meets the disconnection times of
-                  Regulation 411.3.2, every final circuit has additional protection by RCD to
-                  Regulation 415.1.1, and all extraneous-conductive-parts in the room are effectively
-                  connected to the main protective bonding. A property with no RCDs fails the second
-                  condition, so the bonding has to be there.
+                  following are met: every final circuit in the room meets the disconnection times
+                  of Regulation 411.3.2, every final circuit has additional protection by RCD to
+                  Regulation 415.1.1, and all extraneous-conductive-parts in the room are
+                  effectively connected to the main protective bonding. A property with no RCDs
+                  fails the second condition, so the bonding has to be there.
                 </>
               ),
             },
@@ -256,10 +258,10 @@ const sections = [
               detail: (
                 <>
                   Regulation 421.1.201 requires consumer units in domestic premises to comply with
-                  BS&nbsp;EN&nbsp;61439-3 and either have an enclosure of non-combustible material or
-                  be enclosed in one — ferrous metal such as steel being the example the standard
-                  gives. This came in with BS&nbsp;7671:2008+A3:2015, so white plastic consumer units
-                  predating it are widespread and are typically recorded as C3, improvement
+                  BS&nbsp;EN&nbsp;61439-3 and either have an enclosure of non-combustible material
+                  or be enclosed in one — ferrous metal such as steel being the example the standard
+                  gives. This came in with BS&nbsp;7671:2008+A3:2015, so white plastic consumer
+                  units predating it are widespread and are typically recorded as C3, improvement
                   recommended.
                 </>
               ),
@@ -272,18 +274,18 @@ const sections = [
             RCD protection on domestic lighting circuits
           </h3>
           <p className="mt-3 text-[15px] leading-relaxed text-white">
-            Amendment&nbsp;4, issued in April 2026, introduced Regulation 411.3.4: within domestic
-            (household) premises, additional protection by an RCD with a rated residual operating
-            current not exceeding 30&nbsp;mA shall be provided for AC final circuits supplying
-            luminaires. Virtually every home wired before 2026 lacks it.
+            Regulation 411.3.4, in BS&nbsp;7671 since the 2018 edition (not new in
+            Amendment&nbsp;4): within domestic (household) premises, additional protection by an RCD
+            with a rated residual operating current not exceeding 30&nbsp;mA shall be provided for
+            AC final circuits supplying luminaires. Many homes wired before 2019 lack it.
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-white">
             BS&nbsp;7671 is not applied retrospectively, so its absence in an existing installation
             does not automatically mean danger. An inspector assesses the installation against the
             current edition and uses professional judgement: C1 or C2 where a condition is dangerous
             or potentially dangerous, and C3 where the item is simply an improvement. Unprotected
-            lighting on its own would usually sit at C3. Either way, it is a real cost to factor into
-            a post-purchase upgrade plan.
+            lighting on its own would usually sit at C3. Either way, it is a real cost to factor
+            into a post-purchase upgrade plan.
           </p>
         </div>
       </>
@@ -396,14 +398,14 @@ const sections = [
               term: 'Arc fault detection devices',
               detail: (
                 <>
-                  Regulation 421.1.7 was redrafted at Amendment&nbsp;4. AFDDs conforming to
-                  BS&nbsp;EN&nbsp;62606 are now <strong>required</strong> on single-phase AC final
+                  Regulation 421.1.7 was redrafted at Amendment&nbsp;2 (2022). AFDDs conforming to
+                  BS&nbsp;EN&nbsp;62606 are <strong>required</strong> on single-phase AC final
                   circuits supplying socket-outlets rated up to 32&nbsp;A in high rise residential
                   buildings, houses in multiple occupation, purpose-built student accommodation and
-                  care homes. For all other premises — an ordinary house or flat included — their use
-                  is <strong>recommended</strong>, not required. Their absence in a standard domestic
-                  property is therefore a C3 matter at most, but retrofitting them alongside a
-                  consumer unit replacement is a real cost worth knowing about.
+                  care homes. For all other premises — an ordinary house or flat included — their
+                  use is <strong>recommended</strong>, not required. Their absence in a standard
+                  domestic property is therefore a C3 matter at most, but retrofitting them
+                  alongside a consumer unit replacement is a real cost worth knowing about.
                 </>
               ),
             },
@@ -527,9 +529,9 @@ const sections = [
       <>
         <p>
           An Unsatisfactory EICR is one of the clearest grounds for renegotiating a property
-          purchase. Electrical remedial work is quantifiable and quotable — unlike damp or structural
-          issues, where costs are harder to pin down, an electrician can give a firm quote for the
-          work the EICR identifies.
+          purchase. Electrical remedial work is quantifiable and quotable — unlike damp or
+          structural issues, where costs are harder to pin down, an electrician can give a firm
+          quote for the work the EICR identifies.
         </p>
         <PointList
           items={[
@@ -564,9 +566,9 @@ const sections = [
     content: (
       <>
         <p>
-          A Satisfactory EICR is the result you are hoping for. It means the inspector recorded no C1
-          and no C2 observations. There may still be C3 or FI entries — these are advisory and do not
-          change the assessment, but they are worth reading rather than filing.
+          A Satisfactory EICR is the result you are hoping for. It means the inspector recorded no
+          C1 and no C2 observations. There may still be C3 or FI entries — these are advisory and do
+          not change the assessment, but they are worth reading rather than filing.
         </p>
         <p>
           Satisfactory does not mean perfect, and it does not mean the installation will never need
@@ -584,13 +586,13 @@ const sections = [
               term: 'Note the next inspection date',
               detail: (
                 <>
-                  Regulation 653.4 requires the report to state a recommended interval until the next
-                  inspection, supported by an explanation for that recommendation. Under Regulation
-                  652.1 the interval is set having regard to the type of installation and equipment,
-                  its use and operation, the frequency and quality of maintenance, the external
-                  influences it is subject to, and the results and recommendations of previous
-                  reports — so it is a judgement about your property, not a fixed number. Diarise the
-                  date on your report.
+                  Regulation 653.4 requires the report to state a recommended interval until the
+                  next inspection, supported by an explanation for that recommendation. Under
+                  Regulation 652.1 the interval is set having regard to the type of installation and
+                  equipment, its use and operation, the frequency and quality of maintenance, the
+                  external influences it is subject to, and the results and recommendations of
+                  previous reports — so it is a judgement about your property, not a fixed number.
+                  Diarise the date on your report.
                 </>
               ),
             },
@@ -650,14 +652,15 @@ const sections = [
       <>
         <p>
           House purchase EICRs are high-volume, repeatable work with a predictable fee structure.
-          Buyers are commissioning them more as awareness grows, and a referral network with mortgage
-          brokers, conveyancers and estate agents can generate a steady flow of bookings.
+          Buyers are commissioning them more as awareness grows, and a referral network with
+          mortgage brokers, conveyancers and estate agents can generate a steady flow of bookings.
         </p>
         <div className={`${CARD_PADDED} my-6`}>
           <h4 className="text-[15px] font-bold text-white">Deliver the report before you leave</h4>
           <p className="mt-2 text-[15px] leading-relaxed text-white">
-            Use the <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate EICR app</SEOInternalLink>{' '}
-            to complete the full report on your phone during the inspection and send the PDF to the
+            Use the{' '}
+            <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate EICR app</SEOInternalLink> to
+            complete the full report on your phone during the inspection and send the PDF to the
             buyer before you drive away. Speed is a genuine competitive advantage here — the buyer
             cannot progress the transaction until the report lands.
           </p>
@@ -666,8 +669,8 @@ const sections = [
             <p className="mt-2 text-[15px] leading-relaxed text-white">
               Where C1 or C2 findings come up, quote the remedial work immediately using the{' '}
               <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. Buyers
-              need a number fast to negotiate with the vendor, and the electrician who supplies it on
-              the day of the EICR usually wins the work.
+              need a number fast to negotiate with the vendor, and the electrician who supplies it
+              on the day of the EICR usually wins the work.
             </p>
           </div>
         </div>
@@ -691,7 +694,7 @@ export default function ElectricalSurveyBeforeBuyingPage() {
       title="Electrical Survey When Buying a House UK: EICR"
       description="Do you need an EICR when buying a house? Not legally required but strongly recommended for properties over 25 years old."
       datePublished="2026-03-27"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Buyer's Guide"

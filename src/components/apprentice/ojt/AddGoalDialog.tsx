@@ -180,9 +180,7 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
       {suggestions && (
         <div className={cn(infoPanelCn, 'space-y-3')}>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            Suggestions
-          </span>
+          <span className="text-[13px] font-semibold text-elec-yellow">Suggestions</span>
           <div className="flex flex-wrap gap-2">
             {suggestions.examples.map((ex) => (
               <button

@@ -300,7 +300,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Absent RCD protection on lighting circuits</strong> — Regulation 411.3.4
-                (introduced in A4:2026) requires that AC final circuits supplying luminaires in
+                (in force since BS 7671:2018) requires that AC final circuits supplying luminaires in
                 domestic premises are protected by an RCD with a rated residual operating current
                 not exceeding 30 mA. Properties with an older consumer unit that has no RCD coverage
                 of lighting circuits will receive a C2 observation under this requirement. This
@@ -340,11 +340,13 @@ const sections = [
               <span>
                 <strong>No arc fault detection devices (AFDDs)</strong> — Regulation 421.1.7 of BS
                 7671:2018+A4:2026 recommends installation of AFDDs on AC final circuits to mitigate
-                fire risk from arc fault currents. Inspectors completing EICRs on the updated model
-                forms must record the AFDD field. Victorian terraces and student HMOs — precisely
-                the stock found across St David's and Heavitree — are the dwelling type where the
-                AFDD recommendation is most pertinent. Absence of AFDDs typically attracts a C3
-                observation where the wiring is otherwise serviceable.
+                fire risk from arc fault currents, and since A2:2022 requires them on socket-outlet
+                circuits up to 32 A in HMOs, purpose-built student accommodation, care homes and
+                high rise residential buildings. Inspectors completing EICRs on the model forms must
+                record the AFDD field. In student HMOs, common across St David's and Heavitree, AFDDs
+                are a requirement for new work rather than a recommendation. In an ordinary
+                single-family house, absence of AFDDs typically attracts a C3 observation where the
+                wiring is otherwise serviceable.
               </span>
             </li>
           </ul>
@@ -599,7 +601,7 @@ export default function EICRExeterPage() {
       title="EICR Exeter: Inspection Condition Report"
       description="EICR Exeter — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Exeter."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

@@ -40,8 +40,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'MCB (Miniature Circuit Breaker) protects against overcurrent. RCD (Residual Current Device) protects against earth leakage. RCBO combines both in one device.',
-  'AFDD (Arc Fault Detection Device) detects dangerous arcing — recommended by BS 7671:2018+A4:2026 Regulation 421.1.7. SPD (Surge Protection Device) protects against voltage spikes. From A4:2026, AFDD and SPD usage must be recorded on Part 6 certification (Reg 133.1.3).',
-  'A4:2026 Regulation 411.3.4 now requires 30mA RCD protection on all AC lighting circuits in domestic premises — one of the most significant changes in the current edition of BS 7671.',
+  'AFDD (Arc Fault Detection Device) detects dangerous arcing. Regulation 421.1.7 recommends AFDDs and, since A2:2022, requires them on socket-outlet circuits up to 32 A in HMOs, high rise residential buildings, student accommodation and care homes. SPD (Surge Protection Device) protects against voltage spikes. Since A2:2022, the Appendix 6 model forms include fields for recording SPD and AFDD details.',
+  'Regulation 411.3.4 requires 30mA RCD protection on all AC lighting circuits in domestic premises. It is not new in A4:2026: it has applied since BS 7671:2018 came into effect.',
   'PFC (Prospective Fault Current) and Zs (Earth Fault Loop Impedance) are the two most critical test values on any EICR or EIC. They determine whether protective devices will operate fast enough.',
   'TN-S, TN-C-S (PME), and TT are the three main earthing systems in the UK. The earthing arrangement affects every aspect of an installation — from bonding requirements to protective device selection.',
   'Elec-Mate includes a built-in AI assistant that explains any acronym or technical term in plain English — just ask it during a certificate or study session.',
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What does AFDD stand for and when is it required?',
     answer:
-      'AFDD stands for Arc Fault Detection Device. It detects dangerous electrical arcing — such as arcing caused by damaged cable insulation, loose connections, or crushed cables — and disconnects the circuit before the arcing can start a fire. AFDDs are covered by Regulation 421.1.7 of BS 7671:2018+A4:2026, which recommends their installation in AC final circuits of a fixed installation to mitigate the risk of fire from arc fault currents. The wording is recommendatory — the regulation uses "recommending" rather than "shall" — so AFDDs are not yet a mandatory requirement in all cases, but are increasingly specified by building control and are expected to become mandatory in future amendments. They are already required in some European countries under HD 60364.',
+      'AFDD stands for Arc Fault Detection Device. It detects dangerous electrical arcing — such as arcing caused by damaged cable insulation, loose connections, or crushed cables — and disconnects the circuit before the arcing can start a fire. AFDDs are covered by Regulation 421.1.7 of BS 7671:2018+A4:2026, which recommends their installation in AC final circuits of a fixed installation to mitigate the risk of fire from arc fault currents. For most premises the wording is recommendatory, but since A2:2022 the regulation requires AFDDs on single-phase AC final circuits supplying socket-outlets up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. They are already required in some European countries under HD 60364.',
   },
   {
     question: 'What is the difference between Ze and Zs?',
@@ -151,8 +151,8 @@ const sections = [
           in practice, and why it matters. Use it as a reference whenever you encounter an
           unfamiliar term — whether you are studying for your{' '}
           <SEOInternalLink href="/guides/18th-edition-exam-tips">18th Edition exam</SEOInternalLink>
-          , filling in an <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>
-          , or explaining something to a customer.
+          , filling in an <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>, or
+          explaining something to a customer.
         </p>
       </>
     ),
@@ -206,17 +206,16 @@ const sections = [
               <AlertTriangle className="w-6 h-6 text-orange-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
-                  A4:2026 — 30mA RCD on Domestic Lighting Circuits
+                  Reg 411.3.4: 30mA RCD on Domestic Lighting Circuits
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  One of the most significant changes introduced by BS 7671:2018+A4:2026 is
-                  Regulation 411.3.4: all AC final circuits supplying luminaires (light fittings) in
-                  domestic premises must now be provided with additional protection by an RCD with a
-                  rated residual operating current not exceeding 30mA. The requirement uses
-                  &quot;shall&quot; — it is mandatory, not advisory. Lighting circuits were
-                  previously exempt from mandatory 30mA RCD protection in many existing
-                  installations, making this one of the most impactful new obligations for new
-                  domestic wiring and rewires post-A4.
+                  Regulation 411.3.4 of BS 7671:2018+A4:2026 requires that all AC final circuits
+                  supplying luminaires (light fittings) in domestic premises are provided with
+                  additional protection by an RCD with a rated residual operating current not
+                  exceeding 30mA. The requirement uses &quot;shall&quot; — it is mandatory, not
+                  advisory. The requirement is not new in A4:2026. It came in with BS 7671:2018, so
+                  many installations wired before 2019 still have lighting circuits without RCD
+                  protection.
                 </p>
               </div>
             </div>
@@ -249,10 +248,11 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Detects dangerous electrical arcing — from damaged insulation, crushed cables, or
                   loose connections — and disconnects the circuit before a fire starts. Analyses the
-                  waveform of the current for arc signatures. Recommended by BS 7671:2018+A4:2026
-                  Regulation 421.1.7 for AC final circuits of a fixed installation to mitigate the
-                  risk of fire from arc fault currents. The wording is recommendatory, not mandatory
-                  — the regulation uses &#39;recommending&#39; rather than &#39;shall&#39;.
+                  waveform of the current for arc signatures. Regulation 421.1.7 recommends AFDDs
+                  for AC final circuits of a fixed installation to mitigate the risk of fire from
+                  arc fault currents. Since A2:2022 they are required on socket-outlet circuits up
+                  to 32 A in HMOs, high rise residential buildings, student accommodation and care
+                  homes.
                 </p>
               </div>
             </div>
@@ -448,9 +448,8 @@ const sections = [
               <span>
                 <strong>EIC — Electrical Installation Certificate.</strong> Issued when new
                 installation work or a significant alteration is completed. Confirms the work
-                complies with BS 7671. Under A4:2026 Regulation 133.1.3, certain equipment usage —
-                including the installation of an AFDD or SPD — must now be explicitly recorded on
-                the Part 6 certification form. See{' '}
+                complies with BS 7671. Since A2:2022 the model form has included fields for
+                recording the details of any AFDDs and SPDs installed. See{' '}
                 <SEOInternalLink href="/guides/eicr-vs-eic-difference">
                   EIC vs EICR comparison
                 </SEOInternalLink>
@@ -466,8 +465,8 @@ const sections = [
                 <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                   observation codes (C1, C2, C3, FI)
                 </SEOInternalLink>
-                . From A4:2026, the presence or absence of AFDD and SPD protection must also be
-                recorded on the appropriate Part 6 form (Reg 133.1.3).
+                . Since A2:2022, the Appendix 6 model forms include fields for recording the details
+                of SPDs and AFDDs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -647,7 +646,7 @@ export default function ElectricalAcronymsGlossaryPage() {
       title="Electrical Acronyms & Glossary: A-Z Reference"
       description="Complete A-Z glossary of electrical acronyms and abbreviations used in UK installation work. MCB, RCD, RCBO, AFDD, SPD, PFC, Ze, Zs, CPC, PME, TN-S."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference"

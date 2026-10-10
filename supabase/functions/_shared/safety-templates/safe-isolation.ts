@@ -119,7 +119,7 @@ export function safeIsolationTemplate(record: any, branding: Branding): string {
 
   // Signatures
   body += sectionHeader('Declaration & Signatures');
-  body += paragraph('I confirm that the safe isolation procedure has been carried out in accordance with BS 7671:2018+A2:2022, the Electricity at Work Regulations 1989 (Regulations 12-14), and HSE Guidance Note GS38 (4th Edition). The circuit was proven dead before work commenced.');
+  body += paragraph('I confirm that the safe isolation procedure has been carried out in accordance with BS 7671:2018+A4:2026, the Electricity at Work Regulations 1989 (Regulations 12-14), and HSE Guidance Note GS38 (4th Edition). The circuit was proven dead before work commenced.');
   // deno-lint-ignore no-explicit-any
   const sigParties: any[] = [
     { role: 'Isolated By', name: record.isolator_name || undefined, date: fmtDateTime(record.isolation_completed_at || record.created_at), signatureDataUrl: record.isolator_signature || undefined },
@@ -132,7 +132,7 @@ export function safeIsolationTemplate(record: any, branding: Branding): string {
 
   // Regulation reference
   body += sectionHeader('Applicable Regulations');
-  body += paragraph('BS 7671:2018+A2:2022 \u2014 Requirements for Electrical Installations (IET Wiring Regulations), Regulation 14: Switching off for mechanical maintenance. Chapter 46: Isolation and switching.');
+  body += paragraph('BS 7671:2018+A4:2026 \u2014 Requirements for Electrical Installations (IET Wiring Regulations), Chapter 46: Isolation and switching, including Section 464: Switching off for mechanical maintenance.');
   body += paragraph('Electricity at Work Regulations 1989 \u2014 Regulation 12: Means of cutting off supply and isolation. Regulation 13: Precautions for work on dead equipment. Regulation 14: Work on or near live conductors.');
   body += paragraph('HSE GS38 (4th Edition) \u2014 Electrical test equipment for use on low voltage electrical installations. Requirements for test probes, leads, and instruments.');
 

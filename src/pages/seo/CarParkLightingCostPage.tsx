@@ -465,7 +465,7 @@ const sections = [
                 must have RCD additional protection at the rating specified in Regulation 415.1.1
                 (≤30 mA) — see Reg 714.411.3.4. Note that the socket-outlet RCD rule (Reg 411.3.3)
                 applies to socket-outlets rated at 32 A or below, not to lighting circuits; and the
-                A4:2026 luminaire RCD rule (Reg 411.3.4) applies only within domestic (household)
+                domestic luminaire RCD rule (Reg 411.3.4, in force since BS 7671:2018) applies only within domestic (household)
                 premises, so it is not normally engaged by a commercial car park.
               </span>
             </li>
@@ -566,7 +566,7 @@ export default function CarParkLightingCostPage() {
       title="Car Park Lighting Cost 2026: UK Price Guide"
       description="How much does car park lighting cost in 2026? UK guide covering column lighting at £500-2000 per column, bollards, CCTV integration, BMS controls."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

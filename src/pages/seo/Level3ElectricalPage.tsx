@@ -28,7 +28,7 @@ const faqs = [
   {
     question: 'What is the City & Guilds 2365-03 Level 3 qualification?',
     answer:
-      'The City & Guilds 2365-03 is the Level 3 Diploma in Electrical Installation, also referred to as the Advanced Diploma. It builds on the Level 2 foundation and covers the advanced knowledge and skills required to work as a competent electrician. Key areas include circuit design and calculation (applying correction factors, cable sizing using the adiabatic equation, protective device selection), inspection and testing of electrical installations, fault diagnosis and rectification, and the detailed application of BS 7671:2018+A4:2026 including Part 7 special installations and locations. The Level 3 Diploma is a core component of the Installation Electrician apprenticeship standard (ST0215) and is required alongside the AM2 for the JIB Gold Card.',
+      'The City & Guilds 2365-03 is the Level 3 Diploma in Electrical Installation, also referred to as the Advanced Diploma. It builds on the Level 2 foundation and covers the advanced knowledge and skills required to work as a competent electrician. Key areas include circuit design and calculation (applying correction factors, cable sizing using the adiabatic equation, protective device selection), inspection and testing of electrical installations, fault diagnosis and rectification, and the detailed application of BS 7671:2018+A4:2026 including Part 7 special installations and locations. The Level 3 Diploma is a core component of the Installation Electrician apprenticeship standard (ST0152) and is required alongside the AM2 for the JIB Gold Card.',
   },
   {
     question: 'What are the prerequisites for the Level 3 Electrical course?',
@@ -241,7 +241,7 @@ export default function Level3ElectricalPage() {
               years alongside practical experience on site. For apprentices, it forms the core of
               years two and three of the apprenticeship programme. The qualification maps directly
               to the technical knowledge requirements of the Installation Electrician / Maintenance
-              Electrician apprenticeship standard (ST0215) and is assessed through a combination of
+              Electrician apprenticeship standard (ST0152) and is assessed through a combination of
               written examinations and practical assignments.
             </p>
             <p>

@@ -165,7 +165,7 @@ const CableSizingForm = ({
     <div className="space-y-6">
       {/* Section: Basic Parameters */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Cable sizing parameters
         </span>
 
@@ -207,13 +207,13 @@ const CableSizingForm = ({
 
       {/* Section: Installation Method */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Installation method (BS 7671)
         </span>
 
         {/* Current Selection Display */}
         <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-0.5">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white">Selected method</div>
+          <div className="text-[12px] text-white">Selected method</div>
           <div className="text-[14px] text-white font-medium">
             {getMethodLabel(uiSelections.installationMethodUI)}
           </div>
@@ -247,7 +247,7 @@ const CableSizingForm = ({
             >
               ← Back to categories
             </button>
-            <div className="text-[11px] uppercase tracking-[0.18em] text-white mb-1">
+            <div className="text-[12px] text-white mb-1">
               {
                 installationCategories[selectedCategory as keyof typeof installationCategories]
                   ?.label
@@ -261,7 +261,7 @@ const CableSizingForm = ({
                   className={cn(
                     'w-full p-3 text-left rounded-lg border transition-all touch-manipulation min-h-11 text-[14px]',
                     uiSelections.installationMethodUI === option.value
-                      ? 'border-elec-yellow/40 bg-white/[0.05] text-white'
+                      ? 'border-white/[0.14] bg-white/[0.05] text-white'
                       : 'border-white/[0.06] bg-white/[0.02] text-white hover:bg-white/[0.04]'
                   )}
                 >
@@ -275,7 +275,7 @@ const CableSizingForm = ({
 
       {/* Section: Cable Type */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Cable type
         </span>
         <CalculatorSelect
@@ -318,7 +318,7 @@ const CableSizingForm = ({
 
       {/* Section: Protective Device — BS 7671 Reg 433.1.1 / App 4 §5.1.1 */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Protective device (BS 7671 Reg 433.1.1)
         </span>
         <CalculatorInputGrid columns={2}>
@@ -354,7 +354,7 @@ const CableSizingForm = ({
       {/* Section: Underground-Specific Fields (Conditional) */}
       {showUndergroundFields && (
         <div className="space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Underground installation factors (BS 7671 Tables 4B3 / 4B4)
           </span>
           <CalculatorInputGrid columns={2}>
@@ -378,7 +378,7 @@ const CableSizingForm = ({
 
       {/* Section: Environmental Conditions */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Environmental conditions
         </span>
         <CalculatorInputGrid columns={3}>
@@ -414,7 +414,7 @@ const CableSizingForm = ({
 
       {/* Section: Load Characteristics */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Load characteristics
         </span>
         <CalculatorInputGrid columns={2}>
@@ -440,7 +440,7 @@ const CableSizingForm = ({
       {/* Section: System Parameters (only in current mode) */}
       {inputMode !== 'load' && (
         <div className="space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             System parameters
           </span>
           <CalculatorInputGrid columns={2}>

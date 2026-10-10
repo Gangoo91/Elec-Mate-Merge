@@ -50,7 +50,7 @@ const keyTakeaways = [
   'Bidirectional power flow occurs in installations with solar PV, battery storage, vehicle-to-grid (V2G) EV chargers, or other embedded generation where current can flow both from the supply to the installation and from the installation back to the supply.',
   'Standard MCBs and RCDs are designed and tested for unidirectional current flow only. Using a unidirectional device where bidirectional flow occurs may result in the device failing to operate correctly under fault conditions or failing to break the circuit safely.',
   'RCCBs, RCBOs, circuit-breakers, and AFDDs may carry orientation markings (such as "in"/"out", "line"/"load", or arrows) required by the relevant product standard listed in Appendix I of BS 7671. Installers must follow this marking when connecting the device.',
-  'BS 7671:2018+A4:2026 (Amendment 4) introduced further changes including a redrafted Reg 421.1.7 — now requiring AFDDs (to BS EN 62606) on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes (and recommending them in all other premises) — plus a new Reg 411.6.5 and a new Regulation group 419 for where automatic disconnection is not feasible.',
+  'BS 7671:2018+A4:2026 (Amendment 4) made further changes, including protective neutral bonding in Reg 312.2.1.1, Table 52.1 for cables in walls, a new Section 545 and a new Chapter 57 for stationary batteries. It reworded Reg 421.1.7(a) to high rise residential buildings; the AFDD requirement itself dates from A2:2022.',
   'Elec-Mate solar PV and battery storage certificates include fields for confirming bidirectional device selection in compliance with Regulation 530.3.201. The app references BS 7671:2018+A4:2026 on relevant certificates.',
 ];
 
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Where can I find A4:2026 and is it free?',
     answer:
-      'BS 7671:2018+A3:2024 (Amendment 3) was issued on 31 July 2024 by the IET and introduced Regulation 530.3.201 (bidirectional devices) along with supporting definitions. It is available as a free PDF supplement from the IET website. BS 7671:2018+A4:2026 (Amendment 4) followed and introduced further changes, including a redrafted Reg 421.1.7 that now requires AFDDs on socket-outlet final circuits up to 32 A in certain higher-risk premises, plus a new Reg 411.6.5. The full current citation is BS 7671:2018+A4:2026 and should be used on certificates and documentation.',
+      'BS 7671:2018+A3:2024 (Amendment 3) was issued on 31 July 2024 by the IET and introduced Regulation 530.3.201 (bidirectional devices) along with supporting definitions. It is available as a free PDF supplement from the IET website. BS 7671:2018+A4:2026 (Amendment 4) followed with further changes, including protective neutral bonding (Reg 312.2.1.1), Table 52.1, a new Section 545 and a new Chapter 57, and it reworded Reg 421.1.7(a) on AFDDs (a requirement in certain higher-risk premises since A2:2022). The full current citation is BS 7671:2018+A4:2026 and should be used on certificates and documentation.',
   },
   {
     question: 'Do V2G (vehicle-to-grid) EV chargers require bidirectional devices?',
@@ -231,10 +231,10 @@ const sections = [
         </p>
         <p>
           BS 7671:2018+A4:2026 (Amendment 4) followed in 2026. Amendment 4 is the current amendment
-          and, among other changes, redrafted Reg 421.1.7 on arc fault detection devices (AFDDs),
-          inserted a new Reg 411.6.5, and added a new Regulation group 419 for situations where
-          automatic disconnection in accordance with Regulation 411.3.2 is not feasible. The full
-          current citation for the standard is BS 7671:2018+A4:2026.
+          and, among other changes, reworded item (a) of Reg 421.1.7 on arc fault detection devices
+          (AFDDs) to high rise residential buildings, introduced Table 52.1 for cables in walls, and
+          added a new Chapter 57 for stationary secondary batteries. The full current citation for
+          the standard is BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">BS 7671 Amendment Timeline</h3>
@@ -267,9 +267,8 @@ const sections = [
             <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-elec-yellow font-bold shrink-0">2026</span>
               <span className="text-white">
-                Amendment 4 (A4:2026) — redrafted Reg 421.1.7 (AFDDs now required for socket-outlet
-                circuits ≤32 A in higher-risk premises), new Reg 411.6.5, new group 419 — current
-                standard
+                Amendment 4 (A4:2026) — protective neutral bonding, Table 52.1, new Section 545, new
+                Chapter 57, Reg 421.1.7(a) reworded — current standard
               </span>
             </div>
           </div>
@@ -293,28 +292,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-elec-yellow">Reg 421.1.7 (AFDDs)</strong> — redrafted. AFDDs
-                conforming to BS EN 62606 are now <strong>required</strong> on single-phase AC final
-                circuits supplying socket-outlets rated up to 32 A in high rise residential
-                buildings, houses in multiple occupation, purpose-built student accommodation and
-                care homes. For all other premises, AFDDs are <strong>recommended</strong> on such
-                circuits. Where used, the AFDD is placed at the origin of the circuit it protects.
+                <strong className="text-elec-yellow">Reg 421.1.7(a) (AFDDs)</strong> — reworded to
+                &quot;high rise residential buildings&quot;. The requirement itself came in at
+                A2:2022: AFDDs conforming to BS EN 62606 are <strong>required</strong> on
+                single-phase AC final circuits supplying socket-outlets rated up to 32 A in high
+                rise residential buildings, houses in multiple occupation, purpose-built student
+                accommodation and care homes. For all other premises, AFDDs are{' '}
+                <strong>recommended</strong> on such circuits. Where used, the AFDD is placed at the
+                origin of the circuit it protects.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-elec-yellow">Reg 411.6.5</strong> — inserted as part of a
-                reorganisation of the IT system requirements in Section 411.6 (Chapter 41,
-                Protection Against Electric Shock).
+                <strong className="text-elec-yellow">Reg 312.2.1.1</strong> — now includes a
+                protective neutral bonding (PNB) figure and requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-elec-yellow">New Regulation group 419</strong> — inserted for
-                installations where automatic disconnection in accordance with Regulation 411.3.2 is
-                not feasible, such as electronic equipment with limited short-circuit current.
+                <strong className="text-elec-yellow">New Section 545 and Chapter 57</strong> —
+                Section 545 covers functional earthing for information and communication technology,
+                and Chapter 57 covers stationary secondary batteries. (Reg 411.6.5 and Regulation
+                group 419 are not A4 changes; both came in with BS 7671:2018.)
               </span>
             </li>
           </ul>
@@ -347,15 +348,15 @@ const sections = [
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
               <p className="text-white">
                 <strong className="text-white">Unidirectional protective device.</strong> A
-                protective device where it is intended by the manufacturer that a source of supply is
-                only connected to one defined set of connection terminals.
+                protective device where it is intended by the manufacturer that a source of supply
+                is only connected to one defined set of connection terminals.
               </p>
             </div>
             <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <p className="text-white">
                 <strong className="text-elec-yellow">Bidirectional protective device.</strong> A
-                protective device where it is intended by the manufacturer that a source of supply is
-                connected to either or both sets of connection terminals.
+                protective device where it is intended by the manufacturer that a source of supply
+                is connected to either or both sets of connection terminals.
               </p>
             </div>
           </div>
@@ -438,7 +439,9 @@ const sections = [
               </div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
-              <div className="col-span-5 font-semibold text-white">MCB / RCBO for the PV circuit</div>
+              <div className="col-span-5 font-semibold text-white">
+                MCB / RCBO for the PV circuit
+              </div>
               <div className="col-span-7 text-white">
                 The protective device for the inverter's AC output circuit carries generated current
                 from the inverter to the consumer unit busbars.
@@ -455,11 +458,9 @@ const sections = [
         </div>
         <p>
           When specifying protective devices for a{' '}
-          <SEOInternalLink href="/solar-pv-certificate">
-            solar PV installation
-          </SEOInternalLink>
-          , confirm with the device manufacturer that each device in the bidirectional current path
-          is rated for bidirectional operation. Document this on the installation certificate.
+          <SEOInternalLink href="/solar-pv-certificate">solar PV installation</SEOInternalLink>,
+          confirm with the device manufacturer that each device in the bidirectional current path is
+          rated for bidirectional operation. Document this on the installation certificate.
         </p>
       </>
     ),
@@ -606,9 +607,9 @@ const sections = [
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
               <div className="col-span-4 font-semibold text-white">RCDs</div>
               <div className="col-span-8 text-white">
-                If an RCD sits in the bidirectional path, confirm both its residual-current detection
-                and its switching/breaking capability are suitable for current in either direction.
-                See{' '}
+                If an RCD sits in the bidirectional path, confirm both its residual-current
+                detection and its switching/breaking capability are suitable for current in either
+                direction. See{' '}
                 <SEOInternalLink href="/guides/rcd-types-explained">RCD types</SEOInternalLink>.
               </div>
             </div>
@@ -616,7 +617,7 @@ const sections = [
               <div className="col-span-4 font-semibold text-white">AFDDs</div>
               <div className="col-span-8 text-white">
                 Per the NOTE to 530.3.201, AFDDs (BS EN 62606) may be marked for orientation. Where
-                A4:2026 Reg 421.1.7 applies, place the AFDD at the origin of the circuit it protects.
+                Reg 421.1.7 applies, place the AFDD at the origin of the circuit it protects.
               </div>
             </div>
           </div>
@@ -696,7 +697,7 @@ export default function Regulation530Page() {
       title="Regulation 530.3.201: Bidirectional Devices"
       description="Complete guide to Regulation 530.3.201 from BS 7671:2018+A4:2026 (Amendment 4). Bidirectional vs unidirectional switching devices, impact on solar PV."
       datePublished="2025-09-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Amendment 4"

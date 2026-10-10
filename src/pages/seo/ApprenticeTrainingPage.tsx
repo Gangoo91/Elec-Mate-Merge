@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet';
+import { OTJ_ST0152_HOURS } from '@/data/otjStandards';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -35,7 +36,7 @@ const faqs = [
   {
     question: 'What is the Off-the-Job Training requirement?',
     answer:
-      'Under the apprenticeship funding rules in England, every full-time apprentice must spend a minimum of 6 hours per week on off-the-job training (OJT). This includes college attendance, online learning, study time, workshops, and any training that develops knowledge, skills, and behaviours required by the apprenticeship standard but is not part of normal day-to-day duties. Elec-Mate includes a built-in OJT hours tracker that logs your learning time automatically, generates reports for your employer and training provider, and ensures you meet the minimum requirement.',
+      `Under the apprenticeship funding rules in England, every apprentice who started from 1 August 2025 must receive at least the off-the-job training (OJT) hours published on their apprenticeship standard, for example ${OTJ_ST0152_HOURS} hours for Installation and Maintenance Electrician (ST0152) (DfE funding rules 2026 to 2027, rules 85 to 86). Apprentices who started earlier stay on the old average of 6 hours a week. This includes college attendance, online learning, study time, workshops, and any training that develops knowledge, skills, and behaviours required by the apprenticeship standard but is not part of normal day-to-day duties. Elec-Mate includes a built-in OJT hours tracker that logs your learning time automatically, generates reports for your employer and training provider, and ensures you meet the minimum requirement.`,
   },
   {
     question: 'How does the EPA (End Point Assessment) work for electrical apprentices?',
@@ -83,7 +84,7 @@ const features = [
     icon: Clock,
     title: 'OJT Hours Management',
     description:
-      'Automatic off-the-job training hours tracking. Logs study time, generates weekly and monthly reports, calculates your 6 hours per week target…',
+      'Automatic off-the-job training hours tracking. Logs study time, generates weekly and monthly reports, tracks you against your standard’s off-the-job total…',
   },
   {
     icon: BarChart3,
@@ -377,7 +378,7 @@ export default function ApprenticeTrainingPage() {
               carried out by an independent End Point Assessment Organisation (EPAO) and is designed
               to confirm that you have achieved the knowledge, skills, and behaviours defined in the
               apprenticeship standard. For the Installation Electrician / Maintenance Electrician
-              standard (ST0215), the EPA typically comprises three components.
+              standard (ST0152), the EPA typically comprises three components.
             </p>
             <p>
               The first component is a practical assessment, similar in format to the AM2, where you
@@ -409,9 +410,10 @@ export default function ApprenticeTrainingPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Under the apprenticeship funding rules set by the Education and Skills Funding Agency
-              (ESFA), every full-time apprentice must spend a minimum of 6 hours per week on
-              off-the-job training (OJT). This is a mandatory requirement, and failure to meet it
+              Under the DfE apprenticeship funding rules, every apprentice who started from 1 August
+              2025 must receive at least the off-the-job training (OJT) hours published on their
+              apprenticeship standard, {OTJ_ST0152_HOURS} hours for ST0152 (DfE funding rules 2026 to 2027, rules 85 to 86). Starts before
+              then stay on the old average of 6 hours a week. This is a mandatory requirement, and failure to meet it
               can result in funding being withdrawn from your employer and training provider.
             </p>
             <p>
@@ -426,7 +428,7 @@ export default function ApprenticeTrainingPage() {
               becomes a problem at progress reviews. Elec-Mate's OJT hours management feature solves
               this by automatically logging your study time on the platform, allowing you to
               manually add hours from college attendance or other training activities, calculating
-              your running total against the 6 hours per week target, generating formatted reports
+              your running total against your standard&apos;s off-the-job total, generating formatted reports
               for your employer and training provider, and sending alerts when you are at risk of
               falling below the minimum. This means no more scrambling to fill in a paper logbook
               before your quarterly review.

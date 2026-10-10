@@ -841,12 +841,12 @@ export default function EarthLoopImpedanceCalculatorPage() {
         </div>
       </section>
 
-      {/* A4:2026 Changes Relevant to Zs Planning */}
+      {/* BS 7671 rules relevant to Zs planning */}
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-4">
-              BS 7671 A4:2026 — Key Changes for Zs Planning
+              BS 7671:2018+A4:2026 — RCD and AFDD Rules for Zs Planning
             </h2>
             <div className="space-y-4 text-white leading-relaxed text-sm">
               <div>
@@ -854,11 +854,11 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   Reg 411.3.4 — Mandatory RCD protection on domestic lighting circuits
                 </h3>
                 <p>
-                  Amendment 4 adds Regulation 411.3.4, which requires that AC final circuits
+                  Regulation 411.3.4, in force since BS 7671:2018 (not new in Amendment 4), requires that AC final circuits
                   supplying luminaires within domestic (household) premises shall be provided with
                   additional protection by an RCD with a rated residual operating current not
                   exceeding 30 mA. This directly affects Zs planning on lighting circuits (such as
-                  Example 2 above): the circuit must now have a 30 mA RCD regardless of whether the
+                  Example 2 above): the circuit must have a 30 mA RCD regardless of whether the
                   Zs easily meets the OCPD limit. The 1667 ohm RCD Zs limit will always be
                   satisfied, but the presence of the mandatory RCD must be reflected on the Schedule
                   of Test Results and the EICR.
@@ -866,14 +866,16 @@ export default function EarthLoopImpedanceCalculatorPage() {
               </div>
               <div>
                 <h3 className="font-bold text-white mb-1">
-                  Reg 421.1.7 — AFDD recommendation for AC final circuits
+                  Reg 421.1.7 — AFDDs on socket-outlet final circuits
                 </h3>
                 <p>
-                  Regulation 421.1.7 recommends the installation of arc fault detection devices
-                  (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire
-                  due to arc fault currents. The wording is recommendatory (not mandatory with
-                  'shall'), but specifiers and assessors should consider AFDDs — particularly on
-                  socket-outlet circuits — when planning protection at design stage. AFDDs combine
+                  Regulation 421.1.7 covers arc fault detection devices (AFDDs) in AC final circuits
+                  of a fixed installation to mitigate the risk of fire due to arc fault currents.
+                  Since A2:2022 they shall be provided on single-phase socket-outlet circuits up to
+                  32 A in high rise residential buildings, HMOs, purpose-built student accommodation
+                  and care homes. Elsewhere they are recommended, so specifiers and assessors should
+                  consider AFDDs, particularly on socket-outlet circuits, when planning protection at
+                  design stage. AFDDs combine
                   OCPD and RCD functions with arc detection; their Zs requirements follow the
                   integrated OCPD type fitted.
                 </p>

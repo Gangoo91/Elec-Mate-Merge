@@ -131,7 +131,7 @@ export function AttendanceHeatmap({ records, weeks = 8, className }: AttendanceH
         {monthLabels.map((m) => (
           <div
             key={`${m.label}-${m.col}`}
-            className="text-[9px] text-white"
+            className="text-[12px] text-white"
             style={{
               marginLeft:
                 m.col > 0
@@ -145,7 +145,7 @@ export function AttendanceHeatmap({ records, weeks = 8, className }: AttendanceH
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-3 text-[10px] text-white">
+      <div className="flex items-center gap-3 text-[12px] text-white">
         <div className="flex items-center gap-1">
           <div className="h-2.5 w-2.5 rounded-[2px] bg-success" />
           Present

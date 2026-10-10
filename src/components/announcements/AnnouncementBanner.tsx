@@ -2,6 +2,7 @@ import { forwardRef, useState, useEffect, useCallback, useLayoutEffect, useRef }
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/lib/demoMode';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -179,6 +180,8 @@ function saveLocalDismissed(ids: string[]) {
 
 export default function AnnouncementBanner() {
   const { user, profile } = useAuth();
+  // Demo accounts (ELE-1856) see only the product: no Elec-Mate announcements.
+  const demo = useDemoMode();
   const queryClient = useQueryClient();
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(() => {
     // Initialize with localStorage data immediately
@@ -289,7 +292,7 @@ export default function AnnouncementBanner() {
       (a) => !dismissedIds.has(a.id) && !(desktopWeb && isAppStoreNotice(a))
     ) || [];
 
-  if (visibleAnnouncements.length === 0) {
+  if (demo || visibleAnnouncements.length === 0) {
     return null;
   }
 

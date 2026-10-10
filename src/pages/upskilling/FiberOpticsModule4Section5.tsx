@@ -744,7 +744,7 @@ const FiberOpticsModule4Section5 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-4">
+            <Link to="/study-centre/upskilling/fiber-optics-module-4-section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>

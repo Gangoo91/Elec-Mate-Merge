@@ -59,7 +59,7 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
     if (res.success) {
       toast.success(
         res.linked || res.already_member
-          ? `Welcome back — linked to ${res.college_name ?? 'your college'}`
+          ? `Welcome back. Linked to ${res.college_name ?? 'your college'}`
           : `Joined ${res.college_name ?? 'your college'}`
       );
       if (fetchProfile && user?.id) await fetchProfile(user.id);

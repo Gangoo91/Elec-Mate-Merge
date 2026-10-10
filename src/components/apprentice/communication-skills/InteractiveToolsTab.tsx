@@ -7,11 +7,9 @@ const Section = ({
   description?: string;
   children: React.ReactNode;
 }) => (
-  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {eyebrow}
-      </span>
+      <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
       {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
@@ -220,8 +218,8 @@ const InteractiveToolsTab = () => {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Communication frameworks and practical tips
         </span>
         <p className="text-[14px] text-white leading-relaxed">
@@ -239,13 +237,13 @@ const InteractiveToolsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] text-white">{framework.title}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{framework.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{framework.description}</p>
               <div className="flex flex-wrap gap-1.5">
                 {framework.components.map((c, idx) => (
                   <Pill key={idx}>{c}</Pill>
                 ))}
               </div>
-              <p className="text-[13px] text-white italic leading-relaxed">
+              <p className="text-[14px] text-white italic leading-relaxed">
                 <span className="text-white not-italic">Example: </span>
                 {framework.example}
               </p>
@@ -262,19 +260,19 @@ const InteractiveToolsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] text-white">{scenario.title}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{scenario.situation}</p>
+              <p className="text-[14px] text-white leading-relaxed">{scenario.situation}</p>
               <ul className="space-y-1">
                 {scenario.tips.map((tip, tipIdx) => (
                   <li
                     key={tipIdx}
-                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{tip}</span>
                   </li>
                 ))}
               </ul>
-              <p className="text-[13px] text-white italic leading-relaxed">
+              <p className="text-[14px] text-white italic leading-relaxed">
                 <span className="text-white not-italic">Example: </span>
                 &ldquo;{scenario.example}&rdquo;
               </p>
@@ -295,7 +293,7 @@ const InteractiveToolsTab = () => {
                 {category.tips.map((tip, tipIdx) => (
                   <li
                     key={tipIdx}
-                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{tip}</span>
@@ -315,11 +313,11 @@ const InteractiveToolsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] text-white">{tip.title}</h4>
-              <p className="text-[13px] text-white leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 <span className="text-white">Approach: </span>
                 {tip.approach}
               </p>
-              <p className="text-[13px] text-white italic leading-relaxed">
+              <p className="text-[14px] text-white italic leading-relaxed">
                 <span className="text-white not-italic">Example: </span>
                 &ldquo;{tip.example}&rdquo;
               </p>
@@ -339,9 +337,7 @@ const InteractiveToolsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] text-white">{template.title}</h4>
-              <p className="text-[13px] text-white font-mono leading-relaxed">
-                {template.template}
-              </p>
+              <p className="text-[14px] text-white leading-relaxed">{template.template}</p>
             </div>
           ))}
         </div>
@@ -358,7 +354,7 @@ const InteractiveToolsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
               <p className="text-[14px] text-white">{item.trade}</p>
-              <p className="text-[13px] text-white leading-relaxed">{item.tip}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.tip}</p>
             </div>
           ))}
         </div>
@@ -372,7 +368,7 @@ const InteractiveToolsTab = () => {
           natural it becomes in real situations.
         </p>
         <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3">
-          <p className="text-[13px] text-white leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             <span className="text-white">Weekly challenge: </span>
             Pick one communication skill from this guide each week and consciously practise it on
             site. After a month, you will notice a real difference in how people respond to you and

@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const TLevelVsApprenticeshipElectricalConfig: GeneratedGuideConfig = {
   pagePath: '/guides/t-level-vs-apprenticeship-electrical',
@@ -62,7 +62,7 @@ export const TLevelVsApprenticeshipElectricalConfig: GeneratedGuideConfig = {
     },
     {
       id: 'apprenticeship',
-      heading: 'Apprenticeship — 3-4 year employer-led programme with 20% off-the-job training',
+      heading: 'Apprenticeship — 3-4 year employer-led programme with paid off-the-job training',
       tocLabel: 'Apprenticeship',
       blocks: [
         {

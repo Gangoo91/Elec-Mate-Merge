@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>{{ meta.doc_title | default: meta.title }}</title>
+<!--
+  Elec-Mate · Portfolio evidence pack (PDFMonkey, ELE-1881)
+
+  The summary PDF inside the evidence pack ZIP, made by the edge function
+  portfolio-export-pack (evidencePackPayload in build.ts). Same payload as
+  the shared Learner Record template, which stays the fallback.
+
+  Designed 10 Oct 2026 as a professional college / awarding-body document
+  (Andrew: "a cover page designed excellent, and all the boxes laid out
+  excellent"): a full designed cover; numbered sections with one heading
+  style; every table on one ruled pattern; each piece of evidence as a block
+  with a facts panel, its criteria, decisions, witness, photos and files;
+  status as small outlined labels in one colour per meaning.
+
+  Reads, beyond the Learner Record fields: meta.doc_title (running footer),
+  progress { passed, total, pct } (cover bar), toc [{ n, title, id }] (linked
+  contents), gateway_summary (one page before section 01, EPA programmes
+  only), s.num / s.anchor (section numbers and link targets, worked out in
+  build.ts so contents and headings always agree), kind 'unit_signoff'.
+
+  Clickable (10 Oct): contents entries, the gateway summary's "In this pack"
+  column, evidence references (E01) in the criteria table, the declarations
+  and the witness statements link inside the PDF.
+
+  Build: python3 pdf-templates/build-portfolio-evidence-pack.py (inlines the
+  fonts). Page size, margins and the footer (title + Page X of Y) are in the
+  template SETTINGS; the cover takes the full page via @page :first.
+-->
+<style>
+/*FONTS*/
+
+  :root {
+    --navy: #0b1b33;
+    --navy-2: #13294b;
+    --gold: #f5b301;
+    --ink: #111827;
+    --muted: #4b5563;
+    --rule: #cfd6e0;
+    --hair: #e3e8ef;
+    --tint: #f5f7fa;
+    --ok: #157347;
+    --warn: #b45309;
+    --bad: #b42318;
+  }
+  @page { size: A4; margin: 14mm 0 16mm 0; }
+  @page :first { margin-top: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: var(--ink); font-size: 9.2pt; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    font-feature-settings: 'cv11' 1, 'ss01' 1;
+  }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace; font-weight: 500;
+          font-variant-numeric: tabular-nums; letter-spacing: -0.1pt; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  p { margin: 0; }
+  .pad { padding: 0 18mm; }
+
+  /* ── Cover ─────────────────────────────────────────────────────────── */
+  .cover { height: 280mm; display: flex; flex-direction: column;
+           page-break-after: always; break-after: page; }
+  .hero { background: var(--navy); color: #fff; padding: 18mm 18mm 13mm; position: relative;
+          min-height: 158mm; display: flex; flex-direction: column; }
+  .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1.6mm;
+                 background: var(--gold); }
+  .hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10mm; }
+  .org { display: flex; align-items: center; gap: 4mm; }
+  .org-logo { display: block; max-height: 14mm; max-width: 46mm; object-fit: contain;
+              background: #fff; padding: 1.6mm 2.4mm; border-radius: 1.2mm; }
+  .org-name { font-size: 12pt; font-weight: 700; letter-spacing: -0.1pt; }
+  .org-sub { font-size: 8.6pt; margin-top: 0.6mm; color: #c9d3e3; }
+  .ref { text-align: right; }
+  .ref-k { font-size: 8pt; color: #c9d3e3; }
+  .ref-v { font-size: 10pt; margin-top: 0.8mm; color: #fff; }
+
+  .hero-main { margin-top: auto; padding-top: 18mm; }
+  .kicker { display: flex; align-items: center; gap: 3mm; font-size: 10.5pt; font-weight: 600;
+            color: var(--gold); }
+  .kicker::before { content: ''; width: 10mm; height: 0.9mm; background: var(--gold); display: block; }
+  .hero-name { font-size: 34pt; line-height: 1.06; font-weight: 700; letter-spacing: -0.9pt;
+               margin: 4mm 0 0; color: #fff; }
+  .hero-sub { margin-top: 3.4mm; font-size: 11pt; line-height: 1.45; color: #e4eaf3; max-width: 160mm; }
+
+  .hero-progress { margin-top: 10mm; display: flex; align-items: flex-end; gap: 6mm; }
+  .hp-figure { font-size: 22pt; font-weight: 700; line-height: 1; letter-spacing: -0.4pt; }
+  .hp-of { font-size: 10pt; font-weight: 500; color: #c9d3e3; margin-left: 1.4mm; letter-spacing: 0; }
+  .hp-bar { flex: 1; height: 1.8mm; background: #24395c; border-radius: 1mm; overflow: hidden; margin-bottom: 1.6mm; }
+  .hp-bar i { display: block; height: 100%; background: var(--gold); min-width: 1mm; }
+  .hp-label { font-size: 8.6pt; color: #c9d3e3; margin-top: 1.6mm; }
+
+  .cover-body { padding: 9mm 18mm 0; flex: 1; display: flex; flex-direction: column; }
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
+  .gl { border-top: 1.6pt solid var(--navy); padding-top: 2.4mm; }
+  .gl-k { font-size: 8pt; font-weight: 600; color: var(--muted); }
+  .gl-v { font-size: 20pt; font-weight: 700; color: var(--navy); line-height: 1.05; margin-top: 1.2mm;
+          letter-spacing: -0.4pt; font-variant-numeric: tabular-nums; }
+  .gl-u { font-size: 9pt; font-weight: 600; color: var(--ink); letter-spacing: 0; margin-left: 1mm; }
+  .gl-n { font-size: 8pt; color: var(--muted); margin-top: 0.8mm; }
+
+  .details { margin-top: 9mm; display: grid; grid-template-columns: 1fr 1fr; column-gap: 12mm;
+             border-top: 0.7pt solid var(--rule); }
+  .dt { display: grid; grid-template-columns: 34mm 1fr; gap: 3mm; padding: 2.3mm 0;
+        border-bottom: 0.6pt solid var(--hair); align-items: baseline; }
+  .dt-k { font-size: 8pt; font-weight: 600; color: var(--muted); }
+  .dt-v { font-size: 9.4pt; font-weight: 500; color: var(--ink); }
+  .dt-v.mono { font-size: 8.8pt; }
+
+  .cover-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end;
+                gap: 10mm; padding-top: 3mm; border-top: 0.7pt solid var(--rule); font-size: 8pt;
+                color: var(--muted); }
+  .cover-foot b { color: var(--ink); font-weight: 600; }
+  .made { white-space: nowrap; text-align: right; }
+  .made .brand { color: var(--navy); font-weight: 700; }
+
+  /* ── Contents (top of page 2) ──────────────────────────────────────── */
+  .toc { border: 0.7pt solid var(--rule); border-radius: 1.6mm; padding: 4.4mm 5mm 3.4mm;
+         background: var(--tint); break-inside: avoid; }
+  .toc-h { font-size: 10.5pt; font-weight: 700; color: var(--navy); }
+  .toc ol { list-style: none; margin: 2.8mm 0 0; padding: 0; columns: 2; column-gap: 10mm; }
+  .toc li { display: flex; gap: 3mm; align-items: baseline; font-size: 9.4pt; padding: 1.1mm 0;
+            break-inside: avoid; }
+  .toc .n { font-size: 8.6pt; color: var(--navy); font-weight: 700; min-width: 6mm; }
+
+  .alert { margin-top: 5mm; padding: 3mm 4mm; border-left: 2.4pt solid currentColor; border-radius: 0 1.2mm 1.2mm 0;
+           background: var(--tint); font-size: 9.4pt; font-weight: 600; break-inside: avoid; }
+  .alert span { color: var(--ink); font-weight: 400; }
+  .alert.bad { color: var(--bad); } .alert.warn { color: var(--warn); }
+  .alert.ok { color: var(--ok); } .alert.neutral { color: var(--navy); }
+
+  /* ── Sections ──────────────────────────────────────────────────────── */
+  .sec { margin-top: 10mm; }
+  .sec.cont { margin-top: 5mm; }
+  .sec.new-page { page-break-before: always; break-before: page; margin-top: 0; }
+  /* A panel never leaves its heading behind at the foot of a page. */
+  .sec.keep { break-inside: avoid; page-break-inside: avoid; }
+  .sh { display: flex; align-items: baseline; gap: 3.4mm; padding-bottom: 2.2mm;
+        border-bottom: 1.2pt solid var(--navy); break-after: avoid; page-break-after: avoid; }
+  .sh-n { font-size: 10pt; font-weight: 700; color: var(--gold); background: var(--navy);
+          border-radius: 1mm; padding: 0.4mm 1.8mm; line-height: 1.35; font-variant-numeric: tabular-nums; }
+  .sh.sub { border-bottom-width: 0.7pt; border-bottom-color: var(--rule); }
+  .sh.sub h2 { font-size: 11.5pt; }
+  h2 { font-size: 14pt; font-weight: 700; color: var(--navy); margin: 0; letter-spacing: -0.2pt; }
+  h2 .count { font-weight: 500; font-size: 11pt; color: var(--muted); letter-spacing: 0; }
+  .intro { font-size: 9pt; color: var(--muted); margin: 2.6mm 0 0; max-width: 165mm;
+           break-after: avoid; page-break-after: avoid; break-inside: avoid; page-break-inside: avoid; }
+  .after-h { margin-top: 3.4mm; }
+
+  /* ── Tables: one pattern everywhere ────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; }
+  thead { display: table-header-group; }
+  tr { break-inside: avoid; page-break-inside: avoid; }
+  th { background: var(--tint); color: var(--navy); font-size: 7.9pt; font-weight: 600; text-align: left;
+       padding: 2mm 2.6mm; border-top: 0.7pt solid var(--rule); border-bottom: 0.7pt solid var(--rule);
+       vertical-align: bottom; }
+  td { font-size: 8.8pt; padding: 2mm 2.6mm; border-bottom: 0.6pt solid var(--hair); vertical-align: top;
+       white-space: pre-line; }
+  table.compact td { font-size: 8.4pt; padding: 1.5mm 2.6mm; }
+  table.compact th { padding: 1.6mm 2.6mm; }
+  td.zero { color: #a7b0bd; }
+  tr.unit { break-after: avoid; page-break-after: avoid; }
+  tr.unit td { background: #eef2f7; color: var(--navy); font-weight: 600; font-size: 8.6pt;
+               padding-top: 2mm; border-bottom: 0.7pt solid var(--rule); }
+  td.code { white-space: nowrap; color: var(--navy); }
+  td.hash { font-size: 7.2pt; word-break: break-all; line-height: 1.35; color: var(--muted); }
+  .sm { font-size: 7.8pt; color: var(--muted); }
+
+  /* Status: a small outlined label, one colour per meaning */
+  .state { display: inline-block; font-size: 7.8pt; font-weight: 600; white-space: nowrap; line-height: 1.3;
+           padding: 0.3mm 1.8mm; border: 0.7pt solid currentColor; border-radius: 3mm; }
+  .state.passed, .state.iqa, .state.done { color: var(--ok); }
+  .state.referred, .state.todo { color: var(--warn); }
+  .state.rejected, .state.bad { color: var(--bad); }
+  .state.submitted, .state.claimed, .state.suggested, .state.neutral, .state.na { color: var(--navy); }
+
+  /* Key–value panels (hours, statement) */
+  /* Hairlines are the grid gap showing through; build.ts fills every row (fillGrid). */
+  .kv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6pt; background: var(--hair);
+        border: 0.7pt solid var(--rule); border-radius: 1.6mm; overflow: hidden;
+        break-inside: avoid; page-break-inside: avoid; }
+  .kv-cell { padding: 3mm 3.6mm; background: #fff; break-inside: avoid; }
+  .kv-cell.wide { grid-column: 1 / -1; }
+  .kv-cell.span2 { grid-column: span 2; }
+  .kv-k { font-size: 7.9pt; font-weight: 600; color: var(--muted); }
+  .kv-v { font-size: 10pt; font-weight: 600; margin-top: 0.8mm; white-space: pre-line; color: var(--ink); }
+  .kv-v.ok { color: var(--ok); } .kv-v.warn { color: var(--warn); } .kv-v.bad { color: var(--bad); }
+  .kv-v.mono { font-size: 7.8pt; font-weight: 500; word-break: break-all; color: var(--muted); }
+  .kv-note { font-size: 8pt; color: var(--muted); margin-top: 0.6mm; }
+
+  .text p { font-size: 9.4pt; margin-top: 2.2mm; white-space: pre-line; }
+  ul.list { margin: 2.6mm 0 0; padding-left: 5mm; }
+  ul.list li { font-size: 9.2pt; margin-bottom: 1.4mm; }
+
+  /* ── Evidence: one block per item ──────────────────────────────────── */
+  .ev { margin-top: 8mm; }
+  .sh + .ev, .intro + .ev { margin-top: 4mm; }
+  .ev-top { break-inside: avoid; page-break-inside: avoid; }
+  .ev-head { display: flex; align-items: center; gap: 3.4mm; padding-bottom: 2.4mm;
+             border-bottom: 0.7pt solid var(--rule); }
+  .ev-ref { font-size: 8.6pt; font-weight: 600; color: #fff; background: var(--navy); border-radius: 1mm;
+            padding: 0.6mm 2mm; letter-spacing: 0; }
+  .ev-title { flex: 1; font-size: 11.6pt; font-weight: 700; color: var(--navy); letter-spacing: -0.15pt; line-height: 1.3; }
+  .ev-facts { margin-top: 3mm; display: grid; grid-template-columns: repeat(3, 1fr); background: var(--tint);
+              border-radius: 1.6mm; padding: 1mm 4mm 2.6mm; column-gap: 6mm; }
+  .ef { padding-top: 2mm; break-inside: avoid; }
+  .ef.wide { grid-column: 1 / -1; }
+  .ef-k { font-size: 7.6pt; font-weight: 600; color: var(--muted); }
+  .ef-v { font-size: 9.2pt; font-weight: 500; margin-top: 0.4mm; }
+  .ef-v.mono { font-size: 7.6pt; color: var(--muted); word-break: break-all; }
+  .ev-block { margin-top: 4mm; }
+  .ev-k { font-size: 8.4pt; font-weight: 700; color: var(--navy); margin-bottom: 1.4mm;
+          break-after: avoid; page-break-after: avoid; }
+  .ev-p { font-size: 9.4pt; white-space: pre-line; orphans: 3; widows: 3; }
+  .ev-p + .ev-p { margin-top: 1.8mm; }
+  .witness { border-left: 2pt solid var(--navy); padding: 1.6mm 0 1.6mm 3.4mm; break-inside: avoid; }
+  .witness + .witness { margin-top: 2.4mm; }
+  .witness-q { font-size: 9.4pt; font-style: italic; }
+  .witness-by { font-size: 8.2pt; color: var(--muted); margin-top: 1mm; }
+  .witness-by b { color: var(--ink); font-style: normal; }
+  .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .ph { break-inside: avoid; page-break-inside: avoid; }
+  .ph-f { height: 44mm; background: var(--tint); border: 0.6pt solid var(--hair); border-radius: 1.2mm;
+          display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .ph-f img { display: block; max-width: 100%; max-height: 44mm; }
+  .ph-c { font-size: 7.8pt; color: var(--muted); margin-top: 1.2mm; line-height: 1.35; word-break: break-word; }
+  .ev-end { margin-top: 5mm; border-bottom: 0.6pt dashed var(--rule); }
+  .cmt { border-left: 2pt solid var(--rule); padding: 1.2mm 0 1.2mm 3.4mm; break-inside: avoid; }
+  .cmt + .cmt { margin-top: 2mm; }
+  .cmt-by { font-size: 8pt; color: var(--muted); }
+  .cmt-by b { color: var(--ink); }
+  .cmt-flag { font-weight: 600; color: var(--warn); }
+  .cmt-t { font-size: 9.2pt; white-space: pre-line; margin-top: 0.4mm; }
+
+  /* ── Declarations and witness statements ───────────────────────────── */
+  .decl { border: 0.7pt solid var(--rule); border-radius: 1.6mm; padding: 4mm 4.6mm; margin-top: 4mm;
+          break-inside: avoid; page-break-inside: avoid; }
+  .sh + .decl { margin-top: 4mm; }
+  .decl-st { font-size: 9.6pt; line-height: 1.6; padding: 3mm 4mm; border-left: 2.4pt solid var(--navy);
+             background: var(--tint); border-radius: 0 1.2mm 1.2mm 0; white-space: pre-line; }
+  .decl-src { font-size: 8pt; color: var(--muted); margin-top: 1.8mm; font-style: italic; }
+  .decl-grid { display: grid; grid-template-columns: 70mm 1fr; gap: 8mm; margin-top: 4mm; }
+  .sig-role { font-size: 7.9pt; font-weight: 600; color: var(--muted); }
+  .sig-img { display: block; height: 17mm; max-width: 100%; object-fit: contain; margin: 1.6mm 0 0; }
+  .sig-img.light { filter: invert(1); }
+  .sig-blank { height: 15mm; }
+  .sig-line { border-top: 0.8pt solid var(--ink); margin-top: 1mm; padding-top: 1.6mm; }
+  .sig-name { font-size: 10pt; font-weight: 700; }
+  .sig-meta { font-size: 8pt; color: var(--muted); margin-top: 0.3mm; }
+  .df { padding: 1.8mm 0; border-bottom: 0.6pt solid var(--hair); }
+  .df:first-child { padding-top: 0; }
+  .df .kv-v { font-size: 9pt; font-weight: 500; }
+  .decl table { margin-top: 4mm; }
+  .sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 4mm; }
+
+  .notes { margin-top: 10mm; break-inside: avoid; }
+  .notes .sh { margin-bottom: 1mm; }
+  .sources ol { margin: 2.6mm 0 0; padding: 0; list-style: none; }
+  .sources li { font-size: 8.4pt; margin-bottom: 1.4mm; display: flex; gap: 2mm; }
+  .sources .r { font-weight: 700; color: var(--navy); min-width: 6mm; }
+  .sources .url { word-break: break-all; color: var(--muted); }
+  /* ── Links inside the PDF ───────────────────────────────────────────── */
+  a { color: inherit; text-decoration: none; }
+  a.xref { color: var(--navy); font-weight: 600; border-bottom: 0.6pt solid #9fb0c8; }
+  .toc a { display: flex; gap: 3mm; align-items: baseline; color: var(--ink); }
+
+  /* ── Gateway summary (one page, before section 01) ─────────────────── */
+  /* Follows the contents when it fits on that page, else starts the next; never splits. */
+  .gws { margin-top: 8mm; break-inside: avoid; page-break-inside: avoid; }
+  .gws table td { white-space: normal; }
+  .gws .req b { display: block; font-weight: 600; }
+  .gws .req .sm { display: block; margin-top: 0.4mm; line-height: 1.35; }
+  .gws td.dt8 { font-size: 8pt; white-space: pre-line; color: var(--ink); }
+  .gws .flag { display: block; margin-top: 0.6mm; font-weight: 600; }
+  .gws .flag.warn { color: var(--warn); } .gws .flag.bad { color: var(--bad); }
+  .gws td.in a, .gws td.in span { font-weight: 700; color: var(--navy); font-size: 8.6pt; }
+  .gws-note { margin-top: 3mm; font-size: 8pt; color: var(--muted); }
+
+  /* ── Unit sign-off ─────────────────────────────────────────────────── */
+  .unit-head { display: flex; align-items: center; gap: 3.4mm; padding-bottom: 2.4mm;
+               border-bottom: 0.7pt solid var(--rule); }
+  .unit-head .ev-title { font-size: 10.8pt; }
+  .unit .decl-grid { grid-template-columns: 62mm 1fr; margin-top: 3mm; }
+  .unit .sig-blank { height: 12mm; }
+  .unit .df .kv-v { font-size: 8.8pt; }
+  .unit-facts { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; }
+  .unit-facts .df:first-child, .unit-facts .df:nth-child(2) { padding-top: 0; }
+  .unit-facts .df.wide { grid-column: 1 / -1; }
+
+  /* ── Evidence: photo placeholder, authenticity ─────────────────────── */
+  .ph-f.held { flex-direction: column; gap: 1mm; color: var(--muted); font-size: 8.4pt; font-weight: 600;
+               background: repeating-linear-gradient(135deg, #f5f7fa 0 3mm, #eef1f5 3mm 6mm); }
+  .auth { display: flex; align-items: baseline; gap: 3mm; flex-wrap: wrap; }
+  .auth-t { font-size: 9.2pt; }
+  .auth-h { font-size: 7.2pt; color: var(--muted); word-break: break-all; margin-top: 0.8mm; }
+  .witness-c { font-size: 8.2pt; margin-top: 0.6mm; color: var(--ink); }
+  .witness-c.warn { color: var(--warn); font-weight: 600; }
+
+  .disclaimer { margin-top: 6mm; padding-top: 3mm; border-top: 0.7pt solid var(--rule); font-size: 8pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <!-- ══ Cover ════════════════════════════════════════════════════════ -->
+  <div class="cover">
+    <div class="hero">
+      <div class="hero-top">
+        <div class="org">
+          {% if org.logo != blank %}<img class="org-logo" src="{{ org.logo }}" />{% endif %}
+          <div>
+            <div class="org-name">{% if org.name != blank %}{{ org.name }}{% else %}Apprentice record{% endif %}</div>
+            {% if org.sub != blank %}<div class="org-sub">{{ org.sub }}</div>{% endif %}
+          </div>
+        </div>
+        {% if meta.reference != blank %}
+        <div class="ref">
+          <div class="ref-k">Pack reference</div>
+          <div class="ref-v mono">{{ meta.reference }}</div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="hero-main">
+        <div class="kicker">{{ meta.kind | default: "Portfolio evidence pack" }}</div>
+        <h1 class="hero-name">{{ meta.title | default: "Apprentice" }}</h1>
+        {% if meta.subtitle != blank %}<div class="hero-sub">{{ meta.subtitle | replace: ' · ', '<br />' }}</div>{% endif %}
+
+        {% if progress and progress.total > 0 %}
+        <div class="hero-progress">
+          <div class="hp-figure tnum">{{ progress.passed }}<span class="hp-of">of {{ progress.total }}</span></div>
+          <div class="hp-bar"><i style="width: {{ progress.pct }}%"></i></div>
+        </div>
+        <div class="hp-label">Criteria passed and signed off by an assessor</div>
+        {% elsif status.label != blank %}
+        <div class="hp-label" style="margin-top:10mm;font-size:11pt;color:#fff">{{ status.label }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="cover-body">
+      {% if headline and headline.size > 0 %}
+      <div class="glance">
+        {% for h in headline %}
+          <div class="gl">
+            <div class="gl-k">{{ h.label }}</div>
+            <div class="gl-v">{{ h.value }}{% if h.unit != blank %}<span class="gl-u">{{ h.unit }}</span>{% endif %}</div>
+            {% if h.note != blank %}<div class="gl-n">{{ h.note }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="details">
+        {% for f in cover_facts %}
+          {% unless f.big or f.label == 'Pack reference' or f.label == 'Generated' %}
+          <div class="dt">
+            <div class="dt-k">{{ f.label }}</div>
+            <div class="dt-v{% if f.mono %} mono{% endif %}">{{ f.value | default: "Not recorded" }}</div>
+          </div>
+          {% endunless %}
+        {% endfor %}
+      </div>
+
+      <div class="cover-foot">
+        <div>
+          {% if meta.generated != blank %}Prepared <b>{{ meta.generated }}</b>{% endif %}{% if meta.generated_by != blank %} by <b>{{ meta.generated_by }}</b>{% endif %}
+          {% if meta.integrity != blank %}<br />{{ meta.integrity }}{% endif %}
+        </div>
+        <div class="made">Produced with <span class="brand">Elec-Mate</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Record ═══════════════════════════════════════════════════════ -->
+  <div class="pad">
+    {% if toc and toc.size > 0 %}
+    <div class="toc">
+      <div class="toc-h">Contents</div>
+      <ol>{% if gateway_summary %}<li><a href="#gateway-summary"><span class="n">GW</span><span>{{ gateway_summary.title }}</span></a></li>{% endif %}{% for c in toc %}<li><a href="#{{ c.id }}"><span class="n">{{ c.n }}</span><span>{{ c.title }}</span></a></li>{% endfor %}</ol>
+    </div>
+    {% elsif contents and contents.size > 0 %}
+    <div class="toc">
+      <div class="toc-h">Contents</div>
+      <ol>{% for c in contents %}<li><span class="n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span>{{ c }}</span></li>{% endfor %}</ol>
+    </div>
+    {% endif %}
+
+    {% for al in alerts %}
+      <div class="alert {{ al.tone | default: 'neutral' }}">{{ al.title }} <span>{{ al.text }}</span></div>
+    {% endfor %}
+
+    {% if gateway_summary %}
+      {% assign gs = gateway_summary %}
+      <div class="gws" id="gateway-summary">
+        <div class="sh"><h2>{{ gs.title }}{% if gs.sub != blank %} <span class="count">· {{ gs.sub }}</span>{% endif %}</h2></div>
+        {% if gs.intro != blank %}<p class="intro">{{ gs.intro }}</p>{% endif %}
+        <table class="compact after-h">
+          <thead><tr><th>Requirement</th><th style="width:22mm">Status</th><th style="width:34mm">Date</th><th style="width:18mm">In this pack</th></tr></thead>
+          <tbody>
+          {% for r in gs.rows %}
+            <tr>
+              <td class="req"><b>{{ r.label }}</b>{% if r.note != blank %}<span class="sm">{{ r.note }}</span>{% endif %}</td>
+              <td><span class="state {{ r.tone }}">{{ r.state }}</span></td>
+              <td class="dt8">{{ r.date }}{% if r.flag != blank %}<span class="flag {{ r.date_tone }}">{{ r.flag }}</span>{% endif %}</td>
+              <td class="in">{% if r.where.id != blank %}<a href="#{{ r.where.id }}">{{ r.where.n }}</a>{% else %}<span>{{ r.where.n }}</span>{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% if gs.note != blank %}<div class="gws-note">{{ gs.note }}</div>{% endif %}
+      </div>
+    {% endif %}
+
+    {% assign secno = 0 %}
+    {% for s in sections %}
+      <div{% if s.anchor != blank %} id="{{ s.anchor }}"{% endif %} class="sec{% if s.new_page or gateway_summary and forloop.first %} new-page{% endif %}{% if s.heading == blank %} cont{% endif %}{% if s.kind == 'kv' or s.keep %} keep{% endif %}">
+        {% if s.heading != blank %}
+          {% assign hparts = s.heading | split: ' · ' %}
+          {% comment %} A sub-section (s.sub, or the two hours sub-sections by name) shares the number of the section above it, so the numbers match the contents. {% endcomment %}
+          {% assign sub = false %}
+          {% if s.sub or hparts[0] == 'Planned-versus-actual hours statement' or hparts[0] == 'Hours log' %}{% assign sub = true %}{% endif %}
+          {% unless sub %}{% assign secno = secno | plus: 1 %}{% endunless %}
+          <div class="sh{% if sub %} sub{% endif %}">
+            {% unless sub %}<span class="sh-n">{% if s.num != blank %}{{ s.num }}{% else %}{{ secno | prepend: '0' | slice: -2, 2 }}{% endif %}</span>{% endunless %}
+            <h2>{{ hparts[0] }}{% if hparts.size > 1 %} <span class="count">· {{ hparts[1] }}</span>{% endif %}</h2>
+          </div>
+        {% endif %}
+        {% if s.intro != blank %}<p class="intro">{{ s.intro }}</p>{% endif %}
+
+        {% if s.kind == 'kv' %}
+          <div class="kv after-h">
+            {% for r in s.rows %}
+              <div class="kv-cell{% if r.wide %} wide{% elsif r.span2 %} span2{% endif %}">
+                <div class="kv-k">{{ r.label }}</div>
+                <div class="kv-v{% if r.mono %} mono{% endif %}{% if r.tone != blank %} {{ r.tone }}{% endif %}">{{ r.value | default: "Not recorded" }}</div>
+                {% if r.note != blank %}<div class="kv-note">{{ r.note }}</div>{% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+        {% elsif s.kind == 'checklist' %}
+          <table class="after-h">
+            <thead><tr><th style="width:58mm">Requirement</th><th style="width:24mm">Status</th><th>What the record shows</th></tr></thead>
+            <tbody>
+            {% for i in s.items %}
+              <tr>
+                <td><b>{{ i.label }}</b></td>
+                <td><span class="state {{ i.result }}">{{ i.result_label | default: i.result }}</span></td>
+                <td>{{ i.note }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+
+        {% elsif s.kind == 'table' %}
+          {% if s.rows.size > 0 %}
+          <table class="after-h{% if s.compact %} compact{% endif %}">
+            <thead><tr>{% for c in s.columns %}<th style="{% if s.widths and s.widths[forloop.index0] != blank %}width:{{ s.widths[forloop.index0] }}{% endif %}">{{ c }}</th>{% endfor %}</tr></thead>
+            <tbody>{% for row in s.rows %}{% assign ri = forloop.index0 %}<tr>{% for cell in row %}{% if s.state_col != nil and forloop.index0 == s.state_col %}<td>{% if cell != blank %}<span class="state {{ s.row_tones[ri] | default: 'neutral' }}">{{ cell }}</span>{% endif %}</td>{% else %}<td class="tnum{% if cell == '0' or cell == 0 %} zero{% endif %}">{{ cell }}</td>{% endif %}{% endfor %}</tr>{% endfor %}</tbody>
+          </table>
+          {% else %}
+          <div class="text"><p>{{ s.empty | default: "Nothing recorded." }}</p></div>
+          {% endif %}
+
+        {% elsif s.kind == 'states' %}
+          <table class="compact after-h">
+            <thead><tr><th style="width:15mm">AC</th><th>Criterion</th><th style="width:25mm">State</th><th style="width:54mm">Evidence and decision</th></tr></thead>
+            <tbody>
+            {% for r in s.rows %}
+              {% if r.unit != blank %}
+                <tr class="unit"><td colspan="4">Unit {{ r.unit }}{% if r.unit_title != blank %} · {{ r.unit_title }}{% endif %}</td></tr>
+              {% else %}
+                <tr>
+                  <td class="code mono">{{ r.ac }}</td>
+                  <td>{{ r.text }}</td>
+                  <td><span class="state {{ r.tone }}">{{ r.state }}</span></td>
+                  <td>{% if r.ev %}{% if r.ev.size > 0 %}Evidence {% for e in r.ev %}<a class="xref" href="#ev-{{ e }}">{{ e }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}{% if r.detail_more != blank %}; {% endif %}{% endif %}{{ r.detail_more }}{% else %}{{ r.detail | replace: ' · ', '; ' }}{% endif %}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+            </tbody>
+          </table>
+
+        {% elsif s.kind == 'text' %}
+          <div class="text">{% for p in s.paragraphs %}<p>{{ p }}</p>{% endfor %}</div>
+
+        {% elsif s.kind == 'items' %}
+          {% if s.items.size > 0 %}
+          <ul class="list">{% for i in s.items %}<li>{{ i }}</li>{% endfor %}</ul>
+          {% else %}
+          <div class="text"><p>{{ s.empty | default: "None." }}</p></div>
+          {% endif %}
+
+        {% elsif s.kind == 'evidence' %}
+          <div class="ev"{% if s.ref != blank %} id="ev-{{ s.ref }}"{% endif %}>
+            <div class="ev-top">
+              <div class="ev-head">
+                <span class="ev-ref mono">{{ s.ref }}</span>
+                <span class="ev-title">{{ s.title }}</span>
+                {% if s.state != blank %}<span class="state {{ s.tone }}">{{ s.state }}</span>{% endif %}
+              </div>
+              {% if s.facts.size > 0 %}
+              <div class="ev-facts">
+                {% for r in s.facts %}
+                  <div class="ef{% if r.wide or r.mono %} wide{% endif %}"><div class="ef-k">{{ r.label }}</div><div class="ef-v{% if r.mono %} mono{% endif %}">{{ r.value | default: "Not recorded" }}</div></div>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            {% for t in s.texts %}
+              <div class="ev-block"><div class="ev-k">{{ t.label }}</div><div class="ev-p">{{ t.body | replace: '**', '' }}</div></div>
+            {% endfor %}
+            {% if s.criteria.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Criteria this evidence is claimed for</div>
+                <table class="compact">
+                  <thead><tr><th style="width:26mm">AC</th><th>Criterion</th><th style="width:27mm">State</th></tr></thead>
+                  <tbody>{% for c in s.criteria %}<tr><td class="code mono">{{ c.code }}</td><td>{% if c.text != blank %}{{ c.text }}{% else %}<span class="sm">Wording not held for this criterion</span>{% endif %}</td><td><span class="state {{ c.tone }}">{{ c.state }}</span></td></tr>{% endfor %}</tbody>
+                </table>
+              </div>
+            {% endif %}
+            {% if s.decisions.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Assessment decisions</div>
+                <table class="compact">
+                  <thead><tr><th style="width:26mm">AC</th><th style="width:24mm">Decision</th><th style="width:44mm">Assessor and date</th><th>Feedback</th></tr></thead>
+                  <tbody>{% for d in s.decisions %}<tr><td class="code mono">{{ d.ac }}</td><td><span class="state {{ d.tone }}">{{ d.decision }}</span></td><td>{{ d.by | replace: ' · ', ', ' }}<br /><span class="sm">{{ d.when }}</span></td><td>{{ d.feedback }}{% if d.iqa != blank %}<br /><b>IQA:</b> {{ d.iqa }}{% endif %}</td></tr>{% endfor %}</tbody>
+                </table>
+              </div>
+            {% endif %}
+            {% for t in s.tables %}
+              {% if t.rows.size > 0 %}
+              <div class="ev-block"><div class="ev-k">{{ t.label }}</div>
+                <table class="compact">
+                  <thead><tr>{% for c in t.columns %}<th style="{% if t.widths and t.widths[forloop.index0] != blank %}width:{{ t.widths[forloop.index0] }}{% endif %}">{{ c }}</th>{% endfor %}</tr></thead>
+                  <tbody>{% for row in t.rows %}<tr>{% for cell in row %}<td{% if forloop.first and t.code %} class="code mono"{% endif %}>{{ cell }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+                </table>
+              </div>
+              {% endif %}
+            {% endfor %}
+            {% if s.witnesses.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Witness statement</div>
+                {% for w in s.witnesses %}<div class="witness"><div class="witness-q">“{{ w.statement }}”</div><div class="witness-by"><b>{{ w.name }}</b>{% if w.role != blank %}, {{ w.role }}{% endif %} · {{ w.when }}</div>{% if w.competence != blank %}<div class="witness-c{% if w.competence_tone != blank %} {{ w.competence_tone }}{% endif %}">{{ w.competence }}</div>{% endif %}</div>{% endfor %}
+              </div>
+            {% endif %}
+            {% if s.comments and s.comments.count > 0 %}
+              <div class="ev-block"><div class="ev-k">Feedback · {{ s.comments.count }} comment{% if s.comments.count != 1 %}s{% endif %}</div>
+                {% for c in s.comments.items %}<div class="cmt"><div class="cmt-by"><b>{{ c.who }}</b>{% if c.role != blank %}, {{ c.role }}{% endif %} · {{ c.when }}{% if c.flag != blank %} · <span class="cmt-flag">{{ c.flag }}</span>{% endif %}</div><div class="cmt-t">{{ c.text }}</div></div>{% endfor %}
+                {% if s.comments.more != blank %}<div class="sm" style="margin-top:1.6mm">{{ s.comments.more }}</div>{% endif %}
+              </div>
+            {% endif %}
+            {% if s.authenticity %}
+              <div class="ev-block"><div class="ev-k">Assessor’s authenticity check</div>
+                <div class="auth"><span class="auth-t">{{ s.authenticity.line }}</span>{% if s.authenticity.state != blank %}<span class="state {{ s.authenticity.tone }}">{{ s.authenticity.state }}</span>{% endif %}</div>
+                {% if s.authenticity.hash != blank %}<div class="auth-h mono">Record fingerprint {{ s.authenticity.hash }}</div>{% endif %}
+              </div>
+            {% endif %}
+            {% if s.photos.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Photos</div>
+                <div class="photos">
+                  {% for p in s.photos %}
+                    {% if p.withheld %}
+                    <div class="ph"><div class="ph-f held"><span>Photo held by the college</span></div><div class="ph-c">{{ p.caption | replace: ' · ', ': ' }}</div></div>
+                    {% else %}
+                    <div class="ph"><div class="ph-f"><img src="{{ p.url }}" /></div><div class="ph-c">{{ p.caption | replace: ' · ', ': ' }}</div></div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+            {% if s.files.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Files and fingerprints (SHA-256)</div>
+                <table class="compact">
+                  <thead><tr><th style="width:66mm">File</th><th>Fingerprint</th></tr></thead>
+                  <tbody>{% for f in s.files %}<tr><td>{{ f.name | replace: ' · ', ': ' }}<br /><span class="sm">{{ f.path }}</span></td><td class="hash mono">{{ f.sha256 | default: "Not recorded" }}</td></tr>{% endfor %}</tbody>
+                </table>
+              </div>
+            {% endif %}
+            <div class="ev-end"></div>
+          </div>
+
+        {% elsif s.kind == 'sigs' %}
+          {% if s.statement != blank %}<div class="text"><p>{{ s.statement }}</p></div>{% endif %}
+          <div class="sigs">
+            {% for g in s.signers %}
+              <div>
+                <div class="sig-role">{{ g.role | replace: ' · ', ', ' }}</div>
+                {% if g.image != blank %}<img class="sig-img{% if g.ink == 'light' %} light{% endif %}" src="{{ g.image }}" />{% else %}<div class="sig-blank"></div>{% endif %}
+                <div class="sig-line">
+                  <div class="sig-name">{% if g.name != blank %}{{ g.name }}{% else %}Not signed{% endif %}</div>
+                  <div class="sig-meta">{% if g.when != blank %}{{ g.when }}{% else %}Not signed yet{% endif %}</div>
+                  {% if g.method != blank %}<div class="sig-meta">{{ g.method }}</div>{% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+        {% elsif s.kind == 'unit_signoff' %}
+          <div class="decl unit">
+            <div class="unit-head">
+              <span class="ev-ref mono">{{ s.code }}</span>
+              <span class="ev-title">{{ s.title }}</span>
+              {% if s.state != blank %}<span class="state {{ s.tone }}">{{ s.state }}</span>{% endif %}
+            </div>
+            <div class="decl-grid">
+              <div>
+                <div class="sig-role">{{ s.signer.role | replace: ' · ', ', ' }}</div>
+                <div class="sig-blank"></div>
+                <div class="sig-line">
+                  <div class="sig-name">{{ s.signer.name }}</div>
+                  {% if s.signer.when != blank %}<div class="sig-meta">{{ s.signer.when }}</div>{% endif %}
+                  {% if s.signer.method != blank %}<div class="sig-meta">{{ s.signer.method }}</div>{% endif %}
+                </div>
+              </div>
+              <div class="unit-facts">
+                {% for r in s.facts %}<div class="df{% if r.wide %} wide{% endif %}"><div class="kv-k">{{ r.label }}</div><div class="kv-v{% if r.tone != blank %} {{ r.tone }}{% endif %}">{{ r.value }}</div></div>{% endfor %}
+                {% if s.ev.size > 0 %}<div class="df"><div class="kv-k">Evidence</div><div class="kv-v">{% for e in s.ev %}<a class="xref" href="#ev-{{ e }}">{{ e }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</div></div>{% endif %}
+              </div>
+            </div>
+          </div>
+
+        {% elsif s.kind == 'declaration' %}
+          <div class="decl">
+            <div class="decl-st">{{ s.statement }}</div>
+            {% if s.source != blank %}<div class="decl-src">{{ s.source }}</div>{% endif %}
+            <div class="decl-grid">
+              <div>
+                <div class="sig-role">{{ s.signer.role | replace: ' · ', ', ' }}</div>
+                {% if s.signer.image != blank %}<img class="sig-img{% if s.signer.ink == 'light' %} light{% endif %}" src="{{ s.signer.image }}" />{% else %}<div class="sig-blank"></div>{% endif %}
+                <div class="sig-line">
+                  <div class="sig-name">{% if s.signer.name != blank %}{{ s.signer.name }}{% else %}Not signed{% endif %}</div>
+                  {% if s.signer.when != blank %}<div class="sig-meta">{{ s.signer.when }}</div>{% endif %}
+                  {% if s.signer.method != blank %}<div class="sig-meta">{{ s.signer.method }}</div>{% endif %}
+                </div>
+              </div>
+              <div>
+                {% for r in s.facts %}<div class="df"><div class="kv-k">{{ r.label }}</div><div class="kv-v{% if r.mono %} mono{% endif %}{% if r.tone != blank %} {{ r.tone }}{% endif %}">{% if r.href != blank %}<a class="xref" href="{{ r.href }}">{{ r.value }}</a>{% else %}{{ r.value | default: "Not recorded" }}{% endif %}</div></div>{% endfor %}
+              </div>
+            </div>
+            {% if s.items.size > 0 %}
+              <table class="compact">
+                <thead><tr><th>Evidence signed for</th><th style="width:34mm">Criteria</th><th style="width:62mm">Fingerprint at signing</th></tr></thead>
+                <tbody>{% for i in s.items %}<tr><td>{% if i.ref != blank %}<a class="xref" href="#ev-{{ i.ref }}">{{ i.ref }}</a> {{ i.name }}{% else %}{{ i.title }}{% endif %}</td><td>{{ i.criteria }}</td><td class="hash mono">{{ i.hash | default: "Not recorded" }}</td></tr>{% endfor %}</tbody>
+              </table>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    {% if notes and notes.size > 0 %}
+      <div class="notes"><div class="sh"><h2>Notes</h2></div><ul class="list">{% for n in notes %}<li>{{ n }}</li>{% endfor %}</ul>
+        {% if disclaimer != blank %}<div class="disclaimer">{{ disclaimer }}</div>{% endif %}
+      </div>
+    {% endif %}
+
+    {% if sources and sources.size > 0 %}
+      <div class="notes sources"><div class="sh"><h2>Sources</h2></div><ol>{% for f in sources %}<li><span class="r">{{ f.ref | default: '•' }}</span><span>{{ f.text }}{% if f.url != blank %}<br /><span class="url">{{ f.url }}</span>{% endif %}</span></li>{% endfor %}</ol></div>
+    {% endif %}
+
+    {% if disclaimer != blank %}{% unless notes and notes.size > 0 %}<div class="disclaimer">{{ disclaimer }}</div>{% endunless %}{% endif %}
+  </div>
+
+</body>
+</html>

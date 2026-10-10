@@ -164,7 +164,7 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
 
       {/* Results */}
       <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white px-1 mb-2">
           {filteredDiagnostics.length} Diagnostics
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">

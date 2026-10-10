@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-electric-shower',
@@ -154,7 +154,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
             '**Regulation 701.512.3** — switching, control and accessories in the location are restricted. The shower must have a dedicated isolator OUTSIDE the bathroom zones (typically a 45 A or 50 A double-pole switch in the airing cupboard, on the landing, or just outside the bathroom door). Zone accessory rules: Zone 0 — no switchgear or accessories whatsoever; Zone 1 — only switches of SELV circuits at &lt;=12 V AC RMS or 30 V ripple-free DC (SELV source must be outside zones 0, 1 and 2); Zone 2 — no switches or socket-outlets except SELV (Section 414) and shaver supply units complying with BS EN 61558-2-5. Pull-cord insulating cords and switches incorporated in fixed current-using equipment suitable for the zone are exempt from these restrictions.',
             '**Regulation 701.512.2** — electrical equipment in zones 1 and 2 must have minimum IP rating IPX4. The shower itself is normally rated to its installation position by the manufacturer.',
             '**Cable concealment** — cable concealed in walls of the location at depth less than 50 mm must either be mechanically protected, run within Earthed metallic conduit / trunking, or be 30 mA RCD protected. The RCD requirement of 701.411.3.3 covers the shower circuit naturally.',
-            '**Regulation 411.3.4 (A4:2026) — bathroom lighting circuits** — in domestic premises, AC final circuits supplying luminaires must have additional 30 mA RCD protection (Regulation 411.3.4). When quoting for a new shower installation, check whether the consumer unit already provides RCBO or split-load RCD coverage for the bathroom lighting circuit. If lighting circuits are on an unprotected MCB, A4:2026 compliance requires an upgrade — this is a practical consequence that commonly affects shower installation quotes and should be identified at the initial survey stage.',
+            '**Regulation 411.3.4 (since BS 7671:2018) — bathroom lighting circuits** — in domestic premises, AC final circuits supplying luminaires must have additional 30 mA RCD protection (Regulation 411.3.4). When quoting for a new shower installation, check whether the consumer unit already provides RCBO or split-load RCD coverage for the bathroom lighting circuit. If lighting circuits are on an unprotected MCB, compliance with the current edition requires an upgrade — this is a practical consequence that commonly affects shower installation quotes and should be identified at the initial survey stage.',
             '**Supplementary bonding (Regulation 701.415.2)** — supplementary protective equipotential bonding is required in every room containing a bath or shower, connecting the protective conductor terminals of each circuit to accessible extraneous-conductive-parts (metallic water/waste pipes, central heating, accessible structural metalwork). Omission is only permitted when ALL three conditions are met: (d) all final circuits of the location comply with Regulation 411.3.2 automatic disconnection; (e) all final circuits have additional RCD protection per Regulation 415.1.1; and (f) all extraneous-conductive-parts are effectively connected to the main protective equipotential bonding per Regulation 411.3.1.2. Where any condition is not met, supplementary bonding is mandatory regardless of when the installation was carried out.',
           ],
         },
@@ -277,7 +277,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
       description:
         'Why all-RCBO consumer units have become the default — bathroom lighting circuits get the same RCD as the shower.',
       icon: 'ShieldCheck',

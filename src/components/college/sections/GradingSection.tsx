@@ -25,11 +25,17 @@ import {
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
+import { ActionSheet, TextTabs } from '@/components/college/assessment/AssessmentTabs';
 import { useMyLearners } from '@/components/college/assessment/useMyLearners';
-import { Bars, KeyHint, ScopeToggle, initialsOf, useQueueKeys, useScope } from '@/components/college/assessment/AssessmentKit';
+import {
+  Bars,
+  KeyHint,
+  ScopeToggle,
+  initialsOf,
+  useQueueKeys,
+  useScope,
+} from '@/components/college/assessment/AssessmentKit';
 import { RecordGradeDialog } from '@/components/college/dialogs/RecordGradeDialog';
 import { RubricGradingDialog } from '@/components/college/dialogs/RubricGradingDialog';
 import { GradeDetailSheet } from '@/components/college/sheets/GradeDetailSheet';
@@ -47,6 +53,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { keyLabel } from '@/lib/college/labels';
 
 const DAY_MS = 86_400_000;
 
@@ -78,7 +85,7 @@ function shortDate(iso: string): string {
 
 const statusChipCn = (bucket: Bucket) =>
   cn(
-    'inline-flex h-6 shrink-0 items-center rounded-full border px-2 text-[10.5px] font-semibold text-white',
+    'inline-flex h-6 shrink-0 items-center rounded-full border px-2 text-[12px] font-semibold text-white',
     bucket === 'returned' ? 'border-orange-400/60' : 'border-white/[0.16]'
   );
 
@@ -111,16 +118,35 @@ const HELP: PageHelpContent = {
   title: 'Grading',
   what: 'Every assessment your learners have handed in, with the oldest unmarked at the top. Mark it, add feedback, or send it back for resubmission.',
   steps: [
-    { title: 'Mark the oldest first', body: 'The list opens on To mark, oldest first. Anything over a week is orange.' },
-    { title: 'Open, then grade', body: 'Tap a row to see the submission. The menu on the right grades with a rubric, quick-grades, adds feedback or asks for a resubmission.' },
-    { title: 'Record one from scratch', body: 'Record a grade adds an assessment that was marked away from the app.' },
+    {
+      title: 'Mark the oldest first',
+      body: 'The list opens on To mark, oldest first. Anything over a week is orange.',
+    },
+    {
+      title: 'Open, then grade',
+      body: 'Tap a row to see the submission. The menu on the right grades with a rubric, quick-grades, adds feedback or asks for a resubmission.',
+    },
+    {
+      title: 'Record one from scratch',
+      body: 'Record a grade adds an assessment that was marked away from the app.',
+    },
   ],
   legend: [
-    { swatch: 'bg-orange-500', label: 'Waiting too long', body: 'Unmarked for a week or more, or sent back to the learner.' },
+    {
+      swatch: 'bg-orange-500',
+      label: 'Waiting too long',
+      body: 'Unmarked for a week or more, or sent back to the learner.',
+    },
   ],
   notes: [
-    { title: 'Keyboard', body: 'On a desktop: j and k move down and up the list, Enter opens the highlighted assessment.' },
-    { title: 'Whose work', body: 'My learners shows the cohorts you lead or learners assigned to you. Everyone shows the college.' },
+    {
+      title: 'Keyboard',
+      body: 'On a desktop: j and k move down and up the list, Enter opens the highlighted assessment.',
+    },
+    {
+      title: 'Whose work',
+      body: 'My learners shows the cohorts you lead or learners assigned to you. Whole college shows everyone at the college.',
+    },
   ],
 };
 
@@ -148,6 +174,8 @@ export function GradingSection() {
   const [gradeDetailOpen, setGradeDetailOpen] = useState(false);
   const [feedbackSheetOpen, setFeedbackSheetOpen] = useState(false);
   const [selectedGradeId, setSelectedGradeId] = useState<string | null>(null);
+  /** Phone: the row whose actions sheet is open. */
+  const [actionsFor, setActionsFor] = useState<string | null>(null);
 
   const isLoading = gradesLoading || studentsLoading || staffLoading || cohortsLoading;
 
@@ -164,7 +192,9 @@ export function GradingSection() {
   };
   const allGrades = grades;
   const scoped = scope === 'mine' ? allGrades.filter((g) => isMine(g.student_id)) : allGrades;
-  const mineToMark = allGrades.filter((g) => bucketOf(g.status) === 'tomark' && isMine(g.student_id)).length;
+  const mineToMark = allGrades.filter(
+    (g) => bucketOf(g.status) === 'tomark' && isMine(g.student_id)
+  ).length;
   const allToMark = allGrades.filter((g) => bucketOf(g.status) === 'tomark').length;
   const toMark = scoped.filter((g) => bucketOf(g.status) === 'tomark');
   const marked = scoped.filter((g) => bucketOf(g.status) === 'marked');
@@ -193,6 +223,28 @@ export function GradingSection() {
     const since = Date.now() - 7 * DAY_MS;
     return marked.filter((g) => g.assessed_at && new Date(g.assessed_at).getTime() >= since).length;
   }, [marked]);
+
+  // One sentence carries the figures the old row of tiles repeated.
+  const summary = (() => {
+    const parts: string[] = [];
+    if (toMark.length === 0) parts.push('Nothing waiting to be marked.');
+    else {
+      parts.push(
+        `${toMark.length} ${toMark.length === 1 ? 'assessment' : 'assessments'} to mark, oldest first.`
+      );
+      if (oldestWaitingDays !== null && oldestWaitingDays >= 7)
+        parts.push(`The oldest has waited ${oldestWaitingDays} days.`);
+    }
+    if (returned.length > 0) parts.push(`${returned.length} sent back and waiting on the learner.`);
+    parts.push(
+      markedThisWeek > 0
+        ? `${markedThisWeek} marked this week.`
+        : marked.length > 0
+          ? 'None marked this week yet.'
+          : ''
+    );
+    return parts.filter(Boolean).join(' ');
+  })();
 
   const q = searchQuery.trim().toLowerCase();
   const filteredGrades = useMemo(
@@ -225,8 +277,10 @@ export function GradingSection() {
 
   const studentName = (studentId: string | null) =>
     (studentId && studentById.get(studentId)?.name) || 'Unknown learner';
-  const assessorName = (assessorId: string | null) =>
-    !assessorId ? 'Unassigned' : staffById.get(assessorId)?.name || 'Unknown';
+  const assessorLine = (assessorId: string | null) =>
+    !assessorId
+      ? 'No assessor yet'
+      : `Assessor ${staffById.get(assessorId)?.name || 'not on the staff list'}`;
 
   const handleRequestResubmission = async (gradeId: string) => {
     try {
@@ -262,15 +316,17 @@ export function GradingSection() {
       <CollegePageHeader
         eyebrow="Assessment"
         title="Grading"
-        description={
-          toMark.length === 0
-            ? 'Nothing waiting to be marked. Marked work and returns are below.'
-            : `${toMark.length} ${toMark.length === 1 ? 'assessment' : 'assessments'} to mark, oldest first.`
-        }
+        description={summary}
         help={HELP}
         actions={
           <>
-            <ScopeToggle scope={scope} onChange={setScope} my={my} mineCount={mineToMark} allCount={allToMark} />
+            <ScopeToggle
+              scope={scope}
+              onChange={setScope}
+              my={my}
+              mineCount={mineToMark}
+              allCount={allToMark}
+            />
             <button
               type="button"
               onClick={() => {
@@ -285,252 +341,319 @@ export function GradingSection() {
         }
       />
 
-      <CollegeStats
-        items={[
-          {
-            label: 'To mark',
-            value: String(toMark.length),
-            sub: toMark.length ? 'Pending or submitted' : 'All caught up',
-            onClick: () => setFilterBucket('tomark'),
-          },
-          {
-            label: 'Oldest waiting',
-            value: oldestWaitingDays === null ? '—' : `${oldestWaitingDays}d`,
-            sub:
-              oldestWaitingDays === null
-                ? 'Nothing waiting'
-                : oldestWaitingDays >= 7
-                  ? 'Mark this one first'
-                  : 'Within a week',
-            warn: oldestWaitingDays !== null && oldestWaitingDays >= 7,
-            onClick: () => setFilterBucket('tomark'),
-          },
-          {
-            label: 'Marked this week',
-            value: String(markedThisWeek),
-            sub: `${marked.length} marked in total`,
-            good: markedThisWeek > 0,
-            onClick: () => setFilterBucket('marked'),
-          },
-          {
-            label: 'Returned',
-            value: String(returned.length),
-            sub: returned.length ? 'Waiting on the learner' : 'Nothing sent back',
-            warn: returned.length > 0,
-            onClick: () => setFilterBucket('returned'),
-          },
-        ]}
-      />
+      {/* On a phone the list comes first and the charts follow it. */}
+      <div className="flex flex-col gap-8 sm:gap-10">
+        <div className="order-last grid grid-cols-1 items-stretch gap-4 sm:order-none lg:grid-cols-2">
+          <motion.section
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            className={cn(COLLEGE_CARD, 'h-full')}
+          >
+            <CollegeSectionTitle
+              title="Grades awarded"
+              sub={
+                marked.length ? `Across ${marked.length} marked assessments` : 'Nothing marked yet'
+              }
+            />
+            <div className="mt-4">
+              <Bars rows={gradeRows} labelWidth="7rem" onPick={() => setFilterBucket('marked')} />
+            </div>
+          </motion.section>
+          <motion.section
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            className={cn(COLLEGE_CARD, 'h-full')}
+          >
+            <CollegeSectionTitle
+              title="How long work has waited"
+              sub={toMark.length ? `${toMark.length} unmarked` : 'Nothing waiting'}
+            />
+            <div className="mt-4">
+              <Bars rows={ageRows} labelWidth="7rem" onPick={() => setFilterBucket('tomark')} />
+            </div>
+          </motion.section>
+        </div>
 
-      <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2">
-        <motion.section variants={itemVariants} initial="hidden" animate="visible" className={cn(COLLEGE_CARD, 'h-full')}>
-          <CollegeSectionTitle title="Grades awarded" sub={marked.length ? `Across ${marked.length} marked assessments` : 'Nothing marked yet'} />
-          <div className="mt-4">
-            <Bars rows={gradeRows} labelWidth="7rem" onPick={() => setFilterBucket('marked')} />
-          </div>
-        </motion.section>
-        <motion.section variants={itemVariants} initial="hidden" animate="visible" className={cn(COLLEGE_CARD, 'h-full')}>
-          <CollegeSectionTitle title="How long work has waited" sub={toMark.length ? `${toMark.length} unmarked` : 'Nothing waiting'} />
-          <div className="mt-4">
-            <Bars rows={ageRows} labelWidth="7rem" onPick={() => setFilterBucket('tomark')} />
-          </div>
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <CollegeSectionTitle
+            title="Assessments"
+            sub={`${filteredGrades.length} shown`}
+            action={
+              <KeyHint
+                items={[
+                  ['j k', 'Move'],
+                  ['Enter', 'Open'],
+                ]}
+              />
+            }
+          />
+
+          {/* Filters: quiet text tabs for the status, a second rail for the
+              cohort when there is more than one, then the search. */}
+          <motion.div variants={itemVariants} className="space-y-2">
+            <TextTabs
+              ariaLabel="Which assessments to show"
+              value={filterBucket}
+              onChange={setFilterBucket}
+              items={[
+                { key: 'tomark' as const, label: 'To mark', count: toMark.length },
+                { key: 'marked' as const, label: 'Marked', count: marked.length },
+                { key: 'returned' as const, label: 'Returned', count: returned.length },
+                { key: 'all' as const, label: 'All', count: scoped.length },
+              ]}
+            />
+            {activeCohorts.length > 1 && (
+              <TextTabs
+                ariaLabel="Which cohort"
+                className="border-b-0"
+                value={filterCohort}
+                onChange={setFilterCohort}
+                items={[
+                  { key: 'all', label: 'All cohorts' },
+                  ...activeCohorts.map((c) => ({ key: c.id, label: c.name })),
+                ]}
+              />
+            )}
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Find a unit, learner or assessment type"
+              aria-label="Search assessments"
+              className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation lg:max-w-md"
+            />
+          </motion.div>
+
+          {isLoading ? (
+            <div className="space-y-2">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="h-[76px] animate-pulse rounded-2xl bg-white/[0.04]" />
+              ))}
+            </div>
+          ) : filteredGrades.length === 0 ? (
+            <CollegeEmpty
+              title={
+                grades.length === 0
+                  ? 'No assessments recorded yet'
+                  : filterBucket === 'tomark' && !q && filterCohort === 'all'
+                    ? 'Nothing waiting to be marked'
+                    : 'Nothing matches these filters'
+              }
+              body={
+                grades.length === 0
+                  ? 'Record a grade to start the list. Work learners hand in lands here too.'
+                  : scope === 'mine'
+                    ? 'Switch to Whole college to see the rest of the college, or try another filter.'
+                    : 'Try another filter or clear the search.'
+              }
+            />
+          ) : (
+            <motion.ul variants={itemVariants} className={COLLEGE_LIST}>
+              {filteredGrades.map((grade) => {
+                const bucket = bucketOf(grade.status);
+                const age = bucket === 'tomark' ? daysSince(grade.created_at) : null;
+                const urgent = (age !== null && age >= 7) || bucket === 'returned';
+                const mine = scope === 'all' && isMine(grade.student_id);
+                const name = studentName(grade.student_id);
+                const when =
+                  bucket === 'tomark'
+                    ? age === null
+                      ? 'Waiting'
+                      : age <= 0
+                        ? 'Handed in today'
+                        : `Waiting ${age} ${age === 1 ? 'day' : 'days'}`
+                    : grade.assessed_at
+                      ? `Marked ${shortDate(grade.assessed_at)}`
+                      : bucket === 'returned'
+                        ? 'With the learner'
+                        : null;
+
+                return (
+                  <li
+                    key={grade.id}
+                    data-qkey={grade.id}
+                    className={cn(
+                      'flex items-stretch',
+                      focus === grade.id &&
+                        'bg-white/[0.06] shadow-[inset_3px_0_0_0_hsl(47_100%_50%)]'
+                    )}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => openDetail(grade.id)}
+                      className="flex min-w-0 flex-1 items-center gap-3 py-3.5 pl-4 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:gap-4 sm:pl-5"
+                    >
+                      {/* Neutral avatar: the orange waiting line carries the urgency. */}
+                      <span
+                        aria-hidden="true"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/[0.1] text-[13.5px] font-bold text-white"
+                      >
+                        {initialsOf(name)}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block break-words text-[15px] font-semibold leading-tight text-white">
+                          {name}
+                        </span>
+                        <span className="mt-1 line-clamp-2 block text-[13px] leading-snug text-white">
+                          <span className="font-semibold">
+                            {grade.unit_name || 'Untitled unit'}
+                          </span>
+                          {grade.assessment_type ? ` · ${keyLabel(grade.assessment_type)}` : ''}
+                        </span>
+                        <span className="mt-1.5 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+                          <span className={statusChipCn(bucket)}>
+                            {grade.status || bucketLabel[bucket]}
+                          </span>
+                          {mine && (
+                            <span className="inline-flex h-6 shrink-0 items-center rounded-full border border-white/[0.4] px-2 text-[12px] font-semibold text-white">
+                              Yours
+                            </span>
+                          )}
+                          <span className="min-w-0 text-[12.5px] text-white">
+                            {when && (
+                              <span className={cn('font-semibold', urgent && 'text-orange-400')}>
+                                {when}
+                              </span>
+                            )}
+                            {when ? ' · ' : ''}
+                            {assessorLine(grade.assessed_by)}
+                          </span>
+                        </span>
+                      </span>
+                      {bucket !== 'tomark' && grade.grade ? (
+                        <span className="shrink-0 text-[14px] font-bold capitalize text-white">
+                          {grade.grade}
+                        </span>
+                      ) : bucket === 'tomark' ? (
+                        <span className="hidden h-11 min-w-[96px] shrink-0 items-center justify-center rounded-xl border border-white/[0.18] px-3 text-[13px] font-semibold text-white sm:inline-flex">
+                          Mark
+                        </span>
+                      ) : null}
+                      <ChevronRight
+                        className="h-4 w-4 shrink-0 text-white sm:hidden"
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    {/* Phone: the row's actions open as a bottom sheet. */}
+                    <button
+                      type="button"
+                      aria-label="More actions"
+                      onClick={() => setActionsFor(grade.id)}
+                      className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center self-center rounded-xl text-white transition-colors touch-manipulation active:bg-white/[0.08] sm:hidden"
+                    >
+                      <MoreHorizontal className="h-4 w-4" aria-hidden />
+                    </button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          type="button"
+                          aria-label="More actions"
+                          className="mr-2 hidden h-11 w-11 shrink-0 items-center sm:flex justify-center self-center rounded-xl text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                        >
+                          <MoreHorizontal className="h-4 w-4" aria-hidden />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem className="h-11" onClick={() => openDetail(grade.id)}>
+                          View submission
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setSelectedAssessmentId(grade.id);
+                            setRubricDialogOpen(true);
+                          }}
+                        >
+                          Grade with rubric
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setSelectedAssessmentId(grade.id);
+                            setGradeDialogOpen(true);
+                          }}
+                        >
+                          Quick grade
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setSelectedGradeId(grade.id);
+                            setFeedbackSheetOpen(true);
+                          }}
+                        >
+                          Add feedback
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="h-11 text-orange-300 focus:text-orange-300"
+                          onClick={() => handleRequestResubmission(grade.id)}
+                        >
+                          Request resubmission
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </li>
+                );
+              })}
+            </motion.ul>
+          )}
         </motion.section>
       </div>
 
-      <motion.section variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
-        <CollegeSectionTitle title="Assessments" sub={`${filteredGrades.length} shown`} action={<KeyHint items={[['j k', 'Move'], ['Enter', 'Open']]} />} />
-
-        <motion.div variants={itemVariants} className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-          <input
-            type="search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Find a unit, learner or assessment type"
-            aria-label="Search assessments"
-            className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
-          />
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-            {(
-              [
-                ['tomark', 'To mark', toMark.length],
-                ['marked', 'Marked', marked.length],
-                ['returned', 'Returned', returned.length],
-                ['all', 'All', scoped.length],
-              ] as const
-            ).map(([value, label, n]) => (
-              <button key={value} type="button" onClick={() => setFilterBucket(value)} className={chipCn(filterBucket === value)}>
-                {label} <span className="tabular-nums">{n}</span>
-              </button>
-            ))}
-          </div>
-        </motion.div>
-
-        {activeCohorts.length > 1 && (
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-            <button type="button" onClick={() => setFilterCohort('all')} className={chipCn(filterCohort === 'all')}>
-              All cohorts
-            </button>
-            {activeCohorts.map((cohort) => (
-              <button
-                key={cohort.id}
-                type="button"
-                onClick={() => setFilterCohort(cohort.id)}
-                className={chipCn(filterCohort === cohort.id)}
-              >
-                {cohort.name}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {isLoading ? (
-          <div className="space-y-2">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="h-[76px] animate-pulse rounded-2xl bg-white/[0.04]" />
-            ))}
-          </div>
-        ) : filteredGrades.length === 0 ? (
-          <CollegeEmpty
-            title={
-              grades.length === 0
-                ? 'No assessments recorded yet'
-                : filterBucket === 'tomark' && !q && filterCohort === 'all'
-                  ? 'Nothing waiting to be marked'
-                  : 'Nothing matches these filters'
-            }
-            body={
-              grades.length === 0
-                ? 'Record a grade to start the list. Work learners hand in lands here too.'
-                : scope === 'mine'
-                  ? 'Switch to Everyone to see the rest of the college, or try another filter.'
-                  : 'Try another filter or clear the search.'
-            }
-          />
-        ) : (
-          <motion.ul variants={itemVariants} className={COLLEGE_LIST}>
-            {filteredGrades.map((grade) => {
-              const bucket = bucketOf(grade.status);
-              const age = bucket === 'tomark' ? daysSince(grade.created_at) : null;
-              const urgent = (age !== null && age >= 7) || bucket === 'returned';
-              const mine = scope === 'all' && isMine(grade.student_id);
-              const name = studentName(grade.student_id);
-              const when =
-                bucket === 'tomark'
-                  ? age === null
-                    ? 'Waiting'
-                    : age <= 0
-                      ? 'Handed in today'
-                      : `Waiting ${age} ${age === 1 ? 'day' : 'days'}`
-                  : grade.assessed_at
-                    ? `Marked ${shortDate(grade.assessed_at)}`
-                    : bucket === 'returned'
-                      ? 'With the learner'
-                      : null;
-
-              return (
-                <li key={grade.id} data-qkey={grade.id} className={cn('flex items-stretch', focus === grade.id && 'bg-white/[0.06] shadow-[inset_3px_0_0_0_hsl(47_100%_50%)]')}>
-                  <button
-                    type="button"
-                    onClick={() => openDetail(grade.id)}
-                    className="flex min-w-0 flex-1 items-center gap-3 py-3.5 pl-4 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:gap-4 sm:pl-5"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        'flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[13.5px] font-bold',
-                        urgent ? 'bg-orange-500 text-black' : 'bg-white/[0.1] text-white'
-                      )}
-                    >
-                      {initialsOf(name)}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="truncate text-[15px] font-semibold leading-tight text-white">{name}</span>
-                        <span className={statusChipCn(bucket)}>{grade.status || bucketLabel[bucket]}</span>
-                        {mine && <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10.5px] font-bold text-black">Yours</span>}
-                      </span>
-                      <span className="mt-1 block truncate text-[13px] leading-snug text-white">
-                        <span className="font-semibold">{grade.unit_name || 'Untitled unit'}</span>
-                        {grade.assessment_type ? ` · ${grade.assessment_type}` : ''}
-                      </span>
-                      <span className="mt-1 block truncate text-[12px] text-white">
-                        {when && <span className={cn('font-semibold', urgent && 'text-orange-300')}>{when}</span>}
-                        {when ? ' · ' : ''}Assessor {assessorName(grade.assessed_by)}
-                      </span>
-                    </span>
-                    {bucket !== 'tomark' && grade.grade ? (
-                      <span className="shrink-0 text-[14px] font-bold capitalize text-white">{grade.grade}</span>
-                    ) : bucket === 'tomark' ? (
-                      <span
-                        className={cn(
-                          'hidden h-11 min-w-[96px] shrink-0 items-center justify-center rounded-xl px-3 text-[13px] font-bold sm:inline-flex',
-                          urgent ? 'bg-elec-yellow text-black' : 'border border-white/[0.18] text-white'
-                        )}
-                      >
-                        Mark
-                      </span>
-                    ) : null}
-                    <ChevronRight className="h-4 w-4 shrink-0 text-white sm:hidden" aria-hidden="true" />
-                  </button>
-
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button
-                        type="button"
-                        aria-label="More actions"
-                        className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center self-center rounded-xl text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
-                      >
-                        <MoreHorizontal className="h-4 w-4" aria-hidden />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem className="h-11" onClick={() => openDetail(grade.id)}>
-                        View submission
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className="h-11"
-                        onClick={() => {
-                          setSelectedAssessmentId(grade.id);
-                          setRubricDialogOpen(true);
-                        }}
-                      >
-                        Grade with rubric
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="h-11"
-                        onClick={() => {
-                          setSelectedAssessmentId(grade.id);
-                          setGradeDialogOpen(true);
-                        }}
-                      >
-                        Quick grade
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="h-11"
-                        onClick={() => {
-                          setSelectedGradeId(grade.id);
-                          setFeedbackSheetOpen(true);
-                        }}
-                      >
-                        Add feedback
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className="h-11 text-orange-300 focus:text-orange-300"
-                        onClick={() => handleRequestResubmission(grade.id)}
-                      >
-                        Request resubmission
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </li>
-              );
-            })}
-          </motion.ul>
-        )}
-      </motion.section>
-
+      <ActionSheet
+        open={actionsFor !== null}
+        onOpenChange={(o) => !o && setActionsFor(null)}
+        title={(() => {
+          const g = grades.find((x) => x.id === actionsFor);
+          return g ? studentName(g.student_id) : 'Assessment';
+        })()}
+        description={grades.find((x) => x.id === actionsFor)?.unit_name || undefined}
+        actions={
+          actionsFor
+            ? [
+                { label: 'View submission', onSelect: () => openDetail(actionsFor) },
+                {
+                  label: 'Grade with rubric',
+                  divide: true,
+                  onSelect: () => {
+                    setSelectedAssessmentId(actionsFor);
+                    setRubricDialogOpen(true);
+                  },
+                },
+                {
+                  label: 'Quick grade',
+                  onSelect: () => {
+                    setSelectedAssessmentId(actionsFor);
+                    setGradeDialogOpen(true);
+                  },
+                },
+                {
+                  label: 'Add feedback',
+                  onSelect: () => {
+                    setSelectedGradeId(actionsFor);
+                    setFeedbackSheetOpen(true);
+                  },
+                },
+                {
+                  label: 'Request resubmission',
+                  warn: true,
+                  divide: true,
+                  onSelect: () => void handleRequestResubmission(actionsFor),
+                },
+              ]
+            : []
+        }
+      />
       <RecordGradeDialog
         open={gradeDialogOpen}
         onOpenChange={setGradeDialogOpen}

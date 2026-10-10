@@ -203,14 +203,14 @@ const AccreditationSearchForm = ({
         </label>
 
         <div className="flex items-center gap-3">
-          <span className="text-[12px] text-white font-mono">
+          <span className="text-[12px] text-white">
             {resultsCount} {resultsCount === 1 ? 'result' : 'results'}
           </span>
           <Button
             variant="outline"
             size="sm"
             onClick={handleReset}
-            className="h-9 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+            className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
           >
             <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
             Reset
@@ -220,9 +220,7 @@ const AccreditationSearchForm = ({
 
       {activeFilters.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-white/[0.06]">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Active filters
-          </span>
+          <span className="text-[13px] font-semibold text-white">Active filters</span>
           {activeFilters.map((filter, idx) => (
             <span
               key={idx}

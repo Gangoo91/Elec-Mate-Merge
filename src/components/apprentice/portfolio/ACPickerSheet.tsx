@@ -265,9 +265,7 @@ function UnitAccordion({
         </div>
         <div className="flex items-center gap-1.5">
           {selectedInUnit > 0 && (
-            <Badge className="bg-elec-yellow text-black text-[10px] font-bold">
-              {selectedInUnit}
-            </Badge>
+            <Badge className="bg-white text-black text-[12px] font-bold">{selectedInUnit}</Badge>
           )}
           <span className="text-xs text-white">{totalInUnit} ACs</span>
         </div>
@@ -292,7 +290,7 @@ function UnitAccordion({
                   )}
                   <div className="flex-1 text-left">
                     {lo.loNumber && (
-                      <span className="text-[10px] font-medium text-white uppercase tracking-wider">
+                      <span className="text-[12.5px] font-semibold text-white">
                         LO{lo.loNumber}
                       </span>
                     )}
@@ -324,14 +322,14 @@ function UnitAccordion({
                           <div className="flex-1 min-w-0">
                             <p
                               className={cn(
-                                'text-[11px] leading-relaxed',
+                                'text-[13px] leading-relaxed',
                                 isEvidenced ? 'text-green-400/80' : 'text-white'
                               )}
                             >
                               {ac.acText}
                             </p>
                             {isEvidenced && (
-                              <span className="text-[9px] text-green-400/60 font-medium">
+                              <span className="text-[12px] text-green-400 font-medium">
                                 Already evidenced
                               </span>
                             )}

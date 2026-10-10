@@ -34,7 +34,7 @@ const tocItems = [
   { id: 'what-is-consumer-unit', label: 'What Is a Consumer Unit?' },
   { id: 'when-to-upgrade', label: 'When to Upgrade' },
   { id: 'metal-vs-plastic', label: 'Metal vs Plastic Consumer Units' },
-  { id: 'amendment-3', label: 'Amendment 4 Requirements' },
+  { id: 'amendment-3', label: 'Current BS 7671 Requirements' },
   { id: 'afdd-spd', label: 'AFDDs and SPDs' },
   { id: 'part-p', label: 'Part P and Certification' },
   { id: 'cost-guide', label: 'Cost Guide 2026' },
@@ -48,7 +48,7 @@ const keyTakeaways = [
   'A consumer unit upgrade is one of the most important electrical safety improvements you can make — replacing outdated rewirable fuses with modern MCBs, RCDs, or RCBOs that disconnect in milliseconds.',
   'Since Amendment 3 to BS 7671 (effective January 2016), all new or replacement consumer units in domestic premises must be housed in a non-combustible (metal) enclosure complying with BS EN 61439-3 (Regulation 421.1.201).',
   'BS 7671:2018+A4:2026 Regulation 411.3.4 requires 30mA RCD additional protection on all AC final circuits supplying luminaires in domestic premises — meaning every lighting circuit in a house must have RCD protection.',
-  'AFDDs (Arc Fault Detection Devices) are recommended by BS 7671:2018+A4:2026 Regulation 421.1.7 for AC final circuits of a fixed installation to mitigate fire risk from arc fault currents — expect them to become more widely required.',
+  'AFDDs (Arc Fault Detection Devices) are recommended by BS 7671:2018+A4:2026 Regulation 421.1.7 for AC final circuits of a fixed installation to mitigate fire risk from arc fault currents, and since A2:2022 they are required on socket-outlet circuits up to 32 A in HMOs, care homes, student accommodation and high rise residential buildings.',
   'A consumer unit upgrade is notifiable work under Part P of the Building Regulations — it must be carried out by a registered electrician who will issue an Electrical Installation Certificate (EIC).',
   'Elec-Mate helps electricians complete consumer unit upgrades efficiently — AI board scanner reads the existing board, the app generates the EIC, and the remedial estimator prices the job.',
 ];
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What is an AFDD and do I need one?',
     answer:
-      'An AFDD (Arc Fault Detection Device) detects dangerous arcing faults — electrical sparks caused by damaged cables, loose connections, or deteriorating insulation. Arcing faults can cause fires that conventional MCBs and RCDs may not detect, because the fault current may be too low to trip the overcurrent protection but hot enough to ignite surrounding materials. BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of AFDDs in AC final circuits of a fixed installation to mitigate the risk of fire due to the effects of arc fault currents. AFDDs are currently a recommendation (the regulation uses "recommending" rather than "shall") and are not yet a mandatory requirement in the UK, but many electricians expect them to become mandatory in future amendments. They are already required in several European countries. If you are upgrading your consumer unit, fitting AFDDs on socket and other final circuits is a sensible precaution.',
+      'An AFDD (Arc Fault Detection Device) detects dangerous arcing faults — electrical sparks caused by damaged cables, loose connections, or deteriorating insulation. Arcing faults can cause fires that conventional MCBs and RCDs may not detect, because the fault current may be too low to trip the overcurrent protection but hot enough to ignite surrounding materials. BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of AFDDs in AC final circuits of a fixed installation to mitigate the risk of fire due to the effects of arc fault currents. In most homes AFDDs are a recommendation (the regulation uses "recommending" rather than "shall"). Since A2:2022 they have been required on socket-outlet circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. They are already required in several European countries. If you are upgrading your consumer unit, fitting AFDDs on socket and other final circuits is a sensible precaution.',
   },
   {
     question: 'Can I add more circuits to my existing consumer unit?',
@@ -303,7 +303,7 @@ const sections = [
   },
   {
     id: 'amendment-3',
-    heading: 'Amendment 4 Requirements for Consumer Units',
+    heading: 'Current BS 7671 Requirements for Consumer Units',
     content: (
       <>
         <p>
@@ -311,8 +311,8 @@ const sections = [
           <SEOInternalLink href="/consumer-unit-regulations">
             BS 7671:2018+A4:2026
           </SEOInternalLink>
-          , consolidates the requirements for domestic consumer units introduced from Amendment 3
-          (effective January 2016) and extended by Amendment 4 (2026). Any consumer unit upgrade
+          , consolidates the requirements for domestic consumer units, including the metal enclosure
+          rule from Amendment 3 to the 17th Edition (effective January 2016). Any consumer unit upgrade
           must comply with all of the following:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -330,8 +330,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>30mA RCD on all lighting circuits (Regulation 411.3.4) — A4:2026</strong> —
-                BS 7671:2018+A4:2026 requires that, within domestic premises, all AC final circuits
+                <strong>30mA RCD on all lighting circuits (Regulation 411.3.4)</strong> — in force
+                since BS 7671:2018, this requires that, within domestic premises, all AC final circuits
                 supplying luminaires shall have additional protection by an RCD with a rated
                 residual operating current not exceeding 30mA. This is a mandatory requirement
                 ("shall"), not a recommendation. Every lighting circuit in the property must be
@@ -361,7 +361,7 @@ const sections = [
         <p>
           These requirements mean that a modern consumer unit upgrade typically involves a BS EN
           61439-3 compliant metal enclosure, 30mA RCD or RCBO protection on all circuits (including
-          every lighting circuit under A4:2026), and verification that the cable installation meets
+          every lighting circuit under Regulation 411.3.4), and verification that the cable installation meets
           the concealed cable protection requirements.
         </p>
       </>
@@ -388,8 +388,9 @@ const sections = [
                   loose connections, or crushed wiring. These arcing faults can start fires that
                   normal MCBs and RCDs will not detect. BS 7671:2018+A4:2026 Regulation 421.1.7
                   recommends AFDDs in AC final circuits of a fixed installation to mitigate fire
-                  risk from arc fault currents. Currently a recommendation — expected to become
-                  mandatory in future amendments. Cost: approximately £50 to £80 per device.
+                  risk from arc fault currents. A recommendation in most homes, and required since
+                  A2:2022 on socket-outlet circuits up to 32 A in HMOs, care homes, student
+                  accommodation and high rise residential buildings. Cost: approximately £50 to £80 per device.
                 </p>
               </div>
             </div>
@@ -648,9 +649,9 @@ export default function ConsumerUnitUpgradePage() {
   return (
     <GuideTemplate
       title="Consumer Unit Upgrade: Cost & Regulations UK"
-      description="Complete guide to consumer unit upgrades in the UK. When to upgrade, metal vs plastic requirements, Amendment 4, AFDDs and SPDs, Part P certification."
+      description="Complete guide to consumer unit upgrades in the UK. When to upgrade, metal vs plastic requirements, BS 7671 rules, AFDDs and SPDs, Part P certification."
       datePublished="2025-05-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"
@@ -661,7 +662,7 @@ export default function ConsumerUnitUpgradePage() {
           <span className="text-elec-yellow">Cost, Regulations, and Complete Guide</span>
         </>
       }
-      heroSubtitle="Your consumer unit is the heart of your home's electrical safety. This guide covers when to upgrade, the difference between metal and plastic enclosures, Amendment 4 requirements, AFDDs and SPDs, Part P certification, and what you should expect to pay in 2026."
+      heroSubtitle="Your consumer unit is the heart of your home's electrical safety. This guide covers when to upgrade, the difference between metal and plastic enclosures, current BS 7671 requirements, AFDDs and SPDs, Part P certification, and what you should expect to pay in 2026."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What qualifications should a UK electrician have to be considered at "master" level?',
     answer:
-      'While there is no single master electrician qualification, a UK electrician at mastery level would typically hold most or all of the following: 18th Edition (BS 7671:2018+A2:2022), C&G 2391 or 2394/2395 Inspection and Testing, C&G 2396 Design and Verification of Electrical Installations (or equivalent design qualification), NVQ Level 4 Electrical Installation or C&G 8030 Electrical Technician, SMSTS (site management safety training), one or more specialist qualifications (CompEx, HV, BMS, fire, EV, solar PV), HNC or HND in Electrical Engineering, and MIET or MCIBSE membership. This combination represents a comprehensive mastery of the electrical installation discipline — technical, commercial, regulatory, and design — and is the equivalent of master-level competence in practical terms.',
+      'While there is no single master electrician qualification, a UK electrician at mastery level would typically hold most or all of the following: 18th Edition (BS 7671:2018+A4:2026), C&G 2391 or 2394/2395 Inspection and Testing, C&G 2396 Design and Verification of Electrical Installations (or equivalent design qualification), NVQ Level 4 Electrical Installation or C&G 8030 Electrical Technician, SMSTS (site management safety training), one or more specialist qualifications (CompEx, HV, BMS, fire, EV, solar PV), HNC or HND in Electrical Engineering, and MIET or MCIBSE membership. This combination represents a comprehensive mastery of the electrical installation discipline — technical, commercial, regulatory, and design — and is the equivalent of master-level competence in practical terms.',
   },
   {
     question: 'Do I need a "master electrician" licence to start my own electrical business in the UK?',
@@ -261,7 +261,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>18th Edition (BS 7671:2018+A2:2022)</strong> — mandatory baseline.
+                <strong>18th Edition (BS 7671:2018+A4:2026)</strong> — mandatory baseline.
                 Renewal required on each amendment.
               </span>
             </li>
@@ -425,7 +425,7 @@ export default function MasterElectricianUKPage() {
       title="Master Electrician UK: What It Means"
       description="There is no formal Master Electrician title in the UK. This guide explains what mastery means in the UK context — NVQ Level 4, 2391, 2396 design, CEng."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

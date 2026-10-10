@@ -371,7 +371,7 @@ const BasicACCircuitCalculator = () => {
 
                 <div className="space-y-4 animate-fade-in">
                   {/* Status Chip */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-amber-400/20">
                     <span className="text-xs font-semibold text-amber-300">Circuit</span>
                     <span className={cn('text-sm font-semibold', status.color)}>{status.text}</span>
                   </div>

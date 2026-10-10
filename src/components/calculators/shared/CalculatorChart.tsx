@@ -9,8 +9,8 @@ import { cn } from '@/lib/utils';
  * each other and the rest of the app. Two rules it enforces that the older
  * charts in the codebase break:
  *
- *   NO GREY. `SalaryProgressionChart` and friends use `text-white/55` for axis
- *   labels and `text-white/70` for captions. Low-opacity white renders as grey,
+ *   NO GREY. `SalaryProgressionChart` and friends use `text-white` for axis
+ *   labels and `text-white` for captions. Low-opacity white renders as grey,
  *   which the design rules disallow — and on a chart it is worse than usual,
  *   because an axis you cannot read makes the plot decorative.
  *
@@ -42,7 +42,7 @@ export const CalculatorChart = ({
   className,
 }: CalculatorChartProps) => (
   <section className={cn('space-y-2 border-t border-white/[0.10] pt-3.5', className)}>
-    <h4 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+    <h4 className="text-[12px] font-semibold text-elec-yellow">
       {title}
     </h4>
     {caption && <p className="text-[12px] leading-relaxed text-white">{caption}</p>}

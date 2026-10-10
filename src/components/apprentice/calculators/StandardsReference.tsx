@@ -14,7 +14,7 @@ const StandardsReference = () => {
   return (
     <div className="space-y-5">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           UK electrical standards reference
         </span>
         <p className="text-[13px] text-white leading-relaxed">
@@ -61,7 +61,7 @@ const StandardsReference = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    <span className="text-[12px] font-medium text-white">
                       Common use cases
                     </span>
                     <ul className="space-y-1">
@@ -78,7 +78,7 @@ const StandardsReference = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    <span className="text-[12px] font-medium text-white">
                       Key points
                     </span>
                     <ul className="space-y-1">
@@ -95,7 +95,7 @@ const StandardsReference = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    <span className="text-[12px] font-medium text-white">
                       Key sections
                     </span>
                     <ul className="space-y-1">
@@ -119,7 +119,7 @@ const StandardsReference = () => {
 
       {/* Voltage Drop Limits */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           BS 7671 voltage drop limits
         </span>
         <div className="space-y-2">

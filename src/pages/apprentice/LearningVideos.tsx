@@ -28,7 +28,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
-import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
+import { learnChip } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 import {
   curatedVideos,
@@ -556,7 +556,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   <button
                     key={opt.v}
                     onClick={() => setLevelFilter(opt.v)}
-                    className={`h-11 whitespace-nowrap rounded-full px-3 text-[12px] font-semibold transition-colors touch-manipulation ${levelFilter === opt.v ? 'bg-elec-yellow text-black' : 'text-white'}`}
+                    className={`h-11 whitespace-nowrap rounded-full px-3 text-[12px] font-semibold transition-colors touch-manipulation ${levelFilter === opt.v ? 'bg-white text-black' : 'text-white'}`}
                   >
                     {opt.label}
                   </button>
@@ -571,7 +571,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                     value={levelFilter}
                     onChange={(e) => setLevelFilter(e.target.value as typeof levelFilter)}
                     aria-label="Filter by level"
-                    className={`h-11 w-[96px] flex-shrink-0 rounded-full border px-2.5 text-[12px] font-medium touch-manipulation [color-scheme:dark] focus:outline-none lg:hidden ${levelFilter === 'all' ? 'border-white/[0.12] bg-white/[0.06] text-white' : 'border-elec-yellow bg-elec-yellow text-black'}`}
+                    className={`h-11 w-[96px] flex-shrink-0 rounded-full border px-2.5 text-[12px] font-medium touch-manipulation [color-scheme:dark] focus:outline-none lg:hidden ${levelFilter === 'all' ? 'border-white/[0.12] bg-white/[0.06] text-white' : 'border-white bg-white text-black'}`}
                   >
                     <option value="all">Any</option>
                     <option value="beginner">Beginner</option>
@@ -661,9 +661,8 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                     <button
                       onClick={() => setActiveCategory('all')}
                       className={cn(
-                        chipBase,
-                        'flex-shrink-0 rounded-full px-3.5',
-                        activeCategory === 'all' ? chipOn : chipOff
+                        learnChip(activeCategory === 'all'),
+                        'flex-shrink-0 px-3.5 text-[13px]'
                       )}
                     >
                       All
@@ -673,9 +672,8 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                         key={cat}
                         onClick={() => setActiveCategory(cat)}
                         className={cn(
-                          chipBase,
-                          'flex-shrink-0 whitespace-nowrap rounded-full px-3.5',
-                          activeCategory === cat ? chipOn : chipOff
+                          learnChip(activeCategory === cat),
+                          'flex-shrink-0 whitespace-nowrap px-3.5 text-[13px]'
                         )}
                       >
                         {categoryLabels[cat]}
@@ -728,10 +726,8 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   {selectedVideo.duration}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-white/25" aria-hidden />
-                <span className="text-[12px] uppercase tracking-[0.12em] opacity-55">
-                  {selectedVideo.level}
-                </span>
-                <span className="rounded-md border border-elec-yellow/50 px-2 py-0.5 text-[11px] font-medium text-elec-yellow">
+                <span className="capitalize text-[12px]">{selectedVideo.level}</span>
+                <span className="rounded-md border border-elec-yellow/50 px-2 py-0.5 text-[12px] font-medium text-elec-yellow">
                   {categoryLabels[selectedVideo.category]}
                 </span>
                 {(() => {
@@ -778,7 +774,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
               {quizQuestions && (
                 <button
                   onClick={() => setQuizOpen(true)}
-                  className="mt-4 w-full flex items-center gap-3.5 rounded-2xl border border-elec-yellow/25 bg-gradient-to-b from-elec-yellow/[0.1] to-elec-yellow/[0.04] px-4 py-3.5 text-left touch-manipulation transition-all active:scale-[0.99]"
+                  className="mt-4 w-full flex items-center gap-3.5 rounded-2xl border border-white/[0.14] bg-white/[0.04] px-4 py-3.5 text-left touch-manipulation transition-colors hover:border-white/[0.3] active:scale-[0.99] active:bg-white/[0.07]"
                 >
                   <div className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center shrink-0">
                     {quizRecord && quizRecord.best / quizRecord.total >= 2 / 3 ? (
@@ -818,7 +814,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   {selectedVideo.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-md border border-white/[0.08] bg-white/[0.05] px-2 py-0.5 text-[11px] text-white"
+                      className="rounded-md border border-white/[0.08] bg-white/[0.05] px-2 py-0.5 text-[12px] text-white"
                     >
                       {tag}
                     </span>
@@ -836,9 +832,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
               {/* Related videos */}
               {relatedVideos.length > 0 && (
                 <div className="mt-6 pt-6 border-t border-white/[0.06]">
-                  <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 mb-4">
-                    More like this
-                  </h4>
+                  <h4 className="text-[13px] font-semibold text-white mb-4">More like this</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2">
                     {relatedVideos.map((rv) => (
                       <RelatedVideoRow
@@ -873,10 +867,10 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
               {isDefaultView && !activePath && continueVideos.length > 0 && (
                 <section className="space-y-3 sm:space-y-4 mb-9 sm:mb-12">
                   <div className="flex items-baseline justify-between gap-4 px-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                    <span className="text-[17px] font-bold tracking-tight text-white sm:text-[19px]">
                       Continue watching
                     </span>
-                    <span className="text-[11px] tabular-nums text-white">
+                    <span className="text-[12px] tabular-nums text-white">
                       {continueVideos.length}
                     </span>
                   </div>
@@ -889,10 +883,10 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
               {isDefaultView && !activePath && (
                 <section className="space-y-3 sm:space-y-4 mb-9 sm:mb-12">
                   <div className="flex items-baseline justify-between gap-4 px-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                    <span className="text-[17px] font-bold tracking-tight text-white sm:text-[19px]">
                       Learning paths
                     </span>
-                    <span className="text-[11px] tabular-nums text-white">
+                    <span className="text-[12px] tabular-nums text-white">
                       {learningPaths.length} paths · watch in order
                     </span>
                   </div>
@@ -917,7 +911,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                             <p className="text-[14px] font-semibold text-white leading-snug">
                               {path.title}
                             </p>
-                            <p className="mt-1 text-[11.5px] leading-snug text-white line-clamp-2">
+                            <p className="mt-1 text-[12px] leading-snug text-white line-clamp-2">
                               {path.strap}
                             </p>
                             <div className="mt-3 h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
@@ -926,7 +920,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                                 style={{ width: `${pct}%` }}
                               />
                             </div>
-                            <p className="mt-1.5 text-[11px] tabular-nums text-white">
+                            <p className="mt-1.5 text-[12px] tabular-nums text-white">
                               {done}/{vids.length} watched{pct === 100 ? ' · complete ✓' : ''}
                             </p>
                           </button>
@@ -971,10 +965,10 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   {groupedVideos.map(({ cat, items }) => (
                     <section key={cat} className="space-y-3 sm:space-y-4">
                       <div className="flex items-baseline justify-between gap-4 px-1">
-                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                        <span className="text-[17px] font-bold tracking-tight text-white sm:text-[19px]">
                           {categoryLabels[cat]}
                         </span>
-                        <span className="text-[11px] tabular-nums text-white">
+                        <span className="text-[12px] tabular-nums text-white">
                           {(() => {
                             const w = items.filter((v) => watchedSet.has(v.id)).length;
                             return w > 0
@@ -995,14 +989,14 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                 /* Filtered / search → single flat grid */
                 <>
                   <div className="flex items-baseline justify-between gap-4 mb-4 px-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                    <span className="text-[17px] font-bold tracking-tight text-white sm:text-[19px]">
                       {savedOnly
                         ? 'Saved videos'
                         : activeCategory === 'all'
                           ? 'Results'
                           : categoryLabels[activeCategory]}
                     </span>
-                    <span className="text-[11px] tabular-nums text-white">
+                    <span className="text-[12px] tabular-nums text-white">
                       {filteredVideos.length} {filteredVideos.length === 1 ? 'video' : 'videos'}
                       {searchQuery.trim() ? ` · “${searchQuery}”` : ''}
                     </span>
@@ -1099,12 +1093,12 @@ const VideoTile = memo(function VideoTile({
             </span>
           </span>
           {isWatched && !inProgress && (
-            <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-elec-yellow px-1.5 py-0.5 text-[9px] font-semibold text-black">
+            <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-elec-yellow px-1.5 py-0.5 text-[12px] font-semibold text-black">
               <Check className="h-2.5 w-2.5" strokeWidth={3} />
               Watched
             </span>
           )}
-          <span className="absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-[10px] font-medium tabular-nums text-white">
+          <span className="absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-[12px] font-medium tabular-nums text-white">
             {video.duration}
           </span>
           {/* Resume progress bar */}
@@ -1121,7 +1115,7 @@ const VideoTile = memo(function VideoTile({
             onBookmarkToggle(video);
           }}
           aria-label={isBookmarked ? 'Remove bookmark' : 'Save video'}
-          className="absolute top-1.5 right-1.5 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/55 transition-colors touch-manipulation hover:bg-black/75 active:bg-black/80"
+          className="absolute top-1.5 right-1.5 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/55 transition-colors touch-manipulation hover:bg-black/75 active:bg-black/80"
         >
           <Bookmark
             className={`h-3.5 w-3.5 ${
@@ -1141,11 +1135,9 @@ const VideoTile = memo(function VideoTile({
         <h4 className="min-h-[2.75em] text-[12.5px] sm:text-[13px] font-medium text-white leading-snug line-clamp-2 group-hover:text-elec-yellow transition-colors">
           {video.title}
         </h4>
-        <div className="mt-1.5 flex items-center gap-2 text-[11px] text-white">
+        <div className="mt-1.5 flex items-center gap-2 text-[12px] text-white">
           <span className="min-w-0 flex-1 truncate">{video.channel}</span>
-          <span className="shrink-0 text-[9px] font-medium uppercase tracking-[0.12em] opacity-45">
-            {video.level}
-          </span>
+          <span className="capitalize shrink-0 text-[13px] font-semibold">{video.level}</span>
         </div>
       </button>
     </div>
@@ -1176,16 +1168,14 @@ function FeaturedSpotlight({ video, onTap }: { video: CuratedVideo; onTap: () =>
               <Play className="h-6 w-6 text-white fill-white ml-0.5" />
             </span>
           </span>
-          <span className="absolute bottom-2 right-2 rounded bg-black/80 px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-white">
+          <span className="absolute bottom-2 right-2 rounded bg-black/80 px-1.5 py-0.5 text-[12px] font-medium tabular-nums text-white">
             {video.duration}
           </span>
         </div>
 
         {/* Text */}
         <div className="flex-1 p-5 sm:p-7 lg:p-8 flex flex-col justify-center">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            Featured
-          </span>
+          <span className="text-[13px] font-semibold text-white">Featured</span>
           <h2 className="mt-2 text-[20px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.12] text-white group-hover:text-elec-yellow transition-colors">
             {video.title}
           </h2>
@@ -1201,9 +1191,7 @@ function FeaturedSpotlight({ video, onTap }: { video: CuratedVideo; onTap: () =>
               <Clock className="h-3.5 w-3.5" />
               {video.duration}
             </span>
-            <span className="text-[9px] font-medium uppercase tracking-[0.12em] opacity-45">
-              {video.level}
-            </span>
+            <span className="capitalize text-[13px] font-semibold">{video.level}</span>
           </div>
           <span className="mt-5 inline-flex items-center gap-2 h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold w-fit">
             <Play className="h-3.5 w-3.5 fill-black" />
@@ -1371,10 +1359,10 @@ function CreatorCard({ creator }: { creator: Creator }) {
   const HeadIcon = creator.icon;
 
   return (
-    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/20', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden rounded-2xl border border-white/[0.12]', CARD_SURFACE)}>
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-white/[0.08] px-4 py-3.5">
-        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-elec-yellow/35 bg-white/[0.06]">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/[0.14] bg-white/[0.06]">
           <HeadIcon className="h-5 w-5 text-elec-yellow" />
         </div>
         <div className="min-w-0">
@@ -1387,7 +1375,7 @@ function CreatorCard({ creator }: { creator: Creator }) {
         <p className="text-[13px] leading-relaxed text-white opacity-85">{creator.bio}</p>
 
         {creator.note && (
-          <div className="flex gap-2 rounded-xl border border-elec-yellow/35 bg-white/[0.05] p-3">
+          <div className="flex gap-2 rounded-xl border border-white/[0.14] bg-white/[0.05] p-3">
             <Zap className="mt-0.5 h-4 w-4 flex-shrink-0 text-elec-yellow" />
             <p className="text-[12px] leading-relaxed text-white">{creator.note}</p>
           </div>
@@ -1457,7 +1445,7 @@ function RelatedVideoRow({
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/75 text-[9px] text-white font-medium tabular-nums">
+        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/75 text-[12px] text-white font-medium tabular-nums">
           {video.duration}
         </span>
       </button>
@@ -1466,7 +1454,7 @@ function RelatedVideoRow({
         <h5 className="text-[12.5px] font-medium text-white leading-snug line-clamp-2 group-hover:text-elec-yellow transition-colors">
           {video.title}
         </h5>
-        <p className="mt-1 text-[11px] text-white">{video.channel}</p>
+        <p className="mt-1 text-[12px] text-white">{video.channel}</p>
       </button>
 
       <button
@@ -1508,9 +1496,7 @@ function PathDetail({
   return (
     <div className="mx-auto max-w-3xl xl:max-w-6xl">
       <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-5 mb-6">
-        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-          Learning path
-        </p>
+        <p className="text-[13px] font-semibold text-white">Learning path</p>
         <h2 className="mt-1 text-[20px] font-semibold tracking-tight text-white">{path.title}</h2>
         <p className="mt-1 text-[13px] text-white">{path.strap}</p>
         <div className="mt-4 h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
@@ -1566,7 +1552,7 @@ function PathDetail({
                 <span className="block text-[13.5px] font-medium text-white leading-snug line-clamp-2">
                   {video.title}
                 </span>
-                <span className="mt-0.5 block text-[11.5px] text-white">
+                <span className="mt-0.5 block text-[12px] text-white">
                   {video.channel} · {video.duration}
                   {inProgress ? ` · ${prog}% watched` : ''}
                 </span>

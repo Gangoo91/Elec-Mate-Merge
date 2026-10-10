@@ -11,7 +11,7 @@ const QuizCustomBuilder = () => {
   ];
 
   return (
-    <Card className="bg-gradient-to-br from-neutral-800 to-neutral-700 border-2 border-elec-yellow/20">
+    <Card className="bg-gradient-to-br from-neutral-800 to-neutral-700 border-2 border-white/[0.14]">
       <CardHeader>
         <CardTitle className="text-elec-yellow">Create Custom Assessment</CardTitle>
         <CardDescription className="text-white">

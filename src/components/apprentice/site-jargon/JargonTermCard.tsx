@@ -21,7 +21,7 @@ const JargonTermCard = ({ term }: JargonTermCardProps) => {
             <div className="flex items-center gap-3 flex-wrap">
               <h3 className="text-[16px] font-semibold text-white">{term.term}</h3>
               {term.difficulty && (
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[13px] font-semibold capitalize text-white">
                   {term.difficulty}
                 </span>
               )}
@@ -44,29 +44,21 @@ const JargonTermCard = ({ term }: JargonTermCardProps) => {
         <div className="px-4 pb-4 space-y-3 animate-fade-in border-t border-white/[0.06] pt-3">
           {term.commonUsage && (
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                How it sounds on site
-              </span>
-              <p className="text-[14px] text-white leading-relaxed italic">
-                "{term.commonUsage}"
-              </p>
+              <span className="text-[13px] font-semibold text-white">How it sounds on site</span>
+              <p className="text-[14px] text-white leading-relaxed italic">"{term.commonUsage}"</p>
             </div>
           )}
 
           {term.context && (
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Context
-              </span>
+              <span className="text-[13px] font-semibold text-white">Context</span>
               <p className="text-[14px] text-white leading-relaxed">{term.context}</p>
             </div>
           )}
 
           {term.relatedTerms && term.relatedTerms.length > 0 && (
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Related terms
-              </span>
+              <span className="text-[13px] font-semibold text-white">Related terms</span>
               <div className="flex flex-wrap gap-1.5">
                 {term.relatedTerms.map((related, i) => (
                   <span
@@ -82,9 +74,7 @@ const JargonTermCard = ({ term }: JargonTermCardProps) => {
 
           {term.tags && term.tags.length > 0 && (
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Tags
-              </span>
+              <span className="text-[13px] font-semibold text-white">Tags</span>
               <div className="flex flex-wrap gap-1.5">
                 {term.tags.map((tag, i) => (
                   <span

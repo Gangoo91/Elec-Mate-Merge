@@ -6,6 +6,8 @@ import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { useAuth } from '@/contexts/AuthContext';
 import type { ExpenseClaim } from '@/services/financeService';
 import { v4 as uuidv4 } from 'uuid';
+import { OFFLINE_FIRST, offlineSnapshot, isOfflineError } from '@/lib/workerOfflineCache';
+import { holdPhoto, submitWorkerAction, OutboxRefusedError, clipWords } from '@/lib/workerOutbox';
 
 // Category configuration
 export const EXPENSE_CATEGORIES = [
@@ -546,6 +548,70 @@ export interface WorkerMileageInput {
   removeReceipt?: boolean;
 }
 
+/** Queued for the worker outbox when there is no signal (gap #3 / #21). */
+export interface QueuedClaim {
+  queued: true;
+}
+const noSignal = () => typeof navigator !== 'undefined' && navigator.onLine === false;
+
+/**
+ * Gap #3 / #21: a claim made with no signal waits on the phone (worker outbox)
+ * and sends itself once, with the claim's id made on the phone. A PDF receipt
+ * can't be held offline; a photo can.
+ */
+async function queueClaim(
+  kind: 'expense' | 'mileage',
+  employeeId: string,
+  input: WorkerClaimInput | WorkerMileageInput
+): Promise<QueuedClaim | null> {
+  const photos = [];
+  if (input.receiptFile) {
+    if (!input.receiptFile.type.startsWith('image/')) {
+      throw new Error('A PDF receipt needs signal. Take a photo of it instead, or send it when you have signal.');
+    }
+    photos.push(await holdPhoto(input.receiptFile));
+  }
+  const m = kind === 'mileage' ? (input as WorkerMileageInput) : null;
+  const c = kind === 'expense' ? (input as WorkerClaimInput) : null;
+  try {
+    const { result } = await submitWorkerAction({
+      kind,
+      label: m ? `Mileage · ${m.miles} mi` : `Expense · £${(c?.amount ?? 0).toFixed(2)}`,
+      detail: clipWords(m ? `${m.from} to ${m.to}` : c?.description || c?.category || '', 48),
+      jobId: input.jobId,
+      photos,
+      payload: m
+        ? {
+            params: {
+              p_employee: employeeId,
+              p_miles: m.miles,
+              p_from: m.from,
+              p_to: m.to,
+              p_return: m.isReturn,
+              p_job_id: m.jobId,
+              p_description: m.description || null,
+              p_incurred_on: m.incurredOn,
+              p_receipt_url: null,
+            },
+          }
+        : {
+            employeeId,
+            row: {
+              category: c!.category,
+              amount: c!.amount,
+              description: c!.description.trim() || c!.category,
+              job_id: c!.jobId,
+              incurred_on: c!.incurredOn,
+            },
+          },
+    });
+    return result === 'queued' ? { queued: true } : null;
+  } catch (e) {
+    if (e instanceof OutboxRefusedError) throw new Error(claimErrorMessage(e, 'Could not send the claim.'));
+    throw e;
+  }
+}
+
 // Hook for a worker's own expense claims (and the office's per-person view)
 export function useMyExpenses(employeeId?: string) {
   const queryClient = useQueryClient();
@@ -557,7 +623,20 @@ export function useMyExpenses(employeeId?: string) {
     refetch,
   } = useQuery({
     queryKey: ['my_expense_claims', employeeId],
-    queryFn: () => fetchMyExpenseClaims(employeeId!) as Promise<WorkerExpenseClaim[]>,
+    // Kept on the phone, so the page (and Log mileage) opens with no signal.
+    ...OFFLINE_FIRST,
+    queryFn: async () => {
+      try {
+        return await offlineSnapshot(`my-expense-claims:${employeeId}`, () =>
+          fetchMyExpenseClaims(employeeId!) as Promise<WorkerExpenseClaim[]>
+        );
+      } catch (e) {
+        // No signal and no copy on this phone yet: open the page (so a claim
+        // can still be made); the list fills in when the signal is back.
+        if (isOfflineError(e)) return [] as WorkerExpenseClaim[];
+        throw e;
+      }
+    },
     enabled: !!employeeId,
   });
 
@@ -602,8 +681,10 @@ export function useMyExpenses(employeeId?: string) {
 
   // Plain claim — RLS insert (Pending only, own roster row, own receipt).
   const submitMutation = useMutation({
+    networkMode: 'always',
     mutationFn: async (input: WorkerClaimInput) => {
       if (!employeeId) throw new Error('No team record');
+      if (noSignal()) return queueClaim('expense', employeeId, input);
       let receiptUrl: string | null = null;
       if (input.receiptFile) receiptUrl = await uploadWorkerReceipt(employeeId, input.receiptFile);
       const { data, error } = await supabase
@@ -623,6 +704,7 @@ export function useMyExpenses(employeeId?: string) {
         .single();
       if (error) {
         await removeWorkerReceipt(receiptUrl);
+        if (isOfflineError(error)) return queueClaim('expense', employeeId, input);
         throw new Error(claimErrorMessage(error, 'Could not send the claim.'));
       }
       return data;
@@ -631,8 +713,10 @@ export function useMyExpenses(employeeId?: string) {
   });
 
   const submitMileageMutation = useMutation({
+    networkMode: 'always',
     mutationFn: async (input: WorkerMileageInput) => {
       if (!employeeId) throw new Error('No team record');
+      if (noSignal()) return queueClaim('mileage', employeeId, input);
       let receiptUrl: string | null = null;
       if (input.receiptFile) receiptUrl = await uploadWorkerReceipt(employeeId, input.receiptFile);
       const { data, error } = await supabase.rpc(
@@ -651,6 +735,7 @@ export function useMyExpenses(employeeId?: string) {
       );
       if (error) {
         await removeWorkerReceipt(receiptUrl);
+        if (isOfflineError(error)) return queueClaim('mileage', employeeId, input);
         throw new Error(claimErrorMessage(error, 'Could not send the mileage claim.'));
       }
       return data as unknown as WorkerExpenseClaim;

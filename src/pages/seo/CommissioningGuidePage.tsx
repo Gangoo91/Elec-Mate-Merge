@@ -274,7 +274,9 @@ const sections = [
           </div>
           <div className="divide-y divide-white/10 text-sm text-white">
             <div className="grid grid-cols-12 gap-0 px-4 py-3">
-              <div className="col-span-5 font-medium">Consumer unit change / single new circuit</div>
+              <div className="col-span-5 font-medium">
+                Consumer unit change / single new circuit
+              </div>
               <div className="col-span-3">2&ndash;4 hours</div>
               <div className="col-span-4 text-white">Dead and live testing</div>
             </div>
@@ -286,7 +288,9 @@ const sections = [
             <div className="grid grid-cols-12 gap-0 px-4 py-3">
               <div className="col-span-5 font-medium">Office / retail fit-out</div>
               <div className="col-span-3">2&ndash;5 days</div>
-              <div className="col-span-4 text-white">Multiple boards, controls, emergency systems</div>
+              <div className="col-span-4 text-white">
+                Multiple boards, controls, emergency systems
+              </div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3">
               <div className="col-span-5 font-medium">Industrial / motor control</div>
@@ -380,14 +384,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>AFDD verification.</strong> Under A4:2026, Regulation 421.1.7 makes AFDDs a
+                <strong>AFDD verification.</strong> Regulation 421.1.7 (since A2:2022) makes AFDDs a
                 requirement for socket-outlet final circuits rated up to 32&nbsp;A in Higher-Risk
                 Residential Buildings, Houses in Multiple Occupation, purpose-built student
                 accommodation and care homes, and recommends them for single-phase AC socket-outlet
-                final circuits up to 32&nbsp;A in all other premises. Where AFDDs are fitted, confirm
-                the operational indication (status LED) shows the device is active, then operate the
-                manufacturer-specified test and confirm it resets correctly. Record the outcome on
-                the schedule of test results.
+                final circuits up to 32&nbsp;A in all other premises. Where AFDDs are fitted,
+                confirm the operational indication (status LED) shows the device is active, then
+                operate the manufacturer-specified test and confirm it resets correctly. Record the
+                outcome on the schedule of test results.
               </span>
             </li>
           </ul>
@@ -420,9 +424,9 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC).</strong> The formal certificate
-                issued under BS 7671 Regulation 644.1, based on the model in Appendix 6.
-                Includes design, construction, and inspection signatures, plus the schedule of
-                inspections and schedule of test results.
+                issued under BS 7671 Regulation 644.1, based on the model in Appendix 6. Includes
+                design, construction, and inspection signatures, plus the schedule of inspections
+                and schedule of test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -463,9 +467,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          What actually needs handing over depends on the job. A consumer unit change needs the
-          core certificate package; a commercial fit-out adds a full deliverables file. This matrix
-          shows the typical split:
+          What actually needs handing over depends on the job. A consumer unit change needs the core
+          certificate package; a commercial fit-out adds a full deliverables file. This matrix shows
+          the typical split:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white">
@@ -481,7 +485,11 @@ const sections = [
               ['Manufacturer instructions for installed equipment', 'As applicable', 'Required'],
               ['As-built drawings', 'Rarely', 'Required'],
               ['O&M manual', 'Not usually', 'Required (contractual)'],
-              ['Specialist certificates (fire alarm, emergency lighting)', 'If installed', 'Required'],
+              [
+                'Specialist certificates (fire alarm, emergency lighting)',
+                'If installed',
+                'Required',
+              ],
               ['Signed handover / training record', 'Optional', 'Required'],
             ].map(([item, dom, com]) => (
               <div key={item} className="grid grid-cols-12 gap-0 px-4 py-3 items-center">
@@ -652,9 +660,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All live tests completed: Zs, PFC, RCD operation, phase sequence (if 3-phase).
-                Remember the tabulated maximum Zs values assume the conductor at its normal operating
-                temperature, so apply the appropriate temperature/rule-of-thumb correction before
-                comparing them against your measured cold values.
+                Remember the tabulated maximum Zs values assume the conductor at its normal
+                operating temperature, so apply the appropriate temperature/rule-of-thumb correction
+                before comparing them against your measured cold values.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -664,8 +672,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                Functional checks completed on all switchgear, controls, and interlocks (Reg
-                643.10)
+                Functional checks completed on all switchgear, controls, and interlocks (Reg 643.10)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -795,7 +802,7 @@ export default function CommissioningGuidePage() {
       title="Commissioning an Electrical Installation: Guide"
       description="Complete guide to commissioning an electrical installation. What commissioning involves, how it differs from testing, functional checks."
       datePublished="2025-10-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

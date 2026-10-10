@@ -164,7 +164,7 @@ serve(async (req: Request) => {
 ${topicInstruction}
 
 ## Standards
-- BS 7671:2018+A2:2022 (18th Edition Wiring Regulations)
+- BS 7671:2018+A4:2026 (18th Edition Wiring Regulations, the current amendment, issued 15 April 2026)
 - GN3 Guidance Note 3: Inspection & Testing
 - GS38 Electrical Test Equipment
 - All UK electrical standards and practices

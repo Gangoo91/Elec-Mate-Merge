@@ -6,7 +6,7 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   labelCn,
   textareaCn,
 } from '@/components/forms/fieldStyles';

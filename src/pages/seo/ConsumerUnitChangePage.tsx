@@ -22,7 +22,7 @@ export default function ConsumerUnitChangePage() {
       title="Consumer Unit Change UK 2026: Cost & Rules"
       description="Complete guide to changing a consumer unit in the UK. Costs from £500 to £1,200, Part P notification requirements."
       datePublished="2025-04-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Consumer Unit Change', href: '/guides/consumer-unit-change' },
@@ -55,7 +55,7 @@ export default function ConsumerUnitChangePage() {
         'A full Electrical Installation Certificate (EIC) is required — a Minor Works Certificate is not appropriate for a consumer unit change.',
         'Typical cost for a like-for-like consumer unit replacement is £500 to £1,200 depending on the number of circuits, board type (RCBO vs split-load), and any additional work required.',
         'A straightforward like-for-like consumer unit replacement typically takes around four hours for the board change and testing alone; allow a full day when including the survey, DNO coordination, and EIC completion.',
-        'Domestic lighting circuits now require 30 mA RCD additional protection under Regulation 411.3.4 (BS 7671:2018+A4:2026) — this applies to all AC final circuits supplying luminaires and must be provided at the consumer unit.',
+        'Domestic lighting circuits require 30 mA RCD additional protection under Regulation 411.3.4, in force since BS 7671:2018, and this applies to all AC final circuits supplying luminaires and must be provided at the consumer unit.',
       ]}
       sections={[
         {
@@ -184,10 +184,10 @@ export default function ConsumerUnitChangePage() {
                         411.3.3, 411.3.4)
                       </strong>{' '}
                       — BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for
-                      socket-outlet circuits and cables concealed in walls (Reg 411.3.3), and — new
-                      in A4:2026 — for AC final circuits supplying luminaires in domestic premises
+                      socket-outlet circuits and cables concealed in walls (Reg 411.3.3), and, since
+                      BS 7671:2018, for AC final circuits supplying luminaires in domestic premises
                       (Reg 411.3.4). Every lighting circuit in a domestic consumer unit change must
-                      now be RCD-protected. This is achieved with individual RCBOs or by placing
+                      be RCD-protected. This is achieved with individual RCBOs or by placing
                       lighting circuits under an RCD in a split-load arrangement.
                     </span>
                   </li>
@@ -322,11 +322,12 @@ export default function ConsumerUnitChangePage() {
                 arcs.
               </p>
               <p>
-                Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends the installation of AFDDs to
-                BS EN 62606 in AC final circuits of a fixed installation to mitigate the risk of
-                fire due to arc fault currents. The regulation uses "recommends" rather than
-                "shall", so AFDDs remain advisory rather than mandatory — but A4:2026 is already the
-                current edition of BS 7671 and this is live regulatory text. Many competent person
+                Regulation 421.1.7 of BS 7671:2018+A4:2026 covers AFDDs to BS EN 62606 in AC final
+                circuits of a fixed installation to mitigate the risk of fire due to arc fault
+                currents. Since A2:2022 they shall be provided on single-phase socket-outlet circuits
+                up to 32 A in high rise residential buildings, HMOs, purpose-built student
+                accommodation and care homes. In a typical house the regulation uses "recommends"
+                rather than "shall", so AFDDs remain advisory there. Many competent person
                 schemes and building control bodies treat AFDD provision on bedroom and high-risk
                 circuits as strong best practice.
               </p>
@@ -555,7 +556,7 @@ export default function ConsumerUnitChangePage() {
         {
           question: 'Should I choose RCBOs or a split-load board?',
           answer:
-            'For most domestic installations in 2026, a full RCBO board is the recommended choice. Each circuit has its own individual RCBO, providing independent overcurrent and earth fault protection. This means a fault on one circuit trips only that circuit — every other circuit stays live. On a split-load board with dual RCDs, a fault on any circuit trips the RCD for that entire group, disconnecting half the circuits in the house. A full RCBO board also makes it simpler to comply with Regulation 411.3.4 (A4:2026), which now requires 30 mA RCD protection for lighting circuits in domestic premises — on an RCBO board, every circuit including lighting already has its own RCBO. The cost difference between an RCBO board and a split-load is typically £60–£150, easily justified by the improved discrimination and reduced nuisance tripping. The time saved in avoiding call-backs for nuisance tripping often pays for the difference on the first job.',
+            'For most domestic installations in 2026, a full RCBO board is the recommended choice. Each circuit has its own individual RCBO, providing independent overcurrent and earth fault protection. This means a fault on one circuit trips only that circuit — every other circuit stays live. On a split-load board with dual RCDs, a fault on any circuit trips the RCD for that entire group, disconnecting half the circuits in the house. A full RCBO board also makes it simpler to comply with Regulation 411.3.4 (in force since 2018), which requires 30 mA RCD protection for lighting circuits in domestic premises — on an RCBO board, every circuit including lighting already has its own RCBO. The cost difference between an RCBO board and a split-load is typically £60–£150, easily justified by the improved discrimination and reduced nuisance tripping. The time saved in avoiding call-backs for nuisance tripping often pays for the difference on the first job.',
         },
         {
           question: 'What certificate do I get after a consumer unit change?',

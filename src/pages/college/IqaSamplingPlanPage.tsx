@@ -9,18 +9,16 @@ import { openEvidence } from '@/lib/evidenceUrl';
 import { LoadingState, textareaClass } from '@/components/college/primitives';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { COLLEGE_LINK, CollegeEmpty, CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN,
-  COLLEGE_CARD,
-  COLLEGE_LIST,
-  COLLEGE_LINK,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeSectionTitle,
-} from '@/components/college/ui/CollegeUi';
-import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
-import { Ring } from '@/components/college/student360/Student360Visuals';
-import { SegmentBar, StatusPill, type Tone as QTone } from '@/components/college/quality/QualityKit';
+  QBTN as COLLEGE_BTN,
+  QBTN_PRIMARY,
+  QCARD as COLLEGE_CARD,
+  QLIST as COLLEGE_LIST,
+  QualityHeader,
+} from '@/components/college/quality/QualityHubKit';
+import { plural } from '@/components/college/quality/qualityText';
+import { StatusPill, type Tone as QTone } from '@/components/college/quality/QualityKit';
 import { IqaFlowStrip, type FlowStep } from '@/components/college/quality/IqaVisuals';
 import { useIqaFindings, isFindingOpen } from '@/hooks/useIqaFindings';
 import {
@@ -53,16 +51,40 @@ const HELP: PageHelpContent = {
   title: 'A sampling plan',
   what: 'One IQA sampling plan: the assessor decisions you have picked to check, your verdict on each, and any actions raised from them.',
   steps: [
-    { title: 'Pick what to sample', body: 'Add the assessor\'s assessment decisions, observations or verified off-the-job entries from the lists below, one at a time or a handful at random. Each one counts toward the plan\'s percentage.' },
-    { title: 'Give a verdict', body: 'Mark each sample agree, disagree or returned, and add a short rationale. On a decision, agree confirms it for the learner and returned sends it back. On a keyboard, focus a sample and press 1 to 4.' },
-    { title: 'Returned work', body: 'Disagree or returned opens an action for the assessor and tells them, with a link to the learner. They close it once they have looked again.' },
-    { title: 'Raise a finding', body: 'For anything wider than one decision, raise a finding with the details filled in, so it gets an action plan, an owner and a due date.' },
-    { title: 'Close the loop', body: 'Close findings on the IQA dashboard once they are resolved. The plan is done when the target is met and every action is closed.' },
+    {
+      title: 'Pick what to sample',
+      body: "Add the assessor's assessment decisions, observations or verified off-the-job entries from the lists below, one at a time or a handful at random. Each one counts toward the plan's percentage.",
+    },
+    {
+      title: 'Give a verdict',
+      body: 'Mark each sample agree, disagree or returned, and add a short rationale. On a decision, agree confirms it for the learner and returned sends it back. On a keyboard, focus a sample and press 1 to 4.',
+    },
+    {
+      title: 'Returned work',
+      body: 'Disagree or returned opens an action for the assessor and tells them, with a link to the learner. They close it once they have looked again.',
+    },
+    {
+      title: 'Raise a finding',
+      body: 'For anything wider than one decision, raise a finding with the details filled in, so it gets an action plan, an owner and a due date.',
+    },
+    {
+      title: 'Close the loop',
+      body: 'Close findings on the IQA dashboard once they are resolved. The plan is done when the target is met and every action is closed.',
+    },
   ],
   notes: [
-    { title: 'View evidence', body: 'Opens the file the assessor or apprentice attached, so you check the same evidence the decision was based on. For a decision it opens the learner\'s Assess section.' },
-    { title: 'Never your own work', body: 'You cannot sample or give a verdict on a decision you made yourself.' },
-    { title: 'New assessors', body: 'A plan for an assessor in their first six months is set to 100%.' },
+    {
+      title: 'View evidence',
+      body: "Opens the file the assessor or apprentice attached, so you check the same evidence the decision was based on. For a decision it opens the learner's Assess section.",
+    },
+    {
+      title: 'Never your own work',
+      body: 'You cannot sample or give a verdict on a decision you made yourself.',
+    },
+    {
+      title: 'New assessors',
+      body: 'A plan for an assessor in their first six months is set to 100%.',
+    },
   ],
 };
 
@@ -110,7 +132,9 @@ export default function IqaSamplingPlanPage() {
   );
 
   if (!id) {
-    return shell(<CollegeEmpty title="No plan chosen" body="Open a sampling plan from the IQA dashboard." />);
+    return shell(
+      <CollegeEmpty title="No plan chosen" body="Open a sampling plan from the IQA dashboard." />
+    );
   }
 
   if (data.loading && !data.plan) {
@@ -137,11 +161,15 @@ export default function IqaSamplingPlanPage() {
   // The stored total can lag behind the samples taken, so never let the
   // sampled share pass 100%.
   const total = Math.max(
-    (plan.total_assessments ?? 0) || eligible.length + eligibleOtj.length + eligibleDecisions.length + samples.length,
+    (plan.total_assessments ?? 0) ||
+      eligible.length + eligibleOtj.length + eligibleDecisions.length + samples.length,
     samples.length
   );
   const sampledPct = total > 0 ? Math.round((samples.length / total) * 100) : 0;
   const onTrack = sampledPct >= target;
+  const toSample = Math.max(0, Math.ceil((target / 100) * total) - samples.length);
+  const periodEnded =
+    !!plan.period_end && new Date(plan.period_end).setHours(23, 59, 59) < Date.now();
 
   const handleAdd = async (obsId: string) => {
     try {
@@ -281,7 +309,10 @@ export default function IqaSamplingPlanPage() {
         .maybeSingle();
       const sid = (st as { id?: string } | null)?.id;
       if (!sid) {
-        toast({ title: 'Learner not found', description: 'This learner is no longer on the college roll.' });
+        toast({
+          title: 'Learner not found',
+          description: 'This learner is no longer on the college roll.',
+        });
         return;
       }
       navigate(`/college?section=student360&studentId=${sid}#assess`);
@@ -392,7 +423,12 @@ export default function IqaSamplingPlanPage() {
       key: 'verdict',
       label: 'Verdict',
       value: `${decided} given`,
-      sub: verdictCounts.pending > 0 ? `${verdictCounts.pending} awaiting a verdict` : samples.length ? 'Every sample has a verdict' : 'Sample first',
+      sub:
+        verdictCounts.pending > 0
+          ? `${verdictCounts.pending} awaiting a verdict`
+          : samples.length
+            ? 'Every sample has a verdict'
+            : 'Sample first',
       state: samples.length === 0 ? 'todo' : verdictCounts.pending > 0 ? 'now' : 'done',
       onClick: () => scrollTo('iqa-samples'),
     },
@@ -401,7 +437,14 @@ export default function IqaSamplingPlanPage() {
       label: 'Actions',
       value: `${raisedCount} raised`,
       sub: needsAction > 0 ? `${needsAction} disagree or refer back` : 'No disagreements',
-      state: needsAction === 0 ? (decided > 0 ? 'done' : 'todo') : raisedCount >= needsAction ? 'done' : 'now',
+      state:
+        needsAction === 0
+          ? decided > 0
+            ? 'done'
+            : 'todo'
+          : raisedCount >= needsAction
+            ? 'done'
+            : 'now',
       onClick: () => scrollTo('iqa-samples'),
     },
     {
@@ -427,7 +470,12 @@ export default function IqaSamplingPlanPage() {
   ];
 
   const pickButtons = (kind: 'obs' | 'otj' | 'dec') => {
-    const pool = kind === 'obs' ? eligible.length : kind === 'dec' ? eligibleDecisions.length : eligibleOtj.length;
+    const pool =
+      kind === 'obs'
+        ? eligible.length
+        : kind === 'dec'
+          ? eligibleDecisions.length
+          : eligibleOtj.length;
     const busy = kind === 'obs' ? pickingObs : kind === 'dec' ? pickingDec : pickingOtj;
     if (pool === 0 || !canIqa) return null;
     return (
@@ -437,7 +485,11 @@ export default function IqaSamplingPlanPage() {
             key={n}
             type="button"
             onClick={() =>
-              kind === 'obs' ? pickRandomObservations(n) : kind === 'dec' ? pickRandomDecisions(n) : pickRandomOtj(n)
+              kind === 'obs'
+                ? pickRandomObservations(n)
+                : kind === 'dec'
+                  ? pickRandomDecisions(n)
+                  : pickRandomOtj(n)
             }
             disabled={busy}
             className={COLLEGE_BTN}
@@ -452,74 +504,74 @@ export default function IqaSamplingPlanPage() {
 
   return (
     <HubPage ground="landing">
-      <HubMasthead
-        section="College"
-        title="Sampling plan"
-        backTo="/college/iqa"
-      />
+      <HubMasthead section="College" title="Sampling plan" backTo="/college/iqa" />
       <HubBody pushContext="Get notified when IQA findings fall due and samples need a verdict">
-        <CollegePageHeader
+        <QualityHeader
           eyebrow="IQA sampling plan"
-          title={`${plan.qualification_code ?? 'All qualifications'}${plan.unit_code ? ` · ${plan.unit_code}` : ''}`}
-          description={
-            <>
-              {formatDate(plan.period_start)} to {formatDate(plan.period_end)}
-              {plan.iqa_name_snapshot ? `. IQA: ${plan.iqa_name_snapshot}` : ''}. Sample the assessor's decisions, give a verdict on each and raise any actions.
-            </>
+          title={`${plan.qualification_code ?? 'All qualifications'}${plan.unit_code ? ` · unit ${plan.unit_code}` : ''}`}
+          summary={`${samples.length} of ${plural(total, 'decision')} sampled (${sampledPct}%) against a ${target}% target${
+            onTrack
+              ? ', target met'
+              : periodEnded
+                ? `. The period ended ${formatDate(plan.period_end)} below target`
+                : `: ${toSample} more to sample by ${formatDate(plan.period_end)}`
+          }. ${
+            samples.length === 0
+              ? 'No verdicts yet.'
+              : verdictCounts.pending > 0
+                ? `${plural(verdictCounts.pending, 'sample')} waiting for a verdict.`
+                : agreePct === null
+                  ? ''
+                  : `Every sample has a verdict; ${agreePct}% agree with the assessor.`
+          }`}
+          sub={
+            <span className="inline-flex flex-wrap items-center gap-2">
+              <StatusPill tone={onTrack ? 'good' : 'warn'}>
+                {onTrack ? 'On target' : periodEnded ? 'Ended below target' : 'Below target'}
+              </StatusPill>
+              <span>
+                {formatDate(plan.period_start)} to {formatDate(plan.period_end)}
+                {plan.iqa_name_snapshot ? `. IQA: ${plan.iqa_name_snapshot}` : ''}.
+              </span>
+            </span>
           }
           help={HELP}
-          actions={
-            <StatusPill tone={onTrack ? 'good' : 'warn'} className="h-9 px-3.5 text-[12.5px]">
-              {onTrack ? 'On track' : 'Catching up'}
-            </StatusPill>
+          primary={
+            canIqa && !onTrack && !periodEnded ? (
+              <button
+                type="button"
+                onClick={() => scrollTo('iqa-decisions')}
+                className={QBTN_PRIMARY}
+              >
+                Add samples
+              </button>
+            ) : canIqa && verdictCounts.pending > 0 ? (
+              <button
+                type="button"
+                onClick={() => scrollTo('iqa-samples')}
+                className={QBTN_PRIMARY}
+              >
+                Give verdicts
+              </button>
+            ) : undefined
           }
         />
+
+        {!canIqa && (
+          <div className={cn(COLLEGE_CARD, 'text-[13.5px] leading-relaxed text-white')}>
+            You can read this plan. Only an IQA, a quality nominee or a manager can add samples or
+            give verdicts.
+          </div>
+        )}
 
         <IqaFlowStrip steps={flow} title="Where this plan is" />
-
-        <AreaHero
-          figures={[
-            { label: 'Sampled', value: `${samples.length}/${total}`, sub: `${sampledPct}% of decisions`, good: onTrack, warn: !onTrack },
-            { label: 'Target', value: `${target}%`, sub: onTrack ? 'Met' : `${Math.max(0, Math.ceil((target / 100) * total) - samples.length)} more to sample` },
-            {
-              label: 'Agreement',
-              value: agreePct === null ? '—' : `${agreePct}%`,
-              sub: `${verdictCounts.agree} of ${decided} verdicts agree`,
-              warn: agreePct !== null && agreePct < 80,
-              good: agreePct !== null && agreePct >= 90,
-            },
-            { label: 'Awaiting verdict', value: String(verdictCounts.pending), sub: 'Samples still to judge', warn: verdictCounts.pending > 0 },
-          ]}
-          chartTitle="Verdicts on this plan"
-          chart={
-            <SegmentBar
-              emptyText="No samples yet. Pick from the lists below."
-              segments={[
-                { label: 'Agree', n: verdictCounts.agree, tone: 'good' },
-                { label: 'Disagree', n: verdictCounts.disagree, tone: 'bad' },
-                { label: 'Returned', n: verdictCounts.refer, tone: 'warn' },
-                { label: 'Awaiting verdict', n: verdictCounts.pending, tone: 'neutral' },
-              ]}
-            />
-          }
-          side={
-            <div className="flex justify-center">
-              <Ring
-                pct={total > 0 ? Math.min(100, (sampledPct / Math.max(1, target)) * 100) : 0}
-                value={`${sampledPct}%`}
-                label="Sampled against target"
-                sub={`Target ${target}%`}
-                warn={!onTrack}
-                onClick={() => scrollTo('iqa-eligible')}
-              />
-            </div>
-          }
-        />
 
         {plan.notes && (
           <div className={COLLEGE_CARD}>
             <p className="text-[12px] font-medium text-white">Plan notes</p>
-            <p className="mt-1 whitespace-pre-wrap text-[13.5px] leading-relaxed text-white">{plan.notes}</p>
+            <p className="mt-1 whitespace-pre-wrap text-[13.5px] leading-relaxed text-white">
+              {plan.notes}
+            </p>
           </div>
         )}
 
@@ -535,7 +587,11 @@ export default function IqaSamplingPlanPage() {
               title="Nothing sampled yet"
               body="Pick assessment decisions, observations or off-the-job entries from the lists below to add them to your sample, then mark each with a verdict."
               action={
-                <button type="button" onClick={() => scrollTo('iqa-eligible')} className={COLLEGE_LINK}>
+                <button
+                  type="button"
+                  onClick={() => scrollTo('iqa-eligible')}
+                  className={COLLEGE_LINK}
+                >
                   Go to the lists
                 </button>
               }
@@ -613,13 +669,8 @@ export default function IqaSamplingPlanPage() {
           )}
         </motion.section>
 
-        {!canIqa ? (
-          <p className="rounded-xl border border-white/[0.10] bg-white/[0.04] p-4 text-[13px] leading-relaxed text-white">
-            You can read this plan. Only an IQA, a quality nominee or a manager can add samples or give verdicts.
-          </p>
-        ) : null}
         {/* ELE-1871: the assessor's decisions in the period, the core of the plan. */}
-        <section className={cn('space-y-4', !canIqa && 'hidden')}>
+        <section id="iqa-decisions" className={cn('scroll-mt-20 space-y-4', !canIqa && 'hidden')}>
           <CollegeSectionTitle
             title={`Assessment decisions to sample · ${eligibleDecisions.length}`}
             sub="Decisions this assessor recorded in the plan's period. Agree confirms the decision for the learner; returned sends it back to the assessor."
@@ -640,9 +691,14 @@ export default function IqaSamplingPlanPage() {
               {eligibleDecisions.length > visibleDecisions && (
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-[12.5px] tabular-nums text-white">
-                    Showing {Math.min(visibleDecisions, eligibleDecisions.length)} of {eligibleDecisions.length}
+                    Showing {Math.min(visibleDecisions, eligibleDecisions.length)} of{' '}
+                    {eligibleDecisions.length}
                   </p>
-                  <button type="button" onClick={() => setVisibleDecisions((n) => n + 50)} className={COLLEGE_LINK}>
+                  <button
+                    type="button"
+                    onClick={() => setVisibleDecisions((n) => n + 50)}
+                    className={COLLEGE_LINK}
+                  >
                     Load more
                   </button>
                 </div>
@@ -651,7 +707,13 @@ export default function IqaSamplingPlanPage() {
           )}
         </section>
 
-        <div id="iqa-eligible" className={cn('grid scroll-mt-20 grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-5', !canIqa && 'hidden')}>
+        <div
+          id="iqa-eligible"
+          className={cn(
+            'grid scroll-mt-20 grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-5',
+            !canIqa && 'hidden'
+          )}
+        >
           {/* Eligible observations — pickable */}
           <section className="space-y-4">
             <CollegeSectionTitle
@@ -676,7 +738,11 @@ export default function IqaSamplingPlanPage() {
                     <p className="text-[12.5px] tabular-nums text-white">
                       Showing {Math.min(visibleEligible, eligible.length)} of {eligible.length}
                     </p>
-                    <button type="button" onClick={() => setVisibleEligible((n) => n + 50)} className={COLLEGE_LINK}>
+                    <button
+                      type="button"
+                      onClick={() => setVisibleEligible((n) => n + 50)}
+                      className={COLLEGE_LINK}
+                    >
                       Load more
                     </button>
                   </div>
@@ -721,7 +787,11 @@ export default function IqaSamplingPlanPage() {
                 <p className="text-[12.5px] tabular-nums text-white">
                   Showing {Math.min(visibleEligibleOtj, eligibleOtj.length)} of {eligibleOtj.length}
                 </p>
-                <button type="button" onClick={() => setVisibleEligibleOtj((n) => n + 50)} className={COLLEGE_LINK}>
+                <button
+                  type="button"
+                  onClick={() => setVisibleEligibleOtj((n) => n + 50)}
+                  className={COLLEGE_LINK}
+                >
                   Load more
                 </button>
               </div>
@@ -816,7 +886,10 @@ function SampleCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
       aria-label={`Sample ${sample.target_title_snapshot ?? sample.observation_title_snapshot ?? sample.otj_title_snapshot ?? 'untitled'}. Keyboard 1 to 4 sets the verdict`}
-      className={cn(COLLEGE_CARD, 'flex h-full flex-col outline-none focus-visible:border-elec-yellow/60')}
+      className={cn(
+        COLLEGE_CARD,
+        'flex h-full flex-col outline-none focus-visible:border-elec-yellow/60'
+      )}
     >
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div className="min-w-0 flex-1">
@@ -824,7 +897,7 @@ function SampleCard({
             <StatusPill tone={verdictTone}>{VERDICT_LABEL[sample.verdict]}</StatusPill>
             {linkedFindingCount > 0 && (
               <span
-                className="inline-flex h-6 items-center rounded-full border border-orange-400/50 px-2.5 text-[11.5px] font-semibold text-white"
+                className="inline-flex h-6 items-center rounded-full border border-orange-400/50 px-2.5 text-[12px] font-semibold text-white"
                 title={`${linkedFindingCount} IQA finding${linkedFindingCount === 1 ? '' : 's'} raised from this sample`}
               >
                 {linkedFindingCount} finding{linkedFindingCount === 1 ? '' : 's'}
@@ -840,20 +913,21 @@ function SampleCard({
               </>
             )}
           </div>
-          <h3 className="mt-1.5 text-[14px] font-medium text-white flex items-center gap-2">
+          <h3 className="mt-1.5 flex items-start gap-2 text-[14px] font-semibold leading-snug text-white">
             <span
               className={cn(
-                'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold uppercase tracking-[0.16em]',
-                sample.otj_id
-                  ? 'border-emerald-400/40 text-white'
-                  : sample.decision_id || sample.portfolio_item_id
-                    ? 'border-elec-yellow/50 text-white'
-                    : 'border-sky-400/40 text-white'
+                'inline-flex shrink-0 items-center h-6 px-2 rounded-full border border-white/[0.2] text-[12px] font-semibold text-white'
               )}
             >
-              {sample.otj_id ? 'OTJ' : sample.decision_id ? 'Decision' : sample.portfolio_item_id ? 'Evidence' : 'Observation'}
+              {sample.otj_id
+                ? 'Off the job'
+                : sample.decision_id
+                  ? 'Decision'
+                  : sample.portfolio_item_id
+                    ? 'Evidence'
+                    : 'Observation'}
             </span>
-            <span className="truncate">
+            <span className="min-w-0 line-clamp-2 pt-0.5">
               {sample.otj_id
                 ? (sample.otj_title_snapshot ?? 'OTJ entry')
                 : sample.decision_id || sample.portfolio_item_id
@@ -861,58 +935,85 @@ function SampleCard({
                   : (sample.observation_title_snapshot ?? 'Observation')}
             </span>
           </h3>
-          <div className="mt-0.5 text-[12px] text-white tabular-nums">
-            {sample.otj_id ? 'Activity' : sample.decision_id ? 'Decided' : sample.portfolio_item_id ? 'Added' : 'Observed'}{' '}
-            {formatDate(
-              sample.otj_id
-                ? sample.otj_date_snapshot
-                : sample.decision_id || sample.portfolio_item_id
-                  ? sample.target_date_snapshot
-                  : sample.observation_date_snapshot
-            )}
-          </div>
+          {(() => {
+            // Say nothing rather than "Activity —" when the snapshot has no date.
+            const when = sample.otj_id
+              ? sample.otj_date_snapshot
+              : sample.decision_id || sample.portfolio_item_id
+                ? sample.target_date_snapshot
+                : sample.observation_date_snapshot;
+            return when ? (
+              <div className="mt-0.5 text-[12px] text-white tabular-nums">
+                {sample.otj_id
+                  ? 'Activity'
+                  : sample.decision_id
+                    ? 'Decided'
+                    : sample.portfolio_item_id
+                      ? 'Added'
+                      : 'Observed'}{' '}
+                {formatDate(when)}
+              </div>
+            ) : null;
+          })()}
         </div>
       </div>
 
-      <div className="mt-3 flex items-center gap-1.5 flex-wrap">
-        {VERDICT_OPTIONS.map((v) => {
-          const active = sample.verdict === v;
-          const tone = VERDICT_TONE[v];
-          return (
-            <button
-              key={v}
-              type="button"
-              disabled={readOnly}
-              onClick={() => onSetVerdict(v, comments)}
-              className={cn(
-                'h-11 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation inline-flex items-center gap-1.5',
-                active
-                  ? tone === 'good'
-                    ? 'bg-emerald-500/[0.18] border-emerald-400/60 text-white font-semibold'
-                    : tone === 'bad'
-                      ? 'bg-red-500/[0.18] border-red-400/60 text-white font-semibold'
-                      : tone === 'warn'
-                        ? 'bg-orange-500/[0.18] border-orange-400/60 text-white font-semibold'
-                        : 'bg-white/[0.12] border-white/[0.4] text-white font-semibold'
-                  : 'bg-white/[0.04] border-white/[0.12] text-white hover:border-white/[0.3]'
-              )}
-              title={`Set verdict (keyboard: ${VERDICT_SHORTCUT[v]})`}
-            >
-              <span
-                aria-hidden
-                className="hidden h-4 w-4 items-center justify-center rounded bg-white/[0.08] font-mono text-[10px] tabular-nums text-white lg:inline-flex"
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        {/* The verdict: one joined control; the chosen verdict takes its colour. */}
+        <div
+          role="radiogroup"
+          aria-label="Verdict"
+          className="flex w-full rounded-xl border border-white/[0.14] p-0.5 sm:inline-flex sm:w-auto"
+        >
+          {VERDICT_OPTIONS.map((v) => {
+            const active = sample.verdict === v;
+            const tone = VERDICT_TONE[v];
+            return (
+              <button
+                key={v}
+                type="button"
+                role="radio"
+                aria-checked={active}
+                disabled={readOnly}
+                onClick={() => onSetVerdict(v, comments)}
+                className={cn(
+                  'inline-flex h-11 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-[10px] px-2 text-[13px] font-semibold transition-colors touch-manipulation sm:flex-none sm:px-3.5 disabled:cursor-default',
+                  active
+                    ? tone === 'good'
+                      ? 'bg-emerald-400 text-black'
+                      : tone === 'bad' || tone === 'warn'
+                        ? 'bg-orange-400 text-black'
+                        : 'bg-white text-black'
+                    : 'text-white hover:bg-white/[0.06] active:bg-white/[0.08]'
+                )}
+                title={`Set verdict (keyboard: ${VERDICT_SHORTCUT[v]})`}
               >
-                {VERDICT_SHORTCUT[v]}
-              </span>
-              {VERDICT_LABEL[v]}
-            </button>
-          );
-        })}
-        <div className="flex-1" />
+                <span
+                  aria-hidden
+                  className={cn(
+                    'hidden h-4 w-4 items-center justify-center rounded font-mono text-[12px] tabular-nums lg:inline-flex',
+                    active ? 'bg-black/10' : 'bg-white/[0.08]'
+                  )}
+                >
+                  {VERDICT_SHORTCUT[v]}
+                </span>
+                {v === 'pending' ? (
+                  <>
+                    <span className="sm:hidden">Awaiting</span>
+                    <span className="hidden sm:inline">{VERDICT_LABEL[v]}</span>
+                  </>
+                ) : (
+                  VERDICT_LABEL[v]
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <div className="hidden flex-1 sm:block" />
         <button
           type="button"
           onClick={onViewEvidence}
-          className={cn(COLLEGE_BTN, 'h-11')}
+          className={cn(COLLEGE_BTN, 'h-11 w-full sm:w-auto')}
         >
           {sample.decision_id || sample.portfolio_item_id ? 'Open learner' : 'View evidence'}
         </button>
@@ -920,73 +1021,76 @@ function SampleCard({
           <button
             type="button"
             onClick={onPromoteToFinding}
-            className="inline-flex h-11 items-center rounded-xl border border-orange-400/60 px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-orange-500/[0.12]"
+            className="inline-flex h-11 items-center rounded-xl border border-orange-400/60 px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:border-orange-300"
             title="Raise an IQA finding from this sample"
           >
             Raise finding
           </button>
         )}
         {!readOnly && (
-        <button
-          type="button"
-          onClick={onRemove}
-          className="h-11 rounded-xl px-3 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-red-500/[0.10]"
-        >
-          Remove
-        </button>
+          <button
+            type="button"
+            onClick={onRemove}
+            className="h-11 rounded-xl px-3 text-[13px] font-medium text-white transition-colors touch-manipulation hover:text-red-300"
+          >
+            Remove
+          </button>
         )}
       </div>
 
-      <div className="mt-auto pt-3"><div className="border-t border-white/[0.06] pt-3">
-        {readOnly ? (
-          <p className="text-[13px] leading-relaxed text-white">{sample.comments || 'No verdict comment.'}</p>
-        ) : editing ? (
-          <>
-            <textarea
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              rows={3}
-              className={cn(textareaClass, 'min-h-[70px]')}
-              placeholder="Verdict rationale, agreed actions, IV evidence reference…"
-            />
-            <div className="mt-2 flex items-center justify-end gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setComments(sample.comments ?? '');
-                  setEditing(false);
-                }}
-                className="h-11 px-4 rounded-xl text-[12.5px] font-medium text-white transition-colors touch-manipulation"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={persistComments}
-                className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-              >
-                Save comment
-              </button>
-            </div>
-          </>
-        ) : sample.comments ? (
-          <button
-            type="button"
-            onClick={() => setEditing(true)}
-            className="-mx-2 min-h-11 w-full rounded-md px-2 py-1 text-left text-[13px] leading-relaxed text-white transition-colors hover:bg-white/[0.04] touch-manipulation"
-          >
-            {sample.comments}
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setEditing(true)}
-            className="h-11 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
-          >
-            Add verdict comment
-          </button>
-        )}
-      </div>
+      <div className="mt-auto pt-3">
+        <div className="border-t border-white/[0.06] pt-3">
+          {readOnly ? (
+            <p className="text-[13px] leading-relaxed text-white">
+              {sample.comments || 'No verdict comment.'}
+            </p>
+          ) : editing ? (
+            <>
+              <textarea
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
+                rows={3}
+                className={cn(textareaClass, 'min-h-[70px]')}
+                placeholder="Verdict rationale, agreed actions, IV evidence reference…"
+              />
+              <div className="mt-2 flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setComments(sample.comments ?? '');
+                    setEditing(false);
+                  }}
+                  className="h-11 px-4 rounded-xl text-[12.5px] font-medium text-white transition-colors touch-manipulation"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={persistComments}
+                  className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+                >
+                  Save comment
+                </button>
+              </div>
+            </>
+          ) : sample.comments ? (
+            <button
+              type="button"
+              onClick={() => setEditing(true)}
+              className="-mx-2 min-h-11 w-full rounded-md px-2 py-1 text-left text-[13px] leading-relaxed text-white transition-colors hover:bg-white/[0.04] touch-manipulation"
+            >
+              {sample.comments}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setEditing(true)}
+              className="h-11 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Add verdict comment
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -1001,7 +1105,7 @@ function EligibleOtjRow({ otj, onAdd }: { otj: EligibleOtjEntry; onAdd: () => vo
     <div className="px-5 sm:px-6 py-3.5 flex items-center gap-3">
       <div className="min-w-0 flex-1">
         <div className="text-[13px] font-medium text-white truncate flex items-center gap-2">
-          <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-emerald-400/40 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+          <span className="inline-flex shrink-0 items-center h-6 px-2 rounded-full border border-white/[0.2] text-[12px] font-semibold text-white">
             OTJ
           </span>
           <span className="truncate">{otj.title}</span>
@@ -1029,7 +1133,7 @@ function EligibleOtjRow({ otj, onAdd }: { otj: EligibleOtjEntry; onAdd: () => vo
       <button
         type="button"
         onClick={onAdd}
-        className="shrink-0 h-11 px-4 rounded-xl border border-elec-yellow/60 text-[13px] font-semibold text-white hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation"
+        className="shrink-0 h-11 px-4 rounded-xl border border-white/[0.18] text-[13px] font-semibold text-white hover:border-elec-yellow transition-colors touch-manipulation"
       >
         Add to sample
       </button>
@@ -1078,7 +1182,7 @@ function EligibleRow({ obs, onAdd }: { obs: EligibleObservation; onAdd: () => vo
       <button
         type="button"
         onClick={onAdd}
-        className="shrink-0 h-11 px-4 rounded-xl border border-elec-yellow/60 text-[13px] font-semibold text-white hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation"
+        className="shrink-0 h-11 px-4 rounded-xl border border-white/[0.18] text-[13px] font-semibold text-white hover:border-elec-yellow transition-colors touch-manipulation"
       >
         Add to sample
       </button>
@@ -1099,7 +1203,7 @@ function EligibleDecisionRow({ dec, onAdd }: { dec: EligibleDecision; onAdd: () 
     <div className="flex items-center gap-3 px-5 py-3.5 sm:px-6">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2 truncate text-[13px] font-medium text-white">
-          <span className="inline-flex h-5 items-center rounded-md border border-elec-yellow/50 px-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+          <span className="inline-flex h-6 shrink-0 items-center rounded-full border border-white/[0.2] px-2 text-[12px] font-semibold text-white">
             Decision
           </span>
           <span className="truncate">
@@ -1123,7 +1227,9 @@ function EligibleDecisionRow({ dec, onAdd }: { dec: EligibleDecision; onAdd: () 
           {dec.iqa_verdict && (
             <>
               <span className="text-white">·</span>
-              <span>{dec.iqa_verdict === 'confirmed' ? 'Already confirmed' : 'Already returned'}</span>
+              <span>
+                {dec.iqa_verdict === 'confirmed' ? 'Already confirmed' : 'Already returned'}
+              </span>
             </>
           )}
         </div>
@@ -1131,7 +1237,7 @@ function EligibleDecisionRow({ dec, onAdd }: { dec: EligibleDecision; onAdd: () 
       <button
         type="button"
         onClick={onAdd}
-        className="h-11 shrink-0 touch-manipulation rounded-xl border border-elec-yellow/60 px-4 text-[13px] font-semibold text-white transition-colors hover:bg-elec-yellow/[0.12]"
+        className="h-11 shrink-0 touch-manipulation rounded-xl border border-white/[0.18] px-4 text-[13px] font-semibold text-white transition-colors hover:border-elec-yellow"
       >
         Add to sample
       </button>

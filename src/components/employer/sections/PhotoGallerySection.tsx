@@ -6,8 +6,18 @@ import { PhotoMapView, type MapPhoto } from '@/components/employer/PhotoMapView'
 import { PhotoCompareSlider, type ComparePhoto } from '@/components/employer/PhotoCompareSlider';
 import { PhotoAnnotationEditor } from '@/components/employer/PhotoAnnotationEditor';
 import { UploadPhotoSheet } from '@/components/employer/dialogs/UploadPhotoSheet';
-import { useTogglePhotoApproval, useTogglePhotoSharing, useUploadJobPhoto, type PhotoCategory } from '@/hooks/useJobPhotos';
-import { usePhotoFeed, PHOTO_SOURCE_LABEL, type FeedPhoto, type PhotoSource } from '@/hooks/usePhotoFeed';
+import {
+  useTogglePhotoApproval,
+  useTogglePhotoSharing,
+  useUploadJobPhoto,
+  type PhotoCategory,
+} from '@/hooks/useJobPhotos';
+import {
+  usePhotoFeed,
+  PHOTO_SOURCE_LABEL,
+  type FeedPhoto,
+  type PhotoSource,
+} from '@/hooks/usePhotoFeed';
 import { useJobContext } from '@/hooks/useJobContext';
 import { JobContextBar } from '@/components/employer/JobContextBar';
 import { PhotoTile } from '@/components/employer/photos/PhotoTile';
@@ -29,15 +39,23 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
   EmptyState,
   LoadingBlocks,
-  IconButton,
-  PrimaryButton,
   SecondaryButton,
   selectTriggerClass,
   selectContentClass,
 } from '@/components/employer/editorial';
+import {
+  frameClass,
+  panel,
+  PanelTitle,
+  HeroActions,
+  HeroPrimary,
+  ToolButton,
+  PlainEmpty,
+  Segments,
+  SearchField,
+} from '@/components/employer/pageParts/PageParts';
 
 /* ==========================================================================
    Photo gallery (ELE-1970). Every photo from every job in one place:
@@ -52,9 +70,7 @@ type ViewMode = 'job' | 'date' | 'map' | 'compare';
 type SourceFilter = 'all' | PhotoSource;
 
 const SOURCES: PhotoSource[] = ['job', 'snag', 'issue', 'diary', 'task'];
-const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
-const cardCn = 'rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.07] to-white/[0.03]';
+const cardCn = panel;
 const GROUP_PREVIEW = 12;
 
 function sourceLabel(p: FeedPhoto) {
@@ -83,7 +99,9 @@ export function PhotoGallerySection() {
 
   const initialSource = searchParams.get('source') as SourceFilter | null;
   const [source, setSource] = useState<SourceFilter>(
-    initialSource && (initialSource === 'all' || SOURCES.includes(initialSource as PhotoSource)) ? initialSource : 'all'
+    initialSource && (initialSource === 'all' || SOURCES.includes(initialSource as PhotoSource))
+      ? initialSource
+      : 'all'
   );
   const [viewMode, setViewMode] = useState<ViewMode>('job');
   const [searchQuery, setSearchQuery] = useState('');
@@ -91,7 +109,9 @@ export function PhotoGallerySection() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [viewer, setViewer] = useState<{ list: FeedPhoto[]; index: number } | null>(null);
   const [annotating, setAnnotating] = useState<FeedPhoto | null>(null);
-  const [compare, setCompare] = useState<{ before: ComparePhoto; after: ComparePhoto } | null>(null);
+  const [compare, setCompare] = useState<{ before: ComparePhoto; after: ComparePhoto } | null>(
+    null
+  );
   const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
 
   const handleRefresh = useCallback(async () => {
@@ -100,12 +120,23 @@ export function PhotoGallerySection() {
   }, [refetch]);
 
   /* ---------- filtering ---------- */
-  const byJob = useMemo(() => (jobFilter ? feed.filter((p) => p.job_id === jobFilter) : feed), [feed, jobFilter]);
+  const byJob = useMemo(
+    () => (jobFilter ? feed.filter((p) => p.job_id === jobFilter) : feed),
+    [feed, jobFilter]
+  );
   const searched = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return byJob;
     return byJob.filter((p) =>
-      [p.caption, p.author, p.job_title, p.client, p.category, p.address, PHOTO_SOURCE_LABEL[p.source]]
+      [
+        p.caption,
+        p.author,
+        p.job_title,
+        p.client,
+        p.category,
+        p.address,
+        PHOTO_SOURCE_LABEL[p.source],
+      ]
         .filter(Boolean)
         .some((t) => String(t).toLowerCase().includes(q))
     );
@@ -136,9 +167,17 @@ export function PhotoGallerySection() {
   };
 
   const jobGroups = useMemo(() => {
-    const m = new Map<string, { jobId: string; title: string; client: string | null; photos: FeedPhoto[] }>();
+    const m = new Map<
+      string,
+      { jobId: string; title: string; client: string | null; photos: FeedPhoto[] }
+    >();
     filtered.forEach((p) => {
-      const g = m.get(p.job_id) ?? { jobId: p.job_id, title: p.job_title || 'Job', client: p.client, photos: [] };
+      const g = m.get(p.job_id) ?? {
+        jobId: p.job_id,
+        title: p.job_title || 'Job',
+        client: p.client,
+        photos: [],
+      };
       g.photos.push(p);
       m.set(p.job_id, g);
     });
@@ -158,8 +197,13 @@ export function PhotoGallerySection() {
   const pairs = useMemo(() => {
     const out: { jobTitle: string; before: FeedPhoto; after: FeedPhoto }[] = [];
     jobGroups.forEach((g) => {
-      const before = g.photos.filter((p) => p.source === 'job' && p.category === 'Before' && p.url).pop();
-      const after = g.photos.find((p) => p.source === 'job' && (p.category === 'After' || p.category === 'Completion') && p.url);
+      const before = g.photos
+        .filter((p) => p.source === 'job' && p.category === 'Before' && p.url)
+        .pop();
+      const after = g.photos.find(
+        (p) =>
+          p.source === 'job' && (p.category === 'After' || p.category === 'Completion') && p.url
+      );
       if (before && after) out.push({ jobTitle: g.title, before, after });
     });
     return out;
@@ -175,7 +219,7 @@ export function PhotoGallerySection() {
           jobTitle: p.job_title || 'Job',
           uploadedBy: p.author,
           filename: p.url ?? undefined,
-          category: ((p.category || 'during').toLowerCase() as MapPhoto['category']),
+          category: (p.category || 'during').toLowerCase() as MapPhoto['category'],
           timestamp: p.taken_at,
           location: p.address ?? undefined,
           lat: Number(p.lat),
@@ -187,7 +231,8 @@ export function PhotoGallerySection() {
   );
 
   /* ---------- viewer ---------- */
-  const open = (list: FeedPhoto[], p: FeedPhoto) => setViewer({ list, index: Math.max(0, list.indexOf(p)) });
+  const open = (list: FeedPhoto[], p: FeedPhoto) =>
+    setViewer({ list, index: Math.max(0, list.indexOf(p)) });
   const lightboxPhotos: LightboxPhoto[] = useMemo(
     () =>
       (viewer?.list ?? []).map((p) => ({
@@ -202,10 +247,17 @@ export function PhotoGallerySection() {
 
   const recordLink = (p: FeedPhoto) => {
     if (p.source === 'snag' || p.source === 'issue')
-      return { label: p.source === 'snag' ? 'Open the snag' : 'Open the issue', to: `/employer?section=issues&issue=${p.ref_id}&job=${p.job_id}` };
+      return {
+        label: p.source === 'snag' ? 'Open the snag' : 'Open the issue',
+        to: `/employer?section=issues&issue=${p.ref_id}&job=${p.job_id}`,
+      };
     if (p.source === 'diary')
-      return { label: 'Open the diary entry', to: `/employer?section=progresslogs&job=${p.job_id}&entry=${p.ref_id}` };
-    if (p.source === 'task') return { label: 'Open the job', to: `/employer?section=jobs&job=${p.job_id}` };
+      return {
+        label: 'Open the diary entry',
+        to: `/employer?section=progresslogs&job=${p.job_id}&entry=${p.ref_id}`,
+      };
+    if (p.source === 'task')
+      return { label: 'Open the job', to: `/employer?section=jobs&job=${p.job_id}` };
     return { label: 'Open the job', to: `/employer?section=jobs&job=${p.job_id}` };
   };
 
@@ -231,7 +283,9 @@ export function PhotoGallerySection() {
       await uploadPhoto.mutateAsync({
         file: new File([blob], `marked-up-${Date.now()}.jpg`, { type: 'image/jpeg' }),
         jobId: p.job_id,
-        category: (p.source === 'snag' || p.source === 'issue' ? 'Issue' : (p.category as PhotoCategory) || 'During') as PhotoCategory,
+        category: (p.source === 'snag' || p.source === 'issue'
+          ? 'Issue'
+          : (p.category as PhotoCategory) || 'During') as PhotoCategory,
         notes: `Marked up copy of a ${sourceLabel(p).toLowerCase()} photo${p.caption ? `: ${p.caption.slice(0, 120)}` : ''}`,
       });
       setAnnotating(null);
@@ -255,7 +309,12 @@ export function PhotoGallerySection() {
             <SecondaryButton
               data-help="photogallery.approve"
               className="h-11"
-              onClick={() => toggleApproval.mutate(p.ref_id, { onSuccess: () => toast({ title: p.approved ? 'Approval removed' : 'Photo approved' }) })}
+              onClick={() =>
+                toggleApproval.mutate(p.ref_id, {
+                  onSuccess: () =>
+                    toast({ title: p.approved ? 'Approval removed' : 'Photo approved' }),
+                })
+              }
             >
               <Check className="h-4 w-4 mr-1.5" />
               {p.approved ? 'Approved' : 'Approve'}
@@ -264,7 +323,12 @@ export function PhotoGallerySection() {
               className="h-11"
               onClick={() =>
                 toggleSharing.mutate(p.ref_id, {
-                  onSuccess: () => toast({ title: p.shared ? 'No longer shared with the client' : 'Shared with the client' }),
+                  onSuccess: () =>
+                    toast({
+                      title: p.shared
+                        ? 'No longer shared with the client'
+                        : 'Shared with the client',
+                    }),
                 })
               }
             >
@@ -274,7 +338,11 @@ export function PhotoGallerySection() {
           </>
         )}
         {p.url && (
-          <SecondaryButton data-help="photogallery.markup" className="h-11" onClick={() => setAnnotating(p)}>
+          <SecondaryButton
+            data-help="photogallery.markup"
+            className="h-11"
+            onClick={() => setAnnotating(p)}
+          >
             <Pencil className="h-4 w-4 mr-1.5" />
             Mark up
           </SecondaryButton>
@@ -300,9 +368,16 @@ export function PhotoGallerySection() {
 
   /* ---------- render helpers ---------- */
   const tile = (p: FeedPhoto, list: FeedPhoto[]) => (
-    <PhotoTile key={p.key} url={p.url} alt={`${sourceLabel(p)} photo, ${p.job_title ?? 'job'}`} onClick={() => open(list, p)}>
+    <PhotoTile
+      key={p.key}
+      url={p.url}
+      alt={`${sourceLabel(p)} photo, ${p.job_title ?? 'job'}`}
+      onClick={() => open(list, p)}
+    >
       <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent px-2 pb-1.5 pt-5 text-left">
-        <span className="block truncate text-[11px] font-semibold text-white">{sourceLabel(p)}</span>
+        <span className="block truncate text-[11px] font-semibold text-white">
+          {sourceLabel(p)}
+        </span>
         <span className="block truncate text-[10.5px] text-white">
           {p.author} · {format(new Date(p.taken_at), 'd MMM')}
         </span>
@@ -310,12 +385,18 @@ export function PhotoGallerySection() {
       {(p.approved || p.shared) && (
         <span className="absolute right-1.5 top-1.5 flex gap-1">
           {p.approved && (
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500" title="Approved">
+            <span
+              className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500"
+              title="Approved"
+            >
               <Check className="h-3 w-3 text-black" />
             </span>
           )}
           {p.shared && (
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500" title="Shared with client">
+            <span
+              className="flex h-5 w-5 items-center justify-center rounded-full bg-white"
+              title="Shared with client"
+            >
               <Eye className="h-3 w-3 text-black" />
             </span>
           )}
@@ -325,31 +406,44 @@ export function PhotoGallerySection() {
   );
   const gridCn = 'grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-8';
 
+  const liveLine = (() => {
+    if (isLoading) return 'Loading photos.';
+    if (feed.length === 0)
+      return 'No photos yet. They arrive by themselves when the team adds one on site.';
+    const head =
+      stats.week > 0
+        ? `${stats.week} ${stats.week === 1 ? 'photo' : 'photos'} this week${stats.team ? `, ${stats.team} from the team in all` : ''}`
+        : `${stats.total} ${stats.total === 1 ? 'photo' : 'photos'}, none this week`;
+    return stats.unavailable
+      ? `${head}. ${stats.unavailable} ${stats.unavailable === 1 ? 'file is' : 'files are'} missing.`
+      : `${head}.`;
+  })();
+
   const heroActions = (
-    <>
-      <PrimaryButton data-help="photogallery.upload" onClick={() => setUploadSheetOpen(true)}>
-        <Upload className="h-4 w-4 mr-1.5" />
+    <HeroActions>
+      <HeroPrimary
+        data-help="photogallery.upload"
+        onClick={() => setUploadSheetOpen(true)}
+        icon={<Upload className="h-4 w-4" />}
+      >
         Upload
-      </PrimaryButton>
-      <IconButton onClick={handleRefresh} aria-label="Refresh photos">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
-      <PageHelpButton help={PHOTO_GALLERY_HELP} askContext={{ page: 'photogallery', tab: viewMode }} />
-    </>
+      </HeroPrimary>
+      <ToolButton
+        label="Refresh photos"
+        onClick={handleRefresh}
+        icon={<RefreshCw className="h-4 w-4" />}
+      />
+      <PageHelpButton
+        help={PHOTO_GALLERY_HELP}
+        askContext={{ page: 'photogallery', tab: viewMode }}
+      />
+    </HeroActions>
   );
-  const hero = (
-    <PageHero
-      eyebrow="Jobs"
-      title="Photo gallery"
-      description="Every photo from every job: what the office uploads and what the team takes on site."
-      tone="cyan"
-      actions={heroActions}
-    />
-  );
+  const hero = <PageHero title="Photo gallery" description={liveLine} actions={heroActions} />;
 
   if (isLoading) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
         {hero}
         <LoadingBlocks />
       </PageFrame>
@@ -357,20 +451,24 @@ export function PhotoGallerySection() {
   }
   if (error) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
         {hero}
-        <EmptyState title="Couldn't load photos" description={(error as Error).message} action="Try again" onAction={() => refetch()} />
+        <EmptyState
+          title="Couldn't load photos"
+          description={(error as Error).message}
+          action="Try again"
+          onAction={() => refetch()}
+        />
       </PageFrame>
     );
   }
 
   const empty = (
-    <EmptyState
-      title={feed.length === 0 ? 'No photos yet' : 'No photos match'}
-      description={
+    <PlainEmpty
+      text={
         feed.length === 0
-          ? 'Upload one here, or they arrive by themselves when the team adds photos to a snag, a progress note or a task.'
-          : 'Try another source, job or search.'
+          ? "Photos appear here by job and by day, from uploads and from the team's snags, progress notes and tasks."
+          : 'No photos match this source, job or search.'
       }
       action={feed.length === 0 ? 'Upload a photo' : 'Show everything'}
       onAction={() => {
@@ -385,7 +483,7 @@ export function PhotoGallerySection() {
   );
 
   const content = (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       {hero}
 
       <HowItWorks help={PHOTO_GALLERY_HELP} askContext={{ page: 'photogallery', tab: viewMode }} />
@@ -395,51 +493,57 @@ export function PhotoGallerySection() {
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Photos', value: stats.total, tone: 'cyan' },
-          { label: 'This week', value: stats.week, tone: 'blue' },
-          { label: 'From the team', value: stats.team, tone: 'emerald' },
+          { label: 'Photos', value: stats.total },
+          { label: 'This week', value: stats.week },
+          { label: 'From the team', value: stats.team },
           stats.unavailable
-            ? { label: 'Unavailable', value: stats.unavailable, tone: 'orange' }
+            ? { label: 'Unavailable', value: stats.unavailable, tone: 'red', sub: 'File missing' }
             : { label: 'Jobs', value: jobGroups.length },
         ]}
       />
 
-      <div data-help="photogallery.views">
-        <FilterBar
-          tabs={[
-            { value: 'job', label: 'By job' },
-            { value: 'date', label: 'By day' },
-            { value: 'map', label: 'Map' },
-            { value: 'compare', label: 'Before & after' },
+      <div
+        data-help="photogallery.views"
+        className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
+      >
+        <Segments
+          items={[
+            { value: 'job' as ViewMode, label: 'By job' },
+            { value: 'date' as ViewMode, label: 'By day' },
+            { value: 'map' as ViewMode, label: 'Map' },
+            { value: 'compare' as ViewMode, label: 'Before & after' },
           ]}
-          activeTab={viewMode}
-          onTabChange={(v) => setViewMode(v as ViewMode)}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search captions, people, jobs…"
+          value={viewMode}
+          onChange={setViewMode}
+        />
+        <SearchField
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Search captions, people, jobs"
+          className="lg:w-80"
         />
       </div>
 
-      <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
-        <div
-          className="flex gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none]"
-          data-help="photogallery.filter"
-        >
-          {(['all', ...SOURCES] as SourceFilter[]).map((s) => (
-            <button
-              key={s}
-              type="button"
-              onClick={() => setSource(s)}
-              className={cn('h-11 shrink-0 rounded-full border px-4 text-[13px] touch-manipulation', source === s ? chipOn : chipOff)}
-            >
-              {s === 'all' ? 'Everything' : PHOTO_SOURCE_LABEL[s]}
-              <span className="ml-1.5 tabular-nums">{sourceCounts[s] ?? 0}</span>
-            </button>
-          ))}
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <div data-help="photogallery.filter">
+          <Segments
+            wrap
+            quiet
+            items={(['all', ...SOURCES] as SourceFilter[]).map((s) => ({
+              value: s,
+              label: s === 'all' ? 'Everything' : PHOTO_SOURCE_LABEL[s],
+              count: sourceCounts[s] ?? 0,
+            }))}
+            value={source}
+            onChange={setSource}
+          />
         </div>
         {!contextJobId && jobOptions.length > 1 && (
           <div className="lg:ml-auto lg:w-72">
-            <Select value={jobFilter || 'all'} onValueChange={(v) => setJobFilter(v === 'all' ? '' : v)}>
+            <Select
+              value={jobFilter || 'all'}
+              onValueChange={(v) => setJobFilter(v === 'all' ? '' : v)}
+            >
               <SelectTrigger className={selectTriggerClass} aria-label="Filter by job">
                 <SelectValue placeholder="Every job" />
               </SelectTrigger>
@@ -460,27 +564,45 @@ export function PhotoGallerySection() {
         (jobGroups.length === 0 ? (
           empty
         ) : (
-          <div className="space-y-4" data-help="photogallery.grid">
+          <div className="space-y-6 sm:space-y-4" data-help="photogallery.grid">
             {jobGroups.map((g) => {
               const showAll = expanded[g.jobId] || g.photos.length <= GROUP_PREVIEW;
               return (
-                <section key={g.jobId} className={cn(cardCn, 'p-4 space-y-3')} aria-label={g.title}>
+                <section
+                  key={g.jobId}
+                  className={cn(cardCn, 'px-4 py-4 sm:px-5 space-y-3')}
+                  aria-label={g.title}
+                >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <h2 className="truncate text-[15px] font-semibold tracking-tight text-white">{g.title}</h2>
-                      <p className="truncate text-[12px] text-white">
-                        {[g.client, `${g.photos.length} photo${g.photos.length === 1 ? '' : 's'}`].filter(Boolean).join(' · ')}
+                      <h2 className="truncate text-[16px] font-semibold tracking-tight text-white">
+                        {g.title}
+                      </h2>
+                      <p className="truncate text-[13px] text-white">
+                        {[g.client, `${g.photos.length} photo${g.photos.length === 1 ? '' : 's'}`]
+                          .filter(Boolean)
+                          .join(' · ')}
                       </p>
                     </div>
                     {!contextJobId && (
-                      <SecondaryButton className="h-11 shrink-0 px-4" onClick={() => navigate(`/employer?section=photogallery&job=${g.jobId}`)}>
+                      <SecondaryButton
+                        className="h-11 shrink-0 px-4"
+                        onClick={() => navigate(`/employer?section=photogallery&job=${g.jobId}`)}
+                      >
                         Just this job
                       </SecondaryButton>
                     )}
                   </div>
-                  <div className={gridCn}>{(showAll ? g.photos : g.photos.slice(0, GROUP_PREVIEW)).map((p) => tile(p, g.photos))}</div>
+                  <div className={gridCn}>
+                    {(showAll ? g.photos : g.photos.slice(0, GROUP_PREVIEW)).map((p) =>
+                      tile(p, g.photos)
+                    )}
+                  </div>
                   {!showAll && (
-                    <SecondaryButton fullWidth onClick={() => setExpanded((e) => ({ ...e, [g.jobId]: true }))}>
+                    <SecondaryButton
+                      fullWidth
+                      onClick={() => setExpanded((e) => ({ ...e, [g.jobId]: true }))}
+                    >
                       Show all {g.photos.length}
                     </SecondaryButton>
                   )}
@@ -494,12 +616,13 @@ export function PhotoGallerySection() {
         (dayGroups.length === 0 ? (
           empty
         ) : (
-          <div className="space-y-5">
+          <div className="space-y-6 sm:space-y-8">
             {dayGroups.map(([day, list]) => (
-              <section key={day} className="space-y-2" aria-label={dayLabel(day)}>
-                <h2 className="text-[15px] font-semibold tracking-tight text-white">
-                  {dayLabel(day)} <span className="text-[12px] font-normal">{list.length}</span>
-                </h2>
+              <section key={day} aria-label={dayLabel(day)}>
+                <PanelTitle
+                  title={dayLabel(day)}
+                  meta={`${list.length} ${list.length === 1 ? 'photo' : 'photos'}`}
+                />
                 <div className={gridCn}>{list.map((p) => tile(p, list))}</div>
               </section>
             ))}
@@ -508,7 +631,7 @@ export function PhotoGallerySection() {
 
       {viewMode === 'map' && (
         <div className={cn(cardCn, 'p-3 space-y-2')}>
-          <p className="px-1 text-[12.5px] text-white">
+          <p className="px-1 text-[13px] text-white">
             {mapPhotos.length
               ? `${mapPhotos.length} photo${mapPhotos.length === 1 ? '' : 's'} with a location. Uploads tagged with Add current location show here.`
               : 'No photos have a location yet. Tick Add current location when you upload.'}
@@ -537,9 +660,8 @@ export function PhotoGallerySection() {
 
       {viewMode === 'compare' &&
         (pairs.length === 0 ? (
-          <EmptyState
-            title="No before and after yet"
-            description="Upload a Before photo and an After or Completion photo on the same job, and the pair shows here."
+          <PlainEmpty
+            text="Before and after pairs appear here once a job has a Before photo and an After or Completion photo."
             action="Upload a photo"
             onAction={() => setUploadSheetOpen(true)}
           />
@@ -551,8 +673,20 @@ export function PhotoGallerySection() {
                 type="button"
                 onClick={() =>
                   setCompare({
-                    before: { id: pr.before.key, category: 'Before', jobTitle: pr.jobTitle, timestamp: pr.before.taken_at, filename: pr.before.url ?? undefined },
-                    after: { id: pr.after.key, category: pr.after.category || 'After', jobTitle: pr.jobTitle, timestamp: pr.after.taken_at, filename: pr.after.url ?? undefined },
+                    before: {
+                      id: pr.before.key,
+                      category: 'Before',
+                      jobTitle: pr.jobTitle,
+                      timestamp: pr.before.taken_at,
+                      filename: pr.before.url ?? undefined,
+                    },
+                    after: {
+                      id: pr.after.key,
+                      category: pr.after.category || 'After',
+                      jobTitle: pr.jobTitle,
+                      timestamp: pr.after.taken_at,
+                      filename: pr.after.url ?? undefined,
+                    },
                   })
                 }
                 className={cn(cardCn, 'p-3 text-left touch-manipulation active:scale-[0.99]')}
@@ -589,18 +723,21 @@ export function PhotoGallerySection() {
       />
 
       {compare && (
-        <PhotoCompareSlider beforePhoto={compare.before} afterPhoto={compare.after} isOpen onClose={() => setCompare(null)} />
+        <PhotoCompareSlider
+          beforePhoto={compare.before}
+          afterPhoto={compare.after}
+          isOpen
+          onClose={() => setCompare(null)}
+        />
       )}
 
-      <UploadPhotoSheet open={uploadSheetOpen} onOpenChange={setUploadSheetOpen} initialJobId={contextJobId} />
+      <UploadPhotoSheet
+        open={uploadSheetOpen}
+        onOpenChange={setUploadSheetOpen}
+        initialJobId={contextJobId}
+      />
     </PageFrame>
   );
 
-  return isMobile ? (
-    <PullToRefresh onRefresh={handleRefresh}>
-      {content}
-    </PullToRefresh>
-  ) : (
-    content
-  );
+  return isMobile ? <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh> : content;
 }

@@ -213,6 +213,8 @@ export function useDeleteFirmPriceBookItem() {
 
 export interface PriceBookImportRow {
   name: string;
+  /** Product code; matched against the item's supplier code (gap §4.5). */
+  code?: string | null;
   unit?: string;
   buy?: number | null;
   sell?: number | null;
@@ -230,11 +232,14 @@ export function useImportFirmPriceBook() {
     ): Promise<{ added: number; updated: number; skipped: number }> => {
       if (!firmId) throw new Error('No firm');
       const out = { added: 0, updated: 0, skipped: 0 };
-      // The RPC takes up to 2,000 rows a call.
-      for (let i = 0; i < rows.length; i += 2000) {
+      // The RPC takes up to 2,000 rows a call, but each saved item rewrites the
+      // book, so a big file in one call can pass the 8 s statement timeout on a
+      // large book. 100 rows a call stays well inside it.
+      const BATCH = 100;
+      for (let i = 0; i < rows.length; i += BATCH) {
         const { data, error } = await supabase.rpc('import_firm_price_book' as never, {
           p_firm: firmId,
-          p_rows: rows.slice(i, i + 2000),
+          p_rows: rows.slice(i, i + BATCH),
         } as never);
         if (error) throw error;
         const r = data as unknown as { added: number; updated: number; skipped: number };

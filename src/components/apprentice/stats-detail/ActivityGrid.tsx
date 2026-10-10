@@ -12,10 +12,10 @@ import { motion } from 'framer-motion';
 export type ActivityVariant = 'orange' | 'green' | 'purple' | 'yellow';
 
 const intensityMap: Record<ActivityVariant, string[]> = {
-  orange: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
-  green: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
-  purple: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
-  yellow: ['bg-white/[0.04]', 'bg-elec-yellow/25', 'bg-elec-yellow/50', 'bg-elec-yellow/80'],
+  orange: ['bg-white/[0.06]', 'bg-white/[0.25]', 'bg-white/[0.55]', 'bg-elec-yellow'],
+  green: ['bg-white/[0.06]', 'bg-white/[0.25]', 'bg-white/[0.55]', 'bg-elec-yellow'],
+  purple: ['bg-white/[0.06]', 'bg-white/[0.25]', 'bg-white/[0.55]', 'bg-elec-yellow'],
+  yellow: ['bg-white/[0.06]', 'bg-white/[0.25]', 'bg-white/[0.55]', 'bg-elec-yellow'],
 };
 
 function getIntensity(count: number): number {
@@ -58,7 +58,7 @@ export function ActivityGrid({ activityMap, variant }: ActivityGridProps) {
       <div className="grid grid-cols-7 gap-1.5">
         {/* Day labels */}
         {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-          <div key={i} className="text-[10px] text-white text-center mb-0.5 font-medium">
+          <div key={i} className="mb-0.5 text-center text-[12px] font-medium text-white">
             {d}
           </div>
         ))}

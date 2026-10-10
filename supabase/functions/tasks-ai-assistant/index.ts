@@ -3,6 +3,8 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 import { callOpenAI, generateLargeEmbedding } from '../_shared/ai-providers.ts';
 import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
+import { tableA2ForPrompt } from '../_shared/osg-table-a2.ts';
+import { searchAppHelp, ACCOUNT_FACTS } from '../_shared/mate-app-help.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 import {
   findDocuments,
@@ -29,6 +31,334 @@ const corsHeaders = {
 };
 
 const SYSTEM_PROMPT = BUSINESS_HUB_SOUL;
+
+const ENQUIRY_ASK =
+  /\b(new enquir(y|ies)|(create|log|add|make) (an |a new |this |the )?enquir(y|ies)|quote request|website form|enquiry source|new lead)\b/i;
+/** A clear ask for an enquiry, or a pasted form ("Name: …" lines) that mentions one. */
+function looksLikeEnquiry(text: string): boolean {
+  if (ENQUIRY_ASK.test(text)) return true;
+  const fieldLines = (text.match(/^\s*[A-Za-z][A-Za-z ]{1,30}:\s*\S/gm) ?? []).length;
+  return fieldLines >= 3 && /enquir/i.test(text);
+}
+const UK_POSTCODE = /\b[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b/i;
+
+/**
+ * The model sometimes proposes only the customer for a pasted enquiry (Isaac
+ * Stafford, 10 Oct: "sometimes it just tells me to create a new customer"), or
+ * a project instead of the enquiry. When the user's message is plainly an
+ * enquiry, make sure one is proposed: built from the customer card and the
+ * pasted text, and replacing a project the model made for it.
+ */
+function ensureEnquiry(actions: any[], userText: string, canEnquire: boolean): any[] {
+  if (!looksLikeEnquiry(userText)) return actions;
+  const isEnquiry = (a: any) =>
+    a?.type === 'create-enquiry' ||
+    (a?.type === 'create-task' && Array.isArray(a.payload?.tags) && a.payload.tags.includes('enquiry'));
+  if (actions.some(isEnquiry)) return actions;
+  const cust = actions.find((a) => a?.type === 'create-customer')?.payload;
+  const proj = actions.find((a) => a?.type === 'create-project');
+  const name = cust?.name || proj?.payload?.customerName;
+  if (!name) return actions;
+  const addr: string = cust?.address || proj?.payload?.location || '';
+  const pc = addr.match(UK_POSTCODE)?.[0];
+  const lines = userText.split('\n');
+  const firstIsAsk = /^\s*(please\s+)?(create|log|add|make|new)\b.*\benquir/i.test(lines[0] ?? '');
+  const details = (firstIsAsk ? lines.slice(1) : lines).join('\n').trim().slice(0, 1500);
+  const enquiry = enquiryAction(
+    {
+      name,
+      phone: cust?.phone,
+      email: cust?.email,
+      address: pc ? addr.replace(pc, '').replace(/[,\s]+$/, '').trim() : addr || undefined,
+      postcode: pc?.toUpperCase(),
+      jobType: userText.match(/type of work:\s*(.+)/i)?.[1]?.trim(),
+      details: details || undefined,
+      source: /website/i.test(userText) ? 'website' : undefined,
+    },
+    'New enquiry from your message',
+    canEnquire
+  );
+  // Only the project the model made FOR this enquiry is replaced.
+  const sameName = (a: any) =>
+    String(a?.payload?.customerName ?? '').trim().toLowerCase() === String(name).trim().toLowerCase();
+  return [...actions.filter((a) => !(a?.type === 'create-project' && sameName(a))), enquiry];
+}
+
+/**
+ * The model proposes "New customer" even when that person is already on file
+ * (tested 10 Oct: an existing customer's own email, 3/3 duplicates). Drop the
+ * card when they are: same email, or same name with the same phone or no
+ * contact details to tell them apart. Two different John Smiths stay two.
+ * Their enquiry / task then links to the existing record by name.
+ */
+async function dropExistingCustomers(
+  actions: any[],
+  supabase: any,
+  userId: string | null
+): Promise<any[]> {
+  if (!userId || !actions.some((a) => a?.type === 'create-customer')) return actions;
+  const digits = (v: unknown) => String(v ?? '').replace(/\D/g, '').slice(-10);
+  const q = (v: string) => `"${v.replace(/"/g, '')}"`;
+  const out: any[] = [];
+  const existingByName = new Map<string, string>();
+  for (const a of actions) {
+    if (a?.type !== 'create-customer') {
+      out.push(a);
+      continue;
+    }
+    const p = a.payload ?? {};
+    const email = String(p.email ?? '').trim().toLowerCase();
+    const name = String(p.name ?? '').trim();
+    const phone = digits(p.phone);
+    const ors = [email && `email.ilike.${q(email)}`, name && `name.ilike.${q(name)}`].filter(Boolean);
+    if (ors.length === 0) {
+      out.push(a);
+      continue;
+    }
+    const { data } = await supabase
+      .from('customers')
+      .select('id, name, email, phone')
+      .eq('user_id', userId)
+      .or(ors.join(','))
+      .limit(10);
+    const hit = (data ?? []).find((c: any) => {
+      const cEmail = String(c.email ?? '').trim().toLowerCase();
+      if (email && cEmail === email) return true;
+      if (!name || String(c.name ?? '').trim().toLowerCase() !== name.toLowerCase()) return false;
+      const cPhone = digits(c.phone);
+      if (phone && cPhone) return phone === cPhone;
+      return !(email && cEmail); // nothing on one side to tell them apart
+    });
+    if (hit) existingByName.set(name.toLowerCase(), hit.name);
+    else out.push(a);
+  }
+  if (existingByName.size === 0) return out;
+  return out.map((a) => {
+    const n = String(a?.payload?.name ?? a?.payload?.customerName ?? '').toLowerCase();
+    const existing = existingByName.get(n);
+    if (!existing || !(a?.type === 'create-enquiry' || a?.type === 'create-task')) return a;
+    return { ...a, rationale: `Existing customer: ${existing}` };
+  });
+}
+
+/** The source a facet is cited as — never "Reg" for the OSG, GN3 or BS 5839-1. */
+function citeRef(f: { documentType?: string; regNumber?: string | null }): string | null {
+  if (!f.regNumber) return null;
+  if (f.documentType === 'osg') return `OSG ${f.regNumber}`;
+  if (f.documentType === 'gn3') return `GN3 ${f.regNumber}`;
+  if (f.documentType === 'bs5839') return `BS 5839-1 cl ${f.regNumber}`;
+  if (f.documentType === 'bs7671') return `Reg ${f.regNumber}`;
+  return null;
+}
+
+/*
+ * Technical questions are grounded BEFORE the model answers. Left to choose,
+ * it searched for 19% of technical questions over six weeks (101 of 536) and
+ * answered the rest from memory — "socket diversity is 10 A + 40%", "a ring
+ * has no floor-area limit", "Table 4A1 for voltage drop" (all wrong). The
+ * user's own words retrieve the right facets (probed 10 Oct: the OSG 100 m²
+ * ring facts came back top 5 for "What floor area can a 32A ring final serve?").
+ */
+const TECHNICAL_Q =
+  /\b(regs?|regulations?|bs ?7671|osg|on.?site guide|gn ?3|zs|ze|r1|r2|rcds?|rcbos?|mcbs?|afdds?|spds?|cables?|csa|mm²|mm2|earth(ing)?|bond(ing)?|cpcs?|circuits?|eicr|eic|socket|sockets|volt(age|s)?|amps?|kw|zones?|isolat\w*|insulation( resistance)?|continuity|loop impedance|polarity|test (results?|sheets?|readings?|instruments?|voltage)|readings?|diversity|max(imum)? demand|disconnection times?|ring final|radials?|fuses?|consumer unit|fire alarm|5839|emergency light\w*|smoke|inspection|bathroom|shower|ev charg\w*|solar|pv|swa|t&e|twin and earth|lux|ip\d\d|ipx\d)\b/i;
+/** Business chat — no regs search unless it also asks about regs or sizing. */
+const BUSINESS_Q =
+  /\b(paid|pay|invoice\w*|quote\w*|charge|price\w*|cost\w*|chase|order(ing)?|customers?|clients?|tasks?|remind\w*|book(ed|ing)?|diary|sent)\b/i;
+const ASKS_TECHNICAL = /\b(regs?|regulations?|bs ?7671|zs|size|sized|sizing|rating|rated|minimum|maximum|allowed|comply|compliant)\b/i;
+/** Words that make it a question about the app, whatever else it mentions. */
+const APP_NOUN =
+  /\b(stripe|subscription|my plan|account|password|log ?in|sign ?in|settings|price book|xero|quickbooks|support|elec-?mate|the app|template|enquir\w*|portal|team members?|workers?|staff|seats?|notifications?|dashboard|export|upload|download|print)\b/i;
+const APP_ASK = /\b(how (do|can|would) (i|we|you)|how to|where('s| do| can| is| are)|can i|is there a way)\b/i;
+const AFFIRM = /^\s*(yes|yeah|yep|ok|okay|thanks|thank you|cheers|do it|go on|go ahead|sure|nice|great|perfect)\b/i;
+function isInstruction(t: string): boolean {
+  return (
+    /^\s*(please\s+)?(remind|add|create|make|book|schedule|put|log|send|chase|invoice|quote|move|mark|delete|cancel|set up|order|new task|new job)\b/i.test(t) ||
+    /\b(can|could|would) you (please )?(add|create|make|book|schedule|put|log|send|chase|order|remind|set up)\b/i.test(t)
+  );
+}
+type Route = 'technical' | 'app' | 'none';
+/**
+ * One route per turn: the regs, the app guides, or neither — never both (an
+ * app answer drowned in disconnection times, a bathroom-RCD answer in
+ * Right-to-work guides: review, 10 Oct). A short follow-up borrows the
+ * previous question, unless that was an instruction.
+ */
+function routeTurn(last: string, prev: string): { route: Route; query: string } {
+  if (!last.trim() || AFFIRM.test(last) || isInstruction(last) || looksLikeEnquiry(last))
+    return { route: 'none', query: last };
+  const query = last.length < 60 && prev && !isInstruction(prev) && !AFFIRM.test(prev) ? `${prev}\n${last}` : last;
+  if (APP_NOUN.test(last)) return { route: 'app', query: last };
+  if (TECHNICAL_Q.test(query)) {
+    if (BUSINESS_Q.test(last) && !ASKS_TECHNICAL.test(last)) return { route: 'none', query };
+    return { route: 'technical', query };
+  }
+  if (APP_ASK.test(last)) return { route: 'app', query: last };
+  return { route: 'none', query };
+}
+
+/*
+ * Topic boosts: a question about one of these topics also searches that
+ * topic's key facts, in the books' own words. The general search on the
+ * user's words misses them when the question leads elsewhere — "HO7 flex for
+ * emergency bulkheads" came back about mechanical damage and never said the
+ * cable must survive a fire (560.8.1); "how many sockets on a ring" never
+ * said 100 m² (held-out real questions, 10 Oct). Each query was checked to
+ * return the right facets. At most two run, in parallel with the main search.
+ */
+const TOPIC_BOOSTS: Array<{ when: RegExp; query: string; docs: string[] }> = [
+  {
+    when: /\b(emergency light\w*|safety services?|sprinkler)\b/i,
+    query: 'safety services wiring systems fire-resistant cables operate in fire conditions emergency lighting',
+    docs: ['bs7671'],
+  },
+  {
+    // BS 5839-1 governs the fire alarm itself: its supply, RCDs, cables.
+    when: /\b(fire alarm|smoke (alarm|detect\w*)|sounder|call point|fire panel|cie)\b/i,
+    query: 'fire detection and fire alarm system supply RCD fire-resisting cables',
+    docs: ['bs5839'],
+  },
+  {
+    when: /\bring( final| circuit|s)?\b/i,
+    query: 'ring circuit may serve a floor area of up to 100 m2 socket-outlets',
+    docs: ['osg'],
+  },
+  {
+    when: /\b(ev|car charg\w*|charge ?point|electric vehicle)\b/i,
+    query: 'electric vehicle charging point RCD type A RDC-DD type B DC fault current protection',
+    docs: ['bs7671'],
+  },
+  {
+    when: /\b(bath\w*|shower|zone [0-2]|wet room)\b/i,
+    query: 'location containing a bath or shower additional protection RCD 30 mA zones',
+    docs: ['bs7671'],
+  },
+  {
+    when: /\b(main bonding|bonding conductor|bond(ed|ing)? to (gas|water)|extraneous)\b/i,
+    query: 'main protective bonding conductor minimum cross-sectional area PME',
+    docs: ['bs7671', 'osg'],
+  },
+  {
+    when: /\balumin(ium|um)\b/i,
+    query: 'aluminium conductors minimum cross-sectional area terminations',
+    docs: ['bs7671'],
+  },
+];
+
+const DIVERSITY_Q = /\b(diversit\w*|max(imum)? demand|after diversity|load assessment)\b/i;
+
+/**
+ * Every "Reg 123.4.5" in an answer is checked against the 1,781 regulation
+ * numbers in BS 7671 (bs7671_known_reg_numbers). One that isn't there gets a
+ * plain note, so a mistyped or invented number is never passed off as real.
+ */
+async function regCheckNote(supabase: any, text: string): Promise<string | null> {
+  // Every regulation-shaped number with "Reg" in the 25 characters before it,
+  // so "Regs 411.3.3 and 411.3.4" checks both.
+  const cited = [
+    ...new Set(
+      [...text.matchAll(/\b(\d{3}(?:\.\d{1,3}){1,4})\b/g)]
+        .filter((m) => /\breg/i.test(text.slice(Math.max(0, (m.index ?? 0) - 25), m.index)))
+        .map((m) => m[1])
+    ),
+  ];
+  if (!cited.length) return null;
+  try {
+    // Four-part leaves are under-enumerated in the list (559.10.3.1 is real
+    // and missing) — accept one whose three-part parent is known.
+    const parents = cited.filter((n) => n.split('.').length > 3).map((n) => n.split('.').slice(0, 3).join('.'));
+    const { data, error } = await supabase
+      .from('bs7671_known_reg_numbers')
+      .select('reg_number')
+      .in('reg_number', [...new Set([...cited, ...parents])]);
+    if (error) return null;
+    const known = new Set((data ?? []).map((r: any) => r.reg_number));
+    const missing = cited.filter(
+      (n) => !known.has(n) && !(n.split('.').length > 3 && known.has(n.split('.').slice(0, 3).join('.')))
+    );
+    if (!missing.length) return null;
+    const list = missing.map((n) => `Reg ${n}`).join(', ');
+    return `Check before relying on it: I can't find ${list} in BS 7671 — that number may be wrong.`;
+  } catch {
+    return null;
+  }
+}
+
+/*
+ * The model sometimes writes its whole answer twice — 39 of 1,760 replies in
+ * six weeks were an exact X+X, the copy starting at the halfway mark. Where
+ * the text starts repeating its own opening, cut it.
+ */
+const REPEAT_PROBE = 40;
+/** How much of the opening must repeat before it counts as a restart. A
+ * phrase an answer legitimately reuses ("Kitchen ring final: 32 A RCBO…")
+ * diverges well before this (review, 10 Oct). */
+const REPEAT_CONFIRM = 160;
+/** Streaming holds back this much, so a restart is cut before it shows. */
+const REPEAT_HOLD = 200;
+/** Index where `text` begins repeating its own opening, or -1. */
+function repeatStart(text: string): number {
+  if (text.length < REPEAT_PROBE * 3) return -1;
+  const head = text.slice(0, REPEAT_PROBE);
+  let k = text.indexOf(head, REPEAT_PROBE * 2);
+  while (k > 0) {
+    const need = Math.min(k, REPEAT_CONFIRM);
+    const tail = text.slice(k);
+    if (tail.length >= need && text.startsWith(tail.slice(0, need))) return k;
+    k = text.indexOf(head, k + 1);
+  }
+  return -1;
+}
+function undouble(text: string): string {
+  const k = repeatStart(text);
+  return k > 0 ? text.slice(0, k).trimEnd() : text;
+}
+
+const FORM_TIP =
+  'Tip: your website form can send enquiries straight into Enquiries, no copying — Enquiries → Set up → Website form.';
+
+/** The tip, once, when a website enquiry was pasted in and Mate is logging it. */
+function formTip(actions: any[], userText: string): string | null {
+  if (!/website/i.test(userText) || !looksLikeEnquiry(userText)) return null;
+  const logged = actions.some(
+    (a) =>
+      a?.type === 'create-enquiry' ||
+      (a?.type === 'create-task' && Array.isArray(a.payload?.tags) && a.payload.tags.includes('enquiry'))
+  );
+  return logged ? FORM_TIP : null;
+}
+
+/**
+ * create_enquiries → the action the caller's app can apply. App builds from
+ * 10 Oct 2026 send userContext.capabilities ['create-enquiry']; older iOS
+ * builds don't know that action (blank card, Apply does nothing), so they get
+ * the enquiry as a task carrying every detail, which they can apply anywhere.
+ */
+function enquiryAction(
+  e: Record<string, unknown>,
+  rationale: unknown,
+  canEnquire: boolean
+): Record<string, unknown> {
+  if (canEnquire) {
+    return { type: 'create-enquiry', tempId: crypto.randomUUID(), payload: e, rationale };
+  }
+  const s = (k: string) => (typeof e[k] === 'string' && (e[k] as string).trim()) || '';
+  const contact = [s('phone'), s('email'), [s('address'), s('postcode')].filter(Boolean).join(', ')]
+    .filter(Boolean)
+    .join(' · ');
+  return {
+    type: 'create-task',
+    tempId: crypto.randomUUID(),
+    payload: {
+      title: `Enquiry: ${[s('jobType'), s('name')].filter(Boolean).join(' — ') || 'new enquiry'}`,
+      details: [contact, s('details')].filter(Boolean).join('\n\n'),
+      priority: 'normal',
+      customerName: s('name') || undefined,
+      location: [s('address'), s('postcode')].filter(Boolean).join(', ') || undefined,
+      tags: ['enquiry'],
+    },
+    rationale,
+  };
+}
 
 const TOOLS: any[] = [
   {
@@ -194,7 +524,8 @@ const TOOLS: any[] = [
     type: 'function',
     function: {
       name: 'create_projects',
-      description: 'Create one or more new projects (top-level jobs).',
+      description:
+        'Create one or more new projects (top-level jobs that are going ahead). NOT for a new enquiry or quote request — use create_enquiries for those.',
       parameters: {
         type: 'object',
         properties: {
@@ -316,6 +647,52 @@ const TOOLS: any[] = [
           },
         },
         required: ['customers'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'create_enquiries',
+      description:
+        "Add one or more new enquiries to the user's Enquiries inbox: a request for work not yet priced, from a website form, an email, a phone call or word of mouth. Use when the user pastes a website quote request or forwarded email, or asks to create/log an enquiry. Pair with create_customers for a new person. Never use create_projects for an enquiry.",
+      parameters: {
+        type: 'object',
+        properties: {
+          enquiries: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string', description: "Customer's name" },
+                phone: { type: 'string' },
+                email: { type: 'string' },
+                address: { type: 'string', description: 'Site address, without the postcode if given separately' },
+                postcode: { type: 'string' },
+                jobType: {
+                  type: 'string',
+                  description: 'Short type of work, e.g. "EICR", "Consumer unit change", "Rewire", "EV charger"',
+                },
+                details: {
+                  type: 'string',
+                  description:
+                    "Everything else that helps price and book it, in plain lines: reason, property size, last tested, availability, and the customer's own words.",
+                },
+                source: {
+                  type: 'string',
+                  enum: ['website', 'email', 'phone', 'other'],
+                  description: 'Where it came from',
+                },
+                rationale: {
+                  type: 'string',
+                  description: 'One short sentence (≤80 chars) explaining the inference',
+                },
+              },
+              required: ['name'],
+            },
+          },
+        },
+        required: ['enquiries'],
       },
     },
   },
@@ -902,7 +1279,7 @@ const TOOLS: any[] = [
     function: {
       name: 'ask_clarification',
       description:
-        "Ask the user a structured clarifying question BEFORE proposing actions. Use when there's ambiguity that can't be resolved from context — multiple plausible matches, missing critical info (priority/date/customer), or uncertain intent (delete vs amend). Provide 2-5 quick-reply options so the user can tap one. Do NOT also propose mutations in the same response — wait for the answer first.",
+        "Ask the user a structured clarifying question BEFORE proposing actions. Use when there's ambiguity that can't be resolved from context — multiple plausible matches, missing critical info (priority/date/customer), or uncertain intent (delete vs amend). Provide 2-5 quick-reply options so the user can tap one. Do NOT also propose mutations in the same response — wait for the answer first. NOT for a direct instruction where only a link is missing (\"remind me to order the CU for the Hughes job\" and there is no Hughes job): propose the task unlinked and say so in its rationale — every card waits for Apply anyway.",
       parameters: {
         type: 'object',
         properties: {
@@ -1110,6 +1487,15 @@ serve(async (req) => {
     const caller = await identifyCaller(req);
     if (!caller) return deny(corsHeaders);
     const userId: string | null = caller.kind === 'user' ? caller.userId : bodyUserId;
+    const canEnquire =
+      Array.isArray(userContext?.capabilities) && userContext.capabilities.includes('create-enquiry');
+    const lastUserText: string = (() => {
+      const turns = (messages ?? []).filter((m: any) => m?.role === 'user');
+      const last = String(turns[turns.length - 1]?.content ?? '');
+      const prev = String(turns[turns.length - 2]?.content ?? '');
+      // "yes, log it" after a pasted enquiry: the enquiry is the paste.
+      return last.length < 60 && looksLikeEnquiry(prev) && !looksLikeEnquiry(last) ? prev : last;
+    })();
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return new Response(JSON.stringify({ error: 'messages required' }), {
@@ -1212,13 +1598,99 @@ ${snapshotBlock}`;
       }
     }
 
+    const userTurnsAll = messages.filter((m: any) => m?.role === 'user');
+    const turnRoute = routeTurn(
+      String(userTurnsAll[userTurnsAll.length - 1]?.content ?? ''),
+      String(userTurnsAll[userTurnsAll.length - 2]?.content ?? '')
+    );
+
+    // Pre-flight grounding for technical questions (see TECHNICAL_Q). A short
+    // follow-up ("what about a ring?") carries the previous question with it.
+    const groundingCitations: Citation[] = [];
+    {
+      if (turnRoute.route === 'technical') {
+        const query = turnRoute.query;
+        try {
+          // Naming the regs: also search BS 7671 alone, so the regulation itself
+          // isn't crowded out by guidance about it (voltage drop came back as
+          // GN3 2.36, not Reg 525.202 / Appendix 4 §6.4).
+          const namesRegs = /\b(bs ?7671|the regs|wiring regs|regulations?|regs?)\b/i.test(query);
+          const boosts = TOPIC_BOOSTS.filter((b) => b.when.test(query)).slice(0, 2);
+          // One embedding for the user's words, shared by both searches on
+          // them; the boost queries are in the books' own words, which the
+          // keyword half finds on its own (checked), so they skip the call.
+          const q = query.slice(0, 600);
+          const embedding = await generateLargeEmbedding(q, openAiKey).catch(() => null);
+          const [general, regsOnly, ...boosted] = await Promise.all([
+            searchFacets(supabase, { query: q, matchCount: 6, embedding, skipEmbedding: !embedding }),
+            namesRegs
+              ? searchFacets(supabase, {
+                  query: q,
+                  matchCount: 3,
+                  documentTypes: ['bs7671'],
+                  embedding,
+                  skipEmbedding: !embedding,
+                })
+              : Promise.resolve([]),
+            ...boosts.map((b) =>
+              searchFacets(supabase, {
+                query: b.query,
+                matchCount: 2,
+                documentTypes: b.docs,
+                skipEmbedding: true,
+              }).catch(() => [])
+            ),
+          ]);
+          const seenContent = new Set<string>();
+          const facets = [...boosted.flat(), ...regsOnly, ...general]
+            .filter((f) => {
+              const k = String(f.content ?? '').slice(0, 120);
+              if (seenContent.has(k)) return false;
+              seenContent.add(k);
+              return true;
+            })
+            .slice(0, 10);
+          if (facets.length) {
+            enrichedContext +=
+              `\n\n[GROUNDING — retrieved for this question from BS 7671, the On-Site Guide, GN3 and BS 5839-1. ` +
+              `Base the technical answer on these. Cite only references that appear here (or in a search you run). ` +
+              `If they don't settle the point, say what to check rather than giving a figure from memory.]\n` +
+              formatFacetsForPrompt(facets);
+            for (const f of facets) {
+              const ref = citeRef(f);
+              if (ref) groundingCitations.push({ ref, topic: f.primaryTopic || '' });
+            }
+          }
+        } catch (e) {
+          console.warn('[grounding] search failed', e);
+        }
+        if (DIVERSITY_Q.test(query)) {
+          enrichedContext += `\n\n[VERIFIED TABLE]\n${tableA2ForPrompt()}`;
+          groundingCitations.push({ ref: 'OSG Table A2', topic: 'Allowances for diversity' });
+        }
+      }
+    }
+
+    // How to use the app: the page guides and page index, plus account facts.
+    {
+      if (turnRoute.route === 'app') {
+        const help = searchAppHelp(turnRoute.query);
+        enrichedContext +=
+          `\n\n[APP HELP — how Elec-Mate itself works, from the app's own page guides. ` +
+          `For questions about using the app, answer from this: name the page and the real buttons in order. ` +
+          `Never invent a button, setting or feature. If it isn't covered, say so and give info@elec-mate.com.]\n` +
+          ACCOUNT_FACTS +
+          (help ? `\n${help}` : '');
+      }
+    }
+
     const conversation: any[] = [
       { role: 'system', content: SYSTEM_PROMPT },
       { role: 'system', content: enrichedContext },
       ...messages,
     ];
 
-    const citations: Citation[] = [];
+    const citations: Citation[] = [...groundingCitations];
 
     // Conversation persistence — create on first turn, append on each.
     let conversationId: string | null = incomingConvId;
@@ -1295,7 +1767,15 @@ ${snapshotBlock}`;
         LOOKUP_TOOLS,
         authHeader,
       });
-      return await packageResponse(finalResp, citations, supabase, userId, conversationId);
+      return await packageResponse(
+        finalResp,
+        citations,
+        supabase,
+        userId,
+        conversationId,
+        canEnquire,
+        lastUserText
+      );
     }
 
     const encoder = new TextEncoder();
@@ -1318,6 +1798,21 @@ ${snapshotBlock}`;
           let assistantText = '';
           const collectedActions: any[] = [];
           let collectedClarification: any = null;
+          // Tokens go to the client REPEAT_HOLD characters behind the model, so
+          // an answer that starts over (see repeatStart) is cut before it shows.
+          let shown = 0;
+          let cutAt = -1;
+          const forward = (final: boolean) => {
+            if (cutAt < 0) {
+              const k = repeatStart(assistantText);
+              if (k > 0) cutAt = k;
+            }
+            const upto = cutAt > 0 ? cutAt : final ? assistantText.length : assistantText.length - REPEAT_HOLD;
+            if (upto > shown) {
+              send({ type: 'token', delta: assistantText.slice(shown, upto) });
+              shown = upto;
+            }
+          };
 
           for (let round = 0; round < 5; round++) {
             const result = await callOpenAIStreaming({
@@ -1326,12 +1821,16 @@ ${snapshotBlock}`;
               openAiKey,
               onToken: (delta) => {
                 assistantText += delta;
-                send({ type: 'token', delta });
+                forward(false);
               },
               onLookupStarted: (toolName) => {
                 send({ type: 'lookup_started', tool: toolName });
               },
             });
+
+            forward(true);
+            if (cutAt > 0) assistantText = assistantText.slice(0, cutAt).trimEnd();
+            shown = Math.min(shown, assistantText.length);
 
             // No tool calls → final text response, all tokens already streamed.
             if (!result.toolCalls.length) break;
@@ -1345,7 +1844,12 @@ ${snapshotBlock}`;
 
             // Mutation / clarification — emit and break.
             if (terminalCalls.length > 0) {
-              const packaged = packageTerminalCalls(terminalCalls);
+              const packaged = packageTerminalCalls(terminalCalls, canEnquire);
+              packaged.actions = await dropExistingCustomers(
+                ensureEnquiry(packaged.actions, lastUserText, canEnquire),
+                supabase,
+                userId
+              );
               for (const action of packaged.actions) {
                 send({ type: 'action', action });
                 collectedActions.push(action);
@@ -1358,6 +1862,14 @@ ${snapshotBlock}`;
                 // Synthesise a short framing line so the message isn't empty.
                 assistantText = synthesiseFraming(packaged);
                 send({ type: 'framing', text: assistantText });
+              }
+              {
+                const tip = formTip(packaged.actions, lastUserText);
+                if (tip && !assistantText.includes('Website form')) {
+                  // As a token so every app build shows it (older ones too).
+                  send({ type: 'token', delta: `\n\n${tip}` });
+                  assistantText += `\n\n${tip}`;
+                }
               }
               break;
             }
@@ -1383,9 +1895,10 @@ ${snapshotBlock}`;
                   matchCount: 5,
                 });
                 for (const f of facets) {
-                  if (f.regNumber) {
+                  const ref = citeRef(f);
+                  if (ref) {
                     citations.push({
-                      ref: `Reg ${f.regNumber}`,
+                      ref,
                       topic: f.primaryTopic || '',
                     });
                   }
@@ -1478,6 +1991,14 @@ ${snapshotBlock}`;
           });
           if (uniqCitations.length > 0) {
             send({ type: 'citations', citations: uniqCitations });
+          }
+
+          {
+            const note = await regCheckNote(supabase, assistantText);
+            if (note) {
+              send({ type: 'token', delta: `\n\n${note}` });
+              assistantText += `\n\n${note}`;
+            }
           }
 
           // Persist assistant reply on the conversation.
@@ -1638,7 +2159,8 @@ async function callOpenAIStreaming({
  * + clarification object. Mirrors the synchronous packageResponse mapping.
  */
 function packageTerminalCalls(
-  calls: StreamedToolCall[]
+  calls: StreamedToolCall[],
+  canEnquire = false
 ): { actions: any[]; clarification: any | null } {
   const actions: any[] = [];
   let clarification: any = null;
@@ -1696,6 +2218,11 @@ function packageTerminalCalls(
           payload: rest,
           rationale,
         });
+      }
+    } else if (name === 'create_enquiries') {
+      for (const e of args.enquiries || []) {
+        const { rationale, ...rest } = e || {};
+        actions.push(enquiryAction(rest, rationale, canEnquire));
       }
     } else if (name === 'amend_task') {
       actions.push({
@@ -1796,6 +2323,8 @@ function synthesiseFraming({
     bits.push(
       `${counts['create-customer']} customer${counts['create-customer'] > 1 ? 's' : ''}`
     );
+  if (counts['create-enquiry'])
+    bits.push(`${counts['create-enquiry']} enquir${counts['create-enquiry'] > 1 ? 'ies' : 'y'}`);
   if (counts['add-material'])
     bits.push(`${counts['add-material']} material${counts['add-material'] > 1 ? 's' : ''}`);
   if (counts['draft-invoice']) bits.push('invoice to draft');
@@ -1864,8 +2393,8 @@ async function runToolLoopBuffered({
           matchCount: 5,
         });
         for (const f of facets) {
-          if (f.regNumber)
-            citations.push({ ref: `Reg ${f.regNumber}`, topic: f.primaryTopic || '' });
+          const ref = citeRef(f);
+          if (ref) citations.push({ ref, topic: f.primaryTopic || '' });
         }
         toolOutput = formatFacetsForPrompt(facets);
       } else if (toolName === 'search_practical_knowledge') {
@@ -2717,7 +3246,9 @@ async function packageResponse(
   citations: Citation[],
   supabase: any,
   userId: string | null,
-  conversationId: string | null
+  conversationId: string | null,
+  canEnquire = false,
+  lastUserText = ''
 ): Promise<Response> {
   const proposedActions: any[] = [];
   let clarification: any = null;
@@ -2726,7 +3257,7 @@ async function packageResponse(
   // callOpenAI returns toolCalls separately. When tools fire, content holds the
   // first tool's args (per the helper) — not assistant prose. So we synthesise.
   if (!aiResp.toolCalls?.length) {
-    assistantMessage = aiResp.content || '';
+    assistantMessage = undouble(aiResp.content || '');
   }
 
   if (aiResp.toolCalls?.length) {
@@ -2817,6 +3348,11 @@ async function packageResponse(
             rationale,
           });
         }
+      } else if (name === 'create_enquiries') {
+        for (const e of args.enquiries || []) {
+          const { rationale, rest } = splitRationale(e);
+          proposedActions.push(enquiryAction(rest, rationale, canEnquire));
+        }
       } else if (name === 'amend_customer') {
         proposedActions.push({
           type: 'amend-customer',
@@ -2868,6 +3404,15 @@ async function packageResponse(
       }
     }
 
+    {
+      const fixed = await dropExistingCustomers(
+        ensureEnquiry(proposedActions, lastUserText, canEnquire),
+        supabase,
+        userId
+      );
+      proposedActions.splice(0, proposedActions.length, ...fixed);
+    }
+
     if (!assistantMessage && clarification) {
       // The clarification UI carries the question itself — just frame it.
       assistantMessage = clarification.context || 'Quick question first.';
@@ -2884,6 +3429,8 @@ async function packageResponse(
       if (counts['create-project']) bits.push(`${counts['create-project']} project${counts['create-project'] > 1 ? 's' : ''}`);
       if (counts['create-customer'])
         bits.push(`${counts['create-customer']} customer${counts['create-customer'] > 1 ? 's' : ''}`);
+      if (counts['create-enquiry'])
+        bits.push(`${counts['create-enquiry']} enquir${counts['create-enquiry'] > 1 ? 'ies' : 'y'}`);
       if (counts['add-material'])
         bits.push(`${counts['add-material']} material${counts['add-material'] > 1 ? 's' : ''}`);
       if (counts['draft-invoice']) bits.push('invoice to draft');
@@ -2913,6 +3460,13 @@ async function packageResponse(
     seen.add(c.ref);
     return true;
   });
+
+  {
+    const tip = formTip(proposedActions, lastUserText);
+    if (tip && !assistantMessage.includes('Website form')) assistantMessage += `\n\n${tip}`;
+    const note = await regCheckNote(supabase, assistantMessage);
+    if (note) assistantMessage += `\n\n${note}`;
+  }
 
   // Persist assistant reply.
   if (userId && conversationId) {

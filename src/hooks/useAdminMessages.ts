@@ -70,15 +70,9 @@ export function useAdminMessages() {
     mutationFn: async ({ message, subject }: { message: string; subject?: string }) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      // Get an admin user to send to (exclude current user to avoid self-messaging)
-      const { data: adminProfiles } = await supabase
-        .from('profiles')
-        .select('id')
-        .not('admin_role', 'is', null)
-        .neq('id', user.id) // Don't send to yourself
-        .limit(1);
-
-      const adminId = adminProfiles?.[0]?.id;
+      // Get an admin user to send to (never yourself). ELE-2020: through an
+      // RPC — users can't list other profiles by admin_role.
+      const { data: adminId } = await supabase.rpc('get_support_admin_id');
       if (!adminId) throw new Error('No admin available to receive messages');
 
       const { data, error } = await supabase

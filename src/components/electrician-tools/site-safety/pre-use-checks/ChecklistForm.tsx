@@ -45,6 +45,8 @@ interface ChecklistFormProps {
   initialSiteAddress?: string;
   initialJobId?: string | null;
   initialJobTitle?: string | null;
+  /** Firm job (employer_jobs) the check is filed against, if any. */
+  initialEmployerJobId?: string | null;
 }
 
 type CheckResult = 'pass' | 'fail' | 'na';
@@ -96,6 +98,7 @@ export function ChecklistForm({
   initialSiteAddress = '',
   initialJobId = null,
   initialJobTitle = null,
+  initialEmployerJobId = null,
 }: ChecklistFormProps) {
   const [items, setItems] = useState<CheckItem[]>(initialItems);
   /**
@@ -114,6 +117,10 @@ export function ChecklistForm({
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [linkedJobId, setLinkedJobId] = useState<string | null>(initialJobId);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(initialJobTitle);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the check with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(initialEmployerJobId);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const createCheck = useCreatePreUseCheck();
 
   // Equipment register integration
@@ -198,6 +205,7 @@ export function ChecklistForm({
       checked_by: inspectorSigName.trim() || undefined,
       signature: inspectorSigData || undefined,
       job_id: linkedJobId,
+      ...(employerJobId ? { employer_job_id: employerJobId } : {}),
     });
     setPhotoUrls([]);
     onSubmit();
@@ -355,6 +363,12 @@ export function ChecklistForm({
             onSelect={(id, title) => {
               setLinkedJobId(id);
               setLinkedJobTitle(title);
+            }}
+            employerJobId={employerJobId}
+            employerJobTitle={employerJobTitle}
+            onSelectEmployerJob={(id, title) => {
+              setEmployerJobId(id);
+              setEmployerJobTitle(title);
             }}
           />
         </FormCard>

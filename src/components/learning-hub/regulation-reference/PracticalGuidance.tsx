@@ -265,7 +265,7 @@ const PracticalGuidance = () => {
             key={key}
             className={`cursor-pointer transition-all hover:scale-105 ${
               selectedScenario === key
-                ? 'bg-elec-yellow/10 border-elec-yellow'
+                ? 'bg-white/[0.06] border-elec-yellow'
                 : 'bg-card border-border hover:border-elec-yellow/50'
             }`}
             onClick={() => setSelectedScenario(key)}

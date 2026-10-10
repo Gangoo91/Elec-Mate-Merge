@@ -46,7 +46,7 @@ export function StudentActivationStrip({ onShareInvite, collegeId }: Props) {
         <h3 className="text-[15px] font-semibold tracking-tight text-white">
           Apprentice activation
         </h3>
-        <span className="text-[11px] font-semibold tabular-nums text-white">
+        <span className="text-[12px] font-semibold tabular-nums text-white">
           {activated}/{total} · {pct}% in the app
         </span>
       </div>

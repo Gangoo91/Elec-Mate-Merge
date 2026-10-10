@@ -50,7 +50,7 @@ const industrialChecklist = [
 const ChecklistSection = ({ title, items }: { title: string; items: { item: string; check: string }[] }) => (
   <>
     <motion.div variants={itemVariants}>
-      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">{title}</p>
+      <p className="text-[12px] font-medium text-white mb-3">{title}</p>
     </motion.div>
     {items.map((item, i) => (
       <motion.div key={i} variants={itemVariants}>
@@ -92,7 +92,7 @@ const WhatToTestSection = ({ onBack }: Props) => {
 
         {/* Phase sequence verification */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Phase Sequence Verification (Three-Phase)</p>
+          <p className="text-[12px] font-medium text-white mb-3">Phase Sequence Verification (Three-Phase)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -127,7 +127,7 @@ const WhatToTestSection = ({ onBack }: Props) => {
 
         {/* Emergency lighting functional test */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Emergency Lighting Functional Test (BS 5266)</p>
+          <p className="text-[12px] font-medium text-white mb-3">Emergency Lighting Functional Test (BS 5266)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

@@ -56,3 +56,108 @@ export function withCertificatePrefill(href: string): string {
   if (!prefill) return href;
   return `${href}${href.includes('?') ? '&' : '?'}${prefill}`;
 }
+
+/* ── Gap #3 (ELE-2068): circuits from the job's design, and the way back ── */
+
+const CIRCUITS_PREFIX = 'elecmate:cert-prefill-circuits:';
+
+/** A circuit as the office's circuit design keeps it (get_design_detail). */
+export interface DesignCircuit {
+  circuitNumber?: number | string;
+  name?: string;
+  loadType?: string;
+  phases?: number;
+  cableSize?: number | string;
+  cpcSize?: number | string;
+  installationMethod?: string;
+  rcdProtected?: boolean;
+  protectionDevice?: { type?: string; curve?: string; rating?: number | string };
+  calculations?: { zs?: number | string; maxZs?: number | string };
+  expectedTests?: { zs?: { expected?: number; maxPermitted?: number }; r1r2?: { at20C?: number } };
+}
+
+/**
+ * The EIC schedule of tests rows for a design's circuits: the same fields the
+ * EIC form fills when it opens a Circuit Designer design, readings left blank
+ * for site.
+ */
+export function designCircuitsToEicSchedule(circuits: DesignCircuit[]): Record<string, unknown>[] {
+  const s = (v: unknown) => (v == null ? '' : String(v));
+  return circuits.map((c, idx) => ({
+    id: `job-design-${Date.now()}-${idx + 1}`,
+    circuitNumber: s(c.circuitNumber) || String(idx + 1),
+    circuitDesignation: `C${idx + 1}`,
+    circuitDescription: c.name || '',
+    circuitType: c.loadType || '',
+    phaseType: c.phases === 3 ? '3P' : '1P',
+    referenceMethod: c.installationMethod || '',
+    pointsServed: '',
+    liveSize: s(c.cableSize),
+    cpcSize: s(c.cpcSize),
+    bsStandard: 'BS EN 60898',
+    protectiveDeviceType: c.protectionDevice?.type || 'MCB',
+    protectiveDeviceCurve: c.protectionDevice?.curve || 'B',
+    protectiveDeviceRating: s(c.protectionDevice?.rating),
+    protectiveDeviceKaRating: '6',
+    expectedR1R2: s(c.expectedTests?.r1r2?.at20C),
+    expectedZs: s(c.expectedTests?.zs?.expected ?? c.calculations?.zs),
+    expectedMaxZs: s(c.expectedTests?.zs?.maxPermitted ?? c.calculations?.maxZs),
+    r1r2: '',
+    zs: '',
+    maxZs: s(c.expectedTests?.zs?.maxPermitted ?? c.calculations?.maxZs),
+    insulationTestVoltage: '500V',
+    insulationLiveNeutral: '',
+    insulationLiveEarth: '',
+    polarity: '',
+    rcdRating: c.rcdProtected ? '30mA' : '',
+    rcdType: '',
+    rcdOneX: '',
+    rcdFiveX: '',
+    pfc: '',
+    functionalTesting: '',
+    autoFilled: true,
+    fromDesigner: true,
+    notes: 'Pre-filled from the job design. Verify on site.',
+  }));
+}
+
+/** Keep circuits for the form to pick up (works with no signal). Returns the URL key. */
+export function stashCertificateCircuits(rows: Record<string, unknown>[]): string | null {
+  if (!rows.length || typeof window === 'undefined') return null;
+  const key = Math.random().toString(36).slice(2, 10);
+  try {
+    window.sessionStorage.setItem(CIRCUITS_PREFIX + key, JSON.stringify(rows));
+    return key;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Circuits handed over by "Start a certificate" (`?prefillCircuits=<key>`), else null.
+ * Typed loose on purpose: the forms' schedule rows are untyped (`any[]`).
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function readCertificatePrefillCircuits(): any[] | null {
+  if (typeof window === 'undefined') return null;
+  const key = new URLSearchParams(window.location.search).get('prefillCircuits');
+  if (!key || !/^[a-z0-9]{4,16}$/.test(key)) return null;
+  try {
+    const raw = window.sessionStorage.getItem(CIRCUITS_PREFIX + key);
+    const rows = raw ? (JSON.parse(raw) as unknown) : null;
+    return Array.isArray(rows) && rows.length ? rows : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Where the certificate's Back goes when it was started from a job
+ * (`?returnTo=`). Only a Worker Tools path, never anywhere else.
+ */
+export function readCertificateReturnTo(search?: string): string | null {
+  if (typeof window === 'undefined' && search == null) return null;
+  const raw = new URLSearchParams(search ?? window.location.search).get('returnTo');
+  if (!raw) return null;
+  return /^\/electrician\/worker-tools\/[a-z0-9/_-]*(\?[\w=&%.-]*)?$/i.test(raw) ? raw : null;
+}

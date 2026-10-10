@@ -78,16 +78,17 @@ function BlockShell({
         </span>
         {badge}
       </span>
-      {lines
-        .filter(Boolean)
-        .map((l, i) => (
-          <span
-            key={i}
-            className={cn('block text-white truncate', compact ? 'text-[10.5px]' : 'text-[12px] mt-0.5')}
-          >
-            {l}
-          </span>
-        ))}
+      {lines.filter(Boolean).map((l, i) => (
+        <span
+          key={i}
+          className={cn(
+            'block text-white truncate',
+            compact ? 'text-[10.5px]' : 'text-[12px] mt-0.5'
+          )}
+        >
+          {l}
+        </span>
+      ))}
     </button>
   );
 }
@@ -174,10 +175,7 @@ export function JobBlock({
     <BlockShell
       stageBar={sd.bar}
       title={job.title}
-      lines={[
-        compact ? place : [job.client, place].filter(Boolean).join(' · ') || null,
-        note,
-      ]}
+      lines={[compact ? place : [job.client, place].filter(Boolean).join(' · ') || null, note]}
       compact={compact}
       onClick={onClick}
       draggable={draggable}
@@ -205,7 +203,10 @@ export function CapacityBar({
     <span className={cn('flex items-center gap-1.5', className)}>
       <span className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/[0.10]">
         <span
-          className={cn('absolute inset-y-0 left-0 rounded-full', danger ? 'bg-red-400' : 'bg-emerald-400')}
+          className={cn(
+            'absolute inset-y-0 left-0 rounded-full',
+            danger ? 'bg-red-400' : 'bg-emerald-400'
+          )}
           style={{ width: `${pct}%` }}
         />
       </span>

@@ -92,13 +92,13 @@ const COMPLIANCE_STEPS: StepDef[] = [
   {
     code: 'DBS_ENHANCED',
     label: 'Enhanced DBS',
-    hint: 'Cert number, issue date, and a scan if you have it. Default validity 36 months — colleges can renew sooner via the Update Service.',
+    hint: 'Cert number, issue date, and a scan if you have it. Default validity 36 months. Colleges can renew sooner via the Update Service.',
     validityMonths: 36,
   },
   {
     code: 'RIGHT_TO_WORK',
     label: 'Right to work',
-    hint: 'Passport / Settled Status / Share Code verified. No expiry by default — keep the scan on file.',
+    hint: 'Passport / Settled Status / Share Code verified. No expiry by default. Keep the scan on file.',
     validityMonths: null,
   },
   {

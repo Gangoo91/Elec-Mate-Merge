@@ -12,6 +12,7 @@ import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { formatUKDateShort } from '@/utils/collegeHelpers';
 import { LoadingState } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { keyLabel } from '@/lib/college/labels';
 
 interface GradeDetailSheetProps {
   gradeId: string | null;
@@ -57,7 +58,11 @@ export function GradeDetailSheet({
         : 'text-white';
 
   const statusTextCn = (s: string | null) =>
-    s === 'Graded' ? 'text-emerald-400' : s === 'Pending' || s === 'Resubmission' ? 'text-orange-300' : 'text-white';
+    s === 'Graded'
+      ? 'text-emerald-400'
+      : s === 'Pending' || s === 'Resubmission'
+        ? 'text-orange-300'
+        : 'text-white';
 
   const handleStartFeedback = () => {
     setFeedbackText(grade?.feedback ?? '');
@@ -102,14 +107,21 @@ export function GradeDetailSheet({
         grade ? (
           <div className="pr-6 text-right text-[13px] font-semibold leading-tight">
             <div className={statusTextCn(grade.status)}>{grade.status ?? 'Pending'}</div>
-            {grade.grade && <div className={cn('mt-0.5', gradeTextCn(grade.grade))}>{grade.grade}</div>}
+            {grade.grade && (
+              <div className={cn('mt-0.5', gradeTextCn(grade.grade))}>{grade.grade}</div>
+            )}
           </div>
         ) : null
       }
       bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-8 lg:grid-cols-2"
       footer={
         showGradeActions ? (
-          <div className={cn('grid gap-2.5', onRubricGrade && onQuickGrade ? 'grid-cols-3' : 'grid-cols-2')}>
+          <div
+            className={cn(
+              'grid gap-2.5',
+              onRubricGrade && onQuickGrade ? 'grid-cols-3' : 'grid-cols-2'
+            )}
+          >
             <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
               Close
             </button>
@@ -123,7 +135,11 @@ export function GradeDetailSheet({
               </button>
             )}
             {onQuickGrade && gradeId && (
-              <button type="button" onClick={() => onQuickGrade(gradeId)} className={buttonPrimaryCn}>
+              <button
+                type="button"
+                onClick={() => onQuickGrade(gradeId)}
+                className={buttonPrimaryCn}
+              >
                 Quick grade
               </button>
             )}
@@ -146,7 +162,7 @@ export function GradeDetailSheet({
             <section>
               <h3 className={sectionTitleCn}>The assessment</h3>
               {rowList([
-                ['Type', grade.assessment_type ?? 'Not specified'],
+                ['Type', keyLabel(grade.assessment_type) || 'Not specified'],
                 [
                   'Grade',
                   <span key="g" className={gradeTextCn(grade.grade)}>
@@ -167,16 +183,21 @@ export function GradeDetailSheet({
                   <div className="absolute -left-6 top-1 h-2.5 w-2.5 rounded-full bg-white/40" />
                   <div className="text-[14px] font-medium text-white">Assessment created</div>
                   <div className="mt-0.5 text-[12px] tabular-nums text-white">
-                    {formatUKDateShort(grade.created_at)} · Unit: {grade.unit_name ?? 'Not specified'}
+                    {formatUKDateShort(grade.created_at)} · Unit:{' '}
+                    {grade.unit_name ?? 'Not specified'}
                   </div>
                 </li>
 
                 {grade.status && grade.status !== 'Pending' && (
                   <li className="relative">
                     <div className="absolute -left-6 top-1 h-2.5 w-2.5 rounded-full bg-white/40" />
-                    <div className="text-[14px] font-medium text-white">Status → {grade.status}</div>
+                    <div className="text-[14px] font-medium text-white">
+                      Status changed to {keyLabel(grade.status)}
+                    </div>
                     <div className="mt-0.5 text-[12px] tabular-nums text-white">
-                      {grade.assessed_at ? formatUKDateShort(grade.assessed_at) : 'Date not recorded'}
+                      {grade.assessed_at
+                        ? formatUKDateShort(grade.assessed_at)
+                        : 'Date not recorded'}
                     </div>
                   </li>
                 )}
@@ -190,7 +211,9 @@ export function GradeDetailSheet({
                       {assessor && ` · ${assessor.name}`}
                     </div>
                     {grade.grade && (
-                      <div className={cn('mt-1 text-[13px] font-semibold', gradeTextCn(grade.grade))}>
+                      <div
+                        className={cn('mt-1 text-[13px] font-semibold', gradeTextCn(grade.grade))}
+                      >
                         {grade.grade}
                         {grade.score != null && ` · ${grade.score}%`}
                       </div>
@@ -218,7 +241,7 @@ export function GradeDetailSheet({
                 <button
                   type="button"
                   onClick={handleStartFeedback}
-                  className="h-9 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  className="h-11 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
                   Edit
                 </button>
@@ -261,11 +284,13 @@ export function GradeDetailSheet({
               </p>
             ) : (
               <div className="mt-3">
-                <p className="text-[13.5px] text-white">No feedback has been recorded for this assessment.</p>
+                <p className="text-[13.5px] text-white">
+                  No feedback has been recorded for this assessment.
+                </p>
                 <button
                   type="button"
                   onClick={handleStartFeedback}
-                  className="mt-1 h-10 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  className="mt-1 h-11 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
                   Add feedback
                 </button>

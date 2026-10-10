@@ -2,11 +2,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { useCollegeConversations, useCollegeLearnerThreads, type CollegeLearnerThread } from '@/hooks/useCollegeChat';
+import {
+  useCollegeConversations,
+  useCollegeLearnerThreads,
+  type CollegeLearnerThread,
+} from '@/hooks/useCollegeChat';
 import { useAuth } from '@/contexts/AuthContext';
 import type { CollegeConversation } from '@/services/collegeChatService';
 import { Pill, EmptyState, toneDot, type Tone } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { keyLabel } from '@/lib/college/labels';
 
 interface CollegeChatListProps {
   onSelectConversation: (conversation: CollegeConversation) => void;
@@ -15,13 +20,18 @@ interface CollegeChatListProps {
   onLeave?: () => void;
 }
 
-export function CollegeChatList({ onSelectConversation, currentUserType, onLeave }: CollegeChatListProps) {
+export function CollegeChatList({
+  onSelectConversation,
+  currentUserType,
+  onLeave,
+}: CollegeChatListProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { data: conversations = [], isLoading, totalUnread } = useCollegeConversations(true);
   // ELE-1889: learner messages come from the canonical tables, for staff.
   const isStaff = currentUserType === 'staff';
-  const { data: learnerThreads = [], isLoading: threadsLoading } = useCollegeLearnerThreads(isStaff);
+  const { data: learnerThreads = [], isLoading: threadsLoading } =
+    useCollegeLearnerThreads(isStaff);
   const openThread = (t: CollegeLearnerThread) => {
     onLeave?.();
     navigate(`/college?section=student360&studentId=${encodeURIComponent(t.studentId)}#messages`);
@@ -89,7 +99,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
   const learnerSection =
     isStaff && learnerThreads.length > 0 ? (
       <div className="space-y-2">
-        <div className="px-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white">Learner messages</div>
+        <div className="px-1 text-[13px] font-medium text-white">Learner messages</div>
         <div className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)]">
           {learnerThreads.map((t) => (
             <button
@@ -100,26 +110,33 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
             >
               <div className="flex items-center gap-4">
                 <Avatar className="h-11 w-11 shrink-0 ring-1 ring-white/[0.08]">
-                  <AvatarFallback className="bg-elec-yellow/10 text-sm font-semibold text-elec-yellow">
+                  <AvatarFallback className="bg-white/[0.1] text-sm font-semibold text-white">
                     {t.learner.slice(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline justify-between gap-2">
-                    <p className="line-clamp-1 break-words text-[14px] font-medium text-white">{t.learner}</p>
+                    <p className="line-clamp-1 break-words text-[14px] font-medium text-white">
+                      {t.learner}
+                    </p>
                     {t.lastMessageAt && (
-                      <span className="shrink-0 text-[11px] tabular-nums text-white">
+                      <span className="shrink-0 text-[12px] tabular-nums text-white">
                         {formatDistanceToNow(new Date(t.lastMessageAt), { addSuffix: false })}
                       </span>
                     )}
                   </div>
                   <div className="mt-1.5 flex items-center justify-between gap-2">
                     {/* line-clamp, not truncate: the sheet's scroll area sizes to its widest line. */}
-                    <p className={cn('line-clamp-1 break-words text-[12.5px] text-white', t.unread > 0 && 'font-medium')}>
+                    <p
+                      className={cn(
+                        'line-clamp-1 break-words text-[12.5px] text-white',
+                        t.unread > 0 && 'font-medium'
+                      )}
+                    >
                       {t.preview || t.subject || 'No messages yet'}
                     </p>
                     {t.unread > 0 && (
-                      <span className="inline-flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full bg-elec-yellow px-1 text-[10px] font-semibold tabular-nums text-black">
+                      <span className="inline-flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full bg-elec-yellow px-1 text-[12px] font-semibold tabular-nums text-black">
                         {t.unread > 9 ? '9+' : t.unread}
                       </span>
                     )}
@@ -132,7 +149,8 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
       </div>
     ) : null;
 
-  if (conversations.length === 0 && learnerSection) return <div className="space-y-3">{learnerSection}</div>;
+  if (conversations.length === 0 && learnerSection)
+    return <div className="space-y-3">{learnerSection}</div>;
 
   if (conversations.length === 0) {
     return (
@@ -153,7 +171,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
     <div className="space-y-3">
       {learnerSection}
       {totalUnread > 0 && (
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white px-1">
+        <div className="text-[13px] font-medium text-white px-1">
           {totalUnread} unread message{totalUnread > 1 ? 's' : ''}
         </div>
       )}
@@ -172,7 +190,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
                 <div className="relative shrink-0">
                   <Avatar className="h-11 w-11 ring-1 ring-white/[0.08]">
                     <AvatarImage src={display.avatar || undefined} />
-                    <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-sm font-semibold">
+                    <AvatarFallback className="bg-white/[0.1] text-white text-sm font-semibold">
                       {display.name.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -196,10 +214,12 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
                       >
                         {display.name}
                       </p>
-                      {display.badgeLabel && <Pill tone={display.badgeTone}>{display.badgeLabel}</Pill>}
+                      {display.badgeLabel && (
+                        <Pill tone={display.badgeTone}>{display.badgeLabel}</Pill>
+                      )}
                     </div>
                     {display.lastMessageAt && (
-                      <span className="text-[11px] text-white shrink-0 tabular-nums">
+                      <span className="text-[12px] text-white shrink-0 tabular-nums">
                         {formatDistanceToNow(new Date(display.lastMessageAt), {
                           addSuffix: false,
                         })}
@@ -208,13 +228,9 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
                   </div>
 
                   {(display.role || display.student) && (
-                    <p className="mt-0.5 text-[11px] text-white truncate">
-                      {display.role}
-                      {display.student && (
-                        <span className="ml-1">
-                          · {display.student.first_name} {display.student.last_name}
-                        </span>
-                      )}
+                    <p className="mt-0.5 text-[12px] text-white truncate">
+                      {keyLabel(display.role)}
+                      {display.student && <span className="ml-1">· {display.student.name}</span>}
                     </p>
                   )}
 
@@ -228,7 +244,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType, onLeave
                       {display.lastMessage || 'No messages yet'}
                     </p>
                     {display.unreadCount > 0 && (
-                      <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums shrink-0">
+                      <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[12px] font-semibold tabular-nums shrink-0">
                         {display.unreadCount > 9 ? '9+' : display.unreadCount}
                       </span>
                     )}

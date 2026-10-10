@@ -7,21 +7,31 @@
  * to bottom: who this is → how far they are → the evidence itself → by unit.
  *
  * No login. Data comes from token-scoped SECURITY DEFINER functions; evidence
- * files are signed by sign-shared-portfolio-evidence (the bucket is private).
+ * files are signed by sign-shared-portfolio-evidence.
  * Feedback left here is advisory: an official decision needs an assessor
- * account (the learner invites one from Elec-Mate).
+ * account. "Become their assessor" asks the learner for one (request_to_assess);
+ * the learner sends the invite.
+ *
+ * ELE-1885: a share can carry a PIN. Its link is /view/<public_token>;
+ * get_share_gate says a PIN is needed and unlock_shared_portfolio swaps the
+ * right PIN for the real token, which every other call then uses.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { createClient } from '@supabase/supabase-js';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 import { Download, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   useSharedPortfolioStructured,
+  type SharedCriterion,
   type SharedDecision,
   type SharedEvidenceEntry,
   type SharedWitness,
 } from '@/hooks/portfolio/useSharedPortfolioStructured';
 import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
+import { STATE_LABEL, STATE_SWATCH, type AcState } from '@/hooks/portfolio/usePortfolioAcState';
+import { assessorWithQualifications } from '@/lib/assessorQualifications';
 import {
   PublicCard,
   PublicEyebrow,
@@ -33,12 +43,13 @@ import {
 
 const inputCn =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 ' +
-  'text-base text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
+  'text-base text-white placeholder:text-white/70 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
 const textareaCn =
   'min-h-[90px] w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base ' +
-  'text-white caret-elec-yellow placeholder:text-white/25 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
-const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
+  'text-white caret-elec-yellow placeholder:text-white/70 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
+// Chips are border and text only; the page's one solid yellow control is its primary action.
+const chipOn = 'border-elec-yellow text-elec-yellow font-semibold';
+const chipOff = 'border-white/[0.2] text-white font-medium';
 const H2 = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-[24px] font-bold leading-tight tracking-[-0.02em] text-white sm:text-[28px]">
     {children}
@@ -88,10 +99,29 @@ const RECORD_LABEL: Record<RecordState, string> = {
   with_assessor: 'With the assessor',
 };
 const RECORD_PILL: Record<RecordState, string> = {
-  passed: 'border-elec-yellow bg-elec-yellow text-black',
-  needs_more: 'border-orange-400 text-white',
-  with_assessor: 'border-white/[0.3] text-white',
+  passed: 'border-emerald-400 text-emerald-300',
+  needs_more: 'border-orange-400 text-orange-300',
+  with_assessor: 'border-sky-400 text-sky-200',
 };
+
+// ELE-2016: the criteria states LearnerAssessmentView uses, worded for
+// someone reading the learner's portfolio.
+const CRITERION_LABEL: Record<AcState, string> = {
+  ...STATE_LABEL,
+  claimed: 'Claimed by the learner',
+  submitted: 'With the assessor',
+};
+const CRITERION_ORDER: AcState[] = [
+  'iqa_confirmed',
+  'passed',
+  'submitted',
+  'referred',
+  'not_yet',
+  'iqa_rejected',
+  'claimed',
+  'not_started',
+];
+const isPassedState = (st: string) => st === 'passed' || st === 'iqa_confirmed';
 
 function witnessLine(w: SharedWitness) {
   const who = [w.witness_name || 'A witness', w.witness_role].filter(Boolean).join(', ');
@@ -148,8 +178,7 @@ function WitnessStatement({ w }: { w: SharedWitness }) {
   );
 }
 
-export default function SharedPortfolioView() {
-  const { token } = useParams<{ token: string }>();
+function SharedPortfolioBody({ token }: { token: string }) {
   const { data, isLoading, error, reloadComments, reloadSubmissions, anonClient } =
     useSharedPortfolioStructured(token);
 
@@ -162,6 +191,13 @@ export default function SharedPortfolioView() {
   const [busy, setBusy] = useState<string | null>(null);
   const [notice, setNotice] = useState<{ id: string; text: string; bad?: boolean } | null>(null);
   const [downloading, setDownloading] = useState(false);
+  // "Become their assessor" (ELE-2016)
+  const [askOpen, setAskOpen] = useState(false);
+  const [askEmail, setAskEmail] = useState('');
+  const [askOrg, setAskOrg] = useState('');
+  const [askRole, setAskRole] = useState<'assessor' | 'iqa' | 'epa_assessor'>('assessor');
+  const [askState, setAskState] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [askError, setAskError] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState<string | null>(null);
 
   // One call signs every file this share covers. Signed links last an hour,
@@ -235,6 +271,15 @@ export default function SharedPortfolioView() {
 
   const stats = useMemo(() => {
     if (!data) return null;
+    // ELE-2016: with the criteria record, "passed" is the assessor's figure,
+    // the one the learner and their college read.
+    if (Array.isArray(data.criteria) && data.criteria.length > 0) {
+      return {
+        met: data.criteria.filter((c) => isPassedState(c.state)).length,
+        total: data.criteria.length,
+        items: data.entries.length,
+      };
+    }
     let met = 0;
     let total = 0;
     for (const u of data.units)
@@ -259,6 +304,26 @@ export default function SharedPortfolioView() {
     }
     return { counts, units, total: decisions.length };
   }, [data]);
+  // Units and criteria in the states LearnerAssessmentView uses (ELE-2016).
+  const criteriaUnits = useMemo(() => {
+    const list = data?.criteria;
+    if (!Array.isArray(list) || list.length === 0) return null;
+    const units: { code: string; title: string | null; rows: SharedCriterion[] }[] = [];
+    for (const c of list) {
+      let u = units.find((x) => x.code === c.unit_code);
+      if (!u) units.push((u = { code: c.unit_code, title: c.unit_title, rows: [] }));
+      u.rows.push(c);
+    }
+    const counts = {} as Record<AcState, number>;
+    for (const c of list) counts[c.state as AcState] = (counts[c.state as AcState] ?? 0) + 1;
+    return { units, counts };
+  }, [data]);
+  // What the learner mapped each item to. Never an AI suggestion.
+  const mappedFor = (id: string) => {
+    const rows = data?.item_criteria;
+    if (!Array.isArray(rows)) return null;
+    return rows.filter((r) => r.item_id === id).map((r) => `${r.unit_code} AC ${r.ac_code}`);
+  };
   const witnessesFor = (id: string) =>
     (data?.witnesses ?? []).filter((w) => w.portfolio_item_id === id);
   const otherWitnesses = useMemo(() => {
@@ -333,6 +398,37 @@ export default function SharedPortfolioView() {
     setNotice({ id: submissionId, text: 'Feedback sent. The apprentice has been notified.' });
     void reloadSubmissions();
     void reloadComments();
+  };
+
+  const askToAssess = async () => {
+    if (!token) return;
+    setAskError(null);
+    if (reviewerName.trim().length < 2) {
+      setAskError('Add your name first.');
+      return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(askEmail.trim())) {
+      setAskError('Add the email you want the invite sent to.');
+      return;
+    }
+    setAskState('sending');
+    const { data: res, error: e } = await anonClient.rpc(
+      'request_to_assess' as never,
+      {
+        p_share_token: token,
+        p_name: reviewerName.trim(),
+        p_email: askEmail.trim(),
+        p_role: askRole,
+        p_organisation: askOrg.trim() || null,
+      } as never
+    );
+    const r = res as { success?: boolean; error?: string } | null;
+    if (e || !r?.success) {
+      setAskState('idle');
+      setAskError(r?.error ?? 'Could not send. Check your connection and try again.');
+      return;
+    }
+    setAskState('sent');
   };
 
   const download = async () => {
@@ -414,7 +510,21 @@ export default function SharedPortfolioView() {
             </p>
           </PublicCard>
           <PublicCard>
-            {data.otj_hours.target > 0 ? (
+            {data.otj && data.otj.verified_hours != null ? (
+              <>
+                <p className="font-mono text-[30px] font-bold tabular-nums text-white">
+                  {data.otj.verified_hours}
+                  {(data.otj.required_hours ?? 0) > 0 && (
+                    <span className="text-[18px]"> / {data.otj.required_hours}h</span>
+                  )}
+                  {!((data.otj.required_hours ?? 0) > 0) && <span className="text-[18px]">h</span>}
+                </p>
+                <p className="mt-1 text-[14px] text-white">
+                  verified off-the-job hours
+                  {data.otj.frozen_at ? `, to ${when(data.otj.frozen_at)}` : ''}
+                </p>
+              </>
+            ) : data.otj_hours.target > 0 ? (
               <>
                 <p className="font-mono text-[30px] font-bold tabular-nums text-white">
                   {data.otj_hours.current}
@@ -449,50 +559,159 @@ export default function SharedPortfolioView() {
         {downloadError && <p className="mt-2 text-[14px] text-red-300">{downloadError}</p>}
 
         {/* Reviewer */}
-        <PublicCard className="mt-10 space-y-4">
-          <div>
-            <h2 className="text-[18px] font-bold text-white">Leaving feedback?</h2>
-            <p className="mt-1 text-[14px] text-white">
-              Add your name once and it goes on every comment. Feedback here is advisory. To record
-              a pass, ask {a.name.split(' ')[0]} to invite you as their assessor from Elec-Mate.
-              It's free.
-            </p>
-          </div>
-          <div>
-            <label
-              htmlFor="reviewer-name"
-              className="mb-1 block text-[13px] font-medium text-white"
-            >
-              Your name
-            </label>
-            <input
-              id="reviewer-name"
-              className={inputCn}
-              value={reviewerName}
-              onChange={(e) => setReviewerName(e.target.value)}
-              autoComplete="name"
-            />
-          </div>
-          <fieldset>
-            <legend className="mb-2 text-[13px] font-medium text-white">You are their</legend>
-            <div className="flex flex-wrap gap-2">
-              {ROLES.map((r) => (
-                <button
-                  key={r.key}
-                  type="button"
-                  aria-pressed={reviewerRole === r.key}
-                  onClick={() => setReviewerRole(r.key)}
-                  className={cn(
-                    'h-11 rounded-full border px-4 text-[14px] touch-manipulation',
-                    reviewerRole === r.key ? chipOn : chipOff
-                  )}
-                >
-                  {r.label}
-                </button>
-              ))}
+        <div className="mt-10 grid gap-4 lg:grid-cols-2">
+          <PublicCard className="space-y-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+                Advisory only
+              </p>
+              <h2 className="mt-1 text-[18px] font-bold text-white">Leaving feedback?</h2>
+              <p className="mt-1 text-[14px] text-white">
+                Add your name once and it goes on every comment. Comments here help{' '}
+                {a.name.split(' ')[0]} improve; they do not pass or fail anything.
+              </p>
             </div>
-          </fieldset>
-        </PublicCard>
+            <div>
+              <label
+                htmlFor="reviewer-name"
+                className="mb-1 block text-[13px] font-medium text-white"
+              >
+                Your name
+              </label>
+              <input
+                id="reviewer-name"
+                className={inputCn}
+                value={reviewerName}
+                onChange={(e) => setReviewerName(e.target.value)}
+                autoComplete="name"
+              />
+            </div>
+            <fieldset>
+              <legend className="mb-2 text-[13px] font-medium text-white">You are their</legend>
+              <div className="flex flex-wrap gap-2">
+                {ROLES.map((r) => (
+                  <button
+                    key={r.key}
+                    type="button"
+                    aria-pressed={reviewerRole === r.key}
+                    onClick={() => setReviewerRole(r.key)}
+                    className={cn(
+                      'h-11 rounded-full border px-4 text-[14px] touch-manipulation',
+                      reviewerRole === r.key ? chipOn : chipOff
+                    )}
+                  >
+                    {r.label}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+          </PublicCard>
+
+          <PublicCard className="space-y-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+                Official decisions
+              </p>
+              <h2 className="mt-1 text-[18px] font-bold text-white">Become their assessor</h2>
+              <p className="mt-1 text-[14px] text-white">
+                To pass criteria, you need {a.name.split(' ')[0]}'s invite. Ask here and they get
+                your request in Elec-Mate. Assessor accounts are free.
+              </p>
+            </div>
+            {askState === 'sent' ? (
+              <p role="status" className="text-[15px] font-semibold text-emerald-300">
+                Request sent. When {a.name.split(' ')[0]} invites you, the link goes to{' '}
+                {askEmail.trim()}.
+              </p>
+            ) : !askOpen ? (
+              <button
+                type="button"
+                onClick={() => setAskOpen(true)}
+                className={cn(PUBLIC_PRIMARY_CTA, 'h-12 text-[15px] sm:w-auto')}
+              >
+                Ask to be their assessor
+              </button>
+            ) : (
+              <>
+                <div>
+                  <label
+                    htmlFor="ask-email"
+                    className="mb-1 block text-[13px] font-medium text-white"
+                  >
+                    Your email
+                  </label>
+                  <input
+                    id="ask-email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    className={inputCn}
+                    value={askEmail}
+                    onChange={(e) => setAskEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="ask-org"
+                    className="mb-1 block text-[13px] font-medium text-white"
+                  >
+                    Organisation (optional)
+                  </label>
+                  <input
+                    id="ask-org"
+                    className={inputCn}
+                    value={askOrg}
+                    onChange={(e) => setAskOrg(e.target.value)}
+                    autoComplete="organization"
+                  />
+                </div>
+                <fieldset>
+                  <legend className="mb-2 text-[13px] font-medium text-white">As their</legend>
+                  <div className="flex flex-wrap gap-2">
+                    {(
+                      [
+                        ['assessor', 'Assessor'],
+                        ['iqa', 'IQA'],
+                        ['epa_assessor', 'End-point assessor'],
+                      ] as const
+                    ).map(([k, label]) => (
+                      <button
+                        key={k}
+                        type="button"
+                        aria-pressed={askRole === k}
+                        onClick={() => setAskRole(k)}
+                        className={cn(
+                          'h-11 rounded-full border px-4 text-[14px] touch-manipulation',
+                          askRole === k ? chipOn : chipOff
+                        )}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
+                {!reviewerName.trim() && (
+                  <p className="text-[13px] text-white">
+                    Your name comes from the box on the left.
+                  </p>
+                )}
+                {askError && (
+                  <p role="alert" className="text-[14px] text-red-300">
+                    {askError}
+                  </p>
+                )}
+                <button
+                  type="button"
+                  disabled={askState === 'sending'}
+                  onClick={() => void askToAssess()}
+                  className={cn(PUBLIC_PRIMARY_CTA, 'h-12 text-[15px] sm:w-auto')}
+                >
+                  {askState === 'sending' ? 'Sending…' : 'Send my request'}
+                </button>
+              </>
+            )}
+          </PublicCard>
+        </div>
 
         {/* Evidence */}
         <section className="mt-12 space-y-4">
@@ -568,13 +787,13 @@ export default function SharedPortfolioView() {
                   </div>
                 )}
 
-                {(e.assessment_criteria_met?.length ?? 0) > 0 && (
+                {(mappedFor(e.id) ?? e.assessment_criteria_met ?? []).length > 0 && (
                   <div>
-                    <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
-                      Criteria it shows
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
+                      Mapped by {a.name.split(' ')[0]}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      {e.assessment_criteria_met!.map((c) => (
+                      {(mappedFor(e.id) ?? e.assessment_criteria_met ?? []).map((c) => (
                         <span
                           key={c}
                           className="rounded-full border border-white/[0.16] px-2.5 py-1 text-[12.5px] text-white"
@@ -640,7 +859,7 @@ export default function SharedPortfolioView() {
                     type="button"
                     disabled={busy === e.id || !(commentDraft[e.id] ?? '').trim()}
                     onClick={() => sendComment(e.id)}
-                    className={cn(PUBLIC_PRIMARY_CTA, 'h-12 text-[15px] sm:w-auto')}
+                    className={cn(PUBLIC_SECONDARY_CTA, 'h-12 text-[15px] sm:w-auto')}
                   >
                     {busy === e.id ? 'Sending…' : 'Send comment'}
                   </button>
@@ -683,7 +902,7 @@ export default function SharedPortfolioView() {
                   type="button"
                   disabled={busy === s.id || !(feedbackDraft[s.id] ?? '').trim()}
                   onClick={() => sendFeedback(s.id)}
-                  className={cn(PUBLIC_PRIMARY_CTA, 'h-12 text-[15px] sm:w-auto')}
+                  className={cn(PUBLIC_SECONDARY_CTA, 'h-12 text-[15px] sm:w-auto')}
                 >
                   {busy === s.id ? 'Sending…' : 'Send feedback'}
                 </button>
@@ -734,7 +953,7 @@ export default function SharedPortfolioView() {
                               </span>
                               <span
                                 className={cn(
-                                  'shrink-0 rounded-full border px-2.5 py-0.5 text-[11.5px] font-semibold',
+                                  'shrink-0 rounded-full border px-2.5 py-0.5 text-[12px] font-semibold',
                                   RECORD_PILL[st]
                                 )}
                               >
@@ -748,7 +967,16 @@ export default function SharedPortfolioView() {
                                     ? 'Sent back for more, then resubmitted. '
                                     : ''}
                                   {d.decision === 'passed' ? 'Passed' : 'Needs more'} by{' '}
-                                  {d.assessor_name || 'the assessor'}, {when(d.decided_at)}
+                                  {assessorWithQualifications(
+                                    d.assessor_name || 'the assessor',
+                                    d.assessor_qualifications
+                                  )}
+                                  {d.assessed_at
+                                    ? d.assessed_at === 'Independent assessor'
+                                      ? ', independent assessor'
+                                      : ` at ${d.assessed_at}`
+                                    : ''}
+                                  , {when(d.decided_at)}
                                   {d.iqa_verdict === 'confirmed'
                                     ? '. Confirmed by quality assurance.'
                                     : ''}
@@ -782,8 +1010,93 @@ export default function SharedPortfolioView() {
           </section>
         )}
 
-        {/* By unit */}
-        {data.units.length > 0 && (
+        {/* By unit: the criteria record, in LearnerAssessmentView's states */}
+        {criteriaUnits && (
+          <section className="mt-12 space-y-4">
+            <H2>Progress by unit</H2>
+            <p className="text-[15px] leading-[1.55] text-white">
+              Every criterion of the qualification, in the state the assessment record shows.
+            </p>
+            <div className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Key">
+              {CRITERION_ORDER.filter((k) => (criteriaUnits.counts[k] ?? 0) > 0).map((k) => (
+                <span key={k} className="inline-flex items-center gap-2 text-[13px] text-white">
+                  <span className={cn('h-2.5 w-2.5 rounded-full', STATE_SWATCH[k])} aria-hidden />
+                  {CRITERION_LABEL[k]}{' '}
+                  <span className="font-mono tabular-nums">{criteriaUnits.counts[k]}</span>
+                </span>
+              ))}
+            </div>
+            <PublicCard className="p-0 sm:p-0">
+              <ul className="divide-y divide-white/[0.08]">
+                {criteriaUnits.units.map((u) => {
+                  const passed = u.rows.filter((r) => isPassedState(r.state)).length;
+                  const open = openUnit === u.code;
+                  return (
+                    <li key={u.code}>
+                      <button
+                        type="button"
+                        aria-expanded={open}
+                        onClick={() => setOpenUnit(open ? null : u.code)}
+                        className="flex min-h-[60px] w-full items-center gap-4 px-5 py-3 text-left touch-manipulation sm:px-6"
+                      >
+                        <span className="w-14 shrink-0 font-mono text-[14px] font-bold text-white">
+                          {u.code}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[15px] font-semibold leading-snug text-white">
+                            {u.title}
+                          </span>
+                          <span
+                            className="mt-2 flex h-1.5 overflow-hidden rounded-full bg-white/[0.08]"
+                            aria-hidden
+                          >
+                            {u.rows.map((r) => (
+                              <span
+                                key={r.ac_code}
+                                className={cn('h-full flex-1', STATE_SWATCH[r.state as AcState])}
+                              />
+                            ))}
+                          </span>
+                        </span>
+                        <span className="shrink-0 font-mono text-[14px] tabular-nums text-white">
+                          {passed}/{u.rows.length}
+                        </span>
+                      </button>
+                      {open && (
+                        <ul className="space-y-2 px-5 pb-5 sm:px-6">
+                          {u.rows.map((r) => (
+                            <li
+                              key={r.ac_code}
+                              className="flex items-start gap-3 text-[14px] text-white"
+                            >
+                              <span className="w-10 shrink-0 font-mono text-[13px] font-bold">
+                                {r.ac_code}
+                              </span>
+                              <span className="min-w-0 flex-1 leading-snug">{r.ac_text}</span>
+                              <span className="inline-flex shrink-0 items-center gap-1.5 text-[12px] font-semibold">
+                                <span
+                                  className={cn(
+                                    'h-2 w-2 rounded-full',
+                                    STATE_SWATCH[r.state as AcState]
+                                  )}
+                                  aria-hidden
+                                />
+                                {CRITERION_LABEL[r.state as AcState] ?? r.state}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </PublicCard>
+          </section>
+        )}
+
+        {/* By unit (before the criteria record existed) */}
+        {!criteriaUnits && data.units.length > 0 && (
           <section className="mt-12 space-y-4">
             <H2>Progress by unit</H2>
             <PublicCard className="p-0 sm:p-0">
@@ -884,9 +1197,9 @@ export default function SharedPortfolioView() {
                           </span>
                           <span
                             className={cn(
-                              'shrink-0 rounded-full border px-2 py-0.5 text-[11.5px] font-semibold',
+                              'shrink-0 rounded-full border px-2 py-0.5 text-[12px] font-semibold',
                               k.status === 'verified' || k.status === 'completed'
-                                ? 'border-elec-yellow bg-elec-yellow text-black'
+                                ? 'border-emerald-400 text-emerald-300'
                                 : 'border-white/[0.2] text-white'
                             )}
                           >
@@ -903,4 +1216,195 @@ export default function SharedPortfolioView() {
       </div>
     </PublicPageShell>
   );
+}
+
+/* ── ELE-1885: the PIN gate ─────────────────────────────────────────────── */
+
+// The gate's own anon client (no session), like useSharedPortfolioStructured's.
+const gateClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: { persistSession: false, autoRefreshToken: false },
+});
+type GateRpc = (
+  fn: string,
+  args: Record<string, unknown>
+) => Promise<{ data: unknown; error: { message: string } | null }>;
+const gateRpc = gateClient.rpc.bind(gateClient) as unknown as GateRpc;
+const unlockedKey = (t: string) => `elec-mate-share-unlocked:${t}`;
+
+function readUnlocked(t: string): string | null {
+  try {
+    return window.sessionStorage.getItem(unlockedKey(t));
+  } catch {
+    return null;
+  }
+}
+
+function PinGate({ urlToken, onUnlocked }: { urlToken: string; onUnlocked: (t: string) => void }) {
+  const [pin, setPin] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [lockedUntil, setLockedUntil] = useState<string | null>(null);
+
+  useEffect(() => {
+    void gateRpc('get_share_gate', { p_token: urlToken }).then(({ data }) => {
+      const d = data as { locked_until?: string | null } | null;
+      if (d?.locked_until) setLockedUntil(d.locked_until);
+    });
+  }, [urlToken]);
+
+  const time = (iso: string) =>
+    new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+  const submit = async () => {
+    if (!/^[0-9]{4,8}$/.test(pin) || busy) return;
+    setBusy(true);
+    setMessage(null);
+    const { data, error } = await gateRpc('unlock_shared_portfolio', {
+      p_token: urlToken,
+      p_pin: pin,
+    });
+    setBusy(false);
+    const d = data as {
+      token?: string;
+      error?: string;
+      attempts_left?: number;
+      locked_until?: string;
+    } | null;
+    if (error || !d) {
+      setMessage('Could not check the PIN. Check your connection and try again.');
+      return;
+    }
+    if (d.token) {
+      try {
+        window.sessionStorage.setItem(unlockedKey(urlToken), d.token);
+      } catch {
+        /* storage blocked: the PIN is asked again next time */
+      }
+      onUnlocked(d.token);
+      return;
+    }
+    setPin('');
+    if (d.error === 'locked' && d.locked_until) {
+      setLockedUntil(d.locked_until);
+      return;
+    }
+    if (d.error === 'wrong_pin') {
+      setMessage(
+        d.attempts_left === 1
+          ? 'That PIN is not right. One more try before the link locks for 15 minutes.'
+          : `That PIN is not right. ${d.attempts_left} tries left.`
+      );
+      return;
+    }
+    setMessage('This link has expired or been turned off. Ask the apprentice for a new one.');
+  };
+
+  const locked = !!lockedUntil && new Date(lockedUntil) > new Date();
+
+  return (
+    <PublicPageShell>
+      <div className="mx-auto max-w-[28rem]">
+        <PublicEyebrow>Shared portfolio</PublicEyebrow>
+        <PublicH1>Enter the PIN</PublicH1>
+        <p className="mt-4 text-[17px] leading-[1.55] text-white">
+          The apprentice protected this portfolio with a PIN. They will have given it to you
+          separately from the link.
+        </p>
+        <PublicCard className="mt-8 space-y-5">
+          {locked ? (
+            <p role="alert" className="text-[15px] font-semibold text-orange-300">
+              Too many wrong PINs. Try again after {time(lockedUntil!)}.
+            </p>
+          ) : (
+            <>
+              <div>
+                <label
+                  htmlFor="share-pin"
+                  className="mb-1 block text-[13px] font-medium text-white"
+                >
+                  PIN
+                </label>
+                <input
+                  id="share-pin"
+                  className={cn(inputCn, 'font-mono text-[22px] tracking-[0.4em]')}
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={8}
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') void submit();
+                  }}
+                />
+              </div>
+              {message && (
+                <p role="alert" className="text-[14px] text-red-300">
+                  {message}
+                </p>
+              )}
+              <button
+                type="button"
+                disabled={busy || !/^[0-9]{4,8}$/.test(pin)}
+                onClick={() => void submit()}
+                className={PUBLIC_PRIMARY_CTA}
+              >
+                {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                Open the portfolio
+              </button>
+            </>
+          )}
+        </PublicCard>
+      </div>
+    </PublicPageShell>
+  );
+}
+
+export default function SharedPortfolioView() {
+  const { token: urlToken = '' } = useParams<{ token: string }>();
+  // undefined while checking; the token every data call uses once known.
+  const [token, setToken] = useState<string | undefined>(undefined);
+  const [needsPin, setNeedsPin] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    setToken(undefined);
+    setNeedsPin(false);
+    const remembered = urlToken ? readUnlocked(urlToken) : null;
+    void gateRpc('get_share_gate', { p_token: urlToken }).then(({ data, error }) => {
+      if (!active) return;
+      const d = data as { pin_required?: boolean } | null;
+      if (!error && d?.pin_required) {
+        if (remembered) setToken(remembered);
+        else setNeedsPin(true);
+      } else {
+        setToken(urlToken);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [urlToken]);
+
+  if (needsPin && !token) {
+    return (
+      <PinGate
+        urlToken={urlToken}
+        onUnlocked={(t) => {
+          setNeedsPin(false);
+          setToken(t);
+        }}
+      />
+    );
+  }
+  if (!token) {
+    return (
+      <PublicPageShell>
+        <PublicEyebrow>Shared portfolio</PublicEyebrow>
+        <div className="mt-6 flex items-center gap-2 text-[15px] text-white">
+          <Loader2 className="h-4 w-4 animate-spin" /> Loading the portfolio…
+        </div>
+      </PublicPageShell>
+    );
+  }
+  return <SharedPortfolioBody key={token} token={token} />;
 }

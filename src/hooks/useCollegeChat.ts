@@ -3,14 +3,13 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import {
-  collegeConversationService,
   collegeMessageService,
   collegeChatHelpers,
   CollegeConversation,
   CollegeMessage,
 } from '@/services/collegeChatService';
 
-// Query Keys
+// Query Keys (the conversations key now only refreshes the learner threads' counts)
 const COLLEGE_CONVERSATIONS_KEY = ['college-conversations'];
 const COLLEGE_MESSAGES_KEY = ['college-messages'];
 
@@ -19,55 +18,19 @@ const COLLEGE_MESSAGES_KEY = ['college-messages'];
 // =====================================================
 
 /**
- * Hook to get all college conversations for current user
+ * The College tab's conversation list.
+ *
+ * ELE-1918: college_conversations is retired ([LEGACY — DO NOT USE], 0 rows
+ * ever, nothing creates a thread there). Nothing reads it any more: the list
+ * is always empty and the count comes from the canonical learner threads
+ * (student_message_threads), so it matches the bell.
  */
 export function useCollegeConversations(enabled: boolean = true) {
-  const queryClient = useQueryClient();
-
-  // Real-time subscription - only when enabled
-  useEffect(() => {
-    if (!enabled) return;
-
-    const channel = supabase
-      .channel(realtimeChannelName('college-conversations-changes'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'college_conversations',
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [queryClient, enabled]);
-
-  const query = useQuery({
-    queryKey: COLLEGE_CONVERSATIONS_KEY,
-    queryFn: collegeConversationService.getMyConversations,
-    enabled, // Only run query when enabled
-  });
-
-  // Learner messages are on the canonical tables (see useCollegeLearnerThreads);
-  // the College tab's count includes them so it matches the bell.
   const learnerThreads = useCollegeLearnerThreads(enabled);
-
-  // Compute total unread
-  const totalUnread =
-    (query.data || []).reduce((sum, conv) => {
-      // This is simplified - in real app, compare participant IDs with auth.uid()
-      return sum + (conv.unread_1 || 0) + (conv.unread_2 || 0);
-    }, 0) + learnerThreads.totalUnread;
-
   return {
-    ...query,
-    totalUnread,
+    data: [] as CollegeConversation[],
+    isLoading: false,
+    totalUnread: learnerThreads.totalUnread,
   };
 }
 
@@ -77,9 +40,8 @@ export function useCollegeConversations(enabled: boolean = true) {
  * area, get_college_inbox and the bell all read them. The College tab of
  * the messages sheet used to list only college_conversations, which no
  * learner screen writes to (0 rows ever), so a tutor saw no learner
- * messages there. It now lists the canonical threads; college_conversations
- * stays for staff and employer chats, and any old learner chat in it is
- * still shown, marked as older.
+ * messages there. It now lists the canonical threads, and (ELE-1918)
+ * college_conversations is retired altogether.
  * ------------------------------------------------------------------------ */
 
 export interface CollegeLearnerThread {
@@ -101,9 +63,13 @@ export function useCollegeLearnerThreads(enabled: boolean = true) {
     if (!enabled) return;
     const channel = supabase
       .channel(realtimeChannelName('college-learner-threads'))
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'student_message_threads' }, () => {
-        queryClient.invalidateQueries({ queryKey: LEARNER_THREADS_KEY });
-      })
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'student_message_threads' },
+        () => {
+          queryClient.invalidateQueries({ queryKey: LEARNER_THREADS_KEY });
+        }
+      )
       .subscribe();
     return () => {
       supabase.removeChannel(channel);
@@ -142,10 +108,16 @@ export function useCollegeLearnerThreads(enabled: boolean = true) {
           .order('created_at', { ascending: false })
           .limit(200),
       ]);
-      const nameById = new Map(((learners ?? []) as Array<{ id: string; name: string | null }>).map((l) => [l.id, l.name ?? 'Learner']));
+      const nameById = new Map(
+        ((learners ?? []) as Array<{ id: string; name: string | null }>).map((l) => [
+          l.id,
+          l.name ?? 'Learner',
+        ])
+      );
       const previewByThread = new Map<string, string>();
       for (const m of (last ?? []) as Array<{ thread_id: string; body: string | null }>) {
-        if (!previewByThread.has(m.thread_id) && m.body) previewByThread.set(m.thread_id, m.body.replace(/\s+/g, ' ').slice(0, 140));
+        if (!previewByThread.has(m.thread_id) && m.body)
+          previewByThread.set(m.thread_id, m.body.replace(/\s+/g, ' ').slice(0, 140));
       }
       return rows.map((r) => ({
         id: r.id,
@@ -160,91 +132,6 @@ export function useCollegeLearnerThreads(enabled: boolean = true) {
   });
   const totalUnread = (query.data ?? []).reduce((n, t) => n + t.unread, 0);
   return { ...query, totalUnread };
-}
-
-/**
- * Hook to get conversations for a specific student
- */
-export function useStudentConversations(studentId: string | undefined) {
-  return useQuery({
-    queryKey: [...COLLEGE_CONVERSATIONS_KEY, 'student', studentId],
-    queryFn: () => (studentId ? collegeConversationService.getStudentConversations(studentId) : []),
-    enabled: !!studentId,
-  });
-}
-
-/**
- * Hook to get or create a student-tutor conversation
- */
-export function useGetOrCreateStudentTutorConversation() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({
-      institutionId,
-      studentUserId,
-      tutorUserId,
-      studentId,
-    }: {
-      institutionId: string;
-      studentUserId: string;
-      tutorUserId: string;
-      studentId?: string;
-    }) =>
-      collegeConversationService.getOrCreateStudentTutorConversation(
-        institutionId,
-        studentUserId,
-        tutorUserId,
-        studentId
-      ),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
-    },
-  });
-}
-
-/**
- * Hook to get or create a college-employer conversation
- */
-export function useGetOrCreateCollegeEmployerConversation() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({
-      institutionId,
-      staffUserId,
-      employerUserId,
-      studentId,
-    }: {
-      institutionId: string;
-      staffUserId: string;
-      employerUserId: string;
-      studentId?: string;
-    }) =>
-      collegeConversationService.getOrCreateCollegeEmployerConversation(
-        institutionId,
-        staffUserId,
-        employerUserId,
-        studentId
-      ),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
-    },
-  });
-}
-
-/**
- * Hook to archive a conversation
- */
-export function useArchiveCollegeConversation() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: collegeConversationService.archiveConversation,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
-    },
-  });
 }
 
 // =====================================================
@@ -350,34 +237,6 @@ export function useMarkCollegeMessagesAsRead() {
   });
 }
 
-/**
- * Hook to send a progress update
- */
-export function useSendProgressUpdate() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({
-      conversationId,
-      progressData,
-    }: {
-      conversationId: string;
-      progressData: {
-        type: 'assessment' | 'attendance' | 'milestone';
-        title: string;
-        details: string;
-        score?: number;
-      };
-    }) => collegeMessageService.sendProgressUpdate(conversationId, progressData),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: [...COLLEGE_MESSAGES_KEY, variables.conversationId],
-      });
-      queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
-    },
-  });
-}
-
 // =====================================================
 // HELPERS
 // =====================================================
@@ -416,8 +275,6 @@ export function useParticipantDetails(
  * Hook to get college conversation stats
  */
 export function useCollegeChatStats() {
-  return useQuery({
-    queryKey: [...COLLEGE_CONVERSATIONS_KEY, 'stats'],
-    queryFn: collegeConversationService.getStats,
-  });
+  // ELE-1918: college_conversations is retired; there is nothing to count.
+  return { data: { total: 0, unread: 0 } };
 }

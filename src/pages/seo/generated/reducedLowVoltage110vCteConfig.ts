@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
   pagePath: '/guides/reduced-low-voltage-110v-cte-site-supplies',
@@ -30,7 +30,7 @@ export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
     '55V to earth is below the conventional shock-hazard threshold and is regarded by HSE HSG141 and BS 7375 as the most practical risk reduction for portable tools.',
     'BS 7375 colour codes: yellow = 110V, blue = 230V, red = 400V three-phase, black = 500V. Wrong colour socket = site refusal.',
     'Site transformers are rated by continuous kVA — 3.3 / 5 / 7.5 / 10 kVA — and must be sized for the largest tool inrush, not just the steady-state load.',
-    'BS 7671:2018+A4:2026 Section 704 sets the requirements for construction site installations. A4:2026 tightens AFDD guidance and refines TN-C-S (PNB) earthing language affecting the site origin.',
+    'BS 7671:2018+A4:2026 Section 704 sets the requirements for construction site installations. A4:2026 adds protective neutral bonding (PNB) to Regulation 312.2.1.1, which affects how a TN-C-S site origin is described, and only rewords the AFDD premises list in Regulation 421.1.7(a).',
     'The 110V CTE circuit itself does not require additional RCD protection — the 55V-to-earth condition IS the protective measure. The 230V transformer primary and any 230V/400V outlets still need 30 mA RCDs.',
     'A temporary site supply must be certified with an EIC before energisation, and that certificate is the document the principal contractor asks for before work begins.',
   ],
@@ -204,12 +204,12 @@ export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'A4:2026 brings two changes that intersect with site design: AFDD requirements clarified for socket-outlets in higher-risk premises (relevant to 230V site office sockets), and TN-C-S (PNB) terminology refined for the site origin description on the EIC.',
+            'A4:2026 brings two changes that touch site design: Regulation 421.1.7(a) now reads "high rise residential buildings" (the AFDD requirement itself dates from A2:2022), and protective neutral bonding (PNB) is added for the site origin description on the EIC.',
         },
         {
           type: 'paragraph',
           text:
-            'For every A4:2026 change including AFDD, TN-C-S (PNB) and the new EIC schedule columns, see our [BS 7671 A4:2026 summary](/guides/bs-7671-a4-2026-summary).',
+            'For every A4:2026 change including TN-C-S (PNB), Table 52.1 and the new Chapter 57, see our [BS 7671 A4:2026 summary](/guides/bs-7671-a4-2026-summary).',
         },
         {
           type: 'paragraph',
@@ -496,7 +496,7 @@ export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
     {
       question: 'Does BS 7671:2018+A4:2026 change anything for 110V CTE site supplies?',
       answer:
-        'A4:2026 keeps RLV under Section 704 unchanged. It refines AFDD guidance for socket-outlets in higher-risk locations (relevant where a site office is higher-risk) and refines TN-C-S (PNB) language for the site origin description. The new A4:2026 EIC schedule columns must be used on the temporary supply certificate.',
+        'A4:2026 keeps RLV under Section 704 unchanged. It rewords the AFDD premises list in Regulation 421.1.7(a) to "high rise residential buildings" (the AFDD requirement itself came in at A2:2022) and adds protective neutral bonding (PNB) for the site origin description. Use the current model forms on the temporary supply certificate.',
     },
     {
       question: 'Can I use a 230V tool on a site if I have RCD protection?',
@@ -513,7 +513,7 @@ export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
-      description: 'Every change in Amendment 4 — AFDD, TN-C-S (PNB), new schedule columns and the Section 704 modifications affecting site supplies.',
+      description: 'Every change in Amendment 4, including TN-C-S (PNB), Table 52.1 and Chapter 57, and what affects site supplies.',
       icon: 'BookOpen',
       category: 'Guide',
     },

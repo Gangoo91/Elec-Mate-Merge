@@ -149,7 +149,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
                   onClick={() => handleAnswerSelect(index)}
                   className={`w-full text-left p-4 rounded-lg border transition-all duration-200 ${
                     selectedAnswer === index
-                      ? 'border-elec-yellow bg-elec-yellow/10 text-foreground'
+                      ? 'border-elec-yellow bg-white/[0.06] text-foreground'
                       : 'border-border bg-muted text-gray-300 hover:border-border'
                   }`}
                 >
@@ -191,7 +191,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
                 <Button
                   onClick={handleNext}
                   disabled={selectedAnswer === null}
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 min-w-[100px]"
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white min-w-[100px]"
                 >
                   {progress.current === progress.total ? 'Finish Quiz' : 'Next'}
                   <ChevronRight className="h-4 w-4 ml-2" />

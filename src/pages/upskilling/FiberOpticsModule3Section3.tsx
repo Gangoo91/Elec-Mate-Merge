@@ -13,7 +13,6 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { SingleQuestionQuiz } from '@/components/apprentice-courses/SingleQuestionQuiz';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Routing and Containment | Fibre Optics Module 3';
@@ -986,14 +985,14 @@ const FiberOpticsModule3Section3 = () => {
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Link
-            to="../section-2"
+            to="/study-centre/upskilling/fiber-optics-module-3-section-2"
             className="flex items-center gap-2 text-white hover:text-elec-yellow transition-colors touch-manipulation min-h-[44px] active:scale-[0.98]"
           >
             <ArrowLeft className="h-5 w-5" />
             <span>Previous: Bend Radius</span>
           </Link>
           <Link
-            to="../section-4"
+            to="/study-centre/upskilling/fiber-optics-module-3-section-4"
             className="flex items-center gap-2 text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation min-h-[44px] sm:flex-row-reverse active:scale-[0.98]"
           >
             <span>Next: Splice Enclosures</span>

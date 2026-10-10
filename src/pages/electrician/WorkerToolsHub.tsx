@@ -48,6 +48,7 @@ import {
 import { useEmployerOtjAttestations } from '@/hooks/useEmployerOtjAttestations';
 import { useCrewApprovals, crewPendingCount } from '@/hooks/useCrewApprovals';
 import { useWorkerHome } from '@/hooks/useWorkerHome';
+import { useMyCourseAssignments, dueSentence } from '@/hooks/useCourseAssignments';
 import {
   WorkerHero,
   HeroButton,
@@ -66,6 +67,8 @@ import {
 import { differenceInCalendarDays, format, parseISO } from 'date-fns';
 import { PageHelpButton } from '@/components/hub/PageHelp';
 import { WT_HUB_HELP } from '@/components/worker-tools/help/worker-help';
+import { WorkerOutboxPill } from '@/components/worker-tools/WorkerOutbox';
+import { useMyRtwStatus, myRtwNeedsAction } from '@/hooks/useRightToWork';
 
 const BASE = '/electrician/worker-tools';
 
@@ -125,6 +128,11 @@ export default function WorkerToolsHub() {
   const { data: otjToConfirm = [] } = useEmployerOtjAttestations();
   const { data: myActions = [] } = useMyIncidentActions();
   const { data: home } = useWorkerHome();
+  // ELE-1834: Study Centre courses the firm asked this person to do.
+  const { data: myCourses = [] } = useMyCourseAssignments();
+  // ELE-2061: the firm needs this person's right-to-work details.
+  const { data: myRtw = [] } = useMyRtwStatus();
+  const rtwToSend = myRtw.filter(myRtwNeedsAction);
   // Supervisors: their own crew's timesheets, expenses and leave (ELE-1831).
   const { data: crew } = useCrewApprovals();
   const crewWaiting = crewPendingCount(crew);
@@ -224,6 +232,9 @@ export default function WorkerToolsHub() {
   const exWaiting = h?.expenses_waiting ?? { count: 0, total: 0 };
   const expiryDays = h?.next_expiry ? daysUntil(h.next_expiry.due) : null;
 
+  const openCourses = myCourses.filter((c) => c.status === 'assigned');
+  const overdueCourses = openCourses.filter((c) => c.overdue);
+
   // ── To do now: everything waiting on THIS person, each with its action ──
   const todo: TodoItem[] = [
     ...(openSafetyActions.length
@@ -238,6 +249,24 @@ export default function WorkerToolsHub() {
             urgent: overdueSafetyActions.length > 0,
             action: 'Open',
             to: `${BASE}/reports`,
+          },
+        ]
+      : []),
+    ...(rtwToSend.length
+      ? [
+          {
+            key: 'rtw',
+            kind: 'Right to work',
+            badge: 'RW',
+            title:
+              rtwToSend[0].status === 'missing'
+                ? 'Send your right-to-work details'
+                : 'Your right-to-work follow-up is due',
+            detail: `${rtwToSend[0].firm_name} needs a share code or your documents before you work`,
+            meta: rtwToSend[0].status === 'overdue' ? 'Overdue' : 'Share code or photos',
+            urgent: rtwToSend[0].status !== 'due',
+            action: 'Send',
+            to: `${BASE}/right-to-work`,
           },
         ]
       : []),
@@ -322,6 +351,30 @@ export default function WorkerToolsHub() {
             detail: 'Off-the-job training hours your apprentices logged',
             action: 'Confirm',
             to: `${BASE}/apprentice-hours`,
+          },
+        ]
+      : []),
+    ...(openCourses.length
+      ? [
+          {
+            key: 'courses',
+            kind: 'Learning',
+            badge: 'SC',
+            title:
+              openCourses.length === 1
+                ? `${openCourses[0].course_title} course from ${openCourses[0].firm_name}`
+                : `${openCourses.length} courses from your firm`,
+            detail:
+              openCourses.length === 1
+                ? 'Pass the final paper in the Study Centre and it’s marked done'
+                : openCourses.map((c) => c.course_title).join(', '),
+            meta: dueSentence((overdueCourses[0] ?? openCourses[0]).due_date),
+            urgent: overdueCourses.length > 0,
+            action: 'Open',
+            to:
+              openCourses.length === 1
+                ? `${BASE}/learning?assignment=${openCourses[0].id}`
+                : `${BASE}/learning`,
           },
         ]
       : []),
@@ -432,6 +485,7 @@ export default function WorkerToolsHub() {
       heading: 'Kit and records',
       rows: [
         { id: 'credentials', title: 'Credentials', description: 'Qualifications and ECS card.', to: `${BASE}/credentials` },
+        { id: 'learning', title: 'Courses from your firm', description: openCourses.length ? `${plural(openCourses.length, 'course')} to do` : 'Study Centre courses the office asks you to do.', to: `${BASE}/learning`, badge: openCourses.length },
         { id: 'van', title: 'My van', description: 'Daily walk-round check, and report a problem.', to: `${BASE}/van` },
         { id: 'equipment', title: 'My equipment', description: h?.kit_count ? `${plural(h.kit_count, 'tool')} signed out to you` : 'Tools signed out to you.', to: `${BASE}/equipment`, badge: h?.kit_due },
         { id: 'progress', title: 'Progress notes', description: 'Daily notes against your jobs.', to: `${BASE}/progress-notes` },
@@ -462,7 +516,13 @@ export default function WorkerToolsHub() {
         section="Worker"
         title="Worker Tools"
         backTo={backTo}
-        trailing={<PageHelpButton help={WT_HUB_HELP} compact askContext={{ page: 'worker-hub' }} />}
+        trailing={
+          <div className="flex items-center gap-1.5">
+            {/* ELE-1828: what's saved on this phone, waiting for signal */}
+            <WorkerOutboxPill />
+            <PageHelpButton help={WT_HUB_HELP} compact askContext={{ page: 'worker-hub' }} />
+          </div>
+        }
       />
 
       <HubBody>

@@ -36,7 +36,7 @@ import {
 import { WT_TIMESHEET_TASKS } from '@/components/worker-tools/help/worker-help';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { useWorkerSelfService, useMyJobs } from '@/hooks/useWorkerSelfService';
-import { useCreateTimesheet, type Timesheet } from '@/hooks/useTimesheets';
+import { type Timesheet } from '@/hooks/useTimesheets';
 import { captureClockFix, type ClockFix } from '@/hooks/useClockState';
 import {
   useMyTimeSettings,
@@ -47,6 +47,13 @@ import { rpcErrorMessage } from '@/hooks/useWorkerJobSite';
 import { useMyPayrollExports } from '@/hooks/useFirmPaySettings';
 import { formatPeriodRange } from '@/utils/payPeriods';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
+import { submitWorkerAction, OutboxRefusedError } from '@/lib/workerOutbox';
+import { OutboxWaitingList } from '@/components/worker-tools/WorkerOutbox';
+import {
+  PrestartGateNotice,
+  usePrestartOutstanding,
+} from '@/components/worker-tools/JobChecklistsPanel';
+import { queuedToast } from '@/components/worker-tools/outboxToast';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import {
   Field,
@@ -175,7 +182,6 @@ export default function TimesheetPage() {
   const { data: allJobs = [] } = useMyJobs('all');
   const { data: settings } = useMyTimeSettings();
   const defaultBreak = settings?.defaultBreakMinutes ?? 30;
-  const createTimesheet = useCreateTimesheet();
 
   useRealtimeInvalidate(
     'worker-timesheets',
@@ -290,7 +296,7 @@ export default function TimesheetPage() {
     setLocating(true);
     const fix = await captureClockFix();
     setLocating(false);
-    const ok = await clockIn(employeeId, employeeName, job.id, job.title, fix);
+    const ok = await clockIn(employeeId, employeeName, job.id, job.title, fix, { offline: true });
     if (ok) {
       if (fix.status !== 'captured') {
         toast.info('Clocked in without a location. That’s fine, the office will see “no location”.');
@@ -304,7 +310,7 @@ export default function TimesheetPage() {
     setLocating(true);
     const fix = await captureClockFix();
     setLocating(false);
-    const success = await clockOut(breakMinutes, fix);
+    const success = await clockOut(breakMinutes, fix, { offline: true });
     setIsSubmitting(false);
     if (success) backToOverview();
   };
@@ -321,20 +327,28 @@ export default function TimesheetPage() {
     if (!manualSpan || manualHours == null) return toast.error('Check the times and break');
     setIsSubmitting(true);
     try {
-      await createTimesheet.mutateAsync({
-        employee_id: employeeId,
-        job_id: jobId,
-        date: manualData.date,
-        clock_in: manualSpan.start.toISOString(),
-        clock_out: manualSpan.end.toISOString(),
-        break_minutes: manualData.breakMins,
-        total_hours: parseFloat(manualHours.toFixed(2)),
-        status: 'Pending',
-        notes: manualData.notes || null,
-        approved_by: null,
-        approved_at: null,
+      // ELE-1828: through the outbox, so a past day can be added with no signal.
+      const { result } = await submitWorkerAction({
+        kind: 'timesheet',
+        label: `Past day · ${format(manualSpan.start, 'EEE d MMM')} · ${manualHours.toFixed(1)} h`,
+        detail: jobs.find((j) => j.id === jobId)?.title ?? null,
+        jobId,
+        payload: {
+          row: {
+            employee_id: employeeId,
+            job_id: jobId,
+            date: manualData.date,
+            clock_in: manualSpan.start.toISOString(),
+            clock_out: manualSpan.end.toISOString(),
+            break_minutes: manualData.breakMins,
+            total_hours: parseFloat(manualHours.toFixed(2)),
+            status: 'Pending',
+            notes: manualData.notes || null,
+          },
+        },
       });
-      toast.success(`${manualHours.toFixed(1)} hours sent for approval`);
+      if (result === 'sent') toast.success(`${manualHours.toFixed(1)} hours sent for approval`);
+      else queuedToast(`${manualHours.toFixed(1)} hours saved`);
       setManualData({
         date: localDateKey(new Date()),
         startTime: '08:00',
@@ -343,8 +357,10 @@ export default function TimesheetPage() {
         notes: '',
       });
       backToOverview();
-    } catch {
-      toast.error('Couldn’t send that day. Try again');
+    } catch (e) {
+      toast.error(
+        e instanceof OutboxRefusedError ? e.message : 'Couldn’t send that day. Try again'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -352,6 +368,11 @@ export default function TimesheetPage() {
 
   const noJobs = !jobsLoading && jobs.length === 0;
   const jobIdForPicker = selectedJobId || (jobs.length === 1 ? jobs[0].id : '');
+  // ELE-1826: the firm's required pre-start checks for this job, worked out on
+  // the phone (cached checklist + answers waiting in the outbox), so the clock
+  // stays shut offline too. The database refuses the clock-in as well.
+  const prestartOutstanding = usePrestartOutstanding(jobIdForPicker);
+  const prestartBlocked = prestartOutstanding.length > 0;
 
   if (!employee) {
     return (
@@ -526,6 +547,9 @@ export default function TimesheetPage() {
             </button>
           </div>
 
+          {/* ELE-1828: clock times and days still on the phone */}
+          <OutboxWaitingList kinds={['clock_in', 'clock_out', 'timesheet']} />
+
           {noJobs && (
             <WorkerPanel className="px-4 py-4 sm:px-5">
               <p className="text-[14px] text-white">
@@ -688,10 +712,13 @@ export default function TimesheetPage() {
               you can still clock in. The day just shows “no location”.
             </p>
           </WorkerPanel>
+          {jobIdForPicker && (
+            <PrestartGateNotice jobId={jobIdForPicker} outstanding={prestartOutstanding} />
+          )}
           <PrimaryButton
             data-help="wt-timesheets.start"
             onClick={handleClockIn}
-            disabled={!jobIdForPicker || locating}
+            disabled={!jobIdForPicker || locating || prestartBlocked}
             fullWidth
             size="lg"
             className="h-14 rounded-2xl text-[16px]"

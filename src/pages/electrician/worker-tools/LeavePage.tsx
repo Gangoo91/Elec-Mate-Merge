@@ -42,6 +42,8 @@ import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import type { HelpBlocker } from '@/components/hub/PageHelp';
 import { WT_LEAVE_HELP } from '@/components/worker-tools/help/worker-help';
+import { MyHolidayAndSickness } from '@/components/worker-tools/leave/MyHolidayAndSickness';
+import { useMyHolidayBasis } from '@/hooks/usePayLaw';
 import { LeaveType, LeaveStatus } from '@/services/types';
 import {
   Pill,
@@ -137,6 +139,11 @@ export default function LeavePage() {
     ],
     Boolean(employeeId)
   );
+
+  // ELE-2062: irregular-hours and part-year workers build up holiday in hours,
+  // so they have no days allowance to ask the office for.
+  const { data: myBasis } = useMyHolidayBasis(employeeId);
+  const holidayInHours = !!myBasis && myBasis.basis !== 'fixed';
 
   const [view, setView] = useState<LeaveView>('list');
   const [selectedType, setSelectedType] = useState<LeaveType | null>(null);
@@ -392,7 +399,7 @@ export default function LeavePage() {
   // ── Header action: a single primary "Request Leave" on the list view ──
   // Live "Before you start" for the help (ELE-1980).
   const helpBlockers: HelpBlocker[] =
-    leaveAllowance && !leaveAllowance.isSet
+    leaveAllowance && !leaveAllowance.isSet && !holidayInHours
       ? [{ text: 'The office hasn’t set your holiday allowance yet, so there’s no balance. You can still request leave.' }]
       : [];
 
@@ -445,7 +452,7 @@ export default function LeavePage() {
         { label: 'Waiting', value: leaveAllowance.pendingDays, tone: 'amber' },
       ]}
     />
-  ) : leaveAllowance ? (
+  ) : leaveAllowance && !holidayInHours ? (
     <section className="-mx-4 sm:mx-0 border-y sm:border border-white/[0.07] sm:rounded-2xl bg-[hsl(0_0%_13%)] px-4 py-5 sm:p-7">
       <Eyebrow>Holiday · {year}</Eyebrow>
       <h2 className="mt-3 text-[22px] sm:text-3xl font-semibold text-white leading-tight">
@@ -463,6 +470,21 @@ export default function LeavePage() {
       )}
     </section>
   ) : null;
+
+  // ELE-2062: hours built up (irregular hours / part-year) and fit notes.
+  const holidayExtras = (
+    <MyHolidayAndSickness
+      employeeId={employeeId}
+      firmId={(employee as { employer_id?: string | null } | null | undefined)?.employer_id ?? null}
+      leaveRequests={leaveRequests.map((r) => ({
+        id: r.id,
+        type: r.type,
+        startDate: r.startDate,
+        endDate: r.endDate,
+        status: r.status,
+      }))}
+    />
+  );
 
   // ── History (filters + request list) ─────────────────────────
   const historyContent = isLoadingLeave ? (
@@ -801,7 +823,9 @@ export default function LeavePage() {
             <>
               <Dot tone="blue" />
               <span className="text-[13px] text-white">
-                No allowance set yet. Ask the office how many days you have.
+                {holidayInHours
+                  ? 'Your holiday is counted in hours. The office takes it off what you have built up.'
+                  : 'No allowance set yet. Ask the office how many days you have.'}
               </span>
             </>
           )}
@@ -871,6 +895,7 @@ export default function LeavePage() {
           className="space-y-6"
         >
           {heroContent}
+          {holidayExtras}
           {historyContent}
         </motion.div>
       )}
@@ -919,6 +944,7 @@ export default function LeavePage() {
     >
       {/* Full-width allowance hero */}
       <div className="hidden lg:block">{heroContent}</div>
+      <div className="hidden lg:block">{holidayExtras}</div>
 
       {/* Desktop: request flow (left) + history (right) */}
       <div className="hidden lg:block">

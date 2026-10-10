@@ -273,6 +273,22 @@ const handler = async (req: Request): Promise<Response> => {
       })
       .catch((e) => console.error('Acceptance confirmation email failed:', e));
 
+    // ELE-2065 §3A #6 — an Employer Hub firm with online booking books the
+    // visit on the quote page itself (crew diary, onto the quote's job).
+    let bookingUrl: string | null = depositRequired
+      ? null
+      : `${APP_URL}/book/${quote.user_id}?quote=${quote.id}`;
+    if (bookingUrl && quote.public_token) {
+      try {
+        const { data: mode } = await supabase.rpc('get_quote_booking', { p_token: quote.public_token });
+        if ((mode as { mode?: string } | null)?.mode === 'firm') {
+          bookingUrl = `${APP_URL}/quote/${encodeURIComponent(quote.public_token)}`;
+        }
+      } catch (e) {
+        console.error('Quote booking mode lookup failed (keeping /book):', e);
+      }
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -285,7 +301,7 @@ const handler = async (req: Request): Promise<Response> => {
         // share one availability source. Pre-fill comes from
         // get_public_quote_for_booking RPC; the booking links back to
         // the quote via the quote_id query string.
-        bookingUrl: depositRequired ? null : `${APP_URL}/book/${quote.user_id}?quote=${quote.id}`,
+        bookingUrl,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

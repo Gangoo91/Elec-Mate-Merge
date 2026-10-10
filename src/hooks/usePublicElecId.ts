@@ -323,7 +323,7 @@ async function fetchProfileById(
   let userProfile: { full_name: string | null; avatar_url: string | null } | null = null;
   if (profile.employee?.user_id) {
     const { data: profileData } = await supabase
-      .from('profiles')
+      .from('public_profiles')
       .select('full_name, avatar_url')
       .eq('id', profile.employee.user_id)
       .maybeSingle();

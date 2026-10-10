@@ -183,7 +183,7 @@ const handler = async (req: Request): Promise<Response> => {
       [
         {
           role: 'system',
-          content: `You are an expert UK electrician with deep knowledge of BS 7671:2018+A2:2022 (18th Edition Wiring Regulations).
+          content: `You are an expert UK electrician with deep knowledge of BS 7671:2018+A4:2026 (18th Edition Wiring Regulations, the current amendment).
 You classify electrical work site photos and detect safety issues.
 
 Guidelines:

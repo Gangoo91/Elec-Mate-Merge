@@ -14,6 +14,9 @@ import { useLocalStorageMigration } from '@/hooks/useLocalStorageMigration';
 // Lazy load with retry for chunk failures
 const StudyCentreIndex = lazyWithRetry(() => import('@/pages/study-centre/StudyCentreIndex'));
 const LeaderboardPage = lazyWithRetry(() => import('@/pages/study-centre/LeaderboardPage'));
+const LeaderboardEveryonePage = lazyWithRetry(
+  () => import('@/pages/study-centre/LeaderboardEveryonePage')
+);
 const BrowseCoursesPage = lazyWithRetry(() => import('@/pages/study-centre/BrowseCoursesPage'));
 const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVideos'));
 const OnJobFlashcards = lazyWithRetry(() => import('@/pages/apprentice/OnJobFlashcards'));
@@ -22,8 +25,11 @@ const MockExamsPage = lazyWithRetry(() => import('@/pages/study-centre/MockExams
 // ELE-1815 — mock exam history, one attempt reviewed, and revising wrong answers.
 const MockHistoryPage = lazyWithRetry(() => import('@/pages/study-centre/MockHistoryPage'));
 const MockAttemptPage = lazyWithRetry(() => import('@/pages/study-centre/MockAttemptPage'));
+const MyCoursePage = lazyWithRetry(() => import('@/pages/study-centre/MyCoursePage'));
 const MockRevisePage = lazyWithRetry(() => import('@/pages/study-centre/MockRevisePage'));
 const MockTargetedPage = lazyWithRetry(() => import('@/pages/study-centre/MockTargetedPage'));
+// ELE-1904 — "Practise" on a criterion: a short paper on the section that teaches it.
+const PractiseSectionPage = lazyWithRetry(() => import('@/pages/study-centre/PractiseSectionPage'));
 const OSGTableLookupMockExam = lazyWithRetry(
   () => import('@/pages/study-centre/OSGTableLookupMockExam')
 );
@@ -367,14 +373,17 @@ export default function StudyCentreRoutes() {
       <Routes>
         <Route index element={<StudyCentreIndex />} />
         <Route path="leaderboard" element={<LeaderboardPage />} />
+        <Route path="leaderboard/all" element={<LeaderboardEveryonePage />} />
         <Route path="browse" element={<BrowseCoursesPage />} />
         {/* Every in-app paper in one index. Dashboard has linked here since
             before the page existed — that link used to render blank. */}
         <Route path="mock-exams" element={<MockExamsPage />} />
         <Route path="mock-exams/history" element={<MockHistoryPage />} />
         <Route path="mock-exams/history/:attemptId" element={<MockAttemptPage />} />
+        <Route path="my-course" element={<MyCoursePage />} />
         <Route path="mock-exams/revise" element={<MockRevisePage />} />
         <Route path="mock-exams/targeted" element={<MockTargetedPage />} />
+        <Route path="practise" element={<PractiseSectionPage />} />
         {/* ELE-1761 — the On-Site Guide table-lookup paper stands alone; it
             closes no course, so it lives under the index rather than a module. */}
         <Route path="mock-exams/osg-table-lookup" element={<OSGTableLookupMockExam />} />

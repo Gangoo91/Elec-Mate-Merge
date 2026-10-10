@@ -1,6 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  applySafetyScope,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 export type RAMSStatus = 'draft' | 'submitted' | 'approved' | 'rejected';
 
@@ -36,55 +42,73 @@ export interface RAMSDocument {
   ppe_details?: Record<string, unknown>[];
   /** Link to employer_jobs — powers the per-job safety pack. */
   employer_job_id?: string | null;
+  /** The firm the RAMS belongs to (set by the database, never trusted from here). */
+  employer_id?: string | null;
+  /** The firm's countersignature (safety_countersign only). */
+  firm_countersigned_by?: string | null;
+  firm_countersigned_name?: string | null;
+  firm_countersigned_at?: string | null;
 }
 
 export type CreateRAMSDocumentInput = Omit<
   RAMSDocument,
-  'id' | 'user_id' | 'created_at' | 'updated_at' | 'version'
+  | 'id'
+  | 'user_id'
+  | 'created_at'
+  | 'updated_at'
+  | 'version'
+  | 'employer_id'
+  | 'firm_countersigned_by'
+  | 'firm_countersigned_name'
+  | 'firm_countersigned_at'
 >;
 export type UpdateRAMSDocumentInput = Partial<CreateRAMSDocumentInput>;
 
-// Fetch all RAMS documents for the current user
+// Fetch all RAMS documents for the current user — or, inside the Employer
+// Hub's firm scope, the firm's (employer_id).
 export function useRAMSDocuments() {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['ramsDocuments'],
+    queryKey: ['ramsDocuments', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<RAMSDocument[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('rams_documents')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('updated_at', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('rams_documents').select('*'),
+        scope,
+        user.id
+      ).order('updated_at', { ascending: false });
 
       if (error) throw error;
-      return data as RAMSDocument[];
+      return data as unknown as RAMSDocument[];
     },
   });
 }
 
 // Fetch RAMS documents by status
 export function useRAMSDocumentsByStatus(status: RAMSStatus) {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['ramsDocuments', 'status', status],
+    queryKey: ['ramsDocuments', 'status', status, ...safetyScopeKey(scope)],
     queryFn: async (): Promise<RAMSDocument[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('rams_documents')
-        .select('*')
-        .eq('user_id', user.id)
+      const { data, error } = await applySafetyScope(
+        supabase.from('rams_documents').select('*'),
+        scope,
+        user.id
+      )
         .eq('status', status)
         .order('updated_at', { ascending: false });
 
       if (error) throw error;
-      return data as RAMSDocument[];
+      return data as unknown as RAMSDocument[];
     },
   });
 }
@@ -103,7 +127,7 @@ export function useRAMSDocument(id: string | undefined) {
         .single();
 
       if (error) throw error;
-      return data as RAMSDocument;
+      return data as unknown as RAMSDocument;
     },
     enabled: !!id,
   });
@@ -111,18 +135,20 @@ export function useRAMSDocument(id: string | undefined) {
 
 // Get RAMS document statistics
 export function useRAMSDocumentStats() {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['ramsDocuments', 'stats'],
+    queryKey: ['ramsDocuments', 'stats', ...safetyScopeKey(scope)],
     queryFn: async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('rams_documents')
-        .select('id, status, created_at')
-        .eq('user_id', user.id);
+      const { data, error } = await applySafetyScope(
+        supabase.from('rams_documents').select('id, status, created_at'),
+        scope,
+        user.id
+      );
 
       if (error) throw error;
 
@@ -148,6 +174,7 @@ export function useRAMSDocumentStats() {
 export function useCreateRAMSDocument() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (input: CreateRAMSDocumentInput): Promise<RAMSDocument> => {
@@ -159,12 +186,13 @@ export function useCreateRAMSDocument() {
       const { data, error } = await supabase
         .from('rams_documents')
         // employer_job_id is live in the DB but not yet in the generated types
-        .insert({ ...input, user_id: user.id, version: 1 } as never)
+        // Firm scope stamps employer_id; the trigger checks it either way.
+        .insert(stampSafetyInsert({ ...input, user_id: user.id, version: 1 }, scope) as never)
         .select()
         .single();
 
       if (error) throw error;
-      return data as RAMSDocument;
+      return data as unknown as RAMSDocument;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ramsDocuments'] });
@@ -202,7 +230,7 @@ export function useUpdateRAMSDocument() {
         .single();
 
       if (error) throw error;
-      return data as RAMSDocument;
+      return data as unknown as RAMSDocument;
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['ramsDocuments'] });
@@ -244,7 +272,7 @@ export function useAutosaveRAMSDocument() {
         .single();
 
       if (error) throw error;
-      return data as RAMSDocument;
+      return data as unknown as RAMSDocument;
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['ramsDocuments'] });
@@ -277,7 +305,7 @@ export function useUpdateRAMSStatus() {
         .single();
 
       if (error) throw error;
-      return data as RAMSDocument;
+      return data as unknown as RAMSDocument;
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['ramsDocuments'] });
@@ -326,7 +354,7 @@ export function useCreateRAMSVersion() {
         .single();
 
       if (error) throw error;
-      return data as RAMSDocument;
+      return data as unknown as RAMSDocument;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ramsDocuments'] });

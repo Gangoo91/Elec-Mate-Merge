@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Labour rates in Cumbria are typically £35–55/hr for standard domestic and commercial work — lower than major cities. Nuclear and specialist industrial rates are significantly higher, commonly £60–90+/hr.',
   "Barrow-in-Furness has a distinct industrial character centred on BAE Systems's submarine facility. Carlisle is the county's commercial hub and has strong cross-border trade links with Dumfries and south-west Scotland.",
   'Coastal industrial towns including Workington and Whitehaven have chemical, manufacturing, and offshore-adjacent electrical work, including compliance with the Electricity at Work Regulations 1989 in industrial settings.',
-  'BS 7671:2018+A4:2026 introduced two significant new domestic requirements: regulation 411.3.4 now mandates 30 mA RCD additional protection on AC lighting circuits in domestic premises; and regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents.',
+  'Two BS 7671 domestic requirements that are often mistaken for A4:2026 changes: regulation 411.3.4 has mandated 30 mA RCD additional protection on AC lighting circuits in domestic premises since 2018; and regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits, and has required them in HMOs and similar premises since A2:2022.',
 ];
 
 const faqs = [
@@ -284,7 +284,7 @@ const sections = [
                 replacements, new circuits, and other notifiable work must be notified to the local
                 authority or self-certified through a competent person scheme (NICEIC, NAPIT, or
                 similar). RCD protection under regulation 411.3.3 is required for socket-outlets
-                rated ≤ 32 A; A4:2026 adds regulation 411.3.4 requiring 30 mA RCD protection on
+                rated ≤ 32 A; regulation 411.3.4 (since 2018) requires 30 mA RCD protection on
                 domestic lighting circuits.
               </span>
             </li>
@@ -311,12 +311,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>A4:2026 domestic additions</strong> — the 2026 amendment introduced two
-                requirements directly relevant to Cumbrian domestic work. Regulation 411.3.4 now
-                requires 30 mA RCD additional protection on all AC final circuits supplying
+                <strong>Domestic requirements</strong> — two requirements of the current edition are
+                directly relevant to Cumbrian domestic work, and neither is new in A4:2026.
+                Regulation 411.3.4 (since 2018) requires 30 mA RCD additional protection on all AC final circuits supplying
                 luminaires in domestic premises. Regulation 421.1.7 recommends arc fault detection
-                devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents.
-                Both apply to new domestic installations and consumer unit replacements.
+                devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents,
+                and has required them in HMOs and similar premises since A2:2022. Both apply to new domestic installations and consumer unit replacements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -618,7 +618,7 @@ export default function ElectricianCumbriaPage() {
       title="Cumbria Electricians 2026: Carlisle & Sellafield"
       description="Cumbria electricians covering Carlisle, Barrow + Sellafield. BS 7671:2018+A4:2026 EICRs, EV chargers, nuclear-site experience. Electricity North West area."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cumbria"

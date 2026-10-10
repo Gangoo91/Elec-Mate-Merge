@@ -135,16 +135,14 @@ const ResilienceTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Resilience assessment
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Resilience assessment</span>
 
         {!showResults ? (
           <div className="space-y-5">
             <div className="space-y-2">
               <div className="flex items-baseline justify-between">
-                <span className="text-[12px] text-white font-mono">
+                <span className="text-[12px] text-white">
                   {currentQuestion + 1}/{resilienceQuestions.length}
                 </span>
               </div>
@@ -176,7 +174,7 @@ const ResilienceTab = () => {
         ) : (
           <div className="space-y-5">
             <div className="text-center space-y-3 py-2">
-              <div className="text-[40px] font-mono text-white leading-none">
+              <div className="text-[40px] text-white leading-none">
                 {Math.round(resilienceScore)}%
               </div>
               <div className="text-[14px] text-white">
@@ -197,10 +195,8 @@ const ResilienceTab = () => {
         )}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Building resilience
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Building resilience</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {resilienceStrategies.map((strategy, index) => (
             <div
@@ -213,7 +209,7 @@ const ResilienceTab = () => {
                 {strategy.techniques.map((technique, techIndex) => (
                   <li
                     key={techIndex}
-                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <span>{technique}</span>
@@ -225,8 +221,8 @@ const ResilienceTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+      <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-elec-yellow">
           Turn reflection into evidence
         </span>
         <p className="text-[14px] text-white leading-relaxed">

@@ -1,4 +1,4 @@
-import { PANEL_INSET } from '@/components/ui/panel-recipe';
+import { LEARN_INSET } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 import { RingFinalDiagram } from '../../diagrams/TestDiagrams';
 
@@ -50,7 +50,7 @@ const R1R2Step4 = () => {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[13px] font-semibold text-white">
           Step 4
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
@@ -69,8 +69,8 @@ const R1R2Step4 = () => {
 
       <RingFinalDiagram />
 
-      <div className={cn(PANEL_INSET, "space-y-2")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className={cn(LEARN_INSET, "space-y-2")}>
+        <span className="text-[13px] font-semibold text-white">
           Reading the results
         </span>
         <p className="text-[14px] text-white leading-relaxed">

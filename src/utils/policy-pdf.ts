@@ -1,13 +1,22 @@
- 
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
-import type { PolicyTemplate, UserPolicy } from '@/hooks/usePolicies';
+import type { PolicyAcknowledgement, PolicyTemplate, UserPolicy } from '@/hooks/usePolicies';
+import { describeLocation } from '@/lib/signingLocation';
 
 interface PolicyPdfOptions {
   template?: PolicyTemplate | null;
   userPolicy?: UserPolicy | null;
   companyName?: string;
+  /**
+   * ELE-1946: who has read and signed it, printed as an acknowledgement record
+   * after the policy. The SSIP / PQQ evidence that staff have read it.
+   */
+  acknowledgements?: PolicyAcknowledgement[];
+  /** People on the team who have not signed the current version. */
+  outstanding?: string[];
+  /** The version the team was asked to sign. */
+  publishedVersion?: number | null;
 }
 
 // Professional colour palette - refined
@@ -132,13 +141,19 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
 
   // Get category and metadata
   const category =
-    'category' in policy ? policy.category : userPolicy?.template?.category || 'Policy';
+    // A firm policy carries its own (nullable) category since ELE-1946; fall back to its template's.
+    template?.category || userPolicy?.category || userPolicy?.template?.category || 'Policy';
 
   const categoryColor = CATEGORY_COLORS[category] || COLORS.PRIMARY;
   const coverBadge = COVER_BADGES[category] || 'COMPANY POLICY';
   // Blank rather than a literal "[Company Name]" placeholder on the export.
   const displayCompany = userPolicy?.company_name || companyName || '';
-  const version = 'version' in policy ? policy.version : '1.0';
+  // A firm policy's version is the one sent to the team (ELE-1946); a template's is its own.
+  const version: string = userPolicy
+    ? userPolicy.published_version
+      ? `${userPolicy.published_version}.0`
+      : (userPolicy.template?.version ?? '1.0')
+    : (template?.version ?? '1.0');
   const dateStr = userPolicy?.adopted_at
     ? format(new Date(userPolicy.adopted_at), 'dd MMMM yyyy')
     : format(new Date(), 'dd MMMM yyyy');
@@ -634,6 +649,100 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
   doc.setLineWidth(0.3);
   doc.text('Date:', rightColX + 4, empY + 28);
   doc.line(rightColX + 14, empY + 28, rightColX + 45, empY + 28);
+
+  // ============================================
+  // ACKNOWLEDGEMENT RECORD (ELE-1946)
+  // ============================================
+  if (options.acknowledgements) {
+    doc.addPage();
+    currentPage++;
+    addContinuationHeader();
+    yPos = 24;
+    doc.setTextColor(...COLORS.TEXT_DARK);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.text('Acknowledgement record', margin, yPos);
+    yPos += 7;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...COLORS.TEXT_BODY);
+    const intro = doc.splitTextToSize(
+      `Each person below read this policy in the Elec-Mate app and signed to confirm they have read and understood it. ${
+        options.publishedVersion ? `The current version is ${options.publishedVersion}. ` : ''
+      }Printed ${format(new Date(), 'dd MMMM yyyy')}.`,
+      contentWidth
+    ) as string[];
+    doc.text(intro, margin, yPos);
+    yPos += intro.length * 4 + 4;
+
+    const cols = [
+      { label: 'Name', x: margin, w: 52 },
+      { label: 'Version', x: margin + 54, w: 16 },
+      { label: 'Signed', x: margin + 72, w: 38 },
+      { label: 'Where', x: margin + 112, w: contentWidth - 112 },
+    ];
+    const header = () => {
+      doc.setFillColor(...COLORS.LIGHT_BG);
+      doc.rect(margin, yPos - 4, contentWidth, 7, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.setTextColor(...COLORS.TEXT_DARK);
+      cols.forEach((c) => doc.text(c.label, c.x + 1, yPos));
+      yPos += 6;
+    };
+    header();
+    doc.setFont('helvetica', 'normal');
+    const acks = options.acknowledgements;
+    if (acks.length === 0) {
+      doc.setFontSize(9);
+      doc.setTextColor(...COLORS.TEXT_BODY);
+      doc.text('Nobody has signed this policy yet.', margin + 1, yPos);
+      yPos += 6;
+    }
+    for (const a of acks) {
+      let when = a.signed_at;
+      try {
+        when = format(new Date(a.signed_at), 'dd MMM yyyy HH:mm');
+      } catch {
+        /* raw */
+      }
+      const where = describeLocation(a.location) ?? 'Not recorded';
+      const cells = [
+        doc.splitTextToSize(a.signer_name || 'Team member', cols[0].w - 2) as string[],
+        [String(a.policy_version)],
+        [when],
+        doc.splitTextToSize(where, cols[3].w - 2) as string[],
+      ];
+      const h = Math.max(...cells.map((c) => c.length)) * 4 + 2;
+      if (checkPageBreak(h + 2)) header();
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...COLORS.TEXT_BODY);
+      cells.forEach((c, i) => doc.text(c, cols[i].x + 1, yPos));
+      yPos += h;
+      doc.setDrawColor(...COLORS.BORDER_LIGHT);
+      doc.setLineWidth(0.2);
+      doc.line(margin, yPos - 3, margin + contentWidth, yPos - 3);
+    }
+
+    const outstanding = options.outstanding ?? [];
+    if (outstanding.length) {
+      checkPageBreak(14);
+      yPos += 4;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.setTextColor(...COLORS.TEXT_DARK);
+      doc.text('Not signed the current version yet', margin, yPos);
+      yPos += 5;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(...COLORS.TEXT_BODY);
+      const list = doc.splitTextToSize(outstanding.join(', '), contentWidth) as string[];
+      checkPageBreak(list.length * 4);
+      doc.text(list, margin, yPos);
+      yPos += list.length * 4;
+    }
+  }
 
   // ============================================
   // ADD FOOTERS TO ALL PAGES

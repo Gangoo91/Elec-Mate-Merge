@@ -312,8 +312,8 @@ const TimeMaterialsCalculator = () => {
                 <div
                   className="rounded-xl p-5 text-center"
                   style={{
-                    background: `linear-gradient(135deg, ${config.gradientFrom}15, ${config.gradientTo}08)`,
-                    border: `1px solid ${config.gradientFrom}25`,
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
                   }}
                 >
                   <ResultHeadline label="Grand total (inc. VAT)" value={fmt(result.grandTotal)} />
@@ -370,7 +370,7 @@ const TimeMaterialsCalculator = () => {
                   {/* Subtotal */}
                   <div
                     className="px-4 py-3 flex justify-between border-b"
-                    style={{ borderColor: `${config.gradientFrom}20` }}
+                    style={{ borderColor: 'rgba(255, 255, 255, 0.12)' }}
                   >
                     <p className="text-sm text-white font-semibold">Subtotal</p>
                     <p className="text-sm text-white font-semibold">{fmt(result.subtotal)}</p>
@@ -385,7 +385,7 @@ const TimeMaterialsCalculator = () => {
                   {/* Total */}
                   <div
                     className="px-4 py-3.5 flex justify-between"
-                    style={{ background: `${config.gradientFrom}10` }}
+                    style={{ background: 'rgba(255, 255, 255, 0.04)' }}
                   >
                     <p className="text-base text-white font-bold">Total</p>
                     <p className="text-base font-bold tabular-nums text-elec-yellow">
@@ -467,8 +467,8 @@ const TimeMaterialsCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <p className="text-sm text-white">
@@ -496,8 +496,8 @@ const TimeMaterialsCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="grid grid-cols-2 gap-2 text-sm">

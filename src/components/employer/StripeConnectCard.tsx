@@ -17,16 +17,14 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 import {
-  ListCard,
-  ListCardHeader,
   ListBody,
   ListRow,
-  Pill,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
   SheetShell,
 } from './editorial';
+import { PanelHead, StatusPill, panelShellClass } from '@/components/employer/pageParts/PageParts';
 import {
   getStripeConnectStatus,
   createStripeConnectAccount,
@@ -179,22 +177,18 @@ export function StripeConnectCard() {
   const isConnected = !!(status?.connected && status?.account?.chargesEnabled);
   const isPending = !!(status?.connected && !status?.account?.chargesEnabled);
 
-  const statusPill = isCoAdmin
-    ? null
-    : loading
-      ? null
-      : isConnected
-        ? <Pill tone="emerald">Connected</Pill>
-        : isPending
-          ? <Pill tone="orange">Setup not finished</Pill>
-          : status?.stripeConfigured
-            ? <Pill tone="purple">Not connected</Pill>
-            : null;
+  const statusPill = isCoAdmin ? null : loading ? null : isConnected ? (
+    <StatusPill tone="green">Connected</StatusPill>
+  ) : isPending ? (
+    <StatusPill tone="neutral">Setup not finished</StatusPill>
+  ) : status?.stripeConfigured ? (
+    <StatusPill tone="neutral">Not connected</StatusPill>
+  ) : null;
 
   return (
     <>
-      <ListCard>
-        <ListCardHeader tone="purple" title="Card payments" meta={statusPill} />
+      <div className={panelShellClass}>
+        <PanelHead title="Card payments" meta={statusPill} />
 
         {isCoAdmin ? (
           <div className="px-5 sm:px-6 py-4">
@@ -265,17 +259,17 @@ export function StripeConnectCard() {
               <ListRow
                 title="Card payments"
                 trailing={
-                  <Pill tone={status.account?.chargesEnabled ? 'emerald' : 'orange'}>
+                  <StatusPill tone={status.account?.chargesEnabled ? 'green' : 'neutral'}>
                     {status.account?.chargesEnabled ? 'On' : 'Off'}
-                  </Pill>
+                  </StatusPill>
                 }
               />
               <ListRow
                 title="Payouts to your bank"
                 trailing={
-                  <Pill tone={status.account?.payoutsEnabled ? 'emerald' : 'orange'}>
+                  <StatusPill tone={status.account?.payoutsEnabled ? 'green' : 'neutral'}>
                     {status.account?.payoutsEnabled ? 'On' : 'Pending'}
-                  </Pill>
+                  </StatusPill>
                 }
               />
             </ListBody>
@@ -314,7 +308,7 @@ export function StripeConnectCard() {
             </div>
           </>
         )}
-      </ListCard>
+      </div>
 
       <Sheet open={showDisconnect} onOpenChange={setShowDisconnect}>
         <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">

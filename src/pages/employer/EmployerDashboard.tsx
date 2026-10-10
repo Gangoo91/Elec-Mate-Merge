@@ -5,17 +5,20 @@ import {
   CommandTrigger,
   type CommandSection,
 } from '@/components/employer/EmployerCommandPalette';
-import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import useSEO from '@/hooks/useSEO';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
 import { IconButton, LoadingBlocks, Eyebrow } from '@/components/employer/editorial';
+import { AreaNav } from '@/components/employer/overview/AreaNav';
 import { InDevelopmentBanner } from '@/components/employer/InDevelopmentBanner';
 import { EmployerSearchSheet } from '@/components/employer/EmployerSearchSheet';
 import { PageHelpAskProvider, type PageAskHandler } from '@/components/hub/PageHelp';
 import { openEmployerMate } from '@/components/employer/employerMateBus';
+import { RtwGuardHost } from '@/components/employer/people/RtwGuard';
+import { SafetyScopeProvider } from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 const OverviewSection = lazy(() =>
   import('@/components/employer/sections/OverviewSection').then((m) => ({
@@ -58,11 +61,6 @@ const TrainingRecordsSection = lazy(() =>
     default: m.TrainingRecordsSection,
   }))
 );
-const BriefingsSection = lazy(() =>
-  import('@/components/employer/sections/BriefingsSection').then((m) => ({
-    default: m.BriefingsSection,
-  }))
-);
 const ComplianceSection = lazy(() =>
   import('@/components/employer/sections/ComplianceSection').then((m) => ({
     default: m.ComplianceSection,
@@ -83,9 +81,16 @@ const ClientsSection = lazy(() =>
     default: m.ClientsSection,
   }))
 );
-const LeadsSection = lazy(() =>
-  import('@/components/employer/sections/LeadsSection').then((m) => ({
-    default: m.LeadsSection,
+const CustomerInboxSection = lazy(() =>
+  import('@/components/employer/sections/CustomerInboxSection').then((m) => ({
+    default: m.CustomerInboxSection,
+  }))
+);
+// ELE-2094: Leads IS Enquiries now (the shared `enquiries` table and AI
+// reader). The section key stays 'leads' so every link and bell still opens it.
+const EnquiriesSection = lazy(() =>
+  import('@/components/employer/sections/EnquiriesSection').then((m) => ({
+    default: m.EnquiriesSection,
   }))
 );
 const QuotePageSection = lazy(() =>
@@ -169,6 +174,11 @@ const JobIssuesSection = lazy(() =>
     default: m.JobIssuesSection,
   }))
 );
+const CashForecastSection = lazy(() =>
+  import('@/components/employer/sections/CashForecastSection').then((m) => ({
+    default: m.CashForecastSection,
+  }))
+);
 const JobFinancialsSection = lazy(() =>
   import('@/components/employer/sections/JobFinancialsSection').then((m) => ({
     default: m.JobFinancialsSection,
@@ -187,6 +197,12 @@ const ClientPortalSection = lazy(() =>
 const SubcontractorsSection = lazy(() =>
   import('@/components/employer/sections/SubcontractorsSection').then((m) => ({
     default: m.SubcontractorsSection,
+  }))
+);
+// ELE-2061 / ELE-2075: right to work, probation and retention.
+const HrRecordsSection = lazy(() =>
+  import('@/components/employer/sections/HrRecordsSection').then((m) => ({
+    default: m.HrRecordsSection,
   }))
 );
 const ApprenticeProgressSection = lazy(() =>
@@ -247,6 +263,12 @@ const RecurringSection = lazy(() =>
     default: m.RecurringSection,
   }))
 );
+// ELE-1987
+const AutomationsSection = lazy(() =>
+  import('@/components/employer/sections/AutomationsSection').then((m) => ({
+    default: m.AutomationsSection,
+  }))
+);
 const AIDesignSpecSection = lazy(() =>
   import('@/components/employer/sections/AIDesignSpecSection').then((m) => ({
     default: m.AIDesignSpecSection,
@@ -254,16 +276,6 @@ const AIDesignSpecSection = lazy(() =>
 );
 const AIRAMSSection = lazy(() =>
   import('@/components/employer/sections/AIRAMSSection').then((m) => ({ default: m.AIRAMSSection }))
-);
-const AIMethodStatementSection = lazy(() =>
-  import('@/components/employer/sections/AIMethodStatementSection').then((m) => ({
-    default: m.AIMethodStatementSection,
-  }))
-);
-const AIBriefingPackSection = lazy(() =>
-  import('@/components/employer/sections/AIBriefingPackSection').then((m) => ({
-    default: m.AIBriefingPackSection,
-  }))
 );
 const AIQuoteSection = lazy(() =>
   import('@/components/employer/sections/AIQuoteSection').then((m) => ({
@@ -279,6 +291,17 @@ const FinanceHub = lazy(() =>
 );
 const JobsHub = lazy(() =>
   import('@/components/employer/hubs/JobsHub').then((m) => ({ default: m.JobsHub }))
+);
+// Site Safety in both hubs: the Electrical Hub's tools, in the firm's scope.
+const SiteSafetySection = lazy(() =>
+  import('@/components/employer/sections/SiteSafetySection').then((m) => ({
+    default: m.SiteSafetySection,
+  }))
+);
+const ChecklistsSection = lazy(() =>
+  import('@/components/employer/sections/ChecklistsSection').then((m) => ({
+    default: m.ChecklistsSection,
+  }))
 );
 const SafetyHub = lazy(() =>
   import('@/components/employer/hubs/SafetyHub').then((m) => ({ default: m.SafetyHub }))
@@ -313,6 +336,7 @@ export type Section =
   | 'progresslogs'
   | 'issues'
   | 'financials'
+  | 'cashforecast'
   | 'testing'
   | 'clientportal'
   | 'talentpool'
@@ -328,6 +352,7 @@ export type Section =
   | 'kit'
   | 'photogallery'
   | 'recurring'
+  | 'automations'
   | 'peoplehub'
   | 'financehub'
   | 'jobshub'
@@ -340,6 +365,8 @@ export type Section =
   | 'training'
   | 'briefings'
   | 'compliance'
+  | 'checklists'
+  | 'sitesafety'
   | 'smartdocs'
   | 'aidesignspec'
   | 'airams'
@@ -347,9 +374,11 @@ export type Section =
   | 'aibriefingpack'
   | 'aiquote'
   | 'clients'
+  | 'inbox'
   | 'leads'
   | 'quotepage'
-  | 'qsreviews';
+  | 'qsreviews'
+  | 'hrrecords';
 
 const getParentSection = (section: Section): Section => {
   const hierarchy: Record<Section, Section> = {
@@ -362,12 +391,14 @@ const getParentSection = (section: Section): Section => {
     apprentices: 'peoplehub',
     subcontractors: 'peoplehub',
     vacancies: 'peoplehub',
+    hrrecords: 'peoplehub',
     quotes: 'financehub',
     accounts: 'financehub',
     tenders: 'financehub',
     expenses: 'financehub',
     procurement: 'financehub',
     financials: 'financehub',
+    cashforecast: 'financehub',
     reports: 'financehub',
     signatures: 'financehub',
     pricebook: 'financehub',
@@ -385,20 +416,24 @@ const getParentSection = (section: Section): Section => {
     qsreviews: 'jobshub',
     clientportal: 'clientshub',
     clients: 'clientshub',
+    inbox: 'clientshub',
     leads: 'clientshub',
     quotepage: 'clientshub',
     fleet: 'jobshub',
     kit: 'jobshub',
     photogallery: 'jobshub',
     recurring: 'jobshub',
+    automations: 'jobshub',
     safety: 'safetyhub',
     rams: 'safetyhub',
     incidents: 'safetyhub',
     policies: 'safetyhub',
-    contracts: 'safetyhub',
+    contracts: 'peoplehub', // ELE-1982: an HR record, not a safety one
     training: 'safetyhub',
     briefings: 'safetyhub',
     compliance: 'safetyhub',
+    checklists: 'safetyhub',
+    sitesafety: 'safetyhub',
     aidesignspec: 'smartdocs',
     airams: 'smartdocs',
     aimethodstatement: 'smartdocs',
@@ -416,9 +451,13 @@ const getParentSection = (section: Section): Section => {
   return hierarchy[section] || 'overview';
 };
 
+const HUB_AREAS: Section[] = ['peoplehub', 'jobshub', 'financehub', 'safetyhub', 'clientshub', 'smartdocs'];
+
 const getSectionDepth = (section: Section): number => {
   if (section === 'overview') return 0;
-  if (['peoplehub', 'financehub', 'jobshub', 'safetyhub', 'smartdocs', 'clientshub'].includes(section))
+  if (
+    ['peoplehub', 'financehub', 'jobshub', 'safetyhub', 'smartdocs', 'clientshub'].includes(section)
+  )
     return 1;
   return 2;
 };
@@ -481,8 +520,11 @@ const URL_SECTION_ALIASES: Record<string, string> = {
   maintenance: 'recurring',
   'recurring-work': 'recurring',
   repeat: 'recurring',
+  automation: 'automations',
+  workflows: 'automations',
   customers: 'clients',
   client: 'clients',
+  'customer-inbox': 'inbox',
   enquiries: 'leads',
   lead: 'leads',
   expense: 'expenses',
@@ -497,12 +539,19 @@ const URL_SECTION_ALIASES: Record<string, string> = {
   qs: 'qsreviews',
   'job-packs': 'jobpacks',
   packs: 'jobpacks',
+  'pre-start': 'checklists',
+  prestart: 'checklists',
+  checklist: 'checklists',
+  'site-safety': 'sitesafety',
+  'safety-tools': 'sitesafety',
   job: 'jobs',
   briefing: 'briefings',
   apprentice: 'apprentices',
   subcontractor: 'subcontractors',
   subbies: 'subcontractors',
   subbie: 'subcontractors',
+  'right-to-work': 'hrrecords',
+  rtw: 'hrrecords',
   vehicles: 'fleet',
   policy: 'policies',
 };
@@ -559,6 +608,11 @@ const sectionMetadata: Record<Section, SectionMeta> = {
     title: 'Subcontractors',
     queryKeys: ['subcontractor-run', 'employer-employees'],
   },
+  hrrecords: {
+    eyebrow: 'People',
+    title: 'Right to work and HR records',
+    queryKeys: ['rtw-team-status', 'rtw-submissions', 'hr-people', 'hr-retention-queue', 'hr-settings'],
+  },
   vacancies: {
     eyebrow: 'People',
     title: 'Vacancies',
@@ -576,16 +630,25 @@ const sectionMetadata: Record<Section, SectionMeta> = {
     queryKeys: ['employer-pnl', 'employer-ledger'],
   },
   tenders: { eyebrow: 'Finance', title: 'Tenders', queryKeys: ['tenders'] },
-  expenses: { eyebrow: 'Finance', title: 'Expenses', queryKeys: ['expense_claims'] },
+  expenses: {
+    eyebrow: 'Finance',
+    title: 'Expenses',
+    queryKeys: ['expense_claims', 'receipt-captures'],
+  },
   procurement: {
     eyebrow: 'Finance',
     title: 'Procurement',
     queryKeys: ['material_orders', 'suppliers'],
   },
   financials: { eyebrow: 'Finance', title: 'Job Financials', queryKeys: ['job-financials'] },
+  cashforecast: { eyebrow: 'Finance', title: 'Cash forecast', queryKeys: ['cash-forecast'] },
   reports: { eyebrow: 'Finance', title: 'Reports', queryKeys: ['finance-reports', 'debtor-aging'] },
   signatures: { eyebrow: 'Finance', title: 'Signatures' },
-  pricebook: { eyebrow: 'Finance', title: 'Price book', queryKeys: ['firm-price-book', 'firm-rates'] },
+  pricebook: {
+    eyebrow: 'Finance',
+    title: 'Price book',
+    queryKeys: ['firm-price-book', 'firm-rates'],
+  },
   accounting: {
     eyebrow: 'Finance',
     title: 'Accounting',
@@ -607,36 +670,68 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   },
   tracking: { eyebrow: 'Jobs', title: 'Worker Tracking', queryKeys: ['worker-locations'] },
   progresslogs: { eyebrow: 'Jobs', title: 'Site diary', queryKeys: ['progressLogs', 'site-diary'] },
-  issues: { eyebrow: 'Jobs', title: 'Issues', queryKeys: ['jobIssues', 'issue-variations', 'signatureRequests'] },
+  issues: {
+    eyebrow: 'Jobs',
+    title: 'Issues',
+    queryKeys: ['jobIssues', 'issue-variations', 'signatureRequests'],
+  },
   testing: { eyebrow: 'Jobs', title: 'Testing', queryKeys: ['job-certificates', 'employer-jobs'] },
   quality: { eyebrow: 'Jobs', title: 'Issues', queryKeys: ['jobIssues', 'employer-jobs'] },
   qsreviews: { eyebrow: 'Jobs', title: 'QS Reviews', queryKeys: ['qsReviews'] },
   clientportal: { eyebrow: 'Clients', title: 'Client Portal' },
+  inbox: { eyebrow: 'Clients', title: 'Customer inbox', queryKeys: ['firm-customer-inbox'] },
   fleet: { eyebrow: 'Jobs', title: 'Fleet', queryKeys: ['fleet', 'vehicles'] },
   kit: { eyebrow: 'Jobs', title: 'Kit register', queryKeys: ['company-tools', 'tool-checks'] },
   photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['jobPhotos', 'photo-feed'] },
-  recurring: { eyebrow: 'Jobs', title: 'Recurring work', queryKeys: ['firm-recurring', 'firm-renewals'] },
+  recurring: {
+    eyebrow: 'Jobs',
+    title: 'Recurring work',
+    queryKeys: ['firm-recurring', 'firm-renewals'],
+  },
+  automations: { eyebrow: 'Jobs', title: 'Automations', queryKeys: ['employer-automations'] },
   safetyhub: {
     eyebrow: 'Hub',
     title: 'Safety',
     queryKeys: ['incidents', 'ramsDocuments', 'userPolicies', 'trainingRecords'],
   },
-  safety: { eyebrow: 'Safety', title: 'Health & Safety', queryKeys: ['incidents', 'trainingRecords'] },
+  safety: {
+    eyebrow: 'Safety',
+    title: 'Health & Safety',
+    queryKeys: ['incidents', 'trainingRecords'],
+  },
   rams: { eyebrow: 'Safety', title: 'RAMS', queryKeys: ['ramsDocuments'] },
   incidents: { eyebrow: 'Safety', title: 'Incidents', queryKeys: ['incidents'] },
-  policies: { eyebrow: 'Safety', title: 'Policies', queryKeys: ['userPolicies', 'policyTemplates'] },
-  contracts: { eyebrow: 'Safety', title: 'Contracts', queryKeys: ['contracts'] },
+  policies: {
+    eyebrow: 'Safety',
+    title: 'Policies',
+    queryKeys: ['userPolicies', 'policyTemplates'],
+  },
+  contracts: {
+    eyebrow: 'People',
+    title: 'Contracts',
+    queryKeys: ['contracts', 'person-contracts'],
+  },
   training: { eyebrow: 'Safety', title: 'Training Records', queryKeys: ['trainingRecords'] },
   briefings: { eyebrow: 'Safety', title: 'Briefings', queryKeys: ['briefings'] },
   compliance: { eyebrow: 'Safety', title: 'Compliance', queryKeys: ['complianceDocuments'] },
+  sitesafety: {
+    eyebrow: 'Safety',
+    title: 'Site Safety',
+    queryKeys: ['recent-generated-rams', 'ramsDocuments'],
+  },
+  checklists: {
+    eyebrow: 'Safety',
+    title: 'Checklists',
+    queryKeys: ['checklist-overview', 'checklist-templates'],
+  },
   smartdocs: { eyebrow: 'Hub', title: 'Smart Docs' },
   clientshub: { eyebrow: 'Hub', title: 'Clients', queryKeys: ['employer-clients'] },
   clients: { eyebrow: 'Clients', title: 'Clients', queryKeys: ['employer-clients'] },
-  leads: { eyebrow: 'Clients', title: 'Leads', queryKeys: ['employer-leads'] },
+  leads: { eyebrow: 'Clients', title: 'Enquiries', queryKeys: ['front-door', 'enquiries'] },
   quotepage: { eyebrow: 'Clients', title: 'Quote Page', queryKeys: ['lead-page-config'] },
   aidesignspec: { eyebrow: 'Smart Docs', title: 'Design Spec' },
-  airams: { eyebrow: 'Smart Docs', title: 'RAMS' },
-  aimethodstatement: { eyebrow: 'Smart Docs', title: 'Method Statement' },
+  airams: { eyebrow: 'Smart Docs', title: 'Safety documents' },
+  aimethodstatement: { eyebrow: 'Smart Docs', title: 'Safety documents' },
   aibriefingpack: { eyebrow: 'Smart Docs', title: 'Briefing Pack' },
   aiquote: { eyebrow: 'Smart Docs', title: 'AI quote' },
   settings: { eyebrow: 'Account', title: 'Settings' },
@@ -788,6 +883,11 @@ const EmployerDashboard = () => {
       subcontractors: 'subcontractors',
       subcontractor: 'subcontractors',
       subbies: 'subcontractors',
+      'right to work': 'hrrecords',
+      'right-to-work': 'hrrecords',
+      probation: 'hrrecords',
+      retention: 'hrrecords',
+      'hr records': 'hrrecords',
       employees: 'team',
       team: 'team',
       workers: 'team',
@@ -805,7 +905,7 @@ const EmployerDashboard = () => {
       'profit and loss': 'accounts',
       'p&l': 'accounts',
       books: 'accounts',
-      accounting: 'accounts',
+      accounting: 'accounting',
       timesheets: 'timesheets',
       'time sheets': 'timesheets',
       leave: 'leave',
@@ -840,6 +940,8 @@ const EmployerDashboard = () => {
       'job-financials': 'financials',
       financials: 'financials',
       'job financials': 'financials',
+      'cash forecast': 'cashforecast',
+      forecast: 'cashforecast',
       'job costs': 'financials',
       reports: 'reports',
       analytics: 'reports',
@@ -906,6 +1008,8 @@ const EmployerDashboard = () => {
       'client portal': 'clientportal',
       clients: 'clients',
       customers: 'clients',
+      inbox: 'inbox',
+      'customer inbox': 'inbox',
       leads: 'leads',
       enquiries: 'leads',
       'quote-page': 'quotepage',
@@ -937,6 +1041,8 @@ const EmployerDashboard = () => {
       renewals: 'recurring',
       maintenance: 'recurring',
       'maintenance contracts': 'recurring',
+      automations: 'automations',
+      automation: 'automations',
 
       safety: 'safetyhub',
       'health and safety': 'safetyhub',
@@ -947,6 +1053,16 @@ const EmployerDashboard = () => {
       incidents: 'incidents',
       accidents: 'incidents',
       'near misses': 'incidents',
+      checklists: 'checklists',
+      checklist: 'checklists',
+      'pre-start checks': 'checklists',
+      'pre-start': 'checklists',
+      'site safety': 'sitesafety',
+      'site-safety': 'sitesafety',
+      sitesafety: 'sitesafety',
+      'hazard database': 'sitesafety',
+      'safety alerts': 'sitesafety',
+      recalls: 'sitesafety',
       policies: 'policies',
       procedures: 'policies',
       rules: 'policies',
@@ -980,8 +1096,9 @@ const EmployerDashboard = () => {
       'circuit design': 'aidesignspec',
       'ai rams': 'airams',
       'generate rams': 'airams',
-      'ai method statement': 'aimethodstatement',
-      'method statement': 'aimethodstatement',
+      'ai method statement': 'airams',
+      'method statement': 'airams',
+      'safety documents': 'airams',
       'ai briefing': 'aibriefingpack',
       'briefing pack': 'aibriefingpack',
       'ai quote': 'aiquote',
@@ -1037,6 +1154,8 @@ const EmployerDashboard = () => {
         return <TalentPoolSection />;
       case 'subcontractors':
         return <SubcontractorsSection />;
+      case 'hrrecords':
+        return <HrRecordsSection />;
       case 'apprentices':
         return <ApprenticeProgressSection />;
       case 'vacancies':
@@ -1047,8 +1166,10 @@ const EmployerDashboard = () => {
         return <ExpensesSection />;
       case 'clients':
         return <ClientsSection onNavigate={handleNavigate} />;
+      case 'inbox':
+        return <CustomerInboxSection />;
       case 'leads':
-        return <LeadsSection />;
+        return <EnquiriesSection />;
       case 'quotepage':
         return <QuotePageSection />;
       case 'signatures':
@@ -1065,6 +1186,8 @@ const EmployerDashboard = () => {
         return <PhotoGallerySection />;
       case 'recurring':
         return <RecurringSection />;
+      case 'automations':
+        return <AutomationsSection />;
       case 'jobpacks':
         return <JobPacksSection />;
       case 'team':
@@ -1109,12 +1232,19 @@ const EmployerDashboard = () => {
         return <JobIssuesSection />;
       case 'financials':
         return <JobFinancialsSection />;
+      case 'cashforecast':
+        return <CashForecastSection onNavigate={setActiveSection} />;
       case 'testing':
         return <TestingWorkflowSection />;
       case 'clientportal':
         return <ClientPortalSection />;
       case 'rams':
-        return <RAMSSection onNavigate={handleNavigate} />;
+        // The firm's RAMS (employer_id), on the same rows as Site Safety.
+        return (
+          <SafetyScopeProvider mode="firm" fallback={<LoadingBlocks />}>
+            <RAMSSection onNavigate={handleNavigate} />
+          </SafetyScopeProvider>
+        );
       case 'incidents':
         return <IncidentsSection />;
       case 'policies':
@@ -1124,7 +1254,14 @@ const EmployerDashboard = () => {
       case 'training':
         return <TrainingRecordsSection />;
       case 'briefings':
-        return <BriefingsSection />;
+        // Toolbox talks are Site Safety's (team_briefings) in both hubs now
+        // (ELE-2031). The old Employer briefings screen is retired from
+        // navigation; its table and rows are kept.
+        return <Navigate to="/employer?section=site-safety&tool=team-briefing" replace />;
+      case 'sitesafety':
+        return <SiteSafetySection onNavigate={handleNavigate} />;
+      case 'checklists':
+        return <ChecklistsSection />;
       case 'compliance':
         return <ComplianceSection />;
       case 'smartdocs':
@@ -1134,9 +1271,14 @@ const EmployerDashboard = () => {
       case 'airams':
         return <AIRAMSSection onNavigate={handleNavigate} />;
       case 'aimethodstatement':
-        return <AIMethodStatementSection onNavigate={handleNavigate} />;
+        // One "Safety documents for this job" generator (ELE-1941): a run has
+        // always produced the RAMS and its method statement together.
+        return <Navigate to="/employer?section=airams" replace />;
       case 'aibriefingpack':
-        return <AIBriefingPackSection onNavigate={handleNavigate} />;
+        // The AI briefing pack is now a real toolbox talk (ELE-1942): drafted
+        // with AI (and the site photos) in the briefing editor, signed by the
+        // crew in the app. The old section only wrote text onto a job pack.
+        return <Navigate to="/employer?section=site-safety&tool=team-briefing&new=1" replace />;
       case 'aiquote':
         return <AIQuoteSection onNavigate={handleNavigate} />;
       default:
@@ -1166,9 +1308,11 @@ const EmployerDashboard = () => {
       <div className="-mx-3 -mt-1 sm:-mx-4 sm:-mt-3 md:-mx-6 md:-mt-6 lg:-mx-8 min-h-screen bg-background text-white">
         <InDevelopmentBanner section={activeSection} />
 
-        {!isOverview && (
+        {/* A Site Safety tool draws its own masthead with Back, so the hub's
+            bar is hidden while one is open (one Back, not two). */}
+        {!isOverview && !(activeSection === 'sitesafety' && searchParams.get('tool')) && (
           <div className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-white/[0.06]">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center gap-3">
+            <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 h-14 flex items-center gap-3">
               <IconButton aria-label="Back" onClick={handleBack}>
                 <ChevronLeft className="h-5 w-5" />
               </IconButton>
@@ -1178,6 +1322,17 @@ const EmployerDashboard = () => {
                   {currentMeta.title}
                 </div>
               </div>
+              <AreaNav
+                className="hidden xl:flex"
+                current={
+                  HUB_AREAS.includes(activeSection)
+                    ? activeSection
+                    : HUB_AREAS.includes(getParentSection(activeSection))
+                      ? getParentSection(activeSection)
+                      : null
+                }
+                onGo={(s) => setActiveSection(s as Section)}
+              />
               <CommandTrigger onOpen={openSearch} />
               {hasRefresh && (
                 <IconButton aria-label="Refresh" onClick={handleRefresh}>
@@ -1188,7 +1343,10 @@ const EmployerDashboard = () => {
           </div>
         )}
 
-        <main className="px-4 sm:px-6 lg:px-8">
+        {/* pb-28 / sm:pb-24 keep the last control on every page clear of the
+            floating Ask Mate button once you scroll to the end (phone: bottom-20,
+            48px; wider: bottom-6, 44px). */}
+        <main className="px-4 pb-28 sm:px-6 sm:pb-24 lg:px-8">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={activeSection}
@@ -1200,7 +1358,7 @@ const EmployerDashboard = () => {
             >
               <Suspense
                 fallback={
-                  <div className="mx-auto max-w-7xl pt-6">
+                  <div className="mx-auto max-w-[1600px] pt-6">
                     <LoadingBlocks />
                   </div>
                 }
@@ -1212,6 +1370,8 @@ const EmployerDashboard = () => {
         </main>
       </div>
 
+      {/* ELE-2061: the right-to-work gate the assign / book / approve / pay paths call. */}
+      <RtwGuardHost />
       <EmployerCommandPalette
         open={cmdOpen}
         onOpenChange={setCmdOpen}

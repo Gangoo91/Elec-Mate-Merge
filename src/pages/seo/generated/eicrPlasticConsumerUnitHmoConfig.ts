@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // of Houses in Multiple Occupation (England) Regulations 2006.
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-plastic-consumer-unit-hmo',
@@ -34,9 +34,9 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     'For consumer units installed before January 2016: the original installation was compliant at the time. A plastic CU in a normal domestic setting is typically a C3 ("Improvement recommended").',
     'In an HMO escape route, under wooden staircases, in a roof void with combustible storage, in a fire-resisting compartment wall — the same plastic CU becomes a C2 because the combustibility creates potential danger in that specific context.',
     'HMO classification under the Housing Act 2004 + Management of HMOs (England) Regs 2006 makes the property subject to additional fire-safety duties on the landlord — a plastic CU in a designated escape route or near a fire-resisting partition is materially different from a domestic dwelling.',
-    "Remedial options: full consumer unit replacement to a metal-enclosed all-RCBO unit (most common); retrofit a metal enclosure around the existing CU (rare, manufacturer-specific); upgrade to RCBOs in a metal-clad replacement (best practice combining 421.1.201 + 411.3.4 A4 compliance). Any replacement CU must comply with BS EN 61439-3 — verify the manufacturer's declaration before supply.",
+    "Remedial options: full consumer unit replacement to a metal-enclosed all-RCBO unit (most common); retrofit a metal enclosure around the existing CU (rare, manufacturer-specific); upgrade to RCBOs in a metal-clad replacement (best practice combining 421.1.201 + 411.3.4 + 421.1.7 compliance). Any replacement CU must comply with BS EN 61439-3 — verify the manufacturer's declaration before supply.",
     'For HMOs under PRS Regs 2020 (England), a C2 on the EICR triggers a 28-day remedial deadline with mandatory written confirmation to tenants + local authority on request.',
-    'Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices (AFDDs) conforming to BS EN 62606 are RECOMMENDED to mitigate the risk of fire in AC final circuits of a fixed installation. Despite what is widely repeated, the regulation is advisory and names no premises types — there is no HMO-specific mandate. Fitting them on an HMO consumer unit replacement is still sound practice and worth quoting for.',
+    'Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices (AFDDs) conforming to BS EN 62606 are REQUIRED on single-phase AC final circuits supplying socket-outlets up to 32 A in HMOs, a requirement since A2:2022. Elsewhere they are recommended. An HMO consumer unit replacement must therefore include AFDDs on those socket-outlet circuits.',
   ],
   sections: [
     {
@@ -146,29 +146,29 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'pricing',
           title: 'Indicative cost — not a quote',
-          text: 'As a rough market guide only, full replacement to a metal-enclosed all-RCBO unit in a typical 4–6 bed HMO sits around £900–£1,800 at trade prices, with the EIC usually included. Adding combined AFDD/RCBO devices on the socket circuits (now recommended in HMOs) increases the per-way device cost over plain RCBOs. Larger HMOs or boards needing associated remedial work — main bonding, supplementary bonding, recabling — can run to £2,500+. Always price the specific installation.',
+          text: 'As a rough market guide only, full replacement to a metal-enclosed all-RCBO unit in a typical 4–6 bed HMO sits around £900–£1,800 at trade prices, with the EIC usually included. Adding combined AFDD/RCBO devices on the socket circuits (required in HMOs since A2:2022) increases the per-way device cost over plain RCBOs. Larger HMOs or boards needing associated remedial work — main bonding, supplementary bonding, recabling — can run to £2,500+. Always price the specific installation.',
         },
       ],
     },
     {
       id: 'afdd-hmo',
-      heading: 'AFDDs in HMOs — Recommended, Not Mandatory (A4:2026)',
+      heading: 'AFDDs in HMOs: Required Since A2:2022',
       tocLabel: 'AFDDs in HMOs',
       blocks: [
         {
           type: 'paragraph',
-          text: 'This is the change most often missed on HMO consumer unit replacements. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices are "recommended" in HMOs — they are required. When you replace the plastic CU, the new arrangement has to satisfy this.',
+          text: 'This is the change most often missed on HMO consumer unit replacements. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices are required, not just recommended, on single-phase socket-outlet final circuits up to 32 A in HMOs. That requirement came in at A2:2022. When you replace the plastic CU, the new arrangement has to satisfy this.',
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'Regulation 421.1.7 — the HMO requirement',
-          text: 'Regulation 421.1.7 RECOMMENDS arc fault detection devices (AFDDs) conforming to BS EN 62606 in AC final circuits of a fixed installation. The wording is advisory — it is not a "shall", and it names no premises types, so there is no HMO-specific mandate. It remains a strong recommendation you should be able to justify departing from, and on an HMO consumer unit replacement it is worth quoting for. Original claim retained for context: single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in houses in multiple occupation (HMOs). The same mandatory requirement applies to high rise residential buildings, purpose-built student accommodation and care homes. For all other premises the use of AFDDs is recommended, not required.',
+          text: 'Since A2:2022, Regulation 421.1.7 requires arc fault detection devices (AFDDs) conforming to BS EN 62606 on single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in houses in multiple occupation (HMOs). The same requirement applies to high rise residential buildings, purpose-built student accommodation and care homes. For all other premises the use of AFDDs is recommended, not required.',
         },
         {
           type: 'list',
           items: [
-            '**Scope** — the recommendation covers AC final circuits of a fixed installation, commonly applied to single-phase final circuits supplying socket-outlets rated not more than 32 A. It is the socket circuits, not every circuit in the board, that trigger the obligation.',
+            '**Scope** — in an HMO the requirement covers single-phase AC final circuits supplying socket-outlets rated not more than 32 A. It is the socket circuits, not every circuit in the board, that trigger the obligation.',
             '**Placement** — where AFDDs are used they shall be placed at the origin of the circuit to be protected. In a consumer unit replacement that means an AFDD (or combined AFDD/RCBO device) at the board for each affected socket circuit.',
             '**High rise definition** — for the HRRB category, BS 7671 treats a high rise residential building as one over 18 m in height or in excess of six storeys, whichever is met first. HMOs qualify on the building-type basis regardless of height.',
             '**It does not replace other measures** — fitting an AFDD does not remove the need for the other protective measures in BS 7671, including RCD additional protection. An AFDD/RCBO device covers both where specified.',
@@ -176,7 +176,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text: 'In practice this means a plastic-CU replacement in an HMO should be specified as a metal-enclosed unit with AFDD protection on the socket-outlet final circuits and 30 mA RCD additional protection across the board. See the [A4:2026 luminaire RCD requirement](/guides/bs-7671-a4-2026-luminaire-rcd-protection) for the parallel obligation on lighting circuits.',
+          text: 'In practice this means a plastic-CU replacement in an HMO should be specified as a metal-enclosed unit with AFDD protection on the socket-outlet final circuits and 30 mA RCD additional protection across the board. See the [luminaire RCD requirement (Reg 411.3.4)](/guides/bs-7671-a4-2026-luminaire-rcd-protection) for the parallel obligation on lighting circuits.',
         },
       ],
     },
@@ -224,7 +224,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
             '**Floor plan annotation** — marks the CU location relative to fire-resisting compartment walls and escape routes (HMO landlords typically already have these for fire-risk assessment).',
             '**Regulation cite in Section K observation** — "Plastic consumer unit in HMO escape route. Non-compliant with BS 7671:2018+A4:2026 Regulation 421.1.201 for non-combustible enclosure. C2 classification: potentially dangerous in escape-route context."',
             '**Remedial quote** — itemised: replacement CU, RCBOs, labour, certification. Most landlords appreciate the breakdown so they can compare against any second quote.',
-            '**EIC after remedial completion** — confirms the new metal-enclosed unit, the new RCBO selection, and BS 7671:2018+A4:2026 compliance including the new luminaire-RCD requirement on every circuit.',
+            '**EIC after remedial completion** — confirms the new metal-enclosed unit, the new RCBO selection, and BS 7671:2018+A4:2026 compliance including the luminaire-RCD requirement (Reg 411.3.4) on every lighting circuit.',
           ],
         },
       ],
@@ -245,7 +245,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     {
       question: 'Do I have to fit AFDDs when I replace a consumer unit in an HMO?',
       answer:
-        'It is recommended rather than required. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices conforming to BS EN 62606 are recommended for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in houses in multiple occupation — the requirement is mandatory for HMOs (as well as high rise residential buildings, purpose-built student accommodation and care homes). Where AFDDs are used they must sit at the origin of the circuit, so they are fitted at the board, commonly as combined AFDD/RCBO devices. For all other premises types AFDDs are recommended rather than required.',
+        'It is required. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in houses in multiple occupation (as well as high rise residential buildings, purpose-built student accommodation and care homes). This has been a requirement since A2:2022. Where AFDDs are used they must sit at the origin of the circuit, so they are fitted at the board, commonly as combined AFDD/RCBO devices. For all other premises types AFDDs are recommended rather than required.',
     },
     {
       question: "Is my plastic CU automatically dangerous if it's in any HMO?",
@@ -260,7 +260,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     {
       question: 'Do I need to upgrade ALL the circuits to A4:2026 standard when replacing the CU?',
       answer:
-        "Strictly, the existing downstream circuits are not retrospectively upgraded — but the new CU and the work done IN it must comply with current A4 standards, and in an HMO that now includes AFDDs. The new board must address Regulation 411.3.3 socket-outlet RCD protection, Regulation 411.3.4 luminaire RCD protection (additional protection by an RCD not exceeding 30 mA for AC final circuits supplying luminaires in domestic premises), and Regulation 421.1.7 AFDD protection — mandatory on the single-phase socket-outlet final circuits not exceeding 32 A in an HMO. In practice electricians fit combined AFDD/RCBO devices on the socket ways and RCBOs elsewhere. Every existing circuit is tested and an EIC issued for the alteration; where circuits fail current testing (e.g. high Zs, low insulation resistance) separate remedial work is needed.",
+        "Strictly, the existing downstream circuits are not retrospectively upgraded — but the new CU and the work done IN it must comply with the current edition, and in an HMO that includes AFDDs (required there since A2:2022). The new board must address Regulation 411.3.3 socket-outlet RCD protection, Regulation 411.3.4 luminaire RCD protection (additional protection by an RCD not exceeding 30 mA for AC final circuits supplying luminaires in domestic premises), and Regulation 421.1.7 AFDD protection — mandatory on the single-phase socket-outlet final circuits not exceeding 32 A in an HMO. In practice electricians fit combined AFDD/RCBO devices on the socket ways and RCBOs elsewhere. Every existing circuit is tested and an EIC issued for the alteration; where circuits fail current testing (e.g. high Zs, low insulation resistance) separate remedial work is needed.",
     },
     {
       question: "What if the tenant won't agree to consumer unit replacement access?",
@@ -294,7 +294,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
       description:
         'Why a CU replacement is the right time to add 30 mA RCD on every luminaire circuit (Regulation 411.3.4).',
       icon: 'ShieldCheck',

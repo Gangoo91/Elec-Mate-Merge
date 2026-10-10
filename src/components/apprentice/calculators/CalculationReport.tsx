@@ -48,7 +48,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <span className="text-[12px] font-medium text-white">
         Calculation report
       </span>
       <p className="text-[13px] text-white leading-relaxed">
@@ -64,7 +64,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
       </Button>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Report includes
         </span>
         <ul className="space-y-1.5">

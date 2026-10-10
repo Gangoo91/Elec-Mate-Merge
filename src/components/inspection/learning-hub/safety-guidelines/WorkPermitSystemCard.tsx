@@ -133,7 +133,7 @@ const WorkPermitSystemCard = () => {
                 <div className="flex-grow">
                   <div className="flex items-center justify-between mb-2">
                     <h5 className="font-medium text-foreground">{stage.stage}</h5>
-                    <span className="text-xs text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">
+                    <span className="text-xs text-elec-yellow bg-white/[0.06] px-2 py-1 rounded">
                       {stage.responsible}
                     </span>
                   </div>

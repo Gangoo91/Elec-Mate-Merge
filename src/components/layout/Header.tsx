@@ -1,4 +1,4 @@
-import { Menu, Search, Info } from 'lucide-react';
+import { Menu, Info } from 'lucide-react';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -161,7 +161,9 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
         'fixed top-0 left-0 right-0 z-[60]',
         sidebarCollapsed ? 'lg:left-0' : 'lg:left-64',
         'transition-[left] duration-300 ease-in-out',
-        'backdrop-blur-xl bg-elec-dark/90',
+        // The shell ground (HubPage's, when it publishes one), so the header
+        // is the same grey as the page under it (10 Oct).
+        'backdrop-blur-xl bg-[hsl(var(--shell-ground,var(--elec-dark))_/_0.9)]',
         'border-b transition-all duration-300',
         isScrolled ? 'border-white/10 shadow-2xl shadow-black/40' : 'border-white/[0.06]'
       )}
@@ -181,7 +183,7 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
                 size="icon"
                 onClick={toggleSidebar}
                 className={cn(
-                  'h-10 w-10 min-w-[40px] min-h-[40px]',
+                  'relative h-10 w-10 min-w-[40px] min-h-[40px] after:absolute after:-inset-0.5 after:rounded-xl',
                   'hover:bg-white/10 active:bg-white/15',
                   'touch-manipulation rounded-xl',
                   'transition-all duration-150'
@@ -238,6 +240,9 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
               onClick={() => setTipsOpen(true)}
               className={cn(
                 'h-9 w-9 min-w-[36px] min-h-[36px] sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px]',
+                // 44px tap area round the 36px button (10 Oct); the header has
+                // no room for six 44px boxes on a 360px phone.
+                'relative after:absolute after:-inset-1 after:rounded-xl',
                 'bg-white/5 border border-white/10',
                 'hover:bg-white/10 active:bg-white/15',
                 'touch-manipulation rounded-xl',
@@ -246,23 +251,6 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
               aria-label="Tips and guidance"
             >
               <Info className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-white" />
-            </Button>
-          </motion.div>
-          <motion.div whileTap={{ scale: 0.92 }}>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => window.dispatchEvent(new Event(OPEN_SEARCH_EVENT))}
-              className={cn(
-                'h-9 w-9 min-w-[36px] min-h-[36px] sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px]',
-                'bg-white/5 border border-white/10',
-                'hover:bg-white/10 active:bg-white/15',
-                'touch-manipulation rounded-xl',
-                'transition-all duration-150'
-              )}
-              aria-label="Search pages"
-            >
-              <Search className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-white" />
             </Button>
           </motion.div>
           <motion.div whileTap={{ scale: 0.92 }}>

@@ -359,7 +359,7 @@ const BondingConductorSizeCalculator = () => {
               />
 
               <p className="text-[12.5px] leading-relaxed text-white">{verdict.workings}</p>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+              <p className="text-[12px] font-semibold text-elec-yellow">
                 {verdict.reg}
               </p>
               {verdict.notes.map((n) => (
@@ -373,7 +373,7 @@ const BondingConductorSizeCalculator = () => {
                   className={`rounded-xl border p-3 ${
                     check.ok
                       ? 'border-green-500/30 bg-green-500/10'
-                      : 'border-orange-500/30 bg-orange-500/10'
+                      : 'border-orange-500/30 bg-white/[0.04]'
                   }`}
                 >
                   <p className="text-sm font-semibold text-white">

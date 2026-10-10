@@ -44,7 +44,7 @@ const keyTakeaways = [
   'Taking on an electrical apprentice is an investment in your business -- a well-trained apprentice becomes a productive team member within 18 to 24 months and a fully qualified electrician within 3 to 4 years, at a fraction of the cost of hiring a qualified operative.',
   'Funding is available for apprenticeships through the Apprenticeship Levy (for employers with a pay bill over 3 million pounds) or government co-funding (for smaller employers, the government pays 95 percent of the training costs up to the funding band maximum).',
   'Choosing the right training provider is critical -- look for a provider with strong industry links, high pass rates, experienced tutors, and a curriculum that covers the full scope of BS 7671 and the Level 3 Electrotechnical qualification.',
-  'Employers must provide meaningful on-the-job training with progressive responsibility, not just use the apprentice as a labourer. The apprentice must spend at least 20 percent of their working hours on off-the-job training.',
+  'Employers must provide meaningful on-the-job training with progressive responsibility, not just use the apprentice as a labourer. The apprentice must receive at least the off-the-job training hours published on their apprenticeship standard, in paid working time.',
   'Elec-Mate includes a complete apprentice learning platform covering Level 2, Level 3, and AM2 preparation -- your apprentice can study on their phone, track progress, and prepare for assessments alongside their on-the-job training.',
 ];
 
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'How much does it cost to hire an electrical apprentice?',
     answer:
-      'The cost of hiring an electrical apprentice includes several components. The apprentice minimum wage (from April 2025) is 7.55 pounds per hour for apprentices aged 16 to 18 or in their first year, rising to the age-related National Minimum Wage rate from the second year onwards. For a first-year apprentice working 37.5 hours per week, this is approximately 14,700 pounds per year in wages. Employer National Insurance and pension contributions add approximately 15 to 20 percent. The training costs are funded through the Apprenticeship Levy (for levy-paying employers) or government co-funding (for non-levy payers, you pay 5 percent of the training cost and the government pays 95 percent). The training cost for a Level 3 Installation Electrician apprenticeship is typically funded at the maximum band of 15,000 to 21,000 pounds, so a non-levy employer contribution would be 750 to 1,050 pounds over the duration of the apprenticeship. Additional costs include PPE, tools, travel expenses, and the AM2 assessment fee (approximately 800 to 1,000 pounds). You may also be eligible for a 1,000 pound incentive payment for hiring an apprentice aged 16 to 18.',
+      'The cost of hiring an electrical apprentice includes several components. The apprentice minimum wage (from 1 April 2026) is 8.00 pounds per hour for apprentices under 19 or in their first year, rising to the age-related National Minimum Wage rate after that for apprentices aged 19 or over. For a first-year apprentice working 37.5 hours per week, this is approximately 15,600 pounds per year in wages. Employer National Insurance and pension contributions add approximately 15 to 20 percent. The training costs are funded through the Apprenticeship Levy (for levy-paying employers) or by the government (for non-levy payers). For starts from 1 August 2026 a non-levy employer pays nothing for an apprentice aged 16 to 24 at the start, and 5 percent for one aged 25 or over (DfE funding rules 2026 to 2027, rules 213 to 214). The funding band maximum for the Installation and Maintenance Electrician standard (ST0152) is 23,000 pounds, so a 25+ apprentice costs a non-levy employer up to 1,150 pounds over the duration. The end-point assessment, including the AM2, is paid from the same funding. Additional costs include PPE, tools and travel expenses. You may also be eligible for a 1,000 pound incentive payment for hiring an apprentice aged 16 to 18.',
   },
   {
     question: 'What qualifications does an electrical apprentice work towards?',
@@ -62,17 +62,17 @@ const faqs = [
   {
     question: 'What is the Apprenticeship Levy?',
     answer:
-      'The Apprenticeship Levy is a tax on UK employers with an annual pay bill exceeding 3 million pounds. Levy-paying employers pay 0.5 percent of their total pay bill into their Apprenticeship Service account, and receive a 15,000 pound annual allowance to offset against the levy. The funds in the account can only be used to pay for apprenticeship training through approved training providers. Levy funds expire after 24 months if not used. For smaller employers (non-levy payers), the government co-invests: you pay 5 percent of the training cost and the government pays the remaining 95 percent. This means a 15,000 pound apprenticeship training programme costs a non-levy employer just 750 pounds (spread over the duration of the apprenticeship). Small employers with fewer than 50 employees who hire an apprentice aged 16 to 18 pay nothing towards the training costs -- the government funds 100 percent.',
+      'The Apprenticeship Levy is a tax on UK employers with an annual pay bill exceeding 3 million pounds. Levy-paying employers pay 0.5 percent of their total pay bill into their Apprenticeship Service account, and receive a 15,000 pound annual allowance to offset against the levy. The funds in the account can only be used to pay for apprenticeship training through approved training providers. Levy funds expire after 24 months if not used. For smaller employers (non-levy payers), for starts from 1 August 2026, the government pays all of the training costs up to the funding band maximum for an apprentice aged 16 to 24 at the start; for an apprentice aged 25 or over you pay 5 percent and the government 95 percent (DfE funding rules 2026 to 2027, rules 213 to 214). This means a 20,000 pound training programme costs a non-levy employer nothing for a 16 to 24-year-old, or 1,000 pounds for a 25+ apprentice.',
   },
   {
     question: 'How much time must the apprentice spend in college?',
     answer:
-      'The apprenticeship funding rules require that at least 20 percent of the apprentice paid working hours are spent on off-the-job training. This training can take several forms: day release at a college or training provider (typically one day per week), block release (attending college full-time for a week or two at regular intervals), or a combination of on-site training, e-learning, and college attendance that totals at least 20 percent of hours. The specific model depends on the training provider and the employer agreement. Day release is the most common model for electrical apprenticeships -- the apprentice works four days a week with the employer and attends college on the fifth day. During college attendance, the apprentice receives training in electrical science, regulations, installation practices, and health and safety. The remaining four days are on-the-job training with the employer, applying what they have learned in a real working environment.',
+      'The apprenticeship funding rules require that the apprentice receives at least the minimum number of off-the-job training hours published on their apprenticeship standard, in paid working hours (DfE funding rules 2026 to 2027, rules 85 to 86). For apprenticeships that started before 1 August 2025 the older rule applies: 20 percent of normal working hours, capped at 30 a week. This training can take several forms: day release at a college or training provider (typically one day per week), block release (attending college full-time for a week or two at regular intervals), or a combination of on-site training, e-learning, and college attendance that reaches the required total. The specific model depends on the training provider and the employer agreement. Day release is the most common model for electrical apprenticeships -- the apprentice works four days a week with the employer and attends college on the fifth day. During college attendance, the apprentice receives training in electrical science, regulations, installation practices, and health and safety. The remaining four days are on-the-job training with the employer, applying what they have learned in a real working environment.',
   },
   {
     question: 'What are my duties as an employer of an apprentice?',
     answer:
-      'As an employer, your duties include: providing a genuine job with a productive purpose and opportunities to develop skills, paying at least the Apprenticeship Minimum Wage, allowing the apprentice to attend off-the-job training (at least 20 percent of their paid hours), providing on-the-job training and mentoring with progressive responsibility, providing appropriate supervision (the apprentice must be supervised by a qualified electrician at all times when working on electrical installations), providing a safe working environment and appropriate PPE, signing an apprenticeship agreement and commitment statement, supporting the apprentice through their End-Point Assessment, and treating the apprentice fairly in accordance with employment law (apprentices have the same employment rights as other employees). You also have a duty to provide work that is relevant to the apprenticeship standard -- an apprentice who spends most of their time carrying materials and making tea is not receiving the training they are entitled to.',
+      'As an employer, your duties include: providing a genuine job with a productive purpose and opportunities to develop skills, paying at least the Apprenticeship Minimum Wage, allowing the apprentice to attend off-the-job training (at least the minimum hours published on their apprenticeship standard, in paid time), providing on-the-job training and mentoring with progressive responsibility, providing appropriate supervision (the apprentice must be supervised by a qualified electrician at all times when working on electrical installations), providing a safe working environment and appropriate PPE, signing an apprenticeship agreement and commitment statement, supporting the apprentice through their End-Point Assessment, and treating the apprentice fairly in accordance with employment law (apprentices have the same employment rights as other employees). You also have a duty to provide work that is relevant to the apprenticeship standard -- an apprentice who spends most of their time carrying materials and making tea is not receiving the training they are entitled to.',
   },
   {
     question: 'What supervision does an apprentice need on site?',
@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
-      'BS 7671:2018+A2:2022 study materials -- the regulations your apprentice needs to know.',
+      'BS 7671:2018+A4:2026 study materials -- the regulations your apprentice needs to know.',
     icon: GraduationCap,
     category: 'Study',
   },
@@ -202,34 +202,35 @@ const sections = [
                 over 3 million pounds pay 0.5 percent of their total pay bill into an Apprenticeship
                 Service account. These funds can only be used to pay for apprenticeship training
                 through approved providers. Levy funds expire after 24 months if not used. Levy
-                payers can also transfer up to 25 percent of their levy funds to other employers in
-                their supply chain.
+                payers can also transfer part of their levy funds to other employers in their supply
+                chain.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Non-levy payers (most electrical contractors)</strong> -- the government
-                co-invests 95 percent of the training costs up to the funding band maximum. For a
-                Level 3 Installation Electrician apprenticeship funded at 15,000 pounds, the
-                employer contribution is just 750 pounds over the entire duration of the
-                apprenticeship. This is paid directly to the training provider.
+                <strong>Non-levy payers (most electrical contractors)</strong> -- for starts from 1
+                August 2026 the government pays all of the training costs, up to the funding band
+                maximum, for an apprentice aged 16 to 24 at the start, and 95 percent for one aged
+                25 or over (DfE funding rules 2026 to 2027, rules 213 to 214). For ST0152 (band maximum 23,000 pounds) a 25+ apprentice costs
+                the employer up to 1,150 pounds, paid directly to the training provider.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Small employer exemption</strong> -- employers with fewer than 50 employees
-                who hire an apprentice aged 16 to 18 pay nothing towards the training costs. The
-                government funds 100 percent.
+                <strong>Hiring payment</strong> -- non-levy employers receive 2,000 pounds for taking on
+                an apprentice aged 16 to 24 whose practical period starts from 1 October 2026 and who
+                has not worked for them for more than 90 days beforehand (rule 133). The old
+                fewer-than-50-employees exemption has been replaced by full funding for 16 to 24s.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Incentive payments</strong> -- employers may be eligible for a 1,000 pound
-                incentive payment for hiring an apprentice aged 16 to 18. Additional incentives may
-                be available depending on government programmes at the time of hiring.
+                <strong>Incentive payments</strong> -- the employer and the provider each receive 1,000
+                pounds for an apprentice aged 16 to 18 at the start, or 19 to 24 with an EHC plan or
+                care leaver status (rule 125).
               </span>
             </li>
           </ul>
@@ -542,10 +543,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>20 percent off-the-job training</strong> -- allow at least 20 percent of the
-                apprentice paid working hours for off-the-job training (college, e-learning,
-                workshops). This is a funding condition -- failure to provide it can result in loss
-                of funding.
+                <strong>Off-the-job training hours</strong> -- release the apprentice, in paid
+                working time, for at least the off-the-job hours published on their standard
+                (college, e-learning, workshops; DfE funding rules 2026 to 2027, rules 85 to 86).
+                This is a funding condition -- failure to provide it can result in loss of funding.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -725,7 +726,7 @@ export default function ElectricalApprenticeshipEmployerPage() {
       title="Electrical Apprenticeship Employer Guide UK"
       description="Complete employer guide to electrical apprenticeships. Funding, levy, training providers, supervision duties, EPA preparation, employer responsibilities."
       datePublished="2026-01-28"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Employer Guide"

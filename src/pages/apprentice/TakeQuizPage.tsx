@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useReturnTo } from '@/lib/navHistory';
 import { openEvidence } from '@/lib/evidenceUrl';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,7 +23,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { HubSubPage } from '@/components/hub/HubSubPage';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { LC_FRAME, LC_TILE } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { buttonPrimaryCn, inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
 import { useSheetDraft } from '@/hooks/useSheetDraft';
 import { storageRemoveSync } from '@/utils/storage';
@@ -174,7 +175,7 @@ type Phase = 'loading' | 'intro' | 'in_progress' | 'review' | 'submitted' | 'err
 
 export default function TakeQuizPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const returnTo = useReturnTo();
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -328,7 +329,7 @@ export default function TakeQuizPage() {
               toast({
                 title: "Couldn't load your full results",
                 description:
-                  'Your score is shown — pull down to refresh for the question breakdown.',
+                  'Your score is shown. Pull down to refresh for the question breakdown.',
               });
             }
             const review = rev as unknown as AttemptReview | null;
@@ -526,7 +527,7 @@ export default function TakeQuizPage() {
       }
       // Network/other failure: don't lock, don't reveal — let them retry.
       toast({
-        title: "Couldn't check that answer — try again",
+        title: "Couldn't check that answer. Try again",
         variant: 'destructive',
       });
       return;
@@ -606,7 +607,7 @@ export default function TakeQuizPage() {
           if (realFailure) {
             toast({
               title: 'Could not save all your answers',
-              description: 'Check your signal and submit again — nothing has been lost.',
+              description: 'Check your signal and submit again. Nothing has been lost.',
               variant: 'destructive',
             });
             setSubmitting(false);
@@ -676,7 +677,7 @@ export default function TakeQuizPage() {
         draft.clear();
         setPhase('submitted');
         toast({
-          title: autoSubmitted ? 'Time up — submitted' : 'Quiz submitted',
+          title: autoSubmitted ? 'Time up, submitted' : 'Quiz submitted',
           description: `You scored ${res.score}/${res.total_points} (${pct}%).`,
         });
 
@@ -692,7 +693,7 @@ export default function TakeQuizPage() {
 
       // Grading is server-side only (submit_quiz_attempt). Direct score writes
       // are blocked by the lockdown trigger, so there is no client fallback.
-      throw new Error('Quiz could not be submitted — refresh and try again.');
+      throw new Error('Quiz could not be submitted. Refresh and try again.');
     } catch (e) {
       toast({
         title: 'Could not submit',
@@ -718,13 +719,11 @@ export default function TakeQuizPage() {
     return (
       <CenterShell>
         <div className="rounded-2xl border border-red-500/[0.25] bg-red-500/[0.05] px-5 py-4 max-w-md">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300 mb-1">
-            Couldn't load quiz
-          </div>
+          <div className="text-[13px] font-medium text-red-300 mb-1">Couldn't load quiz</div>
           <p className="text-[13px] text-white">{error}</p>
           <button
-            onClick={() => navigate('/apprentice/college/activities')}
-            className="mt-3 text-[12px] font-semibold text-white hover:text-elec-yellow"
+            onClick={() => returnTo('/apprentice/college/activities')}
+            className="mt-3 flex h-11 items-center text-[12px] font-semibold text-white hover:text-elec-yellow touch-manipulation"
           >
             ← Back to your quizzes
           </button>
@@ -744,28 +743,25 @@ export default function TakeQuizPage() {
       backTo="/apprentice/college/activities"
     >
       <div className="mx-auto w-full max-w-3xl">
-        <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4', CARD_SURFACE)}>
+        <div className={cn(LC_FRAME, 'px-4 py-4 sm:px-5')}>
           <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-elec-yellow/35 bg-white/[0.06]">
-              <Brain className="h-5 w-5 text-elec-yellow" />
-            </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[13px] font-medium text-white">
                   {quiz.is_homework ? 'Homework' : 'Quiz'}
                 </span>
                 {quiz.source === 'ai_authored' && (
-                  <span className="inline-flex h-4 items-center rounded-md border border-elec-yellow/50 px-1.5 text-[9px] font-semibold uppercase tracking-[0.06em] text-elec-yellow">
+                  <span className="inline-flex h-6 items-center rounded-md border border-elec-yellow/50 px-1.5 text-[12px] font-semibold text-elec-yellow">
                     AI
                   </span>
                 )}
                 {quiz.difficulty && (
-                  <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9px] font-semibold tracking-[0.06em] uppercase text-white capitalize">
+                  <span className="inline-flex items-center h-6 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[12px] font-semibold text-white capitalize">
                     {quiz.difficulty}
                   </span>
                 )}
               </div>
-              <h1 className="text-[18px] font-semibold text-white tracking-tight leading-tight">
+              <h1 className="text-[22px] font-bold leading-tight tracking-tight text-white sm:text-[26px]">
                 {quiz.title}
               </h1>
               {quiz.description && (
@@ -773,12 +769,12 @@ export default function TakeQuizPage() {
               )}
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-3 text-[11px] text-white tabular-nums flex-wrap">
-            <span>{questions.length} questions</span>
+          <div className="mt-3 flex items-center gap-3 text-[12px] text-white tabular-nums flex-wrap">
+            {questions.length > 0 && <span>{questions.length} questions</span>}
             {quiz.time_limit_minutes && (
               <>
-                <span className="text-white">·</span>
-                <span>{quiz.time_limit_minutes}m</span>
+                {questions.length > 0 && <span className="text-white">·</span>}
+                <span>{quiz.time_limit_minutes} min</span>
               </>
             )}
             {quiz.pass_mark != null && (
@@ -857,7 +853,7 @@ export default function TakeQuizPage() {
               verdictById={serverMode ? verdictById : null}
               marking={marking}
               writtenMarks={writtenMarks}
-              onBack={() => navigate('/apprentice/college/activities')}
+              onBack={() => returnTo('/apprentice/college/activities')}
             />
           )}
         </div>
@@ -881,10 +877,8 @@ function IntroState({
 }) {
   return (
     <div className="space-y-3">
-      <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4', CARD_SURFACE)}>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
-          Before you start
-        </div>
+      <div className={cn(LC_FRAME, 'px-4 py-4 sm:px-5')}>
+        <div className="text-[13px] font-medium text-white mb-2">Before you start</div>
         <ul className="space-y-1.5 text-[12.5px] text-white leading-snug">
           <li className="pl-3 relative">
             <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white" />
@@ -893,7 +887,7 @@ function IntroState({
           {quiz.time_limit_minutes && (
             <li className="pl-3 relative">
               <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white" />
-              {quiz.time_limit_minutes} minute time limit — auto-submits when it runs out
+              {quiz.time_limit_minutes} minute time limit. It submits itself when it runs out
             </li>
           )}
           {quiz.pass_mark != null && (
@@ -969,19 +963,24 @@ function QuestionStep({
             key={i}
             type="button"
             onClick={() => onJumpTo(i)}
-            className={cn(
-              'flex-1 h-1.5 rounded-full transition-colors touch-manipulation',
-              i === index
-                ? 'bg-elec-yellow'
-                : i < index
-                  ? 'bg-emerald-400/60'
-                  : 'bg-white/[0.10] hover:bg-white/[0.15]'
-            )}
+            className="group flex h-11 flex-1 items-center touch-manipulation"
             aria-label={`Question ${i + 1}`}
-          />
+            aria-current={i === index ? 'step' : undefined}
+          >
+            <span
+              className={cn(
+                'block h-1.5 w-full rounded-full transition-colors',
+                i === index
+                  ? 'bg-elec-yellow'
+                  : i < index
+                    ? 'bg-emerald-400'
+                    : 'bg-white/[0.12] group-hover:bg-white/[0.2]'
+              )}
+            />
+          </button>
         ))}
       </div>
-      <div className="flex items-center justify-between text-[10.5px] text-white tabular-nums">
+      <div className="flex items-center justify-between text-[12px] text-white tabular-nums">
         <span>
           Question {index + 1} of {total}
         </span>
@@ -991,33 +990,33 @@ function QuestionStep({
       </div>
 
       {/* Question card */}
-      <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-5', CARD_SURFACE)}>
+      <div className={cn(LC_FRAME, 'px-4 py-4 sm:px-5')}>
         <div className="flex items-center gap-1.5 flex-wrap mb-2">
-          <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
+          <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.18] text-[12px] font-semibold text-white">
             {kindLabel(q.question_kind)}
           </span>
           {q.difficulty && (
             <span
               className={cn(
-                'inline-flex items-center h-5 px-1.5 rounded-md border text-[9.5px] font-semibold tracking-[0.06em] uppercase',
+                'inline-flex items-center h-6 px-2 rounded-md border text-[12px] font-semibold',
                 q.difficulty === 'easy'
-                  ? 'bg-emerald-500/[0.10] border-emerald-400/30 text-emerald-200'
+                  ? 'border-emerald-400/60 text-emerald-300'
                   : q.difficulty === 'hard'
-                    ? 'bg-red-500/[0.10] border-red-400/30 text-red-200'
-                    : 'bg-amber-500/[0.10] border-amber-400/30 text-amber-200'
+                    ? 'border-red-400/60 text-red-300'
+                    : 'border-amber-400/60 text-amber-300'
               )}
             >
               {q.difficulty}
             </span>
           )}
           {q.ac_ref && (
-            <span className="inline-flex items-center gap-1 h-5 px-1.5 rounded-md border border-elec-yellow/50 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
-              <Target className="h-2.5 w-2.5" /> AC {q.ac_ref}
+            <span className="inline-flex items-center gap-1 h-6 px-2 rounded-md border border-elec-yellow/50 text-[12px] font-semibold text-elec-yellow">
+              <Target className="h-3 w-3" /> Criterion {q.ac_ref}
             </span>
           )}
           {(q.points ?? 1) !== 1 && (
-            <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white tabular-nums">
-              {q.points} pts
+            <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.18] text-[12px] font-semibold text-white tabular-nums">
+              {q.points} marks
             </span>
           )}
         </div>
@@ -1033,7 +1032,7 @@ function QuestionStep({
           <button
             type="button"
             onClick={onReveal}
-            className="mt-3 w-full h-10 rounded-full bg-white/[0.06] border border-white/[0.10] text-white text-[12.5px] font-semibold hover:bg-white/[0.10] transition-all touch-manipulation"
+            className="mt-3 w-full h-11 rounded-full bg-white/[0.06] border border-white/[0.10] text-white text-[12.5px] font-semibold hover:bg-white/[0.10] transition-all touch-manipulation"
           >
             Lock answer & continue
           </button>
@@ -1056,13 +1055,11 @@ function QuestionStep({
 
               {q.bs7671_citations && q.bs7671_citations.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-white/[0.04]">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
-                    BS 7671
-                  </div>
+                  <div className="text-[13px] font-semibold text-white mb-2">BS 7671</div>
                   <ul className="space-y-2.5">
                     {q.bs7671_citations.map((c, k) => (
-                      <li key={k} className="border-l-2 border-elec-yellow/50 pl-3 break-words">
-                        <div className="text-[10.5px] font-semibold tracking-[0.04em] text-elec-yellow break-all">
+                      <li key={k} className="break-words">
+                        <div className="text-[12px] font-semibold tracking-[0.04em] text-elec-yellow break-all">
                           {c.ref}
                         </div>
                         {c.snippet && (
@@ -1082,11 +1079,16 @@ function QuestionStep({
 
       {/* Nav row */}
       <div className="flex items-center gap-2">
-        <Button variant="outline" onClick={onPrev} disabled={index === 0} className="flex-1">
+        <Button
+          variant="outline"
+          onClick={onPrev}
+          disabled={index === 0}
+          className="h-11 flex-1 touch-manipulation"
+        >
           <ChevronLeft className="h-4 w-4 mr-1" />
           Previous
         </Button>
-        <Button onClick={onNext} disabled={!locked} className="flex-1">
+        <Button onClick={onNext} disabled={!locked} className="h-11 flex-1 touch-manipulation">
           {index === total - 1 ? 'Review answers' : 'Next'}
           <ChevronRight className="h-4 w-4 ml-1" />
         </Button>
@@ -1230,7 +1232,7 @@ function AnswerInput({
           rows={minRows}
           className={cn(textareaCn, 'w-full resize-y leading-relaxed disabled:text-white/70')}
         />
-        <div className="mt-1.5 flex items-center justify-between text-[10.5px] text-white tabular-nums">
+        <div className="mt-1.5 flex items-center justify-between text-[12px] text-white tabular-nums">
           <span>
             {wordCount} word{wordCount === 1 ? '' : 's'}
             {expected.min_words && wordCount < expected.min_words && (
@@ -1241,10 +1243,8 @@ function AnswerInput({
         </div>
         {q.marking_guidance && locked && (
           <div className="mt-2 rounded-lg bg-white/[0.03] border border-white/[0.08] px-3 py-2">
-            <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white mb-0.5">
-              Marking guidance
-            </div>
-            <p className="text-[11.5px] leading-snug text-white">{q.marking_guidance}</p>
+            <div className="text-[13px] font-semibold text-white mb-0.5">Marking guidance</div>
+            <p className="text-[12px] leading-snug text-white">{q.marking_guidance}</p>
           </div>
         )}
       </div>
@@ -1434,7 +1434,7 @@ function MediaAnswerInput({
               ? 'Tap to upload your annotated image'
               : 'Tap to upload photo / video / PDF evidence'}
         </div>
-        <div className="text-[10.5px] text-white mt-0.5">
+        <div className="text-[12px] text-white mt-0.5">
           Up to 10 MB per file.{' '}
           {q.question_kind === 'image_annotation' ? 'Image only.' : 'Image, video or PDF.'}
         </div>
@@ -1467,7 +1467,7 @@ function MediaAnswerInput({
                   }}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[11px] font-medium text-elec-yellow hover:underline"
+                  className="text-[12px] font-medium text-elec-yellow hover:underline"
                 >
                   Open
                 </a>
@@ -1510,10 +1510,8 @@ function MediaAnswerInput({
       />
       {q.marking_guidance && locked && (
         <div className="rounded-lg bg-white/[0.03] border border-white/[0.08] px-3 py-2">
-          <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white mb-0.5">
-            Marking guidance
-          </div>
-          <p className="text-[11.5px] leading-snug text-white">{q.marking_guidance}</p>
+          <div className="text-[13px] font-semibold text-white mb-0.5">Marking guidance</div>
+          <p className="text-[12px] leading-snug text-white">{q.marking_guidance}</p>
         </div>
       )}
     </div>
@@ -1533,7 +1531,7 @@ function FeedbackBadge({
   const verdict = verdictOverride ?? scoreVerdict(q, answer);
   if (verdict === 'correct') {
     return (
-      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em]">
+      <div className="flex items-center gap-1.5 text-[13px] font-semibold">
         <Check className="h-3 w-3 text-emerald-300" strokeWidth={3} />
         <span className="text-emerald-200">Correct</span>
       </div>
@@ -1541,14 +1539,14 @@ function FeedbackBadge({
   }
   if (verdict === 'incorrect') {
     return (
-      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em]">
+      <div className="flex items-center gap-1.5 text-[13px] font-semibold">
         <X className="h-3 w-3 text-red-300" strokeWidth={3} />
         <span className="text-red-200">Not quite</span>
       </div>
     );
   }
   return (
-    <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em]">
+    <div className="flex items-center gap-1.5 text-[13px] font-semibold">
       <Brain className="h-3 w-3 text-elec-yellow" />
       <span className="text-elec-yellow">Awaiting AI review</span>
     </div>
@@ -1573,10 +1571,8 @@ function ReviewState({
   const unanswered = questions.filter((q) => answers[q.id] == null).length;
   return (
     <div className="space-y-3">
-      <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4', CARD_SURFACE)}>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
-          Review your answers
-        </div>
+      <div className={cn(LC_FRAME, 'px-4 py-4 sm:px-5')}>
+        <div className="text-[13px] font-medium text-white mb-2">Review your answers</div>
         <p className="text-[12.5px] text-white">
           {answeredCount} of {questions.length} answered
           {unanswered > 0 && <span className="ml-1 text-amber-300">· {unanswered} unanswered</span>}
@@ -1592,23 +1588,21 @@ function ReviewState({
               <button
                 type="button"
                 onClick={() => onJumpTo(i)}
-                className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full px-4 py-3')}
+                className={cn(LC_TILE, 'px-4 py-3')}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-semibold tabular-nums text-white">
+                  <span className="text-[12px] font-semibold tabular-nums text-white">
                     Q{i + 1}
                   </span>
                   <span className="text-[12px] text-white truncate flex-1">{q.question_text}</span>
                   {a != null ? (
                     <Check className="h-3.5 w-3.5 text-emerald-300 flex-shrink-0" strokeWidth={3} />
                   ) : (
-                    <span className="text-[10px] uppercase tracking-[0.06em] text-amber-300">
-                      Skip
-                    </span>
+                    <span className="text-[13px] font-semibold text-orange-300">Skip</span>
                   )}
                 </div>
                 {preview && (
-                  <div className="mt-1 pl-7 text-[11px] text-white truncate">
+                  <div className="mt-1 pl-7 text-[12px] text-white truncate">
                     <span className="text-white">Your answer: </span>
                     {preview}
                   </div>
@@ -1679,9 +1673,7 @@ function SubmittedState({
     <div className="space-y-6">
       {/* Headline — typography only, no card / icon */}
       <div className="px-1">
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white">
-          {passed ? 'Passed' : 'Submitted'}
-        </div>
+        <div className="text-[13px] font-medium text-white">{passed ? 'Passed' : 'Submitted'}</div>
         <div className="mt-2 flex items-baseline gap-3 flex-wrap">
           <span
             className={cn(
@@ -1693,7 +1685,7 @@ function SubmittedState({
             <span className="text-[28px] sm:text-[32px] ml-0.5 align-baseline">%</span>
           </span>
           <span className="text-[13px] text-white tabular-nums">
-            {correctCount} of {gradableCount} correct
+            {gradableCount > 0 ? `${correctCount} of ${gradableCount} correct` : 'Your score'}
             {pendingCount > 0 &&
               (marking === 'marked'
                 ? ` · ${pendingCount} written, marked`
@@ -1728,79 +1720,86 @@ function SubmittedState({
       </div>
 
       {/* Question recap — editorial list, no per-row containers */}
-      <div>
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white mb-3 px-1">
-          Question recap
-        </div>
-        <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
-          {questions.map((q, i) => {
-            const a = answers[q.id];
-            const verdict = verdicts[i];
-            const preview = answerPreview(q, a);
-            const verdictMeta = (() => {
-              if (verdict === 'correct') return { label: 'Correct', cls: 'text-emerald-300' };
-              if (verdict === 'incorrect') return { label: 'Wrong', cls: 'text-red-300' };
-              if (verdict === 'pending') {
-                const m = writtenMarks[q.id];
-                if (m?.tutor_marked && m.mark != null)
-                  return { label: `Marked ${m.mark} of ${m.points ?? q.points ?? 1}`, cls: 'text-emerald-300' };
-                if (m?.mark != null)
-                  return { label: `Suggested ${m.mark} of ${m.points ?? q.points ?? 1}, tutor to confirm`, cls: 'text-elec-yellow' };
-                return { label: 'Being marked', cls: 'text-elec-yellow' };
-              }
-              if (verdict === 'no_key') return { label: 'For tutor review', cls: 'text-amber-300' };
-              return { label: 'Skipped', cls: 'text-white' };
-            })();
-            return (
-              <li key={q.id} className="py-4 px-1">
-                <div className="flex items-baseline gap-3">
-                  <span className="text-[10.5px] tabular-nums text-white font-mono w-6 flex-shrink-0">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div
-                      className={cn(
-                        'text-[10.5px] font-semibold uppercase tracking-[0.14em]',
-                        verdictMeta.cls
+      {questions.length === 0 ? (
+        <p className="px-1 text-[13px] leading-relaxed text-white">
+          The questions for this quiz are no longer available, so there is no question by question
+          recap. Your score above still stands. Ask your tutor if you want to go through it.
+        </p>
+      ) : (
+        <div>
+          <div className="text-[13px] font-medium text-white mb-3 px-1">Question recap</div>
+          <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+            {questions.map((q, i) => {
+              const a = answers[q.id];
+              const verdict = verdicts[i];
+              const preview = answerPreview(q, a);
+              const verdictMeta = (() => {
+                if (verdict === 'correct') return { label: 'Correct', cls: 'text-emerald-300' };
+                if (verdict === 'incorrect') return { label: 'Wrong', cls: 'text-red-300' };
+                if (verdict === 'pending') {
+                  const m = writtenMarks[q.id];
+                  if (m?.tutor_marked && m.mark != null)
+                    return {
+                      label: `Marked ${m.mark} of ${m.points ?? q.points ?? 1}`,
+                      cls: 'text-emerald-300',
+                    };
+                  if (m?.mark != null)
+                    return {
+                      label: `Suggested ${m.mark} of ${m.points ?? q.points ?? 1}, tutor to confirm`,
+                      cls: 'text-elec-yellow',
+                    };
+                  return { label: 'Being marked', cls: 'text-elec-yellow' };
+                }
+                if (verdict === 'no_key')
+                  return { label: 'For tutor review', cls: 'text-amber-300' };
+                return { label: 'Skipped', cls: 'text-white' };
+              })();
+              return (
+                <li key={q.id} className="py-4 px-1">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-[12px] tabular-nums text-white font-mono w-6 flex-shrink-0">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className={cn('text-[13px] font-semibold', verdictMeta.cls)}>
+                        {verdictMeta.label}
+                      </div>
+                      <p className="mt-1 text-[13px] sm:text-[13.5px] text-white leading-snug break-words">
+                        {q.question_text}
+                      </p>
+                      {preview && (
+                        <p className="mt-1.5 text-[12px] text-white leading-relaxed break-words">
+                          Your answer: <span className="text-white">{preview}</span>
+                        </p>
                       )}
-                    >
-                      {verdictMeta.label}
+                      {verdict === 'pending' && writtenMarks[q.id]?.feedback && (
+                        <p className="mt-1.5 text-[12px] text-white leading-relaxed break-words">
+                          <span className="font-semibold">
+                            {writtenMarks[q.id]?.tutor_marked
+                              ? 'Feedback: '
+                              : 'Suggested feedback: '}
+                          </span>
+                          {writtenMarks[q.id]?.feedback}
+                        </p>
+                      )}
+                      {(verdict === 'incorrect' || verdict === 'no_key') && q.explanation && (
+                        <p className="mt-1.5 text-[12px] text-white leading-relaxed break-words">
+                          {q.explanation}
+                        </p>
+                      )}
                     </div>
-                    <p className="mt-1 text-[13px] sm:text-[13.5px] text-white leading-snug break-words">
-                      {q.question_text}
-                    </p>
-                    {preview && (
-                      <p className="mt-1.5 text-[11.5px] text-white leading-relaxed break-words">
-                        Your answer: <span className="text-white">{preview}</span>
-                      </p>
-                    )}
-                    {verdict === 'pending' && writtenMarks[q.id]?.feedback && (
-                      <p className="mt-1.5 text-[11.5px] text-white leading-relaxed break-words">
-                        <span className="font-semibold">
-                          {writtenMarks[q.id]?.tutor_marked ? 'Feedback: ' : 'Suggested feedback: '}
-                        </span>
-                        {writtenMarks[q.id]?.feedback}
-                      </p>
-                    )}
-                    {(verdict === 'incorrect' || verdict === 'no_key') && q.explanation && (
-                      <p className="mt-1.5 text-[11.5px] text-white leading-relaxed break-words">
-                        {q.explanation}
-                      </p>
-                    )}
                   </div>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      )}
 
       {/* What happens next — the learner should not have to guess whether
           anyone will see this. */}
       <div className="px-1">
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white">
-          What happens next
-        </div>
+        <div className="text-[13px] font-medium text-white">What happens next</div>
         <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
           {marking === 'marked'
             ? 'Your result is final and on your college record. Your tutor can see every answer.'
@@ -1916,7 +1915,9 @@ function answerPreview(q: QuizQuestion, a: LearnerAnswer | undefined): string | 
   if (a.kind === 'true_false') return a.value ? 'True' : 'False';
   if (a.kind === 'calculation') {
     const expected = (q.expected_answer ?? {}) as { units?: string };
-    return a.numeric == null ? '—' : `${a.numeric}${expected.units ? ' ' + expected.units : ''}`;
+    return a.numeric == null
+      ? 'No answer'
+      : `${a.numeric}${expected.units ? ' ' + expected.units : ''}`;
   }
   if (a.kind === 'image_annotation' || a.kind === 'practical_evidence') {
     const fileLabel =

@@ -8,11 +8,11 @@ import {
   labelCn,
   textareaCn,
 } from '@/components/forms/fieldStyles';
-import { chipCn } from '@/components/college/ui/CollegeUi';
+import { JoinedToggle } from '@/components/college/assessment/AssessmentTabs';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { PresenceBadges } from '@/components/college/ui/PresenceBadges';
-import { UsesAi } from '@/components/college/ui/UsesAi';
+import { AiMarker } from '@/components/college/teaching/TeachingKit';
 
 /* ==========================================================================
    QuizAttemptReviewSheet — tutor / assessor view of a learner's quiz attempt
@@ -234,21 +234,31 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
       }
       footer={
         canMark ? (
-          <div className="grid grid-cols-2 gap-2.5">
-            <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+          // Stacked on a phone (primary on top, by the thumb) so the AI
+          // button's label and its marker are not squeezed into half a row.
+          // From a tablet up: Close sized to its word, the AI action takes the rest.
+          <div className="flex flex-col-reverse gap-2.5 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              className={cn(buttonSecondaryCn, 'sm:w-32 sm:shrink-0')}
+            >
               Close
             </button>
             <button
               type="button"
               onClick={handleRegrade}
               disabled={regrading}
-              className={buttonPrimaryCn}
+              className={cn(
+                buttonPrimaryCn,
+                'inline-flex items-center justify-center px-4 sm:flex-1'
+              )}
             >
               {regrading ? (
                 'Remarking…'
               ) : (
-                <span className="inline-flex items-center gap-1.5">
-                  Remark written answers <UsesAi />
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                  Mark written answers again <AiMarker onYellow />
                 </span>
               )}
             </button>
@@ -330,31 +340,19 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
 
           {/* ── Questions ── */}
           <section className="min-w-0 space-y-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setFilter('all')}
-                className={chipCn(filter === 'all')}
-              >
-                All {questions.length}
-              </button>
-              {freeCount > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setFilter('free')}
-                  className={chipCn(filter === 'free')}
-                >
-                  Written {freeCount}
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => setFilter('wrong')}
-                className={chipCn(filter === 'wrong')}
-              >
-                Lost marks {wrongCount}
-              </button>
-            </div>
+            {/* Three ways to read the attempt: one joined toggle, not yellow chips. */}
+            <JoinedToggle
+              ariaLabel="Which questions to show"
+              value={filter}
+              onChange={setFilter}
+              items={[
+                { key: 'all' as const, label: 'All', count: questions.length },
+                ...(freeCount > 0
+                  ? [{ key: 'free' as const, label: 'Written', count: freeCount }]
+                  : []),
+                { key: 'wrong' as const, label: 'Lost marks', count: wrongCount },
+              ]}
+            />
             {shown.length === 0 ? (
               <p className="text-[13px] text-white">No questions in this group.</p>
             ) : (
@@ -559,7 +557,7 @@ function QuestionReview({
           </div>
         ) : (
           <p className="mt-3 text-[13px] text-white">
-            Waiting for marking. Press Remark written answers if it hasn't started.
+            Waiting for marking. Press Mark written answers again if it hasn't started.
           </p>
         )
       ) : null}

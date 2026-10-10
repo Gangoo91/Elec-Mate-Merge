@@ -22,6 +22,7 @@ import { ApprenticeHubShell } from '@/components/apprentice-hub/ApprenticeHubShe
 import { ApprenticeHubTab } from '@/components/apprentice-hub/ApprenticeHubNav';
 import { PortfolioHome } from '@/components/apprentice-hub/portfolio2/PortfolioHome';
 import { ProfileSection } from '@/components/apprentice-hub/ProfileSection';
+import { useCaptureOutbox } from '@/hooks/portfolio/useCaptureOutbox';
 import {
   UnifiedCaptureSheet,
   type CaptureSeed,
@@ -35,7 +36,8 @@ const isValidTab = (t: string | null): t is ApprenticeHubTab =>
 export default function UnifiedApprenticeHub() {
   useSEO({
     title: 'Apprentice Portfolio',
-    description: 'Your apprenticeship portfolio: evidence, criteria, assessment and EPA gateway readiness.',
+    description:
+      'Your apprenticeship portfolio: evidence, criteria, assessment and EPA gateway readiness.',
     noindex: true,
   });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,6 +50,8 @@ export default function UnifiedApprenticeHub() {
 
   const [showCapture, setShowCapture] = useState(false);
   const [captureSeed, setCaptureSeed] = useState<CaptureSeed | null>(null);
+  // ELE-1894: keeps the capture outbox sending while the learner is in the hub.
+  useCaptureOutbox();
 
   // Keep the URL in step with the tab. Clone the params and replace the entry
   // rather than pushing, so tab switches don't trap the back button.

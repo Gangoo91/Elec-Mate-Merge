@@ -62,7 +62,7 @@ import {
   type CostTier,
   type InstallationCost,
 } from './cost-calculator';
-import { getZsCheck, getCableAdequacy, getVoltageDrop } from './zs-compliance';
+import { computeZs, getZsCheck, getCableAdequacy, getVoltageDrop } from './zs-compliance';
 
 interface EditorialDesignResultsProps {
   design: any;
@@ -414,7 +414,7 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
       // Build a temporary merged circuit so recomputeDerivedFields can read
       // the post-edit state and emit fresh Iz / Vd / maxZs / In.
       const merged = applyEditsToCircuit(baseCircuit, nextCircuitEdits);
-      const derivedPatch = recomputeDerivedFields(merged);
+      const derivedPatch = recomputeDerivedFields(merged, { zs: computeZs(merged, supplyZeNum) });
       return {
         ...prev,
         [circuitIdx]: { ...nextCircuitEdits, ...derivedPatch },
@@ -431,7 +431,9 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
       // setEdits's stale closure) so the ribbon has accurate values.
       const nextCircuitEdits = { ...prevEdits, [field]: after };
       const mergedAfter = applyEditsToCircuit(baseCircuit, nextCircuitEdits);
-      const derivedPatchAfter = recomputeDerivedFields(mergedAfter);
+      const derivedPatchAfter = recomputeDerivedFields(mergedAfter, {
+        zs: computeZs(mergedAfter, supplyZeNum),
+      });
       const snapshotAfter = applyEditsToCircuit(mergedAfter, derivedPatchAfter);
       return {
         ...prev,
@@ -623,18 +625,33 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
   const cableCapacityFindings = useMemo(() => {
     const issues = (design as { cableCapacityIssues?: unknown }).cableCapacityIssues;
     if (!Array.isArray(issues)) return [];
-    return issues.map((issue: Record<string, unknown>) => ({
-      severity: 'error' as const,
-      scope: 'circuit' as const,
-      circuitNumber:
-        typeof issue.circuitNumber === 'number' ? (issue.circuitNumber as number) : undefined,
-      circuitName:
-        typeof issue.circuitName === 'string' ? (issue.circuitName as string) : undefined,
-      title: 'Cable capacity below protective device rating',
-      detail: String(issue.error ?? 'Cable current-carrying capacity is insufficient.'),
-      reg: '433.1.1',
-      recommendation: typeof issue.recommendation === 'string' ? issue.recommendation : undefined,
-    }));
+    return issues.map((issue: Record<string, unknown>) => {
+      // The backend reports several kinds in this list (deterministic-sizing.ts,
+      // design-pipeline.ts) — title each by what actually failed. Older saved
+      // designs have no `kind`, so fall back to the message text.
+      const text = String(issue.error ?? '');
+      const kind =
+        typeof issue.kind === 'string'
+          ? issue.kind
+          : /^voltage drop/i.test(text)
+            ? 'voltage-drop'
+            : /^design current/i.test(text)
+              ? 'design-current'
+              : 'capacity';
+      const label = ISSUE_LABELS[kind] ?? ISSUE_LABELS.capacity;
+      return {
+        severity: label.severity,
+        scope: kind === 'supply-ze' ? ('system' as const) : ('circuit' as const),
+        circuitNumber:
+          typeof issue.circuitNumber === 'number' ? (issue.circuitNumber as number) : undefined,
+        circuitName:
+          typeof issue.circuitName === 'string' ? (issue.circuitName as string) : undefined,
+        title: label.title,
+        detail: text || 'Cable current-carrying capacity is insufficient.',
+        reg: label.reg,
+        recommendation: typeof issue.recommendation === 'string' ? issue.recommendation : undefined,
+      };
+    });
   }, [design]);
 
   // ── Compliance concerns: failing circuits that need attention ─────────
@@ -4604,7 +4621,22 @@ const CircuitKeyStats = ({
   const cable = getCableAdequacy(circuit);
   const vd = getVoltageDrop(circuit);
 
-  const iz = cable.iz ?? Number(circuit?.calculations?.Iz ?? 0);
+  // While the circuit is as designed, Iz is the designer's Appendix 4 figure
+  // for its installation method — the same one its working line explains.
+  // The local lookup has no method column (2.5mm² T&E: 24 A here, 27 A
+  // clipped direct), so it is the fallback once the circuit is edited.
+  const wf = circuit?.calculations?.workingFor;
+  const asDesigned =
+    !!wf &&
+    Number(wf.cableSize) === Number(cableSize) &&
+    Number(wf.cpcSize ?? 0) === Number(circuit?.cpcSize ?? 0) &&
+    Number(wf.rating ?? 0) === Number(proRating ?? 0) &&
+    Number(wf.cableLength ?? 0) === Number(circuit?.cableLength ?? 0);
+  const designedIz = Number(circuit?.calculations?.Iz);
+  const iz =
+    asDesigned && designedIz > 0
+      ? designedIz
+      : (cable.iz ?? Number(circuit?.calculations?.Iz ?? 0));
   const vdPct = vd.known
     ? (vd.percent ?? 0)
     : Number(circuit?.calculations?.voltageDrop?.percent ?? 0);
@@ -4642,6 +4674,21 @@ const CircuitKeyStats = ({
           ? 'warn'
           : 'bad';
 
+  // The designer's working (Appendix 4 / OSG), shown only while the circuit is
+  // as designed — after an edit on this page the figures above are re-derived
+  // and these lines would describe a different cable.
+  const workings: Array<{ label: string; text: string }> = [];
+  if (asDesigned) {
+    const izW = circuit?.calculations?.izWorking;
+    const vdW = circuit?.calculations?.voltageDrop?.working;
+    const zsW = circuit?.expectedTests?.zs?.working;
+    if (typeof izW === 'string') workings.push({ label: 'Iz', text: izW });
+    if (typeof vdW === 'string') workings.push({ label: 'Vd', text: vdW });
+    // Zs from the design is at the origin; on a sub-board the figure above
+    // adds the submain, so the line would not match it.
+    if (typeof zsW === 'string' && zsCorrection <= 0.005) workings.push({ label: 'Zs', text: zsW });
+  }
+
   return (
     <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_12%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] overflow-hidden">
       {/* Row 1: status + cable + protection — high level */}
@@ -4669,7 +4716,9 @@ const CircuitKeyStats = ({
             overloaded
               ? `OVERLOAD — needs ${required.toFixed(0)} A`
               : izHeadroomPct != null
-                ? `+${izHeadroomPct}% headroom`
+                ? cable.ringFinal
+                  ? `+${izHeadroomPct}% over 20 A ring min.`
+                  : `+${izHeadroomPct}% headroom`
                 : ''
           }
           tone={izTone}
@@ -4693,6 +4742,19 @@ const CircuitKeyStats = ({
           tone={zsTone}
         />
       </div>
+      {workings.length > 0 && (
+        <div className="border-t border-white/[0.08] px-3 sm:px-4 py-3">
+          <div className="text-[12px] font-semibold text-white">Checked against BS 7671</div>
+          <dl className="mt-1.5 space-y-1">
+            {workings.map((w) => (
+              <div key={w.label} className="flex gap-2 text-[12px] leading-snug text-white">
+                <dt className="w-8 shrink-0 font-semibold">{w.label}</dt>
+                <dd className="min-w-0 break-words tabular-nums">{w.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )}
     </div>
   );
 };
@@ -5209,6 +5271,23 @@ const AutoFixButton = ({
       Auto-fix
     </button>
   );
+};
+
+// Titles for the backend's sizing findings, by `kind`.
+const ISSUE_LABELS: Record<string, { title: string; reg: string; severity: 'warn' | 'error' }> = {
+  capacity: {
+    title: 'Cable capacity below protective device rating',
+    reg: '433.1.1',
+    severity: 'error',
+  },
+  'voltage-drop': { title: 'Voltage drop over the limit', reg: '525', severity: 'error' },
+  'design-current': {
+    title: 'Design current above the protective device',
+    reg: '433.1.1',
+    severity: 'error',
+  },
+  'supply-ze': { title: 'Check the supply Ze', reg: '411.4', severity: 'warn' },
+  zs: { title: 'Earth fault loop impedance over the maximum', reg: '411.4.4', severity: 'error' },
 };
 
 // ─── Design audit section (multi-pass critique loop output) ─────────────────

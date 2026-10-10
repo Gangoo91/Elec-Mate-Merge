@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -16,7 +16,15 @@ import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
+import { useWorkerOutbox } from '@/hooks/useWorkerOutbox';
+import { OFFLINE_FIRST, offlineSnapshot } from '@/lib/workerOfflineCache';
+import { submitWorkerAction, OutboxRefusedError, type SubmitResult } from '@/lib/workerOutbox';
+import { queuedToast } from '@/components/worker-tools/outboxToast';
 import { WT_SIGNOFFS_HELP } from '@/components/worker-tools/help/worker-help';
+import { MyContractsPanel } from '@/components/worker-tools/MyContractsPanel';
+import { MySafetySignOffsPanel } from '@/components/worker-tools/MySafetySignOffsPanel';
+import { currentSigningLocation, locationToText } from '@/lib/signingLocation';
+import { downloadSignedCopy } from '@/utils/signedCopyPdf';
 import {
   Eyebrow,
   Pill,
@@ -49,6 +57,8 @@ interface PackSignOff {
   id: string;
   job_pack_id: string;
   acknowledged_at: string | null;
+  /** ELE-1828: signed on this phone, not sent yet. */
+  offline_pending?: boolean;
   // Evidence captured at signing — the record must read like evidence, not a
   // checkbox: the drawn signature, the device it was signed on, and (if
   // recorded) where.
@@ -79,9 +89,36 @@ interface PackSignOff {
 
 const useMySignOffs = () => {
   const { data: me } = useMyEmployeeRecord();
+  // ELE-1828: a signature still on the phone shows as signed, marked waiting.
+  const { pending } = useWorkerOutbox();
+  const waiting = pending.filter((o) => o.kind === 'pack_signoff');
+  const waitingKey = waiting.map((o) => o.id).join(',');
+  const overlay = useCallback(
+    (rows: PackSignOff[]): PackSignOff[] => {
+      if (waiting.length === 0) return rows;
+      const byAck = new Map(waiting.map((o) => [String(o.payload.ackId), o.payload]));
+      return rows.map((r) => {
+        const p = byAck.get(r.id);
+        return p && !r.acknowledged_at
+          ? {
+              ...r,
+              acknowledged_at: String(p.acknowledged_at),
+              signature_data: String(p.signature_data),
+              device_info: String(p.device_info),
+              offline_pending: true,
+            }
+          : r;
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [waitingKey]
+  );
   return useQuery({
     queryKey: ['my-pack-signoffs', me?.id],
-    queryFn: async (): Promise<PackSignOff[]> => {
+    // ELE-1828: packs (and their document text) open with no signal.
+    ...OFFLINE_FIRST,
+    select: overlay,
+    queryFn: () => offlineSnapshot(`my-pack-signoffs:${me?.id}`, async (): Promise<PackSignOff[]> => {
       const { data, error } = await supabase
         .from('employer_job_pack_acknowledgements')
         .select(
@@ -108,7 +145,7 @@ const useMySignOffs = () => {
           (d) => (d as { job_pack_id?: string }).job_pack_id === a.job_pack_id
         ),
       }));
-    },
+    }),
     enabled: !!me?.id,
     staleTime: 30 * 1000,
   });
@@ -200,32 +237,42 @@ export default function SignOffsPage() {
   const signed = useMemo(() => signoffs.filter((s) => !!s.acknowledged_at), [signoffs]);
 
   const signMutation = useMutation({
-    mutationFn: async () => {
+    // Runs with no signal (the default 'online' mode would pause it): the
+    // outbox decides whether it goes now or waits on the phone.
+    networkMode: 'always',
+    // ELE-1828: through the outbox, so a pack can be signed with no signal.
+    // Guarded on acknowledged_at IS NULL server-side (never signs over a
+    // signature); the time recorded is when the worker signed on the phone.
+    mutationFn: async (): Promise<SubmitResult> => {
       if (!selected || !signature) throw new Error('Sign first');
-      // .select() so an RLS refusal (0 rows, no error) fails loudly instead
-      // of showing "Signed" over an unsigned record.
-      const { data, error } = await supabase
-        .from('employer_job_pack_acknowledgements')
-        .update({
+      const { result } = await submitWorkerAction({
+        kind: 'pack_signoff',
+        label: `Sign-off · ${selected.pack?.title ?? 'Job pack'}`,
+        detail: [selected.pack?.client, selected.pack?.location].filter(Boolean).join(' · ') || null,
+        jobId: selected.pack?.job_id ?? null,
+        payload: {
+          ackId: selected.id,
           acknowledged_at: new Date().toISOString(),
           signature_data: signature,
           device_info: navigator.userAgent.slice(0, 200),
-        })
-        .eq('id', selected.id)
-        .is('acknowledged_at', null)
-        .select('id');
-      if (error) throw error;
-      if (!data || data.length === 0) {
-        throw new Error('This pack could not be signed. It may already be signed, or your team link has changed.');
-      }
+          // ELE-2010: where it was signed, when the phone says (never blocks).
+          location: locationToText(await currentSigningLocation()),
+        },
+      });
+      return result;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my-pack-signoffs'] });
-      toast.success('Signed. The office has been notified');
+    onSuccess: (result) => {
+      if (result === 'sent') {
+        queryClient.invalidateQueries({ queryKey: ['my-pack-signoffs'] });
+        toast.success('Signed. The office has been notified');
+      } else {
+        queuedToast('Signed');
+      }
       setSelected(null);
       setSignature(null);
     },
-    onError: () => toast.error('Could not save your signature'),
+    onError: (e) =>
+      toast.error(e instanceof OutboxRefusedError ? e.message : 'Could not save your signature'),
   });
 
   /* Filter helpers — tab + free-text search across title/client/location. */
@@ -266,7 +313,13 @@ export default function SignOffsPage() {
           <span className="text-[14px] font-medium text-white leading-snug">
             {s.pack?.title || 'Job pack'}
           </span>
-          {isSigned ? <Pill tone="emerald">Signed</Pill> : <Pill tone="amber">Sign</Pill>}
+          {s.offline_pending ? (
+            <Pill tone="amber">Waiting to send</Pill>
+          ) : isSigned ? (
+            <Pill tone="emerald">Signed</Pill>
+          ) : (
+            <Pill tone="amber">Sign</Pill>
+          )}
         </div>
         <div className="mt-auto pl-2 text-[11.5px] text-white truncate">
           {subtitleParts.length > 0 ? subtitleParts.join(' · ') : 'Job pack'}
@@ -274,6 +327,33 @@ export default function SignOffsPage() {
         </div>
       </button>
     );
+  };
+
+  /* ── Signed copy (ELE-2010) ─────────────────────────────────────────── */
+  const downloadPackCopy = async (s: PackSignOff) => {
+    if (!s.acknowledged_at) return;
+    try {
+      await downloadSignedCopy({
+        kind: 'Job pack',
+        title: s.pack?.title || 'Job pack',
+        from: s.pack?.client ? `For ${s.pack.client}` : null,
+        facts: [{ label: 'Site', value: s.pack?.location }],
+        sections: [
+          { heading: 'Scope of works', lines: (s.pack?.scope || '').split(/\n+/) },
+          { heading: 'Hazards', lines: s.pack?.hazards ?? [], list: true },
+          { heading: 'Required credentials', lines: s.pack?.required_certifications ?? [], list: true },
+          { heading: 'Briefing', lines: (s.pack?.briefing_content || '').split(/\n+/) },
+          { heading: 'Documents', lines: s.documents.map((d) => d.title), list: true },
+        ],
+        signerName: me?.name,
+        signedAt: s.acknowledged_at,
+        signature: s.signature_data,
+        location: s.location,
+        device: s.device_info,
+      });
+    } catch {
+      toast.error('Could not make the signed copy. Try again.');
+    }
   };
 
   /* ── Detail body — scope / hazards / docs / signature for one pack ─── */
@@ -289,7 +369,9 @@ export default function SignOffsPage() {
               <div className="min-w-0">
                 <p className="text-[13px] font-medium text-white">Signature record</p>
                 <p className="text-[11.5px] text-white">
-                  {relativeTime(s.acknowledged_at!)} · the office has been notified
+                  {s.offline_pending
+                    ? `${relativeTime(s.acknowledged_at!)} · saved on this phone, sends when you have signal`
+                    : `${relativeTime(s.acknowledged_at!)} · the office has been notified`}
                 </p>
               </div>
             </div>
@@ -327,6 +409,17 @@ export default function SignOffsPage() {
                 </div>
               )}
             </div>
+
+            {/* ELE-2010: the worker's own signed copy. */}
+            {!s.offline_pending && (
+              <button
+                type="button"
+                onClick={() => void downloadPackCopy(s)}
+                className="inline-flex h-11 w-full items-center justify-center rounded-full border border-white/[0.14] bg-white/[0.06] px-4 text-[13.5px] font-semibold text-white touch-manipulation"
+              >
+                Download signed copy
+              </button>
+            )}
           </div>
         )}
 
@@ -594,6 +687,12 @@ export default function SignOffsPage() {
       description="Job packs the office has sent you to read and sign before you start."
       help={WT_SIGNOFFS_HELP}
     >
+      {/* Employment / subcontractor contracts from the firm (ELE-1982) */}
+      <MyContractsPanel className="mb-6" />
+
+      {/* The firm's toolbox talks and job RAMS, signed in the app (ELE-1817) */}
+      <MySafetySignOffsPanel className="mb-6" />
+
       {isLoading ? (
         <LoadingState />
       ) : signoffs.length === 0 ? (

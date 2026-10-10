@@ -113,9 +113,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
     <div className="space-y-5 animate-fade-in">
       {(!activeMembership || memberships.length === 0) && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Professional body required
-          </span>
+          <span className="text-[13px] font-semibold text-white">Professional body required</span>
           <p className="text-[14px] text-white leading-relaxed">
             {memberships.length === 0
               ? 'Please set up your professional body membership in settings to enable CPD tracking.'
@@ -126,9 +124,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Log CPD activity
-          </span>
+          <span className="text-[13px] font-semibold text-white">Log CPD activity</span>
           {activeMembership && (
             <p className="text-[14px] text-white">
               Recording for{' '}

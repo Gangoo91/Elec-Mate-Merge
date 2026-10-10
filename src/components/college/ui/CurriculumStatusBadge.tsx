@@ -84,15 +84,13 @@ export function CurriculumStatusBadge({
 
   const seeded = status.is_curriculum_seeded;
   const tone = seeded ? 'emerald' : 'amber';
-  const label = seeded
-    ? `${status.ac_count} ACs grounded`
-    : 'AC catalogue not loaded';
+  const label = seeded ? `${status.ac_count} ACs grounded` : 'AC catalogue not loaded';
 
   if (variant === 'compact') {
     return (
       <span
         className={cn(
-          'inline-flex items-center gap-1 h-5 px-2 rounded-full text-[10px] font-medium tracking-tight tabular-nums',
+          'inline-flex items-center gap-1 h-5 px-2 rounded-full text-[12px] font-medium tracking-tight tabular-nums',
           tone === 'emerald'
             ? 'bg-emerald-500/[0.08] border border-emerald-400/30 text-emerald-200'
             : 'bg-amber-500/[0.10] border border-amber-400/30 text-amber-200',
@@ -101,7 +99,7 @@ export function CurriculumStatusBadge({
         title={
           seeded
             ? `AI grounding for ${status.qualificationCode}: ${status.ac_count} ACs available for citation, semantic search active.`
-            : `${status.qualificationCode}: no AC catalogue loaded yet — AI surfaces will produce general guidance only, not AC-cited recommendations.`
+            : `${status.qualificationCode}: no AC catalogue loaded yet. AI surfaces will produce general guidance only, not AC-cited recommendations.`
         }
       >
         {label}
@@ -122,7 +120,7 @@ export function CurriculumStatusBadge({
     >
       <div
         className={cn(
-          'text-[10px] font-medium uppercase tracking-[0.18em]',
+          'text-[13px] font-medium',
           tone === 'emerald' ? 'text-emerald-200' : 'text-amber-200'
         )}
       >
@@ -139,7 +137,7 @@ export function CurriculumStatusBadge({
           <>
             <span className="text-amber-300 font-medium">No AC catalogue loaded</span> for{' '}
             <span className="font-medium">{status.qualificationCode}</span>. The AI will produce
-            general guidance only — recommendations won't cite specific ACs until the catalogue is
+            general guidance only. Recommendations won't cite specific ACs until the catalogue is
             seeded.
           </>
         )}

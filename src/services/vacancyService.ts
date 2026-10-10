@@ -19,59 +19,17 @@ const sendPushNotification = async (
   }
 };
 
-// Helper to notify available electricians of new vacancy
-async function notifyAvailableElectricians(vacancy: Vacancy) {
-  try {
-    // Only notify for open vacancies
-    if (vacancy.status !== 'Open') return;
-
-    // Get all electricians marked as available for hire. The profile table
-    // has NO user_id column (verified live 2026-07-18) — the auth uid lives on
-    // the linked employer_employees row, so a bare select('user_id') 42703'd
-    // and every "New Job Opportunity" push silently died.
-    const { data: profileRows, error } = await supabase
-      .from('employer_elec_id_profiles')
-      .select('employee:employer_employees(user_id)')
-      .eq('available_for_hire', true);
-
-    const availableProfiles = (profileRows || [])
-      .map((p) => ({
-        user_id: (p.employee as { user_id?: string | null } | null)?.user_id ?? null,
-      }))
-      .filter((p) => p.user_id);
-
-    if (error || availableProfiles.length === 0) {
-      return;
-    }
-
-    // Format salary for notification
-    let salaryText = '';
-    if (vacancy.salary_min && vacancy.salary_max) {
-      salaryText = ` - £${(vacancy.salary_min / 1000).toFixed(0)}k-£${(vacancy.salary_max / 1000).toFixed(0)}k`;
-    } else if (vacancy.salary_max) {
-      salaryText = ` - Up to £${(vacancy.salary_max / 1000).toFixed(0)}k`;
-    }
-
-    // Send notification to each available electrician (fire and forget)
-    for (const profile of availableProfiles) {
-      if (profile.user_id) {
-        sendPushNotification(
-          profile.user_id,
-          '🔧 New Job Opportunity',
-          `${vacancy.title} in ${vacancy.location}${salaryText}`,
-          'vacancy',
-          { vacancyId: vacancy.id }
-        ).catch(console.error);
-      }
-    }
-  } catch (error) {
-    console.error('Error notifying available electricians:', error);
-  }
-}
+// ELE-1957: publishing used to fire a client-side "New Job Opportunity" push
+// at every available electrician. It read other firms' roster rows that RLS
+// hides, so it reached nobody, and when it did work it was a blast rather
+// than an invite. Reaching the pool is now explicit: the vacancy page offers
+// the matching, opted-in people (vacancy_talent_matches) and invites them
+// server-side (invite_vacancy_matches), which also sends the push.
 
 // 'Apprenticeship' was always accepted by the wizard schema and built-in
 // template but missing here — the gap was papered over with `as any` casts
-export type EmploymentType = 'Full-time' | 'Part-time' | 'Contract' | 'Temporary' | 'Apprenticeship';
+export type EmploymentType =
+  'Full-time' | 'Part-time' | 'Contract' | 'Temporary' | 'Apprenticeship';
 export type VacancyStatus = 'Open' | 'Closed' | 'Filled' | 'Draft';
 
 export interface Vacancy {
@@ -196,29 +154,10 @@ export const createVacancy = async (
     throw error;
   }
 
-  // Notify available electricians if vacancy is published as open
-  if (data.status === 'Open') {
-    notifyAvailableElectricians(data).catch(console.error);
-  }
-
   return data;
 };
 
-export const updateVacancy = async (
-  id: string,
-  updates: Partial<Vacancy>
-): Promise<Vacancy> => {
-  // Get current status to check if it's being published
-  let wasNotOpen = false;
-  if (updates.status === 'Open') {
-    const { data: current } = await supabase
-      .from('employer_vacancies')
-      .select('status')
-      .eq('id', id)
-      .single();
-    wasNotOpen = current?.status !== 'Open';
-  }
-
+export const updateVacancy = async (id: string, updates: Partial<Vacancy>): Promise<Vacancy> => {
   const { data, error } = await supabase
     .from('employer_vacancies')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -231,11 +170,6 @@ export const updateVacancy = async (
     // write (RLS denial, dropped connection)
     console.error('Error updating vacancy:', error);
     throw error;
-  }
-
-  // Notify available electricians if vacancy just became open
-  if (wasNotOpen && data.status === 'Open') {
-    notifyAvailableElectricians(data).catch(console.error);
   }
 
   return data;
@@ -365,37 +299,11 @@ export const createApplication = async (
   // Update applications count on vacancy
   await supabase.rpc('increment_applications_count', { vacancy_id: application.vacancy_id });
 
-  // Send push notification to vacancy owner
-  notifyVacancyOwner(application.vacancy_id, application.applicant_name, data.id).catch(
-    console.error
-  );
+  // The firm's push now comes from the trg_notify_vacancy_application trigger
+  // (ELE-1957), so every apply path rings the office, not just this one.
 
   return data;
 };
-
-// Helper to notify vacancy owner of new application
-async function notifyVacancyOwner(vacancyId: string, applicantName: string, applicationId: string) {
-  try {
-    // Get vacancy details including owner
-    const { data: vacancy } = await supabase
-      .from('employer_vacancies')
-      .select('title, employer_id')
-      .eq('id', vacancyId)
-      .single();
-
-    if (vacancy?.employer_id) {
-      await sendPushNotification(
-        vacancy.employer_id,
-        '📋 New Job Application',
-        `${applicantName} applied for ${vacancy.title}`,
-        'job',
-        { applicationId, vacancyId, isEmployer: true }
-      );
-    }
-  } catch (error) {
-    console.error('Error notifying vacancy owner:', error);
-  }
-}
 
 export const updateApplicationStatus = async (
   id: string,

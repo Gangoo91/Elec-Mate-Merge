@@ -113,161 +113,151 @@ const trackingTips = [
   "Use your training provider's official log template — auditors expect a specific format",
   'If a session is cancelled, log that too — it helps if you need to claim catch-up time',
 ];
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const WhatCountsPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · OJT"
-        title="What Counts as OJT"
-        backTo="/apprentice/toolbox/off-job-training-guide"
-      />
-      <HubBody>
-        {/* Activities That Count */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Activities That Count
-              </span>
-            </div>
+    <GuidePage
+      section="Apprentice · OJT"
+      area="Off-the-job training"
+      title="What Counts as OJT"
+      backTo="/apprentice/toolbox/off-job-training-guide"
+    >
+      {/* Activities That Count */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Activities That Count</span>
           </div>
-
-          {activitiesThatCount.map((item) => (
-            <div
-              key={item.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 flex items-start gap-3">
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-medium text-white text-sm">{item.title}</h3>
-                  <p className="text-white text-sm mt-1">{item.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
 
-        {/* Activities That Don't Count */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                What Does NOT Count
-              </span>
-            </div>
-          </div>
-
-          {activitiesThatDont.map((item) => (
-            <div key={item.title} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
-              <div className="p-4 sm:p-5 flex items-start gap-3">
-                <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-medium text-white text-sm">{item.title}</h3>
-                  <p className="text-white text-sm mt-1">{item.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Grey Area Scenarios */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Grey Area Scenarios
-              </span>
-            </div>
-          </div>
-
-          <p className="text-white text-sm">
-            Not sure if something counts? Here are real-world examples with verdicts:
-          </p>
-
-          {greyAreaScenarios.map((item) => (
-            <div
-              key={item.scenario}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 space-y-2">
-                <div className="flex items-start gap-2">
-                  <HelpCircle className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                  <p className="text-white text-sm font-medium">{item.scenario}</p>
-                </div>
-                <div className="flex items-start gap-2 ml-7">
-                  {item.verdict ? (
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                  ) : (
-                    <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
-                  )}
-                  <p className="text-white text-sm">{item.explanation}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Hours Tracking Tips */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Hours Tracking Tips
-              </span>
-            </div>
-          </div>
-
+        {activitiesThatCount.map((item) => (
           <div
+            key={item.title}
             className={cn(
-              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
               CARD_SURFACE
             )}
           >
-            <div className="sm:p-5 space-y-3">
-              <div className="flex items-center gap-2 mb-2">
-                <Clock className="h-3.5 w-3.5 text-elec-yellow/85" />
-                <p className="text-white text-sm font-medium">Keep accurate records from day one</p>
+            <div className="sm:p-5 py-4 flex items-start gap-3">
+              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-white text-sm">{item.title}</h3>
+                <p className="text-white text-sm mt-1">{item.desc}</p>
               </div>
-              <ul className="space-y-2">
-                {trackingTips.map((tip) => (
-                  <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
             </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Activities That Don't Count */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-red-300">What Does NOT Count</span>
           </div>
         </div>
 
-        {/* ST0152 Note */}
-        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-          <div className="sm:p-5">
-            <p className="text-white text-sm leading-relaxed">
-              All off-the-job training must be directly relevant to your apprenticeship standard.
-              For an Installation &amp; Maintenance Electrician (ST0152) the fixed requirement is{' '}
-              {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString()} hours, with an absolute floor of{' '}
-              {OTJ_HOURS_FLOOR} hours that delivery can never fall below. Your training provider
-              should map each activity to specific knowledge, skills, and behaviours (KSBs) in the
-              standard. If you are unsure whether an activity qualifies, ask your training provider
-              before logging it.
-            </p>
+        {activitiesThatDont.map((item) => (
+          <div key={item.title} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+            <div className="p-4 sm:p-5 flex items-start gap-3">
+              <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-white text-sm">{item.title}</h3>
+                <p className="text-white text-sm mt-1">{item.desc}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Grey Area Scenarios */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Grey Area Scenarios</span>
           </div>
         </div>
-      </HubBody>
-    </HubPage>
+
+        <p className="text-white text-sm">
+          Not sure if something counts? Here are real-world examples with verdicts:
+        </p>
+
+        {greyAreaScenarios.map((item) => (
+          <div
+            key={item.scenario}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4 space-y-2">
+              <div className="flex items-start gap-2">
+                <HelpCircle className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-white text-sm font-medium">{item.scenario}</p>
+              </div>
+              <div className="flex items-start gap-2 ml-7">
+                {item.verdict ? (
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                ) : (
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
+                )}
+                <p className="text-white text-sm">{item.explanation}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Hours Tracking Tips */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Hours Tracking Tips</span>
+          </div>
+        </div>
+
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
+          <div className="sm:p-5 space-y-3">
+            <div className="flex items-center gap-2 mb-2">
+              <Clock className="h-3.5 w-3.5 text-elec-yellow" />
+              <p className="text-white text-sm font-medium">Keep accurate records from day one</p>
+            </div>
+            <ul className="space-y-2">
+              {trackingTips.map((tip) => (
+                <li key={tip} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* ST0152 Note */}
+      <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+        <div className="sm:p-5">
+          <p className="text-white text-sm leading-relaxed">
+            All off-the-job training must be directly relevant to your apprenticeship standard. For
+            an Installation &amp; Maintenance Electrician (ST0152) the fixed requirement is{' '}
+            {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString()} hours, with an absolute floor of{' '}
+            {OTJ_HOURS_FLOOR} hours that delivery can never fall below. Your training provider
+            should map each activity to specific knowledge, skills, and behaviours (KSBs) in the
+            standard. If you are unsure whether an activity qualifies, ask your training provider
+            before logging it.
+          </p>
+        </div>
+      </div>
+    </GuidePage>
   );
 };
 

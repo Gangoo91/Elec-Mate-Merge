@@ -29,16 +29,16 @@ export type Tone =
   | 'indigo';
 
 export const toneAccent: Record<Tone, string> = {
-  blue: 'from-blue-500/70 via-blue-400/70 to-cyan-400/70',
-  emerald: 'from-emerald-500/70 via-emerald-400/70 to-green-400/70',
-  amber: 'from-amber-500/70 via-amber-400/70 to-yellow-400/70',
-  purple: 'from-purple-500/70 via-violet-400/70 to-indigo-400/70',
-  yellow: 'from-elec-yellow/80 via-amber-400/70 to-orange-400/70',
-  green: 'from-green-500/70 via-emerald-400/70 to-green-400/70',
-  orange: 'from-orange-500/70 via-amber-400/70 to-orange-500/70',
-  red: 'from-red-500/70 via-rose-400/70 to-red-500/70',
-  cyan: 'from-cyan-500/70 via-sky-400/70 to-blue-400/70',
-  indigo: 'from-indigo-500/70 via-violet-400/70 to-purple-400/70',
+  blue: 'from-transparent to-transparent',
+  emerald: 'from-transparent to-transparent',
+  amber: 'from-transparent to-transparent',
+  purple: 'from-transparent to-transparent',
+  yellow: 'from-transparent to-transparent',
+  green: 'from-transparent to-transparent',
+  orange: 'from-transparent to-transparent',
+  red: 'from-transparent to-transparent',
+  cyan: 'from-transparent to-transparent',
+  indigo: 'from-transparent to-transparent',
 };
 
 export const toneText: Record<Tone, string> = {
@@ -67,18 +67,18 @@ export const toneDot: Record<Tone, string> = {
   indigo: 'bg-indigo-400',
 };
 
-/** Diagonal gradient wash — gives cards a visible tone surface (not just a 1px hairline). */
+/** Kept for callers; cards carry no tinted wash, matching the Overview. */
 export const toneWash: Record<Tone, string> = {
-  blue: 'bg-gradient-to-br from-blue-500/[0.08] via-transparent to-transparent',
-  emerald: 'bg-gradient-to-br from-emerald-500/[0.08] via-transparent to-transparent',
-  amber: 'bg-gradient-to-br from-white/[0.04] via-transparent to-transparent',
-  purple: 'bg-gradient-to-br from-purple-500/[0.08] via-transparent to-transparent',
-  yellow: 'bg-gradient-to-br from-white/[0.04] via-transparent to-transparent',
-  green: 'bg-gradient-to-br from-green-500/[0.08] via-transparent to-transparent',
-  orange: 'bg-gradient-to-br from-orange-500/[0.08] via-transparent to-transparent',
-  red: 'bg-gradient-to-br from-red-500/[0.08] via-transparent to-transparent',
-  cyan: 'bg-gradient-to-br from-cyan-500/[0.08] via-transparent to-transparent',
-  indigo: 'bg-gradient-to-br from-indigo-500/[0.08] via-transparent to-transparent',
+  blue: '',
+  emerald: '',
+  amber: '',
+  purple: '',
+  yellow: '',
+  green: '',
+  orange: '',
+  red: '',
+  cyan: '',
+  indigo: '',
 };
 
 /** Icon chip — toned rounded square behind a lucide icon. */
@@ -95,18 +95,18 @@ export const toneChip: Record<Tone, string> = {
   indigo: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400',
 };
 
-/** Soft radial bloom used behind page-hero titles so each hub carries its colour. */
+/** Kept for callers; page heroes carry no glow, matching the Overview. */
 const toneGlow: Record<Tone, string> = {
-  blue: 'bg-blue-500/[0.14]',
-  emerald: 'bg-emerald-500/[0.14]',
-  amber: 'bg-white/[0.06]',
-  purple: 'bg-purple-500/[0.14]',
-  yellow: 'bg-white/[0.06]',
-  green: 'bg-green-500/[0.14]',
-  orange: 'bg-orange-500/[0.14]',
-  red: 'bg-red-500/[0.14]',
-  cyan: 'bg-cyan-500/[0.14]',
-  indigo: 'bg-indigo-500/[0.14]',
+  blue: 'hidden',
+  emerald: 'hidden',
+  amber: 'hidden',
+  purple: 'hidden',
+  yellow: 'hidden',
+  green: 'hidden',
+  orange: 'hidden',
+  red: 'hidden',
+  cyan: 'hidden',
+  indigo: 'hidden',
 };
 
 const pillTone: Record<Tone, string> = {
@@ -175,7 +175,7 @@ function AnimatedValue({ value }: { value: ReactNode }) {
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
+      className={cn('text-[12px] font-semibold text-white', className)}
     >
       {children}
     </div>
@@ -244,7 +244,7 @@ export function Divider({ label, className }: { label?: string; className?: stri
     <div className={cn('flex items-center gap-3 pt-2', className)}>
       <div className="h-px flex-1 bg-white/[0.06]" />
       {label && (
-        <span className="text-[10px] text-white font-semibold uppercase tracking-[0.2em]">
+        <span className="text-[12px] font-semibold text-white">
           {label}
         </span>
       )}
@@ -300,24 +300,23 @@ export function PageHero({
           />
         </>
       )}
-      <div className="relative pt-4 sm:pt-6 lg:pt-8 pb-3 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-6">
+      <div className="relative pt-2 sm:pt-4 pb-1 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2.5">
-            {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
             {live && (
               <span className="inline-flex items-center gap-1.5">
                 <PulseDot tone={live.tone ?? 'green'} />
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[12px] font-semibold text-white">
                   {live.label ?? 'Live'}
                 </span>
               </span>
             )}
           </div>
-          <h1 className="mt-2 text-[24px] sm:text-[36px] lg:text-[48px] font-semibold text-white tracking-[-0.02em] leading-[1.15] sm:leading-[1.05] break-words hyphens-auto">
+          <h1 className="text-[26px] sm:text-[30px] lg:text-[34px] font-semibold text-white tracking-tight leading-[1.15] break-words">
             {title}
           </h1>
           {description && (
-            <p className="mt-3 text-[13.5px] sm:text-[15px] text-white max-w-2xl leading-relaxed">
+            <p className="mt-1.5 text-[14px] sm:text-[15px] text-white max-w-2xl leading-snug">
               {description}
             </p>
           )}
@@ -347,7 +346,7 @@ export function SectionHeader({ eyebrow, title, meta, action, onAction }: Sectio
       <div className="min-w-0">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-          <h2 className="text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-tight">
+          <h2 className="text-[16px] sm:text-[17px] font-semibold text-white tracking-tight leading-tight">
             {title}
           </h2>
           {meta}
@@ -356,7 +355,7 @@ export function SectionHeader({ eyebrow, title, meta, action, onAction }: Sectio
       {action && onAction && (
         <button
           onClick={onAction}
-          className="-mb-3 inline-flex h-11 items-center text-[13px] font-medium text-elec-yellow hover:text-elec-yellow transition-colors shrink-0 whitespace-nowrap touch-manipulation"
+          className="-mb-3 inline-flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors shrink-0 whitespace-nowrap touch-manipulation"
         >
           {action} →
         </button>
@@ -402,7 +401,7 @@ export function HeroNumber({
         )}
       />
       <div aria-hidden className={cn('absolute inset-0 pointer-events-none', toneWash[tone])} />
-      <div className="relative p-5 sm:p-7 lg:p-8">
+      <div className="relative p-4 sm:p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2.5 min-w-0">
             {live && <PulseDot tone="green" />}
@@ -411,7 +410,7 @@ export function HeroNumber({
           {actions && <div className="shrink-0 -mt-1">{actions}</div>}
         </div>
         <div className="mt-5">
-          <div className="text-[40px] sm:text-6xl lg:text-7xl font-semibold text-white tracking-tight leading-none tabular-nums">
+          <div className="text-[32px] sm:text-[40px] font-semibold text-white tracking-tight leading-none tabular-nums">
             <AnimatedValue value={value} />
           </div>
           {caption && <div className="mt-2 text-[13px] text-white">{caption}</div>}
@@ -428,13 +427,13 @@ export function HeroNumber({
               >
                 <div
                   className={cn(
-                    'text-xl sm:text-2xl lg:text-[28px] font-semibold tabular-nums leading-none',
+                    'text-[20px] sm:text-[22px] font-semibold tabular-nums leading-none',
                     col.tone ? toneText[col.tone] : 'text-white'
                   )}
                 >
                   <AnimatedValue value={col.value} />
                 </div>
-                <div className="mt-2 text-[10px] text-white uppercase tracking-[0.14em] font-medium">
+                <div className="mt-1.5 text-[12px] text-white font-semibold">
                   {col.label}
                 </div>
               </div>
@@ -464,7 +463,7 @@ export function HeroNumber({
   );
 
   const base =
-    'group relative bg-[hsl(0_0%_13%)] border border-white/[0.07] rounded-2xl overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.35)]';
+    'group relative -mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-white/[0.08] bg-gradient-to-b from-white/[0.08] to-white/[0.04] overflow-hidden';
 
   return onClick ? (
     <div
@@ -525,7 +524,7 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
       initial="hidden"
       animate="visible"
       className={cn(
-        'grid gap-[1.5px] bg-black border border-white/[0.06] rounded-2xl overflow-hidden',
+        '-mx-4 sm:mx-0 grid gap-px bg-white/[0.08] border-y sm:border border-white/[0.08] sm:rounded-2xl overflow-hidden',
         colClass,
         className
       )}
@@ -533,11 +532,7 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
       {stats.map((stat, i) => {
         // An explicit tone wins over accent: a loss passed as tone 'red' was
         // painted yellow because accent was checked first.
-        const valueClass = stat.tone
-          ? toneText[stat.tone]
-          : stat.accent
-            ? 'text-elec-yellow'
-            : 'text-white';
+        const valueClass = stat.tone ? toneText[stat.tone] : 'text-white';
         // On the 2-column phone grid an odd count left a bare black cell at
         // the end (visible on every 3-stat strip). Let the last cell span.
         const spanLast =
@@ -548,28 +543,23 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
         const content = (
           <>
             <Eyebrow>
-              {numbered ? `${String(i + 1).padStart(2, '0')} · ${stat.label}` : stat.label}
+              {stat.label}
             </Eyebrow>
             <span
               className={cn(
-                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-[-0.02em] leading-none',
-                'text-[30px] sm:text-4xl lg:text-[48px]',
+                'mt-1 font-semibold tabular-nums tracking-tight leading-tight',
+                'text-[20px] sm:text-[22px]',
                 valueClass
               )}
             >
               <AnimatedValue value={stat.value} />
             </span>
-            {stat.sub && <span className="mt-2.5 text-[11px] text-white">{stat.sub}</span>}
-            {stat.onClick && (
-              <span className="mt-2 hidden lg:inline text-[11px] font-medium text-elec-yellow/0 group-hover:text-elec-yellow/90 transition-colors">
-                Open →
-              </span>
-            )}
+            {stat.sub && <span className="mt-0.5 text-[11.5px] leading-snug text-white line-clamp-2">{stat.sub}</span>}
           </>
         );
 
         const baseClass =
-          'group relative flex flex-col items-start bg-[hsl(0_0%_12%)] transition-colors px-4 py-5 sm:px-5 sm:py-6 lg:px-6 lg:py-7 text-left overflow-hidden';
+          'group relative flex min-h-[84px] min-w-0 flex-col items-start bg-[hsl(0_0%_12.5%)] transition-colors px-4 py-3 sm:px-5 text-left overflow-hidden';
 
         return stat.onClick ? (
           <motion.button
@@ -1013,7 +1003,7 @@ export function GroupHeader({
     >
       <div className="flex items-center gap-2.5">
         <Dot tone={tone} />
-        <span className="text-[11px] font-semibold text-white uppercase tracking-[0.14em]">
+        <span className="text-[13px] font-semibold text-white">
           {label}
         </span>
         <span className={cn('text-[11px] font-semibold tabular-nums', toneText[tone])}>
@@ -1157,7 +1147,7 @@ export function PageFrame({ children, className }: { children: ReactNode; classN
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className={cn('mx-auto max-w-7xl space-y-8 sm:space-y-10 lg:space-y-14 pb-24', className)}
+      className={cn('mx-auto max-w-[1600px] space-y-8 sm:space-y-10 lg:space-y-14 pb-24', className)}
     >
       {children}
     </motion.div>
@@ -1390,7 +1380,7 @@ interface MetricTileProps {
 }
 
 export function MetricTile({ label, value, sub, tone, accent, trend, onClick }: MetricTileProps) {
-  const valueClass = accent ? 'text-elec-yellow' : tone ? toneText[tone] : 'text-white';
+  const valueClass = tone ? toneText[tone] : 'text-white';
 
   const trendTone: Tone =
     trend?.direction === 'up' ? 'emerald' : trend?.direction === 'down' ? 'red' : 'amber';
@@ -1399,11 +1389,11 @@ export function MetricTile({ label, value, sub, tone, accent, trend, onClick }: 
   const content = (
     <>
       <Eyebrow>{label}</Eyebrow>
-      <div className="mt-3 sm:mt-4 flex items-baseline gap-3">
+      <div className="mt-1 flex items-baseline gap-3">
         <span
           className={cn(
             'font-semibold tabular-nums tracking-[-0.02em] leading-none',
-            'text-[30px] sm:text-4xl lg:text-[44px]',
+            'text-[20px] sm:text-[22px]',
             valueClass
           )}
         >
@@ -1628,13 +1618,7 @@ export function FormCard({
     >
       {eyebrow && (
         <div className="flex items-baseline gap-2">
-          {typeof index === 'number' && (
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-              {String(index).padStart(2, '0')}
-            </span>
-          )}
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            {typeof index === 'number' ? '· ' : ''}
+          <span className="text-[13px] font-semibold text-white">
             {eyebrow}
           </span>
         </div>
@@ -1948,7 +1932,7 @@ export function ComplianceRing({
         </text>
       </svg>
       <div className="flex flex-col items-start">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-semibold text-white">
           {label}
         </span>
         <span className="text-[12px] text-white">{clamped}% healthy</span>

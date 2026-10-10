@@ -5,13 +5,20 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  EmptyState,
   LoadingBlocks,
+  PrimaryButton,
 } from '@/components/employer/editorial';
+import {
+  PanelTitle,
+  PlainEmpty,
+  Row,
+  RowList,
+  StatusPill,
+  colClass,
+  frameClass,
+  heroPrimaryClass,
+  twoColClass,
+} from '@/components/employer/pageParts/PageParts';
 import {
   PageHelpButton,
   HowItWorks,
@@ -19,8 +26,6 @@ import {
   type HelpBlocker,
 } from '@/components/hub/PageHelp';
 import { useFirmPriceBook } from '@/hooks/useFirmPriceBook';
-import { buttonPrimaryCn, cardCn } from '@/components/forms/fieldStyles';
-import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuotes } from '@/hooks/useFinance';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
@@ -44,9 +49,9 @@ const HELP: PageHelpContent = {
   title: 'AI quote',
   what: (
     <>
-      A first-draft quote in a couple of minutes. Pick a job, or describe the work, and the AI
-      lists the materials and labour. Prices come from your own price book wherever it has the
-      item; anything else is marked as an estimate for you to check.
+      A first-draft quote in a couple of minutes. Pick a job, or describe the work, and the AI lists
+      the materials and labour. Prices come from your own price book wherever it has the item;
+      anything else is marked as an estimate for you to check.
     </>
   ),
   steps: [
@@ -109,10 +114,16 @@ const HELP: PageHelpContent = {
     {
       title: 'Finish an earlier draft',
       steps: [
-        'Under Recent AI drafts, tap one marked Draft, tap to check.',
+        'Under Recent AI drafts, tap one marked Check.',
         'It opens in the quote builder. Change anything, then send it as normal.',
       ],
-      tour: [{ target: 'aiquote.list', caption: 'Tap a draft to open it in the quote builder.', optional: true }],
+      tour: [
+        {
+          target: 'aiquote.list',
+          caption: 'Tap a draft to open it in the quote builder.',
+          optional: true,
+        },
+      ],
     },
   ],
 };
@@ -120,8 +131,7 @@ const HELP: PageHelpContent = {
 const money = (n: number) =>
   `£${Number(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-const aiStampOf = (q: Quote) =>
-  ((q.settings ?? {}) as { aiQuote?: AIQuoteStamp }).aiQuote ?? null;
+const aiStampOf = (q: Quote) => ((q.settings ?? {}) as { aiQuote?: AIQuoteStamp }).aiQuote ?? null;
 
 const isDraft = (q: Quote) => String(q.status).toLowerCase() === 'draft';
 
@@ -154,7 +164,9 @@ export function AIQuoteSection({ onNavigate: _onNavigate }: AIQuoteSectionProps)
   const stats = useMemo(() => {
     const sent = aiQuotes.filter((q) => !isDraft(q)).length;
     const won = aiQuotes.filter((q) => q.status === 'Approved').length;
-    const value = aiQuotes.filter((q) => q.status === 'Approved').reduce((s, q) => s + Number(q.value || 0), 0);
+    const value = aiQuotes
+      .filter((q) => q.status === 'Approved')
+      .reduce((s, q) => s + Number(q.value || 0), 0);
     return { drafted: aiQuotes.length, sent, won, value };
   }, [aiQuotes]);
 
@@ -167,7 +179,8 @@ export function AIQuoteSection({ onNavigate: _onNavigate }: AIQuoteSectionProps)
         .select('job_details, notes')
         .eq('id', q.id)
         .maybeSingle();
-      const jd = ((data as { job_details?: { description?: string } } | null)?.job_details ?? {}) as {
+      const jd = ((data as { job_details?: { description?: string } } | null)?.job_details ??
+        {}) as {
         description?: string;
       };
       setEditing({
@@ -194,97 +207,162 @@ export function AIQuoteSection({ onNavigate: _onNavigate }: AIQuoteSectionProps)
         ]
       : [];
 
+  const waitingDrafts = aiQuotes.filter(isDraft).length;
+  const headline = roleLoading
+    ? 'Loading.'
+    : !canDraft
+      ? 'Only the owner, admins and office managers can draft quotes.'
+      : waitingDrafts > 0
+        ? `${waitingDrafts} AI draft${waitingDrafts === 1 ? '' : 's'} waiting for you to check and send.`
+        : 'Pick a job and get a draft priced from your price book and past jobs. You check it, then send it.';
+
+  const startDraft = () => {
+    setDeepJob(null);
+    setSheetOpen(true);
+  };
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="Smart Docs"
         title="AI quote"
-        description="Pick a job and get a draft quote priced from your own price book and your own past jobs. You check it, then send it from the quote builder."
-        tone="yellow"
-        actions={<PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'aiquote' }} />}
+        description={headline}
+        actions={
+          <>
+            {canDraft && !roleLoading && (
+              <PrimaryButton
+                data-help="aiquote.start"
+                onClick={startDraft}
+                className={heroPrimaryClass}
+              >
+                Start a draft
+              </PrimaryButton>
+            )}
+            <PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'aiquote' }} />
+          </>
+        }
       />
+
+      <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'aiquote' }} />
 
       {roleLoading ? (
         <LoadingBlocks />
       ) : !canDraft ? (
-        <EmptyState
-          title="Quotes are drafted by the office"
-          description="Only the owner, admins and office managers can draft quotes. Ask your office if a customer needs a price."
+        <PlainEmpty
+          stacked
+          text="Quotes are drafted by the office. Ask your office if a customer needs a price."
         />
       ) : (
-        <section className={cn(cardCn, 'sm:flex sm:items-center sm:justify-between sm:gap-6 sm:space-y-0')}>
-          <div className="min-w-0">
-            <h2 className="text-[17px] font-semibold text-white">Draft a quote with AI</h2>
-            <p className="mt-1 text-[13px] text-white">
-              Materials from your price book first, labour checked against your own jobs, VAT from
-              your settings.
-            </p>
-          </div>
-          <button
-            type="button"
-            data-help="aiquote.start"
-            onClick={() => {
-              setDeepJob(null);
-              setSheetOpen(true);
-            }}
-            className={cn(buttonPrimaryCn, 'mt-4 w-full px-6 sm:mt-0 sm:w-auto sm:shrink-0')}
-          >
-            Start a draft
-          </button>
-        </section>
-      )}
+        <>
+          {aiQuotes.length > 0 && (
+            <StatStrip
+              columns={4}
+              stats={[
+                {
+                  label: 'AI drafts',
+                  value: stats.drafted.toLocaleString(),
+                  sub: waitingDrafts > 0 ? `${waitingDrafts} to check` : 'All checked',
+                  tone: waitingDrafts > 0 ? 'yellow' : undefined,
+                },
+                { label: 'Sent', value: stats.sent.toLocaleString(), sub: 'To customers' },
+                { label: 'Won', value: stats.won.toLocaleString(), sub: 'Accepted' },
+                { label: 'Won value', value: money(stats.value), sub: 'From AI drafts' },
+              ]}
+            />
+          )}
 
-      <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'aiquote' }} />
-
-      <StatStrip
-        columns={4}
-        stats={[
-          { label: 'AI drafts', value: stats.drafted.toLocaleString() },
-          { label: 'Sent', value: stats.sent.toLocaleString() },
-          { label: 'Won', value: stats.won.toLocaleString() },
-          { label: 'Won value', value: money(stats.value) },
-        ]}
-      />
-
-      {isLoading ? (
-        <LoadingBlocks />
-      ) : aiQuotes.length === 0 ? (
-        <EmptyState
-          title="No AI drafts yet"
-          description="Your AI-drafted quotes show here with their number, customer and status."
-        />
-      ) : (
-        <div data-help="aiquote.list">
-        <ListCard className="-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x">
-          <ListCardHeader title="Recent AI drafts" meta={<span className="text-[12px] text-white">{aiQuotes.length}</span>} />
-          <ListBody>
-            {aiQuotes.slice(0, 30).map((q) => {
-              const stamp = aiStampOf(q);
-              return (
-                <ListRow
-                  key={q.id}
-                  title={`${q.quote_number || 'Draft'} · ${q.client}`}
-                  subtitle={[
-                    q.job_title,
-                    stamp ? `${stamp.fromPriceBook} from price book, ${stamp.estimated} estimated` : null,
-                  ]
-                    .filter(Boolean)
-                    .join(' · ')}
-                  trailing={
-                    <>
-                      <span className="text-[13px] font-semibold text-white tabular-nums">{money(q.value)}</span>
-                      <span className="rounded-full border border-white/20 px-2 py-0.5 text-[11px] text-white">
-                        {isDraft(q) ? 'Draft, tap to check' : q.status}
-                      </span>
-                    </>
-                  }
-                  onClick={() => void openQuote(q)}
+          <div className={twoColClass}>
+            <section className={colClass}>
+              <div>
+                <PanelTitle
+                  title="Recent AI drafts"
+                  meta={aiQuotes.length > 0 ? `${aiQuotes.length}` : undefined}
+                  action={aiQuotes.length > 0 ? 'All quotes' : undefined}
+                  onAction={() => setSearchParams({ section: 'quotes' })}
                 />
-              );
-            })}
-          </ListBody>
-        </ListCard>
-        </div>
+                {isLoading ? (
+                  <LoadingBlocks />
+                ) : aiQuotes.length === 0 ? (
+                  <PlainEmpty
+                    stacked
+                    text="Your AI-drafted quotes show here with their number, customer and status."
+                  />
+                ) : (
+                  <div data-help="aiquote.list">
+                    <RowList>
+                      {aiQuotes.slice(0, 30).map((q) => {
+                        const stamp = aiStampOf(q);
+                        return (
+                          <Row
+                            wrapDetail
+                            key={q.id}
+                            title={`${q.quote_number || 'Draft'} · ${q.client}`}
+                            detail={[
+                              q.job_title,
+                              stamp
+                                ? `${stamp.fromPriceBook} from price book, ${stamp.estimated} estimated`
+                                : null,
+                            ]
+                              .filter(Boolean)
+                              .join(' · ')}
+                            trailing={
+                              <>
+                                <span className="hidden text-[14px] font-semibold tabular-nums text-white sm:inline">
+                                  {money(q.value)}
+                                </span>
+                                <StatusPill
+                                  tone={
+                                    isDraft(q)
+                                      ? 'volt'
+                                      : q.status === 'Approved'
+                                        ? 'green'
+                                        : 'neutral'
+                                  }
+                                >
+                                  {isDraft(q) ? 'Check' : q.status}
+                                </StatusPill>
+                              </>
+                            }
+                            onClick={() => void openQuote(q)}
+                          />
+                        );
+                      })}
+                    </RowList>
+                  </div>
+                )}
+              </div>
+            </section>
+
+            <aside className={colClass}>
+              <div>
+                <PanelTitle title="Where prices come from" />
+                <RowList>
+                  <Row
+                    wrapDetail
+                    title="Your price book"
+                    detail={
+                      priceBook
+                        ? priceBook.length > 0
+                          ? `${priceBook.length} item${priceBook.length === 1 ? '' : 's'}. Materials are priced from here first.`
+                          : 'Empty, so every material is an AI estimate to check.'
+                        : 'Materials are priced from here first.'
+                    }
+                    onClick={() => setSearchParams({ section: 'pricebook' })}
+                  />
+                  <Row
+                    wrapDetail
+                    title="Your past jobs"
+                    detail="Labour is checked against finished jobs of the same type."
+                  />
+                  <Row
+                    wrapDetail
+                    title="Your settings"
+                    detail="VAT, reverse charge and CIS follow your firm settings."
+                  />
+                </RowList>
+              </div>
+            </aside>
+          </div>
+        </>
       )}
 
       <AIQuoteSheet

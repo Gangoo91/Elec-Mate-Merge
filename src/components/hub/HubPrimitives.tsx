@@ -22,15 +22,22 @@
  * Cards come from `card-recipe`, so press feel, focus ring and the volt rule
  * are defined once.
  */
-import { createContext, useContext, type ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useContext, useEffect, type ReactNode } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSmartBack } from '@/lib/navHistory';
 import { motion } from 'framer-motion';
-import { ChevronRight, Minus, TrendingDown, TrendingUp } from 'lucide-react';
+import { ChevronRight, Minus, TrendingDown, TrendingUp, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import { useHaptic } from '@/hooks/useHaptic';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
-import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY, CARD_SURFACE } from '@/components/ui/card-recipe';
+import {
+  CARD_BASE,
+  CARD_NEUTRAL,
+  CARD_PRIMARY,
+  CARD_QUIET,
+  CARD_SURFACE,
+} from '@/components/ui/card-recipe';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Masthead
@@ -51,6 +58,8 @@ import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY, CARD_SURFACE } from '@/component
 export const HubMastheadExtraContext = createContext<{
   extra?: ReactNode;
   stickBelowHeader?: boolean;
+  /** A second row under the masthead: an area's own navigation (College Hub). */
+  nav?: ReactNode;
 } | null>(null);
 
 /**
@@ -58,6 +67,10 @@ export const HubMastheadExtraContext = createContext<{
  * the rule (hidden on phones, where the space is worth more than the context)
  * and `title` names the page.
  */
+/** College and apprentice screens follow the College Hub design language. */
+const isCollegeOrApprenticePath = (pathname: string) =>
+  /^\/(college|apprentice)(\/|$)/.test(pathname);
+
 export const HubMasthead = ({
   section = 'Electrician',
   title,
@@ -77,8 +90,23 @@ export const HubMasthead = ({
   trailing?: ReactNode;
 }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const smartBack = useSmartBack();
   const area = useContext(HubMastheadExtraContext);
   const extra = area?.extra ?? null;
+  // College and apprentice (10 Oct, docs/college-mobile-standard.md): the
+  // section word is sentence case, icon buttons are 44px, and a long title
+  // (a lesson, a learner) gets its own two lines under the controls on a
+  // phone instead of being cut to "Pro…". Other hubs are unchanged.
+  const quiet = isCollegeOrApprenticePath(pathname);
+  const stackTitle = quiet && section !== 'College' && title.length > 24;
+  // College and apprentice pages go back to where they were opened from
+  // (backTo only when opened cold). Other hubs keep their fixed backTo.
+  const goBack = () => {
+    if (onBack) return onBack();
+    if (quiet) return smartBack(backTo);
+    navigate(backTo);
+  };
   return (
     <div
       className="sticky top-0 z-50 border-b border-white/[0.06] backdrop-blur-sm"
@@ -90,22 +118,42 @@ export const HubMasthead = ({
       }}
     >
       <div className="mx-auto max-w-[1600px] px-4 lg:px-8">
-        <div className="flex h-12 items-center gap-4 sm:gap-6">
+        {/* College on a phone carries six controls on the right, so its gaps
+            close up there; every other hub keeps gap-4. */}
+        <div
+          className={cn(
+            'flex h-12 items-center gap-4 sm:gap-6',
+            section === 'College' && 'max-sm:gap-1'
+          )}
+        >
           {/* -ml-2 + px-2 keeps the 44px target without visually indenting the
               label: the tap area extends left into the container padding. The
               bare text button measured 19px tall on a phone. */}
           <button
             type="button"
-            onClick={() => (onBack ? onBack() : navigate(backTo))}
+            onClick={goBack}
             className="-ml-2 flex h-11 shrink-0 items-center whitespace-nowrap px-2 text-[12.5px] font-medium text-white transition-colors touch-manipulation"
           >
             ← Back
           </button>
           <div className="flex min-w-0 flex-1 items-baseline gap-2.5">
-            <span className="hidden text-[10px] font-medium uppercase tracking-[0.18em] text-white sm:inline">
-              {section}
-            </span>
-            <span className="hidden h-3 w-px bg-white/10 sm:inline" aria-hidden />
+            {/* College: the title is the college's own name, so the spaced
+                "COLLEGE" label beside it only repeated it (10 Oct). */}
+            {section !== 'College' && (
+              <>
+                <span
+                  className={cn(
+                    'hidden whitespace-nowrap text-white sm:inline',
+                    quiet
+                      ? 'text-[12.5px] font-medium'
+                      : 'text-[10px] font-medium uppercase tracking-[0.18em]'
+                  )}
+                >
+                  {section}
+                </span>
+                <span className="hidden h-3 w-px bg-white/10 sm:inline" aria-hidden />
+              </>
+            )}
             {/* College Hub on a phone: the masthead carries Back, search,
                 alerts, settings, scope and Act, so the title was squeezed to a
                 single letter ("L"). Every College page has its own large
@@ -113,19 +161,32 @@ export const HubMasthead = ({
             <h1
               className={cn(
                 'truncate text-[13px] font-semibold tracking-tight text-white sm:text-sm',
-                section === 'College' && 'max-sm:hidden'
+                (section === 'College' || stackTitle) && 'max-sm:hidden'
               )}
             >
               {title}
             </h1>
           </div>
           {trailing || extra ? (
-            <div className="-mr-2 flex shrink-0 items-center gap-1">
+            <div
+              className={cn(
+                '-mr-2 flex shrink-0 items-center gap-1',
+                quiet &&
+                  'max-sm:[&>button]:min-h-11 max-sm:[&>button]:min-w-11 max-sm:[&>button]:justify-center'
+              )}
+            >
               {trailing}
               {extra}
             </div>
           ) : null}
         </div>
+        {stackTitle && (
+          // The phone's heading; the inline one above takes over from sm: up.
+          <h1 className="-mt-1 line-clamp-2 pb-2 text-[14px] font-semibold leading-snug tracking-tight text-white sm:hidden">
+            {title}
+          </h1>
+        )}
+        {area?.nav ?? null}
       </div>
     </div>
   );
@@ -199,14 +260,32 @@ export const HubAlertLine = ({
  * surface or a wash goes muddy brown on this ground, which is why the cards
  * themselves stay neutral until they have something to say.
  */
-export const HubSectionHeading = ({ children }: { children: React.ReactNode }) => (
-  <motion.h2
-    variants={itemVariants}
-    className="text-[15px] font-semibold tracking-tight text-elec-yellow"
-  >
-    {children}
-  </motion.h2>
-);
+export const HubSectionHeading = ({
+  children,
+  tone,
+}: {
+  children: React.ReactNode;
+  /**
+   * 'white' for hubs whose headings are white. Defaults to white on college
+   * and apprentice screens (headings are typography only, 10 Oct) and volt
+   * everywhere else, as before.
+   */
+  tone?: 'volt' | 'white';
+}) => {
+  const { pathname } = useLocation();
+  const white = (tone ?? (isCollegeOrApprenticePath(pathname) ? 'white' : 'volt')) === 'white';
+  return (
+    <motion.h2
+      variants={itemVariants}
+      className={cn(
+        'font-semibold tracking-tight',
+        white ? 'text-[17px] text-white' : 'text-[15px] text-elec-yellow'
+      )}
+    >
+      {children}
+    </motion.h2>
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────
 // Work list
@@ -261,6 +340,11 @@ export const HubWorkList = ({
 }) => {
   const navigate = useNavigate();
   const haptic = useHaptic();
+  const { pathname } = useLocation();
+  // College and apprentice: hairline white edge, no rule per row, orange for
+  // what is overdue (docs/college-mobile-standard.md). Other hubs unchanged.
+  const quiet = isCollegeOrApprenticePath(pathname);
+  const urgentText = quiet ? 'text-orange-400' : 'text-elec-yellow';
   if (items.length === 0) return null;
 
   const shown = items.slice(0, visible);
@@ -288,8 +372,8 @@ export const HubWorkList = ({
             warning. */}
         <span
           className={cn(
-            'text-[11px] font-semibold tabular-nums',
-            items.some((i) => i.urgent) ? 'text-elec-yellow' : 'text-white'
+            'text-[12.5px] font-semibold tabular-nums',
+            items.some((i) => i.urgent) ? urgentText : 'text-white'
           )}
         >
           {count}
@@ -299,7 +383,8 @@ export const HubWorkList = ({
       <motion.div
         variants={itemVariants}
         className={cn(
-          '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+          '-mx-4 overflow-hidden border-y sm:mx-0 sm:rounded-2xl sm:border-x',
+          quiet ? 'border-white/[0.10]' : 'border-elec-yellow/35',
           CARD_SURFACE
         )}
       >
@@ -314,19 +399,22 @@ export const HubWorkList = ({
                 {/* A rule, not a dot or a pill. What kind of thing this is is
                     already legible from the words; this only has to separate
                     one row from the next at a glance. */}
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    'h-8 w-[3px] shrink-0 rounded-full',
-                    item.urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-                  )}
-                />
+                {!quiet && (
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      'h-8 w-[3px] shrink-0 rounded-full',
+                      item.urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                    )}
+                  />
+                )}
 
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[14px] font-semibold leading-tight text-white">
                     {item.title}
                   </span>
-                  <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                  {/* Two lines, not cut to a stub (10 Oct). */}
+                  <span className="mt-0.5 line-clamp-2 text-[12.5px] leading-snug text-white">
                     {item.reason}
                   </span>
                 </span>
@@ -335,7 +423,7 @@ export const HubWorkList = ({
                   <span
                     className={cn(
                       'shrink-0 text-[13px] font-semibold tabular-nums',
-                      item.urgent ? 'text-elec-yellow' : 'text-white'
+                      item.urgent ? urgentText : 'text-white'
                     )}
                   >
                     {item.trailing}
@@ -375,6 +463,8 @@ export interface HubQuickAction {
   onClick: () => void;
   /** The most-reached-for action gets the one solid volt card in the group. */
   primary?: boolean;
+  /** A line icon beside the title (college and apprentice screens only). */
+  icon?: LucideIcon;
 }
 
 /**
@@ -386,11 +476,16 @@ export interface HubQuickAction {
  */
 export const HubQuickStart = ({
   label,
+  labelTone,
   items,
   leadSpans = false,
   compact = false,
+  variant,
 }: {
-  label: string;
+  /** Optional: leave it out when the page heading already says what this is. */
+  label?: string;
+  /** 'white' for hubs whose headings are white. Defaults as HubSectionHeading. */
+  labelTone?: 'volt' | 'white';
   items: HubQuickAction[];
   /**
    * Narrower minimum card width from `sm:` up, so a group of five fits one
@@ -403,9 +498,68 @@ export const HubQuickStart = ({
    * a hole. Other hubs keep their layout.
    */
   leadSpans?: boolean;
+  /**
+   * `quiet` is the College Hub design language: a line icon beside the
+   * title, one solid yellow action at most, the rest outlined (10 Oct).
+   * Defaults to `quiet` on college and apprentice screens, `cards` elsewhere.
+   */
+  variant?: 'cards' | 'quiet';
 }) => {
   const haptic = useHaptic();
+  const { pathname } = useLocation();
   if (items.length === 0) return null;
+  const quiet = (variant ?? (isCollegeOrApprenticePath(pathname) ? 'quiet' : 'cards')) === 'quiet';
+
+  if (quiet) {
+    // The first primary keeps the solid yellow; any other is outlined.
+    const primaryAt = items.findIndex((q) => q.primary);
+    return (
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        {label && <HubSectionHeading tone={labelTone}>{label}</HubSectionHeading>}
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            'grid grid-cols-1 gap-2 min-[400px]:grid-cols-2',
+            compact
+              ? 'sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]'
+              : 'sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]'
+          )}
+        >
+          {items.map((q, i) => {
+            const solid = i === primaryAt;
+            const Icon = q.icon;
+            return (
+              <button
+                key={q.title}
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  q.onClick();
+                }}
+                className={cn(
+                  'flex h-full min-h-[64px] w-full items-start gap-3 rounded-xl border px-4 py-3 text-left transition-colors touch-manipulation',
+                  solid
+                    ? 'border-elec-yellow bg-elec-yellow text-black hover:opacity-90'
+                    : 'border-white/[0.14] text-white hover:border-white/[0.3] active:bg-white/[0.06]'
+                )}
+              >
+                {Icon && <Icon className="mt-0.5 h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden />}
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[15px] font-semibold leading-snug">{q.title}</span>
+                  <span className="mt-0.5 block text-[12.5px] leading-snug">{q.description}</span>
+                </span>
+              </button>
+            );
+          })}
+        </motion.div>
+      </motion.section>
+    );
+  }
 
   return (
     <motion.section
@@ -414,12 +568,12 @@ export const HubQuickStart = ({
       animate="visible"
       className="space-y-3"
     >
-      <HubSectionHeading>{label}</HubSectionHeading>
+      {label && <HubSectionHeading tone={labelTone}>{label}</HubSectionHeading>}
 
       <motion.div
         variants={itemVariants}
         className={cn(
-          'grid grid-cols-2 gap-2.5 sm:gap-3',
+          'grid grid-cols-[repeat(2,minmax(0,1fr))] gap-2.5 sm:gap-3',
           compact
             ? 'sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]'
             : 'sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]',
@@ -566,6 +720,10 @@ export const HubToolGrid = ({
 }) => {
   const navigate = useNavigate();
   const haptic = useHaptic();
+  const { pathname } = useLocation();
+  // College and apprentice (10 Oct): hairline white edge, no volt top line,
+  // sentence-case labels at 12px+, a neutral badge. Other hubs unchanged.
+  const quiet = isCollegeOrApprenticePath(pathname);
   if (cards.length === 0) return null;
 
   // Wide screens earn more columns rather than wider cards — past about
@@ -622,14 +780,14 @@ export const HubToolGrid = ({
             }}
             className={cn(
               CARD_BASE,
-              CARD_NEUTRAL,
+              quiet ? CARD_QUIET : CARD_NEUTRAL,
               'relative flex h-full flex-col overflow-hidden min-h-[132px] p-3.5 sm:p-4',
               card.locked && 'cursor-not-allowed opacity-70',
               // Every card wears the gold edge now (see CARD_NEUTRAL); one
               // with work outstanding wears a brighter one. Degree, not
               // presence — that is what keeps the signal readable once the
               // colour is no longer exclusive to it.
-              card.alert && 'border-elec-yellow/70',
+              card.alert && (quiet ? 'border-orange-400/50' : 'border-elec-yellow/70'),
               // Desktop only — a 1px rise on hover reads as the card lifting
               // toward the cursor. Deliberately not on touch, where there is
               // no hover state and the press-scale already answers the tap.
@@ -643,21 +801,35 @@ export const HubToolGrid = ({
                 an edge with a highlight on it.
                 Outstanding work burns brighter (70% vs 28%), so the grid is
                 still scannable for "what needs me" without reading a label. */}
-            <span
-              aria-hidden
-              className={cn(
-                'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
-                card.alert ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
-              )}
-            />
+            {!quiet && (
+              <span
+                aria-hidden
+                className={cn(
+                  'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
+                  card.alert ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
+                )}
+              />
+            )}
             <span className="flex items-start justify-between gap-2">
               {card.eyebrow && (
-                <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                <span
+                  className={cn(
+                    'min-w-0 truncate font-semibold text-white',
+                    quiet ? 'text-[12.5px]' : 'text-[10px] uppercase tracking-[0.16em]'
+                  )}
+                >
                   {card.eyebrow}
                 </span>
               )}
               {(card.locked || card.badge) && (
-                <span className="shrink-0 whitespace-nowrap rounded-full border border-elec-yellow/30 bg-elec-yellow/10 px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider text-elec-yellow">
+                <span
+                  className={cn(
+                    'shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 font-semibold',
+                    quiet
+                      ? 'border-white/[0.2] text-[12px] text-white'
+                      : 'border-elec-yellow/30 bg-elec-yellow/10 text-[9.5px] uppercase tracking-wider text-elec-yellow'
+                  )}
+                >
                   {card.locked ? (card.lockedLabel ?? 'In development') : card.badge}
                 </span>
               )}
@@ -680,7 +852,10 @@ export const HubToolGrid = ({
               </span>
               {!card.locked && (
                 <ChevronRight
-                  className="h-3.5 w-3.5 shrink-0 text-white/55 transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow"
+                  className={cn(
+                    'h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow',
+                    quiet ? 'text-white' : 'text-white/55'
+                  )}
                   aria-hidden
                 />
               )}
@@ -693,13 +868,18 @@ export const HubToolGrid = ({
                 <span
                   className={cn(
                     'mt-2 text-[26px] font-semibold leading-none tabular-nums tracking-tight sm:text-[30px]',
-                    card.alert ? 'text-elec-yellow' : 'text-white'
+                    card.alert ? (quiet ? 'text-orange-400' : 'text-elec-yellow') : 'text-white'
                   )}
                 >
                   {card.value}
                 </span>
                 {card.valueLabel && (
-                  <span className="mt-1.5 text-[11.5px] leading-snug text-white">
+                  <span
+                    className={cn(
+                      'mt-1.5 leading-snug text-white',
+                      quiet ? 'text-[12.5px]' : 'text-[11.5px]'
+                    )}
+                  >
                     {card.valueLabel}
                   </span>
                 )}
@@ -718,7 +898,14 @@ export const HubToolGrid = ({
             {/* Pinned below the spacer so footers line up across a row rather
                 than floating at whatever height each description ended. */}
             {card.meta && (
-              <span className="mt-2 text-[11px] leading-snug text-white">{card.meta}</span>
+              <span
+                className={cn(
+                  'mt-2 leading-snug text-white',
+                  quiet ? 'text-[12px]' : 'text-[11px]'
+                )}
+              >
+                {card.meta}
+              </span>
             )}
           </button>
         ))}
@@ -759,23 +946,39 @@ export const HubPage = ({
    */
   /** `landing` matches the public landing page's ground (--background, 11%). */
   ground?: 'default' | 'reading' | 'landing';
-}) => (
-  // pb-24 plus the iOS home-indicator inset. A fixed 96px is right on a phone
-  // with a hardware button and 34px short on one without, which leaves the
-  // last row of cards sitting under the indicator.
-  <div
-    className="-mt-3 min-h-screen pb-24 sm:-mt-4 md:-mt-6"
-    style={
-      {
-        '--hub-ground': ground === 'reading' ? '0 0% 13%' : ground === 'landing' ? 'var(--background)' : '0 0% 10%',
-        backgroundColor: 'hsl(var(--hub-ground))',
-        paddingBottom: 'calc(6rem + env(safe-area-inset-bottom, 0px))',
-      } as React.CSSProperties
-    }
-  >
-    {children}
-  </div>
-);
+}) => {
+  const hubGround =
+    ground === 'reading' ? '0 0% 13%' : ground === 'landing' ? 'var(--background)' : '0 0% 10%';
+  // One grey throughout (Andrew, 10 Oct: "its black with grey, it should be
+  // grey throughout"). The app shell (Layout's gutter, the sidebar and the
+  // header) reads --shell-ground, so it paints this page's ground instead of
+  // its own darker frame. Cleared on unmount; pages without a HubPage keep
+  // the shell's default.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--shell-ground', hubGround);
+    return () => {
+      root.style.removeProperty('--shell-ground');
+    };
+  }, [hubGround]);
+  return (
+    // pb-24 plus the iOS home-indicator inset. A fixed 96px is right on a phone
+    // with a hardware button and 34px short on one without, which leaves the
+    // last row of cards sitting under the indicator.
+    <div
+      className="-mt-3 min-h-screen pb-24 sm:-mt-4 md:-mt-6"
+      style={
+        {
+          '--hub-ground': hubGround,
+          backgroundColor: 'hsl(var(--hub-ground))',
+          paddingBottom: 'calc(6rem + env(safe-area-inset-bottom, 0px))',
+        } as React.CSSProperties
+      }
+    >
+      {children}
+    </div>
+  );
+};
 
 /**
  * `max-w-[1600px]`, not `max-w-7xl`. The app already spends ~240px on the

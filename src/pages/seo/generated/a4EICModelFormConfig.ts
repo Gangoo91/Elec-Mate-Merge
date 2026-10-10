@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const a4EICModelFormConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-eic-model-form',
@@ -27,7 +27,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
   answerBox: {
     question: 'What changed on the BS 7671 A4:2026 Electrical Installation Certificate (EIC)?',
     answer:
-      'The A4:2026 EIC adds item 14.0 "Prosumer\'s low voltage electrical installation(s)" to the Section H Schedule of Inspections (now 1.0 to 14.0), splits the TN-C-S earthing tick-box into PME and PNB, and keeps the three-signatory Design / Construction / Inspection & Testing structure. Item 6.0 now covers the new 30 mA RCD requirement for domestic luminaire final circuits (Regulation 411.3.4).',
+      'The A4:2026 EIC adds item 14.0 "Prosumer\'s low voltage electrical installation(s)" to the Section H Schedule of Inspections (now 1.0 to 14.0), splits the TN-C-S earthing tick-box into PME and PNB, and keeps the three-signatory Design / Construction / Inspection & Testing structure. Item 6.0 also covers the 30 mA RCD requirement for domestic luminaire final circuits (Regulation 411.3.4, in place since BS 7671:2018).',
   },
   keyTakeaways: [
     'The EIC is the certificate issued for new electrical installations, additions and alterations — it is NOT the same as the EICR (which records the condition of an existing installation).',
@@ -169,7 +169,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
             '**3.0 Protective measure: Automatic Disconnection of Supply (ADS)** — earthing arrangement, protective device selection, disconnection time verification.',
             '**4.0 Basic protection** — insulation of live parts, barriers and enclosures.',
             '**5.0 Protective measures other than ADS** — SELV/PELV, double or reinforced insulation, electrical separation.',
-            '**6.0 Additional protection** — 30 mA RCDs on socket-outlets not exceeding 32 A (411.3.3), cables concealed in walls at a depth of less than 50 mm (522.6.202, Table 52.1), and the [new requirement for domestic luminaire final circuits (411.3.4)](/guides/bs-7671-a4-2026-luminaire-rcd-protection).',
+            '**6.0 Additional protection** — 30 mA RCDs on socket-outlets not exceeding 32 A (411.3.3), cables concealed in walls at a depth of less than 50 mm (522.6.202, Table 52.1), and the [requirement for domestic luminaire final circuits (411.3.4, since 2018)](/guides/bs-7671-a4-2026-luminaire-rcd-protection).',
             '**7.0 Distribution equipment** — consumer unit / distribution board condition, suitability, identification.',
             '**8.0 Circuits (Distribution and Final)** — circuit wiring, cable types, segregation.',
             '**9.0 Isolation and switching** — emergency switching, functional switching, mechanical maintenance isolation.',
@@ -197,7 +197,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Item 14.0 is the most distinctive new inspection point on the A4:2026 EIC. A4:2026 introduces an entirely new Chapter 82 covering Prosumer\'s Electrical Installations (PEIs) — low voltage installations that both consume energy from the supply AND produce or store energy that may be exported. BS 7671 defines a prosumer as an entity that can be both a producer and a consumer of electrical energy, combining functions traditionally separated into "consumer" and "generator" installations.',
+            'Item 14.0 is the most distinctive new inspection point on the A4:2026 EIC. It reflects Chapter 82 (introduced at A2:2022), which covers Prosumer\'s Electrical Installations (PEIs) — low voltage installations that both consume energy from the supply AND produce or store energy that may be exported. BS 7671 defines a prosumer as an entity that can be both a producer and a consumer of electrical energy, combining functions traditionally separated into "consumer" and "generator" installations.',
         },
         {
           type: 'list',
@@ -304,8 +304,8 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection (411.3.4)',
-      description: 'The new 30 mA RCD mandate for domestic luminaire final circuits — inspected under EIC item 6.0.',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
+      description: 'The 30 mA RCD rule for domestic luminaire final circuits, in force since 2018 and inspected under EIC item 6.0.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
@@ -318,7 +318,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'A4:2026 AFDD Changes',
+      title: 'AFDDs in A4:2026 (Reg 421.1.7, Item 4.23)',
       description: 'Where AFDDs are fitted, the manual test facility is verified and recorded on the Schedule of Test Results attached to the EIC.',
       icon: 'Zap',
       category: 'Guide',

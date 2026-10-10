@@ -42,7 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'Garden lighting installation costs range from £500 for a simple scheme with 4 to 6 LED lights to £5,000+ for a comprehensive landscape lighting design with multiple zones, SWA cable runs, and automated controls.',
   'BS 7671:2018+A4:2026 Section 714 governs outdoor lighting installations including gardens, pathways, driveways, and amenity areas. Regulation 714.1 sets the scope to cover gardens and places open to the public.',
-  'Domestic garden lighting circuits require 30mA RCD protection. Regulation 411.3.4 (added in A4:2026) requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires within domestic premises.',
+  'Domestic garden lighting circuits require 30mA RCD protection. Regulation 411.3.4 (in force since BS 7671:2018) requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires within domestic premises.',
   'IP ratings are critical for garden lighting — IP44 minimum for sheltered locations, IP65 for exposed installations, IP67 or IP68 for in-ground or submerged fittings.',
   'Garden lighting that involves new outdoor circuits is notifiable under Part P of the Building Regulations and requires an Electrical Installation Certificate.',
 ];
@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'Do garden lighting circuits need RCD protection?',
     answer:
-      'Yes. Within domestic premises, BS 7671 Regulation 411.3.4 (added in A4:2026) requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires — this captures garden lighting directly. Regulation 411.3.3 separately requires 30mA RCD protection for socket-outlets up to 32A and for mobile equipment up to 32A used outdoors. A 30mA RCD provides additional protection against electric shock in an environment where the risk is higher due to moisture and contact with earth. Best practice is to protect the garden lighting circuit with a dedicated RCBO at the consumer unit, so a fault outdoors does not trip other circuits in the house.',
+      'Yes. Within domestic premises, BS 7671 Regulation 411.3.4 (in force since 2018) requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires — this captures garden lighting directly. Regulation 411.3.3 separately requires 30mA RCD protection for socket-outlets up to 32A and for mobile equipment up to 32A used outdoors. A 30mA RCD provides additional protection against electric shock in an environment where the risk is higher due to moisture and contact with earth. Best practice is to protect the garden lighting circuit with a dedicated RCBO at the consumer unit, so a fault outdoors does not trip other circuits in the house.',
   },
   {
     question: 'How deep should garden lighting cable be buried?',
@@ -724,7 +724,7 @@ export default function GardenLightingCostPage() {
       title="Garden Lighting Installation Cost: £500–£5,000"
       description="Garden lighting installation costs £500–£1,000 for a simple 4–6 light path scheme, £1,200–£2,500 mid-range and £3,000–£5,000+ for a full landscape scheme."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

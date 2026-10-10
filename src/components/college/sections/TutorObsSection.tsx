@@ -10,24 +10,34 @@ import {
 import { cn } from '@/lib/utils';
 import { itemVariants } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
-import {
-  COLLEGE_CARD,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
-import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+import { CollegeEmpty, CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
+import { TextTabs } from '@/components/college/assessment/AssessmentTabs';
+import { VisHead } from '@/components/college/student360/Student360Visuals';
 import { BarList, Donut, StatusPill, type Tone } from '@/components/college/quality/QualityKit';
-import { QualityLoading, QualityScreen } from '@/components/college/quality/QualityHubKit';
+import {
+  QBTN,
+  QCARD as COLLEGE_CARD,
+  QCARD as VIS_CARD,
+  QLIST as COLLEGE_LIST,
+  QualityHeader,
+  QualityLoading,
+  QualityScreen,
+} from '@/components/college/quality/QualityHubKit';
+import { joinAnd, plural } from '@/components/college/quality/qualityText';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import type { TutorObsRollup } from '@/hooks/useTutorObservations';
 
 /* ==========================================================================
    TutorObsSection — observations OF tutors (ELE-935 K3). Peer, IQA, head of
    department, learning walks and standardisation in one place, so a head of
    department can see who has been observed recently and who has not.
    Content only; CollegeDashboard draws the masthead.
+
+   8 Oct 2026: college_tutor_obs_rollup only has rows for tutors WITH an
+   observation in the last year, so "every tutor observed" was true by
+   construction. The roster now comes from the college's active tutors and
+   heads of department (the same people Tutor workload lists), and anyone
+   missing from the rollup counts as not observed.
    ========================================================================== */
 
 const KIND_LABEL: Record<ObservationKind, string> = {
@@ -61,12 +71,24 @@ const HELP: PageHelpContent = {
   title: 'Lesson observations',
   what: 'Every observation of a tutor’s teaching in one place: peer, IQA, head of department, learning walks and standardisation. Use it to make sure every tutor is observed at least once a year and that actions are followed up.',
   steps: [
-    { title: 'Check who is due', body: 'Tutors with no observation in the last 12 months sit at the top in orange. Arrange an observation for them first; this page records observations, it does not book them.' },
-    { title: 'Look at the spread', body: 'The charts show the grades given and the kinds of observation, so you can see whether it is all peer reviews or a proper mix.' },
-    { title: 'Read the detail', body: 'Tap an observation to see the focus, strengths, development points and agreed actions.' },
+    {
+      title: 'Check who is due',
+      body: 'Tutors with no observation in the last 12 months sit at the top in orange. Arrange an observation for them first; this page records observations, it does not book them.',
+    },
+    {
+      title: 'Look at the spread',
+      body: 'The charts show the grades given and the kinds of observation, so you can see whether it is all peer reviews or a proper mix.',
+    },
+    {
+      title: 'Read the detail',
+      body: 'Tap an observation to see the focus, strengths, development points and agreed actions.',
+    },
   ],
   notes: [
-    { title: 'Awaiting tutor', body: 'The tutor has not yet acknowledged the write-up. Ask them to read and sign it.' },
+    {
+      title: 'Awaiting tutor',
+      body: 'The tutor has not yet acknowledged the write-up. Ask them to read and sign it.',
+    },
     { title: 'Developmental', body: 'An ungraded observation for development only.' },
   ],
   legend: [
@@ -78,13 +100,45 @@ const HELP: PageHelpContent = {
 };
 
 function fmtDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
 type ObsFilter = 'all' | 'awaiting' | 'concern' | 'inadequate';
 
 export function TutorObsSection() {
-  const { rollup, observations, loading, error } = useTutorObservations();
+  const { rollup: observedRollup, observations, loading, error } = useTutorObservations();
+  const { staff } = useCollegeSupabase();
+  // Every active tutor and head of department, observed or not.
+  const rollup = useMemo<TutorObsRollup[]>(() => {
+    const seen = new Set(observedRollup.map((r) => r.tutor_staff_id));
+    const missing = staff
+      .filter((s) => {
+        const role = String(s.role ?? '').toLowerCase();
+        return (
+          (role === 'tutor' || role === 'head_of_department') &&
+          String(s.status ?? '').toLowerCase() === 'active' &&
+          !seen.has(s.id)
+        );
+      })
+      .map((s) => ({
+        college_id: s.college_id ?? '',
+        tutor_staff_id: s.id,
+        tutor_name: s.name,
+        total_obs_12m: 0,
+        peer_count: 0,
+        iqa_count: 0,
+        hod_count: 0,
+        walk_count: 0,
+        standardisation_count: 0,
+        last_observed_at: null,
+        latest_grade: null,
+      }));
+    return [...observedRollup, ...missing];
+  }, [observedRollup, staff]);
   const [openId, setOpenId] = useState<string | null>(null);
   const [filter, setFilter] = useState<ObsFilter>('all');
   const [showAll, setShowAll] = useState(false);
@@ -97,7 +151,9 @@ export function TutorObsSection() {
     });
     const unacknowledged = observations.filter((o) => !o.tutor_acknowledged).length;
     const obs12m = rollup.reduce((sum, r) => sum + r.total_obs_12m, 0);
-    const concern = observations.filter((o) => o.grade === 'inadequate' || o.grade === 'requires_improvement').length;
+    const concern = observations.filter(
+      (o) => o.grade === 'inadequate' || o.grade === 'requires_improvement'
+    ).length;
     const inadequate = observations.filter((o) => o.grade === 'inadequate').length;
     const grades = new Map<ObservationGrade, number>();
     const kinds = new Map<ObservationKind, number>();
@@ -105,7 +161,16 @@ export function TutorObsSection() {
       if (o.grade) grades.set(o.grade, (grades.get(o.grade) ?? 0) + 1);
       kinds.set(o.observation_kind, (kinds.get(o.observation_kind) ?? 0) + 1);
     }
-    return { tutorsWithoutObs, sortedRollup, unacknowledged, obs12m, concern, inadequate, grades, kinds };
+    return {
+      tutorsWithoutObs,
+      sortedRollup,
+      unacknowledged,
+      obs12m,
+      concern,
+      inadequate,
+      grades,
+      kinds,
+    };
   }, [rollup, observations]);
 
   const listed = useMemo(() => {
@@ -113,7 +178,9 @@ export function TutorObsSection() {
       filter === 'awaiting'
         ? observations.filter((o) => !o.tutor_acknowledged)
         : filter === 'concern'
-          ? observations.filter((o) => o.grade === 'inadequate' || o.grade === 'requires_improvement')
+          ? observations.filter(
+              (o) => o.grade === 'inadequate' || o.grade === 'requires_improvement'
+            )
           : filter === 'inadequate'
             ? observations.filter((o) => o.grade === 'inadequate')
             : observations;
@@ -129,10 +196,35 @@ export function TutorObsSection() {
           : observations.length;
 
   const header = (
-    <CollegePageHeader
+    <QualityHeader
       eyebrow="Quality & compliance"
       title="Lesson observations"
-      description="Who has been observed teaching, how it went, and who is due. Every tutor should be observed at least once a year."
+      summary={
+        loading
+          ? 'Reading observations…'
+          : rollup.length === 0
+            ? 'No tutors on the roll yet.'
+            : view.tutorsWithoutObs.length === 0
+              ? `All ${plural(rollup.length, 'tutor')} observed in the last 12 months.`
+              : `${rollup.length - view.tutorsWithoutObs.length} of ${plural(rollup.length, 'tutor')} observed in the last 12 months; ${joinAnd(
+                  view.tutorsWithoutObs.slice(0, 3).map((t) => t.tutor_name)
+                )}${view.tutorsWithoutObs.length > 3 ? ` and ${view.tutorsWithoutObs.length - 3} more` : ''} ${view.tutorsWithoutObs.length === 1 ? 'is' : 'are'} due.`
+      }
+      sub={
+        loading
+          ? undefined
+          : [
+              view.unacknowledged > 0
+                ? `${plural(view.unacknowledged, 'write-up')} waiting for the tutor to acknowledge.`
+                : '',
+              view.inadequate > 0
+                ? `${plural(view.inadequate, 'observation')} graded inadequate need a follow-up plan.`
+                : '',
+              'Every tutor should be observed at least once a year.',
+            ]
+              .filter(Boolean)
+              .join(' ')
+      }
       help={HELP}
     />
   );
@@ -152,33 +244,11 @@ export function TutorObsSection() {
     <QualityScreen>
       {header}
 
-      {error && <div className={cn(COLLEGE_CARD, 'border-red-400/40 text-[13px] text-white')}>Observations could not be loaded: {error}</div>}
-
-      <CollegeStats
-        items={[
-          { label: 'Observations', value: String(view.obs12m), sub: `last 12 months, ${rollup.length} tutor${rollup.length === 1 ? '' : 's'}` },
-          {
-            label: 'Not observed',
-            value: String(view.tutorsWithoutObs.length),
-            sub: view.tutorsWithoutObs.length > 0 ? 'none in 12 months' : 'every tutor observed',
-            warn: view.tutorsWithoutObs.length > 0,
-          },
-          {
-            label: 'Awaiting tutor',
-            value: String(view.unacknowledged),
-            sub: view.unacknowledged > 0 ? 'not yet acknowledged' : 'all acknowledged',
-            warn: view.unacknowledged > 0,
-            onClick: () => setFilter('awaiting'),
-          },
-          {
-            label: 'Inadequate',
-            value: String(view.inadequate),
-            sub: view.inadequate > 0 ? 'needs a follow-up plan' : 'none recorded',
-            warn: view.inadequate > 0,
-            onClick: () => setFilter('inadequate'),
-          },
-        ]}
-      />
+      {error && (
+        <div className={cn(COLLEGE_CARD, '!border-orange-400/50 text-[13px] text-white')}>
+          Observations could not be loaded: {error}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
         <motion.div variants={itemVariants} className={VIS_CARD}>
@@ -196,7 +266,10 @@ export function TutorObsSection() {
           </div>
         </motion.div>
         <motion.div variants={itemVariants} className={VIS_CARD}>
-          <VisHead title="Grades given" sub={`${observations.length} observation${observations.length === 1 ? '' : 's'} on record`} />
+          <VisHead
+            title="Grades given"
+            sub={`${observations.length} observation${observations.length === 1 ? '' : 's'} on record`}
+          />
           <div className="mt-4">
             <Donut
               emptyText="No graded observations yet"
@@ -204,7 +277,7 @@ export function TutorObsSection() {
               segments={(Object.keys(GRADE_LABEL) as ObservationGrade[]).map((g) => ({
                 label: GRADE_LABEL[g],
                 n: view.grades.get(g) ?? 0,
-                tone: g === 'outstanding' ? 'volt' : GRADE_TONE[g],
+                tone: GRADE_TONE[g],
               }))}
             />
           </div>
@@ -238,7 +311,10 @@ export function TutorObsSection() {
             }
           />
           {view.sortedRollup.length === 0 ? (
-            <CollegeEmpty title="No tutors yet" body="Tutors appear here once they are added to the college and observed." />
+            <CollegeEmpty
+              title="No tutors yet"
+              body="Active tutors and heads of department appear here once they are added under People."
+            />
           ) : (
             <motion.ul variants={itemVariants} className={COLLEGE_LIST}>
               {view.sortedRollup.map((r) => {
@@ -253,20 +329,26 @@ export function TutorObsSection() {
                   .filter(Boolean)
                   .join(' · ');
                 return (
-                  <li key={r.tutor_staff_id} className="flex min-h-[64px] items-center gap-3 px-5 py-3 sm:px-6">
-                    <span aria-hidden className={cn('h-9 w-1 shrink-0 rounded-full', none ? 'bg-orange-400' : 'bg-white/[0.14]')} />
+                  <li
+                    key={r.tutor_staff_id}
+                    className="flex min-h-[64px] items-center gap-3 px-4 py-3 sm:px-5"
+                  >
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">{r.tutor_name}</span>
-                      <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">
+                      <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
+                        {r.tutor_name}
+                      </span>
+                      <span className="mt-1 block text-[12.5px] leading-snug text-white sm:truncate">
                         {none
                           ? 'No observation in the last 12 months'
                           : `${r.total_obs_12m} in 12 months${breakdown ? ` · ${breakdown}` : ''}${r.last_observed_at ? ` · last ${fmtDate(r.last_observed_at)}` : ''}`}
                       </span>
                     </span>
                     {none ? (
-                      <StatusPill tone="warn">Due</StatusPill>
+                      <StatusPill tone="warn">Observation due</StatusPill>
                     ) : r.latest_grade ? (
-                      <StatusPill tone={GRADE_TONE[r.latest_grade]}>{GRADE_LABEL[r.latest_grade]}</StatusPill>
+                      <StatusPill tone={GRADE_TONE[r.latest_grade]}>
+                        {GRADE_LABEL[r.latest_grade]}
+                      </StatusPill>
                     ) : null}
                   </li>
                 );
@@ -276,21 +358,21 @@ export function TutorObsSection() {
         </section>
 
         <section className="space-y-4">
-          <CollegeSectionTitle title="Latest observations" sub={`${listedTotal} ${filter === 'all' ? 'on record' : 'match'}`} />
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-            {(
-              [
-                ['all', `All · ${observations.length}`],
-                ['awaiting', `Awaiting tutor · ${view.unacknowledged}`],
-                ['concern', `Below good · ${view.concern}`],
-                ['inadequate', `Inadequate · ${view.inadequate}`],
-              ] as Array<[ObsFilter, string]>
-            ).map(([k, label]) => (
-              <button key={k} type="button" className={chipCn(filter === k)} onClick={() => setFilter(k)}>
-                {label}
-              </button>
-            ))}
-          </div>
+          <CollegeSectionTitle
+            title="Latest observations"
+            sub={`${listedTotal} ${filter === 'all' ? 'on record' : 'match'}`}
+          />
+          <TextTabs
+            ariaLabel="Which observations to show"
+            value={filter}
+            onChange={setFilter}
+            items={[
+              { key: 'all' as ObsFilter, label: 'All', count: observations.length },
+              { key: 'awaiting' as ObsFilter, label: 'Awaiting tutor', count: view.unacknowledged },
+              { key: 'concern' as ObsFilter, label: 'Below good', count: view.concern },
+              { key: 'inadequate' as ObsFilter, label: 'Inadequate', count: view.inadequate },
+            ]}
+          />
           {listed.length === 0 ? (
             <CollegeEmpty
               title={observations.length === 0 ? 'Nothing observed yet' : 'Nothing matches'}
@@ -303,12 +385,17 @@ export function TutorObsSection() {
           ) : (
             <motion.ul variants={itemVariants} className={COLLEGE_LIST}>
               {listed.map((o) => (
-                <ObservationRow key={o.id} o={o} open={openId === o.id} onToggle={() => setOpenId((v) => (v === o.id ? null : o.id))} />
+                <ObservationRow
+                  key={o.id}
+                  o={o}
+                  open={openId === o.id}
+                  onToggle={() => setOpenId((v) => (v === o.id ? null : o.id))}
+                />
               ))}
             </motion.ul>
           )}
           {!showAll && listedTotal > 12 && (
-            <button type="button" onClick={() => setShowAll(true)} className="h-11 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+            <button type="button" onClick={() => setShowAll(true)} className={QBTN}>
               Show all {listedTotal}
             </button>
           )}
@@ -319,33 +406,61 @@ export function TutorObsSection() {
 }
 
 /** Tap to open the detail: focus, strengths, development, agreed actions. */
-function ObservationRow({ o, open, onToggle }: { o: TutorObservation; open: boolean; onToggle: () => void }) {
-  const hasDetail = !!(o.focus_area || o.strengths || o.areas_for_development || (o.agreed_actions && o.agreed_actions.length > 0));
+function ObservationRow({
+  o,
+  open,
+  onToggle,
+}: {
+  o: TutorObservation;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const hasDetail = !!(
+    o.focus_area ||
+    o.strengths ||
+    o.areas_for_development ||
+    (o.agreed_actions && o.agreed_actions.length > 0)
+  );
   return (
     <li>
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
+        className="flex min-h-[64px] w-full items-center gap-3 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-5"
       >
-        <span aria-hidden className={cn('h-9 w-1 shrink-0 rounded-full', o.tutor_acknowledged ? 'bg-white/[0.14]' : 'bg-orange-400')} />
         <span className="min-w-0 flex-1">
           <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
             {o.tutor_name_snapshot ?? 'Tutor'} · {KIND_LABEL[o.observation_kind]}
           </span>
-          <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">
-            {[`By ${o.observer_name_snapshot ?? 'unknown'}`, fmtDate(o.observed_at), o.location, o.tutor_acknowledged ? null : 'awaiting tutor']
+          <span className="mt-1 block text-[12.5px] leading-snug text-white sm:truncate">
+            {[
+              `By ${o.observer_name_snapshot ?? 'unknown'}`,
+              fmtDate(o.observed_at),
+              o.location,
+              o.tutor_acknowledged ? null : 'waiting for the tutor to acknowledge',
+            ]
               .filter(Boolean)
               .join(' · ')}
           </span>
         </span>
-        {o.grade && <StatusPill tone={GRADE_TONE[o.grade]} className="hidden sm:inline-flex">{GRADE_LABEL[o.grade]}</StatusPill>}
-        <ChevronRight className={cn('h-4 w-4 shrink-0 text-white transition-transform', open && 'rotate-90')} aria-hidden />
+        {o.grade && (
+          <StatusPill tone={GRADE_TONE[o.grade]} className="hidden sm:inline-flex">
+            {GRADE_LABEL[o.grade]}
+          </StatusPill>
+        )}
+        <ChevronRight
+          className={cn('h-4 w-4 shrink-0 text-white transition-transform', open && 'rotate-90')}
+          aria-hidden
+        />
       </button>
       {open && (
-        <div className="space-y-3 px-5 pb-4 text-[13px] leading-relaxed text-white sm:px-6 sm:pl-[44px]">
-          {o.grade && <StatusPill tone={GRADE_TONE[o.grade]} className="sm:hidden">{GRADE_LABEL[o.grade]}</StatusPill>}
+        <div className="space-y-3 px-4 pb-4 text-[13px] leading-relaxed text-white sm:px-5">
+          {o.grade && (
+            <StatusPill tone={GRADE_TONE[o.grade]} className="sm:hidden">
+              {GRADE_LABEL[o.grade]}
+            </StatusPill>
+          )}
           {!hasDetail && <p>No written detail on this observation.</p>}
           {o.focus_area && (
             <p>

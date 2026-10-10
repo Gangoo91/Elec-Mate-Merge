@@ -49,7 +49,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Troubleshooting */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
+          <p className="text-[12px] font-medium text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
@@ -70,7 +70,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Common defects */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects Found</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Defects Found</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -86,7 +86,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Remedial options */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">When PFC is Inadequate — Remedial Options</p>
+          <p className="text-[12px] font-medium text-white mb-3">When PFC is Inadequate — Remedial Options</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             {[
               { option: 'Reduce MCB rating', detail: 'A lower-rated MCB needs less PFC for magnetic operation. 32A → 20A reduces minimum PFC from 160A to 100A (Type B). Only viable if the circuit load allows it.' },
@@ -111,7 +111,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Pro tips */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
+          <p className="text-[12px] font-medium text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

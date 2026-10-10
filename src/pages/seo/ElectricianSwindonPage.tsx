@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Swindon has a large stock of modern housing — including extensive post-millennium new-build estates — as well as the Great Western Designer Outlet and a significant commercial and industrial sector.',
   "Labour rates in Swindon are mid-range for the South West, typically £45 to £60 per hour, reflecting the town's mix of commuter population and local industry.",
   "Swindon's rapid population growth has driven strong demand for EV charger installations, solar PV, and battery storage, making renewable electrical installations a growing part of the local market.",
-  'BS 7671 A4:2026 Regulation 411.3.4 now requires ≤30 mA RCD protection for AC lighting circuits in domestic premises — not just socket outlets. Every consumer unit upgrade in Swindon must address lighting circuits as well as power circuits.',
+  'BS 7671 Regulation 411.3.4 (in force since 2018) requires ≤30 mA RCD protection for AC lighting circuits in domestic premises — not just socket outlets. Every consumer unit upgrade in Swindon must address lighting circuits as well as power circuits.',
   'All domestic consumer unit replacements in Swindon must use a non-combustible (steel) enclosure complying with BS EN 61439-3, per Regulation 421.1.201. Plastic enclosures do not satisfy this requirement.',
 ];
 
@@ -278,7 +278,7 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Swindon has a large number of properties built in the 1980s and 1990s with outdated
               consumer units. Upgrading to a modern unit with RCDs or RCBOs to meet BS 7671
-              Regulations 411.3.3 (socket outlets ≤32 A) and 411.3.4 (lighting circuits, A4:2026) is
+              Regulations 411.3.3 (socket outlets ≤32 A) and 411.3.4 (lighting circuits, since 2018) is
               one of the most common jobs in the area, typically triggered by a failed EICR, a
               property sale, or an EV charger installation requiring a spare way. Under Regulation
               421.1.201, all replacement consumer units in domestic premises must comply with BS EN
@@ -343,9 +343,9 @@ const sections = [
               <span>
                 <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD protection
                 for all socket outlets rated up to 32 A (no exception permitted in dwellings).
-                A4:2026 adds Regulation 411.3.4, which separately requires ≤30 mA RCD additional
+                Regulation 411.3.4, in force since BS 7671:2018, separately requires ≤30 mA RCD additional
                 protection for AC final circuits supplying luminaires in domestic premises — meaning
-                lighting circuits must now also be RCD-protected. Consumer unit upgrades in Swindon
+                lighting circuits must also be RCD-protected. Consumer unit upgrades in Swindon
                 must comply with both regulations.
               </span>
             </li>
@@ -474,7 +474,7 @@ export default function ElectricianSwindonPage() {
       title="Electrician in Swindon: Local Electricians 2026"
       description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Swindon"

@@ -120,13 +120,142 @@ interface ImportedAgentContext {
   source: string;
 }
 
+/**
+ * A finished design job's output, shaped for the results screen. Pulled out of
+ * the completion effect unchanged so a saved design (Employer Hub, ELE-1943)
+ * renders exactly as a fresh one.
+ */
+export function mapDesignJobToResults(jobDesignData: any, jobInputs: any) {
+  return {
+    circuits: jobDesignData.circuits.map((circuit: any) => {
+      return {
+        ...circuit,
+        // Explicitly preserve all core fields
+        name: circuit.name,
+        loadType: circuit.loadType,
+        loadPower: circuit.loadPower,
+        phases: circuit.phases,
+        cableLength: circuit.cableLength,
+        cableSize: circuit.cableSize,
+        cpcSize: circuit.cpcSize,
+        voltage: circuit.voltage,
+        protectionDevice: circuit.protectionDevice,
+        calculations: circuit.calculations,
+        justifications: circuit.justifications,
+        installationMethod: circuit.installationMethod || circuit.installMethod,
+        // Use backend expectedTests as primary source - NO text fallback
+        // Only numerical values from expectedTests, null if unavailable
+        expectedTestResults: circuit.expectedTests
+          ? transformExpectedTests(circuit.expectedTests)
+          : null,
+        reasoning: circuit.reasoning,
+        rcdProtected: circuit.rcdProtected,
+        circuitNumber: circuit.circuitNumber,
+        specialLocation: circuit.specialLocation,
+        // CRITICAL: Preserve expectedTests
+        expectedTests: circuit.expectedTests,
+        // CRITICAL: Deep clone structuredOutput to preserve all nested data
+        structuredOutput: circuit.structuredOutput
+          ? {
+              atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary
+                ? {
+                    loadKw: circuit.structuredOutput.atAGlanceSummary.loadKw,
+                    loadIb: circuit.structuredOutput.atAGlanceSummary.loadIb,
+                    cable: circuit.structuredOutput.atAGlanceSummary.cable,
+                    protectiveDevice: circuit.structuredOutput.atAGlanceSummary.protectiveDevice,
+                    voltageDrop: circuit.structuredOutput.atAGlanceSummary.voltageDrop,
+                    zs: circuit.structuredOutput.atAGlanceSummary.zs,
+                    complianceTick: circuit.structuredOutput.atAGlanceSummary.complianceTick,
+                    notes: circuit.structuredOutput.atAGlanceSummary.notes,
+                  }
+                : undefined,
+              sections: circuit.structuredOutput.sections,
+            }
+          : undefined,
+      };
+    }),
+    projectInfo: jobInputs?.projectInfo || {
+      projectName: 'Untitled Project',
+      location: 'Not specified',
+    },
+    supply: jobInputs?.supply || {
+      voltage: 230,
+      phases: 'single',
+      pfc: 16000,
+      ze: 0.35,
+      earthingSystem: 'TN-C-S',
+    },
+    // Transform supply into consumerUnit format with complete data mapping
+    consumerUnit: {
+      type:
+        (jobInputs?.supply?.consumerUnitType as 'split-load' | 'high-integrity' | 'main-switch') ||
+        'split-load',
+      mainSwitchRating: jobInputs?.supply?.mainSwitchRating || 100,
+      ways: jobDesignData.circuits?.length || 0,
+      incomingSupply: {
+        voltage: jobInputs?.supply?.voltage || 230,
+        phases: (jobInputs?.supply?.phases as 'single' | 'three') || 'single',
+        incomingPFC: jobInputs?.supply?.pfc || jobInputs?.supply?.pscc || 16,
+        Ze: jobInputs?.supply?.ze || 0.35,
+        earthingSystem:
+          jobInputs?.supply?.earthingSystem ||
+          (jobInputs?.supply?.earthing as 'TN-S' | 'TN-C-S' | 'TT') ||
+          'TN-C-S',
+      },
+    },
+    projectName: jobInputs?.projectInfo?.projectName || 'Untitled Project',
+    location: jobInputs?.projectInfo?.location || 'Not specified',
+    clientName: jobInputs?.projectInfo?.clientName,
+    electricianName: jobInputs?.projectInfo?.electricianName,
+    installationType:
+      (jobInputs?.projectInfo?.installationType as 'domestic' | 'commercial' | 'industrial') ||
+      'domestic',
+    // ✅ Pass through diversity values from backend (Phase 4.9 synced values)
+    totalLoad:
+      jobDesignData.totalLoad ||
+      jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) ||
+      0,
+    diversifiedLoad: jobDesignData.diversifiedLoad || 0,
+    diversityFactor: jobDesignData.diversityFactor || 0.65,
+    // ✅ Calculate Total Design Ib from all circuits
+    totalDesignCurrent:
+      jobDesignData.circuits?.reduce(
+        (sum: number, c: any) => sum + (c.calculations?.Ib || c.designCurrent || 0),
+        0
+      ) || 0,
+    diversityBreakdown: jobDesignData.diversityBreakdown || {
+      totalConnectedLoad: jobDesignData.totalLoad || 0,
+      diversifiedLoad: jobDesignData.diversifiedLoad || 0,
+      overallDiversityFactor: jobDesignData.diversityFactor || 0.65,
+      byCategory: [],
+      reasoning: 'Calculated per BS 7671',
+    },
+    diversityApplied: false,
+    materials: [],
+    validationPassed: jobDesignData.validationPassed,
+    validationIssues: jobDesignData.validationIssues || [],
+    autoFixSuggestions: jobDesignData.autoFixSuggestions || [],
+  };
+}
+
 interface AIInstallationDesignerProps {
   /** 'employer' hides electrician-only chrome (agent inbox, save-to-customer) so
    *  the same engine can run inside the Employer Hub. Defaults to electrician. */
   variant?: 'electrician' | 'employer';
+  /** Employer Hub (ELE-1943): start the wizard with the job's details. */
+  initialData?: Partial<DesignInputs>;
+  /** Employer Hub: told the new design's id as soon as it starts (to file it with the job). */
+  onDesignStarted?: (designJobId: string) => void;
+  /** Employer Hub: open on a saved design's results (from mapDesignJobToResults). */
+  initialDesign?: unknown;
 }
 
-export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallationDesignerProps = {}) => {
+export const AIInstallationDesigner = ({
+  variant = 'electrician',
+  initialData,
+  onDesignStarted,
+  initialDesign,
+}: AIInstallationDesignerProps = {}) => {
   const isEmployer = variant === 'employer';
   const routerLocation = useLocation();
   const { user } = useAuth();
@@ -140,11 +269,12 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
   } | null;
 
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>(
-    savedResultsState?.fromSavedResults ? 'results' : 'input'
+    savedResultsState?.fromSavedResults || initialDesign ? 'results' : 'input'
   );
   const [userRequest, setUserRequest] = useState<string>('');
   const [totalCircuits, setTotalCircuits] = useState<number>(0);
   const [designData, setDesignData] = useState<any>(() => {
+    if (initialDesign) return initialDesign;
     // Initialize with saved results if present
     if (savedResultsState?.fromSavedResults && savedResultsState.outputData) {
       return savedResultsState.outputData;
@@ -153,12 +283,16 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
   });
   const [jobId, setJobId] = useState<string | null>(null);
   const [activeInputs, setActiveInputs] = useState<DesignInputs | null>(null);
-  const successToastShown = useRef(!!savedResultsState?.fromSavedResults);
+  const successToastShown = useRef(!!savedResultsState?.fromSavedResults || !!initialDesign);
   // State for context imported from other agents via AgentInbox
   const [importedContext, setImportedContext] = useState<ImportedAgentContext | null>(null);
   const [wizardInitialData, setWizardInitialData] = useState<Partial<DesignInputs> | undefined>(
-    undefined
+    initialData
   );
+  // Employer Hub: the picked job's details can arrive after mount.
+  useEffect(() => {
+    if (initialData) setWizardInitialData(initialData);
+  }, [initialData]);
   const [customerId, setCustomerId] = useState<string | undefined>(undefined);
   const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
   const [savePromptDismissed, setSavePromptDismissed] = useState(false);
@@ -243,6 +377,7 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
 
       // Start polling the job
       setJobId(data.jobId);
+      if (onDesignStarted && data?.jobId) onDesignStarted(data.jobId);
       trackFeatureUse(user?.id || '', 'ai_circuit_designer', {});
       console.log('🚀 Started circuit design job:', data.jobId);
 
@@ -275,119 +410,7 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
 
       const jobInputs = (job as any)?.job_inputs;
 
-      const designWithMetadata = {
-        circuits: jobDesignData.circuits.map((circuit: any) => {
-          return {
-            ...circuit,
-            // Explicitly preserve all core fields
-            name: circuit.name,
-            loadType: circuit.loadType,
-            loadPower: circuit.loadPower,
-            phases: circuit.phases,
-            cableLength: circuit.cableLength,
-            cableSize: circuit.cableSize,
-            cpcSize: circuit.cpcSize,
-            voltage: circuit.voltage,
-            protectionDevice: circuit.protectionDevice,
-            calculations: circuit.calculations,
-            justifications: circuit.justifications,
-            installationMethod: circuit.installationMethod || circuit.installMethod,
-            // Use backend expectedTests as primary source - NO text fallback
-            // Only numerical values from expectedTests, null if unavailable
-            expectedTestResults: circuit.expectedTests
-              ? transformExpectedTests(circuit.expectedTests)
-              : null,
-            reasoning: circuit.reasoning,
-            rcdProtected: circuit.rcdProtected,
-            circuitNumber: circuit.circuitNumber,
-            specialLocation: circuit.specialLocation,
-            // CRITICAL: Preserve expectedTests
-            expectedTests: circuit.expectedTests,
-            // CRITICAL: Deep clone structuredOutput to preserve all nested data
-            structuredOutput: circuit.structuredOutput
-              ? {
-                  atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary
-                    ? {
-                        loadKw: circuit.structuredOutput.atAGlanceSummary.loadKw,
-                        loadIb: circuit.structuredOutput.atAGlanceSummary.loadIb,
-                        cable: circuit.structuredOutput.atAGlanceSummary.cable,
-                        protectiveDevice:
-                          circuit.structuredOutput.atAGlanceSummary.protectiveDevice,
-                        voltageDrop: circuit.structuredOutput.atAGlanceSummary.voltageDrop,
-                        zs: circuit.structuredOutput.atAGlanceSummary.zs,
-                        complianceTick: circuit.structuredOutput.atAGlanceSummary.complianceTick,
-                        notes: circuit.structuredOutput.atAGlanceSummary.notes,
-                      }
-                    : undefined,
-                  sections: circuit.structuredOutput.sections,
-                }
-              : undefined,
-          };
-        }),
-        projectInfo: jobInputs?.projectInfo || {
-          projectName: 'Untitled Project',
-          location: 'Not specified',
-        },
-        supply: jobInputs?.supply || {
-          voltage: 230,
-          phases: 'single',
-          pfc: 16000,
-          ze: 0.35,
-          earthingSystem: 'TN-C-S',
-        },
-        // Transform supply into consumerUnit format with complete data mapping
-        consumerUnit: {
-          type:
-            (jobInputs?.supply?.consumerUnitType as
-              | 'split-load'
-              | 'high-integrity'
-              | 'main-switch') || 'split-load',
-          mainSwitchRating: jobInputs?.supply?.mainSwitchRating || 100,
-          ways: jobDesignData.circuits?.length || 0,
-          incomingSupply: {
-            voltage: jobInputs?.supply?.voltage || 230,
-            phases: (jobInputs?.supply?.phases as 'single' | 'three') || 'single',
-            incomingPFC: jobInputs?.supply?.pfc || jobInputs?.supply?.pscc || 16,
-            Ze: jobInputs?.supply?.ze || 0.35,
-            earthingSystem:
-              jobInputs?.supply?.earthingSystem ||
-              (jobInputs?.supply?.earthing as 'TN-S' | 'TN-C-S' | 'TT') ||
-              'TN-C-S',
-          },
-        },
-        projectName: jobInputs?.projectInfo?.projectName || 'Untitled Project',
-        location: jobInputs?.projectInfo?.location || 'Not specified',
-        clientName: jobInputs?.projectInfo?.clientName,
-        electricianName: jobInputs?.projectInfo?.electricianName,
-        installationType:
-          (jobInputs?.projectInfo?.installationType as 'domestic' | 'commercial' | 'industrial') ||
-          'domestic',
-        // ✅ Pass through diversity values from backend (Phase 4.9 synced values)
-        totalLoad:
-          jobDesignData.totalLoad ||
-          jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) ||
-          0,
-        diversifiedLoad: jobDesignData.diversifiedLoad || 0,
-        diversityFactor: jobDesignData.diversityFactor || 0.65,
-        // ✅ Calculate Total Design Ib from all circuits
-        totalDesignCurrent:
-          jobDesignData.circuits?.reduce(
-            (sum: number, c: any) => sum + (c.calculations?.Ib || c.designCurrent || 0),
-            0
-          ) || 0,
-        diversityBreakdown: jobDesignData.diversityBreakdown || {
-          totalConnectedLoad: jobDesignData.totalLoad || 0,
-          diversifiedLoad: jobDesignData.diversifiedLoad || 0,
-          overallDiversityFactor: jobDesignData.diversityFactor || 0.65,
-          byCategory: [],
-          reasoning: 'Calculated per BS 7671',
-        },
-        diversityApplied: false,
-        materials: [],
-        validationPassed: jobDesignData.validationPassed,
-        validationIssues: jobDesignData.validationIssues || [],
-        autoFixSuggestions: jobDesignData.autoFixSuggestions || [],
-      };
+      const designWithMetadata = mapDesignJobToResults(jobDesignData, jobInputs);
 
       console.log('🔧 Design data mapped:', {
         circuitCount: designWithMetadata.circuits.length,
@@ -436,6 +459,8 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
 
   // Load design data from session on mount
   useEffect(() => {
+    // A saved design opened on purpose wins over the last one in this session.
+    if (initialDesign) return;
     const savedData = sessionStorage.getItem('circuit-design-data');
     if (savedData) {
       try {
@@ -444,6 +469,8 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
         console.error('Failed to parse saved design data:', e);
       }
     }
+    // Mount only: initialDesign is fixed for this instance (it is keyed).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCancel = async () => {
@@ -473,7 +500,7 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
    */
   const handleForceResults = async () => {
     if (!jobId || !activeInputs) {
-      toast.error('Cannot view results — design state lost.');
+      toast.error('Cannot view results, design state lost.');
       return;
     }
     try {
@@ -484,7 +511,7 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
         .order('circuit_index');
       if (partialsErr) throw partialsErr;
       if (!partials || partials.length === 0) {
-        toast.error('No circuits ready yet — give it another moment.');
+        toast.error('No circuits ready yet. Give it another moment.');
         return;
       }
 
@@ -515,8 +542,7 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
       const totalLoad = merged.reduce((s, c) => s + Number(c?.loadPower ?? 0), 0);
       const designed = merged.filter((c) => !(c as any).failedToDesign);
       const diversifiedLoad = designed.reduce(
-        (s, c) =>
-          s + Number(c?.calculations?.diversifiedLoad ?? c?.loadPower ?? 0),
+        (s, c) => s + Number(c?.calculations?.diversifiedLoad ?? c?.loadPower ?? 0),
         0
       );
       const diversityFactor = totalLoad > 0 ? diversifiedLoad / totalLoad : 0.65;
@@ -557,10 +583,7 @@ export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallati
         totalLoad,
         diversifiedLoad,
         diversityFactor,
-        totalDesignCurrent: designed.reduce(
-          (s, c) => s + Number(c?.calculations?.Ib ?? 0),
-          0
-        ),
+        totalDesignCurrent: designed.reduce((s, c) => s + Number(c?.calculations?.Ib ?? 0), 0),
         diversityBreakdown: {
           totalConnectedLoad: totalLoad,
           diversifiedLoad,

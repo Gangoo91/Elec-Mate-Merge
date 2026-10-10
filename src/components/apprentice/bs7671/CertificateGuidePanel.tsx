@@ -7,10 +7,7 @@ import {
   type CertificateType,
 } from './data/certificateGuideData';
 
-const observationToneMap: Record<
-  string,
-  { border: string; text: string; tag: string }
-> = {
+const observationToneMap: Record<string, { border: string; text: string; tag: string }> = {
   red: {
     border: 'border-red-500/30',
     text: 'text-red-300',
@@ -22,9 +19,9 @@ const observationToneMap: Record<
     tag: 'bg-white/[0.06] text-orange-200 border-orange-500/30',
   },
   yellow: {
-    border: 'border-elec-yellow/30',
+    border: 'border-white/[0.14]',
     text: 'text-elec-yellow',
-    tag: 'bg-white/[0.06] text-elec-yellow border-elec-yellow/30',
+    tag: 'bg-white/[0.06] text-elec-yellow border-white/[0.14]',
   },
   blue: {
     border: 'border-white/[0.08]',
@@ -37,7 +34,15 @@ const observationToneMap: Record<
 // not just bullet text. Inline SVG, monochrome, very subtle.
 const CertSchematic = () => (
   <svg viewBox="0 0 120 64" className="h-12 w-[90px] flex-shrink-0" aria-hidden="true">
-    <rect x="2" y="2" width="116" height="60" rx="3" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" />
+    <rect
+      x="2"
+      y="2"
+      width="116"
+      height="60"
+      rx="3"
+      fill="rgba(255,255,255,0.03)"
+      stroke="rgba(255,255,255,0.12)"
+    />
     <line x1="10" y1="14" x2="80" y2="14" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
     <line x1="10" y1="22" x2="60" y2="22" stroke="rgba(255,255,255,0.2)" />
     <line x1="10" y1="28" x2="100" y2="28" stroke="rgba(255,255,255,0.2)" />
@@ -53,38 +58,34 @@ const CertSchematic = () => (
 const renderCertCard = (cert: CertificateType) => (
   <Collapsible key={cert.id}>
     <CollapsibleTrigger className="w-full flex items-center gap-4 p-4 rounded-xl bg-white/[0.06] border border-white/[0.10] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors">
-      <CertSchematic />
+      <span className="hidden sm:block">
+        <CertSchematic />
+      </span>
       <div className="flex-1 min-w-0 text-left space-y-1">
         <div className="flex items-baseline gap-2">
-          <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-elec-yellow/85">
+          <span className="text-[12px] font-mono font-semibold text-elec-yellow">
             {cert.abbreviation}
           </span>
-          <span className="text-[10px] uppercase tracking-[0.18em] text-white">·</span>
-          <span className="text-[10px] uppercase tracking-[0.18em] text-white">
-            Certificate
-          </span>
+          <span className="text-[12px] text-white">·</span>
+          <span className="text-[12px] text-white">Certificate</span>
         </div>
-        <span className="block text-[15px] font-medium text-white truncate">{cert.title}</span>
+        <span className="block text-[15px] font-medium leading-snug text-white">{cert.title}</span>
       </div>
       <ChevronDown className="h-4 w-4 text-white flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180" />
     </CollapsibleTrigger>
     <CollapsibleContent>
-      <div className="px-4 pb-4 pt-3 mt-1 space-y-5 text-[14px] rounded-b-xl bg-white/[0.06] border-l-2 border-elec-yellow/20 ml-1">
+      <div className="px-4 pb-4 pt-3 mt-1 space-y-5 text-[14px] rounded-b-xl bg-white/[0.06] border-l-2 border-white/[0.14] ml-1">
         <div className="space-y-1.5">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            When required
-          </h4>
+          <h4 className="text-[13px] font-semibold text-white">When required</h4>
           <p className="text-white leading-relaxed">{cert.whenRequired}</p>
         </div>
 
         <div className="space-y-2">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Key requirements
-          </h4>
+          <h4 className="text-[13px] font-semibold text-white">Key requirements</h4>
           <ul className="space-y-1.5">
             {cert.keyRequirements.map((req, idx) => (
               <li key={idx} className="flex items-start gap-2.5">
-                <span className="w-3.5 h-3.5 rounded-full bg-white/[0.06] border border-elec-yellow/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="w-3.5 h-3.5 rounded-full bg-white/[0.06] border border-white/[0.14] flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="w-1 h-1 rounded-full bg-elec-yellow" />
                 </span>
                 <span className="text-white leading-relaxed">{req}</span>
@@ -94,16 +95,14 @@ const renderCertCard = (cert: CertificateType) => (
         </div>
 
         <div className="space-y-2">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Sections to complete
-          </h4>
+          <h4 className="text-[13px] font-semibold text-white">Sections to complete</h4>
           <ol className="space-y-1.5">
             {cert.sectionsToComplete.map((section, idx) => (
               <li
                 key={idx}
                 className="flex items-start gap-3 rounded-lg border border-white/[0.04] bg-white/[0.06] px-3 py-2"
               >
-                <span className="text-[11px] font-mono text-elec-yellow/85 min-w-[18px] mt-0.5">
+                <span className="text-[12px] font-mono font-semibold text-elec-yellow min-w-[18px] mt-0.5">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
                 <span className="text-white leading-relaxed">{section}</span>
@@ -115,9 +114,7 @@ const renderCertCard = (cert: CertificateType) => (
         <div className="rounded-lg border border-orange-500/25 bg-white/[0.06] p-3 space-y-2">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
-            <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-orange-300/85">
-              Common mistakes
-            </h4>
+            <h4 className="text-[12px] font-medium text-orange-300/85">Common mistakes</h4>
           </div>
           <ul className="space-y-1.5">
             {cert.commonMistakes.map((mistake, idx) => (
@@ -130,9 +127,7 @@ const renderCertCard = (cert: CertificateType) => (
         </div>
 
         <div className="space-y-2">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Official template sources
-          </h4>
+          <h4 className="text-[13px] font-semibold text-white">Official template sources</h4>
           <ul className="space-y-1">
             {cert.templateSources.map((source, idx) => (
               <li key={idx} className="flex items-start gap-2 text-[13px]">
@@ -145,7 +140,7 @@ const renderCertCard = (cert: CertificateType) => (
 
         <div className="flex items-center gap-2 pt-1">
           <span className="h-px flex-1 bg-white/[0.06]" />
-          <p className="text-[11px] text-white font-mono">{cert.regulationReference}</p>
+          <p className="text-[12px] text-white font-mono">{cert.regulationReference}</p>
           <span className="h-px flex-1 bg-white/[0.06]" />
         </div>
       </div>
@@ -159,9 +154,7 @@ const CertificateGuidePanel = () => {
       <div className="space-y-2">{certificateTypes.map(renderCertCard)}</div>
 
       <div className="space-y-3">
-        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          EICR observation codes
-        </h3>
+        <h3 className="text-[12px] font-medium text-white">EICR observation codes</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {eicrObservationCodes.map((code) => {
             const tone = observationToneMap[code.color] || observationToneMap.blue;
@@ -172,7 +165,7 @@ const CertificateGuidePanel = () => {
               >
                 <div className="flex items-center gap-2">
                   <span
-                    className={`text-[11px] font-mono font-semibold px-2 py-0.5 rounded-md border ${tone.tag}`}
+                    className={`text-[12px] font-mono font-semibold px-2 py-0.5 rounded-md border ${tone.tag}`}
                   >
                     {code.code}
                   </span>
@@ -187,9 +180,7 @@ const CertificateGuidePanel = () => {
       </div>
 
       <div className="space-y-3">
-        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Legal requirements
-        </h3>
+        <h3 className="text-[12px] font-medium text-white">Legal requirements</h3>
         {legalRequirements.map((section, idx) => (
           <div
             key={idx}

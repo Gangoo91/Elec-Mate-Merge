@@ -136,7 +136,7 @@ export function ResourcePreviewSheet({
           <button
             type="button"
             onClick={() => onEdit(resource)}
-            className="h-9 rounded-full border border-white/[0.14] px-3.5 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-elec-yellow"
+            className="h-11 rounded-full border border-white/[0.14] px-3.5 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-elec-yellow"
           >
             Edit
           </button>

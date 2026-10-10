@@ -15,6 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { FilePolicyDraftSheet } from './FilePolicyDraftSheet';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ==========================================================================
    AiAuthorPolicySheet — Compliance Phase 5. "Write a policy draft from a
@@ -273,7 +274,7 @@ export function AiAuthorPolicySheet({ open, onOpenChange, initialCategory }: Pro
                 {proposal.owner_role && (
                   <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.08] pt-3">
                     <dt className="text-white">Owner</dt>
-                    <dd className="font-medium text-white">{proposal.owner_role}</dd>
+                    <dd className="font-medium text-white">{keyLabel(proposal.owner_role)}</dd>
                   </div>
                 )}
                 <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.08] pt-3">

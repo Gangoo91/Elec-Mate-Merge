@@ -10,6 +10,7 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { format, parseISO } from 'date-fns';
 import { Check, ChevronRight, Copy, QrCode, Share2, Sparkles, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { areaIconFor } from '@/components/employer/overview/HubIcons';
 
 export type Params = Record<string, string>;
 
@@ -70,7 +71,7 @@ export function HomeHero({
   return (
     <section className="pt-3 sm:pt-6">
       <div className="flex items-center justify-between gap-3">
-        <p className="min-w-0 text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow truncate">
+        <p className="min-w-0 text-[11px] font-semibold text-elec-yellow truncate">
           {eyebrow}
         </p>
         <div className="-mr-1 flex shrink-0 items-center gap-1.5">{tools}</div>
@@ -145,6 +146,19 @@ export interface HomeTodo {
   rank: number;
 }
 
+/** The area the task belongs to, drawn as its hub icon; a red dot when urgent. */
+function TodoIcon({ section, urgent }: { section: string; urgent?: boolean }) {
+  const Icon = areaIconFor(section);
+  return (
+    <span aria-hidden className="relative flex h-10 w-8 shrink-0 items-center justify-center">
+      <Icon className="h-7 w-7" />
+      {urgent && (
+        <span className="absolute -right-0.5 top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-[hsl(0_0%_10%)]" />
+      )}
+    </span>
+  );
+}
+
 export function TodoList({
   items,
   onGo,
@@ -208,15 +222,7 @@ export function TodoList({
       <ul className="divide-y divide-white/[0.07]">
         {shown.map((i) => (
           <li key={i.key} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-            <span
-              aria-hidden
-              className={cn(
-                'h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-[12.5px] font-bold',
-                i.urgent ? 'bg-red-500 text-white' : 'bg-elec-yellow text-black'
-              )}
-            >
-              {i.badge}
-            </span>
+            <TodoIcon section={i.section} urgent={i.urgent} />
             <div className="min-w-0 flex-1">
               <p className="text-[15px] font-semibold leading-snug text-white">{i.title}</p>
               <p className="mt-0.5 text-[13px] text-white line-clamp-2">{i.detail}</p>
@@ -493,7 +499,7 @@ export function QuotePageCard({
             {leadsWeek > 0
               ? `${leadsWeek} enquir${leadsWeek === 1 ? 'y' : 'ies'} this week`
               : 'No enquiries this week'}
-            {newLeads > 0 ? ` · ${newLeads} new lead${newLeads === 1 ? '' : 's'} to reply to` : ''}
+            {newLeads > 0 ? ` · ${newLeads} enquir${newLeads === 1 ? 'y' : 'ies'} to reply to` : ''}
           </span>
         </span>
         <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />

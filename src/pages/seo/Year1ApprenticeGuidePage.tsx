@@ -41,7 +41,7 @@ const keyTakeaways = [
   'Your employer expects you to be punctual, willing to learn, ask questions, follow instructions, maintain a tidy workspace, and develop good safety habits from day one. They do not expect you to know everything — that is what the apprenticeship is for.',
   'Invest in a quality basic tool kit from the start: VDE screwdrivers, side cutters, long-nose pliers, cable strippers, a tape measure, a spirit level, and a sharp knife. Buy good tools that will last — cheap tools make the job harder and less safe.',
   'Elec-Mate is your companion from day 1. Level 2 courses cover exactly what you learn in year 1. Flashcards build core knowledge. The site diary records daily learning. The OJT tracker ensures compliance. The electrical symbols guide and mental health hub support you through the tough days.',
-  'A4:2026 update relevant from day one: BS 7671 Regulation 411.3.4 now requires all domestic lighting circuits (AC final circuits supplying luminaires) to have 30 mA RCD additional protection — not just socket and ring circuits. You will see this on every domestic consumer unit you work on.',
+  'A rule relevant from day one: BS 7671 Regulation 411.3.4 (in force since 2018) requires all domestic lighting circuits (AC final circuits supplying luminaires) to have 30 mA RCD additional protection — not just socket and ring circuits. You will see this on every domestic consumer unit you work on.',
   'BS 7671 Part 6 (Regulation 643.1) requires that a mandatory pre-energisation test sequence be carried out — in order — before any new installation is energised. Testing before switching on is a legal and regulatory requirement, not just best practice.',
 ];
 
@@ -94,7 +94,7 @@ const relatedPages = [
   {
     href: '/guides/off-the-job-training-hours',
     title: 'Off-the-Job Training Hours',
-    description: 'Understanding and tracking the 20% off-the-job training requirement.',
+    description: 'Understanding and tracking the off-the-job training hours requirement.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -235,8 +235,8 @@ const sections = [
           <strong>Introduction to BS 7671:</strong> The structure of the Wiring Regulations. Key
           concepts — protection against electric shock, overcurrent protection, earthing. You will
           not need to know BS 7671 in depth in year 1, but you begin building familiarity with the
-          document that governs every aspect of electrical installation work. One A4:2026 change you
-          will see on every domestic job from the start: BS 7671 Regulation 411.3.4 now requires
+          document that governs every aspect of electrical installation work. One rule you will see on
+          every domestic job from the start: BS 7671 Regulation 411.3.4, in force since 2018, requires
           that all AC final circuits supplying luminaires in domestic premises shall be protected by
           an RCD with a rated residual operating current not exceeding 30 mA — so lighting circuits
           must have 30 mA RCD protection, not just ring finals and socket circuits.
@@ -665,7 +665,7 @@ export default function Year1ApprenticeGuidePage() {
       title="Year 1 Electrical Apprentice: What to Expect"
       description="Complete guide for first-year electrical apprentices in the UK. What year 1 looks like day by day, what you learn, employer expectations."
       datePublished="2025-11-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

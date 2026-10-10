@@ -295,6 +295,13 @@ export default function StatusPage() {
           ratio="1-1"
           primary={
             <>
+              {/* ELE-1827: say plainly what is shared, and when. */}
+              <p className="rounded-xl border border-white/[0.12] bg-white/[0.04] px-3.5 py-3 text-[13px] leading-relaxed text-white">
+                The office sees where you are only when you clock in or out, or set On Site or En Route. Nothing
+                follows you in the background, and off the clock nothing is shared. Status positions are deleted
+                after 30 days. People on the same job as you today see your last position only while you are both
+                clocked in on it.
+              </p>
               {/* Quick status switcher */}
               <section className="space-y-3">
                 <Eyebrow>Set your status</Eyebrow>

@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Southampton properties?',
     answer:
-      'Southampton has a high proportion of post-war rebuilds and 1960s to 1970s properties. Common EICR findings include: lack of RCD protection on socket-outlet circuits rated not exceeding 32 A (a C2 observation under Regulation 411.3.3 of BS 7671:2018+A4:2026); absence of 30 mA RCD protection on lighting circuits, now required in domestic premises by Regulation 411.3.4; deteriorated rubber or PVC insulation on older wiring; inadequate earthing and bonding in properties that have not been updated since original installation; overloaded circuits due to modern appliance loads; and missing or damaged consumer unit covers. Victorian terraced properties near the city centre may also have older wiring types requiring replacement.',
+      'Southampton has a high proportion of post-war rebuilds and 1960s to 1970s properties. Common EICR findings include: lack of RCD protection on socket-outlet circuits rated not exceeding 32 A (a C2 observation under Regulation 411.3.3 of BS 7671:2018+A4:2026); absence of 30 mA RCD protection on lighting circuits, required in domestic premises by Regulation 411.3.4 since BS 7671:2018; deteriorated rubber or PVC insulation on older wiring; inadequate earthing and bonding in properties that have not been updated since original installation; overloaded circuits due to modern appliance loads; and missing or damaged consumer unit covers. Victorian terraced properties near the city centre may also have older wiring types requiring replacement.',
   },
   {
     question: 'How long does an EICR take in Southampton?',
@@ -394,8 +394,8 @@ const sections = [
               Could become dangerous. Urgent remedial action required. Common C2 findings in
               Southampton include: absence of RCD protection on socket-outlet circuits
               (Reg&nbsp;411.3.3 &mdash; threshold is 32&nbsp;A, no exception for dwellings); absence
-              of 30&nbsp;mA RCD protection on lighting circuits (Reg&nbsp;411.3.4 &mdash; new
-              A4:2026 requirement); inadequate earthing and bonding; and deteriorated cable
+              of 30&nbsp;mA RCD protection on lighting circuits (Reg&nbsp;411.3.4, a
+              requirement since BS&nbsp;7671:2018); inadequate earthing and bonding; and deteriorated cable
               insulation.
             </p>
           </div>
@@ -631,19 +631,23 @@ const sections = [
             <Zap className="w-6 h-6 text-purple-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
-                A4:2026 Points to Note: AFDD and Lighting RCD
+                Points to Note: AFDD and Lighting RCD
               </h4>
               <p className="text-white text-sm leading-relaxed">
-                Two A4:2026 changes are particularly relevant to Southampton EICR work. First,
-                Regulation&nbsp;411.3.4 now requires 30&nbsp;mA RCD protection on AC final circuits
+                Two requirements of BS&nbsp;7671:2018+A4:2026 are particularly relevant to Southampton
+                EICR work. First, Regulation&nbsp;411.3.4 (in place since BS&nbsp;7671:2018) requires
+                30&nbsp;mA RCD protection on AC final circuits
                 supplying luminaires in domestic premises &mdash; a requirement that older consumer
                 units do not meet and which should be recorded as a C2 observation. Second,
                 Regulation&nbsp;421.1.7 recommends the installation of arc fault detection devices
-                (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. Where a
+                (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents, and
+                since A2:2022 requires them on socket-outlet circuits up to 32&nbsp;A in HMOs, high
+                rise residential buildings, purpose-built student accommodation and care homes. In
+                an ordinary dwelling, where a
                 consumer unit is being upgraded following an EICR on a property with degraded 1960s
                 wiring, absence of AFDDs on the new installation may be recorded as a C3
-                (improvement recommended) observation. The AFDD recommendation is advisory, not
-                mandatory.
+                (improvement recommended) observation. Outside those premises the AFDD
+                recommendation is advisory, not mandatory.
               </p>
             </div>
           </div>
@@ -668,7 +672,7 @@ export default function EICRSouthamptonPage() {
       title="EICR Southampton: Electrical Safety Cost 2026"
       description="EICR costs in Southampton for 2026. Landlord legal requirements, Southampton City Council enforcement, post-war housing stock findings."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

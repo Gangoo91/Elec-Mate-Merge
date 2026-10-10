@@ -8,12 +8,29 @@ import { Loader2, ArrowLeft } from 'lucide-react';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { DepositChoicePanel } from '@/components/electrician/invoice-builder/DepositChoicePanel';
+import {
+  getDepositOffer,
+  getPendingDeposit,
+  type DepositOffer,
+  type PendingDeposit,
+} from '@/services/quoteDepositInvoice';
+import { PendingDepositPanel } from '@/components/electrician/invoice-builder/PendingDepositPanel';
 
 export default function InvoiceQuoteBuilder() {
   const { quoteId } = useParams<{ quoteId: string }>();
   const navigate = useNavigate();
   const [quote, setQuote] = useState<Quote | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  // ELE-2034 — a quote accepted in the app never had its deposit asked for.
+  // Offer it before the invoice; "Invoice in full" carries on as before.
+  const [depositOffer, setDepositOffer] = useState<DepositOffer | null>(null);
+  // ELE-2034 — a deposit raised and not yet paid. Marking it paid reloads the
+  // quote (reloadKey) so the conversion credits it.
+  const [pendingDeposit, setPendingDeposit] = useState<PendingDeposit | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     const fetchQuote = async () => {
@@ -113,6 +130,16 @@ export default function InvoiceQuoteBuilder() {
         };
 
         setQuote(quoteData);
+        if (!isExistingInvoice) {
+          // Never blocks the builder: no offer, or a failed read, just means
+          // the normal invoice.
+          getDepositOffer(data.id)
+            .then(setDepositOffer)
+            .catch(() => setDepositOffer(null));
+          getPendingDeposit(data.id)
+            .then(setPendingDeposit)
+            .catch(() => setPendingDeposit(null));
+        }
       } catch (error) {
         console.error('Unexpected error:', error);
         toast({
@@ -127,7 +154,7 @@ export default function InvoiceQuoteBuilder() {
     };
 
     fetchQuote();
-  }, [quoteId, navigate]);
+  }, [quoteId, navigate, reloadKey]);
 
   const handleQuoteGenerated = (_invoiceId: string) => {
     if (quote?.invoice_raised && quoteId) {
@@ -159,7 +186,10 @@ export default function InvoiceQuoteBuilder() {
     <div className="min-h-screen bg-background animate-fade-in">
       <Helmet>
         <title>{quote?.invoice_raised ? 'Edit Invoice' : 'Create Invoice'} | Elec-Mate</title>
-        <meta name="description" content="Create professional invoices with our guided invoice builder." />
+        <meta
+          name="description"
+          content="Create professional invoices with our guided invoice builder."
+        />
       </Helmet>
 
       {/* Header — matching QuoteBuilderCreate */}
@@ -186,7 +216,6 @@ export default function InvoiceQuoteBuilder() {
       </header>
 
       <div className="px-0 sm:px-2 py-3 animate-fade-in">
-
         {quote && quote.invoice_raised && quote.invoice_number ? (
           <InvoiceWizard
             existingInvoice={{
@@ -243,9 +272,60 @@ export default function InvoiceQuoteBuilder() {
             onInvoiceGenerated={handleQuoteGenerated}
           />
         ) : quote ? (
-          <InvoiceWizard sourceQuote={quote} onInvoiceGenerated={handleQuoteGenerated} />
+          <InvoiceWizard
+            key={reloadKey}
+            sourceQuote={quote}
+            onInvoiceGenerated={handleQuoteGenerated}
+          />
         ) : null}
       </div>
+
+      {quote && pendingDeposit && (
+        <Sheet open onOpenChange={(open) => !open && setPendingDeposit(null)}>
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] overflow-y-auto rounded-t-2xl border-white/[0.14] bg-background p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:mx-auto sm:max-w-lg"
+          >
+            <VisuallyHidden>
+              <SheetTitle>The deposit isn't paid yet</SheetTitle>
+              <SheetDescription>
+                Mark the deposit paid so it comes off the invoice, or invoice the full amount.
+              </SheetDescription>
+            </VisuallyHidden>
+            <PendingDepositPanel
+              quoteId={quote.id}
+              pending={pendingDeposit}
+              onMarkedPaid={() => {
+                setPendingDeposit(null);
+                setReloadKey((k) => k + 1);
+              }}
+              onFullAmount={() => setPendingDeposit(null)}
+            />
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {quote && depositOffer && (
+        <Sheet open onOpenChange={(open) => !open && setDepositOffer(null)}>
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] overflow-y-auto rounded-t-2xl border-white/[0.14] bg-background p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:mx-auto sm:max-w-lg"
+          >
+            <VisuallyHidden>
+              <SheetTitle>Take the deposit first?</SheetTitle>
+              <SheetDescription>
+                Raise a deposit invoice now, or invoice the full amount.
+              </SheetDescription>
+            </VisuallyHidden>
+            <DepositChoicePanel
+              quoteId={quote.id}
+              offer={depositOffer}
+              onFullAmount={() => setDepositOffer(null)}
+              onDone={() => navigate(`/electrician/quotes/view/${quote.id}`)}
+            />
+          </SheetContent>
+        </Sheet>
+      )}
     </div>
   );
 }

@@ -301,7 +301,7 @@ function PersonAvatar({ name, photo }: { name: string; photo?: string | null }) 
   return (
     <Avatar className="h-9 w-9 shrink-0">
       <AvatarImage src={photo ?? undefined} />
-      <AvatarFallback className="bg-white/[0.08] text-[11px] font-semibold text-white">
+      <AvatarFallback className="bg-white/[0.08] text-[12px] font-semibold text-white">
         {getInitials(name)}
       </AvatarFallback>
     </Avatar>

@@ -726,7 +726,7 @@ const MarineElectricalCalculator = () => {
                       check.status === 'compliant'
                         ? 'bg-green-500/5 border-green-500/20'
                         : check.status === 'warning'
-                          ? 'bg-amber-500/5 border-amber-500/20'
+                          ? 'bg-white/[0.04] border-amber-500/20'
                           : 'bg-red-500/5 border-red-500/20'
                     )}
                   >
@@ -818,8 +818,8 @@ const MarineElectricalCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">
@@ -879,8 +879,8 @@ const MarineElectricalCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <ul className="space-y-2">

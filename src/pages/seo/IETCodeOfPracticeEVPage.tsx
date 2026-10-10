@@ -92,7 +92,7 @@ const faqs = [
   {
     question: 'Are AFDDs required on an EV charging circuit?',
     answer:
-      'Not for compliant EV charging equipment. Regulation 722.421.1.7.201 of BS 7671:2018+A4:2026 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. This matters because A4:2026 redrafted the general AFDD regulation, Regulation 421.1.7, to make AFDD protection a requirement for socket-outlet final circuits rated up to 32 A in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and a recommendation elsewhere. The Section 722 exemption sits on top of that, so a dedicated EV charging circuit feeding compliant equipment does not pull in the AFDD requirement.',
+      'Not for compliant EV charging equipment. Regulation 722.421.1.7.201 of BS 7671:2018+A4:2026 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. This matters because the general AFDD regulation, Regulation 421.1.7, has since A2:2022 made AFDD protection a requirement for socket-outlet final circuits rated up to 32 A in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and a recommendation elsewhere. The Section 722 exemption sits on top of that, so a dedicated EV charging circuit feeding compliant equipment does not pull in the AFDD requirement.',
   },
   {
     question: 'What certification is needed after installing an EV charger?',
@@ -860,7 +860,7 @@ const sections = [
               Regulation 722.421.1.7.201 states that AFDDs are not required for circuits supplying
               EV charging equipment conforming to the BS EN 61851 series that incorporate
               socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. This matters
-              because A4:2026 redrafted Regulation 421.1.7 to make AFDDs a requirement on
+              because Regulation 421.1.7 (redrafted at A2:2022) makes AFDDs a requirement on
               socket-outlet final circuits up to 32 A in Higher Risk Residential Buildings, Houses
               in Multiple Occupation, purpose-built student accommodation and care homes, and a
               recommendation elsewhere. A dedicated EV circuit feeding compliant equipment does not
@@ -999,7 +999,7 @@ export default function IETCodeOfPracticeEVPage() {
       title="IET Code of Practice EV Charging 5th Edition PDF"
       description="No free official PDF — the 5th Edition (2023) is a copyrighted IET publication. What you certify against is BS 7671 Section 722: PME, open-PEN 5 s at 70 V."
       datePublished="2025-04-20"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

@@ -6,7 +6,8 @@
  * No auth required. The token (in `college_employer_tokens.token`) acts as
  * the bearer. Returns the employer record plus every active apprentice
  * `college_students.employer_id = employer.id` with attendance %,
- * progress %, EPA status and OTJ hours.
+ * progress %, EPA status and OTJ hours, and (ELE-2049) how often each has
+ * done safe isolation, inspection and testing and fault finding on site.
  *
  * Security:
  *   - Token must exist, not be revoked, not be expired.
@@ -81,7 +82,9 @@ serve(async (req: Request) => {
     // Active apprentices placed with this employer
     const { data: students, error: stuErr } = await sb
       .from('college_students')
-      .select('id, name, status, progress_percent, start_date, expected_end_date, course_id, user_id')
+      .select(
+        'id, name, status, progress_percent, start_date, expected_end_date, course_id, user_id'
+      )
       .eq('employer_id', employerId)
       .eq('status', 'Active');
     if (stuErr) throw stuErr;
@@ -91,44 +94,47 @@ serve(async (req: Request) => {
     const studentUserIds = studentList.map((s) => s.user_id).filter((id): id is string => !!id);
 
     // Pull attendance, EPA records, OTJ hours, courses in parallel
-    const [
-      { data: attendance },
-      { data: epaRows },
-      { data: otjRows },
-      { data: courses },
-    ] = await Promise.all([
-      studentIds.length > 0
-        ? sb.from('college_attendance').select('student_id, status').in('student_id', studentIds)
-        : Promise.resolve({ data: [] as any[], error: null }),
-      studentUserIds.length > 0
-        ? sb
-            .from('college_epa')
-            .select('student_id, status, gateway_date')
-            // FK is college_epa.student_id → college_students.id (NOT the auth
-            // uid) — matching on user ids returned nothing, so EPA was always null.
-            .in('student_id', studentIds)
-        : Promise.resolve({ data: [] as any[], error: null }),
-      studentUserIds.length > 0
-        ? sb
-            .from('college_otj_entries')
-            .select('student_id, duration_minutes, verification_status')
-            .in('student_id', studentUserIds)
-        : Promise.resolve({ data: [] as any[], error: null }),
-      studentList.length > 0
-        ? sb
-            .from('college_courses')
-            .select('id, name')
-            .in(
-              'id',
-              Array.from(new Set(studentList.map((s) => s.course_id).filter((c): c is string => !!c)))
-            )
-        : Promise.resolve({ data: [] as any[], error: null }),
-    ]);
+    const [{ data: attendance }, { data: epaRows }, { data: otjRows }, { data: courses }] =
+      await Promise.all([
+        studentIds.length > 0
+          ? sb.from('college_attendance').select('student_id, status').in('student_id', studentIds)
+          : Promise.resolve({ data: [] as any[], error: null }),
+        studentUserIds.length > 0
+          ? sb
+              .from('college_epa')
+              .select('student_id, status, gateway_date')
+              // FK is college_epa.student_id → college_students.id (NOT the auth
+              // uid) — matching on user ids returned nothing, so EPA was always null.
+              .in('student_id', studentIds)
+          : Promise.resolve({ data: [] as any[], error: null }),
+        studentUserIds.length > 0
+          ? sb
+              .from('college_otj_entries')
+              .select('student_id, duration_minutes, verification_status')
+              .in('student_id', studentUserIds)
+          : Promise.resolve({ data: [] as any[], error: null }),
+        studentList.length > 0
+          ? sb
+              .from('college_courses')
+              .select('id, name')
+              .in(
+                'id',
+                Array.from(
+                  new Set(studentList.map((s) => s.course_id).filter((c): c is string => !!c))
+                )
+              )
+          : Promise.resolve({ data: [] as any[], error: null }),
+      ]);
 
     // get_otj_summary per linked learner (service role passes its read check).
     const summaryByUser = new Map<
       string,
-      { counted_hours: number; verified_hours: number; required_hours: number | null; app_learning_hours: number }
+      {
+        counted_hours: number;
+        verified_hours: number;
+        required_hours: number | null;
+        app_learning_hours: number;
+      }
     >();
     await Promise.all(
       studentUserIds.map(async (uid) => {
@@ -146,7 +152,7 @@ serve(async (req: Request) => {
     const extrasByStudent = new Map<string, Record<string, unknown>>();
     await Promise.all(
       studentList.map(async (s) => {
-        const [{ data: due }, { data: rv }, pending, week] = await Promise.all([
+        const [{ data: due }, { data: rv }, pending, week, am2] = await Promise.all([
           sb.rpc('tripartite_due_by' as never, { p_student: s.id } as never),
           // The review the employer should act on: the next one to take part in,
           // else a recent summary they must sign (plan changed). employer_review_focus.
@@ -172,7 +178,15 @@ serve(async (req: Request) => {
                 .order('activity_date', { ascending: false })
                 .limit(12)
             : Promise.resolve({ data: [] }),
+          // ELE-2049: how often they have done safe isolation, inspection and
+          // testing and fault finding on site (the AM2 exposure alert email
+          // links here). Service-role-only helper: the token was checked above
+          // and the learner is placed with this employer.
+          s.user_id
+            ? sb.rpc('_am2x_summary_service' as never, { p_learner: s.user_id } as never)
+            : Promise.resolve({ data: null }),
         ]);
+        const am2Data = am2.data as unknown as { applies?: boolean } | null;
         const r = rv as unknown as {
           token: string;
           scheduled_at: string | null;
@@ -188,6 +202,7 @@ serve(async (req: Request) => {
           review: r ?? null,
           to_confirm: (pending.data ?? []) as unknown[],
           this_week: (week.data ?? []) as unknown[],
+          am2_exposure: am2Data && am2Data.applies ? am2Data : null,
         });
       })
     );
@@ -198,27 +213,32 @@ serve(async (req: Request) => {
 
     // Per-student rollups
     const apprentices = studentList.map((s) => {
-      const studentAtt = ((attendance ?? []) as Array<{ student_id: string; status: string }>).filter(
-        (a) => a.student_id === s.id
-      );
+      const studentAtt = (
+        (attendance ?? []) as Array<{ student_id: string; status: string }>
+      ).filter((a) => a.student_id === s.id);
       const presentCount = studentAtt.filter(
         (a) => a.status === 'Present' || a.status === 'Late'
       ).length;
       const attendancePercent =
         studentAtt.length > 0 ? Math.round((presentCount / studentAtt.length) * 100) : null;
 
-      const epa = ((epaRows ?? []) as Array<{ student_id: string; status: string | null; gateway_date: string | null }>)
-        .find((e) => e.student_id === s.id);
+      const epa = (
+        (epaRows ?? []) as Array<{
+          student_id: string;
+          status: string | null;
+          gateway_date: string | null;
+        }>
+      ).find((e) => e.student_id === s.id);
 
       // The one off-the-job figure (get_otj_summary) — the same numbers the
       // apprentice and their tutor see. The old sum added rejected and
       // pending entries into the "total" and left app learning out.
-      const summary = s.user_id ? summaryByUser.get(s.user_id) ?? null : null;
+      const summary = s.user_id ? (summaryByUser.get(s.user_id) ?? null) : null;
 
       return {
         id: s.id,
         name: s.name,
-        course_name: s.course_id ? courseMap.get(s.course_id) ?? null : null,
+        course_name: s.course_id ? (courseMap.get(s.course_id) ?? null) : null,
         progress_percent: s.progress_percent ?? 0,
         attendance_percent: attendancePercent,
         epa_status: epa?.status ?? null,
@@ -228,7 +248,8 @@ serve(async (req: Request) => {
         otj_required_hours: summary?.required_hours ?? null,
         otj_app_learning_hours: summary?.app_learning_hours ?? 0,
         otj_planned_to_date_hours:
-          (summary as { planned_to_date_hours?: number | null } | null)?.planned_to_date_hours ?? null,
+          (summary as { planned_to_date_hours?: number | null } | null)?.planned_to_date_hours ??
+          null,
         ...(extrasByStudent.get(s.id) ?? {}),
         start_date: s.start_date,
         expected_end_date: s.expected_end_date,
@@ -255,19 +276,21 @@ serve(async (req: Request) => {
         company_name: (employer as { company_name: string }).company_name,
         contact_name: (employer as { contact_name: string | null }).contact_name,
         has_email: !!(employer as { contact_email: string | null }).contact_email,
-        weekly_digest: !(employer as { weekly_digest_opt_out_at: string | null }).weekly_digest_opt_out_at,
+        weekly_digest: !(employer as { weekly_digest_opt_out_at: string | null })
+          .weekly_digest_opt_out_at,
       },
       college_name: (college as { name?: string } | null)?.name ?? null,
       apprentices,
       generated_at: new Date().toISOString(),
     });
   } catch (err) {
-    await captureException(err, { functionName: 'employer-portal-view', requestUrl: req.url, requestMethod: req.method });
+    await captureException(err, {
+      functionName: 'employer-portal-view',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[employer-portal-view] error:', err);
-    return json(
-      { ok: false, error: err instanceof Error ? err.message : 'Internal error' },
-      500
-    );
+    return json({ ok: false, error: err instanceof Error ? err.message : 'Internal error' }, 500);
   }
 });
 

@@ -1,20 +1,18 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, type ComponentProps } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
 import { TENDERS_HELP } from '@/components/employer/help/finance';
+import { Plus, Upload, X, Loader2, Search, Target } from 'lucide-react';
 import {
-  RefreshCw,
-  Plus,
-  Brain,
-  Sparkles,
-  Upload,
-  X,
-  FileIcon,
-  Loader2,
-  Search,
-  MapPin,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
+import FormSheet from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
 import { CreateTenderDialog } from '@/components/employer/dialogs/CreateTenderDialog';
 import { ViewTenderSheet } from '@/components/employer/sheets/ViewTenderSheet';
 import { ConvertTenderToJobDialog } from '@/components/employer/dialogs/ConvertTenderToJobDialog';
@@ -24,8 +22,6 @@ import { type TenderOpportunity } from '@/hooks/useOpportunities';
 import {
   useTenders,
   useAllTenderEstimates,
-  useUpdateTenderStatus,
-  useDeleteTender,
   useTenderStats,
   useUploadTenderDocument,
   useGenerateTenderEstimate,
@@ -33,34 +29,43 @@ import {
   type Tender,
 } from '@/hooks/useTenders';
 import { toast } from '@/hooks/use-toast';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 import { useQueryClient } from '@tanstack/react-query';
+import { TenderMatchesCard } from '@/components/employer/tenders/TenderMatchesCard';
+import { TenderCriteriaSheet } from '@/components/employer/tenders/TenderCriteriaSheet';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+  useTenderMatches,
+  useTenderFeedSources,
+  TENDER_MATCHES_KEY,
+  type TenderMatch,
+} from '@/hooks/useTenderMatches';
 import {
   PageFrame,
   PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  EmptyState,
   LoadingBlocks,
-  IconButton,
   PrimaryButton,
   SecondaryButton,
-  type Tone,
 } from '@/components/employer/editorial';
+import {
+  frameClass,
+  twoColClass,
+  colClass,
+  panel,
+  PanelTitle,
+  Row,
+  RowList,
+  StatusPill,
+  PlainEmpty,
+  Segments,
+  SearchField,
+  FigureStrip,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  RefreshIcon,
+  plural,
+  type PillTone,
+} from '@/components/employer/pageParts/PageParts';
 
 type TenderTab = 'matching' | 'bidding' | 'closed';
 
@@ -72,29 +77,32 @@ const tabToStatuses: Record<TenderTab, Tender['status'][]> = {
   closed: ['Won', 'Lost', 'Withdrawn'],
 };
 
-const stageToTone = (status: Tender['status']): Tone => {
-  switch (status) {
-    case 'Open':
-      return 'purple';
-    case 'Submitted':
-      return 'blue';
-    case 'Won':
-      return 'emerald';
-    case 'Lost':
-      return 'red';
-    default:
-      return 'amber';
-  }
+// One status pill per row: green won, red lost, the rest plain
+const stageToTone = (status: Tender['status']): PillTone =>
+  status === 'Won' ? 'green' : status === 'Lost' ? 'red' : 'neutral';
+
+const STAGE_LABEL: Record<Tender['status'], string> = {
+  Open: 'Open',
+  Submitted: 'Submitted',
+  Won: 'Won',
+  Lost: 'Lost',
+  Withdrawn: 'Withdrawn',
 };
 
-const formatDeadline = (deadline?: string | null): string => {
-  if (!deadline) return 'No deadline';
+const WEEK_MS = 7 * 86_400_000;
+
+/** The deadline line, and how loud it is: red past it, volt inside a week. */
+const deadlineOf = (
+  deadline: string | null | undefined,
+  live: boolean
+): { text: string; tone: 'red' | 'volt' | null } => {
+  if (!deadline) return { text: 'No deadline', tone: null };
   const d = new Date(deadline);
-  if (Number.isNaN(d.getTime())) return 'No deadline';
-  const now = new Date();
-  const overdue = d < now;
+  if (Number.isNaN(d.getTime())) return { text: 'No deadline', tone: null };
   const formatted = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-  return overdue ? `Overdue · ${formatted}` : `Closes ${formatted}`;
+  const ms = d.getTime() - Date.now();
+  if (ms < 0) return { text: `Overdue, closed ${formatted}`, tone: live ? 'red' : null };
+  return { text: `Closes ${formatted}`, tone: live && ms < WEEK_MS ? 'volt' : null };
 };
 
 const formatGbp = (value: number): string => {
@@ -108,7 +116,14 @@ export function TenderSection() {
   const [search, setSearch] = useState('');
   const [showAIEstimator, setShowAIEstimator] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [tenderToDelete, setTenderToDelete] = useState<Tender | null>(null);
+  const [showCriteria, setShowCriteria] = useState(false);
+  const [matchLimit, setMatchLimit] = useState(6);
+  const [startingId, setStartingId] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [scrollToMatches, setScrollToMatches] = useState(false);
+  // Office managers never see the firm's bid values or AI estimates (can_see_firm_money)
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const [selectedTender, setSelectedTender] = useState<Tender | null>(null);
   const [showViewSheet, setShowViewSheet] = useState(false);
   const [showConvertDialog, setShowConvertDialog] = useState(false);
@@ -117,20 +132,35 @@ export function TenderSection() {
   const [isGeneratingEstimate, setIsGeneratingEstimate] = useState(false);
   const [isUploadingForEstimate, setIsUploadingForEstimate] = useState(false);
   const [showDiscoverSheet, setShowDiscoverSheet] = useState(false);
-  const [createTenderInitialData, setCreateTenderInitialData] = useState<any>(null);
+  const [createTenderInitialData, setCreateTenderInitialData] = useState<
+    ComponentProps<typeof CreateTenderDialog>['initialData'] | null
+  >(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
 
   const { data: tenders = [], isLoading: tendersLoading } = useTenders();
   const { data: aiEstimates = [], isLoading: estimatesLoading } = useAllTenderEstimates();
-  const updateStatusMutation = useUpdateTenderStatus();
-  const deleteMutation = useDeleteTender();
+  const matchesQuery = useTenderMatches(matchLimit);
+  const { data: feedSources = [] } = useTenderFeedSources();
+  const liveSources = feedSources.filter((x) => x.live > 0).length;
+  const sourcesCopy = liveSources
+    ? `${liveSources} public tender sources, checked every morning`
+    : 'UK public tender sources, checked every morning';
   const uploadDocMutation = useUploadTenderDocument();
   const generateEstimateMutation = useGenerateTenderEstimate();
   const createEstimateMutation = useCreateTenderEstimate();
   const stats = useTenderStats();
 
   const isLoading = tendersLoading || estimatesLoading;
+  useEffect(() => {
+    if (!scrollToMatches || isLoading || matchesQuery.isLoading) return;
+    setScrollToMatches(false);
+    requestAnimationFrame(() =>
+      document
+        .querySelector('[data-help="tenders.matches"]')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    );
+  }, [scrollToMatches, isLoading, matchesQuery.isLoading]);
 
   const handleRefresh = () => {
     queryClient.invalidateQueries({ queryKey: ['tenders'] });
@@ -138,14 +168,38 @@ export function TenderSection() {
     toast({ title: 'Refreshed', description: 'Pipeline updated.' });
   };
 
-  const handleSubmitTender = (tender: Tender) => {
-    updateStatusMutation.mutate({ id: tender.id, status: 'Submitted' });
-  };
+  // The Monday digest and Overview link here with ?matches=1: land on the
+  // matches list once the page (not the loading state) has rendered. Watches
+  // the param, so a bell tap while already on Tenders still scrolls.
+  const matchesParam = searchParams.get('matches');
+  useEffect(() => {
+    if (matchesParam !== '1') return;
+    setScrollToMatches(true);
+    const next = new URLSearchParams(searchParams);
+    next.delete('matches');
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matchesParam]);
 
-  const handleDeleteTender = () => {
-    if (tenderToDelete) {
-      deleteMutation.mutate(tenderToDelete.id);
-      setTenderToDelete(null);
+  // "Start bid" on a match: load the full notice and pre-fill the tender
+  const handleStartFromMatch = async (m: TenderMatch) => {
+    setStartingId(m.id);
+    try {
+      const { data, error } = await supabase
+        .from('tender_opportunities')
+        .select('*')
+        .eq('id', m.id)
+        .maybeSingle();
+      if (error || !data) throw error ?? new Error('Not found');
+      handleStartTenderFromOpportunity(data as unknown as TenderOpportunity);
+    } catch {
+      toast({
+        title: "Couldn't open that tender",
+        description: 'It may have just closed. Refresh and try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setStartingId(null);
     }
   };
 
@@ -234,19 +288,23 @@ export function TenderSection() {
     const fmt = (n: number) => `£${Math.round(n).toLocaleString()}`;
     // Carry the AI estimate (including any manual edits) into the tracked
     // tender so "Use this estimate" isn't a dead end.
-    const estimateNote = estimate
-      ? `\nAI estimate: ${fmt(estimate.total_estimate)} (labour ${fmt(estimate.labour_cost)}, materials ${fmt(estimate.materials_cost)}, equipment ${fmt(estimate.equipment_cost)}, overheads ${fmt(estimate.overheads)}, profit ${fmt(estimate.profit)})${estimate.programme ? `\nProgramme: ${estimate.programme}` : ''}`
-      : '';
+    const estimateNote =
+      estimate && canSeeMoney
+        ? `\nAI estimate: ${fmt(estimate.total_estimate)} (labour ${fmt(estimate.labour_cost)}, materials ${fmt(estimate.materials_cost)}, equipment ${fmt(estimate.equipment_cost)}, overheads ${fmt(estimate.overheads)}, profit ${fmt(estimate.profit)})${estimate.programme ? `\nProgramme: ${estimate.programme}` : ''}`
+        : '';
 
     const initialData = {
       title: opportunity.title,
       client: opportunity.client_name,
-      value:
-        estimate?.total_estimate ||
-        opportunity.value_exact ||
-        opportunity.value_high ||
-        opportunity.value_low ||
-        0,
+      // Under £100 is a placeholder in the notice ("£1"), not a contract value
+      // Roles that can't see firm money get no value pre-filled (can_see_firm_money)
+      value: !canSeeMoney
+        ? 0
+        : estimate?.total_estimate ||
+          [opportunity.value_exact, opportunity.value_high, opportunity.value_low]
+            .map(Number)
+            .find((v) => Number.isFinite(v) && v >= 100) ||
+          0,
       deadline: opportunity.deadline ? opportunity.deadline.split('T')[0] : '',
       category: sectorToCategory[opportunity.sector || ''] || 'Other',
       description: opportunity.scope_of_works || opportunity.description || '',
@@ -281,202 +339,303 @@ export function TenderSection() {
     closed: tenders.filter((t) => tabToStatuses.closed.includes(t.status)).length,
   };
 
+  // One live line: what needs doing first, else where the pipeline stands.
+  const matches = matchesQuery.data;
+  const newMatches = matches?.has_criteria ? matches.new_this_week : 0;
+  const openTenders = tenders.filter((t) => t.status === 'Open');
+  const overdue = openTenders.filter(
+    (t) => t.deadline && new Date(t.deadline).getTime() < Date.now()
+  ).length;
+  const closingSoon = openTenders.filter((t) => {
+    if (!t.deadline) return false;
+    const ms = new Date(t.deadline).getTime() - Date.now();
+    return ms >= 0 && ms < WEEK_MS;
+  }).length;
+  const todo: string[] = [];
+  if (overdue > 0) todo.push(`${plural(overdue, 'bid')} past the deadline`);
+  if (closingSoon > 0) todo.push(`${plural(closingSoon, 'bid')} closing this week`);
+  if (newMatches > 0)
+    todo.push(
+      newMatches === 1
+        ? '1 new tender fits what you bid for'
+        : `${newMatches} new tenders fit what you bid for`
+    );
+  const standing =
+    tenders.length === 0
+      ? matches && !matches.has_criteria
+        ? 'No bids yet. Say what you bid for and matching tenders arrive here'
+        : 'No bids tracked yet'
+      : `${stats.open} open, ${stats.submitted} submitted and waiting`;
+  const liveLine =
+    todo.length > 0
+      ? `${todo.join(', ')}. ${standing}.`
+      : `${standing}.${tenders.length > 0 ? ' Nothing due this week.' : ''}`;
+
+  const openTrack = () => {
+    setCreateTenderInitialData(null);
+    setShowCreateDialog(true);
+  };
+
   const heroActions = (
-    <div className="flex flex-wrap items-center gap-2">
-      <IconButton onClick={handleRefresh} aria-label="Refresh pipeline">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
-      <SecondaryButton data-help="tenders.discover" onClick={() => setShowDiscoverSheet(true)}>
-        <Search className="h-4 w-4 mr-2 text-elec-yellow" />
-        Discover
-      </SecondaryButton>
-      <PrimaryButton
+    <HeroActions>
+      <HeroPrimary
         data-help="tenders.track"
-        onClick={() => {
-          setCreateTenderInitialData(null);
-          setShowCreateDialog(true);
-        }}
+        onClick={openTrack}
+        icon={<Plus className="h-4 w-4" />}
       >
-        <Plus className="h-4 w-4 mr-2" />
         Track tender
-      </PrimaryButton>
+      </HeroPrimary>
+      <HeroSecondary
+        data-help="tenders.discover"
+        label="Discover"
+        onClick={() => setShowDiscoverSheet(true)}
+        icon={<Search className="h-4 w-4" />}
+      >
+        Discover
+      </HeroSecondary>
+      <HeroSecondary
+        label="What we bid for"
+        onClick={() => setShowCriteria(true)}
+        icon={<Target className="h-4 w-4" />}
+      >
+        What we bid for
+      </HeroSecondary>
       <PageHelpButton help={TENDERS_HELP} askContext={{ page: 'tenders', tab: activeTab }} />
-    </div>
+      <RefreshIcon onClick={handleRefresh} />
+    </HeroActions>
   );
 
   if (isLoading) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Money"
-          title="Tenders"
-          description="Public sector bid opportunities and your live pipeline."
-          tone="purple"
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Tenders" description="Loading your bids." />
         <LoadingBlocks />
       </PageFrame>
     );
   }
 
+  const scrollToMatchList = () =>
+    document
+      .querySelector('[data-help="tenders.matches"]')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
   return (
     <>
-      <PageFrame>
-        <PageHero
-          eyebrow="Money"
-          title="Tenders"
-          description="Public sector bid opportunities and your live pipeline."
-          tone="purple"
-          actions={heroActions}
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Tenders" description={liveLine} actions={heroActions} />
 
         <HowItWorks help={TENDERS_HELP} askContext={{ page: 'tenders', tab: activeTab }} />
 
-        <StatStrip
-          columns={3}
-          stats={[
-            { label: 'Open', value: stats.open, tone: 'purple' },
-            { label: 'Bidding', value: stats.submitted, tone: 'blue' },
+        <FigureStrip
+          figures={[
+            matches?.has_criteria
+              ? {
+                  label: 'New matches',
+                  value: newMatches,
+                  tone: newMatches > 0 ? 'volt' : undefined,
+                  sub: `${matches.total} open that fit`,
+                  onOpen: scrollToMatchList,
+                }
+              : {
+                  label: 'New matches',
+                  value: 'None yet',
+                  sub: 'Set what you bid for',
+                  onOpen: () => setShowCriteria(true),
+                },
             {
-              label: 'Won this year £',
-              value: formatGbp(stats.wonValueThisYear),
-              accent: true,
+              label: 'Open',
+              value: stats.open,
+              sub:
+                overdue > 0
+                  ? `${overdue} past the deadline`
+                  : closingSoon > 0
+                    ? `${closingSoon} closing this week`
+                    : stats.open > 0
+                      ? 'Being priced'
+                      : 'Nothing being priced',
+              tone: overdue > 0 ? 'red' : undefined,
+              onOpen: () => setActiveTab('matching'),
             },
+            {
+              label: 'Bidding',
+              value: stats.submitted,
+              sub: 'Submitted, waiting on a result',
+              onOpen: () => setActiveTab('bidding'),
+            },
+            canSeeMoney
+              ? {
+                  label: 'Won this year',
+                  value: formatGbp(stats.wonValueThisYear),
+                  sub: stats.won > 0 ? `${plural(stats.won, 'tender')} won in all` : 'None won yet',
+                  onOpen: () => setActiveTab('closed'),
+                }
+              : {
+                  label: 'Won',
+                  value: stats.won,
+                  sub:
+                    stats.won + stats.lost > 0
+                      ? `${Math.round(stats.winRate)}% of results`
+                      : 'No results yet',
+                  onOpen: () => setActiveTab('closed'),
+                },
           ]}
         />
 
-        <div data-help="tenders.tabs">
-        <FilterBar
-          tabs={[
-            { value: 'matching', label: 'Open', count: tabCounts.matching },
-            { value: 'bidding', label: 'Bidding', count: tabCounts.bidding },
-            { value: 'closed', label: 'Closed', count: tabCounts.closed },
-          ]}
-          activeTab={activeTab}
-          onTabChange={(v) => setActiveTab(v as TenderTab)}
-          search={search}
-          onSearchChange={setSearch}
-          searchPlaceholder="Search tenders, clients, refs…"
-        />
-        </div>
-
-        {aiEstimates.length > 0 && (
-          <ListCard>
-            <ListCardHeader
-              tone="yellow"
-              title="AI estimates"
-              meta={<Pill tone="yellow">{aiEstimates.length}</Pill>}
-            />
-            <ListBody>
-              {aiEstimates.map((estimate) => (
-                <ListRow
-                  key={estimate.id}
-                  title={estimate.tender?.title || 'Untitled tender'}
-                  subtitle={`Labour ${formatGbp(Number(estimate.labour_cost))} · Materials ${formatGbp(Number(estimate.materials_cost))} · ${estimate.programme || 'Programme TBD'}`}
-                  trailing={
-                    <>
-                      <span className="text-[13px] font-semibold text-elec-yellow tabular-nums">
-                        {formatGbp(Number(estimate.total_estimate))}
-                      </span>
-                      <Pill
-                        tone={
-                          estimate.confidence === 'High'
-                            ? 'emerald'
-                            : estimate.confidence === 'Medium'
-                              ? 'amber'
-                              : 'red'
-                        }
-                      >
-                        {estimate.confidence}
-                      </Pill>
-                    </>
-                  }
-                />
-              ))}
-            </ListBody>
-          </ListCard>
-        )}
-
-        {tenders.length === 0 ? (
-          <EmptyState
-            title="No tenders tracked yet"
-            description="Discover live opportunities from 20+ UK sources or track your first bid manually."
-            action="Discover opportunities"
-            onAction={() => setShowDiscoverSheet(true)}
-          />
-        ) : filteredTenders.length === 0 ? (
-          <EmptyState
-            title={`No ${activeTab} tenders`}
-            description={
-              search
-                ? 'Try a different search term or switch tab.'
-                : 'Nothing in this stage yet.'
-            }
-          />
-        ) : (
-          <ListCard>
-            <ListCardHeader
-              tone="purple"
-              title="Opportunities"
-              meta={<Pill tone="purple">{filteredTenders.length}</Pill>}
-            />
-            <div data-help="tenders.list">
-            <ListBody>
-              {filteredTenders.map((tender) => {
-                const tone = stageToTone(tender.status);
-                return (
-                  <ListRow
-                    key={tender.id}
-                    title={tender.title}
-                    subtitle={`${tender.client} · ${formatGbp(Number(tender.value))} · ${formatDeadline(tender.deadline)}`}
-                    trailing={
-                      <>
-                        {tender.category && (
-                          <span className="hidden sm:inline text-[11px] text-white tabular-nums">
-                            {tender.category}
-                          </span>
-                        )}
-                        <Pill tone={tone}>{tender.status}</Pill>
-                      </>
-                    }
-                    onClick={() => handleViewTender(tender)}
-                  />
-                );
-              })}
-            </ListBody>
+        <div className={twoColClass}>
+          <div className={colClass}>
+            <div data-help="tenders.matches" className="scroll-mt-24">
+              <TenderMatchesCard
+                data={matchesQuery.data}
+                isLoading={matchesQuery.isLoading}
+                error={matchesQuery.error}
+                startingId={startingId}
+                onStart={handleStartFromMatch}
+                onEditCriteria={() => setShowCriteria(true)}
+                onDiscover={() => setShowDiscoverSheet(true)}
+                onShowAll={() => setMatchLimit(100)}
+              />
             </div>
-          </ListCard>
-        )}
+          </div>
+
+          <div className={colClass}>
+            <section>
+              <PanelTitle
+                title="Your bids"
+                meta={tenders.length > 0 ? plural(tenders.length, 'tender') : undefined}
+              />
+              <div className="space-y-3">
+                <div data-help="tenders.tabs">
+                  <Segments<TenderTab>
+                    items={[
+                      { value: 'matching', label: 'Open', count: tabCounts.matching },
+                      { value: 'bidding', label: 'Bidding', count: tabCounts.bidding },
+                      { value: 'closed', label: 'Closed', count: tabCounts.closed },
+                    ]}
+                    value={activeTab}
+                    onChange={setActiveTab}
+                  />
+                </div>
+                {tenders.length > 0 && (
+                  <SearchField
+                    value={search}
+                    onChange={setSearch}
+                    placeholder="Search tenders, clients, refs"
+                  />
+                )}
+                {tenders.length === 0 ? (
+                  <PlainEmpty
+                    text={`No tenders tracked yet. Start a bid from a match, browse ${sourcesCopy.split(',')[0]}, or track one you heard about.`}
+                    action="Discover tenders"
+                    onAction={() => setShowDiscoverSheet(true)}
+                  />
+                ) : filteredTenders.length === 0 ? (
+                  <PlainEmpty
+                    text={
+                      search
+                        ? 'Nothing matches that search. Try another word or switch tab.'
+                        : activeTab === 'matching'
+                          ? 'No open bids. Start one from a match.'
+                          : activeTab === 'bidding'
+                            ? 'Nothing submitted and waiting on a result.'
+                            : 'No closed tenders yet.'
+                    }
+                  />
+                ) : (
+                  <div data-help="tenders.list">
+                    <RowList>
+                      {filteredTenders.map((tender) => {
+                        const live = tender.status === 'Open';
+                        const dl = deadlineOf(tender.deadline, live);
+                        return (
+                          <Row
+                            key={tender.id}
+                            title={tender.title}
+                            detail={[
+                              tender.client,
+                              canSeeMoney && Number(tender.value) > 0
+                                ? formatGbp(Number(tender.value))
+                                : null,
+                              tender.category,
+                            ]
+                              .filter(Boolean)
+                              .join(' · ')}
+                            meta={
+                              <span
+                                className={
+                                  dl.tone === 'red'
+                                    ? 'text-red-400'
+                                    : dl.tone === 'volt'
+                                      ? 'text-elec-yellow'
+                                      : 'text-white'
+                                }
+                              >
+                                {dl.text}
+                              </span>
+                            }
+                            trailing={
+                              <StatusPill tone={stageToTone(tender.status)}>
+                                {STAGE_LABEL[tender.status] ?? tender.status}
+                              </StatusPill>
+                            }
+                            onClick={() => handleViewTender(tender)}
+                          />
+                        );
+                      })}
+                    </RowList>
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {canSeeMoney && aiEstimates.length > 0 && (
+              <section>
+                <PanelTitle title="AI estimates" meta={plural(aiEstimates.length, 'estimate')} />
+                <RowList>
+                  {aiEstimates.map((estimate) => (
+                    <Row
+                      key={estimate.id}
+                      title={estimate.tender?.title || 'Untitled tender'}
+                      detail={`Labour ${formatGbp(Number(estimate.labour_cost))} · Materials ${formatGbp(Number(estimate.materials_cost))} · ${estimate.programme || 'Programme to be confirmed'}`}
+                      meta={
+                        <span
+                          className={estimate.confidence === 'Low' ? 'text-red-400' : 'text-white'}
+                        >
+                          {estimate.confidence} confidence
+                        </span>
+                      }
+                      trailing={
+                        <span className="text-[15px] font-semibold tabular-nums text-white">
+                          {formatGbp(Number(estimate.total_estimate))}
+                        </span>
+                      }
+                    />
+                  ))}
+                </RowList>
+              </section>
+            )}
+          </div>
+        </div>
       </PageFrame>
 
       <CreateTenderDialog
         open={showCreateDialog}
         onOpenChange={(open) => {
           setShowCreateDialog(open);
-          if (!open) setCreateTenderInitialData(null);
+          if (!open) {
+            setCreateTenderInitialData(null);
+            // A bid started from a match now shows as "In your pipeline"
+            queryClient.invalidateQueries({ queryKey: [TENDER_MATCHES_KEY] });
+          }
         }}
         initialData={createTenderInitialData}
+        hideValue={!canSeeMoney}
       />
 
-      <AlertDialog open={!!tenderToDelete} onOpenChange={() => setTenderToDelete(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete tender</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete "{tenderToDelete?.title}"? This action cannot be
-              undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteTender}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <TenderCriteriaSheet
+        open={showCriteria}
+        onOpenChange={setShowCriteria}
+        initial={matchesQuery.data?.criteria ?? null}
+      />
 
       <ViewTenderSheet
         open={showViewSheet}
@@ -492,148 +651,129 @@ export function TenderSection() {
         tender={selectedTender}
       />
 
-      <Sheet open={showAIEstimator} onOpenChange={setShowAIEstimator}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)]">
-          <div className="flex flex-col h-full">
-            <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
-              <SheetTitle className="flex items-center gap-2 text-white">
-                <Sparkles className="h-5 w-5 text-elec-yellow" />
-                AI tender estimator
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
-              {estimatorTender && (
-                <ListCard>
-                  <ListCardHeader tone="yellow" title="Estimating for" />
-                  <div className="px-5 py-4">
-                    <div className="text-[14px] font-semibold text-white">
-                      {estimatorTender.title}
-                    </div>
-                    <div className="mt-1 text-[12px] text-white">{estimatorTender.client}</div>
-                  </div>
-                </ListCard>
+      <FormSheet
+        open={showAIEstimator}
+        onOpenChange={setShowAIEstimator}
+        width="wide"
+        title="AI estimate"
+        description={
+          estimatorTender
+            ? `${estimatorTender.title}${estimatorTender.client ? `, for ${estimatorTender.client}` : ''}`
+            : undefined
+        }
+        bodyClassName="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:items-start"
+        footer={
+          <div className="flex gap-2">
+            <SecondaryButton
+              onClick={() => {
+                setShowAIEstimator(false);
+                setEstimatorFiles([]);
+                setEstimatorTender(null);
+              }}
+              disabled={isGeneratingEstimate}
+              fullWidth
+            >
+              Cancel
+            </SecondaryButton>
+            <PrimaryButton
+              onClick={handleGenerateEstimate}
+              disabled={estimatorFiles.length === 0 || !estimatorTender || isGeneratingEstimate}
+              fullWidth
+            >
+              {isGeneratingEstimate ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {isUploadingForEstimate ? 'Uploading…' : 'Generating…'}
+                </>
+              ) : (
+                'Generate estimate'
               )}
-
-              <p className="text-[13px] text-white">
-                Upload your tender documents and our AI will generate a comprehensive estimate
-                package including:
-              </p>
-
-              <StatStrip
-                columns={4}
-                stats={[
-                  { label: 'Scoped RAMS', value: '01', tone: 'purple' },
-                  { label: 'Labour hours', value: '02', tone: 'blue' },
-                  { label: 'Materials', value: '03', tone: 'emerald' },
-                  { label: 'Hazards', value: '04', tone: 'amber' },
-                ]}
-              />
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
-                onChange={handleEstimatorFileSelect}
-                className="hidden"
-              />
-
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full bg-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl px-5 py-8 text-center hover:bg-[hsl(0_0%_14%)] transition-colors touch-manipulation"
-              >
-                <Brain className="h-10 w-10 text-elec-yellow mx-auto mb-3" />
-                <div className="text-[14px] font-semibold text-white">Upload tender documents</div>
-                <div className="mt-1 text-[12px] text-white">
-                  Drawings, specs, BOQs, job descriptions
-                </div>
-                <span className="mt-4 inline-flex items-center gap-2 h-11 px-4 rounded-full border border-white/[0.08] text-[12.5px] font-medium text-white">
-                  <Upload className="h-4 w-4" />
-                  Select files
-                </span>
-              </button>
-
-              {estimatorFiles.length > 0 && (
-                <ListCard>
-                  <ListCardHeader
-                    tone="blue"
-                    title="Selected files"
-                    meta={<Pill tone="blue">{estimatorFiles.length}</Pill>}
-                  />
-                  <ListBody>
-                    {estimatorFiles.map((file, index) => (
-                      <ListRow
-                        key={index}
-                        lead={<FileIcon className="h-4 w-4 text-white" />}
-                        title={file.name}
-                        subtitle={`${(file.size / 1024).toFixed(0)} KB`}
-                        trailing={
-                          <button
-                            onClick={() => handleRemoveEstimatorFile(index)}
-                            className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:bg-white/[0.06] touch-manipulation"
-                            aria-label="Remove file"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        }
-                      />
-                    ))}
-                  </ListBody>
-                </ListCard>
-              )}
-            </div>
-
-            <div className="px-5 py-4 border-t border-white/[0.06] flex flex-col sm:flex-row justify-end gap-2 bg-[hsl(0_0%_10%)]">
-              <SecondaryButton
-                onClick={() => {
-                  setShowAIEstimator(false);
-                  setEstimatorFiles([]);
-                  setEstimatorTender(null);
-                }}
-                disabled={isGeneratingEstimate}
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleGenerateEstimate}
-                disabled={
-                  estimatorFiles.length === 0 || !estimatorTender || isGeneratingEstimate
-                }
-              >
-                {isGeneratingEstimate ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    {isUploadingForEstimate ? 'Uploading…' : 'Generating…'}
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Generate estimate
-                  </>
-                )}
-              </PrimaryButton>
-            </div>
+            </PrimaryButton>
           </div>
-        </SheetContent>
-      </Sheet>
+        }
+      >
+        <section>
+          <PanelTitle title="What it drafts" />
+          <div className={cn(panel, 'px-4 py-4 sm:px-5')}>
+            <p className="text-[14px] leading-relaxed text-white">
+              Upload the tender documents and the AI drafts an estimate package: scoped RAMS, labour
+              hours, materials and hazards.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <PanelTitle
+            title="Tender documents"
+            meta={estimatorFiles.length > 0 ? plural(estimatorFiles.length, 'file') : undefined}
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+            onChange={handleEstimatorFileSelect}
+            className="hidden"
+          />
+          <div className={cn(panel, 'overflow-hidden')}>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="flex w-full items-center gap-3 px-4 py-4 text-left touch-manipulation hover:bg-white/[0.04] sm:px-5"
+            >
+              <span className="min-w-0 flex-1">
+                <span className="block text-[15px] font-semibold text-white">
+                  Add drawings, specs and BOQs
+                </span>
+                <span className="mt-0.5 block text-[13px] text-white">
+                  PDF, Word, Excel or photos. The more detail, the better the estimate.
+                </span>
+              </span>
+              <span className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.06] px-4 text-[14px] font-semibold text-white">
+                <Upload className="h-4 w-4" />
+                Choose files
+              </span>
+            </button>
+            {estimatorFiles.length > 0 && (
+              <ul className="divide-y divide-white/[0.07] border-t border-white/[0.07]">
+                {estimatorFiles.map((file, index) => (
+                  <li key={index} className="flex items-center gap-3 px-4 py-2.5 sm:px-5">
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[15px] font-semibold text-white">{file.name}</p>
+                      <p className="text-[13px] text-white">{(file.size / 1024).toFixed(0)} KB</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveEstimatorFile(index)}
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
+                      aria-label={`Remove ${file.name}`}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      </FormSheet>
 
       <Sheet open={showDiscoverSheet} onOpenChange={setShowDiscoverSheet}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)]"
+          className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
         >
-          <div className="flex flex-col h-full">
-            <SheetHeader className="px-5 py-4 border-b border-white/[0.06] flex-shrink-0">
-              <SheetTitle className="flex items-center gap-2 text-white">
-                <MapPin className="h-5 w-5 text-elec-yellow" />
-                Discover tender opportunities
+          <div className="flex h-full flex-col">
+            <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" aria-hidden />
+            <SheetHeader className="shrink-0 space-y-1 px-4 pb-4 pt-2 text-left sm:px-6 lg:px-10">
+              <SheetTitle className="text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[24px]">
+                Discover tenders
               </SheetTitle>
-              <p className="text-[12.5px] text-white">
-                Find electrical contracts from 20+ UK sources.
-              </p>
+              <SheetDescription className="text-[13px] leading-snug text-white">
+                Electrical contracts from {sourcesCopy}.
+              </SheetDescription>
             </SheetHeader>
-            <div className="flex-1 overflow-y-auto overscroll-contain">
+            <div className="min-h-0 flex-1 border-t border-white/[0.08]">
               <TenderOpportunitiesSection onStartTender={handleStartTenderFromOpportunity} />
             </div>
           </div>

@@ -15,7 +15,13 @@ export class MinimalSafetyChecks {
   /**
    * Apply minimal safety checks - trust the AI for everything else
    */
-  apply(circuits: DesignedCircuit[]): DesignedCircuit[] {
+  apply(
+    circuits: DesignedCircuit[],
+    installationType = 'domestic',
+    earthing = 'TN-C-S'
+  ): DesignedCircuit[] {
+    const household = /domestic|household|residential/i.test(installationType);
+    const tn = /^TN/i.test(earthing);
     return circuits.map((circuit, index) => {
       let modified = { ...circuit };
 
@@ -25,8 +31,15 @@ export class MinimalSafetyChecks {
       // CHECK 2: Socket circuits MUST have RCD/RCBO (BS 7671 Reg 411.3.3)
       modified = this.enforceSocketRCD(modified, index);
 
+      // CHECK 2b: Domestic lighting MUST have 30 mA RCD (BS 7671 Reg 411.3.4, 2018)
+      if (household) modified = this.enforceDomesticLightingRCD(modified, index);
+
       // CHECK 3: Fire/emergency circuits MUST use fire-rated cables (BS 5266-1, BS 5839-1)
       modified = this.enforceFireCircuitCables(modified, index);
+
+      // CHECK 4: Fire alarm supply should NOT be on an RCD (BS 5839-1) — non-domestic.
+      // After CHECK 3, which settles the cable and method.
+      if (!household) modified = this.fireAlarmSupply(modified, index, tn);
 
       return modified;
     });
@@ -110,13 +123,23 @@ export class MinimalSafetyChecks {
           },
         });
 
+        // Keep the cable name and CPC in step with the new size — this used
+        // to leave "2.5mm² …" on a 4mm² circuit, and a 4mm² CPC on T&E,
+        // which is made with 1.5mm² (6242Y).
+        const typeText = String((circuit as any).cableType ?? '');
+        const isTwinEarth = /twin|t\s*&\s*e|t\+e|6242|flat/i.test(typeText);
+        const from = circuit.cableSize;
         return {
           ...circuit,
           cableSize: 4.0,
-          cpcSize: 4.0, // Equal for SWA/singles, or 2.5 for T&E
+          cpcSize: isTwinEarth ? 1.5 : 4.0,
+          cableType:
+            typeText.replace(/\d+(?:\.\d+)?\s*mm²?/i, '4mm²') || (circuit as any).cableType,
           justifications: {
             ...circuit.justifications,
             safetyCheckApplied: 'Radial 32A: 4mm² minimum per BS 7671 Table 4D1A',
+            cableSize:
+              `Corrected from ${from}mm² to 4mm²: a 32A radial needs 4mm² minimum. ${circuit.justifications?.cableSize ?? ''}`.trim(),
           },
         };
       }
@@ -160,6 +183,96 @@ export class MinimalSafetyChecks {
     }
 
     return circuit;
+  }
+
+  /**
+   * Lighting in domestic premises needs 30 mA additional protection (Reg
+   * 411.3.4, since 2018). The model put every domestic lighting circuit in the
+   * benchmark on a plain MCB with rcdProtected false.
+   */
+  private enforceDomesticLightingRCD(circuit: DesignedCircuit, index: number): DesignedCircuit {
+    const isLighting = /light/i.test(`${circuit.loadType ?? ''} ${circuit.name ?? ''}`);
+    if (!isLighting) return circuit;
+    const type = String(circuit.protectionDevice?.type ?? '');
+    const hasRCD = /RCBO|RCD/i.test(type) || (circuit as any).rcdProtected === true;
+    if (hasRCD) return circuit;
+    this.logger.info('Domestic lighting RCD protection enforced', {
+      circuit: circuit.name,
+      index,
+      before: type,
+      after: 'RCBO',
+    });
+    return {
+      ...circuit,
+      rcdProtected: true,
+      protectionDevice: { ...circuit.protectionDevice, type: 'RCBO' },
+      justifications: {
+        ...circuit.justifications,
+        safetyCheckApplied:
+          'Domestic lighting circuit: 30 mA RCD protection per BS 7671 Reg 411.3.4 — RCBO specified.',
+      },
+    } as DesignedCircuit;
+  }
+
+  /**
+   * BS 5839-1: the circuit supplying the fire detection and alarm system
+   * should not be protected by an RCD unless BS 7671 makes one necessary,
+   * and then a fault on any other circuit must not be able to isolate it.
+   * The model put nearly every fire alarm circuit on an RCBO.
+   *
+   * On TN with surface wiring nothing in BS 7671 requires the RCD (no
+   * sockets, not domestic lighting, not concealed in a wall — 522.6.202), so
+   * it becomes an MCB. On TT the RCD is needed for fault protection (411.5),
+   * so a dedicated RCBO stays and the note says why. Domestic smoke alarms
+   * (BS 5839-6) are not in the RAG, so they are left as designed.
+   */
+  private fireAlarmSupply(circuit: DesignedCircuit, index: number, tn: boolean): DesignedCircuit {
+    const kind = detectFireEmergencyCircuit(circuit.loadType || '', circuit.name || '');
+    if (kind !== 'fire-alarm' && kind !== 'smoke-detection') return circuit;
+    const type = String(circuit.protectionDevice?.type ?? '');
+    const onRcd = /RCBO|RCD/i.test(type) || (circuit as any).rcdProtected === true;
+    if (!onRcd) return circuit;
+    const method = String((circuit as any).installationMethod ?? '').toLowerCase();
+    const surface = /clipped|conduit|trunking|tray|surface|method [bce]\b/.test(method);
+    if (!tn || !surface) {
+      return {
+        ...circuit,
+        justifications: {
+          ...circuit.justifications,
+          safetyCheckApplied:
+            'Fire alarm supply: RCD kept because BS 7671 needs it here (TT, or cable concealed in a wall). Use a dedicated RCBO so no fault on another circuit can isolate the fire alarm (BS 5839-1).',
+        },
+      } as DesignedCircuit;
+    }
+    this.logger.info('Fire alarm supply moved off RCD (BS 5839-1)', {
+      circuit: circuit.name,
+      index,
+      before: type,
+      after: 'MCB',
+    });
+    // The model's own notes still say RCBO; drop those and its RCD test.
+    const mentionsRcd = (t: unknown) => /\bRCD\b|RCBO|residual/i.test(JSON.stringify(t ?? ''));
+    const { rcd: _rcdTest, ...tests } = ((circuit as any).expectedTests ?? {}) as Record<
+      string,
+      unknown
+    >;
+    return {
+      ...circuit,
+      rcdProtected: false,
+      protectionDevice: { ...circuit.protectionDevice, type: 'MCB' },
+      ...((circuit as any).expectedTests ? { expectedTests: tests } : {}),
+      regulation_refs: ((circuit as any).regulation_refs ?? []).filter(
+        (r: unknown) => !mentionsRcd(r)
+      ),
+      ungrounded_choices: ((circuit as any).ungrounded_choices ?? []).filter(
+        (u: unknown) => !mentionsRcd(u)
+      ),
+      justifications: {
+        ...circuit.justifications,
+        safetyCheckApplied:
+          'Fire alarm supply: MCB, no RCD — BS 5839-1 says the supply should not be RCD-protected unless BS 7671 requires it, and nothing does on a TN supply with surface wiring. Dedicated circuit from the first distribution board, isolator labelled and protected against unauthorised operation.',
+      },
+    } as DesignedCircuit;
   }
 
   /**

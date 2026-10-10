@@ -92,13 +92,11 @@ const EssentialToolsTab = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Essential tools guide
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Essential tools guide</span>
         <p className="text-[14px] text-white leading-relaxed">
-          Essential tools form the foundation of your professional toolkit. This comprehensive
-          guide covers specifications, maintenance, and strategic purchasing advice.
+          Essential tools form the foundation of your professional toolkit. This comprehensive guide
+          covers specifications, maintenance, and strategic purchasing advice.
         </p>
       </div>
 
@@ -106,25 +104,25 @@ const EssentialToolsTab = () => {
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-white/[0.02] border border-white/[0.06] p-1 rounded-xl h-auto">
           <TabsTrigger
             value="hand-tools"
-            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation"
+            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-11 touch-manipulation"
           >
             Hand tools
           </TabsTrigger>
           <TabsTrigger
             value="power-tools"
-            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation"
+            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-11 touch-manipulation"
           >
             Power tools
           </TabsTrigger>
           <TabsTrigger
             value="test-equipment"
-            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation"
+            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-11 touch-manipulation"
           >
             Test equipment
           </TabsTrigger>
           <TabsTrigger
             value="ppe"
-            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation"
+            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-11 touch-manipulation"
           >
             PPE & safety
           </TabsTrigger>
@@ -144,9 +142,9 @@ const EssentialToolsTab = () => {
         </TabsContent>
       </Tabs>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Apprentice tool progression timeline
           </span>
           <p className="text-[13px] text-white">
@@ -171,9 +169,7 @@ const EssentialToolsTab = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Key items
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Key items</span>
                   <ul className="space-y-1">
                     {milestone.items.map((item, idx) => (
                       <li
@@ -187,9 +183,7 @@ const EssentialToolsTab = () => {
                   </ul>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Next focus
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Next focus</span>
                   <p className="text-[14px] text-white leading-relaxed">{milestone.nextStep}</p>
                 </div>
               </div>
@@ -198,11 +192,9 @@ const EssentialToolsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Tool maintenance schedule
-          </span>
+          <span className="text-[13px] font-semibold text-white">Tool maintenance schedule</span>
           <p className="text-[13px] text-white">
             Proper maintenance extends tool life and ensures safety compliance
           </p>
@@ -220,15 +212,15 @@ const EssentialToolsTab = () => {
                 </span>
               </div>
               <p className="text-[14px] text-white leading-relaxed">{item.task}</p>
-              <p className="text-[12px] text-white font-mono">{item.cost}</p>
+              <p className="text-[12px] text-white">{item.cost}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             UK certification requirements
           </span>
           <p className="text-[13px] text-white">
@@ -242,31 +234,29 @@ const EssentialToolsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <div className="flex items-center flex-wrap gap-2">
-                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {cert.standard}
                 </span>
                 <span className="text-[14px] font-semibold text-white">{cert.applies}</span>
               </div>
               <p className="text-[14px] text-white leading-relaxed">{cert.requirement}</p>
               <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3 space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+                <span className="text-[13px] font-semibold text-red-300">
                   Risk of non-compliance
                 </span>
-                <p className="text-[13px] text-white leading-relaxed">{cert.penalty}</p>
+                <p className="text-[14px] text-white leading-relaxed">{cert.penalty}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Investment strategy
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Investment strategy</span>
         <p className="text-[14px] text-white leading-relaxed">
-          Total essential toolkit cost: £1050–2700. Focus on quality over quantity, spread
-          purchases strategically, and prioritise safety-critical items first. Your tools are an
-          investment in your professional future.
+          Total essential toolkit cost: £1050–2700. Focus on quality over quantity, spread purchases
+          strategically, and prioritise safety-critical items first. Your tools are an investment in
+          your professional future.
         </p>
       </div>
     </div>

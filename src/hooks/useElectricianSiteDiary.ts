@@ -1,8 +1,17 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  applySafetyScope,
+  firmWriteErrorMessage,
+  isFirmScope,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
-export interface SiteDiaryEntry {
+export interface SiteDiaryEntry extends FirmRecordFields {
   id: string;
   user_id: string;
   entry_date: string;
@@ -29,19 +38,21 @@ export interface SiteDiaryEntry {
 }
 
 export function useElectricianSiteDiary() {
+  // Personal: the user's own diary. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['electrician-site-diary'],
+    queryKey: ['electrician-site-diary', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<SiteDiaryEntry[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('electrician_site_diary')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('entry_date', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('electrician_site_diary').select('*'),
+        scope,
+        user.id
+      ).order('entry_date', { ascending: false });
 
       if (error) throw error;
       return (data ?? []) as unknown as SiteDiaryEntry[];
@@ -53,6 +64,7 @@ export function useElectricianSiteDiary() {
 export function useCreateDiaryEntry() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (
@@ -65,10 +77,9 @@ export function useCreateDiaryEntry() {
 
       const { data, error } = await supabase
         .from('electrician_site_diary')
-        .insert({
-          user_id: user.id,
-          ...entry,
-        })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(stampSafetyInsert({ user_id: user.id, ...entry }, scope) as never)
         .select()
         .single();
 
@@ -99,7 +110,8 @@ export function useUpdateDiaryEntry() {
     mutationFn: async ({ id, ...updates }: Partial<SiteDiaryEntry> & { id: string }) => {
       const { data, error } = await supabase
         .from('electrician_site_diary')
-        .update({ ...updates, updated_at: new Date().toISOString() })
+        // employer_* columns are live but not yet in the generated types.
+        .update({ ...updates, updated_at: new Date().toISOString() } as never)
         .eq('id', id)
         .select()
         .single();
@@ -116,6 +128,7 @@ export function useUpdateDiaryEntry() {
 export function useDeleteDiaryEntry() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (id: string) => {
@@ -130,10 +143,13 @@ export function useDeleteDiaryEntry() {
         description: 'Site diary entry has been removed.',
       });
     },
-    onError: () => {
+    onError: (error) => {
       toast({
         title: 'Error',
-        description: 'Could not delete diary entry.',
+        // Personal scope keeps its message; firm scope says why a write was blocked.
+        description: isFirmScope(scope)
+          ? firmWriteErrorMessage(scope, error)
+          : 'Could not delete diary entry.',
         variant: 'destructive',
       });
     },

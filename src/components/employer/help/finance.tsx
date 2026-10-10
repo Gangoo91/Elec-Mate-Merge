@@ -188,11 +188,22 @@ export const TENDERS_HELP: PageHelpContent = {
   title: 'Tenders',
   what: 'Find public sector and commercial work to bid on, and keep every bid you are working on in one pipeline: open, bidding, then won or lost.',
   steps: [
-    { title: 'Find or add a tender', body: 'Discover searches 20+ UK sources by postcode. Track tender adds one you heard about.' },
+    { title: 'Say what you bid for', body: 'Tap What we bid for once: where you work, the kind of work and the contract size. Tenders that fit show under Matches for you, on Overview, and in a Monday round-up.' },
+    { title: 'Start a bid', body: 'Tap Start bid on a match, or use Discover to search the public tender sources by postcode. Track tender adds one you heard about. Open a tender to copy its pre-qualification answers, filled from your firm records.' },
     { title: 'Price it', body: 'Open the tender and tap AI estimate. Add the drawings and specs and it drafts labour, materials and hazards.' },
     { title: 'Bid and record the result', body: 'Tap Mark submitted when you send it, then Won or Lost. A won tender converts to a job.' },
   ],
   tasks: [
+    {
+      title: 'Get tenders that fit sent to you',
+      steps: [
+        'Tap What we bid for.',
+        'Add your base postcode and how far you travel, or tick regions.',
+        'Pick the work and contract size, tick the accreditations you hold, then tap Save.',
+        'Matches show at the top of this page and on Overview. New ones arrive in a Monday notification.',
+      ],
+      tour: [{ target: 'tenders.matches', caption: 'Tenders that fit what you bid for land here.' }],
+    },
     {
       title: 'Find tenders near you',
       steps: [
@@ -218,7 +229,7 @@ export const TENDERS_HELP: PageHelpContent = {
         'Open a tender from the Open tab.',
         'Tap AI estimate.',
         'Add the tender documents, then tap Generate estimate.',
-        'The estimate appears under AI estimates at the top of the page.',
+        'The estimate appears under AI estimates, in the right-hand column on a computer and under Your bids on a phone.',
       ],
       tour: [
         { target: 'tenders.tabs', text: 'Open', caption: 'Open tenders live here.', opens: true },
@@ -245,7 +256,7 @@ export const FINANCE_HUB_HELP: PageHelpContent = {
   title: 'Finance',
   what: 'Where the money pages live: quotes and invoices, costs, reports and the link to your accounting package. Every figure here matches the page it opens.',
   steps: [
-    { title: 'Read the top line', body: 'Outstanding, overdue, cash in over 30 days and open quotes. Tap one to open the list behind it.' },
+    { title: 'Read the top line', body: 'Owed to you, overdue, paid in this month and open quotes. Tap one to open the list behind it.' },
     { title: 'Open a page', body: 'Quote, invoice and chase in Quotes & Invoices. Costs in Expenses and Purchase orders.' },
     { title: 'Check the result', body: 'Accounts and Reports show profit for a period. Job financials shows it per job.' },
   ],

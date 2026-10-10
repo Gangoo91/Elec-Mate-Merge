@@ -289,7 +289,7 @@ const sections = [
                 Arc Fault Detection Devices (AFDDs) — Regulation 421.1.7
               </h4>
               <p className="text-white text-sm leading-relaxed mb-3">
-                Regulation 421.1.7 was redrafted in BS 7671:2018+A4:2026. It is now a{' '}
+                Regulation 421.1.7 was redrafted at A2:2022 (A4:2026 only reworded its first item). It is a{' '}
                 <strong>requirement</strong> to protect final circuits supplying socket-outlets
                 rated up to 32&nbsp;A with AFDDs in Higher Risk Residential Buildings, Houses in
                 Multiple Occupation, purpose-built student accommodation and care homes. For all
@@ -863,7 +863,7 @@ export default function DistributionBoardWiringPage() {
       title="Distribution Board Wiring: Consumer Unit Layout"
       description="Complete guide to distribution board wiring and consumer unit layout in the UK. Split load vs dual RCD vs RCBO boards, circuit arrangement."
       datePublished="2025-08-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

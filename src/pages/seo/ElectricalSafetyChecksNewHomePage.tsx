@@ -42,8 +42,8 @@ const keyTakeaways = [
   'Consumer unit age indicators: BS 3036 rewireable fuse boards (pre-1980s, no RCD, over-fusing risk), MCB boards without RCD protection (pre-2008 practice), and split-load boards with one RCD (standard from late 1990s to 2015).',
   'Red flags in a new home include no main protective bonding on gas and water services, no RCD protection, single-pole isolation at the main switch, 5-amp round-pin sockets, and scorch marks on accessories.',
   'An EICR should be commissioned before exchange of contracts where possible, or immediately after moving in. Any C1 deficiencies must be remediated before the installation is used.',
-  'A4:2026 update: BS 7671 Regulation 411.3.4 now requires 30 mA RCD additional protection on AC lighting circuits in domestic premises. An existing installation without RCD-protected lighting will show this as a deficiency on an EICR.',
-  'A4:2026 update: BS 7671 Regulation 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. This is a recommendation, not a mandatory requirement, but electricians should note it when advising on new or rewired circuits.',
+  'BS 7671 Regulation 411.3.4 has required 30 mA RCD additional protection on AC lighting circuits in domestic premises since the 2018 edition; it is not new in A4:2026. An existing installation without RCD-protected lighting will show this as a deficiency on an EICR.',
+  'BS 7671 Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. In an ordinary home this is a recommendation, not a mandatory requirement; since A2:2022 they are required on socket-outlet circuits in HMOs, high rise residential buildings, student accommodation and care homes.',
   'Private rented properties in England are subject to the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, which require an EICR at intervals of not more than 5 years. Owner-occupied properties should follow GN3 guidance on recommended inspection intervals.',
 ];
 
@@ -552,17 +552,17 @@ const sections = [
               <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
-                  BS 7671:2018+A4:2026 — Key Changes Affecting New Home EICRs
+                  BS 7671:2018+A4:2026 — Key Requirements Affecting New Home EICRs
                 </h4>
                 <ul className="text-white text-sm leading-relaxed space-y-2 mt-1 list-disc list-inside">
                   <li>
                     <strong>Reg 411.3.4 — RCD protection on lighting circuits (mandatory):</strong>{' '}
-                    AC lighting circuits in domestic premises shall now have 30&nbsp;mA additional
+                    AC lighting circuits in domestic premises shall have 30&nbsp;mA additional
                     RCD protection. Existing installations without protected lighting will attract a
                     deficiency observation on an EICR.
                   </li>
                   <li>
-                    <strong>Reg 421.1.7 — AFDDs recommended:</strong> BS 7671 now recommends arc
+                    <strong>Reg 421.1.7 — AFDDs recommended:</strong> BS 7671 recommends arc
                     fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from
                     arc fault currents. This is recommendatory — use &apos;shall&apos; wording only
                     when advising on new or rewired circuits.
@@ -592,7 +592,7 @@ export default function ElectricalSafetyChecksNewHomePage() {
       title="Electrical Safety Checks: New Home Buyer's Guide"
       description="What to check in the electrical installation when buying a home in the UK: wiring age indicators (rubber pre-1960s), consumer unit types, red flags."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Home Buyer's Guide"

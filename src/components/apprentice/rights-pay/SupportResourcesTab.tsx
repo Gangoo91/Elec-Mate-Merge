@@ -332,9 +332,7 @@ const SupportResourcesTab = () => {
       } p-4 sm:p-5 space-y-3`}
     >
       <span
-        className={`text-[10px] font-medium uppercase tracking-[0.18em] ${
-          accent === 'red' ? 'text-red-300' : 'text-white'
-        }`}
+        className={`text-[13px] font-semibold ${accent === 'red' ? 'text-red-300' : 'text-white'}`}
       >
         {eyebrow}
       </span>
@@ -383,20 +381,18 @@ const SupportResourcesTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{org.name}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{org.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{org.description}</p>
               <div className="space-y-1">
                 <ContactLine icon={<Phone className="h-3 w-3" />} text={org.contact} />
                 <ContactLine icon={<Globe className="h-3 w-3" />} text={org.website} />
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Services
-                </span>
+                <span className="text-[13px] font-semibold text-white">Services</span>
                 <ul className="space-y-1">
                   {org.services.map((service, serviceIndex) => (
                     <li
                       key={serviceIndex}
-                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{service}</span>
@@ -435,14 +431,12 @@ const SupportResourcesTab = () => {
                   <ContactLine icon={<Globe className="h-3 w-3" />} text={union.website} />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Member benefits
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Member benefits</span>
                   <ul className="space-y-1">
                     {union.benefits.map((benefit, benefitIndex) => (
                       <li
                         key={benefitIndex}
-                        className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{benefit}</span>
@@ -468,20 +462,18 @@ const SupportResourcesTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{org.name}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{org.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{org.description}</p>
               <div className="space-y-1">
                 <ContactLine icon={<Phone className="h-3 w-3" />} text={org.contact} />
                 <ContactLine icon={<Globe className="h-3 w-3" />} text={org.website} />
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Key services
-                </span>
+                <span className="text-[13px] font-semibold text-white">Key services</span>
                 <ul className="space-y-1">
                   {org.services.map((service, serviceIndex) => (
                     <li
                       key={serviceIndex}
-                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{service}</span>
@@ -507,7 +499,7 @@ const SupportResourcesTab = () => {
             >
               <div className="flex items-start justify-between gap-2">
                 <h4 className="text-[14px] font-semibold text-white">{org.name}</h4>
-                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05] whitespace-nowrap">
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.05] whitespace-nowrap">
                   {org.contact}
                 </span>
               </div>
@@ -525,7 +517,7 @@ const SupportResourcesTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
               <h4 className="text-[14px] font-semibold text-white">{resource.platform}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{resource.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{resource.description}</p>
               <ContactLine icon={<Globe className="h-3 w-3" />} text={resource.website} />
             </div>
           ))}
@@ -540,21 +532,19 @@ const SupportResourcesTab = () => {
         <div className="space-y-3">
           {escalationSteps.map((item) => (
             <div key={item.step} className="flex gap-3 items-start">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-[13px] font-mono text-white">
+              <span className="flex-shrink-0 w-8 h-8 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center text-[13px] text-white">
                 {item.step}
               </span>
               <div className="flex-1 min-w-0">
                 <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
-                <p className="text-[13px] text-white leading-relaxed mt-1">{item.desc}</p>
+                <p className="text-[14px] text-white leading-relaxed mt-1">{item.desc}</p>
               </div>
             </div>
           ))}
         </div>
-        <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-            Important
-          </span>
-          <p className="text-[13px] text-white leading-relaxed">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-3 space-y-1">
+          <span className="text-[13px] font-semibold text-elec-yellow">Important</span>
+          <p className="text-[14px] text-white leading-relaxed">
             Keep written records at every stage — emails, letters, dates, and names. If your issue
             reaches ACAS or a Tribunal, evidence is essential.
           </p>

@@ -51,11 +51,11 @@ export function TopExpiringWidget({ limit = 5 }: Props) {
             Expiring across the college
           </h3>
           {expiredCount > 0 ? (
-            <span className="text-[11px] font-semibold tabular-nums text-red-300">
+            <span className="text-[12px] font-semibold tabular-nums text-red-300">
               {expiredCount} overdue
             </span>
           ) : (
-            <span className="text-[11px] font-semibold tabular-nums text-white">
+            <span className="text-[12px] font-semibold tabular-nums text-white">
               {items.length}
             </span>
           )}

@@ -1,4 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
+import { UsesAi } from '@/components/college/ui/UsesAi';
+import { LC_TILE, LC_TOP_LINE } from '@/components/apprentice-hub/college-hub/learnerUi';
 
 /* ==========================================================================
    CollegeAiCard — apprentice-side hero tile linking to /apprentice/college-ai.
@@ -19,34 +22,35 @@ export function CollegeAiCard() {
     <button
       type="button"
       onClick={() => navigate('/apprentice/college-ai')}
-      className="group w-full text-left rounded-2xl border border-elec-yellow/35 bg-white/[0.02] hover:bg-white/[0.04] transition-colors overflow-hidden touch-manipulation"
+      className={cn(
+        LC_TILE,
+        '-mx-4 w-[calc(100%+2rem)] rounded-none border-x-0 sm:mx-0 sm:w-full sm:rounded-2xl sm:border-x'
+      )}
     >
-      <div className="px-4 sm:px-5 py-4 sm:py-5">
-        <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            College AI
-          </div>
-          <span className="text-[10.5px] tabular-nums text-white">grounded in your data</span>
+      <span className={LC_TOP_LINE} aria-hidden />
+      <div>
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-[13px] font-semibold text-white">College AI</span>
+          <UsesAi />
         </div>
-        <h3 className="mt-2 text-[18px] sm:text-[20px] font-semibold text-white leading-tight tracking-tight">
-          Ask your AI study mentor anything
+        <h3 className="mt-1.5 text-[17px] font-semibold leading-tight tracking-tight text-white">
+          Ask your study mentor
         </h3>
-        <p className="mt-1 text-[12.5px] sm:text-[13px] text-white leading-snug max-w-xl">
-          Knows your ACs, quiz history, OTJ hours, and EPA verdicts. Cites real evidence. Never
-          makes things up.
+        <p className="mt-1 max-w-xl text-[13px] leading-snug text-white">
+          It reads your criteria, quiz results, off-the-job hours and EPA mocks, and points to the
+          evidence it used. Check anything important with your tutor.
         </p>
-        <ul className="mt-3 flex items-center flex-wrap gap-1.5">
+        {/* Example questions read as text, not as chips that look tappable. */}
+        <p className="mt-3 text-[13px] font-medium text-white">Try asking</p>
+        <ul className="mt-1 space-y-0.5">
           {STARTERS.map((s) => (
-            <li
-              key={s}
-              className="inline-flex items-center h-6 px-2 rounded-full border border-white/[0.10] bg-white/[0.03] text-[10.5px] font-medium text-white"
-            >
-              "{s}"
+            <li key={s} className="text-[13.5px] leading-snug text-white">
+              “{s}”
             </li>
           ))}
         </ul>
-        <div className="mt-4 inline-flex items-center h-11 px-4 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold group-hover:bg-elec-yellow/90 transition-colors">
-          Open College AI →
+        <div className="mt-4 flex h-11 w-full items-center justify-center rounded-xl border border-white/[0.14] px-4 text-[13.5px] font-semibold text-white transition-colors group-hover:border-elec-yellow sm:inline-flex sm:w-auto">
+          Open College AI
         </div>
       </div>
     </button>

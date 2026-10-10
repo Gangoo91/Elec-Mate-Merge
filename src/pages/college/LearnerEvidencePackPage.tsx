@@ -2,16 +2,19 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { HowItWorks, PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { HowItWorks, type PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  CollegePageHeader,
+} from '@/components/college/ui/CollegeUi';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import { FormSheet } from '@/components/forms/FormSheet';
+import { ChoiceGrid, JoinedToggle } from '@/components/college/quality/QualityChoices';
 import {
   buttonPrimaryCn,
   buttonSecondaryCn,
   cardCn,
-  chipBase,
-  chipOff,
-  chipOn,
   fieldFullCn,
   grid2Cn,
   inputCn,
@@ -83,7 +86,7 @@ const HELP: PageHelpContent = {
   what: 'Everything the funding rules need on file for this apprentice, plus your college’s own requirements, checked live against the record.',
   steps: [
     {
-      title: 'Work down the red',
+      title: 'Work down the orange',
       body: 'Each item says what is needed, which paragraph of the rules asks for it, and its status.',
     },
     {
@@ -106,7 +109,7 @@ const HELP: PageHelpContent = {
     },
   ],
   source:
-    'Apprenticeship funding rules, August 2025 to July 2026, paragraphs 309 to 318 and the evidence requirements throughout.',
+    'Apprenticeship funding rules for the year the learner started (2024/25, 2025/26 or 2026/27): the evidence section and the evidence requirements throughout. Every paragraph cited was checked against the official text.',
 };
 
 export default function LearnerEvidencePackPage() {
@@ -189,6 +192,11 @@ export default function LearnerEvidencePackPage() {
     if (it.link === 'reviews') return navigate(`/college/reviews`);
     if (it.link === 'otj') return navigate(`/college/otj`);
     if (it.link === 'episodes') return setEpisodeOpen(true);
+    // ELE-2039/2041/2042: built in Student 360.
+    if (it.link === 'training_plan' || it.link === 'starting_point' || it.link === 'epao')
+      return navigate(
+        `/college?section=student360&studentId=${studentId}#${it.link === 'training_plan' ? 'training-plan' : it.link === 'starting_point' ? 'starting-point' : 'epao'}`
+      );
     if (it.field) return setFactsOpen(true);
     if (!it.kind) return;
     const req = it.requirement_id ? requirements.find((r) => r.id === it.requirement_id) : null;
@@ -232,9 +240,8 @@ export default function LearnerEvidencePackPage() {
         section="Evidence pack"
         title={pack?.learner.name ?? 'Learner'}
         backTo="/college/evidence-pack"
-        trailing={<PageHelpButton help={HELP} compact />}
       />
-      <HubBody>
+      <HubBody pushContext="Get notified about evidence that is missing or due">
         {loading ? (
           <div className="flex min-h-[30vh] items-center justify-center">
             <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
@@ -244,31 +251,44 @@ export default function LearnerEvidencePackPage() {
             Could not load the pack. {error}
           </p>
         ) : (
-          <div className="space-y-5">
+          <div className="space-y-6 sm:space-y-8">
+            <CollegePageHeader
+              eyebrow="Funding evidence pack"
+              title={pack.learner.name}
+              description={
+                <>
+                  {[pack.learner.course, pack.learner.cohort, pack.learner.employer]
+                    .filter(Boolean)
+                    .join(' · ')}
+                  <span className="mt-1 block">
+                    {`${inPlace} of ${applicable.length} items due now are in place.`}
+                    {pack.counts.missing ? ` ${pack.counts.missing} missing.` : ''}
+                    {pack.counts.attention ? ` ${pack.counts.attention} need attention.` : ''}
+                    {pack.counts.due ? ` ${pack.counts.due} due soon.` : ''}
+                    {` Checked live, ${fmt(pack.generated_at)}.`}
+                  </span>
+                </>
+              }
+              help={HELP}
+              actions={
+                <button
+                  type="button"
+                  onClick={downloadPack}
+                  disabled={downloadingPack}
+                  className={COLLEGE_BTN_PRIMARY}
+                >
+                  {downloadingPack ? 'Making the PDF…' : 'Download the pack (PDF)'}
+                </button>
+              }
+            />
             <HowItWorks help={HELP} />
             <section className={cardCn}>
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[13px] text-white">
-                    {[pack.learner.course, pack.learner.cohort, pack.learner.employer]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </p>
-                  <p className="mt-1 text-[28px] font-semibold tabular-nums leading-none text-white">
-                    {inPlace}
-                    <span className="text-[16px] font-medium">
-                      {' '}
-                      of {applicable.length} in place
-                    </span>
-                  </p>
-                </div>
-                <span className="shrink-0 text-[12px] text-white">
-                  Live · {fmt(pack.generated_at)}
-                </span>
-              </div>
+              <p className="text-[15px] font-semibold text-white">
+                {inPlace} of {applicable.length} in place
+              </p>
               <div className="h-2 overflow-hidden rounded-full bg-white/[0.1]">
                 <div
-                  className="h-full rounded-full bg-elec-yellow"
+                  className="h-full rounded-full bg-emerald-400"
                   style={{
                     width: `${applicable.length ? Math.round((100 * inPlace) / applicable.length) : 0}%`,
                   }}
@@ -299,14 +319,6 @@ export default function LearnerEvidencePackPage() {
                   className={neutral}
                 >
                   File another document
-                </button>
-                <button
-                  type="button"
-                  onClick={downloadPack}
-                  disabled={downloadingPack}
-                  className={neutral}
-                >
-                  {downloadingPack ? 'Making the PDF…' : 'Download the pack (PDF)'}
                 </button>
                 {learnerUserId && (
                   <>
@@ -369,11 +381,14 @@ export default function LearnerEvidencePackPage() {
 
             <History rows={pack.history} onOpenFile={open} />
 
-            <p className="text-[12px] leading-relaxed text-white">
-              Built from the record each time it opens: apprenticeship funding rules 2025/26,
-              paragraphs 309 to 318 and the evidence requirements throughout, plus your college’s
-              own requirements. Documents are never overwritten; a new version replaces the old one
-              and both are kept.
+            <p className="text-[12px] leading-relaxed text-white" data-testid="pack-rules-source">
+              Built from the record each time it opens:{' '}
+              {pack.rules?.evidence_section
+                ? `${pack.rules.label}, paragraphs ${pack.rules.evidence_section} and the evidence requirements throughout`
+                : (pack.rules?.label ?? 'the apprenticeship funding rules')}
+              , plus your college’s own requirements. A learner follows the rules of the year they
+              started. Documents are never overwritten; a new version replaces the old one and both
+              are kept.
             </p>
           </div>
         )}
@@ -421,8 +436,7 @@ export default function LearnerEvidencePackPage() {
   );
 }
 
-const neutral =
-  'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.10]';
+const neutral = COLLEGE_BTN;
 
 function ItemRow({
   item,
@@ -441,11 +455,15 @@ function ItemRow({
         ? 'Open hours'
         : item.link === 'episodes'
           ? 'Record'
-          : item.field
-            ? 'Edit details'
-            : ev.length
-              ? 'New version'
-              : 'File';
+          : item.link === 'training_plan'
+            ? 'Open plan'
+            : item.link === 'starting_point' || item.link === 'epao'
+              ? 'Open'
+              : item.field
+                ? 'Edit details'
+                : ev.length
+                  ? 'New version'
+                  : 'File';
   const quiet = item.status === 'not_yet_due' || item.status === 'not_applicable';
   return (
     <li className="px-4 py-4 sm:px-5">
@@ -453,13 +471,17 @@ function ItemRow({
         <div className="min-w-0">
           <p className="text-[15px] font-semibold leading-snug text-white">{item.title}</p>
           <p className="mt-1 text-[13px] leading-relaxed text-white">{item.detail}</p>
-          <p className="mt-1 text-[11.5px] text-white">
-            {item.custom ? 'College requirement' : `Funding rules ${item.para}`}
+          <p className="mt-1 text-[12px] text-white">
+            {item.custom
+              ? 'College requirement'
+              : item.para
+                ? `Funding rules ${item.rules_year ?? ''} para ${item.para}`.replace('  ', ' ')
+                : `Funding rules ${item.rules_year ?? ''}: ${item.para_note ?? 'paragraph not checked'}`}
           </p>
         </div>
         <span
           className={cn(
-            'shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold',
+            'shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold',
             STATUS_PILL[item.status]
           )}
         >
@@ -472,13 +494,16 @@ function ItemRow({
           {item.months.map((m) => (
             <div key={m.month} className="flex min-w-0 flex-1 flex-col items-center gap-1">
               <div
-                className={cn('w-full rounded-sm', m.minutes > 0 ? 'bg-elec-yellow' : 'bg-red-500')}
+                className={cn(
+                  'w-full rounded-sm',
+                  m.minutes > 0 ? 'bg-emerald-400' : 'bg-orange-500'
+                )}
                 style={{
                   height: `${m.minutes > 0 ? Math.max(6, Math.min(36, Math.round(m.minutes / 60) * 2)) : 4}px`,
                 }}
                 title={`${m.month}: ${Math.round(m.minutes / 60)}h`}
               />
-              <span className="text-[9.5px] text-white">
+              <span className="text-[12px] text-white">
                 {new Date(`${m.month}T12:00:00`).toLocaleDateString('en-GB', { month: 'narrow' })}
               </span>
             </div>
@@ -527,12 +552,7 @@ function ItemRow({
         <button
           type="button"
           onClick={onAct}
-          className={cn(
-            'mt-3 inline-flex h-11 items-center gap-1.5 rounded-xl px-4 text-[13px] font-semibold touch-manipulation',
-            item.status === 'ok'
-              ? 'border border-white/[0.14] text-white'
-              : 'bg-elec-yellow text-black'
-          )}
+          className={cn(COLLEGE_BTN, 'mt-3', item.status !== 'ok' && 'border-orange-400/70')}
         >
           {actionLabel}
           <ChevronRight className="h-4 w-4" aria-hidden="true" />
@@ -663,7 +683,7 @@ function LearnerFactsSheet({
       onOpenChange={onOpenChange}
       eyebrow="Learner details"
       title={l.name}
-      description="The facts the funding rules ask you to hold accurately (paras 309 and 315). They must match the ILR."
+      description={`The facts the funding rules ask you to hold accurately${pack.rules?.identifiers ? ` (paras ${pack.rules.identifiers.replace('; ', ' and ')})` : ''}. They must match the ILR.`}
       footer={
         <div className="grid grid-cols-2 gap-2.5">
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
@@ -757,26 +777,20 @@ function LearnerFactsSheet({
         </div>
         <div className={fieldFullCn}>
           <p className={labelCn}>How training is delivered</p>
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              ['day_release', 'Day release'],
-              ['block_release', 'Block release'],
-              ['front_loaded', 'Front-loaded'],
-            ].map(([v, label]) => (
-              <button
-                key={v}
-                type="button"
-                aria-pressed={f.model === v}
-                onClick={() => setF({ ...f, model: f.model === v ? '' : v })}
-                className={cn(chipBase, 'px-2 text-[13px]', f.model === v ? chipOn : chipOff)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <JoinedToggle
+            className="sm:w-full"
+            label="How training is delivered"
+            options={[
+              { key: 'day_release', label: 'Day release' },
+              { key: 'block_release', label: 'Block release' },
+              { key: 'front_loaded', label: 'Front-loaded' },
+            ]}
+            value={f.model}
+            onChange={(v) => setF({ ...f, model: f.model === v ? '' : v })}
+          />
           <p className="mt-2 text-[12px] leading-relaxed text-white">
             Block release and front-loaded programmes need training at least every 3 months; others
-            every month (paras 88 and 89).
+            every month{pack.rules?.monthly ? ` (paras ${pack.rules.monthly})` : ''}.
           </p>
         </div>
       </div>
@@ -841,7 +855,7 @@ function EpisodeSheet({
       onOpenChange={onOpenChange}
       eyebrow="Programme history"
       title="Record a break or change"
-      description="The end date of a break, withdrawal or completion is the last day of evidenced learning (paras 270 and 277.1). After a break, file a revised agreement and training plan."
+      description={`The end date of a break, withdrawal or completion is the last day of evidenced learning${pack.rules?.leaver_end_date ? ` (paras ${pack.rules.leaver_end_date.replace('; ', ' and ')})` : ''}. After a break, file a revised agreement and training plan.`}
       footer={
         <div className="grid grid-cols-2 gap-2.5">
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
@@ -858,21 +872,14 @@ function EpisodeSheet({
         </div>
       }
     >
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {(Object.keys(EPISODE_LABEL) as Array<keyof typeof EPISODE_LABEL>)
+      <ChoiceGrid<keyof typeof EPISODE_LABEL>
+        label="What happened"
+        options={(Object.keys(EPISODE_LABEL) as Array<keyof typeof EPISODE_LABEL>)
           .filter((k) => k !== 'start')
-          .map((k) => (
-            <button
-              key={k}
-              type="button"
-              aria-pressed={kind === k}
-              onClick={() => setKind(k)}
-              className={cn(chipBase, 'px-2 text-[13px]', kind === k ? chipOn : chipOff)}
-            >
-              {EPISODE_LABEL[k]}
-            </button>
-          ))}
-      </div>
+          .map((k) => ({ key: k, label: EPISODE_LABEL[k] }))}
+        selected={kind}
+        onToggle={setKind}
+      />
       <div className={cn(grid2Cn, 'lg:grid-cols-4')}>
         <div>
           <label className={labelCn} htmlFor="ep-date">

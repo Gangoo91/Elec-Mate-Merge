@@ -1,7 +1,7 @@
+import { LC_FRAME, lcChip } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useMyCollegeActivity,
   type CollegeActivityItem,
@@ -19,7 +19,7 @@ const KIND_LABEL: Record<CollegeActivityKind, string> = {
   tutor_comment: 'Tutor comment',
   assessor_verdict: 'Assessor verdict',
   iqa_verdict: 'IQA verdict',
-  new_goal: 'New ILP goal',
+  new_goal: 'New learning plan goal',
   tutor_goal_comment: 'Goal comment',
   observation: 'Observation logged',
   quiz_result: 'Quiz result',
@@ -59,13 +59,9 @@ export function MyActivityFeedCard() {
 
   if (items.length === 0) {
     return (
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-      >
+      <section className={LC_FRAME}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            Recent activity
-          </div>
+          <div className="text-[15px] font-semibold tracking-tight text-white">Recent activity</div>
           <p className="mt-3 text-[12.5px] text-white leading-snug">
             Nothing from your college team in the last 30 days. As they comment, sign things off,
             log observations and mark your quizzes, it'll appear here.
@@ -76,17 +72,13 @@ export function MyActivityFeedCard() {
   }
 
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            Recent activity
-          </div>
+          <div className="text-[15px] font-semibold tracking-tight text-white">Recent activity</div>
           {unread_count > 0 && (
-            <span className="text-[10.5px] tabular-nums text-white">
-              {unread_count} {unread_count === 1 ? 'item needs' : 'items need'} action
+            <span className={lcChip('action')}>
+              {unread_count} {unread_count === 1 ? 'needs' : 'need'} you
             </span>
           )}
         </div>
@@ -99,7 +91,7 @@ export function MyActivityFeedCard() {
           <button
             type="button"
             onClick={() => setExpanded((x) => !x)}
-            className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+            className="mt-2 px-1 text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation"
           >
             {expanded ? 'Show less' : `Show ${Math.min(15, items.length - 5)} more`}
           </button>
@@ -132,22 +124,17 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
       <button
         type="button"
         onClick={onClick}
-        className="w-full px-1 py-2.5 flex items-baseline justify-between gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
+        className="flex min-h-[56px] w-full items-baseline justify-between gap-3 px-1 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07]"
       >
         <div className="min-w-0 flex-1">
-          <div
-            className={cn(
-              'text-[10.5px] font-medium uppercase tracking-[0.16em]',
-              KIND_TONE[item.kind]
-            )}
-          >
+          <div className={cn('text-[13px] font-medium', KIND_TONE[item.kind])}>
             {KIND_LABEL[item.kind]}
           </div>
-          <div className="mt-0.5 text-[13px] font-medium text-white leading-snug truncate">
+          <div className="mt-0.5 text-[14px] font-semibold text-white leading-snug line-clamp-2">
             {item.title}
           </div>
           {item.preview && (
-            <div className="mt-1 text-[11.5px] text-white leading-snug line-clamp-2">
+            <div className="mt-1 text-[12px] text-white leading-snug line-clamp-2">
               {item.preview}
             </div>
           )}
@@ -156,7 +143,7 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
           {item.is_unread && (
             <span className="h-1.5 w-1.5 rounded-full bg-white/[0.02]" aria-label="unread" />
           )}
-          <span className="text-[10.5px] text-white tabular-nums whitespace-nowrap">
+          <span className="text-[12px] text-white tabular-nums whitespace-nowrap">
             {fmtRel(item.occurred_at)}
           </span>
         </div>
@@ -167,9 +154,7 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
 
 function Skeleton() {
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         {[0, 1, 2].map((i) => (

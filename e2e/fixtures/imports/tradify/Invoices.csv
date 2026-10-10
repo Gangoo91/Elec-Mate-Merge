@@ -1,0 +1,6 @@
+Invoice Number,Customer,Job Number,Invoice Date,Due Date,Status,Line Description,Quantity,Unit Price,Line Total,Total Excl Tax,Tax,Total Incl Tax,Amount Paid,Amount Due
+INV-3301,Harbour View Lettings Ltd,J-1041,09/06/2026,23/06/2026,Paid,"EICR, 1 bed flat",1,150.00,150.00,150.00,30.00,180.00,180.00,0.00
+INV-3302,Tom Brennan,J-1042,23/06/2026,07/07/2026,Paid,"Consumer unit, 10 way RCBO board",1,520.00,520.00,600.00,120.00,720.00,720.00,0.00
+INV-3302,Tom Brennan,J-1042,23/06/2026,07/07/2026,Paid,"Labour, 1 day",1,80.00,80.00,600.00,120.00,720.00,720.00,0.00
+INV-3303,Kettle & Crumb Cafe,J-1043,15/09/2026,29/09/2026,Overdue,Deposit 50%,1,604.17,604.17,604.17,120.83,725.00,0.00,725.00
+INV-3304,Sarah Okafor,J-1044,22/09/2026,06/10/2026,Part Paid,Deposit for EV charger,1,250.00,250.00,250.00,50.00,300.00,150.00,150.00

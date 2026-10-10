@@ -8,7 +8,19 @@
 export type AchievementRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
 export type AchievementCategory =
-  'flashcards' | 'quizzes' | 'streaks' | 'ojt' | 'portfolio' | 'diary' | 'xp' | 'epa' | 'courses';
+  | 'flashcards'
+  | 'quizzes'
+  | 'streaks'
+  | 'ojt'
+  | 'portfolio'
+  | 'diary'
+  | 'xp'
+  | 'epa'
+  | 'courses'
+  | 'mocks'
+  | 'revision'
+  | 'habits'
+  | 'board';
 
 export interface AchievementDef {
   id: string;
@@ -18,7 +30,11 @@ export interface AchievementDef {
   category: AchievementCategory;
   rarity: AchievementRarity;
   xpBonus: number;
-  /** Condition checker key — maps to logic in useAchievementChecker */
+  /**
+   * Condition checker key — maps to logic in useAchievementChecker.
+   * 'server' = unlocked by the database (study_awards, how = 'server'), never
+   * by the app: mock exams, revision, the weekly plan, study habits, the board.
+   */
   conditionKey: string;
   /** Params for the condition checker */
   conditionParams: Record<string, number | string | boolean>;
@@ -34,7 +50,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'flashcards',
     rarity: 'common',
     xpBonus: 10,
-    conditionKey: 'total_cards_reviewed',
+    conditionKey: 'server',
     conditionParams: { count: 1 },
   },
   {
@@ -56,7 +72,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'flashcards',
     rarity: 'uncommon',
     xpBonus: 30,
-    conditionKey: 'total_cards_reviewed',
+    conditionKey: 'server',
     conditionParams: { count: 100 },
   },
   {
@@ -67,7 +83,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'flashcards',
     rarity: 'epic',
     xpBonus: 75,
-    conditionKey: 'total_cards_reviewed',
+    conditionKey: 'server',
     conditionParams: { count: 500 },
   },
   {
@@ -91,7 +107,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'quizzes',
     rarity: 'common',
     xpBonus: 10,
-    conditionKey: 'total_quizzes',
+    conditionKey: 'server',
     conditionParams: { count: 1 },
   },
   {
@@ -102,7 +118,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'quizzes',
     rarity: 'rare',
     xpBonus: 50,
-    conditionKey: 'perfect_quiz',
+    conditionKey: 'server',
     conditionParams: {},
   },
   {
@@ -113,7 +129,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'quizzes',
     rarity: 'uncommon',
     xpBonus: 30,
-    conditionKey: 'total_quizzes',
+    conditionKey: 'server',
     conditionParams: { count: 10 },
   },
   {
@@ -124,19 +140,19 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'quizzes',
     rarity: 'epic',
     xpBonus: 100,
-    conditionKey: 'total_quizzes',
+    conditionKey: 'server',
     conditionParams: { count: 50 },
   },
   {
     id: 'speed-demon',
     title: 'Speed Demon',
-    description: 'Complete a quiz in under 5 minutes',
+    description: 'Score 80% or more on a quiz in under 5 minutes',
     icon: 'Zap',
     category: 'quizzes',
     rarity: 'uncommon',
     xpBonus: 25,
-    conditionKey: 'fast_quiz',
-    conditionParams: { maxMinutes: 5 },
+    conditionKey: 'server',
+    conditionParams: { maxMinutes: 5, minScore: 80 },
   },
   {
     id: 'all-categories',
@@ -159,7 +175,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'streaks',
     rarity: 'common',
     xpBonus: 15,
-    conditionKey: 'streak_days',
+    conditionKey: 'server',
     conditionParams: { days: 3 },
   },
   {
@@ -170,7 +186,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'streaks',
     rarity: 'uncommon',
     xpBonus: 30,
-    conditionKey: 'streak_days',
+    conditionKey: 'server',
     conditionParams: { days: 7 },
   },
   {
@@ -181,7 +197,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'streaks',
     rarity: 'rare',
     xpBonus: 50,
-    conditionKey: 'streak_days',
+    conditionKey: 'server',
     conditionParams: { days: 14 },
   },
   {
@@ -192,7 +208,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'streaks',
     rarity: 'rare',
     xpBonus: 100,
-    conditionKey: 'streak_days',
+    conditionKey: 'server',
     conditionParams: { days: 30 },
   },
   {
@@ -203,7 +219,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'streaks',
     rarity: 'legendary',
     xpBonus: 250,
-    conditionKey: 'streak_days',
+    conditionKey: 'server',
     conditionParams: { days: 100 },
   },
 
@@ -216,7 +232,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'ojt',
     rarity: 'common',
     xpBonus: 10,
-    conditionKey: 'ojt_hours',
+    conditionKey: 'server',
     conditionParams: { hours: 1 },
   },
   {
@@ -227,7 +243,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'ojt',
     rarity: 'uncommon',
     xpBonus: 30,
-    conditionKey: 'ojt_hours',
+    conditionKey: 'server',
     conditionParams: { hours: 50 },
   },
   {
@@ -238,7 +254,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'ojt',
     rarity: 'uncommon',
     xpBonus: 50,
-    conditionKey: 'ojt_hours',
+    conditionKey: 'server',
     conditionParams: { hours: 100 },
   },
   {
@@ -249,7 +265,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'ojt',
     rarity: 'epic',
     xpBonus: 150,
-    conditionKey: 'ojt_hours',
+    conditionKey: 'server',
     conditionParams: { hours: 400 },
   },
 
@@ -257,12 +273,12 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
   {
     id: 'first-evidence',
     title: 'Evidence Builder',
-    description: 'Add first portfolio evidence',
+    description: 'Add your first portfolio evidence',
     icon: 'FileText',
     category: 'portfolio',
     rarity: 'common',
     xpBonus: 15,
-    conditionKey: 'portfolio_count',
+    conditionKey: 'server',
     conditionParams: { count: 1 },
   },
   {
@@ -273,7 +289,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'portfolio',
     rarity: 'uncommon',
     xpBonus: 40,
-    conditionKey: 'portfolio_count',
+    conditionKey: 'server',
     conditionParams: { count: 10 },
   },
   {
@@ -292,12 +308,12 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
   {
     id: 'first-reflection',
     title: 'Reflective Practitioner',
-    description: 'Write your first diary entry',
+    description: 'Write your first site diary entry',
     icon: 'BookOpen',
     category: 'diary',
     rarity: 'common',
     xpBonus: 10,
-    conditionKey: 'diary_count',
+    conditionKey: 'server',
     conditionParams: { count: 1 },
   },
   {
@@ -308,7 +324,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'diary',
     rarity: 'uncommon',
     xpBonus: 30,
-    conditionKey: 'diary_count',
+    conditionKey: 'server',
     conditionParams: { count: 10 },
   },
   {
@@ -319,7 +335,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'diary',
     rarity: 'rare',
     xpBonus: 75,
-    conditionKey: 'diary_count',
+    conditionKey: 'server',
     conditionParams: { count: 30 },
   },
 
@@ -332,7 +348,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'xp',
     rarity: 'uncommon',
     xpBonus: 50,
-    conditionKey: 'level_reached',
+    conditionKey: 'server',
     conditionParams: { level: 5 },
   },
   {
@@ -343,7 +359,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'xp',
     rarity: 'legendary',
     xpBonus: 500,
-    conditionKey: 'level_reached',
+    conditionKey: 'server',
     conditionParams: { level: 10 },
   },
   {
@@ -354,7 +370,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'xp',
     rarity: 'uncommon',
     xpBonus: 25,
-    conditionKey: 'total_xp',
+    conditionKey: 'server',
     conditionParams: { xp: 1000 },
   },
   {
@@ -365,18 +381,18 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'xp',
     rarity: 'epic',
     xpBonus: 100,
-    conditionKey: 'total_xp',
+    conditionKey: 'server',
     conditionParams: { xp: 10000 },
   },
   {
     id: 'daily-goal-7',
     title: 'Goal Getter',
-    description: 'Meet daily goal 7 days in a row',
+    description: 'Hit your daily XP goal 7 days running',
     icon: 'Target',
     category: 'xp',
     rarity: 'rare',
     xpBonus: 50,
-    conditionKey: 'daily_goal_streak',
+    conditionKey: 'server',
     conditionParams: { days: 7 },
   },
 
@@ -389,7 +405,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'epa',
     rarity: 'uncommon',
     xpBonus: 30,
-    conditionKey: 'epa_mock_completed',
+    conditionKey: 'server',
     conditionParams: { count: 1 },
   },
   {
@@ -400,7 +416,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'epa',
     rarity: 'epic',
     xpBonus: 100,
-    conditionKey: 'epa_distinction',
+    conditionKey: 'server',
     conditionParams: {},
   },
   // ─── Course progress ─────────────────────────────────────────
@@ -423,7 +439,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'courses',
     rarity: 'common',
     xpBonus: 25,
-    conditionKey: 'sections_completed',
+    conditionKey: 'server',
     conditionParams: { count: 1 },
   },
   {
@@ -434,7 +450,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'courses',
     rarity: 'uncommon',
     xpBonus: 50,
-    conditionKey: 'sections_completed',
+    conditionKey: 'server',
     conditionParams: { count: 10 },
   },
   {
@@ -445,7 +461,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'courses',
     rarity: 'rare',
     xpBonus: 100,
-    conditionKey: 'sections_completed',
+    conditionKey: 'server',
     conditionParams: { count: 25 },
   },
   {
@@ -456,7 +472,7 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'courses',
     rarity: 'epic',
     xpBonus: 250,
-    conditionKey: 'sections_completed',
+    conditionKey: 'server',
     conditionParams: { count: 100 },
   },
   {
@@ -467,8 +483,320 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     category: 'courses',
     rarity: 'legendary',
     xpBonus: 500,
-    conditionKey: 'sections_completed',
+    conditionKey: 'server',
     conditionParams: { count: 250 },
+  },
+
+  // ─── Server awards (10 Oct 2026) ─────────────────────────────
+  // Unlocked by the database from what it already records, never by the app.
+  // Titles, XP and rarity mirror study_awards (20261010230000_study_awards.sql).
+  {
+    id: 'mock-first',
+    title: 'First Paper',
+    description: 'Finish your first mock exam',
+    icon: 'FileCheck2',
+    category: 'mocks',
+    rarity: 'common',
+    xpBonus: 15,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-pass',
+    title: 'Pass Mark',
+    description: 'Pass a mock exam',
+    icon: 'BadgeCheck',
+    category: 'mocks',
+    rarity: 'common',
+    xpBonus: 30,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-pb',
+    title: 'Personal Best',
+    description: 'Beat your best score on a paper by 15 points',
+    icon: 'TrendingUp',
+    category: 'mocks',
+    rarity: 'uncommon',
+    xpBonus: 30,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-bounce',
+    title: 'Bounced Back',
+    description: 'Pass a paper you had failed before',
+    icon: 'RotateCcw',
+    category: 'mocks',
+    rarity: 'uncommon',
+    xpBonus: 50,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-10',
+    title: 'Exam Hardened',
+    description: 'Sit 10 mock exams',
+    icon: 'Dumbbell',
+    category: 'mocks',
+    rarity: 'uncommon',
+    xpBonus: 40,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-90',
+    title: 'Top Marks',
+    description: 'Score 90% or more on a mock exam',
+    icon: 'Medal',
+    category: 'mocks',
+    rarity: 'rare',
+    xpBonus: 50,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-full',
+    title: 'The Real Thing',
+    description: 'Pass a full-length paper of 60 questions or more',
+    icon: 'ScrollText',
+    category: 'mocks',
+    rarity: 'rare',
+    xpBonus: 75,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-5-papers',
+    title: 'Five Papers Passed',
+    description: 'Pass 5 different mock papers',
+    icon: 'Library',
+    category: 'mocks',
+    rarity: 'rare',
+    xpBonus: 75,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-turnround',
+    title: 'Turned It Round',
+    description: 'Take a topic from under 50% to 80% or more',
+    icon: 'Undo2',
+    category: 'mocks',
+    rarity: 'rare',
+    xpBonus: 75,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-25',
+    title: 'Mock Machine',
+    description: 'Sit 25 mock exams',
+    icon: 'Rocket',
+    category: 'mocks',
+    rarity: 'rare',
+    xpBonus: 100,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'mock-100',
+    title: 'Flawless',
+    description: 'Score 100% on a mock of 20 questions or more',
+    icon: 'Gem',
+    category: 'mocks',
+    rarity: 'epic',
+    xpBonus: 150,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'rev-first',
+    title: 'Put It Right',
+    description: 'Get a wrong answer right on revision',
+    icon: 'CheckCheck',
+    category: 'revision',
+    rarity: 'common',
+    xpBonus: 10,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'rev-clear',
+    title: 'Clean Slate',
+    description: 'Clear every wrong answer that was due',
+    icon: 'Eraser',
+    category: 'revision',
+    rarity: 'uncommon',
+    xpBonus: 40,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'rev-25',
+    title: 'Nailed On',
+    description: 'Master 25 questions you had got wrong',
+    icon: 'Brain',
+    category: 'revision',
+    rarity: 'rare',
+    xpBonus: 60,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'plan-1',
+    title: 'Plan Done',
+    description: 'Finish a weekly plan',
+    icon: 'CalendarCheck',
+    category: 'habits',
+    rarity: 'common',
+    xpBonus: 25,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'plan-3',
+    title: 'Three in a Row',
+    description: 'Finish three weekly plans in a row',
+    icon: 'CalendarRange',
+    category: 'habits',
+    rarity: 'rare',
+    xpBonus: 75,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'plan-10',
+    title: 'Ten Good Weeks',
+    description: 'Finish 10 weekly plans',
+    icon: 'Mountain',
+    category: 'habits',
+    rarity: 'epic',
+    xpBonus: 150,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'early',
+    title: 'Early Start',
+    description: 'Study before 7am',
+    icon: 'Sunrise',
+    category: 'habits',
+    rarity: 'common',
+    xpBonus: 15,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'weekend',
+    title: 'Weekend Warrior',
+    description: 'Study on a Saturday and the Sunday after',
+    icon: 'CalendarDays',
+    category: 'habits',
+    rarity: 'common',
+    xpBonus: 20,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'comeback',
+    title: 'Welcome Back',
+    description: 'Come back to study after two weeks or more away',
+    icon: 'DoorOpen',
+    category: 'habits',
+    rarity: 'common',
+    xpBonus: 20,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'freeze',
+    title: 'Saved by the Freeze',
+    description: 'A streak freeze kept your streak alive',
+    icon: 'Snowflake',
+    category: 'habits',
+    rarity: 'common',
+    xpBonus: 15,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'days-50',
+    title: 'Fifty Days',
+    description: 'Study on 50 different days',
+    icon: 'Footprints',
+    category: 'habits',
+    rarity: 'uncommon',
+    xpBonus: 50,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'days-20m',
+    title: 'Twenty Days',
+    description: 'Study on 20 days in one month',
+    icon: 'CalendarHeart',
+    category: 'habits',
+    rarity: 'rare',
+    xpBonus: 75,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'days-100',
+    title: 'Hundred Days',
+    description: 'Study on 100 different days',
+    icon: 'Target',
+    category: 'habits',
+    rarity: 'rare',
+    xpBonus: 100,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'days-250',
+    title: 'Two Hundred and Fifty Days',
+    description: 'Study on 250 different days',
+    icon: 'Crown',
+    category: 'habits',
+    rarity: 'legendary',
+    xpBonus: 250,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'board-top10',
+    title: 'Top Ten',
+    description: 'Finish a month in the top 10 of the leaderboard',
+    icon: 'Award',
+    category: 'board',
+    rarity: 'epic',
+    xpBonus: 100,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'board-top3',
+    title: 'Podium',
+    description: 'Finish a month in the top 3 of the leaderboard',
+    icon: 'Medal',
+    category: 'board',
+    rarity: 'epic',
+    xpBonus: 150,
+    conditionKey: 'server',
+    conditionParams: {},
+  },
+  {
+    id: 'board-champ',
+    title: 'Champion',
+    description: 'Finish a month first on the leaderboard',
+    icon: 'Trophy',
+    category: 'board',
+    rarity: 'legendary',
+    xpBonus: 250,
+    conditionKey: 'server',
+    conditionParams: {},
   },
 ];
 
@@ -486,6 +814,10 @@ export const ACHIEVEMENT_CATEGORY_META: Record<
   xp: { name: 'XP & Levels', colour: 'text-elec-yellow' },
   epa: { name: 'EPA', colour: 'text-red-400' },
   courses: { name: 'Courses', colour: 'text-elec-yellow' },
+  mocks: { name: 'Mock exams', colour: 'text-white' },
+  revision: { name: 'Revision', colour: 'text-white' },
+  habits: { name: 'Study habits', colour: 'text-white' },
+  board: { name: 'Leaderboard', colour: 'text-white' },
 };
 
 /** Rarity display colours */

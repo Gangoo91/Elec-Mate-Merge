@@ -32,9 +32,7 @@ interface DevelopmentCategory {
 }
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-    {children}
-  </span>
+  <span className="text-[13px] font-semibold text-white">{children}</span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
@@ -46,10 +44,7 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 const Bullets = ({ items }: { items: string[] }) => (
   <ul className="space-y-1.5">
     {items.map((item, idx) => (
-      <li
-        key={idx}
-        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-      >
+      <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
       </li>
@@ -102,8 +97,7 @@ const ProfessionalDevelopmentStrategy = () => {
     {
       category: 'Professional qualifications',
       timeline: 'Ongoing development',
-      description:
-        'Advanced qualifications for career progression and professional recognition.',
+      description: 'Advanced qualifications for career progression and professional recognition.',
       programmes: [
         {
           qualification: 'HNC / HND Electrical Engineering',
@@ -118,18 +112,15 @@ const ProfessionalDevelopmentStrategy = () => {
           provider: 'Universities (full-time and part-time)',
           duration: '3-6 years',
           cost: '£9,000+ per year',
-          careerImpact:
-            'Engineering roles, chartered engineer pathway, management positions.',
-          prerequisites:
-            'A-levels or equivalent, HND for direct entry to year 2 / 3.',
+          careerImpact: 'Engineering roles, chartered engineer pathway, management positions.',
+          prerequisites: 'A-levels or equivalent, HND for direct entry to year 2 / 3.',
         },
         {
           qualification: 'Project management (APM / PRINCE2)',
           provider: 'Professional training organisations',
           duration: '3-6 months',
           cost: '£2,000-4,000',
-          careerImpact:
-            'Project leadership roles, contractor management, higher responsibility.',
+          careerImpact: 'Project leadership roles, contractor management, higher responsibility.',
           prerequisites: 'Relevant experience and employer support.',
         },
       ],
@@ -137,16 +128,14 @@ const ProfessionalDevelopmentStrategy = () => {
     {
       category: 'Professional certifications',
       timeline: 'Annual renewals',
-      description:
-        'Industry-specific certifications maintaining professional competence.',
+      description: 'Industry-specific certifications maintaining professional competence.',
       programmes: [
         {
           qualification: 'IET Professional Registration (IEng / CEng)',
           provider: 'Institution of Engineering and Technology',
           duration: 'Application process 6-12 months',
           cost: '£200-500 application + annual fees',
-          careerImpact:
-            'Professional recognition, chartered status, enhanced credibility.',
+          careerImpact: 'Professional recognition, chartered status, enhanced credibility.',
           prerequisites: 'Appropriate qualifications and demonstrated competence.',
         },
         {
@@ -154,8 +143,7 @@ const ProfessionalDevelopmentStrategy = () => {
           provider: 'NICEIC, NAPIT, STROMA',
           duration: 'Assessment process 3-6 months',
           cost: '£800-2,000 annually',
-          careerImpact:
-            'Business development, self-certification rights, customer confidence.',
+          careerImpact: 'Business development, self-certification rights, customer confidence.',
           prerequisites: 'Relevant qualifications and business registration.',
         },
         {
@@ -163,8 +151,7 @@ const ProfessionalDevelopmentStrategy = () => {
           provider: 'Equipment manufacturers',
           duration: '1-5 days per course',
           cost: '£500-2,000 per certification',
-          careerImpact:
-            'Specialist installation rights, warranty approvals, premium rates.',
+          careerImpact: 'Specialist installation rights, warranty approvals, premium rates.',
           prerequisites: 'Basic electrical qualifications and experience.',
         },
       ],
@@ -175,8 +162,7 @@ const ProfessionalDevelopmentStrategy = () => {
     {
       strategy: 'Professional bodies engagement',
       timeCommitment: '2-4 hours monthly',
-      description:
-        'Active participation in professional institutions and trade organisations.',
+      description: 'Active participation in professional institutions and trade organisations.',
       activities: [
         'Join IET local network and attend monthly meetings',
         'Participate in SELECT or ECA regional events and workshops',
@@ -192,8 +178,7 @@ const ProfessionalDevelopmentStrategy = () => {
     {
       strategy: 'Industry events and exhibitions',
       timeCommitment: '1-2 days quarterly',
-      description:
-        'Strategic attendance at key industry events for learning and networking.',
+      description: 'Strategic attendance at key industry events for learning and networking.',
       activities: [
         'Visit Electrical Wholesale Show and regional trade exhibitions',
         'Attend manufacturer product launches and technical seminars',
@@ -202,15 +187,13 @@ const ProfessionalDevelopmentStrategy = () => {
       ],
       careerBenefits:
         'Product knowledge, market trends, supplier relationships, business opportunities.',
-      networkingValue:
-        'Meet potential clients, suppliers, partners, and learn from competitors.',
+      networkingValue: 'Meet potential clients, suppliers, partners, and learn from competitors.',
       costs: '£500-2,000 annually including travel and accommodation',
     },
     {
       strategy: 'Mentorship and knowledge sharing',
       timeCommitment: '1-2 hours weekly',
-      description:
-        'Structured learning relationships with experienced professionals.',
+      description: 'Structured learning relationships with experienced professionals.',
       activities: [
         'Find experienced mentor through professional bodies or employer',
         'Join or create peer learning groups with other apprentices',
@@ -219,8 +202,7 @@ const ProfessionalDevelopmentStrategy = () => {
       ],
       careerBenefits:
         'Accelerated learning, career guidance, skill development, confidence building.',
-      networkingValue:
-        'Build long-term professional relationships and industry advocacy.',
+      networkingValue: 'Build long-term professional relationships and industry advocacy.',
       costs: 'Time investment, potential training course fees',
     },
   ];
@@ -242,16 +224,13 @@ const ProfessionalDevelopmentStrategy = () => {
           description: 'Managing electrical projects from inception to completion.',
           developmentPath:
             'Project management training → lead small projects → formal qualification',
-          businessImpact:
-            'On-time delivery, budget control, quality outcomes, team efficiency.',
+          businessImpact: 'On-time delivery, budget control, quality outcomes, team efficiency.',
         },
         {
           skill: 'Problem solving and decision making',
           description: 'Analytical thinking and decisive action in complex situations.',
-          developmentPath:
-            'Technical problem solving → case study analysis → leadership scenarios',
-          businessImpact:
-            'Faster issue resolution, better outcomes, increased team confidence.',
+          developmentPath: 'Technical problem solving → case study analysis → leadership scenarios',
+          businessImpact: 'Faster issue resolution, better outcomes, increased team confidence.',
         },
       ],
     },
@@ -263,8 +242,7 @@ const ProfessionalDevelopmentStrategy = () => {
           description: 'Understanding business finances, cost control, and profitability.',
           developmentPath:
             'Finance for non-finance managers → budgeting experience → business planning',
-          businessImpact:
-            'Better project profitability, cost control, business growth planning.',
+          businessImpact: 'Better project profitability, cost control, business growth planning.',
         },
         {
           skill: 'Health and safety leadership',
@@ -292,8 +270,7 @@ const ProfessionalDevelopmentStrategy = () => {
       developmentAreas: [
         {
           skill: 'Virtual team leadership',
-          description:
-            'Leading and managing teams in hybrid and remote working environments.',
+          description: 'Leading and managing teams in hybrid and remote working environments.',
           developmentPath:
             'Remote leadership training → virtual team projects → digital collaboration tools mastery',
           businessImpact:
@@ -362,8 +339,7 @@ const ProfessionalDevelopmentStrategy = () => {
       developmentAreas: [
         {
           skill: 'Carbon footprint assessment',
-          description:
-            'Measuring and reducing environmental impact of electrical installations.',
+          description: 'Measuring and reducing environmental impact of electrical installations.',
           developmentPath:
             'Carbon accounting training → lifecycle assessment → reduction strategies → reporting',
           businessImpact:
@@ -371,8 +347,7 @@ const ProfessionalDevelopmentStrategy = () => {
         },
         {
           skill: 'Circular economy principles',
-          description:
-            'Implementing waste reduction and resource efficiency in electrical work.',
+          description: 'Implementing waste reduction and resource efficiency in electrical work.',
           developmentPath:
             'Circular economy training → waste audit → process redesign → supplier collaboration',
           businessImpact:
@@ -396,8 +371,7 @@ const ProfessionalDevelopmentStrategy = () => {
       developmentAreas: [
         {
           skill: 'Stress management and work-life balance',
-          description:
-            'Maintaining physical and mental health in demanding work environments.',
+          description: 'Maintaining physical and mental health in demanding work environments.',
           developmentPath:
             'Stress management training → mindfulness practice → time management → health monitoring',
           businessImpact:
@@ -413,8 +387,7 @@ const ProfessionalDevelopmentStrategy = () => {
         },
         {
           skill: 'Continuous learning mindset',
-          description:
-            'Developing adaptability and openness to ongoing skill development.',
+          description: 'Developing adaptability and openness to ongoing skill development.',
           developmentPath:
             'Learning style assessment → goal setting → reflection practice → knowledge sharing',
           businessImpact:
@@ -430,8 +403,7 @@ const ProfessionalDevelopmentStrategy = () => {
       developmentAreas: [
         {
           skill: 'Policy and regulation engagement',
-          description:
-            'Understanding and influencing electrical industry policy and standards.',
+          description: 'Understanding and influencing electrical industry policy and standards.',
           developmentPath:
             'Regulatory awareness → consultation responses → committee participation → policy advocacy',
           businessImpact:
@@ -464,8 +436,7 @@ const ProfessionalDevelopmentStrategy = () => {
       developmentAreas: [
         {
           skill: 'International standards and practices',
-          description:
-            'Understanding electrical standards and practices in different countries.',
+          description: 'Understanding electrical standards and practices in different countries.',
           developmentPath:
             'International standards study → overseas projects → cultural awareness → language skills',
           businessImpact:
@@ -473,8 +444,7 @@ const ProfessionalDevelopmentStrategy = () => {
         },
         {
           skill: 'Cross-cultural communication',
-          description:
-            'Effective communication and collaboration across different cultures.',
+          description: 'Effective communication and collaboration across different cultures.',
           developmentPath:
             'Cultural awareness training → language learning → international teamwork → global networking',
           businessImpact:
@@ -482,8 +452,7 @@ const ProfessionalDevelopmentStrategy = () => {
         },
         {
           skill: 'Export and international business',
-          description:
-            'Developing electrical services and products for international markets.',
+          description: 'Developing electrical services and products for international markets.',
           developmentPath:
             'Export training → market research → international partnerships → compliance understanding',
           businessImpact:
@@ -495,7 +464,7 @@ const ProfessionalDevelopmentStrategy = () => {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <Target className="h-4 w-4 text-white mt-1 flex-shrink-0" />
         <p className="text-[14px] text-white leading-relaxed">
           Strategic professional development supports faster career progression and stronger
@@ -530,9 +499,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     <h4 className="text-[16px] text-white">{category.category}</h4>
                     <Pill>{category.timeline}</Pill>
                   </div>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    {category.description}
-                  </p>
+                  <p className="text-[14px] text-white leading-relaxed">{category.description}</p>
                   <div className="space-y-3">
                     {category.programmes.map((programme, progIndex) => (
                       <div
@@ -589,9 +556,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     <h4 className="text-[16px] text-white">{strategy.strategy}</h4>
                     <Pill>{strategy.timeCommitment}</Pill>
                   </div>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    {strategy.description}
-                  </p>
+                  <p className="text-[14px] text-white leading-relaxed">{strategy.description}</p>
                   <div className="space-y-2">
                     <Eyebrow>Key activities</Eyebrow>
                     <Bullets items={strategy.activities} />
@@ -760,7 +725,7 @@ const ProfessionalDevelopmentStrategy = () => {
 
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
                   <Eyebrow>Personal SWOT analysis</Eyebrow>
-                  <div className="grid grid-cols-2 gap-2 text-[13px] text-white leading-relaxed">
+                  <div className="grid grid-cols-2 gap-2 text-[14px] text-white leading-relaxed">
                     <div>
                       <div className="text-white">Strengths</div>
                       <div className="text-white">
@@ -769,21 +734,15 @@ const ProfessionalDevelopmentStrategy = () => {
                     </div>
                     <div>
                       <div className="text-white">Weaknesses</div>
-                      <div className="text-white">
-                        Business skills, networking, experience
-                      </div>
+                      <div className="text-white">Business skills, networking, experience</div>
                     </div>
                     <div>
                       <div className="text-white">Opportunities</div>
-                      <div className="text-white">
-                        Green energy, smart buildings, EV charging
-                      </div>
+                      <div className="text-white">Green energy, smart buildings, EV charging</div>
                     </div>
                     <div>
                       <div className="text-white">Threats</div>
-                      <div className="text-white">
-                        Automation, competition, regulation changes
-                      </div>
+                      <div className="text-white">Automation, competition, regulation changes</div>
                     </div>
                   </div>
                 </div>

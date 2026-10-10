@@ -17,6 +17,7 @@ import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollege
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { cn } from '@/lib/utils';
+import { keyLabel } from '@/lib/college/labels';
 
 interface RubricGradingDialogProps {
   open: boolean;
@@ -247,7 +248,7 @@ export function RubricGradingDialog({
       width="wide"
       eyebrow="Rubric grading"
       title={grade?.unit_name ?? 'Assessment'}
-      description={`${student?.name ?? 'Unknown learner'}${grade?.assessment_type ? ` · ${grade.assessment_type}` : ''}. Score each criterion 1 to 4, then sign off.`}
+      description={`${student?.name ?? 'Unknown learner'}${grade?.assessment_type ? ` · ${keyLabel(grade.assessment_type)}` : ''}. Score each criterion 1 to 4, then sign off.`}
       subheader={
         <div className="space-y-3 py-3">
           <div>
@@ -379,7 +380,7 @@ export function RubricGradingDialog({
             <button
               type="button"
               onClick={generateAIFeedback}
-              className="h-9 shrink-0 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+              className="h-11 shrink-0 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
             >
               Draft from scores
             </button>
@@ -428,7 +429,7 @@ export function RubricGradingDialog({
                 ['Grade', gradeCalculation.grade],
                 ['Score', `${gradeCalculation.percentage}%`],
                 ['Criteria assessed', `${assessedCount}/${totalCriteria}`],
-                ['Assessment type', grade?.assessment_type ?? '—'],
+                ['Assessment type', keyLabel(grade?.assessment_type) || 'Not specified'],
               ] as [string, string][]
             ).map(([k, v]) => (
               <div key={k} className="flex items-baseline justify-between gap-4 py-2">

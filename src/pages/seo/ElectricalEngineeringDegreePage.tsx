@@ -201,13 +201,13 @@ const sections = [
               BS&nbsp;7671:2018+A4:2026 — current edition.
             </strong>{' '}
             A4:2026 was issued on 15&nbsp;April&nbsp;2026 and may be implemented immediately; the
-            previous edition will be withdrawn on 15&nbsp;October&nbsp;2026. Two changes that affect
-            both electricians and design engineers: arc fault detection devices (AFDDs) are now
-            required to protect socket-outlet final circuits rated up to 32&nbsp;A in higher-risk
+            previous edition will be withdrawn on 15&nbsp;October&nbsp;2026. Two requirements that affect
+            both electricians and design engineers, neither of them new in A4: arc fault detection
+            devices (AFDDs) are required to protect socket-outlet final circuits rated up to 32&nbsp;A in higher-risk
             residential buildings, HMOs, purpose-built student accommodation and care homes
-            (recommended elsewhere) under Reg&nbsp;421.1.7; and 30&nbsp;mA RCD additional protection
-            is now required for AC final circuits supplying luminaires in domestic premises under
-            Reg&nbsp;411.3.4. Design and installation work should be checked against the A4:2026
+            (recommended elsewhere) under Reg&nbsp;421.1.7, since A2:2022; and 30&nbsp;mA RCD
+            additional protection is required for AC final circuits supplying luminaires in domestic
+            premises under Reg&nbsp;411.3.4, since BS&nbsp;7671:2018. Design and installation work should be checked against the A4:2026
             text, not the superseded A3 edition.{' '}
             <SEOInternalLink href="/tools/eicr-certificate">
               Elec-Mate certificates are A4:2026 compliant.
@@ -883,7 +883,7 @@ export default function ElectricalEngineeringDegreePage() {
         title="Electrical Engineering Degree UK: BEng vs MEng"
         description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership."
         datePublished="2026-03-27"
-        dateModified="2026-06-10"
+        dateModified="2026-10-10"
         breadcrumbs={breadcrumbs}
         tocItems={tocItems}
         badge="Career Guide"

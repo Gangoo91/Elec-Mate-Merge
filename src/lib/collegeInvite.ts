@@ -157,3 +157,58 @@ export function joinOfferFor(info: JoinCodeInfo, plan: 'electrician' | 'apprenti
 export function joinLine(info: JoinCodeInfo): string {
   return [info.college_name, info.cohort_name].filter(Boolean).join(' · ');
 }
+
+/* ── ELE-1882: move to a new college, record and all ── */
+
+export interface CollegeMoveCounts {
+  decisions: number;
+  witness_statements: number;
+  otj_entries: number;
+  otj_verified_hours: number;
+  evidence_items: number;
+  audit_events: number;
+}
+
+export interface CollegeMovePreview {
+  error?: string;
+  message?: string;
+  to_college_id?: string;
+  to_college_name?: string;
+  to_cohort_name?: string | null;
+  from?: { college_id: string; college_name: string | null; status: string; student_id: string }[];
+  moving?: boolean;
+  carried?: CollegeMoveCounts;
+  links_ending?: { name: string | null; role: string }[];
+  links_kept?: number;
+  shares_kept?: number;
+  witness_requests_kept?: number;
+}
+
+export interface CollegeMoveResult extends RedeemResult {
+  moved?: boolean;
+  move_id?: string;
+  from_college_name?: string | null;
+  to_college_name?: string | null;
+  carried?: CollegeMoveCounts;
+}
+
+type MoveRpc = (
+  fn: string,
+  args: Record<string, unknown>
+) => Promise<{ data: unknown; error: { message: string } | null }>;
+const moveRpc = supabase.rpc.bind(supabase) as unknown as MoveRpc;
+
+/** What a move to the college behind this code would do. Changes nothing. */
+export async function previewCollegeMove(code: string): Promise<CollegeMovePreview> {
+  const { data, error } = await moveRpc('preview_college_move', { p_invite_code: cleanJoinCode(code) });
+  if (error) return { error: 'network', message: 'Could not reach Elec-Mate. Check your connection.' };
+  return (data ?? {}) as CollegeMovePreview;
+}
+
+/** Leave the current college and join the new one, in one step. */
+export async function moveToNewCollege(code: string): Promise<CollegeMoveResult> {
+  const { data, error } = await moveRpc('move_to_new_college', { p_invite_code: cleanJoinCode(code) });
+  if (error) return { success: false, error: 'network', message: 'Could not reach Elec-Mate. Nothing has changed.' };
+  const res = (data ?? {}) as CollegeMoveResult;
+  return res.error ? { ...res, success: false } : { ...res, success: true };
+}

@@ -1,0 +1,4 @@
+Invoice No,Client,Invoice date,Due,Net,VAT,Gross,Status
+MB-0901,Moorside Bakery,2026-08-05,2026-09-04,1958.33,391.67,2350.00,paid
+MB-0902,Graham Pickles,2026-09-12,2026-09-26,120.00,24.00,144.00,unpaid
+Invoice/448,Graham Pickles,2026-09-30,2026-10-14,100.00,20.00,120.00,unpaid

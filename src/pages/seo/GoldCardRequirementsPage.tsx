@@ -591,8 +591,8 @@ const sections = [
             </li>
             <li>
               <strong>Consolidated edition.</strong> A4:2026 was issued on 15 April 2026 and may be
-              implemented immediately. The A2:2022 + Corrigendum + A3:2024 edition remains current
-              but is withdrawn on 15 October 2026 — after that date, assessment, certification and
+              implemented immediately. The A2:2022 + Corrigendum + A3:2024 edition is withdrawn on 15
+              October 2026 — after that date, assessment, certification and
               design work references BS 7671:2018+A4:2026.
             </li>
           </ul>
@@ -626,7 +626,7 @@ export default function GoldCardRequirementsPage() {
       title="ECS Gold Card Requirements: How to Apply 2026"
       description="ECS Gold Card for UK electricians 2026: NVQ Level 3 + AM2 + 18th Edition + ECS H&S, application steps, cost, renewal cycle, what it unlocks on site."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

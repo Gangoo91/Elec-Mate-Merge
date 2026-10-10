@@ -251,7 +251,9 @@ async function runBrief(req: Request): Promise<Response> {
       .select('user_id, total, created_at, first_viewed_at, client_data')
       .eq('status', 'sent')
       .or('invoice_raised.is.null,invoice_raised.eq.false')
-      .neq('acceptance_status', 'accepted')
+      // ELE-2035 — 'pending' only. `neq('accepted')` still counted declined
+      // quotes and ones waiting on a deposit as "awaiting a reply".
+      .eq('acceptance_status', 'pending')
       .is('deleted_at', null)
       .gte('created_at', since60d),
     admin

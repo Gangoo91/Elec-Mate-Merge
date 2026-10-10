@@ -196,7 +196,7 @@ const PowerFactorInputs = ({
           type="text"
           inputMode="decimal"
           placeholder="e.g., 0.95"
-          className="bg-white/10 border-elec-yellow/20"
+          className="bg-white/10 border-white/[0.14]"
           value={targetPF}
           onChange={(e) => {
             setTargetPF(e.target.value);

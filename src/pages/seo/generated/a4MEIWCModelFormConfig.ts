@@ -6,14 +6,13 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-meiwc-model-form',
-  title:
-    'BS 7671 A4:2026 — MEIWC Model Form',
+  title: 'BS 7671 A4:2026 — MEIWC Model Form',
   description:
-    'Amendment 4 (2026) added AFDD and SPD recording to the BS 7671 Minor Electrical Installation Works Certificate.',
+    'What the BS 7671 A4:2026 Minor Electrical Installation Works Certificate records, including the AFDD and SPD fields added at A2:2022.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,
@@ -24,11 +23,11 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
   heroHighlight: 'MEIWC',
   heroSuffix: 'Minor Works Certificate Changes',
   heroSubtitle:
-    'The Minor Electrical Installation Works Certificate (MEIWC) used to be the simplest BS 7671 form. Amendment 4 made it more comprehensive — adding AFDD and SPD declarations, the new TN-C-S (PME) / (PNB) earthing split, reference method recording, and explicit test button verification. This guide walks every MEIWC change.',
+    'The Minor Electrical Installation Works Certificate (MEIWC) used to be the simplest BS 7671 form. It is now more comprehensive — AFDD and SPD fields (added to the model forms at A2:2022), the A4 TN-C-S (PME) / (PNB) earthing split, reference method recording, and explicit test button verification. This guide walks every MEIWC change.',
   keyTakeaways: [
     'MEIWC is issued for minor electrical work that does NOT extend to providing a new circuit — adding socket-outlets to an existing circuit, replacing a consumer unit (with the same number of ways), relocating a light switch, replacing accessories.',
     'Section B earthing arrangement now lists TN-S, TN-C-S (PME), TN-C-S (PNB), TT, TN-C, IT — same split as the EICR/EIC.',
-    'Section C circuit details now require AFDD, SPD and Reference method recording — previously these were either absent or implicit.',
+    'Section C circuit details record AFDD and SPD details (fields added to the model forms at A2:2022) and the Reference method.',
     'Section D test results add "AFDD satisfactory test button operation" and "SPD functionality confirmed" tick-boxes — with explicit footnotes acknowledging "Not all AFDDs have a test button" and "Not all SPDs have visible functionality indication".',
     'The MEIWC remains a single-page document — it is intentionally lightweight compared to the EIC, but A4 brought it up-to-date with current protection-device practice.',
     'For replacement of a consumer unit, distribution board or similar items, the IET\'s explicit guidance is that "appropriate inspection and testing should always be carried out irrespective of the extent of the work undertaken" — i.e. an EIC may be more appropriate than an MEIWC for any work of meaningful scope.',
@@ -41,8 +40,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The Minor Electrical Installation Works Certificate (MEIWC) is the BS 7671 certificate for additions and alterations to an existing installation that do NOT extend to providing a new circuit. It is intentionally simpler than the EIC — designed for genuinely minor work that nonetheless still needs proper certification.',
+          text: 'The Minor Electrical Installation Works Certificate (MEIWC) is the BS 7671 certificate for additions and alterations to an existing installation that do NOT extend to providing a new circuit. It is intentionally simpler than the EIC — designed for genuinely minor work that nonetheless still needs proper certification.',
         },
         {
           type: 'list',
@@ -51,15 +49,14 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
             'Relocation of a light switch or similar accessory.',
             'Replacement of accessories (sockets, switches, ceiling roses) on existing circuits.',
             'Replacement of a luminaire on its existing circuit.',
-            'Replacement of a consumer unit, distribution board or similar item — though appropriate inspection and testing must always be carried out irrespective of the work\'s extent.',
+            "Replacement of a consumer unit, distribution board or similar item — though appropriate inspection and testing must always be carried out irrespective of the work's extent.",
           ],
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'MEIWC is not for new circuits',
-          text:
-            'If the work involves providing a new circuit — any new circuit at all — the appropriate certificate is the EIC, not the MEIWC. A new circuit means a separate final circuit served by its own overcurrent protective device. Adding a new circuit means the work is no longer "minor" for BS 7671 documentation purposes.',
+          text: 'If the work involves providing a new circuit — any new circuit at all — the appropriate certificate is the EIC, not the MEIWC. A new circuit means a separate final circuit served by its own overcurrent protective device. Adding a new circuit means the work is no longer "minor" for BS 7671 documentation purposes.',
         },
       ],
     },
@@ -70,8 +67,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Section B records the system earthing arrangement using the same tick-box list as the EIC and EICR under A4:2026:',
+          text: 'Section B records the system earthing arrangement using the same tick-box list as the EIC and EICR under A4:2026:',
         },
         {
           type: 'list',
@@ -86,8 +82,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'Section B also records the earth fault loop impedance at the distribution board (Zdb) supplying the final circuit, the presence of an adequate earthing conductor, and the main protective bonding conductor(s) destinations (Water, Gas, Oil, Structural steel, Other).',
+          text: 'Section B also records the earth fault loop impedance at the distribution board (Zdb) supplying the final circuit, the presence of an adequate earthing conductor, and the main protective bonding conductor(s) destinations (Water, Gas, Oil, Structural steel, Other).',
         },
       ],
     },
@@ -98,8 +93,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Section C records the specifics of the circuit that was altered or extended. The A4:2026 MEIWC expanded this section to include explicit AFDD and SPD recording — previously absent or implicit:',
+          text: 'Section C records the specifics of the circuit that was altered or extended. The current MEIWC includes explicit AFDD and SPD recording (fields added to the model forms at A2:2022):',
         },
         {
           type: 'list',
@@ -110,16 +104,15 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
             '**csa of conductors** — Live (mm²) and CPC (mm²).',
             '**Circuit overcurrent protective device** — BS (EN), Type, Rating (A), Breaking capacity (kA).',
             '**RCD** — BS (EN), Type, Rating (A), Rated residual operating current IΔn (mA), Rated time delay (ms).',
-            '**AFDD** — BS (EN), Type, Rating (A). NEW under A4.',
-            '**SPD** — BS (EN), Type. NEW under A4.',
+            '**AFDD** — BS (EN), Type, Rating (A). Added at A2:2022.',
+            '**SPD** — BS (EN), Type. Added at A2:2022.',
           ],
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'Why AFDD + SPD recording was added to MEIWC',
-          text:
-            'Under A4:2026, AFDDs are required in named contexts (and prohibited in others — see medical locations). SPDs are required where the risk assessment per Regulation 443.4 indicates. Even a minor works on an existing circuit can require an AFDD or SPD assessment to be valid — recording both makes the certificate explicit and traceable.',
+          text: 'Under Regulation 421.1.7 (since A2:2022), AFDDs are required in named contexts (and prohibited in others — see medical locations). SPDs are required where the risk assessment per Regulation 443.4 indicates. Even a minor works on an existing circuit can require an AFDD or SPD assessment to be valid — recording both makes the certificate explicit and traceable.',
         },
       ],
     },
@@ -130,8 +123,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Section D records the test results for the altered or extended circuit, where relevant and practicable. The A4:2026 MEIWC expanded this section with AFDD and SPD verification:',
+          text: 'Section D records the test results for the altered or extended circuit, where relevant and practicable. The A4:2026 MEIWC expanded this section with AFDD and SPD verification:',
         },
         {
           type: 'list',
@@ -155,8 +147,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The A4:2026 MEIWC includes standard "Guidance for Recipients" that should be appended to the certificate when issued to the client. The IET\'s wording emphasises:',
+          text: 'The A4:2026 MEIWC includes standard "Guidance for Recipients" that should be appended to the certificate when issued to the client. The IET\'s wording emphasises:',
         },
         {
           type: 'list',
@@ -165,7 +156,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
             'The client should retain the certificate in a safe place — it must be shown to anyone inspecting or undertaking further work, and it demonstrates compliance if the property is sold.',
             'The installation should be inspected at appropriate intervals by a skilled, competent person.',
             'Where the installation includes an RCD, the device should be tested six-monthly by pressing the "T" or "Test" button — the device should switch off the supply and then be switched on to restore. If it does not, seek expert advice.',
-            'Where the installation includes an AFDD with a manual test facility, it should be tested six-monthly by pressing the test button. For AFDDs with both manual and automatic test, manufacturer\'s instructions take precedence.',
+            "Where the installation includes an AFDD with a manual test facility, it should be tested six-monthly by pressing the test button. For AFDDs with both manual and automatic test, manufacturer's instructions take precedence.",
             'Where the installation includes a Surge Protective Device (SPD), the status indicator should be checked. If it shows the device is non-operational, seek expert advice.',
             'Where the installation has alternative or additional sources of supply (e.g. solar PV, generator), warning notices should be present at the origin / meter, the consumer unit, and at all points of isolation.',
           ],
@@ -179,8 +170,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The boundary between MEIWC and EIC is the new-circuit test. The IET\'s explicit guidance:',
+          text: "The boundary between MEIWC and EIC is the new-circuit test. The IET's explicit guidance:",
         },
         {
           type: 'list',
@@ -195,8 +185,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'When in doubt, use the EIC',
-          text:
-            'The MEIWC is intentionally lightweight and lacks the design-construction-inspection three-signature structure of the EIC. For any work where the design responsibility is non-trivial — even a consumer unit replacement — the EIC provides the more robust documentation and protects the installer if a future inspection questions the work.',
+          text: 'The MEIWC is intentionally lightweight and lacks the design-construction-inspection three-signature structure of the EIC. For any work where the design responsibility is non-trivial — even a consumer unit replacement — the EIC provides the more robust documentation and protects the installer if a future inspection questions the work.',
         },
       ],
     },
@@ -208,24 +197,24 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
         'The form technically permits this — the IET guidance explicitly states the MEIWC may be used "for the replacement of equipment such as accessories or luminaires, but not for the replacement of consumer units, distribution boards or similar items. Appropriate inspection and testing, however, should always be carried out irrespective of the extent of the work undertaken." In practice, most competent electricians issue an EIC for a consumer unit replacement — the work touches every circuit on the board and the EIC\'s three-signature design-construction-inspection structure is the appropriate documentation level.',
     },
     {
-      question: 'Do I need to record AFDD and SPD on the MEIWC if the circuit doesn\'t have one?',
+      question: "Do I need to record AFDD and SPD on the MEIWC if the circuit doesn't have one?",
       answer:
-        'If the circuit has no AFDD or SPD, leave the corresponding fields blank or write "N/A". The new A4:2026 fields are there to RECORD presence and verify operation — they\'re not a mandate that every minor works circuit must have an AFDD. The AFDD requirement is set by Regulation 421.1.7 (and prohibitions by 710.421.1.7 etc) based on the circuit\'s location and supply context, not by the MEIWC form itself.',
+        'If the circuit has no AFDD or SPD, leave the corresponding fields blank or write "N/A". The AFDD and SPD fields are there to RECORD presence and verify operation — they\'re not a mandate that every minor works circuit must have an AFDD. The AFDD requirement is set by Regulation 421.1.7 (and prohibitions by 710.421.1.7 etc) based on the circuit\'s location and supply context, not by the MEIWC form itself.',
     },
     {
-      question: 'What\'s the difference between TN-C-S (PME) and TN-C-S (PNB) on Section B?',
+      question: "What's the difference between TN-C-S (PME) and TN-C-S (PNB) on Section B?",
       answer:
-        'TN-C-S (PME) is the distributor\'s combined PEN arrangement — most common in UK domestic and small commercial. TN-C-S (PNB) is a privately-owned combined PEN downstream of a customer\'s own HV/LV transformer — typical for large industrial, hospital and institutional sites. Most MEIWC work in domestic premises will tick TN-C-S (PME). See the dedicated A4 TN-C-S (PNB) guide for the full explanation.',
+        "TN-C-S (PME) is the distributor's combined PEN arrangement — most common in UK domestic and small commercial. TN-C-S (PNB) is a privately-owned combined PEN downstream of a customer's own HV/LV transformer — typical for large industrial, hospital and institutional sites. Most MEIWC work in domestic premises will tick TN-C-S (PME). See the dedicated A4 TN-C-S (PNB) guide for the full explanation.",
     },
     {
       question: 'Why does the form footnote say "Not all AFDDs have a test button"?',
       answer:
-        'Modern AFDDs vary in their test mechanism. Some have a physical manual test button (the typical RCBO + AFDD combination device). Others rely on automatic internal self-test routines without a user-accessible button. A few have both. The form footnote acknowledges this variety so inspectors don\'t mark "AFDD satisfactory test button operation" as unsatisfactory simply because no physical button exists — instead, they verify the AFDD\'s status indication or rely on the manufacturer\'s declared self-test functionality.',
+        "Modern AFDDs vary in their test mechanism. Some have a physical manual test button (the typical RCBO + AFDD combination device). Others rely on automatic internal self-test routines without a user-accessible button. A few have both. The form footnote acknowledges this variety so inspectors don't mark \"AFDD satisfactory test button operation\" as unsatisfactory simply because no physical button exists — instead, they verify the AFDD's status indication or rely on the manufacturer's declared self-test functionality.",
     },
     {
       question: 'Does the MEIWC need a Schedule of Test Results attached?',
       answer:
-        'No — the MEIWC is a single-page certificate and the test results for the altered circuit are recorded directly in Section D of the certificate itself. There\'s no separate Schedule of Test Results. This is a key difference from the EIC, which has full Schedule of Inspections, Schedule of Circuit Details and Schedule of Test Results attached.',
+        "No — the MEIWC is a single-page certificate and the test results for the altered circuit are recorded directly in Section D of the certificate itself. There's no separate Schedule of Test Results. This is a key difference from the EIC, which has full Schedule of Inspections, Schedule of Circuit Details and Schedule of Test Results attached.",
     },
     {
       question: 'Is the MEIWC accepted by landlord agencies for PRS Regs 2020 compliance?',
@@ -244,7 +233,8 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-eic-model-form',
       title: 'A4:2026 EIC Model Form Changes',
-      description: 'The full EIC form: three-signatory structure, Section H Schedule of Inspections items 1.0 to 14.0.',
+      description:
+        'The full EIC form: three-signatory structure, Section H Schedule of Inspections items 1.0 to 14.0.',
       icon: 'FileCheck2',
       category: 'Guide',
     },
@@ -257,15 +247,16 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'A4:2026 AFDD Changes',
-      description: 'Where AFDDs are required, prohibited and tested — recorded on every MEIWC under A4.',
+      title: 'AFDDs in A4:2026 (Reg 421.1.7, Item 4.23)',
+      description: 'Where AFDDs are required, prohibited and tested — recorded on every MEIWC.',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/minor-works-certificate',
       title: 'Minor Works Certificate Tool',
-      description: 'Digital A4:2026 MEIWC with AFDD/SPD fields, test button verification, PDF export.',
+      description:
+        'Digital A4:2026 MEIWC with AFDD/SPD fields, test button verification, PDF export.',
       icon: 'FileCheck2',
       category: 'Tool',
     },
@@ -279,5 +270,5 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Issue compliant A4:2026 Minor Works Certificates',
   ctaSubheading:
-    'Elec-Mate\'s digital MEIWC has every A4:2026 field — AFDD/SPD recording, PME/PNB earthing options, test button verification — and exports a fully-branded PDF for the client. 7-day free trial.',
+    "Elec-Mate's digital MEIWC has every A4:2026 field — AFDD/SPD recording, PME/PNB earthing options, test button verification — and exports a fully-branded PDF for the client. 7-day free trial.",
 };

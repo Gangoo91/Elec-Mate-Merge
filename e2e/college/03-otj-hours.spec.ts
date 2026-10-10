@@ -35,7 +35,7 @@ test('OTJ submit → tutor verifies → learner sees it verified', async ({ brow
     // Learner submits in the browser.
     const learner = await signedInPage(browser, 'learner');
     await learner.page.goto('/apprentice/college/activities');
-    await learner.page.getByRole('button', { name: 'Submit work activity' }).click();
+    await learner.page.getByRole('button', { name: 'Log work activity' }).click();
     const sheet = learner.page.getByRole('dialog');
     await sheet.getByRole('button', { name: 'Manufacturer training' }).click();
     await sheet.getByPlaceholder('e.g. Hager EV charger installer course').fill(title);
@@ -44,6 +44,14 @@ test('OTJ submit → tutor verifies → learner sees it verified', async ({ brow
     await sheet
       .getByPlaceholder(/Who ran it, what it covered/)
       .fill('Wholesaler session on RCBO selection and testing. Created by the College Hub journey test.');
+    // ELE-2052: an entry must name the unit it covers, or the quality check holds it.
+    const { data: acs } = await l.db.rpc('get_portfolio_ac_state', { p_user_id: l.userId });
+    const unit = ((acs ?? []) as Array<{ unit_code: string }>)[0]?.unit_code ?? '';
+    await sheet.getByPlaceholder('304, 305').fill(unit);
+    // ...and a weekend day "in normal hours" is flagged too: use the last weekday.
+    const d = new Date();
+    while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() - 1);
+    await sheet.locator('#otj-activity_date').fill(d.toLocaleDateString('en-CA'));
     await sheet.getByRole('button', { name: 'Send to tutor' }).click();
     await expect(learner.page.getByText('Sent to your tutor').first()).toBeVisible();
 
@@ -92,7 +100,7 @@ test('OTJ submit → tutor verifies → learner sees it verified', async ({ brow
 test('OTJ form fills and is ready to send (nothing submitted)', async ({ browser }) => {
   const learner = await signedInPage(browser, 'learner');
   await learner.page.goto('/apprentice/college/activities');
-  await learner.page.getByRole('button', { name: 'Submit work activity' }).click();
+  await learner.page.getByRole('button', { name: 'Log work activity' }).click();
   const sheet = learner.page.getByRole('dialog');
   const send = sheet.getByRole('button', { name: 'Send to tutor' });
   await expect(send).toBeDisabled();

@@ -9,8 +9,21 @@ import {
   OTJ_ACTIVITY_LABEL,
   type PendingOtjAttestation,
 } from '@/hooks/useEmployerOtjAttestations';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import FormSheet from '@/components/forms/FormSheet';
+import { panel, PanelTitle } from '@/components/employer/overview/HomeSections';
+import {
+  Initials,
+  PlainEmpty,
+  Row,
+  Tag,
+  colClass,
+  frameClass,
+  rowBtnPrimary,
+  rowBtnSecondary,
+  rowsClass,
+  twoColClass,
+} from '@/components/employer/pageParts/PageParts';
+import { cn } from '@/lib/utils';
 import { format, parseISO } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
@@ -19,22 +32,14 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  ComplianceRing,
   IconButton,
-  EmptyState,
   LoadingBlocks,
-  SheetShell,
   PrimaryButton,
   SecondaryButton,
   type Tone,
 } from '@/components/employer/editorial';
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
+import { ApprenticeFundingPanel } from '@/components/employer/payLaw/ApprenticeFundingPanel';
 import { EmployerReviewAction } from '@/components/employer/EmployerReviewAction';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { APPRENTICES_HELP } from '@/components/employer/help/people';
@@ -51,12 +56,6 @@ import {
    actually acts on: off-the-job hours on track, attendance, EPA stage, and
    whether a progress review is overdue. Read-only; the college owns the data.
    ========================================================================== */
-
-const getInitials = (name: string): string => {
-  const parts = name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-};
 
 const epaTone = (status: string | null): Tone => {
   const s = (status ?? '').toLowerCase();
@@ -85,7 +84,6 @@ const programmeDates = (start: string | null, end: string | null): string | null
 };
 
 export function ApprenticeProgressSection() {
-  const isMobile = useIsMobile();
   const { data, isLoading, isError, refetch, isFetching } = useApprenticeProgress();
 
   const rows = useMemo(() => data ?? [], [data]);
@@ -310,24 +308,76 @@ export function ApprenticeProgressSection() {
         ]
       : [];
 
+  // Where the apprentices stand, in one line.
+  const heroLine = (() => {
+    if (isLoading) return 'College progress for the apprentices on your books.';
+    if (rows.length === 0 && unrostered.length === 0)
+      return 'No apprentices linked yet. They show here once a college enrols one of your team.';
+    const bits: string[] = [];
+    if (attestations.length > 0)
+      bits.push(
+        `${attestations.length} training ${attestations.length === 1 ? 'entry' : 'entries'} to attest`
+      );
+    if (stats.overdue > 0)
+      bits.push(`${stats.overdue} ${stats.overdue === 1 ? 'review' : 'reviews'} overdue`);
+    if (unrostered.length > 0) bits.push(`${unrostered.length} not on your team yet`);
+    if (bits.length === 0)
+      return `${rows.length} ${rows.length === 1 ? 'apprentice' : 'apprentices'}, all up to date.`;
+    const s = bits.join(', ');
+    return `${s.charAt(0).toUpperCase()}${s.slice(1)}.`;
+  })();
+
+  const boxed = 'overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04]';
+
+  const unrosteredPanel =
+    !isLoading && unrostered.length > 0 ? (
+      <section data-help="apprentices.unrostered">
+        <PanelTitle title="Not on your team yet" meta={unrostered.length} />
+        <div className={cn(panel, rowsClass)}>
+          {unrostered.map((a) => (
+            <Row
+              key={a.studentId}
+              lead={<Initials name={a.name} />}
+              title={a.name}
+              detail={
+                [a.courseName, a.collegeName].filter(Boolean).join(' · ') || 'College apprentice'
+              }
+              trailing={
+                a.invitedRosterId ? (
+                  <Tag tone="neutral">Invited</Tag>
+                ) : a.reviewOverdue ? (
+                  <Tag tone="red">Review due</Tag>
+                ) : (
+                  <Tag tone="outline">Add</Tag>
+                )
+              }
+              onClick={() => setPendingApprentice(a)}
+            />
+          ))}
+          <p className="px-4 py-3 text-[13px] leading-relaxed text-white sm:px-5">
+            Their college lists your firm as their employer. Add them to your team to see their
+            hours, attendance and reviews here, and to confirm their training hours.
+          </p>
+        </div>
+      </section>
+    ) : null;
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="People"
         title="Apprentices"
-        description="Live college progress for the apprentices on your books. Off-the-job hours, attendance, end-point assessment and reviews."
-        tone="emerald"
+        description={heroLine}
         actions={
-          <>
-            <IconButton onClick={() => refetch()} aria-label="Refresh">
-              <RefreshCw className={isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
-            </IconButton>
+          <div className="flex items-center gap-2">
             <PageHelpButton
               help={APPRENTICES_HELP}
               blockers={helpBlockers}
               askContext={{ page: 'apprentices' }}
             />
-          </>
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className={isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
+            </IconButton>
+          </div>
         }
       />
 
@@ -340,295 +390,284 @@ export function ApprenticeProgressSection() {
       {isLoading || (attestationsLoading && rows.length === 0 && !data) ? (
         <LoadingBlocks />
       ) : isError ? (
-        <EmptyState
-          title="Couldn't load apprentice progress"
-          description="Something went wrong fetching college records. Try again."
-          action="Retry"
-          onAction={() => refetch()}
-        />
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text="College records didn't load. Check your connection and try again."
+            action={
+              <button type="button" onClick={() => refetch()} className={rowBtnSecondary}>
+                Retry
+              </button>
+            }
+          />
+        </div>
       ) : rows.length === 0 ? (
         unrostered.length === 0 ? (
-          <EmptyState
-            title="No apprentices linked yet"
-            description="When an apprentice on your team is enrolled with a college, their progress will appear here automatically."
-          />
-        ) : null
+          <div className={panel}>
+            <PlainEmpty
+              bare
+              text="When an apprentice on your team is enrolled with a college, their hours, attendance and reviews show here."
+            />
+          </div>
+        ) : (
+          unrosteredPanel
+        )
       ) : (
         <>
           <StatStrip
             columns={4}
             stats={[
-              { value: stats.total, label: 'Apprentices' },
+              { value: stats.total, label: 'Apprentices', sub: 'Linked to a college' },
               {
                 value: attestations.length,
                 label: 'To attest',
-                tone: attestations.length > 0 ? 'yellow' : 'emerald',
-                accent: attestations.length > 0,
+                tone: attestations.length > 0 ? 'yellow' : undefined,
+                sub: attestations.length > 0 ? 'Training hours waiting' : 'Nothing waiting',
               },
-              { value: stats.onTrack, label: 'OTJ on track', tone: 'emerald' },
+              {
+                value: stats.onTrack,
+                label: 'OTJ on track',
+                sub: `of ${stats.total} on off-the-job hours`,
+              },
               {
                 value: stats.overdue,
                 label: 'Reviews overdue',
-                tone: stats.overdue > 0 ? 'red' : 'emerald',
+                tone: stats.overdue > 0 ? 'red' : undefined,
+                sub: stats.overdue > 0 ? 'Every 3 months' : 'All in date',
               },
             ]}
           />
 
-          {/* Workplace attestation inbox — what needs the employer TODAY. An
-              attestation here is the employer's own authority (workplace), not
-              the college's verification and not an IQA sample. */}
-          {attestations.length > 0 && (
-            <div data-help="apprentices.attest-list">
-              <ListCard>
-                <ListCardHeader
-                  tone="yellow"
-                  title="Awaiting your attestation"
-                  meta={<Pill tone="yellow">{attestations.length}</Pill>}
-                />
-                <ListBody>
-                  {attestations.map((a) => (
-                    <ListRow
-                      key={a.entryId}
-                      accent="yellow"
-                      lead={<Avatar initials={getInitials(a.apprenticeName)} />}
-                      title={a.title}
-                      subtitle={`${a.apprenticeName} · ${OTJ_ACTIVITY_LABEL[a.activityType] ?? a.activityType} · ${format(parseISO(a.activityDate), 'd MMM')}`}
-                      trailing={
-                        <span className="text-[13px] font-semibold tabular-nums text-white">
-                          {(a.durationMinutes / 60).toFixed(1)}h
-                        </span>
-                      }
-                      onClick={() => setReviewing(a)}
-                    />
-                  ))}
-                </ListBody>
-                <div className="px-5 py-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
-                  Attesting confirms the apprentice did this work under your supervision. The
-                  college verifies separately for the apprenticeship record.
-                </div>
-              </ListCard>
-            </div>
-          )}
+          <div className={twoColClass}>
+            <div className={colClass}>
+              {/* Workplace attestation inbox — what needs the employer TODAY. An
+                  attestation here is the employer's own authority (workplace), not
+                  the college's verification and not an IQA sample. */}
+              {attestations.length > 0 && (
+                <section data-help="apprentices.attest-list">
+                  <PanelTitle title="Awaiting your attestation" meta={attestations.length} />
+                  <div className={cn(panel, rowsClass)}>
+                    {attestations.map((a) => (
+                      <Row
+                        key={a.entryId}
+                        chevron={false}
+                        lead={<Initials name={a.apprenticeName} />}
+                        title={a.title}
+                        detail={`${a.apprenticeName} · ${OTJ_ACTIVITY_LABEL[a.activityType] ?? a.activityType} · ${format(parseISO(a.activityDate), 'd MMM')} · ${(a.durationMinutes / 60).toFixed(1)}h`}
+                        trailing={<span className={rowBtnPrimary}>Review</span>}
+                        onClick={() => setReviewing(a)}
+                      />
+                    ))}
+                    <p className="px-4 py-3 text-[13px] leading-relaxed text-white sm:px-5">
+                      Attesting confirms the apprentice did this work under your supervision. The
+                      college verifies separately for the apprenticeship record.
+                    </p>
+                  </div>
+                </section>
+              )}
 
-          <div data-help="apprentices.list">
-            <ListCard>
-              <ListCardHeader
-                title="Your apprentices"
-                meta={<Pill tone="blue">{rows.length}</Pill>}
-              />
-              <ListBody>
-                {rows.map((r, i) => {
-                  return (
-                    <ListRow
-                      key={`${r.studentUserId}-${i}`}
-                      accent={r.reviewOverdue ? 'red' : r.otjOnTrack ? 'emerald' : 'amber'}
-                      lead={<Avatar initials={getInitials(r.name)} />}
+              <section data-help="apprentices.list">
+                <PanelTitle title="Your apprentices" meta={rows.length} />
+                <div className={cn(panel, rowsClass)}>
+                  {rows.map((r, i) => {
+                    const toAttest = attestationsByApprentice.get(r.studentUserId);
+                    return (
+                      <Row
+                        key={`${r.studentUserId}-${i}`}
+                        lead={<Initials name={r.name} />}
+                        title={r.name}
+                        detail={
+                          [r.courseName, r.collegeName].filter(Boolean).join(' · ') ||
+                          'College apprentice'
+                        }
+                        trailing={
+                          <>
+                            <span className="hidden text-right md:block">
+                              <span className="block text-[14px] font-semibold text-white tabular-nums">
+                                {r.otjVerifiedHours + r.otjEmployerAttestedHours}/
+                                {r.otjRequiredHours}h
+                              </span>
+                              <span className="block text-[12px] text-white">Off the job</span>
+                            </span>
+                            {toAttest ? (
+                              <Tag tone="yellow">{toAttest} to attest</Tag>
+                            ) : r.reviewOverdue ? (
+                              <Tag tone="red">Review due</Tag>
+                            ) : r.otjOnTrack ? (
+                              <Tag tone="done">On track</Tag>
+                            ) : (
+                              <Tag tone="outline">Behind</Tag>
+                            )}
+                          </>
+                        }
+                        onClick={() => setSelected(r)}
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            </div>
+
+            <div className={colClass}>
+              <section>
+                <PanelTitle title="Progress reviews" meta="Every 3 months" />
+                <div className={cn(panel, rowsClass)}>
+                  {rows.map((r, i) => (
+                    <Row
+                      key={`rev-${r.studentUserId}-${i}`}
                       title={r.name}
-                      subtitle={
-                        [r.courseName, r.collegeName].filter(Boolean).join(' · ') ||
-                        'College apprentice'
+                      detail={
+                        r.nextReviewDate
+                          ? `${r.reviewOverdue ? 'Was due' : 'Next'} ${format(parseISO(r.nextReviewDate), 'd MMM yyyy')}`
+                          : r.lastReviewDate
+                            ? `Last ${format(parseISO(r.lastReviewDate), 'd MMM yyyy')}`
+                            : 'No review recorded'
                       }
                       trailing={
-                        // Mobile shows ONE signal (the worst) + the ring — three
-                        // pills crushed the name at 375px; the sheet has the rest
-                        <div className="flex items-center gap-2">
-                          <span className="hidden sm:flex items-center gap-2">
-                            <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
-                              {r.otjVerifiedHours + r.otjEmployerAttestedHours}/{r.otjRequiredHours}
-                              h OTJ
-                            </Pill>
-                            {r.epaStatus && <Pill tone={epaTone(r.epaStatus)}>{r.epaStatus}</Pill>}
-                          </span>
-                          {attestationsByApprentice.get(r.studentUserId) ? (
-                            <Pill tone="yellow">
-                              {attestationsByApprentice.get(r.studentUserId)} to attest
-                            </Pill>
-                          ) : r.reviewOverdue ? (
-                            <Pill tone="red">Review due</Pill>
-                          ) : (
-                            <span className="sm:hidden">
-                              <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
-                                {r.otjOnTrack ? 'On track' : 'Behind'}
-                              </Pill>
-                            </span>
-                          )}
-                          <ComplianceRing score={r.progressPercent} size={40} label="Progress" />
-                        </div>
+                        r.reviewOverdue ? (
+                          <Tag tone="red">Overdue</Tag>
+                        ) : (
+                          <Tag tone="done">In date</Tag>
+                        )
                       }
                       onClick={() => setSelected(r)}
                     />
-                  );
-                })}
-              </ListBody>
-            </ListCard>
+                  ))}
+                </div>
+              </section>
+              {unrosteredPanel}
+              {/* ELE-2063: funding the firm can claim, and apprentice pay rates */}
+              <ApprenticeFundingPanel />
+            </div>
           </div>
         </>
       )}
+      {!isLoading && !isError && rows.length === 0 && <ApprenticeFundingPanel />}
 
-      {/* ELE-1955: apprentices whose college names this firm, not on the team */}
-      {!isLoading && unrostered.length > 0 && (
-        <div data-help="apprentices.unrostered">
-          <ListCard>
-            <ListCardHeader
-              tone="blue"
-              title="Not on your team yet"
-              meta={<Pill tone="blue">{unrostered.length}</Pill>}
-            />
-            <ListBody>
-              {unrostered.map((a) => (
-                <ListRow
-                  key={a.studentId}
-                  accent={a.reviewOverdue ? 'red' : 'blue'}
-                  lead={<Avatar initials={getInitials(a.name)} />}
-                  title={a.name}
-                  subtitle={
-                    [a.courseName, a.collegeName].filter(Boolean).join(' · ') ||
-                    'College apprentice'
-                  }
-                  trailing={
-                    a.invitedRosterId ? (
-                      <Pill tone="blue">Invited</Pill>
-                    ) : a.reviewOverdue ? (
-                      <Pill tone="red">Review due</Pill>
-                    ) : (
-                      <Pill tone="emerald">Add</Pill>
-                    )
-                  }
-                  onClick={() => setPendingApprentice(a)}
-                />
-              ))}
-            </ListBody>
-            <div className="px-5 py-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
-              Their college lists your firm as their employer. Add them to your team to see their
-              hours, attendance and reviews here, and to confirm their training hours.
-            </div>
-          </ListCard>
-        </div>
-      )}
-
-      <Sheet
+      <FormSheet
         open={!!pendingApprentice}
         onOpenChange={(open) => !open && setPendingApprentice(null)}
-      >
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden'
-              : 'w-full sm:max-w-2xl p-0 overflow-hidden'
-          }
-        >
-          {pendingApprentice && (
-            <SheetShell
-              eyebrow={
+        title={pendingApprentice?.name ?? 'Apprentice'}
+        description={
+          pendingApprentice
+            ? `${
                 [pendingApprentice.courseName, pendingApprentice.collegeName]
                   .filter(Boolean)
                   .join(' · ') || 'College apprentice'
-              }
-              title={pendingApprentice.name}
-              description="Their college lists your firm as their employer. They aren't on your team in Elec-Mate yet."
-            >
-              <ListCard>
-                <ListCardHeader tone="emerald" title="Progress review" />
-                <ListBody>
-                  <ListRow
+              }. Their college lists your firm as their employer. They aren't on your team in Elec-Mate yet.`
+            : undefined
+        }
+        width="wide"
+        bodyClassName="grid gap-5 [&>*]:min-w-0 lg:grid-cols-2 lg:gap-8 lg:items-start"
+      >
+        {pendingApprentice && (
+          <>
+            <div className="space-y-2">
+              <h3 className="text-[15px] font-semibold text-white">Progress review</h3>
+              <div className={boxed}>
+                <div className={rowsClass}>
+                  <Row
                     title={
                       pendingApprentice.reviewDue
                         ? `Due by ${format(parseISO(pendingApprentice.reviewDue), 'd MMM yyyy')}`
                         : 'No due date recorded'
                     }
-                    subtitle={
+                    detail={
                       pendingApprentice.reviewOverdue
                         ? 'Overdue: a review is needed at least every 3 calendar months'
                         : 'Within the 3-month window'
                     }
                     trailing={
                       pendingApprentice.reviewOverdue ? (
-                        <Pill tone="red">Overdue</Pill>
+                        <Tag tone="red">Overdue</Tag>
                       ) : (
-                        <Pill tone="emerald">Up to date</Pill>
+                        <Tag tone="done">Up to date</Tag>
                       )
                     }
                   />
                   {pendingApprentice.lastNudgedAt && (
-                    <ListRow
+                    <Row
                       title={`Asked ${format(parseISO(pendingApprentice.lastNudgedAt), 'd MMM, HH:mm')}`}
-                      subtitle="Last review nudge from your firm"
+                      detail="Last review nudge from your firm"
                     />
                   )}
-                </ListBody>
-                <div className="px-5 py-4 border-t border-white/[0.06] space-y-2">
-                  <button
-                    type="button"
-                    data-help="apprentices.unrostered-nudge"
-                    onClick={() => askUnrostered(pendingApprentice)}
-                    disabled={nudgeUnrostered.isPending || !pendingApprentice.hasAccount}
-                    className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white flex items-center justify-center gap-2"
-                  >
-                    {nudgeUnrostered.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Send className="h-4 w-4" />
+                  <div className="space-y-2 px-4 py-3 sm:px-5">
+                    <button
+                      type="button"
+                      data-help="apprentices.unrostered-nudge"
+                      onClick={() => askUnrostered(pendingApprentice)}
+                      disabled={nudgeUnrostered.isPending || !pendingApprentice.hasAccount}
+                      className={cn(rowBtnPrimary, 'w-full sm:w-auto')}
+                    >
+                      {nudgeUnrostered.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                      Ask to arrange review
+                    </button>
+                    {!pendingApprentice.hasAccount && (
+                      <p className="text-[13px] leading-relaxed text-white">
+                        {pendingApprentice.name.split(' ')[0]} doesn't have an Elec-Mate account
+                        yet, so there's nobody to send it to. Add them to your team and they get an
+                        invite.
+                      </p>
                     )}
-                    Ask to arrange review
-                  </button>
-                  {!pendingApprentice.hasAccount && (
-                    <p className="text-[12px] text-white leading-relaxed">
-                      {pendingApprentice.name.split(' ')[0]} doesn't have an Elec-Mate account yet,
-                      so there's nobody to send it to. Add them to your team and they get an invite.
-                    </p>
-                  )}
+                  </div>
                 </div>
-              </ListCard>
+              </div>
+            </div>
 
+            <div className="space-y-3">
+              <h3 className="text-[15px] font-semibold text-white">Your team</h3>
               {pendingApprentice.invitedRosterId ? (
-                <p className="rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-3 text-[13px] text-white leading-relaxed">
+                <p className="rounded-2xl border border-white/[0.1] bg-white/[0.04] px-4 py-3 text-[14px] leading-relaxed text-white">
                   Invite sent to {pendingApprentice.email ?? 'their email'}. They join your team
-                  when they accept it, and their progress then shows above.
+                  when they accept it, and their progress then shows here.
                 </p>
               ) : (
-                <SecondaryButton
-                  fullWidth
+                <button
+                  type="button"
                   data-help="apprentices.unrostered-add"
                   disabled={addingId === pendingApprentice.studentId}
                   onClick={() => addApprentice(pendingApprentice)}
+                  className={cn(rowBtnSecondary, 'w-full sm:w-auto')}
                 >
                   {addingId === pendingApprentice.studentId ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" aria-hidden />
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
                   ) : (
-                    <UserPlus className="h-4 w-4 mr-2" aria-hidden />
+                    <UserPlus className="h-4 w-4" aria-hidden />
                   )}
                   Add {pendingApprentice.name.split(' ')[0]} to your team
-                </SecondaryButton>
+                </button>
               )}
-              <p className="text-[12px] text-white leading-relaxed">
+              <p className="text-[13px] leading-relaxed text-white">
                 Adding them sends an invite to the email their college has for them. Their account
                 links to your team only when they accept it.
               </p>
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
+            </div>
+          </>
+        )}
+      </FormSheet>
 
       {/* Apprentice detail — the RPC already returns everything an employer
           acts on; the rows were dead ends before this sheet */}
-      <Sheet open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden'
-              : 'w-full sm:max-w-2xl p-0 overflow-hidden'
-          }
-        >
-          {selected && (
-            <SheetShell
-              eyebrow={
-                [selected.courseName, selected.collegeName].filter(Boolean).join(' · ') ||
-                'College apprentice'
-              }
-              title={selected.name}
-            >
+      <FormSheet
+        open={!!selected}
+        onOpenChange={(open) => !open && setSelected(null)}
+        title={selected?.name ?? 'Apprentice'}
+        description={
+          selected
+            ? [selected.courseName, selected.collegeName].filter(Boolean).join(' · ') ||
+              'College apprentice'
+            : undefined
+        }
+        width="wide"
+        bodyClassName="grid gap-5 [&>*]:min-w-0 lg:grid-cols-2 lg:gap-8 lg:items-start"
+      >
+        {selected && (
+          <>
+            <div className="space-y-5">
               {/* Programme line + college risk rating — rendered only from
                   facts the college has recorded; nothing is invented */}
               {(() => {
@@ -640,17 +679,18 @@ export function ApprenticeProgressSection() {
                   .filter(Boolean)
                   .join(' · ');
                 if (!programme && !selected.riskLevel) return null;
+                const risk = selected.riskLevel ? riskTone(selected.riskLevel) : null;
                 return (
                   <div className="flex flex-wrap items-center gap-2">
                     {selected.riskLevel && (
-                      <Pill tone={riskTone(selected.riskLevel)}>
+                      <Tag tone={risk === 'red' ? 'red' : risk === 'emerald' ? 'done' : 'outline'}>
                         {/risk/i.test(selected.riskLevel)
                           ? selected.riskLevel
                           : `${selected.riskLevel} risk`}
-                      </Pill>
+                      </Tag>
                     )}
                     {programme && (
-                      <p className="text-[12.5px] text-white leading-relaxed">{programme}</p>
+                      <p className="text-[13px] leading-relaxed text-white">{programme}</p>
                     )}
                   </div>
                 );
@@ -661,23 +701,21 @@ export function ApprenticeProgressSection() {
                   {
                     value: `${selected.otjVerifiedHours + selected.otjEmployerAttestedHours}/${selected.otjRequiredHours}h`,
                     label: 'Off-the-job hours',
-                    tone: selected.otjOnTrack ? 'emerald' : 'amber',
                     sub: selected.otjOnTrack ? 'On track' : 'Behind pro-rata target',
                   },
                   {
                     value: `${selected.attendancePercent}%`,
                     label: 'Attendance',
-                    tone: selected.attendancePercent >= 90 ? 'emerald' : 'amber',
+                    tone: selected.attendancePercent < 90 ? 'red' : undefined,
                   },
                   {
                     value: `${selected.progressPercent}%`,
                     label: 'Course progress',
-                    tone: 'blue',
                   },
                   {
                     value: selected.epaStatus || 'Not started',
                     label: 'EPA status',
-                    tone: epaTone(selected.epaStatus),
+                    tone: epaTone(selected.epaStatus) === 'red' ? 'red' : undefined,
                   },
                 ]}
               />
@@ -692,210 +730,244 @@ export function ApprenticeProgressSection() {
                     : 0;
                 const otjRemaining = Math.max(0, selected.otjRequiredHours - signedOff);
                 return (
-                  <ListCard>
-                    <ListCardHeader
-                      tone="blue"
-                      title="Off-the-job hours"
-                      meta={<Pill tone={selected.otjOnTrack ? 'emerald' : 'amber'}>{otjPct}%</Pill>}
-                    />
-                    <div className="px-5 py-4 space-y-2.5">
-                      <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div className="space-y-2">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="text-[15px] font-semibold text-white">Off-the-job hours</h3>
+                      <span className="text-[13px] font-semibold text-white tabular-nums">
+                        {otjPct}%
+                      </span>
+                    </div>
+                    <div className={cn(boxed, 'space-y-3 px-4 py-4')}>
+                      <div className="h-2 overflow-hidden rounded-full bg-white/[0.08]">
                         <div
                           className={`h-full rounded-full transition-all ${
-                            selected.otjOnTrack ? 'bg-emerald-500' : 'bg-amber-500'
+                            selected.otjOnTrack ? 'bg-emerald-500' : 'bg-elec-yellow'
                           }`}
                           style={{ width: `${otjPct}%` }}
                         />
                       </div>
-                      <div className="flex items-center justify-between text-[12px]">
-                        <span className="text-white tabular-nums">
-                          {selected.otjVerifiedHours + selected.otjEmployerAttestedHours}h signed
-                          off
-                        </span>
-                        <span className="text-white tabular-nums">
-                          {selected.otjRequiredHours}h required
-                        </span>
+                      <div className="flex items-center justify-between text-[13px] text-white tabular-nums">
+                        <span>{signedOff}h signed off</span>
+                        <span>{selected.otjRequiredHours}h required</span>
                       </div>
                       {/* Two authorities, kept apart on purpose */}
-                      <div className="grid grid-cols-2 gap-2 text-[12px]">
-                        <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2">
-                          <p className="text-white tabular-nums font-semibold">
+                      <div className="grid grid-cols-2 gap-2 text-[13px]">
+                        <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2">
+                          <p className="font-semibold text-white tabular-nums">
                             {selected.otjVerifiedHours}h
                           </p>
                           <p className="text-white">College verified</p>
                         </div>
-                        <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2">
-                          <p className="text-white tabular-nums font-semibold">
+                        <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2">
+                          <p className="font-semibold text-white tabular-nums">
                             {selected.otjEmployerAttestedHours}h
                           </p>
                           <p className="text-white">Workplace attested</p>
                         </div>
                       </div>
                       {selected.otjPendingAttestationCount > 0 && (
-                        <p className="text-[12px] text-elec-yellow tabular-nums">
+                        <p className="text-[13px] font-medium text-elec-yellow tabular-nums">
                           {selected.otjPendingAttestationCount} entr
                           {selected.otjPendingAttestationCount === 1 ? 'y' : 'ies'} waiting for your
-                          attestation. See the list above
+                          attestation, in the list on the page.
                         </p>
                       )}
-                      {selected.otjTotalHours >
-                        selected.otjVerifiedHours + selected.otjEmployerAttestedHours && (
-                        <p className="text-[12px] text-amber-300/90 tabular-nums">
-                          {selected.otjTotalHours -
-                            selected.otjVerifiedHours -
-                            selected.otjEmployerAttestedHours}
-                          h logged, not yet signed off by anyone
+                      {selected.otjTotalHours > signedOff && (
+                        <p className="text-[13px] text-white tabular-nums">
+                          {selected.otjTotalHours - signedOff}h logged, not yet signed off by anyone
                         </p>
                       )}
-                      <p className="text-[12px] text-white leading-relaxed">
+                      <p className="text-[13px] leading-relaxed text-white">
                         {otjRemaining > 0
                           ? `${otjRemaining}h of verified off-the-job training still to log. The full requirement must be evidenced before EPA gateway.`
                           : 'Full off-the-job requirement met and verified by the college.'}
                       </p>
                     </div>
-                  </ListCard>
+                  </div>
                 );
               })()}
+            </div>
+
+            <div className="space-y-5">
               {/* End-point assessment — only when the college has recorded a
                   gateway or assessment date (the status already sits in the
-                  strip above) */}
+                  strip) */}
               {(selected.epaGatewayDate || selected.epaDate) && (
-                <ListCard>
-                  <ListCardHeader
-                    tone="yellow"
-                    title="End-point assessment"
-                    meta={
-                      selected.epaStatus ? (
-                        <Pill tone={epaTone(selected.epaStatus)}>{selected.epaStatus}</Pill>
-                      ) : undefined
-                    }
-                  />
-                  <ListBody>
-                    {selected.epaGatewayDate && (
-                      <ListRow
-                        title={format(parseISO(selected.epaGatewayDate), 'd MMM yyyy')}
-                        subtitle="Gateway date"
-                      />
-                    )}
-                    {selected.epaDate && (
-                      <ListRow
-                        title={format(parseISO(selected.epaDate), 'd MMM yyyy')}
-                        subtitle="End-point assessment date"
-                      />
-                    )}
-                  </ListBody>
-                </ListCard>
-              )}
-              <ListCard>
-                <ListCardHeader tone="emerald" title="Progress reviews" />
-                <ListBody>
-                  <ListRow
-                    title={
-                      selected.lastReviewDate
-                        ? `Last review ${format(parseISO(selected.lastReviewDate), 'd MMM yyyy')}`
-                        : 'No review recorded'
-                    }
-                    subtitle={
-                      selected.reviewOverdue
-                        ? 'Overdue: a review is needed at least every 3 calendar months'
-                        : 'Within the 3-month window'
-                    }
-                    trailing={
-                      selected.reviewOverdue ? (
-                        <Pill tone="red">Overdue</Pill>
-                      ) : (
-                        <Pill tone="emerald">Up to date</Pill>
-                      )
-                    }
-                  />
-                  {selected.nextReviewDate && (
-                    <ListRow
-                      title={`Next review ${format(parseISO(selected.nextReviewDate), 'd MMM yyyy')}`}
-                      subtitle={selected.reviewOverdue ? 'Due by' : 'Booked or due by'}
-                    />
-                  )}
-                  {selected.tutorName && (
-                    <ListRow title={selected.tutorName} subtitle="College tutor" />
-                  )}
-                </ListBody>
-                <EmployerReviewAction studentUserId={selected.studentUserId} />
-                {selected.reviewOverdue && (
-                  <div className="px-5 py-4 border-t border-white/[0.06]">
-                    <button
-                      onClick={() => sendReviewNudge(selected)}
-                      disabled={nudging}
-                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white flex items-center justify-center gap-2"
-                    >
-                      {nudging ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Send className="h-4 w-4" />
+                <div className="space-y-2">
+                  <h3 className="text-[15px] font-semibold text-white">End-point assessment</h3>
+                  <div className={boxed}>
+                    <div className={rowsClass}>
+                      {selected.epaGatewayDate && (
+                        <Row
+                          title={format(parseISO(selected.epaGatewayDate), 'd MMM yyyy')}
+                          detail="Gateway date"
+                        />
                       )}
-                      Ask to arrange review
-                    </button>
+                      {selected.epaDate && (
+                        <Row
+                          title={format(parseISO(selected.epaDate), 'd MMM yyyy')}
+                          detail="End-point assessment date"
+                        />
+                      )}
+                    </div>
                   </div>
-                )}
-              </ListCard>
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
+                </div>
+              )}
+              <div className="space-y-2">
+                <h3 className="text-[15px] font-semibold text-white">Progress reviews</h3>
+                <div className={boxed}>
+                  <div className={rowsClass}>
+                    <Row
+                      title={
+                        selected.lastReviewDate
+                          ? `Last review ${format(parseISO(selected.lastReviewDate), 'd MMM yyyy')}`
+                          : 'No review recorded'
+                      }
+                      detail={
+                        selected.reviewOverdue
+                          ? 'Overdue: a review is needed at least every 3 calendar months'
+                          : 'Within the 3-month window'
+                      }
+                      trailing={
+                        selected.reviewOverdue ? (
+                          <Tag tone="red">Overdue</Tag>
+                        ) : (
+                          <Tag tone="done">Up to date</Tag>
+                        )
+                      }
+                    />
+                    {selected.nextReviewDate && (
+                      <Row
+                        title={
+                          selected.reviewOverdue
+                            ? `Was due ${format(parseISO(selected.nextReviewDate), 'd MMM yyyy')}`
+                            : `Next review ${format(parseISO(selected.nextReviewDate), 'd MMM yyyy')}`
+                        }
+                        detail={
+                          selected.reviewOverdue
+                            ? 'Past the date, so ask the college to arrange it'
+                            : 'Booked or due by'
+                        }
+                      />
+                    )}
+                    {selected.tutorName && (
+                      <Row title={selected.tutorName} detail="College tutor" />
+                    )}
+                  </div>
+                  <EmployerReviewAction studentUserId={selected.studentUserId} />
+                  {selected.reviewOverdue && (
+                    <div className="border-t border-white/[0.07] px-4 py-3 sm:px-5">
+                      <button
+                        onClick={() => sendReviewNudge(selected)}
+                        disabled={nudging}
+                        className={cn(rowBtnPrimary, 'w-full sm:w-auto')}
+                      >
+                        {nudging ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Send className="h-4 w-4" />
+                        )}
+                        Ask to arrange review
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </FormSheet>
 
       {/* Attestation review — the whole entry, then one of two decisions */}
-      <Sheet open={!!reviewing} onOpenChange={(open) => !open && closeReview()}>
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden'
-              : 'w-full sm:max-w-2xl p-0 overflow-hidden'
-          }
-        >
-          {reviewing && (
-            <SheetShell eyebrow="Workplace attestation" title={reviewing.title}>
-              <ListCard>
-                <ListBody>
-                  <ListRow
-                    lead={<Avatar initials={getInitials(reviewing.apprenticeName)} />}
+      <FormSheet
+        open={!!reviewing}
+        onOpenChange={(open) => !open && closeReview()}
+        title={reviewing?.title ?? 'Workplace attestation'}
+        description={
+          reviewing ? `Workplace attestation for ${reviewing.apprenticeName}` : undefined
+        }
+        width="wide"
+        bodyClassName="grid gap-5 [&>*]:min-w-0 lg:grid-cols-2 lg:gap-8 lg:items-start"
+        footer={
+          reviewing ? (
+            <div className="flex gap-2">
+              <SecondaryButton
+                data-help="apprentices.send-back"
+                fullWidth
+                size="lg"
+                disabled={decide.isPending || (sendBackArmed && !sendBackComment.trim())}
+                onClick={() => handleDecision(reviewing, 'send_back')}
+              >
+                <Undo2 className="h-4 w-4 mr-2" />
+                {sendBackArmed ? 'Confirm send back' : 'Send back'}
+              </SecondaryButton>
+              <PrimaryButton
+                data-help="apprentices.attest"
+                fullWidth
+                size="lg"
+                disabled={decide.isPending}
+                onClick={() => handleDecision(reviewing, 'attest')}
+              >
+                {decide.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Check className="h-4 w-4 mr-2" />
+                )}
+                Attest {(reviewing.durationMinutes / 60).toFixed(1)}h
+              </PrimaryButton>
+            </div>
+          ) : undefined
+        }
+      >
+        {reviewing && (
+          <>
+            <div className="space-y-5">
+              <div className={boxed}>
+                <div className={rowsClass}>
+                  <Row
+                    lead={<Initials name={reviewing.apprenticeName} />}
                     title={reviewing.apprenticeName}
-                    subtitle="Apprentice"
+                    detail="Apprentice"
                   />
-                  <ListRow
+                  <Row
                     title={`${(reviewing.durationMinutes / 60).toFixed(1)} hours`}
-                    subtitle={`${OTJ_ACTIVITY_LABEL[reviewing.activityType] ?? reviewing.activityType} · ${format(parseISO(reviewing.activityDate), 'EEEE d MMMM yyyy')}`}
+                    detail={`${OTJ_ACTIVITY_LABEL[reviewing.activityType] ?? reviewing.activityType} · ${format(parseISO(reviewing.activityDate), 'EEEE d MMMM yyyy')}`}
                   />
-                </ListBody>
-              </ListCard>
+                </div>
+              </div>
               {reviewing.description && (
-                <ListCard>
-                  <ListCardHeader tone="blue" title="What they logged" />
-                  <p className="px-5 py-4 text-[13px] text-white leading-relaxed whitespace-pre-wrap">
+                <div className="space-y-2">
+                  <h3 className="text-[15px] font-semibold text-white">What they logged</h3>
+                  <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-white">
                     {reviewing.description}
                   </p>
-                </ListCard>
+                </div>
               )}
+            </div>
+            <div className="space-y-5">
               {reviewing.evidenceUrls.length > 0 && (
-                <ListCard>
-                  <ListCardHeader
-                    tone="emerald"
-                    title="Evidence"
-                    meta={<Pill tone="emerald">{reviewing.evidenceUrls.length}</Pill>}
-                  />
-                  <ListBody>
-                    {reviewing.evidenceUrls.map((u, i) => (
-                      <ListRow
-                        key={u}
-                        title={`Attachment ${i + 1}`}
-                        subtitle={u.replace(/^https?:\/\/[^/]+\//, '').slice(0, 60)}
-                        onClick={() => window.open(u, '_blank', 'noopener')}
-                      />
-                    ))}
-                  </ListBody>
-                </ListCard>
+                <div className="space-y-2">
+                  <h3 className="text-[15px] font-semibold text-white">
+                    Evidence{' '}
+                    <span className="text-[13px] font-normal">{reviewing.evidenceUrls.length}</span>
+                  </h3>
+                  <div className={boxed}>
+                    <div className={rowsClass}>
+                      {reviewing.evidenceUrls.map((u, i) => (
+                        <Row
+                          key={u}
+                          title={`Attachment ${i + 1}`}
+                          detail={u.replace(/^https?:\/\/[^/]+\//, '').slice(0, 60)}
+                          onClick={() => window.open(u, '_blank', 'noopener')}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
-              <div className="rounded-2xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 flex gap-3">
-                <GraduationCap className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                <p className="text-[12.5px] text-white leading-relaxed">
+              <div className="flex gap-3 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-4 py-3">
+                <GraduationCap className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow" />
+                <p className="text-[13px] leading-relaxed text-white">
                   Attest only if this work happened under your firm's supervision. Your name and the
                   time are recorded on the entry. The college's own verification and any IQA
                   sampling are separate and stay with the college.
@@ -903,7 +975,7 @@ export function ApprenticeProgressSection() {
               </div>
               {sendBackArmed && (
                 <div className="space-y-1.5">
-                  <label className="text-[12px] font-medium text-white block">
+                  <label className="block text-[13px] font-medium text-white">
                     What needs changing (the apprentice will see this)
                   </label>
                   <textarea
@@ -911,38 +983,14 @@ export function ApprenticeProgressSection() {
                     onChange={(e) => setSendBackComment(e.target.value)}
                     autoFocus
                     placeholder="e.g. This was 2 hours, not 4. And it was on the 3rd, not the 4th"
-                    className="w-full min-h-[80px] rounded-xl border border-white/[0.14] bg-white/[0.04] px-3 py-2 text-[13px] text-white placeholder:text-white focus:border-elec-yellow focus:outline-none focus:ring-0 caret-elec-yellow touch-manipulation"
+                    className="min-h-[80px] w-full resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white caret-elec-yellow placeholder:text-white/35 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                   />
                 </div>
               )}
-              <div className="flex gap-2 pb-2">
-                <SecondaryButton
-                  data-help="apprentices.send-back"
-                  fullWidth
-                  disabled={decide.isPending || (sendBackArmed && !sendBackComment.trim())}
-                  onClick={() => handleDecision(reviewing, 'send_back')}
-                >
-                  <Undo2 className="h-4 w-4 mr-2" />
-                  {sendBackArmed ? 'Confirm send back' : 'Send back'}
-                </SecondaryButton>
-                <PrimaryButton
-                  data-help="apprentices.attest"
-                  fullWidth
-                  disabled={decide.isPending}
-                  onClick={() => handleDecision(reviewing, 'attest')}
-                >
-                  {decide.isPending ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <Check className="h-4 w-4 mr-2" />
-                  )}
-                  Attest {(reviewing.durationMinutes / 60).toFixed(1)}h
-                </PrimaryButton>
-              </div>
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
+            </div>
+          </>
+        )}
+      </FormSheet>
     </PageFrame>
   );
 }

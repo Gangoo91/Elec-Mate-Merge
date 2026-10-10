@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Dundee has a significant stock of pre-war tenement properties, many of which retain original rubber-insulated wiring that degrades with age and is frequently found to be C1 or C2 on EICR inspection.',
   'EICR costs in Dundee typically range from £95 to £190 for a one-bedroom flat and £160 to £320 for a three-bedroom house, making Dundee one of the more affordable Scottish cities for inspection work.',
   'All EICR inspections must be carried out by a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, or ELECSA and holding City and Guilds 2391 or equivalent.',
-  'A4:2026 introduced two key domestic RCD requirements that frequently generate EICR findings in Dundee properties: Regulation 411.3.3 requires 30mA RCD protection on all socket-outlet circuits rated at 32A or below (with no risk-assessment exemption available in dwellings), and Regulation 411.3.4 additionally requires 30mA RCD protection on all AC lighting circuits in domestic premises.',
+  'Two domestic RCD requirements, both in BS 7671 since 2018, frequently generate EICR findings in Dundee properties: Regulation 411.3.3 requires 30mA RCD protection on all socket-outlet circuits rated at 32A or below (the risk-assessment exception never covers sockets liable to be used by ordinary persons or children, so in practice it is not available in a home), and Regulation 411.3.4 additionally requires 30mA RCD protection on all AC lighting circuits in domestic premises.',
   'Dundee City Council operates a private landlord registration scheme; failure to maintain electrical compliance can result in registration sanctions as well as tenant enforcement action through the Housing and Property Chamber.',
 ];
 
@@ -260,23 +260,23 @@ const sections = [
               <span>
                 <strong>No RCD protection on socket-outlet circuits</strong> — properties wired or
                 last rewired before the mid-1990s frequently lack RCD protection on socket-outlet
-                circuits. BS 7671 Regulation 411.3.3 (A4:2026) requires additional protection by a
-                30mA RCD on all socket-outlets rated at 32A or below. In dwellings, omission via
-                risk assessment is expressly prohibited — unlike commercial premises, there is no
-                exception available. Absence of RCD protection on socket-outlet circuits is coded C2
-                and makes the EICR Unsatisfactory.
+                circuits. BS 7671 Regulation 411.3.3 requires additional protection by a 30mA RCD on
+                all socket-outlets rated at 32A or below. The risk-assessment exception never covers
+                sockets liable to be used by ordinary persons or children, so in a home it is not
+                available. Absence of RCD protection on socket-outlet circuits is coded C2 and makes
+                the EICR Unsatisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Unprotected lighting circuits</strong> — a common A4:2026 finding that
-                catches landlords by surprise: Regulation 411.3.4 requires that, in domestic
-                premises, all AC final circuits supplying luminaires must also be protected by a
-                30mA RCD. Properties with post-1990s wiring may have RCD-protected socket-outlet
-                circuits but still fail if lighting circuits run directly from an unprotected way.
-                Absence of 30mA RCD protection on lighting circuits in a domestic property is a C2
-                observation under BS 7671:2018+A4:2026.
+                <strong>Unprotected lighting circuits</strong> — a common finding that catches
+                landlords by surprise: Regulation 411.3.4 requires that, in domestic premises, all
+                AC final circuits supplying luminaires must also be protected by a 30mA RCD.
+                Properties with post-1990s wiring may have RCD-protected socket-outlet circuits but
+                still fail if lighting circuits run directly from an unprotected way. Absence of
+                30mA RCD protection on lighting circuits in a domestic property is a C2 observation
+                under BS 7671:2018+A4:2026.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -296,8 +296,9 @@ const sections = [
                 require assessment against the current A4:2026 requirements. Consumer units in older
                 new-builds may lack arc fault detection (AFDD) or updated RCD protection. Under BS
                 7671:2018+A4:2026 Regulation 421.1.7, installation of arc fault detection devices is
-                recommended in AC final circuits of domestic fixed installations to mitigate fire
-                risk from arc fault currents — where a consumer unit upgrade is triggered by EICR
+                recommended in AC final circuits of ordinary dwellings to mitigate fire risk from
+                arc fault currents, and has been required on socket-outlet circuits in HMOs and
+                similar premises since A2:2022 — where a consumer unit upgrade is triggered by EICR
                 findings, inspectors will commonly note the absence of AFDDs as a C3 observation.
               </span>
             </li>
@@ -574,7 +575,7 @@ export default function EICRDundeePage() {
       title="EICR Dundee: Cost & Inspection 2026"
       description="EICR Dundee 2026: typical costs, Scottish letting + landlord legal duties, and what to expect from an electrical inspection — for trade + clients."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

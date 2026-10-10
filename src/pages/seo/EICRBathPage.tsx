@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Bath properties?',
     answer:
-      "Bath's housing stock is dominated by Georgian and Victorian properties. Common EICR findings include absent RCD protection on socket-outlets rated not exceeding 32 A (a C2 finding under Regulation 411.3.3 of BS 7671:2018+A4:2026), absent 30 mA RCD protection on lighting circuits in domestic premises (Regulation 411.3.4 — a new A4:2026 requirement and frequent C2 finding in pre-1990s properties), rubber-insulated or early PVC cables in properties not rewired since the mid-20th century, inadequate earthing and bonding, and concealed wiring in original stone-mullion and lath-and-plaster walls that cannot be traced without destructive investigation. FI (Further Investigation) observations are particularly common in Bath due to the restricted access to concealed cables in listed buildings.",
+      "Bath's housing stock is dominated by Georgian and Victorian properties. Common EICR findings include absent RCD protection on socket-outlets rated not exceeding 32 A (a C2 finding under Regulation 411.3.3 of BS 7671:2018+A4:2026), absent 30 mA RCD protection on lighting circuits in domestic premises (Regulation 411.3.4, a requirement since BS 7671:2018 and a frequent C2 finding in pre-1990s properties), rubber-insulated or early PVC cables in properties not rewired since the mid-20th century, inadequate earthing and bonding, and concealed wiring in original stone-mullion and lath-and-plaster walls that cannot be traced without destructive investigation. FI (Further Investigation) observations are particularly common in Bath due to the restricted access to concealed cables in listed buildings.",
   },
   {
     question: "Do Bath's listed buildings need an EICR?",
@@ -305,7 +305,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Absent RCD protection on lighting circuits</strong> — Regulation 411.3.4 of
-                BS 7671:2018+A4:2026 (introduced by Amendment A4:2026) requires 30 mA RCD additional
+                BS 7671:2018+A4:2026 (in force since BS 7671:2018) requires 30 mA RCD additional
                 protection on AC final circuits supplying luminaires in domestic premises. Older
                 consumer units in Bath's Georgian and Victorian properties almost universally lack
                 this protection, making it a very common C2 finding under the current edition of the
@@ -520,10 +520,11 @@ const sections = [
           remedial work, making Bath a commercially rewarding market for experienced inspectors.
         </p>
         <p>
-          Amendment A4:2026 introduces Regulation 421.1.7, which recommends the installation of arc
-          fault detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate
-          the risk of fire from arc fault currents. Although the wording is advisory rather than
-          mandatory, Bath&apos;s concentration of ageing wiring — aluminium conductors, early PVC,
+          Regulation 421.1.7 recommends the installation of arc fault detection devices (AFDDs) in
+          AC final circuits of a fixed installation to mitigate the risk of fire from arc fault
+          currents, and since A2:2022 requires them on socket-outlet circuits up to 32 A in HMOs,
+          care homes, purpose-built student accommodation and high rise residential buildings.
+          Although the wording is advisory for an ordinary house, Bath&apos;s concentration of ageing wiring — aluminium conductors, early PVC,
           and rubber-insulated cables — is precisely the scenario where AFDDs add the greatest
           protective value. Inspectors should note the absence of AFDDs as a C3 observation where
           appropriate and be prepared to advise landlords on the benefits of upgrading consumer
@@ -583,7 +584,7 @@ export default function EICRBathPage() {
       title="EICR Bath: Safety Certificate Cost 2026"
       description="EICR costs in Bath for 2026. Landlord legal requirements, Bath & North East Somerset Council enforcement, Georgian listed building challenges."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

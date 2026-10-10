@@ -1,12 +1,6 @@
 import { useState, useMemo } from 'react';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
-import {
-  ArrowLeft,
-  ChevronDown,
-  Bookmark,
-  BookmarkCheck,
-  CheckCircle,
-} from 'lucide-react';
+import { ArrowLeft, ChevronDown, Bookmark, BookmarkCheck, CheckCircle } from 'lucide-react';
 import type { CultureProgress } from './useCultureProgress';
 import type { Section } from './workplaceCultureData';
 import {
@@ -25,7 +19,7 @@ interface CultureSectionViewProps {
   onBack: () => void;
 }
 
-const eyebrowClass = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white';
+const eyebrowClass = 'text-[13px] font-semibold text-white';
 const sectionCardClass =
   'rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2';
 
@@ -131,7 +125,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
             <div className="flex items-baseline justify-between">
               <span className={eyebrowClass}>Progress</span>
-              <span className="text-[12px] text-white font-mono">
+              <span className="text-[12px] text-white">
                 {sectionProgress.read}/{sectionProgress.total} ·{' '}
                 {sectionProgress.total > 0
                   ? Math.round((sectionProgress.read / sectionProgress.total) * 100)
@@ -261,8 +255,8 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
 
                   {isExpanded && (
                     <div className="px-4 pb-4 space-y-2 animate-fade-in">
-                      <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.06] p-3 space-y-1">
-                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                      <div className="rounded-lg border border-white/[0.08] bg-white/[0.06] p-3 space-y-1">
+                        <span className="text-[13px] font-semibold text-elec-yellow">
                           Better approach
                         </span>
                         <p className="text-[14px] text-white leading-relaxed">
@@ -304,10 +298,8 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                       &ldquo;{script.better}&rdquo;
                     </p>
                   </div>
-                  <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.06] p-3 space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                      Best
-                    </span>
+                  <div className="rounded-lg border border-white/[0.08] bg-white/[0.06] p-3 space-y-1">
+                    <span className="text-[13px] font-semibold text-elec-yellow">Best</span>
                     <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{script.best}&rdquo;
                     </p>
@@ -394,10 +386,8 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                     </div>
                   </div>
 
-                  <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.06] p-3 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                      Tips
-                    </span>
+                  <div className="rounded-lg border border-white/[0.08] bg-white/[0.06] p-3 space-y-2">
+                    <span className="text-[13px] font-semibold text-elec-yellow">Tips</span>
                     <ul className="space-y-1">
                       {region.keyTips.map((tip, i) => (
                         <li

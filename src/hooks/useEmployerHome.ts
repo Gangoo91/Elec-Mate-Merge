@@ -163,6 +163,9 @@ export function useEmployerHome() {
       { table: 'employer_jobs' },
       { table: 'employer_employees' },
       { table: 'employer_incidents' },
+      // ELE-2031: incidents are Site Safety near misses and accidents now.
+      { table: 'near_miss_reports' },
+      { table: 'accident_records' },
       { table: 'employer_job_pack_acknowledgements' },
       { table: 'report_qs_reviews' },
       { table: 'employer_leads' },

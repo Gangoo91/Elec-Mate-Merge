@@ -65,14 +65,14 @@ const faqs = [
   },
   {
     question:
-      'Does the circuit designer apply the A4:2026 requirement for RCD protection on lighting circuits?',
+      'Does the circuit designer apply the requirement for RCD protection on domestic lighting circuits?',
     answer:
-      'Yes. Regulation 411.3.4 of BS 7671:2018+A4:2026 introduces a mandatory requirement that, within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. This is a new A4:2026 obligation — not present in earlier editions — and the Circuit Designer applies it automatically when designing a domestic installation. When producing the consumer unit schedule, the designer specifies RCBO protection (or RCD coverage from a split-load board) for every lighting circuit in a domestic property, not only for socket-outlet circuits. The requirement uses "shall" and is not subject to a risk-assessment exception; it applies to all domestic lighting circuits regardless of installation method.',
+      'Yes. Regulation 411.3.4 of BS 7671:2018+A4:2026 sets a mandatory requirement that, within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. This has been a requirement since BS 7671:2018 was published, not a new A4:2026 rule, and the Circuit Designer applies it automatically when designing a domestic installation. When producing the consumer unit schedule, the designer specifies RCBO protection (or RCD coverage from a split-load board) for every lighting circuit in a domestic property, not only for socket-outlet circuits. The requirement uses "shall" and is not subject to a risk-assessment exception; it applies to all domestic lighting circuits regardless of installation method.',
   },
   {
     question: 'When does the designer specify AFDDs, and does it need to be recorded on the EIC?',
     answer:
-      'Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends the installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire due to arc fault currents. The regulation uses recommendatory rather than mandatory language, but many network operators and insurers treat it as a practical requirement for high-risk premises (houses in multiple occupation, care homes, and similar). Where the Circuit Designer recommends or specifies AFDDs for socket-outlet final circuits, this must be recorded on the Electrical Installation Certificate: Regulation 133.1.3 of BS 7671:2018+A4:2026 requires that certain equipment usages — including AFDD installation — shall be recorded on the appropriate Part 6 electrical certification. The consumer unit schedule output from the Circuit Designer flags AFDD-protected circuits and reminds you to declare this on the EIC.',
+      'Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends the installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire due to arc fault currents. Since A2:2022 it has been a requirement for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes, and a recommendation for other premises. Where the Circuit Designer recommends or specifies AFDDs for socket-outlet final circuits, this must be recorded on the Electrical Installation Certificate: Regulation 133.1.3 of BS 7671:2018+A4:2026 requires that certain equipment usages — including AFDD installation — shall be recorded on the appropriate Part 6 electrical certification. The consumer unit schedule output from the Circuit Designer flags AFDD-protected circuits and reminds you to declare this on the EIC.',
   },
 ];
 
@@ -216,10 +216,10 @@ export default function AICircuitDesignerPage() {
           consumer unit schedule — including cable sizes, protective device types and ratings,
           voltage drop figures (verified against Appendix 4, Section 6.4 limits of 3% for lighting
           and 5% for other circuits), and earth fault loop impedance values — ready to transfer
-          directly onto an Electrical Installation Certificate. All A4:2026 requirements are applied
-          automatically, including RCD protection on domestic lighting circuits (Reg 411.3.4) and
-          bidirectional device selection for installations with solar PV or battery storage (Reg
-          530.3.201).
+          directly onto an Electrical Installation Certificate. All BS 7671:2018+A4:2026
+          requirements are applied automatically, including RCD protection on domestic lighting
+          circuits (Reg 411.3.4) and bidirectional device selection for installations with solar PV
+          or battery storage (Reg 530.3.201).
         </div>
       </section>
 
@@ -400,15 +400,16 @@ export default function AICircuitDesignerPage() {
             </p>
             <p>
               The designer also applies the RCD protection requirements of BS 7671. Under Regulation
-              411.3.3 (revised in A4:2026), additional protection by an RCD with a rated residual
-              operating current not exceeding 30 mA is required for socket outlets with a rated
-              current not exceeding 32A. For mobile equipment with a rated current not exceeding 32A
-              for use outdoors, RCD protection is similarly required (Regulation 411.3.3 and OSG
-              Regulation 830.3.201). In non-dwelling premises the requirement may be omitted where a
-              documented risk assessment determines RCD protection is not necessary; in dwellings,
-              no such exception applies. The designer specifies RCBO protection (combined MCB and
-              RCD in a single device) where individual circuit RCD protection is needed, or
-              recommends a split-load consumer unit configuration with appropriate RCD coverage.
+              411.3.3 (revised in 2018, redrafted at A2:2022), additional protection by an RCD with
+              a rated residual operating current not exceeding 30 mA is required for socket outlets
+              with a rated current not exceeding 32A. For mobile equipment with a rated current not
+              exceeding 32A for use outdoors, RCD protection is similarly required (Regulation
+              411.3.3 and OSG Regulation 830.3.201). In non-dwelling premises the requirement may be
+              omitted where a documented risk assessment determines RCD protection is not necessary;
+              in dwellings, no such exception applies. The designer specifies RCBO protection
+              (combined MCB and RCD in a single device) where individual circuit RCD protection is
+              needed, or recommends a split-load consumer unit configuration with appropriate RCD
+              coverage.
             </p>
             <p>
               For installations with battery storage systems, solar PV, or EV chargers with DC fault
@@ -455,28 +456,28 @@ export default function AICircuitDesignerPage() {
             <p>
               The AI Circuit Designer is tailored and trained specifically for UK electrical work.
               Its knowledge base covers the complete scope of BS 7671:2018+A4:2026 (the 18th Edition
-              of the IET Wiring Regulations including Amendment 4, issued July 2024), the IET
+              of the IET Wiring Regulations including Amendment 4, issued 15 April 2026), the IET
               On-Site Guide, all eight IET Guidance Notes, and a curated library of real-world
               installation case studies and worked examples.
             </p>
             <p>
-              Amendment 4:2026 (A4:2026) is particularly relevant for the Circuit Designer because
-              it introduces several new requirements. Regulation 530.3.201 requires that the
-              selection and erection of protective devices shall take account of whether a device is
+              The current edition, BS 7671:2018+A4:2026, carries several requirements that matter
+              for the Circuit Designer. Regulation 530.3.201 requires that the selection and
+              erection of protective devices shall take account of whether a device is
               unidirectional or bidirectional — critical for installations with battery energy
-              storage, solar PV arrays, and other sources of reverse power flow. Regulation 411.3.4
-              introduces a mandatory requirement for RCD protection (rated residual operating
-              current not exceeding 30 mA) on all domestic lighting circuits. Regulation 411.3.3 has
-              been revised to apply to all socket outlets rated not exceeding 32A, with the
-              exception to omit RCD protection limited to non-dwelling premises where a documented
-              risk assessment supports it. The Circuit Designer automatically applies all of these
-              requirements.
+              storage, solar PV arrays, and other sources of reverse power flow. Regulation 411.3.4,
+              in force since BS 7671:2018, sets a mandatory requirement for RCD protection (rated
+              residual operating current not exceeding 30 mA) on all domestic lighting circuits.
+              Regulation 411.3.3 has applied since 2018 to all socket outlets rated not exceeding
+              32A, with the exception to omit RCD protection limited to non-dwelling premises where
+              a documented risk assessment supports it. The Circuit Designer automatically applies
+              all of these requirements.
             </p>
           </div>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
               'BS 7671:2018+A4:2026 (18th Edition)',
-              'Amendment 4:2026 — Regs 411.3.3, 411.3.4, 530.3.201',
+              'BS 7671:2018+A4:2026 Regs 411.3.3, 411.3.4, 530.3.201',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',

@@ -271,11 +271,24 @@ export function useAuditPack() {
           .eq('id', userId)
           .maybeSingle();
         collegeId = await getMyCollegeId(userId);
-        if (profile) {
+        // The pack names the officer by their job at the college (e.g.
+        // "Quality manager"), not the app account type on profiles.role.
+        const { data: staffRow } = collegeId
+          ? await supabase
+              .from('college_staff')
+              .select('name, role')
+              .eq('college_id', collegeId)
+              .eq('user_id', userId)
+              .is('archived_at', null)
+              .maybeSingle()
+          : { data: null };
+        if (profile || staffRow) {
           officer = {
             user_id: userId,
-            name: (profile.full_name as string | null) ?? 'Unknown',
-            role: (profile.role as string | null) ?? '',
+            name:
+              ((profile?.full_name as string | null) ?? (staffRow?.name as string | null)) ||
+              'Unknown',
+            role: (staffRow?.role as string | null) ?? '',
             // profiles has no email column (selecting it 400'd and dropped the
             // officer + college scope); the auth user carries it.
             email: userRes.user?.email ?? null,

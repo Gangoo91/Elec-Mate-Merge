@@ -3,12 +3,20 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useRef } from 'react';
 import type { Json } from '@/integrations/supabase/types';
+import {
+  applySafetyScope,
+  firmWriteErrorMessage,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 export type PermitType =
   'hot-work' | 'confined-space' | 'electrical-isolation' | 'working-at-height' | 'excavation';
 export type PermitStatus = 'active' | 'expired' | 'cancelled' | 'closed';
 
-export interface PermitToWork {
+export interface PermitToWork extends FirmRecordFields {
   id: string;
   user_id: string;
   type: PermitType;
@@ -98,6 +106,8 @@ export type CreatePermitInput = Omit<
   linked_rams_title?: string | null;
   acceptance_status?: string;
   job_id?: string | null;
+  /** Firm job (employer_jobs) — shares the permit with the firm. */
+  employer_job_id?: string | null;
 };
 
 /** Fields a user may change when amending a live permit. */
@@ -121,7 +131,7 @@ export type AmendPermitFields = Partial<
     | 'linked_rams_title'
     | 'job_id'
   >
-> & { hazards?: Json };
+> & { hazards?: Json; employer_job_id?: string | null };
 
 /**
  * A permit whose end_time has passed is expired, whatever the row says.
@@ -145,19 +155,21 @@ function withDerivedStatus(row: PermitToWork): PermitToWork {
 }
 
 export function usePermits() {
+  // Personal: the user's own permits. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['permits-to-work'],
+    queryKey: ['permits-to-work', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<PermitToWork[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('permits_to_work')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('permits_to_work').select('*'),
+        scope,
+        user.id
+      ).order('created_at', { ascending: false });
 
       if (error) throw error;
       return (data as PermitToWork[]).map(withDerivedStatus);
@@ -166,8 +178,9 @@ export function usePermits() {
 }
 
 export function useActivePermits() {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['permits-to-work', 'active'],
+    queryKey: ['permits-to-work', 'active', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<PermitToWork[]> => {
       const {
         data: { user },
@@ -179,10 +192,11 @@ export function useActivePermits() {
       // figure on the Site Safety hub, so it was possible for the hub to
       // report a permit as live after it had expired. The end_time bound makes
       // the query mean what its name says.
-      const { data, error } = await supabase
-        .from('permits_to_work')
-        .select('*')
-        .eq('user_id', user.id)
+      const { data, error } = await applySafetyScope(
+        supabase.from('permits_to_work').select('*'),
+        scope,
+        user.id
+      )
         .eq('status', 'active')
         .gte('end_time', new Date().toISOString())
         .order('end_time', { ascending: true });
@@ -196,6 +210,7 @@ export function useActivePermits() {
 export function useCreatePermit() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (input: CreatePermitInput): Promise<PermitToWork> => {
@@ -206,7 +221,9 @@ export function useCreatePermit() {
 
       const { data, error } = await supabase
         .from('permits_to_work')
-        .insert({ ...input, user_id: user.id })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(stampSafetyInsert({ ...input, user_id: user.id }, scope) as never)
         .select('*')
         .single();
 
@@ -221,7 +238,11 @@ export function useCreatePermit() {
       });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -229,6 +250,7 @@ export function useCreatePermit() {
 export function useClosePermit() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async ({
@@ -257,7 +279,11 @@ export function useClosePermit() {
       toast({ title: 'Permit closed', description: 'Permit has been closed.' });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -265,6 +291,7 @@ export function useClosePermit() {
 export function useCancelPermit() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (id: string): Promise<PermitToWork> => {
@@ -283,7 +310,11 @@ export function useCancelPermit() {
       toast({ title: 'Permit cancelled', description: 'Permit has been cancelled.' });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -291,6 +322,7 @@ export function useCancelPermit() {
 export function useExtendPermit() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async ({
@@ -363,7 +395,11 @@ export function useExtendPermit() {
       });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -392,6 +428,7 @@ export function usePermitRevisions(permitId: string | null) {
 export function useAmendPermit() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async ({
@@ -443,7 +480,7 @@ export function useAmendPermit() {
           approved_at: null,
           approval_comments: null,
           approval_signature: null,
-        })
+        } as never)
         .eq('id', id)
         .select('*')
         .single();
@@ -471,7 +508,11 @@ export function useAmendPermit() {
       });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }

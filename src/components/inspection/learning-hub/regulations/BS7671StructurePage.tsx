@@ -51,7 +51,7 @@ const BS7671StructurePage = ({ onBack }: Props) => {
                 <div className="flex-1 p-4 space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-sm font-semibold text-white">{p.title}</p>
-                    <span className="text-[10px] text-white shrink-0">{p.chapters}</span>
+                    <span className="text-[12px] text-white shrink-0">{p.chapters}</span>
                   </div>
                   <p className="text-sm text-white leading-relaxed">{p.summary}</p>
                   <div className="space-y-1">

@@ -19,8 +19,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -283,262 +282,258 @@ interface ComponentBlockProps {
 const PreparationPage = () => {
   const navigate = useNavigate();
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · EPA"
-        title="Preparation guide"
-        backTo="/apprentice/toolbox/end-point-assessment"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "EPA preparation isn't a last-minute rush. The best results come from consistent prep across the final months. Component-by-component strategy, a 4-phase timeline, and the calculations and regs to know cold."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · EPA"
+      area="End-point assessment"
+      title="Preparation guide"
+      backTo="/apprentice/toolbox/end-point-assessment"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "EPA preparation isn't a last-minute rush. The best results come from consistent prep across the final months. Component-by-component strategy, a 4-phase timeline, and the calculations and regs to know cold."
+        }
+      </p>
 
-        {/* ── Applied-knowledge prep ──────────────────────────────── */}
-        <ComponentBlock
-          eyebrow="Applied-knowledge test"
-          title="Study strategy"
-          meta="~1 hour · online multiple choice · ~30 questions"
-          icon={BookOpen}
-          tips={knowledgeTips}
-          extra={
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
-              <Eyebrow className="text-elec-yellow/85">Key areas to revise</Eyebrow>
-              <ul className="space-y-1.5">
-                {knowledgeAreas.map((area) => (
-                  <li
-                    key={area}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{area}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          }
-        />
-
-        {/* ── Practical sections prep ─────────────────────────────── */}
-        <ComponentBlock
-          eyebrow="Practical sections"
-          title="Practice strategy"
-          meta="~15 hours · observed at a NET assessment centre"
-          icon={Wrench}
-          tips={practicalTips}
-          extra={
-            <>
-              <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
-                <Eyebrow className="text-elec-yellow/85">Instrument checklist</Eyebrow>
-                <p className="text-[12.5px] text-white leading-relaxed">
-                  Make sure you're proficient with all of these:
-                </p>
-                <ul className="space-y-1.5">
-                  {instruments.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                  <p className="text-[12.5px] text-white leading-relaxed">
-                    <span className="font-semibold text-red-300">Calibration:</span> All test
-                    instruments must be in calibration (within the last 12 months). Check the
-                    calibration sticker before the day. Out-of-cal = invalid results.
-                  </p>
-                </div>
-              </div>
-            </>
-          }
-        />
-
-        {/* ── Portfolio & Gateway prep ────────────────────────────── */}
-        <ComponentBlock
-          eyebrow="Portfolio & Gateway"
-          title="Portfolio & evidence strategy"
-          meta="Built across your apprenticeship · confirmed at Gateway"
-          icon={MessageSquare}
-          tips={discussionTips}
-          extra={
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
-              <Eyebrow className="text-elec-yellow/85">Talking through your work — STAR</Eyebrow>
-              {starExample.map((s) => (
-                <div key={s.label} className="space-y-0.5">
-                  <span className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow/85">
-                    {s.label}
-                  </span>
-                  <p className="text-[12.5px] text-white leading-relaxed">{s.text}</p>
-                </div>
-              ))}
-            </div>
-          }
-        />
-
-        {/* ── Timeline ────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Preparation timeline"
-            title="Four phases over the final 6 months"
-            meta="Each phase has its own focus and intensity"
-          />
-          <ul className="space-y-2">
-            {timeline.map((phase) => (
-              <li
-                key={phase.period}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2.5',
-                  CARD_SURFACE
-                )}
-              >
-                <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-                  {phase.period}
-                </span>
-                <ul className="space-y-1.5">
-                  {phase.tasks.map((task) => (
-                    <li
-                      key={task}
-                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      <span>{task}</span>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── Calculations ───────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Key calculations"
-            title="Six formulas to know cold"
-            meta="Frequently appear in the knowledge test and practical"
-          />
-          <ul className="space-y-2">
-            {calculations.map((calc) => (
-              <li
-                key={calc.title}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <Calculator className="h-3.5 w-3.5 text-elec-yellow/85" />
-                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                    {calc.title}
-                  </h3>
-                </div>
-                <p className="text-[12.5px] font-mono text-elec-yellow">{calc.formula}</p>
-                <p className="text-[12.5px] text-white leading-relaxed">{calc.explanation}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── BS 7671 regulation hot list ─────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="BS 7671 regulations"
-            title={`${regs.length} to know where to find quickly`}
-            meta="Bookmark these pages in your Regs book (BS 7671:2018+A4:2026)"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-2">
-              {regs.map((item) => (
-                <li key={item.reg} className="flex items-start gap-3">
-                  <span className="text-[12px] font-mono font-semibold text-elec-yellow tabular-nums min-w-[60px] flex-shrink-0">
-                    {item.reg}
-                  </span>
-                  <span className="text-[12.5px] text-white leading-relaxed">{item.topic}</span>
+      {/* ── Applied-knowledge prep ──────────────────────────────── */}
+      <ComponentBlock
+        eyebrow="Applied-knowledge test"
+        title="Study strategy"
+        meta="~1 hour · online multiple choice · ~30 questions"
+        icon={BookOpen}
+        tips={knowledgeTips}
+        extra={
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 space-y-2">
+            <Eyebrow className="text-elec-yellow">Key areas to revise</Eyebrow>
+            <ul className="space-y-1.5">
+              {knowledgeAreas.map((area) => (
+                <li
+                  key={area}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{area}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </motion.section>
+        }
+      />
 
-        {/* ── Mental prep ─────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Mental preparation"
-            title="EPA is a mental challenge too"
-            meta="Six habits to manage nerves and maintain confidence"
-          />
+      {/* ── Practical sections prep ─────────────────────────────── */}
+      <ComponentBlock
+        eyebrow="Practical sections"
+        title="Practice strategy"
+        meta="~15 hours · observed at a NET assessment centre"
+        icon={Wrench}
+        tips={practicalTips}
+        extra={
+          <>
+            <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 space-y-2">
+              <Eyebrow className="text-elec-yellow">Instrument checklist</Eyebrow>
+              <p className="text-[14px] text-white leading-relaxed">
+                Make sure you're proficient with all of these:
+              </p>
+              <ul className="space-y-1.5">
+                {instruments.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                <p className="text-[14px] text-white leading-relaxed">
+                  <span className="font-semibold text-red-300">Calibration:</span> All test
+                  instruments must be in calibration (within the last 12 months). Check the
+                  calibration sticker before the day. Out-of-cal = invalid results.
+                </p>
+              </div>
+            </div>
+          </>
+        }
+      />
+
+      {/* ── Portfolio & Gateway prep ────────────────────────────── */}
+      <ComponentBlock
+        eyebrow="Portfolio & Gateway"
+        title="Portfolio & evidence strategy"
+        meta="Built across your apprenticeship · confirmed at Gateway"
+        icon={MessageSquare}
+        tips={discussionTips}
+        extra={
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 space-y-2">
+            <Eyebrow className="text-elec-yellow">Talking through your work — STAR</Eyebrow>
+            {starExample.map((s) => (
+              <div key={s.label} className="space-y-0.5">
+                <span className="text-[13px] font-semibold text-elec-yellow">{s.label}</span>
+                <p className="text-[14px] text-white leading-relaxed">{s.text}</p>
+              </div>
+            ))}
+          </div>
+        }
+      />
+
+      {/* ── Timeline ────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Preparation timeline"
+          title="Four phases over the final 6 months"
+          meta="Each phase has its own focus and intensity"
+        />
+        <ul className="space-y-2">
+          {timeline.map((phase) => (
+            <li
+              key={phase.period}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2.5',
+                CARD_SURFACE
+              )}
+            >
+              <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.05] text-[13px] font-semibold text-elec-yellow">
+                {phase.period}
+              </span>
+              <ul className="space-y-1.5">
+                {phase.tasks.map((task) => (
+                  <li
+                    key={task}
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                    <span>{task}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Calculations ───────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Key calculations"
+          title="Six formulas to know cold"
+          meta="Frequently appear in the knowledge test and practical"
+        />
+        <ul className="space-y-2">
+          {calculations.map((calc) => (
+            <li
+              key={calc.title}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-center gap-2">
+                <Calculator className="h-3.5 w-3.5 text-elec-yellow" />
+                <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                  {calc.title}
+                </h3>
+              </div>
+              <p className="text-[12.5px] text-elec-yellow">{calc.formula}</p>
+              <p className="text-[14px] text-white leading-relaxed">{calc.explanation}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── BS 7671 regulation hot list ─────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="BS 7671 regulations"
+          title={`${regs.length} to know where to find quickly`}
+          meta="Bookmark these pages in your Regs book (BS 7671:2018+A4:2026)"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
           <ul className="space-y-2">
-            {mentalPrep.map((item) => (
-              <li
-                key={item.title}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
+            {regs.map((item) => (
+              <li key={item.reg} className="flex items-start gap-3">
+                <span className="text-[12px] font-semibold text-elec-yellow tabular-nums min-w-[60px] flex-shrink-0">
+                  {item.reg}
+                </span>
+                <span className="text-[14px] text-white leading-relaxed">{item.topic}</span>
               </li>
             ))}
           </ul>
-        </motion.section>
+        </div>
+      </motion.section>
 
-        {/* ── Resources ───────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Recommended resources"
-            title="Nine references worth having"
-            meta="Build your own EPA library"
-          />
-          <ul className="space-y-2">
-            {resources.map((resource) => (
-              <li
-                key={resource.title}
-                role={resource.to ? 'link' : undefined}
-                tabIndex={resource.to ? 0 : undefined}
-                onClick={resource.to ? () => navigate(resource.to!) : undefined}
-                onKeyDown={
-                  resource.to
-                    ? (e) => (e.key === 'Enter' || e.key === ' ') && navigate(resource.to!)
-                    : undefined
-                }
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
-                  resource.to && 'cursor-pointer touch-manipulation hover:border-elec-yellow',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-start gap-2.5">
-                  <Library className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <div className="space-y-0.5">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {resource.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{resource.description}</p>
-                  </div>
+      {/* ── Mental prep ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Mental preparation"
+          title="EPA is a mental challenge too"
+          meta="Six habits to manage nerves and maintain confidence"
+        />
+        <ul className="space-y-2">
+          {mentalPrep.map((item) => (
+            <li
+              key={item.title}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
                 </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        <span className="hidden">
-          <Compass />
-        </span>
-      </HubBody>
-    </HubPage>
+      {/* ── Resources ───────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Recommended resources"
+          title="Nine references worth having"
+          meta="Build your own EPA library"
+        />
+        <ul className="space-y-2">
+          {resources.map((resource) => (
+            <li
+              key={resource.title}
+              role={resource.to ? 'link' : undefined}
+              tabIndex={resource.to ? 0 : undefined}
+              onClick={resource.to ? () => navigate(resource.to!) : undefined}
+              onKeyDown={
+                resource.to
+                  ? (e) => (e.key === 'Enter' || e.key === ' ') && navigate(resource.to!)
+                  : undefined
+              }
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5',
+                resource.to && 'cursor-pointer touch-manipulation hover:border-elec-yellow',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-start gap-2.5">
+                <Library className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {resource.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{resource.description}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      <span className="hidden">
+        <Compass />
+      </span>
+    </GuidePage>
   );
 };
 
@@ -552,24 +547,21 @@ function ComponentBlock({ eyebrow, title, meta, icon: Icon, tips, extra }: Compo
         title={title}
         meta={meta}
         action={
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.05]">
             <Icon className="h-4 w-4 text-elec-yellow" />
           </span>
         }
       />
       <div
-        className={cn(
-          'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
-          CARD_SURFACE
-        )}
+        className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4', CARD_SURFACE)}
       >
         <ol className="space-y-2">
           {tips.map((tip, i) => (
             <li key={i} className="flex items-start gap-3">
-              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-white/[0.05] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12.5px] font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                 {i + 1}
               </span>
-              <span className="text-[12.5px] text-white leading-relaxed">{tip}</span>
+              <span className="text-[14px] text-white leading-relaxed">{tip}</span>
             </li>
           ))}
         </ol>

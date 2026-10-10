@@ -1,0 +1,5 @@
+Job Number,Customer,Site Address,Invoice Number,Invoice Type,Delivery and Payment Status,Total (Including Tax),Invoice Date,Due Date
+2051,Pennine Property Care,"Flat 3, Mill House, Sowerby Bridge HX6 2AF",10431,Final,Paid,540.00,04/08/2026,18/08/2026
+2052,Helen Marsh,"12 Moorland View, Halifax HX2 9RT",10432,Final,Sent - Unpaid,1260.00,19/08/2026,02/09/2026
+2053,Calder Valley Dental,"5 Hebble Row, Hebden Bridge HX7 8AD",10433,Progress claim,Sent - Part paid,2400.00,01/09/2026,15/09/2026
+2054,Pennine Property Care,"Unit 2, Wharf Street, Sowerby Bridge HX6 2AF",10434,Final,Draft,310.00,06/10/2026,20/10/2026

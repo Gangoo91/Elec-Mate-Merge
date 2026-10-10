@@ -71,6 +71,11 @@ const BMSModule2Section6 = lazy(() =>
     trackImport('BMSModule2Section6', () => import('@/pages/upskilling/BMSModule2Section6'))
   )
 );
+const BMSModule2Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport('BMSModule2Section7', () => import('@/pages/upskilling/BMSModule2Section7'))
+  )
+);
 const BMSModule3 = lazy(() =>
   withTimeout(() => trackImport('BMSModule3', () => import('@/pages/upskilling/BMSModule3')))
 );
@@ -231,6 +236,11 @@ const BMSModule7Section6 = lazy(() =>
     trackImport('BMSModule7Section6', () => import('@/pages/upskilling/BMSModule7Section6'))
   )
 );
+const BMSModule7Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport('BMSModule7Section7', () => import('@/pages/upskilling/BMSModule7Section7'))
+  )
+);
 const BMSMockExam = lazy(() =>
   withTimeout(() => trackImport('BMSMockExam', () => import('@/pages/upskilling/BMSMockExam')))
 );
@@ -253,6 +263,7 @@ export const bmsRoutes = (
     <Route path="bms-module-2-section-4" element={<BMSModule2Section4 />} />
     <Route path="bms-module-2-section-5" element={<BMSModule2Section5 />} />
     <Route path="bms-module-2-section-6" element={<BMSModule2Section6 />} />
+    <Route path="bms-module-2-section-7" element={<BMSModule2Section7 />} />
     <Route path="bms-module-3" element={<BMSModule3 />} />
     <Route path="bms-module-3-section-1" element={<BMSModule3Section1 />} />
     <Route path="bms-module-3-section-2" element={<BMSModule3Section2 />} />
@@ -287,5 +298,6 @@ export const bmsRoutes = (
     <Route path="bms-module-7-section-4" element={<BMSModule7Section4 />} />
     <Route path="bms-module-7-section-5" element={<BMSModule7Section5 />} />
     <Route path="bms-module-7-section-6" element={<BMSModule7Section6 />} />
+    <Route path="bms-module-7-section-7" element={<BMSModule7Section7 />} />
   </>
 );

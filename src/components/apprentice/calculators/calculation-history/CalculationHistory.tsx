@@ -104,7 +104,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   if (history.length === 0) {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           History
         </span>
         <p className="text-[14px] text-white leading-relaxed mt-2">
@@ -117,7 +117,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Calculation history
         </span>
         <div className="flex gap-2">
@@ -145,7 +145,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
       <div className="space-y-4">
         {bookmarkedHistory.length > 0 && (
           <div className="space-y-2">
-            <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <div className="flex items-center gap-1.5 text-[12px] font-medium text-white">
               <Star className="h-3 w-3" />
               <span>Bookmarked</span>
             </div>
@@ -162,7 +162,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
         )}
 
         <div className="space-y-2">
-          <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <div className="flex items-center gap-1.5 text-[12px] font-medium text-white">
             <Clock className="h-3 w-3" />
             <span>Recent</span>
           </div>
@@ -191,10 +191,10 @@ const HistoryEntry: React.FC<{
     <div className="flex items-center justify-between gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+          <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
             {entry.isValid ? 'Valid' : 'Invalid'}
           </span>
-          <span className="text-[11px] text-white font-mono">
+          <span className="text-[12px] text-white font-mono">
             {format(entry.timestamp, 'MMM dd, HH:mm')}
           </span>
         </div>

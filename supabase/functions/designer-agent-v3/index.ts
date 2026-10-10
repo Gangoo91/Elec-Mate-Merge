@@ -22,6 +22,19 @@ serve(async (req) => {
       return new Response(null, { headers: corsHeaders });
     }
 
+    // Internal only. Every caller (circuit-designer, process-circuit-design-
+    // parallel, agent-router) invokes this with the service-role key, and
+    // verify_jwt is off — without this check anyone could run unlimited AI
+    // designs on our account, or write a design over any job id they knew.
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const bearer = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');
+    if (!serviceKey || bearer !== serviceKey) {
+      return new Response(JSON.stringify({ error: 'Not authorised' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     requestId = crypto.randomUUID();
     const logger = createLogger(requestId);
     const startTime = Date.now();

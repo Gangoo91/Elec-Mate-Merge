@@ -7,6 +7,7 @@
  * recalculates money, it only lays the figures out so the owner can check them.
  */
 import { useEffect, useState, type ReactNode } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { Loader2, Pencil, Printer, FileText, Undo2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import FormSheet from '@/components/forms/FormSheet';
@@ -135,6 +136,7 @@ export function SubcontractorDetailSheet({
   onEdit,
   onIssue,
   onOpenStatement,
+  onChecks,
 }: {
   sub: SubcontractorRow | null;
   run: SubcontractorRun | undefined;
@@ -142,6 +144,8 @@ export function SubcontractorDetailSheet({
   onEdit: () => void;
   onIssue: () => void;
   onOpenStatement: (s: SubcontractorStatement) => void;
+  /** ELE-2064: open the HMRC verification and due-diligence log. */
+  onChecks?: () => void;
 }) {
   const money = run?.money_visible ?? false;
   const statements = (run?.statements ?? []).filter((s) => s.roster_id === sub?.roster_id);
@@ -266,6 +270,19 @@ export function SubcontractorDetailSheet({
                   <Row label="UTR" value={sub.terms?.utr || 'Not recorded'} />
                   {sub.terms?.cis_verification_number && (
                     <Row label="HMRC verification" value={sub.terms.cis_verification_number} />
+                  )}
+                  <Row
+                    label="Verified on"
+                    value={sub.terms?.cis_verified_on ? fmtDay(sub.terms.cis_verified_on) : 'Not recorded'}
+                  />
+                  {onChecks && (
+                    <button
+                      type="button"
+                      onClick={onChecks}
+                      className="h-11 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation hover:bg-white/[0.1]"
+                    >
+                      HMRC checks and verification
+                    </button>
                   )}
                   <Row
                     label="VAT"
@@ -691,6 +708,8 @@ export function IssueStatementSheet({
   const a = sub?.amounts;
   const go = async () => {
     if (!sub || !run || !firm) return;
+    // ELE-2061: individual subcontractors need a right-to-work check too.
+    if (!(await confirmRtw([sub.roster_id], 'pay'))) return;
     try {
       const res = await issue.mutateAsync({
         firm,
@@ -919,6 +938,7 @@ export function CisSettingsSheet({
     <FormSheet
       open={open}
       onOpenChange={(o) => !o && onClose()}
+      width="wide"
       eyebrow="CIS"
       title="Your HMRC references"
       description="Printed on every statement you give a subcontractor."
@@ -934,12 +954,14 @@ export function CisSettingsSheet({
       }
     >
       <FormCard>
-        <Field label="Employer reference" hint="On your HMRC CIS letters, e.g. 123/AB45678.">
-          <Input value={ref} onChange={(e) => setRef(e.target.value)} placeholder="123/AB45678" className={inputClass} />
-        </Field>
-        <Field label="Accounts office reference">
-          <Input value={aor} onChange={(e) => setAor(e.target.value)} placeholder="123PA00045678" className={inputClass} />
-        </Field>
+        <FormGrid cols={2}>
+          <Field label="Employer reference" hint="On your HMRC CIS letters, e.g. 123/AB45678.">
+            <Input value={ref} onChange={(e) => setRef(e.target.value)} placeholder="123/AB45678" className={inputClass} />
+          </Field>
+          <Field label="Accounts office reference" hint="On your HMRC payment letters, e.g. 123PA00045678.">
+            <Input value={aor} onChange={(e) => setAor(e.target.value)} placeholder="123PA00045678" className={inputClass} />
+          </Field>
+        </FormGrid>
       </FormCard>
     </FormSheet>
   );

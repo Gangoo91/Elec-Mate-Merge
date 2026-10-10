@@ -50,7 +50,12 @@ import {
 } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Quote } from '@/types/quote';
-import { isQuoteWon as isWon, isQuoteLost as isLost } from '@/utils/quote-status';
+import {
+  isQuoteWon as isWon,
+  isQuoteLost as isLost,
+  isQuoteExpired,
+} from '@/utils/quote-status';
+import { decidedCount, winRate as winRateOf } from '@/utils/winRate';
 import { isInvoiceOverdue } from '@/utils/invoice-status';
 import { useBusinessInsights } from '@/hooks/useBusinessInsights';
 
@@ -238,12 +243,16 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
    * funnel still shows every count; it just stops dressing them as a rate.
    * The prompt to start recording losses lives on the "Quotes out" KPI.
    */
+  // Gap §4.7: the one win rate (src/utils/winRate.ts) — an expired quote that
+  // was never answered counts as decided, same guard as the KPI strip.
   const winRate = useMemo(() => {
-    const won = inRange.q.filter(isWon).length;
-    const lost = inRange.q.filter(isLost).length;
-    const decided = won + lost;
-    if (decided < 5 || lost === 0) return null;
-    return Math.round((won / decided) * 100);
+    const counts = {
+      won: inRange.q.filter(isWon).length,
+      lost: inRange.q.filter(isLost).length,
+      expired: inRange.q.filter(isQuoteExpired).length,
+    };
+    if (decidedCount(counts) < 5 || counts.lost + counts.expired === 0) return null;
+    return winRateOf(counts);
   }, [inRange.q]);
 
   const avgQuote =

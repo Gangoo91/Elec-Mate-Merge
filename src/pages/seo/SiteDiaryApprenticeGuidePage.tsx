@@ -36,7 +36,7 @@ const tocItems = [
 const keyTakeaways = [
   'A site diary is one of the most valuable habits an apprentice can develop. It provides evidence for your portfolio, supports your EPA professional discussion, tracks your learning and professional development, and creates a searchable record of your entire apprenticeship experience.',
   'Record seven key things each day: date and location, tasks completed, skills practised, tools and materials used, regulations applied, health and safety observations, and what you learned. Detailed entries written on the same day are far more valuable than vague entries written from memory days or weeks later.',
-  'Linking diary entries to apprenticeship standard (ST0215) assessment criteria turns your daily log into structured portfolio evidence. Each entry can demonstrate knowledge, skills, or behaviours defined in the standard.',
+  'Linking diary entries to apprenticeship standard (ST0152) assessment criteria turns your daily log into structured portfolio evidence. Each entry can demonstrate knowledge, skills, or behaviours defined in the standard.',
   'Your site diary is directly relevant to the EPA professional discussion. Assessors ask about specific experiences from your apprenticeship — a well-maintained diary means you can recall details accurately and speak confidently about your work.',
   'Elec-Mate site diary includes mood tracking, skills tracking across 8 categories, AI coach insights, auto-suggest AC mapping from entries, study streak tracking, and weekly summaries. Digital, searchable, and linked directly to your portfolio.',
 ];
@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'Can my site diary be used as portfolio evidence?',
     answer:
-      "Yes, and this is one of the primary reasons to keep a site diary. Each diary entry can serve as portfolio evidence when it is linked to the apprenticeship standard (ST0215) assessment criteria. A well-written diary entry that describes the work you carried out, the skills you applied, the regulations you followed, and the reflection on what you learned can map to multiple knowledge, skills, and behaviour criteria. Elec-Mate's auto-suggest AC mapping analyses your diary entries and suggests which assessment criteria each entry covers, making it easy to build your portfolio progressively as part of your daily routine. Instead of scrambling to create portfolio evidence before the EPA gateway, you build it naturally through consistent diary keeping. Your assessor during the professional discussion can also reference diary entries as evidence of your professional development over time.",
+      "Yes, and this is one of the primary reasons to keep a site diary. Each diary entry can serve as portfolio evidence when it is linked to the apprenticeship standard (ST0152) assessment criteria. A well-written diary entry that describes the work you carried out, the skills you applied, the regulations you followed, and the reflection on what you learned can map to multiple knowledge, skills, and behaviour criteria. Elec-Mate's auto-suggest AC mapping analyses your diary entries and suggests which assessment criteria each entry covers, making it easy to build your portfolio progressively as part of your daily routine. Instead of scrambling to create portfolio evidence before the EPA gateway, you build it naturally through consistent diary keeping. Your assessor during the professional discussion can also reference diary entries as evidence of your professional development over time.",
   },
   {
     question: 'What is mood tracking in a site diary and why does it matter?',
@@ -97,7 +97,7 @@ const relatedPages = [
   {
     href: '/guides/off-the-job-training-hours',
     title: 'Off-the-Job Training Hours',
-    description: 'Understanding and tracking the 20% off-the-job training requirement.',
+    description: 'Understanding and tracking the off-the-job training hours requirement.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -353,12 +353,12 @@ const sections = [
       <>
         <p>
           The real power of a site diary becomes apparent when you link your entries to the
-          apprenticeship standard assessment criteria (ST0215). This transforms your daily log from
+          apprenticeship standard assessment criteria (ST0152). This transforms your daily log from
           a personal record into structured portfolio evidence that demonstrates coverage of the
           standard.
         </p>
         <p>
-          The ST0215 standard defines knowledge criteria (what you need to know), skills criteria
+          The ST0152 standard defines knowledge criteria (what you need to know), skills criteria
           (what you need to be able to do), and behaviour criteria (how you need to conduct
           yourself). Each diary entry can potentially map to multiple criteria across all three
           categories.
@@ -371,7 +371,7 @@ const sections = [
           four or more criteria simultaneously.
         </p>
         <p>
-          <strong>Manual mapping is tedious:</strong> Manually reviewing the ST0215 criteria
+          <strong>Manual mapping is tedious:</strong> Manually reviewing the ST0152 criteria
           document and tagging each diary entry would be time-consuming and require detailed
           knowledge of the standard structure. Most apprentices do not do it — which means their
           diary entries remain personal notes rather than portfolio evidence.
@@ -386,7 +386,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-Map Diary Entries to Assessment Criteria"
-          description="Elec-Mate AI analyses your site diary entries and suggests which ST0215 assessment criteria they cover."
+          description="Elec-Mate AI analyses your site diary entries and suggests which ST0152 assessment criteria they cover."
           icon={Sparkles}
         />
       </>
@@ -522,7 +522,7 @@ const sections = [
           <strong>Auto-suggest AC mapping:</strong> The AI suggests which apprenticeship standard
           assessment criteria each diary entry covers. Accept or modify the suggestions, and your
           criteria coverage is tracked automatically. A visual dashboard shows your coverage across
-          the full ST0215 standard.
+          the full ST0152 standard.
         </p>
         <p>
           <strong>Study streak tracking:</strong> Maintain a daily diary streak to build the habit.
@@ -561,7 +561,7 @@ export default function SiteDiaryApprenticeGuidePage() {
       title="How to Keep a Site Diary as an Apprentice"
       description="Complete guide to keeping an effective site diary as an electrical apprentice. What to record, tips for detailed entries, linking to assessment criteria."
       datePublished="2025-11-01"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

@@ -141,7 +141,7 @@ export function SwipeableCard({
               }}
             >
               {action.icon}
-              <span className="text-[10px] mt-0.5 font-medium">{action.label}</span>
+              <span className="text-[12px] mt-0.5 font-medium">{action.label}</span>
             </button>
           ))}
         </div>
@@ -164,7 +164,7 @@ export function SwipeableCard({
               }}
             >
               {action.icon}
-              <span className="text-[10px] mt-0.5 font-medium">{action.label}</span>
+              <span className="text-[12px] mt-0.5 font-medium">{action.label}</span>
             </button>
           ))}
         </div>

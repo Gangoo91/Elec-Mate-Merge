@@ -23,6 +23,7 @@
     "check:blank-overwrite-parity": "node scripts/check-blank-overwrite-parity.mjs",
     "check:part-p": "node scripts/check-part-p.mjs",
     "check:hook-duplicates": "node scripts/check-hook-duplicates.mjs",
+    "check:card-styling": "node scripts/check-card-styling.mjs",
     "check:sync-queue-identity": "node scripts/check-sync-queue-identity.mjs",
     "check:team-linking": "node scripts/check-team-linking.mjs",
     "check:report-sync-guards": "node scripts/check-report-sync-guards.mjs",

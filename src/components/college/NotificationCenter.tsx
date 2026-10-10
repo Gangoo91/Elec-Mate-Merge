@@ -1,355 +1,296 @@
-import { useMemo, useState } from 'react';
-import { Bell } from 'lucide-react';
+import { useState } from 'react';
+import { Bell, ChevronRight, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
-import { INBOX_KIND_LABEL, useUnifiedInbox, type InboxKind } from '@/hooks/useUnifiedInbox';
-import { useMarkingQueue } from '@/hooks/useMarkingQueue';
+import { useToast } from '@/hooks/use-toast';
+import { INBOX_KIND_LABEL, useUnifiedInbox, type InboxItem } from '@/hooks/useUnifiedInbox';
 
 /* ==========================================================================
-   NotificationCenter — header bell for the College Hub. Surfaces real
-   signals from the unified inbox + marking copilot in one popover. Click
-   any row to deep-link straight to the source surface.
+   NotificationCenter — the Alerts button in the College Hub masthead.
 
-   Was previously wired to mock useCollege() data — replaced with live
-   hooks so the bell actually reflects what needs the tutor's attention.
+   8 Oct 2026: a short preview of the college inbox, in the inbox's own row
+   (initials, kind, how long it has waited, orange when too long) and order
+   (waiting too long first), so the bell, Today, the home page and the inbox
+   speak one language and count the same rows.
 
-   ELE-941 / [M5].
+   What went: the All / Inbox / Marking tabs and the per-kind coloured dots,
+   and a second copy of quiz attempts still being scored. useUnifiedInbox
+   already carries those (ELE-1895), so they were counted twice here.
+   The badge is how many the tutor has not seen yet.
    ========================================================================== */
 
 interface NotificationCenterProps {
-  /** Unused now (was for legacy section navigation). Left in place so the
-      existing CollegeDashboard wiring keeps compiling. */
+  /** Unused (was for legacy section navigation). Kept so CollegeDashboard compiles. */
   onNavigate?: (section: string) => void;
 }
 
-type NotifTab = 'all' | 'inbox' | 'marking';
+const SHOWN = 8;
 
-interface NotifItem {
-  key: string;
-  source: 'inbox' | 'marking';
-  inboxKind?: InboxKind;
-  title: string;
-  description: string;
-  href: string;
-  timestamp: string;
-  toneClass: string;
-  pillLabel: string;
-  pillClass: string;
-}
-
-const KIND_LABEL = INBOX_KIND_LABEL;
-
-const KIND_PILL_CLASS: Record<InboxKind, string> = {
-  hours: 'border-white/[0.18] text-white',
-  app_learning: 'border-white/[0.18] text-white',
-  evidence: 'border-white/[0.18] text-white',
-  comment: 'border-white/[0.18] text-white',
-  message: 'border-white/[0.18] text-white',
-  iqa: 'border-white/[0.18] text-white',
-  review: 'border-white/[0.18] text-white',
-  checkin: 'border-white/[0.18] text-white',
-  marking: 'border-white/[0.18] text-white',
+const waitingText = (i: InboxItem) => {
+  if (i.kind === 'review') return i.waitingDays > 0 ? `${i.waitingDays} days overdue` : 'Coming up';
+  if (i.kind === 'checkin') return 'Flagged today';
+  return i.waitingDays <= 0
+    ? 'Today'
+    : i.waitingDays === 1
+      ? 'Waiting since yesterday'
+      : `Waiting ${i.waitingDays} days`;
 };
 
-const KIND_DOT: Record<InboxKind, string> = {
-  hours: 'bg-emerald-400',
-  app_learning: 'bg-emerald-400',
-  evidence: 'bg-amber-400',
-  comment: 'bg-amber-400',
-  message: 'bg-blue-400',
-  iqa: 'bg-purple-400',
-  review: 'bg-white',
-  checkin: 'bg-orange-500',
-  marking: 'bg-white',
+const initialsOf = (i: InboxItem) => {
+  if (i.kind === 'marking') return 'Q';
+  if (i.kind === 'iqa') return 'IQ';
+  return (
+    (i.learner ?? i.title)
+      .replace(/\(.*?\)/g, '')
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0]?.toUpperCase())
+      .join('') || '?'
+  );
 };
 
 export function NotificationCenter(_props: NotificationCenterProps) {
   const navigate = useNavigate();
-  const {
-    items: inbox,
-    stats: inboxStats,
-    loading: inboxLoading,
-    error: inboxError,
-    markAllAsRead,
-  } = useUnifiedInbox();
-  const { items: marking, stats: markingStats } = useMarkingQueue();
+  const { toast } = useToast();
+  const { items, stats, loading, error, refresh, markSeen, markAllAsRead } = useUnifiedInbox();
   const [open, setOpen] = useState(false);
-  const [tab, setTab] = useState<NotifTab>('all');
-  const [markingAll, setMarkingAll] = useState(false);
+  const [marking, setMarking] = useState(false);
+  const isPhone = useMediaQuery('(max-width: 639px)');
 
-  const handleMarkAllRead = async () => {
-    setMarkingAll(true);
-    try {
-      await markAllAsRead();
-    } catch (_e) {
-      // surface via toast if available; silent here to keep bell snappy
-    } finally {
-      setMarkingAll(false);
-    }
-  };
+  const unread = stats.unread;
+  const shown = items.slice(0, SHOWN);
 
-  const all: NotifItem[] = useMemo(() => {
-    const out: NotifItem[] = [];
-
-    for (const i of inbox) {
-      out.push({
-        key: i.key,
-        source: 'inbox',
-        inboxKind: i.kind,
-        title: i.learner ? `${i.learner} · ${i.title}` : i.title,
-        description: i.body,
-        href: i.href,
-        timestamp: i.occurred_at,
-        toneClass: KIND_DOT[i.kind],
-        pillLabel: KIND_LABEL[i.kind],
-        pillClass: KIND_PILL_CLASS[i.kind],
-      });
-    }
-
-    for (const m of marking) {
-      // Attempts ready to sign off come through the inbox; only those still
-      // being AI-graded are extra here.
-      if (m.status !== 'awaiting_ai') continue;
-      const action = 'Marking written answers';
-      out.push({
-        key: `marking:${m.attempt_id}`,
-        source: 'marking',
-        title: `${m.student_name} — ${m.quiz_title}`,
-        description: action,
-        href: '/college/marking',
-        timestamp: m.submitted_at ?? new Date().toISOString(),
-        toneClass: 'bg-amber-400',
-        pillLabel: 'Marking',
-        pillClass: 'bg-amber-500/[0.10] text-amber-200 border-amber-500/30',
-      });
-    }
-
-    out.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    return out;
-  }, [inbox, marking]);
-
-  const filtered = useMemo(() => {
-    if (tab === 'all') return all;
-    if (tab === 'inbox') return all.filter((n) => n.source === 'inbox');
-    return all.filter((n) => n.source === 'marking');
-  }, [all, tab]);
-
-  // The inbox now carries quiz marking waiting for sign-off; only attempts
-  // still being AI-graded are extra here.
-  const aiPending = marking.filter((m) => m.status === 'awaiting_ai').length;
-  const totalUnread = inboxStats.unread + aiPending;
-  const inboxCount = inboxStats.unread;
-  const markingCount = markingStats.total_pending;
-
-  const handleClick = (n: NotifItem) => {
+  const go = (to: string) => {
     setOpen(false);
-    navigate(n.href);
+    navigate(to);
   };
+
+  const openItem = (i: InboxItem) => {
+    if (i.unread && i.kind !== 'marking') void markSeen([i.key]).catch(() => undefined);
+    go(i.href);
+  };
+
+  const markAll = async () => {
+    setMarking(true);
+    try {
+      const n = await markAllAsRead();
+      toast({ title: n ? `${n} marked as seen` : 'Nothing new to mark' });
+    } catch (e) {
+      toast({ title: 'Not marked', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setMarking(false);
+    }
+  };
+
+  const trigger = (
+    <button
+      type="button"
+      onClick={isPhone ? () => setOpen(true) : undefined}
+      aria-label={unread > 0 ? `Alerts, ${unread} not seen yet` : 'Alerts'}
+      className={cn(
+        'relative inline-flex h-11 items-center gap-1.5 whitespace-nowrap px-2 text-[12.5px] font-medium transition-colors touch-manipulation max-sm:w-11 max-sm:justify-center',
+        open ? 'text-elec-yellow' : 'text-white hover:text-elec-yellow'
+      )}
+    >
+      {/* Phone: a bell with its count on it, so the masthead's Act button stays on screen. */}
+      <Bell className="h-[18px] w-[18px] sm:hidden" aria-hidden />
+      <span className="sr-only sm:not-sr-only">Alerts</span>
+      {unread > 0 && (
+        <span className="inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-elec-yellow px-1 text-[12px] font-semibold tabular-nums text-black max-sm:absolute max-sm:right-0 max-sm:top-0.5 max-sm:h-[18px] max-sm:min-w-[18px] max-sm:text-[12px] max-sm:leading-none">
+          {unread > 9 ? '9+' : unread}
+        </span>
+      )}
+    </button>
+  );
+
+  const heading =
+    loading && items.length === 0
+      ? 'Checking…'
+      : stats.total === 0
+        ? 'Nothing needs you'
+        : `${stats.total} ${stats.total === 1 ? 'thing needs' : 'things need'} you`;
+  const summary =
+    stats.total > 0
+      ? [
+          stats.urgent ? `${stats.urgent} waiting too long` : 'nothing overdue',
+          unread ? `${unread} not seen yet` : null,
+        ]
+          .filter(Boolean)
+          .join(' · ')
+      : null;
+
+  const header = (
+    <div className="flex items-start justify-between gap-3 border-b border-white/[0.06] py-3 pl-5 pr-2">
+      <div className="min-w-0 pt-1">
+        <p className="text-[17px] font-semibold leading-tight text-white">{heading}</p>
+        {summary && <p className="mt-1 text-[13px] leading-snug text-white">{summary}</p>}
+      </div>
+      <button
+        type="button"
+        onClick={() => setOpen(false)}
+        aria-label="Close"
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+      >
+        <X className="h-5 w-5" aria-hidden />
+      </button>
+    </div>
+  );
+
+  const list = error ? (
+    <div className="px-5 py-8 text-center">
+      <p className="text-[14px] font-semibold text-white">Couldn’t load the inbox</p>
+      <p className="mt-1 break-words text-[12.5px] text-white">{error}</p>
+      <button
+        type="button"
+        onClick={() => void refresh()}
+        className="mt-2 h-11 px-3 text-[13.5px] font-semibold text-elec-yellow touch-manipulation"
+      >
+        Try again
+      </button>
+    </div>
+  ) : loading && items.length === 0 ? (
+    <div className="divide-y divide-white/[0.06]">
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="h-[84px] animate-pulse bg-white/[0.02]" />
+      ))}
+    </div>
+  ) : items.length === 0 ? (
+    <div className="px-5 py-10 text-center">
+      <p className="text-[15px] font-semibold text-white">You’re clear</p>
+      <p className="mt-1 text-[13px] text-white">
+        Hours, evidence, messages and reviews land here as they arrive.
+      </p>
+    </div>
+  ) : (
+    <ul className="divide-y divide-white/[0.06]">
+      {shown.map((i) => (
+        <li key={i.key}>
+          <button
+            type="button"
+            onClick={() => openItem(i)}
+            className="flex w-full items-start gap-3 px-5 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07]"
+          >
+            <span className="relative mt-0.5 shrink-0">
+              <span
+                aria-hidden
+                className={cn(
+                  'flex h-10 w-10 items-center justify-center rounded-full text-[12.5px] font-bold',
+                  'bg-white/[0.1] text-white'
+                )}
+              >
+                {initialsOf(i)}
+              </span>
+              {i.unread && (
+                <span
+                  className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-[hsl(0_0%_12%)] bg-elec-yellow"
+                  aria-label="Not seen yet"
+                />
+              )}
+            </span>
+            {/* Name gets the whole line; the kind sits with the wait below,
+                so a phone never cuts the name down to "Andrew Moore (gan…". */}
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-[15px] font-semibold leading-snug text-white">
+                {i.learner ?? i.title}
+              </span>
+              <span className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-white">
+                {i.learner ? [i.title, i.body].filter(Boolean).join(' · ') : i.body}
+              </span>
+              <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span
+                  className={cn(
+                    'text-[12.5px] font-semibold',
+                    i.urgent ? 'text-orange-300' : 'text-white'
+                  )}
+                >
+                  {waitingText(i)}
+                </span>
+                <span className="rounded-full border border-white/[0.16] px-2 py-px text-[12px] font-medium text-white">
+                  {INBOX_KIND_LABEL[i.kind]}
+                </span>
+              </span>
+            </span>
+            <span className="hidden shrink-0 self-center text-[12.5px] font-semibold text-white sm:inline">
+              {i.action}
+            </span>
+            <ChevronRight
+              className="h-4 w-4 shrink-0 self-center text-white sm:hidden"
+              aria-hidden
+            />
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+
+  const footer =
+    items.length > 0 ? (
+      <div className="flex gap-2 border-t border-white/[0.06] p-3">
+        {unread > 0 && (
+          <button
+            type="button"
+            onClick={() => void markAll()}
+            disabled={marking}
+            className="h-11 shrink-0 rounded-xl px-3.5 text-[13.5px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.04] disabled:opacity-50"
+          >
+            {marking ? 'Marking…' : 'Mark all seen'}
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => go('/college/inbox')}
+          className="inline-flex h-11 min-w-0 flex-1 items-center justify-center gap-1 rounded-xl border border-white/[0.14] text-[13.5px] font-semibold text-white touch-manipulation hover:border-elec-yellow"
+        >
+          {items.length > SHOWN ? `All ${items.length} in the inbox` : 'Open the inbox'}
+          <ChevronRight className="h-4 w-4" aria-hidden />
+        </button>
+      </div>
+    ) : null;
+
+  // Phone: a bottom sheet the full width of the screen, like the rest of the
+  // hub's sheets. A popover squeezed into 375px clipped names and left a
+  // strip of the page showing beside it.
+  if (isPhone) {
+    return (
+      <>
+        {trigger}
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetContent
+            side="bottom"
+            hideCloseButton
+            aria-describedby={undefined}
+            className="flex max-h-[88dvh] flex-col gap-0 rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_12%)] p-0 pb-[env(safe-area-inset-bottom)] text-white"
+          >
+            <SheetTitle className="sr-only">Inbox</SheetTitle>
+            <div
+              className="mx-auto mt-2.5 h-1 w-12 shrink-0 rounded-full bg-white/15"
+              aria-hidden
+            />
+            {header}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">{list}</div>
+            {footer}
+          </SheetContent>
+        </Sheet>
+      </>
+    );
+  }
 
   return (
-    <>
-      {open && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setOpen(false)} />}
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <button
-            className={cn(
-              'h-11 -my-3 px-2 text-[12.5px] font-medium transition-colors touch-manipulation whitespace-nowrap inline-flex items-center gap-1.5',
-              open ? 'text-elec-yellow' : 'text-white hover:text-white'
-            )}
-          >
-            {/* Phone: a bell, so the masthead's Act button stays on screen. */}
-            <Bell className="h-[18px] w-[18px] sm:hidden" aria-hidden />
-            <span className="sr-only sm:not-sr-only">Alerts</span>
-            {totalUnread > 0 && (
-              <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums">
-                {totalUnread > 9 ? '9+' : totalUnread}
-              </span>
-            )}
-          </button>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-[calc(100vw-1rem)] sm:w-96 p-0 z-50 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-2xl"
-          align="end"
-        >
-          <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                Notifications
-              </div>
-              <div className="mt-0.5 text-[13px] font-semibold text-white truncate">
-                {totalUnread > 0 ? `${totalUnread} need attention` : 'All caught up'}
-              </div>
-            </div>
-            <div className="flex items-center gap-3 shrink-0">
-              {inboxCount > 0 && (
-                <button
-                  onClick={handleMarkAllRead}
-                  disabled={markingAll}
-                  className="text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 disabled:opacity-40 transition-colors touch-manipulation"
-                >
-                  {markingAll ? 'Marking…' : 'Mark all read'}
-                </button>
-              )}
-              <button
-                onClick={() => setOpen(false)}
-                className="text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-
-          <Tabs value={tab} onValueChange={(v) => setTab(v as NotifTab)} className="w-full">
-            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06]">
-              <TabsTrigger
-                value="all"
-                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
-              >
-                All
-                {totalUnread > 0 && (
-                  <span className="text-[10px] tabular-nums opacity-70">{totalUnread}</span>
-                )}
-              </TabsTrigger>
-              <TabsTrigger
-                value="inbox"
-                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
-              >
-                Inbox
-                {inboxCount > 0 && (
-                  <span className="text-[10px] tabular-nums opacity-70">{inboxCount}</span>
-                )}
-              </TabsTrigger>
-              <TabsTrigger
-                value="marking"
-                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
-              >
-                Marking
-                {markingCount > 0 && (
-                  <span className="text-[10px] font-semibold text-amber-400 tabular-nums">
-                    {markingCount}
-                  </span>
-                )}
-              </TabsTrigger>
-            </TabsList>
-
-            <ScrollArea className="max-h-[420px]">
-              <TabsContent value={tab} className="m-0">
-                {inboxError ? (
-                  <div className="py-10 px-5 text-center">
-                    <div className="text-[13px] font-medium text-red-400">
-                      Could not load notifications
-                    </div>
-                    <div className="mt-1 text-[11.5px] text-white/60 break-words">{inboxError}</div>
-                  </div>
-                ) : inboxLoading && filtered.length === 0 ? (
-                  <div className="divide-y divide-white/[0.06]">
-                    {Array.from({ length: 3 }).map((_, i) => (
-                      <div key={i} className="px-5 py-3.5 animate-pulse">
-                        <div className="flex gap-3 items-start">
-                          <span className="mt-1.5 h-2 w-2 rounded-full bg-white/10 shrink-0" />
-                          <div className="min-w-0 flex-1 space-y-2">
-                            <div className="h-3 w-1/3 bg-white/10 rounded" />
-                            <div className="h-3 w-3/4 bg-white/10 rounded" />
-                            <div className="h-3 w-1/2 bg-white/10 rounded" />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : filtered.length === 0 ? (
-                  <div className="py-12 text-center">
-                    <div className="text-[13px] font-medium text-white">All caught up</div>
-                    <div className="mt-1 text-[11.5px] text-white">Nothing here right now.</div>
-                  </div>
-                ) : (
-                  <div className="divide-y divide-white/[0.06]">
-                    {filtered.slice(0, 30).map((n) => (
-                      <button
-                        key={n.key}
-                        type="button"
-                        onClick={() => handleClick(n)}
-                        className="w-full text-left px-5 py-3.5 hover:bg-white/[0.03] active:bg-white/[0.05] transition-colors touch-manipulation"
-                      >
-                        <div className="flex gap-3 items-start">
-                          <span
-                            aria-hidden
-                            className={cn('mt-1.5 h-2 w-2 rounded-full shrink-0', n.toneClass)}
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span
-                                className={cn(
-                                  'inline-flex items-center h-5 px-2 rounded-md border text-[10px] font-semibold uppercase tracking-[0.06em]',
-                                  n.pillClass
-                                )}
-                              >
-                                {n.pillLabel}
-                              </span>
-                              <span className="text-[12.5px] font-medium text-white truncate">
-                                {n.title}
-                              </span>
-                            </div>
-                            {n.description && (
-                              <div className="mt-0.5 text-[11.5px] text-white line-clamp-2 leading-snug">
-                                {n.description}
-                              </div>
-                            )}
-                            <div className="mt-1 text-[10.5px] text-white tabular-nums">
-                              {formatTime(n.timestamp)}
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </TabsContent>
-            </ScrollArea>
-          </Tabs>
-
-          {totalUnread > 0 && (
-            <div className="border-t border-white/[0.06] px-5 py-3 flex items-center gap-3">
-              <button
-                onClick={() => {
-                  setOpen(false);
-                  navigate('/college/inbox');
-                }}
-                className="flex-1 text-[12px] font-medium text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation text-center"
-              >
-                Open inbox →
-              </button>
-              {markingCount > 0 && (
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    navigate('/college/marking');
-                  }}
-                  className="flex-1 text-[12px] font-medium text-amber-300 hover:text-amber-200 transition-colors touch-manipulation text-center"
-                >
-                  Open marking →
-                </button>
-              )}
-            </div>
-          )}
-        </PopoverContent>
-      </Popover>
-    </>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>{trigger}</PopoverTrigger>
+      <PopoverContent
+        align="end"
+        sideOffset={6}
+        className="z-50 w-[440px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-0 text-white"
+      >
+        {header}
+        <div className="max-h-[min(60vh,480px)] overflow-y-auto">{list}</div>
+        {footer}
+      </PopoverContent>
+    </Popover>
   );
-}
-
-function formatTime(iso: string): string {
-  const date = new Date(iso);
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const min = Math.floor(diff / 60000);
-  const h = Math.floor(diff / 3_600_000);
-  const days = Math.floor(diff / 86_400_000);
-  if (min < 1) return 'now';
-  if (min < 60) return `${min}m`;
-  if (h < 24) return `${h}h`;
-  if (days < 7) return `${days}d`;
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }

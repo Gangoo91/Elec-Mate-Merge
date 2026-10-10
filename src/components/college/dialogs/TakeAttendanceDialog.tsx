@@ -4,10 +4,19 @@ import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { cn } from '@/lib/utils';
 import { Under18Badge } from '@/components/college/people/Under18Badge';
 import { FormSheet } from '@/components/forms/FormSheet';
-import { buttonPrimaryCn, buttonSecondaryCn, inputCn, labelCn } from '@/components/forms/fieldStyles';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { chipCn } from '@/components/college/ui/CollegeUi';
-import { REGISTER_SESSIONS, currentSession, type RegisterSession } from '@/lib/college/attendanceSession';
+import { choiceCn } from '@/components/college/teaching/TeachingKit';
+import {
+  REGISTER_SESSIONS,
+  currentSession,
+  type RegisterSession,
+} from '@/lib/college/attendanceSession';
 
 type AttendanceStatus = 'Present' | 'Absent' | 'Late' | 'Authorised';
 
@@ -36,13 +45,21 @@ const SESSION_TYPES = [
   'Self-Study',
 ] as const;
 
-const SESSION_TYPE_LABEL: Record<string, string> = { 'EPA Prep': 'EPA prep', 'Self-Study': 'Self-study' };
+const SESSION_TYPE_LABEL: Record<string, string> = {
+  'EPA Prep': 'EPA prep',
+  'Self-Study': 'Self-study',
+};
 
-const ATTENDANCE_STATUSES: { value: AttendanceStatus; label: string; short: string }[] = [
-  { value: 'Present', label: 'Present', short: 'P' },
-  { value: 'Absent', label: 'Absent', short: 'A' },
-  { value: 'Late', label: 'Late', short: 'L' },
-  { value: 'Authorised', label: 'Authorised absence', short: 'AA' },
+const ATTENDANCE_STATUSES: {
+  value: AttendanceStatus;
+  label: string;
+  short: string;
+  phone: string;
+}[] = [
+  { value: 'Present', label: 'Present', short: 'P', phone: 'Present' },
+  { value: 'Absent', label: 'Absent', short: 'A', phone: 'Absent' },
+  { value: 'Late', label: 'Late', short: 'L', phone: 'Late' },
+  { value: 'Authorised', label: 'Authorised absence', short: 'AA', phone: 'Authorised' },
 ];
 
 const STATUS_ON: Record<AttendanceStatus, string> = {
@@ -190,7 +207,9 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
         className="grid grid-cols-1 items-start gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]"
       >
         <section className="min-w-0 space-y-5">
-          <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">Session</h3>
+          <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">
+            Session
+          </h3>
           <div>
             <p className={labelCn}>Cohort</p>
             {activeCohorts.length === 0 ? (
@@ -203,7 +222,7 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                     type="button"
                     aria-pressed={selectedCohort === c.id}
                     onClick={() => setSelectedCohort(c.id)}
-                    className={cn(chipCn(selectedCohort === c.id), 'h-11')}
+                    className={cn(choiceCn(selectedCohort === c.id), 'h-11')}
                   >
                     {c.name}
                   </button>
@@ -228,7 +247,7 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                   type="button"
                   aria-pressed={daySession === s.value}
                   onClick={() => setDaySession(s.value)}
-                  className={cn(chipCn(daySession === s.value), 'h-11')}
+                  className={cn(choiceCn(daySession === s.value), 'h-11')}
                 >
                   {s.label}
                 </button>
@@ -255,7 +274,10 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                 value={sessionType}
                 onValueChange={(v) => setSessionType(v as (typeof SESSION_TYPES)[number])}
                 title="Session type"
-                options={SESSION_TYPES.map((t) => ({ value: t, label: SESSION_TYPE_LABEL[t] ?? t }))}
+                options={SESSION_TYPES.map((t) => ({
+                  value: t,
+                  label: SESSION_TYPE_LABEL[t] ?? t,
+                }))}
               />
             </div>
           </div>
@@ -271,7 +293,7 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                     type="button"
                     aria-pressed={tutorId === t.id}
                     onClick={() => setTutorId(t.id)}
-                    className={cn(chipCn(tutorId === t.id), 'h-11')}
+                    className={cn(choiceCn(tutorId === t.id), 'h-11')}
                   >
                     {t.name}
                   </button>
@@ -297,9 +319,13 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
             </h3>
             {studentAttendance.length > 0 && (
               <div className="flex items-center gap-4 text-[13px]">
-                <span className="font-semibold text-emerald-400 tabular-nums">{presentCount} present</span>
+                <span className="font-semibold text-emerald-400 tabular-nums">
+                  {presentCount} present
+                </span>
                 {absentCount > 0 && (
-                  <span className="font-semibold text-red-400 tabular-nums">{absentCount} absent</span>
+                  <span className="font-semibold text-red-400 tabular-nums">
+                    {absentCount} absent
+                  </span>
                 )}
                 <button
                   type="button"
@@ -325,21 +351,31 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
               {studentAttendance.map((sa) => {
                 const student = students.find((s) => s.id === sa.studentId);
                 return (
-                  <li key={sa.studentId} className="flex items-center gap-3 py-3">
+                  <li
+                    key={sa.studentId}
+                    className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 gap-y-2.5 py-3 sm:flex sm:gap-3"
+                  >
                     <Avatar className="h-9 w-9 shrink-0">
                       <AvatarImage src={student?.photo_url ?? undefined} />
                       <AvatarFallback className="bg-white/[0.08] text-xs font-semibold text-white">
-                        {student?.name
-                          .split(' ')
-                          .map((n: string) => n[0])
+                        {(student?.name ?? '')
+                          .replace(/\(.*?\)/g, '')
+                          .split(/\s+/)
+                          .filter(Boolean)
+                          .slice(0, 2)
+                          .map((n: string) => n[0]?.toUpperCase() ?? '')
                           .join('') || '?'}
                       </AvatarFallback>
                     </Avatar>
-                    <p className="flex min-w-0 flex-1 items-center gap-2 text-[14px] font-medium text-white">
-                      <span className="truncate">{sa.studentName}</span>
-                      <Under18Badge dob={(student as { date_of_birth?: string | null } | undefined)?.date_of_birth} />
+                    <p className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1 text-[15px] font-medium leading-snug text-white">
+                      <span className="break-words">{sa.studentName}</span>
+                      <Under18Badge
+                        dob={
+                          (student as { date_of_birth?: string | null } | undefined)?.date_of_birth
+                        }
+                      />
                     </p>
-                    <div className="flex shrink-0 items-center gap-1.5">
+                    <div className="col-span-2 grid grid-cols-4 gap-1.5 sm:flex sm:shrink-0 sm:items-center">
                       {ATTENDANCE_STATUSES.map((status) => {
                         const isActive = sa.status === status.value;
                         return (
@@ -351,13 +387,14 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                             title={status.label}
                             onClick={() => updateStudentStatus(sa.studentId, status.value)}
                             className={cn(
-                              'h-10 min-w-10 rounded-full border px-2.5 text-[12.5px] transition-colors touch-manipulation',
+                              'h-11 min-w-11 rounded-full border px-1 text-[13px] transition-colors touch-manipulation sm:px-3',
                               isActive
                                 ? STATUS_ON[status.value]
                                 : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.3]'
                             )}
                           >
-                            <span className="lg:hidden">{status.short}</span>
+                            <span className="sm:hidden">{status.phone}</span>
+                            <span className="hidden sm:inline lg:hidden">{status.short}</span>
                             <span className="hidden lg:inline">{status.label}</span>
                           </button>
                         );

@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-cooker-circuit',
@@ -32,7 +32,7 @@ export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
     'Most UK domestic single-oven + 4-burner hob installations end up at a diversified design current around 25-30 A — easily served by a 32 A protective device and 6 mm² cable on a typical run.',
     'Larger installations (double oven + 5-burner hob, Range cookers, induction hobs with built-in extractor) may require 10 mm² and a 40 A or 45 A protective device.',
     'A standard "cooker control unit" with built-in 13 A socket-outlet adds 5 A to the diversified design current and must have its socket-outlet on 30 mA RCD protection per Regulation 411.3.3.',
-    'BS 7671:2018+A4:2026 Regulation 411.3.4 adds 30 mA RCD protection on AC luminaire final circuits in domestic premises — but the cooker circuit itself is not directly affected unless the cooker control unit also feeds a kitchen luminaire (rare).',
+    'BS 7671:2018+A4:2026 Regulation 411.3.4 (in place since BS 7671:2018) requires 30 mA RCD protection on AC luminaire final circuits in domestic premises — but the cooker circuit itself is not directly affected unless the cooker control unit also feeds a kitchen luminaire (rare).',
     'The cooker control unit must be positioned within 2 m of the appliance but NOT directly above the hob — mounting directly above is a documented common installation defect (heat, steam, cleaning exposure).',
     'When testing Zs on site, apply the GN3 0.80 correction factor to the tabulated Table 41.3 limit. For a 32 A Type B MCB, the tabulated limit is 1.37 Ω, giving a cold-measured site limit of 1.10 Ω.',
   ],
@@ -186,7 +186,7 @@ export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
           items: [
             '**Regulation 411.3.3** — 30 mA RCD on any socket-outlet circuit intended for general use up to 32 A. The 13 A socket-outlet in a cooker control unit falls under this — RCD protection required.',
             '**Regulation 522.6.202** — 30 mA RCD on cables concealed in walls at depth less than 50 mm, per Table 52.1. The alternative compliance route under Regulation 522.6.204 removes this RCD requirement for the cable-run portion: a cable with an earthed metallic covering (e.g. SWA to BS 5467 / BS 6724, or MICC to BS EN 60702-1) satisfies 522.6.204(a) in place of the RCD. Standard flat 6242Y without such covering falls under 522.6.202 and needs RCD protection for any section concealed at less than 50 mm.',
-            "**Regulation 411.3.4 (new in A4:2026)** — 30 mA RCD on AC luminaire final circuits in domestic premises. Direct cooker circuits don't feed luminaires, so this regulation doesn't directly apply unless an installer has mis-wired a kitchen light from the cooker control unit (rare and non-compliant).",
+            "**Regulation 411.3.4 (since BS 7671:2018)** — 30 mA RCD on AC luminaire final circuits in domestic premises. Direct cooker circuits don't feed luminaires, so this regulation doesn't directly apply unless an installer has mis-wired a kitchen light from the cooker control unit (rare and non-compliant).",
             '**Type selection** — Type A or higher recommended for modern cookers with electronic temperature controls and induction hobs. Type AC may not reliably detect DC fault current components from induction hob switching.',
           ],
         },

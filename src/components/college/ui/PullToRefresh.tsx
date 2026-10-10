@@ -20,7 +20,8 @@ export function PullToRefresh({ onRefresh, children, className }: PullToRefreshP
   const THRESHOLD = 60;
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (containerRef.current && containerRef.current.scrollTop === 0) {
+    // Only from the very top of the page, or a scroll back up mid-page would pull.
+    if (containerRef.current && containerRef.current.scrollTop === 0 && window.scrollY <= 0) {
       touchStart.current = e.touches[0].clientY;
     } else {
       touchStart.current = 0;
@@ -57,36 +58,45 @@ export function PullToRefresh({ onRefresh, children, className }: PullToRefreshP
     touchStart.current = 0;
   }, [pullDistance, isRefreshing, onRefresh]);
 
+  const active = pullDistance > 0 || isRefreshing;
+
   return (
     <div
       ref={containerRef}
       className={cn('relative', className)}
+      // Room for the spinner opens only while pulling; idle it takes no space.
+      style={active ? { paddingTop: pullDistance } : undefined}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Pull indicator */}
-      <div
-        className="flex items-center justify-center overflow-hidden transition-all duration-200"
-        style={{
-          height: pullDistance,
-          opacity: Math.min(pullDistance / THRESHOLD, 1),
-        }}
-      >
-        <span
-          className={cn(
-            'h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow transition-transform duration-200',
-            isRefreshing && 'animate-spin',
-            pullDistance >= THRESHOLD && !isRefreshing && 'scale-125'
-          )}
-          style={{
-            transform: isRefreshing ? undefined : `rotate(${(pullDistance / THRESHOLD) * 360}deg)`,
-          }}
-          aria-hidden
-        />
-      </div>
-
       {children}
+
+      {/* Pull indicator: absolutely positioned and after the children, so a
+          space-y-* on the wrapper never spaces it and idle it renders nothing. */}
+      {active && (
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 !mt-0 flex items-center justify-center overflow-hidden"
+          style={{
+            height: pullDistance,
+            opacity: Math.min(pullDistance / THRESHOLD, 1),
+          }}
+        >
+          <span
+            className={cn(
+              'h-4 w-4 rounded-full border-2 border-white/20 border-t-elec-yellow transition-transform duration-200',
+              isRefreshing && 'animate-spin',
+              pullDistance >= THRESHOLD && !isRefreshing && 'scale-125'
+            )}
+            style={{
+              transform: isRefreshing
+                ? undefined
+                : `rotate(${(pullDistance / THRESHOLD) * 360}deg)`,
+            }}
+            aria-hidden
+          />
+        </div>
+      )}
     </div>
   );
 }

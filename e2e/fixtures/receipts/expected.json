@@ -1,0 +1,94 @@
+[
+  {
+    "file": "01-wholesaler-till.png",
+    "supplier": "Northgate",
+    "date": "2026-10-09",
+    "gross": 104.8,
+    "vat": 17.47,
+    "vat_number": "GB284193752",
+    "kind": "receipt"
+  },
+  {
+    "file": "02-fuel.png",
+    "supplier": "Moorside",
+    "date": "2026-10-08",
+    "gross": 63.23,
+    "vat": 10.54,
+    "vat_number": "GB731004218",
+    "kind": "receipt"
+  },
+  {
+    "file": "03-diy-discount.png",
+    "supplier": "HomeFix",
+    "date": "2026-10-07",
+    "gross": 18.43,
+    "vat": 3.07,
+    "vat_number": "GB556221007",
+    "kind": "receipt"
+  },
+  {
+    "file": "04-parking.png",
+    "supplier": "City Centre Parking",
+    "date": "2026-10-06",
+    "gross": 6.5,
+    "vat": 1.08,
+    "vat_number": "GB902447130",
+    "kind": "receipt"
+  },
+  {
+    "file": "05-supplier-bill.pdf",
+    "supplier": "Pennine Cable",
+    "date": "2026-10-05",
+    "gross": 495,
+    "vat": 82.5,
+    "invoice_number": "PCS-20419",
+    "vat_number": "GB118663041",
+    "kind": "bill"
+  },
+  {
+    "file": "06-cafe-no-vat.png",
+    "supplier": "Bridge Cafe",
+    "date": "2026-10-05",
+    "gross": 8.4,
+    "vat": 0,
+    "kind": "receipt"
+  },
+  {
+    "file": "07-skip-hire.png",
+    "supplier": "Valley Skips",
+    "date": "2026-10-02",
+    "gross": 216,
+    "vat": 36,
+    "invoice_number": "VS-8812",
+    "vat_number": "GB640118592",
+    "kind": "bill"
+  },
+  {
+    "file": "08-tool-hire.png",
+    "supplier": "QuickHire",
+    "date": "2026-10-01",
+    "gross": 48,
+    "vat": 8,
+    "vat_number": "GB377812066",
+    "kind": "receipt"
+  },
+  {
+    "file": "09-wholesale-bill-delivery.pdf",
+    "supplier": "Northgate",
+    "date": "2026-09-30",
+    "gross": 406.8,
+    "vat": 67.8,
+    "invoice_number": "NEW-771045",
+    "vat_number": "GB284193752",
+    "kind": "bill"
+  },
+  {
+    "file": "10-long-till.png",
+    "supplier": "Sparks Trade",
+    "date": "2026-09-29",
+    "gross": 32.94,
+    "vat": 5.49,
+    "vat_number": "GB815009324",
+    "kind": "receipt"
+  }
+]

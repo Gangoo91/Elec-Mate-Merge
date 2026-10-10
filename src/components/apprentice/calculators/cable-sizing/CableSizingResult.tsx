@@ -96,7 +96,7 @@ const CableSizingResult = ({
         <>
           {/* Recommended Cable */}
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Recommended cable
             </span>
 
@@ -161,7 +161,7 @@ const CableSizingResult = ({
           {/* Alternative Options */}
           {alternativeCables.length > 0 && (
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[12px] font-medium text-white">
                 Alternative options
               </span>
               <div className="space-y-3">
@@ -199,7 +199,7 @@ const CableSizingResult = ({
           {/* Show Calculation Derivation */}
           <Collapsible open={showDerivation} onOpenChange={setShowDerivation} className="mt-6">
             <CollapsibleTrigger className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center justify-between text-left touch-manipulation min-h-[44px]">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[12px] font-medium text-white">
                 {showDerivation ? 'Hide calculation derivation' : 'Show calculation derivation'}
               </span>
               <ChevronDown
@@ -211,7 +211,7 @@ const CableSizingResult = ({
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-4">
               <div className="space-y-4">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[12px] font-medium text-white">
                   BS 7671 calculation steps
                 </span>
 
@@ -416,7 +416,7 @@ const CableSizingResult = ({
 
       {errors.general && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Error
           </span>
           <p className="text-[14px] text-white leading-relaxed">{errors.general}</p>

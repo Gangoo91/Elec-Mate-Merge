@@ -36,12 +36,14 @@ function writeSessionFlags(flags: { perfectSession: boolean; quickReview: boolea
 }
 
 export function useFlashcardAchievements() {
-  const { progress, getSetProgress } = useFlashcardProgress();
-  const { streak } = useStudyStreak();
+  const { progress, getSetProgress, loading: progressLoading } = useFlashcardProgress();
+  const { streak, loading: streakLoading } = useStudyStreak();
 
   const [sessionFlags, setSessionFlags] = useState(readSessionFlags);
   const [recentlyUnlocked, setRecentlyUnlocked] = useState<FlashcardAchievementDef[]>([]);
   const prevUnlockedRef = useRef<Set<string>>(new Set());
+  /** Set once the data has loaded: what was already earned, never toasted. */
+  const baselineSet = useRef(false);
 
   /** Count fully mastered sets (100% progress) */
   const masteredSetCount = useMemo(() => {
@@ -144,24 +146,32 @@ export function useFlashcardAchievements() {
     });
   }, [streak, masteredSetCount, sessionFlags, getMasteredCountForLevel, levelSetCounts]);
 
-  /** Detect newly unlocked achievements */
+  /**
+   * Detect newly unlocked achievements (10 Oct 2026 fix). The baseline is
+   * taken once both sources have loaded, so a learner's existing awards never
+   * toast on arrival; after that, every new unlock toasts once — including a
+   * brand-new learner's first (an empty baseline used to block every toast),
+   * and the baseline is updated each time (it used to stay stale after a
+   * toast, so the same award toasted again).
+   */
   useEffect(() => {
+    if (progressLoading || streakLoading) return;
     const currentUnlocked = new Set(achievements.filter((a) => a.unlocked).map((a) => a.def.id));
+    if (!baselineSet.current) {
+      baselineSet.current = true;
+      prevUnlockedRef.current = currentUnlocked;
+      return;
+    }
     const newlyUnlocked = achievements.filter(
       (a) => a.unlocked && !prevUnlockedRef.current.has(a.def.id)
     );
-
-    if (
-      newlyUnlocked.length > 0 &&
-      prevUnlockedRef.current.size > 0 // Don't toast on initial load
-    ) {
+    prevUnlockedRef.current = currentUnlocked;
+    if (newlyUnlocked.length > 0) {
       setRecentlyUnlocked(newlyUnlocked.map((a) => a.def));
       const timer = setTimeout(() => setRecentlyUnlocked([]), 5000);
       return () => clearTimeout(timer);
     }
-
-    prevUnlockedRef.current = currentUnlocked;
-  }, [achievements]);
+  }, [achievements, progressLoading, streakLoading]);
 
   /** Called from the study session completion screen */
   const reportSession = useCallback(

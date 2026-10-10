@@ -59,3 +59,15 @@ export const OTJ_HOURS_FLOOR = 187;
 
 export const getOtjStandard = (code: string | null | undefined): OtjStandard | undefined =>
   code ? OTJ_STANDARDS.find((s) => s.code === code) : undefined;
+
+/**
+ * Wording shared by the public pages (ELE-2060), so they cannot drift from the
+ * figures above. Rules 85 to 86 of the 2026 to 2027 funding rules: the minimum
+ * is published on each standard and no programme may go below 187 hours.
+ * Apprenticeships that started before 1 August 2025 keep the old rule (rule 3:
+ * a programme follows the rules in force when it started): 20% of normal
+ * working hours capped at 30 hours a week, so an average of 6 hours a week for
+ * a full-time apprentice (2024 to 2025 funding rules, rule 84).
+ */
+export const OTJ_ST0152_HOURS = DEFAULT_OTJ_STANDARD.otjHours.toLocaleString('en-GB');
+export const OTJ_RULE_SOURCE = 'DfE apprenticeship funding rules 2026 to 2027, rules 85 to 86';

@@ -104,9 +104,7 @@ const SiteConditionTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Site condition evaluation
-        </span>
+        <span className="text-[13px] font-semibold text-white">Site condition evaluation</span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
           Environmental & working conditions assessment
         </h2>
@@ -116,12 +114,10 @@ const SiteConditionTab = () => {
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Progress
-          </span>
-          <span className="text-[12px] text-white font-mono">
+          <span className="text-[13px] font-semibold text-white">Progress</span>
+          <span className="text-[12px] text-white">
             {checkedItems.length}/{totalItems} · {Math.round(completionRate)}%
           </span>
         </div>
@@ -142,10 +138,8 @@ const SiteConditionTab = () => {
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {category.category}
-              </span>
-              <span className="text-[12px] text-white font-mono">
+              <span className="text-[13px] font-semibold text-white">{category.category}</span>
+              <span className="text-[12px] text-white">
                 {categoryChecked}/{category.items.length}
               </span>
             </div>
@@ -186,10 +180,8 @@ const SiteConditionTab = () => {
         );
       })}
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Environmental factors guide
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Environmental factors guide</span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {environmentalFactors.map((factor, index) => (
             <div
@@ -197,7 +189,7 @@ const SiteConditionTab = () => {
               className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-2"
             >
               <p className="text-[14px] text-white">{factor.factor}</p>
-              <p className="text-[12px] text-white leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 <span className="text-white">Optimal: </span>
                 {factor.optimalRange}
               </p>
@@ -205,7 +197,7 @@ const SiteConditionTab = () => {
                 {factor.considerations.map((consideration, idx) => (
                   <li
                     key={idx}
-                    className="text-[12px] text-white flex items-start gap-2 leading-relaxed"
+                    className="text-[14px] text-white flex items-start gap-2 leading-relaxed"
                   >
                     <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0" />
                     <span>{consideration}</span>
@@ -217,10 +209,8 @@ const SiteConditionTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Environmental notes
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Environmental notes</span>
         <MobileInput
           label="Environmental notes"
           value={environmentalNotes}
@@ -235,10 +225,8 @@ const SiteConditionTab = () => {
         </Button>
       </div>
 
-      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-          Weather considerations
-        </span>
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-red-300">Weather considerations</span>
         <p className="text-[14px] text-white leading-relaxed">
           Always check weather conditions before starting outdoor electrical work.
         </p>

@@ -88,13 +88,13 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                 <React.Fragment key={i}>
                   {i === 0 && (
                     <div className="shrink-0 mr-0.5">
-                      <p className="text-[9px] font-bold text-amber-400 uppercase tracking-widest mb-1.5">Dead</p>
+                      <p className="text-[12px] font-bold text-amber-400 mb-1.5">Dead</p>
                     </div>
                   )}
                   {i === 4 && (
                     <div className="shrink-0 flex flex-col items-center mx-1.5">
                       <div className="w-px h-6 bg-white/20 mb-1" />
-                      <p className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest mb-1.5">Live</p>
+                      <p className="text-[12px] font-bold text-emerald-400 mb-1.5">Live</p>
                     </div>
                   )}
                   <div
@@ -105,8 +105,8 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                     }`}
                   >
                     <p className={`text-lg font-black ${isLive ? 'text-emerald-400' : 'text-amber-400'}`}>{i + 1}</p>
-                    <p className="text-[10px] text-white font-semibold mt-0.5 leading-tight">{test.label}</p>
-                    <p className="text-[9px] text-white mt-0.5 leading-tight">{test.abbrev}</p>
+                    <p className="text-[12px] text-white font-semibold mt-0.5 leading-tight">{test.label}</p>
+                    <p className="text-[12px] text-white mt-0.5 leading-tight">{test.abbrev}</p>
                   </div>
                 </React.Fragment>
               );
@@ -191,7 +191,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
               className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:rounded-2xl sm:border sm:border-white/[0.14]"
             >
               <p className="text-[13px] font-semibold tracking-tight text-white">{ref.title}</p>
-              <div className="mt-2 space-y-1.5 text-[11px]">
+              <div className="mt-2 space-y-1.5 text-[12px]">
                 {ref.rows.map(([label, value]) => (
                   <div key={label} className="flex justify-between gap-2">
                     <span className="text-white">{label}</span>

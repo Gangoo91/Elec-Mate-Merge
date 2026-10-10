@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { usePortfolioAcState } from '@/hooks/portfolio/usePortfolioAcState';
 
 /* ==========================================================================
    useStudentProgress — cross-hub course/unit/KSB progress for one learner.
 
    Surfaces the most useful per-learner aggregates from the apprentice side:
    - active qualification + headline progress %
-   - per-unit coverage matrix (evidenced / verified counts)
+   - per-unit coverage (evidenced / passed counts) from get_portfolio_ac_state,
+     the one per-criterion state function (ELE-1918: unit_coverage_matrix is
+     retired; it was written by nothing live and disagreed with decisions)
    - learning_progress timing (recent module activity, time spent)
    - course_progress per-section completion %
    - KSB roll-up (counts by status, % verified)
@@ -109,7 +112,6 @@ const ZERO_KSB: KsbRollUp = {
 
 export function useStudentProgress(userId: string | null): StudentProgress {
   const [qualifications, setQualifications] = useState<QualificationSelection[]>([]);
-  const [unitCoverage, setUnitCoverage] = useState<UnitCoverageRow[]>([]);
   const [qualCompliance, setQualCompliance] = useState<QualCompliance[]>([]);
   const [courseSections, setCourseSections] = useState<CourseProgressRow[]>([]);
   const [modules, setModules] = useState<ModuleProgressRow[]>([]);
@@ -120,7 +122,6 @@ export function useStudentProgress(userId: string | null): StudentProgress {
   const fetchAll = useCallback(async () => {
     if (!userId) {
       setQualifications([]);
-      setUnitCoverage([]);
       setQualCompliance([]);
       setCourseSections([]);
       setModules([]);
@@ -132,17 +133,11 @@ export function useStudentProgress(userId: string | null): StudentProgress {
     setError(null);
 
     try {
-      const [qualRes, coverageRes, complianceRes, courseRes, learningRes, ksbRes] =
+      const [qualRes, complianceRes, courseRes, learningRes, ksbRes] =
         await Promise.all([
           supabase
             .from('user_qualification_selections')
             .select('qualification_id, is_active, progress_percentage, target_completion_date, selected_at')
-            .eq('user_id', userId),
-          supabase
-            .from('unit_coverage_matrix')
-            .select(
-              'id, qualification_id, category_id, total_criteria, evidenced_criteria, verified_criteria, required_entries, completed_entries, completion_percentage, status, last_updated, qualifications(title, code), qualification_categories(name)'
-            )
             .eq('user_id', userId),
           supabase
             .from('qualification_compliance')
@@ -168,23 +163,6 @@ export function useStudentProgress(userId: string | null): StudentProgress {
 
       if (!qualRes.error && qualRes.data) {
         setQualifications(qualRes.data as QualificationSelection[]);
-      }
-      if (!coverageRes.error && coverageRes.data) {
-        type RawCoverageRow = Omit<
-          UnitCoverageRow,
-          'qualification_title' | 'qualification_code' | 'category_name'
-        > & {
-          qualifications?: { title?: string | null; code?: string | null } | null;
-          qualification_categories?: { name?: string | null } | null;
-        };
-        setUnitCoverage(
-          (coverageRes.data as RawCoverageRow[]).map((r) => ({
-            ...r,
-            qualification_title: r.qualifications?.title ?? null,
-            qualification_code: r.qualifications?.code ?? null,
-            category_name: r.qualification_categories?.name ?? null,
-          }))
-        );
       }
       if (!complianceRes.error && complianceRes.data) {
         setQualCompliance(complianceRes.data as QualCompliance[]);
@@ -246,11 +224,6 @@ export function useStudentProgress(userId: string | null): StudentProgress {
       .channel(realtimeChannelName(`student_progress:${userId}`))
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'unit_coverage_matrix', filter: `user_id=eq.${userId}` },
-        () => fetchAll()
-      )
-      .on(
-        'postgres_changes',
         { event: '*', schema: 'public', table: 'user_ksb_progress', filter: `user_id=eq.${userId}` },
         () => fetchAll()
       )
@@ -264,6 +237,41 @@ export function useStudentProgress(userId: string | null): StudentProgress {
       supabase.removeChannel(channel);
     };
   }, [userId, fetchAll]);
+
+  // Per-unit coverage from the one state function. "Evidenced" is any criterion
+  // with evidence tied to it (claimed or further); "verified" is passed or IQA
+  // confirmed. A suggestion is never coverage.
+  const ac = usePortfolioAcState(userId);
+  const unitCoverage = useMemo<UnitCoverageRow[]>(
+    () =>
+      ac.units.map((u) => {
+        const evidenced =
+          u.total - u.counts.not_started - u.counts.suggested;
+        const lastDecided = u.rows
+          .map((r) => r.decided_at)
+          .filter((d): d is string => !!d)
+          .sort()
+          .pop();
+        const pct = u.total > 0 ? Math.round((u.passed / u.total) * 100) : 0;
+        return {
+          id: u.unit_code,
+          qualification_id: null,
+          qualification_title: null,
+          qualification_code: u.rows[0]?.qualification_code ?? null,
+          category_id: null,
+          category_name: `${u.unit_code} ${u.unit_title}`.trim(),
+          total_criteria: u.total,
+          evidenced_criteria: evidenced,
+          verified_criteria: u.passed,
+          required_entries: 0,
+          completed_entries: 0,
+          completion_percentage: pct,
+          status: pct >= 100 ? 'complete' : evidenced > 0 ? 'in_progress' : 'not_started',
+          last_updated: lastDecided ?? null,
+        };
+      }),
+    [ac.units]
+  );
 
   const activeQualification = useMemo<QualificationSelection | null>(() => {
     if (!qualifications.length) return null;
@@ -288,11 +296,10 @@ export function useStudentProgress(userId: string | null): StudentProgress {
       (r) => (r.completion_percentage ?? 0) >= 100 || r.status === 'complete'
     ).length;
     const totalMinutes = modules.reduce((s, m) => s + (m.time_spent_minutes ?? 0), 0);
-    const overallPct = activeQualification
-      ? activeQualification.progress_percentage
-      : totalCriteria > 0
-        ? Math.round((totalVerified / totalCriteria) * 100)
-        : 0;
+    // Criteria passed over the qualification's total: the same figure the
+    // learner's hub and portfolio show (ELE-1917), not the stale
+    // user_qualification_selections.progress_percentage.
+    const overallPct = totalCriteria > 0 ? Math.round((totalVerified / totalCriteria) * 100) : 0;
     return {
       overall_percent: overallPct,
       units_started: unitsStarted,
@@ -302,7 +309,7 @@ export function useStudentProgress(userId: string | null): StudentProgress {
       total_criteria: totalCriteria,
       total_minutes_studied: totalMinutes,
     };
-  }, [unitCoverage, modules, activeQualification]);
+  }, [unitCoverage, modules]);
 
   return useMemo(
     () => ({
@@ -314,9 +321,11 @@ export function useStudentProgress(userId: string | null): StudentProgress {
       modules,
       ksb: ksbCounts,
       totals,
-      loading,
-      error,
-      refresh: fetchAll,
+      loading: loading || ac.loading,
+      error: error ?? ac.error,
+      refresh: async () => {
+        await Promise.all([fetchAll(), ac.refresh()]);
+      },
     }),
     [
       qualifications,
@@ -330,6 +339,9 @@ export function useStudentProgress(userId: string | null): StudentProgress {
       loading,
       error,
       fetchAll,
+      ac.loading,
+      ac.error,
+      ac.refresh,
     ]
   );
 }

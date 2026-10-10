@@ -32,7 +32,10 @@ const SOURCE_LABEL: Record<OtjSource, string> = {
   time_entry: 'Site diary',
 };
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
 const TEXT_BTN =
   'inline-flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold transition-colors touch-manipulation';
@@ -81,9 +84,9 @@ export function SectionApprenticeOtj({
 
   return (
     <section id={id} className="scroll-mt-6 space-y-3">
-      <div className="flex items-end justify-between gap-3">
+      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
         <CollegeHeading>Off-the-job training</CollegeHeading>
-        <div className="no-print -my-2 -mr-2 flex items-center">
+        <div className="no-print -my-2 -mr-2 flex flex-wrap items-center">
           <button
             type="button"
             onClick={() => navigate('/college/otj/inbox')}
@@ -197,11 +200,11 @@ function EntryRow({ entry }: { entry: OtjEntry }) {
         )}
       />
       <div className="min-w-0 flex-1">
-        <div className="truncate text-[14px] font-semibold leading-tight text-white">
+        <div className="line-clamp-2 text-[14px] font-semibold leading-snug text-white">
           {entry.title}
         </div>
         <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] leading-tight text-white">
-          <span className="truncate tabular-nums">{reason}</span>
+          <span className="line-clamp-2 tabular-nums">{reason}</span>
           {verified && <span className="font-semibold text-elec-yellow">Verified</span>}
         </div>
         {entry.unit_codes.length > 0 && (
@@ -209,7 +212,7 @@ function EntryRow({ entry }: { entry: OtjEntry }) {
             {entry.unit_codes.slice(0, 4).map((u) => (
               <span
                 key={u}
-                className="inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 font-mono text-[10.5px] tabular-nums text-white"
+                className="inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 font-mono text-[12px] tabular-nums text-white"
               >
                 {u}
               </span>

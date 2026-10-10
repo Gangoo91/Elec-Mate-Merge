@@ -5,12 +5,10 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useEPAGateway, GatewayStatus } from '@/hooks/college/useEPAGateway';
 import {
-  SectionHeader,
   ListCard,
   Pill,
   EmptyState,
   LoadingState,
-  Eyebrow,
   Field,
   PrimaryButton,
   SecondaryButton,
@@ -121,9 +119,8 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4 mb-5">
           <div>
-            <Eyebrow>EPA Gateway Checklist</Eyebrow>
-            <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-              Gateway Progress
+            <h3 className="text-[17px] font-semibold tracking-tight text-white">
+              Gateway progress
             </h3>
             <p className="mt-1 text-[12.5px] text-white">
               {status.studentName} · {status.qualificationTitle}
@@ -135,7 +132,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
         </div>
 
         <div className="flex items-center justify-between text-[12.5px] mb-2">
-          <span className="text-white">Gateway Progress</span>
+          <span className="text-white">Overall</span>
           <span className="font-semibold text-white tabular-nums">{status.overallProgress}%</span>
         </div>
         <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
@@ -150,8 +147,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <Eyebrow>Off-the-Job Training Hours</Eyebrow>
-            <h4 className="mt-1 text-lg font-semibold text-white">OJT Progress</h4>
+            <h4 className="text-[15px] font-semibold text-white">Off-the-job training hours</h4>
           </div>
           {!readOnly && (
             <SecondaryButton size="sm" onClick={() => setShowOJTSheet(true)}>
@@ -183,7 +179,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
 
       {/* Checklist */}
       <div className="space-y-3">
-        <SectionHeader eyebrow="Requirements" title="Gateway Requirements" />
+        <h4 className="text-[15px] font-semibold text-white">Gateway requirements</h4>
         <p className="text-[13px] text-white">All items must be completed before EPA</p>
 
         <ListCard>
@@ -205,7 +201,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                   )}
                 >
                   {item.completed && (
-                    <span className="text-green-400 text-[11px] font-bold">✓</span>
+                    <span className="text-green-400 text-[12px] font-bold">✓</span>
                   )}
                 </div>
               ) : (
@@ -233,7 +229,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
               </div>
               {item.completedDate && (
                 <div className="text-right shrink-0">
-                  <Eyebrow>Completed</Eyebrow>
+                  <p className="text-[12.5px] font-semibold text-white">Completed</p>
                   <div className="mt-0.5 text-[12.5px] text-white tabular-nums">
                     {new Date(item.completedDate).toLocaleDateString('en-GB', {
                       day: 'numeric',
@@ -262,13 +258,13 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                 status.epaBookedDate ? 'bg-green-400' : 'bg-blue-400'
               )}
             />
-            <Eyebrow>End Point Assessment</Eyebrow>
+            <p className="text-[13px] font-semibold text-white">End-point assessment</p>
           </div>
 
           {status.epaBookedDate ? (
             <div className="flex items-center justify-between gap-4">
               <div>
-                <div className="text-[15px] font-medium text-white">EPA Scheduled</div>
+                <div className="text-[15px] font-medium text-white">EPA booked</div>
                 <div className="mt-1 text-[12.5px] text-white">
                   {new Date(status.epaBookedDate).toLocaleDateString('en-GB', {
                     weekday: 'long',
@@ -294,7 +290,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0 mt-2" />
           <div>
             <p className="text-[14px] font-medium text-amber-300">
-              Gateway Requirements Incomplete
+              Gateway requirements incomplete
             </p>
             <p className="mt-1 text-[12.5px] text-white leading-relaxed">
               Complete all required checklist items before the apprentice can progress to EPA.

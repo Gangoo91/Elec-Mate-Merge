@@ -62,7 +62,7 @@ export default function HowToFillInMinorWorksPage() {
       title="Minor Works Certificate: Fill In Sections A to E"
       description="Five lettered sections: A description, B earthing and bonding, C circuit details, D test results, E declaration. Every field explained, plus SPD and AFDD."
       datePublished="2025-05-15"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -98,12 +98,12 @@ export default function HowToFillInMinorWorksPage() {
         answer:
           'A Minor Electrical Installation Works Certificate certifies an addition or alteration to an existing circuit. Regulation 644.4.201 permits one for each circuit added to or altered, but only where the work does not include a new circuit or the replacement of a distribution board or consumer unit — those need an EIC.',
         detail:
-          'The model form in BS 7671:2018+A4:2026 Appendix 6 has five lettered sections: A description of the minor works, B earthing and bonding, C circuit details, D test results, E declaration. Sections for SPD and AFDD details were added at Amendment 4.',
+          'The model form in BS 7671:2018+A4:2026 Appendix 6 has five lettered sections: A description of the minor works, B earthing and bonding, C circuit details, D test results, E declaration. Fields for SPD and AFDD details were added at Amendment 2:2022.',
       }}
       keyTakeaways={[
         'Regulation 644.4.201 allows a Minor Works Certificate for each circuit added to or altered, provided the work includes no new circuit and no replacement of a distribution board or consumer unit.',
         'The Appendix 6 model form has five lettered sections — A description of the minor works, B earthing and bonding, C circuit details, D test results, E declaration — not four numbered parts.',
-        'Section D covers protective conductor continuity, ring final circuit continuity, insulation resistance, polarity, maximum measured Zs and RCD disconnection time at IΔn — plus SPD and AFDD fields added at Amendment 4.',
+        'Section D covers protective conductor continuity, ring final circuit continuity, insulation resistance, polarity, maximum measured Zs and RCD disconnection time at IΔn — plus SPD and AFDD fields added at Amendment 2:2022.',
         'There is no next inspection date on the model Minor Works Certificate. That recommendation sits on the EIC (Section D) and on the EICR.',
         'Elec-Mate auto-fills the site and circuit details, validates test results against BS 7671, captures a digital signature and exports the PDF with the guidance for recipients attached.',
       ]}
@@ -127,9 +127,10 @@ export default function HowToFillInMinorWorksPage() {
               </p>
               <p>
                 Regulation 644.1 requires an EIC on completion of a new installation or an addition
-                or alteration to an existing one, <strong>including the replacement of a
-                distribution board or consumer unit</strong> — except where Regulation 644.4.201
-                applies. That regulation is the one that permits the Minor Works Certificate:
+                or alteration to an existing one,{' '}
+                <strong>including the replacement of a distribution board or consumer unit</strong>{' '}
+                — except where Regulation 644.4.201 applies. That regulation is the one that permits
+                the Minor Works Certificate:
               </p>
               <blockquote className={cardCn}>
                 <p className="text-white">
@@ -247,11 +248,7 @@ export default function HowToFillInMinorWorksPage() {
               <RefTable
                 columns={['Field', 'What to enter', 'Reference']}
                 rows={[
-                  [
-                    'Date minor works completed',
-                    'The date the work was finished and tested.',
-                    '—',
-                  ],
+                  ['Date minor works completed', 'The date the work was finished and tested.', '—'],
                   ['Details of the client', 'The person ordering the work.', '644.4'],
                   [
                     'Installation location/address',
@@ -289,8 +286,8 @@ export default function HowToFillInMinorWorksPage() {
                   socket.&rdquo;
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-white">
-                  <span className="font-semibold text-elec-yellow">Better:</span> &ldquo;Supplied and
-                  installed one twin switched socket-outlet on the existing kitchen ring final
+                  <span className="font-semibold text-elec-yellow">Better:</span> &ldquo;Supplied
+                  and installed one twin switched socket-outlet on the existing kitchen ring final
                   circuit, spurred from the existing socket-outlet at the base of the units in 2.5
                   mm&sup2; flat twin and earth to BS 6004, run in the ceiling void and terminated in
                   an accessible junction box.&rdquo;
@@ -412,7 +409,11 @@ export default function HowToFillInMinorWorksPage() {
                     'Type matters — A, F, B',
                   ],
                   ['SPD', 'BS (EN) number and type, where an SPD is present.', 'Added at A4:2026'],
-                  ['AFDD', 'BS (EN) number and rating, where an AFDD is present.', 'Added at A4:2026'],
+                  [
+                    'AFDD',
+                    'BS (EN) number and rating, where an AFDD is present.',
+                    'Added at A4:2026',
+                  ],
                 ]}
               />
               <p>
@@ -551,11 +552,10 @@ export default function HowToFillInMinorWorksPage() {
                   <p className="mt-2 text-sm leading-relaxed text-white">
                     Amendment 4 changed this. Regulation 643.8 requires the effectiveness of
                     automatic disconnection by RCDs to be verified with equipment to BS EN 61557-6,
-                    and its note states that{' '}
-                    <strong>regardless of RCD type</strong>, effectiveness is deemed verified where
-                    the device disconnects within the stated time on an alternating current test at
-                    the rated residual operating current (IΔn) — for a general non-delay type,{' '}
-                    <strong>300 ms maximum</strong>.
+                    and its note states that <strong>regardless of RCD type</strong>, effectiveness
+                    is deemed verified where the device disconnects within the stated time on an
+                    alternating current test at the rated residual operating current (IΔn) — for a
+                    general non-delay type, <strong>300 ms maximum</strong>.
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-white">
                     Table 3A of Appendix 3, which set the old time/current performance criteria, has
@@ -798,7 +798,7 @@ export default function HowToFillInMinorWorksPage() {
         {
           question: 'How many sections does a Minor Works Certificate have?',
           answer:
-            'The model form in Appendix 6 of BS 7671:2018+A4:2026 has five lettered sections. Section A is the description of the minor works, including the date, the client, the address, any departures, any permitted exceptions under Regulation 411.3.3 and any defects observed in the existing installation. Section B covers the presence and adequacy of the earthing and bonding arrangements. Section C covers the circuit details, including conductor sizes, reference method and the protective devices. Section D covers the test results for the altered or extended circuit. Section E is the declaration and signature. Amendment 4 added fields for recording SPD and AFDD details.',
+            'The model form in Appendix 6 of BS 7671:2018+A4:2026 has five lettered sections. Section A is the description of the minor works, including the date, the client, the address, any departures, any permitted exceptions under Regulation 411.3.3 and any defects observed in the existing installation. Section B covers the presence and adequacy of the earthing and bonding arrangements. Section C covers the circuit details, including conductor sizes, reference method and the protective devices. Section D covers the test results for the altered or extended circuit. Section E is the declaration and signature. Amendment 2:2022 added fields for recording SPD and AFDD details.',
         },
         {
           question: 'Which conductor sizes go on a Minor Works Certificate?',

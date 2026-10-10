@@ -245,7 +245,7 @@ const VoltageDropCalculator: React.FC = () => {
 
       {/* Show selected mV/A/m value */}
       {selectedMvam && (
-        <div className="mb-4 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
+        <div className="mb-4 p-3 bg-white/[0.06] border border-white/[0.14] rounded-lg">
           <div className="flex items-center gap-2">
             <Info className="w-4 h-4 text-elec-yellow" />
             <span className="text-sm font-medium text-foreground">

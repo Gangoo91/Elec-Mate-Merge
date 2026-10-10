@@ -19,6 +19,7 @@ import {
 } from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb, captureError } from '@/lib/sentry';
+import { MicrosoftSignInButton } from '@/components/auth/MicrosoftSignInButton';
 
 const LAST_EMAIL_KEY = 'elec-mate-last-email';
 
@@ -372,6 +373,10 @@ const SignIn = () => {
                 )}
               </button>
             </form>
+            {/* ELE-1971: college accounts. Hidden until the provider is enabled. */}
+            <div className="mt-4">
+              <MicrosoftSignInButton />
+            </div>
           </div>
 
           <div className="mt-auto space-y-4 pt-10 lg:mt-0 lg:pt-6">

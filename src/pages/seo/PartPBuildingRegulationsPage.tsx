@@ -584,16 +584,16 @@ export default function PartPBuildingRegulationsPage() {
               Approved Document P references BS 7671 as the standard that, if followed, demonstrates
               compliance with the safety requirements of Part P. The current referenced edition is
               BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment
-              4, effective April 2026. Amendment 4 introduced Regulation 530.3.201 covering
-              bidirectional and unidirectional protective devices, mandatory RCD protection for
-              domestic lighting circuits (Reg 411.3.4), and other updates and clarifications.
+              4, effective April 2026. It carries forward Regulation 530.3.201 on bidirectional and
+              unidirectional protective devices (added at A3:2024) and the mandatory RCD protection
+              for domestic lighting circuits (Reg 411.3.4) that has applied since BS 7671:2018.
             </p>
             <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm">
               <p className="font-semibold text-elec-yellow mb-1">
-                A4:2026 key change — Reg 411.3.4: RCD protection on domestic lighting circuits
+                Reg 411.3.4: RCD protection on domestic lighting circuits (since 2018)
               </p>
               <p className="text-white leading-relaxed">
-                Under Amendment 4, all AC final circuits supplying luminaires within domestic
+                Under BS 7671, all AC final circuits supplying luminaires within domestic
                 (household) premises must be provided with additional protection by an RCD with a
                 rated residual operating current not exceeding 30&nbsp;mA (Reg 411.3.4). This
                 applies to new consumer unit installations and new lighting circuits — both of which

@@ -33,6 +33,12 @@ export interface UserPolicy {
   approved_by: string | null;
   created_at: string;
   updated_at: string;
+  /** ELE-1946: publishing to the team. Absent on an older server. */
+  version?: number | null;
+  published_version?: number | null;
+  published_at?: string | null;
+  ai_generated?: boolean | null;
+  category?: string | null;
   // Joined data
   template?: PolicyTemplate | null;
 }
@@ -118,6 +124,7 @@ export function useUserPolicies() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
+      // The firm's policies, so co-admins see the same library (ELE-1946).
       const { data, error } = await supabase
         .from('employer_policies')
         .select(
@@ -126,7 +133,7 @@ export function useUserPolicies() {
           template:employer_policy_templates(*)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', (await getActingEmployerId(user.id)) ?? user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -156,7 +163,7 @@ export function useUserPolicy(id: string | undefined) {
         `
         )
         .eq('id', id)
-        .eq('user_id', user.id)
+        .eq('user_id', (await getActingEmployerId(user.id)) ?? user.id)
         .single();
 
       if (error) throw error;
@@ -361,6 +368,129 @@ export function useDeletePolicy() {
         description: error.message,
         variant: 'destructive',
       });
+    },
+  });
+}
+
+// ── Publishing and acknowledgement (ELE-1946) ─────────────────────────────
+
+export interface PolicyPerson {
+  employee_id: string;
+  name: string;
+  on_app: boolean;
+  email: string | null;
+  phone: string | null;
+  signed_at: string | null;
+  location: unknown;
+  last_version: number | null;
+}
+
+export interface PolicyAcknowledgement {
+  signer_name: string;
+  policy_version: number;
+  signed_at: string;
+  location: unknown;
+  user_agent: string | null;
+  signature: string | null;
+}
+
+export interface PolicyTracker {
+  policy_id: string;
+  version: number | null;
+  published_at: string | null;
+  people: PolicyPerson[];
+  acknowledgements: PolicyAcknowledgement[];
+}
+
+/** Who has signed the published version, and every acknowledgement made. */
+export function usePolicyTracker(policyId: string | null | undefined) {
+  return useQuery({
+    queryKey: ['userPolicies', 'tracker', policyId],
+    enabled: !!policyId,
+    queryFn: async (): Promise<PolicyTracker> => {
+      const { data, error } = await supabase.rpc(
+        'get_firm_policy_tracker' as never,
+        { p_policy_id: policyId } as never
+      );
+      if (error) throw error;
+      const t = (data ?? {}) as Partial<PolicyTracker>;
+      return {
+        policy_id: policyId as string,
+        version: t.version ?? null,
+        published_at: t.published_at ?? null,
+        people: t.people ?? [],
+        acknowledgements: t.acknowledgements ?? [],
+      };
+    },
+  });
+}
+
+export interface PublishResult {
+  version: number;
+  notified: Array<{ employee_id: string; name: string }>;
+  off_app: Array<{ employee_id: string; name: string; email: string | null; phone: string | null }>;
+}
+
+/** Publish (or publish a new version) and send it to the team to sign. */
+export function usePublishPolicy() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (policyId: string): Promise<PublishResult> => {
+      const { data, error } = await supabase.rpc(
+        'publish_firm_policy' as never,
+        { p_policy_id: policyId } as never
+      );
+      if (error) throw error;
+      const r = (data ?? {}) as Partial<PublishResult>;
+      return { version: r.version ?? 1, notified: r.notified ?? [], off_app: r.off_app ?? [] };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userPolicies'] });
+      queryClient.invalidateQueries({ queryKey: ['firm-policy-status'] });
+      queryClient.invalidateQueries({ queryKey: ['firm-signoff-attention'] });
+    },
+  });
+}
+
+export interface NewPolicyInput {
+  name: string;
+  content: string;
+  category?: string | null;
+  ai_generated?: boolean;
+  review_date?: string | null;
+  company_name?: string | null;
+}
+
+/** A policy written from scratch or drafted with AI, saved as a draft. */
+export function useCreatePolicy() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: NewPolicyInput): Promise<UserPolicy> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+      const { data, error } = await supabase
+        .from('employer_policies')
+        .insert({
+          user_id: (await getActingEmployerId(user.id)) ?? user.id,
+          name: input.name,
+          content: input.content,
+          status: 'Draft',
+          company_name: input.company_name || null,
+          review_date: input.review_date || null,
+          adopted_at: new Date().toISOString(),
+          category: input.category || null,
+          ai_generated: !!input.ai_generated,
+        } as never)
+        .select('*, template:employer_policy_templates(*)')
+        .single();
+      if (error) throw error;
+      return data as unknown as UserPolicy;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userPolicies'] });
+      queryClient.invalidateQueries({ queryKey: ['firm-policy-status'] });
     },
   });
 }

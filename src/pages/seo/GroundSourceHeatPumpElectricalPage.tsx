@@ -676,7 +676,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.4 (A4:2026)</strong> — within domestic (household)
+                <strong>Regulation 411.3.4</strong> — within domestic (household)
                 premises, AC final circuits supplying luminaires shall have additional protection by
                 a 30 mA RCD. Where new lighting circuits are added as part of a GSHP supply upgrade,
                 this requirement applies.
@@ -687,7 +687,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-elec-yellow shrink-0" />
-            BS 7671:2018+A4:2026 Updates Relevant to GSHP Installations
+            BS 7671:2018+A4:2026 Requirements Relevant to GSHP Installations
           </h4>
           <ul className="space-y-3 text-white text-sm">
             <li>
@@ -699,7 +699,7 @@ const sections = [
             <li>
               <strong>30 mA RCD on lighting — Reg 411.3.4:</strong> New domestic lighting circuits
               added as part of a GSHP supply upgrade shall have additional protection by a 30 mA
-              RCD. This A4:2026 addition is mandatory for new circuits in household premises.
+              RCD. This has been mandatory in household premises since BS 7671:2018.
             </li>
             <li>
               <strong>SPDs for GSHP control electronics:</strong> GSHP controllers, inverter drives,
@@ -860,7 +860,7 @@ export default function GroundSourceHeatPumpElectricalPage() {
       title="Ground Source Heat Pump Electrical Guide UK"
       description="Ground source heat pump electrical installation in the UK: power demands, three-phase supply, circuit wiring, earthing and BS 7671 compliance."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Renewables"

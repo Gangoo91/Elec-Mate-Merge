@@ -889,11 +889,19 @@ export function validateNotesChange(_circuit: any, newNotes: string): Validation
  * Returns a flat patch keyed by dot-paths so it can be applied alongside
  * the user's direct edits.
  */
-export function recomputeDerivedFields(circuit: any): Record<string, unknown> {
+export function recomputeDerivedFields(
+  circuit: any,
+  /** Zs for the edited circuit, worked by the caller (zs-compliance computeZs). */
+  opts: { zs?: number | null } = {}
+): Record<string, unknown> {
   const patch: Record<string, unknown> = {};
   const cableSize = Number(circuit?.cableSize ?? 0);
   const cableType = circuit?.cableType;
-  const ib = Number(circuit?.calculations?.Ib ?? 0);
+  // Design current: the diversified Id where the design gives one (a cooker
+  // is ~40 A raw, ~19 A after OSG A2 diversity), else Ib — as the designer.
+  const ibRaw = Number(circuit?.calculations?.Ib ?? 0);
+  const id = Number(circuit?.calculations?.Id ?? 0);
+  const ib = id > 0 && !(id > ibRaw) ? id : ibRaw;
   const length = Number(circuit?.cableLength ?? 0);
   const rating = Number(circuit?.protectionDevice?.rating ?? 0);
   const curve = circuit?.protectionDevice?.curve;
@@ -936,7 +944,11 @@ export function recomputeDerivedFields(circuit: any): Record<string, unknown> {
   if (cableSize > 0) {
     const iz = lookupIz(cableSize, cableType);
     if (iz != null && rating > 0) {
-      patch['calculations.izCompliant'] = iz >= rating;
+      // A ring final on 30/32 A is deemed to meet 433.1.1 when Iz ≥ 20 A
+      // (Reg 433.1.204) — Iz ≥ In marked every edited 2.5mm² ring FAIL.
+      patch['calculations.izCompliant'] = detectRingFinal(circuit)
+        ? iz >= 20 && cableSize >= 2.5
+        : iz >= rating;
     }
   }
 
@@ -944,7 +956,12 @@ export function recomputeDerivedFields(circuit: any): Record<string, unknown> {
   const maxZs = lookupMaxZs(curve, rating);
   if (maxZs != null) {
     patch['calculations.maxZs'] = maxZs;
-    const correctedZs = Number(circuit?.calculations?.zs ?? 0);
+    // The stored Zs belongs to the cable before the edit; use the one worked
+    // for the edited circuit when the caller has it.
+    const freshZs = Number(opts.zs);
+    if (Number.isFinite(freshZs) && freshZs > 0) patch['calculations.zs'] = freshZs;
+    const correctedZs =
+      Number.isFinite(freshZs) && freshZs > 0 ? freshZs : Number(circuit?.calculations?.zs ?? 0);
     // zsCompliant: false = FAIL — earth fault disconnection time > 0.4 s
     patch['calculations.zsCompliant'] = correctedZs <= maxZs;
   }

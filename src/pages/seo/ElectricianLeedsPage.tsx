@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Northern Powergrid is the Distribution Network Operator for Leeds and the wider Yorkshire region. All new connections, supply upgrades, and generation notifications go through Northern Powergrid.',
   'Leeds has a distinctive property mix including Yorkshire stone-built back-to-back terraces (unique to the region), Victorian through-terraces in Headingley and Chapel Allerton, city centre apartments, and new-build estates in the suburbs.',
   'Headingley, Hyde Park, and Woodhouse have the highest concentration of student HMOs in Leeds, with strict licensing and electrical compliance requirements enforced by Leeds City Council.',
-  'A4:2026 update (Reg 411.3.4): all domestic consumer units now require 30 mA RCD protection on every lighting circuit — not just socket circuits. Any consumer unit replacement in a Leeds dwelling must include this protection.',
+  'Reg 411.3.4 (since BS 7671:2018): all domestic consumer units require 30 mA RCD protection on every lighting circuit — not just socket circuits. Any consumer unit replacement in a Leeds dwelling must include this protection.',
   'Since A4:2026 (Reg 534.4.1.6), electricians must assess and document whether surge protection devices (SPDs) are needed at consumer unit replacement. For installations with sensitive electronics or telecommunications links, SPDs add an additional cost item to budget.',
 ];
 
@@ -249,8 +249,8 @@ const sections = [
               <span>
                 <strong>Consumer unit replacement</strong> — £400 to £650 including supply
                 isolation, new BS 7671:2018+A4:2026 compliant unit with RCBOs, testing, and Part P
-                notification. Under A4:2026 (Reg 411.3.4), all lighting circuits in domestic
-                premises must now have 30 mA RCD protection — this is included in a properly
+                notification. Under Reg 411.3.4 (in force since 2018), all lighting circuits in domestic
+                premises must have 30 mA RCD protection — this is included in a properly
                 specified replacement. Electricians must also assess surge protection device (SPD)
                 provision under Reg 534.4.1.6; SPDs are typically an additional £50 to £150 where
                 installed.
@@ -569,7 +569,7 @@ export default function ElectricianLeedsPage() {
       title="Electrician in Leeds: Local Electricians 2026"
       description="Find qualified, registered electricians in Leeds. 2026 pricing guide, NICEIC/NAPIT verification, Yorkshire stone terrace rewiring."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

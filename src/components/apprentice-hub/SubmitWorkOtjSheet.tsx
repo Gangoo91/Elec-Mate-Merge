@@ -21,6 +21,11 @@ import {
   OTJ_LEARNER_ACTIVITY_TYPES,
   OTJ_NOT_FOR_LEARNERS,
 } from '@/data/otjActivityTypes';
+import {
+  OtjQualityPanel,
+  useOtjQualityCheck,
+} from '@/components/apprentice-hub/otj/OtjQualityPanel';
+import type { OtjEntryInput } from '@/lib/otj/otjQualityCheck';
 
 /* ==========================================================================
    SubmitWorkOtjSheet — apprentice-side. Submit a work-based off-the-job
@@ -108,6 +113,8 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   const [uid, setUid] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  // ELE-2052: the funding-rules check before the entry goes to the tutor.
+  const qc = useOtjQualityCheck();
 
   // Voice-first entry: speak the activity, the deterministic parser fills the
   // form (duration/date/type/title/description), the learner reviews + submits.
@@ -202,7 +209,9 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
       if (prefill) {
         setForm({
           activity_date:
-            prefill.activity_date && /^\d{4}-\d{2}-\d{2}$/.test(prefill.activity_date) && prefill.activity_date <= todayIso()
+            prefill.activity_date &&
+            /^\d{4}-\d{2}-\d{2}$/.test(prefill.activity_date) &&
+            prefill.activity_date <= todayIso()
               ? prefill.activity_date
               : todayIso(),
           activity_type: allowedType(prefill.activity_type),
@@ -221,6 +230,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
       }
       setPhotos([]);
       setSavedTick(false);
+      qc.reset();
     }
     wasOpenRef.current = open;
   }, [open, prefill]);
@@ -265,8 +275,39 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     }
   };
 
+  // The entry as the quality check sees it (ELE-2052).
+  const checkInput: OtjEntryInput = {
+    activity_date: form.activity_date,
+    activity_type: form.activity_type,
+    title: form.title.trim(),
+    description: form.description.trim(),
+    duration_minutes: minutes,
+    unit_codes: form.unit_codes_text
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean),
+    hours: form.hours,
+  };
+  const fixField = (field: string | undefined) => {
+    const el = document.getElementById(`otj-${field ?? 'description'}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      (el as HTMLElement).focus({ preventScroll: true });
+    }
+  };
+
   const handleSubmit = async () => {
-    if (!valid || saving) return;
+    if (!valid || saving || qc.checking) return;
+    // ELE-2052: hold the send while the check shows something to fix.
+    const gate = await qc.gate(checkInput);
+    if (!gate.ok) {
+      if (gate.reason) toast({ title: 'Before you send', description: gate.reason });
+      else
+        document
+          .querySelector('[data-testid="otj-quality-panel"]')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     setSaving(true);
     try {
       const { data: userData } = await supabase.auth.getUser();
@@ -331,6 +372,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
           verification_status: 'pending',
           in_working_hours: form.hours === 'in',
           outside_hours_compensated: form.hours === 'outside_paid',
+          quality_check: gate.record ?? null,
         } as never)
         .select('id')
         .maybeSingle();
@@ -341,8 +383,8 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
       toast({
         title: noCollege ? 'Activity saved' : 'Sent to your tutor',
         description: noCollege
-          ? `${minutes}m · ${form.title.trim()} — send your supervisor an attestation link to confirm it.`
-          : `${minutes}m · ${form.title.trim()} — awaiting verification.`,
+          ? `${minutes} minutes, ${form.title.trim()}. Send your supervisor a link so they can confirm it.`
+          : `${minutes} minutes, ${form.title.trim()}. Your tutor will check it and sign it off.`,
       });
       onSubmitted?.((inserted as { id?: string } | null)?.id ?? null);
       setTimeout(() => {
@@ -376,13 +418,24 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
         disabled={!valid || saving}
         className={buttonPrimaryCn}
       >
-        {savedTick ? 'Saved ✓' : saving ? 'Saving…' : noCollege ? 'Save activity' : 'Send to tutor'}
+        {savedTick
+          ? 'Saved ✓'
+          : saving
+            ? 'Saving…'
+            : qc.checking
+              ? 'Checking…'
+              : qc.held?.flags.length && qc.held.key === JSON.stringify(checkInput)
+                ? 'Send with my note'
+                : noCollege
+                  ? 'Save activity'
+                  : 'Send to tutor'}
       </button>
     </div>
   );
 
   return (
     <FormSheet
+      width="wide"
       open={open}
       onOpenChange={onOpenChange}
       eyebrow="Add training"
@@ -394,130 +447,151 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
       }
       footer={footer}
     >
-      {draft.hasDraft && draft.draft && !prefill && (
-        <div className={cn('space-y-3 rounded-2xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
-          <div>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              Unfinished entry
-            </span>
-            <p className="mt-1 text-[13px] leading-snug text-white">
-              {draft.draft.title.trim() || 'An entry you started earlier'} — pick up where you left
-              off?
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <button type="button" onClick={draft.clear} className={cn(buttonSecondaryCn, 'h-11')}>
-              Discard
-            </button>
+      {/* Wide on desktop: guidance and the quick inputs on the left, the
+          detail on the right. One column on a phone. */}
+      <div className="grid gap-5 lg:grid-cols-2 lg:gap-x-10">
+        <div className="lg:col-span-2 empty:hidden">
+          <OtjQualityPanel qc={qc} current={checkInput} onFix={fixField} />
+        </div>
+        <div className="space-y-5">
+          {draft.hasDraft && draft.draft && !prefill && (
+            <div
+              className={cn('space-y-3 rounded-2xl border border-white/[0.14] p-4', CARD_SURFACE)}
+            >
+              <div>
+                <span className="text-[13px] font-semibold text-white">Unfinished entry</span>
+                <p className="mt-1 text-[13px] leading-snug text-white">
+                  {draft.draft.title.trim() || 'An entry you started earlier'}. Pick up where you
+                  left off?
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={draft.clear}
+                  className={cn(buttonSecondaryCn, 'h-11')}
+                >
+                  Discard
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (draft.draft) setForm(draft.draft);
+                    draft.dismiss();
+                  }}
+                  className={cn(buttonPrimaryCn, 'h-11')}
+                >
+                  Resume
+                </button>
+              </div>
+            </div>
+          )}
+          <div className="rounded-2xl border border-white/[0.12]">
             <button
               type="button"
-              onClick={() => {
-                if (draft.draft) setForm(draft.draft);
-                draft.dismiss();
-              }}
-              className={cn(buttonPrimaryCn, 'h-11')}
+              onClick={() => setShowRules((v) => !v)}
+              aria-expanded={showRules}
+              className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3 text-left touch-manipulation"
             >
-              Resume
+              <span className="text-[13px] font-semibold text-white">
+                What counts as off-the-job training?
+              </span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 shrink-0 text-white transition-transform',
+                  showRules && 'rotate-180'
+                )}
+              />
             </button>
+            {showRules && (
+              <div className="grid gap-4 border-t border-white/[0.12] px-4 py-3.5 sm:grid-cols-2">
+                <div>
+                  <p className="text-[13px] font-semibold text-elec-yellow">Counts</p>
+                  <ul className="mt-2 space-y-1.5">
+                    {OTJ_COUNTS.map((t) => (
+                      <li key={t} className="text-[13px] leading-snug text-white">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-[13px] font-semibold text-white">Does not count</p>
+                  <ul className="mt-2 space-y-1.5">
+                    {OTJ_DOES_NOT_COUNT.map((t) => (
+                      <li key={t} className="text-[13px] leading-snug text-white">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      )}
-      <div className="rounded-2xl border border-white/[0.12]">
-        <button
-          type="button"
-          onClick={() => setShowRules((v) => !v)}
-          aria-expanded={showRules}
-          className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3 text-left touch-manipulation"
-        >
-          <span className="text-[13px] font-semibold text-white">What counts as off-the-job training?</span>
-          <ChevronDown
-            className={cn('h-4 w-4 shrink-0 text-white transition-transform', showRules && 'rotate-180')}
-          />
-        </button>
-        {showRules && (
-          <div className="grid gap-4 border-t border-white/[0.12] px-4 py-3.5 sm:grid-cols-2">
-            <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">Counts</p>
-              <ul className="mt-2 space-y-1.5">
-                {OTJ_COUNTS.map((t) => (
-                  <li key={t} className="text-[13px] leading-snug text-white">{t}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white">Does not count</p>
-              <ul className="mt-2 space-y-1.5">
-                {OTJ_DOES_NOT_COUNT.map((t) => (
-                  <li key={t} className="text-[13px] leading-snug text-white">{t}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-      </div>
 
-      {/* Voice-first entry — speak it, the parser fills the form, you
+          {/* Voice-first entry — speak it, the parser fills the form, you
                 check it. Gloves-friendly: one tap to start, one to stop. */}
-      {speech.isSupported && (
-        <div
-          className={cn(
-            'rounded-2xl border p-3.5 space-y-2.5 transition-colors',
-            CARD_SURFACE,
-            speech.isListening ? 'border-elec-yellow' : 'border-elec-yellow/35'
-          )}
-        >
-          <button
-            type="button"
-            onClick={speech.isListening ? handleVoiceStop : handleVoiceStart}
-            className={cn(
-              'w-full h-11 rounded-xl inline-flex items-center justify-center gap-2 text-[13px] font-medium touch-manipulation transition-colors',
-              speech.isListening
-                ? 'bg-elec-yellow text-black'
-                : 'border border-elec-yellow/35 bg-white/[0.06] text-elec-yellow hover:bg-white/[0.1]'
-            )}
-          >
-            {speech.isListening ? (
-              <>
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-black/60 animate-ping" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-black" />
-                </span>
-                <Square className="h-3.5 w-3.5" />
-                Stop &amp; fill the form
-              </>
-            ) : (
-              <>
-                <Mic className="h-4 w-4" />
-                Speak it — what, how long, when
-              </>
-            )}
-          </button>
-          {(speech.isListening || speech.interimTranscript || speech.transcript) && (
-            <p className="text-[12.5px] text-white leading-snug min-h-[18px]">
-              {speech.transcript}
-              <span className="text-white">{speech.interimTranscript}</span>
-              {speech.isListening && !speech.transcript && !speech.interimTranscript && (
-                <span className="text-white">
-                  Listening… e.g. &ldquo;Two hours second fix wiring at the Hartlepool job
-                  yesterday&rdquo;
-                </span>
+          {speech.isSupported && (
+            <div
+              className={cn(
+                'rounded-2xl border p-3.5 space-y-2.5 transition-colors',
+                CARD_SURFACE,
+                speech.isListening ? 'border-elec-yellow' : 'border-white/[0.14]'
               )}
-            </p>
+            >
+              <button
+                type="button"
+                onClick={speech.isListening ? handleVoiceStop : handleVoiceStart}
+                className={cn(
+                  'w-full h-11 rounded-xl inline-flex items-center justify-center gap-2 text-[13px] font-medium touch-manipulation transition-colors',
+                  speech.isListening
+                    ? 'bg-elec-yellow text-black'
+                    : 'border border-white/[0.14] bg-white/[0.04] font-semibold text-white hover:border-white/[0.3] active:bg-white/[0.08]'
+                )}
+              >
+                {speech.isListening ? (
+                  <>
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-black/60 animate-ping" />
+                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-black" />
+                    </span>
+                    <Square className="h-3.5 w-3.5" />
+                    Stop &amp; fill the form
+                  </>
+                ) : (
+                  <>
+                    <Mic className="h-4 w-4" />
+                    Speak it: what, how long, when
+                  </>
+                )}
+              </button>
+              {(speech.isListening || speech.interimTranscript || speech.transcript) && (
+                <p className="text-[12.5px] text-white leading-snug min-h-[18px]">
+                  {speech.transcript}
+                  <span className="text-white">{speech.interimTranscript}</span>
+                  {speech.isListening && !speech.transcript && !speech.interimTranscript && (
+                    <span className="text-white">
+                      Listening… e.g. &ldquo;Two hours second fix wiring at the Hartlepool job
+                      yesterday&rdquo;
+                    </span>
+                  )}
+                </p>
+              )}
+            </div>
           )}
-        </div>
-      )}
 
-      <Field label="Date">
-        <input
-          type="date"
-          value={form.activity_date}
-          max={todayIso()}
-          onChange={(e) => setForm((f) => ({ ...f, activity_date: e.target.value }))}
-          className={inputClass}
-        />
-      </Field>
+          <Field label="Date">
+            <input
+              id="otj-activity_date"
+              type="date"
+              value={form.activity_date}
+              max={todayIso()}
+              onChange={(e) => setForm((f) => ({ ...f, activity_date: e.target.value }))}
+              className={inputClass}
+            />
+          </Field>
 
-      {/*
+          {/*
               Chips, not ten stacked cards.
               Two problems here. The selected state was INVISIBLE — selected
               carried `border-white/[0.06]` against unselected's
@@ -528,182 +602,194 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
               The hint now shows once, for the current choice, instead of ten
               times for choices you have not made.
             */}
-      <Field label="What kind of training?">
-        <div className="flex flex-wrap gap-2">
-          {ACTIVITY_TYPES.map((a) => {
-            const on = form.activity_type === a.value;
-            return (
-              <button
-                key={a.value}
-                type="button"
-                aria-pressed={on}
-                onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
-                className={cn(
-                  'inline-flex h-11 items-center rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation active:scale-[0.98]',
-                  on
-                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                    : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
-                )}
-              >
-                {a.label}
-              </button>
-            );
-          })}
-        </div>
-        {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint && (
-          <p className="mt-2 text-[12px] leading-snug text-white">
-            {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint}
-          </p>
-        )}
-      </Field>
-
-      <Field label="Headline">
-        <input
-          type="text"
-          value={form.title}
-          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-          placeholder="e.g. Hager EV charger installer course"
-          maxLength={120}
-          className={inputClass}
-        />
-      </Field>
-
-      <Field label="Duration">
-        <div className="space-y-2">
-          <input
-            type="number"
-            inputMode="numeric"
-            min={1}
-            max={1440}
-            value={form.duration_minutes}
-            onChange={(e) => setForm((f) => ({ ...f, duration_minutes: e.target.value }))}
-            placeholder="Minutes"
-            className={inputClass}
-          />
-          <div className="flex items-center flex-wrap gap-1.5">
-            {DURATION_PRESETS.map((p) => (
-              <button
-                key={p}
-                type="button"
-                onClick={() => setForm((f) => ({ ...f, duration_minutes: String(p) }))}
-                aria-pressed={form.duration_minutes === String(p)}
-                className={cn(
-                  'h-11 rounded-full border px-3.5 text-[12.5px] tabular-nums transition-colors touch-manipulation',
-                  form.duration_minutes === String(p)
-                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                    : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
-                )}
-              >
-                {p < 60 ? `${p}m` : `${p / 60}h`}
-              </button>
-            ))}
-          </div>
-        </div>
-      </Field>
-
-      <Field label="When was it?">
-        <div className="space-y-2">
-          {(
-            [
-              ['in', 'In my normal paid working hours'],
-              ['outside_paid', 'Outside my hours, agreed with my employer and paid back (time off or extra pay)'],
-              ['outside_unpaid', 'In my own time, not paid back'],
-            ] as Array<[HoursAnswer, string]>
-          ).map(([value, label]) => {
-            const on = form.hours === value;
-            return (
-              <button
-                key={value}
-                type="button"
-                aria-pressed={on}
-                onClick={() => setForm((f) => ({ ...f, hours: value }))}
-                className={cn(
-                  'flex min-h-11 w-full items-center rounded-xl border px-3.5 py-2.5 text-left text-[13px] leading-snug touch-manipulation',
-                  on ? 'border-elec-yellow bg-elec-yellow font-semibold text-black' : 'border-white/[0.12] bg-white/[0.06] text-white'
-                )}
-              >
-                {label}
-              </button>
-            );
-          })}
-          {form.hours === 'outside_unpaid' && (
-            <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3.5 py-2.5 text-[13px] leading-snug text-orange-300">
-              Training in your own time that you were not paid back for does not count as off-the-job
-              training. Talk to your employer: if they agree to give you time off in lieu or extra pay,
-              it can count.
-            </p>
-          )}
-        </div>
-      </Field>
-
-      <Field
-        label="What did you learn?"
-        hint="Be specific. Your tutor checks it teaches something new for your apprenticeship."
-      >
-        <textarea
-          value={form.description}
-          rows={4}
-          onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-          placeholder="Who ran it, what it covered, what you can now do that you could not before, and which part of your apprenticeship it relates to."
-          className={textareaClass}
-        />
-        <div className="mt-1 text-right text-[10.5px] text-white tabular-nums">
-          {form.description.trim().length} chars
-        </div>
-      </Field>
-
-      <Field label="Unit codes covered" hint="Optional. Comma-separated, e.g. 304, 305">
-        <input
-          type="text"
-          value={form.unit_codes_text}
-          onChange={(e) => setForm((f) => ({ ...f, unit_codes_text: e.target.value }))}
-          placeholder="304, 305"
-          className={inputClass}
-        />
-      </Field>
-
-      <Field
-        label="Photo evidence"
-        hint="Up to 4 photos · 8MB each · optional but strengthens verification"
-      >
-        <div className="space-y-2">
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            multiple
-            className="hidden"
-            onChange={(e) => addFiles(e.target.files)}
-          />
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
-            disabled={photos.length >= 4}
-            className={cn(buttonSecondaryCn, 'h-11 w-full text-[13px]')}
-          >
-            {photos.length === 0 ? 'Add photos' : `Add more (${photos.length}/4)`}
-          </button>
-          {photos.length > 0 && (
-            <ul className="space-y-1">
-              {photos.map((p, i) => (
-                <li
-                  key={i}
-                  className="flex items-center justify-between gap-3 px-3 py-2 rounded-md border border-white/[0.06] bg-white/[0.02]"
-                >
-                  <span className="truncate text-[12px] text-white">{p.name}</span>
+          <Field label="What kind of training?">
+            <div className="flex flex-wrap gap-2">
+              {ACTIVITY_TYPES.map((a) => {
+                const on = form.activity_type === a.value;
+                return (
                   <button
+                    key={a.value}
                     type="button"
-                    onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
-                    className="text-[11px] text-white hover:text-white tabular-nums"
+                    aria-pressed={on}
+                    onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
+                    className={cn(
+                      'inline-flex h-11 items-center rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation active:scale-[0.98]',
+                      on
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
+                    )}
                   >
-                    remove
+                    {a.label}
                   </button>
-                </li>
-              ))}
-            </ul>
-          )}
+                );
+              })}
+            </div>
+            {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint && (
+              <p className="mt-2 text-[12px] leading-snug text-white">
+                {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint}
+              </p>
+            )}
+          </Field>
         </div>
-      </Field>
+        <div className="space-y-5">
+          <Field label="Headline">
+            <input
+              id="otj-title"
+              type="text"
+              value={form.title}
+              onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+              placeholder="e.g. Hager EV charger installer course"
+              maxLength={120}
+              className={inputClass}
+            />
+          </Field>
+
+          <Field label="Duration">
+            <div className="space-y-2">
+              <input
+                id="otj-duration_minutes"
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={1440}
+                value={form.duration_minutes}
+                onChange={(e) => setForm((f) => ({ ...f, duration_minutes: e.target.value }))}
+                placeholder="Minutes"
+                className={inputClass}
+              />
+              <div className="flex items-center flex-wrap gap-1.5">
+                {DURATION_PRESETS.map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, duration_minutes: String(p) }))}
+                    aria-pressed={form.duration_minutes === String(p)}
+                    className={cn(
+                      'h-11 rounded-full border px-3.5 text-[12.5px] tabular-nums transition-colors touch-manipulation',
+                      form.duration_minutes === String(p)
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                    )}
+                  >
+                    {p < 60 ? `${p}m` : `${p / 60}h`}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </Field>
+
+          <Field label="When was it?">
+            <div className="space-y-2" id="otj-hours" tabIndex={-1}>
+              {(
+                [
+                  ['in', 'In my normal paid working hours'],
+                  [
+                    'outside_paid',
+                    'Outside my hours, agreed with my employer and paid back (time off or extra pay)',
+                  ],
+                  ['outside_unpaid', 'In my own time, not paid back'],
+                ] as Array<[HoursAnswer, string]>
+              ).map(([value, label]) => {
+                const on = form.hours === value;
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => setForm((f) => ({ ...f, hours: value }))}
+                    className={cn(
+                      'flex min-h-11 w-full items-center rounded-xl border px-3.5 py-2.5 text-left text-[13px] leading-snug touch-manipulation',
+                      on
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] text-white'
+                    )}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+              {form.hours === 'outside_unpaid' && (
+                <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3.5 py-2.5 text-[13px] leading-snug text-orange-300">
+                  Training in your own time that you were not paid back for does not count as
+                  off-the-job training. Talk to your employer: if they agree to give you time off in
+                  lieu or extra pay, it can count.
+                </p>
+              )}
+            </div>
+          </Field>
+
+          <Field
+            label="What did you learn?"
+            hint="Be specific. Your tutor checks it teaches something new for your apprenticeship."
+          >
+            <textarea
+              id="otj-description"
+              value={form.description}
+              rows={4}
+              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+              placeholder="Who ran it, what it covered, what you can now do that you could not before, and which part of your apprenticeship it relates to."
+              className={textareaClass}
+            />
+            <div className="mt-1 text-right text-[12px] text-white tabular-nums">
+              {form.description.trim().length} chars
+            </div>
+          </Field>
+
+          <Field label="Unit codes covered" hint="Optional. Comma-separated, e.g. 304, 305">
+            <input
+              id="otj-unit_codes_text"
+              type="text"
+              value={form.unit_codes_text}
+              onChange={(e) => setForm((f) => ({ ...f, unit_codes_text: e.target.value }))}
+              placeholder="304, 305"
+              className={inputClass}
+            />
+          </Field>
+
+          <Field
+            label="Photo evidence"
+            hint="Up to 4 photos · 8MB each · optional but strengthens verification"
+          >
+            <div className="space-y-2">
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => addFiles(e.target.files)}
+              />
+              <button
+                type="button"
+                onClick={() => fileRef.current?.click()}
+                disabled={photos.length >= 4}
+                className={cn(buttonSecondaryCn, 'h-11 w-full text-[13px]')}
+              >
+                {photos.length === 0 ? 'Add photos' : `Add more (${photos.length}/4)`}
+              </button>
+              {photos.length > 0 && (
+                <ul className="space-y-1">
+                  {photos.map((p, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center justify-between gap-3 px-3 py-2 rounded-md border border-white/[0.06] bg-white/[0.02]"
+                    >
+                      <span className="truncate text-[12px] text-white">{p.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
+                        className="text-[12px] text-white hover:text-white tabular-nums"
+                      >
+                        remove
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </Field>
+        </div>
+      </div>
     </FormSheet>
   );
 }
@@ -732,7 +818,7 @@ function Field({
     <div>
       <div className="flex items-baseline justify-between gap-3">
         <label className={cn(labelCn, 'mb-0')}>{label}</label>
-        {hint && <span className="text-[10.5px] text-white leading-snug">{hint}</span>}
+        {hint && <span className="text-[12px] text-white leading-snug">{hint}</span>}
       </div>
       <div className="mt-1.5">{children}</div>
     </div>

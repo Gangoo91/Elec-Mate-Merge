@@ -4,6 +4,7 @@ import { FormSheet } from '@/components/forms/FormSheet';
 import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import { usePolicyTemplates, type PolicyTemplate } from '@/hooks/usePolicyTemplates';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ==========================================================================
    PolicyTemplatesSheet — Compliance Phase 6.
@@ -118,13 +119,13 @@ export function PolicyTemplatesSheet({ open, onOpenChange }: Props) {
                     {active && <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-elec-yellow" aria-hidden />}
                     <div className="flex items-baseline justify-between gap-3 pl-2">
                       <span className="text-[14px] font-semibold leading-snug text-white">{t.title}</span>
-                      <span className="shrink-0 text-[11.5px] font-medium text-white">
+                      <span className="shrink-0 text-[12px] font-medium text-white">
                         {CATEGORY_LABEL[t.category] ?? t.category}
                       </span>
                     </div>
                     <p className="mt-1 line-clamp-2 pl-2 text-[12.5px] leading-snug text-white">{t.summary}</p>
                     {t.ofsted_areas.length > 0 && (
-                      <p className="mt-1 pl-2 text-[11.5px] text-white" title="Ofsted EIF judgement areas this template addresses">
+                      <p className="mt-1 pl-2 text-[12px] text-white" title="Ofsted EIF judgement areas this template addresses">
                         Ofsted: {t.ofsted_areas.slice(0, 3).join(' · ')}
                       </p>
                     )}
@@ -163,7 +164,7 @@ export function PolicyTemplatesSheet({ open, onOpenChange }: Props) {
                 {selected.suggested_owner_role && (
                   <div>
                     <dt className="text-[12px] font-medium text-white">Suggested owner</dt>
-                    <dd className="font-semibold text-white">{selected.suggested_owner_role}</dd>
+                    <dd className="font-semibold text-white">{keyLabel(selected.suggested_owner_role)}</dd>
                   </div>
                 )}
                 {selected.requires_acknowledgement && (

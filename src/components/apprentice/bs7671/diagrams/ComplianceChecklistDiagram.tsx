@@ -59,7 +59,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Regulation 641.3 — inspection requirements
         </span>
         <p className="text-[14px] text-white leading-relaxed">
@@ -76,10 +76,10 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2"
           >
             <div className="space-y-0.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[12px] font-medium text-white">
                 {category.category}
               </span>
-              <p className="text-[11px] text-white font-mono">{category.regulation}</p>
+              <p className="text-[12px] text-white font-mono">{category.regulation}</p>
             </div>
             <ul className="space-y-1.5">
               {category.items.map((item, itemIndex) => (
@@ -97,12 +97,12 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Competent person requirements (Regulation 641.4)
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Inspector qualifications
             </span>
             <ul className="space-y-1.5">
@@ -123,7 +123,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Testing personnel
             </span>
             <ul className="space-y-1.5">
@@ -147,7 +147,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
       </div>
 
       <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+        <span className="text-[12px] font-medium text-red-300">
           Non-compliance action required
         </span>
         <p className="text-[14px] text-white leading-relaxed">If non-compliance is identified:</p>

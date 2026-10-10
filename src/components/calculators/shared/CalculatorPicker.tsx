@@ -142,8 +142,8 @@ export function CalculatorPicker({ value, onChange }: Props) {
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          'group relative flex w-full items-center gap-3 overflow-hidden rounded-2xl border text-left',
-          'border-elec-yellow/35 px-4 py-3 sm:px-5',
+          'group relative -mx-4 flex w-[calc(100%+2rem)] items-center gap-3 overflow-hidden border-y text-left sm:mx-0 sm:w-full sm:rounded-2xl sm:border-x',
+          'border-white/[0.14] px-4 py-3 sm:px-5',
           CARD_SURFACE,
           'transition-[background-image,border-color,transform] duration-150 ease-out',
           'hover:border-elec-yellow/60 active:scale-[0.99] touch-manipulation',
@@ -155,16 +155,18 @@ export function CalculatorPicker({ value, onChange }: Props) {
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
         />
         <span className="min-w-0 flex-1">
-          <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+          <span className="block text-[13px] font-semibold text-elec-yellow">
             {current.category}
           </span>
-          <span className="mt-0.5 block truncate text-[16px] font-semibold leading-tight tracking-tight text-white">
+          <span className="mt-0.5 block text-[17px] font-semibold leading-snug tracking-tight text-white">
             {current.label}
           </span>
         </span>
-        <span className="flex shrink-0 items-center gap-1.5 text-[12.5px] font-semibold text-white">
+        {/* Says what it does (and how many there are) rather than a bare
+            magnifier on a phone. */}
+        <span className="flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white">
           <Search className="h-4 w-4" aria-hidden />
-          <span className="hidden sm:inline">Change</span>
+          Change
         </span>
       </button>
 
@@ -177,7 +179,11 @@ export function CalculatorPicker({ value, onChange }: Props) {
           {/* Capped and centred: on a wide monitor a full-bleed list strands
               every label at the far left of a 2400px row. */}
           <div className="mx-auto flex h-full w-full max-w-5xl flex-col" onKeyDown={onKeyDown}>
-            <div className="shrink-0 border-b border-white/[0.10] p-4">
+            <div className="shrink-0 border-b border-white/[0.10] p-4 pt-2">
+              <div
+                aria-hidden
+                className="mx-auto mb-3 h-1 w-10 rounded-full bg-white/25 sm:hidden"
+              />
               <div className="flex items-center gap-2">
                 <div className="relative min-w-0 flex-1">
                   <Search
@@ -208,7 +214,7 @@ export function CalculatorPicker({ value, onChange }: Props) {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <p className="mt-2 text-[11px] tabular-nums text-white">
+              <p className="mt-2 text-[13px] tabular-nums text-white">
                 {query
                   ? `${results.length} of ${CALCULATORS.length} calculators`
                   : `${CALCULATORS.length} calculators`}
@@ -216,7 +222,10 @@ export function CalculatorPicker({ value, onChange }: Props) {
               </p>
             </div>
 
-            <div ref={listRef} className="min-h-0 flex-1 overflow-y-auto px-2 pb-4">
+            <div
+              ref={listRef}
+              className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-[calc(1rem+env(safe-area-inset-bottom))]"
+            >
               {flat.length === 0 ? (
                 <p className="px-4 py-10 text-center text-[13px] text-white">
                   Nothing matches “{query}”.
@@ -245,9 +254,7 @@ export function CalculatorPicker({ value, onChange }: Props) {
                   {recent.length > 0 && (
                     <div>
                       <div className="sticky top-0 z-10 bg-[hsl(0_0%_9%_/_0.95)] px-2 pb-2 pt-3.5 backdrop-blur-sm">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                          Recent
-                        </p>
+                        <p className="text-[13px] font-semibold text-white">Recent</p>
                       </div>
                       <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2 xl:grid-cols-3">
                         {recent.map((c, i) => (
@@ -268,9 +275,7 @@ export function CalculatorPicker({ value, onChange }: Props) {
                   {grouped.map((group) => (
                     <div key={group.category}>
                       <div className="sticky top-0 z-10 bg-[hsl(0_0%_9%_/_0.95)] px-2 pb-2 pt-3.5 backdrop-blur-sm">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                          {group.category}
-                        </p>
+                        <p className="text-[13px] font-semibold text-white">{group.category}</p>
                       </div>
                       {/* Columns from md: up — 63 items one-per-row is a scroll,
                         not a menu. */}
@@ -342,14 +347,14 @@ function Row({
       <span className="min-w-0 flex-1">
         <span
           className={cn(
-            'block truncate text-[14.5px] leading-tight',
+            'block text-[15px] leading-snug',
             active ? 'font-semibold text-elec-yellow' : 'font-medium text-white'
           )}
         >
           {entry.label}
         </span>
         {showCategory && (
-          <span className="mt-0.5 block truncate text-[11px] leading-tight text-white">
+          <span className="mt-0.5 block text-[12.5px] leading-snug text-white">
             {entry.category}
           </span>
         )}

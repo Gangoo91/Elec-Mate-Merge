@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // and BS EN 61643 (Low-voltage surge protective devices).
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const spdChapter443A4Config: GeneratedGuideConfig = {
   pagePath: '/guides/spd-chapter-443-a4-2026',
@@ -365,7 +365,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'A4:2026 is also the amendment that brings the wider package of AFDD changes, TN-C-S (PNB) earthing updates, and new schedule columns. For the surge-protection-specific picture of A4:2026, the most important practical change is the CRL methodology in 443.5 — for the rest, see our [BS 7671 A4:2026 AFDD changes](/guides/bs-7671-a4-2026-afdd-changes) guide and the broader [BS 7671 A4:2026 summary](/guides/bs-7671-a4-2026-summary).',
+            'A4:2026 also brings protective neutral bonding (PNB), Table 52.1 and a new Chapter 57 for batteries. The AFDD requirement in Regulation 421.1.7 dates from A2:2022, with A4:2026 only rewording the high rise premises entry. See our [BS 7671 AFDD rules](/guides/bs-7671-a4-2026-afdd-changes) guide and the broader [BS 7671 A4:2026 summary](/guides/bs-7671-a4-2026-summary).',
         },
         {
           type: 'callout',
@@ -543,7 +543,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
       description:
-        'The full A4:2026 picture — AFDD changes, TN-C-S (PNB) earthing updates, new schedule columns, model form changes…',
+        'The full A4:2026 picture, including TN-C-S (PNB) earthing, Table 52.1, Chapter 57 and model form changes.',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -573,9 +573,9 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'BS 7671 A4:2026 AFDD Changes',
+      title: 'BS 7671 AFDD Rules (Reg 421.1.7)',
       description:
-        'The companion A4:2026 update on AFDDs — when they are mandatory, where they live in the consumer unit, and how they relate to the SPD and RCBO stack.',
+        'The companion guide on AFDDs: when they are mandatory, where they live in the consumer unit, and how they relate to the SPD and RCBO stack.',
       icon: 'BookOpen',
       category: 'Guide',
     },

@@ -61,9 +61,7 @@ const CPDTracker = () => {
       <div className="min-h-screen bg-elec-dark animate-fade-in">
         <div className="sticky top-0 z-20 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06] p-4">
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Professional development
-            </span>
+            <span className="text-[13px] font-semibold text-white">Professional development</span>
             <h1 className="text-[18px] font-semibold text-white leading-tight">CPD tracker</h1>
           </div>
         </div>
@@ -84,7 +82,7 @@ const CPDTracker = () => {
                   variant="ghost"
                   size="sm"
                   onClick={() => setActiveTab('overview')}
-                  className="h-10 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
@@ -101,7 +99,7 @@ const CPDTracker = () => {
                   variant="ghost"
                   size="sm"
                   onClick={() => setActiveTab('overview')}
-                  className="h-10 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
@@ -118,7 +116,7 @@ const CPDTracker = () => {
                   variant="ghost"
                   size="sm"
                   onClick={() => setActiveTab('overview')}
-                  className="h-10 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
@@ -168,9 +166,7 @@ const CPDTracker = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Professional development
-        </span>
+        <span className="text-[13px] font-semibold text-white">Professional development</span>
         <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           CPD tracker
         </h1>

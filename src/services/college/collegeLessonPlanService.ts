@@ -17,7 +17,17 @@ export interface CollegeLessonPlan {
   scheduled_room?: string | null;
   /** 'HH:MM:SS' when the lesson has a start time; sets its register session. */
   scheduled_start_time?: string | null;
+  /**
+   * List reads (getCollegeLessonPlans) leave out the heavy `content` and
+   * `slide_deck_json` columns and return this instead (ELE-1912). Read a
+   * single plan by id for its body.
+   */
+  has_content?: boolean;
 }
+
+/** Every column a lesson-plan LIST needs: everything except the lesson body and slide deck. */
+const LIST_COLUMNS =
+  'id, college_id, title, cohort_id, tutor_id, scheduled_date, duration_minutes, objectives, resources, status, created_at, scheduled_start_time, scheduled_room, has_content';
 
 /** A calendar day in Europe/London as YYYY-MM-DD, `offsetDays` from today. */
 const londonIso = (offsetDays = 0) => {
@@ -29,7 +39,7 @@ const londonIso = (offsetDays = 0) => {
 export const getCollegeLessonPlans = async (collegeId?: string): Promise<CollegeLessonPlan[]> => {
   let query = supabase
     .from('college_lesson_plans')
-    .select('*')
+    .select(LIST_COLUMNS)
     .order('scheduled_date', { ascending: false });
 
   if (collegeId) {
@@ -43,7 +53,8 @@ export const getCollegeLessonPlans = async (collegeId?: string): Promise<College
     throw error;
   }
 
-  return data || [];
+  // has_content is a computed column the generated types do not know.
+  return (data || []) as unknown as CollegeLessonPlan[];
 };
 
 export const getLessonPlansByCohort = async (cohortId: string): Promise<CollegeLessonPlan[]> => {
@@ -80,7 +91,10 @@ export const getLessonPlansByTutor = async (tutorId: string): Promise<CollegeLes
  * Lessons in the next `days` calendar days in Europe/London, today included
  * (days = 7 → today and the six days after it).
  */
-export const getUpcomingLessons = async (days: number = 7, collegeId?: string): Promise<CollegeLessonPlan[]> => {
+export const getUpcomingLessons = async (
+  days: number = 7,
+  collegeId?: string
+): Promise<CollegeLessonPlan[]> => {
   let query = supabase
     .from('college_lesson_plans')
     .select('*')
@@ -182,10 +196,7 @@ export const markLessonDelivered = async (id: string): Promise<boolean> => {
 };
 
 export const deleteLessonPlan = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('college_lesson_plans')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('college_lesson_plans').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting lesson plan:', error);

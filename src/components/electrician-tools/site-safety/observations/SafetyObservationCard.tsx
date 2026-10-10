@@ -121,6 +121,10 @@ export function SafetyObservationCard({ onBack, launch }: SafetyObservationCardP
   const [observerSigDataUrl, setObserverSigDataUrl] = useState('');
   const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the observation with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
 
   // Templates
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
@@ -177,6 +181,8 @@ export function SafetyObservationCard({ onBack, launch }: SafetyObservationCardP
     setObserverSigDataUrl('');
     setLinkedJobId(null);
     setLinkedJobTitle(null);
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
   };
 
   /**
@@ -212,6 +218,7 @@ export function SafetyObservationCard({ onBack, launch }: SafetyObservationCardP
       observer_signature: observerSigDataUrl || undefined,
       observer_name: observerSigName || undefined,
       job_id: linkedJobId,
+      ...(employerJobId ? { employer_job_id: employerJobId } : {}),
     });
     haptic.success();
     clearDraft();
@@ -483,6 +490,12 @@ export function SafetyObservationCard({ onBack, launch }: SafetyObservationCardP
                 onSelect={(id, title) => {
                   setLinkedJobId(id);
                   setLinkedJobTitle(title);
+                }}
+                employerJobId={employerJobId}
+                employerJobTitle={employerJobTitle}
+                onSelectEmployerJob={(id, title) => {
+                  setEmployerJobId(id);
+                  setEmployerJobTitle(title);
                 }}
               />
             </FormCard>

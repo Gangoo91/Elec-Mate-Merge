@@ -97,9 +97,7 @@ const ToolStorage = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Storage
-        </span>
+        <span className="text-[13px] font-semibold text-white">Storage</span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           Tool storage solutions
         </h2>
@@ -130,7 +128,7 @@ const ToolStorage = () => {
                     </span>
                   </div>
 
-                  <p className="text-[13px] text-white leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     <strong>Best for:</strong> {option.bestFor}
                   </p>
 
@@ -153,9 +151,7 @@ const ToolStorage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Organisation tips
-          </span>
+          <span className="text-[13px] font-semibold text-white">Organisation tips</span>
           <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -177,9 +173,7 @@ const ToolStorage = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Security essentials
-          </span>
+          <span className="text-[13px] font-semibold text-white">Security essentials</span>
           <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -201,9 +195,7 @@ const ToolStorage = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Efficiency tips
-          </span>
+          <span className="text-[13px] font-semibold text-white">Efficiency tips</span>
           <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />

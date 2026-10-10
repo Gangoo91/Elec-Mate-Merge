@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
-import { MyCollegeIdentityCard } from '@/components/apprentice-hub/MyCollegeIdentityCard';
-import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { CollegePageHeader } from '@/components/college/ui/CollegeUi';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 
 /* ==========================================================================
    SubPageShell — the frame for every College Hub sub-page
@@ -28,6 +28,13 @@ import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp'
       fold on a phone. The section name lives in the masthead now; the
       description stays, because on these pages it genuinely explains what
       the section is for — but at reading size, under a normal heading.
+
+   8 Oct 2026, College Hub design language: the page now opens with the same
+   header as the staff screens (eyebrow, big title, one sentence, the "?"),
+   because on a phone the masthead drops its title for College pages and the
+   only heading left was a small yellow eyebrow. The gold-edged identity strip
+   that repeated the college, cohort and tutor on every section is gone; the
+   college home carries those facts once.
    ========================================================================== */
 
 export function SubPageShell({
@@ -36,44 +43,38 @@ export function SubPageShell({
   description,
   layout = 'even',
   help,
+  actions,
   children,
 }: {
-  /** The "?" in the masthead: what this page is and how to use it. */
+  /** The "?" beside the title: what this page is and how to use it. */
   help?: PageHelpContent;
   eyebrow: string;
   title: string;
-  description?: string;
+  description?: ReactNode;
+  /** The page's one primary action, on the right of the header. */
+  actions?: ReactNode;
   /**
    * How to weight the two columns.
    *
    * `even` suits sections whose cards carry comparable weight. `lead` gives
-   * the first child two thirds — for a section like the ILP, where a tall
-   * plan card sat beside a near-empty messages card and left roughly 450px
-   * of void down the right of the page. Splitting it 2:1 both closes most of
-   * that gap and says which of the two the page is actually about.
+   * the first child two thirds, for a section like the ILP where the plan is
+   * the page and messages are the aside.
    */
   layout?: 'even' | 'lead';
   children: ReactNode;
 }) {
   return (
     <HubPage ground="landing">
-      <HubMasthead
-        section="College"
-        title={title}
-        backTo="/apprentice/college-plan"
-        trailing={help ? <PageHelpButton help={help} compact /> : undefined}
-      />
-      <HubBody>
-        <div className="space-y-4">
-          {/* Which college and cohort this page is about. Renders nothing for
-              an unlinked learner, so the frame is unchanged for them. */}
-          <MyCollegeIdentityCard variant="line" />
-          <div className="space-y-1.5">
-            <HubSectionHeading>{eyebrow}</HubSectionHeading>
-            {description && (
-              <p className="max-w-prose text-[13px] leading-relaxed text-white">{description}</p>
-            )}
-          </div>
+      <HubMasthead section="College" title={title} backTo="/apprentice/college-plan" />
+      <HubBody pushContext="Get told when your tutor sets work, replies or signs something off">
+        <div className="space-y-6 sm:space-y-8">
+          <CollegePageHeader
+            eyebrow={eyebrow}
+            title={title}
+            description={description}
+            help={help}
+            actions={actions}
+          />
 
           {/*
            * Two-up from `lg`, and a lone card spans the full width so a
@@ -83,7 +84,9 @@ export function SubPageShell({
           <div
             className={cn(
               'grid grid-cols-1 items-start gap-4 lg:gap-5 [&>*:only-child]:lg:col-span-full',
-              layout === 'lead' ? 'lg:grid-cols-3 [&>*:first-child]:lg:col-span-2' : 'lg:grid-cols-2'
+              layout === 'lead'
+                ? 'lg:grid-cols-3 [&>*:first-child]:lg:col-span-2'
+                : 'lg:grid-cols-2'
             )}
           >
             {children}

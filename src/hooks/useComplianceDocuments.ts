@@ -15,7 +15,21 @@ export type DocumentType =
   | 'Certificate'
   | 'Policy';
 export type DocumentCategory =
-  'Safety' | 'Permits' | 'Induction' | 'Training' | 'Legal' | 'Insurance';
+  | 'Safety'
+  | 'Permits'
+  | 'Induction'
+  | 'Training'
+  | 'Legal'
+  | 'Insurance'
+  | 'Accreditation';
+export type InsuranceKind =
+  | 'public_liability'
+  | 'employers_liability'
+  | 'professional_indemnity'
+  | 'contract_works'
+  | 'vehicle'
+  | 'tools'
+  | 'other';
 export type DocumentStatus = 'Current' | 'Expiring' | 'Expired' | 'Draft' | 'Pending';
 
 export interface ComplianceDocument {
@@ -37,6 +51,23 @@ export interface ComplianceDocument {
   /** FK → employer_jobs.id */
   job_id?: string | null;
   site_name?: string | null;
+  /** ELE-2076 insurance register: set when the document is an insurance policy. */
+  insurance_kind?: InsuranceKind | null;
+  insurer?: string | null;
+  policy_number?: string | null;
+  /** Limit of indemnity in pounds. */
+  cover_amount?: number | null;
+  /** Gap #10: scheme membership or prequal accreditation (CHAS, NICEIC...). */
+  accreditation?: string | null;
+  /** Gap #10: this row only holds the certificate file for the Settings
+   *  record ('settings_insurance' | 'settings_scheme'). */
+  certificate_for?: 'settings_insurance' | 'settings_scheme' | null;
+  /** Client-only (Gap #10): 'settings' when the row is the Settings record. */
+  source?: 'settings';
+  /** Client-only: the register row holding a Settings record's certificate. */
+  certificate_id?: string | null;
+  /** Client-only: the cover as typed in Settings. */
+  cover_text?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -188,7 +219,8 @@ export function useCreateComplianceDocument() {
 
       const { data, error } = await supabase
         .from('compliance_documents')
-        .insert({ ...input, user_id: await firmId(user.id) })
+        // Cast: the ELE-2076 insurance columns postdate the last types.ts regeneration.
+        .insert({ ...input, user_id: await firmId(user.id) } as never)
         .select()
         .single();
 
@@ -224,7 +256,7 @@ export function useUpdateComplianceDocument() {
     }: UpdateComplianceDocumentInput & { id: string }): Promise<ComplianceDocument> => {
       const { data, error } = await supabase
         .from('compliance_documents')
-        .update({ ...input, updated_at: new Date().toISOString() })
+        .update({ ...input, updated_at: new Date().toISOString() } as never)
         .eq('id', id)
         .select()
         .single();

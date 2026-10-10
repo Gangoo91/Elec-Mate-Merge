@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  ResponsiveFormModal,
-  ResponsiveFormModalContent,
-  ResponsiveFormModalHeader,
-  ResponsiveFormModalTitle,
-  ResponsiveFormModalBody,
-} from '@/components/ui/responsive-form-modal';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -149,21 +143,35 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
   };
 
   return (
-    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
-      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <ResponsiveFormModalHeader>
-          <ResponsiveFormModalTitle className="text-white">
-            {isEdit ? 'Edit equipment' : 'Add equipment'}
-          </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white text-left">
-            {isEdit
-              ? 'Update the details, PAT dates and calibration for this equipment.'
-              : 'Add a new tool or piece of equipment to the inventory.'}
-          </p>
-        </ResponsiveFormModalHeader>
-
-        <ResponsiveFormModalBody className="pb-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Kit register"
+      title={isEdit ? 'Edit equipment' : 'Add equipment'}
+      description={
+        isEdit
+          ? 'Update the details, PAT dates and calibration for this equipment.'
+          : 'Add a tool or piece of test equipment to the register.'
+      }
+      width="wide"
+      footer={
+        <div className="flex gap-2">
+          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isPending} fullWidth>
+            Cancel
+          </SecondaryButton>
+          <PrimaryButton type="submit" form="create-tool-form" disabled={isPending} fullWidth>
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isEdit ? 'Save changes' : 'Add equipment'}
+          </PrimaryButton>
+        </div>
+      }
+    >
+      <form
+        id="create-tool-form"
+        onSubmit={handleSubmit}
+        className="grid gap-5 lg:grid-cols-2 lg:items-start"
+      >
+        <div className="space-y-4">
           <FormCard bleed eyebrow="Equipment">
             <Field label="Equipment name" required>
               <Input
@@ -177,19 +185,19 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
             <FormGrid cols={2}>
               <Field label="Category" required>
                 <SelectField
-        value={formData.category}
-        onValueChange={(value) => updateField('category', value)}
-        placeholder="Select category"
-        options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
-      />
+                  value={formData.category}
+                  onValueChange={(value) => updateField('category', value)}
+                  placeholder="Select category"
+                  options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
+                />
               </Field>
               <Field label="Status">
                 <SelectField
-        value={formData.status}
-        onValueChange={(value) => updateField('status', value)}
-        placeholder="Select status"
-        options={STATUSES.map((status) => ({ value: status, label: status }))}
-      />
+                  value={formData.status}
+                  onValueChange={(value) => updateField('status', value)}
+                  placeholder="Select status"
+                  options={STATUSES.map((status) => ({ value: status, label: status }))}
+                />
               </Field>
             </FormGrid>
             <FormGrid cols={2}>
@@ -223,7 +231,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
               <Field label="Purchase price (£)">
                 <Input
                   type="number"
-                            inputMode="decimal"
+                  inputMode="decimal"
                   min="0"
                   step="0.01"
                   placeholder="0.00"
@@ -240,7 +248,8 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
               ? 'To give it to someone or put it on a van, use Issue on the item.'
               : 'Once it is saved, tap the item and use Issue to give it to a person or put it on a van.'}
           </p>
-
+        </div>
+        <div className="space-y-4">
           <FormCard bleed eyebrow="PAT testing">
             <FormGrid cols={2}>
               <Field label="Last PAT date">
@@ -286,7 +295,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
           <FormCard bleed eyebrow="Notes">
             <Field label="Notes">
               <Textarea
-                placeholder="Any additional notes..."
+                placeholder="Anything else worth knowing"
                 value={formData.notes}
                 onChange={(e) => updateField('notes', e.target.value)}
                 rows={2}
@@ -294,19 +303,8 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
               />
             </Field>
           </FormCard>
-
-          <div className="flex gap-2 pb-2">
-            <SecondaryButton onClick={() => onOpenChange(false)} disabled={isPending} fullWidth>
-              Cancel
-            </SecondaryButton>
-            <PrimaryButton type="submit" disabled={isPending} fullWidth>
-              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isEdit ? 'Save changes' : 'Add equipment'}
-            </PrimaryButton>
-          </div>
-          </form>
-        </ResponsiveFormModalBody>
-      </ResponsiveFormModalContent>
-    </ResponsiveFormModal>
+        </div>
+      </form>
+    </FormSheet>
   );
 }

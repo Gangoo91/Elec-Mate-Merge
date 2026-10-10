@@ -31,7 +31,7 @@ import { cn } from '@/lib/utils';
 export interface FormSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  /** Small volt caps above the title — the sheet's section, e.g. "Your programme". */
+  /** Small volt line above the title (sentence case) — the sheet's section, e.g. "Your programme". */
   eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
@@ -81,10 +81,12 @@ export function FormSheet({
           <div className={cn('shrink-0 px-4 sm:px-6', width === 'wide' && 'lg:px-10')}>
             <div className={inner}>
               <SheetHeader className="pb-4 pt-2">
-                <div className="flex items-start justify-between gap-3">
+                {/* pr-10 keeps the title and `headerTrailing` clear of the
+                    sheet's 44px close button, top right (10 Oct). */}
+                <div className="flex items-start justify-between gap-3 pr-10">
                   <SheetTitle className="min-w-0 text-left">
                     {eyebrow ? (
-                      <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                      <span className="block text-[12.5px] font-semibold text-elec-yellow">
                         {eyebrow}
                       </span>
                     ) : null}
@@ -110,21 +112,43 @@ export function FormSheet({
           </div>
 
           {subheader ? (
-            <div className={cn('shrink-0 border-b border-white/[0.08] px-4 sm:px-6', width === 'wide' && 'lg:px-10')}>
+            <div
+              className={cn(
+                'shrink-0 border-b border-white/[0.08] px-4 sm:px-6',
+                width === 'wide' && 'lg:px-10'
+              )}
+            >
               <div className={inner}>{subheader}</div>
             </div>
           ) : null}
 
-          <div className={cn('flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-6', width === 'wide' && 'lg:px-10')}>
+          <div
+            className={cn(
+              'flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-6',
+              width === 'wide' && 'lg:px-10'
+            )}
+          >
             <div className={cn(inner, bodyClassName ?? 'space-y-5')}>{children}</div>
           </div>
 
           {footer ? (
             <div
-              className={cn('shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-3 sm:px-6', width === 'wide' && 'lg:px-10', footerClassName)}
+              className={cn(
+                'shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-3 sm:px-6',
+                width === 'wide' && 'lg:px-10',
+                footerClassName
+              )}
               style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
             >
-              <div className={cn(inner, width === 'wide' && 'lg:[&>*]:ml-auto lg:[&>button]:block lg:[&>*]:max-w-lg')}>{footer}</div>
+              <div
+                className={cn(
+                  inner,
+                  width === 'wide' &&
+                    'lg:[&>*]:ml-auto lg:[&>button]:block lg:[&>button:has(>svg)]:flex lg:[&>*]:max-w-lg'
+                )}
+              >
+                {footer}
+              </div>
             </div>
           ) : null}
         </div>

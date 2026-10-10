@@ -124,9 +124,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
   const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {eyebrow}
-      </span>
+      <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
       <div>{children}</div>
     </div>
   );
@@ -138,7 +136,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           {/* Header */}
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1 space-y-3">
-              <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <div className="flex flex-wrap items-baseline gap-3 text-[13px] font-semibold text-white">
                 <span>{course.category}</span>
                 {isLiveCourse && (
                   <>
@@ -161,7 +159,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+                    className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
                     onClick={handleOpenCourseUrl}
                   >
                     <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
@@ -172,7 +170,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+                  className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
                   onClick={fetchContactDetails}
                   disabled={!course.external_url}
                 >
@@ -183,7 +181,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
               <p className="text-[14px] text-white leading-relaxed">{course.description}</p>
               {isLiveCourse && course.source && (
-                <p className="text-[11px] text-white font-mono">Source: {course.source}</p>
+                <p className="text-[12.5px] text-white">Source: {course.source}</p>
               )}
             </div>
             <Button
@@ -208,9 +206,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 key={item.label}
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  {item.label}
-                </span>
+                <span className="text-[13px] font-semibold text-white">{item.label}</span>
                 <div className="text-[14px] text-white">{item.value}</div>
               </div>
             ))}
@@ -342,7 +338,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       <TableCell className="text-right">
                         <Button
                           size="sm"
-                          className="h-9 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                          className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
                           onClick={handleOpenCourseUrl}
                           disabled={!course.external_url}
                         >

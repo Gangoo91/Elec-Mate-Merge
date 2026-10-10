@@ -17,6 +17,7 @@ import { useNativeApp, useNativePushNotifications } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
 import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
 import { AppUpdatePrompt } from '@/components/app-update/AppUpdatePrompt';
+import { SentryRouteTags } from '@/components/college/security/CollegeRouteMonitor';
 import AppReviewPromptHost from '@/components/AppReviewPromptHost';
 import { NativeTrackingPrompt } from '@/components/NativeTrackingPrompt';
 import { initConsentSync } from '@/lib/consentSync';
@@ -24,6 +25,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { captureAttribution } from '@/lib/attribution';
 import SilentErrorBoundary from '@/components/common/SilentErrorBoundary';
+import { DemoVisitorBar } from '@/components/college/demo/DemoVisitorBar';
 
 // Lazy load analytics components to defer ~427KB from initial bundle
 const PostHogProvider = lazy(() => import('@/components/analytics/PostHogProvider'));
@@ -71,6 +73,8 @@ function App() {
                 <AttributionCapture />
                 {/* Native app version check — force/optional update prompts */}
                 <AppUpdatePrompt />
+                {/* ELE-1915: tag Sentry events with the hub and route pattern */}
+                <SentryRouteTags />
                 {/* Activity tracking - logs user events to Supabase */}
                 <ActivityTracker />
                 {/* Analytics providers load async — don't block render.
@@ -96,6 +100,10 @@ function App() {
                 )}
                 <TrainingActivityMonitor />
                 <AppRouter />
+                {/* ELE-1854: "Demo learner" bar for Try-it-on-your-phone visitors only */}
+                <SilentErrorBoundary section="DemoVisitorBar">
+                  <DemoVisitorBar />
+                </SilentErrorBoundary>
                 {/* OfflineIndicator removed (ELE-707) */}
                 <SonnerToaster />
                 {/* Single host for the store review sheet — every

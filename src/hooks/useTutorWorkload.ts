@@ -99,7 +99,8 @@ export function useTutorWorkload() {
       const weekStart = startOfThisWeek().toISOString().slice(0, 10);
       const weekEnd = endOfThisWeek().toISOString().slice(0, 10);
       const sevenAgo = new Date(Date.now() - 7 * 86_400_000).toISOString();
-      const ninetyAgo = new Date(Date.now() - 90 * 86_400_000).toISOString().slice(0, 10);
+      // A year back, so a tutor last observed 4 months ago reads "120 days", not "Never".
+      const yearAgo = new Date(Date.now() - 365 * 86_400_000).toISOString().slice(0, 10);
 
       // Parallel signal fetches
       const [cohortsRes, lessonsRes, quizzesRes, obsRes, commentsRes] = await Promise.all([
@@ -124,7 +125,7 @@ export function useTutorWorkload() {
           .from('college_tutor_observations')
           .select('tutor_staff_id, observed_at')
           .in('tutor_staff_id', tutorIds)
-          .gte('observed_at', ninetyAgo)
+          .gte('observed_at', yearAgo)
           .order('observed_at', { ascending: false }),
         // Portfolio comments authored by these tutors in last 7 days
         tutorUserIds.length > 0

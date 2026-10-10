@@ -8,7 +8,7 @@ import {
   selectTriggerCn,
 } from '@/components/forms/fieldStyles';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { chipCn } from '@/components/college/ui/CollegeUi';
+import { choiceCn } from '@/components/college/teaching/TeachingKit';
 import { useCollegeCohorts } from '@/hooks/college/useCollegeCohorts';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -234,7 +234,7 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
                 role="radio"
                 aria-checked={form.cohort_id === c.id}
                 onClick={() => handleChange('cohort_id', c.id)}
-                className={chipCn(form.cohort_id === c.id)}
+                className={choiceCn(form.cohort_id === c.id)}
               >
                 {c.name}
               </button>
@@ -302,7 +302,7 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
               role="radio"
               aria-checked={form.status === o.value}
               onClick={() => handleChange('status', o.value)}
-              className={chipCn(form.status === o.value)}
+              className={choiceCn(form.status === o.value)}
             >
               {o.label}
             </button>

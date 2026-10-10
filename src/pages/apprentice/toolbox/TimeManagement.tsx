@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { GuidePage, GuideIndex } from '@/components/apprentice/shared/GuideKit';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 
 interface Section {
   number: string;
@@ -83,36 +83,33 @@ const SECTIONS: Section[] = [
 const TimeManagement = () => {
   const navigate = useNavigate();
   return (
-    <HubSubPage
+    <GuidePage
+      area="Time management"
       title="There are 168 hours in a week"
       backTo="/apprentice/toolbox"
       description="40 on site. College and off-the-job training (1,066 hours across the apprenticeship for an Installation & Maintenance Electrician). Some study. Some sleep. Some life. The maths only works if you're honest about where the time actually goes — and ruthless about what you protect."
     >
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Six chapters</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="three"
-          cards={SECTIONS.map((s) => ({
-            id: s.slug,
-            eyebrow: s.eyebrow,
-            title: s.title,
-            description: s.description,
-            meta: s.meta,
-            onClick: () => navigate(`/apprentice/toolbox/time-management/${s.slug}`),
-          }))}
-        />
-      </motion.section>
+      <GuideIndex
+        title="Six chapters"
+        columns={3}
+        items={SECTIONS.map((s) => ({
+          id: s.slug,
+          title: s.title,
+          description: s.description,
+          meta: s.meta,
+          onClick: () => navigate(`/apprentice/toolbox/time-management/${s.slug}`),
+        }))}
+      />
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>A week that actually fits</HubSectionHeading>
+        <CollegeHeading>A week that actually fits</CollegeHeading>
         <div
           className={cn(
-            '-mx-4 rounded-none border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5 space-y-3',
+            '-mx-4 rounded-none border-y border-white/[0.08] px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5 space-y-3',
             CARD_SURFACE
           )}
         >
-          <p className="text-[12.5px] text-white leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             A realistic Level 3 week — not a perfect one. Spread across the apprenticeship,{' '}
             {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString()} hours of off-the-job training is
             roughly five to six hours a week on average, but it rarely lands evenly. Block-release
@@ -139,16 +136,16 @@ const TimeManagement = () => {
             ].map((row) => (
               <li
                 key={row.day}
-                className="flex flex-col gap-1 sm:flex-row sm:gap-3 text-[12.5px] leading-relaxed"
+                className="flex flex-col gap-1 sm:flex-row sm:gap-3 text-[14px] leading-relaxed"
               >
-                <span className="text-elec-yellow/85 font-medium sm:w-28 flex-shrink-0">
+                <span className="text-elec-yellow font-medium sm:w-28 flex-shrink-0">
                   {row.day}
                 </span>
                 <span className="text-white">{row.plan}</span>
               </li>
             ))}
           </ul>
-          <p className="text-[11px] text-white leading-relaxed pt-1">
+          <p className="text-[14px] text-white leading-relaxed pt-1">
             Your exact split depends on your employer and training provider — confirm your
             off-the-job arrangement with them.
           </p>
@@ -156,14 +153,14 @@ const TimeManagement = () => {
       </motion.section>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Time you're owed</HubSectionHeading>
+        <CollegeHeading>Time you're owed</CollegeHeading>
         <div
           className={cn(
-            '-mx-4 rounded-none border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5 space-y-2.5',
+            '-mx-4 rounded-none border-y border-white/[0.08] px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5 space-y-2.5',
             CARD_SURFACE
           )}
         >
-          <p className="text-[12px] uppercase tracking-[0.18em] text-elec-yellow/85 font-medium">
+          <p className="text-[12px] text-elec-yellow font-semibold">
             Off-the-job training is paid working time
           </p>
           <ul className="space-y-2">
@@ -175,20 +172,20 @@ const TimeManagement = () => {
             ].map((item) => (
               <li
                 key={item}
-                className="flex items-start gap-2.5 text-[12.5px] text-white leading-relaxed"
+                className="flex items-start gap-2.5 text-[14px] text-white leading-relaxed"
               >
                 <span className="mt-[7px] h-1 w-1 rounded-full bg-elec-yellow/85 flex-shrink-0" />
                 {item}
               </li>
             ))}
           </ul>
-          <p className="text-[11px] text-white leading-relaxed pt-1">
+          <p className="text-[14px] text-white leading-relaxed pt-1">
             Sources: gov.uk apprenticeship funding rules (off-the-job training), ACAS (working time
             and rest breaks), gov.uk National Minimum Wage rates.
           </p>
         </div>
       </motion.section>
-    </HubSubPage>
+    </GuidePage>
   );
 };
 

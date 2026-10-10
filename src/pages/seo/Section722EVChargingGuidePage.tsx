@@ -248,14 +248,14 @@ const sections = [
         <p>
           Regulation 722.531.3 requires RCD protection for EV charging circuits, and Regulation
           722.531.3.101 is the clause that governs which device you select — it is the regulation
-          Appendix 1 of BS 7671 ties to BS IEC 62955:2018 (RDC-DD for Mode 3 charging) and to
-          BS EN 62423 (Type F and Type B RCDs). The type of RCD depends on the charger design. Where
-          the equipment includes a built-in RDC-DD (Residual Direct Current Detecting Device) to
-          BS IEC 62955:2018, a Type A RCD is permitted. Without integral DC leakage detection, a
-          Type B RCD is required. Separately, where an EV charging point is supplied through an
-          isolating transformer under the electrical separation route, Regulation 722.413.1.2 limits
-          each unearthed source to one vehicle, and Figure A722 in the Annex shows the 30 mA RCD on
-          the transformer secondary placed as close to the transformer as possible.
+          Appendix 1 of BS 7671 ties to BS IEC 62955:2018 (RDC-DD for Mode 3 charging) and to BS EN
+          62423 (Type F and Type B RCDs). The type of RCD depends on the charger design. Where the
+          equipment includes a built-in RDC-DD (Residual Direct Current Detecting Device) to BS IEC
+          62955:2018, a Type A RCD is permitted. Without integral DC leakage detection, a Type B RCD
+          is required. Separately, where an EV charging point is supplied through an isolating
+          transformer under the electrical separation route, Regulation 722.413.1.2 limits each
+          unearthed source to one vehicle, and Figure A722 in the Annex shows the 30 mA RCD on the
+          transformer secondary placed as close to the transformer as possible.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -493,8 +493,8 @@ const sections = [
                 <strong>Voltage drop</strong>: Table 4Ab of Appendix 4 gives 3% for lighting and 5%
                 for other uses, measured from the origin of the installation, for a low voltage
                 installation supplied directly from a public distribution system. An EV charger is
-                an "other use", so 5% applies. For a 32A circuit, voltage
-                drop must be checked carefully on longer runs. Use the{' '}
+                an "other use", so 5% applies. For a 32A circuit, voltage drop must be checked
+                carefully on longer runs. Use the{' '}
                 <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
@@ -612,11 +612,11 @@ const sections = [
           alongside the EIC.
         </p>
         <p>
-          Under A4:2026, the Appendix 6 model forms (EIC and EICR) include new fields for recording
-          SPDs (surge protective devices) and AFDDs (arc fault detection devices). Where either
-          device is installed as part of the EV charger circuit, its details must be recorded in the
-          relevant fields. Where no SPD or AFDD is installed, record N/A in those fields. This
-          requirement applies to all EIC certificates issued against BS 7671:2018+A4:2026.
+          Since Amendment 2:2022, the Appendix 6 model forms (EIC and EICR) have included fields for
+          recording SPDs (surge protective devices) and AFDDs (arc fault detection devices). Where
+          either device is installed as part of the EV charger circuit, its details must be recorded
+          in the relevant fields. Where no SPD or AFDD is installed, record N/A in those fields.
+          This requirement applies to all EIC certificates issued against BS 7671:2018+A4:2026.
         </p>
       </>
     ),

@@ -107,9 +107,7 @@ const PowerToolsTab = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Power tools
-        </span>
+        <span className="text-[13px] font-semibold text-white">Power tools</span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           Power tools
         </h2>
@@ -149,7 +147,7 @@ const PowerToolsTab = () => {
       </div>
 
       <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+        <span className="text-[13px] font-semibold text-red-300">
           Power tool safety & maintenance
         </span>
         <div className="space-y-2 text-[14px] text-white leading-relaxed">
@@ -166,15 +164,15 @@ const PowerToolsTab = () => {
             Check site requirements and use appropriate transformers if needed.
           </p>
           <p>
-            <strong>Battery care:</strong> Store batteries at room temperature, charge regularly, and
-            replace when capacity drops significantly. Quality batteries last 3-5 years with proper
-            care.
+            <strong>Battery care:</strong> Store batteries at room temperature, charge regularly,
+            and replace when capacity drops significantly. Quality batteries last 3-5 years with
+            proper care.
           </p>
         </div>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[13px] font-semibold text-white">
           Investment timeline for apprentices
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[14px] text-white leading-relaxed">

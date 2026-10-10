@@ -1,7 +1,7 @@
+import { LC_FRAME } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -29,13 +29,22 @@ interface TaughtRow {
   delivered_on: string;
   ac_codes: string[] | null;
   kit: string[] | null;
-  resources: Array<Pick<MyResource, 'id' | 'college_id' | 'title' | 'kind' | 'file_path' | 'external_url' | 'mime_type'>> | null;
+  resources: Array<
+    Pick<
+      MyResource,
+      'id' | 'college_id' | 'title' | 'kind' | 'file_path' | 'external_url' | 'mime_type'
+    >
+  > | null;
   was_present: boolean;
   quiz_id: string | null;
   quiz_title: string | null;
 }
 
-const DATE_FMT = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+const DATE_FMT = new Intl.DateTimeFormat('en-GB', {
+  weekday: 'short',
+  day: 'numeric',
+  month: 'short',
+});
 
 export function MyTaughtLessonsCard() {
   const navigate = useNavigate();
@@ -69,7 +78,11 @@ export function MyTaughtLessonsCard() {
     try {
       const url = await resolveResourceUrl(r as MyResource);
       if (!url) {
-        toast({ title: 'Could not open this file', description: 'Ask your tutor to re-share it.', variant: 'destructive' });
+        toast({
+          title: 'Could not open this file',
+          description: 'Ask your tutor to re-share it.',
+          variant: 'destructive',
+        });
         return;
       }
       window.open(url, '_blank', 'noopener,noreferrer');
@@ -80,13 +93,11 @@ export function MyTaughtLessonsCard() {
   };
 
   return (
-    <section className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+    <section className={LC_FRAME}>
       <div className="px-4 py-4 sm:px-5 sm:py-5">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow sm:text-[11.5px]">
-            Taught in class
-          </h2>
-          <span className="text-[10.5px] tabular-nums text-white">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">Taught in class</h2>
+          <span className="text-[12px] tabular-nums text-white">
             {rows.length} {rows.length === 1 ? 'lesson' : 'lessons'}
             {missed > 0 && ` · ${missed} missed`}
           </span>
@@ -99,22 +110,30 @@ export function MyTaughtLessonsCard() {
             return (
               <li key={`${r.lesson_plan_id}|${r.delivered_on}`} className="px-1 py-3">
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-white">
+                  <span className="text-[13px] font-medium text-white">
                     Taught {DATE_FMT.format(new Date(`${r.delivered_on}T12:00:00`))}
                   </span>
-                  <span className={cn('shrink-0 text-[11.5px] font-semibold', r.was_present ? 'text-emerald-400' : 'text-orange-400')}>
+                  <span
+                    className={cn(
+                      'shrink-0 text-[12px] font-semibold',
+                      r.was_present ? 'text-emerald-400' : 'text-orange-400'
+                    )}
+                  >
                     {r.was_present ? 'You were there' : 'You missed this'}
                   </span>
                 </div>
-                <p className="mt-0.5 text-[13.5px] font-semibold leading-snug text-white">{r.title}</p>
+                <p className="mt-0.5 text-[13.5px] font-semibold leading-snug text-white">
+                  {r.title}
+                </p>
                 {acs.length > 0 && (
-                  <p className="mt-1 text-[11.5px] leading-snug text-white">
+                  <p className="mt-1 text-[12px] leading-snug text-white">
                     Criteria covered: <span className="tabular-nums">{acs.join(', ')}</span>
                   </p>
                 )}
                 {!r.was_present && (
-                  <p className="mt-1 text-[11.5px] leading-snug text-white">
-                    Catch up with the materials below and ask your tutor about anything you are unsure of.
+                  <p className="mt-1 text-[12px] leading-snug text-white">
+                    Catch up with the materials below and ask your tutor about anything you are
+                    unsure of.
                   </p>
                 )}
                 {(res.length > 0 || r.quiz_id) && (
@@ -134,7 +153,7 @@ export function MyTaughtLessonsCard() {
                       <button
                         type="button"
                         onClick={() => navigate(`/apprentice/college/quiz/${r.quiz_id}`)}
-                        className="inline-flex h-11 items-center rounded-xl bg-elec-yellow px-3 text-[12.5px] font-semibold text-black touch-manipulation"
+                        className="inline-flex h-11 items-center rounded-xl border border-white/[0.3] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-elec-yellow active:bg-white/[0.06]"
                       >
                         Take the quiz
                       </button>
@@ -142,7 +161,9 @@ export function MyTaughtLessonsCard() {
                   </div>
                 )}
                 {res.length === 0 && (r.kit ?? []).length > 0 && (
-                  <p className="mt-1 text-[11.5px] leading-snug text-white">Used in class: {(r.kit ?? []).join(', ')}</p>
+                  <p className="mt-1 text-[12px] leading-snug text-white">
+                    Used in class: {(r.kit ?? []).join(', ')}
+                  </p>
                 )}
               </li>
             );
@@ -153,7 +174,7 @@ export function MyTaughtLessonsCard() {
           <button
             type="button"
             onClick={() => setExpanded((e) => !e)}
-            className="mt-1 h-11 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+            className="mt-2 inline-flex h-11 items-center rounded-xl border border-white/[0.14] px-4 text-[13px] font-semibold text-white touch-manipulation hover:border-elec-yellow active:bg-white/[0.06]"
           >
             {expanded ? 'Show fewer' : `Show all ${rows.length}`}
           </button>

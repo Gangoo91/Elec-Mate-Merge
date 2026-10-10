@@ -472,7 +472,7 @@ const BatteryBackupCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
                   <button
                     onClick={addLoad}
                     disabled={!newLoadName || !newLoadWatts || parseFloat(newLoadWatts) <= 0}
-                    className="self-end h-12 px-4 rounded-xl bg-white/[0.06] border border-white/[0.18] text-white hover:bg-white/[0.10] transition-colors disabled:text-white/70 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+                    className="self-end h-12 px-4 rounded-xl bg-white/[0.06] border border-white/[0.18] text-white hover:bg-white/[0.10] transition-colors disabled:text-white disabled:cursor-not-allowed min-h-11 touch-manipulation"
                   >
                     <Plus className="h-5 w-5" />
                   </button>
@@ -623,7 +623,7 @@ const BatteryBackupCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
 
                 {/* C-Rate Warning */}
                 {results.cRate > selectedChemistry.maxCRate * 0.8 && (
-                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                     <p className="text-sm text-white">
                       C-rate ({results.cRate.toFixed(2)}C) is high for {selectedChemistry.name}.
@@ -694,8 +694,8 @@ const BatteryBackupCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">
@@ -742,8 +742,8 @@ const BatteryBackupCalculator = ({ onResult }: CalculatorResultReporter = {}) =>
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <ul className="space-y-2">

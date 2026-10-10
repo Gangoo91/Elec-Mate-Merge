@@ -24,7 +24,7 @@ export default function EmployerElectricalPlatformPage() {
       title="Employer Platform for Electrical Companies"
       description="Elec-Mate's employer platform for electrical companies. 5 employer hubs — apprentice tracking, staff management, certificate oversight."
       datePublished="2026-01-18"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Employer Platform', href: '/tools/employer-electrical-platform' },
@@ -125,7 +125,7 @@ export default function EmployerElectricalPlatformPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">Off-the-job training hours</span> —
-                  logged hours against the 20% off-the-job requirement. Automatic calculation of
+                  logged hours against the off-the-job minimum for each apprentice&apos;s standard. Automatic calculation of
                   whether each apprentice is on track, ahead, or behind on their hours.
                 </li>
                 <li>

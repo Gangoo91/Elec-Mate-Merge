@@ -36,33 +36,33 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The Education & Skills Funding Agency (ESFA) funds up to 95% of apprenticeship training costs for non-levy paying employers and 100% (via levy funds) for levy-paying employers with large payrolls.',
-  'Electrical apprenticeships in England follow the Level 3 Electrician Apprenticeship Standard (ST0145), which replaced the older framework and includes end-point assessment (EPA).',
-  'The National Minimum Wage for apprentices is £6.40 per hour (April 2024 rate), but most electrical employers pay above this — the JIB sets a fixed hourly rate for each apprentice stage, from £8.16 (Stage 1) to £14.03 (Stage 4), effective 5 January 2026.',
+  'For starts from 1 August 2026 the Department for Education funds 100% of training for apprentices aged 16 to 24 at non-levy employers, and 95% for apprentices aged 25 or over (DfE funding rules 2026 to 2027, rules 213 to 214). Levy payers use their levy funds.',
+  'Electrical apprenticeships in England follow the Level 3 Electrician Apprenticeship Standard (ST0152), which replaced the older framework and includes end-point assessment (EPA).',
+  'The National Minimum Wage for apprentices is £8.00 per hour (from 1 April 2026), but most electrical employers pay above this — the JIB sets a fixed hourly rate for each apprentice stage, from £8.16 (Stage 1) to £14.03 (Stage 4), effective 5 January 2026.',
   'You must register your apprentice with the Joint Industry Board (JIB) within the first few weeks of employment to establish their grading and entitlement to JIB benefits.',
-  'Non-levy employers pay just 5% of training costs (capped at the funding band maximum), with the ESFA contributing the remaining 95% directly to the training provider.',
+  'Non-levy employers pay nothing for apprentices aged 16 to 24 at the start and 5% for those aged 25 or over, up to the funding band maximum; the government pays the rest directly to the training provider.',
 ];
 
 const faqs = [
   {
     question: 'How much does it cost to hire an electrical apprentice?',
     answer:
-      "For non-levy employers (annual payroll below £3 million), the employer contribution is 5% of the training costs, up to the funding band maximum. For the Level 3 Electrician Apprenticeship Standard (ST0145), the funding band maximum is £27,000 over the full apprenticeship. Your contribution is therefore around £1,350 over three to four years, or roughly £400 per year. You also pay the apprentice's wages, National Insurance contributions, and any personal protective equipment or tool costs. Levy-paying employers pay nothing from their own pocket — all costs are drawn from their Digital Apprenticeship Service (DAS) account.",
+      "For non-levy employers (annual payroll below £3 million), the employer contribution, for starts from 1 August 2026, is nothing for an apprentice aged 16 to 24 at the start and 5% of the training costs for an apprentice aged 25 or over, up to the funding band maximum (DfE funding rules 2026 to 2027, rules 213 to 214). For the Installation and Maintenance Electrician standard (ST0152) the funding band maximum is £23,000, so a 25+ apprentice costs you up to £1,150 over three to four years. Any price above the band is paid in full by the employer. You also pay the apprentice's wages, National Insurance contributions, and any personal protective equipment or tool costs. Levy-paying employers pay nothing from their own pocket — all costs are drawn from their Digital Apprenticeship Service (DAS) account.",
   },
   {
     question: 'What is the ESFA and how does it fund apprenticeships?',
     answer:
-      'The Education & Skills Funding Agency (ESFA) is the government body responsible for funding apprenticeships in England. For non-levy employers, the ESFA pays 95% of training costs directly to the approved training provider. Levy-paying employers (payroll over £3 million) pay the Apprenticeship Levy at 0.5% of their annual wage bill (with a £15,000 annual allowance), and these funds sit in a Digital Apprenticeship Service account from which training costs are drawn. Employers must use an ESFA-registered training provider to access any government funding.',
+      'The Department for Education (DfE) funds apprenticeships in England (the ESFA\'s work moved into the DfE in 2025). For non-levy employers it pays 100% of training costs for apprentices aged 16 to 24 and 95% for those aged 25 or over, directly to the approved training provider. Levy-paying employers (payroll over £3 million) pay the Apprenticeship Levy at 0.5% of their annual wage bill (with a £15,000 annual allowance), and these funds sit in a Digital Apprenticeship Service account from which training costs are drawn. Employers must use an ESFA-registered training provider to access any government funding.',
   },
   {
     question: 'What qualifications does an electrical apprentice work towards?',
     answer:
-      'Under the Level 3 Electrician Apprenticeship Standard (ST0145), apprentices work towards the Level 3 Diploma in Installing Electrotechnical Systems and Equipment (City & Guilds 2357) or equivalent, the Level 3 Certificate in Electrotechnical Technology (C&G 2357 Part B), and the End-Point Assessment (EPA) which includes a practical task and professional discussion. On completion, apprentices typically hold the qualifications required for JIB Approved Electrician grade and can apply for ECS Gold Card (Electrotechnical Certification Scheme).',
+      'Under the Level 3 Electrician Apprenticeship Standard (ST0152), apprentices work towards the Level 3 Diploma in Installing Electrotechnical Systems and Equipment (City & Guilds 2357) or equivalent, the Level 3 Certificate in Electrotechnical Technology (C&G 2357 Part B), and the End-Point Assessment (EPA) which includes a practical task and professional discussion. On completion, apprentices typically hold the qualifications required for JIB Approved Electrician grade and can apply for ECS Gold Card (Electrotechnical Certification Scheme).',
   },
   {
     question: 'What is the apprentice National Minimum Wage?',
     answer:
-      'The National Minimum Wage for apprentices is £6.40 per hour from April 2024. This rate applies to all apprentices in their first year and to those under 19 years old in any year. Once an apprentice is 19 or older AND has completed their first year, they are entitled to the National Minimum Wage for their age band (e.g., £11.44 per hour for those aged 21+). Most electrical employers pay above the minimum — the JIB sets a fixed hourly rate for each apprentice stage rather than a percentage of the Approved Electrician rate. From 5 January 2026 the National Standard rates are: Stage 1 £8.16, Stage 2 £10.60, Stage 3 £13.05, Stage 4 £14.03 per hour. London Zone rates are £9.14, £11.88, £14.62 and £15.72. Each stage rate covers all hours worked, including off-the-job training.',
+      'The National Minimum Wage for apprentices is £8.00 per hour from 1 April 2026. This rate applies to all apprentices in their first year and to those under 19 years old in any year. Once an apprentice is 19 or older AND has completed their first year, they are entitled to the National Minimum Wage for their age band (e.g., £12.71 per hour for those aged 21+). Most electrical employers pay above the minimum — the JIB sets a fixed hourly rate for each apprentice stage rather than a percentage of the Approved Electrician rate. From 5 January 2026 the National Standard rates are: Stage 1 £8.16, Stage 2 £10.60, Stage 3 £13.05, Stage 4 £14.03 per hour. London Zone rates are £9.14, £11.88, £14.62 and £15.72. Each stage rate covers all hours worked, including off-the-job training.',
   },
   {
     question: 'Do I need to register my apprentice with the JIB?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Can I take on an apprentice if I am a sole trader?',
     answer:
-      'Yes. Sole traders can hire apprentices and access ESFA funding. You must have a Digital Apprenticeship Service (DAS) account (free to set up at gov.uk), choose an ESFA-registered training provider, and sign an apprenticeship agreement with the apprentice. As a non-levy employer you pay 5% of training costs. Bear in mind that as the sole employer you will personally be responsible for all mentoring and supervision — you cannot take on an apprentice if you cannot guarantee adequate on-site supervision throughout their training.',
+      'Yes. Sole traders can hire apprentices and access ESFA funding. You must have a Digital Apprenticeship Service (DAS) account (free to set up at gov.uk), choose an ESFA-registered training provider, and sign an apprenticeship agreement with the apprentice. As a non-levy employer you pay nothing towards training for an apprentice aged 16 to 24, and 5% for one aged 25 or over. Bear in mind that as the sole employer you will personally be responsible for all mentoring and supervision — you cannot take on an apprentice if you cannot guarantee adequate on-site supervision throughout their training.',
   },
   {
     question: 'What happens if my business cannot keep the apprentice for the full term?',
@@ -132,7 +132,7 @@ const sections = [
         </p>
         <p>
           In England, electrical apprenticeships follow the{' '}
-          <strong>Level 3 Electrician Apprenticeship Standard (ST0145)</strong>, introduced to
+          <strong>Level 3 Electrician Apprenticeship Standard (ST0152)</strong>, introduced to
           replace the older framework apprenticeships. The standard typically lasts three to four
           years for school leavers, or can be compressed for mature entrants with prior electrical
           knowledge.
@@ -142,10 +142,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Off-the-job training</strong> — at least 20% of the apprentice's paid
-                working hours must be spent in off-the-job training (college, online learning, or
-                structured workplace training). This is a legal requirement and is monitored by the
-                ESFA. Your training provider will help you track and record this time.
+                <strong>Off-the-job training</strong> — the apprentice must receive at least the
+                off-the-job hours published on their apprenticeship standard, in paid working time
+                (college, online learning, or structured workplace training). This is a statutory
+                requirement and a funding condition (DfE funding rules 2026 to 2027, rules 85 to 86). Your training provider will help you track and record this time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -199,9 +199,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Funding band maximum</strong> — the ESFA sets a maximum funding band for
-                each apprenticeship standard. For the Level 3 Electrician Standard (ST0145) this is
-                £27,000. Training costs must not exceed this cap. Your training provider will agree
+                <strong>Funding band maximum</strong> — each apprenticeship standard has a maximum
+                funding band. For the Installation and Maintenance Electrician standard (ST0152)
+                this is £23,000 (DfE funding rules 2025 to 2026, Annex C). Training costs must not exceed this cap. Your training provider will agree
                 a price within the band.
               </span>
             </li>
@@ -209,9 +209,10 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional payments</strong> — if your apprentice is aged 16 to 18 at the
-                start of their apprenticeship, the ESFA pays an additional £1,000 to you (the
-                employer) and £1,000 to the training provider. This is to encourage employers to
-                take on younger apprentices who require more support.
+                start (or 19 to 24 with an EHC plan or care leaver status), £1,000 is paid to you
+                and £1,000 to the training provider (rule 125). Non-levy employers also receive a
+                £2,000 hiring payment for a 16 to 24-year-old whose practical period starts from 1
+                October 2026 (rule 133).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -263,10 +264,11 @@ const sections = [
               <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-levy employers</strong> — businesses with a wage bill below £3 million
-                (the vast majority of independent electrical contractors) pay just 5% of training
-                costs as a co-investment. The ESFA pays 95% directly to the training provider. For a
-                £20,000 training programme, your contribution is £1,000 spread over three to four
-                years — typically invoiced quarterly.
+                (the vast majority of independent electrical contractors) pay nothing for an
+                apprentice aged 16 to 24 at the start, for starts from 1 August 2026. For an
+                apprentice aged 25 or over they pay 5% and the government 95% (DfE funding rules 2026 to 2027, rules 213 to 214). For a £20,000
+                training programme, a 25+ apprentice costs you £1,000 spread over three to four
+                years.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -299,11 +301,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>National Minimum Wage (apprentice rate)</strong> — £6.40 per hour from April
-                2024. This applies to all apprentices in their first year, and to apprentices under
+                <strong>National Minimum Wage (apprentice rate)</strong> — £8.00 per hour from 1
+                April 2026. This applies to all apprentices in their first year, and to apprentices under
                 19 in any year. Once an apprentice is 19 or older and past their first year, the
                 age-band NMW
-                applies (£11.44 per hour for those aged 21+).
+                applies (£12.71 per hour for those aged 21+).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -359,7 +361,7 @@ const sections = [
               <span>
                 <strong>ESFA registered providers</strong> — you must use a provider on the ESFA
                 Register of Apprenticeship Training Providers (RoATP). Search the Find
-                Apprenticeship Training service at gov.uk to find providers delivering ST0145 in
+                Apprenticeship Training service at gov.uk to find providers delivering ST0152 in
                 your area.
               </span>
             </li>
@@ -564,9 +566,9 @@ export default function HiringElectricianApprenticesPage() {
   return (
     <GuideTemplate
       title="Hiring Electrical Apprentices UK: Employer Guide"
-      description="Complete employer guide to hiring electrical apprentices in the UK. ESFA funding explained (up to 95–100% of training costs), levy vs non-levy employers."
+      description="Complete employer guide to hiring electrical apprentices in the UK. Funding explained (0% for 16 to 24s and 5% for 25+ at non-levy firms), levy vs non-levy employers."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Employer Guide"
@@ -577,7 +579,7 @@ export default function HiringElectricianApprenticesPage() {
           <span className="text-elec-yellow">Employer Guide 2025</span>
         </>
       }
-      heroSubtitle="Everything you need to know about taking on an electrical apprentice — ESFA funding (up to 95% of training costs), levy vs non-levy rules, JIB paperwork, apprentice wages, choosing a training provider, and your mentoring responsibilities."
+      heroSubtitle="Everything you need to know about taking on an electrical apprentice — government funding (all training costs for 16 to 24-year-olds at non-levy firms), levy vs non-levy rules, JIB paperwork, apprentice wages, choosing a training provider, and your mentoring responsibilities."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

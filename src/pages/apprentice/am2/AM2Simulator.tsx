@@ -27,6 +27,8 @@ import { SectionBDrill } from '@/components/am2/SectionBDrill';
 import { DRILLS, type DrillKind } from '@/data/am2/sectionBDrills';
 import { AM2TopBar } from '@/components/am2/AM2TopBar';
 import { cn } from '@/lib/utils';
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
+import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY } from '@/components/college/ui/CollegeUi';
 import { AM2Home } from '@/components/am2/AM2Home';
 import { SafeIsolationAssessment } from '@/components/am2/safe-isolation/SafeIsolationAssessment';
 import { SafeWorkingPractices } from '@/components/am2/safe-working/SafeWorkingPractices';
@@ -155,29 +157,25 @@ const AM2Simulator = () => {
     window.addEventListener('keydown', block, true);
     return () => window.removeEventListener('keydown', block, true);
   }, [confirmLeave]);
-  const leaveSheet = confirmLeave && (
-    <div
-      className="fixed inset-0 z-50 flex items-end bg-black/70"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Leave the mock day?"
-      onClick={() => setConfirmLeave(false)}
-    >
-      <div
-        className="w-full rounded-t-2xl border-t border-white/[0.12] bg-[hsl(0_0%_9%)] px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 sm:mx-auto sm:mb-6 sm:max-w-lg sm:rounded-2xl sm:border"
-        onClick={(e) => e.stopPropagation()}
+  // A Radix sheet, so focus is trapped and it reads as a sheet to the
+  // native back handling; on a phone it sits at the bottom, in reach.
+  const leaveSheet = (
+    <Sheet open={confirmLeave} onOpenChange={setConfirmLeave}>
+      <SheetContent
+        side="bottom"
+        className="mx-auto max-w-lg rounded-t-2xl border-white/[0.12] bg-[hsl(0_0%_9%)] px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 sm:mb-6 sm:rounded-2xl sm:border"
       >
-        <p className="text-[17px] font-bold text-white">Leave the mock day?</p>
-        <p className="mt-1.5 text-[13.5px] leading-relaxed text-white">
-          Each section you’ve finished is saved as its own run, but the mock day itself — the
-          full-day result — is only saved once the last section is done.
-        </p>
-        <div className="mt-4 grid grid-cols-2 gap-2">
+        <SheetTitle className="text-[17px] font-bold text-white">Leave the mock day?</SheetTitle>
+        <SheetDescription className="mt-1.5 text-[14px] leading-relaxed text-white">
+          Each section you’ve finished is saved as its own run, but the mock day itself, the
+          full-day result, is only saved once the last section is done.
+        </SheetDescription>
+        <div className="mt-5 grid grid-cols-2 gap-2">
           <button
             type="button"
             autoFocus
             onClick={() => setConfirmLeave(false)}
-            className="h-12 rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation"
+            className={COLLEGE_BTN_PRIMARY}
           >
             Stay
           </button>
@@ -188,13 +186,13 @@ const AM2Simulator = () => {
               afterGuard.current = () => setActiveTab('readiness');
               setMockInProgress(false);
             }}
-            className="h-12 rounded-xl border border-white/[0.22] text-[15px] font-semibold text-white touch-manipulation"
+            className={COLLEGE_BTN}
           >
             Leave
           </button>
         </div>
-      </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 
   const content = (

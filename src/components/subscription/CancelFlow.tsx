@@ -14,6 +14,15 @@
  *      No prices are hardcoded here; see the note above `RETENTION_PERCENT`.
  *   3. Final cancel confirmation. Last-chance copy, no dark patterns.
  *
+ * The two rules that keep it honest (ELE-2029)
+ *   - "Cancel" is a full-size button on every offer screen and on the screen
+ *     after a message to Andrew. Bilal Mohamed went round this flow five times
+ *     in two days because the message screen ended in "Back to my account" and
+ *     nothing else, and 12 others were stuck the same way.
+ *   - Only an accepted discount or pause records a save, and the server writes
+ *     those. A message to Andrew leaves the row `pending`; the nightly
+ *     reconcile_cancel_survey_outcomes settles it from what billing did.
+ *
  * Backend
  *   - cancel_survey_responses row inserted on step 1
  *   - apply-retention-offer edge fn for "stay" path
@@ -33,6 +42,11 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import {
+  openStoreSubscriptionManager,
+  storeName,
+  type StoreKind,
+} from '@/lib/storeSubscriptionManager';
 import { cn } from '@/lib/utils';
 import {
   trackCancelFlowOpened,
@@ -77,6 +91,16 @@ interface CancelFlowProps {
   onCancelled?: () => void;
   /** Admin design preview: walk every step, write nothing, call nothing. */
   preview?: boolean;
+  /**
+   * Set for App Store / Google Play subscribers. We cannot discount or pause a
+   * store subscription ourselves, so the flow asks why (saved to the same
+   * table as web reasons, so the weekly digest covers everyone), offers Andrew
+   * for bugs and missing features, then hands over to the RevenueCat Customer
+   * Center, which makes the store's retention offer and does the cancelling.
+   * The Customer Center cannot hand its own survey answers back to the app,
+   * which is why the question is asked here and not there.
+   */
+  store?: StoreKind | null;
 }
 
 // ─── Copy / data ────────────────────────────────────────────────────────
@@ -115,6 +139,7 @@ const REASON_CHIPS: Record<string, { prompt: string; options: string[] }> = {
       'Work changed / less certs',
       'Never got set up properly',
       'Only needed it once',
+      'Passed my exam',
       'Too complicated',
       'Other',
     ],
@@ -253,16 +278,29 @@ function discountedPrice(
   };
 }
 
-const DONE_FOUNDER = {
+type DoneKind = 'founder' | 'pause' | 'discount';
+interface DoneState {
+  kind: DoneKind;
+  title: string;
+  lead: string;
+  items: string[];
+}
+
+// Says plainly that nothing was cancelled. The old copy ("your plan carries on
+// as it was") read as the end of the road, and the only button was "Back to my
+// account", so people who still wanted to leave started the flow again.
+const DONE_FOUNDER: DoneState = {
+  kind: 'founder',
   title: 'Sent to Andrew.',
-  lead: 'He reads it himself and replies personally, usually the same day.',
+  lead: 'He reads it himself and replies to the email on your account, usually the same day.',
   items: [
-    'Your plan carries on as it was, nothing has changed',
-    'The reply comes to the email on your account',
-    'If it needs fixing, it goes straight on the list',
+    'Nothing has been cancelled yet',
+    'Your plan carries on while you wait for his reply',
+    'Still want to go? Carry on below, it is one more tap',
   ],
 };
-const doneForPause = (resumes: Date) => ({
+const doneForPause = (resumes: Date): DoneState => ({
+  kind: 'pause',
   title: 'Paused. See you soon.',
   lead: `Nothing to pay until ${formatMonthDay(resumes)}`,
   items: [
@@ -271,7 +309,8 @@ const doneForPause = (resumes: Date) => ({
     'Come back sooner any time from Subscriptions',
   ],
 });
-const doneForDiscount = (amount: string, months: number | null) => ({
+const doneForDiscount = (amount: string, months: number | null): DoneState => ({
+  kind: 'discount',
   title: `${amount} a month it is.`,
   lead:
     months === null
@@ -332,6 +371,7 @@ export function CancelFlow({
   onStayed,
   onCancelled,
   preview = false,
+  store = null,
 }: CancelFlowProps) {
   const isMobile = useMediaQuery('(max-width: 640px)');
   const { toast } = useToast();
@@ -346,7 +386,17 @@ export function CancelFlow({
   const [pauseMonths, setPauseMonths] = useState<number>(2);
   // The screen after a yes. A toast and a page reload felt like being thrown
   // out; this says what changed, in the same place, and hands back control.
-  const [done, setDone] = useState<{ title: string; lead: string; items: string[] } | null>(null);
+  const [done, setDone] = useState<DoneState | null>(null);
+  // Set when the user picks a different way out on step 2 ("Message Andrew",
+  // "Pause instead"). It replaces the reason-picked intervention rather than
+  // firing straight away: "Message Andrew" on the offer screens used to send
+  // whatever was in the box, empty included, and record a save.
+  const [override, setOverride] = useState<Intervention | null>(null);
+  // The discount taken in THIS sitting. The prop is read once on open, so
+  // without this, Back from "Cancel for sure?" would pitch the same discount
+  // again and the server would refuse it as a second one.
+  const [discountedHere, setDiscountedHere] = useState(false);
+  const hasDiscount = alreadyDiscounted || discountedHere;
   const followUpRef = useRef<HTMLDivElement | null>(null);
 
   // On a phone the follow-up to a reason can land below the fold; bring it up.
@@ -360,7 +410,34 @@ export function CancelFlow({
   }, [reason]);
 
   const safeName = firstName?.trim() || 'mate';
-  const intervention = interventionFor(reason, alreadyDiscounted, alreadyPaused);
+  // Store subscribers only see step 2 when there is something for Andrew to
+  // act on; everyone else goes from the reason straight to the hand-over,
+  // where the store's own offer is made.
+  const storeNeedsFounder = reason === 'bug' || reason === 'missing_feature';
+  const intervention: Intervention =
+    override ??
+    (store
+      ? storeNeedsFounder
+        ? 'founder'
+        : 'discount' // never rendered for store; step 2 is skipped
+      : interventionFor(reason, hasDiscount, alreadyPaused));
+  const passedExam = reasonChip === 'Passed my exam';
+  // A second way to stay, offered quietly under the main one. Only to people
+  // whose reason a pause actually answers (cost, not using it); someone moving
+  // to TradeCert has no use for one, and the server refuses a second pause.
+  const canOfferPause =
+    !store &&
+    !alreadyPaused &&
+    intervention !== 'pause' &&
+    (reason === 'too_expensive' || reason === 'not_using' || reason === 'other');
+  const founderMinChars = reason === 'bug' ? 5 : 3;
+  const founderReady = founderMsg.trim().length >= founderMinChars;
+  // "TradeCert", not "Other" or "Paper certs", so the founder screen can ask
+  // what the named app does better.
+  const switchingTo =
+    reason === 'switching' && reasonChip && reasonChip !== 'Other' && reasonChip !== 'Paper certs'
+      ? reasonChip
+      : null;
   // Stripe's numbers win over ours whenever we have them.
   const percentOff = offerPercentOff ?? RETENTION_PERCENT;
   // `null` from get-billing-context means the coupon runs forever; only an
@@ -404,6 +481,9 @@ export function CancelFlow({
       setFounderMsg('');
       setPauseMonths(2);
       setDone(null);
+      setOverride(null);
+      // discountedHere is NOT reset: the discount is still on the subscription
+      // if they reopen the flow without a reload.
     }, 250);
   };
 
@@ -432,9 +512,12 @@ export function CancelFlow({
       document.getElementById('cancel-detail')?.focus();
       return;
     }
+    // A new reason gets the offer that reason picks, not one chosen last time.
+    setOverride(null);
+    const nextStep: 2 | 3 = store && !storeNeedsFounder ? 3 : 2;
     if (preview) {
       setFounderMsg(detail.trim());
-      setStep(2);
+      setStep(nextStep);
       return;
     }
     setIsSubmitting(true);
@@ -446,7 +529,11 @@ export function CancelFlow({
 
       // Decide the intervention we will offer at step 2 so it gets logged
       // alongside the reason (clean analytics — one row per cancel intent).
-      const offered = INTERVENTION_EVENT[interventionFor(reason, alreadyDiscounted, alreadyPaused)];
+      const offered = store
+        ? storeNeedsFounder
+          ? 'founder_message'
+          : 'store_handoff'
+        : INTERVENTION_EVENT[interventionFor(reason, hasDiscount, alreadyPaused)];
 
       const { data: inserted, error } = await supabase
         .from('cancel_survey_responses')
@@ -464,7 +551,7 @@ export function CancelFlow({
 
       setSurveyId(inserted?.id ?? null);
       setFounderMsg(detail.trim());
-      setStep(2);
+      setStep(nextStep);
     } catch (err) {
       console.error('[CancelFlow] reason save failed', err);
       toast({
@@ -494,6 +581,7 @@ export function CancelFlow({
       return;
     }
     if (preview) {
+      if (action === 'discount') setDiscountedHere(true);
       setDone(
         action === 'pause'
           ? doneForPause(addMonths(new Date(), pauseMonths))
@@ -525,6 +613,7 @@ export function CancelFlow({
             ? formatPence(data.next_amount, data?.next_currency ?? 'gbp')
             : (priced?.now ?? `${data?.percent_off ?? percentOff}% off`);
         const months: number | null = data?.duration_in_months ?? durationMonths;
+        setDiscountedHere(true);
         setDone(doneForDiscount(amount, months));
       }
 
@@ -549,12 +638,16 @@ export function CancelFlow({
   // lost a paying customer's bug report that way, July 2026).
   const handleMessageFounder = async () => {
     const message = founderMsg.trim();
-    if (reason === 'bug' && message.length < 5) {
+    // The button is disabled until this passes; the check stays for the Enter
+    // key and anything else that reaches here. An empty send was a save in
+    // the data and nothing at all in Andrew's inbox.
+    if (message.length < founderMinChars) {
       toast({
-        title: 'Tell us what broke',
-        description: 'A sentence is enough — it goes straight to Andrew.',
+        title: reason === 'bug' ? 'Tell us what broke' : 'Write Andrew a line first',
+        description: 'A sentence is enough. It goes straight to him.',
         variant: 'destructive',
       });
+      document.getElementById('cancel-founder')?.focus();
       return;
     }
     if (preview) {
@@ -571,22 +664,40 @@ export function CancelFlow({
       // destroyed the moment they typed anything — and wiped to NULL entirely
       // if they cleared the box. That chip is the only structured signal on
       // most rows, and the digest aggregates on it.
+      //
+      // No `outcome` here. This used to write 'stayed', so everyone who wrote
+      // to Andrew on their way out was counted as saved — 10 of them were
+      // still trying to leave (ELE-2029). The row stays 'pending' and the
+      // nightly reconcile settles it from what billing actually did.
       if (surveyId) {
         const existing = [reasonChip, detail.trim()].filter(Boolean).join(' — ');
-        const merged = [existing, message].filter(Boolean).join(' — ');
-        await supabase
+        // The step-1 detail pre-fills the message box; don't store it twice.
+        const merged = [existing, message === detail.trim() ? '' : message]
+          .filter(Boolean)
+          .join(' — ');
+        const { error: saveError } = await supabase
           .from('cancel_survey_responses')
           .update({
             reason_detail: merged || null,
-            outcome: 'stayed',
-            outcome_at: new Date().toISOString(),
-            intervention_applied: { kind: 'founder_message' },
+            intervention_applied: {
+              kind: 'founder_message',
+              sent_at: new Date().toISOString(),
+            },
           })
           .eq('id', surveyId);
+        // The email below still carries the message, so this is not fatal.
+        if (saveError) console.warn('[CancelFlow] founder message not saved', saveError);
       }
       // 2. Email Andrew — reply-to is the user, so replies just work
       const { error } = await supabase.functions.invoke('send-certificate-resend', {
-        body: { founderContactMode: true, message, reason: reason ?? 'unknown', tier: tier ?? '' },
+        body: {
+          founderContactMode: true,
+          message,
+          reason: reason ?? 'unknown',
+          // Andrew cannot refund or discount a store subscription himself, so
+          // he needs to know which kind of customer is writing.
+          tier: store ? `${tier ?? ''} (${storeName(store)} subscriber)`.trim() : (tier ?? ''),
+        },
       });
       if (error) throw new Error(error.message);
 
@@ -606,6 +717,7 @@ export function CancelFlow({
 
   // ── Step 3: actually cancel ──────────────────────────────────────────
   const handleConfirmCancel = async () => {
+    if (store) return handleStoreHandoff();
     if (!subscriptionId) {
       toast({
         title: 'No subscription to cancel',
@@ -660,6 +772,51 @@ export function CancelFlow({
     }
   };
 
+  // ── Step 3 (store): hand over to Apple / Google ──────────────────────
+  // No outcome is written: whether they cancel, take the store's offer or
+  // back out happens inside the Customer Center, out of our sight. The row
+  // stays 'pending' and the nightly reconcile settles it from the
+  // cancellation webhook, the same as the web flow's unanswered rows.
+  const handleStoreHandoff = async () => {
+    if (!store) return;
+    if (preview) {
+      toast({ title: 'Preview only', description: `This would open ${storeName(store)} now.` });
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const via = await openStoreSubscriptionManager(store);
+      if (via === 'store_settings') {
+        toast({
+          title: `Finish in ${storeName(store)}`,
+          description:
+            store === 'app_store'
+              ? 'Apple needs you to confirm in Settings → Apple ID → Subscriptions. We’ve opened it for you.'
+              : 'Google needs you to confirm in Play Store → Subscriptions. We’ve opened it for you.',
+        });
+      }
+      resetAndClose();
+    } catch (err) {
+      console.error('[CancelFlow] store hand-over failed', err);
+      toast({
+        title: `Could not open ${storeName(store)}`,
+        description:
+          store === 'app_store'
+            ? 'Cancel in Settings → Apple ID → Subscriptions, or email founder@elec-mate.com and Andrew will help.'
+            : 'Cancel in Play Store → Subscriptions, or email founder@elec-mate.com and Andrew will help.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  /** From a done screen or an offer straight to the "Cancel for sure?" step. */
+  const goToFinalCancel = () => {
+    setDone(null);
+    setStep(3);
+  };
+
   // ── Step renderers ───────────────────────────────────────────────────
   // The app's form language throughout: a hairline list instead of boxed
   // cards, chips for the one-tap follow-up, underline fields, and the price
@@ -683,8 +840,26 @@ export function CancelFlow({
   const renderStep = () => {
     if (done) {
       return (
-        <StepShell eyebrow="All done" title={done.title}>
+        <StepShell
+          eyebrow={done.kind === 'founder' ? 'Message sent' : 'All done'}
+          title={done.title}
+        >
           <Facts lead={done.lead} items={done.items} />
+          {/* The discount lands on one tap, and one tap can be a slip: Bilal's
+              was recorded three seconds after the screen opened. Cancelling
+              still works with the discount on; it stops renewal as normal. */}
+          {done.kind === 'discount' && (
+            <p className="text-[13px] leading-[18px] text-white">
+              Tapped that by mistake?{' '}
+              <button
+                type="button"
+                onClick={goToFinalCancel}
+                className="-my-3 inline-flex h-11 touch-manipulation items-center font-semibold text-white underline underline-offset-4"
+              >
+                Carry on cancelling
+              </button>
+            </p>
+          )}
         </StepShell>
       );
     }
@@ -800,14 +975,18 @@ export function CancelFlow({
                 ? 'Tell Andrew what broke.'
                 : reason === 'missing_feature'
                   ? `${safeName}, this one goes on the build list.`
-                  : `${safeName}, give Andrew a minute first?`
+                  : switchingTo
+                    ? `What does ${switchingTo} do better, ${safeName}?`
+                    : `${safeName}, give Andrew a minute first?`
             }
             subtitle={
               reason === 'bug'
                 ? 'Most bugs are fixed the same day. Replies come from the founder, not a queue.'
                 : reason === 'missing_feature'
                   ? 'Andrew reads these himself and they decide what gets built next. He’ll tell you straight whether it’s coming.'
-                  : 'He reads every one of these personally. If there’s anything he can do, he will.'
+                  : switchingTo
+                    ? 'Andrew reads every one of these. If it is something we can fix, he will tell you straight. If you have made up your mind, cancel is just below.'
+                    : 'He reads every one of these personally. If there’s anything he can do, he will. If you have made up your mind, cancel is just below.'
             }
           >
             <div className="border-t border-white/[0.08] pt-4">
@@ -820,7 +999,11 @@ export function CancelFlow({
                 onChange={(e) => setFounderMsg(e.target.value)}
                 rows={4}
                 placeholder={
-                  reason === 'bug' ? 'What broke, and where in the app?' : 'A line is enough'
+                  reason === 'bug'
+                    ? 'What broke, and where in the app?'
+                    : switchingTo
+                      ? `What ${switchingTo} has that we don’t`
+                      : 'A line is enough'
                 }
                 className={UNDERLINE_FIELD}
               />
@@ -828,6 +1011,7 @@ export function CancelFlow({
                 Or email founder@elec-mate.com if you’d rather.
               </p>
             </div>
+            {canOfferPause && <PauseLine onClick={() => setOverride('pause')} />}
           </StepShell>
         );
       }
@@ -838,9 +1022,19 @@ export function CancelFlow({
       if (intervention === 'pause') {
         return (
           <StepShell
-            eyebrow="Come back when you need it"
-            title={`Pause it instead, ${safeName}?`}
-            subtitle="Stop paying now and pick up where you left off later. Certificates, quotes and progress all stay exactly where they are."
+            eyebrow={passedExam ? 'Well done' : 'Come back when you need it'}
+            title={
+              passedExam
+                ? `Pause until the next one, ${safeName}?`
+                : `Pause it instead, ${safeName}?`
+            }
+            subtitle={
+              // Most passers are between Level 2 and Level 3, or Level 3 and
+              // AM2. A pause keeps their progress for the next course.
+              passedExam
+                ? 'Most apprentices have Level 3 or AM2 next. Stop paying now and your progress is here when that starts.'
+                : 'Stop paying now and pick up where you left off later. Certificates, quotes and progress all stay exactly where they are.'
+            }
           >
             <div className="grid grid-cols-3 gap-2">
               {PAUSE_CHOICES.map((m) => {
@@ -874,7 +1068,7 @@ export function CancelFlow({
                 'Come back sooner any time, one tap',
               ]}
             />
-            <FounderLine onClick={handleMessageFounder} />
+            <FounderLine onClick={() => setOverride('founder')} />
           </StepShell>
         );
       }
@@ -924,7 +1118,39 @@ export function CancelFlow({
               'No tie-in, cancel any time',
             ]}
           />
-          <FounderLine onClick={handleMessageFounder} />
+          {canOfferPause && <PauseLine onClick={() => setOverride('pause')} />}
+          <FounderLine onClick={() => setOverride('founder')} />
+        </StepShell>
+      );
+    }
+
+    // Step 3 (store) — what happens next, then Apple / Google
+    if (store) {
+      const name = storeName(store);
+      return (
+        <StepShell
+          eyebrow="Last step"
+          title={
+            passedExam ? `Well done on passing, ${safeName}.` : `Cancel for sure, ${safeName}?`
+          }
+          subtitle={`${name} handles the cancelling, so the next screen is theirs. That’s where you confirm.`}
+        >
+          <Facts
+            lead={`${tierName(tier)} plan stops renewing`}
+            items={[
+              'No further charges after the period you’ve paid for',
+              'Access runs until then, nothing switches off early',
+              'Your data is safe for 90 days after that. Resubscribe and it’s all back',
+            ]}
+          />
+          {!storeNeedsFounder && (
+            <FounderLine
+              onClick={() => {
+                setOverride('founder');
+                setStep(2);
+              }}
+            />
+          )}
         </StepShell>
       );
     }
@@ -952,6 +1178,20 @@ export function CancelFlow({
   const busy = isSubmitting;
   const spinner = <Loader2 className="h-4 w-4 animate-spin" />;
   const renderFooter = () => {
+    if (done?.kind === 'founder') {
+      // Both ways forward at the same size. Nothing changed on the account,
+      // so "Keep my plan" just closes; no reload, and nothing is recorded.
+      return (
+        <div className={FOOTER_PAIR}>
+          <button type="button" onClick={goToFinalCancel} className={OUTLINE_BTN}>
+            Carry on cancelling
+          </button>
+          <button type="button" onClick={resetAndClose} className={PRIMARY_BTN}>
+            Keep my plan
+          </button>
+        </div>
+      );
+    }
     if (done) {
       return (
         <FooterRow>
@@ -998,17 +1238,20 @@ export function CancelFlow({
       );
     }
 
+    // Step 2: the offer and the way out, side by side at the same size. The
+    // way out used to be faint text beside a big yellow button, and the
+    // yellow button was tapped three seconds in by someone who was leaving.
     if (step === 2) {
       return (
-        <FooterRow left={<BackButton onClick={() => setStep(1)} disabled={busy} />}>
-          <button type="button" onClick={() => setStep(3)} disabled={busy} className={GHOST_BTN}>
+        <div className={FOOTER_PAIR}>
+          <button type="button" onClick={goToFinalCancel} disabled={busy} className={OUTLINE_BTN}>
             No thanks, cancel
           </button>
           {intervention === 'founder' ? (
             <button
               type="button"
               onClick={handleMessageFounder}
-              disabled={busy}
+              disabled={busy || !founderReady}
               className={PRIMARY_BTN}
             >
               {busy ? spinner : 'Send to Andrew'}
@@ -1020,9 +1263,7 @@ export function CancelFlow({
               disabled={busy}
               className={PRIMARY_BTN}
             >
-              {busy
-                ? spinner
-                : `Pause for ${pauseMonths} ${pauseMonths === 1 ? 'month' : 'months'}`}
+              {busy ? spinner : `Pause ${pauseMonths} ${pauseMonths === 1 ? 'month' : 'months'}`}
             </button>
           ) : (
             <button
@@ -1034,17 +1275,17 @@ export function CancelFlow({
               {busy
                 ? spinner
                 : priced
-                  ? `Yes, ${priced.now} a ${priced.per}`
-                  : `Yes, ${percentOff}% off`}
+                  ? `Stay at ${priced.now}/${priced.per === 'year' ? 'yr' : 'mo'}`
+                  : `Stay at ${percentOff}% off`}
             </button>
           )}
-        </FooterRow>
+        </div>
       );
     }
 
     return (
-      <FooterRow left={<BackButton onClick={() => setStep(2)} disabled={busy} />}>
-        <button type="button" onClick={resetAndClose} disabled={busy} className={GHOST_BTN}>
+      <div className={FOOTER_PAIR}>
+        <button type="button" onClick={resetAndClose} disabled={busy} className={OUTLINE_BTN}>
           Keep my plan
         </button>
         <button
@@ -1053,23 +1294,51 @@ export function CancelFlow({
           disabled={busy}
           className={cn(PRIMARY_BTN, 'bg-[#d9483b] text-white hover:bg-[#c53f33]')}
         >
-          {busy ? spinner : 'Cancel subscription'}
+          {busy ? spinner : store ? `Continue to ${storeName(store)}` : 'Cancel subscription'}
         </button>
-      </FooterRow>
+      </div>
     );
   };
+
+  // Back lives in the header now, so the footer's two buttons can share the
+  // width equally. On step 2 with a switched offer it returns to the offer
+  // the reason picked, not all the way to the reasons.
+  // Store mode has no offer screen: from the hand-over, Back goes to the
+  // reasons unless Andrew's message screen is the step before it.
+  const handleBack =
+    done || step === 1
+      ? null
+      : step === 3
+        ? () => setStep(store && intervention !== 'founder' ? 1 : 2)
+        : override
+          ? () => {
+              setOverride(null);
+              if (store) setStep(3);
+            }
+          : () => setStep(1);
+
+  // A store subscriber with nothing for Andrew has two steps, not three: the
+  // reason and the hand-over. Showing three dots and jumping one reads as a
+  // skipped screen.
+  const twoStep = Boolean(store) && intervention !== 'founder';
+  const totalSteps = twoStep ? 2 : 3;
+  const shownStep = twoStep && step === 3 ? 2 : step;
 
   const content = (
     <div className="flex h-full min-h-0 flex-col bg-background bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
       {/* Where you are, and the way out */}
       <div className="flex items-center justify-between px-6 pt-5 sm:px-8">
-        <div className="flex items-center gap-1.5" aria-label={`Step ${step} of 3`}>
-          {[1, 2, 3].map((i) => (
+        {handleBack && <BackButton onClick={handleBack} disabled={isSubmitting} />}
+        <div
+          className={cn('flex items-center gap-1.5', handleBack && 'mx-auto')}
+          aria-label={`Step ${shownStep} of ${totalSteps}`}
+        >
+          {Array.from({ length: totalSteps }, (_, k) => k + 1).map((i) => (
             <span
               key={i}
               className={cn(
                 'h-1 w-7 rounded-full transition-colors',
-                done || i <= step ? 'bg-elec-yellow' : 'bg-white/[0.14]'
+                done || i <= shownStep ? 'bg-elec-yellow' : 'bg-white/[0.14]'
               )}
             />
           ))}
@@ -1154,10 +1423,15 @@ export function CancelFlow({
 
 const UNDERLINE_FIELD =
   'textarea-soft mt-1 w-full resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-0 py-2 text-[15px] leading-[1.5] text-white caret-elec-yellow placeholder:text-white/35 outline-none transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 touch-manipulation';
+// Two equal buttons across the footer: the way out is never the smaller one.
+const FOOTER_PAIR = 'grid grid-cols-2 gap-2 [&>button]:w-full [&>button]:px-3';
+const OUTLINE_BTN =
+  'inline-flex h-12 touch-manipulation items-center justify-center rounded-full border border-white/40 px-4 text-[14px] font-semibold text-white transition-colors hover:border-white/70 hover:bg-white/[0.06] disabled:opacity-40';
 const GHOST_BTN =
   'inline-flex h-11 touch-manipulation items-center rounded-full px-4 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.06] disabled:opacity-40';
+// Disabled is a neutral fill, not faded yellow: yellow at 40% reads as brown.
 const PRIMARY_BTN =
-  'inline-flex h-12 touch-manipulation items-center justify-center rounded-full bg-elec-yellow px-6 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40';
+  'inline-flex h-12 touch-manipulation items-center justify-center rounded-full bg-elec-yellow px-6 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.1] disabled:text-white';
 
 function tierName(tier: Tier | null): string {
   const t = (tier ?? 'Subscription')
@@ -1237,11 +1511,27 @@ function FounderLine({ onClick }: { onClick: () => void }) {
       <button
         type="button"
         onClick={onClick}
-        className="touch-manipulation font-semibold text-elec-yellow"
+        className="-my-3 inline-flex h-11 touch-manipulation items-center font-semibold text-elec-yellow"
       >
         Message Andrew
       </button>
       . He replies the same day.
+    </p>
+  );
+}
+
+function PauseLine({ onClick }: { onClick: () => void }) {
+  return (
+    <p className="text-[13px] leading-[18px] text-white">
+      Only need it now and then?{' '}
+      <button
+        type="button"
+        onClick={onClick}
+        className="-my-3 inline-flex h-11 touch-manipulation items-center font-semibold text-elec-yellow"
+      >
+        Pause it instead
+      </button>
+      , up to three months, nothing to pay.
     </p>
   );
 }

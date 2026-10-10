@@ -46,7 +46,7 @@ const SafeIsolationCard = ({ onBack }: SafeIsolationCardProps) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Safe Isolation</h1>
-              <p className="text-[10px] text-white">BS 7671 · GN3 · GS38</p>
+              <p className="text-[12px] text-white">BS 7671 · GN3 · GS38</p>
             </div>
           </div>
         </div>

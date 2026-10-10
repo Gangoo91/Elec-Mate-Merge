@@ -11,6 +11,11 @@
  *     two inputs: "Take photo" (camera) and "Choose photo or PDF" (no capture).
  *
  * Edit is only offered on Pending claims; the server re-checks.
+ *
+ * A NEW claim from here is always mileage. New receipts go through the one
+ * receipt flow, "Snap a receipt or bill" (ELE-2071, ReceiptsPanel), from the
+ * Expenses page and the job page alike; the Receipt form below is for
+ * changing a Pending receipt claim made before that.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { format } from 'date-fns';
@@ -54,6 +59,8 @@ interface Props {
   /** Present when editing a Pending claim. */
   claim?: WorkerExpenseClaim | null;
   initialKind?: ClaimKind;
+  /** Gap #3 / #21: a new claim started from a job opens with that job picked. */
+  initialJobId?: string | null;
   onSubmitPlain: (input: WorkerClaimInput) => Promise<unknown>;
   onSubmitMileage: (input: WorkerMileageInput) => Promise<unknown>;
   busy?: boolean;
@@ -86,6 +93,7 @@ export function ExpenseClaimSheet({
   jobsLoading,
   claim,
   initialKind = 'mileage',
+  initialJobId = null,
   onSubmitPlain,
   onSubmitMileage,
   busy,
@@ -142,17 +150,35 @@ export function ExpenseClaimSheet({
     } else {
       setKind(initialKind);
       setIncurredOn(todayIso());
-      setJobId('');
+      const preset = initialJobId ? jobs.find((j) => j.id === initialJobId) : null;
+      setJobId(preset ? preset.id : '');
       setNote('');
       setAmount('');
       setCategory('');
       setFrom(readLastFrom());
-      setTo('');
+      const addr = initialKind === 'mileage' ? preset?.address?.trim() || '' : '';
+      setTo(addr);
       setIsReturn(false);
       setOneWayMiles('');
-      autoTo.current = null;
+      autoTo.current = addr || null;
     }
-  }, [open, claim, initialKind]);
+    // jobs: only read when the sheet opens with a job preset.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, claim, initialKind, initialJobId]);
+
+  // The job list can arrive just after the sheet opens from a job page.
+  useEffect(() => {
+    if (!open || claim || !initialJobId || jobId) return;
+    const preset = jobs.find((j) => j.id === initialJobId);
+    if (!preset) return;
+    setJobId(preset.id);
+    const addr = kind === 'mileage' ? preset.address?.trim() || '' : '';
+    if (addr && !to.trim()) {
+      setTo(addr);
+      autoTo.current = addr;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, claim, initialJobId, jobs]);
 
   // Picking a job fills "To" with its address unless the worker typed one.
   const pickJob = (id: string) => {
@@ -394,9 +420,7 @@ export function ExpenseClaimSheet({
 
   const mileageHero = (
     <div className="-mx-4 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-        You&rsquo;ll claim
-      </p>
+      <p className="text-[12.5px] font-semibold text-white">You&rsquo;ll claim</p>
       <p className="mt-1.5 text-[34px] font-semibold leading-none tabular-nums text-white">
         {totalMiles > 0 && quoteAmount != null ? gbp(quoteAmount) : '£0.00'}
         {quote.isFetching && totalMiles > 0 && (
@@ -511,7 +535,7 @@ export function ExpenseClaimSheet({
       <div className="-mx-4 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
         <label
           htmlFor="claim-amount"
-          className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow"
+          className="text-[12.5px] font-semibold text-white"
         >
           Amount
         </label>
@@ -566,32 +590,27 @@ export function ExpenseClaimSheet({
           : 'Goes to the office to approve. You will get a notification when they do.'
       }
       footer={
-        <PrimaryButton
-          data-help="wt-expenses.send"
-          fullWidth
-          size="lg"
-          disabled={!canSave || busy}
-          onClick={save}
-        >
-          {busy ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
-          {busy ? 'Saving…' : saveLabel}
-        </PrimaryButton>
+        // The house footer: one row on a phone too, Cancel on the left, the
+        // one yellow on the right; natural widths on a desktop.
+        <div className="flex items-center gap-2 sm:justify-end">
+          <SecondaryButton
+            onClick={() => onOpenChange(false)}
+            className="h-12 shrink-0 px-6"
+          >
+            Cancel
+          </SecondaryButton>
+          <PrimaryButton
+            data-help="wt-expenses.send"
+            disabled={!canSave || busy}
+            onClick={save}
+            className="h-12 min-w-0 flex-1 sm:min-w-[200px] sm:flex-none"
+          >
+            {busy ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
+            {busy ? 'Saving…' : saveLabel}
+          </PrimaryButton>
+        </div>
       }
     >
-      {!editing && (
-        <Segmented<ClaimKind>
-          value={kind}
-          onChange={(v) => {
-            setKind(v);
-            setReceiptFile(null);
-          }}
-          options={[
-            { value: 'mileage', label: 'Mileage' },
-            { value: 'receipt', label: 'Receipt' },
-          ]}
-        />
-      )}
-
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
         <div className="space-y-5">
           {kind === 'mileage' ? mileageHero : receiptFields}
@@ -603,7 +622,7 @@ export function ExpenseClaimSheet({
           {kind === 'mileage' && jobId && !jobs.find((j) => j.id === jobId)?.address && (
             <p className="flex items-center gap-1.5 text-[12px] text-white">
               <MapPin className="h-3.5 w-3.5 text-elec-yellow" />
-              This job has no address on it — type where you went.
+              This job has no address on it. Type where you went.
             </p>
           )}
           {noteField}

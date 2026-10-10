@@ -71,7 +71,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* What RCDs protect against */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What RCDs Protect Against</p>
+          <p className="text-[12px] font-medium text-white mb-3">What RCDs Protect Against</p>
         </motion.div>
 
         {hazards.map((h, i) => (
@@ -92,7 +92,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* How it works */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How an RCD Works</p>
+          <p className="text-[12px] font-medium text-white mb-3">How an RCD Works</p>
         </motion.div>
 
         {howItWorks.map((item, i) => (
@@ -111,7 +111,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Current effects on the body */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Electric Current Effects on the Human Body</p>
+          <p className="text-[12px] font-medium text-white mb-3">Electric Current Effects on the Human Body</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -139,7 +139,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world scenarios */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Happens With and Without a Working RCD</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Happens With and Without a Working RCD</p>
         </motion.div>
 
         {failureScenarios.map((s, i) => (

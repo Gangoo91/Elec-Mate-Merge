@@ -1,9 +1,17 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { FileDown, Plus, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
-import { useJobPacks, invalidatePackViews } from '@/hooks/useJobPacks';
+import {
+  useJobPacks,
+  useJobPackSignoffs,
+  invalidatePackViews,
+  chaseUnsignedPack,
+} from '@/hooks/useJobPacks';
+import { useCrewCompetence } from '@/hooks/useCrewCompetence';
+import { checkPackCrew } from '@/utils/packCompetence';
+import { JobSafetyPack } from '@/components/employer/JobSafetyPack';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
 import { AddJobPackDialog } from '@/components/employer/dialogs/AddJobPackDialog';
@@ -12,7 +20,7 @@ import { JobPack } from '@/services/jobPackService';
 import { JobContextBar } from '@/components/employer/JobContextBar';
 import { useJobContext } from '@/hooks/useJobContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { JOB_PACKS_HELP } from '@/components/employer/help/jobs';
 import {
@@ -21,38 +29,34 @@ import {
   timeAgoShort,
   useSavedDraft,
 } from '@/components/employer/dialogs/formSheetKit';
+import { PageFrame, PageHero, StatStrip, LoadingBlocks } from '@/components/employer/editorial';
 import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  IconButton,
-  EmptyState,
-  LoadingBlocks,
-  PrimaryButton,
-  SecondaryButton,
-  type Tone,
-} from '@/components/employer/editorial';
+  frameClass,
+  twoColClass,
+  colClass,
+  PanelTitle,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  ToolButton,
+  StatusPill,
+  Row,
+  RowList,
+  PlainEmpty,
+  Segments,
+  SearchField,
+  FilterRow,
+} from '@/components/employer/pageParts/PageParts';
 
 type StatusTab = 'all' | 'Draft' | 'In Progress' | 'Complete';
 
-const statusTone: Record<string, Tone> = {
-  Draft: 'orange',
-  'In Progress': 'cyan',
-  Complete: 'emerald',
-};
-
-// One vocabulary everywhere: tabs and stats say Sent/Signed, so the row
-// pills must not say 'In Progress'/'Complete' for the same states
+// One vocabulary everywhere (ELE-1962): Draft, then Sent while signatures are
+// coming in, then Complete once everyone has signed. The database moves a
+// pack to Complete itself when the last person signs.
 const statusLabel: Record<string, string> = {
   Draft: 'Draft',
   'In Progress': 'Sent',
-  Complete: 'Signed',
+  Complete: 'Complete',
 };
 
 export const JobPacksSection = () => {
@@ -63,6 +67,13 @@ export const JobPacksSection = () => {
   const [activeTab, setActiveTab] = useState<StatusTab>('all');
   const [packPrefillJobId, setPackPrefillJobId] = useState<string | null>(null);
   const { data: jobPacks = [], isLoading, refetch, isRefetching } = useJobPacks();
+  const { data: signoffs = [] } = useJobPackSignoffs();
+  const { matrix } = useCrewCompetence();
+  const [chasingId, setChasingId] = useState<string | null>(null);
+  // The site safety PDF is an export of a pack (ELE-1962): undefined = closed,
+  // null = open with the job picker, a job id = open on that job.
+  const [exportJobId, setExportJobId] = useState<string | null | undefined>(undefined);
+  const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
   const packDraft = useSavedDraft<{ formData?: { title?: string } }>('new-job-pack', user?.id);
 
@@ -97,6 +108,78 @@ export const JobPacksSection = () => {
     () => jobPacks.find((jp) => jp.id === selectedJobPackId) ?? null,
     [jobPacks, selectedJobPackId]
   );
+
+  // A notification opens the exact pack: ?section=jobpacks&pack=<id>.
+  const packParam = searchParams.get('pack');
+  useEffect(() => {
+    if (!packParam || isLoading) return;
+    if (jobPacks.some((jp) => jp.id === packParam)) {
+      setSelectedJobPackId(packParam);
+      setShowJobPackSheet(true);
+    }
+    const next = new URLSearchParams(searchParams);
+    next.delete('pack');
+    setSearchParams(next, { replace: true });
+  }, [packParam, isLoading, jobPacks, searchParams, setSearchParams]);
+
+  // Who still has to sign each pack, worked out the same way as the database
+  // (_pack_sync_status): everyone with a sign-off row plus anyone assigned
+  // since it went out, leaving out people no longer on the team.
+  const signing = useMemo(() => {
+    const onTeam = new Set(
+      employees.filter((e) => String(e.status ?? '').toLowerCase() !== 'archived').map((e) => e.id)
+    );
+    const byPack = new Map<string, { signed: number; total: number; unsigned: number }>();
+    for (const jp of jobPacks) {
+      const rows = signoffs.filter((a) => a.job_pack_id === jp.id && onTeam.has(a.employee_id));
+      const people = new Map<string, boolean>();
+      for (const a of rows)
+        people.set(a.employee_id, people.get(a.employee_id) || !!a.acknowledged_at);
+      for (const w of jp.assigned_workers ?? []) {
+        if (onTeam.has(w) && !people.has(w)) people.set(w, false);
+      }
+      const signed = [...people.values()].filter(Boolean).length;
+      // Only people with a sign-off row can be chased; the rest need the pack re-sent.
+      const unsigned = rows.filter((a) => !a.acknowledged_at).length;
+      byPack.set(jp.id, { signed, total: people.size, unsigned });
+    }
+    return byPack;
+  }, [jobPacks, signoffs, employees]);
+
+  // Required certificates checked against the people on each pack (ELE-1834 check).
+  const certGaps = useMemo(() => {
+    const byPack = new Map<string, string[]>();
+    if (!matrix) return byPack;
+    for (const jp of jobPacks) {
+      if (!jp.required_certifications?.length || !jp.assigned_workers?.length) continue;
+      const people = employees.filter((e) => jp.assigned_workers.includes(e.id));
+      const r = checkPackCrew(matrix, jp.required_certifications, people, jp.start_date);
+      if (r.lines.length) byPack.set(jp.id, r.lines);
+    }
+    return byPack;
+  }, [jobPacks, employees, matrix]);
+
+  const handleChase = async (e: React.MouseEvent | React.KeyboardEvent, jobPack: JobPack) => {
+    e.stopPropagation();
+    if (chasingId) return;
+    setChasingId(jobPack.id);
+    try {
+      const r = await chaseUnsignedPack(jobPack.id);
+      const parts: string[] = [];
+      if (r.alreadyToday) parts.push(`${r.alreadyToday} already reminded today`);
+      if (r.notLinked) parts.push(`${r.notLinked} not on the app yet`);
+      toast({
+        title: r.chased
+          ? `Reminder sent to ${r.chased} ${r.chased === 1 ? 'person' : 'people'}`
+          : 'Nobody new to remind today',
+        description: parts.length ? `${parts.join(', ')}.` : undefined,
+      });
+    } catch {
+      toast({ title: 'Could not send reminders', variant: 'destructive' });
+    } finally {
+      setChasingId(null);
+    }
+  };
 
   // Prefer the real FK link (employer_job_packs.job_id); title matching only
   // covers legacy packs created before the column existed.
@@ -154,6 +237,13 @@ export const JobPacksSection = () => {
     inProgress: jobPacks.filter((jp) => jp.status === 'In Progress').length,
     complete: jobPacks.filter((jp) => jp.status === 'Complete').length,
     awaiting: allJobsAwaitingPack.length,
+    unsignedPeople: jobPacks
+      .filter((jp) => jp.status === 'In Progress')
+      .reduce((n, jp) => {
+        const s = signing.get(jp.id);
+        return n + (s ? s.total - s.signed : 0);
+      }, 0),
+    certPacks: jobPacks.filter((jp) => jp.status !== 'Complete' && certGaps.has(jp.id)).length,
   };
 
   const handleSendToWorkers = async (e: React.MouseEvent, jobPack: JobPack) => {
@@ -205,40 +295,88 @@ export const JobPacksSection = () => {
     return docs.filter(Boolean).length;
   };
 
+  const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+  const liveLine = (() => {
+    if (jobPacks.length === 0 && stats.awaiting === 0)
+      return 'No packs yet. A pack holds the scope, RAMS and briefing your team signs before work starts.';
+    const todo: string[] = [];
+    if (stats.awaiting > 0) todo.push(`${plural(stats.awaiting, 'job')} without a pack`);
+    if (stats.draft > 0) todo.push(`${plural(stats.draft, 'draft')} to finish and send`);
+    if (stats.unsignedPeople > 0)
+      todo.push(
+        `${plural(stats.unsignedPeople, 'signature')} missing on ${plural(stats.inProgress, 'pack')}`
+      );
+    else if (stats.inProgress > 0) todo.push(`${plural(stats.inProgress, 'pack')} out for signing`);
+    if (stats.certPacks > 0)
+      todo.push(`${plural(stats.certPacks, 'pack')} with someone missing a certificate`);
+    return todo.length
+      ? `${todo.join(', ')}.`
+      : `${plural(stats.complete, 'pack')} complete. Nothing waiting.`;
+  })();
+
+  const openNew = () => {
+    if (contextJobId) setPackPrefillJobId(contextJobId);
+    setShowNewJobPack(true);
+  };
+
+  const hero = (
+    <PageHero
+      title="Job packs"
+      description={isLoading ? 'Loading job packs.' : liveLine}
+      actions={
+        <HeroActions>
+          <HeroPrimary
+            data-help="jobpacks.new"
+            onClick={openNew}
+            icon={<Plus className="h-4 w-4" />}
+          >
+            New pack
+          </HeroPrimary>
+          <HeroSecondary
+            label="Site safety PDF"
+            onClick={() => setExportJobId(contextJobId ?? null)}
+            icon={<FileDown className="h-4 w-4" />}
+          >
+            Site safety PDF
+          </HeroSecondary>
+          <ToolButton
+            label="Refresh"
+            onClick={() => refetch()}
+            disabled={isRefetching}
+            icon={<RefreshCw className={isRefetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />}
+          />
+          <PageHelpButton help={JOB_PACKS_HELP} blockers={helpBlockers} askContext={helpAsk} />
+        </HeroActions>
+      }
+    />
+  );
+
+  if (exportJobId !== undefined) {
+    return (
+      <JobSafetyPack
+        initialJobId={exportJobId}
+        backLabel="Job packs"
+        onBack={() => setExportJobId(undefined)}
+        onNavigate={(section) => navigate(`/employer?section=${section}`)}
+      />
+    );
+  }
+
   if (isLoading) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
+        {hero}
         <LoadingBlocks />
       </PageFrame>
     );
   }
 
+  const showAwaiting = activeTab === 'all' && !contextJobId && jobsAwaitingPack.length > 0;
+
   return (
     <>
-      <PageFrame>
-        <PageHero
-          eyebrow="Operations"
-          title="Job Packs"
-          description="Scope, docs, sign-offs and checklists bundled per job."
-          tone="yellow"
-          actions={
-            <>
-              <PrimaryButton
-                data-help="jobpacks.new"
-                onClick={() => {
-                  if (contextJobId) setPackPrefillJobId(contextJobId);
-                  setShowNewJobPack(true);
-                }}
-              >
-                New pack
-              </PrimaryButton>
-              <IconButton onClick={() => refetch()} disabled={isRefetching} aria-label="Refresh">
-                <RefreshCw className={isRefetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
-              </IconButton>
-              <PageHelpButton help={JOB_PACKS_HELP} blockers={helpBlockers} askContext={helpAsk} />
-            </>
-          }
-        />
+      <PageFrame className={frameClass}>
+        {hero}
 
         <HowItWorks help={JOB_PACKS_HELP} blockers={helpBlockers} askContext={helpAsk} />
 
@@ -256,141 +394,221 @@ export const JobPacksSection = () => {
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Draft', value: stats.draft },
-            { label: 'Sent', value: stats.inProgress, tone: 'orange' },
-            { label: 'Signed off', value: stats.complete, tone: 'emerald' },
-            { label: 'Jobs to pack', value: stats.awaiting, accent: true },
+            {
+              label: 'Draft',
+              value: stats.draft,
+              tone: stats.draft ? 'yellow' : undefined,
+              sub: 'Not sent yet',
+              onClick: () => setActiveTab('Draft'),
+            },
+            {
+              label: 'Sent',
+              value: stats.inProgress,
+              sub:
+                stats.unsignedPeople > 0
+                  ? `${plural(stats.unsignedPeople, 'signature')} missing`
+                  : 'Waiting on signatures',
+              onClick: () => setActiveTab('In Progress'),
+            },
+            {
+              label: 'Complete',
+              value: stats.complete,
+              sub: 'Everyone has signed',
+              onClick: () => setActiveTab('Complete'),
+            },
+            {
+              label: 'Jobs to pack',
+              value: stats.awaiting,
+              tone: stats.awaiting ? 'yellow' : undefined,
+              sub: 'Live jobs with no pack',
+              onClick: () => setActiveTab('all'),
+            },
           ]}
         />
 
-        <FilterBar
-          tabs={[
-            { value: 'all', label: 'All', count: stats.total },
-            { value: 'Draft', label: 'Draft', count: stats.draft },
-            { value: 'In Progress', label: 'Sent', count: stats.inProgress },
-            { value: 'Complete', label: 'Signed', count: stats.complete },
-          ]}
-          activeTab={activeTab}
-          onTabChange={(v) => setActiveTab(v as StatusTab)}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search job packs…"
-        />
-
-        {activeTab === 'all' && !contextJobId && jobsAwaitingPack.length > 0 && (
-          <ListCard>
-            <ListCardHeader
-              tone="orange"
-              title="Jobs awaiting pack"
-              meta={<Pill tone="orange">{jobsAwaitingPack.length}</Pill>}
-              action="New pack"
-              onAction={() => setShowNewJobPack(true)}
-            />
-            <ListBody>
-              {jobsAwaitingPack.map((job) => (
-                <ListRow
-                  key={job.id}
-                  title={job.title}
-                  subtitle={job.client}
-                  trailing={<Pill tone="amber">No pack</Pill>}
-                  onClick={() => {
-                    // Pre-select THIS job in the wizard, not a blank form.
-                    setPackPrefillJobId(job.id);
-                    setShowNewJobPack(true);
-                  }}
-                />
-              ))}
-            </ListBody>
-          </ListCard>
-        )}
-
-        <div data-help="jobpacks.list">
-        <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title="Job packs"
-            meta={<Pill tone="yellow">{filteredJobPacks.length}</Pill>}
+        <FilterRow>
+          <Segments
+            items={[
+              { value: 'all' as StatusTab, label: 'All' },
+              { value: 'Draft' as StatusTab, label: 'Draft' },
+              { value: 'In Progress' as StatusTab, label: 'Sent' },
+              { value: 'Complete' as StatusTab, label: 'Complete' },
+            ]}
+            value={activeTab}
+            onChange={setActiveTab}
           />
-          {filteredJobPacks.length === 0 ? (
-            <div className="p-5 sm:p-6">
-              <EmptyState
-                title={
-                  activeTab === 'all' ? 'No job packs yet' : `No ${activeTab.toLowerCase()} packs`
-                }
-                description="Job packs bundle scope, RAMS, method statements, briefings and sign-offs per job."
-                action={contextJobId ? 'Create a pack for this job' : 'Create job pack'}
-                onAction={() => {
-                  if (contextJobId) setPackPrefillJobId(contextJobId);
-                  setShowNewJobPack(true);
-                }}
-              />
+          <SearchField
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search job packs"
+            className="lg:w-72"
+          />
+        </FilterRow>
+
+        <div className={showAwaiting ? twoColClass : undefined}>
+          <div className={colClass}>
+            <section data-help="jobpacks.list">
+              <PanelTitle title="Job packs" meta={`${filteredJobPacks.length}`} />
+              {filteredJobPacks.length === 0 ? (
+                <PlainEmpty
+                  text={
+                    activeTab === 'all'
+                      ? 'Packs appear here, each with its scope, RAMS, method statement, briefing and sign-offs.'
+                      : `No ${(statusLabel[activeTab] ?? activeTab).toLowerCase()} packs.`
+                  }
+                  action={contextJobId ? 'Create a pack for this job' : 'Create job pack'}
+                  onAction={openNew}
+                />
+              ) : (
+                <RowList>
+                  {filteredJobPacks.map((jobPack) => {
+                    const assignedEmployees = employees.filter((e) =>
+                      jobPack.assigned_workers?.includes(e.id)
+                    );
+                    const docProgress = getDocumentProgress(jobPack);
+                    const allDocsReady = docProgress === 3;
+                    const canSend =
+                      allDocsReady && jobPack.status === 'Draft' && assignedEmployees.length > 0;
+                    const sign = signing.get(jobPack.id);
+                    const canChase = jobPack.status === 'In Progress' && (sign?.unsigned ?? 0) > 0;
+                    const gaps =
+                      jobPack.status !== 'Complete' ? certGaps.get(jobPack.id) : undefined;
+
+                    const detail = [
+                      jobPack.client,
+                      jobPack.status === 'Draft' ? `Docs ${docProgress}/3` : null,
+                      jobPack.status !== 'Draft' && sign && sign.total > 0
+                        ? `${sign.signed} of ${sign.total} signed`
+                        : assignedEmployees.length > 0
+                          ? `${assignedEmployees.length} worker${assignedEmployees.length !== 1 ? 's' : ''}`
+                          : null,
+                      jobPack.location,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ');
+
+                    return (
+                      <Row
+                        key={jobPack.id}
+                        onClick={() => handleJobPackClick(jobPack)}
+                        title={jobPack.title}
+                        detail={detail}
+                        meta={
+                          gaps?.length ? (
+                            <span className="text-red-400">
+                              {gaps[0]}
+                              {gaps.length > 1 ? `, and ${gaps.length - 1} more` : ''}
+                            </span>
+                          ) : undefined
+                        }
+                        trailing={
+                          <>
+                            {!allDocsReady && (
+                              /* Opens the pack's Documents tab where the REAL AI
+                                 generation lives — the old handler just flipped
+                                 the _generated flags, so "Docs 3/3" (and Send)
+                                 could be reached with zero actual RAMS content. */
+                              <span
+                                role="button"
+                                tabIndex={0}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleJobPackClick(jobPack);
+                                }}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    handleJobPackClick(jobPack);
+                                  }
+                                }}
+                                className="hidden sm:inline-flex h-11 items-center px-4 rounded-full border border-white/[0.14] text-white text-[13px] font-semibold touch-manipulation hover:bg-white/[0.06] transition-colors"
+                              >
+                                Generate
+                              </span>
+                            )}
+                            {canSend && (
+                              <span
+                                role="button"
+                                tabIndex={0}
+                                onClick={(e) => handleSendToWorkers(e, jobPack)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    handleSendToWorkers(e as unknown as React.MouseEvent, jobPack);
+                                  }
+                                }}
+                                className="hidden sm:inline-flex h-11 items-center px-4 rounded-full border border-elec-yellow text-elec-yellow text-[13px] font-semibold touch-manipulation hover:bg-white/[0.06]"
+                              >
+                                Send
+                              </span>
+                            )}
+                            {canChase && (
+                              <span
+                                role="button"
+                                tabIndex={0}
+                                aria-disabled={chasingId === jobPack.id}
+                                onClick={(e) => handleChase(e, jobPack)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    handleChase(e, jobPack);
+                                  }
+                                }}
+                                className="inline-flex h-11 items-center whitespace-nowrap rounded-full border border-white/[0.18] bg-white/[0.06] px-4 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.1] aria-disabled:opacity-50"
+                              >
+                                {chasingId === jobPack.id
+                                  ? 'Chasing'
+                                  : `Chase ${sign?.unsigned ?? 0}`}
+                                <span className="hidden sm:inline">&nbsp;unsigned</span>
+                              </span>
+                            )}
+                            <StatusPill
+                              tone={jobPack.status === 'Complete' ? 'green' : 'neutral'}
+                              className={canChase ? 'hidden sm:inline-flex' : undefined}
+                            >
+                              {statusLabel[jobPack.status] ?? jobPack.status}
+                            </StatusPill>
+                          </>
+                        }
+                      />
+                    );
+                  })}
+                </RowList>
+              )}
+            </section>
+          </div>
+
+          {showAwaiting && (
+            <div className={colClass}>
+              <section>
+                <PanelTitle
+                  title="Jobs awaiting a pack"
+                  meta={
+                    stats.awaiting > jobsAwaitingPack.length
+                      ? `${jobsAwaitingPack.length} of ${stats.awaiting}`
+                      : `${stats.awaiting}`
+                  }
+                  action="New pack"
+                  onAction={() => setShowNewJobPack(true)}
+                />
+                <RowList>
+                  {jobsAwaitingPack.map((job) => (
+                    <Row
+                      key={job.id}
+                      title={job.title}
+                      detail={job.client}
+                      onClick={() => {
+                        // Pre-select THIS job in the wizard, not a blank form.
+                        setPackPrefillJobId(job.id);
+                        setShowNewJobPack(true);
+                      }}
+                    />
+                  ))}
+                </RowList>
+              </section>
             </div>
-          ) : (
-            <ListBody>
-              {filteredJobPacks.map((jobPack) => {
-                const assignedEmployees = employees.filter((e) =>
-                  jobPack.assigned_workers?.includes(e.id)
-                );
-                const docProgress = getDocumentProgress(jobPack);
-                const allDocsReady = docProgress === 3;
-                const canSend =
-                  allDocsReady && jobPack.status === 'Draft' && assignedEmployees.length > 0;
-                const tone = statusTone[jobPack.status] ?? 'amber';
-
-                const subtitleBits = [jobPack.client, jobPack.location].filter(Boolean).join(' · ');
-
-                return (
-                  <ListRow
-                    key={jobPack.id}
-                    accent={tone}
-                    title={jobPack.title}
-                    subtitle={
-                      <span>
-                        {subtitleBits}
-                        <span className="ml-2 tabular-nums">· Docs {docProgress}/3</span>
-                        {assignedEmployees.length > 0 && (
-                          <span className="ml-2 tabular-nums">
-                            · {assignedEmployees.length} worker
-                            {assignedEmployees.length !== 1 ? 's' : ''}
-                          </span>
-                        )}
-                      </span>
-                    }
-                    trailing={
-                      <>
-                        {!allDocsReady && (
-                          /* Opens the pack's Documents tab where the REAL AI
-                             generation lives — the old handler just flipped
-                             the _generated flags, so "Docs 3/3" (and Send)
-                             could be reached with zero actual RAMS content. */
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleJobPackClick(jobPack);
-                            }}
-                            className="hidden sm:inline-flex h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.08] text-white text-[12px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
-                          >
-                            Generate
-                          </button>
-                        )}
-                        {canSend && (
-                          <button
-                            onClick={(e) => handleSendToWorkers(e, jobPack)}
-                            className="hidden sm:inline-flex h-11 px-4 rounded-full bg-elec-yellow text-black text-[12px] font-semibold touch-manipulation"
-                          >
-                            Send
-                          </button>
-                        )}
-                        <Pill tone={tone}>{statusLabel[jobPack.status] ?? jobPack.status}</Pill>
-                      </>
-                    }
-                    onClick={() => handleJobPackClick(jobPack)}
-                  />
-                );
-              })}
-            </ListBody>
           )}
-        </ListCard>
         </div>
       </PageFrame>
 
@@ -407,6 +625,10 @@ export const JobPacksSection = () => {
         jobPack={selectedJobPack}
         open={showJobPackSheet}
         onOpenChange={setShowJobPackSheet}
+        onExportSitePack={(jobId) => {
+          setShowJobPackSheet(false);
+          setExportJobId(jobId);
+        }}
       />
     </>
   );

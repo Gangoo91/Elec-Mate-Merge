@@ -5,13 +5,13 @@ import { cn } from '@/lib/utils';
 import { itemVariants } from '@/components/college/primitives';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { QuietTabs } from '@/components/college/quality/QualityChoices';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  CollegePageHeader,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
+  QBTN,
+  QBTN_PRIMARY,
+  QCARD,
+  QualityHeader,
+} from '@/components/college/quality/QualityHubKit';
 import { ComplianceDocsSection } from '@/components/college/sections/ComplianceDocsSection';
 import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
 
@@ -51,13 +51,28 @@ const HELP: PageHelpContent = {
   title: 'Compliance',
   what: 'Everything an inspector, auditor or awarding body could ask to see, in one place: staff records and policies, a live Ofsted readiness view, your self-assessment, the improvement plan and a printable audit pack.',
   steps: [
-    { title: 'Keep the vault in date', body: 'Staff checks (DBS, right to work, references) and policies live in Vault and policies. Expired and missing items show first.' },
-    { title: 'Check your readiness', body: 'Ofsted readiness reads your live records against the areas Ofsted inspects and shows where evidence is thin.' },
-    { title: 'Write it up and act on it', body: 'Draft the self-assessment, turn its weaknesses into improvement plan actions, and rehearse the questions.' },
-    { title: 'Print the pack', body: 'The audit pack puts the single central record, policies, sign-offs and the IQA chain into one document.' },
+    {
+      title: 'Keep the vault in date',
+      body: 'Staff checks (DBS, right to work, references) and policies live in Vault and policies. Expired and missing items show first.',
+    },
+    {
+      title: 'Check your readiness',
+      body: 'Ofsted readiness reads your live records against the areas Ofsted inspects and shows where evidence is thin.',
+    },
+    {
+      title: 'Write it up and act on it',
+      body: 'Draft the self-assessment, turn its weaknesses into improvement plan actions, and rehearse the questions.',
+    },
+    {
+      title: 'Print the pack',
+      body: 'The audit pack puts the single central record, policies, sign-offs and the IQA chain into one document.',
+    },
   ],
   notes: [
-    { title: 'Evidence search', body: 'Type a question the way an inspector would ask it, such as “show me struggling learners and our response”, and jump to the learners and records that answer it.' },
+    {
+      title: 'Evidence search',
+      body: 'Type a question the way an inspector would ask it, such as “show me struggling learners and our response”, and see the learners and records on file that answer it. The question is read with AI; the records are your own.',
+    },
   ],
 };
 
@@ -81,42 +96,31 @@ export default function ComplianceHubPage() {
     <HubPage ground="landing">
       <HubMasthead section="College" title="Compliance" backTo="/college?section=qualityhub" />
       <HubBody pushContext="Get notified when staff checks expire and policies need signing">
-        <CollegePageHeader
+        <QualityHeader
           eyebrow="Quality and compliance"
           title="Compliance"
-          description="Staff records, policies, Ofsted readiness, self-assessment and the audit pack, in one place."
+          summary="Staff records, policies, Ofsted readiness, self-assessment and the audit pack, in one place."
           help={HELP}
         />
 
-        <div
-          className="sticky top-[calc(var(--header-height,0px)+3rem)] z-20 -mx-4 border-b border-white/[0.06] bg-[hsl(var(--hub-ground))]/95 px-4 py-2 backdrop-blur-md lg:-mx-8 lg:px-8"
-          role="tablist"
-          aria-label="Compliance sections"
-        >
-          <div className="flex gap-2 overflow-x-auto pb-0.5 scrollbar-none">
-            {TABS.map((t) => (
-              <button
-                key={t.key}
-                type="button"
-                role="tab"
-                aria-selected={activeTab === t.key}
-                onClick={() => setTab(t.key)}
-                className={cn(chipCn(activeTab === t.key), 'h-11')}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Quiet text tabs, a sideways rail on a phone (not a second sticky bar). */}
+        <QuietTabs
+          asTabs
+          label="Compliance sections"
+          tabs={TABS}
+          value={activeTab}
+          onChange={setTab}
+        />
 
-        {activeTab === 'showme' && (
-          <div className={COLLEGE_CARD}>
-            <ShowMePanel />
-          </div>
-        )}
-        {activeTab === 'vault' && <ComplianceDocsSection />}
+        {/* ShowMePanel draws its own card. */}
+        {activeTab === 'showme' && <ShowMePanel />}
+        {activeTab === 'vault' && <ComplianceDocsSection embedded />}
         {activeTab === 'eif' && (
-          <Suspense fallback={<div className={cn(COLLEGE_CARD, 'text-[13.5px] text-white')}>Loading Ofsted readiness…</div>}>
+          <Suspense
+            fallback={
+              <div className={cn(QCARD, 'text-[13.5px] text-white')}>Loading Ofsted readiness…</div>
+            }
+          >
             <OfstedEifPage embedded />
           </Suspense>
         )}
@@ -125,7 +129,11 @@ export default function ComplianceHubPage() {
             eyebrow="Self-assessment"
             title="Self-assessment report"
             body="Draft your annual self-assessment from live college records: attendance, achievement, end-point assessment, IQA findings and staff. Read it, regenerate it, send it for review and approve it."
-            points={['Written from the records you already keep', 'Strengths and areas for improvement listed', 'Review and approval recorded']}
+            points={[
+              'Written from the records you already keep',
+              'Strengths and areas for improvement listed',
+              'Review and approval recorded',
+            ]}
             ctaLabel="Open self-assessment"
             target="/college/compliance/sar"
           />
@@ -145,7 +153,11 @@ export default function ComplianceHubPage() {
             eyebrow="Practice inspection"
             title="Rehearse the inspector’s questions"
             body="Mate plays the lead inspector, asks probing questions using your college’s live figures, grades each answer and gives you strengths and weaknesses at the end."
-            points={['Pick a general inspection or one area', 'Each answer graded with feedback', 'Private to you']}
+            points={[
+              'Pick a general inspection or one area',
+              'Each answer graded with feedback',
+              'Private to you',
+            ]}
             ctaLabel="Start a rehearsal"
             target="/college/compliance/rehearsal"
           />
@@ -155,7 +167,11 @@ export default function ComplianceHubPage() {
             eyebrow="Audit pack"
             title="The printable audit pack"
             body="Your single central record, live policies, every policy sign-off, the staff compliance matrix and the IQA verification chain in one document. It opens on its own page so it prints cleanly."
-            points={['Cover sheet with headline figures', 'Save as PDF from the print dialog', 'Generated from live records']}
+            points={[
+              'Cover sheet with headline figures',
+              'Download it as a PDF from the pack',
+              'Generated from live records',
+            ]}
             ctaLabel="Open audit pack"
             target="/college/compliance/pack"
             secondary={{ label: 'Open and print', target: '/college/compliance/pack?auto=1' }}
@@ -185,18 +201,20 @@ function RoutePanel({
 }) {
   const navigate = useNavigate();
   return (
-    <motion.section variants={itemVariants} initial="hidden" animate="visible" className={COLLEGE_CARD}>
+    <motion.section variants={itemVariants} initial="hidden" animate="visible" className={QCARD}>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-center">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">{eyebrow}</p>
-          <h2 className="mt-1.5 text-[22px] font-bold tracking-tight text-white sm:text-[26px]">{title}</h2>
+          <p className="text-[13px] font-medium text-white">{eyebrow}</p>
+          <h2 className="mt-1 text-[22px] font-bold tracking-tight text-white sm:text-[26px]">
+            {title}
+          </h2>
           <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-white">{body}</p>
           <div className="mt-5 flex flex-wrap gap-2">
-            <button type="button" onClick={() => navigate(target)} className={COLLEGE_BTN_PRIMARY}>
+            <button type="button" onClick={() => navigate(target)} className={QBTN_PRIMARY}>
               {ctaLabel}
             </button>
             {secondary && (
-              <button type="button" onClick={() => navigate(secondary.target)} className={COLLEGE_BTN}>
+              <button type="button" onClick={() => navigate(secondary.target)} className={QBTN}>
                 {secondary.label}
               </button>
             )}
@@ -204,8 +222,10 @@ function RoutePanel({
         </div>
         <ul className="space-y-2">
           {points.map((p) => (
-            <li key={p} className="flex min-h-[48px] items-center gap-3 rounded-2xl border border-white/[0.08] px-4 text-[13.5px] text-white">
-              <span className="h-2 w-2 shrink-0 rounded-full bg-elec-yellow" aria-hidden />
+            <li
+              key={p}
+              className="flex min-h-[48px] items-center gap-3 rounded-2xl border border-white/[0.08] px-4 text-[13.5px] text-white"
+            >
               {p}
             </li>
           ))}

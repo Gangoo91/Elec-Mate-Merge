@@ -22,21 +22,17 @@ interface ToolSpecificationCardProps {
 
 const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <h3 className="text-[18px] font-semibold text-white leading-tight">{tool.name}</h3>
           <p className="text-[14px] text-white leading-relaxed">{tool.description}</p>
         </div>
-        <span className="text-[10px] uppercase tracking-[0.18em] text-white flex-shrink-0">
-          {tool.priority}
-        </span>
+        <span className="text-[13px] text-white flex-shrink-0">{tool.priority}</span>
       </div>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Specifications
-        </span>
+        <span className="text-[13px] font-semibold text-white">Specifications</span>
         <div className="grid grid-cols-2 gap-2 text-[13px] text-white">
           {Object.entries(tool.specifications).map(
             ([key, value]) =>
@@ -49,17 +45,15 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
           )}
           <div className="flex justify-between col-span-2 pt-2 border-t border-white/[0.06]">
             <span className="text-white">Price range</span>
-            <span className="font-mono text-white">{tool.priceRange}</span>
+            <span className="text-white">{tool.priceRange}</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Advantages
-          </span>
-          <ul className="space-y-1 text-[13px] text-white leading-relaxed">
+          <span className="text-[13px] font-semibold text-white">Advantages</span>
+          <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             {tool.pros.map((pro, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -70,10 +64,8 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
         </div>
 
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Considerations
-          </span>
-          <ul className="space-y-1 text-[13px] text-white leading-relaxed">
+          <span className="text-[13px] font-semibold text-white">Considerations</span>
+          <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             {tool.cons.map((con, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -85,10 +77,8 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
       </div>
 
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Buying tips
-        </span>
-        <ul className="space-y-1 text-[13px] text-white leading-relaxed">
+        <span className="text-[13px] font-semibold text-white">Buying tips</span>
+        <ul className="space-y-1 text-[14px] text-white leading-relaxed">
           {tool.buyingTips.map((tip, index) => (
             <li key={index} className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -100,10 +90,8 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
 
       {tool.maintenanceNotes && (
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Maintenance notes
-          </span>
-          <p className="text-[13px] text-white leading-relaxed">{tool.maintenanceNotes}</p>
+          <span className="text-[13px] font-semibold text-white">Maintenance notes</span>
+          <p className="text-[14px] text-white leading-relaxed">{tool.maintenanceNotes}</p>
         </div>
       )}
     </div>

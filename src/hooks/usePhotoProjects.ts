@@ -183,11 +183,13 @@ export function usePhotoProjects(statusFilter?: string) {
           supabase
             .from('safety_photos')
             .select('project_id, project_reference, photo_type, file_url, thumbnail_url')
+            .eq('user_id', session.user.id)
             .in('project_id', projectIds)
             .order('created_at', { ascending: false }),
           supabase
             .from('safety_photos')
             .select('project_id, project_reference, photo_type, file_url, thumbnail_url')
+            .eq('user_id', session.user.id)
             .is('project_id', null)
             .in('project_reference', projectNames)
             .order('created_at', { ascending: false }),
@@ -266,11 +268,13 @@ export function usePhotoProjects(statusFilter?: string) {
         supabase
           .from('safety_photos')
           .select('*')
+          .eq('user_id', session.user.id)
           .eq('project_id', projectId)
           .order('created_at', { ascending: false }),
         supabase
           .from('safety_photos')
           .select('*')
+          .eq('user_id', session.user.id)
           .is('project_id', null)
           .eq('project_reference', project.name)
           .order('created_at', { ascending: false }),

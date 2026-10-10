@@ -21,6 +21,10 @@ export interface CollegeOverviewStat {
   /** The one off-the-job figure (get_otj_summary): verified + measured app learning. */
   counted_otj_hours: number | null;
   required_otj_hours: number | null;
+  /** Where the plan says they should be by today (get_otj_summary). */
+  planned_otj_hours: number | null;
+  /** on_track | slightly_behind | behind | unknown (get_otj_summary). */
+  otj_risk: string | null;
   verified_otj_minutes: number;
   pending_otj_minutes: number;
   rejected_otj_minutes: number;
@@ -72,6 +76,8 @@ export interface MyCollegeOverview {
 const ZERO_STATS: CollegeOverviewStat = {
   counted_otj_hours: null,
   required_otj_hours: null,
+  planned_otj_hours: null,
+  otj_risk: null,
   verified_otj_minutes: 0,
   pending_otj_minutes: 0,
   rejected_otj_minutes: 0,
@@ -102,9 +108,16 @@ export function useMyCollegeOverview(): MyCollegeOverview {
 
   // OTJ + portfolio counters live here — small parallel pull.
   const [otjMinutes, setOtjMinutes] = useState({ verified: 0, pending: 0, rejected: 0 });
-  const [otjFigure, setOtjFigure] = useState<{ counted: number | null; required: number | null }>({
+  const [otjFigure, setOtjFigure] = useState<{
+    counted: number | null;
+    required: number | null;
+    planned: number | null;
+    risk: string | null;
+  }>({
     counted: null,
     required: null,
+    planned: null,
+    risk: null,
   });
   const [otjActions, setOtjActions] = useState<ActionRequiredItem[]>([]);
   const [unactionedPortfolioComments, setUnactionedPortfolioComments] = useState(0);
@@ -161,7 +174,8 @@ export function useMyCollegeOverview(): MyCollegeOverview {
         lowAttendance.push({
           kind: 'attendance_low',
           title: `Attendance is ${rate}%`,
-          detail: 'Below the usual target — if something is getting in the way, tell your tutor early.',
+          detail:
+            'Below the usual target — if something is getting in the way, tell your tutor early.',
           href: '/apprentice/college/today',
         });
       }
@@ -196,8 +210,9 @@ export function useMyCollegeOverview(): MyCollegeOverview {
           : Promise.resolve({ data: [], error: null }),
       ]);
       const steps: ActionRequiredItem[] = [];
-      const unread = ((threadsRes.data ?? []) as Array<{ unread_count_student: number | null }>)
-        .reduce((n, t) => n + (t.unread_count_student ?? 0), 0);
+      const unread = (
+        (threadsRes.data ?? []) as Array<{ unread_count_student: number | null }>
+      ).reduce((n, t) => n + (t.unread_count_student ?? 0), 0);
       if (unread > 0) {
         steps.push({
           kind: 'message_unread',
@@ -206,13 +221,15 @@ export function useMyCollegeOverview(): MyCollegeOverview {
           href: '/apprentice/college/plan',
         });
       }
-      const lesson = ((lessonRes.data ?? []) as Array<{
-        id: string;
-        title: string;
-        scheduled_date: string;
-        scheduled_start_time: string | null;
-        scheduled_room: string | null;
-      }>)[0];
+      const lesson = (
+        (lessonRes.data ?? []) as Array<{
+          id: string;
+          title: string;
+          scheduled_date: string;
+          scheduled_start_time: string | null;
+          scheduled_room: string | null;
+        }>
+      )[0];
       if (lesson) {
         const [y, m, d] = lesson.scheduled_date.split('-').map(Number);
         const when = new Date(y, (m ?? 1) - 1, d ?? 1);
@@ -238,7 +255,9 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     const [otjRes, portfolioRes] = await Promise.all([
       supabase
         .from('college_otj_entries')
-        .select('id, title, duration_minutes, verification_status, verification_rationale, source_kind')
+        .select(
+          'id, title, duration_minutes, verification_status, verification_rationale, source_kind'
+        )
         .eq('student_id', uid)
         .order('activity_date', { ascending: false })
         .limit(80),
@@ -297,8 +316,18 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     }
     setOtjMinutes({ verified: verifiedMin, pending: pendingMin, rejected: rejectedMin });
     const { data: otjSummary } = await supabase.rpc('get_otj_summary' as never);
-    const os = otjSummary as { counted_hours?: number; required_hours?: number | null } | null;
-    setOtjFigure({ counted: os?.counted_hours ?? null, required: os?.required_hours ?? null });
+    const os = otjSummary as {
+      counted_hours?: number;
+      required_hours?: number | null;
+      planned_to_date_hours?: number | null;
+      risk?: string | null;
+    } | null;
+    setOtjFigure({
+      counted: os?.counted_hours ?? null,
+      required: os?.required_hours ?? null,
+      planned: os?.planned_to_date_hours ?? null,
+      risk: os?.risk ?? null,
+    });
     // ELE-1876: hours the app already knows about (registers, diary college
     // days, unsent diary training), waiting for the apprentice to confirm.
     const { data: proposalData } = await supabase.rpc('get_otj_proposals' as never);
@@ -363,7 +392,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
           title: `New goal from your tutor: ${g.title}`,
           detail: g.target_date
             ? `Acknowledge it, and say how you'll get there · due ${new Date(g.target_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
-            : 'Acknowledge it, and say how you\'ll get there.',
+            : "Acknowledge it, and say how you'll get there.",
           href: '/apprentice/college/plan',
         });
       }
@@ -445,6 +474,8 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     () => ({
       counted_otj_hours: otjFigure.counted,
       required_otj_hours: otjFigure.required,
+      planned_otj_hours: otjFigure.planned,
+      otj_risk: otjFigure.risk,
       verified_otj_minutes: otjMinutes.verified,
       pending_otj_minutes: otjMinutes.pending,
       rejected_otj_minutes: otjMinutes.rejected,

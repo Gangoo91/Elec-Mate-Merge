@@ -328,11 +328,11 @@ const WagoConnectionMethods = () => {
         </div>
 
         {/* Step-by-Step Connection Guide */}
-        <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/[0.14] overflow-hidden relative">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="relative">
             <CardTitle className="text-white flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <Wrench className="h-5 w-5 text-elec-yellow" />
               </div>
               Step-by-Step Connection Guide
@@ -362,7 +362,7 @@ const WagoConnectionMethods = () => {
             {/* Active Step Content */}
             {currentStep && (
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-white/10 border border-elec-yellow/20">
+                <div className="p-4 rounded-xl bg-white/10 border border-white/[0.14]">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/80 text-black flex items-center justify-center text-lg font-bold flex-shrink-0">
                       {activeStep + 1}
@@ -413,7 +413,7 @@ const WagoConnectionMethods = () => {
                     variant="outline"
                     onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
                     disabled={activeStep === 0}
-                    className="h-11 border-white/20 text-white hover:bg-white/10 disabled:text-white/70 touch-manipulation"
+                    className="h-11 border-white/20 text-white hover:bg-white/10 disabled:text-white touch-manipulation"
                   >
                     Previous Step
                   </Button>
@@ -424,7 +424,7 @@ const WagoConnectionMethods = () => {
                       )
                     }
                     disabled={activeStep === selectedConnector.connectionSteps.length - 1}
-                    className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all disabled:bg-white/[0.08] disabled:text-white/70"
+                    className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all disabled:bg-white/[0.08] disabled:text-white"
                   >
                     Next Step
                   </Button>
@@ -457,7 +457,7 @@ const WagoConnectionMethods = () => {
             connections ideal for testing scenarios.
           </p>
 
-          <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/30">
+          <div className="p-4 rounded-xl bg-white/[0.06] border border-white/[0.14]">
             <div className="flex items-start gap-3">
               <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                 <Info className="h-4 w-4 text-elec-yellow" />

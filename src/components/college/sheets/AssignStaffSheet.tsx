@@ -142,7 +142,7 @@ export function AssignStaffSheet({
       if (error) throw error;
       if (!data || data.length === 0) {
         throw new Error(
-          'Update did not apply — you may not have permission to assign staff for this learner.'
+          'Update did not apply. You may not have permission to assign staff for this learner.'
         );
       }
 

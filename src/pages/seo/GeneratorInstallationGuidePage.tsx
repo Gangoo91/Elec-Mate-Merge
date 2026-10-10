@@ -259,8 +259,8 @@ const sections = [
                 protection for the circuit connecting the generating set to the installation, that
                 RCD shall disconnect all live conductors including the neutral. Together they rule
                 out a common panel error — terminating the generator output on the RCD-protected
-                side of a board where that RCD also feeds other circuits. Verify the connection point
-                on both the mains and generator sides of any ATS panel before completing the
+                side of a board where that RCD also feeds other circuits. Verify the connection
+                point on both the mains and generator sides of any ATS panel before completing the
                 Electrical Installation Certificate.
               </p>
             </div>
@@ -336,14 +336,14 @@ const sections = [
         <p>
           A portable generator that is isolated from earth — the windings isolated from the mass of
           Earth and from the protective conductor, with no connection between the chassis or the
-          earth connection of the socket-outlets and either live conductor of the winding —
-          presents a specific shock risk. The arrangement is a form of electrical separation
-          (BS 7671 Section 413): basic protection comes from basic insulation, barriers or
-          enclosures, and fault protection from simple separation of the circuit from other circuits
-          and from Earth. There is no earth fault reference, so a fault to an earthed Class I
-          enclosure will not necessarily cause a protective device to operate. The On-Site Guide
-          (OSG) Reg 2.4.3 addresses this by restricting the combinations of equipment that may be
-          connected to such a generator.
+          earth connection of the socket-outlets and either live conductor of the winding — presents
+          a specific shock risk. The arrangement is a form of electrical separation (BS 7671 Section
+          413): basic protection comes from basic insulation, barriers or enclosures, and fault
+          protection from simple separation of the circuit from other circuits and from Earth. There
+          is no earth fault reference, so a fault to an earthed Class I enclosure will not
+          necessarily cause a protective device to operate. The On-Site Guide (OSG) Reg 2.4.3
+          addresses this by restricting the combinations of equipment that may be connected to such
+          a generator.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -351,10 +351,11 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted permutation (a) — Class II only</strong>: a portable generator
-                isolated from earth may supply one or more items of Class II equipment. Because Class
-                II equipment relies on double or reinforced insulation rather than a protective earth
-                conductor, the absence of an earth reference on the generator does not create a shock
-                risk. This is the safest and most common configuration for site power tools.
+                isolated from earth may supply one or more items of Class II equipment. Because
+                Class II equipment relies on double or reinforced insulation rather than a
+                protective earth conductor, the absence of an earth reference on the generator does
+                not create a shock risk. This is the safest and most common configuration for site
+                power tools.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -417,8 +418,8 @@ const sections = [
                 <strong>Loss of mains (LoM) protection</strong> — BS 7671 Reg 551.7.4 already
                 requires means of automatic switching to disconnect the generating set from the
                 public distribution system on loss of that supply, or on deviation of the voltage or
-                frequency at the supply terminals from declared values; Reg 551.7.5 requires means to
-                prevent connection under the same conditions. For a set with an output exceeding
+                frequency at the supply terminals from declared values; Reg 551.7.5 requires means
+                to prevent connection under the same conditions. For a set with an output exceeding
                 16 A, Reg 551.7.4 states the type of protection and its sensitivity and operating
                 times shall be agreed with the distributor — which in Great Britain is done through
                 the G99 application. The generator must not continue to supply the network when
@@ -747,21 +748,21 @@ const sections = [
             <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
-                A4:2026 Certification Requirements — Reg 133.1.3 and the Schedule of Inspections
+                Certification Requirements — Reg 133.1.3 and the Schedule of Inspections
               </p>
               <p className="text-white text-sm leading-relaxed">
                 BS 7671:2018+A4:2026 Reg 133.1.3 requires that where equipment is not in accordance
-                with Reg 133.1.1, or is used outside the scope of its standard, the designer or other
-                person specifying the installation confirms it provides at least the same degree of
-                safety, and that such use is recorded as a departure on the appropriate electrical
-                certification specified in Part 6. Separately, the Part 6 Schedule of Inspections
-                carries dedicated line items for generators: adequate arrangements where a generating
-                set operates as a switched alternative to the public supply (551.6), adequate
-                arrangements where it operates in parallel with the public supply (551.7), and a
-                dedicated earthing arrangement independent of that of the public supply
+                with Reg 133.1.1, or is used outside the scope of its standard, the designer or
+                other person specifying the installation confirms it provides at least the same
+                degree of safety, and that such use is recorded as a departure on the appropriate
+                electrical certification specified in Part 6. Separately, the Part 6 Schedule of
+                Inspections carries dedicated line items for generators: adequate arrangements where
+                a generating set operates as a switched alternative to the public supply (551.6),
+                adequate arrangements where it operates in parallel with the public supply (551.7),
+                and a dedicated earthing arrangement independent of that of the public supply
                 (551.4.3.2.1). These must be signed off on the certification for a generator
-                installation. The Elec-Mate EIC app captures these fields so the certification record
-                is complete before you leave site.
+                installation. The Elec-Mate EIC app captures these fields so the certification
+                record is complete before you leave site.
               </p>
             </div>
           </div>
@@ -774,20 +775,21 @@ const sections = [
                 A4:2026 Reg 421.1.7 — AFDDs Are Now Required in Four Premises Types
               </p>
               <p className="text-white text-sm leading-relaxed">
-                Amendment 4 redrafted Reg 421.1.7. It is no longer purely a recommendation: AFDDs
-                conforming to BS EN 62606 <strong>shall</strong> be provided for single-phase AC
-                final circuits supplying socket-outlets with a rated current not exceeding 32 A in
-                (a) high rise residential buildings (HRRBs), (b) houses in multiple occupation
-                (HMOs), (c) purpose-built student accommodation and (d) care homes. Note 1 to the
-                regulation treats an HRRB as a residential building over 18 m in height or in excess
-                of six storeys, whichever is met first. For all other premises the use of AFDDs is
-                recommended for the same single-phase socket-outlet circuits not exceeding 32 A.
-                Where used, AFDDs shall be placed at the origin of the circuit to be protected. This
-                applies to generator-fed fixed installations in the same way as mains-fed ones — so
-                where a generator supplies a building's final circuits, first check whether the
-                premises fall into one of the four mandatory categories, and record the decision
-                either way in the design rationale. Using AFDDs does not obviate the need to apply
-                the other protective measures in BS 7671.
+                Amendment 2:2022 redrafted Reg 421.1.7 (A4:2026 reworded item (a)). It is no longer
+                purely a recommendation: AFDDs conforming to BS EN 62606 <strong>shall</strong> be
+                provided for single-phase AC final circuits supplying socket-outlets with a rated
+                current not exceeding 32 A in (a) high rise residential buildings (HRRBs), (b)
+                houses in multiple occupation (HMOs), (c) purpose-built student accommodation and
+                (d) care homes. Note 1 to the regulation treats an HRRB as a residential building
+                over 18 m in height or in excess of six storeys, whichever is met first. For all
+                other premises the use of AFDDs is recommended for the same single-phase
+                socket-outlet circuits not exceeding 32 A. Where used, AFDDs shall be placed at the
+                origin of the circuit to be protected. This applies to generator-fed fixed
+                installations in the same way as mains-fed ones — so where a generator supplies a
+                building's final circuits, first check whether the premises fall into one of the
+                four mandatory categories, and record the decision either way in the design
+                rationale. Using AFDDs does not obviate the need to apply the other protective
+                measures in BS 7671.
               </p>
             </div>
           </div>
@@ -831,7 +833,7 @@ export default function GeneratorInstallationGuidePage() {
       title="Standby Generator Installation: ATS, G99 & TN-S"
       description="Standby generator installation as a switched alternative supply: ATS transfer in 15–45s, G99 applies above 16 A per phase, TN-S earth, 110% fuel bund."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

@@ -11,8 +11,6 @@ import {
   FileText,
   Loader2,
   Mail,
-  Plus,
-  RefreshCw,
   Share2,
   ShieldCheck,
   Trash2,
@@ -23,19 +21,27 @@ import { JobContextBar } from '@/components/employer/JobContextBar';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { SIGNATURES_HELP } from '@/components/employer/help/finance-ops';
 import {
-  PageFrame,
+  PageColumn,
+  TwoColumn,
+  FigureStrip,
+  FilterRow,
+  Segments,
+  SearchField,
+  HeroActions,
+  HeroPrimary,
+  RefreshIcon,
+  Rows,
+  Row,
+  PlainEmpty,
+  StatusPill as UiPill,
+  panel,
+  PanelTitle,
+} from '@/components/employer/pageParts/PageParts';
+import {
   PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
   Avatar,
   Pill,
-  EmptyState,
   LoadingBlocks,
-  IconButton,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
@@ -199,43 +205,169 @@ export function SignaturesSection() {
         ]
       : [];
 
+  const statusLine = isLoading
+    ? 'Clients sign the actual document on their phone. Every request for the whole office.'
+    : [
+        counts.waiting > 0
+          ? `${counts.waiting} waiting for a signature${counts.opened > 0 ? `, ${counts.opened} opened` : ''}`
+          : 'Nothing waiting for a signature',
+        counts.action > 0
+          ? `${counts.action} signed variation${counts.action === 1 ? '' : 's'} to add to the job value`
+          : null,
+      ]
+        .filter(Boolean)
+        .join('. ') + '.';
+
   if (error) {
     return (
-      <PageFrame>
-        <PageHero eyebrow="Money" title="Signatures" tone="indigo" />
-        <EmptyState
-          title="Could not load signature requests"
-          description="Check your connection and try again."
-          action="Try again"
-          onAction={() => refetch()}
+      <PageColumn>
+        <PageHero
+          title="Signatures"
+          description="Clients sign the actual document on their phone."
         />
-      </PageFrame>
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text="Signature requests didn't load. Check your connection and try again."
+            action="Try again"
+            onAction={() => refetch()}
+          />
+        </div>
+      </PageColumn>
     );
   }
 
+  const variations = list.filter(needsVariationAction);
+  const oldestOpen = list
+    .filter((x) => isOpenRequest(x))
+    .sort((x, y) =>
+      String(x.last_sent_at || x.created_at).localeCompare(String(y.last_sent_at || y.created_at))
+    )
+    .slice(0, 4);
+
+  const listPanel = isLoading ? (
+    <LoadingBlocks />
+  ) : (
+    <section>
+      <PanelTitle title="Requests" meta={`${filtered.length}`} />
+      <div className={cn(panel, 'overflow-hidden')}>
+        {filtered.length === 0 ? (
+          <PlainEmpty
+            bare
+            text={
+              search
+                ? 'Nothing matches that. Try another name, document or job.'
+                : tab === 'waiting'
+                  ? 'Nothing waiting for a signature. Send a quote, a variation, a handover or a certificate and the client signs it on their phone.'
+                  : 'Requests will show here once they are sent.'
+            }
+            action={!search ? 'Request signature' : undefined}
+            onAction={!search ? () => setShowNew(true) : undefined}
+          />
+        ) : (
+          <div data-help="signatures.list">
+            <Rows>
+              {filtered.map((x) => {
+                const st = displayStatus(x);
+                return (
+                  <Row
+                    chevron={false}
+                    key={x.id}
+                    title={x.document_title}
+                    detail={[x.signer_name, x.job?.title, lastEvent(x)].filter(Boolean).join(' · ')}
+                    status={
+                      needsVariationAction(x) ? (
+                        <UiPill tone="volt">Add to job value</UiPill>
+                      ) : (
+                        <UiPill
+                          tone={st === 'Signed' ? 'green' : st === 'Declined' ? 'red' : 'neutral'}
+                        >
+                          {st === 'Signed' && isPaperSignature(x)
+                            ? 'Signed on paper'
+                            : STATUS_LABEL[st]}
+                        </UiPill>
+                      )
+                    }
+                    onClick={() => setDetailId(x.id)}
+                  />
+                );
+              })}
+            </Rows>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+
+  const side = (
+    <>
+      <section>
+        <PanelTitle
+          title="Signed variations"
+          meta={variations.length ? `${variations.length} to add` : undefined}
+        />
+        <div className={cn(panel, 'overflow-hidden')}>
+          {variations.length ? (
+            <Rows>
+              {variations.map((x) => (
+                <Row
+                  key={x.id}
+                  title={x.document_title}
+                  detail="The client has agreed. Open it to update the job value."
+                  onClick={() => setDetailId(x.id)}
+                  chevron
+                />
+              ))}
+            </Rows>
+          ) : (
+            <PlainEmpty
+              bare
+              text="Variations the client signs show here until they are added to the job value."
+            />
+          )}
+        </div>
+      </section>
+      <section>
+        <PanelTitle title="Waiting longest" />
+        <div className={cn(panel, 'overflow-hidden')}>
+          {oldestOpen.length ? (
+            <Rows>
+              {oldestOpen.map((x) => (
+                <Row
+                  key={x.id}
+                  title={x.signer_name || x.document_title}
+                  detail={`${x.document_title} · ${lastEvent(x)}`}
+                  onClick={() => setDetailId(x.id)}
+                  chevron
+                />
+              ))}
+            </Rows>
+          ) : (
+            <PlainEmpty bare text="Nobody is keeping you waiting." />
+          )}
+        </div>
+      </section>
+    </>
+  );
+
   return (
     <>
-      <PageFrame>
+      <PageColumn>
         <PageHero
-          eyebrow="Money"
           title="Signatures"
-          description="Clients sign the actual document on their phone. Every request for the whole office."
-          tone="indigo"
+          description={statusLine}
           actions={
-            <div className="flex items-center gap-2">
-              <PrimaryButton data-help="signatures.request" onClick={() => setShowNew(true)}>
-                <Plus className="mr-1.5 h-4 w-4" />
+            <HeroActions>
+              <HeroPrimary data-help="signatures.request" onClick={() => setShowNew(true)}>
                 Request signature
-              </PrimaryButton>
-              <IconButton onClick={() => refetch()} aria-label="Refresh" disabled={isFetching}>
-                <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-              </IconButton>
+              </HeroPrimary>
+              <RefreshIcon onClick={() => refetch()} spinning={isFetching} />
               <PageHelpButton
                 help={SIGNATURES_HELP}
                 blockers={helpBlockers}
                 askContext={{ page: 'signatures', tab }}
               />
-            </div>
+            </HeroActions>
           }
         />
 
@@ -246,136 +378,60 @@ export function SignaturesSection() {
         />
         <JobContextBar what="Signatures" />
 
-        <StatStrip
-          columns={4}
-          stats={[
+        <FigureStrip
+          figures={[
             {
               label: 'Waiting',
               value: isLoading ? '—' : counts.waiting,
-              tone: 'orange',
-              onClick: () => setTab('waiting'),
+              sub: 'Sent, not signed',
+              onOpen: () => setTab('waiting'),
             },
             {
               label: 'Opened',
               value: isLoading ? '—' : counts.opened,
-              tone: 'purple',
-              onClick: () => setTab('waiting'),
+              sub: 'Seen by the client',
+              onOpen: () => setTab('waiting'),
             },
             {
-              label: 'Signed 30 days',
+              label: 'Signed, 30 days',
               value: isLoading ? '—' : counts.signed30,
-              tone: 'emerald',
-              onClick: () => setTab('signed'),
+              sub: 'Done',
+              onOpen: () => setTab('signed'),
             },
             {
               label: 'Declined',
               value: isLoading ? '—' : counts.declined,
-              tone: 'red',
-              onClick: () => setTab('declined'),
+              sub: counts.declined > 0 ? 'Follow these up' : 'None',
+              tone: counts.declined > 0 ? 'red' : undefined,
+              onOpen: () => setTab('declined'),
             },
           ]}
         />
 
-        {counts.action > 0 ? (
-          <button
-            type="button"
-            onClick={() => {
-              const first = list.find(needsVariationAction);
-              if (first) setDetailId(first.id);
-            }}
-            className="-mx-4 sm:mx-0 flex w-[calc(100%+2rem)] sm:w-full items-center justify-between gap-3 border-y sm:border sm:rounded-2xl border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-left touch-manipulation"
-          >
-            <span className="min-w-0">
-              <span className="block text-[14px] font-semibold text-white">
-                {counts.action === 1 ? '1 signed variation' : `${counts.action} signed variations`}{' '}
-                to add to the job value
-              </span>
-              <span className="block text-[12.5px] text-white">
-                The client has agreed. Open it to update the job.
-              </span>
-            </span>
-            <span aria-hidden className="text-white">
-              ›
-            </span>
-          </button>
-        ) : null}
-
-        <div data-help="signatures.tabs">
-          <FilterBar
-            tabs={[
-              { value: 'waiting', label: 'Waiting', count: counts.waiting },
-              { value: 'signed', label: 'Signed', count: counts.signed },
-              { value: 'declined', label: 'Declined', count: counts.declined },
-              { value: 'closed', label: 'Expired or cancelled', count: counts.closed },
-              { value: 'all', label: 'All', count: list.length },
-            ]}
-            activeTab={tab}
-            onTabChange={(v) => setTab(v as FilterTab)}
-            search={search}
-            onSearchChange={setSearch}
-            searchPlaceholder="Search document, client or job…"
-          />
-        </div>
-
-        {isLoading ? (
-          <LoadingBlocks />
-        ) : filtered.length === 0 ? (
-          <EmptyState
-            title={
-              search
-                ? 'Nothing matches that search'
-                : tab === 'waiting'
-                  ? 'Nothing waiting for a signature'
-                  : 'Nothing here yet'
-            }
-            description={
-              search
-                ? 'Try another name, document or job.'
-                : 'Send a quote, a variation, a handover or a certificate. The client signs it on their phone.'
-            }
-            action={!search ? 'Request signature' : undefined}
-            onAction={!search ? () => setShowNew(true) : undefined}
-          />
-        ) : (
-          <ListCard>
-            <ListCardHeader
-              tone="indigo"
-              title="Requests"
-              meta={<Pill tone="indigo">{filtered.length}</Pill>}
+        <FilterRow>
+          <div data-help="signatures.tabs" className="min-w-0">
+            <Segments
+              items={[
+                { value: 'waiting' as FilterTab, label: 'Waiting', count: counts.waiting },
+                { value: 'signed' as FilterTab, label: 'Signed', count: counts.signed },
+                { value: 'declined' as FilterTab, label: 'Declined', count: counts.declined },
+                { value: 'closed' as FilterTab, label: 'Closed', count: counts.closed },
+                { value: 'all' as FilterTab, label: 'All', count: list.length },
+              ]}
+              value={tab}
+              onChange={setTab}
             />
-            <div data-help="signatures.list">
-              <ListBody>
-                {filtered.map((s) => {
-                  const st = displayStatus(s);
-                  return (
-                    <ListRow
-                      key={s.id}
-                      lead={<Avatar initials={initials(s.signer_name)} />}
-                      title={s.document_title}
-                      subtitle={[s.signer_name, s.job?.title, lastEvent(s)]
-                        .filter(Boolean)
-                        .join(' · ')}
-                      trailing={
-                        <>
-                          {needsVariationAction(s) ? (
-                            <Pill tone="emerald">Add to job value</Pill>
-                          ) : null}
-                          <Pill tone={STATUS_TONE[st]}>
-                            {st === 'Signed' && isPaperSignature(s)
-                              ? 'Signed on paper'
-                              : STATUS_LABEL[st]}
-                          </Pill>
-                        </>
-                      }
-                      onClick={() => setDetailId(s.id)}
-                    />
-                  );
-                })}
-              </ListBody>
-            </div>
-          </ListCard>
-        )}
-      </PageFrame>
+          </div>
+          <SearchField
+            className="w-full lg:w-72"
+            value={search}
+            onChange={setSearch}
+            placeholder="Search document, client or job"
+          />
+        </FilterRow>
+
+        <TwoColumn main={listPanel} side={side} />
+      </PageColumn>
 
       <RequestSignatureSheet
         open={showNew}

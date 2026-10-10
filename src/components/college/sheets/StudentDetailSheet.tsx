@@ -1,4 +1,5 @@
 import { useState, useMemo, type ReactNode } from 'react';
+import { keyLabel } from '@/lib/college/labels';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AttendanceHeatmap } from '@/components/college/ui/AttendanceHeatmap';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
@@ -9,6 +10,10 @@ import { cn } from '@/lib/utils';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { chipCn } from '@/components/college/ui/CollegeUi';
+import {
+  passedOf,
+  useCollegePortfolioOverview,
+} from '@/components/college/portfolio/useCollegePortfolioOverview';
 
 interface StudentDetailSheetProps {
   student: CollegeStudent | null;
@@ -27,7 +32,9 @@ const TABS = [
 
 function SectionHeading({ children }: { children: ReactNode }) {
   return (
-    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">{children}</h3>
+    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">
+      {children}
+    </h3>
   );
 }
 
@@ -35,7 +42,9 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="min-w-0">
       <div className="text-[12px] font-medium text-white">{label}</div>
-      <div className="mt-1 truncate text-[14px] font-semibold tabular-nums text-white">{children}</div>
+      <div className="mt-1 truncate text-[14px] font-semibold tabular-nums text-white">
+        {children}
+      </div>
     </div>
   );
 }
@@ -73,6 +82,15 @@ export function StudentDetailSheet({
   const lowAttendance = settings.low_attendance_threshold_percent;
   const highAttendance = settings.high_attendance_threshold_percent;
   const [activeTab, setActiveTab] = useState<string>('overview');
+  // Criteria passed out of the qualification total, from get_portfolio_ac_state
+  // (via college_portfolio_overview): the same count as Student 360 and the
+  // Progress tracking row this sheet opens from. progress_percent was typed in.
+  const { data: overview } = useCollegePortfolioOverview();
+  const criteria = useMemo(() => {
+    if (!student) return null;
+    const c = overview?.learners.find((l) => l.student_id === student.id)?.criteria ?? null;
+    return c && c.total > 0 ? { passed: passedOf(c), total: c.total, c } : null;
+  }, [overview, student]);
 
   const studentAttendance = useMemo(() => {
     if (!student) return [];
@@ -93,13 +111,19 @@ export function StudentDetailSheet({
 
   const studentILP = useMemo(() => {
     if (!student) return null;
-    return ilps.find((ilp) => ilp.student_id === student.id && (ilp.status ?? '').toLowerCase() === 'active') || null;
+    return (
+      ilps.find(
+        (ilp) => ilp.student_id === student.id && (ilp.status ?? '').toLowerCase() === 'active'
+      ) || null
+    );
   }, [student, ilps]);
 
   if (!student) return null;
 
-  const progressPercent = student.progress_percent ?? 0;
-  const isAtRisk = ['medium', 'high', 'critical'].includes((student.risk_level ?? '').toLowerCase());
+  const progressPercent = criteria ? Math.round((criteria.passed / criteria.total) * 100) : 0;
+  const isAtRisk = ['medium', 'high', 'critical'].includes(
+    (student.risk_level ?? '').toLowerCase()
+  );
 
   const attendancePctTone =
     attendanceRate >= highAttendance
@@ -107,8 +131,6 @@ export function StudentDetailSheet({
       : attendanceRate >= lowAttendance
         ? 'text-orange-300'
         : 'text-red-400';
-  const progressPctTone =
-    progressPercent >= 70 ? 'text-emerald-400' : progressPercent >= 50 ? 'text-orange-300' : 'text-red-400';
 
   // The host may open this read-only (Progress tracking passes no handlers):
   // only offer the buttons that do something.
@@ -135,7 +157,9 @@ export function StudentDetailSheet({
       }
       description={
         <span>
-          {[student.uln ? `ULN ${student.uln}` : null, cohortName, student.status].filter(Boolean).join(' · ')}
+          {[student.uln ? `ULN ${student.uln}` : null, cohortName, student.status]
+            .filter(Boolean)
+            .join(' · ')}
           {isAtRisk ? (
             <span className="font-semibold text-orange-300"> · {student.risk_level} risk</span>
           ) : null}
@@ -160,7 +184,11 @@ export function StudentDetailSheet({
         </div>
       }
       subheader={
-        <div role="tablist" aria-label="Student sections" className="flex gap-2 overflow-x-auto pb-3">
+        <div
+          role="tablist"
+          aria-label="Student sections"
+          className="flex gap-2 overflow-x-auto pb-3"
+        >
           {TABS.map((t) => (
             <button
               key={t.value}
@@ -245,10 +273,21 @@ export function StudentDetailSheet({
 
           <section className="min-w-0 space-y-4">
             <SectionHeading>Progress</SectionHeading>
-            <div className="flex items-baseline justify-between">
-              <span className="text-[14px] text-white">Overall</span>
-              <span className={cn('text-3xl font-semibold tabular-nums', progressPctTone)}>
-                {progressPercent}%
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-[14px] text-white">Criteria passed</span>
+              <span className="text-right text-[14px] text-white" data-testid="sds-criteria">
+                {criteria ? (
+                  <>
+                    <span className="text-2xl font-semibold tabular-nums">
+                      {criteria.passed} of {criteria.total}
+                    </span>{' '}
+                    passed
+                  </>
+                ) : student.user_id ? (
+                  'Not counted yet'
+                ) : (
+                  'Not joined the app'
+                )}
               </span>
             </div>
             <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
@@ -257,18 +296,25 @@ export function StudentDetailSheet({
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <div className="grid grid-cols-2 gap-6 border-t border-white/[0.08] pt-4">
-              <div>
-                <div className="text-[12px] font-medium text-white">Attendance</div>
-                <div className={cn('mt-1 text-2xl font-semibold leading-none tabular-nums', attendancePctTone)}>
-                  {attendanceRate}%
-                </div>
-              </div>
-              <div>
-                <div className="text-[12px] font-medium text-white">Complete</div>
-                <div className={cn('mt-1 text-2xl font-semibold leading-none tabular-nums', progressPctTone)}>
-                  {progressPercent}%
-                </div>
+            {criteria && (criteria.c.submitted > 0 || criteria.c.referred > 0) && (
+              <p className="text-[12.5px] text-white">
+                {[
+                  criteria.c.submitted > 0 && `${criteria.c.submitted} with an assessor`,
+                  criteria.c.referred > 0 && `${criteria.c.referred} sent back for more`,
+                ]
+                  .filter(Boolean)
+                  .join(' · ')}
+              </p>
+            )}
+            <div className="border-t border-white/[0.08] pt-4">
+              <div className="text-[12px] font-medium text-white">Attendance</div>
+              <div
+                className={cn(
+                  'mt-1 text-2xl font-semibold leading-none tabular-nums',
+                  attendancePctTone
+                )}
+              >
+                {attendanceRate}%
               </div>
             </div>
           </section>
@@ -281,12 +327,19 @@ export function StudentDetailSheet({
             <section className="space-y-4">
               <SectionHeading>Attendance rate</SectionHeading>
               <div className="flex items-baseline justify-between">
-                <div className={cn('text-4xl font-semibold leading-none tabular-nums', attendancePctTone)}>
+                <div
+                  className={cn(
+                    'text-4xl font-semibold leading-none tabular-nums',
+                    attendancePctTone
+                  )}
+                >
                   {attendanceRate}%
                 </div>
                 <div className="text-right text-[12px] tabular-nums text-white">
                   <div>{studentAttendance.length} sessions</div>
-                  <div>{studentAttendance.filter((a) => a.status === 'Present').length} present</div>
+                  <div>
+                    {studentAttendance.filter((a) => a.status === 'Present').length} present
+                  </div>
                 </div>
               </div>
               <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
@@ -336,8 +389,13 @@ export function StudentDetailSheet({
                         <div className="mt-0.5 text-[13px] text-white">{record.notes}</div>
                       ) : null}
                     </div>
-                    <span className={cn('shrink-0 text-[13px] font-semibold', attendanceTextTone(record.status))}>
-                      {record.status}
+                    <span
+                      className={cn(
+                        'shrink-0 text-[13px] font-semibold',
+                        attendanceTextTone(record.status)
+                      )}
+                    >
+                      {keyLabel(record.status)}
                     </span>
                   </li>
                 ))}
@@ -356,7 +414,9 @@ export function StudentDetailSheet({
                 <span
                   className={cn(
                     'text-[13px] font-semibold',
-                    (studentILP.status ?? '').toLowerCase() === 'active' ? 'text-emerald-400' : 'text-white'
+                    (studentILP.status ?? '').toLowerCase() === 'active'
+                      ? 'text-emerald-400'
+                      : 'text-white'
                   )}
                 >
                   {studentILP.status
@@ -371,7 +431,9 @@ export function StudentDetailSheet({
               {studentILP.support_needs && (
                 <div className="border-t border-white/[0.08] pt-4">
                   <div className="text-[12px] font-medium text-white">Support needs</div>
-                  <p className="mt-1.5 text-[14px] leading-relaxed text-white">{studentILP.support_needs}</p>
+                  <p className="mt-1.5 text-[14px] leading-relaxed text-white">
+                    {studentILP.support_needs}
+                  </p>
                 </div>
               )}
             </section>
@@ -385,13 +447,20 @@ export function StudentDetailSheet({
                   {studentILP.targets.map((target, i) => (
                     <li key={i} className="flex items-start justify-between gap-3 py-3">
                       <div className="min-w-0">
-                        <div className="text-[14px] font-medium text-white">{target.description}</div>
+                        <div className="text-[14px] font-medium text-white">
+                          {target.description}
+                        </div>
                         <div className="mt-0.5 text-[13px] tabular-nums text-white">
                           Due {formatUKDateShort(target.target_date)}
                         </div>
                       </div>
-                      <span className={cn('shrink-0 text-[13px] font-semibold', targetTextTone(target.status))}>
-                        {target.status}
+                      <span
+                        className={cn(
+                          'shrink-0 text-[13px] font-semibold',
+                          targetTextTone(target.status)
+                        )}
+                      >
+                        {keyLabel(target.status)}
                       </span>
                     </li>
                   ))}

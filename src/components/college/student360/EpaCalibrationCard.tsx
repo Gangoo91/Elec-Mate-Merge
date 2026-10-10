@@ -17,8 +17,41 @@ export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null })
   const [sessionsOpen, setSessionsOpen] = useState(false);
 
   const insufficient = cal.total < 3;
+  // Showcase pass (10 Oct): with too few real results there is nothing to
+  // chart yet, so the card is one quiet line rather than an empty panel.
+  if (insufficient && !cal.loading) {
+    return (
+      <div
+        className={cn(
+          '-mx-4 flex flex-col gap-1 border-y border-white/[0.08] px-4 py-3 sm:mx-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:rounded-2xl sm:border-x sm:px-5',
+          CARD_SURFACE
+        )}
+      >
+        <p className="min-w-0 text-[13px] leading-snug text-white">
+          <span className="font-semibold">How accurate the prediction is</span>
+          <span>
+            {' '}
+            shows once 3 real EPA grades are recorded on Student 360 ({cal.total} so far).
+          </span>
+        </p>
+        <button
+          type="button"
+          onClick={() => setSessionsOpen(true)}
+          className="-ml-1 inline-flex h-11 shrink-0 items-center self-start px-1 text-[13px] font-semibold text-elec-yellow transition-colors touch-manipulation sm:self-auto"
+        >
+          Tutor standardisation
+        </button>
+        <CalibrationSessionSheet open={sessionsOpen} onOpenChange={setSessionsOpen} />
+      </div>
+    );
+  }
   return (
-    <div className={cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE)}>
+    <div
+      className={cn(
+        'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+        CARD_SURFACE
+      )}
+    >
       <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-1.5 sm:px-5">
         <div className="min-w-0 text-[13px] font-semibold text-white">
           How accurate the readiness prediction is
@@ -73,7 +106,7 @@ export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null })
                       r.matched ? 'bg-elec-yellow' : 'bg-white/[0.25]'
                     )}
                   />
-                  <span className="min-w-0 flex-1 truncate text-white">{r.student_name}</span>
+                  <span className="min-w-0 flex-1 line-clamp-2 text-white">{r.student_name}</span>
                   <span className="capitalize tabular-nums text-white">
                     {r.predicted_grade ?? '?'} → {r.actual_outcome ?? '?'}
                   </span>
@@ -108,7 +141,7 @@ function Stat({
 }) {
   return (
     <div>
-      <div className="text-[11px] font-medium text-white">{label}</div>
+      <div className="text-[12px] font-medium text-white">{label}</div>
       <div
         className={cn(
           'mt-1 text-[20px] font-semibold leading-none tabular-nums',
@@ -117,7 +150,7 @@ function Stat({
       >
         {value}
       </div>
-      <div className="mt-1 text-[11.5px] tabular-nums text-white">{detail}</div>
+      <div className="mt-1 text-[12px] tabular-nums text-white">{detail}</div>
     </div>
   );
 }

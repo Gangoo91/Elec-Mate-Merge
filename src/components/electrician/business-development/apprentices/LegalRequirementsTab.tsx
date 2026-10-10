@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/mobile-accordion';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { NMW_RATES, NMW_EFFECTIVE_FROM } from '@/data/nmwRates';
+import { OTJ_RULE_SOURCE, OTJ_ST0152_HOURS } from '@/data/otjStandards';
 import {
   FileText,
   Shield,
@@ -31,31 +32,32 @@ import {
 const LegalRequirementsTab = () => {
   const isMobile = useIsMobile();
 
-  // Updated for 2025 - Key metrics for employer focus
+  // ELE-2060: only verified facts, each with its source. The old figures
+  // ("15% of employers face penalties", "£4.50 saved per £1") had no source.
   const complianceMetrics = [
     {
-      metric: 'Non-Compliance Risk',
-      data: '15% of employers face penalties annually',
-      icon: <AlertTriangle className="h-5 w-5 text-red-400" />,
-      detail: 'Proper compliance systems reduce risk by 90%',
-    },
-    {
-      metric: 'Average Penalty Cost',
-      data: '£12,500 per violation incident',
+      metric: 'Apprentice minimum wage',
+      data: `${NMW_RATES.apprentice}/hour from ${NMW_EFFECTIVE_FROM}`,
       icon: <PoundSterling className="h-5 w-5 text-amber-400" />,
-      detail: 'Including back-pay, fines, and legal costs',
+      detail: 'gov.uk/national-minimum-wage-rates',
     },
     {
-      metric: 'Training Compliance ROI',
-      data: '£4.50 saved per £1 invested',
-      icon: <BarChart3 className="h-5 w-5 text-green-400" />,
-      detail: 'Proper systems prevent costly compliance failures',
+      metric: 'Underpaying the minimum wage',
+      data: 'Back pay, a fine and possible public naming',
+      icon: <AlertTriangle className="h-5 w-5 text-red-400" />,
+      detail: 'gov.uk/national-minimum-wage/employers-and-the-minimum-wage',
     },
     {
-      metric: 'Time to Full Compliance',
-      data: '4-6 weeks with structured approach',
+      metric: 'Off-the-job training',
+      data: `${OTJ_ST0152_HOURS} hours minimum for ST0152`,
       icon: <Clock className="h-5 w-5 text-blue-400" />,
-      detail: 'Systematic implementation ensures legal protection',
+      detail: OTJ_RULE_SOURCE,
+    },
+    {
+      metric: "Employers' liability insurance",
+      data: 'At least £5 million cover; fines of £2,500 a day without it',
+      icon: <BarChart3 className="h-5 w-5 text-green-400" />,
+      detail: 'gov.uk/employers-liability-insurance',
     },
   ];
 
@@ -70,7 +72,7 @@ const LegalRequirementsTab = () => {
         `Apprentice minimum wage: ${NMW_RATES.apprentice}/hour (first year or under 19)`,
         `18-20 National minimum wage: ${NMW_RATES.age18to20}/hour (after first year)`,
         `21+ National Living Wage: ${NMW_RATES.age21Plus}/hour (after first year)`,
-        'Automatic penalty system for underpayment (up to £25,000 per worker)',
+        'Underpayment means back pay at current rates, a fine and possible public naming',
       ],
       employerView:
         'Wage compliance is strictly monitored with automatic penalties and naming/shaming',
@@ -83,11 +85,12 @@ const LegalRequirementsTab = () => {
     {
       category: 'Training Time Legal Requirements',
       timing: 'Ongoing Compliance',
-      description: 'Mandatory 20% off-the-job training with strict documentation requirements',
+      description:
+        'Off-the-job training to the minimum hours set for the standard, with strict documentation requirements',
       components: [
-        'Minimum 20% of working hours for off-the-job training',
+        'At least the off-the-job hours published on the standard (1,066 for ST0152), in paid working time, never below 187',
         'Detailed time tracking and evidence requirements',
-        'Regular progress reviews every 12 weeks minimum',
+        'Regular progress reviews at least every 3 months',
         'EPA readiness assessment and documentation',
       ],
       employerView: 'Training compliance directly affects funding eligibility and legal standing',
@@ -122,14 +125,15 @@ const LegalRequirementsTab = () => {
       requirements: [
         {
           item: 'Employment Contract Documentation',
-          description: 'Written statement within 2 months, apprenticeship agreement signed',
-          penalty: '£20,000 employment tribunal + legal costs',
+          description:
+            'Written statement on day one (wider terms within 2 months), apprenticeship agreement signed',
+          penalty: 'Employment tribunal claim',
           action: 'Standardise contracts and ensure proper signing procedures',
         },
         {
           item: 'Minimum Wage Compliance',
           description: 'Correct rates paid from day one with proper record keeping',
-          penalty: '£25,000 per worker + naming/shaming + back-pay',
+          penalty: 'Back pay + fine + public naming',
           action: 'Implement automatic payroll checks and regular audits',
         },
         {
@@ -151,14 +155,15 @@ const LegalRequirementsTab = () => {
         },
         {
           item: 'Off-the-Job Training Systems',
-          description: '20% time allocation with comprehensive tracking',
+          description: 'Off-the-job hours for the standard, with comprehensive tracking',
           penalty: 'Funding clawback + apprentice transfer',
           action: 'Digital tracking systems and regular monitoring',
         },
         {
           item: 'Insurance and Liability Coverage',
-          description: 'Employer liability minimum £5m, professional indemnity',
-          penalty: 'Personal liability + unlimited damages',
+          description:
+            "Employers' liability insurance of at least £5m (a legal requirement); professional indemnity is optional",
+          penalty: "Fines of up to £2,500 a day without employers' liability cover",
           action: 'Review insurance coverage and update policies',
         },
       ],
@@ -168,7 +173,7 @@ const LegalRequirementsTab = () => {
       requirements: [
         {
           item: 'Progress Review System',
-          description: '12-week reviews with documented outcomes',
+          description: 'Reviews at least every 3 months, with documented outcomes',
           penalty: 'Apprentice withdrawal + funding loss',
           action: 'Implement structured review calendar and documentation',
         },
@@ -211,15 +216,17 @@ const LegalRequirementsTab = () => {
       details: [
         {
           service: 'Apprentice Hiring Incentives',
-          description: '£3,000 for 16-18 year olds, £1,500 for 19-24',
-          access: 'Automatic payment through apprenticeship service',
-          cost: 'Free money - paid after 90 days',
+          description:
+            '£1,000 for 16-18s (or 19-24 with an EHC plan or care leaver status), plus a £2,000 hiring payment for non-levy employers taking on 16-24s from 1 Oct 2026',
+          access: 'Claimed and paid through your training provider',
+          cost: 'Paid via the provider: half at 90 days, half at 365 days',
         },
         {
           service: 'Training Cost Support',
-          description: '95-100% funding for training costs',
+          description:
+            'Non-levy employers: 16-24s fully funded (starts from 1 Aug 2026); 95% funded for 25+',
           access: 'Through registered training providers',
-          cost: 'Minimal co-investment required',
+          cost: 'Nothing to pay for 16-24s; 5% for 25+',
         },
       ],
     },
@@ -277,8 +284,8 @@ const LegalRequirementsTab = () => {
       <Alert className="border-red-500/50 bg-red-500/10">
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <AlertDescription className="text-red-200">
-          Legal compliance is strictly enforced with severe penalties. Proper systems prevent 90% of
-          violations.
+          Apprenticeship and employment law is enforced, and the penalties below are real. Keep the
+          records that prove you comply.
         </AlertDescription>
       </Alert>
 
@@ -289,6 +296,7 @@ const LegalRequirementsTab = () => {
               {metric.icon}
               <div className="text-xs font-medium text-foreground">{metric.metric}</div>
               <div className="text-xs text-white">{metric.data}</div>
+              <div className="text-[11px] text-white break-words">Source: {metric.detail}</div>
             </div>
           </Card>
         ))}

@@ -41,7 +41,7 @@ const ScheduleGuideProcedure = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Schedule of Test Results</h1>
-              <p className="text-[10px] text-white">Column-by-column guide</p>
+              <p className="text-[12px] text-white">Column-by-column guide</p>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@ const ScheduleGuideProcedure = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Column-by-Column Guide</p>
+          <p className="text-[12px] font-medium text-white mb-3">Column-by-Column Guide</p>
         </motion.div>
 
         {columns.map((col, i) => (
@@ -65,7 +65,7 @@ const ScheduleGuideProcedure = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-yellow-400">{i + 1}</span>
+                  <span className="text-[12px] font-bold text-yellow-400">{i + 1}</span>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">{col.column}</p>
@@ -77,7 +77,7 @@ const ScheduleGuideProcedure = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Mistakes</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

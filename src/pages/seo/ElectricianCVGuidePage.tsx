@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What qualifications should I list on an electrician CV?',
     answer:
-      'List all relevant electrical qualifications in order of importance. The essential ones are: C&G 2382 (18th Edition IET Wiring Regulations, BS 7671:2018+A2:2022), C&G 2391 or 2394/2395 (Inspection and Testing), and AM2 (if you hold it). Also include your NVQ Level 3 in Electrotechnical Services, your JIB/ECS card grade, and any competent person scheme registration (NICEIC, NAPIT, ELECSA). Additional qualifications that strengthen your CV include: C&G 2919 (Electric Vehicle Charging), Part P Building Regulations, PAT testing, 18th Edition Amendment 2 update, fire alarm (BS 5839), emergency lighting (BS 5266), and any manufacturer-specific training. Always include the date you obtained each qualification.',
+      'List all relevant electrical qualifications in order of importance. The essential ones are: C&G 2382 (18th Edition IET Wiring Regulations, BS 7671:2018+A4:2026), C&G 2391 or 2394/2395 (Inspection and Testing), and AM2 (if you hold it). Also include your NVQ Level 3 in Electrotechnical Services, your JIB/ECS card grade, and any competent person scheme registration (NICEIC, NAPIT, ELECSA). Additional qualifications that strengthen your CV include: C&G 2919 (Electric Vehicle Charging), Part P Building Regulations, PAT testing, 18th Edition Amendment 2 update, fire alarm (BS 5839), emergency lighting (BS 5266), and any manufacturer-specific training. Always include the date you obtained each qualification.',
   },
   {
     question: 'How do I write an electrician CV with no experience?',
@@ -282,7 +282,7 @@ const sections = [
               <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G 2382-22</strong> — 18th Edition IET Wiring Regulations (BS
-                7671:2018+A2:2022). Include the amendment number to show you are up to date.
+                7671:2018+A4:2026). Include the amendment number to show you are up to date.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -580,7 +580,7 @@ export default function ElectricianCVGuidePage() {
       title="Electrician CV Guide 2026: Template & Tips UK"
       description="Complete guide to writing an electrician CV that gets interviews. CV structure, qualifications section, experience tips, common mistakes to avoid."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

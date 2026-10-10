@@ -1,14 +1,21 @@
 import { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Search, Settings } from 'lucide-react';
+import { useSmartBack } from '@/lib/navHistory';
+import { Search } from 'lucide-react';
 import { CollegeSupabaseProvider } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
+import { CollegeAreaNav } from '@/components/college/nav/CollegeAreaNav';
 import { NotificationCenter } from '@/components/college/NotificationCenter';
 import { QuickRegisterSheet } from '@/components/college/teaching/QuickRegisterSheet';
 import { CollegeActButton } from '@/components/college/CollegeActSheet';
 import { CollegeScopeSwitch } from '@/components/college/scope/CollegeScopeSwitch';
-import { HubPage, HubBody, HubMasthead, HubMastheadExtraContext } from '@/components/hub/HubPrimitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubMastheadExtraContext,
+} from '@/components/hub/HubPrimitives';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
@@ -124,6 +131,11 @@ const SchemesOfWorkSection = lazy(() =>
     default: m.SchemesOfWorkSection,
   }))
 );
+const CriteriaGapsSection = lazy(() =>
+  import('@/components/college/sections/CriteriaGapsSection').then((m) => ({
+    default: m.CriteriaGapsSection,
+  }))
+);
 const DocumentLibrarySection = lazy(() =>
   import('@/components/college/sections/DocumentLibrarySection').then((m) => ({
     default: m.DocumentLibrarySection,
@@ -181,11 +193,6 @@ const AssessmentCalendarSection = lazy(() =>
 const ResourceAnalyticsSection = lazy(() =>
   import('@/components/college/sections/ResourceAnalyticsSection').then((m) => ({
     default: m.ResourceAnalyticsSection,
-  }))
-);
-const MasteryQueueSection = lazy(() =>
-  import('@/components/college/sections/MasteryQueueSection').then((m) => ({
-    default: m.MasteryQueueSection,
   }))
 );
 const IqaOtjAuditSection = lazy(() =>
@@ -253,6 +260,7 @@ export type CollegeSection =
   | 'teachingresources'
   | 'tutornotebook'
   | 'schemesofwork'
+  | 'criteriagaps'
   | 'documentlibrary'
   // Assessment Hub sections
   | 'grading'
@@ -279,7 +287,6 @@ export type CollegeSection =
   | 'batchoperations'
   | 'assessmentcalendar'
   | 'resourceanalytics'
-  | 'masteryqueue'
   | 'iqaotjaudit'
   | 'tutorobs'
   | 'auditlog'
@@ -287,54 +294,100 @@ export type CollegeSection =
 
 // Section titles for the header
 const sectionTitles: Record<CollegeSection, string> = {
-  overview: 'College Dashboard',
-  peoplehub: 'People Hub',
-  curriculumhub: 'Curriculum Hub',
-  assessmenthub: 'Assessment Hub',
-  resourceshub: 'Resources Hub',
-  qualityhub: 'Quality & Compliance',
+  overview: 'Home',
+  peoplehub: 'People',
+  curriculumhub: 'Curriculum',
+  assessmenthub: 'Assessment',
+  resourceshub: 'Resources',
+  qualityhub: 'Quality and compliance',
   tutors: 'Tutors',
-  students: 'Students',
+  students: 'Learners',
   cohorts: 'Cohorts',
-  supportstaff: 'Support Staff',
+  supportstaff: 'Support staff',
   courses: 'Courses',
-  coursesetup: 'Course Setup',
-  lessonplans: 'Lesson Plans',
-  teachingresources: 'Teaching Resources',
+  coursesetup: 'Course setup',
+  lessonplans: 'Lesson plans',
+  teachingresources: 'Teaching resources',
   tutornotebook: 'Learner notebook',
-  schemesofwork: 'Schemes of Work',
-  documentlibrary: 'Document Library',
+  schemesofwork: 'Schemes of work',
+  criteriagaps: 'Criteria gaps',
+  documentlibrary: 'Document library',
   grading: 'Grading',
   attendance: 'Attendance',
-  ilpmanagement: 'ILP Management',
-  epatracking: 'EPA Tracking',
-  progresstracking: 'Progress Tracking',
+  ilpmanagement: 'Learning plans',
+  epatracking: 'EPA readiness',
+  progresstracking: 'Progress',
   portfolio: 'Portfolio',
-  workqueue: 'Work Queue',
-  compliancedocs: 'Compliance Docs',
+  workqueue: 'Work queue',
+  compliancedocs: 'Compliance documents',
   safeguardingqueue: 'Safeguarding',
-  ltisettings: 'LTI Settings',
-  collegesettings: 'College Settings',
-  employerportal: 'Employer Portal',
-  otjtraining: 'OTJ Training',
-  student360: 'Student Profile',
-  qualitydashboard: 'Quality Dashboard',
+  ltisettings: 'VLE integration',
+  collegesettings: 'College settings',
+  employerportal: 'Employers',
+  otjtraining: 'Off-the-job training',
+  student360: 'Learner profile',
+  qualitydashboard: 'Quality dashboard',
   timetable: 'Timetable',
   aiilpgenerator: 'Draft learning plans',
-  iqaworkflow: 'IQA Workflow',
-  batchoperations: 'Batch Operations',
-  assessmentcalendar: 'Assessment Calendar',
-  resourceanalytics: 'Resource Analytics',
-  masteryqueue: 'Mastery Queue',
-  iqaotjaudit: 'IQA · OTJ Audit',
-  tutorobs: 'Lesson Obs 360',
+  iqaworkflow: 'IQA',
+  batchoperations: 'Bulk jobs',
+  assessmentcalendar: 'Assessment calendar',
+  resourceanalytics: 'Resource use',
+  iqaotjaudit: 'IQA: off-the-job audit',
+  tutorobs: 'Lesson observations',
   auditlog: 'Audit log',
   tutorworkload: 'Tutor workload',
 };
 
 // Act is in this masthead's own `trailing` (it opens the register in place), so
 // CollegeGuard's is switched off here; the masthead still parks under the header.
-const DASHBOARD_MASTHEAD = { stickBelowHeader: true };
+const DASHBOARD_MASTHEAD = { stickBelowHeader: true, nav: <CollegeAreaNav /> };
+
+/** Each section's home hub: where Back goes when the page was opened cold. */
+const SECTION_PARENT: Partial<Record<CollegeSection, CollegeSection>> = {
+  peoplehub: 'overview',
+  curriculumhub: 'overview',
+  assessmenthub: 'overview',
+  resourceshub: 'overview',
+  qualityhub: 'overview',
+  tutors: 'peoplehub',
+  students: 'peoplehub',
+  cohorts: 'peoplehub',
+  supportstaff: 'peoplehub',
+  employerportal: 'peoplehub',
+  tutorworkload: 'peoplehub',
+  student360: 'students',
+  courses: 'curriculumhub',
+  coursesetup: 'curriculumhub',
+  lessonplans: 'curriculumhub',
+  teachingresources: 'curriculumhub',
+  tutornotebook: 'curriculumhub',
+  schemesofwork: 'curriculumhub',
+  criteriagaps: 'curriculumhub',
+  documentlibrary: 'curriculumhub',
+  timetable: 'curriculumhub',
+  grading: 'assessmenthub',
+  attendance: 'assessmenthub',
+  ilpmanagement: 'assessmenthub',
+  epatracking: 'assessmenthub',
+  progresstracking: 'assessmenthub',
+  portfolio: 'assessmenthub',
+  workqueue: 'assessmenthub',
+  otjtraining: 'assessmenthub',
+  aiilpgenerator: 'assessmenthub',
+  batchoperations: 'assessmenthub',
+  assessmentcalendar: 'assessmenthub',
+  compliancedocs: 'qualityhub',
+  iqaworkflow: 'qualityhub',
+  qualitydashboard: 'qualityhub',
+  safeguardingqueue: 'qualityhub',
+  tutorobs: 'qualityhub',
+  auditlog: 'qualityhub',
+  iqaotjaudit: 'qualityhub',
+  ltisettings: 'resourceshub',
+  collegesettings: 'resourceshub',
+  resourceanalytics: 'resourceshub',
+};
 
 const CollegeDashboard = () => {
   const navigate = useNavigate();
@@ -369,17 +422,38 @@ const CollegeDashboard = () => {
   // daily-driver without being trapped on /college/today (which had no way back
   // to the hub). /college/today stays reachable via the "My Work" area card.
 
+  // Cmd/Ctrl+K opens the learner search the masthead advertises. Caught on the
+  // way down (window, capture) and stopped there: the app header's own Cmd+K
+  // (focus the sidebar search) is a document listener that ran first and
+  // marked the key handled, so the palette never opened in the College Hub.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'k') return;
+      e.preventDefault();
+      e.stopPropagation();
+      setCommandPaletteOpen(true);
+    };
+    window.addEventListener('keydown', onKey, { capture: true });
+    return () => window.removeEventListener('keydown', onKey, { capture: true });
+  }, []);
+
   // Keyboard shortcuts
   useKeyboardShortcuts([
-    { key: 'k', ctrl: true, handler: () => setCommandPaletteOpen(true) },
     {
       key: 'Escape',
-      handler: () => {
+      handler: (event) => {
         if (commandPaletteOpen) {
           setCommandPaletteOpen(false);
-        } else if (activeSection !== 'overview') {
-          handleBack();
+          return;
         }
+        // Escape belongs to an open sheet, dialog or menu: it closes that and
+        // must not also jump the page back to its hub underneath. The sheet
+        // has usually closed by the time this runs, so look at where focus was
+        // when the key went down, as well as what is still open.
+        const overlay = '[role="dialog"], [role="alertdialog"], [role="menu"], [role="listbox"]';
+        const from = event.target instanceof Element ? event.target : null;
+        if (from?.closest(overlay) || document.querySelector(overlay)) return;
+        if (activeSection !== 'overview') handleBack();
       },
     },
   ]);
@@ -508,63 +582,16 @@ const CollegeDashboard = () => {
     setActiveSection(mappedSection);
   }, []);
 
+  // Back returns to where you came from (the Learners list, a hub, Today…).
+  // Opened cold, from a link or a refresh, it goes to the section's parent hub
+  // instead, replacing this entry so the browser's back never loops.
+  const smartBack = useSmartBack();
   const handleBack = useCallback(() => {
-    // Smart back navigation - go to hub if coming from sub-section
-    const peopleSubSections: CollegeSection[] = ['tutors', 'students', 'cohorts', 'supportstaff'];
-    const curriculumSubSections: CollegeSection[] = [
-      'courses',
-      'coursesetup',
-      'lessonplans',
-      'teachingresources',
-      'tutornotebook',
-      'schemesofwork',
-      'documentlibrary',
-      'timetable',
-    ];
-    const assessmentSubSections: CollegeSection[] = [
-      'grading',
-      'attendance',
-      'ilpmanagement',
-      'epatracking',
-      'progresstracking',
-      'portfolio',
-      'workqueue',
-      'otjtraining',
-      'student360',
-      'aiilpgenerator',
-      'batchoperations',
-      'assessmentcalendar',
-    ];
-    const resourcesSubSections: CollegeSection[] = [
-      'compliancedocs',
-      'ltisettings',
-      'collegesettings',
-      'qualitydashboard',
-      'iqaworkflow',
-    ];
+    const parent = SECTION_PARENT[activeSection] ?? 'overview';
+    smartBack(parent === 'overview' ? '/college' : `/college?section=${parent}`);
+  }, [activeSection, smartBack]);
 
-    if (peopleSubSections.includes(activeSection)) {
-      setActiveSection('peoplehub');
-    } else if (curriculumSubSections.includes(activeSection)) {
-      setActiveSection('curriculumhub');
-    } else if (assessmentSubSections.includes(activeSection)) {
-      setActiveSection('assessmenthub');
-    } else if (resourcesSubSections.includes(activeSection)) {
-      setActiveSection('resourceshub');
-    } else if (
-      ['peoplehub', 'curriculumhub', 'assessmenthub', 'resourceshub', 'qualityhub'].includes(
-        activeSection
-      )
-    ) {
-      setActiveSection('overview');
-    } else {
-      setActiveSection('overview');
-    }
-  }, [activeSection]);
-
-  const handleGoHome = useCallback(() => {
-    navigate('/dashboard');
-  }, [navigate]);
+  const handleGoHome = useCallback(() => smartBack('/dashboard'), [smartBack]);
 
   const renderSection = () => {
     switch (activeSection) {
@@ -615,6 +642,8 @@ const CollegeDashboard = () => {
         return <TutorNotebookSection />;
       case 'schemesofwork':
         return <SchemesOfWorkSection />;
+      case 'criteriagaps':
+        return <CriteriaGapsSection />;
       case 'documentlibrary':
         return <DocumentLibrarySection onNavigate={handleNavigate} />;
 
@@ -671,8 +700,6 @@ const CollegeDashboard = () => {
         return <AssessmentCalendarSection onNavigate={handleNavigate} />;
       case 'resourceanalytics':
         return <ResourceAnalyticsSection />;
-      case 'masteryqueue':
-        return <MasteryQueueSection />;
       case 'iqaotjaudit':
         return <IqaOtjAuditSection />;
       case 'tutorobs':
@@ -705,39 +732,33 @@ const CollegeDashboard = () => {
         {/* No bottom bar (Andrew, 7 Oct): Act lives in the masthead. This one
             opens the register in place, so it replaces CollegeGuard's. */}
         <HubMastheadExtraContext.Provider value={DASHBOARD_MASTHEAD}>
-        <HubMasthead
-          section="College"
-          title={mastheadTitle}
-          onBack={activeSection === 'overview' ? handleGoHome : handleBack}
-          trailing={
-            <>
-              <button
-                type="button"
-                onClick={() => setCommandPaletteOpen(true)}
-                aria-label="Search learners"
-                className="flex h-11 items-center gap-2 px-2 text-white transition-colors hover:text-elec-yellow touch-manipulation sm:px-2.5"
-              >
-                <Search className="h-4 w-4 shrink-0" aria-hidden />
-                <span className="hidden text-[12.5px] font-medium sm:inline">Search learners</span>
-                <kbd className="ml-0.5 hidden rounded border border-white/15 px-1 text-[10px] font-medium text-white lg:inline">
-                  ⌘K
-                </kbd>
-              </button>
-              <NotificationCenter onNavigate={handleNavigate} />
-              <button
-                type="button"
-                onClick={() => setActiveSection('collegesettings')}
-                aria-label="Settings"
-                className="flex h-11 min-w-11 items-center justify-center px-2 text-[12.5px] font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation"
-              >
-                <Settings className="h-4 w-4 sm:hidden" aria-hidden />
-                <span className="hidden sm:inline">Settings</span>
-              </button>
-              <CollegeScopeSwitch />
-              <CollegeActButton onRegister={() => setRegisterOpen(true)} />
-            </>
-          }
-        />
+          <HubMasthead
+            section="College"
+            title={mastheadTitle}
+            onBack={activeSection === 'overview' ? handleGoHome : handleBack}
+            trailing={
+              <>
+                <button
+                  type="button"
+                  onClick={() => setCommandPaletteOpen(true)}
+                  aria-label="Search learners"
+                  className="flex h-11 items-center gap-2 px-2 text-white transition-colors hover:text-elec-yellow touch-manipulation max-sm:w-10 max-sm:justify-center sm:px-2.5"
+                >
+                  <Search className="h-4 w-4 shrink-0" aria-hidden />
+                  <span className="hidden text-[12.5px] font-medium sm:inline">
+                    Search learners
+                  </span>
+                  <kbd className="ml-0.5 hidden rounded border border-white/15 px-1 text-[10px] font-medium text-white lg:inline">
+                    ⌘K
+                  </kbd>
+                </button>
+                <NotificationCenter onNavigate={handleNavigate} />
+                {/* Settings lives in the area navigation under the masthead. */}
+                <CollegeScopeSwitch />
+                <CollegeActButton onRegister={() => setRegisterOpen(true)} />
+              </>
+            }
+          />
         </HubMastheadExtraContext.Provider>
 
         <HubBody

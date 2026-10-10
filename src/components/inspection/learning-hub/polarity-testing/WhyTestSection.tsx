@@ -84,7 +84,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Hazards */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Can Go Wrong</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Can Go Wrong</p>
         </motion.div>
 
         {hazards.map((hazard, i) => (
@@ -105,7 +105,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Core regulation requirements */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">The Regulations</p>
+          <p className="text-[12px] font-medium text-white mb-3">The Regulations</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -157,7 +157,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Examples</p>
+          <p className="text-[12px] font-medium text-white mb-3">Real-World Examples</p>
         </motion.div>
 
         {realWorldExamples.map((example, i) => (

@@ -19,6 +19,7 @@ import {
   qualificationAcLines,
   raggedAcLines,
   GROUNDING_RULES,
+  callerFrom,
 } from '../_shared/learner-context.ts';
 
 const corsHeaders = {
@@ -222,7 +223,7 @@ Deno.serve(async (req) => {
       .maybeSingle();
     const collegeStudentId = (cs as { id?: string } | null)?.id ?? null;
     if (collegeStudentId) {
-      const ctx = await loadLearnerContext(sb, collegeStudentId);
+      const ctx = await loadLearnerContext(sb, collegeStudentId, { asCaller: callerFrom(req) });
       const qualCode = ctx?.course?.code ?? null;
       if (qualCode) {
         const seeds = [promptText.slice(0, 200)];

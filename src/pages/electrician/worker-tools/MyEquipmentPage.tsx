@@ -13,7 +13,7 @@
  * opens Materials used for that job.
  */
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { ScanBarcode, Search, Truck } from 'lucide-react';
 import { toast } from 'sonner';
@@ -84,6 +84,7 @@ function nextDueLine(t: MyKitTool): { text: string; tone: string } | null {
 
 export default function MyEquipmentPage() {
   const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
   const { data: kit, isLoading } = useMyKit();
   const { data: vans = [], isLoading: loadingVans } = useMyVanStock();
   const confirm = useConfirmTool();
@@ -131,6 +132,9 @@ export default function MyEquipmentPage() {
   const overdueCount = tools.filter(isOverdue).length;
   const faultyCount = tools.filter(isFaulty).length;
   const hasVan = (kit?.vans.length ?? 0) > 0 || vans.length > 0;
+  // Gap #3 / #22: "Materials used" from a job, but no van stock on this
+  // person's name. Say so, and offer the way that works, instead of nothing.
+  const noVanForJob = !!jobParam && !loadingVans && vans.length === 0;
 
   const q = search.trim().toLowerCase();
   const shown = tools.filter((t) => {
@@ -152,6 +156,39 @@ export default function MyEquipmentPage() {
       help={WT_EQUIPMENT_HELP}
       helpBlockers={helpBlockers}
     >
+      {noVanForJob && (
+        <section
+          data-testid="materials-no-van"
+          className="space-y-3 rounded-2xl border border-white/[0.14] bg-white/[0.04] p-4 sm:p-5"
+        >
+          <div>
+            <h2 className="text-[15px] font-semibold text-white">No van stock on your name</h2>
+            <p className="mt-1 text-[13.5px] leading-snug text-white">
+              Materials used come off a van&rsquo;s stock, and the office hasn&rsquo;t put a van on
+              your name yet. Add what you used to the job as a progress note instead (a photo of the
+              packaging helps), and the office can cost it from there.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => navigate(`/electrician/worker-tools/progress-notes?job=${jobParam}`)}
+              className={cn(buttonPrimaryCn, 'w-full sm:w-auto sm:px-5')}
+            >
+              Add a progress note
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(`/electrician/worker-tools/jobs?job=${jobParam}`)}
+              className={cn(buttonSecondaryCn, 'w-full sm:w-auto sm:px-5')}
+            >
+              Back to the job
+            </button>
+          </div>
+          <p className="text-[12.5px] text-white">Ask the office to put a van on your name to log stock next time.</p>
+        </section>
+      )}
+
       {hasVan && (
         <div data-help="wt-equipment.tabs" className="grid grid-cols-2 gap-2 sm:max-w-sm">
           {(

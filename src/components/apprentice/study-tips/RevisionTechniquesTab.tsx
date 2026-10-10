@@ -1,6 +1,6 @@
 const utilityToneClass = (utility: string) =>
   utility === 'High utility'
-    ? 'text-elec-yellow border-elec-yellow/30 bg-white/[0.05]'
+    ? 'text-elec-yellow border-white/[0.08] bg-white/[0.05]'
     : 'text-white border-white/10 bg-white/[0.03]';
 
 const RevisionTechniquesTab = () => {
@@ -77,12 +77,12 @@ const RevisionTechniquesTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Evidence-based revision techniques
           </span>
-          <p className="text-[12px] text-white leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Utility ratings follow Dunlosky et al. (2013), which ranked study techniques by how well
             they hold up across subjects, ages, and test types — not by invented effectiveness
             scores.
@@ -102,7 +102,7 @@ const RevisionTechniquesTab = () => {
                   <p className="text-[13px] text-white">{technique.description}</p>
                 </div>
                 <span
-                  className={`flex-shrink-0 text-[10px] font-medium uppercase tracking-[0.14em] px-2 py-0.5 rounded-md border ${utilityToneClass(
+                  className={`flex-shrink-0 text-[13px] font-semibold px-2 py-0.5 rounded-md border ${utilityToneClass(
                     technique.utility
                   )}`}
                 >
@@ -112,22 +112,16 @@ const RevisionTechniquesTab = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    How to do it
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">How to do it</span>
                   <p className="text-[13px] text-white">{technique.howTo}</p>
                   <div className="rounded-md border border-white/10 bg-white/[0.03] p-3 space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Example
-                    </span>
+                    <span className="text-[13px] font-semibold text-white">Example</span>
                     <p className="text-[12px] text-white">{technique.example}</p>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Benefits
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Benefits</span>
                   <ul className="space-y-1">
                     {technique.benefits.map((benefit, benefitIndex) => (
                       <li
@@ -146,10 +140,8 @@ const RevisionTechniquesTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Proven study methods
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Proven study methods</span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
           {studyMethods.map((method, index) => (
             <div
@@ -162,17 +154,13 @@ const RevisionTechniquesTab = () => {
               <ol className="space-y-2">
                 {method.steps.map((step, stepIndex) => (
                   <li key={stepIndex} className="text-[13px] text-white flex items-start gap-2">
-                    <span className="text-white font-mono text-[11px] mt-0.5">
-                      {stepIndex + 1}.
-                    </span>
+                    <span className="text-white text-[12.5px] mt-0.5">{stepIndex + 1}.</span>
                     <span>{step}</span>
                   </li>
                 ))}
               </ol>
               <div className="rounded-md border border-white/10 bg-white/[0.03] p-2.5 space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Best for
-                </span>
+                <span className="text-[13px] font-semibold text-white">Best for</span>
                 <p className="text-[12px] text-white">{method.bestFor}</p>
               </div>
             </div>

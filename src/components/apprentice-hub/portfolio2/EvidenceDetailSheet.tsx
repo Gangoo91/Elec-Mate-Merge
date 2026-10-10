@@ -17,10 +17,14 @@ import { assessorWithQualifications } from '@/lib/assessorQualifications';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Check,
+  Clock,
   Copy,
+  CopyPlus,
   ExternalLink,
   FileText,
   Loader2,
+  Lock,
+  MapPin,
   Pencil,
   Search,
   Send,
@@ -40,6 +44,7 @@ import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { openEvidence } from '@/lib/evidenceUrl';
 import { copyToClipboard } from '@/utils/clipboard';
 import { shortHash } from '@/lib/portfolio/contentHash';
+import { captureLine } from '@/lib/portfolio/captureStamp';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
 import { useAIEvidenceTagger } from '@/hooks/portfolio/useAIEvidenceTagger';
@@ -55,8 +60,13 @@ import {
 import type { AcState } from '@/hooks/portfolio/usePortfolioAcState';
 import { notifyDoNextChanged } from '@/hooks/useMyDoNext';
 import { AskWitnessSheet } from './AskWitnessSheet';
+import { useItemAuthenticity } from '@/hooks/portfolio/useItemAuthenticity';
+import { AuthenticityLine } from '@/components/assessment/AuthenticityLine';
+import { WitnessCompetence } from '@/components/assessment/WitnessCompetence';
 import { ObservationPanel } from './ObservationPanel';
 import { aiProvenanceLine } from '@/hooks/portfolio/usePortfolioAcState';
+import { studyKey, useStudyLinks } from '@/hooks/college/useStudyLinks';
+import { StudyPractiseLinks } from './StudyPractiseLinks';
 import { SubmitEvidenceSheet } from './SubmitEvidenceSheet';
 import {
   ITEM_STATE_CHIP,
@@ -69,6 +79,8 @@ import {
   fmtDate,
   fmtDateTime,
 } from './ui';
+import { claimErrorText } from '@/lib/portfolio/claimCriteria';
+import { AttemptHistory } from '@/components/assessment/AttemptHistory';
 
 const SOURCE_LABEL: Record<ItemCriterion['source'], string> = {
   learner: 'You',
@@ -103,6 +115,7 @@ const AUDIT_LABEL: Record<string, string> = {
   decision_referred: 'Needs more',
   decision_not_yet: 'Not yet',
   decision_superseded: 'Earlier decision replaced',
+  decision_countersigned: 'Countersigned by a qualified assessor',
   iqa_confirmed: 'IQA confirmed',
   iqa_not_confirmed: 'IQA queried',
   witness_requested: 'Witness asked',
@@ -145,6 +158,8 @@ export function EvidenceDetailSheet({
   const { createShareLink, getShareUrl } = usePortfolioSharing();
   const { analyze, isAnalyzing } = useAIEvidenceTagger();
   const { validate, isValidating, result: validation } = useEvidenceValidator();
+  // ELE-1904: Study and Practise on each criterion this evidence covers.
+  const study = useStudyLinks(portfolio.qualificationCode);
 
   const [busyKey, setBusyKey] = useState<string | null>(null);
   const [witnessOpen, setWitnessOpen] = useState(false);
@@ -158,6 +173,8 @@ export function EvidenceDetailSheet({
   const [comment, setComment] = useState('');
   const [audit, setAudit] = useState<AuditEvent[]>([]);
   const [openStatement, setOpenStatement] = useState<string | null>(null);
+  // The assessor's "own work" countersign on this item (C&G authenticity).
+  const authenticity = useItemAuthenticity(portfolio.learnerId);
   const [ackComment, setAckComment] = useState('');
 
   const itemId = item?.id ?? null;
@@ -244,7 +261,11 @@ export function EvidenceDetailSheet({
     );
     setBusyKey(null);
     if (error) {
-      toast({ title: 'Not saved', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Not saved',
+        description: claimErrorText(error.message),
+        variant: 'destructive',
+      });
       return false;
     }
     notifyPortfolioChanged();
@@ -413,6 +434,34 @@ export function EvidenceDetailSheet({
     onOpenChange(false);
   };
 
+  /* ─── New version of assessed evidence ─────────────────────────────── */
+  // Passed evidence is locked in the database (_portfolio_items_assessed_lock).
+  // A new version is a new draft linked to it, assessed on its own.
+  const newVersion = async () => {
+    if (!item) return;
+    setBusyKey('version');
+    const { data, error } = await supabase.rpc(
+      'create_portfolio_item_version' as never,
+      { p_item_id: item.id } as never
+    );
+    setBusyKey(null);
+    if (error || !data) {
+      toast({
+        title: 'Could not start a new version',
+        description: error ? claimErrorText(error.message) : 'Check your connection and try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    notifyPortfolioChanged();
+    toast({
+      title: 'New version started',
+      description: 'Add what is new, then send it for assessment.',
+    });
+    if (onEdit) onEdit(data as unknown as string);
+    else onOpenChange(false);
+  };
+
   /* ─── Comments ─────────────────────────────────────────────────────── */
   const threads = item ? getCommentsForEvidence(item.id) : [];
   const sendComment = async () => {
@@ -471,11 +520,19 @@ export function EvidenceDetailSheet({
 
   if (!item) return null;
   const isObservation = !!item.observation;
+  const locked = item.assessed && !isObservation;
+  const previous = item.previousVersionId
+    ? (portfolio.items.find((i) => i.id === item.previousVersionId) ?? null)
+    : null;
 
   const decided = item.claimed.filter((c) => c.decided_at);
   const needsMore = item.claimed.filter((c) => NEEDS.has(c.state));
   const resend = needsMore.length > 0;
-  const canSubmit = item.claimed.length > 0 && (!item.submission?.open || resend);
+  // Fully passed and locked: nothing to send again (a new version is the way forward).
+  const canSubmit =
+    item.claimed.length > 0 &&
+    (!item.submission?.open || resend) &&
+    !(locked && item.state === 'passed');
   const pending = item.witnesses.find((w) => w.status === 'requested');
 
   const primary = (() => {
@@ -522,7 +579,8 @@ export function EvidenceDetailSheet({
         headerTrailing={
           <span
             className={cn(
-              'rounded-full border px-2.5 py-1 text-[12px] font-semibold',
+              // mr-8 keeps the chip clear of the sheet's close button.
+              'mr-8 whitespace-nowrap rounded-full border px-2.5 py-1 text-[12px] font-semibold',
               ITEM_STATE_CHIP[item.state]
             )}
           >
@@ -562,13 +620,25 @@ export function EvidenceDetailSheet({
                 <ShieldCheck className="h-4 w-4" />{' '}
                 <span className="hidden sm:inline">Check quality</span>
               </button>
-              {onEdit && !isObservation && (
+              {onEdit && !isObservation && !locked && (
                 <button
                   type="button"
                   className={cn(P_BTN, 'whitespace-nowrap px-2 sm:px-4')}
                   onClick={() => onEdit(item.id)}
                 >
                   <Pencil className="h-4 w-4" /> <span className="hidden sm:inline">Edit</span>
+                </button>
+              )}
+              {locked && (
+                <button
+                  type="button"
+                  className={cn(P_BTN, 'whitespace-nowrap px-2 sm:px-4')}
+                  onClick={() => void newVersion()}
+                  disabled={busyKey === 'version'}
+                  aria-label="Add a new version"
+                >
+                  <CopyPlus className="h-4 w-4" />{' '}
+                  <span className="hidden sm:inline">New version</span>
                 </button>
               )}
               {!isObservation && (
@@ -608,6 +678,41 @@ export function EvidenceDetailSheet({
             <p className="text-[12px] font-medium text-white">Next step</p>
             <p className="mt-0.5 text-[15px] font-semibold text-white">{item.next.label}</p>
           </div>
+        )}
+
+        {/* Assessed evidence is locked: say so, and offer the one way forward. */}
+        {locked && (
+          <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.14] bg-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-start gap-2.5">
+              <Lock className="mt-0.5 h-4 w-4 shrink-0 text-white" strokeWidth={1.5} />
+              <p className="text-[14px] leading-snug text-white">
+                <span className="font-semibold">
+                  Assessed: changes would need a new submission.
+                </span>{' '}
+                What your assessor passed stays exactly as it was. To add to it, start a new version
+                and send that.
+              </p>
+            </div>
+            <button
+              type="button"
+              className={cn(P_BTN, 'w-full shrink-0 sm:w-auto')}
+              onClick={() => void newVersion()}
+              disabled={busyKey === 'version'}
+            >
+              {busyKey === 'version' ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <CopyPlus className="h-4 w-4" strokeWidth={1.5} />
+              )}
+              Add a new version
+            </button>
+          </div>
+        )}
+        {item.previousVersionId && (
+          <p className="text-[13px] text-white">
+            A new version of {previous ? `"${previous.title}"` : 'assessed evidence'}. That one
+            stays as it was assessed.
+          </p>
         )}
 
         {item.observation && (
@@ -685,12 +790,20 @@ export function EvidenceDetailSheet({
                     <span className="font-mono text-[12.5px] text-elec-yellow">
                       {c.unit_code} AC {c.ac_code}
                     </span>
-                    <StateChip state={c.state} />
+                    <StateChip state={c.state} pending={c.countersign_pending} />
                   </div>
                   {c.decision_feedback && (
                     <p className="mt-1 text-[14px] leading-relaxed text-white">
                       "{c.decision_feedback}"
                     </p>
+                  )}
+                  {NEEDS.has(c.state) && (
+                    <StudyPractiseLinks
+                      unit={c.unit_code}
+                      ac={c.ac_code}
+                      links={study.links.get(studyKey(c.unit_code, c.ac_code))}
+                      className="mt-2"
+                    />
                   )}
                   <p className="mt-0.5 text-[12px] text-white">
                     {assessorWithQualifications(
@@ -698,7 +811,16 @@ export function EvidenceDetailSheet({
                       c.assessor_qualifications
                     )}{' '}
                     · {fmtDate(c.decided_at)}
+                    {c.countersigned_at
+                      ? ` · countersigned by ${c.countersigned_by_name ?? 'a qualified assessor'}, ${fmtDate(c.countersigned_at)}`
+                      : ''}
                   </p>
+                  {c.countersign_pending && (
+                    <p className="mt-0.5 text-[12px] text-white">
+                      Your assessor is in training. This counts once a qualified assessor
+                      countersigns it.
+                    </p>
+                  )}
                   {c.decision_feedback &&
                     aiProvenanceLine(
                       c.decision_feedback_source,
@@ -716,6 +838,12 @@ export function EvidenceDetailSheet({
                 </li>
               ))}
             </ul>
+            <AuthenticityLine
+              a={authenticity.byItem.get(item.id)}
+              currentHash={item.contentHash}
+              audience="learner"
+              className="mt-3"
+            />
             {resend && (
               <button
                 type="button"
@@ -728,9 +856,22 @@ export function EvidenceDetailSheet({
           </section>
         )}
 
+        {/* Every attempt and its decision, earlier ones read only (batch 2) */}
+        <AttemptHistory learnerId={portfolio.learnerId} itemId={item.id} audience="learner" />
+
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
           {/* LEFT: the evidence itself */}
           <div className="space-y-8">
+            {item.capture && (
+              <p className="-mb-4 flex items-center gap-2 text-[13px] text-white">
+                {item.capture.place || item.capture.lat !== null ? (
+                  <MapPin className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
+                ) : (
+                  <Clock className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
+                )}
+                {captureLine(item.capture)}
+              </p>
+            )}
             {item.files.length > 0 ? (
               <section>
                 <h3 className="mb-3 text-[13px] font-semibold text-white">Files</h3>
@@ -755,14 +896,14 @@ export function EvidenceDetailSheet({
                         </div>
                       )}
                       <div className="flex items-center gap-1 px-2 py-1.5">
-                        <span className="min-w-0 flex-1 truncate text-[11.5px] text-white">
+                        <span className="min-w-0 flex-1 truncate text-[12.5px] text-white">
                           {f.name}
                         </span>
                         <ExternalLink className="h-3 w-3 shrink-0 text-white" />
                       </div>
                       {f.sha256 && (
                         <p
-                          className="px-2 pb-1.5 font-mono text-[10.5px] text-white"
+                          className="px-2 pb-1.5 font-mono text-[12px] text-white"
                           title={f.sha256}
                         >
                           SHA-256 {shortHash(f.sha256)}
@@ -872,8 +1013,13 @@ export function EvidenceDetailSheet({
                                 <p className="whitespace-pre-line text-[14px] leading-relaxed text-white">
                                   {w.statement}
                                 </p>
+                                <WitnessCompetence
+                                  w={w}
+                                  audience="learner"
+                                  className="text-[12.5px] leading-snug text-white"
+                                />
                                 {w.statement_hash && (
-                                  <p className="font-mono text-[11px] text-white">
+                                  <p className="font-mono text-[12px] text-white">
                                     Signed fingerprint {shortHash(w.statement_hash)}
                                   </p>
                                 )}
@@ -1026,14 +1172,20 @@ export function EvidenceDetailSheet({
                             <span className="font-mono text-[12.5px] text-elec-yellow">
                               {c.unit_code} AC {c.ac_code}
                             </span>
-                            <StateChip state={c.state} />
-                            <span className="text-[11.5px] text-white">
+                            <StateChip state={c.state} pending={c.countersign_pending} />
+                            <span className="text-[12.5px] text-white">
                               by {SOURCE_LABEL[c.source]}
                             </span>
                           </div>
                           {c.ac_text && (
                             <p className="mt-1 text-[13px] leading-snug text-white">{c.ac_text}</p>
                           )}
+                          <StudyPractiseLinks
+                            unit={c.unit_code}
+                            ac={c.ac_code}
+                            links={study.links.get(studyKey(c.unit_code, c.ac_code))}
+                            className="mt-2"
+                          />
                         </div>
                         {!locked && (
                           <button
@@ -1094,7 +1246,7 @@ export function EvidenceDetailSheet({
                               {c.unit_code} AC {c.ac_code}
                             </span>
                             {c.confidence !== null && (
-                              <span className="text-[11.5px] text-white">
+                              <span className="text-[12.5px] text-white">
                                 {c.confidence}% match
                               </span>
                             )}
@@ -1213,7 +1365,7 @@ export function EvidenceDetailSheet({
                           {crit}
                           {e.summary.backfilled ? ' (recorded when the trail began)' : ''}
                         </p>
-                        <p className="text-[11.5px] text-white">
+                        <p className="text-[12.5px] text-white">
                           {fmtDateTime(e.created_at)} · by{' '}
                           {ROLE_LABEL[e.actor_role] ?? e.actor_role}
                           {e.content_hash ? ` · ${shortHash(e.content_hash)}` : ''}

@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { GuidePage, GuideIndex } from '@/components/apprentice/shared/GuideKit';
 
 interface Section {
   number: string;
@@ -80,27 +79,24 @@ const SECTIONS: Section[] = [
 const StudyTips = () => {
   const navigate = useNavigate();
   return (
-    <HubSubPage
+    <GuidePage
+      area="Study tips"
       title="How to actually study"
       backTo="/apprentice/toolbox"
       description="School might have taught you to revise — apprenticeship needs you to learn. Different game. The techniques that work for adults studying after a 9-hour shift on site."
     >
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Six chapters</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="three"
-          cards={SECTIONS.map((s) => ({
-            id: s.slug,
-            eyebrow: s.eyebrow,
-            title: s.title,
-            description: s.description,
-            meta: s.meta,
-            onClick: () => navigate(`/apprentice/toolbox/study-tips/${s.slug}`),
-          }))}
-        />
-      </motion.section>
-    </HubSubPage>
+      <GuideIndex
+        title="Six chapters"
+        columns={3}
+        items={SECTIONS.map((s) => ({
+          id: s.slug,
+          title: s.title,
+          description: s.description,
+          meta: s.meta,
+          onClick: () => navigate(`/apprentice/toolbox/study-tips/${s.slug}`),
+        }))}
+      />
+    </GuidePage>
   );
 };
 

@@ -193,8 +193,8 @@ const sections = [
           What Government authorisation actually means
         </h3>
         <p>
-          A NAPIT-registered electrician can self-certify notifiable domestic electrical work,
-          which triggers a Building Regulations Compliance Certificate being issued directly to the
+          A NAPIT-registered electrician can self-certify notifiable domestic electrical work, which
+          triggers a Building Regulations Compliance Certificate being issued directly to the
           homeowner without building control involvement. The legal standing of that certificate is
           identical whichever authorised scheme issues it — they all sit under the same Part P
           framework.
@@ -202,9 +202,11 @@ const sections = [
 
         <div className={`${CARD_PADDED} my-6`}>
           <p className="text-sm leading-relaxed text-white">
-            <span className="font-semibold">Written and reviewed by Andrew Moore, founder of
-            Elec-Mate</span> &mdash; a qualified electrician (18th Edition, C&amp;G 2391 inspection
-            and testing). Checked against BS&nbsp;7671:2018+A4:2026.
+            <span className="font-semibold">
+              Written and reviewed by Andrew Moore, founder of Elec-Mate
+            </span>{' '}
+            &mdash; a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing).
+            Checked against BS&nbsp;7671:2018+A4:2026.
           </p>
         </div>
       </>
@@ -499,10 +501,10 @@ const sections = [
               single easiest thing for an assessor to spot.
             </li>
             <li>
-              <strong>SPD and AFDD details (Appendix 6).</strong> A4:2026 added fields to the model
-              forms and the guidance for recipients specifically for recording the details of surge
-              protective devices and arc fault detection devices. Certificates issued since the
-              amendment should populate them where such devices are installed.
+              <strong>SPD and AFDD details (Appendix 6).</strong> Amendment 2:2022 added fields to
+              the model forms and the guidance for recipients specifically for recording the details
+              of surge protective devices and arc fault detection devices. Certificates issued since
+              the amendment should populate them where such devices are installed.
             </li>
             <li>
               <strong>The split test-result pages (Appendix 6).</strong> The generic single-page
@@ -634,8 +636,8 @@ const sections = [
               website directory when homeowners search for a registered electrician in their area
             </li>
             <li>
-              <strong>Technical support helpline:</strong> access to NAPIT&rsquo;s technical team for
-              regulation interpretation and BS 7671 queries
+              <strong>Technical support helpline:</strong> access to NAPIT&rsquo;s technical team
+              for regulation interpretation and BS 7671 queries
             </li>
             <li>
               <strong>Insurance-backed warranty:</strong> cover offered on domestic work, protecting

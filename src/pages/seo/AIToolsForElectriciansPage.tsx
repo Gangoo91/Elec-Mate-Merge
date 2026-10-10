@@ -18,7 +18,7 @@ export default function AIToolsForElectriciansPage() {
       title="AI Tools for Electricians: Board Scan to RAMS"
       description="What AI actually does for UK electricians: scan a consumer unit, code C1/C2/C3 defects to BS 7671, price jobs and write site-specific RAMS in seconds."
       datePublished="2026-01-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AI Tools for Electricians', href: '/guides/ai-tools-for-electricians' },
@@ -59,7 +59,7 @@ export default function AIToolsForElectriciansPage() {
         'AI cost estimation tools generate itemised quotes with materials and labour from a job description, using real UK trade pricing data.',
         'AI circuit designers produce complete consumer unit schedules with cable sizes, protective device ratings, and diversity calculations to BS 7671.',
         'Privacy matters — look for AI tools that process data in the UK/EU, do not train on your client data, and comply with GDPR.',
-        'A4:2026 introduced Reg 411.3.4 (30 mA RCD on domestic AC lighting circuits) and Reg 421.1.7 (AFDD recommendation for dwellings) — a compliant AI tool must know both.',
+        'A compliant AI tool must know Reg 411.3.4 (30 mA RCD on domestic AC lighting circuits, since 2018) and Reg 421.1.7 (AFDDs, required in HMOs, care homes and similar since A2:2022).',
         'For EV charger design, Reg 722.311.201 permits load curtailment to be factored into maximum demand calculations — essential for fitting higher-rated chargers on constrained supplies.',
       ]}
       sections={[
@@ -227,9 +227,9 @@ export default function AIToolsForElectriciansPage() {
                 real-world EICR observations. It handles everything from simple non-compliances ("no
                 earth on lighting circuit" = C2) to nuanced situations ("original wiring in good
                 condition but no RCD protection on socket outlets" = C3, Reg 411.3.3 — because it
-                was compliant at the time of installation under the 16th Edition; note that A4:2026
-                Reg 411.3.4 now also mandates 30 mA RCD protection on AC lighting circuits in
-                domestic premises).
+                was compliant at the time of installation under the 16th Edition; note that Reg
+                411.3.4, in force since BS 7671:2018, also mandates 30 mA RCD protection on AC
+                lighting circuits in domestic premises).
               </p>
               <SEOAppBridge
                 title="Defect Code AI — Instant C1/C2/C3/FI Classification"
@@ -237,13 +237,14 @@ export default function AIToolsForElectriciansPage() {
                 icon={Search}
               />
               <p>
-                A4:2026 introduced two new requirements that frequently arise in EICR defect lists.
-                Regulation 411.3.4 now mandates additional protection by a 30 mA RCD on AC final
+                Two requirements frequently arise in EICR defect lists. Regulation 411.3.4, in force
+                since BS 7671:2018, mandates additional protection by a 30 mA RCD on AC final
                 circuits supplying luminaires in domestic premises — an absence of this protection
-                on post-A4:2026 new installations or rewired circuits should be classified
-                accordingly. Regulation 421.1.7 recommends the installation of arc fault detection
-                devices (AFDDs) on AC final circuits in dwellings to mitigate fire risk from arc
-                fault currents. The Defect Code AI is aware of both requirements and will surface
+                on new installations or rewired circuits since 2019 should be classified
+                accordingly. Regulation 421.1.7 covers arc fault detection devices (AFDDs) on AC
+                final circuits to mitigate fire risk from arc fault currents: required since A2:2022
+                on socket-outlet circuits up to 32 A in HMOs, care homes, purpose-built student
+                accommodation and high rise residential buildings, and recommended elsewhere. The Defect Code AI is aware of both requirements and will surface
                 the correct code and regulation reference automatically.
               </p>
             </>
@@ -330,12 +331,12 @@ export default function AIToolsForElectriciansPage() {
                 output feeds directly into your EIC schedule of circuits.
               </p>
               <p>
-                A4:2026 adds several mandatory or recommended provisions that the AI Circuit
-                Designer applies automatically. Regulation 411.3.4 requires 30 mA RCD additional
+                BS 7671:2018+A4:2026 contains several mandatory or recommended provisions that the
+                AI Circuit Designer applies automatically. Regulation 411.3.4 requires 30 mA RCD additional
                 protection on all AC final circuits supplying luminaires in domestic premises — the
                 designer allocates these circuits to RCD-protected ways accordingly. Regulation
-                421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits in
-                dwellings; the designer flags circuits where an AFDD is advisable and includes the
+                421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits in most
+                dwellings and requires them in HMOs and similar premises; the designer flags circuits where an AFDD is advisable and includes the
                 device in the consumer unit schedule. For EV charging installations, Regulation
                 722.311.201 permits load curtailment (automatic or manual load reduction or
                 disconnection) to be taken into account when determining maximum demand — meaning a
@@ -445,7 +446,7 @@ export default function AIToolsForElectriciansPage() {
                   must cite specific BS 7671 regulation numbers, not make vague references to "the
                   regulations." Ask it about RCD protection for socket outlets and check whether it
                   correctly cites Regulation 411.3.3 (socket outlets ≤32 A) and Reg 411.3.4 (30 mA
-                  RCD on domestic AC lighting circuits — introduced in A4:2026).
+                  RCD on domestic AC lighting circuits, in force since BS 7671:2018).
                 </li>
                 <li>
                   <span className="font-semibold text-white">Current data</span> — pricing tools

@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const electricalRamsTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-rams-template-uk',
@@ -201,7 +201,7 @@ export const electricalRamsTemplateConfig: GeneratedGuideConfig = {
         {
           type: 'list',
           items: [
-            'Consumer unit (CU) replacement — safe isolation at the meter tails or service head, dealing with PME bonding, working dead, A4:2026 AFDD requirements, BS 7671 testing on energisation.',
+            'Consumer unit (CU) replacement — safe isolation at the meter tails or service head, dealing with PME bonding, working dead, AFDD requirements (Reg 421.1.7), BS 7671 testing on energisation.',
             'EICR / periodic inspection — live testing exposures, sampling, dealing with C1 / C2 findings on the spot, customer briefing for isolation.',
             'EV charger installation — masonry drilling, working at height, cable management, earthing for TN-C-S (PNB) installations under BS 7671:2018+A4:2026, and CT clamp installation around live tails.',
             'Solar PV installation — working at height on a roof, DC isolation, fall arrest, manual handling of panels, weather windows.',
@@ -390,7 +390,7 @@ export const electricalRamsTemplateConfig: GeneratedGuideConfig = {
     {
       question: 'How does the Elec-Mate RAMS Generator stay current with regulations?',
       answer:
-        'The generator references the CDM 2015 statutory framework, the Electricity at Work Regulations 1989, the Health and Safety at Work etc. Act 1974, and BS 7671:2018+A4:2026 — the current edition of the UK Wiring Regulations as of 2026. When BS 7671 updates (for example A4:2026 introduced AFDD changes, TN-C-S PNB earthing updates, and new schedule columns), the generator templates are updated in line.',
+        'The generator references the CDM 2015 statutory framework, the Electricity at Work Regulations 1989, the Health and Safety at Work etc. Act 1974, and BS 7671:2018+A4:2026 — the current edition of the UK Wiring Regulations as of 2026. When BS 7671 updates (for example A4:2026 added protective neutral bonding (PNB) and a new Chapter 57 for stationary batteries), the generator templates are updated in line.',
     },
   ],
   relatedPages: [
@@ -432,7 +432,7 @@ export const electricalRamsTemplateConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-amendment-4-2026',
       title: 'BS 7671 Amendment 4 (2026)',
-      description: 'AFDD requirements, TN-C-S (PNB) earthing, new schedule columns and model form changes that affect how your RAMS describes the work.',
+      description: 'TN-C-S (PNB) earthing, Table 52.1 cables in walls, Chapter 57 batteries and model form changes that affect how your RAMS describes the work.',
       icon: 'BookOpen',
       category: 'Guide',
     },

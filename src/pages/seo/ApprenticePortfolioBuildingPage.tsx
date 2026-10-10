@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What is the difference between the NVQ portfolio and the apprenticeship standard portfolio?',
     answer:
-      'There are two overlapping evidence requirements for electrical apprentices. The NVQ Diploma (Level 3 Diploma in Electrotechnical Technology) is a separately certificated qualification with its own evidence and assessment requirements — managed by City & Guilds or EAL as the awarding body and assessed by your college or training provider assessor. The apprenticeship standard portfolio demonstrates competence against the Knowledge, Skills, and Behaviours (KSBs) defined in the ST0215 Installation Electrician/Maintenance Electrician standard — this is reviewed at the gateway stage before the AM2 End Point Assessment. In practice, evidence gathered for the NVQ units often satisfies the apprenticeship standard KSBs simultaneously, and most training providers structure their portfolio system to evidence both requirements from a single set of records. Your training provider will guide you on their specific portfolio management system.',
+      'There are two overlapping evidence requirements for electrical apprentices. The NVQ Diploma (Level 3 Diploma in Electrotechnical Technology) is a separately certificated qualification with its own evidence and assessment requirements — managed by City & Guilds or EAL as the awarding body and assessed by your college or training provider assessor. The apprenticeship standard portfolio demonstrates competence against the Knowledge, Skills, and Behaviours (KSBs) defined in the ST0152 Installation Electrician/Maintenance Electrician standard — this is reviewed at the gateway stage before the AM2 End Point Assessment. In practice, evidence gathered for the NVQ units often satisfies the apprenticeship standard KSBs simultaneously, and most training providers structure their portfolio system to evidence both requirements from a single set of records. Your training provider will guide you on their specific portfolio management system.',
   },
   {
     question: 'How much evidence do I need for each NVQ unit?',
@@ -432,7 +432,7 @@ export default function ApprenticePortfolioBuildingPage() {
       title="Electrical Apprentice Portfolio Tips UK: NVQ"
       description="Complete guide to building a strong electrical apprentice NVQ portfolio. Evidence types, how to document jobs professionally, photography tips."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

@@ -12,7 +12,7 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   inputCn,
   labelCn,
   textareaCn,
@@ -25,6 +25,7 @@ import {
   type CalibrationSampleKind,
 } from '@/hooks/useCalibrationSessions';
 import { CalibrationDriftCard } from '@/components/college/CalibrationDriftCard';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ==========================================================================
    CalibrationSessionSheet — three modes:
@@ -119,17 +120,19 @@ function Shell({
         <div className={INNER}>
           <SheetHeader className="pb-4 pt-2">
             <SheetTitle className="min-w-0 text-left">
-              <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                {eyebrow}
-              </span>
+              <span className="block text-[12.5px] font-semibold text-elec-yellow">{eyebrow}</span>
               <span className="mt-1 block text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[24px]">
                 {title}
               </span>
             </SheetTitle>
             {description ? (
-              <SheetDescription className="text-left text-[13px] leading-snug text-white">{description}</SheetDescription>
+              <SheetDescription className="text-left text-[13px] leading-snug text-white">
+                {description}
+              </SheetDescription>
             ) : (
-              <SheetDescription className="sr-only">{typeof title === 'string' ? title : eyebrow}</SheetDescription>
+              <SheetDescription className="sr-only">
+                {typeof title === 'string' ? title : eyebrow}
+              </SheetDescription>
             )}
           </SheetHeader>
         </div>
@@ -178,7 +181,8 @@ function Section({
 }
 
 const hintCn = 'mt-1.5 text-[12px] leading-relaxed text-white';
-const sampleLabel = (k: string) => SAMPLE_KINDS.find((s) => s.value === k)?.label ?? k.replace(/_/g, ' ');
+const sampleLabel = (k: string) =>
+  SAMPLE_KINDS.find((s) => s.value === k)?.label ?? k.replace(/_/g, ' ');
 const gradeLabel = (g: string) => GRADES.find((x) => x.value === g)?.label ?? g;
 
 function ListView({
@@ -212,8 +216,8 @@ function ListView({
         {loading && <p className="text-[13px] text-white">Loading…</p>}
         {!loading && sessions.length === 0 && (
           <div className="rounded-2xl border border-dashed border-white/[0.14] px-5 py-8 text-center text-[13px] leading-relaxed text-white">
-            No calibration sessions yet. Posting one is the quickest way to see whether your team grade
-            consistently.
+            No calibration sessions yet. Posting one is the quickest way to see whether your team
+            grade consistently.
           </div>
         )}
         {!loading && sessions.length > 0 && (
@@ -229,7 +233,9 @@ function ListView({
                     <div className="truncate text-[14px] font-semibold text-white">{s.title}</div>
                     <div className="mt-0.5 text-[12px] text-white">
                       {sampleLabel(s.sample_kind)}
-                      {s.reference_grade && <> · Reference {gradeLabel(s.reference_grade).toLowerCase()}</>}
+                      {s.reference_grade && (
+                        <> · Reference {gradeLabel(s.reference_grade).toLowerCase()}</>
+                      )}
                     </div>
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-0.5 text-right">
@@ -239,7 +245,7 @@ function ListView({
                         s.status === 'open' ? 'text-emerald-300' : 'text-white'
                       )}
                     >
-                      {s.status}
+                      {keyLabel(s.status)}
                     </span>
                     {s.response_count != null && (
                       <span className="text-[12px] tabular-nums text-white">
@@ -258,16 +264,16 @@ function ListView({
         <Section top title="How it works">
           <ol className="space-y-3 text-[13px] leading-relaxed text-white">
             <li>
-              <span className="font-semibold">1. Post a sample.</span> An anonymised piece of work, with the grade you
-              think it deserves if you want a target.
+              <span className="font-semibold">1. Post a sample.</span> An anonymised piece of work,
+              with the grade you think it deserves if you want a target.
             </li>
             <li>
-              <span className="font-semibold">2. Every tutor marks it alone.</span> Nobody sees the others' grades until
-              they have submitted their own.
+              <span className="font-semibold">2. Every tutor marks it alone.</span> Nobody sees the
+              others' grades until they have submitted their own.
             </li>
             <li>
-              <span className="font-semibold">3. Compare.</span> Agreement, the most common grade and each tutor's
-              reasoning show where marking drifts.
+              <span className="font-semibold">3. Compare.</span> Agreement, the most common grade
+              and each tutor's reasoning show where marking drifts.
             </li>
           </ol>
         </Section>
@@ -362,7 +368,11 @@ function CreateView({
                 type="button"
                 aria-pressed={kind === s.value}
                 onClick={() => setKind(s.value)}
-                className={cn(chipBase, 'px-2 text-[13px] leading-tight', kind === s.value ? chipOn : chipOff)}
+                className={cn(
+                  chipBase,
+                  'px-2 text-[13px] leading-tight',
+                  kind === s.value ? chipOn : chipOff
+                )}
               >
                 {s.label}
               </button>
@@ -386,7 +396,8 @@ function CreateView({
 
       <Section top title="Reference grade (optional)">
         <p className="-mt-2 text-[13px] leading-relaxed text-white">
-          The grade you think this sample deserves. Used as the calibration target once tutors have submitted.
+          The grade you think this sample deserves. Used as the calibration target once tutors have
+          submitted.
         </p>
         <div className="grid grid-cols-2 gap-2">
           <button
@@ -445,7 +456,9 @@ function DetailView({ id, onBack }: { id: string; onBack: () => void }) {
     }
     setSubmitting(true);
     try {
-      const parsedScore = score.trim() ? Math.max(0, Math.min(100, Math.round(Number(score)))) : null;
+      const parsedScore = score.trim()
+        ? Math.max(0, Math.min(100, Math.round(Number(score))))
+        : null;
       await submit({
         predicted_grade: grade,
         predicted_score: Number.isFinite(parsedScore as number) ? parsedScore : null,
@@ -509,12 +522,24 @@ function DetailView({ id, onBack }: { id: string; onBack: () => void }) {
       description="Read the brief, then submit your grade. The agreement figures appear once you have submitted."
       bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
       footer={
-        <div className={cn('grid gap-2.5', session.status === 'open' ? 'grid-cols-2' : 'grid-cols-1')}>
-          <button type="button" onClick={onBack} disabled={submitting} className={buttonSecondaryCn}>
+        <div
+          className={cn('grid gap-2.5', session.status === 'open' ? 'grid-cols-2' : 'grid-cols-1')}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            disabled={submitting}
+            className={buttonSecondaryCn}
+          >
             Back
           </button>
           {session.status === 'open' && (
-            <button type="button" onClick={handleSubmit} disabled={submitting} className={buttonPrimaryCn}>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitting}
+              className={buttonPrimaryCn}
+            >
               {submitting ? 'Submitting…' : myResponse ? 'Update verdict' : 'Submit verdict'}
             </button>
           )}
@@ -588,8 +613,12 @@ function DetailView({ id, onBack }: { id: string; onBack: () => void }) {
             <dl className="grid grid-cols-2 gap-3">
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
                 <dt className="text-[12px] text-white">Most common grade</dt>
-                <dd className="mt-1 text-[20px] font-semibold capitalize text-white">{stats.modalGrade ?? '—'}</dd>
-                <dd className="mt-0.5 text-[12px] tabular-nums text-white">{stats.agreementPct}% agreement</dd>
+                <dd className="mt-1 text-[20px] font-semibold capitalize text-white">
+                  {stats.modalGrade ?? '—'}
+                </dd>
+                <dd className="mt-0.5 text-[12px] tabular-nums text-white">
+                  {stats.agreementPct}% agreement
+                </dd>
               </div>
               {session.reference_grade && (
                 <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
@@ -597,7 +626,9 @@ function DetailView({ id, onBack }: { id: string; onBack: () => void }) {
                   <dd className="mt-1 text-[20px] font-semibold tabular-nums text-emerald-300">
                     {stats.referenceMatchPct ?? 0}%
                   </dd>
-                  <dd className="mt-0.5 text-[12px] text-white">Target: {gradeLabel(session.reference_grade).toLowerCase()}</dd>
+                  <dd className="mt-0.5 text-[12px] text-white">
+                    Target: {gradeLabel(session.reference_grade).toLowerCase()}
+                  </dd>
                 </div>
               )}
             </dl>
@@ -612,11 +643,16 @@ function DetailView({ id, onBack }: { id: string; onBack: () => void }) {
                     <div className="w-24 text-[12.5px] capitalize text-white">{g}</div>
                     <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
                       <div
-                        className={cn('h-full rounded-full', isModal ? 'bg-elec-yellow' : 'bg-white/40')}
+                        className={cn(
+                          'h-full rounded-full',
+                          isModal ? 'bg-elec-yellow' : 'bg-white/40'
+                        )}
                         style={{ width: `${width}%` }}
                       />
                     </div>
-                    <div className="w-6 text-right text-[12.5px] tabular-nums text-white">{count}</div>
+                    <div className="w-6 text-right text-[12.5px] tabular-nums text-white">
+                      {count}
+                    </div>
                   </div>
                 );
               })}
@@ -624,21 +660,29 @@ function DetailView({ id, onBack }: { id: string; onBack: () => void }) {
 
             {responses.length > 0 && (
               <div className="border-t border-white/[0.08] pt-4">
-                <h4 className="mb-2 text-[13px] font-semibold text-white">Each tutor's reasoning</h4>
+                <h4 className="mb-2 text-[13px] font-semibold text-white">
+                  Each tutor's reasoning
+                </h4>
                 <ul className="divide-y divide-white/[0.06]">
                   {responses.map((r) => (
                     <li key={r.id} className="py-2.5">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-[13px] font-semibold text-white">{r.tutor_name ?? 'Tutor'}</span>
+                        <span className="text-[13px] font-semibold text-white">
+                          {r.tutor_name ?? 'Tutor'}
+                        </span>
                         <span className="text-[12.5px] font-semibold capitalize text-elec-yellow">
                           {r.predicted_grade}
                           {r.predicted_score != null && (
-                            <span className="ml-1 font-normal tabular-nums text-white">({r.predicted_score})</span>
+                            <span className="ml-1 font-normal tabular-nums text-white">
+                              ({r.predicted_score})
+                            </span>
                           )}
                         </span>
                       </div>
                       {r.rationale && (
-                        <p className="mt-1 whitespace-pre-wrap text-[13px] leading-snug text-white">{r.rationale}</p>
+                        <p className="mt-1 whitespace-pre-wrap text-[13px] leading-snug text-white">
+                          {r.rationale}
+                        </p>
                       )}
                     </li>
                   ))}

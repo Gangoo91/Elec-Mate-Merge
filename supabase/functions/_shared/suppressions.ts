@@ -45,3 +45,40 @@ export async function isSuppressed(supabase: Client, email: string): Promise<boo
   if (error) throw error;
   return (data ?? []).length > 0;
 }
+
+/**
+ * Reasons that mean an email will not arrive, or that the address reported us
+ * as spam. Mail to these hurts every sender on the domain, whoever sends it.
+ */
+const UNDELIVERABLE_REASONS = [
+  'bounced_hard',
+  'bounced_hard_instantly',
+  'brevo_hardBounce',
+  'hard_bounce',
+  'zerobounce_invalid',
+  'zerobounce_abuse',
+  'zerobounce_do_not_mail',
+  'brevo_contactFlaggedAsSpam',
+  'complaint',
+];
+
+/**
+ * For a firm's own one-to-one email to its customer (an enquiry reply), not
+ * Elec-Mate marketing. Andrew, 10 Oct 2026: someone who unsubscribed from OUR
+ * win-back or outreach mail has not opted out of hearing from their
+ * electrician, so only a bounce, a bad address or a spam report blocks it.
+ * Marketing senders keep using isSuppressed (the whole list).
+ * Case-insensitive; throws on a read error (fail closed).
+ */
+export async function isUndeliverable(supabase: Client, email: string): Promise<boolean> {
+  const e = email.trim().toLowerCase();
+  if (!e) return false;
+  const { data, error } = await supabase
+    .from('email_suppressions')
+    .select('email')
+    .ilike('email', e.replace(/[\\%_]/g, (m: string) => '\\' + m))
+    .in('reason', UNDELIVERABLE_REASONS)
+    .limit(1);
+  if (error) throw error;
+  return (data ?? []).length > 0;
+}

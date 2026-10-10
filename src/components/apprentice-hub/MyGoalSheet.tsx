@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { useToast } from '@/hooks/use-toast';
 import { Check, MessageCircle, Calendar, Tag } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { Button } from '@/components/ui/button';
 import type { IlpGoal, GoalCategory, GoalStatus } from '@/hooks/useStudentIlp';
-import { textareaCn } from '@/components/forms/fieldStyles';
+import { buttonPrimaryCn, buttonSecondaryCn, textareaCn } from '@/components/forms/fieldStyles';
 
 /* ==========================================================================
    MyGoalSheet — apprentice-side bottom sheet showing one goal in full.
@@ -34,7 +32,7 @@ const STATUS_LABEL: Record<GoalStatus, string> = {
 };
 
 function formatDate(iso: string | null): string {
-  if (!iso) return '—';
+  if (!iso) return 'No date';
   return new Date(iso).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -79,7 +77,9 @@ export function MyGoalSheet({
 
   useEffect(() => {
     if (open && goal) {
-      setReply(goal.student_comment ?? '');
+      // Start blank: the last reply shows above the box. Pre-filling it
+      // made the sheet open looking half-written.
+      setReply('');
       // Auto-acknowledge on open if there's a new tutor comment
       if (
         !goal.student_acknowledged ||
@@ -104,7 +104,7 @@ export function MyGoalSheet({
       await toggleComplete(goal.id, !isComplete);
       toast({
         title: isComplete ? 'Marked not done' : 'Goal complete',
-        description: !isComplete ? 'Nice one — your tutor will see this.' : undefined,
+        description: !isComplete ? 'Nice one. Your tutor will see this.' : undefined,
       });
     } catch (e) {
       toast({
@@ -124,7 +124,7 @@ export function MyGoalSheet({
       await postComment(goal.id, reply);
       toast({
         title: 'Reply sent',
-        description: 'Your tutor will see it in the College Hub.',
+        description: 'Your tutor will see it on your learning plan.',
       });
       onOpenChange(false);
     } catch (e) {
@@ -138,182 +138,161 @@ export function MyGoalSheet({
     }
   };
 
+  const panel = 'rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3';
+  const panelHead = 'mb-1.5 text-[13px] font-medium text-white';
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]"
-      >
-        <div className="flex flex-col h-full">
-          {/* Drag handle */}
-          <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
-          </div>
-
-          {/* Header */}
-          <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              College plan goal
-            </div>
-            <h2
-              className={cn(
-                'mt-1.5 text-[20px] font-semibold leading-tight',
-                isComplete ? 'text-white line-through' : 'text-white'
-              )}
-            >
-              {goal.title}
-            </h2>
-            <div className="mt-2 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white tabular-nums">
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Learning plan goal"
+      width="wide"
+      title={<span className={cn(isComplete && 'line-through')}>{goal.title}</span>}
+      description={
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5 tabular-nums">
+          <span className="inline-flex items-center gap-1">
+            <Tag className="h-3.5 w-3.5" aria-hidden />
+            {CATEGORY_LABEL[goal.category]}
+          </span>
+          <span aria-hidden>·</span>
+          <span
+            className={cn(
+              isComplete
+                ? 'font-semibold text-emerald-300'
+                : goal.status === 'overdue' || goal.status === 'blocked'
+                  ? 'font-semibold text-orange-300'
+                  : 'text-white'
+            )}
+          >
+            {STATUS_LABEL[goal.status]}
+          </span>
+          {goal.target_date && (
+            <>
+              <span aria-hidden>·</span>
               <span className="inline-flex items-center gap-1">
-                <Tag className="h-3 w-3" />
-                {CATEGORY_LABEL[goal.category]}
+                <Calendar className="h-3.5 w-3.5" aria-hidden />
+                Due {formatDate(goal.target_date)}
               </span>
-              <span className="text-white">·</span>
-              <span
-                className={cn(
-                  isComplete
-                    ? 'text-elec-yellow'
-                    : goal.status === 'overdue'
-                      ? 'text-red-300'
-                      : goal.status === 'blocked'
-                        ? 'text-orange-300'
-                        : 'text-white'
-                )}
-              >
-                {STATUS_LABEL[goal.status]}
-              </span>
-              {goal.target_date && (
-                <>
-                  <span className="text-white">·</span>
-                  <span className="inline-flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    Due {formatDate(goal.target_date)}
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Body */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
-            {goal.description && (
-              <div className={cn('rounded-2xl border border-white/[0.06] px-4 py-3', CARD_SURFACE)}>
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-1.5">
-                  What success looks like
-                </div>
-                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
-                  {goal.description}
-                </p>
-              </div>
-            )}
-
-            {goal.acceptance_criteria && (
-              <div className={cn('rounded-2xl border border-white/[0.06] px-4 py-3', CARD_SURFACE)}>
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-1.5">
-                  How we'll know it's done
-                </div>
-                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
-                  {goal.acceptance_criteria}
-                </p>
-              </div>
-            )}
-
-            {/* Tutor comment */}
-            {goal.tutor_comment && (
-              <div
-                className={cn(
-                  'rounded-2xl border px-4 py-3',
-                  hasNewTutor
-                    ? 'border-elec-yellow/35 bg-white/[0.04]'
-                    : 'border-white/[0.06] bg-white/[0.02]'
-                )}
-              >
-                <div className="flex items-baseline justify-between gap-2 mb-1.5">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                    From your tutor
-                  </div>
-                  {goal.tutor_comment_at && (
-                    <div className="text-[10.5px] text-white tabular-nums">
-                      {formatRelative(goal.tutor_comment_at)}
-                    </div>
-                  )}
-                </div>
-                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
-                  {goal.tutor_comment}
-                </p>
-              </div>
-            )}
-
-            {/* Existing student comment */}
-            {goal.student_comment && goal.student_comment !== reply && (
-              <div className={cn('rounded-2xl border border-white/[0.06] px-4 py-3', CARD_SURFACE)}>
-                <div className="flex items-baseline justify-between gap-2 mb-1.5">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                    Your last reply
-                  </div>
-                  {goal.student_comment_at && (
-                    <div className="text-[10.5px] text-white tabular-nums">
-                      {formatRelative(goal.student_comment_at)}
-                    </div>
-                  )}
-                </div>
-                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
-                  {goal.student_comment}
-                </p>
-              </div>
-            )}
-
-            {/* Reply box */}
-            <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-1.5 flex items-center gap-1.5">
-                <MessageCircle className="h-3 w-3" />
-                Reply to your tutor
-              </div>
-              <textarea
-                value={reply}
-                onChange={(e) => setReply(e.target.value)}
-                onKeyDown={(e) => {
-                  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-                placeholder="Let your tutor know how it's going, ask a question, or share progress."
-                rows={4}
-                className={cn(textareaCn, 'w-full resize-none')}
-              />
-              <div className="mt-1 text-[10.5px] text-white">⌘ + Enter to send</div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2 pb-[max(16px,env(safe-area-inset-bottom))]">
-            <Button
-              type="button"
-              onClick={handleTick}
-              disabled={busy !== null}
-              variant="outline"
-              className={cn(
-                'flex-1 h-11 rounded-full border touch-manipulation transition-colors',
-                isComplete
-                  ? 'border-white/[0.15] text-white hover:bg-white/[0.06]'
-                  : 'border-white/[0.06] bg-white/[0.02] text-white hover:bg-white/[0.02]'
-              )}
-            >
-              <Check className="h-4 w-4 mr-1.5" strokeWidth={3} />
-              {busy === 'tick' ? 'Saving…' : isComplete ? 'Mark not done' : 'Mark done'}
-            </Button>
-            <Button
-              type="button"
-              onClick={handleSend}
-              disabled={!reply.trim() || busy !== null}
-              className="flex-1 h-11 rounded-full bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation"
-            >
-              {busy === 'send' ? 'Sending…' : 'Send reply'}
-            </Button>
-          </div>
+            </>
+          )}
+        </span>
+      }
+      bodyClassName="space-y-5 lg:grid lg:grid-cols-[minmax(0,1fr)_28rem] lg:items-start lg:gap-10 lg:space-y-0"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={handleTick}
+            disabled={busy !== null}
+            className={cn(buttonSecondaryCn, 'inline-flex items-center justify-center gap-1.5')}
+          >
+            <Check className="h-4 w-4" strokeWidth={3} aria-hidden />
+            {busy === 'tick' ? 'Saving…' : isComplete ? 'Mark not done' : 'Mark done'}
+          </button>
+          <button
+            type="button"
+            onClick={handleSend}
+            disabled={!reply.trim() || busy !== null}
+            className={buttonPrimaryCn}
+          >
+            {busy === 'send' ? 'Sending…' : 'Send reply'}
+          </button>
         </div>
-      </SheetContent>
-    </Sheet>
+      }
+    >
+      {/* Left: the goal as the tutor wrote it, and the thread so far. */}
+      <div className="space-y-4">
+        {goal.description && (
+          <div className={panel}>
+            <div className={panelHead}>What success looks like</div>
+            <p className="whitespace-pre-line text-[14px] leading-relaxed text-white">
+              {goal.description}
+            </p>
+          </div>
+        )}
+
+        {goal.acceptance_criteria && (
+          <div className={panel}>
+            <div className={panelHead}>How you will know it is done</div>
+            <p className="whitespace-pre-line text-[14px] leading-relaxed text-white">
+              {goal.acceptance_criteria}
+            </p>
+          </div>
+        )}
+
+        {goal.tutor_comment && (
+          <div className={cn(panel, hasNewTutor && 'border-elec-yellow/60')}>
+            <div className="mb-1.5 flex items-baseline justify-between gap-2">
+              <div className="text-[13px] font-medium text-elec-yellow">
+                {hasNewTutor ? 'New from your tutor' : 'From your tutor'}
+              </div>
+              {goal.tutor_comment_at && (
+                <div className="text-[12px] tabular-nums text-white">
+                  {formatRelative(goal.tutor_comment_at)}
+                </div>
+              )}
+            </div>
+            <p className="whitespace-pre-line text-[14px] leading-relaxed text-white">
+              {goal.tutor_comment}
+            </p>
+          </div>
+        )}
+
+        {goal.student_comment && (
+          <div className={panel}>
+            <div className="mb-1.5 flex items-baseline justify-between gap-2">
+              <div className={cn(panelHead, 'mb-0')}>Your last reply</div>
+              {goal.student_comment_at && (
+                <div className="text-[12px] tabular-nums text-white">
+                  {formatRelative(goal.student_comment_at)}
+                </div>
+              )}
+            </div>
+            <p className="whitespace-pre-line text-[14px] leading-relaxed text-white">
+              {goal.student_comment}
+            </p>
+          </div>
+        )}
+
+        {!goal.description &&
+          !goal.acceptance_criteria &&
+          !goal.tutor_comment &&
+          !goal.student_comment && (
+            <p className="text-[14px] leading-relaxed text-white">
+              Your tutor has not added any detail to this goal yet. Ask them below what they would
+              like to see.
+            </p>
+          )}
+      </div>
+
+      {/* Right: reply to the tutor. */}
+      <div>
+        <label
+          htmlFor="goal-reply"
+          className="mb-1.5 flex items-center gap-1.5 text-[13px] font-medium text-white"
+        >
+          <MessageCircle className="h-3.5 w-3.5" aria-hidden />
+          Reply to your tutor
+        </label>
+        <textarea
+          id="goal-reply"
+          value={reply}
+          onChange={(e) => setReply(e.target.value)}
+          onKeyDown={(e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+          placeholder="Let your tutor know how it's going, ask a question, or share progress."
+          rows={6}
+          className={cn(textareaCn, 'w-full resize-none')}
+        />
+        <p className="mt-1.5 text-[12px] leading-snug text-white">
+          Your tutor sees this on your learning plan. Tick Mark done when you have finished, and
+          they will check it at your next review.
+        </p>
+      </div>
+    </FormSheet>
   );
 }

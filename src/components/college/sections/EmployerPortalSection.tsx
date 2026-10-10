@@ -25,37 +25,55 @@ import { useCollegeEmployers } from '@/hooks/useCollegeEmployers';
 import { useReviewBoard, londonToday, fmtReviewDate } from '@/hooks/useTripartiteReviews';
 import { EmployerLinkSheet } from '@/components/college/sheets/EmployerLinkSheet';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
+import {
+  passedOf,
+  useCollegePortfolioOverview,
+} from '@/components/college/portfolio/useCollegePortfolioOverview';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { PEOPLE_LIST } from '@/components/college/people/peopleKit';
 import {
   COLLEGE_BTN,
-  COLLEGE_LIST,
   COLLEGE_ROW,
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
 } from '@/components/college/ui/CollegeUi';
 
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
 const TEXT_ACTION =
   'flex h-11 shrink-0 items-center px-2 text-[13px] font-semibold text-elec-yellow transition-colors touch-manipulation';
-const LIST_CARD = COLLEGE_LIST;
+const LIST_CARD = PEOPLE_LIST;
 const ROW = COLLEGE_ROW;
 
 const HELP: PageHelpContent = {
   id: 'college-employers',
   title: 'Employers',
-  what: 'Every employer your apprentices work for, with how their apprentices are doing: attendance, progress, off-the-job hours and reviews.',
+  what: 'Every employer your apprentices work for, with how their apprentices are doing: attendance, criteria passed, off-the-job hours and reviews.',
   steps: [
-    { title: 'Open an employer', body: 'Tap an employer to see their apprentices. Tap an apprentice for their Student 360.' },
-    { title: 'Share a link with them', body: 'Set up share link gives the employer a page with their apprentices\' progress, no account needed.' },
-    { title: 'Keep reviews moving', body: 'Apprentices due a review are listed. Progress reviews books and records the three-way review with the employer.' },
+    {
+      title: 'Open an employer',
+      body: 'Tap an employer to see their apprentices. Tap an apprentice for their Student 360.',
+    },
+    {
+      title: 'Share a link with them',
+      body: "Set up share link gives the employer a page with their apprentices' progress, no account needed.",
+    },
+    {
+      title: 'Keep reviews moving',
+      body: 'Apprentices due a review are listed. Progress reviews books and records the three-way review with the employer.',
+    },
   ],
   notes: [
-    { title: 'Off-the-job on track', body: 'An apprentice is on track when their verified hours are within 90% of where they should be by now.' },
-    { title: 'Workplace visits', body: 'Record a site visit as an observation on the learner\'s profile; it keeps the same evidence trail.' },
+    {
+      title: 'Off-the-job on track',
+      body: 'An apprentice is on track when their verified hours are within 90% of where they should be by now.',
+    },
+    {
+      title: 'Workplace visits',
+      body: "Record a site visit as an observation on the learner's profile; it keeps the same evidence trail.",
+    },
   ],
 };
 
@@ -71,7 +89,6 @@ interface ApprenticeRow {
   courseId: string | null;
   courseName: string;
   attendancePercent: number | null;
-  progressPercent: number;
   epaStatus: string;
   otjCompleted: number;
   otjTarget: number;
@@ -86,7 +103,6 @@ interface EmployerGroup {
   label: string;
   apprentices: ApprenticeRow[];
   avgAttendance: number | null;
-  avgProgress: number;
   totalOtjRequired: number;
   totalOtjCompleted: number;
 }
@@ -166,17 +182,12 @@ export function EmployerPortalSection() {
       const epa = epaRecords.find((e) => e.student_id === s.id);
       const epaStatus = epa?.status ?? 'Not started';
 
-      // Progress
-      const progress = s.progress_percent ?? 0;
-
       // OTJ: fixed required total per apprenticeship standard (DfE Annex C),
       // inherited onto the course as otj_required_hours — NOT a % of duration.
       // Completed = real verified off-the-job minutes the learner has logged.
       const course = courses.find((c) => c.id === s.course_id);
       const otjTarget = course?.otj_required_hours ?? DEFAULT_OTJ_STANDARD.otjHours;
-      const otjCompleted = s.user_id
-        ? Math.round((verifiedMinutesByUser[s.user_id] ?? 0) / 60)
-        : 0;
+      const otjCompleted = s.user_id ? Math.round((verifiedMinutesByUser[s.user_id] ?? 0) / 60) : 0;
       const expectedOtjAtThisPoint =
         s.start_date && s.expected_end_date
           ? (() => {
@@ -193,9 +204,7 @@ export function EmployerPortalSection() {
       // Last ILP review as proxy for tri-partite review
       const studentIlp = ilps.find((i) => i.student_id === s.id);
       const lastReviewDate = studentIlp?.last_reviewed ?? null;
-      const daysSinceReview = lastReviewDate
-        ? daysBetween(new Date(lastReviewDate), now)
-        : null;
+      const daysSinceReview = lastReviewDate ? daysBetween(new Date(lastReviewDate), now) : null;
 
       const row: ApprenticeRow = {
         id: s.id,
@@ -203,7 +212,6 @@ export function EmployerPortalSection() {
         courseId: s.course_id,
         courseName: course?.name ?? 'No course set',
         attendancePercent,
-        progressPercent: progress,
         epaStatus,
         otjCompleted,
         otjTarget,
@@ -228,12 +236,6 @@ export function EmployerPortalSection() {
                 withAttendance.length
             )
           : null;
-      const avgProgress =
-        apprentices.length > 0
-          ? Math.round(
-              apprentices.reduce((s, a) => s + a.progressPercent, 0) / apprentices.length
-            )
-          : 0;
       const totalOtjRequired = apprentices.reduce((s, a) => s + a.otjTarget, 0);
       const totalOtjCompleted = apprentices.reduce((s, a) => s + a.otjCompleted, 0);
       const registered = registeredMap.get(id);
@@ -246,7 +248,6 @@ export function EmployerPortalSection() {
         label,
         apprentices,
         avgAttendance,
-        avgProgress,
         totalOtjRequired,
         totalOtjCompleted,
       });
@@ -272,7 +273,10 @@ export function EmployerPortalSection() {
   // When the board is still loading or the RPC refuses this person, we do not
   // know who is due, so say so instead of "All up to date".
   const boardUnknown = boardLoading || !!boardError;
-  const dueByStudent = useMemo(() => new Map(boardRows.map((r) => [r.student_id, r.due_by])), [boardRows]);
+  const dueByStudent = useMemo(
+    () => new Map(boardRows.map((r) => [r.student_id, r.due_by])),
+    [boardRows]
+  );
   const today = londonToday();
   // 14 days ahead on the UK calendar (noon UTC avoids any clock-change edge).
   const soon = (() => {
@@ -288,6 +292,30 @@ export function EmployerPortalSection() {
     })
     .sort((a, b) => (reviewDue(a.id) ?? '').localeCompare(reviewDue(b.id) ?? ''));
   const reviewsOverdue = reviewsDue.filter((a) => (reviewDue(a.id) ?? '9999') < today).length;
+
+  // Criteria passed, from college_portfolio_overview (get_portfolio_ac_state):
+  // the same count the learner sees. Replaces progress_percent, a typed-in
+  // number with no definition. null for a learner with no account yet.
+  const { data: portfolio } = useCollegePortfolioOverview();
+  const criteriaById = useMemo(() => {
+    const m = new Map<string, { passed: number; total: number }>();
+    for (const l of portfolio?.learners ?? []) {
+      if (l.criteria && l.criteria.total > 0)
+        m.set(l.student_id, { passed: passedOf(l.criteria), total: l.criteria.total });
+    }
+    return m;
+  }, [portfolio]);
+  const criteriaForEmployer = (ids: string[]) => {
+    let passed = 0;
+    let total = 0;
+    for (const id of ids) {
+      const c = criteriaById.get(id);
+      if (!c) continue;
+      passed += c.passed;
+      total += c.total;
+    }
+    return total > 0 ? { passed, total } : null;
+  };
 
   /* ---------- search filter ---------- */
 
@@ -317,51 +345,37 @@ export function EmployerPortalSection() {
   }
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
       <CollegePageHeader
         eyebrow="Staff and partners"
         title="Employers"
-        description="Who your apprentices work for, and how each employer's apprentices are doing."
+        description={
+          totalEmployers === 0
+            ? "Who your apprentices work for. Nobody is linked to an employer yet: set the employer on a learner's record and they appear here."
+            : `${plural(totalEmployers, 'employer')} with ${plural(totalPlaced, 'apprentice')} placed. ` +
+              `${otjCompliantCount} of ${allApprentices.length} on pace with off-the-job hours. ` +
+              (boardUnknown
+                ? ''
+                : reviewsDue.length === 0
+                  ? 'No progress reviews due in the next two weeks.'
+                  : `${plural(reviewsDue.length, 'review')} due in the next two weeks${reviewsOverdue > 0 ? `, ${reviewsOverdue} overdue` : ''}.`)
+        }
         help={HELP}
         actions={
-          <button type="button" className={COLLEGE_BTN} onClick={() => navigate('/college/reviews')}>
+          <button
+            type="button"
+            className={COLLEGE_BTN}
+            onClick={() => navigate('/college/reviews')}
+          >
             Progress reviews
           </button>
         }
       />
-      <CollegeStats
-        items={[
-          {
-            label: 'Employers',
-            value: String(totalEmployers),
-            sub: registeredEmployers.length > 0 ? `${registeredEmployers.length} with a share link` : totalEmployers > 0 ? 'With active apprentices' : 'None linked yet',
-          },
-          { label: 'Placed', value: String(totalPlaced), sub: totalPlaced > 0 ? 'Apprentices with an employer' : 'Nobody placed yet' },
-          {
-            label: 'Off-the-job on track',
-            value: allApprentices.length > 0 ? `${otjCompliancePercent}%` : '—',
-            sub: allApprentices.length > 0 ? `${otjCompliantCount} of ${allApprentices.length} within 90% of expected` : 'No apprentices to measure',
-            warn: allApprentices.length > 0 && otjCompliancePercent < 80,
-            good: allApprentices.length > 0 && otjCompliancePercent >= 80,
-          },
-          {
-            label: 'Reviews due',
-            value: boardUnknown ? '—' : String(reviewsDue.length),
-            sub: boardError
-              ? 'Could not load the review board'
-              : boardLoading
-                ? 'Loading…'
-                : reviewsOverdue > 0
-                  ? `${reviewsOverdue} overdue`
-                  : reviewsDue.length > 0
-                    ? 'Book them now'
-                    : 'All up to date',
-            warn: !boardUnknown && reviewsDue.length > 0,
-            onClick: () => navigate('/college/reviews'),
-          },
-        ]}
-      />
-
       <motion.div variants={itemVariants}>
         <input
           type="search"
@@ -375,7 +389,10 @@ export function EmployerPortalSection() {
 
       {/* Employer directory — tap a row to open its apprentices in place. */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <CollegeSectionTitle title="Employers" sub={`${plural(filteredEmployers.length, 'employer')}. Tap one for their apprentices.`} />
+        <CollegeSectionTitle
+          title="Employers"
+          sub={`${plural(filteredEmployers.length, 'employer')}. Tap one for their apprentices.`}
+        />
 
         <div className={LIST_CARD}>
           {filteredEmployers.length === 0 ? (
@@ -412,25 +429,25 @@ export function EmployerPortalSection() {
                       aria-expanded={isExpanded}
                       className={ROW}
                     >
-                      <span
-                        aria-hidden
-                        className={cn(
-                          'h-8 w-[3px] shrink-0 rounded-full',
-                          behind > 0 ? 'bg-orange-400' : 'bg-white/[0.25]'
-                        )}
-                      />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        <span className="block break-words text-[15px] font-semibold leading-snug text-white md:truncate md:text-[14px]">
                           {employer.label}
                         </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                        <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-white md:line-clamp-1 md:text-[12.5px]">
                           {reason}
                         </span>
                       </span>
-                      <span className="flex shrink-0 flex-col items-end">
-                        <span className="text-[14px] font-semibold tabular-nums text-white">{employer.avgProgress}%</span>
-                        <span className="text-[11.5px] text-white">progress</span>
-                      </span>
+                      {(() => {
+                        const c = criteriaForEmployer(employer.apprentices.map((a) => a.id));
+                        return (
+                          <span className="flex shrink-0 flex-col items-end">
+                            <span className="text-[14px] font-semibold tabular-nums text-white">
+                              {c ? `${Math.round((100 * c.passed) / c.total)}%` : '—'}
+                            </span>
+                            <span className="text-[12px] text-white">of criteria passed</span>
+                          </span>
+                        );
+                      })()}
                       <ChevronRight
                         className={cn(
                           'h-4 w-4 shrink-0 text-white transition-transform',
@@ -456,7 +473,9 @@ export function EmployerPortalSection() {
                                 a.attendancePercent !== null
                                   ? `${a.attendancePercent}% attendance`
                                   : null,
-                                `${a.progressPercent}% progress`,
+                                criteriaById.get(a.id)
+                                  ? `${criteriaById.get(a.id)!.passed} of ${criteriaById.get(a.id)!.total} criteria passed`
+                                  : 'Not joined yet',
                                 `${a.otjCompleted}/${a.otjTarget}h off-the-job${a.otjOnTrack ? '' : ' · behind'}`,
                               ]
                                 .filter(Boolean)
@@ -468,25 +487,21 @@ export function EmployerPortalSection() {
                                     onClick={() => openLearner(a.id)}
                                     className={cn(ROW, 'pl-8 sm:pl-10')}
                                   >
-                                    <span
-                                      aria-hidden
-                                      className={cn(
-                                        'h-8 w-[3px] shrink-0 rounded-full',
-                                        a.otjOnTrack ? 'bg-white/[0.25]' : 'bg-orange-400'
-                                      )}
-                                    />
                                     <span className="min-w-0 flex-1">
-                                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                                      <span className="block break-words text-[15px] font-semibold leading-snug text-white md:truncate md:text-[14px]">
                                         {a.name}
                                       </span>
-                                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                                      <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-white md:line-clamp-1 md:text-[12.5px]">
                                         {detail}
                                       </span>
                                     </span>
                                     <span className="hidden shrink-0 text-[12px] font-semibold text-white sm:inline">
                                       EPA · {a.epaStatus}
                                     </span>
-                                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                                    <ChevronRight
+                                      className="h-4 w-4 shrink-0 text-white"
+                                      aria-hidden
+                                    />
                                   </button>
                                 </li>
                               );
@@ -515,133 +530,145 @@ export function EmployerPortalSection() {
       </motion.section>
 
       <div className="grid items-start gap-6 xl:grid-cols-2">
-      {/* Tri-partite reviews */}
-      <motion.section variants={itemVariants} className="min-w-0 space-y-3">
-        <CollegeSectionTitle
-          title="Reviews due"
-          sub={boardUnknown ? undefined : `${plural(reviewsDue.length, 'apprentice')} due in the next two weeks or overdue`}
-          action={
-            <button type="button" className={TEXT_ACTION} onClick={() => navigate('/college/reviews')}>
-              Progress reviews
-            </button>
-          }
-        />
-        <div className={LIST_CARD}>
-          {boardUnknown ? (
-            <div className="px-5 py-6 sm:px-6">
-              <p className="text-[14px] font-semibold text-white">
-                {boardError ? 'Reviews could not be loaded' : 'Loading reviews…'}
-              </p>
-              {boardError && (
-                <p className="mt-1 text-[12.5px] leading-snug text-white">
-                  Your account cannot read the progress review board here. Open Progress reviews, or ask a college admin to check your access.
+        {/* Tri-partite reviews */}
+        <motion.section variants={itemVariants} className="min-w-0 space-y-3">
+          <CollegeSectionTitle
+            title="Reviews due"
+            sub={
+              boardUnknown
+                ? undefined
+                : `${plural(reviewsDue.length, 'apprentice')} due in the next two weeks or overdue`
+            }
+            action={
+              <button
+                type="button"
+                className={TEXT_ACTION}
+                onClick={() => navigate('/college/reviews')}
+              >
+                Progress reviews
+              </button>
+            }
+          />
+          <div className={LIST_CARD}>
+            {boardUnknown ? (
+              <div className="px-5 py-6 sm:px-6">
+                <p className="text-[14px] font-semibold text-white">
+                  {boardError ? 'Reviews could not be loaded' : 'Loading reviews…'}
                 </p>
-              )}
-            </div>
-          ) : reviewsDue.length === 0 ? (
-            <div className="px-5 py-6 sm:px-6">
-              <p className="text-[14px] font-semibold text-white">All reviews up to date</p>
-              <p className="mt-1 text-[12.5px] leading-snug text-white">
-                No apprentice has a progress review due in the next two weeks.
-              </p>
-            </div>
-          ) : (
-            <ul className="divide-y divide-white/[0.10]">
-              {reviewsDue.slice(0, 10).map((a) => {
-                const employer = employers.find((e) => e.apprentices.some((ap) => ap.id === a.id));
-                const due = reviewDue(a.id);
-                const overdueDays = due ? Math.round((Date.parse(`${today}T12:00`) - Date.parse(`${due}T12:00`)) / 86_400_000) : null;
-                const overdue = overdueDays !== null && overdueDays > 0;
-                return (
-                  <li key={a.id}>
-                    <button type="button" onClick={() => openLearner(a.id)} className={ROW}>
-                      <span
-                        aria-hidden
-                        className={cn(
-                          'h-8 w-[3px] shrink-0 rounded-full',
-                          overdue ? 'bg-red-400' : 'bg-orange-400'
-                        )}
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {a.name}
+                {boardError && (
+                  <p className="mt-1 text-[12.5px] leading-snug text-white">
+                    Your account cannot read the progress review board here. Open Progress reviews,
+                    or ask a college admin to check your access.
+                  </p>
+                )}
+              </div>
+            ) : reviewsDue.length === 0 ? (
+              <div className="px-5 py-6 sm:px-6">
+                <p className="text-[14px] font-semibold text-white">All reviews up to date</p>
+                <p className="mt-1 text-[12.5px] leading-snug text-white">
+                  No apprentice has a progress review due in the next two weeks.
+                </p>
+              </div>
+            ) : (
+              <ul className="divide-y divide-white/[0.10]">
+                {reviewsDue.slice(0, 10).map((a) => {
+                  const employer = employers.find((e) =>
+                    e.apprentices.some((ap) => ap.id === a.id)
+                  );
+                  const due = reviewDue(a.id);
+                  const overdueDays = due
+                    ? Math.round(
+                        (Date.parse(`${today}T12:00`) - Date.parse(`${due}T12:00`)) / 86_400_000
+                      )
+                    : null;
+                  const overdue = overdueDays !== null && overdueDays > 0;
+                  return (
+                    <li key={a.id}>
+                      <button type="button" onClick={() => openLearner(a.id)} className={ROW}>
+                        <span className="min-w-0 flex-1">
+                          <span className="block break-words text-[15px] font-semibold leading-snug text-white md:truncate md:text-[14px]">
+                            {a.name}
+                          </span>
+                          <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-white md:line-clamp-1 md:text-[12.5px]">
+                            {employer?.label ?? 'No employer'} ·{' '}
+                            {reviewDue(a.id)
+                              ? `Due by ${fmtReviewDate(reviewDue(a.id)!)}`
+                              : 'No review history'}
+                          </span>
                         </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {employer?.label ?? 'No employer'} ·{' '}
-                          {reviewDue(a.id) ? `Due by ${fmtReviewDate(reviewDue(a.id)!)}` : 'No review history'}
+                        <span
+                          className={cn(
+                            'shrink-0 text-[13px] font-semibold tabular-nums',
+                            overdue ? 'text-red-300' : 'text-orange-400'
+                          )}
+                        >
+                          {overdue ? `${overdueDays}d overdue` : 'Due soon'}
                         </span>
-                      </span>
-                      <span
-                        className={cn(
-                          'shrink-0 text-[13px] font-semibold tabular-nums',
-                          overdue ? 'text-red-300' : 'text-orange-400'
-                        )}
-                      >
-                        {overdue ? `${overdueDays}d overdue` : 'Due soon'}
-                      </span>
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
-                    </button>
+                        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                      </button>
+                    </li>
+                  );
+                })}
+                {reviewsDue.length > 10 && (
+                  <li className="px-5 py-3 text-[12.5px] font-semibold text-white sm:px-6">
+                    +{reviewsDue.length - 10} more due
                   </li>
-                );
-              })}
-              {reviewsDue.length > 10 && (
-                <li className="px-5 py-3 text-[12.5px] font-semibold text-white sm:px-6">
-                  +{reviewsDue.length - 10} more due
-                </li>
-              )}
-            </ul>
-          )}
-        </div>
-      </motion.section>
+                )}
+              </ul>
+            )}
+          </div>
+        </motion.section>
 
-      {/* Off-the-job hours by employer */}
-      <motion.section variants={itemVariants} className="min-w-0 space-y-3">
-        <CollegeSectionTitle title="Off-the-job hours by employer" sub="Verified hours against what their apprentices need" />
-        <div className={LIST_CARD}>
-          {employers.length === 0 ? (
-            <div className="px-5 py-6 sm:px-6">
-              <p className="text-[14px] font-semibold text-white">Nothing to total yet</p>
-              <p className="mt-1 text-[12.5px] leading-snug text-white">
-                Verified off-the-job hours roll up here once apprentices are linked to employers.
-              </p>
-            </div>
-          ) : (
-            <ul className="divide-y divide-white/[0.10]">
-              {employers.map((employer) => {
-                const pct =
-                  employer.totalOtjRequired > 0
-                    ? Math.round((employer.totalOtjCompleted / employer.totalOtjRequired) * 100)
-                    : 0;
-                return (
-                  <li key={employer.id} className="px-5 py-3.5 sm:px-6">
-                    <div className="flex items-center gap-3">
-                      <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {employer.label}
+        {/* Off-the-job hours by employer */}
+        <motion.section variants={itemVariants} className="min-w-0 space-y-3">
+          <CollegeSectionTitle
+            title="Off-the-job hours by employer"
+            sub="Verified hours against what their apprentices need"
+          />
+          <div className={LIST_CARD}>
+            {employers.length === 0 ? (
+              <div className="px-5 py-6 sm:px-6">
+                <p className="text-[14px] font-semibold text-white">Nothing to total yet</p>
+                <p className="mt-1 text-[12.5px] leading-snug text-white">
+                  Verified off-the-job hours roll up here once apprentices are linked to employers.
+                </p>
+              </div>
+            ) : (
+              <ul className="divide-y divide-white/[0.10]">
+                {employers.map((employer) => {
+                  const pct =
+                    employer.totalOtjRequired > 0
+                      ? Math.round((employer.totalOtjCompleted / employer.totalOtjRequired) * 100)
+                      : 0;
+                  return (
+                    <li key={employer.id} className="px-5 py-3.5 sm:px-6">
+                      <div className="flex items-center gap-3">
+                        <span className="min-w-0 flex-1">
+                          <span className="block break-words text-[15px] font-semibold leading-snug text-white md:truncate md:text-[14px]">
+                            {employer.label}
+                          </span>
+                          <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-white md:line-clamp-1 md:text-[12.5px]">
+                            {employer.totalOtjCompleted}h verified of {employer.totalOtjRequired}h ·{' '}
+                            {plural(employer.apprentices.length, 'apprentice')}
+                          </span>
                         </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {employer.totalOtjCompleted}h verified of {employer.totalOtjRequired}h ·{' '}
-                          {plural(employer.apprentices.length, 'apprentice')}
+                        <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                          {pct}%
                         </span>
-                      </span>
-                      <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-                        {pct}%
-                      </span>
-                    </div>
-                    <div className="ml-[15px] mt-2.5 h-1 overflow-hidden rounded-full bg-white/[0.10]">
-                      <div
-                        className="h-full rounded-full bg-elec-yellow"
-                        style={{ width: `${Math.min(pct, 100)}%` }}
-                      />
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
-      </motion.section>
+                      </div>
+                      <div className="mt-2.5 h-1 overflow-hidden rounded-full bg-white/[0.10]">
+                        <div
+                          className="h-full rounded-full bg-elec-yellow"
+                          style={{ width: `${Math.min(pct, 100)}%` }}
+                        />
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        </motion.section>
       </div>
 
       <CollegeEmpty

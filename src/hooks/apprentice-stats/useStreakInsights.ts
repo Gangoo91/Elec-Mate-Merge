@@ -233,7 +233,7 @@ export function useStreakInsights() {
       if (daysLeft <= 5 && daysLeft > 0) {
         recs.push({
           id: 'milestone-chase',
-          title: `${daysLeft} day${daysLeft !== 1 ? 's' : ''} to ${nextMilestone.emoji} ${nextMilestone.label} milestone`,
+          title: `${daysLeft} day${daysLeft !== 1 ? 's' : ''} to the ${nextMilestone.label} milestone`,
           description: 'Keep studying daily to unlock this achievement!',
           actionLabel: 'Study now',
           actionPath: lastLocation?.path || '/study-centre/apprentice',

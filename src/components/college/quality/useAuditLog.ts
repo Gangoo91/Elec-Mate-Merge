@@ -113,7 +113,7 @@ export function useAuditLog(filters: AuditFilters = {}) {
         const missing = ids.filter((id) => !names.has(id));
         if (missing.length > 0) {
           const { data: profs } = await supabase
-            .from('profiles')
+            .from('public_profiles')
             .select('id, full_name')
             .in('id', missing);
           for (const p of (profs ?? []) as Array<{ id: string; full_name: string | null }>) {

@@ -36,7 +36,7 @@ export const AM2TestSequence = memo(function AM2TestSequence({
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-70" />
 
-      <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white mb-4">
+      <div className="text-[12px] font-medium text-white mb-4">
         Test sequence
       </div>
 
@@ -48,7 +48,7 @@ export const AM2TestSequence = memo(function AM2TestSequence({
           return (
             <li key={index} className="py-3 first:pt-0">
               <div className="flex gap-3">
-                <div className="shrink-0 h-7 w-7 rounded-full bg-elec-yellow/15 border border-elec-yellow/35 flex items-center justify-center">
+                <div className="shrink-0 h-7 w-7 rounded-full bg-white/[0.06] border border-white/[0.14] flex items-center justify-center">
                   <span className="text-[12px] font-bold text-elec-yellow">{index + 1}</span>
                 </div>
 

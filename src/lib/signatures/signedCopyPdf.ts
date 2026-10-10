@@ -14,6 +14,7 @@
  */
 import { gbp, ukDate, isStablePdfLink, type DocumentSnapshot } from '@/lib/signatures/types';
 import { buildTermsList } from '@/utils/quoteTerms';
+import { contractPlainText } from '@/lib/signatures/contractText';
 
 export interface SignedCopyInput {
   requestId: string;
@@ -244,7 +245,8 @@ export async function buildSignedCopyPdf(input: SignedCopyInput): Promise<Blob> 
     if (d.start_date) pair('Starts', ukDate(d.start_date));
     if (d.end_date) pair('Ends', ukDate(d.end_date));
     rule();
-    text(d.content || '');
+    // Templates are HTML — print readable text, not tags (ELE-1982)
+    text(contractPlainText(d.content));
   }
 
   // ---------------------------------------------------------------- signature page

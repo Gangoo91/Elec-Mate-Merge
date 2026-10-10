@@ -6,19 +6,27 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import { inputCn } from '@/components/forms/fieldStyles';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
-import { useTutorQuizzes, type TutorQuizListItem, type TutorQuizKind, type TutorQuizScope } from '@/hooks/useTutorQuizzes';
+  StatusChip,
+  TEACH_BTN,
+  TEACH_BTN_PRIMARY,
+  TEACH_LIST,
+  TEACH_ROW,
+  TeachingEmpty,
+  TeachTabs,
+  TeachToggle,
+  TeachingHeader,
+  plural,
+} from '@/components/college/teaching/TeachingKit';
+import {
+  useTutorQuizzes,
+  type TutorQuizListItem,
+  type TutorQuizKind,
+  type TutorQuizScope,
+} from '@/hooks/useTutorQuizzes';
 import { rowsToCsv, downloadCsv } from '@/lib/csv';
 import { useToast } from '@/hooks/use-toast';
 
@@ -34,8 +42,10 @@ import { useToast } from '@/hooks/use-toast';
    (blue / cyan / orange / purple / amber) that encoded nothing a word
    couldn't. Rows now speak HubWorkList: rule, words, figure, chevron.
 
-   The one solid volt control is the marking queue — pending AI marks are
-   the only thing on this page that is waiting on the tutor.
+   8 Oct 2026: the four figure tiles went into the header sentence; New quiz
+   is the one solid action, the marking queue an outline button that says how
+   many answers wait. Rows lost their coloured left bar: status is a chip in
+   words (orange to mark or overdue, green when everyone has done it).
    ========================================================================== */
 
 type StatusFilter = 'all' | 'published' | 'draft' | 'overdue' | 'needs_review';
@@ -51,10 +61,10 @@ const STATUS_DEFS: { key: StatusFilter; label: string }[] = [
 ];
 
 const KIND_DEFS: { key: KindFilter; label: string }[] = [
-  { key: 'all', label: 'All kinds' },
+  { key: 'all', label: 'All' },
   { key: 'quiz', label: 'Quizzes' },
   { key: 'assessment', label: 'Assessments' },
-  { key: 'mock_exam', label: 'Mock exams' },
+  { key: 'mock_exam', label: 'Mocks' },
 ];
 
 const SORT_LABEL: Record<SortKey, string> = {
@@ -82,17 +92,33 @@ const HELP: PageHelpContent = {
   title: 'Quizzes and assessments',
   what: 'Every quiz, assessment and mock exam you have set, with how many learners have done it, the average score and the pass rate.',
   steps: [
-    { title: 'Set one', body: 'Open a learner in Student 360 and tap Quiz, or build one from a document. It appears here once saved.' },
-    { title: 'Check the written answers', body: 'Written answers get a suggested mark. Open the marking queue to confirm or change each one.' },
-    { title: 'Chase and review', body: 'Overdue shows homework past its due date. Open a quiz to see each learner\'s attempt and the hardest questions.' },
+    {
+      title: 'Set one',
+      body: 'New quiz drafts the questions from BS 7671 and the qualification criteria for a cohort or one learner. Check them, then publish.',
+    },
+    {
+      title: 'Check the written answers',
+      body: 'Written answers get a suggested mark. Open the marking queue to confirm or change each one.',
+    },
+    {
+      title: 'Chase and review',
+      body: "Overdue shows homework past its due date. Open a quiz to see each learner's attempt and the hardest questions.",
+    },
   ],
-  notes: [{ title: 'Export', body: 'Export CSV downloads the list as it is filtered, for a quality review or a team meeting.' }],
-  legend: [{ swatch: 'bg-orange-400', label: 'Orange', body: 'overdue homework or written answers waiting for you' }],
+  notes: [
+    {
+      title: 'Export',
+      body: 'Export CSV downloads the list as it is filtered, for a quality review or a team meeting.',
+    },
+  ],
+  legend: [
+    {
+      swatch: 'bg-orange-400',
+      label: 'Orange',
+      body: 'overdue homework or written answers waiting for you',
+    },
+  ],
 };
-
-function plural(n: number, one: string, many = `${one}s`): string {
-  return `${n} ${n === 1 ? one : many}`;
-}
 
 function matchesStatus(q: TutorQuizListItem, status: StatusFilter): boolean {
   if (status === 'published') return q.is_published;
@@ -225,57 +251,77 @@ export default function TutorQuizzesPage() {
         section="College"
         title="Quizzes and assessments"
         backTo="/college?section=curriculumhub"
-        trailing={<PageHelpButton help={HELP} compact />}
       />
-      <CreateQuizSheet open={createOpen} onOpenChange={setCreateOpen} onSaved={() => void reload()} />
+      <CreateQuizSheet
+        open={createOpen}
+        onOpenChange={setCreateOpen}
+        onSaved={() => void reload()}
+      />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-        <CollegePageHeader
+        <TeachingHeader
           eyebrow="Assessment"
           title="Quizzes and assessments"
-          description="Everything you have set, who has done it, and the written answers waiting for your mark."
+          help={HELP}
+          summary={
+            loading ? (
+              'Loading your quizzes…'
+            ) : counts.total === 0 ? (
+              'Nothing set yet. New quiz drafts one for a cohort or a learner.'
+            ) : (
+              <>
+                {plural(counts.total, 'quiz', 'quizzes')} set
+                {counts.draft > 0 ? `, ${counts.draft} still a draft` : ''}.{' '}
+                {counts.needs_review === 0 && counts.overdue === 0 ? (
+                  'Nothing is waiting on you.'
+                ) : (
+                  <span className="font-semibold text-orange-400">
+                    {[
+                      counts.needs_review > 0
+                        ? `${plural(counts.needs_review, 'written answer')} wait${counts.needs_review === 1 ? 's' : ''} for your mark`
+                        : null,
+                      counts.overdue > 0
+                        ? `${plural(counts.overdue, 'learner')} ${counts.overdue === 1 ? 'is' : 'are'} past a due date`
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(', ')}
+                    .
+                  </span>
+                )}
+              </>
+            )
+          }
+          sub={
+            !loading && completionPct != null
+              ? `${counts.completed} of ${plural(counts.assigned, 'assignment')} done (${completionPct}%).`
+              : undefined
+          }
           actions={
             <>
-              <button type="button" onClick={handleExportCsv} disabled={loading || filtered.length === 0} className={COLLEGE_BTN}>
+              <button
+                type="button"
+                onClick={() => navigate('/college/marking')}
+                className={cn(TEACH_BTN, 'flex-1 sm:flex-none')}
+              >
+                {counts.needs_review > 0 ? `${counts.needs_review} to mark` : 'Marking queue'}
+              </button>
+              <button
+                type="button"
+                onClick={handleExportCsv}
+                disabled={loading || filtered.length === 0}
+                className={cn(TEACH_BTN, 'flex-1 sm:flex-none')}
+              >
                 Export CSV
               </button>
-              <button type="button" onClick={() => setCreateOpen(true)} className={COLLEGE_BTN}>
+              <button
+                type="button"
+                onClick={() => setCreateOpen(true)}
+                className={cn(TEACH_BTN_PRIMARY, 'w-full sm:w-auto')}
+              >
                 New quiz
-              </button>
-              <button type="button" onClick={() => navigate('/college/marking')} className={COLLEGE_BTN_PRIMARY}>
-                {counts.needs_review > 0 ? `Marking queue · ${counts.needs_review}` : 'Marking queue'}
               </button>
             </>
           }
-        />
-
-        <CollegeStats
-          items={[
-            {
-              label: 'Set',
-              value: loading ? '—' : String(counts.total),
-              sub: loading ? undefined : counts.total === 0 ? 'nothing set yet' : `${counts.published} published · ${counts.draft} draft`,
-              onClick: () => setStatus('all'),
-            },
-            {
-              label: 'Written answers to mark',
-              value: loading ? '—' : String(counts.needs_review),
-              sub: counts.needs_review > 0 ? 'suggested mark waiting for you' : 'nothing waiting',
-              warn: counts.needs_review > 0,
-              onClick: () => setStatus('needs_review'),
-            },
-            {
-              label: 'Overdue',
-              value: loading ? '—' : String(counts.overdue),
-              sub: counts.overdue > 0 ? 'learners past a due date' : 'nothing overdue',
-              warn: counts.overdue > 0,
-              onClick: () => setStatus('overdue'),
-            },
-            {
-              label: 'Completion',
-              value: loading ? '—' : completionPct == null ? '—' : `${completionPct}%`,
-              sub: completionPct == null ? 'nothing assigned yet' : `${counts.completed} of ${plural(counts.assigned, 'assignment')}`,
-            },
-          ]}
         />
 
         <section className="space-y-4">
@@ -283,64 +329,88 @@ export default function TutorQuizzesPage() {
             title={scope === 'mine' ? 'Your quizzes' : 'Quizzes across the college'}
             sub={plural(filtered.length, 'quiz', 'quizzes')}
             action={
-              <span className="flex gap-2">
-                <button type="button" onClick={() => setScope('mine')} aria-pressed={scope === 'mine'} className={chipCn(scope === 'mine')}>
-                  Mine
-                </button>
-                <button type="button" onClick={() => setScope('college')} aria-pressed={scope === 'college'} className={chipCn(scope === 'college')}>
-                  Whole college
-                </button>
-              </span>
+              <TeachToggle
+                label="Whose quizzes"
+                value={scope}
+                onChange={setScope}
+                options={[
+                  { value: 'mine', label: 'Mine' },
+                  { value: 'college', label: 'Whole college' },
+                ]}
+              />
             }
           />
 
-          <motion.div variants={itemVariants} initial="hidden" animate="visible" className="space-y-3">
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-              {STATUS_DEFS.map((f) => (
-                <button key={f.key} type="button" onClick={() => setStatus(f.key)} aria-pressed={status === f.key} className={chipCn(status === f.key)}>
-                  {f.label} · {statusCount(f.key)}
-                </button>
-              ))}
-            </div>
-            <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
-              <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-                {KIND_DEFS.map((f) => (
-                  <button key={f.key} type="button" onClick={() => setKind(f.key)} aria-pressed={kind === f.key} className={chipCn(kind === f.key)}>
-                    {f.label}
-                  </button>
-                ))}
-                <button type="button" onClick={() => setSort(NEXT_SORT[sort])} className={chipCn(false)}>
-                  Sort: {SORT_LABEL[sort]}
-                </button>
-              </div>
+          <motion.div
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-3"
+          >
+            <TeachTabs
+              label="Status"
+              value={status}
+              onChange={setStatus}
+              tabs={STATUS_DEFS.map((f) => ({
+                value: f.key,
+                label: f.label,
+                count: statusCount(f.key),
+              }))}
+            />
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-[auto_auto_minmax(0,1fr)] lg:items-center">
+              <TeachToggle
+                label="Kind"
+                value={kind}
+                onChange={setKind}
+                options={KIND_DEFS.map((f) => ({ value: f.key, label: f.label }))}
+              />
+              <button
+                type="button"
+                onClick={() => setSort(NEXT_SORT[sort])}
+                className={cn(TEACH_BTN, 'justify-self-start')}
+              >
+                Sort: {SORT_LABEL[sort]}
+              </button>
               <input
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Filter by title, cohort or qualification"
                 aria-label="Filter quizzes"
-                className={cn(inputCn, 'lg:w-[360px]')}
+                className={cn(inputCn, 'lg:ml-auto lg:w-[360px]')}
               />
             </div>
           </motion.div>
 
           {loading ? (
-            <div className={cn(COLLEGE_LIST, 'animate-pulse')}>
+            <div className={cn(TEACH_LIST, 'animate-pulse')}>
               {[0, 1, 2, 3].map((i) => (
                 <div key={i} className="h-16" />
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <CollegeEmpty
+            <TeachingEmpty
               title={quizzes.length === 0 ? 'Nothing set yet' : 'No quizzes match this filter'}
               body={
                 quizzes.length === 0
-                  ? 'Open a learner in Student 360 and tap Quiz, or build one from a document.'
+                  ? 'New quiz drafts questions for a cohort or one learner. Nothing reaches a learner until you publish it.'
                   : 'Pick All, or clear the search.'
+              }
+              action={
+                quizzes.length === 0 ? (
+                  <button type="button" onClick={() => setCreateOpen(true)} className={TEACH_BTN}>
+                    New quiz
+                  </button>
+                ) : undefined
               }
             />
           ) : (
-            <motion.ul variants={itemVariants} initial="hidden" animate="visible" className={COLLEGE_LIST}>
+            <motion.ul
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              className={TEACH_LIST}
+            >
               {filtered.map((q) => (
                 <li key={q.id}>
                   <QuizRow q={q} onClick={() => navigate(`/college/quizzes/${q.id}`)} />
@@ -357,70 +427,69 @@ export default function TutorQuizzesPage() {
 /* ────────────────────────── row ────────────────────────── */
 
 function QuizRow({ q, onClick }: { q: TutorQuizListItem; onClick: () => void }) {
-  const urgent = q.overdue_count > 0 || q.pending_ai_grade_count > 0;
   const total = Math.max(q.assigned_count, q.completed_count);
+  const allDone = total > 0 && q.completed_count >= total;
 
   const reason = [
     KIND_LABEL[q.kind],
-    !q.is_published ? 'Draft' : null,
     q.is_homework ? 'Homework' : null,
     plural(q.questions_count, 'question'),
     q.cohort_name,
     q.qualification_code,
-    q.due_date ? `Due ${new Date(q.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}` : null,
+    q.due_date
+      ? `Due ${new Date(q.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
+      : null,
     q.mine ? null : 'Another tutor, read only',
   ]
     .filter(Boolean)
     .join(' · ');
 
   const detail = [
+    total > 0 ? `${q.completed_count} of ${total} done` : 'Not sent to anyone yet',
     q.in_progress_count > 0 ? `${q.in_progress_count} in progress` : null,
     q.avg_percentage != null ? `${q.avg_percentage}% average` : null,
-    q.pass_rate_percent != null ? `${q.pass_rate_percent}% pass` : null,
-    q.overdue_count > 0 ? `${q.overdue_count} overdue` : null,
-    q.pending_ai_grade_count > 0 ? `${q.pending_ai_grade_count} written answer${q.pending_ai_grade_count === 1 ? '' : 's'} to mark` : null,
+    q.pass_rate_percent != null ? `${q.pass_rate_percent}% passed` : null,
   ]
     .filter(Boolean)
     .join(' · ');
+
+  const chips: { label: string; tone: 'done' | 'action' | 'neutral' }[] = [];
+  if (!q.is_published) chips.push({ label: 'Draft', tone: 'neutral' });
+  if (q.pending_ai_grade_count > 0)
+    chips.push({ label: `${q.pending_ai_grade_count} to mark`, tone: 'action' });
+  if (q.overdue_count > 0) chips.push({ label: `${q.overdue_count} overdue`, tone: 'action' });
+  if (chips.length === 0 && allDone) chips.push({ label: 'All done', tone: 'done' });
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
+      className={cn(TEACH_ROW, 'items-start sm:items-center')}
     >
-      <span
-        aria-hidden="true"
-        className={cn('h-9 w-1 shrink-0 rounded-full', urgent ? 'bg-orange-400' : 'bg-white/[0.14]')}
-      />
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
-          {q.title}
-        </span>
-        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">{reason}</span>
-        {detail && (
-          <span
-            className={cn(
-              'mt-0.5 block truncate text-[12px] leading-tight',
-              urgent ? 'text-orange-400' : 'text-white'
-            )}
-          >
-            {detail}
+        <span className="block text-[14.5px] font-semibold leading-snug text-white">{q.title}</span>
+        <span className="mt-0.5 block text-[12.5px] leading-snug text-white">{reason}</span>
+        <span className="mt-0.5 block text-[12.5px] leading-snug text-white">{detail}</span>
+        {chips.length > 0 && (
+          <span className="mt-2 flex flex-wrap gap-1.5 sm:hidden">
+            {chips.map((c) => (
+              <StatusChip key={c.label} tone={c.tone}>
+                {c.label}
+              </StatusChip>
+            ))}
           </span>
         )}
       </span>
-      <span className="shrink-0 text-right">
-        <span
-          className={cn(
-            'block text-[13px] font-semibold tabular-nums',
-            urgent ? 'text-orange-400' : 'text-white'
-          )}
-        >
-          {q.completed_count}/{total}
+      {chips.length > 0 && (
+        <span className="hidden shrink-0 gap-1.5 sm:flex">
+          {chips.map((c) => (
+            <StatusChip key={c.label} tone={c.tone}>
+              {c.label}
+            </StatusChip>
+          ))}
         </span>
-        <span className="mt-0.5 block text-[11px] tabular-nums text-white">done</span>
-      </span>
-      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+      )}
+      <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-white sm:mt-0" aria-hidden="true" />
     </button>
   );
 }

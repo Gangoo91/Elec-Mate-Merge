@@ -92,7 +92,7 @@ export function ProgressSparkline({
         />
       </svg>
       {showTrend && (
-        <span className={`text-[10px] font-medium ${trendColour}`}>
+        <span className={`text-[12px] font-medium ${trendColour}`}>
           {trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→'}
         </span>
       )}

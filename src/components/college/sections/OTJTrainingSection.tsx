@@ -40,8 +40,6 @@ import {
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
 import { Ring, VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
 import { Bars, ScopeToggle, useScope } from '@/components/college/assessment/AssessmentKit';
@@ -49,6 +47,7 @@ import { useMyLearners } from '@/components/college/assessment/useMyLearners';
 import { CLearnerRow } from '@/components/college/assessment/CLearnerRow';
 import { fetchCollegeOtj, type CollegeOtjRow, type OtjRisk } from '@/hooks/useOtjSummary';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+import { QuietTabs } from '@/components/college/otj/hoursUi';
 
 interface OTJTrainingSectionProps {
   onNavigate: (section: CollegeSection) => void;
@@ -75,28 +74,59 @@ interface StudentOTJData {
 }
 
 const round1 = (n: number) => Math.round(n * 10) / 10;
-const fmtH = (n: number | null | undefined) => (n === null || n === undefined ? '\u2014' : `${Math.round(n)}h`);
+// The same rounding as the off-the-job hours page, so a learner's figure
+// reads identically on both (2.5h there was 3h here).
+const fmtH = (n: number | null | undefined) => {
+  if (n === null || n === undefined) return '\u2014';
+  if (n <= 0) return '0h';
+  if (n < 1) return `${Math.round(n * 60)}m`;
+  return n < 10 ? `${n.toFixed(1)}h` : `${Math.round(n).toLocaleString('en-GB')}h`;
+};
 
 const HELP: PageHelpContent = {
   id: 'college-otj-training',
   title: 'Off-the-job training',
   what: 'Every apprentice\u2019s off-the-job hours against the fixed total their standard requires, and whether they are on pace to reach it by the planned end date.',
   steps: [
-    { title: 'Start with who is behind', body: 'The list is sorted furthest behind first. Tap an apprentice to open their hours in Student 360.' },
-    { title: 'Clear what is waiting', body: 'Hours to verify and app learning to approve wait in the off-the-job inbox. Open it from the top of the page.' },
-    { title: 'Check the monthly rule', body: 'Funding rules expect some off-the-job training every calendar month. The figure shows who has none yet this month.' },
+    {
+      title: 'Start with who is behind',
+      body: 'The list is sorted furthest behind first. Tap an apprentice to open their hours in Student 360.',
+    },
+    {
+      title: 'Clear what is waiting',
+      body: 'Hours learners log wait in Hours to verify; time spent learning in the app waits in Approve app learning. Both are at the top of the page.',
+    },
+    {
+      title: 'Check the monthly rule',
+      body: 'Funding rules expect some off-the-job training every calendar month. The figure shows who has none yet this month.',
+    },
   ],
   legend: [
     { swatch: 'bg-emerald-400', label: 'On track', body: 'At or ahead of the pace needed.' },
     { swatch: 'bg-elec-yellow', label: 'Behind', body: 'Slightly behind the planned pace.' },
-    { swatch: 'bg-orange-500', label: 'At risk', body: 'Behind enough to miss the total without a change.' },
-    { swatch: 'bg-white', label: 'Not judged', body: 'Under four weeks in, or no required total or dates set.' },
+    {
+      swatch: 'bg-orange-500',
+      label: 'At risk',
+      body: 'Behind enough to miss the total without a change.',
+    },
+    {
+      swatch: 'bg-white',
+      label: 'Not judged',
+      body: 'Under four weeks in, or no required total or dates set.',
+    },
   ],
   notes: [
-    { title: 'The figure', body: 'Counted hours are verified hours plus app learning not yet approved: the same figure Student 360, the cohort hours page and the apprentice\u2019s own app show.' },
-    { title: 'My learners', body: 'Opens on the cohorts you lead. Switch to Everyone for the whole college.' },
+    {
+      title: 'The figure',
+      body: 'Counted hours are verified hours plus app learning not yet approved: the same figure Student 360, the cohort hours page and the apprentice\u2019s own app show.',
+    },
+    {
+      title: 'Whose apprentices',
+      body: 'The switch at the top picks Mine, My cohorts or Whole college for the whole College Hub.',
+    },
   ],
-  source: 'Apprenticeship funding rules 2025/26: off-the-job training is a fixed total per standard.',
+  source:
+    'Apprenticeship funding rules 2025/26: off-the-job training is a fixed total per standard.',
 };
 
 function toData(row: CollegeOtjRow): StudentOTJData {
@@ -110,7 +140,8 @@ function toData(row: CollegeOtjRow): StudentOTJData {
     countedHours: counted,
     plannedHours: planned,
     progressPercent: req && req > 0 ? Math.min(100, (counted / req) * 100) : null,
-    expectedPercent: req && req > 0 && planned !== null ? Math.min(100, (planned / req) * 100) : null,
+    expectedPercent:
+      req && req > 0 && planned !== null ? Math.min(100, (planned / req) * 100) : null,
     status: STATUS_OF[s.risk] ?? 'Not judged',
   };
 }
@@ -123,7 +154,12 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
   const my = useMyLearners();
   const [scope, setScope] = useScope('otjtraining', my);
 
-  const { data: rows = [], isLoading, error, refetch } = useQuery({
+  const {
+    data: rows = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ['college-otj-rows'],
     queryFn: () => fetchCollegeOtj(),
   });
@@ -141,7 +177,11 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
     [rows]
   );
   const isMineRow = (d: StudentOTJData) =>
-    my.isMine({ studentId: d.row.college_student_id, userId: d.row.user_id, cohortId: d.row.cohort_id });
+    my.isMine({
+      studentId: d.row.college_student_id,
+      userId: d.row.user_id,
+      cohortId: d.row.cohort_id,
+    });
   const mineCount = allData.filter(isMineRow).length;
   const otjData = scope === 'mine' ? allData.filter(isMineRow) : allData;
 
@@ -152,13 +192,30 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
     const atRisk = otjData.filter((d) => d.status === 'At risk').length;
     const notJudged = otjData.filter((d) => d.status === 'Not judged').length;
     const withPct = otjData.filter((d) => d.progressPercent !== null);
-    const avgPct = withPct.length > 0 ? Math.round(withPct.reduce((s, d) => s + (d.progressPercent ?? 0), 0) / withPct.length) : null;
+    const avgPct =
+      withPct.length > 0
+        ? Math.round(withPct.reduce((s, d) => s + (d.progressPercent ?? 0), 0) / withPct.length)
+        : null;
     const countedHours = round1(otjData.reduce((s, d) => s + d.countedHours, 0));
-    const verifiedHours = round1(otjData.reduce((s, d) => s + (d.row.summary.verified_hours ?? 0), 0));
+    const verifiedHours = round1(
+      otjData.reduce((s, d) => s + (d.row.summary.verified_hours ?? 0), 0)
+    );
     const waitingApp = round1(otjData.reduce((s, d) => s + (d.row.unapproved_app_hours ?? 0), 0));
     const pending = round1(otjData.reduce((s, d) => s + (d.row.summary.pending_hours ?? 0), 0));
     const noneThisMonth = otjData.filter((d) => !d.row.trained_this_month).length;
-    return { total, onTrack, behind, atRisk, notJudged, avgPct, countedHours, verifiedHours, waitingApp, pending, noneThisMonth };
+    return {
+      total,
+      onTrack,
+      behind,
+      atRisk,
+      notJudged,
+      avgPct,
+      countedHours,
+      verifiedHours,
+      waitingApp,
+      pending,
+      noneThisMonth,
+    };
   }, [otjData]);
 
   const bands = useMemo(() => {
@@ -171,19 +228,23 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
     ];
     return defs.map((b) => ({
       ...b,
-      n: otjData.filter((d) => d.progressPercent !== null && d.progressPercent >= b.lo && d.progressPercent < b.hi).length,
+      n: otjData.filter(
+        (d) => d.progressPercent !== null && d.progressPercent >= b.lo && d.progressPercent < b.hi
+      ).length,
     }));
   }, [otjData]);
 
-  const filteredData = activeFilter === 'all' ? otjData : otjData.filter((d) => d.status === activeFilter);
-  const showList = () => document.getElementById('otj-apprentices')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  const pick = (f: FilterOption) => {
-    setActiveFilter(f);
-    showList();
-  };
-
+  const filteredData =
+    activeFilter === 'all' ? otjData : otjData.filter((d) => d.status === activeFilter);
   const requiredTotal = otjData.reduce((s, d) => s + (d.requiredHours ?? 0), 0);
-  const overallPct = requiredTotal > 0 ? Math.round((otjData.reduce((s, d) => s + Math.min(d.countedHours, d.requiredHours ?? 0), 0) / requiredTotal) * 100) : null;
+  const overallPct =
+    requiredTotal > 0
+      ? Math.round(
+          (otjData.reduce((s, d) => s + Math.min(d.countedHours, d.requiredHours ?? 0), 0) /
+            requiredTotal) *
+            100
+        )
+      : null;
 
   return (
     <div className="space-y-8 sm:space-y-10">
@@ -195,19 +256,38 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
             ? 'Each apprentice\u2019s hours against the total their standard requires.'
             : kpis.total === 0
               ? 'Each apprentice\u2019s hours against the total their standard requires.'
-              : `${kpis.total} ${kpis.total === 1 ? 'apprentice' : 'apprentices'}${scope === 'mine' ? ' in your cohorts' : ''}. ${
-                  kpis.atRisk + kpis.behind > 0 ? `${kpis.atRisk + kpis.behind} behind on hours.` : 'Everyone on pace.'
-                }`
+              : [
+                  `${kpis.total} ${kpis.total === 1 ? 'apprentice' : 'apprentices'}${scope === 'mine' ? ' in your cohorts' : ''}`,
+                  kpis.atRisk + kpis.behind > 0
+                    ? `${kpis.atRisk} at risk of missing their total and ${kpis.behind} behind`
+                    : 'everyone on pace',
+                  kpis.noneThisMonth > 0
+                    ? `${kpis.noneThisMonth} with no training this month`
+                    : null,
+                  `${fmtH(kpis.countedHours)} counted${kpis.waitingApp > 0 ? `, ${fmtH(kpis.waitingApp)} of it app learning still to approve` : ''}`,
+                ]
+                  .filter(Boolean)
+                  .join(' · ') + '.'
         }
         help={HELP}
         actions={
           <>
-            <ScopeToggle scope={scope} onChange={setScope} my={my} mineCount={mineCount} allCount={allData.length} />
-            <button type="button" onClick={() => navigate('/college/otj/inbox')} className={COLLEGE_BTN}>
+            <ScopeToggle
+              scope={scope}
+              onChange={setScope}
+              my={my}
+              mineCount={mineCount}
+              allCount={allData.length}
+            />
+            <button
+              type="button"
+              onClick={() => navigate('/college/otj/inbox')}
+              className={COLLEGE_BTN}
+            >
               Hours to verify
             </button>
             <button type="button" onClick={() => navigate('/college/otj')} className={COLLEGE_BTN}>
-              Cohort hours
+              Approve app learning
             </button>
           </>
         }
@@ -215,82 +295,51 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
 
       {error && (
         <div className="flex items-center justify-between gap-3 rounded-2xl border border-orange-500/40 px-4 py-3">
-          <p className="text-[13.5px] text-white">Couldn’t load hours: {(error as Error).message}</p>
+          <p className="text-[13.5px] text-white">
+            Couldn’t load hours: {(error as Error).message}
+          </p>
           <button type="button" onClick={() => void refetch()} className={COLLEGE_LINK}>
             Try again
           </button>
         </div>
       )}
 
-      <CollegeStats
-        items={[
-          {
-            label: 'Behind on hours',
-            value: String(kpis.behind + kpis.atRisk),
-            sub: kpis.atRisk > 0 ? `${kpis.atRisk} at risk of missing the total` : kpis.behind > 0 ? 'Slightly behind the pace' : kpis.total > 0 ? 'Everyone on pace' : 'No apprentices yet',
-            warn: kpis.behind + kpis.atRisk > 0,
-            onClick: () => pick(kpis.atRisk > 0 ? 'At risk' : 'Behind'),
-          },
-          {
-            label: 'On track',
-            value: String(kpis.onTrack),
-            sub: kpis.notJudged > 0 ? `${kpis.notJudged} too early to judge` : `${kpis.total} apprentice${kpis.total === 1 ? '' : 's'}`,
-            good: kpis.onTrack > 0,
-            onClick: () => pick('On track'),
-          },
-          {
-            label: 'No training this month',
-            value: String(kpis.noneThisMonth),
-            sub: 'Some is expected every month',
-            warn: kpis.noneThisMonth > 0,
-          },
-          {
-            label: 'Hours counted',
-            value: `${Math.round(kpis.countedHours).toLocaleString('en-GB')}h`,
-            sub: `${Math.round(kpis.verifiedHours).toLocaleString('en-GB')}h verified${kpis.waitingApp > 0 ? ` · ${Math.round(kpis.waitingApp)}h app to approve` : ''}`,
-            onClick: kpis.waitingApp + kpis.pending > 0 ? () => navigate('/college/otj/inbox') : undefined,
-          },
-        ]}
-      />
-
       {otjData.length > 0 && (
-        <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
-          <section className={VIS_CARD}>
-            <VisHead title="On pace" sub="Against the planned hours to date. Tap to filter." />
-            <div className="mt-4">
-              <Bars
-                labelWidth="6.5rem"
-                onPick={(k) => pick(k as FilterOption)}
-                rows={[
-                  { key: 'At risk', label: 'At risk', n: kpis.atRisk, cls: 'bg-orange-500' },
-                  { key: 'Behind', label: 'Behind', n: kpis.behind, cls: 'bg-elec-yellow' },
-                  { key: 'On track', label: 'On track', n: kpis.onTrack, cls: 'bg-emerald-400' },
-                  { key: 'Not judged', label: 'Not judged', n: kpis.notJudged, cls: 'bg-white' },
-                ]}
-              />
-            </div>
-          </section>
+        <div className="hidden items-stretch gap-4 sm:grid lg:grid-cols-2">
           <section className={VIS_CARD}>
             <VisHead title="Towards the total" sub="Share of each required total counted" />
             <div className="mt-4">
-              <Bars labelWidth="6.5rem" rows={bands.map((b) => ({ key: b.key, label: b.label, n: b.n, cls: b.cls }))} />
+              <Bars
+                labelWidth="6.5rem"
+                rows={bands.map((b) => ({ key: b.key, label: b.label, n: b.n, cls: b.cls }))}
+              />
             </div>
           </section>
           <section className={cn(VIS_CARD, 'flex flex-col')}>
-            <VisHead title="All hours" sub={scope === 'mine' ? 'Your apprentices together' : 'Every apprentice together'} />
+            <VisHead
+              title="All hours"
+              sub={scope === 'mine' ? 'Your apprentices together' : 'Every apprentice together'}
+            />
             <div className="flex flex-1 items-center justify-center pt-2">
               <Ring
                 pct={overallPct}
                 value={overallPct === null ? '\u2014' : `${overallPct}%`}
                 label={`${Math.round(kpis.countedHours).toLocaleString('en-GB')}h of ${Math.round(requiredTotal).toLocaleString('en-GB')}h`}
-                sub={kpis.avgPct === null ? 'No required totals set' : `Average apprentice ${kpis.avgPct}%`}
+                sub={
+                  kpis.avgPct === null
+                    ? 'No required totals set'
+                    : `Average apprentice ${kpis.avgPct}%`
+                }
               />
             </div>
           </section>
         </div>
       )}
 
-      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+      {/* The list full width (two columns on a wide screen), then how it is
+          worked out: a short side column left a large empty block beside a
+          long list. */}
+      <div className="space-y-8">
         <section className="min-w-0 space-y-3">
           <CollegeSectionTitle
             id="otj-apprentices"
@@ -298,8 +347,11 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
             sub="Furthest behind first. Tap one to open their hours in Student 360."
           />
           {otjData.length > 0 && (
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-              {(
+            <QuietTabs
+              label="Filter apprentices"
+              value={activeFilter}
+              onChange={setActiveFilter}
+              tabs={(
                 [
                   ['all', 'All', kpis.total],
                   ['At risk', 'At risk', kpis.atRisk],
@@ -307,12 +359,13 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                   ['On track', 'On track', kpis.onTrack],
                   ['Not judged', 'Not judged', kpis.notJudged],
                 ] as const
-              ).map(([value, label, n]) => (
-                <button key={value} type="button" onClick={() => setActiveFilter(value)} className={chipCn(activeFilter === value)}>
-                  {label} <span className="tabular-nums">{n}</span>
-                </button>
-              ))}
-            </div>
+              ).map(([key, label, count]) => ({
+                key,
+                label,
+                count,
+                warn: key === 'At risk' || key === 'Behind',
+              }))}
+            />
           )}
 
           {isLoading ? (
@@ -326,7 +379,7 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
               title={scope === 'mine' ? 'No hours for your learners yet' : 'No apprentices yet'}
               body={
                 scope === 'mine'
-                  ? 'Hours are logged in the app, so a learner shows here once they have joined with their invite. Switch to Everyone for the whole college.'
+                  ? 'Hours are logged in the app, so a learner shows here once they have joined with their invite. Pick Whole college at the top to see everyone.'
                   : 'Hours are tracked per apprentice once they are on the roll with a programme.'
               }
               action={
@@ -335,7 +388,11 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                     Show everyone
                   </button>
                 ) : (
-                  <button type="button" onClick={() => onNavigate('students')} className={COLLEGE_LINK}>
+                  <button
+                    type="button"
+                    onClick={() => onNavigate('students')}
+                    className={COLLEGE_LINK}
+                  >
                     View learners
                   </button>
                 )
@@ -345,13 +402,22 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
             <CollegeEmpty
               title="No apprentices in this band"
               action={
-                <button type="button" onClick={() => setActiveFilter('all')} className={COLLEGE_LINK}>
+                <button
+                  type="button"
+                  onClick={() => setActiveFilter('all')}
+                  className={COLLEGE_LINK}
+                >
                   Show all
                 </button>
               }
             />
           ) : (
-            <ul className={COLLEGE_LIST}>
+            <ul
+              className={cn(
+                COLLEGE_LIST,
+                'grid grid-cols-1 divide-y-0 xl:grid-cols-2 [&>li]:-mb-px [&>li]:border-b [&>li]:border-white/[0.06] xl:[&>li:nth-child(odd)]:border-r'
+              )}
+            >
               {filteredData.map((d) => {
                 const pct = d.progressPercent === null ? null : Math.round(d.progressPercent);
                 const expected = d.expectedPercent === null ? null : Math.round(d.expectedPercent);
@@ -364,8 +430,10 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                   .filter(Boolean)
                   .join(' · ');
                 const chips: Array<{ label: string; warn?: boolean }> = [];
-                if (d.status !== 'On track') chips.push({ label: d.status, warn: d.status === 'At risk' });
-                if ((d.row.unapproved_app_hours ?? 0) > 0) chips.push({ label: `${Math.round(d.row.unapproved_app_hours)}h app to approve` });
+                if (d.status !== 'On track')
+                  chips.push({ label: d.status, warn: d.status === 'At risk' });
+                if ((d.row.unapproved_app_hours ?? 0) > 0)
+                  chips.push({ label: `${fmtH(d.row.unapproved_app_hours)} app to approve` });
                 return (
                   <CLearnerRow
                     key={d.row.college_student_id ?? d.row.user_id}
@@ -375,9 +443,13 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                     sub={sub}
                     figure={pct === null ? '\u2014' : `${pct}%`}
                     pct={pct}
-                    tone={d.status === 'At risk' ? 'warn' : d.status === 'On track' ? 'good' : 'plain'}
+                    tone={
+                      d.status === 'At risk' ? 'warn' : d.status === 'On track' ? 'good' : 'plain'
+                    }
                     onOpen={() =>
-                      navigate(`/college?section=student360&studentId=${encodeURIComponent(d.row.college_student_id)}#otj`)
+                      navigate(
+                        `/college?section=student360&studentId=${encodeURIComponent(d.row.college_student_id)}#otj`
+                      )
                     }
                   />
                 );
@@ -386,18 +458,30 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
           )}
         </section>
 
-        <aside className="space-y-3 xl:sticky xl:top-16">
+        <aside className="space-y-3">
           <CollegeSectionTitle title="How this is calculated" />
           <div className={cn(COLLEGE_CARD, 'p-0 sm:p-0')}>
-            <ul className="divide-y divide-white/[0.06]">
+            <ul className="grid grid-cols-1 divide-y divide-white/[0.06] sm:grid-cols-2 sm:divide-y-0 xl:grid-cols-5">
               {[
-                ['Required hours', 'Fixed total per apprenticeship standard (DfE Annex C, 2025/26), from the learner record or course'],
+                [
+                  'Required hours',
+                  'Fixed total per apprenticeship standard (DfE Annex C, 2025/26), from the learner record or course',
+                ],
                 ['Counted hours', 'Verified entries plus app learning not yet approved'],
-                ['Expected by now', 'Planned hours to date between the start and planned end dates'],
-                ['Behind / at risk', 'Pace since starting against the pace needed to reach the total'],
-                ['Every month', 'Funding rules expect some off-the-job training each calendar month'],
+                [
+                  'Expected by now',
+                  'Planned hours to date between the start and planned end dates',
+                ],
+                [
+                  'Behind / at risk',
+                  'Pace since starting against the pace needed to reach the total',
+                ],
+                [
+                  'Every month',
+                  'Funding rules expect some off-the-job training each calendar month',
+                ],
               ].map(([label, value]) => (
-                <li key={label} className="px-5 py-3.5 sm:px-6">
+                <li key={label} className="px-5 py-3.5 sm:px-6 sm:py-4">
                   <p className="text-[13px] font-semibold text-white">{label}</p>
                   <p className="mt-0.5 text-[12.5px] leading-snug text-white">{value}</p>
                 </li>

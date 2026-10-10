@@ -52,15 +52,20 @@ import {
   type MatrixScope,
 } from '@/utils/competenceMatrix';
 import { verificationLabel, verificationShortLabel } from '@/services/credentialsService';
+import { PrimaryButton } from '@/components/employer/editorial';
+import FormSheet from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
 import {
-  ListCard,
-  ListCardHeader,
-  Pill,
-  EmptyState,
-  SecondaryButton,
-  PrimaryButton,
-} from '@/components/employer/editorial';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+  panel,
+  PanelTitle,
+  Row,
+  RowList,
+  rowsClass,
+  StatusPill,
+  PlainEmpty,
+  Segments,
+  rowBtnSecondary,
+} from '@/components/employer/pageParts/PageParts';
 import {
   Select,
   SelectContent,
@@ -70,18 +75,22 @@ import {
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { getActingEmployerId } from '@/lib/actingEmployer';
+import {
+  AssignCourseSheet,
+  type AssignCoursePerson,
+} from '@/components/employer/AssignCourseSheet';
+import { CourseAssignmentsList } from '@/components/employer/CourseAssignmentsList';
+import { courseForCredential } from '@/data/assignableCourses';
+import {
+  useTeamTrainingEvidence,
+  trainingEvidenceLine,
+  hoursLabel,
+} from '@/hooks/useTeamTrainingEvidence';
 
 const fmtShort = (iso: string | null): string =>
   iso
     ? new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' })
     : '';
-
-const cellClasses: Record<MatrixCell['status'], string> = {
-  valid: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/20',
-  expiring: 'bg-white/[0.06] text-amber-300 border-amber-500/25',
-  expired: 'bg-red-500/15 text-red-300 border-red-500/25',
-  none: 'text-white',
-};
 
 const HORIZON_KEY = 'elecmate:competence-matrix:horizon';
 const REQUIREMENTS_KEY = 'elecmate:competence-matrix:requirements';
@@ -107,7 +116,10 @@ const loadRequirements = (): StoredRequirements | null => {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as StoredRequirements;
     if (!Array.isArray(parsed?.keys) || parsed.keys.length === 0) return null;
-    return { presetId: parsed.presetId ?? null, keys: parsed.keys.filter((k) => typeof k === 'string') };
+    return {
+      presetId: parsed.presetId ?? null,
+      keys: parsed.keys.filter((k) => typeof k === 'string'),
+    };
   } catch {
     return null;
   }
@@ -127,9 +139,13 @@ const serialiseReqState = (req: StoredRequirements | null, horizon: number): str
 
 interface CompetenceMatrixProps {
   profiles: ElecIdProfile[];
+  /** The whole roster (ELE-2086): people without an Elec-ID still get a row. */
+  roster?: { employeeId: string; name: string; role: string }[];
+  /** Opens "Create Elec-ID" for someone on the roster who has none. */
+  onCreateElecId?: (person: { id: string; name: string }) => void;
 }
 
-export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
+export function CompetenceMatrix({ profiles, roster, onCreateElecId }: CompetenceMatrixProps) {
   const navigate = useNavigate();
   const { data: jobs = [] } = useJobs();
   const createCommunication = useCreateCommunication();
@@ -151,6 +167,11 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     () => (selectedJob ? profiles.filter((p) => crewEmployeeIds.has(p.employee_id)) : profiles),
     [profiles, selectedJob, crewEmployeeIds]
   );
+  const scopedRoster = useMemo(
+    () =>
+      roster && selectedJob ? roster.filter((r) => crewEmployeeIds.has(r.employeeId)) : roster,
+    [roster, selectedJob, crewEmployeeIds]
+  );
   const scope: MatrixScope | null = selectedJob
     ? {
         jobTitle: selectedJob.title,
@@ -171,11 +192,16 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     }
   }, [horizonDays]);
 
+  // ELE-1834: briefings signed and attested training hours, beside the grid.
+  const { data: training } = useTeamTrainingEvidence();
+
   // One store per person (ELE-1950): every record is on the profile already.
   const matrix = useMemo(
-    () => buildCompetenceMatrix(scopedProfiles, [], { horizonDays }),
-    [scopedProfiles, horizonDays]
+    () =>
+      buildCompetenceMatrix(scopedProfiles, [], { horizonDays, training, roster: scopedRoster }),
+    [scopedProfiles, horizonDays, training, scopedRoster]
   );
+  const showTraining = matrix.workers.some((w) => w.training);
 
   // ── Site requirements ──
   const [requirements, setRequirements] = useState<StoredRequirements | null>(loadRequirements);
@@ -219,7 +245,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
           .limit(1);
         if (error) throw error;
         if (cancelled) return;
-        const row = ((data as unknown as RequirementSetRow[] | null)?.[0] ?? null);
+        const row = (data as unknown as RequirementSetRow[] | null)?.[0] ?? null;
         if (row) {
           const keys = Array.isArray(row.credential_keys)
             ? row.credential_keys.filter((k) => typeof k === 'string')
@@ -312,7 +338,11 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
         } else {
           const { data: inserted, error } = await supabase
             .from('competence_requirement_sets' as never)
-            .insert({ employer_id: (await getActingEmployerId(user.id)) ?? user.id, name: 'Default', ...payload } as never)
+            .insert({
+              employer_id: (await getActingEmployerId(user.id)) ?? user.id,
+              name: 'Default',
+              ...payload,
+            } as never)
             .select('id')
             .single();
           if (error) throw error;
@@ -322,8 +352,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
       } catch {
         toast({
           title: 'Could not save your settings',
-          description:
-            'Requirements and horizon are kept on this device and will sync next time.',
+          description: 'Requirements and horizon are kept on this device and will sync next time.',
           variant: 'destructive',
         });
       }
@@ -345,6 +374,40 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     [readiness]
   );
 
+  // ── Assigned learning (ELE-1834) ──
+  // The course that fixes this person's most pressing gap: an expired or
+  // expiring ticket first, then a site requirement they're missing.
+  const [assignFor, setAssignFor] = useState<{
+    person: AssignCoursePerson;
+    courseKey: string | null;
+    reason: string | null;
+  } | null>(null);
+  const openAssign = (employeeId: string) => {
+    const w = matrix.workers.find((x) => x.employeeId === employeeId);
+    if (!w) return;
+    const linked = profiles.find((p) => p.employee_id === employeeId)?.linked_account;
+    let courseKey: string | null = null;
+    let reason: string | null = null;
+    for (const col of matrix.columns) {
+      const cell = w.cells[col.key];
+      const course = courseForCredential(col.key);
+      if (!course || !cell || (cell.status !== 'expired' && cell.status !== 'expiring')) continue;
+      courseKey = course.key;
+      reason = `Your ${col.label} ${cell.status === 'expired' ? 'has expired' : `expires ${fmtShort(cell.expiry)}`}`;
+      break;
+    }
+    if (!courseKey) {
+      const gap = readinessByWorker
+        .get(employeeId)
+        ?.gaps.find((g) => g.reason === 'missing' && courseForCredential(g.key));
+      if (gap) {
+        courseKey = courseForCredential(gap.key)!.key;
+        reason = `${gap.label} is needed for site work`;
+      }
+    }
+    setAssignFor({ person: { id: employeeId, name: w.name, linked }, courseKey, reason });
+  };
+
   // Mobile: per-worker certificate-number disclosure
   const [openNumbers, setOpenNumbers] = useState<Set<string>>(new Set());
   const toggleNumbers = (id: string) =>
@@ -362,7 +425,11 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
 
   const exportFilename = (ext: 'pdf' | 'csv') => {
     const jobSlug = selectedJob
-      ? `-${selectedJob.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40)}`
+      ? `-${selectedJob.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '')
+          .slice(0, 40)}`
       : '';
     return `competence-matrix${jobSlug}-${new Date().toISOString().slice(0, 10)}.${ext}`;
   };
@@ -375,7 +442,11 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
       doc.save(exportFilename('pdf'));
       toast({ title: 'Matrix exported', description: 'Branded PDF downloaded. Ready to send.' });
     } catch {
-      toast({ title: 'Export failed', description: 'Could not generate the PDF.', variant: 'destructive' });
+      toast({
+        title: 'Export failed',
+        description: 'Could not generate the PDF.',
+        variant: 'destructive',
+      });
     } finally {
       setExporting(null);
     }
@@ -409,7 +480,11 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     } catch (err) {
       // User dismissing the share sheet is not an error
       if (err instanceof Error && err.name === 'AbortError') return;
-      toast({ title: 'Share failed', description: 'Could not share the PDF.', variant: 'destructive' });
+      toast({
+        title: 'Share failed',
+        description: 'Could not share the PDF.',
+        variant: 'destructive',
+      });
     } finally {
       setExporting(null);
     }
@@ -469,7 +544,11 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
         description: `${name} has been asked to renew ${items.length} credential${items.length === 1 ? '' : 's'}.`,
       });
     } catch {
-      toast({ title: 'Nudge failed', description: 'Message was not sent.', variant: 'destructive' });
+      toast({
+        title: 'Nudge failed',
+        description: 'Message was not sent.',
+        variant: 'destructive',
+      });
     } finally {
       setNudgingId(null);
     }
@@ -477,10 +556,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
 
   if (profiles.length === 0) {
     return (
-      <EmptyState
-        title="No credentials to chart yet"
-        description="When your team have an Elec-ID, their qualifications appear here automatically. You can also add qualifications and training for them from the Workers tab."
-      />
+      <PlainEmpty text="No credentials to chart yet. When your team have an Elec-ID, their qualifications show here. You can also add qualifications and training for them from the Workers tab." />
     );
   }
 
@@ -502,14 +578,18 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     });
   };
 
+  const workerCount = matrix.workers.length;
+  const summaryParts: string[] = [`${workerCount} ${workerCount === 1 ? 'person' : 'people'}`];
+  if (dueCount > 0) summaryParts.push(`${dueCount} renewal${dueCount === 1 ? '' : 's'} due`);
+  if (readiness) summaryParts.push(`${readiness.readyCount} of ${readiness.total} site-ready`);
+
   const controls = (
     <div className="space-y-3">
-      {/* Scope + horizon */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+      <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
         <Select value={scopeJobId} onValueChange={setScopeJobId}>
           <SelectTrigger
             aria-label="Scope"
-            className="h-11 w-full sm:w-72 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2"
+            className="h-11 w-full rounded-xl border-white/[0.12] bg-white/[0.04] text-[14px] text-white touch-manipulation focus:ring-0 data-[state=open]:border-elec-yellow lg:w-72"
           >
             <SelectValue placeholder="All workers" />
           </SelectTrigger>
@@ -518,185 +598,176 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
             {jobs.map((j) => (
               <SelectItem key={j.id} value={j.id}>
                 {j.title}
-                {j.client ? ` — ${j.client}` : ''}
+                {j.client ? `, ${j.client}` : ''}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
 
-        <div className="flex items-center gap-2">
-          <div
-            className="inline-flex rounded-full border border-white/[0.08] bg-white/[0.04] p-1"
-            role="group"
-            aria-label="Amber expiry horizon"
+        <div className="flex items-center gap-2" aria-label="Expiry warning window">
+          <Segments
+            quiet
+            className="flex-1 lg:flex-none"
+            items={HORIZON_OPTIONS.map((d) => ({ value: String(d), label: `${d} days` }))}
+            value={String(horizonDays)}
+            onChange={(v) => setHorizonDays(Number(v))}
+          />
+        </div>
+
+        <div className="flex gap-2 lg:ml-auto">
+          <button
+            type="button"
+            onClick={openRequirementsSheet}
+            className={cn(rowBtnSecondary, 'flex-1 lg:flex-none')}
           >
-            {HORIZON_OPTIONS.map((d) => (
-              <button
-                key={d}
-                onClick={() => setHorizonDays(d)}
-                className={`h-9 min-w-[52px] px-3 rounded-full text-[12px] font-semibold touch-manipulation transition-colors ${
-                  horizonDays === d ? 'bg-elec-yellow text-black' : 'text-white'
-                }`}
-              >
-                {d}d
-              </button>
-            ))}
-          </div>
-          <span className="hidden sm:inline text-[11px] text-white">
-            Amber = expires within {horizonDays} days
-          </span>
+            <ClipboardCheck className="h-4 w-4" />
+            Site requirements
+            {requirements ? ` (${requirements.keys.length})` : ''}
+          </button>
         </div>
       </div>
-      <p className="sm:hidden text-[11px] text-white -mt-1">
-        Amber = expires within {horizonDays} days
+      <p className="text-[13px] leading-snug text-white">
+        Yellow means it runs out within {horizonDays} days
+        {readiness?.referenceIsJobStart
+          ? ` of the job start (${fmtShort(readiness.referenceDate)})`
+          : ''}
+        . Self, Doc seen and Source say how each one was checked: self-declared, certificate seen,
+        or verified with the awarding body or card scheme.
       </p>
-      <p className="text-[11px] text-white leading-snug">
-        Each credential shows how it was checked: Self = self-declared, Doc seen = someone saw the
-        certificate, Source = verified with the awarding body or card scheme.
-      </p>
-
-      {/* Site requirements */}
-      <div className="flex flex-wrap items-center gap-2">
-        <SecondaryButton onClick={openRequirementsSheet}>
-          <ClipboardCheck className="h-4 w-4 mr-2" />
-          Site requirements
-          {requirements ? ` (${requirements.keys.length})` : ''}
-        </SecondaryButton>
-        {readiness && (
-          <>
-            <Pill tone={readiness.readyCount === readiness.total ? 'emerald' : 'amber'}>
-              {readiness.readyCount} of {readiness.total} site-ready
-            </Pill>
-            {readiness.referenceIsJobStart && (
-              <span className="text-[11px] text-white">
-                judged against job start {fmtShort(readiness.referenceDate)}
-              </span>
-            )}
-          </>
-        )}
-      </div>
     </div>
   );
 
   const exportBar = (
-    <div data-help="elecid.matrix-export" className="flex flex-wrap items-center gap-2">
-      <SecondaryButton onClick={handleExportPdf} disabled={exporting !== null}>
+    <div data-help="elecid.matrix-export" className="flex gap-2">
+      <button
+        type="button"
+        onClick={handleExportPdf}
+        disabled={exporting !== null}
+        className={cn(rowBtnSecondary, 'flex-1 sm:flex-none')}
+      >
         {exporting === 'pdf' ? (
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+          <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
-          <Download className="h-4 w-4 mr-2" />
+          <Download className="h-4 w-4" />
         )}
-        Export PDF
-      </SecondaryButton>
-      <SecondaryButton onClick={handleShare} disabled={exporting !== null}>
+        PDF
+      </button>
+      <button
+        type="button"
+        onClick={handleShare}
+        disabled={exporting !== null}
+        className={cn(rowBtnSecondary, 'flex-1 sm:flex-none')}
+      >
         {exporting === 'share' ? (
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+          <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
-          <Share2 className="h-4 w-4 mr-2" />
+          <Share2 className="h-4 w-4" />
         )}
         Share
-      </SecondaryButton>
-      <SecondaryButton onClick={handleExportCsv} disabled={exporting !== null}>
-        <FileSpreadsheet className="h-4 w-4 mr-2" />
+      </button>
+      <button
+        type="button"
+        onClick={handleExportCsv}
+        disabled={exporting !== null}
+        className={cn(rowBtnSecondary, 'flex-1 sm:flex-none')}
+      >
+        <FileSpreadsheet className="h-4 w-4" />
         CSV
-      </SecondaryButton>
-      {dueCount > 0 && <Pill tone="amber">{dueCount} renewal{dueCount === 1 ? '' : 's'} due</Pill>}
+      </button>
     </div>
   );
 
   const requirementsSheet = (
-    <Sheet open={reqSheetOpen} onOpenChange={setReqSheetOpen}>
-      <SheetContent
-        side="bottom"
-        className="max-h-[85vh] overflow-y-auto rounded-t-2xl border-white/10 bg-[hsl(0_0%_8%)] px-4 pb-8 pt-2"
-      >
-        <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-white/20" aria-hidden />
-        <SheetHeader className="text-left">
-          <SheetTitle className="text-white">Site requirements</SheetTitle>
-          <p className="text-[12.5px] text-white">
-            Pick what the site demands. Every worker is judged ready or not against it. A
-            requirement nobody holds shows honestly as missing.
-          </p>
-        </SheetHeader>
-
-        <div className="mt-4 space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            {REQUIREMENT_PRESETS.map((preset) => {
-              const active = draftReq?.presetId === preset.id;
-              return (
-                <button
-                  key={preset.id}
-                  onClick={() => setDraftReq({ presetId: preset.id, keys: [...preset.keys] })}
-                  className={`min-h-[44px] rounded-xl border px-3 py-3 text-left touch-manipulation transition-colors ${
-                    active
-                      ? 'border-elec-yellow bg-white/[0.06]'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_12%)]'
-                  }`}
-                >
-                  <div className={`text-[13px] font-semibold ${active ? 'text-elec-yellow' : 'text-white'}`}>
-                    {preset.label}
-                  </div>
-                  <div className="mt-1 text-[11px] leading-snug text-white">
-                    {preset.keys.map((k) => requirementLabel(k, matrix.columns)).join(' · ')}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
-              Custom — from your recorded credentials
-            </div>
-            <div className="space-y-1">
-              {matrix.columns.map((col) => {
-                const checked = draftReq?.keys.includes(col.key) ?? false;
+    <FormSheet
+      open={reqSheetOpen}
+      onOpenChange={setReqSheetOpen}
+      width="wide"
+      title="Site requirements"
+      description="Pick what the site demands. Every worker is judged ready or not against it. A requirement nobody holds shows as missing."
+      footer={
+        <div className="flex gap-2">
+          {requirements && (
+            <button
+              type="button"
+              onClick={() => {
+                setRequirements(null);
+                setReqSheetOpen(false);
+              }}
+              className="h-12 flex-1 rounded-xl border border-red-500/40 text-[14px] font-semibold text-red-400 touch-manipulation lg:flex-none lg:px-5"
+            >
+              Clear
+            </button>
+          )}
+          <PrimaryButton
+            className="h-12 flex-[2] rounded-xl text-[15px] lg:flex-none lg:px-8"
+            onClick={applyRequirements}
+            disabled={!draftReq?.keys.length}
+          >
+            Apply requirements
+          </PrimaryButton>
+        </div>
+      }
+    >
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-start">
+        <section>
+          <PanelTitle title="Start from a preset" />
+          <div className={cn(panel, 'overflow-hidden')}>
+            <div className={rowsClass}>
+              {REQUIREMENT_PRESETS.map((preset) => {
+                const active = draftReq?.presetId === preset.id;
                 return (
-                  <label
-                    key={col.key}
-                    className="flex min-h-[44px] items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.04] px-3 touch-manipulation cursor-pointer"
-                  >
-                    <Checkbox
-                      checked={checked}
-                      onCheckedChange={() => toggleDraftKey(col.key)}
-                      className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                    />
-                    <span className="text-[13px] text-white">{col.label}</span>
-                  </label>
+                  <Row
+                    key={preset.id}
+                    onClick={() => setDraftReq({ presetId: preset.id, keys: [...preset.keys] })}
+                    chevron={false}
+                    title={preset.label}
+                    detail={preset.keys.map((k) => requirementLabel(k, matrix.columns)).join(' · ')}
+                    trailing={active ? <StatusPill tone="volt">Chosen</StatusPill> : undefined}
+                  />
                 );
               })}
             </div>
           </div>
+        </section>
 
-          <div className="space-y-2 pt-1">
-            <PrimaryButton fullWidth onClick={applyRequirements} disabled={!draftReq?.keys.length}>
-              Apply requirements
-            </PrimaryButton>
-            {requirements && (
-              <button
-                onClick={() => {
-                  setRequirements(null);
-                  setReqSheetOpen(false);
-                }}
-                className="h-11 w-full rounded-full border border-red-500/25 bg-red-500/10 text-[13px] font-semibold text-red-300 touch-manipulation"
-              >
-                Clear requirements
-              </button>
-            )}
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
+        <section>
+          <PanelTitle title="Or pick your own" meta="From your recorded credentials" />
+          {matrix.columns.length === 0 ? (
+            <PlainEmpty text="Nothing recorded on the team yet." />
+          ) : (
+            <div className={cn(panel, 'overflow-hidden')}>
+              <div className="grid grid-cols-1 sm:grid-cols-2">
+                {matrix.columns.map((col) => {
+                  const checked = draftReq?.keys.includes(col.key) ?? false;
+                  return (
+                    <label
+                      key={col.key}
+                      className="flex min-h-[52px] cursor-pointer items-center gap-3 border-b border-white/[0.07] px-4 touch-manipulation sm:px-5"
+                    >
+                      <Checkbox
+                        checked={checked}
+                        onCheckedChange={() => toggleDraftKey(col.key)}
+                        className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                      />
+                      <span className="text-[14px] text-white">{col.label}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
+    </FormSheet>
   );
 
   // Honest empty state: a crew job with nobody assigned yet
   if (selectedJob && matrix.workers.length === 0) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6">
         {controls}
-        <EmptyState
-          title="No workers assigned to this job yet"
-          description={`Assign workers to “${selectedJob.title}” and their credentials will appear here, ready to send as a crew competence pack.`}
+        <PlainEmpty
+          text={`Nobody is assigned to ${selectedJob.title} yet. Assign people to the job and their credentials show here, ready to send as a crew competence pack.`}
           action="Go to Jobs"
           onAction={() => navigate('/employer?section=jobs')}
         />
@@ -705,276 +776,393 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     );
   }
 
-  const gapDetails =
-    readiness && readiness.workers.some((w) => !w.ready) ? (
-      <div className="rounded-2xl border border-amber-500/20 bg-white/[0.06] px-4 py-3 space-y-1.5">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300">
-          Requirement gaps
-        </div>
-        {readiness.workers
-          .filter((w) => !w.ready)
-          .map((w) => (
-            <p key={w.employeeId} className="text-[12.5px] leading-snug text-white">
-              <span className="font-semibold text-white">{w.name}</span>
-              {' — '}
-              {w.gaps.map(gapSentence).join('; ')}
-            </p>
-          ))}
-      </div>
-    ) : null;
+  const gapWorkers = readiness ? readiness.workers.filter((w) => !w.ready) : [];
+
+  const cellBox = (cell: MatrixCell) =>
+    cn(
+      'inline-flex w-full flex-col items-center justify-center rounded-lg border px-1.5 py-1.5 text-[12px] font-semibold tabular-nums leading-tight',
+      cell.status === 'valid' && 'border-emerald-500/40 text-emerald-400',
+      cell.status === 'expiring' && 'border-elec-yellow/60 text-elec-yellow',
+      cell.status === 'expired' && 'border-red-500/50 text-red-400'
+    );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 sm:space-y-8">
       {controls}
-      {exportBar}
-      {gapDetails}
 
-      {/* Desktop — the full grid, sticky worker column */}
-      <div className="hidden lg:block rounded-2xl border border-white/[0.06] bg-white/[0.025] overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left">
-            <thead>
-              <tr className="border-b border-white/[0.08]">
-                <th className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-4 py-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white min-w-[180px]">
-                  Worker
-                </th>
-                {matrix.columns.map((col) => (
-                  <th
-                    key={col.key}
-                    className="px-2 py-3 text-[10px] font-medium uppercase tracking-wider text-white text-center min-w-[104px]"
-                  >
-                    {col.label}
+      {gapWorkers.length > 0 && (
+        <section>
+          <PanelTitle title="Not site-ready" meta={`${gapWorkers.length}`} />
+          <RowList>
+            {gapWorkers.map((w) => (
+              <Row
+                key={w.employeeId}
+                title={w.name}
+                detail={w.gaps.map(gapSentence).join('; ')}
+                trailing={<StatusPill tone="red">Not ready</StatusPill>}
+              />
+            ))}
+          </RowList>
+        </section>
+      )}
+
+      <CourseAssignmentsList hideWhenEmpty />
+
+      <section className="space-y-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 items-baseline gap-2">
+            <h2 className="text-[16px] font-semibold tracking-tight text-white">
+              {selectedJob ? `Crew for ${selectedJob.title}` : 'Competence matrix'}
+            </h2>
+            <span className="truncate text-[13px] text-white">{summaryParts.join(' · ')}</span>
+          </div>
+          {exportBar}
+        </div>
+
+        {/* Desktop: the full grid with a sticky worker column */}
+        <div className={cn(panel, 'hidden overflow-hidden bg-none bg-[hsl(0_0%_12%)] lg:block')}>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-left">
+              <thead>
+                <tr className="border-b border-white/[0.07]">
+                  <th className="sticky left-0 z-10 min-w-[200px] bg-[hsl(0_0%_12%)] px-5 py-3 text-[12px] font-semibold text-white">
+                    Worker
                   </th>
-                ))}
-                <th className="px-3 py-3 min-w-[90px]" aria-label="Actions" />
-              </tr>
-            </thead>
-            <tbody>
-              {matrix.workers.map((w) => {
-                const needsNudge = w.expiringCount + w.expiredCount > 0;
-                const ready = readinessByWorker.get(w.employeeId);
-                return (
-                  <tr key={w.employeeId} className="border-b border-white/[0.04] last:border-b-0">
-                    <td className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-4 py-2.5">
-                      <div className="text-[13px] font-semibold text-white leading-tight">
-                        {w.name}
-                      </div>
-                      <div className="text-[11px] text-white">{w.role}</div>
-                      <div className="mt-1 flex flex-wrap items-center gap-1">
+                  {matrix.columns.map((col) => (
+                    <th
+                      key={col.key}
+                      className="min-w-[104px] px-2 py-3 text-center text-[12px] font-semibold text-white"
+                    >
+                      {col.label}
+                    </th>
+                  ))}
+                  {showTraining && (
+                    <th
+                      className="min-w-[150px] border-l border-white/[0.07] px-3 py-3 text-left text-[12px] font-semibold text-white"
+                      title="Briefings signed and apprentice training hours. Evidence of training, never a ticket."
+                    >
+                      Training
+                    </th>
+                  )}
+                  <th className="min-w-[90px] px-3 py-3" aria-label="Actions" />
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/[0.07]">
+                {matrix.workers.map((w) => {
+                  const needsNudge = w.expiringCount + w.expiredCount > 0;
+                  const ready = readinessByWorker.get(w.employeeId);
+                  return (
+                    <tr key={w.employeeId}>
+                      <td className="sticky left-0 z-10 bg-[hsl(0_0%_12%)] px-5 py-3">
+                        <div className="text-[15px] font-semibold leading-tight text-white">
+                          {w.name}
+                        </div>
+                        <div className="mt-0.5 text-[13px] text-white">
+                          {w.role}
+                          {w.noElecId ? ' · No Elec-ID yet' : ''}
+                          {w.uncheckedCount > 0 ? ` · ${w.uncheckedCount} self-declared` : ''}
+                        </div>
                         {ready && (
-                          <Pill tone={ready.ready ? 'emerald' : 'red'}>
-                            {ready.ready ? 'Site-ready' : 'Not ready'}
-                          </Pill>
+                          <div className="mt-1.5">
+                            <StatusPill tone={ready.ready ? 'green' : 'red'}>
+                              {ready.ready ? 'Site-ready' : 'Not ready'}
+                            </StatusPill>
+                          </div>
                         )}
-                        {w.uncheckedCount > 0 && (
-                          <Pill tone="amber">{w.uncheckedCount} self-declared</Pill>
-                        )}
-                      </div>
-                    </td>
-                    {matrix.columns.map((col) => {
-                      const cell = w.cells[col.key];
-                      if (!cell || cell.status === 'none') {
+                      </td>
+                      {matrix.columns.map((col) => {
+                        const cell = w.cells[col.key];
+                        if (!cell || cell.status === 'none') {
+                          return (
+                            <td key={col.key} className="px-2 py-3 text-center">
+                              {cell?.course ? (
+                                <span
+                                  title={`${cell.course.label}: Study Centre course passed${cell.course.date ? ` ${fmtShort(cell.course.date)}` : ''}. Not the qualification itself.`}
+                                  className="inline-flex w-full flex-col items-center justify-center rounded-lg border border-dashed border-white/25 px-1.5 py-1.5 text-[11.5px] font-medium leading-tight text-white"
+                                >
+                                  Course done
+                                  {cell.course.date && (
+                                    <span className="text-[11px] tabular-nums">
+                                      {fmtShort(cell.course.date)}
+                                    </span>
+                                  )}
+                                </span>
+                              ) : (
+                                <span className="text-[13px] text-white">–</span>
+                              )}
+                            </td>
+                          );
+                        }
+                        const tooltip = [
+                          cell.label,
+                          cell.certNumber ? `No. ${cell.certNumber}` : null,
+                          verificationLabel(cell.verification),
+                        ]
+                          .filter(Boolean)
+                          .join(', ');
                         return (
-                          <td key={col.key} className="px-2 py-2.5 text-center">
-                            <span className={`text-[12px] ${cellClasses.none}`}>—</span>
+                          <td key={col.key} className="px-1.5 py-2.5 text-center">
+                            <span title={tooltip || undefined} className={cellBox(cell)}>
+                              {cell.expiry ? fmtShort(cell.expiry) : 'Held'}
+                              {cell.status === 'expired' && (
+                                <span className="text-[11px] font-medium">Expired</span>
+                              )}
+                              {cell.status === 'expiring' && cell.daysLeft !== null && (
+                                <span className="text-[11px] font-medium">
+                                  {cell.daysLeft} days left
+                                </span>
+                              )}
+                              <span className="mt-0.5 text-[11px] font-medium text-white">
+                                {verificationShortLabel(cell.verification)}
+                              </span>
+                              {cell.course && (
+                                <span className="mt-0.5 text-[11px] font-medium text-white">
+                                  Course {cell.course.date ? fmtShort(cell.course.date) : 'done'}
+                                </span>
+                              )}
+                            </span>
                           </td>
                         );
-                      }
-                      const tooltip = [
-                        cell.label,
-                        cell.certNumber ? `No. ${cell.certNumber}` : null,
-                        verificationLabel(cell.verification),
-                      ]
-                        .filter(Boolean)
-                        .join(' — ');
-                      return (
-                        <td key={col.key} className="px-1.5 py-2 text-center">
-                          <span
-                            title={tooltip || undefined}
-                            className={`inline-flex flex-col items-center justify-center w-full rounded-lg border px-1.5 py-1.5 text-[11px] font-semibold tabular-nums leading-tight ${cellClasses[cell.status]}`}
-                          >
-                            {cell.expiry ? fmtShort(cell.expiry) : 'Held'}
-                            {cell.status === 'expired' && (
-                              <span className="text-[9px] font-medium uppercase tracking-wider">
-                                Expired
-                              </span>
-                            )}
-                            {cell.status === 'expiring' && cell.daysLeft !== null && (
-                              <span className="text-[9px] font-medium">{cell.daysLeft}d left</span>
-                            )}
-                            <span className="mt-0.5 text-[9px] font-medium text-white">
-                              {verificationShortLabel(cell.verification)}
-                            </span>
-                          </span>
-                        </td>
-                      );
-                    })}
-                    <td className="px-3 py-2.5 text-right">
-                      {needsNudge && (
-                        <button
-                          onClick={() => nudgeWorker(w.employeeId, w.name)}
-                          disabled={nudgingId === w.employeeId}
-                          className="h-11 px-3 rounded-full bg-white/[0.06] border border-amber-500/25 text-amber-300 text-[12px] font-semibold touch-manipulation hover:bg-white/[0.06] transition-colors disabled:opacity-50 inline-flex items-center gap-1.5"
-                        >
-                          {nudgingId === w.employeeId ? (
-                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      })}
+                      {showTraining && (
+                        <td className="border-l border-white/[0.07] px-3 py-3 text-left align-middle">
+                          {w.training ? (
+                            <div className="space-y-0.5 text-[12.5px] leading-snug text-white">
+                              {w.training.briefingsSigned > 0 && (
+                                <div>
+                                  {w.training.briefingsSigned}{' '}
+                                  {w.training.briefingsSigned === 1 ? 'briefing' : 'briefings'}{' '}
+                                  signed
+                                </div>
+                              )}
+                              {w.training.otjAttestedMinutes > 0 && (
+                                <div>{hoursLabel(w.training.otjAttestedMinutes)} attested</div>
+                              )}
+                              {w.training.otjCollegeVerifiedMinutes > 0 && (
+                                <div>
+                                  {hoursLabel(w.training.otjCollegeVerifiedMinutes)} college
+                                  verified
+                                </div>
+                              )}
+                              {w.training.otjWaiting > 0 && (
+                                <div className="font-semibold text-elec-yellow">
+                                  {w.training.otjWaiting} waiting for you
+                                </div>
+                              )}
+                            </div>
                           ) : (
-                            <Send className="h-3.5 w-3.5" />
+                            <span className="text-[13px] text-white">–</span>
                           )}
-                          Nudge
-                        </button>
+                        </td>
                       )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      <td className="px-3 py-3 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          {w.noElecId && onCreateElecId && (
+                            <button
+                              type="button"
+                              onClick={() => onCreateElecId({ id: w.employeeId, name: w.name })}
+                              className={rowBtnSecondary}
+                            >
+                              Create Elec-ID
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => openAssign(w.employeeId)}
+                            className={rowBtnSecondary}
+                          >
+                            Assign course
+                          </button>
+                          {needsNudge && (
+                            <button
+                              type="button"
+                              onClick={() => nudgeWorker(w.employeeId, w.name)}
+                              disabled={nudgingId === w.employeeId}
+                              className={rowBtnSecondary}
+                            >
+                              {nudgingId === w.employeeId ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Send className="h-4 w-4" />
+                              )}
+                              Nudge
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      {/* Mobile — per-worker credential card, renewals surfaced first */}
-      <div className="lg:hidden space-y-3">
-        {matrix.workers.map((w) => {
-          const due = renewalItemsFor(w, matrix.columns);
-          const held = matrix.columns.filter(
-            (c) => w.cells[c.key] && w.cells[c.key].status === 'valid'
-          );
-          const ready = readinessByWorker.get(w.employeeId);
-          const numbered = matrix.columns
-            .map((c) => ({ col: c, cell: w.cells[c.key] }))
-            .filter(({ cell }) => cell && cell.status !== 'none' && cell.certNumber);
-          const numbersOpen = openNumbers.has(w.employeeId);
-          return (
-            <ListCard key={w.employeeId}>
-              <ListCardHeader
-                tone={w.expiredCount > 0 ? 'red' : w.expiringCount > 0 ? 'amber' : 'emerald'}
-                title={w.name}
-                meta={
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    {ready && (
-                      <Pill tone={ready.ready ? 'emerald' : 'red'}>
-                        {ready.ready ? 'Site-ready' : 'Not ready'}
-                      </Pill>
-                    )}
-                    {w.expiredCount > 0 && <Pill tone="red">{w.expiredCount} expired</Pill>}
-                    {w.expiringCount > 0 && <Pill tone="amber">{w.expiringCount} expiring</Pill>}
-                    {w.expiredCount === 0 && w.expiringCount === 0 && (
-                      <Pill tone="emerald">All valid</Pill>
-                    )}
-                    {w.uncheckedCount > 0 && (
-                      <Pill tone="amber">{w.uncheckedCount} self-declared</Pill>
-                    )}
-                  </div>
-                }
-              />
-              <div className="px-4 py-3 space-y-3">
-                {ready && !ready.ready && (
-                  <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-3 py-2">
-                    <div className="text-[10px] font-medium uppercase tracking-wider text-red-300">
-                      Site requirements
-                    </div>
-                    <p className="mt-0.5 text-[12px] leading-snug text-white">
+        {/* Phone and tablet: one panel per worker, renewals first, the rest folded away */}
+        <div className="space-y-4 lg:hidden">
+          {matrix.workers.map((w) => {
+            const due = renewalItemsFor(w, matrix.columns);
+            const held = matrix.columns.filter(
+              (c) => w.cells[c.key] && w.cells[c.key].status === 'valid'
+            );
+            const coursesDone = matrix.columns.filter(
+              (c) => w.cells[c.key]?.course && w.cells[c.key].status === 'none'
+            );
+            const ready = readinessByWorker.get(w.employeeId);
+            const open = openNumbers.has(w.employeeId);
+            const foldCount = held.length + coursesDone.length;
+            const headPill =
+              ready && !ready.ready ? (
+                <StatusPill tone="red">Not ready</StatusPill>
+              ) : w.expiredCount > 0 ? (
+                <StatusPill tone="red">{w.expiredCount} expired</StatusPill>
+              ) : w.expiringCount > 0 ? (
+                <StatusPill tone="volt">{w.expiringCount} expiring</StatusPill>
+              ) : ready?.ready ? (
+                <StatusPill tone="green">Site-ready</StatusPill>
+              ) : held.length > 0 ? (
+                <StatusPill tone="green">All in date</StatusPill>
+              ) : undefined;
+            return (
+              <div key={w.employeeId} className={cn(panel, 'overflow-hidden')}>
+                <div className={rowsClass}>
+                  <Row
+                    title={w.name}
+                    detail={`${w.role}${w.uncheckedCount > 0 ? ` · ${w.uncheckedCount} self-declared` : ''}`}
+                    trailing={w.noElecId && !headPill ? <StatusPill>No Elec-ID yet</StatusPill> : headPill}
+                  />
+                  {ready && !ready.ready && (
+                    <div className="px-4 py-3 text-[13px] leading-snug text-white sm:px-5">
+                      <span className="font-semibold text-red-400">Missing for this site: </span>
                       {ready.gaps.map(gapSentence).join('; ')}
-                    </p>
-                  </div>
-                )}
-                {due.length > 0 && (
-                  <div className="space-y-1.5">
-                    {due.map((item, i) => (
-                      <div
-                        key={i}
-                        className={`flex items-center justify-between gap-3 rounded-xl border px-3 py-2 ${
-                          item.status === 'expired'
-                            ? 'bg-red-500/10 border-red-500/20'
-                            : 'bg-white/[0.06] border-amber-500/20'
-                        }`}
-                      >
-                        <span className="text-[12.5px] text-white truncate">{item.label}</span>
-                        <span
-                          className={`text-[11px] font-semibold tabular-nums shrink-0 ${
-                            item.status === 'expired' ? 'text-red-300' : 'text-amber-300'
-                          }`}
-                        >
-                          {item.status === 'expired'
-                            ? `Expired ${fmtShort(item.expiry)}`
-                            : `${fmtShort(item.expiry)}`}
-                        </span>
-                      </div>
-                    ))}
+                    </div>
+                  )}
+                  {due.map((item, i) => (
+                    <Row
+                      key={i}
+                      title={item.label}
+                      detail={
+                        item.status === 'expired'
+                          ? `Expired ${fmtShort(item.expiry)}`
+                          : `Runs out ${fmtShort(item.expiry)}`
+                      }
+                      trailing={
+                        <StatusPill tone={item.status === 'expired' ? 'red' : 'volt'}>
+                          {item.status === 'expired' ? 'Expired' : 'Expiring'}
+                        </StatusPill>
+                      }
+                    />
+                  ))}
+                  {due.length === 0 && foldCount === 0 && (
+                    <div className="px-4 py-3 text-[13px] text-white sm:px-5">
+                      {w.noElecId
+                        ? 'No Elec-ID yet. Create one so their cards and tickets show here.'
+                        : 'No credentials recorded yet.'}
+                    </div>
+                  )}
+                  {w.training && trainingEvidenceLine(w.training) && (
+                    <Row
+                      title="Training"
+                      wrapDetail
+                      detail={`${trainingEvidenceLine(w.training)}. Evidence of training, not a ticket.`}
+                      trailing={
+                        w.training.otjWaiting > 0 ? (
+                          <StatusPill tone="volt">To attest</StatusPill>
+                        ) : undefined
+                      }
+                    />
+                  )}
+                  {foldCount > 0 && (
                     <button
-                      onClick={() => nudgeWorker(w.employeeId, w.name)}
-                      disabled={nudgingId === w.employeeId}
-                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white flex items-center justify-center gap-2"
-                    >
-                      {nudgingId === w.employeeId ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Send className="h-4 w-4" />
-                      )}
-                      Nudge to renew
-                    </button>
-                  </div>
-                )}
-                {held.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {held.map((c) => (
-                      <span
-                        key={c.key}
-                        className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 text-[11px] text-emerald-300"
-                      >
-                        {c.label}
-                        {w.cells[c.key].expiry && (
-                          <span className="text-white tabular-nums">
-                            {fmtShort(w.cells[c.key].expiry)}
-                          </span>
-                        )}
-                        <span className="text-white">
-                          · {verificationShortLabel(w.cells[c.key].verification)}
-                        </span>
-                      </span>
-                    ))}
-                  </div>
-                )}
-                {numbered.length > 0 && (
-                  <div>
-                    <button
+                      type="button"
                       onClick={() => toggleNumbers(w.employeeId)}
-                      className="flex min-h-[44px] w-full items-center justify-between touch-manipulation text-[12px] font-medium text-white"
-                      aria-expanded={numbersOpen}
+                      aria-expanded={open}
+                      className="flex min-h-[52px] w-full items-center justify-between gap-3 px-4 text-left text-[14px] font-semibold text-white touch-manipulation sm:px-5"
                     >
-                      Certificate numbers ({numbered.length})
+                      In date and courses ({foldCount})
                       <ChevronDown
-                        className={`h-4 w-4 transition-transform ${numbersOpen ? 'rotate-180' : ''}`}
+                        className={cn('h-4 w-4 transition-transform', open && 'rotate-180')}
                       />
                     </button>
-                    {numbersOpen && (
-                      <div className="space-y-1 pb-1">
-                        {numbered.map(({ col, cell }) => (
-                          <div
-                            key={col.key}
-                            className="flex items-center justify-between gap-3 rounded-lg bg-white/[0.03] px-3 py-1.5"
-                          >
-                            <span className="text-[11.5px] text-white truncate">{col.label}</span>
-                            <span className="text-[11.5px] font-medium tabular-nums text-white shrink-0">
-                              {cell.certNumber}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                  )}
+                  {open &&
+                    held.map((c) => {
+                      const cell = w.cells[c.key];
+                      return (
+                        <Row
+                          key={c.key}
+                          title={c.label}
+                          detail={[
+                            cell.expiry ? `Runs out ${fmtShort(cell.expiry)}` : 'No expiry',
+                            verificationShortLabel(cell.verification),
+                            cell.certNumber ? `No. ${cell.certNumber}` : null,
+                            cell.course
+                              ? `Course ${cell.course.date ? fmtShort(cell.course.date) : 'done'}`
+                              : null,
+                          ]
+                            .filter(Boolean)
+                            .join(' · ')}
+                          trailing={<StatusPill tone="green">In date</StatusPill>}
+                        />
+                      );
+                    })}
+                  {open &&
+                    coursesDone.map((c) => (
+                      <Row
+                        key={c.key}
+                        title={c.label}
+                        detail={`Study Centre course passed${w.cells[c.key].course?.date ? ` ${fmtShort(w.cells[c.key].course!.date)}` : ''}. Not the qualification itself.`}
+                        trailing={<StatusPill>Course done</StatusPill>}
+                      />
+                    ))}
+                  <div className="flex gap-2 px-4 py-3 sm:px-5">
+                    {w.noElecId && onCreateElecId && (
+                      <button
+                        type="button"
+                        onClick={() => onCreateElecId({ id: w.employeeId, name: w.name })}
+                        className={cn(rowBtnSecondary, 'flex-1')}
+                      >
+                        Create Elec-ID
+                      </button>
                     )}
+                    {due.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => nudgeWorker(w.employeeId, w.name)}
+                        disabled={nudgingId === w.employeeId}
+                        className={cn(rowBtnSecondary, 'flex-1')}
+                      >
+                        {nudgingId === w.employeeId ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Send className="h-4 w-4" />
+                        )}
+                        Nudge to renew
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => openAssign(w.employeeId)}
+                      className={cn(rowBtnSecondary, 'flex-1')}
+                    >
+                      Assign a course
+                    </button>
                   </div>
-                )}
-                {due.length === 0 && held.length === 0 && (
-                  <p className="text-[12.5px] text-white">No credentials recorded yet.</p>
-                )}
+                </div>
               </div>
-            </ListCard>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      </section>
 
       {requirementsSheet}
+      <AssignCourseSheet
+        open={!!assignFor}
+        onOpenChange={(o) => !o && setAssignFor(null)}
+        person={assignFor?.person ?? null}
+        initialCourseKey={assignFor?.courseKey}
+        initialReason={assignFor?.reason}
+      />
     </div>
   );
 }

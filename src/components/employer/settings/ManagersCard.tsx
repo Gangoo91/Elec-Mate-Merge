@@ -17,18 +17,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 import { toast } from '@/hooks/use-toast';
 import {
-  ListCard,
-  ListCardHeader,
   ListBody,
   ListRow,
   Avatar,
-  Pill,
   Field,
   FormGrid,
   PrimaryButton,
   SecondaryButton,
   inputClass,
 } from '@/components/employer/editorial';
+import { PanelHead, StatusPill, panelShellClass } from '@/components/employer/pageParts/PageParts';
 
 interface ManagerRow {
   id: string;
@@ -156,11 +154,10 @@ export function ManagersCard() {
 
   if (isCoAdmin) {
     return (
-      <ListCard>
-        <ListCardHeader
-          tone="yellow"
+      <div className={panelShellClass}>
+        <PanelHead
           title="Managers"
-          meta={<Pill tone="cyan">You are a manager</Pill>}
+          meta={<StatusPill tone="neutral">You are a manager</StatusPill>}
         />
         <div className="px-5 sm:px-6 py-4">
           <p className="text-[13px] text-white leading-relaxed">
@@ -168,18 +165,17 @@ export function ManagersCard() {
             remove managers.
           </p>
         </div>
-      </ListCard>
+      </div>
     );
   }
 
   const validEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim());
 
   return (
-    <ListCard>
-      <ListCardHeader
-        tone="yellow"
+    <div className={panelShellClass}>
+      <PanelHead
         title="Managers"
-        meta={<Pill tone="yellow">{managers.length}</Pill>}
+        meta={<StatusPill tone="neutral">{managers.length}</StatusPill>}
         action={adding ? undefined : 'Add manager'}
         onAction={adding ? undefined : () => setAdding(true)}
       />
@@ -240,9 +236,9 @@ export function ManagersCard() {
                       >
                         Make {m.access_role === 'admin' ? 'Office' : 'Admin'}
                       </button>
-                      <Pill tone={m.status === 'active' ? 'emerald' : 'amber'}>
+                      <StatusPill tone={m.status === 'active' ? 'green' : 'neutral'}>
                         {m.status === 'active' ? 'Active' : 'Invited'}
-                      </Pill>
+                      </StatusPill>
                       <button
                         type="button"
                         aria-label={`Remove ${label}`}
@@ -332,6 +328,6 @@ export function ManagersCard() {
           </div>
         </div>
       )}
-    </ListCard>
+    </div>
   );
 }

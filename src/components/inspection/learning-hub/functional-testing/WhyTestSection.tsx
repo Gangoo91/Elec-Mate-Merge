@@ -62,7 +62,7 @@ const WhyTestSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
+          <p className="text-[12px] font-medium text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {reasons.map((r, i) => (
@@ -82,7 +82,7 @@ const WhyTestSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Functional Testing Covers</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Functional Testing Covers</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {whatItCovers.map((item, i) => (

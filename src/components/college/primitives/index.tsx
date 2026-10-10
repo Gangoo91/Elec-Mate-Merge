@@ -145,32 +145,23 @@ export function Pill({
   tone?: Tone;
   className?: string;
 }) {
+  // House style (8 Oct 2026): outline and text only, no tinted fills (a
+  // translucent yellow fill reads brown on this ground). Blue, cyan, purple and
+  // indigo are not in the palette and render neutral.
   const colour =
     tone === 'red'
-      ? 'bg-red-500/10 text-red-400 border-red-500/20'
-      : tone === 'orange'
-        ? 'bg-orange-500/10 text-orange-400 border-orange-500/20'
-        : tone === 'amber'
-          ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-          : tone === 'green'
-            ? 'bg-green-500/10 text-green-400 border-green-500/20'
-            : tone === 'emerald'
-              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-              : tone === 'blue'
-                ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                : tone === 'cyan'
-                  ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
-                  : tone === 'purple'
-                    ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
-                    : tone === 'indigo'
-                      ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
-                      : tone === 'grey'
-                        ? 'bg-white/[0.06] text-white border-white/10'
-                        : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
+      ? 'border-red-400/40 text-red-300'
+      : tone === 'orange' || tone === 'amber'
+        ? 'border-orange-500/40 text-orange-300'
+        : tone === 'green' || tone === 'emerald'
+          ? 'border-emerald-400/40 text-emerald-300'
+          : tone === 'yellow'
+            ? 'border-elec-yellow/60 text-elec-yellow'
+            : 'border-white/[0.2] text-white';
   return (
     <span
       className={cn(
-        'inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border tabular-nums',
+        'inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-full border tabular-nums',
         colour,
         className
       )}

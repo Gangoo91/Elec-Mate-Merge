@@ -490,7 +490,11 @@ export class AIDesigner {
     parts.push('  Per BS 7671 522.6.');
     parts.push('');
     parts.push('FIRE ALARM / EMERGENCY LIGHTING / SMOKE DETECTION / SOUNDER:');
-    parts.push('  FP200 enhanced (or FP400, or MICC mineral-insulated).');
+    parts.push('  Fire-resisting cable: FP200 (standard grade), FP400, or MICC (BS 7671 560.8.1).');
+    parts.push('  Enhanced grade (120 min, BS EN 50200 / BS 8434-2) only where BS 5839-1 recommends it,');
+    parts.push('  e.g. an unsprinklered high-rise with phased evacuation.');
+    parts.push('  Fire alarm SUPPLY (BS 5839-1): dedicated circuit, MCB — NOT on an RCD unless BS 7671');
+    parts.push('  requires one (TT, cable concealed in a wall); then a dedicated RCBO.');
     parts.push('  ✗ NEVER twin & earth — fails the fire-resistance test.');
     parts.push('  Per BS 7671 560.7 · BS 5266-1 · BS 5839-1.');
     parts.push('');
@@ -513,7 +517,7 @@ export class AIDesigner {
     parts.push('  ✗ Fire alarm with T&E — FAIL');
     parts.push('  ✗ Three-phase motor with T&E — FAIL');
     parts.push('  ✓ Outdoor lighting with "1.5 mm² SWA 3-core 90°C XLPE" — correct');
-    parts.push('  ✓ Fire alarm with "1.5 mm² FP200 enhanced" — correct');
+    parts.push('  ✓ Fire alarm with "1.5 mm² FP200" on a 6 A MCB — correct');
     parts.push('  ✓ Three-phase motor with "6 mm² SWA 4-core 90°C XLPE" — correct');
     parts.push('');
     parts.push('Enclosure selection follows cable type:');
@@ -642,9 +646,9 @@ export class AIDesigner {
     parts.push('📐 RING FINAL SPECIFICATIONS:');
     parts.push('  • Cable: ALWAYS 2.5mm² + 1.5mm² CPC (BS 7671 Appendix 15)');
     parts.push('  • Protection: ALWAYS 32A RCBO (sockets require RCD)');
-    parts.push('  • Max area: 100m² floor area (Reg 433.1.5)');
+    parts.push('  • Max area: 100m² floor area (OSG Appendix H, Table H2.1)');
     parts.push('  • Parallel paths: Current splits 50/50, each leg ~16A max');
-    parts.push('  • Calculations: Use HALF cable length (parallel paths affect Zs and VD)');
+    parts.push('  • Calculations: R1+R2 and voltage drop are ¼ of the end-to-end loop values');
     parts.push('  • Never use: 1.5mm², 4mm², 6mm², or 10mm² for rings');
     parts.push('');
     parts.push('📐 RADIAL SOCKET SPECIFICATIONS:');
@@ -2135,7 +2139,7 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
                 installationNotes: {
                   type: 'string',
                   description:
-                    'Circuit-specific installation guidance (2-4 sentences). CRITICAL: Must reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Install RCD spur at shower pull-cord location for local isolation."',
+                    'Circuit-specific installation guidance (2-4 sentences). CRITICAL: Must reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Fit a double-pole pull-cord isolator outside zones 0–2 for local isolation."',
                 },
                 structuredOutput: {
                   type: 'object',
@@ -2622,7 +2626,7 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
                   installationNotes: {
                     type: 'string',
                     description:
-                      'Circuit-specific installation guidance (2-4 sentences). CRITICAL: Must reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Install RCD spur at shower pull-cord location for local isolation."',
+                      'Circuit-specific installation guidance (2-4 sentences). CRITICAL: Must reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Fit a double-pole pull-cord isolator outside zones 0–2 for local isolation."',
                   },
                   structuredOutput: {
                     type: 'object',

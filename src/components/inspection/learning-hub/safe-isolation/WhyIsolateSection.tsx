@@ -46,7 +46,7 @@ const WhyIsolateSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
+          <p className="text-[12px] font-medium text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {reasons.map((r, i) => (
@@ -66,7 +66,7 @@ const WhyIsolateSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Fatal Errors — What Gets People Killed</p>
+          <p className="text-[12px] font-medium text-white mb-3">Fatal Errors — What Gets People Killed</p>
         </motion.div>
 
         {fatalErrors.map((item, i) => (

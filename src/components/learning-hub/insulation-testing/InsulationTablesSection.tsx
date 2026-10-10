@@ -138,9 +138,9 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                 <table className="w-full text-[13px]">
                   <thead>
                     <tr className="border-b border-white/[0.08]">
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Circuit Voltage</th>
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Test Voltage</th>
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Min IR</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Circuit Voltage</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Test Voltage</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Min IR</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.06]">
@@ -158,8 +158,8 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                 <table className="w-full text-[13px]">
                   <thead>
                     <tr className="border-b border-white/[0.08]">
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Test Type</th>
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Duration</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Test Type</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Duration</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.06]">
@@ -172,7 +172,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-[11px] text-amber-400 font-medium mt-3">Note: Reading must be stable for final 15 seconds</p>
+              <p className="text-[12px] text-amber-400 font-medium mt-3">Note: Reading must be stable for final 15 seconds</p>
             </div>
           </div>
         </motion.div>
@@ -188,8 +188,8 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                 <table className="w-full text-[13px]">
                   <thead>
                     <tr className="border-b border-white/[0.08]">
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Condition</th>
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Value</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Condition</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Value</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.06]">
@@ -217,8 +217,8 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                 <table className="w-full text-[13px]">
                   <thead>
                     <tr className="border-b border-white/[0.08]">
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Temperature (\u00b0C)</th>
-                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Correction Factor</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Temperature (\u00b0C)</th>
+                      <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Correction Factor</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.06]">
@@ -243,7 +243,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                   <Bullet text="T = Temperature during test (\u00b0C)" accent="emerald-400" />
                   <Bullet text="1.07 = Temperature coefficient for typical insulation" accent="emerald-400" />
                 </div>
-                <p className="text-[11px] text-amber-400 font-medium">Example: 500M\u03a9 at 5\u00b0C = 500 \u00d7 0.475 = 238M\u03a9 at 20\u00b0C</p>
+                <p className="text-[12px] text-amber-400 font-medium">Example: 500M\u03a9 at 5\u00b0C = 500 \u00d7 0.475 = 238M\u03a9 at 20\u00b0C</p>
               </div>
             </div>
           </div>
@@ -251,7 +251,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* Typical Values */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mb-2">Typical Insulation Resistance Values</p>
+          <p className="text-[12px] font-medium text-white px-0.5 mb-2">Typical Insulation Resistance Values</p>
         </motion.div>
 
         <motion.div variants={itemVariants} className="grid grid-cols-1 gap-3">
@@ -264,7 +264,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                 <Bullet key={i} text={item} accent="green-400" />
               ))}
             </div>
-            <p className="text-[11px] text-green-400 font-medium mt-2">Typical new install: {'>'} 200M\u03a9 per circuit</p>
+            <p className="text-[12px] text-green-400 font-medium mt-2">Typical new install: {'>'} 200M\u03a9 per circuit</p>
           </div>
 
           {/* Aged Installations */}
@@ -276,7 +276,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                 <Bullet key={i} text={item} accent="amber-400" />
               ))}
             </div>
-            <p className="text-[11px] text-amber-400 font-medium mt-2">Acceptable if {'>'} 2M\u03a9 with stable readings</p>
+            <p className="text-[12px] text-amber-400 font-medium mt-2">Acceptable if {'>'} 2M\u03a9 with stable readings</p>
           </div>
 
           {/* Problem Indicators */}
@@ -288,7 +288,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                 <Bullet key={i} text={item} accent="red-400" />
               ))}
             </div>
-            <p className="text-[11px] text-red-400 font-medium mt-2">Investigate any reading below 1M\u03a9</p>
+            <p className="text-[12px] text-red-400 font-medium mt-2">Investigate any reading below 1M\u03a9</p>
           </div>
         </motion.div>
 

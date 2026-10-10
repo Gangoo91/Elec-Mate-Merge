@@ -1,33 +1,11 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { TRACKING_HELP } from '@/components/employer/help/jobs';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Label } from '@/components/ui/label';
-import {
-  RefreshCw,
-  MapPin,
-  List,
-  Map as MapIcon,
-  LogIn,
-  LogOut,
-  UserPlus,
-  Phone,
-  MessageSquare,
-} from 'lucide-react';
+import FormSheet from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
+import { RefreshCw, LogOut, UserPlus, Phone, MessageSquare, Check, X } from 'lucide-react';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { LiveWorkerMap } from '../LiveWorkerMap';
@@ -39,51 +17,127 @@ import {
 } from '@/hooks/useWorkerLocations';
 import { useJobs } from '@/hooks/useJobs';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getOfficeLocation } from '@/services/settingsService';
 import { toast } from '@/hooks/use-toast';
-import { getCurrentPosition } from '@/utils/geolocation';
+import { supabase } from '@/integrations/supabase/client';
+import { geocodeAddress } from '@/services/jobService';
 import { createCommunication } from '@/services/communicationService';
 import {
   PageFrame,
   PageHero,
-  StatStrip,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  IconButton,
-  FilterBar,
-  EmptyState,
   LoadingBlocks,
   PrimaryButton,
-  selectTriggerClass,
-  selectContentClass,
   textareaClass,
   type Tone,
 } from '@/components/employer/editorial';
+import {
+  frameClass,
+  panel,
+  HeroActions,
+  HeroPrimary,
+  RefreshIcon,
+  Segments,
+  SearchField,
+  plural,
+} from '@/components/employer/pageParts/PageParts';
+import { STATUS_COLOURS, STATUS_RING, statusInk } from '../trackingColours';
+import { areaCard, StatCards } from '@/components/employer/hubs/AreaPage';
 
-const STATUS_TONE: Record<string, Tone> = {
-  'On Site': 'emerald',
-  'En Route': 'blue',
-  Office: 'amber',
-  'On Leave': 'red',
-  'Off Duty': 'purple',
+/** Team list and map share one height on desktop, so the page ends on one line. */
+const TRACK_H = 'lg:h-[clamp(560px,calc(100vh-15rem),860px)]';
+
+const initialsOf = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('') || '?';
+
+/** Words for each status, in sentence case. */
+const STATUS_LABEL: Record<string, string> = {
+  'On Site': 'On site',
+  'En Route': 'Travelling',
+  Office: 'Office',
+  'On Leave': 'On leave',
+  'Off Duty': 'Off duty',
 };
+
+/** A choice in the check-in sheet: picked = solid white, black text. */
+const choiceRow = (on: boolean) =>
+  cn(
+    'flex min-h-[56px] w-full items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left transition-colors touch-manipulation',
+    on
+      ? 'border-white bg-white text-black'
+      : 'border-white/[0.1] bg-white/[0.03] text-white hover:bg-white/[0.06]'
+  );
+
+const rowIconBtn =
+  'flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/[0.14] bg-white/[0.04] text-white hover:bg-white/[0.08] touch-manipulation';
 
 /** A location update older than this is presented as history, not live. */
 const STALE_AFTER_HOURS = 12;
+/** Older than this, a position is still today's but no longer "live" (amber). */
+const AMBER_AFTER_MINUTES = 60;
+
+type Freshness = { label: string; tone: Tone | null; ageMs: number };
+
+/**
+ * How old a person's last position is, from THE DATA's own timestamp, never
+ * the time the page last refetched (ELE-1956). Under an hour is green, an hour
+ * to 12 hours amber, older grey (tone null).
+ */
+/** A freshness label mid-sentence: "just now", but a date keeps its capitals. */
+const inLine = (label: string) => (label === 'Just now' ? 'just now' : label);
+
+function freshnessOf(ts: string | null | undefined, now: number): Freshness | null {
+  if (!ts) return null;
+  const t = new Date(ts).getTime();
+  if (Number.isNaN(t)) return null;
+  const ageMs = Math.max(0, now - t);
+  const mins = Math.floor(ageMs / 60000);
+  let label: string;
+  if (mins < 1) label = 'Just now';
+  else if (mins < 60) label = `${mins} min ago`;
+  else if (mins < 24 * 60) label = `${Math.floor(mins / 60)}h ago`;
+  else
+    // date-fns, not toLocaleDateString: en-GB in Chrome writes "Sept"
+    label = format(new Date(t), 'EEE d MMM');
+  const tone: Tone | null =
+    mins < AMBER_AFTER_MINUTES ? 'emerald' : mins < STALE_AFTER_HOURS * 60 ? 'amber' : null;
+  return { label, tone, ageMs };
+}
+
+/**
+ * A full UK postcode in the job address. Without one the geocoder still
+ * answers, confidently and wrongly: "Basement plant room, 14 Orchard Close"
+ * (a Sheffield job) came back as Reading. A wrong pin is worse than none, and
+ * it would be saved on the job, so only an address with a postcode is looked up.
+ */
+const UK_POSTCODE = /\b[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b/i;
+const canGeocode = (address: string | null | undefined) => !!address && UK_POSTCODE.test(address);
 
 export function WorkerTrackingSection() {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
-  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [pickedId, setPickedId] = useState<string | null>(null);
+  const [confirmOutId, setConfirmOutId] = useState<string | null>(null);
+  // An unanswered "are you sure" lapses on its own
+  useEffect(() => {
+    if (!confirmOutId) return;
+    const t = setTimeout(() => setConfirmOutId(null), 4000);
+    return () => clearTimeout(t);
+  }, [confirmOutId]);
+  // Ticks once a minute so "4 min ago" keeps counting without a refetch
+  const [now, setNow] = useState(() => Date.now());
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
+  // Covers the geocode as well as the insert, so a second tap can't double-book
+  const [checkingIn, setCheckingIn] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<string>('');
   const [selectedJob, setSelectedJob] = useState<string>('');
 
@@ -94,6 +148,7 @@ export function WorkerTrackingSection() {
     data: workerLocations = [],
     isLoading: locationsLoading,
     refetch: refetchLocations,
+    isError: locationsFailed,
   } = useWorkerLocations();
   const { data: jobsData = [], isLoading: jobsLoading } = useJobs();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
@@ -105,12 +160,9 @@ export function WorkerTrackingSection() {
   });
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      refetchLocations();
-      setLastUpdated(new Date());
-    }, 30000);
+    const interval = setInterval(() => setNow(Date.now()), 60000);
     return () => clearInterval(interval);
-  }, [refetchLocations]);
+  }, []);
 
   const handleRefresh = useCallback(async () => {
     // refetch never throws — check the result so a failed refresh can't
@@ -124,7 +176,7 @@ export function WorkerTrackingSection() {
       });
       return;
     }
-    setLastUpdated(new Date());
+    setNow(Date.now());
     toast({ title: 'Workers refreshed', description: 'Location data updated' });
   }, [refetchLocations]);
 
@@ -169,47 +221,47 @@ export function WorkerTrackingSection() {
     }
   };
 
+  const checkInJob = jobsData.find((j) => j.id === selectedJob) ?? null;
+  const [pickWorkerQ, setPickWorkerQ] = useState('');
+  const [pickJobQ, setPickJobQ] = useState('');
+  const checkInPeople = employees.filter((e) => e.status === 'active' || e.status === 'Active');
+  const checkInJobs = jobsData.filter((j) => j.status === 'Active' || j.status === 'Pending');
+
   const handleCheckIn = async () => {
     if (!selectedEmployee || !selectedJob) {
       toast({ title: 'Select employee and job', variant: 'destructive' });
       return;
     }
+    if (checkingIn) return;
+    setCheckingIn(true);
 
     try {
-      // A remote check-in records where the WORKER is — the job site — never
-      // the admin's own device GPS (an office check-in would pin the worker at
-      // head office). Job coordinates win; admin GPS is only a last resort for
-      // jobs with no coordinates on record.
+      // A remote check-in records where the WORKER is: the job site. It never
+      // uses the admin's own device GPS, which pinned the worker at the office
+      // (ELE-1956). Job coordinates win; a job with an address but no
+      // coordinates is geocoded now and the coordinates saved on the job; with
+      // neither, the check-in is recorded with the location unknown.
       let lat: number | null = null;
       let lng: number | null = null;
 
       const selectedJobData = jobsData.find((j) => j.id === selectedJob);
-      // != null, not truthiness — longitude 0 is the Greenwich meridian, which
+      // != null, not truthiness: longitude 0 is the Greenwich meridian, which
       // runs through east London; a real coordinate, not a missing one
       if (selectedJobData?.lat != null && selectedJobData?.lng != null) {
         lat = selectedJobData.lat;
         lng = selectedJobData.lng;
-      } else {
-        try {
-          const position = await getCurrentPosition({
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 60000,
-          });
-          lat = position.latitude;
-          lng = position.longitude;
-        } catch {
-          // No job coords and no GPS — refuse to invent a position
+      } else if (canGeocode(selectedJobData?.location)) {
+        const coords = await geocodeAddress(selectedJobData!.location);
+        if (coords) {
+          lat = coords.lat;
+          lng = coords.lng;
+          // Save them so the job pins on the map and the next check-in is instant
+          const { error: saveErr } = await supabase
+            .from('employer_jobs')
+            .update({ lat: coords.lat, lng: coords.lng })
+            .eq('id', selectedJobData!.id);
+          if (!saveErr) queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
         }
-      }
-
-      if (lat === null || lng === null) {
-        toast({
-          title: 'No location available',
-          description: 'Add an address to the job, or ask the worker to check in from their phone.',
-          variant: 'destructive',
-        });
-        return;
       }
 
       await checkInMutation.mutateAsync({
@@ -219,12 +271,25 @@ export function WorkerTrackingSection() {
         lng,
       });
 
-      toast({ title: 'Worker checked in', description: 'Location recorded successfully' });
+      if (lat === null || lng === null) {
+        toast({
+          title: 'Checked in, location unknown',
+          description: !selectedJobData?.location?.trim()
+            ? 'This job has no address. Add one with its postcode so check-ins pin on the map.'
+            : canGeocode(selectedJobData.location)
+              ? "We couldn't find that postcode on the map. Check the job address so it pins next time."
+              : 'The job address has no postcode, so we did not guess. Add the postcode to the job so it pins next time.',
+        });
+      } else {
+        toast({ title: 'Worker checked in', description: 'Pinned at the job site.' });
+      }
       setIsCheckInOpen(false);
       setSelectedEmployee('');
       setSelectedJob('');
     } catch {
       toast({ title: 'Check-in failed', variant: 'destructive' });
+    } finally {
+      setCheckingIn(false);
     }
   };
 
@@ -247,10 +312,10 @@ export function WorkerTrackingSection() {
         .map((loc) => {
           const isStale =
             !loc.last_updated ||
-            Date.now() - new Date(loc.last_updated).getTime() > STALE_AFTER_HOURS * 60 * 60 * 1000;
+            now - new Date(loc.last_updated).getTime() > STALE_AFTER_HOURS * 60 * 60 * 1000;
           return isStale ? { ...loc, status: 'Off Duty' as typeof loc.status } : loc;
         }),
-    [workerLocations]
+    [workerLocations, now]
   );
 
   const workerCheckIns = useMemo(() => {
@@ -278,6 +343,10 @@ export function WorkerTrackingSection() {
         ? 'Off Duty'
         : location?.status || (emp.status === 'On Leave' ? 'On Leave' : 'Off Duty');
       const stamp = location?.checked_in_at || location?.last_updated;
+      const fresh = freshnessOf(location?.last_updated, now);
+      // A check-in recorded with no coordinates is "location unknown", shown
+      // honestly rather than pinned anywhere
+      const noFix = !!location && (location.lat == null || location.lng == null);
 
       return {
         id: emp.id,
@@ -288,11 +357,7 @@ export function WorkerTrackingSection() {
         jobTitle: jobData?.title || null,
         checkInTime: stamp
           ? isStale
-            ? `Last seen ${new Date(stamp).toLocaleDateString('en-GB', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'short',
-              })}`
+            ? `Last seen ${format(new Date(stamp), 'EEE d MMM')}`
             : new Date(stamp).toLocaleTimeString('en-GB', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -304,9 +369,11 @@ export function WorkerTrackingSection() {
         lat: location?.lat,
         lng: location?.lng,
         locationId: location?.id,
+        fresh,
+        noFix,
       };
     });
-  }, [employees, workerLocations]);
+  }, [employees, workerLocations, now]);
 
   const statusCounts = useMemo(
     () => ({
@@ -330,30 +397,30 @@ export function WorkerTrackingSection() {
         (activeTab === 'enroute' && c.status === 'En Route') ||
         (activeTab === 'office' && c.status === 'Office') ||
         (activeTab === 'offduty' && c.status === 'Off Duty') ||
-        (activeTab === 'onleave' && c.status === 'On Leave');
+        (activeTab === 'onleave' && c.status === 'On Leave') ||
+        (activeTab === 'away' && (c.status === 'Off Duty' || c.status === 'On Leave'));
       return matchesSearch && matchesTab;
     });
   }, [workerCheckIns, searchQuery, activeTab]);
 
   const totalWorkers = workerCheckIns.length;
 
-  const formatLastUpdated = () => {
-    const now = new Date();
-    const diff = Math.floor((now.getTime() - lastUpdated.getTime()) / 1000);
-    if (diff < 60) return 'Just now';
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    return lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
-
-  const getInitials = (name: string, fallback?: string) => {
-    if (fallback) return fallback;
-    return name
-      .split(' ')
-      .map((p) => p[0])
-      .join('')
-      .slice(0, 2)
-      .toUpperCase();
-  };
+  // The hero reports the NEWEST real position across the team, not when the
+  // page last refetched: "Updated just now" was green with every row hours old.
+  const newestFresh = useMemo(() => {
+    const ages = workerCheckIns
+      .map((c) => c.fresh)
+      .filter((f): f is Freshness => !!f)
+      .sort((a, b) => a.ageMs - b.ageMs);
+    return ages[0] ?? null;
+  }, [workerCheckIns]);
+  const heroLive =
+    newestFresh && newestFresh.tone
+      ? {
+          label: `Latest position ${inLine(newestFresh.label)}`,
+          tone: newestFresh.tone === 'emerald' ? ('green' as Tone) : newestFresh.tone,
+        }
+      : undefined;
 
   const isLoading = employeesLoading || locationsLoading;
 
@@ -373,64 +440,224 @@ export function WorkerTrackingSection() {
   }
   const helpAsk = { page: 'tracking', tab: isMobile ? `${viewMode}:${activeTab}` : activeTab };
 
+  // One live line: who is out, then how fresh the newest real position is
+  // (from the data's own timestamp, never the refetch time: ELE-1956).
+  const out = [
+    statusCounts.onSite > 0 ? `${statusCounts.onSite} on site` : null,
+    statusCounts.enRoute > 0 ? `${statusCounts.enRoute} travelling` : null,
+    statusCounts.office > 0 ? `${statusCounts.office} in the office` : null,
+  ].filter(Boolean);
+  const freshLine = heroLive
+    ? `${heroLive.label}.`
+    : newestFresh
+      ? `No live positions, last one ${inLine(newestFresh.label)}.`
+      : 'No positions yet.';
+  const liveLine = isLoading
+    ? 'Where the team is right now.'
+    : locationsFailed
+      ? 'Positions did not load, so this may be out of date. Pull down or tap refresh.'
+    : totalWorkers === 0
+      ? 'Nobody on the team to track yet.'
+      : `${out.length ? out.join(', ') : 'Nobody checked in'}. ${freshLine}`;
+
+  // How fresh a position is, in words. Only a live one (under an hour) gets
+  // colour: a solid yellow dot. Older ones are plain white, not a rainbow.
+  const fresh = (f: Freshness | null) =>
+    f ? (
+      f.tone === 'emerald' ? (
+        <span className="inline-flex items-center gap-1.5 text-white">
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+          Live, {inLine(f.label)}
+        </span>
+      ) : (
+        <span className="text-white">
+          {f.tone ? `Position ${inLine(f.label)}` : `Last position ${f.label}`}
+        </span>
+      )
+    ) : null;
+
+  const showList = !isMobile || viewMode === 'list';
+  const showMap = !isMobile || viewMode === 'map';
+
+  // The person picked on the list or the map (by employee). The map moves to
+  // them and their row opens with the rest of what you can do.
+  const picked = workerCheckIns.find((c) => c.id === pickedId) ?? null;
+  const pickedHasPos = !!picked && picked.lat != null && picked.lng != null && !picked.noFix;
+  const pick = (id: string | null) => setPickedId((cur) => (cur === id ? null : id));
+  const onMapPick = (locationId: string | null) => {
+    const who = locationId ? workerCheckIns.find((c) => c.locationId === locationId) : null;
+    setPickedId(who?.id ?? null);
+    if (who && !isMobile) {
+      document.getElementById(`trk-${who.id}`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  };
+
+  // Job sites on the map: today's work (active or pending), plus any job
+  // someone is checked in to. Finished, cancelled and template jobs stay off,
+  // or a firm with a year of history gets a map full of old pins.
+  const liveJobIds = new Set(mapLocations.map((l) => l.job_id).filter(Boolean));
+  const mapJobs = jobsData.filter(
+    (j) =>
+      !j.is_template &&
+      !j.archived_at &&
+      (j.status === 'Active' || j.status === 'Pending' || liveJobIds.has(j.id))
+  );
+
+  // The map shows whoever the list shows, so a filter reads the same on both
+  const shownIds = new Set(filteredCheckIns.map((c) => c.id));
+  const shownOnMap = mapLocations.filter((l) => shownIds.has(l.employee_id));
+
+  // A card filters the list; tapping it again shows everyone
+  const filterTo = (tab: string) => setActiveTab((cur) => (cur === tab ? 'all' : tab));
+  const notWorking = statusCounts.offDuty + statusCounts.onLeave;
+  const peopleOut = statusCounts.onSite + statusCounts.enRoute + statusCounts.office;
+
+  const FILTER_WORDS: Record<string, string> = {
+    onsite: 'on site',
+    enroute: 'travelling',
+    office: 'in the office',
+    away: 'not working',
+    offduty: 'off duty',
+    onleave: 'on leave',
+  };
+
+  const badge = (c: (typeof workerCheckIns)[number], size: 'md' | 'lg' = 'md') => {
+    const ring = !!STATUS_RING[c.status];
+    return (
+      <span
+        aria-hidden
+        className={cn(
+          'flex shrink-0 items-center justify-center rounded-full font-bold tracking-tight',
+          size === 'lg' ? 'h-12 w-12 text-[14px]' : 'h-10 w-10 text-[12.5px]'
+        )}
+        style={{
+          background: ring ? '#141414' : (STATUS_COLOURS[c.status] ?? STATUS_COLOURS['Off Duty']),
+          color: statusInk(c.status),
+          boxShadow: ring ? 'inset 0 0 0 2px #fff' : undefined,
+        }}
+      >
+        {(c.avatar || initialsOf(c.employeeName)).slice(0, 3).toUpperCase()}
+      </span>
+    );
+  };
+
+  const whenLine = (c: (typeof workerCheckIns)[number]) =>
+    c.checkInTime
+      ? c.isStale
+        ? c.checkInTime // already reads "Last seen Tue 15 Jan"
+        : `Checked in ${c.checkInTime}`
+      : 'No check-in today';
+
+  // Any open row can be closed: On Site, En Route and Office are live shifts,
+  // and stale rows (forgotten check-outs) especially need it
+  const canCheckOutOf = (c: (typeof workerCheckIns)[number]) =>
+    !!c.locationId && (['On Site', 'En Route', 'Office'].includes(c.status) || c.isStale);
+
+  const contactButtons = (c: (typeof workerCheckIns)[number]) => (
+    <>
+      {c.phone && (
+        <button
+          type="button"
+          onClick={() => handleCall(c.phone!)}
+          className={rowIconBtn}
+          aria-label={`Call ${c.employeeName}`}
+        >
+          <Phone className="h-4 w-4" />
+        </button>
+      )}
+      <button
+        type="button"
+        onClick={() => handleMessage(c.employeeId, c.employeeName)}
+        className={rowIconBtn}
+        aria-label={`Message ${c.employeeName}`}
+      >
+        <MessageSquare className="h-4 w-4" />
+      </button>
+    </>
+  );
+
+  const checkOutButton = (c: (typeof workerCheckIns)[number]) =>
+    canCheckOutOf(c) ? (
+      <button
+        type="button"
+        // Two taps: the first asks, the second ends their shift. One stray tap
+        // on a phone must not clock someone off site.
+        onClick={() => {
+          if (confirmOutId === c.id) {
+            setConfirmOutId(null);
+            handleCheckOut(c.locationId!, c.employeeName);
+          } else {
+            setConfirmOutId(c.id);
+          }
+        }}
+        disabled={checkOutMutation.isPending}
+        className={cn(
+          'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl border px-3.5 text-[13px] font-semibold touch-manipulation disabled:opacity-50',
+          confirmOutId === c.id
+            ? 'border-white bg-white text-black'
+            : 'border-white/[0.14] bg-white/[0.04] text-white hover:bg-white/[0.08]'
+        )}
+      >
+        <LogOut className="h-4 w-4" />
+        {confirmOutId === c.id ? `Yes, check ${c.employeeName.split(' ')[0]} out` : 'Check out'}
+      </button>
+    ) : null;
+
   const content = (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="Operations"
-        title="Worker Tracking"
-        description="Live GPS, check-ins and location history."
-        tone="cyan"
-        live={{ label: `Updated ${formatLastUpdated()}`, tone: 'green' }}
+        title="Worker tracking"
+        description={liveLine}
         actions={
-          <>
-            {isMobile && (
-              <>
-                <IconButton
-                  onClick={() => setViewMode('list')}
-                  aria-label="List view"
-                  className={
-                    viewMode === 'list' ? 'bg-elec-yellow text-black border-elec-yellow' : ''
-                  }
-                >
-                  <List className="h-4 w-4" />
-                </IconButton>
-                <IconButton
-                  onClick={() => setViewMode('map')}
-                  aria-label="Map view"
-                  className={
-                    viewMode === 'map' ? 'bg-elec-yellow text-black border-elec-yellow' : ''
-                  }
-                >
-                  <MapIcon className="h-4 w-4" />
-                </IconButton>
-              </>
-            )}
-            <span className="contents" data-help="tracking.checkin">
-              <IconButton onClick={() => setIsCheckInOpen(true)} aria-label="Check in worker">
-                <UserPlus className="h-4 w-4" />
-              </IconButton>
-            </span>
-            <IconButton onClick={handleRefresh} disabled={locationsLoading} aria-label="Refresh">
-              <RefreshCw className={locationsLoading ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
-            </IconButton>
+          <HeroActions>
+            <HeroPrimary
+              data-help="tracking.checkin"
+              onClick={() => setIsCheckInOpen(true)}
+              icon={<UserPlus className="h-4 w-4" />}
+            >
+              Check in worker
+            </HeroPrimary>
             <PageHelpButton help={TRACKING_HELP} blockers={helpBlockers} askContext={helpAsk} />
-          </>
+            <RefreshIcon onClick={handleRefresh} spinning={locationsLoading} />
+          </HeroActions>
         }
       />
 
       <HowItWorks help={TRACKING_HELP} blockers={helpBlockers} askContext={helpAsk} />
 
-      <StatStrip
-        columns={4}
+      <StatCards
         stats={[
-          { label: 'On site', value: statusCounts.onSite, tone: 'emerald' },
-          { label: 'Travelling', value: statusCounts.enRoute, tone: 'blue' },
-          { label: 'Office', value: statusCounts.office, tone: 'amber' },
           {
-            label: 'Off duty / leave',
-            value: statusCounts.offDuty + statusCounts.onLeave,
-            tone: 'purple',
-            sub: statusCounts.onLeave > 0 ? `${statusCounts.onLeave} on leave` : undefined,
+            label: 'On site',
+            value: statusCounts.onSite,
+            sub: totalWorkers > 0 ? `of ${plural(totalWorkers, 'person', 'people')}` : 'Nobody yet',
+            progress: totalWorkers > 0 ? statusCounts.onSite / totalWorkers : undefined,
+            selected: activeTab === 'onsite',
+            onOpen: () => filterTo('onsite'),
+          },
+          {
+            label: 'Travelling',
+            value: statusCounts.enRoute,
+            sub: 'On the way to a job',
+            selected: activeTab === 'enroute',
+            onOpen: () => filterTo('enroute'),
+          },
+          {
+            label: 'In the office',
+            value: statusCounts.office,
+            sub: 'At the office',
+            selected: activeTab === 'office',
+            onOpen: () => filterTo('office'),
+          },
+          {
+            label: 'Not working',
+            value: notWorking,
+            sub:
+              statusCounts.onLeave > 0
+                ? `${statusCounts.offDuty} off duty, ${statusCounts.onLeave} on leave`
+                : 'Off duty now',
+            selected: ['away', 'offduty', 'onleave'].includes(activeTab),
+            onOpen: () => filterTo('away'),
           },
         ]}
       />
@@ -439,305 +666,427 @@ export function WorkerTrackingSection() {
         <LoadingBlocks />
       ) : (
         <>
-          {(!isMobile || viewMode === 'map') && (
-            <ListCard>
-              <ListCardHeader
-                tone="cyan"
-                title="Live map"
-                meta={
-                  <Pill tone="cyan">
-                    {totalWorkers} {totalWorkers === 1 ? 'worker' : 'workers'}
-                  </Pill>
+          {/* Phone: the list or the map, switched here */}
+          {isMobile && (
+            <Segments<'list' | 'map'>
+              quiet
+              items={[
+                { value: 'list', label: 'List' },
+                { value: 'map', label: 'Map' },
+              ]}
+              value={viewMode}
+              onChange={(v) => {
+                setViewMode(v);
+                if (v === 'map') {
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById('trk-map')
+                        ?.scrollIntoView({ block: 'start', behavior: 'smooth' }),
+                    60
+                  );
                 }
-              />
-              <div className="p-4 sm:p-5">
+              }}
+            />
+          )}
+
+          {/* Desktop: the team down the left, the map as the page's main
+              panel; both the same height so the page ends on one line */}
+          <div className="grid gap-4 lg:grid-cols-[minmax(340px,400px)_minmax(0,1fr)] lg:items-stretch xl:gap-5">
+            {showList && (
+              <section
+                data-help="tracking.list"
+                className={cn(areaCard, 'flex min-w-0 flex-col overflow-hidden', TRACK_H)}
+              >
+                <div className="space-y-3 border-b border-white/[0.07] px-4 pb-3 pt-4 sm:px-5">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h2 className="text-[17px] font-semibold tracking-tight text-white">Team</h2>
+                    <span className="text-[13px] text-white">
+                      {filteredCheckIns.length === totalWorkers
+                        ? plural(totalWorkers, 'person', 'people')
+                        : `${filteredCheckIns.length} of ${totalWorkers}`}
+                    </span>
+                  </div>
+                  <SearchField
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    placeholder="Search people or jobs"
+                  />
+                  {activeTab !== 'all' && (
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-[13px] text-white">
+                        Showing people {FILTER_WORDS[activeTab] ?? activeTab}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('all')}
+                        className="-my-2 h-11 shrink-0 text-[13.5px] font-semibold text-elec-yellow touch-manipulation hover:underline underline-offset-4"
+                      >
+                        Show everyone
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {filteredCheckIns.length === 0 ? (
+                  <div className="flex flex-1 flex-col items-start justify-center gap-3 px-4 py-8 sm:px-5">
+                    <p className="text-[15px] font-semibold text-white">
+                      {searchQuery || activeTab !== 'all' ? 'Nobody matches' : 'No one to track yet'}
+                    </p>
+                    <p className="text-[13.5px] leading-snug text-white">
+                      {searchQuery || activeTab !== 'all'
+                        ? 'Clear the search or the filter to see the whole team.'
+                        : 'Add your team and they show here, with where they are and what they are on.'}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (searchQuery || activeTab !== 'all') {
+                          setSearchQuery('');
+                          setActiveTab('all');
+                        } else {
+                          navigate('/employer?section=team');
+                        }
+                      }}
+                      className="h-11 rounded-xl border border-white/[0.14] bg-white/[0.04] px-4 text-[13.5px] font-semibold text-white hover:bg-white/[0.08] touch-manipulation"
+                    >
+                      {searchQuery || activeTab !== 'all' ? 'Show everyone' : 'Open the team'}
+                    </button>
+                  </div>
+                ) : (
+                  <ul className="divide-y divide-white/[0.07] lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+                    {filteredCheckIns.map((c) => {
+                      const on = pickedId === c.id;
+                      // A check-in with no coordinates: said plainly, never
+                      // pinned anywhere (ELE-1956)
+                      const unknown = c.noFix && !c.isStale;
+                      const hasPos = c.lat != null && c.lng != null && !c.noFix;
+                      return (
+                        <li
+                          key={c.id}
+                          id={`trk-${c.id}`}
+                          className={cn(
+                            'relative transition-colors',
+                            on ? 'bg-white/[0.06]' : 'hover:bg-white/[0.03]'
+                          )}
+                        >
+                          {on && (
+                            <span aria-hidden className="absolute inset-y-0 left-0 w-[3px] bg-elec-yellow" />
+                          )}
+                          <div className="flex items-center gap-3 px-4 py-3 sm:px-5">
+                            <button
+                              type="button"
+                              onClick={() => pick(c.id)}
+                              aria-expanded={on}
+                              className="flex min-w-0 flex-1 items-center gap-3 text-left touch-manipulation"
+                            >
+                              {badge(c)}
+                              <span className="min-w-0 flex-1">
+                                <span className="block truncate text-[15px] font-semibold leading-snug text-white">
+                                  {c.employeeName}
+                                </span>
+                                <span className="mt-0.5 block truncate text-[13px] text-white">
+                                  <span className="font-medium">
+                                    {STATUS_LABEL[c.status] ?? c.status}
+                                  </span>
+                                  {c.jobTitle && ` · ${c.jobTitle}`}
+                                </span>
+                                <span className="mt-0.5 block truncate text-[12.5px] text-white">
+                                  {c.fresh ? fresh(c.fresh) : whenLine(c)}
+                                  {unknown && ' · Location unknown'}
+                                </span>
+                              </span>
+                            </button>
+                            {/* Call and message on both form factors: a phone
+                                is where calling a worker matters most */}
+                            <div className="flex shrink-0 items-center gap-2">{contactButtons(c)}</div>
+                          </div>
+                          {on && (
+                            <div className="flex flex-wrap items-center gap-2 px-4 pb-3.5 pl-[4.25rem] sm:px-5 sm:pl-[4.75rem]">
+                              <p className="w-full text-[13px] leading-snug text-white">
+                                {[c.role, c.fresh ? whenLine(c) : null].filter(Boolean).join(' · ')}
+                                {!hasPos && !c.isStale && '. No position to show on the map.'}
+                              </p>
+                              {isMobile && hasPos && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setViewMode('map');
+                                    // Land on the map, not wherever the list was scrolled to
+                                    setTimeout(
+                                      () =>
+                                        document
+                                          .getElementById('trk-map')
+                                          ?.scrollIntoView({ block: 'start', behavior: 'smooth' }),
+                                      60
+                                    );
+                                  }}
+                                  className="h-11 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation"
+                                >
+                                  See on the map
+                                </button>
+                              )}
+                              {checkOutButton(c)}
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </section>
+            )}
+
+            {showMap && (
+              <section
+                id="trk-map"
+                className={cn(areaCard, 'flex min-w-0 scroll-mt-28 flex-col overflow-hidden', TRACK_H)}
+              >
+                <div className="flex min-h-[56px] items-center gap-3 border-b border-white/[0.07] px-4 sm:px-5">
+                  <h2 className="text-[17px] font-semibold tracking-tight text-white">Map</h2>
+                  <span className="min-w-0 flex-1 truncate text-[13px] text-white">
+                    {plural(
+                      shownOnMap.filter((l) => l.lat != null && l.lng != null).length,
+                      'person',
+                      'people'
+                    )}{' '}
+                    and {plural(mapJobs.filter((j) => j.lat != null && j.lng != null).length, 'job site', 'job sites')}
+                  </span>
+                </div>
                 <GoogleMapsProvider>
                   <LiveWorkerMap
-                    workerLocations={mapLocations}
-                    jobs={jobsData}
+                    className="flex min-h-0 flex-1 flex-col"
+                    mapClassName="h-[58vh] min-h-[340px] lg:h-auto lg:min-h-0 lg:flex-1"
+                    workerLocations={shownOnMap}
+                    jobs={mapJobs}
                     officeLocation={officeLocation}
                     onRefresh={handleRefresh}
                     isLoading={locationsLoading || jobsLoading}
+                    hideSummary
+                    selectedWorkerId={pickedHasPos ? (picked!.locationId ?? null) : null}
+                    onSelectWorker={onMapPick}
+                    overlay={
+                      isMobile && picked ? (
+                        <div className="rounded-2xl border border-white/[0.14] bg-[#141414]/95 p-3.5 shadow-2xl backdrop-blur">
+                          <div className="flex items-center gap-3">
+                            {badge(picked)}
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate text-[15px] font-semibold text-white">
+                                {picked.employeeName}
+                              </p>
+                              <p className="truncate text-[12.5px] text-white">
+                                {STATUS_LABEL[picked.status] ?? picked.status}
+                                {picked.jobTitle && ` · ${picked.jobTitle}`}
+                              </p>
+                              <p className="truncate text-[12.5px] text-white">
+                                {picked.fresh ? fresh(picked.fresh) : whenLine(picked)}
+                              </p>
+                            </div>
+                            <button
+                              type="button"
+                              aria-label="Close"
+                              onClick={() => setPickedId(null)}
+                              className="-mr-1.5 -mt-6 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white hover:bg-white/[0.08] touch-manipulation"
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                          </div>
+                          <div className="mt-3 flex flex-wrap items-center gap-2">
+                            {contactButtons(picked)}
+                            {checkOutButton(picked)}
+                          </div>
+                        </div>
+                      ) : undefined
+                    }
+                    emptyNote={
+                      peopleOut === 0 ? (
+                        <>
+                          <p className="font-semibold">Nobody is out right now</p>
+                          <p className="mt-1">
+                            People appear here when they set On site or En route in Worker Tools,
+                            or when you check them in to a job.
+                          </p>
+                        </>
+                      ) : !shownOnMap.some((l) => l.lat != null && l.lng != null) ? (
+                        <p>Nobody in this view has a position on the map.</p>
+                      ) : undefined
+                    }
                   />
                 </GoogleMapsProvider>
-              </div>
-            </ListCard>
-          )}
+              </section>
+            )}
+          </div>
 
-          {(!isMobile || viewMode === 'list') && (
-            <>
-              <FilterBar
-                tabs={[
-                  { value: 'all', label: 'All', count: totalWorkers },
-                  { value: 'onsite', label: 'On site', count: statusCounts.onSite },
-                  { value: 'enroute', label: 'Travelling', count: statusCounts.enRoute },
-                  { value: 'office', label: 'Office', count: statusCounts.office },
-                  { value: 'offduty', label: 'Off duty', count: statusCounts.offDuty },
-                  { value: 'onleave', label: 'On leave', count: statusCounts.onLeave },
-                ]}
-                activeTab={activeTab}
-                onTabChange={setActiveTab}
-                search={searchQuery}
-                onSearchChange={setSearchQuery}
-                searchPlaceholder="Search workers or jobs…"
-              />
-
-              <div data-help="tracking.list">
-              <ListCard>
-                <ListCardHeader
-                  tone="cyan"
-                  title="Workers"
-                  meta={<Pill tone="cyan">{filteredCheckIns.length}</Pill>}
-                />
-                {filteredCheckIns.length === 0 ? (
-                  <div className="p-5">
-                    <EmptyState
-                      title="No workers found"
-                      description={
-                        searchQuery || activeTab !== 'all'
-                          ? 'Try clearing filters to see all workers.'
-                          : 'Add employees to start tracking their locations.'
-                      }
-                      action={searchQuery || activeTab !== 'all' ? 'Clear filters' : undefined}
-                      onAction={
-                        searchQuery || activeTab !== 'all'
-                          ? () => {
-                              setSearchQuery('');
-                              setActiveTab('all');
-                            }
-                          : undefined
-                      }
-                    />
-                  </div>
-                ) : (
-                  <ListBody>
-                    {filteredCheckIns.map((checkIn) => {
-                      const tone = STATUS_TONE[checkIn.status] ?? 'amber';
-                      const lastSeen = checkIn.checkInTime ?? '—';
-                      const subtitleParts = [
-                        checkIn.role,
-                        checkIn.jobTitle,
-                        checkIn.checkInTime
-                          ? checkIn.isStale
-                            ? checkIn.checkInTime // already reads "Last seen Tue 15 Jan"
-                            : `Checked in ${checkIn.checkInTime}`
-                          : 'No check-in today',
-                      ].filter(Boolean);
-
-                      return (
-                        <ListRow
-                          key={checkIn.id}
-                          accent={tone}
-                          lead={
-                            <Avatar
-                              initials={getInitials(checkIn.employeeName, checkIn.avatar)}
-                              online={checkIn.status === 'On Site' || checkIn.status === 'En Route'}
-                            />
-                          }
-                          title={checkIn.employeeName}
-                          subtitle={subtitleParts.join(' · ')}
-                          trailing={
-                            <>
-                              <Pill tone={tone}>{checkIn.status}</Pill>
-                              <span className="hidden sm:inline text-[11px] text-white tabular-nums">
-                                {lastSeen}
-                              </span>
-                              {/* Actions on BOTH form factors — a phone is where
-                                  calling a worker matters most; these were
-                                  desktop-only, leaving mobile rows dead ends */}
-                              {checkIn.phone && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleCall(checkIn.phone!);
-                                  }}
-                                  className="h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
-                                  aria-label={`Call ${checkIn.employeeName}`}
-                                >
-                                  <Phone className="h-4 w-4" />
-                                </button>
-                              )}
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleMessage(checkIn.employeeId, checkIn.employeeName);
-                                }}
-                                className="h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
-                                aria-label={`Message ${checkIn.employeeName}`}
-                              >
-                                <MessageSquare className="h-4 w-4" />
-                              </button>
-                              {/* Any open row can be closed — On Site, En Route
-                                  and Office are all live shifts, and stale rows
-                                  (forgotten check-outs) especially need it */}
-                              {checkIn.locationId &&
-                                (['On Site', 'En Route', 'Office'].includes(checkIn.status) ||
-                                  checkIn.isStale) && (
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleCheckOut(checkIn.locationId!, checkIn.employeeName);
-                                    }}
-                                    disabled={checkOutMutation.isPending}
-                                    className="h-11 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium flex items-center gap-1.5 hover:bg-white/[0.08] touch-manipulation disabled:opacity-50"
-                                  >
-                                    <LogOut className="h-3.5 w-3.5" />
-                                    Check out
-                                  </button>
-                                )}
-                            </>
-                          }
-                        />
-                      );
-                    })}
-                  </ListBody>
-                )}
-              </ListCard>
-              </div>
-            </>
-          )}
         </>
       )}
 
-      {isMobile && viewMode === 'list' && (
-        <div className="fixed bottom-24 right-4 z-40 flex flex-col gap-3">
-          <button
-            onClick={() => setIsCheckInOpen(true)}
-            className="h-14 w-14 rounded-full shadow-lg bg-elec-yellow text-black flex items-center justify-center touch-manipulation"
-            aria-label="Check in worker"
+      <FormSheet
+        open={isCheckInOpen}
+        onOpenChange={setIsCheckInOpen}
+        width="wide"
+        title="Check in worker"
+        description="Record a worker's arrival at a job site. They are pinned at the job's address, never at your own location."
+        bodyClassName="grid gap-5 lg:grid-cols-2 lg:items-start"
+        footer={
+          <PrimaryButton
+            data-help="tracking.checkin-go"
+            onClick={handleCheckIn}
+            disabled={!selectedEmployee || !selectedJob || checkingIn}
+            fullWidth
           >
-            <UserPlus className="h-6 w-6" />
-          </button>
-          {filteredCheckIns.length > 0 && (
-            <button
-              onClick={() => setViewMode('map')}
-              className="h-14 w-14 rounded-full shadow-lg bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center touch-manipulation"
-              aria-label="Open map"
-            >
-              <MapPin className="h-6 w-6" />
-            </button>
+            {checkingIn && <RefreshCw className="mr-2 h-4 w-4 animate-spin" />}
+            Check in to site
+          </PrimaryButton>
+        }
+      >
+        {/* One tap each: the people and the jobs as lists, not two dropdowns
+            hiding everything until opened */}
+        <div className="min-w-0">
+          <div className="mb-2.5 flex items-baseline justify-between gap-3">
+            <h3 className="text-[15px] font-semibold text-white">Who</h3>
+            <span className="text-[13px] text-white">{plural(checkInPeople.length, 'person', 'people')}</span>
+          </div>
+          {checkInPeople.length > 8 && (
+            <div className="mb-2.5">
+              <SearchField value={pickWorkerQ} onChange={setPickWorkerQ} placeholder="Find a person" />
+            </div>
+          )}
+          {checkInPeople.length === 0 ? (
+            <p className="text-[13.5px] text-white">Nobody active on the team yet.</p>
+          ) : (
+            <div className="space-y-2 lg:max-h-[52vh] lg:overflow-y-auto lg:pr-1">
+              {checkInPeople
+                .filter((e) => e.name.toLowerCase().includes(pickWorkerQ.toLowerCase()))
+                .map((e) => {
+                  const on = selectedEmployee === e.id;
+                  const now_ = workerCheckIns.find((c) => c.id === e.id);
+                  return (
+                    <button
+                      key={e.id}
+                      type="button"
+                      onClick={() => setSelectedEmployee(e.id)}
+                      aria-pressed={on}
+                      className={choiceRow(on)}
+                    >
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14.5px] font-semibold">{e.name}</span>
+                        <span className="block truncate text-[12.5px]">
+                          {now_
+                            ? `${STATUS_LABEL[now_.status] ?? now_.status}${now_.jobTitle ? ` · ${now_.jobTitle}` : ''}`
+                            : e.team_role}
+                        </span>
+                      </span>
+                      {on && <Check className="h-5 w-5 shrink-0" aria-hidden />}
+                    </button>
+                  );
+                })}
+            </div>
           )}
         </div>
-      )}
 
-      <Sheet open={isCheckInOpen} onOpenChange={setIsCheckInOpen}>
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[70vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06]'
-              : 'bg-[hsl(0_0%_10%)] border-white/[0.06]'
-          }
-        >
-          <SheetHeader>
-            <SheetTitle className="flex items-center gap-2 text-white">
-              <LogIn className="h-5 w-5 text-elec-yellow" />
-              Check in worker
-            </SheetTitle>
-            <SheetDescription className="text-white">
-              Record a worker's arrival at a job site.
-            </SheetDescription>
-          </SheetHeader>
-
-          <div className="space-y-6 mt-6">
-            <div className="space-y-2">
-              <Label className="text-white">Select worker</Label>
-              <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Choose a worker…" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {employees
-                    .filter((emp) => emp.status === 'active' || emp.status === 'Active')
-                    .map((emp) => (
-                      <SelectItem key={emp.id} value={emp.id}>
-                        {emp.name}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-white">Select job site</Label>
-              <Select value={selectedJob} onValueChange={setSelectedJob}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Choose a job…" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {jobsData
-                    .filter((job) => job.status === 'Active' || job.status === 'Pending')
-                    .map((job) => (
-                      <SelectItem key={job.id} value={job.id}>
-                        {job.title}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <PrimaryButton
-              data-help="tracking.checkin-go"
-              onClick={handleCheckIn}
-              disabled={!selectedEmployee || !selectedJob || checkInMutation.isPending}
-              fullWidth
-              size="lg"
-            >
-              {checkInMutation.isPending ? (
-                <RefreshCw className="h-4 w-4 animate-spin mr-2" />
-              ) : (
-                <LogIn className="h-4 w-4 mr-2" />
-              )}
-              Check in to site
-            </PrimaryButton>
+        <div className="min-w-0">
+          <div className="mb-2.5 flex items-baseline justify-between gap-3">
+            <h3 className="text-[15px] font-semibold text-white">Which job</h3>
+            <span className="text-[13px] text-white">{plural(checkInJobs.length, 'job', 'jobs')}</span>
           </div>
-        </SheetContent>
-      </Sheet>
+          {checkInJobs.length > 6 && (
+            <div className="mb-2.5">
+              <SearchField value={pickJobQ} onChange={setPickJobQ} placeholder="Find a job, client or address" />
+            </div>
+          )}
+          {checkInJobs.length === 0 ? (
+            <div className="space-y-3">
+              <p className="text-[13.5px] leading-snug text-white">
+                No active or pending jobs to check in to. Start a job and it shows here.
+              </p>
+              <button
+                type="button"
+                onClick={() => navigate('/employer?section=jobs')}
+                className="h-11 rounded-xl border border-white/[0.14] bg-white/[0.04] px-4 text-[13.5px] font-semibold text-white hover:bg-white/[0.08] touch-manipulation"
+              >
+                Open jobs
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-2 lg:max-h-[52vh] lg:overflow-y-auto lg:pr-1">
+              {checkInJobs
+                .filter((j) =>
+                  [j.title, j.client, j.location]
+                    .filter(Boolean)
+                    .join(' ')
+                    .toLowerCase()
+                    .includes(pickJobQ.toLowerCase())
+                )
+                .map((j) => {
+                  const on = selectedJob === j.id;
+                  return (
+                    <button
+                      key={j.id}
+                      type="button"
+                      onClick={() => setSelectedJob(j.id)}
+                      aria-pressed={on}
+                      className={choiceRow(on)}
+                    >
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14.5px] font-semibold">{j.title}</span>
+                        <span className="block truncate text-[12.5px]">
+                          {[j.client, j.location?.trim()].filter(Boolean).join(' · ') || 'No address'}
+                        </span>
+                      </span>
+                      {on && <Check className="h-5 w-5 shrink-0" aria-hidden />}
+                    </button>
+                  );
+                })}
+            </div>
+          )}
+        </div>
 
-      {/* Message composer — replaces window.prompt */}
-      <Sheet open={!!messageTarget} onOpenChange={(open) => !open && setMessageTarget(null)}>
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-auto rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] p-0'
-              : 'w-full sm:max-w-md bg-[hsl(0_0%_10%)] border-l border-white/[0.06] p-0'
-          }
-        >
-          <SheetHeader className="px-5 py-4 border-b border-white/[0.06] text-left">
-            <SheetTitle className="text-white text-[15px] font-semibold">
-              Message {messageTarget?.name}
-            </SheetTitle>
-            <SheetDescription className="text-white text-[12px]">
-              Lands in their Worker Tools comms with a push notification.
-            </SheetDescription>
-          </SheetHeader>
-          <div className="p-5 space-y-4">
-            <textarea
-              value={messageText}
-              onChange={(e) => setMessageText(e.target.value)}
-              placeholder="Type your message…"
-              rows={4}
-              autoFocus
-              className={textareaClass}
-            />
-            <PrimaryButton
-              onClick={sendWorkerMessage}
-              disabled={!messageText.trim() || isSending}
-              fullWidth
-            >
-              {isSending ? <RefreshCw className="h-4 w-4 animate-spin mr-2" /> : null}
-              Send message
-            </PrimaryButton>
+        {checkInJob && (
+          <div className={cn(panel, 'px-4 py-3.5 sm:px-5 lg:col-span-2')}>
+            <p className="text-[13px] font-semibold text-white">Where they pin</p>
+            <p className="mt-0.5 break-words text-[14px] leading-snug text-white">
+              {checkInJob.lat != null && checkInJob.lng != null
+                ? `Pins at ${checkInJob.location?.trim() || 'the job site'}`
+                : canGeocode(checkInJob.location)
+                  ? `Pins at ${checkInJob.location.trim()}. We'll find it on the map and save it to the job.`
+                  : checkInJob.location?.trim()
+                    ? `"${checkInJob.location.trim()}" has no postcode, so the check-in is recorded with the location unknown. Add the postcode to the job to pin it.`
+                    : 'This job has no address, so the check-in is recorded with the location unknown. Add an address with its postcode to pin it.'}
+            </p>
           </div>
-        </SheetContent>
-      </Sheet>
+        )}
+      </FormSheet>
+
+      {/* Message composer, replacing window.prompt */}
+      <FormSheet
+        open={!!messageTarget}
+        onOpenChange={(open) => !open && setMessageTarget(null)}
+        width="wide"
+        title={`Message ${messageTarget?.name ?? ''}`}
+        description="Lands in their Worker Tools comms with a push notification."
+        footer={
+          <PrimaryButton
+            onClick={sendWorkerMessage}
+            disabled={!messageText.trim() || isSending}
+            fullWidth
+          >
+            {isSending ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : null}
+            Send message
+          </PrimaryButton>
+        }
+      >
+        <textarea
+          value={messageText}
+          onChange={(e) => setMessageText(e.target.value)}
+          placeholder="Type your message"
+          rows={5}
+          autoFocus
+          aria-label="Message"
+          className={textareaClass}
+        />
+      </FormSheet>
     </PageFrame>
   );
 
-  return isMobile ? (
-    <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh>
-  ) : (
-    content
-  );
+  return isMobile ? <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh> : content;
 }

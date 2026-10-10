@@ -96,7 +96,7 @@ const DocumentationTab = () => {
         return {
           bg: 'bg-white/[0.06]',
           text: 'text-elec-yellow',
-          border: 'border-elec-yellow/30',
+          border: 'border-white/[0.14]',
         };
       case 'optional':
         return { bg: 'bg-white/[0.06]', text: 'text-green-400', border: 'border-green-500/30' };
@@ -183,7 +183,7 @@ const DocumentationTab = () => {
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Download className="h-5 w-5 text-elec-yellow" />
             </div>
             Certificate Templates

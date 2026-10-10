@@ -110,16 +110,16 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'Which standard sets the planning and installation practice for cable containment inside buildings, and is directly cited from BS 7671 §444.410?',
+      'Which standard sets the planning and installation practice for cable containment inside buildings, and is directly cited from BS 7671 §444.4.10?',
     options: [
       'BS 7430 — the code of practice for protective earthing of electrical installations.',
       'BS 5266 — the code of practice for emergency lighting of premises.',
       'BS 7909 — the code of practice for temporary electrical systems for entertainment.',
-      'BS EN 50174-2 — IT cabling installation: planning and practices inside buildings, cited from Reg 444.410.',
+      'BS EN 50174-2 — IT cabling installation: planning and practices inside buildings, cited from Reg 444.4.10.',
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 §444.410 explicitly cites BS EN 50174-1 (specification and QA), BS EN 50174-2 (planning and practice inside buildings) and BS EN 50310 (telecommunications bonding networks for buildings) as the standards to apply for control / signalling / communication circuits. §444.410 is the gateway clause that brings the EN 50174 / 50310 family directly into BS 7671 compliance.',
+      'BS 7671 §444.4.10 explicitly cites BS EN 50174-1 (specification and QA), BS EN 50174-2 (planning and practice inside buildings) and BS EN 50310 (telecommunications bonding networks for buildings) as the standards to apply for control / signalling / communication circuits. §444.4.10 is the gateway clause that brings the EN 50174 / 50310 family directly into BS 7671 compliance.',
   },
   {
     id: 4,
@@ -184,12 +184,12 @@ const quizQuestions = [
     options: [
       'Regulation 411.3.1.1 — protective earthing of exposed-conductive-parts via the CPC.',
       'Regulation 528.3.5 — restriction on wiring systems within a lift or hoist well.',
-      'Regulations 444.5.3.1 (containment in the EBN), 521.10.202 (fire-collapse support) and 444.410 together.',
+      'Regulations 444.5.3.1 (containment in the EBN), 521.10.202 (fire-collapse support) and 444.4.10 together.',
       'Regulation 543.7 — measures for circuits with high protective conductor currents.',
     ],
     correctAnswer: 2,
     explanation:
-      'Containment for data cabling sits at the intersection of three BS 7671 cites: §444.5.3.1 (metallic containment in the EBN), §521.10.202 (fire-collapse support, with steel containment deemed compliant per Note 2), and §444.410 (apply BS EN 50174-1 / -2 and BS EN 50310 for the install-practice detail). All three are required. None alone is the whole answer.',
+      'Containment for data cabling sits at the intersection of three BS 7671 cites: §444.5.3.1 (metallic containment in the EBN), §521.10.202 (fire-collapse support, with steel containment deemed compliant per Note 2), and §444.4.10 (apply BS EN 50174-1 / -2 and BS EN 50310 for the install-practice detail). All three are required. None alone is the whole answer.',
   },
   {
     id: 9,
@@ -328,7 +328,7 @@ const DataCablingModule4Section1 = () => {
           Basket tray, ladder rack, cable tray, conduit and trunking — the metallic and non-metallic
           containment families that carry data cabling through commercial buildings. With BS 7671
           §521.10.202 (support against premature fire collapse), §444.5.3.1 (metallic containment in
-          the equipotential bonding network) and §444.410 (apply BS EN 50174-1 / -2 and BS EN 50310)
+          the equipotential bonding network) and §444.4.10 (apply BS EN 50174-1 / -2 and BS EN 50310)
           all in scope from 15 April 2026.
         </p>
 
@@ -337,7 +337,7 @@ const DataCablingModule4Section1 = () => {
             'Containment for data cabling means basket tray (welded mesh — the default horizontal carrier), ladder rack (heavy-duty risers / comms rooms), cable tray (solid or perforated steel), conduit and trunking (enclosed pathways). Choose by mechanical protection, capacity, access for moves / adds / changes, and bundle thermal management for continuous PoE.',
             'BS 7671 §521.10.202 requires wiring systems to be supported such that they will not be liable to premature collapse in the event of a fire. Note 2 deems steel containment to meet the rule; Note 3 explicitly fails non-metallic cable ties or trunking as the SOLE means of support.',
             'BS 7671 §444.5.3.1 places metallic containment, conductive screens, sheaths and armouring of data cables into the equipotential bonding network. The basket / tray / trunking is part of the EBN — not free-floating metalwork. Joints electrically continuous; bonding path back to the MET (or MFET under §545).',
-            'BS EN 50174-2 (cited from §444.410) gives the planning rules — capacity, fill ratios, separation from power, access for moves / adds / changes. Industry practice: 40-50 percent first-fit fill, lateral access on basket, generous bend-radius space, and bundle sizes that respect manufacturer PoE de-rating curves.',
+            'BS EN 50174-2 (cited from §444.4.10) gives the planning rules — capacity, fill ratios, separation from power, access for moves / adds / changes. Industry practice: 40-50 percent first-fit fill, lateral access on basket, generous bend-radius space, and bundle sizes that respect manufacturer PoE de-rating curves.',
           ]}
         />
 
@@ -346,7 +346,7 @@ const DataCablingModule4Section1 = () => {
             'Identify the four common containment families (wire basket, ladder rack, cable tray, conduit / trunking) and select between them by mechanical protection, capacity, access and thermal management',
             'Cite BS 7671 §521.10.202 verbatim, including Notes 2-5, and apply Note 3 (non-metallic ties / trunking as sole support fail the rule) on a real install',
             'Cite BS 7671 §444.5.3.1 verbatim and explain why metallic containment, screens, sheaths and armouring of data cables sit in the equipotential bonding network',
-            'Apply §444.410 — bring BS EN 50174-1 (specification / QA), BS EN 50174-2 (planning / install) and BS EN 50310 (telecommunications bonding) into the BS 7671 compliance envelope',
+            'Apply §444.4.10 — bring BS EN 50174-1 (specification / QA), BS EN 50174-2 (planning / install) and BS EN 50310 (telecommunications bonding) into the BS 7671 compliance envelope',
             'Size a basket tray for capacity, including PoE bundle de-rating per TIA TSB-184-A and PD CLC/TR 50174-99-1:2015 (referenced from §716.523.1.101 Note 2)',
             'Plan basket / ladder routing around the §444.6.2 130 mm separation from HID / CFL lamps and against the Annex A444 Table A444.1 separation hierarchy from LV power',
             'Justify metallic containment over non-metallic on a continuous-PoE++ horizontal run, on heat dissipation, fire-collapse compliance and EBN-bonding grounds',
@@ -984,7 +984,7 @@ const DataCablingModule4Section1 = () => {
               fontWeight="700"
               fontFamily="system-ui"
             >
-              §444.410
+              §444.4.10
             </text>
             <text
               x="719"
@@ -1151,7 +1151,7 @@ const DataCablingModule4Section1 = () => {
 
         <ConceptBlock
           title="Sizing for the cabling life — not just for today"
-          plainEnglish="Containment capacity is a design parameter, not a finishing detail. BS EN 50174-2 (cited from §444.410) gives the planning rules. The competent design sizes containment for foreseeable moves, adds and changes (typically 40-50 percent fill at first fit), for proper bend-radius space, and for PoE bundle thermal management. Continuous-PoE++ work — Type 4 at up to 90 W PSE / 71.3 W PD per IEEE 802.3bt, capped at 750 mA per conductor by §716.523.2.101 — pushes bundle heat from theoretical to operational."
+          plainEnglish="Containment capacity is a design parameter, not a finishing detail. BS EN 50174-2 (cited from §444.4.10) gives the planning rules. The competent design sizes containment for foreseeable moves, adds and changes (typically 40-50 percent fill at first fit), for proper bend-radius space, and for PoE bundle thermal management. Continuous-PoE++ work — Type 4 at up to 90 W PSE / 71.3 W PD per IEEE 802.3bt, capped at 750 mA per conductor by §716.523.2.101 — pushes bundle heat from theoretical to operational."
           onSite="Walk the proposed basket route with two numbers in your head: the day-one cable count, and the year-five cable count. If they are close, your basket is undersized. If your basket cannot accept a third more cables without re-cutting the supports, you have built a one-shot install. The aim is to absorb a service refresh — additional APs, additional cameras, a second PoE-lighting circuit, a BMS sensor net — without lifting the basket."
         >
           <p>The factors that drive containment sizing:</p>
@@ -1372,7 +1372,7 @@ const DataCablingModule4Section1 = () => {
             'Four containment families: wire basket (default horizontal carrier), ladder rack (heavy-duty risers / comms rooms), cable tray (solid or perforated steel for protection / EMC), conduit and trunking (enclosed pathways for drops and concealment). Choose by job — not by stock.',
             '§521.10.202 — wiring systems shall not be liable to premature collapse in fire. Note 2: steel containment deemed compliant. Note 3: non-metallic ties / trunking as sole support fail. Note 4: steel or copper clips / saddles compliant.',
             '§444.5.3.1 — metallic containment, conductive screens, sheaths and armouring of data cables sit in the equipotential bonding network. Joints electrically continuous; bonding path to the MET (or MFET under §545).',
-            '§444.410 — apply BS EN 50174-1 (specification / QA), BS EN 50174-2 (planning / install) and BS EN 50310 (telecommunications bonding) for all control / signalling / communication circuits.',
+            '§444.4.10 — apply BS EN 50174-1 (specification / QA), BS EN 50174-2 (planning / install) and BS EN 50310 (telecommunications bonding) for all control / signalling / communication circuits.',
             'Size for the cabling life: 40-50 percent first-fit fill, lateral access, generous bend-radius space, PoE bundle de-rating per TIA TSB-184-A and PD CLC/TR 50174-99-1:2015. The containment outlives the cables — make it carry the next refresh.',
           ]}
         />

@@ -165,9 +165,7 @@ const FundingCalculator = () => {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-1"
       >
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Funding calculator
-        </span>
+        <span className="text-[13px] font-semibold text-white">Funding calculator</span>
         <h2 className="text-[18px] font-semibold text-white">Plan your study funding</h2>
       </motion.div>
 
@@ -183,7 +181,7 @@ const FundingCalculator = () => {
             className={cn(
               'flex items-center gap-3 p-3 rounded-xl text-left transition-colors touch-manipulation',
               'bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04]',
-              selectedType === type.id && 'border-elec-yellow/40 bg-white/[0.05]'
+              selectedType === type.id && 'border-white/[0.08] bg-white/[0.05]'
             )}
           >
             <div className="min-w-0 flex-1">
@@ -196,9 +194,7 @@ const FundingCalculator = () => {
       </div>
 
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Official resources
-        </span>
+        <span className="text-[13px] font-semibold text-white">Official resources</span>
         <div className="grid grid-cols-2 gap-2">
           {OFFICIAL_LINKS.map((link) => (
             <button
@@ -237,7 +233,7 @@ const FundingCalculator = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-5">
               {selectedType && (
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     {FUNDING_TYPES.find((t) => t.id === selectedType)?.title}
                   </span>
                   <p className="text-[14px] text-white mt-1">
@@ -322,17 +318,13 @@ const FundingCalculator = () => {
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Course cost
-                    </span>
+                    <span className="text-[13px] font-semibold text-white">Course cost</span>
                     <p className="text-[18px] font-semibold text-white">
                       £{result.totalCost.toLocaleString()}
                     </p>
                   </div>
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Available funding
-                    </span>
+                    <span className="text-[13px] font-semibold text-white">Available funding</span>
                     <p className="text-[18px] font-semibold text-white">
                       £{result.totalFunding.toLocaleString()}
                     </p>
@@ -341,12 +333,8 @@ const FundingCalculator = () => {
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Funding coverage
-                    </span>
-                    <span className="text-[12px] text-white font-mono">
-                      {result.coverage.toFixed(0)}%
-                    </span>
+                    <span className="text-[13px] font-semibold text-white">Funding coverage</span>
+                    <span className="text-[12px] text-white">{result.coverage.toFixed(0)}%</span>
                   </div>
                   <Progress value={result.coverage} className="h-1 bg-white/5" />
                   {result.fundingGap > 0 ? (
@@ -363,9 +351,7 @@ const FundingCalculator = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Funding sources
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Funding sources</span>
                   {result.sources.map((source, index) => (
                     <div
                       key={index}
@@ -375,16 +361,14 @@ const FundingCalculator = () => {
                         <p className="text-[14px] text-white">{source.name}</p>
                         <p className="text-[12px] text-white capitalize">{source.type}</p>
                       </div>
-                      <p className="text-[14px] text-white font-mono">
-                        £{source.amount.toLocaleString()}
-                      </p>
+                      <p className="text-[14px] text-white">£{source.amount.toLocaleString()}</p>
                     </div>
                   ))}
                 </div>
 
                 {result.monthlyRepayment > 0 && (
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    <span className="text-[13px] font-semibold text-white">
                       Estimated repayment
                     </span>
                     <p className="text-[24px] font-semibold text-white">
@@ -399,9 +383,7 @@ const FundingCalculator = () => {
                 )}
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Next steps
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Next steps</span>
                   <ul className="space-y-1.5 text-[14px] text-white leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />

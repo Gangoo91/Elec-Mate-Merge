@@ -130,8 +130,9 @@ const SheetContent = React.forwardRef<
           sheet therefore looks unchanged; only the tappable area grows.
         */}
         {!hideCloseButton && (
-          <SheetPrimitive.Close className="absolute right-0.5 top-0.5 h-11 w-11 flex items-center justify-center rounded-full opacity-70 transition-opacity hover:opacity-100 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-ring disabled:pointer-events-none touch-manipulation">
-            <X className="h-4 w-4" />
+          <SheetPrimitive.Close className="absolute right-0.5 top-0.5 h-11 w-11 flex items-center justify-center rounded-full text-white transition-colors hover:bg-white/[0.08] active:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-ring disabled:pointer-events-none touch-manipulation">
+            {/* Full white, 20px (10 Oct): opacity-70 read as grey. */}
+            <X className="h-5 w-5" />
             <span className="sr-only">Close</span>
           </SheetPrimitive.Close>
         )}

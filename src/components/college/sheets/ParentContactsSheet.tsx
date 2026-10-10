@@ -7,7 +7,7 @@ import {
   checkRowCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   fieldWideCn,
   grid2Cn,
   inputCn,

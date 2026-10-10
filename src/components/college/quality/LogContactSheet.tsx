@@ -28,11 +28,36 @@ export const CONTACT_METHOD_LABEL: Record<ContactMethod, string> = {
   referral: 'Referral',
 };
 
-const METHODS: Array<{ key: ContactMethod; icon: typeof Phone; hint: string; placeholder: string }> = [
-  { key: 'call', icon: Phone, hint: 'You spoke on the phone.', placeholder: 'What you talked about and what was agreed.' },
-  { key: 'one_to_one', icon: Users, hint: 'You met face to face or on a video call.', placeholder: 'What you talked about, the barriers, and the plan you agreed.' },
-  { key: 'email', icon: Mail, hint: 'You wrote to them, or to their employer.', placeholder: 'Who you wrote to and what you asked for.' },
-  { key: 'referral', icon: Share2, hint: 'You passed them to support: learning support, wellbeing, careers.', placeholder: 'Who you referred them to and why.' },
+const METHODS: Array<{
+  key: ContactMethod;
+  icon: typeof Phone;
+  hint: string;
+  placeholder: string;
+}> = [
+  {
+    key: 'call',
+    icon: Phone,
+    hint: 'You spoke on the phone.',
+    placeholder: 'What you talked about and what was agreed.',
+  },
+  {
+    key: 'one_to_one',
+    icon: Users,
+    hint: 'You met face to face or on a video call.',
+    placeholder: 'What you talked about, the barriers, and the plan you agreed.',
+  },
+  {
+    key: 'email',
+    icon: Mail,
+    hint: 'You wrote to them, or to their employer.',
+    placeholder: 'Who you wrote to and what you asked for.',
+  },
+  {
+    key: 'referral',
+    icon: Share2,
+    hint: 'You passed them to support: learning support, wellbeing, careers.',
+    placeholder: 'Who you referred them to and why.',
+  },
 ];
 
 interface Props {
@@ -97,11 +122,18 @@ export function LogContactSheet({ open, onOpenChange, studentId, studentName, on
         action_by_date: nextStep.trim() && nextBy ? nextBy : null,
       } as never);
       if (error) throw error;
-      toast({ title: 'Contact logged', description: `${CONTACT_METHOD_LABEL[method]} saved on ${studentName}'s record.` });
+      toast({
+        title: 'Contact logged',
+        description: `${CONTACT_METHOD_LABEL[method]} saved on ${studentName}'s record.`,
+      });
       onSaved?.();
       onOpenChange(false);
     } catch (e) {
-      toast({ title: 'Could not log the contact', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not log the contact',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setSaving(false);
     }
@@ -120,8 +152,17 @@ export function LogContactSheet({ open, onOpenChange, studentId, studentName, on
           <button type="button" onClick={() => onOpenChange(false)} className={COLLEGE_BTN}>
             Cancel
           </button>
-          <button type="button" onClick={save} disabled={!body.trim() || saving} className={COLLEGE_BTN_PRIMARY}>
-            {saving ? 'Saving…' : method === 'one_to_one' ? 'Log 1-2-1' : `Log ${CONTACT_METHOD_LABEL[method].toLowerCase()}`}
+          <button
+            type="button"
+            onClick={save}
+            disabled={!body.trim() || saving}
+            className={COLLEGE_BTN_PRIMARY}
+          >
+            {saving
+              ? 'Saving…'
+              : method === 'one_to_one'
+                ? 'Log 1-2-1'
+                : `Log ${CONTACT_METHOD_LABEL[method].toLowerCase()}`}
           </button>
         </div>
       }
@@ -143,7 +184,7 @@ export function LogContactSheet({ open, onOpenChange, studentId, studentName, on
                   className={cn(
                     'flex min-h-[52px] items-center gap-2.5 rounded-xl border px-3.5 text-left text-[13.5px] font-semibold transition-colors touch-manipulation',
                     on
-                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      ? 'border-white bg-white text-black'
                       : 'border-white/[0.12] bg-white/[0.04] text-white hover:border-white/[0.3]'
                   )}
                 >

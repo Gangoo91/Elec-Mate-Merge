@@ -26,13 +26,14 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Bookmark, Clock } from 'lucide-react';
+import { Bookmark, ChevronRight, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { curatedVideos } from '@/data/apprentice/curatedVideos';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
 import { useAuth } from '@/contexts/AuthContext';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HOME_SURFACE } from '@/components/apprentice/ApprenticeHomeUi';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 8 },
@@ -75,7 +76,7 @@ export function LearningVideosSection() {
       <motion.div variants={itemVariants}>
         <div
           className={cn(
-            'space-y-1.5 rounded-2xl border border-elec-yellow/35 p-6 text-center',
+            'space-y-1.5 rounded-2xl border border-white/[0.14] p-6 text-center',
             CARD_SURFACE
           )}
         >
@@ -90,10 +91,9 @@ export function LearningVideosSection() {
 
   return (
     <motion.div variants={itemVariants} className="space-y-3">
-      {/* Two-up on phones like every other card grid in the app — this was a
-          horizontal scroll strip of fixed 220px tiles, which hides the third
-          video behind a gesture nobody knows is there. */}
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] sm:gap-3">
+      {/* A phone gets rows (thumbnail beside the title, nothing cut short);
+          from sm: three equal cards. */}
+      <div className="-mx-4 grid gap-0 sm:mx-0 sm:grid-cols-3 sm:gap-3">
         {previewVideos.map((video) => (
           <HubVideoCard
             key={video.id}
@@ -108,16 +108,17 @@ export function LearningVideosSection() {
       {curatedVideos.length > 3 && (
         <Link
           to="/apprentice/learning-videos"
-          className="flex h-11 items-center text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+          className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-white/[0.14] px-4 text-[13.5px] font-semibold text-white touch-manipulation transition-colors hover:border-white/[0.3]"
         >
-          View all {curatedVideos.length} videos →
+          All {curatedVideos.length} videos
+          <ChevronRight className="h-4 w-4" aria-hidden />
         </Link>
       )}
     </motion.div>
   );
 }
 
-/* Hub-specific compact video card */
+/* Hub video card: a row on a phone, a card from sm: */
 function HubVideoCard({
   video,
   isBookmarked,
@@ -130,53 +131,61 @@ function HubVideoCard({
   onBookmarkToggle: () => void;
 }) {
   return (
-    <div className="relative">
+    <div
+      className={cn(
+        'relative min-w-0 border-b border-white/[0.07] first:border-t sm:rounded-2xl sm:border sm:first:border-t-[1px]',
+        HOME_SURFACE,
+        'max-sm:rounded-none max-sm:shadow-none'
+      )}
+    >
       <button
         type="button"
         onClick={onTap}
-        className={cn(CARD_BASE, CARD_NEUTRAL, 'relative overflow-hidden p-0 lg:hover:-translate-y-0.5')}
+        className="group flex w-full min-w-0 items-center gap-3.5 p-3 pr-14 text-left touch-manipulation sm:block sm:p-0 sm:pr-0"
       >
-        <span className="relative block aspect-video w-full overflow-hidden">
+        <span className="relative block aspect-video w-[132px] shrink-0 overflow-hidden rounded-xl bg-black sm:w-full sm:rounded-none sm:rounded-t-2xl">
           <img
             src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
             alt=""
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
             loading="lazy"
           />
-          <span className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
           <span className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/55 backdrop-blur-sm transition-transform group-hover:scale-105">
-              <span className="ml-0.5 h-0 w-0 border-b-[5px] border-l-[9px] border-t-[5px] border-b-transparent border-l-white border-t-transparent" />
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 ring-1 ring-white/25 backdrop-blur-sm sm:h-11 sm:w-11">
+              <Play className="ml-0.5 h-4 w-4 fill-white text-white" aria-hidden />
             </span>
           </span>
-
-          <span className="absolute bottom-1.5 right-1.5 flex items-center gap-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] tabular-nums text-white backdrop-blur-sm">
-            <Clock className="h-2.5 w-2.5" />
+          <span className="absolute bottom-1.5 right-1.5 rounded-md bg-black/75 px-1.5 py-0.5 text-[12px] font-medium tabular-nums text-white">
             {video.duration}
           </span>
         </span>
 
-        <span className="block px-3 py-2.5">
-          <span className="line-clamp-2 text-[13px] font-semibold leading-tight text-white transition-colors group-hover:text-elec-yellow">
+        <span className="block min-w-0 flex-1 sm:px-4 sm:pb-4 sm:pt-3.5">
+          <span className="line-clamp-3 text-[14px] font-semibold leading-snug text-white sm:line-clamp-2 sm:text-[15px]">
             {video.title}
           </span>
-          <span className="mt-1 block text-[11px] capitalize text-white">{video.level}</span>
+          <span className="mt-1 block text-[12.5px] capitalize text-white">
+            {video.level}
+          </span>
         </span>
       </button>
 
-      {/* The one genuinely separate action, at a real 44px target. Outside the
-          card button so it is not a nested control. */}
+      {/* The one separate action, a real 44px target: beside the row on a
+          phone, over the thumbnail corner on a card. */}
       <button
         type="button"
         onClick={onBookmarkToggle}
         aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark this video'}
         aria-pressed={isBookmarked}
-        className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center touch-manipulation"
+        className="absolute right-1.5 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center touch-manipulation sm:right-1 sm:top-1 sm:translate-y-0"
       >
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.14] bg-black/55 backdrop-blur-sm">
           <Bookmark
-            className={cn('h-3.5 w-3.5', isBookmarked ? 'fill-elec-yellow text-elec-yellow' : 'text-white')}
+            className={cn(
+              'h-3.5 w-3.5',
+              isBookmarked ? 'fill-elec-yellow text-elec-yellow' : 'text-white'
+            )}
+            aria-hidden
           />
         </span>
       </button>

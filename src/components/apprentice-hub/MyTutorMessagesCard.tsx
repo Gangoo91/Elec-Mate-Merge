@@ -1,7 +1,6 @@
+import { LC_FRAME, lcChip } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
@@ -35,7 +34,7 @@ function fmtRel(iso: string): string {
   const hrs = Math.round(mins / 60);
   if (hrs < 24) return `${hrs}h ago`;
   const days = Math.round(hrs / 24);
-  if (days < 7) return `${days}d ago`;
+  if (days < 7) return `${days} ${days === 1 ? 'day' : 'days'} ago`;
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
@@ -179,18 +178,12 @@ export function MyTutorMessagesCard() {
 
   return (
     <>
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-      >
+      <section className={LC_FRAME}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              Messages
-            </div>
+            <div className="text-[15px] font-semibold tracking-tight text-white">Messages</div>
             {unreadTotal > 0 && (
-              <span className="text-[10.5px] tabular-nums text-white">
-                {unreadTotal} unread from your tutor
-              </span>
+              <span className={lcChip('action')}>{unreadTotal} new from your tutor</span>
             )}
           </div>
 
@@ -203,7 +196,7 @@ export function MyTutorMessagesCard() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="mt-4 w-full h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+                className="mt-4 h-11 w-full rounded-xl border border-white/[0.14] text-[13.5px] font-semibold text-white transition-colors touch-manipulation hover:border-elec-yellow"
               >
                 Message your tutor
               </button>
@@ -211,19 +204,12 @@ export function MyTutorMessagesCard() {
           ) : (
             <>
               {latestMsg && (
-                <div
-                  className={cn(
-                    'mt-3 border-l-2 pl-3 py-1',
-                    latestMsg.sender_kind === 'tutor'
-                      ? 'border-white/[0.06]'
-                      : 'border-white/[0.10]'
-                  )}
-                >
-                  <div className="text-[10.5px] uppercase tracking-[0.14em] text-white">
-                    {latestMsg.sender_kind === 'tutor' ? 'Tutor' : 'You'} ·{' '}
+                <div className="mt-3 rounded-xl border border-white/[0.08] px-3.5 py-2.5">
+                  <div className="text-[12px] font-semibold text-white">
+                    {latestMsg.sender_kind === 'tutor' ? 'Your tutor' : 'You'},{' '}
                     {fmtRel(latestMsg.created_at)}
                   </div>
-                  <p className="mt-0.5 text-[12.5px] text-white leading-snug line-clamp-2">
+                  <p className="mt-0.5 text-[13.5px] text-white leading-snug line-clamp-2">
                     {latestMsg.body}
                   </p>
                 </div>
@@ -231,14 +217,9 @@ export function MyTutorMessagesCard() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className={cn(
-                  'mt-4 w-full h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
-                  unreadTotal > 0
-                    ? 'bg-white/[0.02] text-white hover:bg-white/[0.02]'
-                    : 'border border-white/[0.10] bg-white/[0.02] text-white hover:text-white hover:border-white/[0.22]'
-                )}
+                className="mt-4 h-11 w-full rounded-xl border border-white/[0.14] text-[13.5px] font-semibold text-white transition-colors touch-manipulation hover:border-elec-yellow"
               >
-                {unreadTotal > 0 ? 'Read tutor message →' : 'Open conversation'}
+                {unreadTotal > 0 ? 'Read tutor message' : 'Open conversation'}
               </button>
             </>
           )}
@@ -252,9 +233,7 @@ export function MyTutorMessagesCard() {
 
 function Skeleton() {
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-20 rounded-full bg-white/[0.05]" />
         <div className="h-12 rounded-md bg-white/[0.04]" />

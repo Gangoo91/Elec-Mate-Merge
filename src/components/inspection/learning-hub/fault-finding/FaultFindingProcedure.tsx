@@ -41,7 +41,7 @@ const FaultFindingProcedure = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Fault Finding</h1>
-              <p className="text-[10px] text-white">Diagnostic Procedures</p>
+              <p className="text-[12px] text-white">Diagnostic Procedures</p>
             </div>
           </div>
         </div>

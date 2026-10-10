@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'What are the fire safety considerations for battery storage?',
     answer:
-      'Lithium-ion batteries present a fire risk if they are damaged, overcharged, or operated outside their temperature specifications. Thermal runaway — a self-sustaining exothermic reaction — is the primary concern. Battery systems must be installed in a location with adequate ventilation, away from heat sources and direct sunlight. Most manufacturers specify a minimum distance from combustible materials. Installation in living spaces (bedrooms, living rooms) is generally not recommended. The battery management system (BMS) provides multiple layers of protection including over-voltage, under-voltage, over-temperature, over-current, and short-circuit protection. BS 7671:2018+A2:2022 Section 558 covers requirements for electrical energy storage systems.',
+      'Lithium-ion batteries present a fire risk if they are damaged, overcharged, or operated outside their temperature specifications. Thermal runaway — a self-sustaining exothermic reaction — is the primary concern. Battery systems must be installed in a location with adequate ventilation, away from heat sources and direct sunlight. Most manufacturers specify a minimum distance from combustible materials. Installation in living spaces (bedrooms, living rooms) is generally not recommended. The battery management system (BMS) provides multiple layers of protection including over-voltage, under-voltage, over-temperature, over-current, and short-circuit protection. BS 7671:2018+A4:2026 Chapter 57 (new in A4:2026) covers stationary secondary battery installations used for storage and supply.',
   },
   {
     question: 'Can I add battery storage to an existing solar PV system?',
@@ -335,11 +335,11 @@ const sections = [
         <p>
           {' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022 Section 558
+            BS 7671:2018+A4:2026 Chapter 57
           </SEOInternalLink>{' '}
-          covers the wiring regulations for electrical energy storage systems, including
-          requirements for disconnection, isolation, marking, and protection against electric shock
-          from stored energy.
+          (new in A4:2026) covers stationary secondary battery installations, including requirements
+          for disconnection, isolation, marking, and protection against electric shock from stored
+          energy.
         </p>
       </>
     ),
@@ -505,7 +505,7 @@ export default function RenewableEnergyCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Renewable Energy Training"

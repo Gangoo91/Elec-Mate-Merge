@@ -9,6 +9,12 @@ import { SheetShell, PrimaryButton, SecondaryButton, Field } from '@/components/
 import { safetyInputCn, safetyTextareaCn } from '../common/SafetyDocField';
 import { SignatureField } from '../common/SignatureField';
 import type { FireWatchRecord } from '@/hooks/useFireWatchRecords';
+import {
+  assertFirmWrite,
+  firmWriteErrorMessage,
+  isFirmScope,
+  useSafetyScope,
+} from '../common/SafetyScope';
 
 /**
  * The two-hour check (HSG168 para 122).
@@ -37,6 +43,7 @@ export function FollowUpCheckSheet({
   const { toast } = useToast();
   const haptic = useHaptic();
   const queryClient = useQueryClient();
+  const scope = useSafetyScope();
   const [allClear, setAllClear] = useState<boolean | null>(null);
   const [name, setName] = useState(record.completed_by ?? '');
   const [notes, setNotes] = useState('');
@@ -55,7 +62,7 @@ export function FollowUpCheckSheet({
     if (!canSave) return;
     setSaving(true);
     try {
-      const { error } = await supabase
+      const { data: rows, error } = await supabase
         .from('fire_watch_records')
         .update({
           status: 'completed',
@@ -64,8 +71,11 @@ export function FollowUpCheckSheet({
           follow_up_notes: notes.trim() || null,
           follow_up_all_clear: allClear,
         })
-        .eq('id', record.id);
+        .eq('id', record.id)
+        .select('id');
       if (error) throw error;
+      // Firm scope: RLS blocks a worker's record with no rows, not an error.
+      assertFirmWrite(scope, rows);
       haptic.success();
       toast({
         title: allClear ? 'Fire watch closed' : 'Recorded — area not clear',
@@ -78,11 +88,13 @@ export function FollowUpCheckSheet({
       queryClient.invalidateQueries({ queryKey: ['fire-watch-records'] });
       onDone?.();
       onClose();
-    } catch {
+    } catch (err) {
       haptic.error();
       toast({
         title: 'Error',
-        description: 'Could not save the two-hour check.',
+        description: isFirmScope(scope)
+          ? firmWriteErrorMessage(scope, err)
+          : 'Could not save the two-hour check.',
         variant: 'destructive',
       });
     } finally {

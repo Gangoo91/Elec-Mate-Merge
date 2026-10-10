@@ -610,7 +610,7 @@ const RingCircuitCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
 
                 {/* R1 vs Rn similarity check */}
                 {!result.rnSimilar && (
-                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                     <p className="text-sm text-white">
                       End-to-end r1 and rn differ by{' '}
@@ -749,7 +749,7 @@ const RingCircuitCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
                               'flex items-center justify-between p-3 rounded-lg border text-sm',
                               check.match
                                 ? 'bg-green-500/5 border-green-500/20'
-                                : 'bg-amber-500/5 border-amber-500/20'
+                                : 'bg-white/[0.04] border-amber-500/20'
                             )}
                           >
                             <div className="flex items-center gap-2 min-w-0">
@@ -836,8 +836,8 @@ const RingCircuitCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">

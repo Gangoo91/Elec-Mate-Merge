@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FormSheet } from '@/components/forms/FormSheet';
-import { buttonPrimaryCn, buttonSecondaryCn, inputCn, labelCn } from '@/components/forms/fieldStyles';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
@@ -49,10 +54,17 @@ export function OtjStatementSignSheet({
     const res = await signOtjHoursStatement(statement.id, name.trim());
     setSaving(false);
     if (res.error || !res.success) {
-      toast({ title: 'Not signed', description: res.error ?? 'Try again.', variant: 'destructive' });
+      toast({
+        title: 'Not signed',
+        description: res.error ?? 'Try again.',
+        variant: 'destructive',
+      });
       return;
     }
-    toast({ title: 'Statement signed', description: 'Your college has it. Your employer signs it separately.' });
+    toast({
+      title: 'Statement signed',
+      description: 'Your college has it. Your employer signs it separately.',
+    });
     onSigned();
     onOpenChange(false);
   };
@@ -64,7 +76,11 @@ export function OtjStatementSignSheet({
     try {
       await downloadLearnerDocument({ kind: 'otj_statement', statementId: statement.id });
     } catch (e) {
-      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not make the PDF',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setPdfBusy(false);
     }
@@ -84,7 +100,12 @@ export function OtjStatementSignSheet({
           </button>
         ) : (
           <div className="grid grid-cols-2 gap-2.5">
-            <button type="button" onClick={() => onOpenChange(false)} disabled={saving} className={buttonSecondaryCn}>
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              disabled={saving}
+              className={buttonSecondaryCn}
+            >
               Not now
             </button>
             <button
@@ -107,14 +128,16 @@ export function OtjStatementSignSheet({
             ['Minimum', fmtH(statement.minimum_hours)],
           ].map(([l, v]) => (
             <div key={l} className="rounded-xl border border-white/[0.12] p-3">
-              <p className="text-[11.5px] text-white">{l}</p>
+              <p className="text-[12.5px] text-white">{l}</p>
               <p className="mt-1 text-[17px] font-semibold tabular-nums text-white">{v}</p>
             </div>
           ))}
         </div>
         <div>
           <p className={labelCn}>Why fewer hours were delivered</p>
-          <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-white">{statement.reason}</p>
+          <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-white">
+            {statement.reason}
+          </p>
         </div>
         <p className="text-[13px] text-white">
           {statement.minimum_met
@@ -124,7 +147,12 @@ export function OtjStatementSignSheet({
         {signed ? (
           <div className="space-y-3">
             <p className="text-[14px] text-white">Signed as {statement.learner_signed_name}.</p>
-            <button type="button" onClick={downloadPdf} disabled={pdfBusy} className={cn(buttonSecondaryCn, 'h-11')}>
+            <button
+              type="button"
+              onClick={downloadPdf}
+              disabled={pdfBusy}
+              className={cn(buttonSecondaryCn, 'h-11')}
+            >
               {pdfBusy ? 'Making the PDF…' : 'Download statement (PDF)'}
             </button>
           </div>
@@ -147,11 +175,19 @@ export function OtjStatementSignSheet({
               >
                 {agree ? '✓' : ''}
               </span>
-              I am satisfied with the off-the-job training I received, even though it was less than planned.
+              I am satisfied with the off-the-job training I received, even though it was less than
+              planned.
             </button>
             <div>
-              <label className={labelCn} htmlFor="stmt-sign-name">Type your full name to sign</label>
-              <input id="stmt-sign-name" value={name} onChange={(e) => setName(e.target.value)} className={inputCn} />
+              <label className={labelCn} htmlFor="stmt-sign-name">
+                Type your full name to sign
+              </label>
+              <input
+                id="stmt-sign-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={inputCn}
+              />
             </div>
           </>
         )}

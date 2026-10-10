@@ -135,7 +135,7 @@ const CommonScenariosPage = ({ onBack }: Props) => {
               <p className="text-sm text-white leading-relaxed">{s.answer}</p>
               <div className="flex flex-wrap gap-1.5">
                 {s.regs.map((reg, j) => (
-                  <span key={j} className="text-[10px] font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{reg}</span>
+                  <span key={j} className="text-[12px] font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{reg}</span>
                 ))}
               </div>
             </div>

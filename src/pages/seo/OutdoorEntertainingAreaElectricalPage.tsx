@@ -171,8 +171,9 @@ const sections = [
           411.3.3, hot tub considerations, and the testing and certification process.
         </p>
         <p className="text-sm text-white mt-2">
-          Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). Regulation references
-          reflect BS 7671:2018+A4:2026.
+          Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th
+          Edition, C&amp;G 2391 inspection and testing). Regulation references reflect BS
+          7671:2018+A4:2026.
         </p>
       </>
     ),
@@ -348,13 +349,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.3 (A4:2026)</strong> — requires 30mA RCD protection for all
-                socket outlets rated 32A and below. The A4:2026 revision removed the earlier
-                "outdoor portable equipment" qualifier: the requirement now applies universally to
-                every ≤32A socket outlet. In domestic dwellings, no risk-assessment exemption is
-                available — omission of RCD protection on any socket outlet (≤32A) is not permitted.
-                An RCBO at the consumer unit, an RCD covering the outdoor circuit, or an in-line RCD
-                at the socket are all acceptable methods of compliance.
+                <strong>Regulation 411.3.3</strong> — requires 30mA RCD protection for socket
+                outlets rated 32A and below, and for mobile equipment rated up to 32A used outdoors.
+                This has applied since the 2018 edition and was redrafted at A2:2022, not A4. The
+                risk-assessment exception never covers sockets liable to be used by ordinary persons
+                or children, or outdoor mobile equipment, so in a home it is not available. An RCBO
+                at the consumer unit, an RCD covering the outdoor circuit, or an in-line RCD at the
+                socket are all acceptable methods of compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -580,7 +581,7 @@ export default function OutdoorEntertainingAreaElectricalPage() {
       title="Outdoor Entertaining Area Electrical UK Guide"
       description="Complete guide to outdoor entertaining area electrical installations in the UK. IP ratings for outdoor equipment, IP66 sockets, outdoor kitchen circuits."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

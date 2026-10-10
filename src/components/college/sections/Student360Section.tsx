@@ -45,7 +45,22 @@ import {
 import { importWithRetry } from '@/utils/lazyWithRetry';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Archive,
+  ChevronLeft,
+  ChevronRight,
+  ClipboardCheck,
+  Eye,
+  FileText,
+  Link2,
+  MessageSquare,
+  MoreHorizontal,
+  NotebookPen,
+  ShieldAlert,
+  Sparkles,
+  Users,
+  type LucideIcon,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Under18Badge } from '@/components/college/people/Under18Badge';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -56,13 +71,13 @@ import {
   containerVariants,
   itemVariants,
 } from '@/components/college/primitives';
-import {
-  HubQuickStart,
-  type HubQuickAction,
-  type HubWorkItem,
-} from '@/components/hub/HubPrimitives';
+import { type HubQuickAction, type HubWorkItem } from '@/components/hub/HubPrimitives';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
-import { CollegeHeading } from '@/components/college/ui/CollegeUi';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  CollegeHeading,
+} from '@/components/college/ui/CollegeUi';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { LearnerQuickJump } from '@/components/college/sections/LearnerQuickJump';
 import {
@@ -106,6 +121,11 @@ import { OtjForecastBadge } from '@/components/college/widgets/OtjForecastBadge'
 import { SectionNextBestAction } from '@/components/college/student360/SectionNextBestAction';
 import { SectionIlp } from '@/components/college/student360/SectionIlp';
 import { SectionSupportNeeds } from '@/components/college/student360/SectionSupportNeeds';
+import { SectionStartingPoint } from '@/components/college/student360/SectionStartingPoint';
+import { SectionTrainingPlan } from '@/components/college/student360/SectionTrainingPlan';
+import { SectionOnboarding } from '@/components/college/student360/SectionOnboarding';
+import { SectionEpao } from '@/components/college/student360/SectionEpao';
+import { useLearnerEpao } from '@/hooks/useLearnerEpao';
 import { SectionCourseProgress } from '@/components/college/student360/SectionCourseProgress';
 import { StudentAssessmentConfidence } from '@/components/college/student360/StudentAssessmentConfidence';
 import { SectionAcMatrix } from '@/components/college/student360/SectionAcMatrix';
@@ -140,9 +160,10 @@ import {
   HoursChart,
   PortfolioDonut,
   ProgrammeJourney,
+  Measure,
   RiskTrend,
-  Ring,
   VIS_CARD,
+  type MeasureTone,
 } from '@/components/college/student360/Student360Visuals';
 import {
   AssessHero,
@@ -154,6 +175,16 @@ import {
   PortfolioHero,
 } from '@/components/college/student360/Student360AreaHeroes';
 import { SectionEpaReadiness } from '@/components/college/student360/SectionEpaReadiness';
+import {
+  GatewayForecastPanel,
+  GatewayForecastSummary,
+} from '@/components/college/student360/GatewayForecastPanel';
+import {
+  UnitProgrammeNote,
+  useIsUnitLearner,
+} from '@/components/college/student360/UnitProgrammeNote';
+import { FORECAST_HELP_NOTE } from '@/lib/epa/gatewayForecast';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ELE-1912: the sheets and dialogs below open on a tap, never on first paint.
    Imported statically they pulled ~60 chunks (charts, zip, signature pad, the
@@ -287,6 +318,10 @@ const AREA_FOR: Record<string, AreaKey> = {
   'otj-list': 'otj',
   ilp: 'ilp',
   support: 'ilp',
+  onboarding: 'ilp',
+  'starting-point': 'ilp',
+  'training-plan': 'ilp',
+  epao: 'ilp',
   reviews: 'reviews',
   diary: 'diary',
   observations: 'observations',
@@ -398,6 +433,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
   // Run once here, shared with the sections below.
   const ilpHook = useStudentIlp({ collegeStudentId: studentId || null });
   const observationsHook = useCollegeObservations(studentId || null);
+  const epaoHook = useLearnerEpao(studentId || null); // ELE-2041
   const portfolioHook = useStudentPortfolio(core?.user_id ?? null);
   const { forecast } = useOtjForecast(studentId || null);
   // The programme dates and planned-to-date hours, as the hours page counts them.
@@ -468,6 +504,8 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
   }, []);
 
   const area: AreaKey | null = AREA_FOR[location.hash.replace(/^#/, '')] ?? null;
+  // ELE-2053: an Apprenticeship Unit has no progress reviews and no gateway.
+  const isUnit = useIsUnitLearner(studentId);
   // True when this area page was opened from the overview in this visit, so
   // "Overview" can step back instead of stacking another history entry.
   const fromOverview = useRef(false);
@@ -572,7 +610,12 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
     (id: string) => {
       // A new learner: "Overview" must not step back to the previous one.
       fromOverview.current = false;
-      navigate(`/college?section=student360&studentId=${encodeURIComponent(id)}${location.hash}`);
+      // Previous / next swap the learner in place: Back still returns to the
+      // list the first learner was opened from, not through every learner
+      // flicked past (the history entry keeps where it came from).
+      navigate(`/college?section=student360&studentId=${encodeURIComponent(id)}${location.hash}`, {
+        replace: true,
+      });
     },
     [navigate, location.hash]
   );
@@ -714,6 +757,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         line: `${t.passedAll} of ${t.total} passed`,
         sub: `${t.submitted} with an assessor · ${t.claimed} claimed`,
         total: t.total,
+        done: t.passedAll,
       };
     }
     return {
@@ -726,6 +770,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         ? `${coverage.assessed} assessed · ${coverage.confirmed} IQA confirmed`
         : '',
       total: coverage.total,
+      done: coverage.done,
     };
   }, [acState.totals, core?.user_id, coverage]);
 
@@ -737,6 +782,38 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
     () => notes.filter((n) => n.action_required && !n.action_completed_at),
     [notes]
   );
+
+  // ELE-1866: the learner chose a different course themselves than the one the
+  // college enrolled them on. Evidence counts against the enrolment only, so
+  // anything they tagged against their own pick is stranded. The resolver
+  // (resolve_learner_qualification → _resolve_qualification) already applies
+  // "college course first"; this makes the disagreement visible to the tutor.
+  const [courseMismatch, setCourseMismatch] = useState<{
+    enrolled: string;
+    chosen: string;
+  } | null>(null);
+  useEffect(() => {
+    if (!core?.id) return;
+    let cancelled = false;
+    void supabaseForAudit
+      .rpc('resolve_learner_qualification' as never, { p_student_id: core.id } as never)
+      .then(({ data, error }) => {
+        if (cancelled || error || !data) return;
+        const r = data as unknown as {
+          diverges_from_selection?: boolean;
+          code?: string | null;
+          selection_code?: string | null;
+        };
+        setCourseMismatch(
+          r.diverges_from_selection && r.code && r.selection_code
+            ? { enrolled: r.code, chosen: r.selection_code }
+            : null
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [core?.id]);
 
   /* ── Needs you ────────────────────────────────────────────────────
      Ranked by cost of delay: a learner in trouble first, then anything
@@ -891,12 +968,39 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
       });
     }
 
+    if (courseMismatch) {
+      items.push({
+        id: 'course-mismatch',
+        title: 'Two different courses',
+        reason: `${first} picked ${courseMismatch.chosen} themselves but is enrolled on ${courseMismatch.enrolled}. Only ${courseMismatch.enrolled} counts, so check what they have been tagging.`,
+        onClick: () => openArea('assess'),
+      });
+    }
+
     if (!loading.acCoverage && !errors.acCoverage && acCoverage.length === 0) {
       items.push({
         id: 'coverage-seed',
         title: 'No AC list tracked',
         reason: "Seed the criteria from this learner's course to start tracking coverage",
         onClick: () => void seedCoverage(),
+      });
+    }
+
+    // ELE-2041: the EPA organisation, due 6 months before gateway (para 143) or at the start (382).
+    const ed = epaoHook.due;
+    if (ed && (ed.status === 'overdue' || ed.status === 'due_soon')) {
+      items.push({
+        id: 'epao-due',
+        title: ed.status === 'overdue' ? 'EPA organisation overdue' : 'EPA organisation due',
+        reason: `Choose it and agree the price by ${shortDate(ed.due_date)}${ed.para ? ` · funding rules ${ed.rules_year} para ${ed.para}` : ''}`,
+        trailing:
+          ed.days_left != null
+            ? ed.days_left < 0
+              ? `${-ed.days_left}d late`
+              : `${ed.days_left}d`
+            : undefined,
+        urgent: ed.status === 'overdue',
+        onClick: () => openArea('epao'),
       });
     }
 
@@ -922,6 +1026,8 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
     loading.acCoverage,
     errors.acCoverage,
     acCoverage.length,
+    courseMismatch,
+    epaoHook.due,
   ]);
 
   /* ── Start something ─────────────────────────────────────────────
@@ -1045,7 +1151,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         <motion.div variants={itemVariants}>
           <EmptyState
             title="No learner selected"
-            description="Pick a learner to open their profile — next best action, risk, ILP, attendance, grades, off-the-job, EPA and portfolio in one place."
+            description="Pick a learner to open their profile: next best action, risk, ILP, attendance, grades, off-the-job, EPA and portfolio in one place."
             action="Back to learners"
             onAction={onBack}
           />
@@ -1114,13 +1220,131 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
   const contactStale =
     contactDays !== null ? contactDays > 28 : facts.contactLoaded && !loading.notes;
 
+  // Showcase pass (10 Oct): the four headline measures, each in its own unit
+  // and read against where the learner should be by now.
+  const throughPct = (() => {
+    if (!progStart || !progEnd) return null;
+    const s0 = Date.parse(progStart);
+    const e0 = Date.parse(progEnd);
+    if (!(e0 > s0)) return null;
+    return Math.max(0, Math.min(100, Math.round(((Date.now() - s0) / (e0 - s0)) * 100)));
+  })();
+  const requiredHours = otj?.required_hours ?? forecast?.required_hours ?? null;
+  const hrs = (n: number) => `${Math.round(n * 10) / 10}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const critTone: MeasureTone =
+    crit.pct === null || throughPct === null
+      ? 'neutral'
+      : crit.pct >= throughPct - 15
+        ? 'good'
+        : 'behind';
+  const hoursGap = plannedNow ? countedNow - plannedNow : null;
+  const hoursTone: MeasureTone =
+    hoursGap === null || pacePct === null
+      ? 'neutral'
+      : hoursGap >= 0
+        ? 'good'
+        : pacePct >= 90
+          ? 'neutral'
+          : 'behind';
+  const attTone: MeasureTone =
+    att.rate === null ? 'neutral' : att.rate >= 95 ? 'good' : att.rate >= 85 ? 'neutral' : 'behind';
+  const attDots: MeasureTone[] = attendance
+    .slice(0, Math.min(att.sessions, 12))
+    .map((a): MeasureTone =>
+      norm(a.status) === 'absent' ? 'behind' : norm(a.status) === 'late' ? 'neutral' : 'good'
+    )
+    .reverse();
+  const contactTone: MeasureTone =
+    contactDays === null
+      ? contactStale
+        ? 'behind'
+        : 'neutral'
+      : contactDays <= 14
+        ? 'good'
+        : contactDays <= 28
+          ? 'neutral'
+          : 'behind';
+  const headline = [
+    {
+      label: core.user_id && acState.totals.total ? 'Criteria passed' : 'Criteria evidenced',
+      figure: crit.total ? `${crit.done}` : '—',
+      unit: crit.total ? `of ${crit.total}` : undefined,
+      fill: crit.pct,
+      expected: crit.total ? throughPct : null,
+      tone: critTone,
+      status:
+        crit.pct === null
+          ? 'No criteria list yet'
+          : throughPct === null
+            ? `${crit.pct}% of the course`
+            : critTone === 'good'
+              ? `${crit.pct}%, on track for the time used`
+              : `${crit.pct}%, behind for the time used`,
+      detail: throughPct === null ? undefined : `Tick marks the time gone, ${throughPct}%`,
+      onClick: () => openArea('assess'),
+    },
+    {
+      label: 'Off-the-job hours',
+      figure: !core.user_id ? '—' : `${hrs(countedNow)}h`,
+      unit: core.user_id && requiredHours ? `of ${hrs(requiredHours)}h` : undefined,
+      fill: core.user_id && requiredHours ? (countedNow / requiredHours) * 100 : null,
+      expected:
+        core.user_id && requiredHours && plannedNow ? (plannedNow / requiredHours) * 100 : null,
+      tone: hoursTone,
+      status: !core.user_id
+        ? 'No app account linked yet'
+        : hoursGap === null
+          ? plannedNow === 0 && progStart
+            ? 'Programme not started yet'
+            : 'Needs start and end dates'
+          : hoursGap >= 0
+            ? `${hrs(hoursGap)}h ahead of plan`
+            : `${hrs(-hoursGap)}h behind plan`,
+      detail: plannedNow ? `Tick marks the plan, ${hrs(plannedNow)}h by now` : undefined,
+      onClick: () => openArea('otj'),
+    },
+    {
+      label: 'Attendance',
+      figure: att.rate === null ? '—' : `${att.rate}%`,
+      unit: att.rate === null ? undefined : 'attended',
+      dots: attDots,
+      tone: attTone,
+      status: !att.sessions
+        ? 'No register yet'
+        : att.absent === 0
+          ? `None missed in ${plural(att.sessions, 'session')}`
+          : `${att.absent} missed of the last ${att.sessions}`,
+      detail: att.late ? `${att.late} late` : att.sessions ? 'Oldest to newest' : undefined,
+      onClick: () => openArea('attendance'),
+    },
+    {
+      label: 'Last contact',
+      figure: contactDays === null ? '—' : contactDays === 0 ? 'Today' : `${contactDays}`,
+      unit: contactDays ? (contactDays === 1 ? 'day ago' : 'days ago') : undefined,
+      tone: contactTone,
+      status:
+        contactDays === null
+          ? facts.contactLoaded && !loading.notes
+            ? 'No contact logged yet'
+            : 'Checking…'
+          : contactDays > 28
+            ? `Overdue, every 4 weeks`
+            : contactDays === 28
+              ? 'Next contact due today'
+              : `Next contact due in ${plural(28 - contactDays, 'day')}`,
+      detail: contact ? `${CONTACT_LABEL[contact.kind]}, ${shortDate(contact.at)}` : undefined,
+      onClick: () => openArea('notes'),
+    },
+  ];
+
   const cards: AreaCardData[] = [
     {
       key: 'assess',
       title: 'Criteria and assessment',
-      figure: crit.pct === null ? '—' : `${crit.pct}%`,
-      unit: core.user_id && acState.totals.total ? 'passed' : 'covered',
-      line: crit.line,
+      // Words over a bare percentage: "4 of 340" says more than "1%".
+      figure: crit.total ? `${crit.done} of ${crit.total}` : 'None yet',
+      unit: crit.total ? (core.user_id && acState.totals.total ? 'passed' : 'evidenced') : '',
+      line: crit.total ? crit.sub || crit.line : crit.line,
       pct: crit.pct,
     },
     {
@@ -1171,8 +1395,8 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
     {
       key: 'ilp',
       title: 'Learning plan and support',
-      figure: ilpRoll.total_goals ? `${ilpRoll.completion_percent}%` : '—',
-      unit: ilpRoll.total_goals ? 'of goals met' : '',
+      figure: ilpRoll.total_goals ? `${ilpRoll.completed} of ${ilpRoll.total_goals}` : 'None yet',
+      unit: ilpRoll.total_goals ? 'goals met' : '',
       line:
         ilpRoll.total_goals === 0
           ? 'No goals set yet'
@@ -1209,7 +1433,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
       figure: String(grades.length),
       unit: grades.length === 1 ? 'result' : 'results',
       line: lastGrade
-        ? `Latest: ${lastGrade.unit_name ?? lastGrade.assessment_type ?? 'result'}${lastGrade.grade ? ` · ${lastGrade.grade}` : ''}`
+        ? `Latest: ${lastGrade.unit_name ?? (keyLabel(lastGrade.assessment_type) || 'result')}${lastGrade.grade ? ` · ${lastGrade.grade}` : ''}`
         : 'No results logged',
     },
     {
@@ -1337,6 +1561,8 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
                     inProgress={acCoverage.filter((r) => r.status === 'in_progress').length}
                   />
                 )}
+                {/* When, at this pace: the gateway forecast (get_gateway_forecast). */}
+                {core.user_id && !isUnit && <GatewayForecastPanel userId={core.user_id} />}
                 <SectionAssessmentPlan
                   id="plan"
                   studentName={core.name}
@@ -1423,15 +1649,19 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
             )}
             {area === 'reviews' && (
               <>
-                <SectionProgressReviews
-                  id="reviews"
-                  studentId={core.id}
-                  studentName={core.name}
-                  onOpen={() => {
-                    setTripartiteReviewId(null);
-                    setTripartiteOpen(true);
-                  }}
-                />
+                {isUnit ? (
+                  <UnitProgrammeNote what="reviews" />
+                ) : (
+                  <SectionProgressReviews
+                    id="reviews"
+                    studentId={core.id}
+                    studentName={core.name}
+                    onOpen={() => {
+                      setTripartiteReviewId(null);
+                      setTripartiteOpen(true);
+                    }}
+                  />
+                )}
               </>
             )}
             {area === 'ilp' && (
@@ -1457,6 +1687,18 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
                   collegeStudentId={core.id}
                   hook={ilpHook}
                 />
+
+                <SectionOnboarding studentId={core.id} studentName={core.name} />
+
+                <SectionStartingPoint studentId={core.id} studentName={core.name} />
+
+                <SectionTrainingPlan
+                  studentId={core.id}
+                  studentName={core.name}
+                  startDate={core.start_date}
+                />
+
+                <SectionEpao studentId={core.id} studentName={core.name} />
 
                 <SectionSupportNeeds
                   id="support"
@@ -1557,12 +1799,20 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
                   collegeStudentId={core.id}
                 />
 
-                <SectionEpaReadiness
-                  id="epa"
-                  studentName={core.name}
-                  userId={core.user_id}
-                  collegeStudentId={core.id}
-                />
+                {isUnit ? (
+                  <UnitProgrammeNote what="gateway" />
+                ) : (
+                  <>
+                    {core.user_id && <GatewayForecastPanel userId={core.user_id} />}
+
+                    <SectionEpaReadiness
+                      id="epa"
+                      studentName={core.name}
+                      userId={core.user_id}
+                      collegeStudentId={core.id}
+                    />
+                  </>
+                )}
               </>
             )}
             {area === 'mocks' && (
@@ -1616,69 +1866,43 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
             className={VIS_CARD}
           >
             <ProgrammeJourney start={progStart} end={progEnd} reviewDueBy={reviewDueBy} />
-            <div className="mt-6 grid grid-cols-2 gap-x-2 gap-y-5 border-t border-white/[0.06] pt-5 lg:grid-cols-4">
-              <Ring
-                pct={crit.pct}
-                value={crit.pct === null ? '—' : `${crit.pct}%`}
-                label={
-                  core.user_id && acState.totals.total ? 'Criteria passed' : 'Criteria covered'
-                }
-                sub={crit.line}
-                onClick={() => openArea('assess')}
-              />
-              <Ring
-                pct={pacePct}
-                value={pacePct === null ? '—' : `${Math.min(pacePct, 999)}%`}
-                label="Hours on pace"
-                sub={
-                  !core.user_id
-                    ? 'No app account linked yet'
-                    : plannedNow === 0 && progStart
-                      ? 'Programme not started yet'
-                      : plannedNow
-                        ? `${Math.round(countedNow * 10) / 10}h of ${Math.round(plannedNow * 10) / 10}h planned by now`
-                        : 'Needs start and end dates'
-                }
-                warn={pacePct !== null && pacePct < 80}
-                onClick={() => openArea('otj')}
-              />
-              <Ring
-                pct={att.rate}
-                value={att.rate === null ? '—' : `${att.rate}%`}
-                label="Attendance"
-                sub={att.sessions ? `Last ${plural(att.sessions, 'session')}` : 'No register yet'}
-                warn={att.rate !== null && att.rate < 85}
-                onClick={() => openArea('attendance')}
-              />
-              <Ring
-                pct={
-                  contactDays === null
-                    ? null
-                    : Math.max(4, Math.round(100 - (contactDays / 28) * 100))
-                }
-                value={contactDays === null ? '—' : contactDays === 0 ? 'Today' : `${contactDays}d`}
-                label="Last contact"
-                sub={
-                  contact
-                    ? `${CONTACT_LABEL[contact.kind]}, ${shortDate(contact.at)}`
-                    : facts.contactLoaded && !loading.notes
-                      ? 'No contact logged yet'
-                      : 'Checking…'
-                }
-                warn={contactStale}
-                onClick={() => openArea('notes')}
-              />
+            <div className="-mx-3 mt-6 grid grid-cols-2 gap-x-1 gap-y-2 border-t border-white/[0.06] pt-4 sm:-mx-4 lg:grid-cols-4">
+              {headline.map((m) => (
+                <Measure key={m.label} {...m} />
+              ))}
             </div>
+            {core.user_id && !isUnit && (
+              <button
+                type="button"
+                onClick={() => openArea('quizzes')}
+                className="mt-5 block min-h-[44px] w-full border-t border-white/[0.06] pt-4 text-left touch-manipulation"
+              >
+                <span className="block text-[13px] font-semibold text-white">Gateway forecast</span>
+                <GatewayForecastSummary userId={core.user_id} className="mt-1" />
+              </button>
+            )}
           </motion.section>
 
-          <HubQuickStart label="Start something" items={quickStart} />
+          <StartBar items={quickStart} />
 
           {/* ELE-2015: what needs doing, then every area as a card, near the
               top on every screen. The charts and mini cards come after; on a
               phone they sit behind one toggle so the overview stays short. */}
-          <div className="grid grid-cols-1 items-stretch gap-5 xl:grid-cols-3">
-            <div className="min-w-0 xl:col-span-2">
+          <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-3">
+            {/* What we agreed sits under Needs you, so the left column ends
+                level with About instead of leaving an empty block. */}
+            <div className="min-w-0 space-y-5 xl:col-span-2">
               <NeedsYouCard items={work} first={first} />
+              <AgreedCard
+                reviewActions={agreed}
+                noteActions={openActions}
+                planItems={plans.open}
+                first={first}
+                onOpenReviews={() => openArea('reviews')}
+                onOpenNotes={() => openArea('notes')}
+                onOpenPlan={() => openArea('plan')}
+                onSetPlan={core.user_id ? () => setPlanSheet({ item: null }) : undefined}
+              />
             </div>
             <div className="hidden min-w-0 xl:block">
               <AboutCard
@@ -1690,17 +1914,6 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
             </div>
           </div>
 
-          <AgreedCard
-            reviewActions={agreed}
-            noteActions={openActions}
-            planItems={plans.open}
-            first={first}
-            onOpenReviews={() => openArea('reviews')}
-            onOpenNotes={() => openArea('notes')}
-            onOpenPlan={() => openArea('plan')}
-            onSetPlan={core.user_id ? () => setPlanSheet({ item: null }) : undefined}
-          />
-
           <section className="space-y-3">
             <CollegeHeading>Everything about {first}</CollegeHeading>
             <motion.div
@@ -1709,8 +1922,24 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
               animate="visible"
               className="grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-4"
             >
-              {cards.map((c) => (
-                <AreaCard key={c.key} card={c} onOpen={() => openArea(c.key)} />
+              {cards.map((c, i) => (
+                <AreaCard
+                  key={c.key}
+                  card={c}
+                  onOpen={() => openArea(c.key)}
+                  // The last card fills what is left of its row, so the grid
+                  // never ends on one orphan card beside an empty space.
+                  className={
+                    i === cards.length - 1
+                      ? cn(
+                          cards.length % 2 === 1 && 'col-span-2 xl:col-span-1',
+                          { 1: 'xl:!col-span-4', 2: 'xl:!col-span-3', 3: 'xl:!col-span-2' }[
+                            cards.length % 4
+                          ]
+                        )
+                      : undefined
+                  }
+                />
               ))}
             </motion.div>
           </section>
@@ -1751,54 +1980,66 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
                 />
               </div>
             </div>
+            {/* Balanced on a wide screen: the tall criteria card and the
+                reviews card stack in the first column; the four shorter
+                cards sit 2x2 beside them, so both sides end together. Below
+                xl the wrappers dissolve (`contents`) into one 2-up grid. */}
             <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2 xl:grid-cols-3">
-              {hasAcState ? (
-                <AcStateByUnit units={acState.units} limit={5} onOpen={() => openArea('assess')} />
-              ) : (
-                <CriteriaByUnit rows={acCoverage} limit={5} onOpen={() => openArea('assess')} />
-              )}
-              <AttendanceStrip
-                rows={attendance}
-                rate={att.rate}
-                onOpen={() => openArea('attendance')}
-              />
-              <PortfolioDonut
-                byStatus={pfRoll.by_status}
-                items={pfRoll.total_items}
-                verifiedItems={pfRoll.items_supervisor_verified}
-                onOpen={goPortfolio}
-              />
-              <GoalsCard
-                total={ilpRoll.total_goals}
-                completed={ilpRoll.completed}
-                inProgress={ilpRoll.in_progress}
-                notStarted={ilpRoll.not_started}
-                blocked={ilpRoll.blocked}
-                overdueStatus={
-                  ilpRoll.total_goals -
-                  ilpRoll.completed -
-                  ilpRoll.in_progress -
-                  ilpRoll.not_started -
-                  ilpRoll.blocked
-                }
-                overdue={ilpRoll.overdue}
-                onOpen={() => openArea('ilp')}
-              />
-              <RiskTrend
-                history={riskHistory}
-                level={riskLevel}
-                factor={topFactor?.label ?? null}
-                onOpen={() => openArea('risk')}
-              />
-              <ReviewsCard
-                dueBy={reviewDueBy}
-                days={reviewDays}
-                onOpen={() => openArea('reviews')}
-                onBook={() => {
-                  setTripartiteReviewId(null);
-                  setTripartiteOpen(true);
-                }}
-              />
+              <div className="contents xl:flex xl:min-w-0 xl:flex-col xl:gap-5 xl:[&>*]:h-auto xl:[&>*:first-child]:flex-1">
+                {hasAcState ? (
+                  <AcStateByUnit
+                    units={acState.units}
+                    limit={5}
+                    onOpen={() => openArea('assess')}
+                  />
+                ) : (
+                  <CriteriaByUnit rows={acCoverage} limit={5} onOpen={() => openArea('assess')} />
+                )}
+                <ReviewsCard
+                  dueBy={reviewDueBy}
+                  days={reviewDays}
+                  onOpen={() => openArea('reviews')}
+                  onBook={() => {
+                    setTripartiteReviewId(null);
+                    setTripartiteOpen(true);
+                  }}
+                />
+              </div>
+              <div className="contents xl:col-span-2 xl:grid xl:min-w-0 xl:grid-cols-2 xl:gap-5">
+                <AttendanceStrip
+                  rows={attendance}
+                  rate={att.rate}
+                  onOpen={() => openArea('attendance')}
+                />
+                <PortfolioDonut
+                  byStatus={pfRoll.by_status}
+                  items={pfRoll.total_items}
+                  verifiedItems={pfRoll.items_supervisor_verified}
+                  onOpen={goPortfolio}
+                />
+                <GoalsCard
+                  total={ilpRoll.total_goals}
+                  completed={ilpRoll.completed}
+                  inProgress={ilpRoll.in_progress}
+                  notStarted={ilpRoll.not_started}
+                  blocked={ilpRoll.blocked}
+                  overdueStatus={
+                    ilpRoll.total_goals -
+                    ilpRoll.completed -
+                    ilpRoll.in_progress -
+                    ilpRoll.not_started -
+                    ilpRoll.blocked
+                  }
+                  overdue={ilpRoll.overdue}
+                  onOpen={() => openArea('ilp')}
+                />
+                <RiskTrend
+                  history={riskHistory}
+                  level={riskLevel}
+                  factor={topFactor?.label ?? null}
+                  onOpen={() => openArea('risk')}
+                />
+              </div>
             </div>
           </div>
         </>
@@ -2018,7 +2259,11 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         <OnceOpened open={tripartiteOpen}>
           <TripartiteReviewSheet
             open={tripartiteOpen}
-            onOpenChange={setTripartiteOpen}
+            onOpenChange={(o) => {
+              setTripartiteOpen(o);
+              // A review opened from a link is a one-off; the next open shows the list.
+              if (!o) setTripartiteReviewId(null);
+            }}
             studentId={core.id}
             studentName={core.name}
             collegeId={profile.college_id}
@@ -2081,6 +2326,7 @@ const S360_HELP: PageHelpContent = {
       title: 'Back to the overview',
       body: 'Use Overview at the top of any area, or your browser back button.',
     },
+    FORECAST_HELP_NOTE,
   ],
 };
 
@@ -2138,7 +2384,7 @@ function ProfileHeader({
         <div
           aria-hidden
           className={cn(
-            'flex shrink-0 items-center justify-center rounded-2xl bg-elec-yellow font-bold text-black',
+            'flex shrink-0 items-center justify-center rounded-2xl border border-white/[0.14] bg-white/[0.08] font-bold text-white',
             compact
               ? 'h-11 w-11 text-[15px]'
               : 'h-14 w-14 text-[20px] sm:h-20 sm:w-20 sm:text-[26px]'
@@ -2156,16 +2402,18 @@ function ProfileHeader({
         <h1
           className={cn(
             'font-bold tracking-tight text-white [overflow-wrap:anywhere]',
-            compact ? 'truncate text-[18px]' : 'text-[22px] leading-tight sm:text-[32px]'
+            compact
+              ? 'text-[17px] leading-tight sm:truncate sm:text-[18px]'
+              : 'text-[22px] leading-tight sm:text-[32px]'
           )}
         >
           {core.name}
         </h1>
         <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-white">
-          {meta && <span className={compact ? 'truncate' : ''}>{meta}</span>}
+          {meta && <span className={compact ? 'line-clamp-2 sm:truncate' : ''}>{meta}</span>}
           {status && !compact && (
-            <span className="rounded-full border border-white/[0.14] px-2 py-0.5 text-[11.5px] font-medium capitalize text-white">
-              {status}
+            <span className="rounded-full border border-white/[0.14] px-2 py-0.5 text-[12px] font-medium text-white">
+              {keyLabel(status)}
             </span>
           )}
           {core.uln && !compact && <span className="tabular-nums">ULN {core.uln}</span>}
@@ -2237,7 +2485,15 @@ interface AreaCardData {
   warn?: boolean;
 }
 
-function AreaCard({ card, onOpen }: { card: AreaCardData; onOpen: () => void }) {
+function AreaCard({
+  card,
+  onOpen,
+  className,
+}: {
+  card: AreaCardData;
+  onOpen: () => void;
+  className?: string;
+}) {
   return (
     <motion.button
       variants={itemVariants}
@@ -2246,11 +2502,12 @@ function AreaCard({ card, onOpen }: { card: AreaCardData; onOpen: () => void }) 
       className={cn(
         'group flex min-h-[128px] w-full min-w-0 flex-col rounded-2xl border p-3.5 text-left transition-colors touch-manipulation hover:border-white/[0.2] sm:min-h-[148px] sm:rounded-3xl sm:p-5',
         SURFACE,
-        card.warn && 'border-orange-400/40'
+        card.warn && 'border-orange-400/40',
+        className
       )}
     >
       <span className="flex w-full items-start justify-between gap-3">
-        <span className="min-w-0 text-[13px] font-semibold leading-snug text-white sm:text-[14px]">
+        <span className="min-w-0 text-[14px] font-semibold leading-snug text-white">
           {card.title}
         </span>
         <ChevronRight
@@ -2315,8 +2572,8 @@ function AboutCard({
     ['Started', longDate(core.start_date)],
     ['Planned end', longDate(core.expected_end_date)],
     ['Next review by', longDate(reviewDueBy)],
-    ['Email', core.email ?? '—'],
-    ['Phone', core.phone ?? '—'],
+    ['Email', core.email ?? 'Not given'],
+    ['Phone', core.phone ?? 'Not given'],
   ];
   return (
     <motion.aside variants={itemVariants} className={cn(VIS_CARD, 'flex flex-col')}>
@@ -2381,7 +2638,7 @@ function NeedsYouCard({ items, first }: { items: HubWorkItem[]; first: string })
         <span
           className={cn(
             'text-[12.5px] font-semibold tabular-nums',
-            items.some((i) => i.urgent) ? 'text-elec-yellow' : 'text-white'
+            items.some((i) => i.urgent) ? 'text-orange-300' : 'text-white'
           )}
         >
           {items.length === 0
@@ -2402,18 +2659,11 @@ function NeedsYouCard({ items, first }: { items: HubWorkItem[]; first: string })
                 onClick={() => go(i)}
                 className="flex min-h-[56px] w-full items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors touch-manipulation hover:bg-white/[0.05]"
               >
-                <span
-                  aria-hidden
-                  className={cn(
-                    'h-8 w-[3px] shrink-0 rounded-full',
-                    i.urgent ? 'bg-orange-400' : 'bg-white/[0.25]'
-                  )}
-                />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                  <span className="block text-[14.5px] font-semibold leading-snug text-white">
                     {i.title}
                   </span>
-                  <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-white">
+                  <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-white md:line-clamp-1 md:text-[12.5px]">
                     {i.reason}
                   </span>
                 </span>
@@ -2551,10 +2801,10 @@ function AgreedCard({
                   className="flex min-h-[56px] w-full items-center gap-3 rounded-xl px-2 py-2.5 text-left touch-manipulation hover:bg-white/[0.05]"
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14px] font-semibold text-white">
+                    <span className="line-clamp-2 block text-[14.5px] font-semibold leading-snug text-white">
                       {r.text}
                     </span>
-                    <span className="mt-0.5 block text-[12px] text-white">
+                    <span className="mt-0.5 block text-[13px] text-white">
                       {r.who} · from {r.from}
                     </span>
                   </span>
@@ -2655,42 +2905,130 @@ function AreaBar({
   onPick: (k: AreaKey) => void;
 }) {
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-3">
+    <div className="space-y-2">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-0">
         <button
           type="button"
           onClick={onBack}
-          className="-ml-2 flex h-11 items-center gap-1 rounded-full px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06]"
+          className="-ml-2 flex h-11 items-center gap-1 rounded-full px-2 text-[13.5px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06]"
         >
           <ChevronLeft className="h-4 w-4" aria-hidden />
           Overview
         </button>
-        <h2 className="min-w-0 truncate text-[20px] font-bold tracking-tight text-white sm:text-[24px]">
+        <h2 className="min-w-0 basis-full break-words text-[22px] font-bold leading-tight tracking-tight text-white sm:basis-auto sm:text-[24px]">
           {title}
         </h2>
       </div>
+      {/* Quiet text tabs, underlined like the area navigation (10 Oct: no
+          row of pills with a solid yellow one). Scrolls sideways on a phone. */}
       <nav
         aria-label="Parts of the record"
-        className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+        className="-mx-4 flex overflow-x-auto border-b border-white/[0.08] px-2 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
-        {areas.map((a) => (
-          <button
-            key={a.key}
-            type="button"
-            onClick={() => onPick(a.key)}
-            aria-current={a.key === current ? 'page' : undefined}
-            className={cn(
-              'h-9 shrink-0 rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation',
-              a.key === current
-                ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.3]'
-            )}
-          >
-            {a.title}
-          </button>
-        ))}
+        {areas.map((a) => {
+          const on = a.key === current;
+          return (
+            <button
+              key={a.key}
+              type="button"
+              onClick={() => onPick(a.key)}
+              aria-current={on ? 'page' : undefined}
+              className={cn(
+                'relative inline-flex h-12 shrink-0 items-center whitespace-nowrap px-3 text-[13.5px] text-white transition-colors touch-manipulation active:bg-white/[0.05]',
+                on ? 'font-semibold' : 'font-medium hover:text-elec-yellow'
+              )}
+            >
+              {a.title}
+              <span
+                aria-hidden
+                className={cn(
+                  'absolute inset-x-3 bottom-0 h-[2px] rounded-full',
+                  on ? 'bg-elec-yellow' : 'bg-transparent'
+                )}
+              />
+            </button>
+          );
+        })}
       </nav>
     </div>
+  );
+}
+
+/**
+ * Start something: the one action this role reaches for most, solid, and
+ * three outlined beside it (10 Oct: no stacked title-over-hint tiles, no
+ * yellow tile). Full width and first on a phone; one row on a wide screen.
+ */
+const START_ICON: Record<string, LucideIcon> = {
+  '1-2-1': Users,
+  Note: NotebookPen,
+  Message: MessageSquare,
+  'More actions': MoreHorizontal,
+  Safeguarding: ShieldAlert,
+  Observation: Eye,
+  Grade: ClipboardCheck,
+  'Evidence chain': Link2,
+  'Learner record': FileText,
+  'GDPR pack': Archive,
+  'Ask about this learner': Sparkles,
+};
+
+/** The few words a secondary action keeps on a phone, three to a row. */
+const START_SHORT: Record<string, string> = {
+  'More actions': 'More',
+  'Learner record': 'Record',
+  'GDPR pack': 'GDPR pack',
+  'Ask about this learner': 'Ask',
+  Observation: 'Observe',
+};
+
+function StartBar({ items }: { items: HubQuickAction[] }) {
+  if (items.length === 0) return null;
+  const label = (i: HubQuickAction) =>
+    i.title === '1-2-1'
+      ? 'Log a 1-2-1'
+      : i.title === 'Message' && typeof i.description === 'string'
+        ? i.description.replace(/^Send to /, 'Message ')
+        : i.title;
+  return (
+    <section aria-label="Start something" className="space-y-3">
+      <h2 className="text-[17px] font-semibold tracking-tight text-white">Start something</h2>
+      <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
+        {items.map((i) => {
+          const Icon = START_ICON[i.title];
+          return (
+            <button
+              key={i.title}
+              type="button"
+              onClick={i.onClick}
+              aria-label={label(i)}
+              title={i.description}
+              className={cn(
+                i.primary ? COLLEGE_BTN_PRIMARY : COLLEGE_BTN,
+                'min-w-0 px-2 active:opacity-80 sm:px-4',
+                i.primary && 'col-span-3 h-12 text-[14.5px] sm:h-11 sm:text-[13.5px]'
+              )}
+            >
+              {Icon && (
+                <Icon
+                  className={cn('h-[18px] w-[18px] shrink-0', !i.primary && 'max-sm:hidden')}
+                  strokeWidth={1.5}
+                  aria-hidden
+                />
+              )}
+              {i.primary ? (
+                <span className="truncate">{label(i)}</span>
+              ) : (
+                <>
+                  <span className="truncate sm:hidden">{START_SHORT[i.title] ?? i.title}</span>
+                  <span className="hidden truncate sm:inline">{label(i)}</span>
+                </>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
@@ -2770,7 +3108,7 @@ function RiskCard({
               >
                 {RISK_LABEL[risk.level] ?? risk.level}
               </div>
-              <div className="mt-1.5 text-[11.5px] tabular-nums text-white">
+              <div className="mt-1.5 text-[12px] tabular-nums text-white">
                 Score {risk.score.toFixed(1)} · updated {shortDate(risk.computed_at)}
               </div>
             </div>
@@ -2803,7 +3141,7 @@ function RiskCard({
                         {f.label}
                       </span>
                       {f.detail && (
-                        <span className="mt-0.5 block text-[11.5px] leading-snug text-white">
+                        <span className="mt-0.5 block text-[12px] leading-snug text-white">
                           {f.detail}
                         </span>
                       )}
@@ -2837,7 +3175,7 @@ function RiskCard({
 
 function TrendSparkline({ history }: { history: { computed_at: string; score: number }[] }) {
   if (history.length < 2) {
-    return <div className="text-[11.5px] text-white">Not enough history yet.</div>;
+    return <div className="text-[12px] text-white">Not enough history yet.</div>;
   }
   const w = 240;
   const h = 48;
@@ -2938,13 +3276,13 @@ function AttendanceCard({
     for (const [day, st] of byDay) {
       if (st.total >= 3 && st.absent >= Math.ceil(st.total * 0.6)) {
         out.push(
-          `${names[day]}s: absent ${st.absent} of ${st.total} sessions in the last four weeks — worth a conversation.`
+          `${names[day]}s: absent ${st.absent} of ${st.total} sessions in the last four weeks. Worth a conversation.`
         );
       }
     }
     if (summary.late >= 4) {
       out.push(
-        `${summary.late} late marks in the last 28 sessions — punctuality is the pattern, not absence.`
+        `${summary.late} late marks in the last 28 sessions. Punctuality is the pattern, not absence.`
       );
     }
     if (summary.streak >= 2) {
@@ -2987,7 +3325,7 @@ function AttendanceCard({
               >
                 {summary.rate === null ? '—' : `${summary.rate}%`}
               </div>
-              <div className="pb-0.5 text-[11.5px] leading-snug tabular-nums text-white">
+              <div className="pb-0.5 text-[12px] leading-snug tabular-nums text-white">
                 attended, last {plural(summary.sessions, 'session')}
                 <br />
                 {summary.attended} present or late · {summary.absent} absent
@@ -3009,15 +3347,15 @@ function AttendanceCard({
                     }`}
                     className="rounded-xl border border-white/[0.12] px-1 py-2 text-center"
                   >
-                    <div className="text-[10.5px] font-semibold text-white">{d.day}</div>
+                    <div className="text-[12px] font-semibold text-white">{d.day}</div>
                     {d.marks.length === 0 ? (
-                      <div className="mt-0.5 truncate text-[11px] font-medium text-white">—</div>
+                      <div className="mt-0.5 truncate text-[12px] font-medium text-white">—</div>
                     ) : (
                       d.marks.map((m) => (
                         <div
                           key={m.id}
                           className={cn(
-                            'mt-0.5 truncate text-[11px] font-medium',
+                            'mt-0.5 truncate text-[12px] font-medium',
                             attendanceTone(m.status).text
                           )}
                         >
@@ -3047,7 +3385,7 @@ function AttendanceCard({
                   />
                 ))}
             </div>
-            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white">
+            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-white">
               <Legend colour="bg-emerald-400" label="Present" />
               <Legend colour="bg-elec-yellow" label="Late" />
               <Legend colour="bg-red-400" label="Absent" />
@@ -3153,7 +3491,7 @@ function GradesCard({
               >
                 {analysis.predicted ?? '—'}
               </div>
-              <div className="mt-1 text-[11px] tabular-nums text-white">
+              <div className="mt-1 text-[12px] tabular-nums text-white">
                 {analysis.graded > 0
                   ? [
                       analysis.counts.distinction
@@ -3173,7 +3511,7 @@ function GradesCard({
               <div className="mt-1 text-[24px] font-semibold leading-none tabular-nums tracking-tight text-white">
                 {analysis.avgScore != null ? `${analysis.avgScore}%` : '—'}
               </div>
-              <div className="mt-1 text-[11px] tabular-nums text-white">
+              <div className="mt-1 text-[12px] tabular-nums text-white">
                 {plural(rows.length, 'attempt')} on record
               </div>
             </div>
@@ -3187,12 +3525,12 @@ function GradesCard({
                     <div className="truncate text-[13px] font-medium text-white">
                       {g.unit_name ?? '—'}
                     </div>
-                    <div className="mt-0.5 text-[11px] capitalize tabular-nums text-white">
-                      {g.assessment_type?.replace(/_/g, ' ') ?? 'Assessment'}
+                    <div className="mt-0.5 text-[12px] capitalize tabular-nums text-white">
+                      {keyLabel(g.assessment_type) || 'Assessment'}
                       {g.assessed_at && ` · ${shortDate(g.assessed_at)}`}
                     </div>
                     {g.feedback && (
-                      <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-white">
+                      <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-white">
                         {g.feedback}
                       </p>
                     )}
@@ -3200,7 +3538,7 @@ function GradesCard({
                   <div className="flex shrink-0 flex-col items-end gap-0.5">
                     <span
                       className={cn(
-                        'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold capitalize',
+                        'inline-flex items-center rounded-full border px-2 py-0.5 text-[12px] font-semibold capitalize',
                         fail
                           ? 'border-red-400/30 bg-red-500/[0.08] text-red-300'
                           : 'border-white/[0.14] bg-white/[0.06] text-white'
@@ -3209,7 +3547,7 @@ function GradesCard({
                       {g.grade ?? '—'}
                     </span>
                     {g.score != null && (
-                      <span className="text-[11px] tabular-nums text-white">{g.score}%</span>
+                      <span className="text-[12px] tabular-nums text-white">{g.score}%</span>
                     )}
                   </div>
                 </li>
@@ -3305,7 +3643,7 @@ function NoteRow({ note }: { note: PastoralNote }) {
   const due = daysUntil(note.action_by_date);
   return (
     <li data-focus-id={note.id} className="px-4 py-3.5 sm:px-5">
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] tabular-nums">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] tabular-nums">
         <span className={cn('font-semibold capitalize', kindTone)}>
           {note.kind.replace(/_/g, ' ')}
         </span>
@@ -3388,7 +3726,7 @@ const ACTION_LABEL: Record<ActionKey, { title: string; reason: string }> = {
   praise: { title: 'Praise', reason: 'Recognise good work' },
   flag: { title: 'Flag', reason: 'Something to keep an eye on' },
   concern: { title: 'Concern', reason: 'Wellbeing or progress worry' },
-  safeguarding: { title: 'Safeguarding', reason: 'Restricted — DSL only' },
+  safeguarding: { title: 'Safeguarding', reason: 'Restricted: DSL only' },
   inclusion: { title: 'Inclusion plan', reason: 'Support arrangements and reviews' },
   tripartite: { title: 'Tripartite review', reason: 'Learner, employer and college' },
   parents: { title: 'Parent contacts', reason: 'Next of kin and consent' },

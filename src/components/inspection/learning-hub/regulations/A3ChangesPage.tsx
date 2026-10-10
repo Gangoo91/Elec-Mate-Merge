@@ -49,7 +49,7 @@ const A3ChangesPage = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Key Changes</p>
+          <p className="text-[12px] font-medium text-white mb-3">Key Changes</p>
         </motion.div>
 
         {majorChanges.map((change, i) => (

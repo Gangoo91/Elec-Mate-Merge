@@ -15,6 +15,7 @@ import { ExitIntentModal } from '@/components/landing/ExitIntentModal';
 import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
 import { TeamSignupForm } from '@/components/landing/TeamSignupForm';
 import { cn } from '@/lib/utils';
+import { PlainTermsStrip } from '@/components/employer/settings/import/PlainTerms';
 import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY } from '@/components/ui/card-recipe';
 
 /**
@@ -1079,6 +1080,8 @@ const LandingPage = () => {
               </div>
             ))}
           </dl>
+          {/* ELE-2067 plain terms: the four promises the Terms already make, shown to everyone. */}
+          <PlainTermsStrip className="mt-8" />
         </div>
       </section>
 

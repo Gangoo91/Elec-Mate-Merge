@@ -278,7 +278,7 @@ const sections = [
         <p>
           All new circuits must be RCD-protected. Under BS 7671 Regulation 411.3.3, socket outlets
           rated up to 32A must be protected by a 30mA RCD, and Regulation 411.3.4 requires
-          additional protection for cables concealed in walls or partitions. If the existing{' '}
+          the same 30mA protection for lighting circuits in a dwelling. If the existing{' '}
           <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           does not have RCD protection, this may trigger a consumer unit upgrade as part of the loft
           conversion project.
@@ -656,7 +656,7 @@ export default function LoftConversionElectricsPage() {
       title="Loft Conversion Electrics: Wiring Requirements"
       description="Complete guide to loft conversion electrics in the UK. Part P notification, new circuits, lighting design, smoke alarms, fire detection."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

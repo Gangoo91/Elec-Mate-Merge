@@ -1129,7 +1129,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             asChild
             className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow"
           >
-            <Link to="../section-4">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-4-section-4">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Previous: Section 4
             </Link>

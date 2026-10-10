@@ -52,7 +52,7 @@ export const MateBar = ({ onOpen }: { onOpen: () => void }) => {
       </span>
 
       <span className="flex-1 truncate py-1.5 text-[14px] text-white sm:text-[15px]">
-        Ask Mate — tasks, snags, regs, anything…
+        Ask Mate about tasks, snags, regs, anything…
       </span>
 
       <kbd className="hidden items-center gap-1 rounded-md border border-white/[0.12] bg-white/[0.04] px-1.5 py-0.5 text-[10px] font-semibold text-white md:inline-flex">

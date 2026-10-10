@@ -34,10 +34,20 @@ import {
 
 /**
  * R1+R2 is *recorded* at ambient, but Zs is assessed at conductor operating
- * temperature. Table 9B / GN3 give ~1.20 for 70°C thermoplastic — the same
- * factor designer-agent-v3 applies.
+ * temperature. OSG Table I3: 1.20 for 70 °C thermoplastic, 1.28 for 90 °C
+ * thermosetting (XLPE, XLPE SWA, LSZH) — the same rule as designer-agent-v3's
+ * operatingTempFactor, so the card and the design agree.
  */
-const OPERATING_TEMP_FACTOR = 1.2;
+export function operatingTempFactor(cableType: unknown): number {
+  const s = String(cableType ?? '').toLowerCase();
+  // Order matters: T&E first (6242Y/6242B are 70 °C even in LSZH), then the
+  // insulation named outright, then sheath/construction words. "XLPE/SWA/PVC"
+  // is 90 °C XLPE with a PVC sheath (review — /pvc/ used to win).
+  if (/twin|t\s*&\s*e|t\+e|6242|flat/.test(s)) return 1.2;
+  if (/xlpe|thermosetting|5467|6724|7211/.test(s)) return 1.28;
+  if (/pvc|thermoplastic|6491x|6346|6942|6943/.test(s)) return 1.2;
+  return /swa|armour|lszh|lsf|lsoh|low smoke/.test(s) ? 1.28 : 1.2;
+}
 
 /** Ze fallback when the supply carries none. TN-C-S typical maximum. */
 const DEFAULT_ZE = 0.35;
@@ -51,6 +61,10 @@ export interface ZsCircuitInput {
   cableSize?: number | null;
   cpcSize?: number | null;
   cableLength?: number | null;
+  cableType?: string | null;
+  circuitTopology?: string | null;
+  name?: string | null;
+  loadType?: string | null;
 }
 
 export interface ZsCheck {
@@ -80,7 +94,10 @@ export function computeZs(circuit: ZsCircuitInput | null | undefined, ze: number
   const r1r2At20C = calculateExpectedR1R2(String(live), cpc, length, 1.0);
   if (!Number.isFinite(r1r2At20C) || r1r2At20C <= 0) return null;
 
-  const zs = ze + r1r2At20C * OPERATING_TEMP_FACTOR;
+  // A ring's R1+R2 is a quarter of the same length run as a radial — this
+  // used to read every ring ~4× high (55 m ring: 1.64 Ω shown, 0.67 Ω real).
+  const ring = detectRingFinal(circuit as never);
+  const zs = ze + (r1r2At20C / (ring ? 4 : 1)) * operatingTempFactor(circuit?.cableType);
   return Number.isFinite(zs) && zs > 0 ? Number(zs.toFixed(3)) : null;
 }
 
@@ -250,6 +267,9 @@ export function getCableAdequacy(circuit: CableCircuitInput | null | undefined):
 
     return {
       ...base,
+      // The ring's test is Iz ≥ 20 A, not Iz ≥ In — measuring headroom
+      // against 32 A showed every 2.5mm² ring as overloaded.
+      required: RING_MIN_IZ,
       tabulatedIt: it,
       iz: izRing,
       adequate: csaOk && izOk,

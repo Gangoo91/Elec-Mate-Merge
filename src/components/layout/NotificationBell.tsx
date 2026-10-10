@@ -9,6 +9,7 @@ import { isToday, isYesterday } from 'date-fns';
 import { cn } from '@/lib/utils';
 // Shared category → colour/label source (same as the /notifications page).
 import { categoryTone as toneFor, compactAge } from '@/lib/notificationCategory';
+import { OtjQuickAttest, otjEntryIdOf } from '@/components/notifications/OtjQuickAttest';
 
 const bucketOf = (iso: string): 'Today' | 'Yesterday' | 'Earlier' => {
   const d = new Date(iso);
@@ -64,7 +65,7 @@ export default function NotificationBell() {
         size="icon"
         onClick={() => setOpen(true)}
         className={cn(
-          'relative h-9 w-9 min-w-[36px] min-h-[36px] sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px]',
+          'relative h-9 w-9 min-w-[36px] min-h-[36px] sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px] after:absolute after:-inset-1 after:rounded-xl',
           'bg-white/5 border border-white/10 hover:bg-white/10 active:bg-white/15',
           'touch-manipulation rounded-xl transition-all duration-150',
           unreadCount > 0 && 'text-elec-yellow'
@@ -73,7 +74,7 @@ export default function NotificationBell() {
       >
         <Bell className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-elec-yellow text-black text-[10px] font-bold rounded-full flex items-center justify-center shadow-lg">
+          <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 bg-elec-yellow text-black text-[12px] leading-none font-bold rounded-full flex items-center justify-center shadow-lg">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
@@ -195,6 +196,12 @@ export default function NotificationBell() {
                               <p className="mt-0.5 line-clamp-2 text-[12.5px] leading-snug text-white">
                                 {n.message}
                               </p>
+                              {otjEntryIdOf(n) && (
+                                <OtjQuickAttest
+                                  entryId={otjEntryIdOf(n)!}
+                                  onDone={() => !n.is_read && markAsRead.mutate(n.id)}
+                                />
+                              )}
                             </div>
                             <button
                               onClick={(e) => {

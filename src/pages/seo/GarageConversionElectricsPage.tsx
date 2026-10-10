@@ -285,7 +285,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <p className="font-semibold text-white mb-2">
-            Arc fault detection — Reg 421.1.7 (A4:2026)
+            Arc fault detection — Reg 421.1.7
           </p>
           <p className="text-white text-sm leading-relaxed">
             BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection
@@ -554,7 +554,7 @@ const sections = [
             <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold text-white mb-1">
-                A4:2026 compliance checkpoint — Reg 411.3.4
+                Compliance checkpoint — Reg 411.3.4 (since 2018)
               </p>
               <p className="text-white text-sm leading-relaxed">
                 Under BS 7671:2018+A4:2026 Reg 411.3.4, all AC final circuits supplying luminaires
@@ -764,7 +764,7 @@ export default function GarageConversionElectricsPage() {
       title="Garage Conversion Electrics: UK Guide 2026"
       description="Complete guide to garage conversion electrics in the UK. Building regulations, consumer unit design, lighting, socket layout, heating circuits."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

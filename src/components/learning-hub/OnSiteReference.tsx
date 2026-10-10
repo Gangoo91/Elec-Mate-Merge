@@ -24,7 +24,7 @@ const cardCn =
 
 export const OnSiteReference: React.FC = () => {
   return (
-    <div className="space-y-6 px-4 py-4">
+    <div className="space-y-6">
       {/* The sequence as a strip — the one thing people forget mid-job is
           which test comes next, and it costs almost no room to answer that. */}
       <section className={`${cardCn} p-4 sm:p-5`}>
@@ -36,7 +36,7 @@ export const OnSiteReference: React.FC = () => {
               className={`flex items-center gap-1.5 rounded-lg border px-2 py-1.5 ${
                 step.phase === 'dead'
                   ? 'border-white/[0.14] bg-white/[0.06]'
-                  : 'border-elec-yellow/30 bg-elec-yellow/10'
+                  : 'border-white/[0.14] bg-white/[0.06]'
               }`}
             >
               <span className="text-[12px] font-semibold tabular-nums text-white">
@@ -46,7 +46,7 @@ export const OnSiteReference: React.FC = () => {
             </li>
           ))}
         </ol>
-        <p className="mt-2 text-[11px] text-white">
+        <p className="mt-2 text-[12px] text-white">
           Plain = dead tests · highlighted = live tests. BS 7671 Reg 643.
         </p>
       </section>
@@ -72,7 +72,7 @@ export const OnSiteReference: React.FC = () => {
                 </div>
               ))}
             </div>
-            <p className="border-t border-white/[0.08] px-4 py-2.5 text-[11px] text-white">
+            <p className="border-t border-white/[0.08] px-4 py-2.5 text-[12px] text-white">
               {table.source}
             </p>
           </div>

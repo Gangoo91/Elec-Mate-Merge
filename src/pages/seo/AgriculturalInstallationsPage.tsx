@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What does BS 7671 Section 705 cover?',
     answer:
-      'Section 705 of BS 7671:2018+A2:2022 applies to all fixed electrical installations in agricultural and horticultural premises. This includes farmhouses, barns, livestock buildings, milking parlours, grain stores, glasshouses, stables, equestrian centres, and any other buildings or locations used for agricultural or horticultural purposes. The section sets out additional requirements beyond the general rules of BS 7671, reflecting the specific hazards found in agricultural environments — including the presence of livestock, high levels of moisture and dust, corrosive atmospheres (ammonia from animal waste, fertiliser chemicals), mechanical damage from farm machinery, and the presence of combustible materials (hay, straw, grain). Section 705 does not apply to dwellings within agricultural premises — a farmhouse is treated as a normal domestic installation. However, outbuildings, workshops, and any building used for agricultural purposes fall within the scope of Section 705.',
+      'Section 705 of BS 7671:2018+A4:2026 applies to all fixed electrical installations in agricultural and horticultural premises. This includes farmhouses, barns, livestock buildings, milking parlours, grain stores, glasshouses, stables, equestrian centres, and any other buildings or locations used for agricultural or horticultural purposes. The section sets out additional requirements beyond the general rules of BS 7671, reflecting the specific hazards found in agricultural environments — including the presence of livestock, high levels of moisture and dust, corrosive atmospheres (ammonia from animal waste, fertiliser chemicals), mechanical damage from farm machinery, and the presence of combustible materials (hay, straw, grain). Section 705 does not apply to dwellings within agricultural premises — a farmhouse is treated as a normal domestic installation. However, outbuildings, workshops, and any building used for agricultural purposes fall within the scope of Section 705.',
   },
   {
     question: 'Why is supplementary bonding so critical in agricultural buildings?',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete overview of BS 7671:2018+A2:2022 with regulation references for every section.',
+      'Complete overview of BS 7671:2018+A4:2026 with regulation references for every section.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -149,7 +149,7 @@ const sections = [
         <p>
           Section 705 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           is one of the "Part 7" special installations sections, and it applies specifically to
           agricultural and horticultural premises. This includes farms, dairy units, poultry houses,
@@ -618,7 +618,7 @@ export default function AgriculturalInstallationsPage() {
       title="Agricultural Electrical Installations: BS 7671"
       description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Earthing and bonding for livestock buildings, IP ratings."
       datePublished="2025-07-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Agricultural Guide"

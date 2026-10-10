@@ -29,8 +29,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { useCultureProgress } from '@/components/apprentice/workplace-culture/useCultureProgress';
 import CultureSectionView from '@/components/apprentice/workplace-culture/CultureSectionView';
 import CultureQuiz from '@/components/apprentice/workplace-culture/CultureQuiz';
@@ -102,429 +101,417 @@ const OnJobWorkplaceCulture = () => {
   }
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Workplace culture"
-        title="Site comms & standards"
-        backTo="/apprentice/on-job-tools"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'UK trade culture, regional terminology, professional relationships, and the unwritten rules that mean the difference between fitting in and standing out for the wrong reasons.'
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Workplace culture"
+      area="On-the-job tools"
+      title="Site comms & standards"
+      backTo="/apprentice/on-job-tools"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          'UK trade culture, regional terminology, professional relationships, and the unwritten rules that mean the difference between fitting in and standing out for the wrong reasons.'
+        }
+      </p>
 
-        {/* ── Search bar ────────────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-            <Input
-              placeholder="Search questions, topics, advice…"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
+      {/* ── Search bar ────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+          <Input
+            placeholder="Search questions, topics, advice…"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setExpandedSearchId(null);
+            }}
+            className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+          />
+          {searchQuery.length > 0 && (
+            <button
+              onClick={() => {
+                setSearchQuery('');
                 setExpandedSearchId(null);
               }}
-              className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
-            />
-            {searchQuery.length > 0 && (
-              <button
-                onClick={() => {
-                  setSearchQuery('');
-                  setExpandedSearchId(null);
-                }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
-              >
-                <X className="h-4 w-4 text-white" />
-              </button>
-            )}
-          </div>
-        </motion.div>
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
+            >
+              <X className="h-4 w-4 text-white" />
+            </button>
+          )}
+        </div>
+      </motion.div>
 
-        {searchQuery.length >= 2 ? (
-          /* ── Search results ─────────────────────────────────────── */
-          <motion.div variants={itemVariants} className="space-y-3">
-            <Eyebrow>
-              {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found
-            </Eyebrow>
+      {searchQuery.length >= 2 ? (
+        /* ── Search results ─────────────────────────────────────── */
+        <motion.div variants={itemVariants} className="space-y-3">
+          <Eyebrow>
+            {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found
+          </Eyebrow>
 
-            {searchResults.length === 0 ? (
-              <div
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
-                  CARD_SURFACE
-                )}
-              >
-                <Search className="h-5 w-5 text-white mx-auto" />
-                <p className="text-[13px] text-white">No matches. Try different keywords.</p>
-              </div>
-            ) : (
-              <ul className="space-y-2">
-                {searchResults.map((q) => {
-                  const isExpanded = expandedSearchId === q.id;
-                  const sectionLabel = sections.find((s) => s.id === q.section)?.title || '';
-                  const isBookmarked = progress.isBookmarked(q.id);
+          {searchResults.length === 0 ? (
+            <div
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-6 text-center space-y-2',
+                CARD_SURFACE
+              )}
+            >
+              <Search className="h-5 w-5 text-white mx-auto" />
+              <p className="text-[13px] text-white">No matches. Try different keywords.</p>
+            </div>
+          ) : (
+            <ul className="space-y-2">
+              {searchResults.map((q) => {
+                const isExpanded = expandedSearchId === q.id;
+                const sectionLabel = sections.find((s) => s.id === q.section)?.title || '';
+                const isBookmarked = progress.isBookmarked(q.id);
 
-                  return (
-                    <li
-                      key={q.id}
-                      className={cn(
-                        'rounded-xl border overflow-hidden transition-colors',
-                        isExpanded ? 'border-elec-yellow/70' : 'border-white/[0.12] bg-white/[0.06]'
-                      )}
+                return (
+                  <li
+                    key={q.id}
+                    className={cn(
+                      'rounded-xl border overflow-hidden transition-colors',
+                      isExpanded ? 'border-elec-yellow/70' : 'border-white/[0.12] bg-white/[0.06]'
+                    )}
+                  >
+                    <button
+                      onClick={() => {
+                        setExpandedSearchId(isExpanded ? null : q.id);
+                        if (!isExpanded) progress.markRead(q.id);
+                      }}
+                      className="w-full text-left p-4 touch-manipulation"
                     >
-                      <button
-                        onClick={() => {
-                          setExpandedSearchId(isExpanded ? null : q.id);
-                          if (!isExpanded) progress.markRead(q.id);
-                        }}
-                        className="w-full text-left p-4 touch-manipulation"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="flex-1 min-w-0 space-y-1">
-                            <Eyebrow className={isExpanded ? 'text-elec-yellow/85' : undefined}>
-                              {sectionLabel}
-                            </Eyebrow>
-                            <p className="text-[13.5px] font-medium text-white leading-snug">
-                              {q.question}
-                            </p>
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1 min-w-0 space-y-1">
+                          <Eyebrow className={isExpanded ? 'text-elec-yellow' : undefined}>
+                            {sectionLabel}
+                          </Eyebrow>
+                          <p className="text-[13.5px] font-medium text-white leading-snug">
+                            {q.question}
+                          </p>
+                        </div>
+                        <ChevronDown
+                          className={cn(
+                            'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
+                            isExpanded && 'rotate-180'
+                          )}
+                        />
+                      </div>
+                    </button>
+                    {isExpanded && (
+                      <div className="px-4 pb-4 space-y-3 animate-fade-in border-t border-white/[0.04] pt-3">
+                        <p className="text-[14px] text-white leading-relaxed">{q.answer}</p>
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <div className="flex flex-wrap gap-1">
+                            {q.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.14] bg-white/[0.06] text-[12.5px] text-white"
+                              >
+                                {tag}
+                              </span>
+                            ))}
                           </div>
-                          <ChevronDown
-                            className={cn(
-                              'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
-                              isExpanded && 'rotate-180'
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              progress.toggleBookmark(q.id);
+                            }}
+                            className="h-11 w-11 flex items-center justify-center rounded-md active:bg-white/[0.06] touch-manipulation"
+                            aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark'}
+                          >
+                            {isBookmarked ? (
+                              <BookmarkCheck className="h-4 w-4 text-elec-yellow" />
+                            ) : (
+                              <Bookmark className="h-4 w-4 text-white" />
                             )}
-                          />
+                          </button>
                         </div>
-                      </button>
-                      {isExpanded && (
-                        <div className="px-4 pb-4 space-y-3 animate-fade-in border-t border-white/[0.04] pt-3">
-                          <p className="text-[13px] text-white leading-relaxed">{q.answer}</p>
-                          <div className="flex items-center justify-between gap-2 flex-wrap">
-                            <div className="flex flex-wrap gap-1">
-                              {q.tags.map((tag) => (
-                                <span
-                                  key={tag}
-                                  className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.14] bg-white/[0.06] text-[10.5px] text-white"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                progress.toggleBookmark(q.id);
-                              }}
-                              className="h-11 w-11 flex items-center justify-center rounded-md active:bg-white/[0.06] touch-manipulation"
-                              aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark'}
-                            >
-                              {isBookmarked ? (
-                                <BookmarkCheck className="h-4 w-4 text-elec-yellow" />
-                              ) : (
-                                <Bookmark className="h-4 w-4 text-white" />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </motion.div>
-        ) : (
-          <>
-            {/* ── Progress strip ─────────────────────────────────── */}
-            <motion.div variants={itemVariants}>
-              <div
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2.5',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <Eyebrow>Coverage</Eyebrow>
-                  <span className="text-[12px] font-mono tabular-nums text-white">
-                    {overall.read} / {overall.total}
-                    <span className="text-white ml-1.5">· {overall.percentage}%</span>
-                  </span>
-                </div>
-                <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${overall.percentage}%` }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                    className="h-full bg-elec-yellow rounded-full"
-                  />
-                </div>
-                <p className="text-[11.5px] text-white leading-snug">
-                  {overall.percentage === 100
-                    ? 'All topics explored — brilliant.'
-                    : 'Tap a topic below to dig in.'}
-                  {progress.quizResult && (
-                    <>
-                      {' '}
-                      · last quiz{' '}
-                      <span className="font-mono tabular-nums text-elec-yellow">
-                        {progress.quizResult.score}/{progress.quizResult.total}
-                      </span>
-                    </>
-                  )}
-                </p>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </motion.div>
+      ) : (
+        <>
+          {/* ── Progress strip ─────────────────────────────────── */}
+          <motion.div variants={itemVariants}>
+            <div
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2.5',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <Eyebrow>Coverage</Eyebrow>
+                <span className="text-[12px] tabular-nums text-white">
+                  {overall.read} / {overall.total}
+                  <span className="text-white ml-1.5">· {overall.percentage}%</span>
+                </span>
               </div>
-            </motion.div>
-
-            {/* ── Daily tip ──────────────────────────────────────── */}
-            <motion.div variants={itemVariants}>
-              <div
-                className={cn(
-                  'rounded-xl border border-elec-yellow/35 overflow-hidden',
-                  CARD_SURFACE
+              <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${overall.percentage}%` }}
+                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                  className="h-full bg-elec-yellow rounded-full"
+                />
+              </div>
+              <p className="text-[12.5px] text-white leading-snug">
+                {overall.percentage === 100
+                  ? 'All topics explored — brilliant.'
+                  : 'Tap a topic below to dig in.'}
+                {progress.quizResult && (
+                  <>
+                    {' '}
+                    · last quiz{' '}
+                    <span className="tabular-nums text-elec-yellow">
+                      {progress.quizResult.score}/{progress.quizResult.total}
+                    </span>
+                  </>
                 )}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* ── Daily tip ──────────────────────────────────────── */}
+          <motion.div variants={itemVariants}>
+            <div
+              className={cn('rounded-xl border border-white/[0.08] overflow-hidden', CARD_SURFACE)}
+            >
+              <button
+                onClick={() => setDailyExpanded(!dailyExpanded)}
+                className="w-full text-left p-4 sm:p-5 touch-manipulation"
               >
-                <button
-                  onClick={() => setDailyExpanded(!dailyExpanded)}
-                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
-                >
-                  <div className="flex items-start gap-3">
-                    <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <Eyebrow className="text-elec-yellow/85">Tip of the day</Eyebrow>
-                      <p className="text-[13.5px] font-medium text-white leading-snug">
-                        {dailyTip.area}: {dailyTip.tip}
-                      </p>
-                    </div>
-                    <ChevronDown
-                      className={cn(
-                        'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
-                        dailyExpanded && 'rotate-180'
-                      )}
-                    />
-                  </div>
-                </button>
-                {dailyExpanded && (
-                  <div className="px-4 sm:px-5 pb-4 border-t border-elec-yellow/15 pt-3 animate-fade-in">
-                    <p className="text-[13px] text-white leading-relaxed pl-7">
-                      Small, consistent habits build your professional reputation. Focus on this one
-                      area today and notice the difference in how colleagues and supervisors respond
-                      to you.
+                <div className="flex items-start gap-3">
+                  <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <Eyebrow className="text-elec-yellow">Tip of the day</Eyebrow>
+                    <p className="text-[13.5px] font-medium text-white leading-snug">
+                      {dailyTip.area}: {dailyTip.tip}
                     </p>
                   </div>
-                )}
-              </div>
-            </motion.div>
-
-            {/* ── Bookmarks ──────────────────────────────────────── */}
-            {progress.bookmarks.length > 0 && (
-              <motion.section variants={itemVariants} className="space-y-3">
-                <SectionHeader
-                  eyebrow="My quick reference"
-                  title={`${progress.bookmarks.length} bookmark${progress.bookmarks.length === 1 ? '' : 's'}`}
-                  meta="Tap to jump back to the topic"
-                />
-                <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-                  {progress.bookmarks.slice(0, 5).map((bId) => {
-                    const q = questions.find((q) => q.id === bId);
-                    if (!q) return null;
-                    return (
-                      <button
-                        key={bId}
-                        onClick={() => setActiveSection(q.section)}
-                        className="flex-shrink-0 px-3 py-2.5 rounded-md text-[12px] font-medium text-left max-w-[220px] border border-elec-yellow/40 text-white hover:border-elec-yellow/70 active:scale-[0.98] transition-all touch-manipulation"
-                      >
-                        <span className="line-clamp-2 leading-snug">{q.question}</span>
-                      </button>
-                    );
-                  })}
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
+                      dailyExpanded && 'rotate-180'
+                    )}
+                  />
                 </div>
-              </motion.section>
-            )}
+              </button>
+              {dailyExpanded && (
+                <div className="px-4 sm:px-5 pb-4 border-t border-white/[0.08] pt-3 animate-fade-in">
+                  <p className="text-[14px] text-white leading-relaxed pl-7">
+                    Small, consistent habits build your professional reputation. Focus on this one
+                    area today and notice the difference in how colleagues and supervisors respond
+                    to you.
+                  </p>
+                </div>
+              )}
+            </div>
+          </motion.div>
 
-            {/* ── Sections grid ──────────────────────────────────── */}
+          {/* ── Bookmarks ──────────────────────────────────────── */}
+          {progress.bookmarks.length > 0 && (
             <motion.section variants={itemVariants} className="space-y-3">
               <SectionHeader
-                eyebrow="Topics"
-                title="Choose a topic"
-                meta={`${sections.length} sections, ${questions.length} questions`}
+                eyebrow="My quick reference"
+                title={`${progress.bookmarks.length} bookmark${progress.bookmarks.length === 1 ? '' : 's'}`}
+                meta="Tap to jump back to the topic"
               />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                {sections.map((section) => {
-                  const Icon = iconMap[section.icon] || HelpCircle;
-                  const sectionQIds = questions
-                    .filter((q) => q.section === section.id)
-                    .map((q) => q.id);
-                  const sProgress = progress.getSectionProgress(sectionQIds);
-                  const pct =
-                    sProgress.total > 0 ? Math.round((sProgress.read / sProgress.total) * 100) : 0;
-                  const complete = sProgress.read === sProgress.total && sProgress.total > 0;
-
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+                {progress.bookmarks.slice(0, 5).map((bId) => {
+                  const q = questions.find((q) => q.id === bId);
+                  if (!q) return null;
                   return (
                     <button
-                      key={section.id}
-                      onClick={() => setActiveSection(section.id)}
-                      className={cn(
-                        'p-4 sm:p-5 rounded-2xl border border-elec-yellow/35 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation text-left space-y-2.5',
-                        CARD_SURFACE
-                      )}
+                      key={bId}
+                      onClick={() => setActiveSection(q.section)}
+                      className="flex-shrink-0 px-3 py-2.5 rounded-md text-[12px] font-medium text-left max-w-[220px] border border-white/[0.08] text-white hover:border-elec-yellow/70 active:scale-[0.98] transition-all touch-manipulation"
                     >
-                      <div className="flex items-start justify-between gap-2">
-                        <Icon
-                          className={cn(
-                            'h-4 w-4 flex-shrink-0',
-                            complete ? 'text-elec-yellow' : 'text-white'
-                          )}
-                        />
-                        <span className="text-[10.5px] font-mono tabular-nums text-white flex-shrink-0">
-                          {sProgress.read}/{sProgress.total}
-                        </span>
-                      </div>
-                      <div className="space-y-0.5">
-                        <p className="text-[14px] font-semibold text-white leading-snug">
-                          {section.title}
-                        </p>
-                        <p className="text-[12px] text-white leading-snug line-clamp-2">
-                          {section.subtitle}
-                        </p>
-                      </div>
-                      <div className="h-1 rounded-full bg-white/[0.04] overflow-hidden">
-                        <div
-                          className={cn(
-                            'h-full rounded-full transition-all duration-500',
-                            complete ? 'bg-elec-yellow' : 'bg-white/55'
-                          )}
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
+                      <span className="line-clamp-2 leading-snug">{q.question}</span>
                     </button>
                   );
                 })}
               </div>
             </motion.section>
+          )}
 
-            {/* ── Culture quiz CTA ───────────────────────────────── */}
-            <motion.div variants={itemVariants}>
-              <button
-                onClick={() => setShowQuiz(true)}
-                className={cn(
-                  'w-full rounded-xl border border-elec-yellow/35 p-4 sm:p-5 flex items-center gap-3',
-                  'active:scale-[0.99] transition-all touch-manipulation text-left',
-                  CARD_SURFACE
-                )}
-              >
-                <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <div className="flex-1 min-w-0 space-y-0.5">
-                  <Eyebrow className="text-elec-yellow/85">Culture quiz</Eyebrow>
-                  <p className="text-[13px] text-white leading-snug">
-                    Test your knowledge with 10 random questions
-                  </p>
-                </div>
-                {progress.quizResult && (
-                  <div className="text-right flex-shrink-0">
-                    <p className="text-[13px] font-mono font-semibold tabular-nums text-elec-yellow">
-                      {progress.quizResult.score}/{progress.quizResult.total}
-                    </p>
-                    <p className="text-[10px] uppercase tracking-[0.14em] text-white">Best</p>
-                  </div>
-                )}
-              </button>
-            </motion.div>
+          {/* ── Sections grid ──────────────────────────────────── */}
+          <motion.section variants={itemVariants} className="space-y-3">
+            <SectionHeader
+              eyebrow="Topics"
+              title="Choose a topic"
+              meta={`${sections.length} sections, ${questions.length} questions`}
+            />
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 xl:grid-cols-3">
+              {sections.map((section) => {
+                const Icon = iconMap[section.icon] || HelpCircle;
+                const sectionQIds = questions
+                  .filter((q) => q.section === section.id)
+                  .map((q) => q.id);
+                const sProgress = progress.getSectionProgress(sectionQIds);
+                const pct =
+                  sProgress.total > 0 ? Math.round((sProgress.read / sProgress.total) * 100) : 0;
+                const complete = sProgress.read === sProgress.total && sProgress.total > 0;
 
-            {/* ── Footnote tip ───────────────────────────────────── */}
-            <motion.div variants={itemVariants}>
-              <div
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-2.5">
-                  <MessageSquare className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <p className="text-[13px] text-white leading-relaxed">
-                    One of the easiest ways to fit into any UK site is to{' '}
-                    <span className="font-semibold text-elec-yellow">offer to make the tea</span>.
-                    It's not just about the drink — it's about showing you're part of the team.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-
-        {/* ── Key contacts FAB ──────────────────────────────────── */}
-        {!searchQuery && (
-          <button
-            onClick={() => setShowContactsSheet(true)}
-            className="fixed bottom-6 right-6 z-50 h-12 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold shadow-lg shadow-black/40 flex items-center gap-2 touch-manipulation active:scale-95 transition-transform"
-            aria-label="Key contacts"
-          >
-            <Phone className="h-4 w-4" />
-            Contacts
-          </button>
-        )}
-
-        {/* ── Key contacts sheet ────────────────────────────────── */}
-        <Sheet open={showContactsSheet} onOpenChange={setShowContactsSheet}>
-          <SheetContent
-            side="bottom"
-            className="h-[85vh] rounded-t-2xl p-0 overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
-          >
-            <div className="flex flex-col h-full">
-              <div className="flex justify-center pt-2.5 pb-1">
-                <div className="h-1 w-10 rounded-full bg-white/15" />
-              </div>
-              <SheetHeader className="px-5 pb-3">
-                <SheetTitle className="text-left">
-                  <Eyebrow>Key contacts</Eyebrow>
-                  <h2 className="text-[20px] sm:text-[22px] font-semibold tracking-tight text-white mt-1">
-                    Who to call, when
-                  </h2>
-                </SheetTitle>
-              </SheetHeader>
-
-              <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-2.5">
-                {contacts.map((contact) => (
-                  <Card key={contact.id} className={cn('border-elec-yellow/35', CARD_SURFACE)}>
-                    <CardContent className="p-4 space-y-2 text-left">
-                      <h3 className="text-[14px] font-semibold text-white leading-snug">
-                        {contact.name}
-                      </h3>
-                      <p className="text-[12.5px] text-white leading-relaxed">
-                        {contact.description}
-                      </p>
-                      {contact.availability && (
-                        <p className="text-[11px] text-white font-mono">{contact.availability}</p>
-                      )}
-                      <div className="flex gap-2 pt-1 flex-wrap">
-                        {contact.phone && (
-                          <a
-                            href={`tel:${contact.phone.replace(/\s/g, '')}`}
-                            className="inline-flex items-center gap-1.5 h-11 px-3 rounded-md border border-elec-yellow/40 text-[12.5px] font-medium text-elec-yellow touch-manipulation active:scale-95 transition-all"
-                          >
-                            <Phone className="h-3.5 w-3.5" />
-                            {contact.phone}
-                          </a>
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => setActiveSection(section.id)}
+                    className="group relative flex h-full w-full flex-col gap-2.5 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-4 text-left transition-colors touch-manipulation hover:border-white/[0.18] active:bg-white/[0.06] sm:p-5"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="inline-flex min-w-0 items-start gap-2 text-[15px] font-semibold leading-snug text-white">
+                        <Icon
+                          className="mt-[2px] h-[18px] w-[18px] flex-shrink-0"
+                          strokeWidth={1.5}
+                          aria-hidden
+                        />
+                        {section.title}
+                      </span>
+                      <span
+                        className={cn(
+                          'flex-shrink-0 text-[13px] font-semibold tabular-nums',
+                          complete ? 'text-emerald-300' : 'text-white'
                         )}
-                        {contact.website && (
-                          <a
-                            href={contact.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 h-11 px-3 rounded-md border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-medium text-white touch-manipulation active:scale-95 transition-all"
-                          >
-                            <ExternalLink className="h-3.5 w-3.5" />
-                            Website
-                          </a>
+                      >
+                        {sProgress.read}/{sProgress.total}
+                      </span>
+                    </div>
+                    <p className="text-[13.5px] leading-snug text-white">{section.subtitle}</p>
+                    <div className="mt-auto h-1 overflow-hidden rounded-full bg-white/[0.08]">
+                      <div
+                        className={cn(
+                          'h-full rounded-full transition-all duration-500',
+                          complete ? 'bg-emerald-400' : 'bg-elec-yellow'
                         )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.section>
+
+          {/* ── Culture quiz CTA ───────────────────────────────── */}
+          <motion.div variants={itemVariants}>
+            <button
+              onClick={() => setShowQuiz(true)}
+              className={cn(
+                'w-full rounded-xl border border-white/[0.08] p-4 sm:p-5 flex items-center gap-3',
+                'active:scale-[0.99] transition-all touch-manipulation text-left',
+                CARD_SURFACE
+              )}
+            >
+              <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+              <div className="flex-1 min-w-0 space-y-0.5">
+                <Eyebrow className="text-elec-yellow">Culture quiz</Eyebrow>
+                <p className="text-[13px] text-white leading-snug">
+                  Test your knowledge with 10 random questions
+                </p>
+              </div>
+              {progress.quizResult && (
+                <div className="text-right flex-shrink-0">
+                  <p className="text-[13px] font-semibold tabular-nums text-elec-yellow">
+                    {progress.quizResult.score}/{progress.quizResult.total}
+                  </p>
+                  <p className="text-[13px] text-white">Best</p>
+                </div>
+              )}
+            </button>
+          </motion.div>
+
+          {/* ── Footnote tip ───────────────────────────────────── */}
+          <motion.div variants={itemVariants}>
+            <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+              <div className="flex items-start gap-2.5">
+                <MessageSquare className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <p className="text-[14px] text-white leading-relaxed">
+                  One of the easiest ways to fit into any UK site is to{' '}
+                  <span className="font-semibold text-elec-yellow">offer to make the tea</span>.
+                  It's not just about the drink — it's about showing you're part of the team.
+                </p>
               </div>
             </div>
-          </SheetContent>
-        </Sheet>
-      </HubBody>
-    </HubPage>
+          </motion.div>
+        </>
+      )}
+
+      {/* ── Key contacts FAB ──────────────────────────────────── */}
+      {!searchQuery && (
+        <button
+          onClick={() => setShowContactsSheet(true)}
+          className="fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] right-4 z-40 flex h-12 items-center gap-2 rounded-full border border-white/[0.18] bg-[hsl(0_0%_12%)] px-4 text-[13.5px] font-semibold text-white shadow-lg shadow-black/50 transition-transform touch-manipulation active:scale-95 lg:bottom-6 lg:right-6"
+          aria-label="Key contacts"
+        >
+          <Phone className="h-4 w-4" strokeWidth={1.5} />
+          Contacts
+        </button>
+      )}
+
+      {/* ── Key contacts sheet ────────────────────────────────── */}
+      <Sheet open={showContactsSheet} onOpenChange={setShowContactsSheet}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-2xl p-0 overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+        >
+          <div className="flex flex-col h-full">
+            <div className="flex justify-center pt-2.5 pb-1">
+              <div className="h-1 w-10 rounded-full bg-white/15" />
+            </div>
+            <SheetHeader className="px-5 pb-3">
+              <SheetTitle className="text-left">
+                <Eyebrow>Key contacts</Eyebrow>
+                <h2 className="text-[20px] sm:text-[22px] font-semibold tracking-tight text-white mt-1">
+                  Who to call, when
+                </h2>
+              </SheetTitle>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-2.5">
+              {contacts.map((contact) => (
+                <Card key={contact.id} className={cn('border-white/[0.08]', CARD_SURFACE)}>
+                  <CardContent className="p-4 space-y-2 text-left">
+                    <h3 className="text-[14px] font-semibold text-white leading-snug">
+                      {contact.name}
+                    </h3>
+                    <p className="text-[14px] text-white leading-relaxed">{contact.description}</p>
+                    {contact.availability && (
+                      <p className="text-[12.5px] text-white">{contact.availability}</p>
+                    )}
+                    <div className="flex gap-2 pt-1 flex-wrap">
+                      {contact.phone && (
+                        <a
+                          href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                          className="inline-flex items-center gap-1.5 h-11 px-3 rounded-md border border-white/[0.08] text-[12.5px] font-medium text-elec-yellow touch-manipulation active:scale-95 transition-all"
+                        >
+                          <Phone className="h-3.5 w-3.5" />
+                          {contact.phone}
+                        </a>
+                      )}
+                      {contact.website && (
+                        <a
+                          href={contact.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 h-11 px-3 rounded-md border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-medium text-white touch-manipulation active:scale-95 transition-all"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          Website
+                        </a>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </GuidePage>
   );
 };
 

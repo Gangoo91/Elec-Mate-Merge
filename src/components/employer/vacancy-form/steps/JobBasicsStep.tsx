@@ -2,13 +2,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { Building2, Home, Laptop } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import {
-  inputClass,
-  FormCard,
-  FormGrid,
-  Field,
-  OptionTile,
-} from '@/components/employer/editorial';
+import { inputClass, FormCard, FormGrid, Field, OptionTile } from '@/components/employer/editorial';
 import {
   employmentTypes,
   workArrangements,
@@ -39,7 +33,7 @@ export function JobBasicsStep() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
       {/* Job Title */}
       <FormCard index={1} eyebrow="Role">
         <Field label="Job Title" required hint={errors.title?.message}>
@@ -77,7 +71,11 @@ export function JobBasicsStep() {
       {/* Location */}
       <FormCard index={3} eyebrow="Location">
         <FormGrid cols={2}>
-          <Field label="Work Location" required hint={errors.location?.message ?? 'Enter city, town or postcode'}>
+          <Field
+            label="Work Location"
+            required
+            hint={errors.location?.message ?? 'Enter city, town or postcode'}
+          >
             <Input
               className={inputClass}
               placeholder="e.g., Manchester, M1 1AA"
@@ -85,12 +83,11 @@ export function JobBasicsStep() {
             />
           </Field>
 
-          <Field label="Postcode (optional)" hint={errors.postcode?.message ?? 'For map display and distance matching'}>
-            <Input
-              className={inputClass}
-              placeholder="e.g., M1 1AA"
-              {...register('postcode')}
-            />
+          <Field
+            label="Postcode (optional)"
+            hint={errors.postcode?.message ?? 'For map display and distance matching'}
+          >
+            <Input className={inputClass} placeholder="e.g., M1 1AA" {...register('postcode')} />
           </Field>
         </FormGrid>
       </FormCard>
@@ -121,12 +118,9 @@ export function JobBasicsStep() {
       </FormCard>
 
       {/* Helper text */}
-      <div className="flex items-start gap-2.5 px-3.5 py-3 rounded-xl bg-white/[0.06] border border-elec-yellow/[0.15]">
-        <span className="text-elec-yellow text-[13px] font-semibold flex-shrink-0">Tip</span>
-        <p className="text-[12px] text-white leading-snug">
-          Be specific with your location. Jobs with a postcode get 40% more relevant, nearby applications.
-        </p>
-      </div>
+      <p className="text-[13px] leading-snug text-white lg:col-span-2">
+        Add a postcode so the talent pool can show people who live near the work.
+      </p>
     </div>
   );
 }

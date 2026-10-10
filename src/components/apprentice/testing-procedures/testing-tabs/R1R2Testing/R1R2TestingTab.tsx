@@ -1,4 +1,4 @@
-import { PANEL } from '@/components/ui/panel-recipe';
+import { LEARN_CARD } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 import StepNavigation from '../../StepNavigation';
 import CommonIssuesCard from '../../CommonIssuesCard';
@@ -27,7 +27,7 @@ const R1R2TestingTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className={cn(PANEL, "space-y-4")}>
+      <div className={cn(LEARN_CARD, "space-y-4")}>
         <div className="space-y-1">
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             R₁+R₂ continuity testing

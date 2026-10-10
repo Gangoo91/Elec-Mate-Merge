@@ -1,7 +1,8 @@
 import { memo, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSmartBack } from '@/lib/navHistory';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Plus } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils';
@@ -18,7 +19,11 @@ import {
   type CollegePolicyProposal,
 } from '@/hooks/useNotebook';
 import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
-import { FilePortfolioItemSheet } from '@/components/apprentice-hub/FilePortfolioItemSheet';
+import {
+  UnifiedCaptureSheet,
+  type CaptureSeed,
+} from '@/components/apprentice-hub/UnifiedCaptureSheet';
+import { parseAcRef, acRefString } from '@/lib/portfolio/acRef';
 import { ProposeIlpGoalSheet } from '@/components/apprentice-hub/ProposeIlpGoalSheet';
 import { FilePolicyDraftSheet } from '@/components/college/dialogs/FilePolicyDraftSheet';
 import { fmtRel } from '@/lib/format';
@@ -34,7 +39,7 @@ import { fmtRel } from '@/lib/format';
    - Empty state: 4 categorised query cards
    ========================================================================== */
 
-type Tone = 'cyan' | 'amber';
+type Tone = 'cyan' | 'amber' | 'volt';
 
 interface ToneStyle {
   accent: string; // text-... eyebrow / category
@@ -50,6 +55,20 @@ interface ToneStyle {
 }
 
 const TONE: Record<Tone, ToneStyle> = {
+  // The app's own accent: solid volt for the one action, neutral surfaces
+  // everywhere else (translucent volt renders brown, so no tinted fills).
+  volt: {
+    accent: 'text-elec-yellow',
+    ring: 'border-white/[0.14]',
+    pill: 'bg-white/[0.06]',
+    pillBorder: 'border-white/[0.12]',
+    send: 'bg-elec-yellow',
+    sendHover: 'hover:opacity-90',
+    bullet: 'marker:text-white',
+    cursor: 'bg-elec-yellow',
+    dot: 'bg-white',
+    hairline: 'hidden',
+  },
   cyan: {
     accent: 'text-cyan-300',
     ring: 'border-cyan-300/30',
@@ -116,6 +135,8 @@ interface Props {
   /** Optional content rendered above the welcome screen (empty state only).
       Used by the apprentice notebook to surface MyThisWeekCard. */
   welcomeExtra?: ReactNode;
+  /** Where Back goes when the page was opened cold (a link, a refresh). */
+  backTo?: string;
 }
 
 export function NotebookShell({
@@ -139,8 +160,9 @@ export function NotebookShell({
   markProposalFiled,
   headerExtra,
   welcomeExtra,
+  backTo = '/dashboard',
 }: Props) {
-  const navigate = useNavigate();
+  const smartBack = useSmartBack();
   const [draft, setDraft] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -197,16 +219,29 @@ export function NotebookShell({
     };
   }, [activeProposal]);
 
-  const portfolioPrefill = useMemo(() => {
+  // ELE-1916: a notebook suggestion opens the one capture flow, pre-filled.
+  // Its criteria are suggestions the learner taps to claim, never ticked.
+  const portfolioSeed = useMemo<CaptureSeed | null>(() => {
     const p = activeProposal?.proposal;
-    if (p?.kind !== 'propose_portfolio_item') return undefined;
+    if (p?.kind !== 'propose_portfolio_item') return null;
+    const refs = (p.assessment_criteria_met ?? [])
+      .map((t: string) => {
+        const r = parseAcRef(t);
+        if (r) return acRefString(r);
+        // The notebook's "113.1.1" shorthand.
+        const m = /^([A-Za-z0-9/_-]+)\.(\d+\.\d+)$/.exec(String(t).trim());
+        return m ? acRefString({ unit_code: m[1], ac_code: m[2] }) : null;
+      })
+      .filter((r: string | null): r is string => !!r);
     return {
+      preset: 'reflection',
+      source: 'notebook',
       title: p.title,
       description: p.description,
-      reflection_notes: p.reflection_notes,
-      category: p.category,
-      assessment_criteria_met: p.assessment_criteria_met,
-      date_completed: p.date_completed,
+      reflection: p.reflection_notes,
+      workDate: p.date_completed || undefined,
+      suggestedAcRefs: Array.from(new Set(refs)),
+      briefSource: 'from your notebook',
     };
   }, [activeProposal]);
 
@@ -248,7 +283,7 @@ export function NotebookShell({
     <div className="min-h-screen bg-[hsl(0_0%_8%)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 pb-24">
         <motion.button
-          onClick={() => navigate(-1)}
+          onClick={() => smartBack(backTo)}
           whileTap={{ scale: 0.97 }}
           className="inline-flex items-center gap-1 -ml-2 h-11 px-2 rounded-lg text-[13px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
         >
@@ -264,19 +299,19 @@ export function NotebookShell({
         >
           <div
             className={cn(
-              'text-[10px] lg:text-[11px] font-medium uppercase tracking-[0.22em]',
+              'text-[12px] lg:text-[12px] font-medium uppercase tracking-[0.22em]',
               t.accent
             )}
           >
             {eyebrow}
           </div>
           <div className="mt-1 flex items-center gap-3 flex-wrap">
-            <h1 className="text-[22px] sm:text-[28px] lg:text-[36px] font-semibold text-white tracking-tight leading-[1.1]">
+            <h1 className="text-[26px] sm:text-[28px] lg:text-[36px] font-bold text-white tracking-tight leading-[1.1]">
               {title}
             </h1>
             {headerExtra}
           </div>
-          <p className="mt-2 text-[12.5px] sm:text-[13px] text-white/85 leading-snug max-w-2xl">
+          <p className="mt-2 text-[12.5px] sm:text-[13px] text-white leading-snug max-w-2xl">
             {description}
           </p>
         </motion.div>
@@ -285,25 +320,20 @@ export function NotebookShell({
           {/* Conversation rail */}
           <aside className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
             <div className="px-3 py-3 border-b border-white/[0.06] flex items-center justify-between">
-              <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
-                Conversations
-              </div>
+              <div className="text-[13px] font-medium text-white">Conversations</div>
               <button
                 type="button"
                 onClick={newConversation}
-                className={cn(
-                  'h-7 px-2.5 rounded-md text-[11px] font-semibold text-black transition-colors touch-manipulation',
-                  t.send,
-                  t.sendHover
-                )}
+                className="inline-flex h-11 items-center gap-1 rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06]"
               >
-                + New
+                <Plus className="h-4 w-4" strokeWidth={1.5} aria-hidden />
+                New
               </button>
             </div>
             {loadingConversations ? (
-              <div className="px-3 py-4 text-[11.5px] text-white/85">Loading…</div>
+              <div className="px-3 py-4 text-[12px] text-white">Loading…</div>
             ) : conversations.length === 0 ? (
-              <div className="px-3 py-6 text-[11.5px] text-white/85 leading-snug">
+              <div className="px-3 py-6 text-[12px] text-white leading-snug">
                 No conversations yet. Ask anything to start one.
               </div>
             ) : (
@@ -344,9 +374,7 @@ export function NotebookShell({
                   />
                 </>
               )}
-              {loadingMessages && empty && (
-                <div className="text-[12.5px] text-white/85">Loading…</div>
-              )}
+              {loadingMessages && empty && <div className="text-[12.5px] text-white">Loading…</div>}
               {messages.map((m, i) => (
                 <MessageBlock
                   key={m.id}
@@ -404,7 +432,7 @@ export function NotebookShell({
                     'shrink-0 h-11 px-4 rounded-xl text-[13px] font-semibold transition-colors touch-manipulation',
                     draft.trim() && !streaming
                       ? cn(t.send, t.sendHover, 'text-black')
-                      : 'bg-white/[0.05] text-white/40'
+                      : 'bg-white/[0.05] text-white'
                   )}
                 >
                   {streaming ? '…' : 'Send'}
@@ -432,13 +460,13 @@ export function NotebookShell({
         }}
       />
 
-      <FilePortfolioItemSheet
+      <UnifiedCaptureSheet
         open={activeProposal?.proposal.kind === 'propose_portfolio_item'}
         onOpenChange={(o) => {
           if (!o) setActiveProposal(null);
         }}
-        prefill={portfolioPrefill}
-        onSubmitted={(insertedId) => {
+        seed={portfolioSeed}
+        onComplete={(insertedId) => {
           if (activeProposal && insertedId && markProposalFiled) {
             void markProposalFiled(activeProposal.messageId, activeProposal.index, insertedId);
           }
@@ -512,17 +540,12 @@ function ConversationRow({
         onClick={onPick}
         className="min-w-0 flex-1 text-left touch-manipulation"
       >
-        <div
-          className={cn(
-            'text-[12.5px] font-medium leading-snug truncate',
-            active ? 'text-white' : 'text-white/95'
-          )}
-        >
-          {convo.pinned && <span className="mr-1.5 text-[10px]">★</span>}
+        <div className={cn('text-[12.5px] font-medium leading-snug truncate', 'text-white')}>
+          {convo.pinned && <span className="mr-1.5 text-[12px]">★</span>}
           {convo.title || 'Untitled conversation'}
         </div>
-        <div className="mt-0.5 text-[10.5px] text-white/85 tabular-nums">
-          {convo.message_count} {convo.message_count === 1 ? 'msg' : 'msgs'}
+        <div className="mt-0.5 text-[12px] text-white tabular-nums">
+          {convo.message_count} {convo.message_count === 1 ? 'message' : 'messages'}
           {convo.last_message_at && ` · ${fmtRel(convo.last_message_at)}`}
         </div>
       </button>
@@ -531,8 +554,9 @@ function ConversationRow({
           <button
             type="button"
             onClick={onTogglePin}
-            className="text-[10px] text-white/85 hover:text-white tabular-nums px-1"
+            className="inline-flex h-11 min-w-11 items-center justify-center text-[14px] text-white tabular-nums touch-manipulation"
             title={convo.pinned ? 'Unpin' : 'Pin'}
+            aria-label={convo.pinned ? 'Unpin conversation' : 'Pin conversation'}
           >
             {convo.pinned ? '★' : '☆'}
           </button>
@@ -541,7 +565,8 @@ function ConversationRow({
             onClick={() => {
               if (window.confirm('Delete this conversation?')) onDelete();
             }}
-            className="text-[10px] text-rose-300 hover:text-rose-200 tabular-nums px-1"
+            className="inline-flex h-11 min-w-11 items-center justify-center text-[16px] text-rose-300 hover:text-rose-200 tabular-nums touch-manipulation"
+            aria-label="Delete conversation"
           >
             ×
           </button>
@@ -580,16 +605,12 @@ function WelcomeScreen({
               className={cn('absolute left-0 top-0 bottom-0 w-[2px]', t.hairline)}
               aria-hidden="true"
             />
-            <div className={cn('text-[10px] font-medium uppercase tracking-[0.22em]', t.accent)}>
-              {card.category}
-            </div>
+            <div className={cn('text-[13px] font-medium', t.accent)}>{card.category}</div>
             <div className="mt-1.5 flex items-start justify-between gap-3">
               <span className="text-[14px] sm:text-[14.5px] text-white leading-snug">
                 {card.prompt}
               </span>
-              <span className="text-white/40 group-hover:text-white/80 transition-colors mt-0.5">
-                →
-              </span>
+              <span className="text-white group-hover:text-white transition-colors mt-0.5">→</span>
             </div>
           </button>
         ))}
@@ -651,13 +672,9 @@ const MessageBlock = memo(
           className="w-full max-w-3xl space-y-3 min-w-0"
           style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
         >
-          <div
-            className={cn(
-              'flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em]'
-            )}
-          >
+          <div className={cn('flex items-center gap-3 text-[13px] font-medium')}>
             <span className={t.accent}>{eyebrow}</span>
-            <span className="text-white/70">grounded answer</span>
+            <span className="text-white">grounded answer</span>
           </div>
 
           <div className="prose prose-sm sm:prose-base max-w-none text-left">
@@ -800,9 +817,7 @@ const MessageBlock = memo(
 
           {!message.streaming && message.citations && message.citations.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              <span className="text-[10px] uppercase tracking-[0.22em] text-white/55 mr-1">
-                Sources
-              </span>
+              <span className="text-[13px] text-white mr-1">Sources</span>
               {message.citations.map((c, i) => (
                 <CitationChip key={`${c.type}-${c.ref}-${i}`} citation={c} />
               ))}
@@ -820,7 +835,7 @@ const MessageBlock = memo(
             )}
 
           {isLast && !message.streaming && (
-            <div className="text-[10px] uppercase tracking-[0.22em] text-white/40 pt-1">
+            <div className="text-[13px] text-white pt-1">
               Cited from learner data + BS 7671 A4:2026
             </div>
           )}
@@ -847,9 +862,9 @@ function ComposingIndicator({ tone, eyebrow }: { tone: Tone; eyebrow: string }) 
   return (
     <div className="flex justify-start w-full">
       <div className="w-full max-w-3xl space-y-3">
-        <div className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em]">
+        <div className="flex items-center gap-3 text-[13px] font-medium">
           <span className={t.accent}>{eyebrow}</span>
-          <span className="text-white/70">composing</span>
+          <span className="text-white">composing</span>
         </div>
         <div className="flex gap-1">
           {[0, 1, 2].map((i) => (
@@ -936,13 +951,10 @@ function OtjProposalPanel({
       />
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <div
-            className={cn(
-              'text-[10px] font-medium uppercase tracking-[0.22em]',
-              filed ? 'text-emerald-300' : t.accent
-            )}
-          >
-            {filed ? '✓ Filed as OTJ' : `✨ Proposed OTJ entry · ${durationLabel} · ready to file`}
+          <div className={cn('text-[13px] font-medium', filed ? 'text-emerald-300' : t.accent)}>
+            {filed
+              ? '✓ Filed as off-the-job hours'
+              : `✨ Suggested off-the-job hours · ${durationLabel} · ready to file`}
           </div>
           <div className="mt-1.5 text-[13.5px] font-semibold text-white leading-snug">
             {proposal.title}
@@ -950,7 +962,7 @@ function OtjProposalPanel({
           <p
             className={cn(
               'mt-1 text-[12.5px] leading-snug line-clamp-3',
-              filed ? 'text-white/65' : 'text-white/85'
+              filed ? 'text-white' : 'text-white'
             )}
           >
             {proposal.description}
@@ -963,7 +975,7 @@ function OtjProposalPanel({
             type="button"
             onClick={onTap}
             className={cn(
-              'shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black transition-colors touch-manipulation',
+              'shrink-0 inline-flex items-center h-11 px-3 rounded-md text-[12px] font-semibold text-black transition-colors touch-manipulation',
               t.send,
               t.sendHover
             )}
@@ -985,7 +997,7 @@ function FiledPill({ href, label }: { href: string; label: string }) {
     <button
       type="button"
       onClick={() => navigate(href)}
-      className="shrink-0 inline-flex items-center gap-1 h-8 px-3 rounded-md text-[11.5px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/25 hover:bg-emerald-500/[0.16] transition-colors touch-manipulation"
+      className="shrink-0 inline-flex items-center gap-1 h-11 px-3 rounded-md text-[12px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/25 hover:bg-emerald-500/[0.16] transition-colors touch-manipulation"
     >
       {label} <span className="text-emerald-300/80">→</span>
     </button>
@@ -1019,10 +1031,7 @@ function PortfolioProposalPanel({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div
-            className={cn(
-              'text-[10px] font-medium uppercase tracking-[0.22em]',
-              filed ? 'text-emerald-300' : 'text-blue-300'
-            )}
+            className={cn('text-[13px] font-medium', filed ? 'text-emerald-300' : 'text-blue-300')}
           >
             {filed
               ? '✓ Filed in your portfolio'
@@ -1034,7 +1043,7 @@ function PortfolioProposalPanel({
           <p
             className={cn(
               'mt-1 text-[12.5px] leading-snug line-clamp-3',
-              filed ? 'text-white/65' : 'text-white/85'
+              filed ? 'text-white' : 'text-white'
             )}
           >
             {proposal.description}
@@ -1044,7 +1053,7 @@ function PortfolioProposalPanel({
               {proposal.assessment_criteria_met.slice(0, 6).map((ac) => (
                 <span
                   key={ac}
-                  className="inline-flex items-center h-5 px-1.5 rounded-md border border-purple-300/30 bg-purple-500/[0.06] text-[10.5px] font-medium text-purple-200 font-mono"
+                  className="inline-flex items-center h-5 px-1.5 rounded-md border border-purple-300/30 bg-purple-500/[0.06] text-[12px] font-medium text-purple-200 font-mono"
                 >
                   {ac}
                 </span>
@@ -1058,7 +1067,7 @@ function PortfolioProposalPanel({
           <button
             type="button"
             onClick={onTap}
-            className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black bg-blue-300 hover:bg-blue-200 transition-colors touch-manipulation"
+            className="shrink-0 inline-flex items-center h-11 px-3 rounded-md text-[12px] font-semibold text-black bg-blue-300 hover:bg-blue-200 transition-colors touch-manipulation"
           >
             Review &amp; save →
           </button>
@@ -1108,10 +1117,7 @@ function IlpGoalProposalPanel({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div
-            className={cn(
-              'text-[10px] font-medium uppercase tracking-[0.22em]',
-              filed ? 'text-emerald-300' : 'text-amber-300'
-            )}
+            className={cn('text-[13px] font-medium', filed ? 'text-emerald-300' : 'text-amber-300')}
           >
             {filed
               ? '✓ Sent for tutor review'
@@ -1123,13 +1129,13 @@ function IlpGoalProposalPanel({
           <p
             className={cn(
               'mt-1 text-[12.5px] leading-snug line-clamp-3',
-              filed ? 'text-white/65' : 'text-white/85'
+              filed ? 'text-white' : 'text-white'
             )}
           >
             {proposal.description}
           </p>
           {proposal.acceptance_criteria && !filed && (
-            <p className="mt-2 text-[11.5px] text-amber-100/85 leading-snug">
+            <p className="mt-2 text-[12px] text-amber-100/85 leading-snug">
               <span className="text-amber-300/85 font-medium">Done when:</span>{' '}
               {proposal.acceptance_criteria}
             </p>
@@ -1141,7 +1147,7 @@ function IlpGoalProposalPanel({
           <button
             type="button"
             onClick={onTap}
-            className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black bg-amber-300 hover:bg-amber-200 transition-colors touch-manipulation"
+            className="shrink-0 inline-flex items-center h-11 px-3 rounded-md text-[12px] font-semibold text-black bg-amber-300 hover:bg-amber-200 transition-colors touch-manipulation"
           >
             Review &amp; send →
           </button>
@@ -1180,10 +1186,7 @@ function PolicyProposalPanel({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div
-            className={cn(
-              'text-[10px] font-medium uppercase tracking-[0.22em]',
-              filed ? 'text-emerald-300' : 'text-amber-300'
-            )}
+            className={cn('text-[13px] font-medium', filed ? 'text-emerald-300' : 'text-amber-300')}
           >
             {filed
               ? '✓ Saved as draft policy'
@@ -1195,7 +1198,7 @@ function PolicyProposalPanel({
           <p
             className={cn(
               'mt-1 text-[12.5px] leading-snug line-clamp-3',
-              filed ? 'text-white/65' : 'text-white/85'
+              filed ? 'text-white' : 'text-white'
             )}
           >
             {proposal.description}
@@ -1203,12 +1206,12 @@ function PolicyProposalPanel({
           {!filed && (proposal.code || proposal.owner_role) && (
             <div className="mt-2 flex items-center flex-wrap gap-1">
               {proposal.code && (
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] font-medium text-white/85 font-mono">
+                <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-white/[0.10] bg-white/[0.03] text-[12px] font-medium text-white font-mono">
                   {proposal.code}
                 </span>
               )}
               {proposal.owner_role && (
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-amber-300/30 bg-amber-500/[0.06] text-[10.5px] font-medium text-amber-200">
+                <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-amber-300/30 bg-amber-500/[0.06] text-[12px] font-medium text-amber-200">
                   {proposal.owner_role}
                 </span>
               )}
@@ -1220,7 +1223,7 @@ function PolicyProposalPanel({
             href={
               proposal.filed_record_id
                 ? `/college/policies/${proposal.filed_record_id}`
-                : '/college/policies'
+                : '/college?section=compliancedocs'
             }
             label="Open draft"
           />
@@ -1228,7 +1231,7 @@ function PolicyProposalPanel({
           <button
             type="button"
             onClick={onTap}
-            className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black bg-amber-300 hover:bg-amber-200 transition-colors touch-manipulation"
+            className="shrink-0 inline-flex items-center h-11 px-3 rounded-md text-[12px] font-semibold text-black bg-amber-300 hover:bg-amber-200 transition-colors touch-manipulation"
           >
             Review &amp; save →
           </button>
@@ -1242,8 +1245,8 @@ function CitationChip({ citation }: { citation: Citation }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center h-6 px-2 rounded-md border bg-white/[0.02] text-[11px] font-medium',
-        CITATION_TONE[citation.type] ?? 'border-white/[0.10] text-white/95'
+        'inline-flex items-center h-6 px-2 rounded-md border bg-white/[0.02] text-[12px] font-medium',
+        CITATION_TONE[citation.type] ?? 'border-white/[0.10] text-white'
       )}
       title={citation.ref}
     >
@@ -1263,7 +1266,7 @@ function ActionButton({ action, tone }: { action: SuggestedAction; tone: Tone })
       type="button"
       onClick={() => navigate(action.href)}
       className={cn(
-        'inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-semibold text-black transition-colors touch-manipulation',
+        'inline-flex items-center h-11 px-2.5 rounded-md text-[12px] font-semibold text-black transition-colors touch-manipulation',
         t.send,
         t.sendHover
       )}

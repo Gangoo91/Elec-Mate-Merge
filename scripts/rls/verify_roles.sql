@@ -43,6 +43,7 @@ create temp table _k on commit drop as select
   'f1e70000-0000-4000-8000-0000000000a9'::uuid dsl,
   'f1e70000-0000-4000-8000-0000000000aa'::uuid indep,
   'f1e70000-0000-4000-8000-0000000000b1'::uuid learner2,
+  'f1e70000-0000-4000-8000-0000000000ab'::uuid ntutor,     -- Northgate tutor, NOT the fixture learner's tutor
   (select id from college_students where user_id = '28a0fc81-3783-4c31-8e7e-1f52f778abb2' limit 1) sid,
   (select cohort_id from college_students where user_id = '28a0fc81-3783-4c31-8e7e-1f52f778abb2' limit 1) cohort,
   gen_random_uuid() sid2, gen_random_uuid() note_sg, gen_random_uuid() note_tut,
@@ -57,7 +58,8 @@ select v.id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authentic
        jsonb_build_object('full_name', 'RLS ' || v.tag), '{}'::jsonb, now(), now(), now()
 from _k, lateral (values (assessor,'assessor'), (iqa,'iqa'), (cadmin,'cadmin'), (eqa,'eqa'),
                          (otutor,'otutor'), (outsider,'outsider'), (employer,'employer'),
-                         (padmin,'padmin'), (dsl,'dsl'), (indep,'indep'), (learner2,'learner2')) v(id, tag);
+                         (padmin,'padmin'), (dsl,'dsl'), (indep,'indep'), (learner2,'learner2'),
+                         (ntutor,'ntutor')) v(id, tag);
 
 insert into college_staff (college_id, user_id, name, email, role, status, is_dsl, iqa_qual)
 select c, u, 'RLS ' || r, 'rls-verify-' || r || '@example.invalid', r2, 'Active', d, q
@@ -66,7 +68,8 @@ from _k, lateral (values (ng, assessor, 'assessor', 'assessor', false, null::tex
                          (ng, cadmin, 'cadmin', 'admin', false, null),
                          (ng, eqa, 'eqa', 'eqa', false, null),
                          (other_college, otutor, 'otutor', 'tutor', false, null),
-                         (ng, dsl, 'dsl', 'tutor', true, null)) v(c, u, r, r2, d, q);
+                         (ng, dsl, 'dsl', 'tutor', true, null),
+                         (ng, ntutor, 'ntutor', 'tutor', false, null)) v(c, u, r, r2, d, q);
 
 update profiles set role = 'employer' where id = (select employer from _k);
 update profiles set admin_role = 'admin' where id = (select padmin from _k);
@@ -244,12 +247,25 @@ do $$ declare k record; begin select * into k from _k;
   perform pg_temp.try('tutor: reads a learner''s criteria state', format('select public.get_portfolio_ac_state(%L)::text', k.learner), 'ok');
   perform pg_temp.try('tutor: has the college inbox', format('select public.get_college_inbox(%L)::text', k.ng), 'ok');
   perform pg_temp.try('tutor: reads the tutors'' pastoral note', format('select (count(*) = 1)::text from pastoral_notes where id = %L', k.note_tut), 'ok');
-  perform pg_temp.try('tutor (not DSL): cannot read the safeguarding note', format('select count(*) from pastoral_notes where id = %L', k.note_sg), 'denied');
+  -- ELE-1911 (Andrew, 8 Oct): the learner's OWN tutor (cohort tutor or named on
+  -- the assignment) reads that learner's safeguarding notes. The fixture tutor
+  -- tutors the fixture learner's cohort. Assessor, IQA, EQA and other tutors
+  -- still cannot (checked below and under each role).
+  perform pg_temp.try('tutor (own tutor, not DSL): reads own learner''s safeguarding note (ELE-1911)', format('select (count(*) = 1)::text from pastoral_notes where id = %L', k.note_sg), 'ok');
   perform pg_temp.try('tutor: cannot see another college''s learners', format('select count(*) from college_students where college_id = %L', k.other_college), 'denied');
   perform pg_temp.try('tutor: cannot record an IQA verdict',
     format($s$update portfolio_assessment_decisions set iqa_verdict = 'confirmed' where learner_id = %L returning id$s$, k.learner), 'denied');
   perform pg_temp.try('tutor: cannot add a learner to another college',
     format($s$insert into college_students(college_id, name, email) values (%L, 'x', 'x@example.invalid') returning id$s$, k.other_college), 'denied');
+end $$;
+reset role;
+
+-- ELE-1911 boundary: a Northgate tutor who does not tutor the learner's cohort
+-- (and is not named on the learner's assignment) still cannot read it.
+select pg_temp.as_user(ntutor) from _k; set local role authenticated;
+do $$ declare k record; begin select * into k from _k;
+  perform pg_temp.try('tutor (not own tutor, not DSL): cannot read the safeguarding note', format('select count(*) from pastoral_notes where id = %L', k.note_sg), 'denied');
+  perform pg_temp.try('tutor (not own tutor): reads the tutors'' pastoral note', format('select (count(*) = 1)::text from pastoral_notes where id = %L', k.note_tut), 'ok');
 end $$;
 reset role;
 

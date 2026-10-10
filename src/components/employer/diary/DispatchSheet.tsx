@@ -8,6 +8,7 @@
  * moved. Bottom sheet, h-[85vh], like every other Employer Hub sheet.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { Check, ExternalLink, Search } from 'lucide-react';
 import { toast } from 'sonner';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -32,6 +33,8 @@ import {
   type DispatchBoard,
   type DispatchJob,
 } from '@/hooks/useDispatchBoard';
+import { useCrewWarning } from '@/hooks/useCrewCompetence';
+import { YoungWorkerDiaryNote } from '@/components/employer/payLaw/YoungWorkerDiaryNote';
 import { jobStage, stageDef } from '@/lib/jobStages';
 import {
   addDaysYmd,
@@ -86,6 +89,7 @@ export function DispatchSheet({
   onOpenJob,
 }: DispatchSheetProps) {
   const assign = useDispatchAssign();
+  const warnCrew = useCrewWarning();
   const move = useDispatchMove();
   const unassign = useDispatchUnassign();
 
@@ -134,7 +138,7 @@ export function DispatchSheet({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
-  const job = jobId ? jobsById.get(jobId) ?? null : null;
+  const job = jobId ? (jobsById.get(jobId) ?? null) : null;
   const isMove = target?.kind === 'move';
   const span = Math.max(0, diffDays(end, start));
   const days = useMemo(() => weekDays(weekStart), [weekStart]);
@@ -181,6 +185,9 @@ export function DispatchSheet({
 
   const save = async () => {
     if (!jobId || !employeeId) return;
+    // ELE-2061: a new booking (or a move to someone else) checks right to work.
+    if ((!isMove || booking?.employee_id !== employeeId) && !(await confirmRtw([employeeId], 'dispatch')))
+      return;
     try {
       if (isMove && booking) {
         await move.mutateAsync({
@@ -212,6 +219,7 @@ export function DispatchSheet({
             ? 'They have been sent a push.'
             : 'They have not joined the app yet, so no push. Tell them directly.',
         });
+        void warnCrew(jobId);
       }
       onClose();
     } catch (e) {
@@ -257,7 +265,11 @@ export function DispatchSheet({
               <>
                 {isMove &&
                   (confirmRemove ? (
-                    <DestructiveButton onClick={remove} disabled={busy} className="flex-1">
+                    <DestructiveButton
+                      onClick={remove}
+                      disabled={busy}
+                      className="flex-1 lg:ml-auto lg:flex-none lg:px-8"
+                    >
                       Yes, take off
                     </DestructiveButton>
                   ) : (
@@ -265,6 +277,7 @@ export function DispatchSheet({
                       data-help="diary.take-off"
                       onClick={() => setConfirmRemove(true)}
                       disabled={busy}
+                      className="lg:ml-auto"
                     >
                       Take off
                     </SecondaryButton>
@@ -273,7 +286,7 @@ export function DispatchSheet({
                   data-help="diary.save"
                   onClick={save}
                   disabled={!canSave}
-                  className="flex-1"
+                  className={cn('flex-1 lg:flex-none lg:px-10', !isMove && 'lg:ml-auto')}
                 >
                   {busy ? 'Saving…' : isMove ? 'Save' : 'Book'}
                 </PrimaryButton>
@@ -407,6 +420,15 @@ export function DispatchSheet({
                     {selectedClashes.join('; ')}. You can still book it.
                   </p>
                 )}
+                {/* ELE-2063: under-18 working time limits */}
+                <YoungWorkerDiaryNote
+                  assignments={board.assignments}
+                  employeeId={employeeId}
+                  start={start}
+                  end={end}
+                  hoursPerDay={hours}
+                  ignoreAssignmentId={booking?.id}
+                />
               </section>
 
               {/* When */}
@@ -419,12 +441,17 @@ export function DispatchSheet({
                       type="button"
                       onClick={() => setStartKeepLength(d)}
                       aria-pressed={start === d}
-                      className={cn(chipCn(start === d), 'flex flex-col items-center justify-center h-14 px-0')}
+                      className={cn(
+                        chipCn(start === d),
+                        'flex flex-col items-center justify-center h-14 px-0'
+                      )}
                     >
-                      <span className="text-[10px] uppercase tracking-[0.12em]">
+                      <span className="text-[11.5px] font-medium">
                         {fmtDay(d, { weekday: 'short' })}
                       </span>
-                      <span className="text-[15px] tabular-nums">{fmtDay(d, { day: 'numeric' })}</span>
+                      <span className="text-[15px] tabular-nums">
+                        {fmtDay(d, { day: 'numeric' })}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -435,7 +462,10 @@ export function DispatchSheet({
                   >
                     ← Week before
                   </SecondaryButton>
-                  <SecondaryButton size="sm" onClick={() => setStartKeepLength(addDaysYmd(start, 7))}>
+                  <SecondaryButton
+                    size="sm"
+                    onClick={() => setStartKeepLength(addDaysYmd(start, 7))}
+                  >
                     Week after →
                   </SecondaryButton>
                 </div>
@@ -495,9 +525,7 @@ export function DispatchSheet({
               </section>
 
               {!isMove && (
-                <label
-                  className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 cursor-pointer touch-manipulation"
-                >
+                <label className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 cursor-pointer touch-manipulation">
                   <Checkbox
                     checked={email}
                     onCheckedChange={(c) => setEmail(c === true)}

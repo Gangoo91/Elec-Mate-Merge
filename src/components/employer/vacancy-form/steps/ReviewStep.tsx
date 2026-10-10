@@ -1,5 +1,4 @@
 import { useFormContext } from 'react-hook-form';
-import { Save, Send, Eye, AlertCircle, FileText } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { VacancyPreviewCard } from '../VacancyPreviewCard';
 import type { VacancyFormData } from '../schema';
@@ -52,113 +51,81 @@ export function ReviewStep({
   if (!formData.closingDate) validationIssues.push('Closing date is required');
 
   return (
-    <div className="space-y-4">
-      {/* Preview Section */}
-      <FormCard eyebrow="Preview">
-        <div className="flex items-center gap-2 text-white mb-3">
-          <Eye className="h-5 w-5" />
-          <span className="text-[13px] font-medium">How candidates will see your job</span>
-        </div>
-
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-start">
+      {/* How candidates will see it */}
+      <FormCard eyebrow="How candidates see it">
         <VacancyPreviewCard
           data={formData}
           companyName={companyProfile?.company_name || 'Your Company'}
         />
       </FormCard>
 
-      {/* Closing Date */}
-      <FormCard eyebrow="Closing Date">
-        <Field
-          label="Application Closing Date"
-          required
-          hint={
-            errors.closingDate?.message ??
-            'Shown to candidates on the advert. Close the listing from Vacancies when the role is filled'
-          }
-        >
-          <Input
-            type="date"
-            className={`${inputClass} [color-scheme:dark]`}
-            min={minDate}
-            {...register('closingDate')}
-          />
-        </Field>
-      </FormCard>
+      <div className="min-w-0 space-y-4">
+        <FormCard eyebrow="Closing date">
+          <Field
+            label="Applications close on"
+            required
+            hint={
+              errors.closingDate?.message ??
+              'Shown to candidates on the advert. Close the listing from Vacancies when the role is filled'
+            }
+          >
+            <Input
+              type="date"
+              className={`${inputClass} [color-scheme:dark]`}
+              min={minDate}
+              {...register('closingDate')}
+            />
+          </Field>
+        </FormCard>
 
-      {/* Validation Summary */}
-      {validationIssues.length > 0 && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/25">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-[13px] font-medium text-red-400 mb-2">
-                Please fix the following before publishing:
-              </p>
-              <ul className="text-[11px] text-red-400/80 space-y-1">
-                {validationIssues.map((issue, idx) => (
-                  <li key={idx}>• {issue}</li>
-                ))}
-              </ul>
-            </div>
+        {validationIssues.length > 0 ? (
+          <div className="rounded-2xl border border-red-500/40 px-4 py-3">
+            <p className="text-[14px] font-semibold text-red-400">Before you publish</p>
+            <ul className="mt-1 space-y-0.5 text-[13px] text-white">
+              {validationIssues.map((issue, idx) => (
+                <li key={idx}>{issue}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p className="text-[14px] leading-snug text-white">
+            <span className="font-semibold text-emerald-400">Ready to publish.</span> It goes on the
+            Elec-Mate job board and you are told when someone applies.
+          </p>
+        )}
+
+        <div className="space-y-2">
+          <PrimaryButton
+            type="button"
+            onClick={onPublish}
+            disabled={validationIssues.length > 0 || isSubmitting}
+            fullWidth
+            className="h-12 rounded-xl text-[15px]"
+          >
+            {isSubmitting ? 'Publishing…' : 'Publish vacancy'}
+          </PrimaryButton>
+          <div className="grid grid-cols-2 gap-2">
+            <SecondaryButton
+              type="button"
+              onClick={onSaveDraft}
+              disabled={isSubmitting}
+              fullWidth
+              className="rounded-xl"
+            >
+              Save as draft
+            </SecondaryButton>
+            <SecondaryButton
+              type="button"
+              onClick={onSaveAsTemplate}
+              disabled={isSubmitting || !formData.title}
+              fullWidth
+              className="rounded-xl"
+            >
+              Save as template
+            </SecondaryButton>
           </div>
         </div>
-      )}
-
-      {/* Ready to publish */}
-      {validationIssues.length === 0 && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25">
-          <p className="text-[13px] text-white">
-            <strong className="text-emerald-400">Ready to publish!</strong> Your job listing looks
-            complete. Hit publish to make it live.
-          </p>
-        </div>
-      )}
-
-      {/* Action Buttons */}
-      <div className="space-y-3 pt-4 border-t border-white/[0.06]">
-        {/* Primary action */}
-        <PrimaryButton
-          type="button"
-          onClick={onPublish}
-          disabled={validationIssues.length > 0 || isSubmitting}
-          fullWidth
-          size="lg"
-        >
-          <Send className="h-5 w-5 mr-2" />
-          {isSubmitting ? 'Publishing...' : 'Publish Job Listing'}
-        </PrimaryButton>
-
-        {/* Secondary actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <SecondaryButton
-            type="button"
-            onClick={onSaveDraft}
-            disabled={isSubmitting}
-            fullWidth
-          >
-            <Save className="h-4 w-4 mr-2" />
-            Save as Draft
-          </SecondaryButton>
-
-          <SecondaryButton
-            type="button"
-            onClick={onSaveAsTemplate}
-            disabled={isSubmitting || !formData.title}
-            fullWidth
-          >
-            <FileText className="h-4 w-4 mr-2" />
-            Save Template
-          </SecondaryButton>
-        </div>
-      </div>
-
-      {/* Info tip */}
-      <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
-        <p className="text-[13px] text-white">
-          <strong>After publishing:</strong> Your job will appear in the Jobs section where
-          qualified electricians can view and apply. You'll receive notifications when candidates
-          apply.
-        </p>
       </div>
     </div>
   );

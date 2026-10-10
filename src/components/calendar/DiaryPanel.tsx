@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
 import { addDays, format, isSameDay, isToday, isTomorrow, startOfDay } from 'date-fns';
 import { ChevronRight, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { cardCn, eyebrowCn, rowCn } from './calendarStyles';
+import { cardCn, rowCn } from './calendarStyles';
 import {
   buildDayShape,
   clampToDay,
@@ -156,7 +156,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
           onClick={() => navigate(CALENDAR_PATH)}
           className="flex w-full items-center gap-2 border-b border-white/[0.10] px-4 py-3 text-left touch-manipulation sm:px-5"
         >
-          <span className={eyebrowCn}>Your diary</span>
+          <span className="text-[12px] font-medium text-white">Your diary</span>
           <ChevronRight className="ml-auto h-4 w-4 text-elec-yellow" />
         </button>
 
@@ -192,7 +192,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
             onClick={() => navigate(calendarNewEventUrl(new Date()))}
             className={cn(rowCn, 'py-4 text-[13px] text-white')}
           >
-            {isLoading ? 'Loading your day…' : 'Nothing in the diary this week — tap to book something in.'}
+            {isLoading ? 'Loading your day…' : 'Nothing in the diary this week. Tap to book something in.'}
           </button>
         )}
       </section>
@@ -204,7 +204,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
     <section className={cn(cardCn, 'overflow-hidden')}>
       <div className="flex items-center gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
         <div className="min-w-0">
-          <span className={eyebrowCn}>Your diary</span>
+          <span className="text-[12px] font-medium text-white">Your diary</span>
           <p className="mt-1 truncate text-[15px] font-semibold tracking-tight text-white">
             {verdict}
           </p>
@@ -265,7 +265,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
             onClick={() => navigate(calendarDayUrl(selected))}
             className="flex items-center gap-1.5 text-left touch-manipulation"
           >
-            <span className={eyebrowCn}>{dayHeading(selected)}</span>
+            <span className="text-[12px] font-medium text-white">{dayHeading(selected)}</span>
             <ChevronRight className="h-3.5 w-3.5 text-elec-yellow" />
           </button>
           <button
@@ -284,7 +284,7 @@ const DiaryPanel = ({ variant = 'full' }: DiaryPanelProps) => {
             onClick={() => navigate(calendarNewEventUrl(selected))}
             className={cn(rowCn, 'py-4 text-[13px] text-white')}
           >
-            Nothing on {dayHeading(selected).toLowerCase()} — tap to book someone in.
+            Nothing on {dayHeading(selected).toLowerCase()}. Tap to book someone in.
           </button>
         ) : (
           <div className="divide-y divide-white/[0.08]">

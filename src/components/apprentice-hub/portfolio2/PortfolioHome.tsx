@@ -19,16 +19,21 @@ import { cn } from '@/lib/utils';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
+import { PRESETS, type CapturePreset } from '@/lib/portfolio/capturePresets';
+import { CaptureOutboxStrip } from './CaptureOutboxStrip';
 import PortfolioEntryForm from '@/components/apprentice/portfolio/PortfolioEntryForm';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { loadPortfolioEntry, usePortfolioWrites } from '@/hooks/portfolio/portfolioWrites';
 import type { PortfolioEntry } from '@/types/portfolio';
 import { useAuth } from '@/contexts/AuthContext';
-import { usePortfolio, notifyPortfolioChanged, type PortfolioItemView } from '@/hooks/portfolio/usePortfolio';
+import {
+  usePortfolio,
+  notifyPortfolioChanged,
+  type PortfolioItemView,
+} from '@/hooks/portfolio/usePortfolio';
 import { STATE_SWATCH } from '@/hooks/portfolio/usePortfolioAcState';
 import { SharePortfolioSheet } from '../SharePortfolioSheet';
-import { ExportPackSheet } from '@/components/portfolio-export/ExportPackSheet';
 import { PortfolioStartHere } from '../PortfolioStartHere';
 import type { CaptureSeed } from '../UnifiedCaptureSheet';
 import { useAssessmentPlans } from '@/hooks/portfolio/useAssessmentPlans';
@@ -40,7 +45,7 @@ import { EvidenceDetailSheet } from './EvidenceDetailSheet';
 import { EvidenceList } from './EvidenceList';
 import { InviteAssessorSheet } from './InviteAssessorSheet';
 import { NoCollegeCard } from './NoCollegeCard';
-import { LEGEND_HELP, P_BTN, P_CARD, pChip } from './ui';
+import { LEGEND_HELP, P_BTN, P_CARD, P_SEG_GROUP, pSeg } from './ui';
 import type { WorkKind } from '@/lib/portfolio/workEvidence';
 
 /** Hours as the hours page shows them: one decimal under ten ("2.5"), whole above. */
@@ -115,9 +120,18 @@ export const COVERAGE_HELP: PageHelpContent = {
   title: 'Coverage',
   what: 'Every criterion on your course and where each one stands. The ring shows the whole course; each unit shows its own bar.',
   steps: [
-    { title: 'Read the ring', body: 'Green is passed by your assessor. Blue is with your assessor. Orange needs more. White is claimed or suggested. Grey is not started.' },
-    { title: 'Filter by state', body: 'Tap a line in the key, for example Not started, to see only those criteria. Tap it again to show everything.' },
-    { title: 'Open a unit', body: 'Each criterion shows its state, any feedback and the evidence it is tied to. Capture for unit starts new evidence aimed at the gaps.' },
+    {
+      title: 'Read the ring',
+      body: 'Green is passed by your assessor. Blue is with your assessor. Orange needs more. White is claimed or suggested. Grey is not started.',
+    },
+    {
+      title: 'Filter by state',
+      body: 'Tap a line in the key, for example Not started, to see only those criteria. Tap it again to show everything.',
+    },
+    {
+      title: 'Open a unit',
+      body: 'Each criterion shows its state, any feedback and the evidence it is tied to. Capture for unit starts new evidence aimed at the gaps.',
+    },
   ],
   legend: PORTFOLIO_HELP.legend,
   notes: [
@@ -131,12 +145,24 @@ export const COVERAGE_HELP: PageHelpContent = {
 export const READINESS_HELP: PageHelpContent = {
   id: 'apprentice-portfolio-readiness',
   title: 'Readiness',
-  what: 'How close your record is to the end of your programme: criteria passed, off-the-job hours, evidence someone has seen, and your tutor\'s plan.',
+  what: "How close your record is to the end of your programme: criteria passed, off-the-job hours, evidence someone has seen, and your tutor's plan.",
   steps: [
-    { title: 'Check the rings', body: 'Each ring is a real figure from your record. Tap one to see the detail behind it.' },
-    { title: 'Work down Before gateway', body: 'Each line says what your record shows today and the one thing to do next.' },
-    { title: 'Clear what needs you', body: 'Evidence waiting on a step from you is listed with that step. Tap it to open the evidence.' },
-    { title: 'Write your statement', body: 'A few sentences in your own words. It opens your exported record.' },
+    {
+      title: 'Check the rings',
+      body: 'Each ring is a real figure from your record. Tap one to see the detail behind it.',
+    },
+    {
+      title: 'Work down Before gateway',
+      body: 'Each line says what your record shows today and the one thing to do next.',
+    },
+    {
+      title: 'Clear what needs you',
+      body: 'Evidence waiting on a step from you is listed with that step. Tap it to open the evidence.',
+    },
+    {
+      title: 'Write your statement',
+      body: 'A few sentences in your own words. It opens your exported record.',
+    },
   ],
   notes: [
     {
@@ -148,7 +174,17 @@ export const READINESS_HELP: PageHelpContent = {
 
 const crit = (n: number) => (n === 1 ? 'Criterion' : 'Criteria');
 
-function Figure({ label, value, sub, tone }: { label: string; value: string | number; sub?: string; tone?: 'warn' | 'info' }) {
+function Figure({
+  label,
+  value,
+  sub,
+  tone,
+}: {
+  label: string;
+  value: string | number;
+  sub?: string;
+  tone?: 'warn' | 'info';
+}) {
   return (
     <div className="min-w-0 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-3.5">
       <p className="text-[12.5px] font-medium text-white">{label}</p>
@@ -199,7 +235,10 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
   const [params, setParams] = useSearchParams();
   const portfolio = usePortfolio(null, { withHours: true });
   const { items, headline, loading } = portfolio;
-  const needsMoreItems = useMemo(() => items.filter((i) => i.state === 'needs_more').length, [items]);
+  const needsMoreItems = useMemo(
+    () => items.filter((i) => i.state === 'needs_more').length,
+    [items]
+  );
   const { qualificationName, collegeCourseCode } = useStudentQualification();
   const { learner, loading: collegeLoading } = useMyCollegeContext();
   // What the tutor has asked for next (ELE-1874): a to-do with capture pre-ticked.
@@ -231,17 +270,19 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
   const [openId, setOpenId] = useState<string | null>(params.get('item'));
   const openItem = useMemo(() => items.find((i) => i.id === openId) ?? null, [items, openId]);
   const [editId, setEditId] = useState<string | null>(null);
-  const [shareOpen, setShareOpen] = useState(false);
+  // ?share=1 (the 'wrong PIN' notification, ELE-1885) opens the share sheet.
+  const [shareOpen, setShareOpen] = useState(params.get('share') === '1');
   const [courseOpen, setCourseOpen] = useState(false);
-  const [exportOpen, setExportOpen] = useState(params.get('export') === '1');
+  // Old ?export=1 links (gateway nudges, emails) go to the export page.
+  const exportParam = params.get('export') === '1';
+  useEffect(() => {
+    if (exportParam) navigate('/apprentice/export', { replace: true });
+  }, [exportParam, navigate]);
   const [inviteOpen, setInviteOpen] = useState(false);
 
-  const open = useCallback(
-    (i: PortfolioItemView) => {
-      setOpenId(i.id);
-    },
-    []
-  );
+  const open = useCallback((i: PortfolioItemView) => {
+    setOpenId(i.id);
+  }, []);
   // ?item=<id> deep links (from a notification) open the evidence once loaded.
   useEffect(() => {
     const id = params.get('item');
@@ -286,6 +327,7 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
       })
       .filter((r): r is string => !!r);
     const unit = params.get('unit');
+    const presetParam = params.get('preset');
     const workParam = params.get('work') ?? '';
     const workSep = workParam.indexOf(':');
     const workKind = workParam.slice(0, workSep) as WorkKind;
@@ -303,8 +345,11 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
         briefSource: 'from your assessor',
       });
     else if (unit) onCapture({ context: `Evidence for unit ${unit}.` });
+    // ELE-1916: ?capture=1&preset=reflection|diary_entry|worksheet|test_sheet|photo|from_job
+    else if (presetParam && presetParam in PRESETS)
+      onCapture({ preset: presetParam as CapturePreset });
     else if (!planId) onCapture(null);
-    drop(['capture', 'ac', 'unit', 'work']);
+    drop(['capture', 'ac', 'unit', 'work', 'preset']);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params, plans.loading]);
 
@@ -325,14 +370,20 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
               Your portfolio
             </h1>
             <PageHelpButton
-              help={view === 'coverage' ? COVERAGE_HELP : view === 'readiness' ? READINESS_HELP : PORTFOLIO_HELP}
+              help={
+                view === 'coverage'
+                  ? COVERAGE_HELP
+                  : view === 'readiness'
+                    ? READINESS_HELP
+                    : PORTFOLIO_HELP
+              }
             />
           </div>
           <p className="mt-1 max-w-3xl text-[14px] leading-snug text-white">
             {qualificationName ? (
               <>
-                Marked against <span className="font-semibold">{qualificationName}</span>. What you have captured,
-                what it covers and where it stands with your assessor.
+                Marked against <span className="font-semibold">{qualificationName}</span>. What you
+                have captured, what it covers and where it stands with your assessor.
               </>
             ) : (
               'What you have captured, what it covers and where it stands with your assessor.'
@@ -340,20 +391,40 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
           </p>
         </div>
         <div className="grid shrink-0 grid-cols-2 gap-2 sm:flex">
-          <button type="button" className={cn(P_BTN, 'col-span-2 whitespace-nowrap sm:col-span-1')} onClick={() => setExportOpen(true)}>
+          <button
+            type="button"
+            className={cn(P_BTN, 'col-span-2 whitespace-nowrap sm:col-span-1')}
+            onClick={() => navigate('/apprentice/export')}
+          >
             <FolderDown className="h-4 w-4" /> Export my record
           </button>
-          <button type="button" className={cn(P_BTN, 'whitespace-nowrap')} onClick={() => setShareOpen(true)}>
+          <button
+            type="button"
+            className={cn(P_BTN, 'whitespace-nowrap')}
+            onClick={() => setShareOpen(true)}
+          >
             <Share2 className="h-4 w-4" /> Share
           </button>
-          <button type="button" className={cn(P_BTN, 'whitespace-nowrap')} onClick={() => setCourseOpen(true)}>
+          <button
+            type="button"
+            className={cn(P_BTN, 'whitespace-nowrap')}
+            onClick={() => setCourseOpen(true)}
+          >
             {collegeCourseCode ? 'Your course' : 'Change course'}
           </button>
         </div>
       </header>
 
+      {/* ELE-1894: evidence saved on this phone that has not synced yet */}
+      <CaptureOutboxStrip />
+
       {/* Headline: passed is the figure; the rest are separate and smaller */}
-      <section className={cn(P_CARD, 'grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:items-center lg:gap-8')}>
+      <section
+        className={cn(
+          P_CARD,
+          'grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:items-center lg:gap-8'
+        )}
+      >
         <div className="flex items-center gap-4 sm:gap-5">
           <div className="shrink-0">
             <Ring
@@ -369,20 +440,41 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
               {noAssessor ? 'Passed by an assessor' : 'Passed by your assessor'}
             </p>
             <p className="mt-1 flex items-baseline gap-2">
-              <span className="text-[40px] font-bold leading-none tabular-nums text-white">{headline.passed}</span>
+              <span className="text-[40px] font-bold leading-none tabular-nums text-white">
+                {headline.passed}
+              </span>
               <span className="text-[15px] text-white">of {headline.total || '–'} criteria</span>
             </p>
             <div className="mt-3 flex h-2 overflow-hidden rounded-full bg-white/[0.08]" aria-hidden>
-              <span className={STATE_SWATCH.iqa_confirmed} style={{ width: `${headline.total ? (headline.iqaConfirmed / headline.total) * 100 : 0}%` }} />
+              <span
+                className={STATE_SWATCH.iqa_confirmed}
+                style={{
+                  width: `${headline.total ? (headline.iqaConfirmed / headline.total) * 100 : 0}%`,
+                }}
+              />
               <span
                 className={STATE_SWATCH.passed}
-                style={{ width: `${headline.total ? ((headline.passed - headline.iqaConfirmed) / headline.total) * 100 : 0}%` }}
+                style={{
+                  width: `${headline.total ? ((headline.passed - headline.iqaConfirmed) / headline.total) * 100 : 0}%`,
+                }}
               />
-              <span className={STATE_SWATCH.submitted} style={{ width: `${headline.total ? (headline.submitted / headline.total) * 100 : 0}%` }} />
-              <span className={STATE_SWATCH.claimed} style={{ width: `${headline.total ? (headline.claimed / headline.total) * 100 : 0}%` }} />
+              <span
+                className={STATE_SWATCH.submitted}
+                style={{
+                  width: `${headline.total ? (headline.submitted / headline.total) * 100 : 0}%`,
+                }}
+              />
+              <span
+                className={STATE_SWATCH.claimed}
+                style={{
+                  width: `${headline.total ? (headline.claimed / headline.total) * 100 : 0}%`,
+                }}
+              />
             </div>
             <p className="mt-2 text-[12.5px] leading-snug text-white">
-              {headline.total ? `${headline.percent}% of your course is passed.` : 'Choose your course to track it.'}{' '}
+              {headline.total
+                ? `${headline.percent}% of your course is passed.`
+                : 'Choose your course to track it.'}{' '}
               {headline.iqaConfirmed > 0 && `${headline.iqaConfirmed} confirmed by the IQA.`}
             </p>
           </div>
@@ -390,7 +482,11 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {/* ELE-1862: these figures count CRITERIA; the Evidence filter chips
               count pieces of evidence. Say so, so the two never look contradictory. */}
-          <Figure label="Claimed by you" value={headline.claimed} sub={`${crit(headline.claimed)}, not sent yet`} />
+          <Figure
+            label="Claimed by you"
+            value={headline.claimed}
+            sub={`${crit(headline.claimed)}, not sent yet`}
+          />
           <Figure
             label="With your assessor"
             value={headline.submitted}
@@ -409,19 +505,19 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
           />
           <Figure
             label={hours?.required_hours ? 'Off-the-job hours' : 'Suggested (AI)'}
-            value={
+            value={hours?.required_hours ? fmtHours(hours.counted_hours ?? 0) : headline.suggested}
+            sub={
               hours?.required_hours
-                ? fmtHours(hours.counted_hours ?? 0)
-                : headline.suggested
+                ? `of ${Math.round(hours.required_hours)} needed`
+                : 'Check and claim'
             }
-            sub={hours?.required_hours ? `of ${Math.round(hours.required_hours)} needed` : 'Check and claim'}
           />
         </div>
       </section>
 
       {showNoCollege && (
         <NoCollegeCard
-          onExport={() => setExportOpen(true)}
+          onExport={() => navigate('/apprentice/export')}
           onAskWitness={askWitness}
           onChanged={() => notifyPortfolioChanged()}
         />
@@ -439,7 +535,8 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
             Turn your own work into evidence
           </h2>
           <p className="mt-0.5 text-[12.5px] leading-snug text-white">
-            A certificate, test results or a calculation you did. We make a readable copy and suggest the criteria.
+            A certificate, test results or a calculation you did. We make a readable copy and
+            suggest the criteria.
           </p>
         </div>
         <div className="grid shrink-0 grid-cols-3 gap-2">
@@ -453,13 +550,13 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
             <button
               key={o.kind}
               type="button"
-              className={cn(
-                P_BTN,
-                'h-auto min-h-[56px] flex-col gap-1 px-2 py-2 text-[12.5px] leading-tight sm:min-h-11 sm:flex-row sm:gap-2 sm:px-3 sm:text-[13px]'
-              )}
+              className={cn(P_BTN, 'gap-1.5 whitespace-nowrap px-2 text-[13px] sm:gap-2 sm:px-3')}
               onClick={() => onCapture({ pickWork: o.kind })}
             >
-              <o.icon className="h-4 w-4 shrink-0 text-elec-yellow" />
+              <o.icon
+                className="hidden h-4 w-4 shrink-0 text-white min-[380px]:block"
+                strokeWidth={1.5}
+              />
               <span className="text-center">{o.label}</span>
             </button>
           ))}
@@ -467,18 +564,20 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
       </section>
 
       {/* View switch */}
-      <div className="flex gap-2" role="tablist" aria-label="Portfolio view">
+      <div className={P_SEG_GROUP} role="tablist" aria-label="Portfolio view">
         {VIEWS.map((v) => (
           <button
             key={v.key}
             type="button"
             role="tab"
             aria-selected={view === v.key}
-            className={cn(pChip(view === v.key), 'h-11 flex-1 sm:flex-none sm:px-6')}
+            className={pSeg(view === v.key)}
             onClick={() => chooseView(v.key)}
           >
             {v.label}
-            {v.key === 'evidence' && items.length > 0 && <span className="ml-1.5 tabular-nums">{items.length}</span>}
+            {v.key === 'evidence' && items.length > 0 && (
+              <span className="tabular-nums">{items.length}</span>
+            )}
           </button>
         ))}
       </div>
@@ -491,7 +590,10 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
             ))}
           </div>
         ) : items.length === 0 ? (
-          <PortfolioStartHere onChooseCourse={() => setCourseOpen(true)} onCapture={() => onCapture(null)} />
+          <PortfolioStartHere
+            onChooseCourse={() => setCourseOpen(true)}
+            onCapture={() => onCapture(null)}
+          />
         ) : (
           <EvidenceList items={items} onOpen={open} />
         ))}
@@ -516,7 +618,7 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
           onOpenItem={open}
           onView={chooseView}
           onCapture={() => onCapture(null)}
-          onOpenGatewayPack={() => setExportOpen(true)}
+          onOpenGatewayPack={() => navigate('/apprentice/export')}
         />
       )}
 
@@ -555,7 +657,6 @@ export function PortfolioHome({ onCapture }: { onCapture: (seed?: CaptureSeed | 
         onCreated={() => notifyPortfolioChanged()}
         onAskWitness={askWitness}
       />
-      <ExportPackSheet open={exportOpen} onOpenChange={setExportOpen} learnerUserId={null} mode="learner" />
       <FormSheet
         open={courseOpen}
         onOpenChange={setCourseOpen}

@@ -1,11 +1,7 @@
 import { useFormContext, Controller } from 'react-hook-form';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  commonRequirements,
-  experienceLevels,
-  type VacancyFormData,
-} from '../schema';
+import { commonRequirements, experienceLevels, type VacancyFormData } from '../schema';
 import { RichTextEditor } from '../RichTextEditor';
 import { AIDescriptionGenerator } from '../AIDescriptionGenerator';
 import { FormCard, Eyebrow } from '@/components/employer/editorial';
@@ -52,7 +48,7 @@ export function RequirementsStep() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
       {/* Experience Level */}
       <FormCard index={1} eyebrow="Experience level">
         <Controller
@@ -156,7 +152,7 @@ export function RequirementsStep() {
       </FormCard>
 
       {/* Job Description */}
-      <FormCard>
+      <FormCard className="lg:col-span-2">
         <div className="flex items-center justify-between">
           <Eyebrow>Job Description</Eyebrow>
           <AIDescriptionGenerator
@@ -182,12 +178,9 @@ export function RequirementsStep() {
       </FormCard>
 
       {/* Helper tip */}
-      <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/25">
-        <p className="text-[13px] text-white">
-          <strong className="text-elec-yellow">Pro tip:</strong> Use the AI generator to create a
-          professional description, then customise it to match your company voice.
-        </p>
-      </div>
+      <p className="text-[13px] leading-snug text-white lg:col-span-2">
+        Write it yourself or start from the generator, then make it sound like your firm.
+      </p>
     </div>
   );
 }

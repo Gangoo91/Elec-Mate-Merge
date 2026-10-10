@@ -9,8 +9,7 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -358,281 +357,273 @@ const a4Changes = [
 
 const ContinuingEducation = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · CPD"
-        title="Continuing education"
-        backTo="/apprentice/professional-development"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'A4:2026 changes, EV charging, solar PV, smart homes — stay current and the upskilling pays. The roles that pay best usually require the certifications most people skip.'
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · CPD"
+      area="Professional development"
+      title="Continuing education"
+      backTo="/apprentice/professional-development"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          'A4:2026 changes, EV charging, solar PV, smart homes — stay current and the upskilling pays. The roles that pay best usually require the certifications most people skip.'
+        }
+      </p>
 
-        {/* ── Why continue ─────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Why continue learning"
-            title="Three reasons the maths works"
-            meta="The trade is moving — and so is its pay"
-          />
-          <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            {whyContinue.map((b) => (
-              <li
-                key={b.title}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
-              >
-                <Eyebrow>{b.title}</Eyebrow>
-                <p className="text-[13px] text-white leading-relaxed">{b.detail}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+      {/* ── Why continue ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Why continue learning"
+          title="Three reasons the maths works"
+          meta="The trade is moving — and so is its pay"
+        />
+        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          {whyContinue.map((b) => (
+            <li
+              key={b.title}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <Eyebrow>{b.title}</Eyebrow>
+              <p className="text-[14px] text-white leading-relaxed">{b.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── What changed in A4:2026 ──────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="BS 7671:2018+A4:2026"
-            title="What changed — and why it pays to know"
-            meta="The current amendment. Knowing it first is billable."
-          />
-          <ul className="space-y-2">
-            {a4Changes.map((c) => (
-              <li
-                key={c.change}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
-              >
-                <Eyebrow>{c.change}</Eyebrow>
-                <p className="text-[13px] text-white leading-relaxed">{c.detail}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+      {/* ── What changed in A4:2026 ──────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="BS 7671:2018+A4:2026"
+          title="What changed — and why it pays to know"
+          meta="The current amendment. Knowing it first is billable."
+        />
+        <ul className="space-y-2">
+          {a4Changes.map((c) => (
+            <li
+              key={c.change}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <Eyebrow>{c.change}</Eyebrow>
+              <p className="text-[14px] text-white leading-relaxed">{c.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Course categories ────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Course categories"
-            title="Where to put your time"
-            meta="Seven directions, ranked roughly by ROI"
-          />
-          <ul className="space-y-2.5">
-            {courseCategories.map((cat) => (
-              <li
-                key={cat.title}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                    {cat.title}
+      {/* ── Course categories ────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Course categories"
+          title="Where to put your time"
+          meta="Seven directions, ranked roughly by ROI"
+        />
+        <ul className="space-y-2.5">
+          {courseCategories.map((cat) => (
+            <li
+              key={cat.title}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">{cat.title}</h3>
+                <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.05] text-[13px] font-semibold text-elec-yellow">
+                  {cat.level}
+                </span>
+              </div>
+              <p className="text-[14px] text-white leading-relaxed">{cat.description}</p>
+              <div className="flex items-center gap-2 text-[12.5px] tabular-nums text-white">
+                <span>{cat.duration}</span>
+                <span>·</span>
+                <span>{cat.cost}</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {cat.courses.map((course) => (
+                  <span
+                    key={course}
+                    className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[12.5px] text-white"
+                  >
+                    {course}
+                  </span>
+                ))}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Planning ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Planning"
+          title="Five steps before you commit"
+          meta="Don't book the course until you've done the homework"
+        />
+        <ol className="space-y-2">
+          {planningSteps.map((item) => (
+            <li
+              key={item.step}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-md border border-white/[0.08] bg-white/[0.05] flex items-center justify-center flex-shrink-0">
+                  <span className="text-[13px] font-semibold text-elec-yellow tabular-nums">
+                    {item.step}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0 space-y-1.5">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
                   </h3>
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-                    {cat.level}
-                  </span>
+                  <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
                 </div>
-                <p className="text-[13px] text-white leading-relaxed">{cat.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white">
-                  <span>{cat.duration}</span>
-                  <span>·</span>
-                  <span>{cat.cost}</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {cat.courses.map((course) => (
-                    <span
-                      key={course}
-                      className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white"
-                    >
-                      {course}
-                    </span>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
 
-        {/* ── Planning ─────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Planning"
-            title="Five steps before you commit"
-            meta="Don't book the course until you've done the homework"
-          />
-          <ol className="space-y-2">
-            {planningSteps.map((item) => (
-              <li
-                key={item.step}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                    <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
-                      {item.step}
-                    </span>
-                  </div>
-                  <div className="flex-1 min-w-0 space-y-1.5">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </motion.section>
-
-        {/* ── Funding ──────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Funding"
-            title="Six routes to lower the bill"
-            meta="Many courses are partially or fully funded — understand your options"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-2">
-              {fundingPoints.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── Market trends ────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Market trends"
-            title="Four shifts driving demand"
-            meta="What employers will pay for over the next 5 years"
-          />
+      {/* ── Funding ──────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Funding"
+          title="Six routes to lower the bill"
+          meta="Many courses are partially or fully funded — understand your options"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
           <ul className="space-y-2">
-            {keyTrends.map((item) => (
+            {fundingPoints.map((point) => (
               <li
-                key={item.trend}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
+                key={point}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
               >
-                <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                  {item.trend}
-                </h3>
-                <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{point}</span>
               </li>
             ))}
           </ul>
-        </motion.section>
+        </div>
+      </motion.section>
 
-        {/* ── Regional insights ────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Regional insights"
-            title="Where the projects are"
-            meta="Local market signals across six UK regions"
-          />
-          <ul className="space-y-2">
-            {regionalInsights.map((region) => (
-              <li
-                key={region.region}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-                  CARD_SURFACE
-                )}
-              >
-                <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                  {region.region}
-                </h3>
-                <ul className="space-y-1.5">
-                  {region.projects.map((project) => (
-                    <li
-                      key={project}
-                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      <span>{project}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-[12px] text-white leading-relaxed pt-1 border-t border-white/[0.04]">
-                  {region.outlook}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+      {/* ── Market trends ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Market trends"
+          title="Four shifts driving demand"
+          meta="What employers will pay for over the next 5 years"
+        />
+        <ul className="space-y-2">
+          {keyTrends.map((item) => (
+            <li
+              key={item.trend}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.trend}</h3>
+              <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Success stories ──────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Success stories"
-            title="Six routes through CPD"
-            meta="What it looked like for the people who did it"
-          />
-          <ul className="space-y-2">
-            {successStories.map((story) => (
-              <li
-                key={story.name}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2.5',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <div className="min-w-0">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {story.name}
-                    </h3>
-                    <p className="text-[11.5px] text-white mt-0.5">
-                      {story.role} · {story.location}
-                    </p>
-                  </div>
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[11px] font-mono tabular-nums text-elec-yellow">
-                    {story.change}
-                  </span>
-                </div>
-                <p className="text-[13px] text-white leading-relaxed">{story.detail}</p>
-                <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <Eyebrow>Education path</Eyebrow>
-                  <p className="text-[12.5px] text-white leading-relaxed">{story.path}</p>
-                </div>
-                <div className="flex items-start gap-2 pt-1">
-                  <Eyebrow>Top tip</Eyebrow>
-                  <span className="text-[12.5px] text-white leading-relaxed italic">
-                    "{story.tip}"
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+      {/* ── Regional insights ────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Regional insights"
+          title="Where the projects are"
+          meta="Local market signals across six UK regions"
+        />
+        <ul className="space-y-2">
+          {regionalInsights.map((region) => (
+            <li
+              key={region.region}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                {region.region}
+              </h3>
+              <ul className="space-y-1.5">
+                {region.projects.map((project) => (
+                  <li
+                    key={project}
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                    <span>{project}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[14px] text-white leading-relaxed pt-1 border-t border-white/[0.04]">
+                {region.outlook}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Footnote ─────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants}>
-          <p className="text-[11px] text-white leading-relaxed">
-            Course information and funding details based on DfE apprenticeship funding rules, IET
-            professional standards, and current UK electrical industry data. Costs and availability
-            vary by provider and region. Check with individual providers for current pricing.
-          </p>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+      {/* ── Success stories ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Success stories"
+          title="Six routes through CPD"
+          meta="What it looked like for the people who did it"
+        />
+        <ul className="space-y-2">
+          {successStories.map((story) => (
+            <li
+              key={story.name}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2.5',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <div className="min-w-0">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {story.name}
+                  </h3>
+                  <p className="text-[12.5px] text-white mt-0.5">
+                    {story.role} · {story.location}
+                  </p>
+                </div>
+                <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12.5px] tabular-nums text-elec-yellow">
+                  {story.change}
+                </span>
+              </div>
+              <p className="text-[14px] text-white leading-relaxed">{story.detail}</p>
+              <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                <Eyebrow>Education path</Eyebrow>
+                <p className="text-[14px] text-white leading-relaxed">{story.path}</p>
+              </div>
+              <div className="flex items-start gap-2 pt-1">
+                <Eyebrow>Top tip</Eyebrow>
+                <span className="text-[14px] text-white leading-relaxed italic">"{story.tip}"</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Footnote ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <p className="text-[14px] text-white leading-relaxed">
+          Course information and funding details based on DfE apprenticeship funding rules, IET
+          professional standards, and current UK electrical industry data. Costs and availability
+          vary by provider and region. Check with individual providers for current pricing.
+        </p>
+      </motion.section>
+    </GuidePage>
   );
 };
 

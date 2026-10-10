@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { FormSheet } from '@/components/forms/FormSheet';
+import { CHOICE_OFF, CHOICE_ON } from '@/components/college/teaching/TeachingKit';
 import {
   buttonPrimaryCn,
   buttonSecondaryCn,
   chipBase,
-  chipOff,
-  chipOn,
   inputCn,
   labelCn,
   textareaCn,
@@ -13,10 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import type {
-  CollegeResource,
-  ResourceVisibility,
-} from '@/hooks/useCollegeResources';
+import type { CollegeResource, ResourceVisibility } from '@/hooks/useCollegeResources';
 
 interface Props {
   open: boolean;
@@ -31,8 +27,16 @@ const VISIBILITY_OPTIONS: {
   hint: string;
 }[] = [
   { value: 'private', label: 'Only me', hint: 'A draft or personal copy. No one else sees it.' },
-  { value: 'tutors', label: 'All tutors', hint: 'Shared across the teaching team at your college. The usual choice.' },
-  { value: 'cohort_members', label: 'Cohort members', hint: 'Apprentices in the linked cohorts can view it.' },
+  {
+    value: 'tutors',
+    label: 'All tutors',
+    hint: 'Shared across the teaching team at your college. The usual choice.',
+  },
+  {
+    value: 'cohort_members',
+    label: 'Cohort members',
+    hint: 'Apprentices in the linked cohorts can view it.',
+  },
   { value: 'college', label: 'Whole college', hint: 'Anyone at the college can view it.' },
 ];
 
@@ -108,10 +112,20 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
       bodyClassName="grid grid-cols-1 items-start gap-x-6 gap-y-5 lg:grid-cols-2"
       footer={
         <div className="grid grid-cols-2 gap-2.5">
-          <button type="button" onClick={() => onOpenChange(false)} disabled={saving} className={buttonSecondaryCn}>
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
             Cancel
           </button>
-          <button type="button" onClick={handleSave} disabled={!canSave || saving} className={buttonPrimaryCn}>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!canSave || saving}
+            className={buttonPrimaryCn}
+          >
             {saving ? 'Saving…' : 'Save changes'}
           </button>
         </div>
@@ -121,7 +135,12 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
         <label className={labelCn} htmlFor="er-title">
           Title
         </label>
-        <input id="er-title" value={title} onChange={(e) => setTitle(e.target.value)} className={inputCn} />
+        <input
+          id="er-title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className={inputCn}
+        />
       </div>
 
       <div>
@@ -180,7 +199,11 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
               type="button"
               aria-pressed={visibility === opt.value}
               onClick={() => setVisibility(opt.value)}
-              className={cn(chipBase, 'px-3 text-[13px]', visibility === opt.value ? chipOn : chipOff)}
+              className={cn(
+                chipBase,
+                'px-3 text-[13px]',
+                visibility === opt.value ? CHOICE_ON : CHOICE_OFF
+              )}
             >
               {opt.label}
             </button>

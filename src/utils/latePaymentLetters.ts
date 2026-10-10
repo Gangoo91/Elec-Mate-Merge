@@ -7,11 +7,14 @@
 // CONSUMER customers (homeowners): the 1998 Act does NOT apply. Interest may
 //   be claimed under contract terms or s.69 County Courts Act 1984 (8%).
 //
-// BOE_BASE_RATE verified 2026-07-25 (bankofengland.co.uk — 3.75%, held
-// 18 Jun 2026, so the 30 Jun reference rate for H2 2026 is 3.75%).
-// Review each January and July when the reference rate resets.
+// Gap §4.9: the rate and the fixed sums come from the ONE table in
+// statutoryInterest.ts (sourced there, reviewed each January and July).
+import {
+  currentReferenceRate,
+  fixedCompensation as fixedSum,
+} from '@/utils/statutoryInterest';
 
-export const BOE_BASE_RATE = 3.75;
+export const BOE_BASE_RATE = currentReferenceRate();
 export const STATUTORY_RATE_BUSINESS = 8 + BOE_BASE_RATE; // % p.a.
 export const STATUTORY_RATE_CONSUMER = 8; // % p.a. — s.69 County Courts Act 1984
 
@@ -19,9 +22,7 @@ export type DebtorType = 'business' | 'consumer';
 
 /** Fixed compensation per invoice under the 1998 Act (business debts only). */
 export function fixedCompensation(principal: number): number {
-  if (principal < 1000) return 40;
-  if (principal < 10000) return 70;
-  return 100;
+  return fixedSum(principal);
 }
 
 export function statutoryRate(debtorType: DebtorType): number {

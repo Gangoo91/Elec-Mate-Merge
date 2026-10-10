@@ -11,7 +11,10 @@ const db = supabase as unknown as SupabaseClient;
    employer, at least every 3 calendar months.
 
    Source: Apprenticeship funding rules 2025/26, paras 97–98 and the evidence
-   box on p.55. The database does the rules (tripartite_reviews_v2):
+   box on p.55 (the numbers below are 2025/26). For 2026/27 starts the same
+   rules are paras 102–103 (102.1: an agreed alternative timetable, reviews no
+   more than 6 months apart; 102.2.2 summary signed by provider and
+   apprentice); 2024/25 starts, 101–102. Verified against the PDFs (ELE-2038). The database does the rules (tripartite_reviews_v2):
      - tripartite_due_by: end of the calendar month 3 months after the last
        review (or the start), or the learner's agreed frequency (97.1)
      - sign_off_tripartite_review: refuses until the employer was asked
@@ -88,9 +91,19 @@ export interface ReviewOutcomes {
   plan_change?: PlanChange;
   ilp_updates?: string;
   concerns?: string;
-  learning_support?: { applies?: boolean; discussed?: boolean; employer_consent?: boolean; note?: string };
+  learning_support?: {
+    applies?: boolean;
+    discussed?: boolean;
+    employer_consent?: boolean;
+    note?: string;
+  };
   wellbeing_check?: string;
   safeguarding_check?: string;
+  /** ELE-2051: the summary came from an AI draft the tutor checked and chose to use. */
+  summary_source?: 'tutor' | 'ai_draft_confirmed';
+  summary_ai_draft_id?: string;
+  summary_confirmed_by_name?: string;
+  summary_confirmed_at?: string;
 }
 
 export interface ReviewSignatures {
@@ -155,6 +168,8 @@ export interface ReviewAction {
   outcome_note: string | null;
   closed_in_review_id: string | null;
   position: number;
+  /** ELE-2051: 'ai_draft_confirmed' = a SMART target from a confirmed AI draft. */
+  source?: 'tutor' | 'ai_draft_confirmed';
 }
 
 export interface ReviewPrefill {
@@ -165,7 +180,11 @@ export interface ReviewPrefill {
     course: string | null;
     cohort: string | null;
     employer: string | null;
+    /** Typed into the learner record; never shown (8 Oct 2026). */
     progress_percent: number;
+    /** Criteria passed of the qualification total, from get_portfolio_ac_state
+     *  (migration 20261008190000). Absent on older snapshots. */
+    criteria?: { passed: number; total: number } | null;
     has_account?: boolean;
   };
   since: string;
@@ -198,7 +217,8 @@ export interface ReviewPrefill {
   support_needs: boolean;
 }
 
-export type BoardState = 'overdue' | 'write_up' | 'due_soon' | 'scheduled' | 'late' | 'signatures' | 'ok';
+export type BoardState =
+  'overdue' | 'write_up' | 'due_soon' | 'scheduled' | 'late' | 'signatures' | 'ok';
 
 export interface ReviewBoardRow {
   student_id: string;
@@ -231,7 +251,7 @@ export interface ReviewBoardRow {
 
 /** Which review a board row opens. */
 export const boardRowReviewId = (r: ReviewBoardRow) =>
-  r.state === 'signatures' ? r.to_sign?.id ?? null : r.next?.id ?? null;
+  r.state === 'signatures' ? (r.to_sign?.id ?? null) : (r.next?.id ?? null);
 
 // Every column except employer_token (not selectable; see the migration).
 const REVIEW_COLUMNS =
@@ -257,7 +277,9 @@ export function useReviewBoard(collegeId?: string | null) {
   const load = useCallback(async () => {
     setError(null);
     try {
-      const res = await rpc<{ rows: ReviewBoardRow[] }>('get_review_board', { p_college: collegeId ?? null });
+      const res = await rpc<{ rows: ReviewBoardRow[] }>('get_review_board', {
+        p_college: collegeId ?? null,
+      });
       setRows(res?.rows ?? []);
     } catch (e) {
       setError((e as Error).message);
@@ -324,7 +346,7 @@ export async function fetchReviewActions(reviewId: string): Promise<ReviewAction
   const { data, error } = await db
     .from('college_review_actions')
     .select(
-      'id, review_id, student_id, college_id, action, owner_party, due_date, status, outcome_note, closed_in_review_id, position'
+      'id, review_id, student_id, college_id, action, owner_party, due_date, status, outcome_note, closed_in_review_id, position, source'
     )
     .eq('review_id', reviewId)
     .order('position')
@@ -353,7 +375,7 @@ export async function scheduleReview(input: ScheduleInput): Promise<string> {
   const { data: u } = await supabase.auth.getUser();
   const { data, error } = await db
     .from('college_tripartite_reviews')
-    .insert({ ...input, status: 'scheduled', duration_minutes: 45, created_by: u.user?.id ?? null } )
+    .insert({ ...input, status: 'scheduled', duration_minutes: 45, created_by: u.user?.id ?? null })
     .select('id')
     .single();
   if (error) throw new Error(error.message);
@@ -379,10 +401,7 @@ export async function updateReview(
     >
   >
 ) {
-  const { error } = await db
-    .from('college_tripartite_reviews')
-    .update(patch )
-    .eq('id', id);
+  const { error } = await db.from('college_tripartite_reviews').update(patch).eq('id', id);
   if (error) throw new Error(error.message);
 }
 
@@ -406,7 +425,7 @@ export async function addReviewAction(
     owner_party: owner,
     due_date: dueDate,
     position,
-  } );
+  });
   if (error) throw new Error(error.message);
 }
 
@@ -429,16 +448,21 @@ export async function checkEarlierAction(
       outcome_note: note,
       closed_in_review_id: status === 'open' ? null : reviewId,
       closed_at: status === 'open' ? null : new Date().toISOString(),
-    } )
+    })
     .eq('id', actionId);
   if (error) throw new Error(error.message);
 }
 
 export const recordPaperLearnerSignature = (id: string, signedOn: string, note: string) =>
-  rpc<RpcResult>('record_paper_learner_signature', { p_review: id, p_signed_on: signedOn, p_note: note });
+  rpc<RpcResult>('record_paper_learner_signature', {
+    p_review: id,
+    p_signed_on: signedOn,
+    p_note: note,
+  });
 
 /** Today's date in the UK, as yyyy-mm-dd. */
-export const londonToday = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
+export const londonToday = () =>
+  new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
 /** A timestamp's date in the UK, as yyyy-mm-dd. */
 export const londonDate = (iso: string | null | undefined) =>
   iso ? new Date(iso).toLocaleDateString('en-CA', { timeZone: 'Europe/London' }) : null;
@@ -451,18 +475,29 @@ export async function fetchCollegeEmployers(collegeId: string) {
     .eq('college_id', collegeId)
     .order('company_name');
   if (error) throw new Error(error.message);
-  return (data ?? []) as Array<{ id: string; company_name: string; contact_name: string | null; contact_email: string | null }>;
+  return (data ?? []) as Array<{
+    id: string;
+    company_name: string;
+    contact_name: string | null;
+    contact_email: string | null;
+  }>;
 }
 
 export async function linkLearnerEmployer(studentId: string, employerId: string) {
-  const { error } = await supabase.from('college_students').update({ employer_id: employerId }).eq('id', studentId);
+  const { error } = await supabase
+    .from('college_students')
+    .update({ employer_id: employerId })
+    .eq('id', studentId);
   if (error) throw new Error(error.message);
 }
 
 /** Add or correct the employer contact's email on the record and this review. */
 export async function setEmployerEmail(reviewId: string, employerId: string | null, email: string) {
   if (employerId) {
-    const { error } = await supabase.from('college_employers').update({ contact_email: email }).eq('id', employerId);
+    const { error } = await supabase
+      .from('college_employers')
+      .update({ contact_email: email })
+      .eq('id', employerId);
     if (error) throw new Error(error.message);
   }
   await updateReview(reviewId, { employer_contact_email: email });
@@ -476,11 +511,8 @@ export const getEmployerReviewLink = async (id: string) => {
   return reviewLink(token);
 };
 
-export const logEmployerContact = (
-  id: string,
-  kind: ContactLogEntry['kind'],
-  to: string | null
-) => rpc<RpcResult>('log_tripartite_employer_contact', { p_review: id, p_kind: kind, p_to: to });
+export const logEmployerContact = (id: string, kind: ContactLogEntry['kind'], to: string | null) =>
+  rpc<RpcResult>('log_tripartite_employer_contact', { p_review: id, p_kind: kind, p_to: to });
 
 /** The employer's page. Always the public domain, so a link copied from a
  *  preview build still works for the person who receives it. */
@@ -514,7 +546,7 @@ export async function ensureLearnerEmployer(
       company_name: company.trim(),
       contact_name: contactName.trim() || null,
       contact_email: contactEmail.trim() || null,
-    } )
+    })
     .select('id')
     .single();
   if (error) throw new Error(error.message);
@@ -549,7 +581,12 @@ export interface MyReview {
     otj: string | null;
     plan_note: string | null;
     concerns: string | null;
-    checked_actions: Array<{ action: string; owner_party: ActionOwner; status: ActionStatus; outcome_note: string | null }>;
+    checked_actions: Array<{
+      action: string;
+      owner_party: ActionOwner;
+      status: ActionStatus;
+      outcome_note: string | null;
+    }>;
     agreed_actions: Array<{ action: string; owner_party: ActionOwner; due_date: string | null }>;
   } | null;
   signatures: {

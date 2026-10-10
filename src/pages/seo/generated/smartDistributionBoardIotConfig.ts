@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (In-cable control & protective devices), and the Building Regulations Part P.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
   pagePath: '/guides/smart-distribution-board-iot-consumer-unit',
@@ -29,7 +29,7 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
     'Replacing a consumer unit is notifiable work under Building Regulations Part P in England and Wales — whether traditional or smart. The smart layer does not change Part P; the act of replacing the CU does.',
     'BS EN 61439 type-tested assembly status applies to the assembly as supplied. Adding third-party measurement modules or aftermarket CT clamps to a non-smart CU can break TTA status and shift liability onto the installer.',
     'Section 537 of BS 7671:2018+A4:2026 requires isolation devices to be capable of being secured against unauthorised reclosure. A cloud command is not a substitute for a physical lock-off.',
-    'AFDD requirements in A4:2026 apply regardless of whether the CU is "smart". Smart CUs that integrate AFDD into the RCBO are an aid to compliance, not a workaround.',
+    'AFDD requirements under Regulation 421.1.7 apply regardless of whether the CU is "smart". Smart CUs that integrate AFDD into the RCBO are an aid to compliance, not a workaround.',
     'A mains-rated IoT device on a domestic WiFi network creates a new attack surface — segmented SSID, firmware update policy and vendor disclosure record should be documented at handover.',
     'The strongest commercial case in 2026 is the EV-and-heat-pump household: per-circuit load shedding lets a 60-100 A supply ride coincident loads without the cost of a service upgrade, and unlocks dynamic Octopus tariff savings.',
   ],
@@ -42,7 +42,7 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'A smart consumer unit, sometimes called an IoT distribution board, is a standard BS EN 61439-3 type-tested domestic distribution board with three additions: per-circuit current measurement, a local intelligence module, and a communications interface. Everything BS 7671 requires of a traditional CU — main switch, RCD or RCBO protection, AFDD where mandated by A4:2026, correct earthing arrangement — still applies. The "smart" layer sits on top, not in place of it.',
+            'A smart consumer unit, sometimes called an IoT distribution board, is a standard BS EN 61439-3 type-tested domestic distribution board with three additions: per-circuit current measurement, a local intelligence module, and a communications interface. Everything BS 7671 requires of a traditional CU — main switch, RCD or RCBO protection, AFDD where Regulation 421.1.7 requires it, correct earthing arrangement — still applies. The "smart" layer sits on top, not in place of it.',
         },
         {
           type: 'paragraph',
@@ -175,7 +175,7 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'A second consideration is fault discrimination. Smart RCBOs have firmware that can be updated, and an update can in principle alter trip characteristics. Record firmware version at commissioning, retain it on the EIC, and treat any vendor-pushed change to trip behaviour as a fault that requires re-verification. See our [consumer unit upgrade guide](/guides/consumer-unit-upgrade) and [BS 7671 A4:2026 AFDD changes](/guides/bs-7671-a4-2026-afdd-changes) for context.',
+            'A second consideration is fault discrimination. Smart RCBOs have firmware that can be updated, and an update can in principle alter trip characteristics. Record firmware version at commissioning, retain it on the EIC, and treat any vendor-pushed change to trip behaviour as a fault that requires re-verification. See our [consumer unit upgrade guide](/guides/consumer-unit-upgrade) and [BS 7671 AFDD rules](/guides/bs-7671-a4-2026-afdd-changes) for context.',
         },
       ],
     },
@@ -326,18 +326,18 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
     },
     {
       id: 'afdd-integration',
-      heading: 'AFDD Integration Under A4:2026',
+      heading: 'AFDD Integration Under Reg 421.1.7',
       tocLabel: 'AFDD integration',
       blocks: [
         {
           type: 'paragraph',
           text:
-            'BS 7671:2018+A4:2026 expanded the situations in which AFDDs are required. Smart CUs interact with this in two useful ways. First, several vendors now ship smart RCBOs that integrate AFDD into the same physical device, so one busbar slot provides overcurrent, residual-current and arc-fault protection plus telemetry — a tidy compliance outcome where A4:2026 mandates AFDD. Second, telemetry can assist diagnosis of nuisance trips. On a conventional CU the only forensic information is "it tripped"; on a smart CU the controller may have a high-resolution snapshot of current and voltage either side of the event, and may distinguish a true arc fault from a switching transient or faulty appliance.',
+            'Since A2:2022, BS 7671 has required AFDDs on single-phase socket-outlet circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. Smart CUs interact with this in two useful ways. First, several vendors now ship smart RCBOs that integrate AFDD into the same physical device, so one busbar slot provides overcurrent, residual-current and arc-fault protection plus telemetry — a tidy compliance outcome where Regulation 421.1.7 requires AFDD. Second, telemetry can assist diagnosis of nuisance trips. On a conventional CU the only forensic information is "it tripped"; on a smart CU the controller may have a high-resolution snapshot of current and voltage either side of the event, and may distinguish a true arc fault from a switching transient or faulty appliance.',
         },
         {
           type: 'list',
           items: [
-            'AFDD-integrated smart RCBOs — preferred where A4:2026 mandates AFDD and the smart CU vendor supports them. Tidy, type-tested, one slot per circuit.',
+            'AFDD-integrated smart RCBOs — preferred where Regulation 421.1.7 requires AFDD and the smart CU vendor supports them. Tidy, type-tested, one slot per circuit.',
             'Separate AFDDs in a smart CU — acceptable, but telemetry will not see the AFDD\'s trip state in the same fine-grained way.',
             'Trip log retention — useful evidence for future EICRs. Export and retain as part of the installation records.',
             'Firmware change management — any update altering detection thresholds should be treated as a fault requiring re-verification.',
@@ -456,7 +456,7 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
     {
       name: 'Install the CU and configure AFDD-integrated smart RCBOs where mandated',
       text:
-        'Mount and wire the smart CU per the manufacturer\'s instructions. Where BS 7671:2018+A4:2026 mandates AFDD and the smart CU supports AFDD-integrated smart RCBOs, use them. Record firmware version of each smart RCBO and of the controller on commissioning.',
+        'Mount and wire the smart CU per the manufacturer\'s instructions. Where Regulation 421.1.7 of BS 7671:2018+A4:2026 requires AFDD and the smart CU supports AFDD-integrated smart RCBOs, use them. Record firmware version of each smart RCBO and of the controller on commissioning.',
     },
     {
       name: 'Commission cloud, tariff and load-shedding rules with the homeowner',
@@ -486,9 +486,9 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
         'No. Section 537 of BS 7671:2018+A4:2026 requires that isolation devices be capable of being secured against unauthorised reclosure. A cloud command from an app does not meet this requirement — it is precisely the kind of unauthorised reclosure Section 537 is concerned with. When working on a circuit fed from a smart RCBO, lock off physically (using the product\'s lock-off slot where provided, or isolate upstream at the main switch where not) and prove dead with a GS38-compliant tester.',
     },
     {
-      question: 'How does a smart CU interact with the new AFDD requirements in A4:2026?',
+      question: 'How does a smart CU interact with the AFDD requirements in BS 7671?',
       answer:
-        'BS 7671:2018+A4:2026 expanded the situations where AFDDs are required, and smart CUs interact with this helpfully. Several vendors now offer smart RCBOs with integrated AFDD in a single slot — overcurrent, residual-current and arc-fault protection plus telemetry from one device. The telemetry can also assist forensic analysis of nuisance trips. AFDD detection should be re-verified after any firmware update that may alter detection thresholds.',
+        'Regulation 421.1.7 has required AFDDs in high rise residential buildings, HMOs, student accommodation and care homes since A2:2022, and smart CUs help. Several vendors now offer smart RCBOs with integrated AFDD in a single slot — overcurrent, residual-current and arc-fault protection plus telemetry from one device. The telemetry can also assist forensic analysis of nuisance trips. AFDD detection should be re-verified after any firmware update that may alter detection thresholds.',
     },
     {
       question: 'What is the cybersecurity risk of having a smart consumer unit on my home WiFi?',
@@ -528,8 +528,8 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'BS 7671 A4:2026 AFDD Changes',
-      description: 'What A4:2026 changed about AFDD requirements and how smart RCBOs with integrated AFDD can streamline compliance.',
+      title: 'BS 7671 AFDD Rules (Reg 421.1.7)',
+      description: 'Where AFDDs are required or recommended and how smart RCBOs with integrated AFDD can streamline compliance.',
       icon: 'BookOpen',
       category: 'Guide',
     },

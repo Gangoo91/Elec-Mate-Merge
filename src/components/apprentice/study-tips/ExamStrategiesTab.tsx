@@ -10,11 +10,9 @@ const Section = ({
   description?: string;
   children: React.ReactNode;
 }) => (
-  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {eyebrow}
-      </span>
+      <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
       {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
@@ -272,10 +270,8 @@ const ExamStrategiesTab = () => {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Quick exam success formula
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Quick exam success formula</span>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           {[
             { label: 'Preparation', detail: '3-6 months consistent study' },
@@ -287,10 +283,8 @@ const ExamStrategiesTab = () => {
               key={item.label}
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {item.label}
-              </span>
-              <p className="text-[12px] text-white leading-relaxed">{item.detail}</p>
+              <span className="text-[13px] font-semibold text-white">{item.label}</span>
+              <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
             </div>
           ))}
         </div>
@@ -320,9 +314,7 @@ const ExamStrategiesTab = () => {
                       <h4 className="text-[14px] text-white">{strategy.strategy}</h4>
                       <Pill>{strategy.priority}</Pill>
                     </div>
-                    <p className="text-[13px] text-white leading-relaxed">
-                      {strategy.description}
-                    </p>
+                    <p className="text-[14px] text-white leading-relaxed">{strategy.description}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {strategy.tips.map((tip, tipIndex) => (
                         <Pill key={tipIndex}>{tip}</Pill>
@@ -347,14 +339,14 @@ const ExamStrategiesTab = () => {
                 <h4 className="text-[14px] font-semibold text-white">{technique.technique}</h4>
                 <Pill>{technique.timeframe}</Pill>
               </div>
-              <p className="text-[13px] text-white leading-relaxed">{technique.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{technique.description}</p>
               <ol className="space-y-1">
                 {technique.steps.map((step, stepIndex) => (
                   <li
                     key={stepIndex}
-                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
-                    <span className="text-white font-mono">{stepIndex + 1}.</span>
+                    <span className="text-white">{stepIndex + 1}.</span>
                     <span>{step}</span>
                   </li>
                 ))}
@@ -372,8 +364,8 @@ const ExamStrategiesTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{strategy.title}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{strategy.description}</p>
-              <p className="text-[12px] text-white leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">{strategy.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">
                 <span className="text-white">Best for: </span>
                 {strategy.application}
               </p>

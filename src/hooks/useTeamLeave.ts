@@ -18,6 +18,8 @@ export interface TeamLeaveRequest {
   endDate: string;
   halfDay?: 'am' | 'pm';
   totalDays: number;
+  /** Hours of holiday, for irregular-hours workers (ELE-2062). Null = not given. */
+  hours?: number | null;
   status: string; // lowercased for display logic
   reason?: string;
   /** Set when declined — the worker sees it. */
@@ -81,6 +83,10 @@ export const useTeamLeaveRequests = () => {
         endDate: item.end_date,
         halfDay: (item.half_day as 'am' | 'pm') || undefined,
         totalDays: item.total_days || 0,
+        hours:
+          (item as { hours?: number | string | null }).hours != null
+            ? Number((item as { hours?: number | string | null }).hours)
+            : null,
         status: (item.status || '').toLowerCase(),
         reason: item.reason || undefined,
         rejectedReason: item.rejected_reason || undefined,
@@ -222,6 +228,8 @@ export const useAddTeamLeave = () => {
       reason?: string;
       /** Office recording leave it has already agreed — skips its own queue. */
       approved?: boolean;
+      /** Hours of holiday (irregular-hours workers, ELE-2062). */
+      hours?: number | null;
     }) => {
       let decider: string | null = null;
       if (input.approved) {
@@ -249,7 +257,9 @@ export const useAddTeamLeave = () => {
         approved_by: input.approved ? decider : null,
         approved_date: input.approved ? new Date().toISOString() : null,
         reason: input.reason || null,
-      });
+        // Column postdates the generated types; only sent when given.
+        ...(input.hours != null ? { hours: input.hours } : {}),
+      } as never);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -267,11 +277,14 @@ export const useDecideLeave = () => {
       decision,
       decidedBy,
       reason,
+      hours,
     }: {
       id: string;
       decision: 'approved' | 'rejected';
       decidedBy?: string;
       reason?: string;
+      /** Hours of holiday, set on approval for irregular-hours workers (ELE-2062). */
+      hours?: number | null;
     }) => {
       const {
         data: { user },
@@ -294,6 +307,7 @@ export const useDecideLeave = () => {
               status: 'Approved',
               approved_by: decider || 'Manager',
               approved_date: new Date().toISOString(),
+              ...(hours != null ? { hours } : {}),
             }
           : {
               status: 'Rejected',

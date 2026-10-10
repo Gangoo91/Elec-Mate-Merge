@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet';
+import { OTJ_ST0152_HOURS } from '@/data/otjStandards';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -22,23 +23,23 @@ import {
 
 const PAGE_TITLE = 'Electrical EPA Prep | End Point Assessment Simulator';
 const PAGE_DESCRIPTION =
-  'EPA prep with AI-graded simulators: knowledge tests, practical assessments, professional discussions. ST0215 standard. From £6.99/mo.';
+  'EPA prep with AI-graded simulators: knowledge tests, practical assessments, professional discussions. ST0152 standard. From £6.99/mo.';
 
 const faqs = [
   {
     question: 'What is the End Point Assessment (EPA) for electrical apprentices?',
     answer:
-      'The End Point Assessment (EPA) is the final independent assessment at the end of an electrical apprenticeship in England. It is carried out by an approved End Point Assessment Organisation (EPAO) and is designed to confirm that you have achieved the knowledge, skills, and behaviours defined in the apprenticeship standard. For the Installation Electrician / Maintenance Electrician standard (ST0215), the EPA consists of three components: a practical assessment, a knowledge test, and a professional discussion with portfolio review. You must pass all three components to achieve the apprenticeship. The EPA is separate from the AM2, Level 3, and 18th Edition qualifications — it is an additional, overarching assessment of your readiness to work as a competent professional.',
+      'The End Point Assessment (EPA) is the final independent assessment at the end of an electrical apprenticeship in England. It is carried out by an approved End Point Assessment Organisation (EPAO) and is designed to confirm that you have achieved the knowledge, skills, and behaviours defined in the apprenticeship standard. For the Installation Electrician / Maintenance Electrician standard (ST0152), the EPA consists of three components: a practical assessment, a knowledge test, and a professional discussion with portfolio review. You must pass all three components to achieve the apprenticeship. The EPA is separate from the AM2, Level 3, and 18th Edition qualifications — it is an additional, overarching assessment of your readiness to work as a competent professional.',
   },
   {
-    question: 'What is the ST0215 apprenticeship standard?',
+    question: 'What is the ST0152 apprenticeship standard?',
     answer:
-      'ST0215 is the reference number for the Installation Electrician / Maintenance Electrician apprenticeship standard, published by the Institute for Apprenticeships and Technical Education (IfATE). The standard defines the knowledge, skills, and behaviours that an apprentice must demonstrate to be considered occupationally competent. Knowledge areas include electrical science, BS 7671 wiring regulations, health and safety legislation, installation design, inspection and testing, and fault diagnosis. Skills include practical installation, inspection and testing, safe isolation, fault finding, and certification. Behaviours include professionalism, communication, team working, and commitment to continuing professional development. The EPA assesses the apprentice against all of these requirements.',
+      'ST0152 is the reference number for the Installation Electrician / Maintenance Electrician apprenticeship standard, published by the Institute for Apprenticeships and Technical Education (IfATE). The standard defines the knowledge, skills, and behaviours that an apprentice must demonstrate to be considered occupationally competent. Knowledge areas include electrical science, BS 7671 wiring regulations, health and safety legislation, installation design, inspection and testing, and fault diagnosis. Skills include practical installation, inspection and testing, safe isolation, fault finding, and certification. Behaviours include professionalism, communication, team working, and commitment to continuing professional development. The EPA assesses the apprentice against all of these requirements.',
   },
   {
     question: 'What are the gateway requirements for the EPA?',
     answer:
-      'Before you can attempt the EPA, you must pass through the "gateway." The gateway requirements for the Installation Electrician / Maintenance Electrician standard typically include: completion of the Level 3 Diploma in Electrical Installation (or equivalent), achievement of Level 2 Functional Skills in English and maths (if not already held), completion of the AM2 practical assessment, a portfolio of evidence demonstrating on-the-job competence across the apprenticeship standard criteria, confirmation from your employer that you are ready for the EPA, and meeting the minimum 20% off-the-job training hours requirement. Your employer and training provider must agree that you are "at or above the level required" before the EPA can be booked. Elec-Mate helps you track all of these requirements and identify any gaps before you reach the gateway.',
+      'Before you can attempt the EPA, you must pass through the "gateway." The gateway requirements for the Installation Electrician / Maintenance Electrician standard typically include: completion of the Level 3 Diploma in Electrical Installation (or equivalent), achievement of Level 2 Functional Skills in English and maths (if not already held), completion of the AM2 practical assessment, a portfolio of evidence demonstrating on-the-job competence across the apprenticeship standard criteria, confirmation from your employer that you are ready for the EPA, and evidence of the minimum off-the-job training hours for your standard. Your employer and training provider must agree that you are "at or above the level required" before the EPA can be booked. Elec-Mate helps you track all of these requirements and identify any gaps before you reach the gateway.',
   },
   {
     question: 'How is the EPA graded?',
@@ -187,7 +188,7 @@ export default function EPAPreparationPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <GraduationCap className="w-4 h-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-elec-yellow">ST0215 EPA Preparation</span>
+            <span className="text-sm font-medium text-elec-yellow">ST0152 EPA Preparation</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             End Point Assessment
@@ -232,7 +233,7 @@ export default function EPAPreparationPage() {
             </p>
             <p>
               For the Installation Electrician / Maintenance Electrician apprenticeship standard
-              (ST0215), the EPA is designed to confirm that you have achieved the full range of
+              (ST0152), the EPA is designed to confirm that you have achieved the full range of
               knowledge, skills, and behaviours defined in the standard. It goes beyond testing
               individual qualifications (Level 3, AM2, 18th Edition) and assesses your overall
               occupational competence — your ability to apply everything you have learned in a
@@ -342,7 +343,7 @@ export default function EPAPreparationPage() {
                 </p>
                 <p>
                   Elec-Mate's knowledge test practice bank includes hundreds of questions covering
-                  the full ST0215 standard. Each question includes a detailed explanation of the
+                  the full ST0152 standard. Each question includes a detailed explanation of the
                   correct answer with regulation references, and timed mock tests help you build the
                   speed and confidence needed for the real assessment.
                 </p>
@@ -402,7 +403,7 @@ export default function EPAPreparationPage() {
             <p>
               The EPA is graded overall as Distinction, Pass, or Fail. The grading is determined by
               your performance across all three components, assessed against the criteria published
-              in the EPA assessment plan for the ST0215 standard.
+              in the EPA assessment plan for the ST0152 standard.
             </p>
             <p>
               <strong>Pass:</strong> To achieve a Pass, you must meet the required standard in all
@@ -475,9 +476,9 @@ export default function EPAPreparationPage() {
               },
               {
                 step: '5',
-                title: '20% Off-the-Job Training Hours',
+                title: 'Off-the-Job Training Hours',
                 description:
-                  'Documented evidence that you have met the minimum 20% off-the-job training requirement throughout your apprenticeship…',
+                  `Documented evidence that you have received at least the off-the-job hours for your standard (${OTJ_ST0152_HOURS} for ST0152 starts from August 2025)…`,
               },
               {
                 step: '6',
@@ -528,7 +529,7 @@ export default function EPAPreparationPage() {
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <Target className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
-              <p className="text-2xl font-bold text-white mb-1">ST0215</p>
+              <p className="text-2xl font-bold text-white mb-1">ST0152</p>
               <p className="text-sm text-white">Standard Aligned</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">

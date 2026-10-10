@@ -7,14 +7,7 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useJobPacks } from '@/hooks/useJobPacks';
-import {
-  Package,
-  MapPin,
-  FileText,
-  Plus,
-  CheckCircle,
-  AlertTriangle,
-} from 'lucide-react';
+import { Package, MapPin, FileText, Plus, CheckCircle, AlertTriangle } from 'lucide-react';
 import {
   FormCard,
   Field,
@@ -65,37 +58,37 @@ export function JobPackSelector({
     );
   }
 
+  // Every pack is listed. (The old filter compared against 'Completed', a status
+  // that doesn't exist, so it never removed anything.)
+  const choosable = jobPacks;
+
   return (
     <div className="space-y-3">
       {/* Job Pack Selector */}
-      <Field label="Select Job Pack">
+      <Field label="Job pack">
         <Select value={selectedJobPackId || ''} onValueChange={(value) => onSelect(value || null)}>
           <SelectTrigger className={selectTriggerClass}>
-            <SelectValue placeholder="Choose a job pack..." />
+            <SelectValue placeholder="Choose a job pack" />
           </SelectTrigger>
           <SelectContent className={selectContentClass}>
-            {jobPacks.length === 0 ? (
+            {choosable.length === 0 ? (
               <SelectItem value="none" disabled className="text-white">
-                No job packs available
+                No job packs yet
               </SelectItem>
             ) : (
-              jobPacks
-                .filter((jp) => jp.status !== 'Completed')
-                .map((jp) => (
-                  <SelectItem
-                    key={jp.id}
-                    value={jp.id}
-                    className="text-white focus:bg-white/[0.08] focus:text-white"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4 text-elec-yellow" />
-                      <span className="text-white">{jp.title}</span>
-                      {jp.status === 'In Progress' && (
-                        <Pill tone="emerald">Active</Pill>
-                      )}
-                    </div>
-                  </SelectItem>
-                ))
+              choosable.map((jp) => (
+                <SelectItem
+                  key={jp.id}
+                  value={jp.id}
+                  className="text-white focus:bg-white/[0.08] focus:text-white"
+                >
+                  <div className="flex items-center gap-2">
+                    <Package className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-white">{jp.title}</span>
+                    {jp.status === 'In Progress' && <Pill tone="emerald">Active</Pill>}
+                  </div>
+                </SelectItem>
+              ))
             )}
           </SelectContent>
         </Select>
@@ -105,7 +98,7 @@ export function JobPackSelector({
       {onCreateNew && (
         <SecondaryButton fullWidth onClick={onCreateNew}>
           <Plus className="h-4 w-4 mr-2" />
-          Create New Job Pack
+          New job pack
         </SecondaryButton>
       )}
 
@@ -152,9 +145,7 @@ export function JobPackSelector({
 
           {/* Document Status */}
           <div className="pt-3 border-t border-white/[0.06]">
-            <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white mb-2">
-              Document Status
-            </p>
+            <p className="mb-2 text-[12px] font-medium text-white">Documents</p>
             <div className="flex flex-wrap gap-2">
               {getDocumentStatus(selectedJobPack).map((status, idx) => (
                 <span
@@ -179,9 +170,7 @@ export function JobPackSelector({
           {/* Hazards if available */}
           {selectedJobPack.hazards && selectedJobPack.hazards.length > 0 && (
             <div className="pt-3 border-t border-white/[0.06]">
-              <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white mb-2">
-                Identified Hazards
-              </p>
+              <p className="mb-2 text-[12px] font-medium text-white">Hazards found</p>
               <div className="flex flex-wrap gap-1.5">
                 {selectedJobPack.hazards.slice(0, 5).map((hazard, idx) => (
                   <span

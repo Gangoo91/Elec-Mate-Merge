@@ -719,8 +719,8 @@ const PowerFactorCorrectionCalculator = () => {
                     <span
                       className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
                       style={{
-                        backgroundColor: `${config.gradientFrom}15`,
-                        border: `1px solid ${config.gradientFrom}30`,
+                        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
                         color: config.gradientFrom,
                       }}
                     >
@@ -840,7 +840,7 @@ const PowerFactorCorrectionCalculator = () => {
                 {result.warnings.length > 0 && (
                   <>
                     <CalculatorDivider category="power" />
-                    <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                    <div className="p-4 rounded-xl bg-white/[0.04] border border-orange-500/30">
                       <div className="flex items-start gap-3">
                         <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 shrink-0" />
                         <div className="space-y-1">

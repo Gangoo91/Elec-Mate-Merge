@@ -241,6 +241,33 @@ serve(async (req) => {
      * what makes the next page load show a "connect" button rather than
      * repeating the failure (same condition as JAVASCRIPT-REACT-H3).
      */
+    /*
+     * ELE-2065 §3A #6 — after paying a quote deposit, an Employer Hub firm's
+     * customer goes back to the quote page, which books the visit from the
+     * firm's crew diary onto the job made from the quote (get_quote_booking
+     * says 'firm'). Everyone else lands on /book/<user_id>?quote= as before.
+     */
+    let depositSuccessUrl: string | null = null;
+    if (invoice.deposit_for_quote && invoice.parent_quote_id && invoice.user_id) {
+      depositSuccessUrl = `${appUrl}/book/${invoice.user_id}?quote=${invoice.parent_quote_id}`;
+      try {
+        const { data: parent } = await supabaseAdmin
+          .from('quotes')
+          .select('public_token')
+          .eq('id', invoice.parent_quote_id)
+          .maybeSingle();
+        const token = (parent as { public_token?: string | null } | null)?.public_token;
+        if (token) {
+          const { data: mode } = await supabaseAdmin.rpc('get_quote_booking', { p_token: token });
+          if ((mode as { mode?: string } | null)?.mode === 'firm') {
+            depositSuccessUrl = `${appUrl}/quote/${encodeURIComponent(token)}?deposit=paid`;
+          }
+        }
+      } catch (e) {
+        console.error('Quote booking mode lookup failed (keeping /book):', e);
+      }
+    }
+
     let session;
     try {
       session = await stripe.checkout.sessions.create({
@@ -279,9 +306,8 @@ serve(async (req) => {
         // from the quote and links the booking back. For regular invoices,
         // fall back to the generic success page.
         success_url:
-          invoice.deposit_for_quote && invoice.parent_quote_id && invoice.user_id
-            ? `${appUrl}/book/${invoice.user_id}?quote=${invoice.parent_quote_id}`
-            : `${appUrl}/invoice-payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
+          depositSuccessUrl ??
+          `${appUrl}/invoice-payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
         // Back to the pay page — `/invoice/:id` was never a route, so a client
         // who pressed back on Stripe landed on nothing.
         cancel_url: `${payPageUrl}?cancelled=1`,

@@ -83,11 +83,9 @@ const CareerCourses = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Training & courses
-          </span>
+          <span className="text-[13px] font-semibold text-white">Training & courses</span>
           <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
             UK electrical career courses
           </h2>
@@ -106,9 +104,7 @@ const CareerCourses = () => {
             Location search
           </Button>
 
-          {(isLocationFiltered ||
-            selectedCategory !== 'All Categories' ||
-            showLocationSearch) && (
+          {(isLocationFiltered || selectedCategory !== 'All Categories' || showLocationSearch) && (
             <Button
               variant="outline"
               onClick={handleResetAll}
@@ -125,9 +121,7 @@ const CareerCourses = () => {
 
       {(isLocationFiltered || selectedCategory !== 'All Categories') && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Active filters
-          </span>
+          <span className="text-[13px] font-semibold text-white">Active filters</span>
           <div className="flex flex-wrap items-center gap-1.5">
             {isLocationFiltered && (
               <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
@@ -155,10 +149,8 @@ const CareerCourses = () => {
         />
       )}
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Filter by category
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Filter by category</span>
         <div className="flex flex-wrap gap-2">
           {courseCategories.map((category) => {
             const isActive = selectedCategory === category;
@@ -170,13 +162,13 @@ const CareerCourses = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={
                   isActive
-                    ? 'bg-elec-yellow text-black font-semibold h-9 touch-manipulation'
-                    : 'border-white/15 text-white hover:bg-white/[0.05] h-9 touch-manipulation'
+                    ? 'bg-elec-yellow text-black font-semibold h-11 touch-manipulation'
+                    : 'border-white/15 text-white hover:bg-white/[0.05] h-11 touch-manipulation'
                 }
               >
                 {category}
                 {category !== 'All Categories' && (
-                  <span className="ml-2 text-[11px] opacity-70">
+                  <span className="ml-2 text-[12.5px] opacity-70">
                     {enhancedCareerCourses.filter((c) => c.category === category).length}
                   </span>
                 )}

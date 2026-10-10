@@ -1,11 +1,15 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { GraduationCap } from 'lucide-react';
+import { useResolvedPath } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
-import { moduleProgress } from '@/lib/courseProgressMatch';
-import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY } from '@/components/ui/card-recipe';
-import { cn } from '@/lib/utils';
+import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
+import {
+  CourseRow,
+  orderOf,
+  startedUnder,
+  useIsNext,
+  useListItem,
+} from '@/components/study-centre/course-kit';
 
 interface ModuleCardProps {
   to: string;
@@ -26,6 +30,8 @@ interface ModuleCardProps {
    * see "Unit 304E", the code their tutor and their handbook use.
    */
   label?: string;
+  /** Replaces the whole eyebrow — e.g. "Reference" for the glossary card, which is not a module. */
+  eyebrow?: string;
 }
 
 /**
@@ -49,6 +55,7 @@ interface ModuleCardProps {
 export const ModuleCard: React.FC<ModuleCardProps> = ({
   to,
   moduleNumber,
+  eyebrow: eyebrowOverride,
   title,
   description,
   duration,
@@ -60,102 +67,60 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
   label = 'Module',
 }) => {
   const { allProgress } = useCourseProgress();
-  const location = useLocation();
+  // Exactly where the link goes. (The hand-rolled version dropped a path
+  // segment on nested routes — /level2/module1 + section1 became
+  // /level2/section1 — so Level 2 progress never showed.)
+  const resolvedPath = useResolvedPath(to).pathname;
 
-  const autoProgress = useMemo(() => {
-    if (!allProgress.length) return { completed: false, pct: 0 };
-
-    const basePath = location.pathname.replace(/\/[^/]*$/, '');
-    const resolvedPath = to.startsWith('../')
-      ? basePath.replace(/\/[^/]*$/, '') + '/' + to.replace('../', '')
-      : to.startsWith('/')
-        ? to
-        : basePath + '/' + to;
-
+  // Sections finished in this module. (The old "completed" flag went true as
+  // soon as ANY section was done, so a module looked finished after one.)
+  const doneCount = useMemo(() => {
+    if (!allProgress.length) return 0;
     // Canonical matcher tolerates every historical key format (ELE-1045).
-    return moduleProgress(allProgress, resolvedPath);
-  }, [allProgress, to, location.pathname]);
+    return completedSectionsForCourse(allProgress, resolvedPath);
+  }, [allProgress, resolvedPath]);
 
-  const isCompleted = isCompletedProp || autoProgress.completed;
-  const progress =
-    progressProp ?? (autoProgress.pct > 0 && autoProgress.pct < 100 ? autoProgress.pct : undefined);
-
-  const ModuleIcon = isExam ? GraduationCap : Icon;
-  const eyebrow = isExam ? 'Final assessment' : `${label} ${moduleNumber}`;
-
-  // On the volt face everything sits in black; on the neutral face, white.
-  const ink = isExam ? 'text-black' : 'text-white';
-  const hasProgress = isCompleted || (progress !== undefined && progress > 0);
+  // Opened at all (a page visit is recorded at 50%, never "complete").
+  const visited = useMemo(
+    () => startedUnder(allProgress, resolvedPath),
+    [allProgress, resolvedPath]
+  );
+  const eyebrow = eyebrowOverride ?? (isExam ? 'Final assessment' : `${label} ${moduleNumber}`);
+  useListItem({
+    key: to,
+    to,
+    order: isExam ? 999 : orderOf(moduleNumber),
+    label: eyebrow,
+    title,
+    done: isCompletedProp,
+    doneCount,
+    started: visited,
+    // The final assessment isn't a module of study: not in "2 of 8 started".
+    tracked: !isExam,
+  });
+  const isNext = useIsNext(to);
+  void progressProp;
 
   return (
-    <Link
+    <CourseRow
       to={to}
-      className={cn(
-        CARD_BASE,
-        isExam ? CARD_PRIMARY : CARD_NEUTRAL,
-        'relative overflow-hidden px-4 py-3.5 sm:p-5 lg:hover:-translate-y-0.5'
-      )}
-    >
-      {/* A 1px volt line, not a volt surface — the same treatment HubKpi uses.
-          A translucent volt FILL goes muddy brown on this ground; a hairline
-          stays yellow because there is nothing behind it to muddy. */}
-      <span
-        aria-hidden
-        className={cn(
-          'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
-          isExam ? 'via-black/30' : hasProgress ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
-        )}
-      />
-
-      <span
-        className={cn(
-          'flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em]',
-          isExam ? 'text-black/80' : 'text-white'
-        )}
-      >
-        <ModuleIcon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />
-        {eyebrow}
-        {duration && (
-          <>
-            <span
-              className={cn('h-2.5 w-px', isExam ? 'bg-black/25' : 'bg-white/20')}
-              aria-hidden
-            />
-            {duration}
-          </>
-        )}
-      </span>
-
-      <span className={cn('mt-1.5 text-[15px] font-semibold leading-tight tracking-tight', ink)}>
-        {title}
-      </span>
-
-      {description && (
-        <span
-          className={cn(
-            'mt-1.5 line-clamp-2 text-[12.5px] leading-snug',
-            isExam ? 'text-black/70' : 'text-white'
-          )}
-        >
-          {description}
-        </span>
-      )}
-
-      <span className="mt-3 flex items-center justify-between gap-2 text-[11.5px]">
-        <span className={cn(isExam ? 'text-black/70' : 'text-white')}>
-          {isCompleted ? 'Completed' : progress !== undefined ? `${progress}% done` : 'Not started'}
-        </span>
-        {/* Volt only where there is progress — an accent on every card means nothing. */}
-        <span
-          className={cn(
-            'font-semibold tabular-nums',
-            isExam ? 'text-black' : hasProgress ? 'text-elec-yellow' : 'text-white'
-          )}
-        >
-          {isCompleted ? 'Review' : isExam ? 'Open exam' : 'Open'}
-        </span>
-      </span>
-    </Link>
+      number={String(moduleNumber)}
+      icon={Icon}
+      eyebrow={duration ? `${eyebrow} · ${duration}` : eyebrow}
+      title={title}
+      description={description}
+      status={
+        isCompletedProp
+          ? 'Done'
+          : doneCount > 0
+            ? `${doneCount} ${doneCount === 1 ? 'section' : 'sections'} done`
+            : undefined
+      }
+      done={isCompletedProp}
+      started={doneCount > 0 || visited}
+      next={isNext && (doneCount > 0 || visited)}
+      exam={isExam}
+    />
   );
 };
 

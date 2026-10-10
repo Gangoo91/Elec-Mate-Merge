@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What is an AFDD and does BS 7671 require them?',
     answer:
-      'An Arc Fault Detection Device (AFDD) is a protective device that detects the electrical signatures of arc faults — abnormal electrical discharges that can occur in damaged, corroded, or deteriorating wiring and connections. Unlike RCDs (which detect earth leakage currents) and MCBs (which detect overcurrent), AFDDs detect the specific waveform characteristics of arcing faults that do not cause sufficient current to trip a standard protective device. BS 7671 (18th Edition) recommends the use of AFDDs for certain locations — specifically bedroom circuits in single-family dwellings, and in locations where a fire could have serious consequences. However, as of BS 7671:2018+A4:2026, AFDDs are recommended but not mandatory for most domestic installations in the UK. They are mandatory in some other European countries. Despite not being mandatory, AFDDs are increasingly specified for bedroom circuits as part of comprehensive fire protection.',
+      'An Arc Fault Detection Device (AFDD) is a protective device that detects the electrical signatures of arc faults — abnormal electrical discharges that can occur in damaged, corroded, or deteriorating wiring and connections. Unlike RCDs (which detect earth leakage currents) and MCBs (which detect overcurrent), AFDDs detect the specific waveform characteristics of arcing faults that do not cause sufficient current to trip a standard protective device. Under BS 7671:2018+A4:2026, Regulation 421.1.7 requires them on single-phase socket-outlet circuits up to 32 A in high rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes (since A2:2022), and recommends them elsewhere. So in an ordinary owner-occupied home they are recommended rather than mandatory, but in an HMO, care home, student block or high rise residential building they are required. Many electricians now fit them in ordinary homes too as part of comprehensive fire protection.',
   },
   {
     question: 'Why are metal consumer units required in dwellings?',
@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/afdd-arc-fault-detection',
     title: 'AFDD Guide',
-    description: 'Full guide to arc fault detection devices — how they work and where to install them.',
+    description:
+      'Full guide to arc fault detection devices — how they work and where to install them.',
     icon: Zap,
     category: 'Guide',
   },
@@ -140,10 +141,10 @@ const sections = [
       <>
         <p>
           Electrical fires are one of the leading causes of accidental house fires in the United
-          Kingdom. UK fire and rescue service data shows approximately 20,000 electrical fires
-          in dwellings each year, accounting for around 50% of all accidental house fires. These
-          fires cause a significant number of deaths, injuries, and billions of pounds of property
-          damage annually.
+          Kingdom. UK fire and rescue service data shows approximately 20,000 electrical fires in
+          dwellings each year, accounting for around 50% of all accidental house fires. These fires
+          cause a significant number of deaths, injuries, and billions of pounds of property damage
+          annually.
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 text-centre">
@@ -162,14 +163,14 @@ const sections = [
         <p>
           The risk is not evenly distributed across all properties. Older properties with
           deteriorating wiring, properties with overloaded circuits and extension leads, and
-          properties with plastic consumer units and no RCD protection are at significantly
-          higher risk. Properties with modern installations, metal consumer units, RCD protection,
-          and appropriate smoke and heat detection are much safer.
+          properties with plastic consumer units and no RCD protection are at significantly higher
+          risk. Properties with modern installations, metal consumer units, RCD protection, and
+          appropriate smoke and heat detection are much safer.
         </p>
         <p>
-          For electricians, understanding the causes of electrical fires and the protective
-          measures available is essential — both for advising customers and for ensuring that
-          installed work does not contribute to the problem.
+          For electricians, understanding the causes of electrical fires and the protective measures
+          available is essential — both for advising customers and for ensuring that installed work
+          does not contribute to the problem.
         </p>
       </>
     ),
@@ -182,7 +183,8 @@ const sections = [
         <p>
           The majority of electrical fires fall into three categories: faulty wiring, faulty or
           misused appliances, and poor installation workmanship. Understanding these causes helps
-          electricians identify and remediate risks during EICR inspections and new installation work.
+          electricians identify and remediate risks during EICR inspections and new installation
+          work.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -192,9 +194,9 @@ const sections = [
                 <strong>Deteriorating wiring and connections</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   Old rubber-insulated wiring (pre-1960s) becomes brittle and cracks, exposing
-                  conductors that can arc against each other or against earthed metalwork.
-                  Loose connections at socket outlets, switches, light fittings, and the consumer
-                  unit cause resistance heating and arcing. These faults are a leading cause of
+                  conductors that can arc against each other or against earthed metalwork. Loose
+                  connections at socket outlets, switches, light fittings, and the consumer unit
+                  cause resistance heating and arcing. These faults are a leading cause of
                   electrical fires in older properties.
                 </p>
               </div>
@@ -220,7 +222,8 @@ const sections = [
                   connections, or degraded insulation. Arcing generates extremely high temperatures
                   (over 6,000°C) that can ignite surrounding materials — including plastic cable
                   insulation and timber joists — even when the arc current is too low to trip a
-                  standard MCB. AFDDs are specifically designed to detect and interrupt these faults.
+                  standard MCB. AFDDs are specifically designed to detect and interrupt these
+                  faults.
                 </p>
               </div>
             </li>
@@ -229,8 +232,8 @@ const sections = [
               <div>
                 <strong>Poor workmanship</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  Incorrectly rated fuses, undersized cables, joints made in ceiling voids or
-                  wall cavities without a junction box, and cables damaged during installation
+                  Incorrectly rated fuses, undersized cables, joints made in ceiling voids or wall
+                  cavities without a junction box, and cables damaged during installation
                   (penetrated by nails or screws) are all workmanship issues that can cause fires
                   years after the installation was completed.
                 </p>
@@ -247,15 +250,15 @@ const sections = [
     content: (
       <>
         <p>
-          Arc Fault Detection Devices (AFDDs) detect the electrical signatures of arcing faults
-          — abnormal electrical discharges that can develop in damaged or deteriorating wiring and
+          Arc Fault Detection Devices (AFDDs) detect the electrical signatures of arcing faults —
+          abnormal electrical discharges that can develop in damaged or deteriorating wiring and
           connections. AFDDs continuously monitor the current waveform in a circuit and use
           algorithms to distinguish between the normal current waveform of household loads and the
           irregular waveform characteristic of an arc fault.
         </p>
         <p>
-          BS 7671 (18th Edition) addresses the use of AFDDs. It recommends
-          that AFDDs should be provided in specific circumstances:
+          BS 7671 (18th Edition) addresses the use of AFDDs. It recommends that AFDDs should be
+          provided in specific circumstances:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -273,7 +276,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Circuits supplying combustible materials (e.g. cable runs through timber-framed structures)</span>
+              <span>
+                Circuits supplying combustible materials (e.g. cable runs through timber-framed
+                structures)
+              </span>
             </li>
           </ul>
         </div>
@@ -281,22 +287,22 @@ const sections = [
           <AlertTriangle className="w-6 h-6 text-elec-yellow shrink-0 mt-0.5" />
           <div>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Recommended, not mandated (in most cases):</strong> As of BS 7671:2018+A4:2026,
-              AFDDs are recommended but not mandatory for most domestic installations in England and
-              Wales. They are mandatory in some European countries. BS 7671 recommends
-              that AFDDs should be considered and specified where the risk assessment
-              indicates they would provide meaningful additional protection. Electricians should
-              discuss AFDD options with customers during consumer unit replacements and new
-              installations.
+              <strong>Required in some premises, recommended elsewhere:</strong> Under BS
+              7671:2018+A4:2026, Regulation 421.1.7 requires AFDDs on single-phase socket-outlet
+              circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student
+              accommodation and care homes (a requirement since A2:2022). In all other premises,
+              including an ordinary owner-occupied home, they are recommended on those circuits.
+              Electricians should discuss AFDD options with customers during consumer unit
+              replacements and new installations.
             </p>
           </div>
         </div>
         <p>
-          AFDDs are combined with MCBs in a single unit (AFDD+MCB) and replace standard MCBs
-          on the ways they protect. They are currently more expensive than standard MCBs (typically
-          £30 to £60 per way) but prices have reduced significantly and continue to fall. For
-          bedroom circuits — where occupants are asleep and less likely to detect the early signs
-          of a fire — the additional cost is a reasonable investment in safety.
+          AFDDs are combined with MCBs in a single unit (AFDD+MCB) and replace standard MCBs on the
+          ways they protect. They are currently more expensive than standard MCBs (typically £30 to
+          £60 per way) but prices have reduced significantly and continue to fall. For bedroom
+          circuits — where occupants are asleep and less likely to detect the early signs of a fire
+          — the additional cost is a reasonable investment in safety.
         </p>
       </>
     ),
@@ -308,13 +314,15 @@ const sections = [
       <>
         <p>
           Smoke and heat detectors provide the earliest warning of an electrical fire, giving
-          occupants time to escape and contact the fire brigade before the fire spreads. The type
-          of detector and its location are important — the wrong type in the wrong location provides
+          occupants time to escape and contact the fire brigade before the fire spreads. The type of
+          detector and its location are important — the wrong type in the wrong location provides
           false security and nuisance alarms.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Optical (Photoelectric) Smoke Alarm</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Optical (Photoelectric) Smoke Alarm
+            </h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               Detects smoke particles by measuring light scattering. More sensitive to slow-burning,
               smouldering fires — the type of fire commonly associated with electrical faults in
@@ -327,9 +335,8 @@ const sections = [
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Ionisation Smoke Alarm</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
-              More sensitive to fast-flaming fires. Can give nuisance alarms from cooking and
-              toast. Less effective at detecting slow-burning electrical fires in their early
-              stages.
+              More sensitive to fast-flaming fires. Can give nuisance alarms from cooking and toast.
+              Less effective at detecting slow-burning electrical fires in their early stages.
             </p>
             <div className="text-white text-sm font-semibold">Best locations:</div>
             <p className="text-white text-sm">
@@ -343,26 +350,27 @@ const sections = [
               <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat alarm for kitchens</strong> — a heat alarm (detects rapid temperature
-                rise) rather than a smoke alarm is required in kitchens where cooking fumes and steam
-                would trigger nuisance alarms from a smoke detector. Heat alarms are slower to activate
-                than smoke alarms but are appropriate for high-humidity, high-fume environments.
+                rise) rather than a smoke alarm is required in kitchens where cooking fumes and
+                steam would trigger nuisance alarms from a smoke detector. Heat alarms are slower to
+                activate than smoke alarms but are appropriate for high-humidity, high-fume
+                environments.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Interlinked alarms</strong> — BS 5839-6 recommends interlinked alarms
-                (wired or wireless) so that when one alarm activates, all alarms in the property
-                sound. This ensures occupants in remote rooms are alerted. Interlinked systems
-                are required in new dwellings under Building Regulations Approved Document B.
+                <strong>Interlinked alarms</strong> — BS 5839-6 recommends interlinked alarms (wired
+                or wireless) so that when one alarm activates, all alarms in the property sound.
+                This ensures occupants in remote rooms are alerted. Interlinked systems are required
+                in new dwellings under Building Regulations Approved Document B.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon monoxide alarms</strong> — not directly related to electrical fires,
-                but BS 7671 encourages electricians to recommend CO alarms in properties with gas
-                or oil appliances. Many modern combination smoke/CO alarm units are available.
+                but BS 7671 encourages electricians to recommend CO alarms in properties with gas or
+                oil appliances. Many modern combination smoke/CO alarm units are available.
               </span>
             </li>
           </ul>
@@ -381,32 +389,32 @@ const sections = [
           and the concentration of circuits in one location increases the risk.
         </p>
         <p>
-          Amendment 4 to BS 7671 (2015) introduced the requirement that consumer units in
-          domestic premises must have a metal enclosure. This requirement exists because plastic
-          consumer units, when subjected to an internal arc fault, can ignite — and the plastic
-          enclosure then becomes fuel for the fire. A metal enclosure contains the arc and any
-          combustion products within the enclosure, giving the protective devices time to operate
-          and preventing fire spread.
+          Amendment 4 to BS 7671 (2015) introduced the requirement that consumer units in domestic
+          premises must have a metal enclosure. This requirement exists because plastic consumer
+          units, when subjected to an internal arc fault, can ignite — and the plastic enclosure
+          then becomes fuel for the fire. A metal enclosure contains the arc and any combustion
+          products within the enclosure, giving the protective devices time to operate and
+          preventing fire spread.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>New consumer units must be metal</strong> — any consumer unit installed
-                as a new installation or as a replacement in a domestic dwelling must have a metal
-                (or other non-combustible) enclosure. This applies to both the main consumer unit
-                and any sub-distribution board in a dwelling.
+                <strong>New consumer units must be metal</strong> — any consumer unit installed as a
+                new installation or as a replacement in a domestic dwelling must have a metal (or
+                other non-combustible) enclosure. This applies to both the main consumer unit and
+                any sub-distribution board in a dwelling.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing plastic units</strong> — properties with plastic consumer units
-                installed before 2015 are not required to replace them immediately. However, if
-                the EICR reveals that the installation is due for a consumer unit replacement for
-                other reasons (overloaded, no RCD protection, insufficient ways), the new unit
-                must be metal.
+                installed before 2015 are not required to replace them immediately. However, if the
+                EICR reveals that the installation is due for a consumer unit replacement for other
+                reasons (overloaded, no RCD protection, insufficient ways), the new unit must be
+                metal.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,17 +444,17 @@ const sections = [
       <>
         <p>
           Homeowners and electricians should be aware of the warning signs that indicate dangerous
-          or deteriorating electrical wiring. Early identification of these signs can prevent
-          an electrical fire.
+          or deteriorating electrical wiring. Early identification of these signs can prevent an
+          electrical fire.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scorch marks around socket outlets or switches</strong> — discolouration
-                or scorch marks indicate that arcing has already occurred at that point. This
-                is a serious warning sign requiring immediate investigation and remediation.
+                <strong>Scorch marks around socket outlets or switches</strong> — discolouration or
+                scorch marks indicate that arcing has already occurred at that point. This is a
+                serious warning sign requiring immediate investigation and remediation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,8 +485,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Frequent circuit breaker trips</strong> — a circuit that frequently trips
-                without an obvious cause (such as a known high-load appliance) is overloaded or
-                has a developing fault. Resetting a frequently tripping breaker without investigating
+                without an obvious cause (such as a known high-load appliance) is overloaded or has
+                a developing fault. Resetting a frequently tripping breaker without investigating
                 the cause is dangerous.
               </span>
             </li>
@@ -487,9 +495,9 @@ const sections = [
               <span>
                 <strong>Old wiring types</strong> — rubber-insulated wiring (black rubber outer
                 sheath, pre-1960s), aluminium wiring (1960s to 1970s), and lead-sheathed wiring
-                (pre-WWII) are all significantly past their design life and represent a serious
-                fire risk. Any property with these wiring types should have an EICR and
-                prioritise rewiring.
+                (pre-WWII) are all significantly past their design life and represent a serious fire
+                risk. Any property with these wiring types should have an EICR and prioritise
+                rewiring.
               </span>
             </li>
           </ul>
@@ -503,48 +511,53 @@ const sections = [
     content: (
       <>
         <p>
-          An Electrical Installation Condition Report (EICR) is the most systematic way to
-          identify electrical fire risks in an existing installation. The EICR assesses the
-          condition of the fixed electrical installation — wiring, accessories, consumer unit,
-          and earthing — and identifies deficiencies that could lead to fire or electric shock.
+          An Electrical Installation Condition Report (EICR) is the most systematic way to identify
+          electrical fire risks in an existing installation. The EICR assesses the condition of the
+          fixed electrical installation — wiring, accessories, consumer unit, and earthing — and
+          identifies deficiencies that could lead to fire or electric shock.
         </p>
-        <p>
-          Deficiencies are classified as:
-        </p>
+        <p>Deficiencies are classified as:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="bg-red-500 text-white text-xs font-bold rounded px-2 py-1 shrink-0">C1</span>
+              <span className="bg-red-500 text-white text-xs font-bold rounded px-2 py-1 shrink-0">
+                C1
+              </span>
               <span>
-                <strong>Danger present</strong> — risk of injury. Immediate remedial action required.
-                The circuit or equipment presenting the danger should be disconnected until remediated.
+                <strong>Danger present</strong> — risk of injury. Immediate remedial action
+                required. The circuit or equipment presenting the danger should be disconnected
+                until remediated.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="bg-orange-500 text-white text-xs font-bold rounded px-2 py-1 shrink-0">C2</span>
+              <span className="bg-orange-500 text-white text-xs font-bold rounded px-2 py-1 shrink-0">
+                C2
+              </span>
               <span>
                 <strong>Potentially dangerous</strong> — urgent remedial action required. Not
-                immediately dangerous but could become so. Remediation should be completed as
-                soon as possible.
+                immediately dangerous but could become so. Remediation should be completed as soon
+                as possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="bg-yellow-500 text-black text-xs font-bold rounded px-2 py-1 shrink-0">C3</span>
+              <span className="bg-yellow-500 text-black text-xs font-bold rounded px-2 py-1 shrink-0">
+                C3
+              </span>
               <span>
-                <strong>Improvement recommended</strong> — not immediately dangerous but
-                improvement would enhance safety. Typically for installations that do not meet
-                current standards but are not inherently unsafe.
+                <strong>Improvement recommended</strong> — not immediately dangerous but improvement
+                would enhance safety. Typically for installations that do not meet current standards
+                but are not inherently unsafe.
               </span>
             </li>
           </ul>
         </div>
         <p>
           An EICR that reveals C1 or C2 deficiencies — such as deteriorating wiring, no earth
-          bonding, or inadequate RCD protection — must be addressed promptly. An installation
-          with known deficiencies and no remedial action taken represents a serious and preventable
-          fire risk. Use the{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICR certificate app</SEOInternalLink>{' '}
-          to complete condition reports on site and provide customers with a clear, professional
+          bonding, or inadequate RCD protection — must be addressed promptly. An installation with
+          known deficiencies and no remedial action taken represents a serious and preventable fire
+          risk. Use the{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">EICR certificate app</SEOInternalLink> to
+          complete condition reports on site and provide customers with a clear, professional
           assessment of their installation's safety.
         </p>
       </>
@@ -572,8 +585,8 @@ const sections = [
                     Electrical Installation Condition Reports
                   </SEOInternalLink>{' '}
                   on your phone. AI-assisted inspection guidance, code classification, and instant
-                  PDF for the homeowner. Every EICR is an opportunity to identify and address
-                  fire risks.
+                  PDF for the homeowner. Every EICR is an opportunity to identify and address fire
+                  risks.
                 </p>
               </div>
             </div>
@@ -585,8 +598,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC for Consumer Unit Upgrades</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Consumer unit replacements (to metal enclosures with RCD protection and AFDDs)
-                  require an{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>.{' '}
+                  require an <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>.{' '}
                   Complete it on site with AI board scanning and send the PDF to the homeowner
                   immediately.
                 </p>
@@ -609,7 +621,7 @@ export default function ElectricalFirePreventionPage() {
       title="Electrical Fire Prevention UK: AFDD Guide"
       description="Complete guide to electrical fire prevention in UK homes. UK statistics (~20,000 electrical fires/year), arc fault detection devices (AFDDs)."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fire Safety Guide"

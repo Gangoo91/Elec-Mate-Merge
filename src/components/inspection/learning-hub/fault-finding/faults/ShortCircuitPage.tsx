@@ -20,14 +20,14 @@ const ShortCircuitPage = ({ onBack }: Props) => (
       {/* What is it */}
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
+          <p className="text-[12px] font-medium text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">A short circuit is a direct, low-impedance connection between two live conductors (usually line and neutral). This creates an extremely high fault current — potentially thousands of amps — that should trip the protective device instantaneously. The fault current is limited only by the supply impedance and the resistance of the conductors to the fault point.</p>
         </div>
       </motion.div>
 
       {/* Symptoms */}
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <p className="text-[12px] font-medium text-white mb-3">Symptoms</p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['MCB trips immediately on reset — cannot hold in the ON position', 'Fuse blows instantly when replaced', 'Audible bang, flash, or arc at the moment of fault', 'Burning smell — charred insulation at the fault point', 'Visible damage: melted cable, blackened terminals, arc marks', 'Zero or very low insulation resistance between L and N (0Ω = dead short)'].map((s, i) => (
@@ -42,7 +42,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
 
       {/* Common causes */}
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
+        <p className="text-[12px] font-medium text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -65,7 +65,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
 
       {/* How to diagnose */}
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
+        <p className="text-[12px] font-medium text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {[
@@ -91,7 +91,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
       {/* Real-world case */}
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
+          <p className="text-[12px] font-medium text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Bedroom Socket Circuit — Shelf Installation</p>
           <p className="text-sm text-white">Client installed floating shelves in the bedroom. 32A ring circuit MCB tripped and will not reset.</p>
           <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
@@ -108,7 +108,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
       {/* Regulations */}
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-2">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Regulations</p>
+          <p className="text-[12px] font-medium text-white">Regulations</p>
           <div className="space-y-1.5">
             {[
               'Reg 434 — Protection against fault current. Protective devices must disconnect within the time required to prevent conductor damage.',

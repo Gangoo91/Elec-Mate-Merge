@@ -86,12 +86,16 @@ async function getElecIdData(userId: string): Promise<ProfileDataResult | null> 
     return null;
   }
 
-  // Get additional profile data (name, email from profiles table)
+  // Name from profiles. profiles has no email or phone column (asking for them
+  // failed the whole read, so the name never filled); the email comes from the
+  // signed-in account when it is the same person.
   const { data: userProfile } = await supabase
     .from('profiles')
-    .select('full_name, email, phone')
+    .select('full_name')
     .eq('id', userId)
-    .single();
+    .maybeSingle();
+  const { data: authData } = await supabase.auth.getUser();
+  const ownEmail = authData?.user?.id === userId ? (authData.user.email ?? '') : '';
 
   return {
     source: 'elec_id',
@@ -107,8 +111,8 @@ async function getElecIdData(userId: string): Promise<ProfileDataResult | null> 
     elecIdNumber: elecIdProfile.elec_id_number,
     data: {
       name: userProfile?.full_name || '',
-      email: userProfile?.email || '',
-      phone: userProfile?.phone || '',
+      email: ownEmail,
+      phone: '',
       company: '', // Elec-ID doesn't store company info directly
       companyAddress: '',
       companyPhone: '',
@@ -181,13 +185,15 @@ function mapInspectorProfile(profile: any): ProfileDataResult {
 async function getAccountData(userId: string): Promise<ProfileDataResult | null> {
   const { data: profile, error } = await supabase
     .from('profiles')
-    .select('*')
+    .select('full_name')
     .eq('id', userId)
-    .single();
+    .maybeSingle();
 
   if (error || !profile) {
     return null;
   }
+  const { data: authData } = await supabase.auth.getUser();
+  const accountEmail = authData?.user?.id === userId ? (authData.user.email ?? '') : '';
 
   return {
     source: 'account',
@@ -195,8 +201,8 @@ async function getAccountData(userId: string): Promise<ProfileDataResult | null>
     isVerified: false,
     data: {
       name: profile.full_name || '',
-      email: profile.email || '',
-      phone: profile.phone || '',
+      email: accountEmail,
+      phone: '',
       company: '',
       companyAddress: '',
       companyPhone: '',

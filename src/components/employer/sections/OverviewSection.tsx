@@ -27,9 +27,25 @@ import { FirstJobGuide, type FirstJobStage } from '@/components/employer/overvie
 import { supabase } from '@/integrations/supabase/client';
 import type { Job } from '@/services/jobService';
 import { useEmployerHome, type EmployerHome } from '@/hooks/useEmployerHome';
+import { useFirmJobsDoneToday } from '@/hooks/useJobDone';
 import { useKitAttention } from '@/hooks/useKit';
 import { buildKitTodo } from '@/components/employer/kit/kitTodo';
 import { useFirmRenewals, certLabel, type FirmRenewal } from '@/hooks/useFirmRecurring';
+import { useTenderMatches } from '@/hooks/useTenderMatches';
+import { buildTenderTodo } from '@/components/employer/tenders/tenderTodo';
+import { buildCourseTodo, ASSIGN_COURSE_SECTION } from '@/components/employer/overview/courseTodo';
+import { buildSignoffTodo } from '@/components/employer/overview/safetySignoffTodo';
+import { useFirmSignoffAttention } from '@/hooks/useFirmSignoffAttention';
+import { useTeamCourseAssignments } from '@/hooks/useCourseAssignments';
+import { useComplianceDocuments } from '@/hooks/useComplianceDocuments';
+import { buildComplianceTodo } from '@/components/employer/overview/complianceTodo';
+import { buildPartPTodo } from '@/components/employer/overview/partPTodo';
+import { useFirmPartP } from '@/hooks/useFirmPartP';
+import { buildWonQuoteTodo } from '@/components/employer/overview/wonQuoteTodo';
+import { useWonQuotesWithoutJob } from '@/hooks/useWonQuotesWithoutJob';
+import { buildEnquiryTodo } from '@/components/employer/overview/enquiryTodo';
+import { useFrontDoorCounts } from '@/hooks/useFrontDoor';
+import { AssignCourseSheet, type AssignCoursePerson } from '@/components/employer/AssignCourseSheet';
 import { OverviewClientMessages } from '@/components/employer/client-portal/OverviewClientMessages';
 import { HubAreas } from '@/components/employer/overview/HubAreas';
 import { buildHubAreas } from '@/components/employer/overview/hubAreasModel';
@@ -37,6 +53,7 @@ import { useClientMessageInbox } from '@/hooks/useCustomerPortal';
 import { copyToClipboard } from '@/utils/clipboard';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { BringDataAcrossEntry } from '@/components/employer/settings/import/BringDataAcrossEntry';
 import {
   HomeHero,
   HeroButton,
@@ -491,7 +508,14 @@ function buildRenewalTodo(list?: FirmRenewal[]): (HomeTodo & { hero: string })[]
 export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: OverviewSectionProps) {
   const [, setSearchParams] = useSearchParams();
   const { toast } = useToast();
-  const { data: h, isLoading, error, refetch, isFetching } = useEmployerHome();
+  const { data: home, isLoading, error, refetch, isFetching } = useEmployerHome();
+  // ELE-2094: enquiries to reply to come from the one front door (enquiries,
+  // older leads and online bookings), not the old Leads table alone.
+  const { data: door } = useFrontDoorCounts(!!home);
+  const h = useMemo(
+    () => (home && door ? { ...home, grow: { ...home.grow, new_leads: door.to_reply } } : home),
+    [home, door]
+  );
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(() => readFlag(SHARED_KEY));
   const [setupHidden, setSetupHidden] = useState(() => readFlag(SETUP_HIDDEN_KEY));
@@ -515,21 +539,72 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
     else setFirstJob({ stage: 'job', job: null });
   };
 
-  const go = (section: string, params?: Params) =>
-    params ? setSearchParams({ section, ...params }) : onNavigate(section as Section);
+  // ELE-1834: "Assign" on an expiring-ticket row opens the assign sheet here.
+  const [assignCourse, setAssignCourse] = useState<{
+    person: AssignCoursePerson;
+    course: string;
+    reason: string;
+  } | null>(null);
+  const go = (section: string, params?: Params) => {
+    if (section === ASSIGN_COURSE_SECTION) {
+      if (params?.member)
+        setAssignCourse({
+          person: { id: params.member, name: params.name || 'them' },
+          course: params.course ?? '',
+          reason: params.reason ?? '',
+        });
+      return;
+    }
+    if (params) setSearchParams({ section, ...params });
+    else onNavigate(section as Section);
+  };
 
   // Kit register and van stock rows (ELE-1829) come from their own RPC.
   const { data: kitAttention } = useKitAttention(h?.firm.id);
+  // ELE-2068: jobs the crew finished on site today, and the invoices they left ready.
+  const { data: doneToday } = useFirmJobsDoneToday(h?.firm.id);
   // Certificate re-tests due within 14 days and not yet booked (ELE-1821).
   const { data: renewals } = useFirmRenewals(14);
+  // New public tenders that fit what the firm bids for (ELE-1994).
+  const { data: tenderMatches } = useTenderMatches();
+  // Assigned learning: overdue courses, and the course fix for expiring tickets.
+  const { data: courseAssignments } = useTeamCourseAssignments(!!h);
+  // Toolbox talks and policies people have not signed; policy reviews (ELE-1944/1946).
+  const { data: signoffAttention } = useFirmSignoffAttention(h?.firm.id);
+  // Compliance register renewals within 30 days (ELE-1985); same cache as the register.
+  const { data: complianceDocs } = useComplianceDocuments();
+  // Part P notifications due on the firm's job certificates (ELE-2084).
+  const { data: partPRows } = useFirmPartP(null, !!h);
+  // ELE-2065: accepted quotes with no firm job yet.
+  const { data: wonNoJob } = useWonQuotesWithoutJob(!!h);
   const todo = useMemo(
     () =>
       h
-        ? [...buildTodo(h), ...buildKitTodo(kitAttention, h.today), ...buildRenewalTodo(renewals)].sort(
-            (p, q) => p.rank - q.rank
-          )
+        ? [
+            ...buildTodo(h),
+            ...buildKitTodo(kitAttention, h.today),
+            ...buildRenewalTodo(renewals),
+            ...buildTenderTodo(tenderMatches),
+            ...buildCourseTodo(courseAssignments, h.expiring.credential_items, h.today),
+            ...buildSignoffTodo(signoffAttention, h.today),
+            ...buildComplianceTodo(complianceDocs, h.today),
+            ...buildPartPTodo(partPRows, h.today),
+            ...buildWonQuoteTodo(wonNoJob),
+            ...buildEnquiryTodo(door),
+          ].sort((p, q) => p.rank - q.rank)
         : [],
-    [h, kitAttention, renewals]
+    [
+      h,
+      kitAttention,
+      renewals,
+      tenderMatches,
+      courseAssignments,
+      complianceDocs,
+      signoffAttention,
+      partPRows,
+      wonNoJob,
+      door,
+    ]
   );
 
   const quoteUrl = h?.grow.slug ? `https://elec-mate.com/q/${h.grow.slug}` : null;
@@ -580,7 +655,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
 
   if (isLoading || (!h && !error)) {
     return (
-      <div className="mx-auto max-w-7xl pt-6 pb-24">
+      <div className="mx-auto max-w-[1600px] pt-6 pb-24">
         <LoadingBlocks />
       </div>
     );
@@ -588,7 +663,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
 
   if (!h) {
     return (
-      <div className="mx-auto max-w-7xl pt-8 pb-24 space-y-4">
+      <div className="mx-auto max-w-[1600px] pt-8 pb-24 space-y-4">
         <h1 className="text-[28px] font-semibold tracking-tight text-white">Couldn&apos;t load your briefing</h1>
         <p className="text-[14px] text-white">{(error as Error)?.message ?? 'Something went wrong.'}</p>
         <button
@@ -656,7 +731,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
     {
       key: 'share',
       label: 'Share your quote page',
-      sub: 'Customers ask for quotes straight into your Leads',
+      sub: 'Customers ask for quotes straight into your Enquiries',
       done: st.quote_page_lead || shared,
       action: 'Share',
       onGo: () => (quoteUrl ? void shareLink() : go('quotepage')),
@@ -690,6 +765,10 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
     if (onLeave.length > 0)
       summaryParts.push(
         onLeave.length === 1 ? `${firstName(onLeave[0].name)} is on leave.` : `${onLeave.length} on leave.`
+      );
+    if (doneToday && doneToday.finished_today > 0)
+      summaryParts.push(
+        `${plural(doneToday.finished_today, 'job')} finished today${doneToday.invoices_ready ? `, ${plural(doneToday.invoices_ready, 'invoice')} ready` : ''}.`
       );
     if (h.jobs.starting_week_count > 0)
       summaryParts.push(`${plural(h.jobs.starting_week_count, 'more job')} start this week.`);
@@ -732,24 +811,33 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
       onOpen: p.job_id ? () => go('jobs', { job: p.job_id! }) : undefined,
     };
   });
-  const todayFooter =
-    people.length > 7 || notBooked > 0 ? (
+  // ELE-1827: the board always offers the map of where everyone checked in.
+  const todayFooter = (
+    <div className="flex items-center justify-between gap-3">
       <button
         type="button"
         onClick={() => go('diary')}
-        className="h-11 w-full flex items-center justify-between text-[13px] font-semibold text-white touch-manipulation"
+        className="h-11 min-w-0 flex-1 flex items-center gap-2 text-left text-[13px] font-semibold text-white touch-manipulation"
       >
-        <span>
+        <span className="truncate">
           {[
             people.length > 7 ? `${people.length - 7} more` : null,
             notBooked > 0 ? `${plural(notBooked, 'person', 'people')} not booked today` : null,
           ]
             .filter(Boolean)
-            .join(' · ')}
+            .join(' · ') || 'The week in the Diary'}
         </span>
         <span className="text-elec-yellow">Diary</span>
       </button>
-    ) : undefined;
+      <button
+        type="button"
+        onClick={() => go('tracking')}
+        className="h-11 shrink-0 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+      >
+        Map
+      </button>
+    </div>
+  );
 
   /* Week ahead. */
   const weekItems: WeekItem[] = [
@@ -789,7 +877,8 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
                 ? `${plural(m.outstanding_count, 'invoice')}, none overdue`
                 : 'No unpaid invoices',
           tone: m.overdue_count > 0 ? 'red' : undefined,
-          onOpen: () => go('quotes', { tab: m.overdue_count > 0 ? 'overdue' : 'invoices' }),
+          // ELE-2065: straight to "Who owes me" (aged debt, next chase, promises).
+          onOpen: () => go('quotes', { view: 'owed' }),
         },
         {
           label: 'Paid this month',
@@ -899,12 +988,39 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
         action="Diary"
         onAction={() => go('diary')}
       />
+      {doneToday && doneToday.finished_today > 0 && (
+        <button
+          type="button"
+          onClick={() =>
+            doneToday.invoices_ready ? go('quotes') : go('jobs', { job: doneToday.jobs[0]?.job_id ?? '' })
+          }
+          className="mb-3 flex min-h-11 w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.1] bg-white/[0.04] px-4 py-2.5 text-left touch-manipulation"
+        >
+          <span className="min-w-0">
+            <span className="block text-[15px] font-semibold text-white">
+              {plural(doneToday.finished_today, 'job')} finished today
+              {doneToday.invoices_ready
+                ? `, ${plural(doneToday.invoices_ready, 'invoice')} ready`
+                : ''}
+            </span>
+            <span className="block truncate text-[13px] text-white">
+              {doneToday.jobs
+                .slice(0, 3)
+                .map((j) => `${(j.title || 'Job').replace(/^DEMO — /, '')}${j.by ? ` by ${j.by}` : ''}`)
+                .join(' · ')}
+            </span>
+          </span>
+          <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">
+            {doneToday.invoices_ready ? 'Invoices' : 'Open'}
+          </span>
+        </button>
+      )}
       <TodayPanel
         rows={todayRows}
         footer={todayFooter}
         empty={
-          <div className="flex items-center gap-3">
-            <p className="min-w-0 flex-1 text-[14px] text-white">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-3">
+            <p className="min-w-0 basis-full text-[14px] leading-snug text-white sm:basis-0 sm:flex-1">
               {h.jobs.today > 0
                 ? `${plural(h.jobs.today, 'job')} on today and nobody booked on ${h.jobs.today === 1 ? 'it' : 'them'}.`
                 : 'Nobody is booked on a job today.'}
@@ -916,6 +1032,43 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
             >
               Open diary
             </button>
+            <button
+              type="button"
+              onClick={() => go('tracking')}
+              className="h-11 shrink-0 px-2 text-[14px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Map
+            </button>
+          </div>
+        }
+      />
+    </section>
+  ) : null;
+
+  const weekSection = !isNewFirm ? (
+    <section>
+      <PanelTitle
+        title="The week ahead"
+        meta={
+          h.jobs.starting_week_count > 0
+            ? `${h.jobs.starting_week_count} starting`
+            : undefined
+        }
+      />
+      <WeekAhead
+        items={weekItems}
+        empty={
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-3">
+            <p className="min-w-0 basis-full text-[14px] leading-snug text-white sm:basis-0 sm:flex-1">
+              No new jobs start in the next seven days and nobody is off.
+            </p>
+            <button
+              type="button"
+              onClick={() => go('jobs')}
+              className="h-11 shrink-0 rounded-xl border border-white/[0.18] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation"
+            >
+              New job
+            </button>
           </div>
         }
       />
@@ -923,7 +1076,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
   ) : null;
 
   return (
-    <div className="mx-auto max-w-7xl pb-28 space-y-6 sm:space-y-8">
+    <div className="mx-auto max-w-[1600px] pb-28 space-y-6 sm:space-y-8">
       <HomeHero
         eyebrow={`${firm} · ${format(today, 'EEE d MMM')}`}
         headline={headline}
@@ -949,6 +1102,8 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
 
       {/* A brand-new firm starts with its checklist; the hub follows. */}
       {isNewFirm && setupPanel}
+      {/* ELE-2067: a new firm can bring its records across from its old system. */}
+      {isNewFirm && <BringDataAcrossEntry onOpen={() => go('settings', { open: 'data' })} />}
 
       <HubAreas areas={areas} settings={settingsInfo} onGo={go} />
 
@@ -967,41 +1122,17 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
           {/* Phone and tablet: Today straight after the To do list, then Money. */}
           {todaySection && <div className="lg:hidden">{todaySection}</div>}
           {!isNewFirm && moneyStrip && <div className="lg:hidden">{moneyStrip}</div>}
+          {weekSection && <div className="lg:hidden">{weekSection}</div>}
 
-          {!isNewFirm && (
-            <section>
-              <PanelTitle
-                title="The week ahead"
-                meta={
-                  h.jobs.starting_week_count > 0
-                    ? `${h.jobs.starting_week_count} starting`
-                    : undefined
-                }
-              />
-              <WeekAhead
-                items={weekItems}
-                empty={
-                  <div className="flex items-center gap-3">
-                    <p className="min-w-0 flex-1 text-[14px] text-white">
-                      No new jobs start in the next seven days and nobody is off.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => go('jobs')}
-                      className="h-11 shrink-0 rounded-xl border border-white/[0.18] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation"
-                    >
-                      New job
-                    </button>
-                  </div>
-                }
-              />
-            </section>
-          )}
+          {/* Desktop: setting up sits under the work queue, so the columns balance. */}
+          {!isNewFirm && setupPanel && <div className="hidden lg:block">{setupPanel}</div>}
+
         </div>
 
         <div className="space-y-6 sm:space-y-8 min-w-0">
           {todaySection && <div className="hidden lg:block">{todaySection}</div>}
-          {!isNewFirm && setupPanel}
+          {weekSection && <div className="hidden lg:block">{weekSection}</div>}
+          {!isNewFirm && setupPanel && <div className="lg:hidden">{setupPanel}</div>}
           {growPanel}
           {matePanel}
         </div>
@@ -1016,6 +1147,14 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
           Tell Andrew
         </a>
       </p>
+
+      <AssignCourseSheet
+        open={!!assignCourse}
+        onOpenChange={(o) => !o && setAssignCourse(null)}
+        person={assignCourse?.person ?? null}
+        initialCourseKey={assignCourse?.course}
+        initialReason={assignCourse?.reason}
+      />
     </div>
   );
 }

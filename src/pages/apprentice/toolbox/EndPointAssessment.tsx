@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { GuidePage, GuideIndex } from '@/components/apprentice/shared/GuideKit';
 
 interface Section {
   number: string;
@@ -70,27 +69,24 @@ const SECTIONS: Section[] = [
 const EndPointAssessment = () => {
   const navigate = useNavigate();
   return (
-    <HubSubPage
+    <GuidePage
+      area="End-point assessment"
       title="The final test"
       backTo="/apprentice/toolbox"
       description="End-point assessment is the gate that turns 'apprentice' into 'electrician'. For the Installation & Maintenance Electrician (ST0152) it is the integrated AM2S, run by NET — one practical and knowledge assessment taken after Gateway. Everything you need to know, in the order you need to know it."
     >
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Five chapters</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="two"
-          cards={SECTIONS.map((s) => ({
-            id: s.slug,
-            eyebrow: s.eyebrow,
-            title: s.title,
-            description: s.description,
-            meta: s.meta,
-            onClick: () => navigate(`/apprentice/toolbox/end-point-assessment/${s.slug}`),
-          }))}
-        />
-      </motion.section>
-    </HubSubPage>
+      <GuideIndex
+        title="Five chapters"
+        columns={2}
+        items={SECTIONS.map((s) => ({
+          id: s.slug,
+          title: s.title,
+          description: s.description,
+          meta: s.meta,
+          onClick: () => navigate(`/apprentice/toolbox/end-point-assessment/${s.slug}`),
+        }))}
+      />
+    </GuidePage>
   );
 };
 

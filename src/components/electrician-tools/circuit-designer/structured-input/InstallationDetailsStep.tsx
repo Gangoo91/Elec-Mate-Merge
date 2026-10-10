@@ -4,9 +4,7 @@
  */
 
 import { CircuitInput } from '@/types/installation-design';
-import { IOSSelect } from '@/components/ui/ios-select';
-import { Eyebrow } from '@/components/college/primitives';
-import { cn } from '@/lib/utils';
+import { StepHeader, Section, SelectRow, ItemCard, Fact } from './wizardUi';
 
 interface InstallationDetailsStepProps {
   circuits: CircuitInput[];
@@ -72,203 +70,127 @@ export const InstallationDetailsStep = ({
   };
 
   return (
-    <div className="space-y-8 sm:space-y-10">
-      {/* Section header — editorial */}
-      <div className="space-y-2">
-        <Eyebrow>04 · INSTALL</Eyebrow>
-        <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1] text-white">
-          Installation details.
-        </h2>
-        <p className="text-[14px] leading-relaxed text-white/85 max-w-2xl">
-          Per-circuit install setup — containment, route, special location considerations. Drives
-          the install method and derating tables.
-        </p>
-      </div>
+    <div className="space-y-8">
+      <StepHeader
+        title="Installation details"
+        description="Set containment, route and special location handling for each circuit. These drive the install method and derating tables."
+      />
 
-      {/* Empty state — editorial centred */}
       {circuits.length === 0 ? (
-        <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl px-6 py-14 sm:py-20 text-center">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/50 tabular-nums">
-            00 · NO CIRCUITS
-          </span>
-          <h3 className="mt-3 text-[20px] sm:text-[24px] font-semibold tracking-tight leading-[1.15] text-white">
-            Nothing to configure yet.
-          </h3>
-          <p className="mt-2 text-[13px] leading-relaxed text-white/70 max-w-md mx-auto">
+        <ItemCard className="text-center sm:py-12">
+          <h3 className="text-[15px] font-semibold text-white">Nothing to configure yet</h3>
+          <p className="mx-auto mt-1 max-w-md text-[14px] leading-relaxed text-white">
             Add circuits in the previous step to set per-circuit installation methods, protection
             preferences and special location handling.
           </p>
-        </div>
+        </ItemCard>
       ) : (
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-              Per-circuit configuration
-            </span>
-            <span className="text-[11px] text-white/50 tabular-nums">
-              {circuits.length} {circuits.length === 1 ? 'circuit' : 'circuits'}
-            </span>
-          </div>
-
-          <div className="space-y-4">
+        <Section
+          title="Per-circuit configuration"
+          aside={`${circuits.length} ${circuits.length === 1 ? 'circuit' : 'circuits'}`}
+        >
+          <div className="space-y-3">
             {circuits.map((circuit, index) => {
               const hasSpecialLocation =
                 circuit.specialLocation && circuit.specialLocation !== 'none';
+              const showDiversity = !!(
+                circuit.calculatedDiversity && circuit.calculatedDiversity < 1
+              );
               return (
-                <div
-                  key={circuit.id}
-                  className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5"
-                >
-                  {/* Circuit header strip — number + name + special tag */}
-                  <div className="flex items-start justify-between gap-3 pb-4 border-b border-white/[0.08]">
+                <ItemCard key={circuit.id}>
+                  {/* Circuit header: name, summary line, special location */}
+                  <div className="flex items-start justify-between gap-3 border-b border-white/[0.08] pb-4">
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/50">
-                          Circuit
-                        </span>
-                      </div>
-                      <h3 className="mt-1.5 text-[17px] sm:text-[18px] font-semibold tracking-tight leading-[1.2] text-white truncate">
-                        {circuit.name || 'Unnamed circuit'}
-                      </h3>
-                      <p className="mt-1 text-[12.5px] leading-snug text-white/70">
+                      <h4 className="truncate text-[15px] font-semibold text-white">
+                        {index + 1}. {circuit.name || 'Unnamed circuit'}
+                      </h4>
+                      <p className="mt-0.5 text-[13px] leading-snug text-white">
                         {circuit.loadType} · {circuit.loadPower}W · {circuit.cableLength}m
                       </p>
                     </div>
                     {hasSpecialLocation && (
-                      <span className="shrink-0 inline-flex items-center px-2.5 py-1 rounded-full bg-orange-500/[0.12] border border-orange-400/30 text-orange-300 text-[10.5px] font-semibold uppercase tracking-[0.14em] capitalize">
+                      <span className="inline-flex shrink-0 items-center rounded-full border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 text-[12px] font-medium capitalize text-orange-300">
                         {circuit.specialLocation}
                       </span>
                     )}
                   </div>
 
                   {/* Form group */}
-                  <div className="pt-4 space-y-4">
-                    <div className="space-y-2">
-                      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                        Cable installation method
-                      </span>
-                      <IOSSelect
-                        label=""
-                        value={circuit.installMethod || 'auto'}
-                        onValueChange={(value) => updateCircuit(index, 'installMethod', value)}
-                        options={getInstallMethodOptions()}
-                      />
-                    </div>
+                  <div className="grid grid-cols-1 gap-y-5 pt-4 sm:grid-cols-2 sm:gap-x-6">
+                    <SelectRow
+                      label="Cable installation method"
+                      value={circuit.installMethod || 'auto'}
+                      onValueChange={(value) => updateCircuit(index, 'installMethod', value)}
+                      options={getInstallMethodOptions()}
+                    />
 
-                    <div className="space-y-2">
-                      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                        Protection device preference
-                      </span>
-                      <IOSSelect
-                        label=""
-                        value={circuit.protectionType || 'auto'}
-                        onValueChange={(value) => updateCircuit(index, 'protectionType', value)}
-                        options={[
-                          { value: 'auto', label: 'Auto (let the designer decide)' },
-                          { value: 'MCB', label: 'MCB only' },
-                          { value: 'RCBO', label: 'RCBO (30mA Type AC)' },
-                          { value: 'RCBO-TypeA', label: 'RCBO (30mA Type A)' },
-                          { value: 'RCBO-TypeB', label: 'RCBO (30mA Type B)' },
-                        ]}
-                      />
-                    </div>
+                    <SelectRow
+                      label="Protection device preference"
+                      value={circuit.protectionType || 'auto'}
+                      onValueChange={(value) => updateCircuit(index, 'protectionType', value)}
+                      options={[
+                        { value: 'auto', label: 'Auto (let the designer decide)' },
+                        { value: 'MCB', label: 'MCB only' },
+                        { value: 'RCBO', label: 'RCBO (30mA Type AC)' },
+                        { value: 'RCBO-TypeA', label: 'RCBO (30mA Type A)' },
+                        { value: 'RCBO-TypeB', label: 'RCBO (30mA Type B)' },
+                      ]}
+                    />
 
                     {circuit.specialLocation === 'bathroom' && (
-                      <div className="space-y-2">
-                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                          Bathroom zone
-                        </span>
-                        <IOSSelect
-                          label=""
-                          value={circuit.bathroomZone || 'outside_zones'}
-                          onValueChange={(value) => updateCircuit(index, 'bathroomZone', value)}
-                          options={[
-                            { value: 'zone_0', label: 'Zone 0' },
-                            { value: 'zone_1', label: 'Zone 1' },
-                            { value: 'zone_2', label: 'Zone 2' },
-                            { value: 'outside_zones', label: 'Outside zones' },
-                          ]}
-                          hint="Determines IP rating and wiring requirements"
-                        />
-                      </div>
+                      <SelectRow
+                        label="Bathroom zone"
+                        value={circuit.bathroomZone || 'outside_zones'}
+                        onValueChange={(value) => updateCircuit(index, 'bathroomZone', value)}
+                        options={[
+                          { value: 'zone_0', label: 'Zone 0' },
+                          { value: 'zone_1', label: 'Zone 1' },
+                          { value: 'zone_2', label: 'Zone 2' },
+                          { value: 'outside_zones', label: 'Outside zones' },
+                        ]}
+                        hint="Determines IP rating and wiring requirements"
+                      />
                     )}
 
                     {circuit.specialLocation === 'outdoor' && (
-                      <div className="space-y-2">
-                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                          Outdoor installation type
-                        </span>
-                        <IOSSelect
-                          label=""
-                          value={circuit.outdoorInstall || 'wall_mounted'}
-                          onValueChange={(value) => updateCircuit(index, 'outdoorInstall', value)}
-                          options={[
-                            { value: 'buried', label: 'Buried in ground' },
-                            { value: 'overhead', label: 'Overhead line' },
-                            { value: 'wall_mounted', label: 'Wall mounted' },
-                            { value: 'other', label: 'Other' },
-                          ]}
-                          hint="Affects cable type and protection requirements"
-                        />
-                      </div>
-                    )}
-
-                    {/* Auto-calculated values — gridline summary strip */}
-                    {circuit.calculatedIb && (
-                      <div className="mt-2">
-                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-                          Auto-calculated
-                        </span>
-                        <div
-                          className={cn(
-                            'mt-2 grid gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-                            circuit.suggestedMCB && circuit.calculatedDiversity && circuit.calculatedDiversity < 1
-                              ? 'grid-cols-3'
-                              : circuit.suggestedMCB || (circuit.calculatedDiversity && circuit.calculatedDiversity < 1)
-                              ? 'grid-cols-2'
-                              : 'grid-cols-1'
-                          )}
-                        >
-                          <div className="bg-[hsl(0_0%_10%)] px-3 py-3 sm:px-4 sm:py-4 min-h-11 flex flex-col justify-center">
-                            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/50">
-                              Design Ib
-                            </span>
-                            <span className="mt-1 text-[16px] sm:text-[18px] font-semibold tracking-tight tabular-nums text-elec-yellow">
-                              {circuit.calculatedIb.toFixed(1)}A
-                            </span>
-                          </div>
-                          {circuit.suggestedMCB && (
-                            <div className="bg-[hsl(0_0%_10%)] px-3 py-3 sm:px-4 sm:py-4 min-h-11 flex flex-col justify-center">
-                              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/50">
-                                MCB
-                              </span>
-                              <span className="mt-1 text-[16px] sm:text-[18px] font-semibold tracking-tight tabular-nums text-white">
-                                {circuit.suggestedMCB}A
-                              </span>
-                            </div>
-                          )}
-                          {circuit.calculatedDiversity && circuit.calculatedDiversity < 1 && (
-                            <div className="bg-[hsl(0_0%_10%)] px-3 py-3 sm:px-4 sm:py-4 min-h-11 flex flex-col justify-center">
-                              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/50">
-                                Diversity
-                              </span>
-                              <span className="mt-1 text-[16px] sm:text-[18px] font-semibold tracking-tight tabular-nums text-white">
-                                {(circuit.calculatedDiversity * 100).toFixed(0)}%
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                      <SelectRow
+                        label="Outdoor installation type"
+                        value={circuit.outdoorInstall || 'wall_mounted'}
+                        onValueChange={(value) => updateCircuit(index, 'outdoorInstall', value)}
+                        options={[
+                          { value: 'buried', label: 'Buried in ground' },
+                          { value: 'overhead', label: 'Overhead line' },
+                          { value: 'wall_mounted', label: 'Wall mounted' },
+                          { value: 'other', label: 'Other' },
+                        ]}
+                        hint="Affects cable type and protection requirements"
+                      />
                     )}
                   </div>
-                </div>
+
+                  {/* Auto-calculated values */}
+                  {circuit.calculatedIb && (
+                    <div className="mt-5 border-t border-white/[0.08] pt-4">
+                      <div className="text-[13px] font-semibold text-white">Auto-calculated</div>
+                      <div className="mt-2 grid grid-cols-3 gap-3">
+                        <Fact label="Design Ib" value={`${circuit.calculatedIb.toFixed(1)}A`} />
+                        {circuit.suggestedMCB && (
+                          <Fact label="MCB" value={`${circuit.suggestedMCB}A`} />
+                        )}
+                        {showDiversity && (
+                          <Fact
+                            label="Diversity"
+                            value={`${((circuit.calculatedDiversity ?? 0) * 100).toFixed(0)}%`}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </ItemCard>
               );
             })}
           </div>
-        </div>
+        </Section>
       )}
     </div>
   );

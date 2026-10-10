@@ -28,7 +28,7 @@ const faqs = [
   {
     question: 'What is the City & Guilds 2365-02 Level 2 qualification?',
     answer:
-      "The City & Guilds 2365-02 is the Level 2 Diploma in Electrical Installation. It is the foundation qualification for anyone entering the electrical trade, covering the essential knowledge and skills needed before progressing to Level 3. The qualification includes units on electrical science (Ohm's law, Kirchhoff's laws, power, impedance), health and safety in the electrical industry, electrical installation technology (cable types, containment, wiring systems), and basic installation practice. It is typically studied during the first year of an electrical apprenticeship or as a standalone course for career changers. The 2365-02 maps to the technical knowledge requirements of the Installation Electrician / Maintenance Electrician apprenticeship standard (ST0215).",
+      "The City & Guilds 2365-02 is the Level 2 Diploma in Electrical Installation. It is the foundation qualification for anyone entering the electrical trade, covering the essential knowledge and skills needed before progressing to Level 3. The qualification includes units on electrical science (Ohm's law, Kirchhoff's laws, power, impedance), health and safety in the electrical industry, electrical installation technology (cable types, containment, wiring systems), and basic installation practice. It is typically studied during the first year of an electrical apprenticeship or as a standalone course for career changers. The 2365-02 maps to the technical knowledge requirements of the Installation Electrician / Maintenance Electrician apprenticeship standard (ST0152).",
   },
   {
     question: 'Can I study for Level 2 Electrical Installation online?',
@@ -238,7 +238,7 @@ export default function Level2ElectricalPage() {
               changers entering the electrical industry, and anyone who wants to develop a thorough
               understanding of how electrical installations work before progressing to more advanced
               study. It is nationally recognised, maps to the apprenticeship standard for
-              Installation Electrician / Maintenance Electrician (ST0215), and is accepted by
+              Installation Electrician / Maintenance Electrician (ST0152), and is accepted by
               employers across the United Kingdom.
             </p>
             <p>

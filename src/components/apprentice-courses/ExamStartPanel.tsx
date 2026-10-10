@@ -45,9 +45,9 @@ export interface ExamStartPanelProps {
 const RING_R = 26;
 const RING_C = 2 * Math.PI * RING_R;
 
-/** Quiet uppercase micro-label — the app's standard uppercase eyebrow. */
+/** Quiet section label, sentence case. */
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{children}</p>
+  <p className="text-[13px] font-semibold text-white">{children}</p>
 );
 
 export function ExamStartPanel({
@@ -148,9 +148,7 @@ export function ExamStartPanel({
                   </span>
                 </div>
                 <div className="sm:text-center">
-                  <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                    Your best
-                  </p>
+                  <p className="text-[12.5px] font-semibold text-white">Your best</p>
                   <p className="mt-0.5 text-[12px] text-white">
                     {history?.attempts} {history?.attempts === 1 ? 'attempt' : 'attempts'} · last{' '}
                     {history?.last}%
@@ -188,9 +186,7 @@ export function ExamStartPanel({
               <p className="text-[26px] font-bold leading-none tabular-nums tracking-tight text-white sm:text-[30px]">
                 {f.value}
               </p>
-              <p className="mt-1.5 text-[10.5px] font-medium uppercase tracking-[0.14em] text-white">
-                {f.label}
-              </p>
+              <p className="mt-1.5 text-[12.5px] font-medium text-white">{f.label}</p>
             </div>
           ))}
         </div>
@@ -198,19 +194,18 @@ export function ExamStartPanel({
         {topics.length > 0 && (
           <section className="mt-5">
             <Eyebrow>What it covers</Eyebrow>
-            <div className="mt-2.5 flex flex-wrap gap-1.5">
+            {/* A plain list — these used to be pill shapes that looked tappable and did nothing. */}
+            <ul className="mt-2.5 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
               {topics.map((t) => (
-                <span
-                  key={t}
-                  className={cn(
-                    'rounded-full border border-white/12 px-3 py-1.5 text-[12px] font-medium text-white',
-                    CARD_SURFACE
-                  )}
-                >
+                <li key={t} className="flex gap-2 text-[13.5px] leading-snug text-white">
+                  <span
+                    aria-hidden
+                    className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
+                  />
                   {t}
-                </span>
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
         )}
 

@@ -29,7 +29,7 @@ const InteractiveScenariosTab = () => {
       <SafetyCasesErrorBoundary>
         <div className="rounded-xl border border-red-500/30 bg-white/[0.06] p-6 sm:p-8 space-y-3 animate-fade-in text-center">
           <AlertTriangle className="h-8 w-8 text-red-400 mx-auto" />
-          <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          <span className="block text-[13px] font-semibold text-red-300">
             Failed to load scenarios
           </span>
           <p className="text-[14px] text-white leading-relaxed max-w-xs mx-auto">{error}</p>
@@ -51,9 +51,7 @@ const InteractiveScenariosTab = () => {
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Interactive scenarios
-        </span>
+        <span className="text-[13px] font-semibold text-white">Interactive scenarios</span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Safety scenarios
         </h2>
@@ -65,12 +63,10 @@ const InteractiveScenariosTab = () => {
       </div>
 
       {/* Stats strip */}
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Progress
-          </span>
-          <span className="text-[12px] text-white font-mono">
+          <span className="text-[13px] font-semibold text-white">Progress</span>
+          <span className="text-[12px] text-white">
             {completedScenarios.length}/{allScenarios.length} · {completionPercentage}%
           </span>
         </div>

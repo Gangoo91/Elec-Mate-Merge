@@ -27,6 +27,7 @@ const corsHeaders = {
 };
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const CANCELLED = /^(cancelled|canceled|void|voided)$/i;
 
 function reply(body: Record<string, unknown>): Response {
   return new Response(JSON.stringify(body), {
@@ -53,6 +54,7 @@ Deno.serve(async (req: Request) => {
       user_id: string;
       invoice_number: string | null;
       paid: boolean;
+      cancelled: boolean;
     } | null = null;
     {
       const { data } = await admin
@@ -65,6 +67,7 @@ Deno.serve(async (req: Request) => {
           user_id: data.user_id,
           invoice_number: data.invoice_number,
           paid: data.status === 'paid' || !!data.paid_at,
+          cancelled: CANCELLED.test(String(data.status ?? '').trim()),
         };
       }
     }
@@ -79,6 +82,7 @@ Deno.serve(async (req: Request) => {
           user_id: data.user_id,
           invoice_number: data.invoice_number,
           paid: data.invoice_status === 'paid' || !!data.invoice_paid_at,
+          cancelled: CANCELLED.test(String(data.invoice_status ?? '').trim()),
         };
       }
     }
@@ -99,6 +103,14 @@ Deno.serve(async (req: Request) => {
     };
 
     if (row.paid) return reply({ state: 'paid', ...shown });
+    // ELE-2079: a cancelled or void invoice (e.g. a declined or released
+    // online booking's deposit) is never offered for card payment.
+    // L1: answered as 'adjusted' with reason 'cancelled'. The pay page in the
+    // live app (HEAD) knows 'adjusted' ("check with the business before
+    // paying", with their contact details) but not 'cancelled', which it
+    // rendered as a blank page. The new page reads the reason and shows its
+    // own "This invoice has been cancelled" view.
+    if (row.cancelled) return reply({ state: 'adjusted', reason: 'cancelled', ...shown });
 
     /*
      * An issued credit note changes what is owed, and the balance maths in

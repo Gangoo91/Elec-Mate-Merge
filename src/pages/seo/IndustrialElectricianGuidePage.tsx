@@ -50,7 +50,7 @@ const keyTakeaways = [
   'PLC (Programmable Logic Controller) programming and industrial automation are increasingly important — modern factories use PLCs, HMIs (Human Machine Interfaces), SCADA systems, and variable speed drives to control machinery, and industrial electricians are expected to understand, commission, and fault-find these systems.',
   'Planned preventive maintenance (PPM) is a core part of industrial work — electricians carry out scheduled inspections, thermal imaging, vibration analysis, and condition monitoring to prevent unplanned downtime that can cost manufacturers thousands of pounds per hour.',
   'Elec-Mate supports industrial electricians with three-phase calculators, cable sizing for large installations, EICR certificates for industrial premises, AI-powered RAMS generation, and training courses covering inspection and testing of industrial systems.',
-  'BS 7671:2018+A4:2026 (in force from April 2026) introduced Reg 133.1.3, which requires the use of certain equipment — including SPDs (surge protective devices) and AFDDs (arc fault detection devices) — to be recorded on the appropriate Part 6 electrical certification. Every industrial EIC and EICR issued after April 2026 must include these disclosures where applicable. Appendix 6 model forms have been updated with dedicated SPD and AFDD fields.',
+  'Since BS 7671:2018, Reg 133.1.3 has required equipment used outside its standard to be recorded as a departure on the Part 6 certification. Since A2:2022 the Appendix 6 model forms have carried dedicated fields for SPDs (surge protective devices) and AFDDs (arc fault detection devices), so industrial EICs and EICRs should record them where fitted.',
 ];
 
 const faqs = [
@@ -808,7 +808,7 @@ export default function IndustrialElectricianGuidePage() {
       title="Industrial Electrician Guide: Skills & Career UK"
       description="Complete guide to working as an industrial electrician in the UK. Three-phase systems, motor control, PLC programming, variable speed drives."
       datePublished="2025-06-25"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
 import { getJobValueMap } from '@/lib/columnPrivacy';
+import { fetchFirmIncidents } from '@/hooks/useIncidents';
 import { startOfMonth, subMonths, endOfMonth, isAfter, isBefore } from 'date-fns';
 
 // Types
@@ -202,10 +203,15 @@ export function useBusinessMetrics() {
       const complianceRate = totalCerts > 0 ? Math.round((validCerts / totalCerts) * 100) : 100;
 
       // Fetch incidents for safety score (no incidents = 100, each incident reduces score)
-      const { count: incidentCount, error: incError } = await supabase
-        .from('employer_incidents')
-        .select('*', { count: 'exact', head: true })
-        .gte('reported_at', subMonths(now, 3).toISOString());
+      // ELE-2031: Site Safety near misses / accidents and employer_incidents.
+      const since = subMonths(now, 3).getTime();
+      let incError: unknown = null;
+      const incidentCount = await fetchFirmIncidents()
+        .then((rows) => rows.filter((r) => new Date(r.date_occurred).getTime() >= since).length)
+        .catch((e) => {
+          incError = e;
+          return 0;
+        });
 
       // Table may not exist - default to perfect score
       // ELE-555 — this was "safetyScore = 100 - incidents * 5", an invented

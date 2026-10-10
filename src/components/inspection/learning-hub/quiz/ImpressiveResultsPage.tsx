@@ -171,7 +171,7 @@ const ImpressiveResultsPage = ({
 
           {/* Certification Badge */}
           {result.percentage >= 80 && (
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-elec-yellow/20 to-yellow-500/20 border-2 border-elec-yellow rounded-full">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-white/[0.08] to-yellow-500/20 border-2 border-elec-yellow rounded-full">
               <Award className="h-5 w-5 text-elec-yellow" />
               <span className="font-semibold text-elec-yellow">Certification Ready</span>
             </div>

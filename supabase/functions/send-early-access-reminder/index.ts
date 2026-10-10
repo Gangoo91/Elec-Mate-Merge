@@ -187,15 +187,12 @@ Deno.serve(async (req) => {
   try {
     const authHeader = req.headers.get('Authorization');
     const internalKey = req.headers.get('X-Internal-Key');
-    const testSecret = req.headers.get('X-Test-Secret');
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
     // Allow internal key for CLI/internal testing
     const isInternalCall = internalKey === serviceRoleKey;
     // Also check if auth header contains service role
     const isServiceRole = authHeader === `Bearer ${serviceRoleKey}`;
-    // Test secret for admin testing only
-    const isTestMode = testSecret === 'elecmate-test-2026';
 
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -207,7 +204,7 @@ Deno.serve(async (req) => {
     let callerId = 'internal';
 
     // If not internal/service/test call, verify user is admin
-    if (!isInternalCall && !isServiceRole && !isTestMode) {
+    if (!isInternalCall && !isServiceRole) {
       if (!authHeader) {
         throw new Error('No authorization header');
       }
@@ -226,7 +223,7 @@ Deno.serve(async (req) => {
         throw new Error('Unauthorized');
       }
 
-      callerId = callerId;
+      callerId = user.id;
 
       // Check admin
       const { data: callerProfile } = await supabaseClient
@@ -490,7 +487,11 @@ Deno.serve(async (req) => {
 
     throw new Error(`Unknown action: ${action}`);
   } catch (error: any) {
-    await captureException(error, { functionName: 'send-early-access-reminder', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'send-early-access-reminder',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('Error in send-early-access-reminder:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

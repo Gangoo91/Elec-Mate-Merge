@@ -62,6 +62,8 @@ import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { FiveWhysAnalysis } from './common/FiveWhysAnalysis';
 import { RIDDORCountdown } from './common/RIDDORCountdown';
 import { JobLinkField } from './common/JobLinkField';
+import { FirmRecordBar } from './common/FirmRecordBar';
+import { useFirmRecordAccess, type FirmRecordFields } from './common/SafetyScope';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -215,6 +217,9 @@ interface AccidentRecord {
   root_cause?: string | null;
   root_cause_category?: string | null;
   created_at: string;
+  /** The firm a record is shared with (Site Safety in both hubs). Only firm
+      managers can read a firm accident record; the database enforces it. */
+  firm: FirmRecordFields;
 }
 
 // ─── Constants ───
@@ -727,6 +732,14 @@ export function DigitalAccidentBook({
       incident_number: r.incident_number || undefined,
       is_archived: r.is_archived ?? false,
       created_at: r.created_at,
+      firm: {
+        user_id: r.user_id,
+        employer_id: r.employer_id ?? null,
+        employer_job_id: r.employer_job_id ?? null,
+        firm_countersigned_by: r.firm_countersigned_by ?? null,
+        firm_countersigned_name: r.firm_countersigned_name ?? null,
+        firm_countersigned_at: r.firm_countersigned_at ?? null,
+      },
     };
   });
 
@@ -735,6 +748,11 @@ export function DigitalAccidentBook({
     ...emptyForm(),
     job_id: launch?.jobId ?? null,
   }));
+
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the record with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
 
   // Spark project link
   const { projects: jobs = [] } = useSparkProjects('active');
@@ -760,6 +778,8 @@ export function DigitalAccidentBook({
   };
 
   const [viewingRecord, setViewingRecord] = useState<AccidentRecord | null>(null);
+  // Employer Hub: a worker's shared record is read and countersigned, not changed.
+  const viewingAccess = useFirmRecordAccess(viewingRecord?.firm);
   // Remote supervisor sign-off (generic engine)
   const [showSignShare, setShowSignShare] = useState(false);
   const [signUrl, setSignUrl] = useState('');
@@ -844,6 +864,8 @@ export function DigitalAccidentBook({
     setTreatmentOpen(false);
     setReportingOpen(false);
     setForm(emptyForm());
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
   };
 
   const riddorCheck = useMemo(() => checkRIDDOR(form), [form]);
@@ -921,6 +943,7 @@ export function DigitalAccidentBook({
         additional_notes: form.additional_notes || '',
         corrective_actions: form.corrective_actions || '',
         job_id: form.job_id ?? null,
+        ...(employerJobId ? { employer_job_id: employerJobId } : {}),
         photos: photoUrls,
         reporter_signature: reporterSigData || undefined,
       });
@@ -1115,6 +1138,12 @@ export function DigitalAccidentBook({
               jobId={form.job_id ?? null}
               jobTitle={jobTitleFor(form.job_id ?? null)}
               onSelect={(id) => updateForm({ job_id: id })}
+              employerJobId={employerJobId}
+              employerJobTitle={employerJobTitle}
+              onSelectEmployerJob={(id, title) => {
+                setEmployerJobId(id);
+                setEmployerJobTitle(title);
+              }}
             />
           </FormCard>
 
@@ -1651,6 +1680,12 @@ export function DigitalAccidentBook({
                 )}
               </div>
 
+              <FirmRecordBar
+                table="accident_records"
+                row={{ id: viewingRecord.id, ...viewingRecord.firm }}
+                invalidate={[['accident-records']]}
+              />
+
               {/* RIDDOR countdown.
                   `category` must be one of the countdown's four canonical keys —
                   passing `riddor_category` (prose) meant the lookup always missed
@@ -1759,6 +1794,9 @@ export function DigitalAccidentBook({
                           >
                             Report to the HSE online
                           </a>
+                          {/* "Mark as reported" changes the record, so a
+                              worker's shared record (Employer Hub) leaves it
+                              to them. The HSE routes stay available. */}
                           <div className="flex gap-2">
                             {notifyWithoutDelay && (
                               <a
@@ -1772,13 +1810,15 @@ export function DigitalAccidentBook({
                                 Call 0345 300 9923
                               </a>
                             )}
-                            <SecondaryButton
-                              fullWidth={!notifyWithoutDelay}
-                              className={notifyWithoutDelay ? 'flex-1' : undefined}
-                              onClick={() => setShowMarkReported(true)}
-                            >
-                              Mark as reported
-                            </SecondaryButton>
+                            {viewingAccess.canEdit && (
+                              <SecondaryButton
+                                fullWidth={!notifyWithoutDelay}
+                                className={notifyWithoutDelay ? 'flex-1' : undefined}
+                                onClick={() => setShowMarkReported(true)}
+                              >
+                                Mark as reported
+                              </SecondaryButton>
+                            )}
                           </div>
                         </>
                       )}
@@ -1892,14 +1932,41 @@ export function DigitalAccidentBook({
                   props on first render only, so it must not be reused across
                   two records. The sheet unmounts on close today, which hides
                   that — the key is what keeps it true if it ever doesn't. */}
-              <FiveWhysAnalysis
-                key={viewingRecord.id}
-                table="accident_records"
-                recordId={viewingRecord.id}
-                existingWhys={(viewingRecord.five_whys as []) ?? []}
-                existingCategory={viewingRecord.root_cause_category || ''}
-                existingSummary={viewingRecord.root_cause || ''}
-              />
+              {viewingAccess.canEdit ? (
+                <FiveWhysAnalysis
+                  key={viewingRecord.id}
+                  table="accident_records"
+                  recordId={viewingRecord.id}
+                  existingWhys={(viewingRecord.five_whys as []) ?? []}
+                  existingCategory={viewingRecord.root_cause_category || ''}
+                  existingSummary={viewingRecord.root_cause || ''}
+                />
+              ) : (
+                // A worker's shared record (Employer Hub): the investigation is
+                // theirs to write, so the firm reads it here instead.
+                (() => {
+                  const whys = (
+                    (viewingRecord.five_whys ?? []) as Array<{ why?: string; answer?: string }>
+                  ).filter((w) => (w?.answer || '').trim());
+                  if (whys.length === 0 && !viewingRecord.root_cause) return null;
+                  return (
+                    <FormCard eyebrow="Root cause analysis" className={cardCn}>
+                      <DetailField label="Root cause" value={viewingRecord.root_cause} />
+                      {whys.length > 0 && (
+                        <ol className="space-y-2">
+                          {whys.map((w, i) => (
+                            <li key={i} className="text-[13px] leading-relaxed text-white">
+                              <span className="font-medium">{w.why || `Why ${i + 1}`}</span>
+                              <br />
+                              {w.answer}
+                            </li>
+                          ))}
+                        </ol>
+                      )}
+                    </FormCard>
+                  );
+                })()
+              )}
 
               {/* Corrective actions tracker */}
               <CorrectiveActionsPanel sourceType="accident" sourceId={viewingRecord.id} />
@@ -1923,7 +1990,7 @@ export function DigitalAccidentBook({
                       className="h-12 w-auto"
                     />
                   </div>
-                ) : (
+                ) : viewingAccess.canEdit ? (
                   <SecondaryButton
                     fullWidth
                     disabled={signLoading}
@@ -1931,6 +1998,8 @@ export function DigitalAccidentBook({
                   >
                     {signLoading ? 'Preparing link…' : 'Request supervisor sign-off'}
                   </SecondaryButton>
+                ) : (
+                  <p className="text-[12px] text-white">Not signed off yet.</p>
                 )}
               </div>
 

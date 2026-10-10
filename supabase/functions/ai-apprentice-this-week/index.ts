@@ -188,7 +188,7 @@ async function authorise(req: Request) {
   );
   const { data } = await userClient.auth.getUser();
   if (!data?.user) return { ok: false as const, error: 'unauthorized' as const };
-  return { ok: true as const, uid: data.user.id };
+  return { ok: true as const, uid: data.user.id, client: userClient };
 }
 
 Deno.serve(async (req) => {
@@ -259,7 +259,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const ctx = await loadLearnerContext(sb, collegeStudentId);
+  const ctx = await loadLearnerContext(sb, collegeStudentId, { asCaller: auth.client });
   if (!ctx) {
     return new Response(JSON.stringify({ error: 'student_not_found' }), {
       status: 404,

@@ -305,7 +305,7 @@ export const peerConversationService = {
     // Get unique seeker IDs and fetch their profiles
     const seekerIds = [...new Set(rawConversations.map((c) => c.seeker_id))];
     const { data: seekerProfiles } = await supabase
-      .from('profiles')
+      .from('public_profiles')
       .select('id, full_name, avatar_url')
       .in('id', seekerIds);
 

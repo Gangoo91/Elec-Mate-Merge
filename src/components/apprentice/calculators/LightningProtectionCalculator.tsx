@@ -524,8 +524,8 @@ const LightningProtectionCalculator = () => {
                   <div
                     className="p-3 rounded-lg border text-sm"
                     style={{
-                      borderColor: `${config.gradientFrom}20`,
-                      background: `${config.gradientFrom}05`,
+                      borderColor: 'rgba(255, 255, 255, 0.12)',
+                      background: 'rgba(255, 255, 255, 0.04)',
                     }}
                   >
                     <p className="text-white font-medium mb-1">Indicative Cost Estimate</p>
@@ -593,8 +593,8 @@ const LightningProtectionCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">

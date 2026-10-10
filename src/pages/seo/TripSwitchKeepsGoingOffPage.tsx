@@ -43,7 +43,7 @@ const keyTakeaways = [
   'A "trip switch" can be either an MCB (Miniature Circuit Breaker) or an RCD (Residual Current Device). They trip for completely different reasons, and knowing which one is tripping tells you what type of fault you have.',
   'An MCB trips because of overcurrent — too much current flowing through the circuit. This is caused by overloading (too many appliances) or a short circuit (live touching neutral or earth). MCBs protect the cable from overheating.',
   'An RCD trips because of an earth fault — current is leaking to earth through an unintended path. This could be a faulty appliance, damaged cable, or moisture. RCDs protect people from electric shock. Under Regulation 411.3.3 of BS 7671:2018+A4:2026, additional protection by an RCD rated at 30mA is required for all socket-outlets rated up to 32A. In non-dwellings only, a documented risk assessment may justify omission; no such exception exists for dwellings.',
-  'Regulation 411.3.4 (A4:2026 addition) requires that AC final circuits supplying luminaires in domestic premises shall be provided with additional protection by an RCD rated at no more than 30mA. A split-load consumer unit with unprotected lighting MCBs is no longer compliant — a lighting circuit tripping an MCB without upstream RCD protection is both a nuisance and a compliance gap.',
+  'Regulation 411.3.4 (in BS 7671 since 2018) requires that AC final circuits supplying luminaires in domestic premises shall be provided with additional protection by an RCD rated at no more than 30mA. A split-load consumer unit with unprotected lighting MCBs is no longer compliant — a lighting circuit tripping an MCB without upstream RCD protection is both a nuisance and a compliance gap.',
   'The most common cause of repeated tripping is a faulty appliance. You can identify it by unplugging everything, resetting the trip, and plugging appliances back in one at a time until it trips again.',
   'Moisture ingress — from rain entering an outdoor socket, a leaking pipe near wiring, or condensation in a junction box — is a very common cause of RCD tripping, especially in autumn and winter.',
   'If your consumer unit is old (rewirable fuses, no RCD protection), repeated tripping may indicate it is time for a consumer unit upgrade to provide proper circuit-by-circuit protection with RCBOs.',
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What is an AFDD and could it be what tripped?',
     answer:
-      'An AFDD (Arc Fault Detection Device) is a third type of protective device introduced by Regulation 421.1.7 of BS 7671:2018+A4:2026. Unlike an MCB (which trips on overcurrent) or an RCD (which trips on earth leakage), an AFDD trips when it detects a hazardous arc fault — dangerous electrical arcing in cables or connections that can cause fires without necessarily blowing a fuse or tripping an MCB. AFDDs look similar to MCBs in the consumer unit and are increasingly fitted on new installations following the A4:2026 recommendation. If your consumer unit was recently installed or upgraded and a device trips without an obvious overload or earth fault, check whether it is an AFDD. Resetting it without finding the cause of the arc (e.g. a damaged cable, a loose connection) is not safe.',
+      'An AFDD (Arc Fault Detection Device) is a third type of protective device covered by Regulation 421.1.7 of BS 7671, recommended since 2018 and required in named higher-risk premises since A2:2022. Unlike an MCB (which trips on overcurrent) or an RCD (which trips on earth leakage), an AFDD trips when it detects a hazardous arc fault — dangerous electrical arcing in cables or connections that can cause fires without necessarily blowing a fuse or tripping an MCB. AFDDs look similar to MCBs in the consumer unit and are increasingly fitted on new installations. If your consumer unit was recently installed or upgraded and a device trips without an obvious overload or earth fault, check whether it is an AFDD. Resetting it without finding the cause of the arc (e.g. a damaged cable, a loose connection) is not safe.',
   },
   {
     question: 'What is the difference between an MCB and an RCD?',
@@ -486,10 +486,10 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white mb-2">
-            A4:2026 Update: Lighting Circuits Now Need RCD Protection (Reg 411.3.4)
+            Lighting Circuits Need RCD Protection (Reg 411.3.4, Since 2018)
           </h3>
           <p className="text-white text-sm leading-relaxed">
-            Amendment 4 of BS 7671 (2026) introduced Regulation 411.3.4, which requires that AC
+            BS 7671:2018 introduced Regulation 411.3.4, which requires that AC
             final circuits supplying luminaires in domestic premises shall be provided with
             additional protection by an RCD whose rated residual operating current does not exceed
             30&nbsp;mA. An older split-load consumer unit where lighting circuits are protected only
@@ -648,7 +648,7 @@ export default function TripSwitchKeepsGoingOffPage() {
       title="Trip Switch Keeps Going Off: Why & How to Fix"
       description="Trip switch keeps tripping? Learn why — MCB vs RCD tripping explained, overloaded circuits, earth faults, moisture ingress, faulty appliance isolation."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Common Problem"

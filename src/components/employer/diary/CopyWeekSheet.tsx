@@ -39,9 +39,12 @@ export function CopyWeekSheet({ open, onOpenChange, weekStart }: CopyWeekSheetPr
   const run = async () => {
     try {
       const done = await apply.mutateAsync({ weekStart, apply: true });
-      toast.success(`${done.length} ${done.length === 1 ? 'booking' : 'bookings'} carried into this week`, {
-        description: 'Everyone affected gets one push in about a minute.',
-      });
+      toast.success(
+        `${done.length} ${done.length === 1 ? 'booking' : 'bookings'} carried into this week`,
+        {
+          description: 'Everyone affected gets one push in about a minute.',
+        }
+      );
       onOpenChange(false);
     } catch (e) {
       toast.error(dispatchErrorMessage(e));
@@ -57,11 +60,13 @@ export function CopyWeekSheet({ open, onOpenChange, weekStart }: CopyWeekSheetPr
           description={`Anyone still on a job at the end of last week stays on it until ${rangeLabel(friday)}. Finished, cancelled and on-hold jobs are left alone.`}
           footer={
             <>
-              <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
+              <SecondaryButton onClick={() => onOpenChange(false)} className="lg:ml-auto">
+                Cancel
+              </SecondaryButton>
               <PrimaryButton
                 onClick={run}
                 disabled={rows.length === 0 || apply.isPending || preview.isPending}
-                className="flex-1"
+                className="flex-1 lg:flex-none lg:px-10"
               >
                 {apply.isPending
                   ? 'Copying…'
@@ -77,14 +82,17 @@ export function CopyWeekSheet({ open, onOpenChange, weekStart }: CopyWeekSheetPr
           ) : preview.isError ? (
             <p className="text-[13px] text-white">{dispatchErrorMessage(preview.error)}</p>
           ) : rows.length === 0 ? (
-            <p className="text-[13px] text-white leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Nobody was on an open job last Friday, so there is nothing to carry over. Book this
               week from the board instead.
             </p>
           ) : (
-            <div className="-mx-5 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+            <div className="-mx-5 divide-y divide-white/[0.06] border-y border-white/[0.06] lg:mx-0 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:divide-y-0 lg:border-y-0">
               {rows.map((r) => (
-                <div key={r.assignment_id} className="px-5 py-3 flex items-center gap-3 min-h-[60px]">
+                <div
+                  key={r.assignment_id}
+                  className="px-5 py-3 flex items-center gap-3 min-h-[60px]"
+                >
                   <Avatar initials={initialsOf(r.name)} />
                   <div className="min-w-0 flex-1">
                     <div className="text-[14px] font-medium text-white truncate">{r.name}</div>

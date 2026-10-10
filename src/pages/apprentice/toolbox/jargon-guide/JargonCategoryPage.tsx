@@ -13,22 +13,16 @@ import { Search, X } from 'lucide-react';
 import { siteJargonTerms, siteJargonCategories } from '@/data/apprentice/siteJargonData';
 import { itemVariants } from '@/components/college/primitives';
 import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
-import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
+import { P_SEG_GROUP, pSeg } from '@/components/apprentice-hub/portfolio2/ui';
+import {
+  Eyebrow,
+  GUIDE_CARD,
+  GuideFacts,
+  GuidePage,
+} from '@/components/apprentice/shared/GuideKit';
 import JargonTermCard from '@/components/apprentice/site-jargon/JargonTermCard';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-
-const categoryEmoji: Record<string, string> = {
-  'electrical-terms': '⚡',
-  'tools-equipment': '🔧',
-  'safety-terms': '🛡',
-  'site-language': '💬',
-  'regulations-standards': '📋',
-  'installation-methods': '🔌',
-  'testing-terminology': '🔬',
-  'commercial-industrial': '🏭',
-};
 
 const JargonCategoryPage = () => {
   const navigate = useNavigate();
@@ -37,7 +31,6 @@ const JargonCategoryPage = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
 
   const category = siteJargonCategories.find((c) => c.id === categoryId);
-  const emoji = categoryEmoji[categoryId || ''] || '📘';
 
   const allCategoryTerms = useMemo(() => {
     return siteJargonTerms.filter((term) => term.category === categoryId);
@@ -78,143 +71,111 @@ const JargonCategoryPage = () => {
   }
 
   return (
-    <HubPage>
-      <HubMasthead
-        section={`Apprentice · ${category.name}`}
-        title={`${emoji} ${category.name}`}
-        backTo="/apprentice/toolbox/site-jargon"
+    <GuidePage
+      section={`Apprentice · ${category.name}`}
+      area="Site jargon"
+      title={category.name}
+      backTo="/apprentice/toolbox/site-jargon"
+      description={category.description}
+    >
+      {/* ── Stats ───────────────────────────────────────────────── */}
+      <GuideFacts
+        items={[
+          { label: 'Terms', value: String(allCategoryTerms.length) },
+          { label: 'Basic', value: String(basicCount) },
+          { label: 'Intermediate', value: String(intermediateCount) },
+          { label: 'Advanced', value: String(advancedCount) },
+        ]}
       />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">{category.description}</p>
 
-        {/* ── Stats ───────────────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-              CARD_SURFACE
-            )}
-          >
-            <div className="flex items-baseline justify-between gap-3 flex-wrap">
-              <Eyebrow>Category overview</Eyebrow>
-              <span className="text-[12px] font-mono tabular-nums text-elec-yellow">
-                {allCategoryTerms.length} terms
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {basicCount > 0 && (
-                <span className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[11px] font-medium text-elec-yellow">
-                  <span className="font-mono tabular-nums mr-1">{basicCount}</span> basic
-                </span>
-              )}
-              {intermediateCount > 0 && (
-                <span className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[11px] font-medium text-white">
-                  <span className="font-mono tabular-nums mr-1">{intermediateCount}</span>{' '}
-                  intermediate
-                </span>
-              )}
-              {advancedCount > 0 && (
-                <span className="inline-flex items-center h-7 px-2 rounded-md border border-red-500/30 bg-red-500/[0.04] text-[11px] font-medium text-red-300">
-                  <span className="font-mono tabular-nums mr-1">{advancedCount}</span> advanced
-                </span>
-              )}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── Search ──────────────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            <Input
-              placeholder={`Search ${category.name.toLowerCase()}…`}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
-                aria-label="Clear search"
-              >
-                <X className="h-4 w-4 text-white" />
-              </button>
-            )}
-          </div>
-        </motion.div>
-
-        {/* ── Difficulty filters ──────────────────────────────────── */}
-        <motion.div variants={itemVariants} className="flex gap-1.5 flex-wrap">
-          {(['all', 'basic', 'intermediate', 'advanced'] as const).map((level) => {
-            const isActive = selectedDifficulty === level;
-            const count =
-              level === 'all'
-                ? allCategoryTerms.length
-                : level === 'basic'
-                  ? basicCount
-                  : level === 'intermediate'
-                    ? intermediateCount
-                    : advancedCount;
-            if (level !== 'all' && count === 0) return null;
-            const labelMap: Record<string, string> = {
-              all: 'All',
-              basic: 'Basic',
-              intermediate: 'Intermediate',
-              advanced: 'Advanced',
-            };
-            return (
-              <button
-                key={level}
-                onClick={() => setSelectedDifficulty(level)}
-                className={cn(
-                  'inline-flex items-center gap-1.5 h-8 px-3 rounded-md border text-[11.5px] font-medium touch-manipulation active:scale-[0.98] transition-all',
-                  isActive
-                    ? 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow'
-                    : 'border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04]'
-                )}
-              >
-                <span>{labelMap[level]}</span>
-                <span className="font-mono tabular-nums text-[10.5px] opacity-70">{count}</span>
-              </button>
-            );
-          })}
-        </motion.div>
-
-        {/* ── Results count ───────────────────────────────────────── */}
-        {(searchTerm || selectedDifficulty !== 'all') && (
-          <motion.div variants={itemVariants}>
-            <Eyebrow>
-              Showing {filteredTerms.length} of {allCategoryTerms.length} terms
-            </Eyebrow>
-          </motion.div>
-        )}
-
-        {/* ── Terms ───────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <HubSectionHeading>{`${filteredTerms.length} on screen`}</HubSectionHeading>
-          {filteredTerms.length > 0 ? (
-            <div className="space-y-2.5">
-              {filteredTerms.map((term, i) => (
-                <JargonTermCard key={i} term={term} />
-              ))}
-            </div>
-          ) : (
-            <div
-              className={cn(
-                'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
-                CARD_SURFACE
-              )}
+      {/* ── Search ──────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+          <Input
+            placeholder={`Search ${category.name.toLowerCase()}…`}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+          />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
+              aria-label="Clear search"
             >
-              <Search className="h-5 w-5 text-white mx-auto" />
-              <p className="text-[13px] text-white">
-                No terms match your filters. Try adjusting your search.
-              </p>
-            </div>
+              <X className="h-4 w-4 text-white" />
+            </button>
           )}
-        </motion.section>
-      </HubBody>
-    </HubPage>
+        </div>
+      </motion.div>
+
+      {/* ── Difficulty filters ──────────────────────────────────── */}
+      <motion.div
+        variants={itemVariants}
+        className={P_SEG_GROUP}
+        role="group"
+        aria-label="Difficulty"
+      >
+        {(['all', 'basic', 'intermediate', 'advanced'] as const).map((level) => {
+          const isActive = selectedDifficulty === level;
+          const count =
+            level === 'all'
+              ? allCategoryTerms.length
+              : level === 'basic'
+                ? basicCount
+                : level === 'intermediate'
+                  ? intermediateCount
+                  : advancedCount;
+          if (level !== 'all' && count === 0) return null;
+          const labelMap: Record<string, string> = {
+            all: 'All',
+            basic: 'Basic',
+            intermediate: 'Intermediate',
+            advanced: 'Advanced',
+          };
+          return (
+            <button
+              key={level}
+              onClick={() => setSelectedDifficulty(level)}
+              aria-pressed={isActive}
+              className={cn(pSeg(isActive), 'max-sm:px-1.5 max-sm:text-[12.5px]')}
+            >
+              <span>{labelMap[level]}</span>
+              <span className="tabular-nums max-sm:hidden">{count}</span>
+            </button>
+          );
+        })}
+      </motion.div>
+
+      {/* ── Results count ───────────────────────────────────────── */}
+      {(searchTerm || selectedDifficulty !== 'all') && (
+        <motion.div variants={itemVariants}>
+          <Eyebrow>
+            Showing {filteredTerms.length} of {allCategoryTerms.length} terms
+          </Eyebrow>
+        </motion.div>
+      )}
+
+      {/* ── Terms ───────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <CollegeHeading>{`${filteredTerms.length} on screen`}</CollegeHeading>
+        {filteredTerms.length > 0 ? (
+          <div className="space-y-2.5 lg:grid lg:grid-cols-2 lg:items-start lg:gap-3 lg:space-y-0">
+            {filteredTerms.map((term, i) => (
+              <JargonTermCard key={i} term={term} />
+            ))}
+          </div>
+        ) : (
+          <div className={cn(GUIDE_CARD, 'space-y-2 text-center')}>
+            <Search className="h-5 w-5 text-white mx-auto" />
+            <p className="text-[13px] text-white">
+              No terms match your filters. Try adjusting your search.
+            </p>
+          </div>
+        )}
+      </motion.section>
+    </GuidePage>
   );
 };
 

@@ -1088,11 +1088,11 @@ const IndustrialOverviewCards = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {overviewStats.map((stat, index) => (
-          <Card key={index} className="border-elec-yellow/30 bg-white/5">
-            <CardContent className="p-4 p-0">
-              <div className="flex items-center gap-2 mb-2">
-                <stat.icon className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs text-white">{stat.label}</span>
+          <Card key={index} className="border-white/[0.14] bg-white/5">
+            <CardContent className="p-3.5 sm:p-4">
+              <div className="mb-1.5 flex items-start gap-2">
+                <stat.icon className="h-4 w-4 shrink-0 text-white" strokeWidth={1.5} />
+                <span className="text-[12.5px] leading-snug text-white">{stat.label}</span>
               </div>
               <p className="text-lg font-semibold text-white">{stat.value}</p>
             </CardContent>
@@ -1572,7 +1572,7 @@ const IndustrialOverviewCards = () => {
                         : zone.zone === 'Chilled'
                           ? 'border-white/20 text-white'
                           : zone.zone === 'Frozen'
-                            ? 'border-elec-yellow/40 text-elec-yellow'
+                            ? 'border-white/[0.14] text-elec-yellow'
                             : 'border-white/10 text-white'
                     }`}
                   >
@@ -1762,7 +1762,7 @@ const IndustrialOverviewCards = () => {
                         ? 'bg-white/[0.06] border border-red-500/40'
                         : zone.zone === 'Zone 1'
                           ? 'bg-white/[0.06] border border-white/[0.10]'
-                          : 'bg-white/[0.06] border border-elec-yellow/40'
+                          : 'bg-white/[0.06] border border-white/[0.14]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -1797,7 +1797,7 @@ const IndustrialOverviewCards = () => {
                         ? 'bg-white/[0.06] border border-red-500/40'
                         : zone.zone === 'Zone 21'
                           ? 'bg-white/[0.06] border border-white/[0.10]'
-                          : 'bg-white/[0.06] border border-elec-yellow/40'
+                          : 'bg-white/[0.06] border border-white/[0.14]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -1986,7 +1986,7 @@ const IndustrialOverviewCards = () => {
                       : zone.zone === 'Production Areas'
                         ? 'bg-white/[0.06] border-white/[0.10]'
                         : zone.zone === 'Low Risk Areas'
-                          ? 'bg-white/[0.06] border-elec-yellow/30'
+                          ? 'bg-white/[0.06] border-white/[0.14]'
                           : 'bg-white/[0.06] border-white/[0.10]'
                   }`}
                 >

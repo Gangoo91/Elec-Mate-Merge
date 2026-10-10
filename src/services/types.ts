@@ -56,6 +56,22 @@ export interface PayrollEntry {
   leaveDays: number;
   /** e.g. "2 annual, 1 sick" — so payroll never cross-references the leave screen. */
   leaveDetail: string;
+  /** ELE-2062: holiday taken in the period, in hours (null = could not be worked out). */
+  holidayHours?: number | null;
+  /** Holiday pay for leave taken in the period (owner/admin only). */
+  holidayPay?: number | null;
+  /** Irregular / part-year workers: holiday hours built up (12.07%) in pay periods ending in the window. */
+  holidayAccruedHours?: number | null;
+  /** Rolled-up holiday pay (12.07% of pay) — its own payslip line. */
+  rolledUpHolidayPay?: number | null;
+  /** Statutory Sick Pay qualifying days in the period. */
+  sspDays?: number;
+  /** SSP for those days (owner/admin only). */
+  sspPay?: number | null;
+  /** Any holiday or SSP figure here was estimated from incomplete inputs. */
+  payLawEstimate?: boolean;
+  /** Why, in a line. */
+  payLawNotes?: string;
   jobBreakdown: Array<{
     jobId: string;
     jobTitle: string;

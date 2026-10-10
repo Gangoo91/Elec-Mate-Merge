@@ -19,30 +19,30 @@ const MFTConnectionDiagram = ({ stepData, systemType }: MFTConnectionDiagramProp
 
     return (
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           MFT configuration
         </span>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Test type
             </span>
             <p className="text-[14px] text-white leading-relaxed">{testType}</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Voltage
             </span>
             <p className="text-[14px] text-white leading-relaxed">{voltage}</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Current
             </span>
             <p className="text-[14px] text-white leading-relaxed">{current}</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Duration
             </span>
             <p className="text-[14px] text-white leading-relaxed">
@@ -59,7 +59,7 @@ const MFTConnectionDiagram = ({ stepData, systemType }: MFTConnectionDiagramProp
 
     return (
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Connection instructions
         </span>
         <ol className="space-y-2">
@@ -81,7 +81,7 @@ const MFTConnectionDiagram = ({ stepData, systemType }: MFTConnectionDiagramProp
 
     return (
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Required test leads
         </span>
         <div className="flex flex-wrap gap-1.5">
@@ -113,7 +113,7 @@ const MFTConnectionDiagram = ({ stepData, systemType }: MFTConnectionDiagramProp
 
     return (
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           {systemType === 'three-phase' ? 'Three-phase' : 'Single-phase'} system notes
         </span>
         <ul className="space-y-1.5">

@@ -13,6 +13,7 @@ import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollege
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { cn } from '@/lib/utils';
+import { keyLabel } from '@/lib/college/labels';
 
 interface RecordGradeDialogProps {
   open: boolean;
@@ -26,7 +27,12 @@ const GRADE_OPTIONS: { value: string; label: string; description: string; warn?:
   { value: 'Pass', label: 'Pass', description: 'Meets required standard' },
   { value: 'Competent', label: 'Competent', description: 'Demonstrates competence' },
   { value: 'Refer', label: 'Refer', description: 'Requires resubmission', warn: true },
-  { value: 'Not Yet Competent', label: 'Not Yet Competent', description: 'Does not meet standard', warn: true },
+  {
+    value: 'Not Yet Competent',
+    label: 'Not Yet Competent',
+    description: 'Does not meet standard',
+    warn: true,
+  },
 ];
 
 export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGradeDialogProps) {
@@ -142,23 +148,28 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
             onValueChange={(value) => handleChange('assessmentId', value)}
             title="Assessment to grade"
             placeholder={
-              pendingAssessments.length === 0 ? 'No assessments pending' : 'Select assessment to grade'
+              pendingAssessments.length === 0
+                ? 'No assessments pending'
+                : 'Select assessment to grade'
             }
             disabled={pendingAssessments.length === 0}
             triggerClassName={selectTriggerCn}
             options={pendingAssessments.map((grade) => {
               const student = students.find((s) => s.id === grade.student_id);
-              return { value: grade.id, label: `${grade.unit_name} - ${student?.name || 'Unknown'}` };
+              return {
+                value: grade.id,
+                label: `${grade.unit_name} - ${student?.name || 'Unknown'}`,
+              };
             })}
           />
         </div>
 
         {selectedAssessment && (
-          <div className="border-l-2 border-elec-yellow pl-3.5">
+          <div className="card-surface rounded-2xl p-4">
             <p className="text-[15px] font-semibold text-white">{selectedAssessment.unit_name}</p>
             <p className="mt-1 text-[13px] text-white">
               Learner: <span className="font-medium">{selectedStudent?.name}</span> · Type:{' '}
-              <span className="font-medium">{selectedAssessment.assessment_type}</span>
+              <span className="font-medium">{keyLabel(selectedAssessment.assessment_type)}</span>
             </p>
             {selectedAssessment.assessed_at && (
               <p className="text-[13px] tabular-nums text-white">
@@ -235,7 +246,7 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
                 className={cn(
                   'min-h-[56px] rounded-xl border px-3 py-2 text-left transition-colors touch-manipulation active:scale-[0.98]',
                   on
-                    ? 'border-elec-yellow bg-elec-yellow text-black'
+                    ? 'border-white bg-white text-black'
                     : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]'
                 )}
               >

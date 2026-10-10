@@ -1,6 +1,6 @@
 import { DesignInputs } from '@/types/installation-design';
 import { cn } from '@/lib/utils';
-import { Eyebrow } from '@/components/college/primitives';
+import { StepHeader, Section, Fact } from './wizardUi';
 
 interface ReviewStepProps {
   inputs: DesignInputs;
@@ -16,7 +16,6 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
   const missingData = inputs.circuits.filter((c) => !c.cableLength);
 
   const overallLabel = hasIssues ? 'Incomplete' : 'Ready';
-  const overallClass = hasIssues ? 'text-red-400' : 'text-emerald-400';
 
   const deliverables = [
     'BS 7671 compliant cable sizing for each circuit',
@@ -29,257 +28,121 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
   ];
 
   return (
-    <div className="space-y-8 sm:space-y-10">
-      {/* Section header — editorial */}
-      <div className="space-y-2">
-        <Eyebrow>06 · REVIEW</Eyebrow>
-        <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1] text-white">
-          Ready for the designer.
-        </h2>
-        <p className="text-[14px] leading-relaxed text-white/85 max-w-2xl">
-          Last look before generation. The designer will produce the cable schedule, MCB selection,
-          validation report and install guidance.
-        </p>
-      </div>
+    <div className="space-y-8">
+      <StepHeader
+        title="Ready for the designer"
+        description="Last look before generation. The designer will produce the cable schedule, MCB selection, validation report and install guidance."
+      />
 
-      {/* Headline summary strip — gridline pattern */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Status
-          </div>
-          <div
-            className={cn(
-              'mt-1 text-[13px] font-semibold uppercase tracking-[0.18em]',
-              overallClass
-            )}
-          >
-            {overallLabel}
-          </div>
-        </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Circuits
-          </div>
-          <div className="mt-1 text-[13px] font-semibold text-elec-yellow tabular-nums">
-            {inputs.circuits.length}
-          </div>
-        </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Supply
-          </div>
-          <div className="mt-1 text-[13px] font-semibold text-white tabular-nums">
-            {inputs.phases === 'single' ? '1Φ' : '3Φ'} · {inputs.voltage}V
-          </div>
-        </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Earthing
-          </div>
-          <div className="mt-1 text-[13px] font-semibold text-white">{inputs.earthingSystem}</div>
-        </div>
+      {/* Headline figures */}
+      <div className="grid grid-cols-4 gap-3 border-y border-white/[0.10] py-4">
+        <Fact label="Status" value={overallLabel} tone={hasIssues ? 'bad' : 'good'} />
+        <Fact label="Circuits" value={inputs.circuits.length} />
+        <Fact
+          label="Supply"
+          value={`${inputs.phases === 'single' ? '1Φ' : '3Φ'} · ${inputs.voltage}V`}
+        />
+        <Fact label="Earthing" value={inputs.earthingSystem} />
       </div>
 
       {/* Status banner */}
       {hasIssues ? (
-        <div className="bg-[hsl(0_0%_10%)] border border-red-500/40 rounded-2xl p-4 sm:p-5">
-          <div className="flex items-baseline gap-3">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-red-400 shrink-0">
-              Fail
-            </span>
-            <div className="flex-1">
-              <div className="text-[15px] font-semibold text-white">Missing information</div>
-              <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
-                Complete all required fields before generating the design.
-              </p>
-            </div>
-          </div>
+        <div className="rounded-xl border border-red-500/40 px-4 py-3">
+          <div className="text-[15px] font-semibold text-red-400">Missing information</div>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
+            Complete all required fields before generating the design.
+          </p>
         </div>
       ) : (
-        <div className="bg-[hsl(0_0%_10%)] border border-emerald-500/40 rounded-2xl p-4 sm:p-5">
-          <div className="flex items-baseline gap-3">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-emerald-400 shrink-0">
-              Pass
-            </span>
-            <div className="flex-1">
-              <div className="text-[15px] font-semibold text-white">Ready to generate</div>
-              <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
-                All required information provided.
-              </p>
-            </div>
-          </div>
+        <div className="rounded-xl border border-emerald-500/40 px-4 py-3">
+          <div className="text-[15px] font-semibold text-emerald-400">Ready to generate</div>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
+            All required information provided.
+          </p>
         </div>
       )}
 
       {/* Project details */}
-      <div className="space-y-3">
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-          Project details
-        </span>
-        <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-1">
-                Project name
-              </div>
-              <div className="text-[14px] font-medium text-white">
-                {inputs.projectName || (
-                  <span className="text-red-400 text-[11px] uppercase tracking-[0.18em]">
-                    Not set
-                  </span>
-                )}
-              </div>
-            </div>
-            <div>
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-1">
-                Location
-              </div>
-              <div className="text-[14px] font-medium text-white">
-                {inputs.location || (
-                  <span className="text-red-400 text-[11px] uppercase tracking-[0.18em]">
-                    Not set
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-white/[0.08] flex flex-wrap items-center gap-2">
-            <span className="text-[11px] uppercase tracking-[0.14em] text-white border border-white/15 bg-white/[0.04] rounded-full px-2.5 py-0.5 capitalize">
-              {inputs.propertyType}
-            </span>
-            <span className="text-[11px] uppercase tracking-[0.14em] tabular-nums text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/[0.06] rounded-full px-2.5 py-0.5">
-              {inputs.phases === 'single' ? 'Single phase' : '3-phase'} {inputs.voltage}V
-            </span>
-            <span className="text-[11px] uppercase tracking-[0.14em] text-white border border-white/15 bg-white/[0.04] rounded-full px-2.5 py-0.5">
-              {inputs.earthingSystem}
-            </span>
-          </div>
+      <Section title="Project details">
+        <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6">
+          <Fact
+            label="Project name"
+            value={inputs.projectName || <span className="text-red-400">Not set</span>}
+          />
+          <Fact
+            label="Location"
+            value={inputs.location || <span className="text-red-400">Not set</span>}
+          />
+          <Fact
+            label="Property type"
+            value={<span className="capitalize">{inputs.propertyType}</span>}
+          />
+          <Fact
+            label="Supply"
+            value={`${inputs.phases === 'single' ? 'Single phase' : '3-phase'} ${inputs.voltage}V, ${inputs.earthingSystem}`}
+          />
         </div>
-      </div>
+      </Section>
 
       {/* Circuits overview */}
-      <div className="space-y-3">
-        <div className="flex items-baseline justify-between gap-3">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-            Circuits overview
-          </span>
-          <span className="text-[11px] text-white/50 tabular-nums">
-            {inputs.circuits.length} circuit{inputs.circuits.length !== 1 ? 's' : ''}
-          </span>
-        </div>
-        <div className="space-y-3 sm:space-y-4">
+      <Section
+        title="Circuits overview"
+        aside={`${inputs.circuits.length} circuit${inputs.circuits.length !== 1 ? 's' : ''}`}
+      >
+        <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
           {inputs.circuits.map((circuit, index) => {
             const isMissing = !circuit.loadPower || !circuit.name;
-            const borderClass = isMissing ? 'border-red-500/40' : 'border-white/[0.10]';
-            const statusLabel = isMissing ? 'Fail' : 'Pass';
-            const statusClass = isMissing ? 'text-red-400' : 'text-emerald-400';
-
             return (
-              <div
-                key={circuit.id}
-                className={cn(
-                  'bg-[hsl(0_0%_10%)] border rounded-2xl p-4 sm:p-5',
-                  borderClass
-                )}
-              >
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/50">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span
-                    className={cn(
-                      'text-[11px] uppercase tracking-[0.18em] font-semibold',
-                      statusClass
+              <li key={circuit.id} className="flex items-start justify-between gap-3 py-3">
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-[15px] font-semibold text-white">
+                    {index + 1}.{' '}
+                    {circuit.name || <span className="text-red-400">Unnamed circuit</span>}
+                  </div>
+                  <div className="mt-0.5 text-[13px] tabular-nums text-white">
+                    {circuit.loadPower ? `${circuit.loadPower}W` : '-'} ·{' '}
+                    {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto length'} ·{' '}
+                    {circuit.phases === 'single' ? '1Φ' : '3Φ'}
+                    {circuit.specialLocation && circuit.specialLocation !== 'none' && (
+                      <span className="capitalize"> · {circuit.specialLocation}</span>
                     )}
-                  >
-                    {statusLabel}
-                  </span>
+                  </div>
                 </div>
-                <div className="text-[16px] font-semibold tracking-tight text-white truncate mb-3">
-                  {circuit.name || (
-                    <span className="text-red-400 text-[13px] uppercase tracking-[0.18em]">
-                      Unnamed circuit
-                    </span>
+                <span
+                  className={cn(
+                    'shrink-0 text-[13px] font-semibold',
+                    isMissing ? 'text-red-400' : 'text-emerald-400'
                   )}
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[12.5px]">
-                  <div>
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
-                      Power
-                    </div>
-                    <div className="font-medium text-white tabular-nums">
-                      {circuit.loadPower ? `${circuit.loadPower}W` : '—'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
-                      Length
-                    </div>
-                    <div className="font-medium text-white tabular-nums">
-                      {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
-                      Phase
-                    </div>
-                    <div className="font-medium text-white">
-                      {circuit.phases === 'single' ? '1Φ' : '3Φ'}
-                    </div>
-                  </div>
-                  {circuit.specialLocation && circuit.specialLocation !== 'none' && (
-                    <div>
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-0.5">
-                        Location
-                      </div>
-                      <div className="text-[11px] uppercase tracking-[0.14em] text-amber-400 capitalize">
-                        {circuit.specialLocation}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+                >
+                  {isMissing ? 'Fail' : 'Pass'}
+                </span>
+              </li>
             );
           })}
-        </div>
-      </div>
+        </ul>
+      </Section>
 
       {/* Cable length warning */}
       {missingData.length > 0 && (
-        <div className="bg-[hsl(0_0%_10%)] border border-amber-500/40 rounded-2xl p-4 sm:p-5">
-          <div className="flex items-baseline gap-3">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-amber-400 shrink-0">
-              Warning
-            </span>
-            <p className="text-[12.5px] leading-relaxed text-white/85 flex-1">
-              {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length
-              — the designer will estimate based on typical installations.
-            </p>
-          </div>
+        <div className="rounded-xl border border-amber-500/40 px-4 py-3">
+          <div className="text-[13px] font-semibold text-amber-400">Warning</div>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
+            {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length.
+            The designer will estimate based on typical installations.
+          </p>
         </div>
       )}
 
       {/* Expected output */}
-      <div className="space-y-3">
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-          What you'll get
-        </span>
-        <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5">
-          <ul className="space-y-2.5">
-            {deliverables.map((item, index) => (
-              <li key={index} className="flex items-start gap-3 text-[13px]">
-                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow shrink-0 mt-0.5 w-7">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="text-white/85 leading-relaxed flex-1">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <Section title="What you'll get">
+        <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+          {deliverables.map((item, index) => (
+            <li key={index} className="py-2.5 text-[14px] leading-relaxed text-white">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </Section>
     </div>
   );
 };

@@ -474,7 +474,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
                     className={cn(
                       'h-12 rounded-xl font-medium transition-all touch-manipulation',
                       earthingSystem === sys
-                        ? 'border-orange-500/50 bg-orange-500/20 text-white'
+                        ? 'border-orange-500/50 bg-white/[0.08] text-white'
                         : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
                     )}
                   >
@@ -504,7 +504,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
                         className={cn(
                           'h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
                           measurementMode === opt.value
-                            ? 'border-orange-500/50 bg-orange-500/20 text-white'
+                            ? 'border-orange-500/50 bg-white/[0.08] text-white'
                             : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
                         )}
                       >
@@ -579,12 +579,12 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
                         className={cn(
                           'h-12 rounded-xl font-medium text-sm transition-all touch-manipulation flex-col gap-0.5',
                           disconnectionTime === opt.value
-                            ? 'border-orange-500/50 bg-orange-500/20 text-white'
+                            ? 'border-orange-500/50 bg-white/[0.08] text-white'
                             : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
                         )}
                       >
                         <span>{opt.label}</span>
-                        <span className="text-[10px] font-normal text-white">{opt.sub}</span>
+                        <span className="text-[12px] font-normal text-white">{opt.sub}</span>
                       </Button>
                     ))}
                   </div>
@@ -726,7 +726,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
                         className={cn(
                           'text-xs h-11 rounded-lg touch-manipulation',
                           iDeltaN === opt.value
-                            ? 'border-orange-500/50 bg-orange-500/20 text-white'
+                            ? 'border-orange-500/50 bg-white/[0.08] text-white'
                             : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
                         )}
                       >
@@ -902,7 +902,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
 
                     {/* No device selected info */}
                     {!result.maxZsValue && (
-                      <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                      <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                         <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                         <p className="text-sm text-white">
                           Select a protection device above to check compliance against the BS 7671
@@ -914,7 +914,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
 
                     {/* Device not found warning */}
                     {!result.deviceValid && rating && (
-                      <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                      <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                         <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                         <p className="text-sm text-white">
                           {rating}A is not tabulated for the selected device at{' '}
@@ -927,7 +927,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
 
                     {/* Marginal warning */}
                     {result.compliance100 && !result.compliance80 && (
-                      <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                      <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                         <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                         <p className="text-sm text-white">
                           Zs is within the tabulated maximum but exceeds the 80% rule. Cable
@@ -997,7 +997,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
                     </div>
 
                     {/* Reg 411.5.3(a) — the condition this tool does NOT evaluate */}
-                    <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                    <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                       <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                       <p className="text-sm text-white">
                         <span className="font-medium">Condition (a) still to verify.</span> Reg
@@ -1011,7 +1011,7 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
 
                     {/* Table 41.5 NOTE 2 / Reg 542.2.4 — electrode stability */}
                     {result.electrodeAboveStabilityLimit && (
-                      <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                      <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                         <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                         <p className="text-sm text-white">
                           RA is above 200 Ω. Table 41.5 NOTE 2 states the resistance of the
@@ -1126,8 +1126,8 @@ const EarthFaultLoopCalculator = ({ onResult }: CalculatorResultReporter = {}) =
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       {earthingSystem === 'tn' ? (

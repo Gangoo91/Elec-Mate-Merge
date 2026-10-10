@@ -4,7 +4,7 @@ import { Table, FileText, Calculator, AlertTriangle, BookOpen, Shield } from 'lu
 const ZsTablesSection = () => (
   <div className="space-y-4 sm:space-y-6">
     {/* Educational Header - Understanding 80% Rule */}
-    <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3 sm:p-4">
+    <div className="bg-white/[0.06] border border-white/[0.14] rounded-lg p-3 sm:p-4">
       <div className="flex items-center gap-2 mb-3">
         <Calculator className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
         <h4 className="font-semibold text-sm sm:text-base text-elec-yellow">

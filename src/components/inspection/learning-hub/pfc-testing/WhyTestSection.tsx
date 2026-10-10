@@ -59,7 +59,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* What is PFC */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Is PFC?</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Is PFC?</p>
         </motion.div>
 
         {whatIsPfc.map((item, i) => (
@@ -87,7 +87,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Why it matters */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
+          <p className="text-[12px] font-medium text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {hazards.map((h, i) => (
@@ -108,7 +108,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* MCB operation zones */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">MCB Operation — Why PFC Determines Trip Speed</p>
+          <p className="text-[12px] font-medium text-white mb-3">MCB Operation — Why PFC Determines Trip Speed</p>
         </motion.div>
 
         {mcbOperationZones.map((zone, i) => (
@@ -125,7 +125,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Examples</p>
+          <p className="text-[12px] font-medium text-white mb-3">Real-World Examples</p>
         </motion.div>
 
         {realWorldExamples.map((ex, i) => (
@@ -133,7 +133,7 @@ const WhyTestSection = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-semibold text-white">{ex.title}</p>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${ex.result === 'PASS' ? 'text-green-400 bg-green-400/10' : ex.result === 'MARGINAL' ? 'text-yellow-400 bg-yellow-400/10' : 'text-orange-400 bg-orange-400/10'}`}>{ex.result}</span>
+                <span className={`text-[12px] font-bold px-2 py-0.5 rounded-lg ${ex.result === 'PASS' ? 'text-green-400 bg-green-400/10' : ex.result === 'MARGINAL' ? 'text-yellow-400 bg-yellow-400/10' : 'text-orange-400 bg-orange-400/10'}`}>{ex.result}</span>
               </div>
               <p className="text-sm text-white">{ex.finding}</p>
               <p className="text-sm text-white">{ex.outcome}</p>

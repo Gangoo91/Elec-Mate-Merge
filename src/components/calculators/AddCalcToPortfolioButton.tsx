@@ -72,7 +72,7 @@ export function AddCalcToPortfolioButton({
       disabled={busy}
       className={cn(
         'flex min-h-[44px] touch-manipulation items-center gap-1.5 rounded-lg px-3 py-1.5',
-        'border border-elec-yellow/40 text-xs font-semibold text-white transition-colors hover:border-elec-yellow',
+        'border border-white/[0.14] text-xs font-semibold text-white transition-colors hover:border-elec-yellow',
         'disabled:opacity-40',
         className
       )}

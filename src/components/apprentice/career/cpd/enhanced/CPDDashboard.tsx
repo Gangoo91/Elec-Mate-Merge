@@ -24,10 +24,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
       <div className="space-y-6 animate-fade-in">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {[...Array(4)].map((_, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
-            >
+            <div key={i} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
               <div className="h-16 bg-white/[0.04] rounded animate-pulse"></div>
             </div>
           ))}
@@ -81,43 +78,35 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Hours this year
-          </span>
+          <span className="text-[13px] font-semibold text-white">Hours this year</span>
           <div className="text-[20px] font-semibold text-white">{stats.hoursThisYear}</div>
           <p className="text-[12px] text-white">of {stats.targetHours} target</p>
         </div>
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Progress
-          </span>
+          <span className="text-[13px] font-semibold text-white">Progress</span>
           <div className="text-[20px] font-semibold text-white">{stats.completionPercentage}%</div>
           <p className="text-[12px] text-white">Target completion</p>
         </div>
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Days remaining
-          </span>
+          <span className="text-[13px] font-semibold text-white">Days remaining</span>
           <div className="text-[20px] font-semibold text-white">{stats.daysRemaining}</div>
           <p className="text-[12px] text-white">Until year end</p>
         </div>
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Compliance
-          </span>
+          <span className="text-[13px] font-semibold text-white">Compliance</span>
           <div className="text-[16px] font-semibold text-white">{getComplianceStatus()}</div>
           <p className="text-[12px] text-white">Professional bodies</p>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           {new Date().getFullYear()} CPD progress
         </span>
         <div className="space-y-2">
           <div className="flex justify-between text-[13px]">
             <span className="text-white">Annual progress</span>
-            <span className="text-white font-mono">
+            <span className="text-white">
               {stats.hoursThisYear} / {stats.targetHours} hours
             </span>
           </div>
@@ -125,15 +114,11 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Hours this month
-            </span>
+            <span className="text-[13px] font-semibold text-white">Hours this month</span>
             <div className="text-[16px] font-semibold text-white">{stats.hoursThisMonth}</div>
           </div>
           <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Monthly average
-            </span>
+            <span className="text-[13px] font-semibold text-white">Monthly average</span>
             <div className="text-[16px] font-semibold text-white">
               {stats.averageHoursPerMonth.toFixed(1)}
             </div>
@@ -141,25 +126,20 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
         </div>
         {stats.completionPercentage < 100 && (
           <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 text-[13px] text-white">
-            You need{' '}
-            <span className="text-white font-mono">
-              {stats.targetHours - stats.hoursThisYear}
-            </span>{' '}
+            You need <span className="text-white">{stats.targetHours - stats.hoursThisYear}</span>{' '}
             more hours to meet your annual target.
           </div>
         )}
       </div>
 
-      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Hours by category
-        </span>
+      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Hours by category</span>
         <div className="space-y-3">
           {stats.categoryBreakdown.map((category, index) => (
             <div key={index} className="space-y-1.5">
               <div className="flex justify-between items-baseline">
                 <span className="text-[13px] text-white">{category.category}</span>
-                <span className="text-[12px] text-white font-mono">
+                <span className="text-[12px] text-white">
                   {category.hours} hrs ({category.percentage}%)
                 </span>
               </div>

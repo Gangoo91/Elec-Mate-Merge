@@ -7,10 +7,17 @@
  *  - Book the next inspection: a repeat visit at the certificate's own
  *    interval, due on its re-test date (ELE-1821).
  *  - Raise a remedial quote: one line per open C1, C2 or FI observation.
+ *  - Send it when paid (ELE-2065 §3A #12): hold it on the job's unpaid invoice;
+ *    release-certificate emails it the moment that invoice is paid.
  */
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CalendarClock, FileText, Send } from 'lucide-react';
+import { CalendarClock, FileText, Lock, Send } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  getJobInvoiceCertificates,
+  setInvoiceCertificate,
+} from '@/services/quoteChainService';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { FormSheet } from '@/components/forms/FormSheet';
@@ -56,6 +63,32 @@ export function CertNextSteps({ cert }: { cert: JobCertificate }) {
 
   const signed = cert.qs?.status === 'approved';
   const done = cert.status === 'completed';
+  const qc = useQueryClient();
+  const [holdBusy, setHoldBusy] = useState(false);
+  // Firm managers only: the server returns nothing for anyone else.
+  const { data: billing } = useQuery({
+    queryKey: ['job-invoice-certificates', cert.job_id],
+    enabled: done && (!cert.qs || signed),
+    staleTime: 30_000,
+    queryFn: () => getJobInvoiceCertificates(cert.job_id),
+  });
+  const isThis = (id: string | null) => !!id && (id === cert.report_id || id === cert.report_uuid);
+  const holding = billing?.invoices.find((i) => isThis(i.linked_certificate_id));
+  const unpaid = billing?.invoices.find((i) => !i.paid && !i.released_at && !i.linked_certificate_id);
+  const ready = !!billing?.certificates.some((c) => c.report_uuid === cert.report_uuid);
+  const hasPdf = !!billing?.certificates.find((c) => c.report_uuid === cert.report_uuid)?.has_pdf;
+  const setHold = async (invoiceId: string, on: boolean) => {
+    setHoldBusy(true);
+    try {
+      await setInvoiceCertificate(invoiceId, on ? cert.report_uuid : null, 'on_payment');
+      toast.success(on ? 'It goes to the customer once the invoice is paid' : 'No longer held');
+      qc.invalidateQueries({ queryKey: ['job-invoice-certificates', cert.job_id] });
+    } catch (e) {
+      toast.error((e as Error).message || 'Could not change that');
+    } finally {
+      setHoldBusy(false);
+    }
+  };
   const remedials = cert.remedials ?? [];
   const label = typeLabel(cert.report_type);
 
@@ -156,16 +189,66 @@ export function CertNextSteps({ cert }: { cert: JobCertificate }) {
     navigate(`/employer?${p.toString()}`);
   };
 
+  // Held for an invoice: sending now is the exception, so it says so.
+  const held = !!(ready && holding && !holding.released_at);
+  const sendButton = (
+    <button
+      type="button"
+      className={btn}
+      onClick={openSend}
+      disabled={ensure.isPending || (!!cert.qs && !signed)}
+    >
+      <Send className={cn('h-4 w-4 shrink-0', held ? 'text-white' : 'text-elec-yellow')} />
+      {held ? 'Send now anyway' : 'Send it to the customer'}
+    </button>
+  );
+
   return (
     <div data-help="testing.next-steps" className="rounded-2xl border border-white/[0.12] bg-white/[0.04] p-4 space-y-3">
       <h3 className="text-[15px] font-semibold text-white">Next steps</h3>
       {!signed && cert.qs && (
         <p className="text-[13px] text-white">The customer can download it once the QS has signed it off.</p>
       )}
-      <button type="button" className={btn} onClick={openSend} disabled={ensure.isPending || (!!cert.qs && !signed)}>
-        <Send className="h-4 w-4 shrink-0 text-elec-yellow" />
-        Send it to the customer
-      </button>
+      {!held && sendButton}
+      {ready && holding && (
+        <div className="flex items-center gap-3 rounded-xl border border-white/[0.12] px-4 py-3">
+          <Lock className="h-4 w-4 shrink-0 text-elec-yellow" aria-hidden />
+          <p className="min-w-0 flex-1 text-[13px] leading-snug text-white">
+            {holding.released_at
+              ? `Sent to the customer when ${holding.invoice_number ?? 'the invoice'} was paid.`
+              : holding.mode === 'on_payment'
+                ? `Held until ${holding.invoice_number ?? 'the invoice'} is paid, then emailed to the customer.`
+                : `Goes with ${holding.invoice_number ?? 'the invoice'} when it is emailed.`}
+          </p>
+          {!holding.released_at && holding.mode === 'on_payment' && (
+            <button
+              type="button"
+              disabled={holdBusy}
+              onClick={() => setHold(holding.id, false)}
+              className="h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold text-white touch-manipulation hover:underline disabled:opacity-50"
+            >
+              Stop holding
+            </button>
+          )}
+        </div>
+      )}
+      {held && sendButton}
+      {ready && !holding && unpaid && (
+        <button
+          type="button"
+          className={btn}
+          disabled={holdBusy}
+          onClick={() => setHold(unpaid.id, true)}
+        >
+          <Lock className="h-4 w-4 shrink-0 text-elec-yellow" />
+          Send it when {unpaid.invoice_number ?? 'the invoice'} is paid
+        </button>
+      )}
+      {ready && !hasPdf && (holding || unpaid) && (
+        <p className="text-[13px] leading-snug text-orange-300">
+          Save the certificate PDF first, or it can't be emailed.
+        </p>
+      )}
       {cert.next_inspection && (
         <button type="button" className={btn} onClick={() => setRepeatOpen(true)}>
           <CalendarClock className="h-4 w-4 shrink-0 text-elec-yellow" />
@@ -187,6 +270,17 @@ export function CertNextSteps({ cert }: { cert: JobCertificate }) {
         title={`Send the ${label} to ${greetingName(m?.client || cert.client_name) || 'the customer'}`}
         description="Their client portal link, where they can view and download it. It opens your own WhatsApp, Messages or email."
         width="wide"
+        footer={
+          <div className="flex items-center gap-2 sm:justify-end">
+            <button
+              type="button"
+              onClick={() => setSendOpen(false)}
+              className={cn(buttonSecondaryCn, 'flex-1 px-6 sm:flex-none')}
+            >
+              Close
+            </button>
+          </div>
+        }
       >
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-10">
           <pre className="whitespace-pre-wrap rounded-2xl border border-white/[0.12] border-l-[3px] border-l-elec-yellow bg-white/[0.04] px-4 py-3.5 font-sans text-[14px] leading-relaxed text-white">

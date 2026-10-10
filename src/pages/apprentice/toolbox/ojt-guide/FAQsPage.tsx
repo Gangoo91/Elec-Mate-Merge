@@ -157,66 +157,63 @@ const glossary = [
       'English and Maths qualifications at Level 2 — required for apprenticeship completion if you do not already have GCSEs grade 4+',
   },
 ];
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const FAQsPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · OJT"
-        title="FAQs & Glossary"
-        backTo="/apprentice/toolbox/off-job-training-guide"
-      />
-      <HubBody>
-        {/* FAQs */}
-        <div className="space-y-3">
-          <HubSectionHeading>Frequently asked questions</HubSectionHeading>
+    <GuidePage
+      section="Apprentice · OJT"
+      area="Off-the-job training"
+      title="FAQs & Glossary"
+      backTo="/apprentice/toolbox/off-job-training-guide"
+    >
+      {/* FAQs */}
+      <div className="space-y-3">
+        <CollegeHeading>Frequently asked questions</CollegeHeading>
 
-          {faqs.map((faq) => (
-            <div
-              key={faq.question}
-              className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]"
-            >
-              <div className="sm:p-5 py-4 space-y-2">
-                <h3 className="font-medium text-elec-yellow text-sm">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Glossary */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Glossary of Terms
-              </span>
-            </div>
-          </div>
-
+        {faqs.map((faq) => (
           <div
-            className={cn(
-              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-              CARD_SURFACE
-            )}
+            key={faq.question}
+            className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]"
           >
-            <div className="sm:p-5 space-y-3">
-              {glossary.map((item) => (
-                <div key={item.term} className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-semibold text-sm min-w-[80px] flex-shrink-0">
-                    {item.term}
-                  </span>
-                  <span className="text-white text-sm">{item.definition}</span>
-                </div>
-              ))}
+            <div className="sm:p-5 py-4 space-y-2">
+              <h3 className="font-medium text-elec-yellow text-sm">{faq.question}</h3>
+              <p className="text-white text-sm">{faq.answer}</p>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Glossary */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Glossary of Terms</span>
+          </div>
         </div>
-      </HubBody>
-    </HubPage>
+
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
+          <div className="sm:p-5 space-y-3">
+            {glossary.map((item) => (
+              <div key={item.term} className="flex items-start gap-2">
+                <span className="text-elec-yellow font-semibold text-sm min-w-[80px] flex-shrink-0">
+                  {item.term}
+                </span>
+                <span className="text-white text-sm">{item.definition}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </GuidePage>
   );
 };
 

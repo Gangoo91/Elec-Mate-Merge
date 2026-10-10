@@ -19,12 +19,13 @@
  */
 import type { ElecIdProfile } from '@/services/elecIdService';
 import type { Certification } from '@/hooks/useCertifications';
-import { getQualificationLabel, getEcsCardLabel } from '@/data/uk-electrician-constants';
 import {
-  isHeld,
-  verificationLabel,
-  type VerificationLevel,
-} from '@/services/credentialsService';
+  getQualificationLabel,
+  getEcsCardLabel,
+  jobTitleText,
+} from '@/data/uk-electrician-constants';
+import { courseForRecordName } from '@/data/assignableCourses';
+import { isHeld, verificationLabel, type VerificationLevel } from '@/services/credentialsService';
 
 export type CellStatus = 'valid' | 'expiring' | 'expired' | 'none';
 
@@ -42,7 +43,21 @@ export interface MatrixCell {
   verification: VerificationLevel | null;
   /** Store id of the governing record (null for the profile's ECS fields). */
   recordId: string | null;
+  /** ELE-1834: a Study Centre course the person passed that relates to this
+   *  column. CPD only: it never makes the cell held. */
+  course?: { label: string; date: string | null } | null;
 }
+
+/** Training records written when someone passes a course their firm assigned
+ *  (ELE-1834, training_type set server-side). They sit beside the credential
+ *  they relate to and are never counted as holding it. */
+export const STUDY_CENTRE_TRAINING_TYPE = 'Study Centre course';
+export const isStudyCentreCourseRecord = (q: {
+  training_type?: string | null;
+  source_table?: string | null;
+}): boolean =>
+  q.training_type === STUDY_CENTRE_TRAINING_TYPE ||
+  q.source_table === 'employer_course_assignments';
 
 export interface MatrixColumn {
   key: string;
@@ -59,6 +74,23 @@ export interface MatrixWorker {
   expiredCount: number;
   /** Held cells nobody has checked (self-declared). */
   uncheckedCount: number;
+  /** ELE-1834: briefings signed and attested training hours. Evidence beside
+   *  the credentials: never counted as holding one, never in a column. */
+  training: WorkerTrainingEvidence | null;
+  /** On the roster but no Elec-ID yet: every cell is empty until one is made. */
+  noElecId?: boolean;
+}
+
+/** Training evidence for one person (from get_team_training_evidence). */
+export interface WorkerTrainingEvidence {
+  briefingsSigned: number;
+  lastBriefingOn: string | null;
+  /** Workplace-attested off-the-job minutes (employer or supervisor). */
+  otjAttestedMinutes: number;
+  /** College-verified off-the-job minutes, a separate authority. */
+  otjCollegeVerifiedMinutes: number;
+  /** Entries logged and still waiting for the firm to attest. */
+  otjWaiting: number;
 }
 
 export interface CompetenceMatrix {
@@ -98,7 +130,8 @@ const CANONICAL: { key: string; label: string; match: RegExp }[] = [
   {
     key: '2391',
     label: 'Inspection & Testing',
-    match: /2391|2394|2395|inspection[\s,]*(&|and)?\s*testing|periodic inspection|initial verification/i,
+    match:
+      /2391|2394|2395|inspection[\s,]*(&|and)?\s*testing|periodic inspection|initial verification/i,
   },
   { key: 'am2', label: 'AM2 / NVQ L3', match: /\bam2s?\b|nvq\s*(level\s*)?3|2357|5357/i },
   { key: 'pat', label: 'PAT Testing', match: /\bpat\b|2377/i },
@@ -108,7 +141,11 @@ const CANONICAL: { key: string; label: string; match: RegExp }[] = [
   { key: 'asbestos', label: 'Asbestos Awareness', match: /asbestos/i },
   { key: 'height', label: 'Working at Height', match: /work(ing)?\s*at\s*height|harness/i },
   { key: 'manual', label: 'Manual Handling', match: /manual handling/i },
-  { key: 'ssts', label: 'SSSTS / SMSTS', match: /sssts|smsts|site\s*(supervisor|management)\s*safety/i },
+  {
+    key: 'ssts',
+    label: 'SSSTS / SMSTS',
+    match: /sssts|smsts|site\s*(supervisor|management)\s*safety/i,
+  },
   { key: 'fire', label: 'Fire Safety', match: /fire\s*(safety|marshal|warden|awareness)/i },
   { key: 'ev', label: 'EV Charging', match: /\bev\b|electric vehicle|2921|2919/i },
   {
@@ -171,7 +208,14 @@ export function buildCompetenceMatrix(
    *  come from the same store as profile.qualifications, so any record whose id
    *  is already on a profile is ignored (never double-counted). */
   certifications: Certification[] = [],
-  options: { horizonDays?: number } = {}
+  options: {
+    horizonDays?: number;
+    /** ELE-1834: training evidence keyed by roster employee_id. */
+    training?: Map<string, WorkerTrainingEvidence>;
+    /** The whole roster: anyone here without a profile still gets a row
+     *  (every requirement missing) so nobody is invisible (ELE-2086). */
+    roster?: { employeeId: string; name: string; role: string }[];
+  } = {}
 ): CompetenceMatrix {
   const horizonDays = options.horizonDays ?? 60;
   const onProfiles = new Set(profiles.flatMap((p) => (p.qualifications ?? []).map((q) => q.id)));
@@ -194,6 +238,7 @@ export function buildCompetenceMatrix(
       ...(certsByEmployee.get(p.employee_id) ?? []),
       ...(p.qualifications ?? [])
         .filter((q) => isHeld({ training_status: q.training_status ?? null }))
+        .filter((q) => !isStudyCentreCourseRecord(q))
         .map((q) => ({
           name: getQualificationLabel(q.qualification_name),
           expiry: q.expiry_date,
@@ -208,7 +253,25 @@ export function buildCompetenceMatrix(
     // ECS-card records feed the dedicated ECS column, not their own columns
     const records = all.filter((r) => !ECS_MATCH.test(r.name));
     const ecsRecords = all.filter((r) => ECS_MATCH.test(r.name));
-    return { profile: p, records, ecsRecords };
+    // Study Centre courses passed, keyed by the column they relate to.
+    const courses = new Map<string, { label: string; date: string | null }>();
+    for (const q of p.qualifications ?? []) {
+      if (!isStudyCentreCourseRecord(q)) continue;
+      const label = q.qualification_name
+        .replace(/^Study Centre:\s*/i, '')
+        .replace(/\s*\(Study Centre course\)\s*$/i, '');
+      // The course's own column first ("Renewable energy" → Solar PV, which the
+      // name patterns don't catch), then the name patterns.
+      const key =
+        courseForRecordName(q.qualification_name)?.credentialKey ??
+        CANONICAL.find((c) => c.match.test(label))?.key;
+      if (!key) continue;
+      const prev = courses.get(key);
+      if (!prev || (q.date_achieved ?? '') > (prev.date ?? '')) {
+        courses.set(key, { label, date: q.date_achieved ?? null });
+      }
+    }
+    return { profile: p, records, ecsRecords, courses };
   });
 
   // Decide which canonical columns actually exist in this company's data,
@@ -226,6 +289,7 @@ export function buildCompetenceMatrix(
         if (!leftovers.has(col.key)) leftovers.set(col.key, col);
       }
     }
+    for (const key of w.courses.keys()) usedCanonical.add(key);
   }
 
   const columns: MatrixColumn[] = [
@@ -235,7 +299,7 @@ export function buildCompetenceMatrix(
   ];
 
   const workers: MatrixWorker[] = workersRaw
-    .map(({ profile, records, ecsRecords }) => {
+    .map(({ profile, records, ecsRecords, courses }) => {
       const cells: Record<string, MatrixCell> = {};
 
       // ECS cell — governing record across the profile's card fields AND any
@@ -245,9 +309,7 @@ export function buildCompetenceMatrix(
         ...(profile.ecs_card_type || profile.ecs_expiry_date || profile.ecs_card_number
           ? [
               {
-                name: profile.ecs_card_type
-                  ? getEcsCardLabel(profile.ecs_card_type)
-                  : 'ECS Card',
+                name: profile.ecs_card_type ? getEcsCardLabel(profile.ecs_card_type) : 'ECS Card',
                 expiry: profile.ecs_expiry_date,
                 number: profile.ecs_card_number,
                 verification: (profile.ecs_verification_level ??
@@ -291,22 +353,40 @@ export function buildCompetenceMatrix(
               recordId: gov.id,
             }
           : NONE_CELL;
+        const course = courses.get(col.key);
+        if (course) cells[col.key] = { ...cells[col.key], course };
       }
 
       const all = Object.values(cells);
       return {
         employeeId: profile.employee_id,
         name: profile.employee?.name || 'Unknown',
-        role: profile.employee?.role || 'Electrician',
+        role: jobTitleText(profile.employee?.role) || 'Electrician',
         cells,
         validCount: all.filter((c) => c.status === 'valid').length,
         expiringCount: all.filter((c) => c.status === 'expiring').length,
         expiredCount: all.filter((c) => c.status === 'expired').length,
-        uncheckedCount: all.filter(
-          (c) => c.status !== 'none' && c.verification === 'self_declared'
-        ).length,
+        uncheckedCount: all.filter((c) => c.status !== 'none' && c.verification === 'self_declared')
+          .length,
+        training: options.training?.get(profile.employee_id) ?? null,
       };
     })
+    .concat(
+      (options.roster ?? [])
+        .filter((r) => !profiles.some((p) => p.employee_id === r.employeeId))
+        .map((r) => ({
+          employeeId: r.employeeId,
+          name: r.name || 'Unknown',
+          role: jobTitleText(r.role) || 'Electrician',
+          cells: Object.fromEntries(columns.map((c) => [c.key, NONE_CELL])),
+          validCount: 0,
+          expiringCount: 0,
+          expiredCount: 0,
+          uncheckedCount: 0,
+          training: options.training?.get(r.employeeId) ?? null,
+          noElecId: true,
+        }))
+    )
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return { columns, workers, generatedAt: new Date().toISOString(), horizonDays };
@@ -334,9 +414,7 @@ export const REQUIREMENT_PRESETS: { id: string; label: string; keys: string[] }[
 export function requirementLabel(key: string, columns: MatrixColumn[]): string {
   if (key === 'ecs') return 'ECS Card';
   return (
-    columns.find((c) => c.key === key)?.label ??
-    CANONICAL.find((c) => c.key === key)?.label ??
-    key
+    columns.find((c) => c.key === key)?.label ?? CANONICAL.find((c) => c.key === key)?.label ?? key
   );
 }
 
@@ -495,7 +573,26 @@ export function buildCompetenceMatrixCsv(
   lines.push([esc('Amber threshold'), esc(`Expires within ${matrix.horizonDays} days`)].join(','));
   lines.push('');
 
-  lines.push(['Worker', 'Role', ...matrix.columns.map((c) => c.label)].map(esc).join(','));
+  // Training evidence sits after the credentials, in its own columns, so a
+  // signed briefing or attested hours can never read as a held ticket.
+  const withTraining = matrix.workers.some((w) => w.training);
+  const hrs = (m: number) => String(Math.round((m / 60) * 10) / 10);
+  lines.push(
+    [
+      'Worker',
+      'Role',
+      ...matrix.columns.map((c) => c.label),
+      ...(withTraining
+        ? [
+            'Briefings signed',
+            'Training hours attested by the firm',
+            'Training hours verified by college',
+          ]
+        : []),
+    ]
+      .map(esc)
+      .join(',')
+  );
   for (const w of matrix.workers) {
     lines.push(
       [
@@ -508,6 +605,13 @@ export function buildCompetenceMatrixCsv(
           const label = cell.status === 'expired' ? 'EXPIRED ' : '';
           return esc(`${label}${fmt(cell.expiry)}`);
         }),
+        ...(withTraining
+          ? [
+              esc(String(w.training?.briefingsSigned ?? 0)),
+              esc(hrs(w.training?.otjAttestedMinutes ?? 0)),
+              esc(hrs(w.training?.otjCollegeVerifiedMinutes ?? 0)),
+            ]
+          : []),
       ].join(',')
     );
   }

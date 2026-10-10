@@ -27,6 +27,7 @@ import { JobScaleBadge } from './JobScaleBadge';
 import { QuoteSelectorSheet, type QuotePickerRow } from './QuoteSelectorSheet';
 import { PreviousRamsSheet } from './PreviousRamsSheet';
 import { supabase } from '@/integrations/supabase/client';
+import type { SafetyLaunchPeople } from '@/utils/safety-launch';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
@@ -166,6 +167,18 @@ export interface AIRAMSInputProps {
     sourceId: string,
     target: { projectName: string; location: string }
   ) => Promise<void>;
+  /**
+   * Start from these details (the Employer Hub's job pack). Passed as a prop
+   * rather than in the URL: the hub's URL carries its own section and tool,
+   * which the URL seed below would clear.
+   */
+  seed?: {
+    title?: string;
+    location?: string;
+    description?: string;
+    /** The firm's real people for the job (Employer Hub, ELE-1941). */
+    people?: SafetyLaunchPeople;
+  };
 }
 
 /** Read the saved input draft from localStorage, returns null if none / parse error. */
@@ -189,6 +202,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
   onGenerate,
   isProcessing,
   onStartFromPrevious,
+  seed: packSeed,
 }) => {
   const { user, profile } = useAuth();
   const { companyProfile } = useCompanyProfile();
@@ -356,6 +370,35 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       seededFromQuote.current = true;
       handlePickQuote(seed);
       navigate(location.pathname, { replace: true, state: null });
+      return;
+    }
+    // Started from a firm job pack (Employer Hub). Same rule as a job: its
+    // details win over an autosaved draft. No navigate — the hub owns its URL.
+    if (packSeed && (packSeed.title || packSeed.location || packSeed.description)) {
+      seededFromQuote.current = true;
+      setJobDescription(packSeed.description?.trim() || '');
+      const people = packSeed.people ?? {};
+      const named = (v?: string) => v?.trim() || '';
+      setProjectInfo((prev) => ({
+        ...prev,
+        projectName: packSeed.title?.trim() || prev.projectName,
+        location: packSeed.location?.trim() || prev.location,
+        // The firm's people for this job win over an earlier draft's names.
+        contractor: named(people.contractor) || prev.contractor,
+        supervisor: named(people.supervisor) || prev.supervisor,
+        siteManagerName: named(people.siteManagerName) || prev.siteManagerName,
+        siteManagerPhone: named(people.siteManagerPhone) || prev.siteManagerPhone,
+        firstAiderName: named(people.firstAiderName) || prev.firstAiderName,
+        firstAiderPhone: named(people.firstAiderPhone) || prev.firstAiderPhone,
+      }));
+      if (people.firstAiderName || people.siteManagerName) setShowEmergencyContacts(true);
+      const anyPeople = Object.values(people).some((v) => !!v?.trim());
+      toast({
+        title: 'Filled in from the job',
+        description: anyPeople
+          ? 'The site and your people come from the job and your team. Check them, then generate.'
+          : 'Check the description covers the work on site, then generate.',
+      });
       return;
     }
     // Started from a job (see utils/safety-launch). The job's details win over

@@ -294,6 +294,9 @@ export function applyCableCapacityTripwire(
 
     // App 15 governs rings, not the radial rule — leave them alone.
     if ((circuit as any).circuitTopology === 'ring') return circuit;
+    // Already sized from Appendix 4 by deterministic-sizing.ts; these local
+    // tables disagree with it, so only unmapped circuits come through here.
+    if ((circuit as any)._appendix4Sized) return circuit;
 
     const size = Number(circuit.cableSize);
     const cableType = String((circuit as any).cableType ?? '');

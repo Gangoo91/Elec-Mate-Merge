@@ -87,6 +87,11 @@ import { labourLinesFor, labourAllocations, describeLabour, describeLines, short
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { useSaveToPriceBook } from '@/hooks/useSaveToPriceBook';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
+import {
+  bundleAllowanceHours,
+  bundleLineToQuoteItem,
+  quoteItemsToBundleLines,
+} from '@/utils/bundleFromQuote';
 import { usePriceList } from '@/hooks/usePriceList';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { useMaterialsAutocomplete } from '@/hooks/useMaterialsAutocomplete';
@@ -146,9 +151,24 @@ export const EnhancedQuoteItemsStep = ({
   const [showPriceBook, setShowPriceBook] = useState(false);
 
   // Bundles
-  const { bundles, bundleTotal } = usePriceBookBundles();
+  const { bundles, bundleTotal, createBundle } = usePriceBookBundles();
   const [showBundles, setShowBundles] = useState(false);
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
+  // ELE-2026 — save this quote's lines as a reusable bundle.
+  const [savingBundle, setSavingBundle] = useState(false);
+  const [bundleName, setBundleName] = useState('');
+  const saveAsBundle = () => {
+    const name = bundleName.trim();
+    const lines = quoteItemsToBundleLines(items);
+    if (!name || lines.length === 0) return;
+    createBundle(name, lines, { labourHours: bundleAllowanceHours(lines) || undefined });
+    toast({
+      title: 'Saved to your bundles',
+      description: `${name}: ${lines.length} line${lines.length === 1 ? '' : 's'}. Add it to any quote from Bundles.`,
+    });
+    setSavingBundle(false);
+    setBundleName('');
+  };
 
   // Inline item description editing
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
@@ -1043,7 +1063,11 @@ export const EnhancedQuoteItemsStep = ({
                           )}
                         </div>
                       </div>
-                      <p className="text-[11px] text-white mt-0.5">{bundle.items.length} items</p>
+                      <p className="text-[11px] text-white mt-0.5">
+                        {bundle.items.length} items
+                        {bundleAllowanceHours(bundle.items) > 0 &&
+                          ` · + ${bundleAllowanceHours(bundle.items)} h labour at your rates`}
+                      </p>
                     </button>
 
                     {expanded && (
@@ -1063,17 +1087,9 @@ export const EnhancedQuoteItemsStep = ({
                           onClick={() => {
                             let addedCount = 0;
                             bundle.items.forEach((item) => {
-                              // Bundle unitPrice is already the sell price — it's what
-                              // the bundle total and expanded rows display. Re-applying
-                              // markup quoted bundle materials above the shown total.
-                              // Use it directly. (ELE-1010)
-                              onAdd({
-                                description: item.name,
-                                quantity: item.quantity,
-                                unit: item.unit,
-                                unitPrice: item.unitPrice,
-                                category: item.category === 'labour' ? 'labour' : item.category === 'equipment' ? 'equipment' : 'materials',
-                              });
+                              // Sell price used as-is (ELE-1010); a line's time
+                              // allowance re-derives its labour (ELE-2026).
+                              onAdd(bundleLineToQuoteItem(item));
                               addedCount++;
                             });
                             toast({
@@ -1719,9 +1735,61 @@ export const EnhancedQuoteItemsStep = ({
       {/* Items List */}
       {items.length > 0 && (
         <div>
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-            Added Items ({items.length})
-          </p>
+          <div className="flex items-center justify-between gap-3 px-1 mb-2">
+            <p className="text-[13px] font-medium text-white uppercase tracking-wider">
+              Added Items ({items.length})
+            </p>
+            {!savingBundle && (
+              <button
+                type="button"
+                onClick={() => setSavingBundle(true)}
+                className="h-11 px-1 text-[13px] font-medium text-elec-yellow touch-manipulation"
+              >
+                Save as a bundle
+              </button>
+            )}
+          </div>
+          {savingBundle && (
+            <div className="mb-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3 space-y-2.5">
+              <p className="text-[13px] text-white">
+                Save these lines, with their time allowances, to use on another quote.
+              </p>
+              <Input
+                autoFocus
+                value={bundleName}
+                onChange={(e) => setBundleName(e.target.value.slice(0, 80))}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveAsBundle();
+                  }
+                }}
+                placeholder="Name, e.g. Consumer unit change"
+                className="h-11 text-[14px]"
+                aria-label="Bundle name"
+              />
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={saveAsBundle}
+                  disabled={!bundleName.trim()}
+                  className="h-11 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation disabled:opacity-50"
+                >
+                  Save bundle
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSavingBundle(false);
+                    setBundleName('');
+                  }}
+                  className="h-11 px-4 rounded-xl border border-white/[0.12] text-[14px] text-white touch-manipulation"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
             {items.map((item, itemIndex) => {
               const cat = categories.find((c) => c.id === item.category);

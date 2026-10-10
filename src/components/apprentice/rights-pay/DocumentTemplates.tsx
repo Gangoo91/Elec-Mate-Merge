@@ -151,10 +151,8 @@ Signature: _________________ Date: _________`,
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        Document templates
-      </span>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+      <span className="text-[13px] font-semibold text-white">Document templates</span>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {templates.map((template, index) => (
@@ -184,8 +182,8 @@ Signature: _________________ Date: _________`,
         ))}
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+      <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-2">
+        <span className="text-[13px] font-semibold text-elec-yellow">
           How to use these templates
         </span>
         <ul className="space-y-1.5">
@@ -195,10 +193,7 @@ Signature: _________________ Date: _________`,
             'Send formal letters by email with read receipt when possible',
             "Follow up if you don't receive a response within reasonable time",
           ].map((item, i) => (
-            <li
-              key={i}
-              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-            >
+            <li key={i} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
               <span>{item}</span>
             </li>

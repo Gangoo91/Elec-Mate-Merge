@@ -33,6 +33,7 @@ interface OverdueInvoice {
   user_id: string;
   reminder_count: number;
   last_reminder_sent_at: string | null;
+  invoice_sent_at: string | null;
   stripe_payment_link_url: string | null;
   external_invoice_url: string | null;
   settings: any;
@@ -136,6 +137,21 @@ serve(async (req: Request) => {
         invSettings?.grantEnabled && Number(invSettings?.grantAmount) > 0
           ? Math.min(Number(invSettings.grantAmount), Number(invoice.total) || 0)
           : 0;
+      /*
+       * ELE-2067 — an invoice brought in by "Bring your data across" was sent
+       * from the firm's old system, not from Elec-Mate. The old invoice screen
+       * flips it to overdue on load, which would make it eligible above, but
+       * it is never ours to chase until it has been sent from Elec-Mate.
+       */
+      if (invSettings?.imported === true && !invoice.invoice_sent_at) {
+        skipped++;
+        results.push({
+          invoice: invoice.invoice_number,
+          status: 'skipped',
+          reason: 'imported, never sent from Elec-Mate',
+        });
+        continue;
+      }
       const invoiceTotal = Math.max(0, (Number(invoice.total) || 0) - invGrant);
       if (invoiceTotal > 0 && amountPaid >= invoiceTotal) {
         skipped++;
@@ -305,7 +321,9 @@ serve(async (req: Request) => {
           : null,
         tone: reminderType,
         markPaidUrl,
-        trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=payment_reminder&id=${invoice.id}`,
+        // `r` names the recipient, so an open can be told apart from any other
+        // copy after the fact (email-open header, ELE-1730).
+        trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=payment_reminder&id=${invoice.id}&r=${encodeURIComponent(clientEmail)}`,
       });
 
       // ELE-662 + ELE-880 — Send via Brevo (Resend banned us at the domain
@@ -332,11 +350,16 @@ serve(async (req: Request) => {
         // "the reminder was sent to ME, not my customer".
         if (electricianCopyBcc && electricianCopyBcc.toLowerCase() !== clientEmail.toLowerCase()) {
           const copyBanner = `<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-family:sans-serif;font-size:14px;color:#78350f;"><strong>Copy for your records</strong> — this reminder was sent to your customer at ${clientEmail}.</div>`;
+          // ELE-2032 — the copy must not carry the customer's tracking pixel.
+          // It did, so the electrician opening their own copy marked the
+          // invoice "viewed" (Mark Glowacki, 13 Sep). send-payment-reminder
+          // was fixed for this under ELE-1730; the automatic reminders were not.
+          const copyHtml = copyBanner + emailContent.html.replace(/<img[^>]*email-open[^>]*>/gi, '');
           const { error: copyError } = await resend.emails.send({
             ...sender,
             to: [electricianCopyBcc],
             subject: `Copy: ${emailContent.subject}`,
-            html: copyBanner + emailContent.html,
+            html: copyHtml,
             text: `COPY FOR YOUR RECORDS — this reminder was sent to your customer at ${clientEmail}.\n\n${htmlToPlainText(emailContent.html)}`,
           });
           if (copyError) {

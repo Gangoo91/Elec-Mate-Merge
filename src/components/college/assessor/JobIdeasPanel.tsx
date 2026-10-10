@@ -47,9 +47,9 @@ const TYPE_TONE: Record<EvidenceTypeCode, string> = {
 };
 
 const DIFFICULTY_LABEL: Record<JobIdea['difficulty'], string> = {
-  novice: 'Novice — early apprentice',
-  developing: 'Developing — mid-programme',
-  competent: 'Competent — late programme',
+  novice: 'Novice, early apprentice',
+  developing: 'Developing, mid-programme',
+  competent: 'Competent, late programme',
 };
 
 const DIFFICULTY_TONE: Record<JobIdea['difficulty'], string> = {
@@ -112,9 +112,7 @@ export function JobIdeasPanel({
     <div className={wrapperClass}>
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div className="min-w-0 flex-1">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
-            Job ideas
-          </div>
+          <div className="text-[13px] font-semibold text-elec-yellow">Job ideas</div>
           <h3
             className={cn(
               'mt-1 font-semibold text-white tracking-tight leading-tight',
@@ -125,15 +123,15 @@ export function JobIdeasPanel({
           </h3>
           {variant === 'card' && (
             <p className="mt-1 text-[12px] text-white max-w-prose">
-              AI looks at your gaps and suggests jobs you could plan to do at work — each one
-              hits multiple criteria. Pick one, capture the evidence on site, upload it.
+              AI looks at your gaps and suggests jobs you could plan to do at work. Each one hits
+              multiple criteria. Pick one, capture the evidence on site, upload it.
             </p>
           )}
         </div>
         {!hasResults && !noGaps && !noCoverage && (
           <button
             type="button"
-            onClick={handleGenerate}
+            onClick={() => handleGenerate()}
             disabled={loading}
             className={cn(
               'shrink-0 h-10 px-4 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
@@ -152,7 +150,7 @@ export function JobIdeasPanel({
               reset();
               setExpandedIdx(new Set());
             }}
-            className="shrink-0 text-[11.5px] font-medium text-white hover:text-white touch-manipulation"
+            className="shrink-0 text-[12px] font-medium text-white hover:text-white touch-manipulation"
           >
             Reset
           </button>
@@ -167,13 +165,13 @@ export function JobIdeasPanel({
 
       {noGaps && (
         <div className="mt-3 rounded-lg border border-emerald-500/25 bg-emerald-500/[0.06] px-3 py-2.5 text-[12.5px] text-emerald-200">
-          No current gaps — every AC has at least some evidence. Focus on building stronger
-          examples for ACs that aren't yet IQA-confirmed.
+          No current gaps: every AC has at least some evidence. Focus on building stronger examples
+          for ACs that aren't yet IQA-confirmed.
         </div>
       )}
       {noCoverage && (
         <div className="mt-3 rounded-lg border border-white/[0.10] bg-white/[0.02] px-3 py-2.5 text-[12.5px] text-white">
-          This learner doesn't have a coverage map yet — set their course on the identity strip.
+          This learner doesn't have a coverage map yet. Set their course on the identity strip.
         </div>
       )}
 
@@ -191,7 +189,7 @@ export function JobIdeasPanel({
       {hasResults && (
         <div className="mt-4 space-y-3">
           {data?.meta && (
-            <div className="text-[11px] text-white">
+            <div className="text-[12px] text-white">
               Across {data.meta.gaps_total} current gap
               {data.meta.gaps_total === 1 ? '' : 's'} · qualification {data.meta.qualification_code}
             </div>
@@ -251,22 +249,22 @@ function IdeaCard({
             <div className="mt-1.5 flex items-center gap-1.5 flex-wrap">
               <span
                 className={cn(
-                  'inline-flex items-center h-5 px-2 rounded-md border text-[10px] font-semibold uppercase tracking-[0.06em]',
+                  'inline-flex items-center h-6 px-2 rounded-md border text-[12px] font-semibold',
                   DIFFICULTY_TONE[idea.difficulty]
                 )}
               >
                 {DIFFICULTY_LABEL[idea.difficulty]}
               </span>
               {idea.estimated_minutes && (
-                <span className="text-[10.5px] text-white tabular-nums">
+                <span className="text-[12px] text-white tabular-nums">
                   ~{idea.estimated_minutes} min
                 </span>
               )}
-              <span className="text-[10.5px] text-emerald-300 tabular-nums">
+              <span className="text-[12px] text-emerald-300 tabular-nums">
                 {primaryAcs.length} primary
               </span>
               {partialAcs.length > 0 && (
-                <span className="text-[10.5px] text-amber-300 tabular-nums">
+                <span className="text-[12px] text-amber-300 tabular-nums">
                   {partialAcs.length} partial
                 </span>
               )}
@@ -291,9 +289,7 @@ function IdeaCard({
 
           {/* AC coverage */}
           <div>
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-1.5">
-              ACs this hits
-            </div>
+            <div className="text-[13px] font-semibold text-white mb-1.5">ACs this hits</div>
             <ul className="space-y-1.5">
               {idea.ac_coverage.map((a) => (
                 <li
@@ -302,7 +298,7 @@ function IdeaCard({
                 >
                   <span
                     className={cn(
-                      'inline-flex items-center h-5 px-1.5 rounded border text-[10px] font-mono font-semibold tabular-nums shrink-0 mt-0.5',
+                      'inline-flex items-center h-5 px-1.5 rounded border text-[12px] font-mono font-semibold tabular-nums shrink-0 mt-0.5',
                       a.strength === 'primary'
                         ? 'border-emerald-500/30 bg-emerald-500/[0.10] text-emerald-200'
                         : 'border-amber-500/30 bg-amber-500/[0.06] text-amber-200'
@@ -318,9 +314,7 @@ function IdeaCard({
 
           {/* Evidence checklist */}
           <div>
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-1.5">
-              Evidence to capture
-            </div>
+            <div className="text-[13px] font-semibold text-white mb-1.5">Evidence to capture</div>
             <ul className="space-y-1.5">
               {idea.evidence_checklist.map((c, ci) => (
                 <li
@@ -329,7 +323,7 @@ function IdeaCard({
                 >
                   <span
                     className={cn(
-                      'inline-flex items-center h-5 px-2 rounded-md border text-[10px] font-semibold uppercase tracking-[0.06em] shrink-0 mt-0.5',
+                      'inline-flex items-center h-6 px-2 rounded-md border text-[12px] font-semibold shrink-0 mt-0.5',
                       TYPE_TONE[c.type] ?? 'border-white/[0.16] bg-white/[0.04] text-white'
                     )}
                   >
@@ -338,19 +332,15 @@ function IdeaCard({
                   <span className="flex-1">
                     {c.label}
                     {c.required && (
-                      <span className="ml-1.5 text-rose-300 text-[10px] font-semibold">
-                        REQUIRED
+                      <span className="ml-1.5 text-[12px] font-semibold text-orange-400">
+                        Required
                       </span>
                     )}
                     {c.needs_witness_signature && (
-                      <span className="ml-1.5 text-purple-300 text-[10px] font-semibold">
-                        SIGNATURE
-                      </span>
+                      <span className="ml-1.5 text-[12px] font-semibold text-white">Signature</span>
                     )}
                     {c.guidance && (
-                      <div className="mt-0.5 text-[11px] text-white/65 italic">
-                        {c.guidance}
-                      </div>
+                      <div className="mt-0.5 text-[12px] text-white">{c.guidance}</div>
                     )}
                   </span>
                 </li>

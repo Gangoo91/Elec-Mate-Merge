@@ -26,6 +26,10 @@ export interface LeadPageData {
   colour?: string | null;
   services?: string[];
   areas?: string[];
+  /** Only on a firm preview (get_lead_page_preview, ELE-2081). */
+  preview?: boolean;
+  /** Only on a firm preview: whether customers can see the page right now. */
+  enabled?: boolean;
   trust?: {
     registration: { scheme: string; number: string | null } | null;
     insurance: { coverage: string | null } | null;
@@ -41,14 +45,28 @@ const rpc = supabase.rpc.bind(supabase) as unknown as (
   args?: Record<string, unknown>
 ) => Promise<{ data: unknown; error: { message: string } | null }>;
 
-export const useLeadPage = (slug: string | undefined) =>
+/**
+ * With `preview` (?preview=1), a signed-in owner or firm manager gets the full
+ * page even while it is switched off (get_lead_page_preview, ELE-2081). Anyone
+ * else, or anyone signed out, falls through to the public page, which says
+ * "not available" for a page that is off.
+ */
+export const useLeadPage = (slug: string | undefined, preview = false) =>
   useQuery({
-    queryKey: ['lead-page', slug],
+    queryKey: ['lead-page', slug, preview],
     enabled: !!slug,
     retry: 1,
     staleTime: 1000 * 60 * 5,
     queryFn: async (): Promise<LeadPageData> => {
       if (!slug) return { found: false };
+      if (preview) {
+        const { data: auth } = await supabase.auth.getSession();
+        if (auth.session) {
+          const own = await rpc('get_lead_page_preview', { p_slug: slug });
+          const page = own.data as LeadPageData | null;
+          if (!own.error && page?.found) return page;
+        }
+      }
       const { data, error } = await rpc('get_lead_page', { p_slug: slug });
       if (error) throw new Error(error.message);
       return (data as LeadPageData) ?? { found: false };

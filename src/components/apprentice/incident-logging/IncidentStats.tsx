@@ -170,10 +170,8 @@ const IncidentStats = () => {
 
   const summaryCard = (label: string, value: number | string) => (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {label}
-      </span>
-      <p className="text-2xl font-mono text-white">{value}</p>
+      <span className="text-[13px] font-semibold text-white">{label}</span>
+      <p className="text-2xl text-white">{value}</p>
     </div>
   );
 
@@ -186,9 +184,7 @@ const IncidentStats = () => {
 
   const chartCard = (title: string, children: React.ReactNode) => (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {title}
-      </span>
+      <span className="text-[13px] font-semibold text-white">{title}</span>
       <div>{children}</div>
     </div>
   );
@@ -197,10 +193,7 @@ const IncidentStats = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {summaryCard('Total incidents', stats.total)}
-        {summaryCard(
-          'Resolved',
-          stats.byStatus.find((s) => s.name === 'Resolved')?.value || 0
-        )}
+        {summaryCard('Resolved', stats.byStatus.find((s) => s.name === 'Resolved')?.value || 0)}
         {summaryCard('In progress', inProgressCount)}
         {summaryCard('This month', thisMonthCount)}
       </div>

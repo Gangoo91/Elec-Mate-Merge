@@ -32,7 +32,10 @@ function formatRelative(iso: string | null): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
 }
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 
 export function SectionCourseProgress({
   id,
@@ -53,7 +56,7 @@ export function SectionCourseProgress({
         <CollegeHeading>Course progress</CollegeHeading>
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[12.5px] leading-relaxed text-white">
-            No linked apprentice account — connect this learner's app sign-in to see qualification
+            No linked apprentice account. Connect this learner's app sign-in to see qualification
             and module progress.
           </p>
         </div>
@@ -124,15 +127,15 @@ export function SectionCourseProgress({
       ) : unitCoverage.length === 0 ? (
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[12.5px] leading-relaxed text-white">
-            No unit coverage rows for {first} yet. They appear as the learner makes progress in
-            the app.
+            No unit coverage rows for {first} yet. They appear as the learner makes progress in the
+            app.
           </p>
         </div>
       ) : (
         <div className={CARD}>
           <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
             <div className="text-[13px] font-semibold text-white">Unit coverage</div>
-            <div className="text-[11px] tabular-nums text-white">{unitCoverage.length} units</div>
+            <div className="text-[12px] tabular-nums text-white">{unitCoverage.length} units</div>
           </div>
           <ul className="divide-y divide-white/[0.10]">
             {unitCoverage.slice(0, 10).map((u) => {
@@ -142,11 +145,13 @@ export function SectionCourseProgress({
               return (
                 <li key={u.id} className="flex items-center gap-3 px-4 py-3 sm:px-5">
                   <div className="min-w-0 flex-1">
-                    <div className="truncate text-[13px] font-medium text-white">
+                    <div className="line-clamp-2 text-[13px] font-medium text-white">
                       {u.category_name ?? u.qualification_title ?? 'Unit'}
                     </div>
-                    <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] tabular-nums text-white">
-                      {u.qualification_code && <span className="font-mono">{u.qualification_code}</span>}
+                    <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] tabular-nums text-white">
+                      {u.qualification_code && (
+                        <span className="font-mono">{u.qualification_code}</span>
+                      )}
                       <span>
                         {u.evidenced_criteria}/{u.total_criteria} evidenced
                       </span>
@@ -164,7 +169,9 @@ export function SectionCourseProgress({
                         style={{ width: `${Math.min(100, pct)}%` }}
                       />
                     </div>
-                    <div className="mt-1 text-right text-[11px] tabular-nums text-white">{pct}%</div>
+                    <div className="mt-1 text-right text-[12px] tabular-nums text-white">
+                      {pct}%
+                    </div>
                   </div>
                 </li>
               );
@@ -181,10 +188,15 @@ export function SectionCourseProgress({
           </div>
           <ul className="divide-y divide-white/[0.10]">
             {modules.slice(0, 6).map((m, i) => (
-              <li key={`${m.course}-${m.module}-${i}`} className="flex items-center gap-3 px-4 py-3 sm:px-5">
+              <li
+                key={`${m.course}-${m.module}-${i}`}
+                className="flex items-center gap-3 px-4 py-3 sm:px-5"
+              >
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-[13px] font-medium text-white">{m.module || m.course}</div>
-                  <div className="mt-0.5 text-[11px] tabular-nums text-white">
+                  <div className="line-clamp-2 text-[13px] font-medium text-white">
+                    {m.module || m.course}
+                  </div>
+                  <div className="mt-0.5 text-[12px] tabular-nums text-white">
                     {fmtMins(m.time_spent_minutes)} · {formatRelative(m.last_accessed)}
                   </div>
                 </div>
@@ -248,7 +260,7 @@ function Metric({
               style={{ width: `${Math.min(100, pct)}%` }}
             />
           </div>
-          <div className="mt-1 text-[11px] tabular-nums text-white">{pct}%</div>
+          <div className="mt-1 text-[12px] tabular-nums text-white">{pct}%</div>
         </>
       )}
     </div>

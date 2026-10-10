@@ -1,7 +1,7 @@
+import { LC_FRAME } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
@@ -134,16 +134,12 @@ export function MyEpaSimulatorCard() {
   const empty = sessions.length === 0;
 
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            EPA simulator
-          </div>
+          <div className="text-[15px] font-semibold tracking-tight text-white">EPA simulator</div>
           {summary.total > 0 && (
-            <span className="text-[10.5px] tabular-nums text-white">
+            <span className="text-[12px] tabular-nums text-white">
               {summary.total} {summary.total === 1 ? 'run' : 'runs'} so far
             </span>
           )}
@@ -173,16 +169,14 @@ export function MyEpaSimulatorCard() {
                     gradeTone(summary.latest?.predicted_grade ?? null)
                   )}
                 >
-                  {summary.latest?.predicted_grade ?? '—'}
+                  {summary.latest?.predicted_grade ?? 'None yet'}
                 </div>
-                <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">
-                  Latest predicted grade
-                </div>
+                <div className="mt-1 text-[13px] text-white">Latest predicted grade</div>
               </div>
               <div>
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-[20px] sm:text-[24px] font-semibold tabular-nums leading-none text-white">
-                    {summary.latest?.overall_score ?? '—'}
+                    {summary.latest?.overall_score ?? 'None yet'}
                   </span>
                   {summary.latest?.overall_score != null && (
                     <span className="text-[12px] text-white">%</span>
@@ -190,7 +184,7 @@ export function MyEpaSimulatorCard() {
                   {summary.trendDelta != null && summary.trendDelta !== 0 && (
                     <span
                       className={cn(
-                        'ml-1 text-[10.5px] font-medium tabular-nums',
+                        'ml-1 text-[12px] font-medium tabular-nums',
                         summary.trendDelta > 0 ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
@@ -199,13 +193,11 @@ export function MyEpaSimulatorCard() {
                     </span>
                   )}
                 </div>
-                <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">
-                  Latest score
-                </div>
+                <div className="mt-1 text-[13px] text-white">Latest score</div>
               </div>
             </div>
 
-            <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
+            <p className="mt-3 text-[12px] sm:text-[12px] text-white leading-snug">
               Your scores show how ready you are. If you are linked to a college, your tutor sees
               them too, and the more you practise the clearer their read of your readiness gets.
             </p>
@@ -228,9 +220,7 @@ export function MyEpaSimulatorCard() {
             </div>
 
             <div className="mt-5 -mx-1">
-              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
-                Recent runs
-              </div>
+              <div className="px-1 text-[13px] font-medium text-white">Recent runs</div>
               <ul className="mt-2 divide-y divide-white/[0.05]">
                 {sessions.slice(0, 4).map((s) => (
                   <li key={s.id} className="px-1 py-2.5 flex items-baseline justify-between gap-3">
@@ -238,19 +228,19 @@ export function MyEpaSimulatorCard() {
                       <span className="text-[12.5px] font-medium text-white">
                         {TYPE_LABEL[s.session_type]}
                       </span>
-                      <span className="text-[10.5px] text-white">{fmtRel(s.completed_at)}</span>
+                      <span className="text-[12px] text-white">{fmtRel(s.completed_at)}</span>
                     </div>
                     <div className="shrink-0 flex items-baseline gap-3 tabular-nums">
-                      <span className="text-[11.5px] text-white">
-                        {s.overall_score != null ? `${s.overall_score}%` : '—'}
+                      <span className="text-[12px] text-white">
+                        {s.overall_score != null ? `${s.overall_score}%` : 'Not scored'}
                       </span>
                       <span
                         className={cn(
-                          'text-[10.5px] uppercase tracking-tight font-medium',
+                          'text-[12px] uppercase tracking-tight font-medium',
                           gradeTone(s.predicted_grade)
                         )}
                       >
-                        {s.predicted_grade ?? '—'}
+                        {s.predicted_grade ?? 'None yet'}
                       </span>
                     </div>
                   </li>
@@ -260,7 +250,7 @@ export function MyEpaSimulatorCard() {
                 <button
                   type="button"
                   onClick={() => navigate('/apprentice/epa-simulator?tab=history')}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+                  className="mt-2 px-1 text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   See full history →
                 </button>
@@ -275,9 +265,7 @@ export function MyEpaSimulatorCard() {
 
 function Skeleton() {
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-2 gap-3">

@@ -439,7 +439,9 @@ export const GLOSSARY_GROUPS: GlossaryGroup[] = [
         term: 'AM2',
         def: 'The practical assessment used in the electrotechnical apprenticeship route. Referenced in this course for context — it is not part of the ST1426 EPA.',
         where: '7.1.1',
-        courses: ['moet', 'level2', 'level3'],
+        // MOET only: the line about ST1426 is wrong for Level 2/3, where AM2 is
+        // the assessment. They get the general entry under "AM2 assessment".
+        courses: ['moet'],
       },
     ],
   },
@@ -911,7 +913,7 @@ export const GLOSSARY_GROUPS: GlossaryGroup[] = [
       {
         term: 'AM2',
         def: 'The practical assessment taken at the end of the electrotechnical apprenticeship. It is a set of timed, observed tasks — installation, inspection and testing, fault diagnosis and a knowledge test — sat at an approved centre rather than on your own site.',
-        courses: ['am2', 'level3'],
+        courses: ['am2', 'level2', 'level3'],
       },
       {
         term: 'AM2E / AM2S',

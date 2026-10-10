@@ -61,180 +61,10 @@ export interface CollegeMessage {
 // =====================================================
 // CONVERSATIONS
 // =====================================================
-
-export const collegeConversationService = {
-  /**
-   * Get conversations for current user
-   */
-  async getMyConversations(): Promise<CollegeConversation[]> {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return [];
-
-      const { data, error } = await supabase
-        .from('college_conversations')
-        .select(
-          `
-          *,
-          student:college_students(id, name)
-        `
-        )
-        .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
-        .eq('status', 'active')
-        .order('last_message_at', { ascending: false, nullsFirst: false });
-
-      if (error) {
-        // Table may not exist yet - fail gracefully
-        return [];
-      }
-      return (data as unknown as CollegeConversation[]) || [];
-    } catch {
-      // College chat feature not fully set up
-      return [];
-    }
-  },
-
-  /**
-   * Get conversations for a specific student (staff view)
-   */
-  async getStudentConversations(studentId: string): Promise<CollegeConversation[]> {
-    try {
-      const { data, error } = await supabase
-        .from('college_conversations')
-        .select('*')
-        .eq('student_id', studentId)
-        .order('last_message_at', { ascending: false });
-
-      if (error) return [];
-      return (data as unknown as CollegeConversation[]) || [];
-    } catch {
-      return [];
-    }
-  },
-
-  /**
-   * Get or create a student-tutor conversation
-   */
-  async getOrCreateStudentTutorConversation(
-    institutionId: string,
-    studentUserId: string,
-    tutorUserId: string,
-    studentId?: string
-  ): Promise<CollegeConversation> {
-    // Try to find existing
-    const { data: existing } = await supabase
-      .from('college_conversations')
-      .select('*')
-      .eq('institution_id', institutionId)
-      .eq('conversation_type', 'student_tutor')
-      .or(
-        `and(participant_1_id.eq.${studentUserId},participant_2_id.eq.${tutorUserId}),and(participant_1_id.eq.${tutorUserId},participant_2_id.eq.${studentUserId})`
-      )
-      .single();
-
-    if (existing) return existing as unknown as CollegeConversation;
-
-    // Create new
-    const { data, error } = await supabase
-      .from('college_conversations')
-      .insert({
-        institution_id: institutionId,
-        conversation_type: 'student_tutor',
-        participant_1_id: tutorUserId, // Staff initiates
-        participant_1_type: 'staff',
-        participant_2_id: studentUserId,
-        participant_2_type: 'student',
-        student_id: studentId || null,
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-    return data as unknown as CollegeConversation;
-  },
-
-  /**
-   * Get or create a college-employer conversation
-   */
-  async getOrCreateCollegeEmployerConversation(
-    institutionId: string,
-    staffUserId: string,
-    employerUserId: string,
-    studentId?: string
-  ): Promise<CollegeConversation> {
-    // Try to find existing
-    const { data: existing } = await supabase
-      .from('college_conversations')
-      .select('*')
-      .eq('institution_id', institutionId)
-      .eq('conversation_type', 'college_employer')
-      .or(
-        `and(participant_1_id.eq.${staffUserId},participant_2_id.eq.${employerUserId}),and(participant_1_id.eq.${employerUserId},participant_2_id.eq.${staffUserId})`
-      )
-      .maybeSingle();
-
-    if (existing) return existing as unknown as CollegeConversation;
-
-    // Create new
-    const { data, error } = await supabase
-      .from('college_conversations')
-      .insert({
-        institution_id: institutionId,
-        conversation_type: 'college_employer',
-        participant_1_id: staffUserId,
-        participant_1_type: 'staff',
-        participant_2_id: employerUserId,
-        participant_2_type: 'employer',
-        student_id: studentId || null,
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-    return data as unknown as CollegeConversation;
-  },
-
-  /**
-   * Archive a conversation
-   */
-  async archiveConversation(conversationId: string): Promise<void> {
-    const { error } = await supabase
-      .from('college_conversations')
-      .update({ status: 'archived' })
-      .eq('id', conversationId);
-
-    if (error) throw error;
-  },
-
-  /**
-   * Get conversation stats
-   */
-  async getStats(): Promise<{ total: number; unread: number }> {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { total: 0, unread: 0 };
-
-    const { data, error } = await supabase
-      .from('college_conversations')
-      .select('id, unread_1, unread_2, participant_1_id')
-      .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
-      .eq('status', 'active');
-
-    if (error) return { total: 0, unread: 0 };
-
-    const total = data?.length || 0;
-    const unread =
-      data?.reduce((sum, conv) => {
-        const unreadCount = conv.participant_1_id === user.id ? conv.unread_1 : conv.unread_2;
-        return sum + (unreadCount || 0);
-      }, 0) || 0;
-
-    return { total, unread };
-  },
-};
+// ELE-1918: college_conversations is retired ([LEGACY — DO NOT USE]). The
+// service that listed, created and archived threads there had no callers left
+// and is gone; learner and tutor messages live in student_message_threads /
+// student_messages. The types above stay for the chat components' props.
 
 // =====================================================
 // MESSAGES
@@ -311,20 +141,8 @@ export const collegeMessageService = {
       .neq('sender_id', user.id)
       .is('read_at', null);
 
-    // Reset unread count
-    const { data: conv } = await supabase
-      .from('college_conversations')
-      .select('participant_1_id, participant_2_id')
-      .eq('id', conversationId)
-      .single();
-
-    if (conv) {
-      const updateField = (conv as any).participant_1_id === user.id ? 'unread_1' : 'unread_2';
-      await supabase
-        .from('college_conversations')
-        .update({ [updateField]: 0 })
-        .eq('id', conversationId);
-    }
+    // ELE-1918: the per-thread unread counters lived on college_conversations,
+    // which is retired; nothing reads or writes it from the app any more.
   },
 
   /**
@@ -463,4 +281,3 @@ export const collegeChatHelpers = {
     return { name: 'Unknown', avatar_url: null };
   },
 };
-

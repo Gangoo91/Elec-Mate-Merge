@@ -29,8 +29,23 @@ import { FormSheet } from '@/components/forms/FormSheet';
 import { textareaCn } from '@/components/forms/fieldStyles';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { UsesAi } from '@/components/college/ui/UsesAi';
+import { AiUseRecord } from '@/components/college/ui/AiUseRecord';
 import { openEvidence } from '@/lib/evidenceUrl';
 import type { AcStateRow } from '@/hooks/portfolio/usePortfolioAcState';
+import {
+  confirmEvidenceAuthenticity,
+  useItemAuthenticity,
+} from '@/hooks/portfolio/useItemAuthenticity';
+import { AuthenticityLine } from '@/components/assessment/AuthenticityLine';
+import { AttemptHistory } from '@/components/assessment/AttemptHistory';
+import { StaffNotesList, StaffOnlyLabel } from '@/components/assessment/StaffNotes';
+import { staffNoteKey, useStaffNotes } from '@/hooks/portfolio/useStaffNotes';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  WITNESS_COMPETENCE_COLUMNS,
+  WitnessCompetence,
+  type WitnessCompetenceFields,
+} from '@/components/assessment/WitnessCompetence';
 
 export type DecisionKey = 'passed' | 'referred' | 'not_yet';
 
@@ -56,9 +71,24 @@ interface EvidenceItem {
   created_at: string;
   file_url: string | null;
   storage_urls: EvidenceFile[] | null;
-  metadata?: { source?: string; observation?: { kind?: string } } | null;
+  metadata?: {
+    source?: string;
+    observation?: {
+      kind?: string;
+      /** Batch 2: questioning records carry the questions and the answers. */
+      questions?: { question?: string; answer?: string }[];
+      question_mode?: string | null;
+      question_delivery?: string | null;
+    };
+  } | null;
+  reflection_notes?: string | null;
+  /** ELE-2048 */
+  ai_assisted?: boolean | null;
+  ai_use?: unknown;
+  /** SHA-256 the item trigger keeps; stored with the assessor's authenticity countersign. */
+  content_hash?: string | null;
 }
-interface WitnessRow {
+interface WitnessRow extends WitnessCompetenceFields {
   id: string;
   portfolio_item_id: string | null;
   witness_name: string | null;
@@ -93,7 +123,12 @@ const METHODS: { key: string; label: string }[] = [
   { key: 'witness', label: 'Witness' },
 ];
 /** A pass on these methods can stand without a portfolio item ticked. */
-const NO_ITEM_NEEDED = new Set(['observation', 'professional_discussion', 'questioning', 'witness']);
+const NO_ITEM_NEEDED = new Set([
+  'observation',
+  'professional_discussion',
+  'questioning',
+  'witness',
+]);
 
 const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
 const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
@@ -137,7 +172,8 @@ function composeDraft(d: HeldDraft, rows: AcStateRow[], decision: DecisionKey): 
     .filter((a) => a.comment?.trim())
     .map((a) => `${a.unit_code ? `${a.unit_code} ` : ''}AC ${a.ac_code}: ${a.comment!.trim()}`);
   if (notes.length) parts.push(notes.join('\n'));
-  if (decision !== 'passed' && d.action_required?.trim()) parts.push(`To do: ${d.action_required.trim()}`);
+  if (decision !== 'passed' && d.action_required?.trim())
+    parts.push(`To do: ${d.action_required.trim()}`);
   return parts.join('\n\n');
 }
 
@@ -185,7 +221,15 @@ export function AcDecisionSheet({
   const [aiUsed, setAiUsed] = useState(false);
   const [aiChecked, setAiChecked] = useState(false);
   const [aiBusy, setAiBusy] = useState(false);
+  // C&G: the assessor confirms authenticity on each piece of work they assess.
+  const [ownWork, setOwnWork] = useState(false);
+  const authenticity = useItemAuthenticity(learnerId, open);
   const feedbackRef = useRef<HTMLTextAreaElement>(null);
+  // Batch 2: a private note only staff see, and the trainee countersign rule.
+  const { user } = useAuth();
+  const staffNotes = useStaffNotes(learnerId, open);
+  const [privateNote, setPrivateNote] = useState('');
+  const [trainee, setTrainee] = useState(false);
 
   const citedIds = useMemo(() => {
     const ids = new Set<string>();
@@ -193,7 +237,8 @@ export function AcDecisionSheet({
     return ids;
   }, [rows]);
   const startIds = useMemo(
-    () => new Set(initialEvidenceIds && initialEvidenceIds.length ? initialEvidenceIds : [...citedIds]),
+    () =>
+      new Set(initialEvidenceIds && initialEvidenceIds.length ? initialEvidenceIds : [...citedIds]),
     [initialEvidenceIds, citedIds]
   );
 
@@ -201,13 +246,17 @@ export function AcDecisionSheet({
     const [items, wit, drafts] = await Promise.all([
       supabase
         .from('portfolio_items')
-        .select('id, title, description, created_at, file_url, storage_urls, metadata')
+        .select(
+          'id, title, description, created_at, file_url, storage_urls, metadata, reflection_notes, ai_assisted, ai_use, content_hash'
+        )
         .eq('user_id', learnerId)
         .order('created_at', { ascending: false })
         .limit(200),
       supabase
         .from('portfolio_witness_statements' as never)
-        .select('id, portfolio_item_id, witness_name, witness_role, witness_company, statement, signed_at')
+        .select(
+          `id, portfolio_item_id, witness_name, witness_role, witness_company, statement, signed_at, ${WITNESS_COMPETENCE_COLUMNS}`
+        )
         .eq('learner_id', learnerId)
         .eq('status', 'signed'),
       supabase
@@ -238,7 +287,14 @@ export function AcDecisionSheet({
       ) ||
       null;
     setHeld(pick);
-  }, [learnerId, submissionId, rows]);
+    if (user?.id) {
+      const { data: t } = await supabase.rpc(
+        '_is_trainee_assessor' as never,
+        { p_user: user.id, p_learner: learnerId } as never
+      );
+      setTrainee(t === true);
+    }
+  }, [learnerId, submissionId, rows, user?.id]);
 
   // Reset each time the sheet opens.
   const rowsKey = rows.map((r) => `${r.unit_code}:${r.ac_code}`).join(',');
@@ -249,6 +305,8 @@ export function AcDecisionSheet({
     setDecision('passed');
     setAiUsed(false);
     setAiChecked(false);
+    setOwnWork(false);
+    setPrivateNote('');
     setExpanded(null);
     setMethod('evidence_review');
     void load();
@@ -258,16 +316,26 @@ export function AcDecisionSheet({
   // ELE-1873: deciding from an observation or professional discussion records that method.
   useEffect(() => {
     if (!open) return;
-    const observed = evidence.find((e) => startIds.has(e.id) && e.metadata?.source === 'college_observation');
+    const observed = evidence.find(
+      (e) => startIds.has(e.id) && e.metadata?.source === 'college_observation'
+    );
     if (observed) {
+      const kind = observed.metadata?.observation?.kind;
       setMethod(
-        observed.metadata?.observation?.kind === 'professional_discussion' ? 'professional_discussion' : 'observation'
+        kind === 'professional_discussion'
+          ? 'professional_discussion'
+          : kind === 'questioning'
+            ? 'questioning'
+            : 'observation'
       );
     }
   }, [open, evidence, startIds]);
 
   const sheetEvidence = useMemo(
-    () => [...evidence.filter((e) => startIds.has(e.id) || citedIds.has(e.id)), ...evidence.filter((e) => !startIds.has(e.id) && !citedIds.has(e.id))],
+    () => [
+      ...evidence.filter((e) => startIds.has(e.id) || citedIds.has(e.id)),
+      ...evidence.filter((e) => !startIds.has(e.id) && !citedIds.has(e.id)),
+    ],
     [evidence, startIds, citedIds]
   );
   const witnessByItem = useMemo(() => {
@@ -304,7 +372,11 @@ export function AcDecisionSheet({
         setAiChecked(false);
       }
     } catch (e) {
-      toast({ title: 'Could not draft', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not draft',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setAiBusy(false);
     }
@@ -312,29 +384,47 @@ export function AcDecisionSheet({
 
   const passNeedsItem = decision === 'passed' && !NO_ITEM_NEEDED.has(method) && chosen.size === 0;
   const aiBlocks = aiUsed && feedback.trim().length > 0 && !aiChecked;
+  // A pass on ticked evidence needs the assessor's "own work" confirmation.
+  const ownWorkBlocks = decision === 'passed' && chosen.size > 0 && !ownWork;
 
   const save = useCallback(async () => {
     if (saving || rows.length === 0) return;
     if (decision !== 'passed' && !feedback.trim()) {
-      toast({ title: 'Say what is needed', description: 'Feedback is required when it is not a pass.' });
+      toast({
+        title: 'Say what is needed',
+        description: 'Feedback is required when it is not a pass.',
+      });
       return;
     }
     if (passNeedsItem) {
       toast({
         title: 'Tick the evidence',
-        description: 'A pass on evidence needs at least one item. If you saw it done, choose Observed.',
+        description:
+          'A pass on evidence needs at least one item. If you saw it done, choose Observed.',
       });
       return;
     }
     if (aiBlocks) {
       toast({
         title: 'Check the draft first',
-        description: 'Tick that you have read and checked the AI draft, or rewrite it in your own words.',
+        description:
+          'Tick that you have read and checked the AI draft, or rewrite it in your own words.',
+      });
+      return;
+    }
+    if (ownWorkBlocks) {
+      toast({
+        title: 'Confirm it is their own work',
+        description: `Tick that you are satisfied the evidence is ${first}'s own work before you pass it.`,
       });
       return;
     }
     setSaving(true);
     try {
+      // The countersign goes first: a pass is never recorded without it.
+      if (ownWork && chosen.size > 0) {
+        await confirmEvidenceAuthenticity(learnerId, [...chosen], submissionId);
+      }
       await record({
         criteria: rows.map((r) => ({ unit_code: r.unit_code, ac_code: r.ac_code })),
         decision,
@@ -344,18 +434,63 @@ export function AcDecisionSheet({
         method,
         feedbackSource: aiUsed && feedback.trim() ? 'ai_draft_confirmed' : 'assessor',
       });
+      if (privateNote.trim()) {
+        try {
+          await staffNotes.add({
+            body: privateNote,
+            criteria: rows.map((r) => staffNoteKey(r.unit_code, r.ac_code)),
+            itemIds: [...chosen],
+          });
+        } catch (e) {
+          toast({
+            title: 'Decision recorded, note not saved',
+            description: (e as Error).message,
+            variant: 'destructive',
+          });
+        }
+      }
       toast({
         title: `${rows.length} decision${rows.length === 1 ? '' : 's'} recorded`,
-        description: `${First} has been told.`,
+        description:
+          trainee && decision === 'passed'
+            ? `${First} has been told it is waiting for a qualified assessor to countersign.`
+            : `${First} has been told.`,
       });
       onOpenChange(false);
       onRecorded?.();
     } catch (e) {
-      toast({ title: 'Could not record', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not record',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setSaving(false);
     }
-  }, [saving, rows, decision, feedback, passNeedsItem, aiBlocks, record, chosen, submissionId, method, aiUsed, First, toast, onOpenChange, onRecorded]);
+  }, [
+    saving,
+    rows,
+    decision,
+    feedback,
+    passNeedsItem,
+    aiBlocks,
+    ownWorkBlocks,
+    ownWork,
+    learnerId,
+    first,
+    record,
+    chosen,
+    submissionId,
+    method,
+    aiUsed,
+    First,
+    toast,
+    onOpenChange,
+    onRecorded,
+    privateNote,
+    staffNotes,
+    trainee,
+  ]);
 
   // Desktop keyboard.
   useEffect(() => {
@@ -386,6 +521,15 @@ export function AcDecisionSheet({
   }, [open, save, held, draftWithAi, useHeld, runOnDemand]);
 
   const label = DECISIONS.find((d) => d.key === decision)?.label.toLowerCase();
+  // Staff notes already on these criteria or the evidence ticked.
+  const relevantNotes = useMemo(() => {
+    const keys = new Set(rows.map((r) => staffNoteKey(r.unit_code, r.ac_code)));
+    return staffNotes.notes.filter(
+      (n) =>
+        (n.criteria ?? []).some((k) => keys.has(k)) ||
+        (n.portfolio_item_ids ?? []).some((id) => chosen.has(id))
+    );
+  }, [staffNotes.notes, rows, chosen]);
 
   return (
     <FormSheet
@@ -403,11 +547,13 @@ export function AcDecisionSheet({
       bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
       footer={
         <div className="w-full">
-          {(passNeedsItem || aiBlocks) && (
+          {(passNeedsItem || aiBlocks || ownWorkBlocks) && (
             <p className="mb-2 text-center text-[12.5px] text-white">
               {aiBlocks
                 ? 'Tick that you have checked the AI draft before you record.'
-                : 'Tick at least one piece of evidence, or choose how you saw it done.'}
+                : passNeedsItem
+                  ? 'Tick at least one piece of evidence, or choose how you saw it done.'
+                  : `Tick that you are satisfied this is ${first}'s own work before you pass it.`}
             </p>
           )}
           <button
@@ -419,8 +565,9 @@ export function AcDecisionSheet({
             {saving ? 'Recording…' : `Record ${label}`}
           </button>
           <p className="mt-2 hidden text-center text-[11.5px] text-white lg:block">
-            Keys: P passed, M needs more, N not yet{held || draftWithAi ? ', D use the AI draft' : ''}, F feedback,
-            Ctrl or Cmd + Enter records
+            Keys: P passed, M needs more, N not yet
+            {held || draftWithAi ? ', D use the AI draft' : ''}, F feedback, Ctrl or Cmd + Enter
+            records
           </p>
         </div>
       }
@@ -430,7 +577,10 @@ export function AcDecisionSheet({
         {rows.length <= 4 && (
           <ul className="space-y-1.5">
             {rows.map((r) => (
-              <li key={`${r.unit_code}:${r.ac_code}`} className="text-[13px] leading-snug text-white">
+              <li
+                key={`${r.unit_code}:${r.ac_code}`}
+                className="text-[13px] leading-snug text-white"
+              >
                 <span className="font-mono font-semibold">
                   {r.unit_code} AC {r.ac_code}
                 </span>{' '}
@@ -449,7 +599,10 @@ export function AcDecisionSheet({
                 aria-pressed={decision === d.key}
                 aria-keyshortcuts={d.hotkey}
                 onClick={() => setDecision(d.key)}
-                className={cn('h-11 rounded-xl border text-[14px] touch-manipulation', decision === d.key ? chipOn : chipOff)}
+                className={cn(
+                  'h-11 rounded-xl border text-[14px] touch-manipulation',
+                  decision === d.key ? chipOn : chipOff
+                )}
               >
                 {d.label}
               </button>
@@ -465,7 +618,10 @@ export function AcDecisionSheet({
                 type="button"
                 aria-pressed={method === m.key}
                 onClick={() => setMethod(m.key)}
-                className={cn('h-11 rounded-full border px-4 text-[13px] touch-manipulation', method === m.key ? chipOn : chipOff)}
+                className={cn(
+                  'h-11 rounded-full border px-4 text-[13px] touch-manipulation',
+                  method === m.key ? chipOn : chipOff
+                )}
               >
                 {m.label}
               </button>
@@ -502,20 +658,25 @@ export function AcDecisionSheet({
               )}
             </div>
             {held && !aiUsed && heldText && (
-              <p className="line-clamp-4 whitespace-pre-line text-[12.5px] leading-relaxed text-white">{heldText}</p>
+              <p className="line-clamp-4 whitespace-pre-line text-[12.5px] leading-relaxed text-white">
+                {heldText}
+              </p>
             )}
             {held && (
               <p className="text-[12px] text-white">
                 Drafted {when(held.created_at)}
-                {held.verdict ? `, suggests ${held.verdict.replace('_', ' ')}` : ''}. {First} cannot see
-                it until you record a decision with it.
+                {held.verdict ? `, suggests ${held.verdict.replace('_', ' ')}` : ''}. {First} cannot
+                see it until you record a decision with it.
               </p>
             )}
           </div>
         )}
 
         <div>
-          <label htmlFor="ac-decision-feedback" className="mb-1 block text-[12px] font-medium text-white">
+          <label
+            htmlFor="ac-decision-feedback"
+            className="mb-1 block text-[12px] font-medium text-white"
+          >
             Feedback for {first}
             {decision !== 'passed' ? ' (required)' : ''}
           </label>
@@ -528,7 +689,9 @@ export function AcDecisionSheet({
               if (!e.target.value.trim()) setAiUsed(false);
             }}
             placeholder={
-              decision === 'passed' ? 'What was good about this evidence?' : 'Exactly what is missing and how to get it.'
+              decision === 'passed'
+                ? 'What was good about this evidence?'
+                : 'Exactly what is missing and how to get it.'
             }
             className={cn(textareaCn, 'min-h-[140px]')}
           />
@@ -540,10 +703,63 @@ export function AcDecisionSheet({
                 onChange={(e) => setAiChecked(e.target.checked)}
                 className="h-5 w-5 shrink-0 accent-yellow-400"
               />
-              I have read and checked this AI draft. {First} will see it marked
-              as drafted with AI and confirmed by me.
+              I have read and checked this AI draft. {First} will see it marked as drafted with AI
+              and confirmed by me.
             </label>
           )}
+        </div>
+
+        {chosen.size > 0 && (
+          <div>
+            <label
+              data-testid="own-work-confirm"
+              className="flex min-h-11 cursor-pointer items-start gap-3 text-[14px] text-white touch-manipulation"
+            >
+              <input
+                type="checkbox"
+                checked={ownWork}
+                onChange={(e) => setOwnWork(e.target.checked)}
+                className="mt-0.5 h-5 w-5 shrink-0 accent-yellow-400"
+              />
+              <span>
+                I am satisfied this is {first}&rsquo;s own work
+                {decision === 'passed' ? ' (needed to pass)' : ''}
+              </span>
+            </label>
+            <p className="mt-1 pl-8 text-[12.5px] leading-snug text-white">
+              Recorded against the {chosen.size === 1 ? 'piece' : `${chosen.size} pieces`} of
+              evidence ticked, with your name, the time and each item&rsquo;s fingerprint.
+            </p>
+          </div>
+        )}
+
+        {trainee && decision === 'passed' && (
+          <p
+            data-testid="trainee-countersign-note"
+            className="rounded-xl border border-white/[0.14] px-3.5 py-3 text-[13px] leading-snug text-white"
+          >
+            You are recorded as a trainee assessor. {First} will see this as passed, awaiting
+            countersignature, and it will not count until a qualified assessor countersigns it.
+          </p>
+        )}
+
+        {/* Private note: staff only, enforced by RLS (portfolio_staff_notes) */}
+        <div className="space-y-2 border-t border-white/[0.1] pt-5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <label htmlFor="ac-decision-private" className="text-[12px] font-medium text-white">
+              Private note (optional)
+            </label>
+            <StaffOnlyLabel />
+          </div>
+          <textarea
+            id="ac-decision-private"
+            value={privateNote}
+            onChange={(e) => setPrivateNote(e.target.value)}
+            maxLength={4000}
+            placeholder={`For other assessors, the IQA and EQA. ${First} never sees it.`}
+            className={cn(textareaCn, 'min-h-[80px]')}
+          />
+          {relevantNotes.length > 0 && <StaffNotesList notes={relevantNotes} limit={3} />}
         </div>
       </div>
 
@@ -554,11 +770,13 @@ export function AcDecisionSheet({
           {decision === 'passed' && !NO_ITEM_NEEDED.has(method) ? ' (at least one)' : ''}
         </p>
         {evidenceError ? (
-          <p className="text-[13px] text-white">Couldn't load {first}'s evidence. Close and try again.</p>
+          <p className="text-[13px] text-white">
+            Couldn't load {first}'s evidence. Close and try again.
+          </p>
         ) : sheetEvidence.length === 0 ? (
           <p className="text-[13px] text-white">
-            {First} has no evidence yet. Choose Observed, Discussion or
-            Questions if you assessed it directly.
+            {First} has no evidence yet. Choose Observed, Discussion or Questions if you assessed it
+            directly.
           </p>
         ) : (
           <ul className="divide-y divide-white/[0.08] rounded-xl border border-white/[0.12]">
@@ -567,6 +785,7 @@ export function AcDecisionSheet({
               const isOpen = expanded === e.id;
               const files = filesOf(e);
               const wits = witnessByItem.get(e.id) ?? [];
+              const auth = authenticity.byItem.get(e.id) ?? null;
               return (
                 <li key={e.id}>
                   <div className="flex items-center gap-1 pr-1">
@@ -587,7 +806,9 @@ export function AcDecisionSheet({
                         aria-hidden
                         className={cn(
                           'flex h-5 w-5 shrink-0 items-center justify-center rounded border text-[12px] font-bold',
-                          on ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.3] text-transparent'
+                          on
+                            ? 'border-elec-yellow bg-elec-yellow text-black'
+                            : 'border-white/[0.3] text-transparent'
                         )}
                       >
                         ✓
@@ -597,8 +818,12 @@ export function AcDecisionSheet({
                         <span className="block text-[11.5px] text-white">
                           {when(e.created_at)}
                           {citedIds.has(e.id) ? ' · cited on these criteria' : ''}
-                          {files.length ? ` · ${files.length} file${files.length === 1 ? '' : 's'}` : ''}
+                          {files.length
+                            ? ` · ${files.length} file${files.length === 1 ? '' : 's'}`
+                            : ''}
                           {wits.length ? ' · witnessed' : ''}
+                          {e.ai_assisted ? ' · AI assisted' : ''}
+                          {auth ? ' · own work confirmed' : ''}
                         </span>
                       </span>
                     </button>
@@ -614,7 +839,53 @@ export function AcDecisionSheet({
                   </div>
                   {isOpen && (
                     <div className="space-y-3 border-t border-white/[0.08] px-3 py-3">
-                      {e.description && <p className="whitespace-pre-line text-[13px] text-white">{e.description}</p>}
+                      {e.description && (
+                        <p className="whitespace-pre-line text-[13px] text-white">
+                          {e.description}
+                        </p>
+                      )}
+                      {(e.metadata?.observation?.questions ?? []).length > 0 && (
+                        <div>
+                          <p className="text-[12px] font-semibold text-white">
+                            Questions and answers
+                            {e.metadata?.observation?.question_mode
+                              ? ` (${e.metadata.observation.question_mode === 'written' ? 'written' : 'oral'}${
+                                  e.metadata.observation.question_delivery === 'remote'
+                                    ? ', remote'
+                                    : ', face to face'
+                                })`
+                              : ''}
+                          </p>
+                          <ol className="mt-1 space-y-2">
+                            {(e.metadata?.observation?.questions ?? []).map((q, qi) => (
+                              <li key={qi} className="border-l border-white/[0.18] pl-2.5">
+                                <p className="text-[13px] font-semibold text-white">
+                                  {qi + 1}. {q.question}
+                                </p>
+                                <p className="whitespace-pre-line text-[13px] text-white">
+                                  {q.answer || 'No answer recorded.'}
+                                </p>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                      )}
+                      {e.reflection_notes && (
+                        <div>
+                          <p className="text-[12px] font-semibold text-white">Reflective account</p>
+                          <p className="whitespace-pre-line text-[13px] text-white">
+                            {e.reflection_notes}
+                          </p>
+                        </div>
+                      )}
+                      <AiUseRecord aiAssisted={e.ai_assisted} aiUse={e.ai_use} />
+                      <AuthenticityLine a={auth} currentHash={e.content_hash} audience="staff" />
+                      <AttemptHistory
+                        learnerId={learnerId}
+                        itemId={e.id}
+                        audience="staff"
+                        showSingle
+                      />
                       {files.length > 0 && (
                         <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
                           {files.map((f, i) =>
@@ -626,7 +897,12 @@ export function AcDecisionSheet({
                                 aria-label={`Open ${f.name ?? 'photo'}`}
                                 className="block aspect-square overflow-hidden rounded-lg border border-white/[0.12] touch-manipulation"
                               >
-                                <EvidenceImage src={f.url} alt={f.name ?? 'Evidence photo'} loading="lazy" className="h-full w-full object-cover" />
+                                <EvidenceImage
+                                  src={f.url}
+                                  alt={f.name ?? 'Evidence photo'}
+                                  loading="lazy"
+                                  className="h-full w-full object-cover"
+                                />
                               </button>
                             ) : (
                               <button
@@ -643,21 +919,33 @@ export function AcDecisionSheet({
                         </div>
                       )}
                       {wits.map((w) => (
-                        <div key={w.id} className="rounded-lg border border-emerald-400/30 bg-emerald-500/[0.08] p-3">
+                        <div
+                          key={w.id}
+                          className="rounded-lg border border-emerald-400/30 bg-emerald-500/[0.08] p-3"
+                        >
                           <p className="text-[12.5px] font-semibold text-emerald-300">
                             Witness statement, signed {when(w.signed_at)}
                           </p>
-                          <p className="mt-1 whitespace-pre-line text-[13px] text-white">“{w.statement}”</p>
+                          <p className="mt-1 whitespace-pre-line text-[13px] text-white">
+                            “{w.statement}”
+                          </p>
                           <p className="mt-1 text-[12px] text-white">
                             {w.witness_name}
                             {w.witness_role ? `, ${w.witness_role}` : ''}
                             {w.witness_company ? `, ${w.witness_company}` : ''}
                           </p>
+                          <WitnessCompetence w={w} audience="staff" />
                         </div>
                       ))}
-                      {!e.description && files.length === 0 && wits.length === 0 && (
-                        <p className="text-[13px] text-white">No description or files on this item.</p>
-                      )}
+                      {!e.description &&
+                        !e.reflection_notes &&
+                        (e.metadata?.observation?.questions ?? []).length === 0 &&
+                        files.length === 0 &&
+                        wits.length === 0 && (
+                          <p className="text-[13px] text-white">
+                            No description or files on this item.
+                          </p>
+                        )}
                     </div>
                   )}
                 </li>

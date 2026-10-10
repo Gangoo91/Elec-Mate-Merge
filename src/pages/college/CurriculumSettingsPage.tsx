@@ -9,14 +9,13 @@ import { containerVariants, itemVariants } from '@/components/college/primitives
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import {
+  COLLEGE_BTN,
   COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  COLLEGE_LIST,
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
 } from '@/components/college/ui/CollegeUi';
-import { RiskThresholdsCard } from '@/components/college/settings/RiskThresholdsCard';
+import { PEOPLE_LIST, PEOPLE_PANEL } from '@/components/college/people/peopleKit';
 
 /* ==========================================================================
    CurriculumSettingsPage — /college/settings/curriculum
@@ -31,6 +30,11 @@ import { RiskThresholdsCard } from '@/components/college/settings/RiskThresholds
    back link at white/65, boxed inputs on hsl(0 0% 10%) and a volt-tinted
    toggle card — all four are dialects this app has retired. Masthead →
    two cards → one solid volt Save.
+
+   8 Oct 2026: the risk flags moved to Quality thresholds
+   (/college/settings/operational), beside the other numbers the hub judges
+   learners by; they had nothing to do with lesson plans. The Save button now
+   says whether there is anything to save.
    ========================================================================== */
 
 interface Settings {
@@ -69,9 +73,11 @@ const HELP: PageHelpContent = {
       body: 'Your designated safeguarding lead and Prevent lead, so plans name the right people.',
     },
     { title: 'Save', body: 'The next plan anyone at your college generates uses these settings.' },
+  ],
+  notes: [
     {
-      title: 'Set your risk flags',
-      body: 'Further down: the attendance target and the gaps that flag a learner at risk, and the score for medium, high and critical. Saved separately, used from the next nightly check.',
+      title: 'Looking for risk flags?',
+      body: 'The attendance target and the gaps that flag a learner at risk are on Quality thresholds, in Settings.',
     },
   ],
 };
@@ -83,6 +89,9 @@ export default function CurriculumSettingsPage() {
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  // What is stored, so the page can say whether there is anything to save.
+  const [stored, setStored] = useState<Settings>(DEFAULTS);
+  const dirty = JSON.stringify(stored) !== JSON.stringify(settings);
 
   useEffect(() => {
     let cancelled = false;
@@ -105,7 +114,10 @@ export default function CurriculumSettingsPage() {
         .eq('college_id', collegeId)
         .maybeSingle();
       if (cancelled) return;
-      if (data) setSettings(data as Settings);
+      if (data) {
+        setSettings(data as Settings);
+        setStored(data as Settings);
+      }
       setLoading(false);
     })();
     return () => {
@@ -121,6 +133,7 @@ export default function CurriculumSettingsPage() {
         .from('college_curriculum_settings')
         .upsert({ college_id: collegeId, ...settings }, { onConflict: 'college_id' });
       if (error) throw error;
+      setStored(settings);
       toast({ title: 'Settings saved', description: 'Next lesson plan will use these settings.' });
     } catch (e) {
       toast({
@@ -148,14 +161,20 @@ export default function CurriculumSettingsPage() {
           description="What every generated lesson plan must include. Defaults match Ofsted and DfE expectations for FE providers in England."
           actions={
             collegeId ? (
-              <button
-                type="button"
-                onClick={save}
-                disabled={saving}
-                className={cn(COLLEGE_BTN_PRIMARY, 'hidden sm:inline-flex')}
-              >
-                {saving ? 'Saving…' : 'Save settings'}
-              </button>
+              <span className="hidden items-center gap-3 sm:inline-flex">
+                <span className="text-[12.5px] font-medium text-white">
+                  {loading ? '' : dirty ? 'Unsaved changes' : 'All saved'}
+                </span>
+                <button
+                  type="button"
+                  onClick={save}
+                  disabled={saving || !dirty}
+                  // Outline while there is nothing to save: a dimmed solid yellow reads brown.
+                  className={dirty ? COLLEGE_BTN_PRIMARY : COLLEGE_BTN}
+                >
+                  {saving ? 'Saving…' : 'Save settings'}
+                </button>
+              </span>
             ) : undefined
           }
         />
@@ -181,7 +200,7 @@ export default function CurriculumSettingsPage() {
                   title="Always included"
                   sub="Switch off only what your college covers elsewhere."
                 />
-                <div className={COLLEGE_LIST}>
+                <div className={PEOPLE_LIST}>
                   <ul className="divide-y divide-white/[0.06]">
                     <ToggleRow
                       label="British values"
@@ -212,7 +231,7 @@ export default function CurriculumSettingsPage() {
                   title="Safeguarding context"
                   sub="Names and wording plans can use."
                 />
-                <div className={cn(COLLEGE_CARD, 'space-y-5')}>
+                <div className={cn(PEOPLE_PANEL, 'space-y-5')}>
                   <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="dsl-name" className={labelCn}>
@@ -282,20 +301,17 @@ export default function CurriculumSettingsPage() {
               </motion.section>
             </motion.div>
 
-            <div className="mt-8">
-              <RiskThresholdsCard collegeId={collegeId} />
-            </div>
-
             {/* Sticky on phones so nobody scrolls back to commit. */}
             <div className="sticky bottom-0 z-10 -mx-4 flex flex-col gap-2 border-t border-white/[0.06] bg-elec-dark/95 px-4 py-3 backdrop-blur-sm sm:hidden">
               <span className="text-[12px] text-white">
-                Changes apply to the next lesson plan generated.
+                {dirty ? 'Unsaved changes. ' : 'All saved. '}Changes apply to the next lesson plan
+                generated.
               </span>
               <button
                 type="button"
                 onClick={save}
-                disabled={saving}
-                className={COLLEGE_BTN_PRIMARY}
+                disabled={saving || !dirty}
+                className={dirty ? COLLEGE_BTN_PRIMARY : COLLEGE_BTN}
               >
                 {saving ? 'Saving…' : 'Save settings'}
               </button>

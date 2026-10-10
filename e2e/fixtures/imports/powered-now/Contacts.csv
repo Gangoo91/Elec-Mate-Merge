@@ -1,0 +1,5 @@
+Type,title,forename,surname,companyname,Address 1,Address 2,Address 3,County,Country,Postcode,Notes,mobile,Email
+Customer,Mrs,Denise,Carter,,4 Orchard Way,Newport,,Isle of Wight,United Kingdom,PO30 5NB,,07700 900301,denise.carter@example.com
+Customer,Mr,Luke,Freeman,Freeman Holiday Lets,The Old Barn,Godshill,,Isle of Wight,United Kingdom,PO38 3HZ,Three holiday cottages,07700 900302,bookings@freemanlets.example.com
+Customer,,Ian,Whitlock,,22 Esplanade,Ryde,,Isle of Wight,United Kingdom,PO33 2EH,,07700 900303,ian.whitlock@example.com
+Supplier,,,,IOW Electrical Wholesale,Unit 9,Newport,,Isle of Wight,United Kingdom,PO30 5XX,"Supplier, not a customer",01983 555 000,trade@iow-wholesale.example.com

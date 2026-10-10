@@ -87,7 +87,7 @@ const faqs = [
   {
     question: 'Does an EV charging circuit need an AFDD?',
     answer:
-      'No. Regulation 722.421.1.7.201 of BS 7671:2018+A4:2026 states that arc fault detection devices are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. This matters because A4:2026 redrafted Regulation 421.1.7 and made AFDD protection a requirement for socket-outlet final circuits up to 32 A in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. Section 722 carves EV charging circuits out of that requirement.',
+      'No. Regulation 722.421.1.7.201 of BS 7671:2018+A4:2026 states that arc fault detection devices are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2. This matters because A2:2022 redrafted Regulation 421.1.7 and made AFDD protection a requirement for socket-outlet final circuits up to 32 A in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. Section 722 carves EV charging circuits out of that requirement.',
   },
 ];
 
@@ -331,11 +331,11 @@ const sections = [
         <p>
           Section 722 of BS 7671:2018+A4:2026 sets out the electrical installation requirements for
           EV charging equipment. A4:2026 was issued on 15 April 2026 and may be implemented
-          immediately; BS 7671:2018+A2:2022+Corrigendum (May 2023)+A3:2024 remains current but will
-          be withdrawn on 15 October 2026. A4:2026 makes significant changes to Regulation
-          722.411.4.1 on the use of a PME supply — the exception concerning reasonable practicability
-          has been deleted — and further changes to external influences, RCDs, socket-outlets and
-          connectors. Review the revised regulation text before certifying new work.
+          immediately; BS 7671:2018+A2:2022+Corrigendum (May 2023)+A3:2024 is withdrawn on 15
+          October 2026. Section 722 was last substantially revised at A2:2022, which deleted indent
+          (a) of Regulation 722.411.4.1 on the use of a PME supply (the exception concerning
+          reasonable practicability) and redrafted the Annex to Section 722; A4:2026 carries those
+          requirements forward. Review the current regulation text before certifying new work.
         </p>
 
         <h3 className="mt-8 text-base font-semibold text-white">
@@ -521,7 +521,7 @@ const sections = [
               <strong>722.421.1.7.201 — no AFDD required</strong> — arc fault detection devices are
               not required for circuits supplying EV charging equipment conforming to the BS EN
               61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN
-              IEC 62196-2. Worth knowing, because A4:2026 redrafted Regulation 421.1.7 and made
+              IEC 62196-2. Worth knowing, because A2:2022 redrafted Regulation 421.1.7 and made
               AFDDs a requirement on 32A socket-outlet final circuits in Higher Risk Residential
               Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care
               homes.
@@ -749,7 +749,7 @@ export default function EVChargingLegislationUKPage() {
       title="EV Charger Installation Regs UK: Part S + §722"
       description="UK rules for EV charge point installation: Building Regs Part S, Smart Charge Point Regulations 2021, BS 7671 Section 722 and PME / O-PEN earthing."
       datePublished="2025-01-01"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Legislation Guide"

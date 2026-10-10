@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const eicrExampleAndTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-example-and-template',
@@ -97,7 +97,7 @@ export const eicrExampleAndTemplateConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text: 'A4:2026 note: BS 7671:2018+A4:2026 introduced Reg 421.1.7, which recommends the installation of arc fault detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate the risk of fire from arc fault currents. The regulation is recommendatory rather than mandatory. On post-October 2026 EICRs, absence of AFDDs where the recommendation applies may warrant a C3 observation — record it consistently if you note it on one circuit.',
+          text: 'AFDD note: Reg 421.1.7 has recommended arc fault detection devices (AFDDs) on AC final circuits since BS 7671:2018. Since A2:2022 they have been required on single-phase socket-outlet final circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommended elsewhere. On post-October 2026 EICRs, absence of AFDDs where only the recommendation applies may warrant a C3 observation — record it consistently if you note it on one circuit.',
         },
       ],
     },

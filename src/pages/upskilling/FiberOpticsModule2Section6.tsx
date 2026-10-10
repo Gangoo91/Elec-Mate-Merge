@@ -795,7 +795,7 @@ const FiberOpticsModule2Section6 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-5">
+            <Link to="/study-centre/upskilling/fiber-optics-module-2-section-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Patch Panels
             </Link>

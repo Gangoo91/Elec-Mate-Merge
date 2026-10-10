@@ -1,3 +1,4 @@
+import type React from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { SubPageShell } from '@/components/apprentice-hub/college-hub/SubPageShell';
@@ -14,6 +15,8 @@ import { MyOtjSubmitCard } from '@/components/apprentice-hub/MyOtjSubmitCard';
 import { MyPortfolioLinkCard } from '@/components/apprentice-hub/MyPortfolioLinkCard';
 import { MyTutorResourcesCard } from '@/components/apprentice-hub/MyTutorResourcesCard';
 import { MyEpaBriefCard } from '@/components/apprentice-hub/MyEpaBriefCard';
+import { MyGatewayCard } from '@/components/apprentice-hub/MyGatewayCard';
+import { FORECAST_HELP_NOTE_LEARNER } from '@/lib/epa/gatewayForecast';
 import { MyEpaSimulatorCard } from '@/components/apprentice-hub/MyEpaSimulatorCard';
 import { MyVoiceSurveyCard } from '@/components/apprentice-hub/MyVoiceSurveyCard';
 import { MyReflectionCard } from '@/components/apprentice-hub/MyReflectionCard';
@@ -36,6 +39,15 @@ import type { PageHelpContent } from '@/components/hub/PageHelp';
    — the bottleneck is the cards themselves, not the wrapper.
    ========================================================================== */
 
+/**
+ * One column of a two-column section. Cards stack inside it, so a short card
+ * never leaves a gap beside a tall one; the two columns are weighted to end
+ * at about the same height on desktop. One column on a phone.
+ */
+function Col({ children }: { children: React.ReactNode }) {
+  return <div className="min-w-0 space-y-4 lg:space-y-5">{children}</div>;
+}
+
 type Section =
   'today' | 'plan' | 'progress' | 'activities' | 'epa' | 'voice' | 'compliance' | 'activity';
 
@@ -56,17 +68,21 @@ const SECTIONS: Record<Section, SectionDef> = {
       "Today's focus, this week's lessons, your timetable, what was taught in class and your attendance record, all in one place.",
     render: () => (
       <>
-        <MyTodayFocusCard />
-        <MyThisWeekCard />
-        <MyTimetableCard />
-        {/* ELE-1890: what was taught to the class, and what to catch up on. */}
-        <MyTaughtLessonsCard />
-        <MyAttendanceCard />
+        <Col>
+          <MyTodayFocusCard />
+          <MyThisWeekCard />
+        </Col>
+        <Col>
+          <MyTimetableCard />
+          {/* ELE-1890: what was taught to the class, and what to catch up on. */}
+          <MyTaughtLessonsCard />
+          <MyAttendanceCard />
+        </Col>
       </>
     ),
   },
   plan: {
-    eyebrow: 'Your ILP',
+    eyebrow: 'Learning plan',
     title: 'Learning plan & messages',
     description:
       'Goals your tutor has set, your messages back, and the comment thread between you.',
@@ -93,25 +109,29 @@ const SECTIONS: Record<Section, SectionDef> = {
       'Take quizzes, submit off-the-job hours, and keep your portfolio moving toward sign-off.',
     render: () => (
       <>
-        <AssignedQuizzesCard />
-        <div id="otj" className="scroll-mt-6">
-          <MyOtjSubmitCard />
-        </div>
-        {/* Funding evidence sits with the hours it is mostly made of. The
+        <Col>
+          <AssignedQuizzesCard />
+          <div id="otj" className="scroll-mt-6">
+            <MyOtjSubmitCard />
+          </div>
+          <div id="resources" className="scroll-mt-6">
+            <MyTutorResourcesCard />
+          </div>
+        </Col>
+        <Col>
+          {/* Funding evidence sits with the hours it is mostly made of. The
             /college/compliance section still exists for a direct link; this
             is how a learner finds it from the hub, which previously had no
             tile pointing at it at all. */}
-        <div id="compliance" className="scroll-mt-6">
-          <MyComplianceCard />
-        </div>
-        {/* ELE-1892: links to the one portfolio home; submitting (with the
+          <div id="compliance" className="scroll-mt-6">
+            <MyComplianceCard />
+          </div>
+          {/* ELE-1892: links to the one portfolio home; submitting (with the
             signed declaration) happens on the evidence itself. */}
-        <div id="portfolio" className="scroll-mt-6">
-          <MyPortfolioLinkCard />
-        </div>
-        <div id="resources" className="scroll-mt-6">
-          <MyTutorResourcesCard />
-        </div>
+          <div id="portfolio" className="scroll-mt-6">
+            <MyPortfolioLinkCard />
+          </div>
+        </Col>
       </>
     ),
   },
@@ -122,10 +142,15 @@ const SECTIONS: Record<Section, SectionDef> = {
       "Read your personalised pre-EPA brief and practice with timed mocks. Your scores feed into your tutor's read of your readiness.",
     render: () => (
       <>
-        <MyEpaBriefCard />
-        <div id="epa-simulator" className="scroll-mt-6">
-          <MyEpaSimulatorCard />
-        </div>
+        <Col>
+          <MyGatewayCard />
+        </Col>
+        <Col>
+          <MyEpaBriefCard />
+          <div id="epa-simulator" className="scroll-mt-6">
+            <MyEpaSimulatorCard />
+          </div>
+        </Col>
       </>
     ),
   },
@@ -151,7 +176,8 @@ const SECTIONS: Record<Section, SectionDef> = {
   activity: {
     eyebrow: 'Activity',
     title: "What's happened on your record",
-    description: 'Live feed of comments, sign-offs, observations and quiz results from your college team.',
+    description:
+      'Live feed of comments, sign-offs, observations and quiz results from your college team.',
     render: () => (
       <>
         <MyActivityFeedCard />
@@ -166,24 +192,42 @@ const SECTION_HELP: PageHelpContent = {
   title: 'Your college area',
   what: 'One part of your college area: lessons, your learning plan, quizzes and hours, assessment, your end-point assessment, surveys or your record. Everything here is about you; your college sees the same.',
   steps: [
-    { title: 'Do what is waiting', body: 'Anything your tutor has set or is waiting on is at the top. Tap it to deal with it.' },
-    { title: 'Keep your evidence moving', body: 'Your portfolio, witness statements and assessor decisions live under Progress and assessment.' },
-    { title: 'No college yet?', body: 'Your portfolio, hours and study all work without one. Join with your college or cohort code when you have it, or invite an assessor yourself.' },
+    {
+      title: 'Do what is waiting',
+      body: 'Anything your tutor has set or is waiting on is at the top. Tap it to deal with it.',
+    },
+    {
+      title: 'Keep your evidence moving',
+      body: 'Your portfolio, witness statements and assessor decisions live under Progress and assessment.',
+    },
+    {
+      title: 'No college yet?',
+      body: 'Your portfolio, hours and study all work without one. Join with your college or cohort code when you have it, or invite an assessor yourself.',
+    },
   ],
   notes: [
-    { title: 'Who sees what', body: 'Your college tutor and assessor see your portfolio, hours and quiz results. An assessor you invite sees your evidence and can record decisions until you remove them.' },
+    {
+      title: 'Who sees what',
+      body: 'Your college tutor and assessor see your portfolio, hours and quiz results. An assessor you invite sees your evidence and can record decisions until you remove them.',
+    },
+    FORECAST_HELP_NOTE_LEARNER,
   ],
 };
 
 /** No college: sections run by a college say so; the rest drop tutor-only cards. */
-const NO_COLLEGE_ALT: Partial<Record<Section, { description: string; render?: () => JSX.Element }>> = {
+const NO_COLLEGE_ALT: Partial<
+  Record<Section, { description: string; render?: () => JSX.Element }>
+> = {
   today: { description: 'Your day at college: lessons, timetable and attendance.' },
   plan: { description: 'Goals you agree with your college tutor, and messages between you.' },
   voice: { description: 'Surveys and reflections for your college.' },
   compliance: { description: 'What your college’s funding body needs from you.' },
-  activity: { description: 'Comments, sign-offs, observations and quiz results from your college team.' },
+  activity: {
+    description: 'Comments, sign-offs, observations and quiz results from your college team.',
+  },
   activities: {
-    description: 'Log your off-the-job hours and keep your portfolio moving. Quizzes from a tutor appear here once you join a college.',
+    description:
+      'Log your off-the-job hours and keep your portfolio moving. Quizzes from a tutor appear here once you join a college.',
     render: () => (
       <>
         <div id="otj" className="scroll-mt-6">
@@ -196,7 +240,8 @@ const NO_COLLEGE_ALT: Partial<Record<Section, { description: string; render?: ()
     ),
   },
   epa: {
-    description: 'Practise for your end-point assessment with timed mocks marked against your course.',
+    description:
+      'Practise for your end-point assessment with timed mocks marked against your course.',
     render: () => (
       <div id="epa-simulator" className="scroll-mt-6">
         <MyEpaSimulatorCard />
@@ -228,7 +273,12 @@ export default function MyCollegeSectionPage() {
   // without a college would otherwise fire their college reads (403s).
   if (loading) {
     return (
-      <SubPageShell eyebrow={def.eyebrow} title={def.title} description={def.description} help={SECTION_HELP}>
+      <SubPageShell
+        eyebrow={def.eyebrow}
+        title={def.title}
+        description={def.description}
+        help={SECTION_HELP}
+      >
         <div className="h-40 animate-pulse rounded-3xl bg-white/[0.04]" />
       </SubPageShell>
     );
@@ -237,7 +287,12 @@ export default function MyCollegeSectionPage() {
   if (noCollege && section && NO_COLLEGE_ALT[section as Section]) {
     const alt = NO_COLLEGE_ALT[section as Section]!;
     return (
-      <SubPageShell eyebrow={def.eyebrow} title={def.title} description={alt.description} help={SECTION_HELP}>
+      <SubPageShell
+        eyebrow={def.eyebrow}
+        title={def.title}
+        description={alt.description}
+        help={SECTION_HELP}
+      >
         {alt.render ? alt.render() : <NoCollegeSectionPanel section={section} />}
       </SubPageShell>
     );

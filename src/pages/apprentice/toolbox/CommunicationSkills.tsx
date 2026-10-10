@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { GuidePage, GuideIndex } from '@/components/apprentice/shared/GuideKit';
 
 interface Section {
   number: string;
@@ -60,27 +59,24 @@ const SECTIONS: Section[] = [
 const CommunicationSkills = () => {
   const navigate = useNavigate();
   return (
-    <HubSubPage
+    <GuidePage
+      area="Communication skills"
       title="The other half of the job"
       backTo="/apprentice/toolbox"
       description="Technical ability gets you on site — communication keeps you there. Talking to supervisors, clients, mates and the difficult-conversation people who turn up on every job."
     >
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Four chapters</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="two"
-          cards={SECTIONS.map((s) => ({
-            id: s.slug,
-            eyebrow: s.eyebrow,
-            title: s.title,
-            description: s.description,
-            meta: s.meta,
-            onClick: () => navigate(`/apprentice/toolbox/communication-skills/${s.slug}`),
-          }))}
-        />
-      </motion.section>
-    </HubSubPage>
+      <GuideIndex
+        title="Four chapters"
+        columns={2}
+        items={SECTIONS.map((s) => ({
+          id: s.slug,
+          title: s.title,
+          description: s.description,
+          meta: s.meta,
+          onClick: () => navigate(`/apprentice/toolbox/communication-skills/${s.slug}`),
+        }))}
+      />
+    </GuidePage>
   );
 };
 

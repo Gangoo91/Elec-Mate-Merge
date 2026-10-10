@@ -46,7 +46,7 @@ const RIGHT_TABS: TabItem[] = [
 export function ApprenticeTabBar() {
   const { profile } = useAuth();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [captureOpen, setCaptureOpen] = useState(false);
 
   // Let other apprentice surfaces open the capture sheet without mounting
@@ -72,16 +72,25 @@ export function ApprenticeTabBar() {
       <button
         key={to}
         type="button"
-        onClick={() => navigate(to)}
+        // The tab you are on: back to its top, like a native tab bar, instead
+        // of stacking the same page in history (Back then did nothing).
+        onClick={() =>
+          pathname === to && !search
+            ? window.scrollTo({ top: 0, behavior: 'smooth' })
+            : navigate(to)
+        }
         aria-label={label}
         aria-current={active ? 'page' : undefined}
         className={cn(
-          'flex h-14 min-w-0 flex-col items-center justify-center gap-1 touch-manipulation transition-colors',
-          active ? 'text-elec-yellow' : 'text-white hover:text-white/85'
+          'flex h-14 min-w-0 flex-col items-center justify-center gap-1 touch-manipulation transition-colors active:opacity-70',
+          active ? 'text-elec-yellow' : 'text-white'
         )}
       >
-        <Icon className="h-5 w-5" strokeWidth={active ? 2.25 : 2} />
-        <span className="text-[10px] font-medium leading-none">{label}</span>
+        <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2 : 1.5} />
+        {/* 12px: the 10px labels were under the readable minimum (10 Oct). */}
+        <span className={cn('text-[12px] leading-none', active ? 'font-semibold' : 'font-medium')}>
+          {label}
+        </span>
       </button>
     );
   };
@@ -93,7 +102,14 @@ export function ApprenticeTabBar() {
       {/* In-flow spacer — keeps the last of the page content clear of the
           fixed bar (h-14 + safe-area inset on notched phones). Lives inside
           the component so it's role-gated with it. */}
-      <div className="h-24 lg:hidden" aria-hidden data-apprentice-tabbar />
+      {/* A HubPage already pads its own bottom (6rem + the home indicator),
+          so on those screens this spacer doubled it into ~150px of empty
+          page above the bar (10 Oct). Hidden when a HubPage is on screen. */}
+      <div
+        className="h-24 lg:hidden [body:has([style*=--hub-ground])_&]:hidden"
+        aria-hidden
+        data-apprentice-tabbar
+      />
 
       {/* ELE-1451 — data-apprentice-tabbar lets an exam screen stand this bar
           down. Exams render their own fixed bottom bar at z-50, the same layer
@@ -103,7 +119,7 @@ export function ApprenticeTabBar() {
       <nav
         aria-label="Apprentice navigation"
         data-apprentice-tabbar
-        className="fixed bottom-0 inset-x-0 z-50 lg:hidden bg-[hsl(0_0%_6%)]/95 backdrop-blur-md border-t border-white/[0.08] pb-[env(safe-area-inset-bottom)]"
+        className="fixed bottom-0 inset-x-0 z-50 lg:hidden bg-[hsl(0_0%_6%)] border-t border-white/[0.08] pb-[env(safe-area-inset-bottom)]"
       >
         <div className="grid grid-cols-5 items-center max-w-2xl mx-auto">
           {LEFT_TABS.map(renderTab)}

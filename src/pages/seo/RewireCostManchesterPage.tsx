@@ -205,7 +205,9 @@ const sections = [
           </div>
           <p className="text-white text-xs mt-4">
             Manchester typically runs 20–30% below London on the same job. See the{' '}
-            <SEOInternalLink href="/guides/rewire-cost-uk">national rewire cost guide</SEOInternalLink>{' '}
+            <SEOInternalLink href="/guides/rewire-cost-uk">
+              national rewire cost guide
+            </SEOInternalLink>{' '}
             for the full UK picture.
           </p>
         </div>
@@ -382,8 +384,9 @@ const sections = [
         </p>
         <p>
           A new rewire must comply with the current edition of the Wiring Regulations,
-          BS&nbsp;7671:2018+A4:2026. The amendment tightened the protection rules that drive consumer
-          unit specification and cost — here is what a compliant Manchester rewire now has to deliver:
+          BS&nbsp;7671:2018+A4:2026. The amendment tightened the protection rules that drive
+          consumer unit specification and cost — here is what a compliant Manchester rewire now has
+          to deliver:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -399,33 +402,33 @@ const sections = [
             <div className="text-xs font-mono text-elec-yellow mb-1">Reg 411.3.4</div>
             <h4 className="font-bold text-white mb-2">RCD on lighting circuits</h4>
             <p className="text-white text-sm leading-relaxed">
-              New in A4:2026 — within domestic premises, AC final circuits supplying luminaires must
-              have additional protection by a 30&nbsp;mA RCD. Lighting circuits now need RCD
-              protection too, not just socket circuits.
+              In force since BS 7671:2018 — within domestic premises, AC final circuits supplying
+              luminaires must have additional protection by a 30&nbsp;mA RCD. Lighting circuits need
+              RCD protection too, not just socket circuits.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="text-xs font-mono text-elec-yellow mb-1">Reg 415.1</div>
             <h4 className="font-bold text-white mb-2">30&nbsp;mA additional protection</h4>
             <p className="text-white text-sm leading-relaxed">
-              Additional protection is provided by an RCD with a rated residual operating current not
-              exceeding 30&nbsp;mA. An RCBO board giving per-circuit protection is the standard way to
-              meet this across a whole rewire.
+              Additional protection is provided by an RCD with a rated residual operating current
+              not exceeding 30&nbsp;mA. An RCBO board giving per-circuit protection is the standard
+              way to meet this across a whole rewire.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="text-xs font-mono text-elec-yellow mb-1">Reg 421.1.7</div>
             <h4 className="font-bold text-white mb-2">AFDDs recommended</h4>
             <p className="text-white text-sm leading-relaxed">
-              A4:2026 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate
-              fire risk from arc fault currents. The wording is recommendatory, but AFDDs add a
-              further cost per circuit where fitted.
+              A4:2026 recommends arc fault detection devices (AFDDs) on AC final circuits to
+              mitigate fire risk from arc fault currents. The wording is recommendatory, but AFDDs
+              add a further cost per circuit where fitted.
             </p>
           </div>
         </div>
         <p>
-          Both RCD requirements mean an RCBO consumer unit with per-circuit protection is the standard
-          solution for a Manchester rewire. The electrician must issue an{' '}
+          Both RCD requirements mean an RCBO consumer unit with per-circuit protection is the
+          standard solution for a Manchester rewire. The electrician must issue an{' '}
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
@@ -485,8 +488,8 @@ const sections = [
               <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing, EIC, and Part P</strong> — initial verification testing of every
-                circuit, the Electrical Installation Certificate with its Schedule of Circuit Details
-                and Schedule of Test Results (the Appendix&nbsp;6 model forms in
+                circuit, the Electrical Installation Certificate with its Schedule of Circuit
+                Details and Schedule of Test Results (the Appendix&nbsp;6 model forms in
                 BS&nbsp;7671:2018+A4:2026), and Part P notification to the local authority.
               </span>
             </li>

@@ -48,7 +48,12 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
     };
   }, [cells]);
 
-  const handlePick = async (samplerId: string, samplerName: string, cohortId: string, cohortName: string) => {
+  const handlePick = async (
+    samplerId: string,
+    samplerName: string,
+    cohortId: string,
+    cohortName: string
+  ) => {
     try {
       const picks = await pickRandomSample({ samplerId, cohortId, n: 5 });
       if (picks.length === 0) {
@@ -79,11 +84,11 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
             <GitBranch className="h-4 w-4 text-elec-yellow" />
             Standards-Verifier coverage
           </h2>
-          <p className="mt-1 text-[12px] text-white/70 max-w-2xl leading-snug">
-            One row per IQA, one column per cohort they've sampled. Cells show how many
-            distinct learners they've reached, vs the cohort's active size. Anything below
-            <span className="text-elec-yellow font-semibold"> {targetPct}%</span> is flagged —
-            this is the proof Ofsted look for.
+          <p className="mt-1 text-[12px] text-white max-w-2xl leading-snug">
+            One row per IQA, one column per cohort they've sampled. Cells show how many distinct
+            learners they've reached, vs the cohort's active size. Anything below
+            <span className="text-elec-yellow font-semibold"> {targetPct}%</span> is flagged. This
+            is the proof Ofsted look for.
           </p>
         </div>
         <div className="flex gap-2">
@@ -100,10 +105,10 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
               type="button"
               onClick={() => setWindow(w.value)}
               className={cn(
-                'h-8 px-3 rounded-full border text-[11.5px] font-semibold transition-colors touch-manipulation',
+                'h-8 px-3 rounded-full border text-[12px] font-semibold transition-colors touch-manipulation',
                 window === w.value
-                  ? 'bg-elec-yellow/[0.12] border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.04] border-white/[0.10] text-white/70 hover:bg-white/[0.08]'
+                  ? 'border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.04] border-white/[0.10] text-white hover:bg-white/[0.08]'
               )}
             >
               {w.label}
@@ -112,14 +117,12 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
         </div>
       </div>
 
-      {loading && (
-        <div className="text-[12.5px] text-white/70">Crunching coverage…</div>
-      )}
+      {loading && <div className="text-[12.5px] text-white">Crunching coverage…</div>}
 
       {!loading && cells.length === 0 && (
-        <div className="rounded-xl border border-dashed border-white/[0.10] px-4 py-10 text-center text-[12.5px] text-white/70">
-          No IQA samples logged in this window. Once samples are recorded against learners,
-          the coverage grid populates automatically.
+        <div className="rounded-xl border border-dashed border-white/[0.10] px-4 py-10 text-center text-[12.5px] text-white">
+          No IQA samples logged in this window. Once samples are recorded against learners, the
+          coverage grid populates automatically.
         </div>
       )}
 
@@ -149,15 +152,13 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
                       key={cohortId}
                       className="flex items-center justify-between gap-3 px-4 py-3"
                     >
-                      <span className="text-[12.5px] text-white/90 min-w-0 truncate">
+                      <span className="text-[12.5px] text-white min-w-0 truncate">
                         {cohortName}
                       </span>
                       <CoverageCellView
                         cell={cell!}
                         target={targetPct}
-                        onPick={() =>
-                          handlePick(samplerId, samplerName, cohortId, cohortName)
-                        }
+                        onPick={() => handlePick(samplerId, samplerName, cohortId, cohortName)}
                       />
                     </div>
                   ))}
@@ -174,13 +175,13 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
           <table className="min-w-full border-collapse text-[12px]">
             <thead>
               <tr className="border-b border-white/[0.08]">
-                <th className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-3 py-2.5 text-left text-[10px] uppercase tracking-[0.16em] text-white/70 whitespace-nowrap">
+                <th className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-3 py-2.5 text-left text-[12.5px] font-semibold text-white whitespace-nowrap">
                   IQA / Verifier
                 </th>
                 {cohorts.map(([id, name]) => (
                   <th
                     key={id}
-                    className="px-3 py-2.5 text-center text-[10px] uppercase tracking-[0.16em] text-white/70 whitespace-nowrap"
+                    className="px-3 py-2.5 text-center text-[12.5px] font-semibold text-white whitespace-nowrap"
                   >
                     {name}
                   </th>
@@ -197,7 +198,7 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
                     const cell = cellMap.get(`${samplerId}::${cohortId}`);
                     if (!cell) {
                       return (
-                        <td key={cohortId} className="px-3 py-3 text-center text-white/60">
+                        <td key={cohortId} className="px-3 py-3 text-center text-white">
                           —
                         </td>
                       );
@@ -207,9 +208,7 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
                         <CoverageCellView
                           cell={cell}
                           target={targetPct}
-                          onPick={() =>
-                            handlePick(samplerId, samplerName, cohortId, cohortName)
-                          }
+                          onPick={() => handlePick(samplerId, samplerName, cohortId, cohortName)}
                         />
                       </td>
                     );
@@ -235,22 +234,24 @@ function CoverageCellView({
 }) {
   const tone =
     cell.coverage_pct >= target
-      ? 'bg-emerald-500/[0.08] border-emerald-400/30 text-emerald-200'
+      ? 'border-emerald-400/30 text-emerald-200'
       : cell.coverage_pct >= target * 0.5
-        ? 'bg-amber-500/[0.08] border-amber-400/30 text-amber-200'
-        : 'bg-red-500/[0.08] border-red-400/30 text-red-200';
+        ? 'border-amber-400/30 text-amber-200'
+        : 'border-red-400/30 text-red-200';
   return (
-    <div className={cn('inline-flex flex-col items-center gap-1 rounded-lg border px-2 py-1.5', tone)}>
+    <div
+      className={cn('inline-flex flex-col items-center gap-1 rounded-lg border px-2 py-1.5', tone)}
+    >
       <div className="text-[14px] font-semibold tabular-nums leading-none">
         {cell.coverage_pct}%
       </div>
-      <div className="text-[10px] tabular-nums opacity-75">
+      <div className="text-[12px] tabular-nums opacity-75">
         {cell.sampled_students}/{cell.total_students}
       </div>
       <button
         type="button"
         onClick={onPick}
-        className="mt-0.5 inline-flex items-center gap-1 h-5 px-1.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-[9.5px] text-white touch-manipulation"
+        className="mt-0.5 inline-flex items-center gap-1 h-5 px-1.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-[12px] text-white touch-manipulation"
         title="Pick 5 random unsampled learners"
       >
         <Shuffle className="h-2.5 w-2.5" />

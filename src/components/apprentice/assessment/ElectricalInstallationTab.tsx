@@ -145,7 +145,7 @@ const ElectricalInstallationTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[13px] font-semibold text-white">
           Electrical installation assessment
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
@@ -157,12 +157,10 @@ const ElectricalInstallationTab = () => {
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Progress
-          </span>
-          <span className="text-[12px] text-white font-mono">
+          <span className="text-[13px] font-semibold text-white">Progress</span>
+          <span className="text-[12px] text-white">
             {checkedItems.length}/{totalItems} · {Math.round(completionRate)}%
           </span>
         </div>
@@ -183,10 +181,8 @@ const ElectricalInstallationTab = () => {
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {category.category}
-              </span>
-              <span className="text-[12px] text-white font-mono">
+              <span className="text-[13px] font-semibold text-white">{category.category}</span>
+              <span className="text-[12px] text-white">
                 {categoryChecked}/{category.items.length}
               </span>
             </div>
@@ -227,20 +223,18 @@ const ElectricalInstallationTab = () => {
         );
       })}
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Key standards & regulations
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Key standards & regulations</span>
         <div className="space-y-3">
           {complianceRequirements.map((req, index) => (
             <div key={index} className="space-y-1.5">
               <p className="text-[14px] text-white">{req.standard}</p>
-              <p className="text-[13px] text-white leading-relaxed">{req.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{req.description}</p>
               <ul className="space-y-1">
                 {req.keyPoints.map((point, idx) => (
                   <li
                     key={idx}
-                    className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{point}</span>
@@ -252,16 +246,14 @@ const ElectricalInstallationTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Testing priorities
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Testing priorities</span>
         <div className="space-y-2">
           {testingPriorities.map((test, index) => (
             <div key={index} className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-[14px] text-white">{test.test}</p>
-                <p className="text-[13px] text-white leading-relaxed">{test.reason}</p>
+                <p className="text-[14px] text-white leading-relaxed">{test.reason}</p>
               </div>
               <span className="flex-shrink-0 text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                 {test.priority}
@@ -271,10 +263,8 @@ const ElectricalInstallationTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Findings & recommendations
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Findings & recommendations</span>
         <MobileInput
           label="Findings notes"
           value={findings}
@@ -289,10 +279,8 @@ const ElectricalInstallationTab = () => {
         </Button>
       </div>
 
-      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-          Important reminder
-        </span>
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-red-300">Important reminder</span>
         <p className="text-[14px] text-white leading-relaxed">
           If any defects or safety concerns are identified during this assessment, they must be
           reported immediately and rectified before proceeding with new installation work. All work

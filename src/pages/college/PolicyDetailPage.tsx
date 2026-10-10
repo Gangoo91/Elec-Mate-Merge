@@ -8,13 +8,12 @@ import { cn } from '@/lib/utils';
 import { itemVariants } from '@/components/college/primitives';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeEmpty, CollegePageHeader } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  CollegeEmpty,
-  CollegePageHeader,
-} from '@/components/college/ui/CollegeUi';
+  QBTN as COLLEGE_BTN,
+  QBTN_PRIMARY as COLLEGE_BTN_PRIMARY,
+  QCARD as COLLEGE_CARD,
+} from '@/components/college/quality/QualityHubKit';
 import { StatusPill, type Tone } from '@/components/college/quality/QualityKit';
 import { Ring } from '@/components/college/student360/Student360Visuals';
 import { FormSheet } from '@/components/forms/FormSheet';
@@ -59,12 +58,24 @@ const HELP: PageHelpContent = {
   title: 'A college policy',
   what: 'One policy: what it says, who owns it, when it is next reviewed, and which staff have read and signed the current version.',
   steps: [
-    { title: 'Edit the draft', body: 'Tap Edit to change the wording. The preview shows how staff will see it. Editing a live policy turns it back into a draft; the live version stays in the history untouched.' },
-    { title: 'Publish a version', body: 'Publishing freezes this wording as a new version and asks every member of staff to acknowledge it again.' },
-    { title: 'Chase signatures', body: 'The sign-off log shows who has acknowledged the current version and who has not.' },
+    {
+      title: 'Edit the draft',
+      body: 'Tap Edit to change the wording. The preview shows how staff will see it. Editing a live policy turns it back into a draft; the live version stays in the history untouched.',
+    },
+    {
+      title: 'Publish a version',
+      body: 'Publishing freezes this wording as a new version and asks every member of staff to acknowledge it again.',
+    },
+    {
+      title: 'Chase signatures',
+      body: 'The sign-off log shows who has acknowledged the current version and who has not.',
+    },
   ],
   notes: [
-    { title: 'Archiving', body: 'An archived policy stays in the version history but nobody is asked to sign it. You can restore it at any time.' },
+    {
+      title: 'Archiving',
+      body: 'An archived policy stays in the version history but nobody is asked to sign it. You can restore it at any time.',
+    },
   ],
 };
 
@@ -325,7 +336,12 @@ export default function PolicyDetailPage() {
         </button>
       )}
       {policy.status !== 'archived' && (
-        <button type="button" onClick={startPublish} disabled={saving} className={COLLEGE_BTN_PRIMARY}>
+        <button
+          type="button"
+          onClick={startPublish}
+          disabled={saving}
+          className={COLLEGE_BTN_PRIMARY}
+        >
           {policy.status === 'live' ? `Publish v${policy.version + 1}` : 'Publish v1'}
         </button>
       )}
@@ -347,7 +363,11 @@ export default function PolicyDetailPage() {
           {editing ? (
             <EditPanel draft={draft} onChange={setDraft} />
           ) : (
-            <ReadPanel content={policy.content_md ?? ''} status={policy.status} onEdit={() => setEditing(true)} />
+            <ReadPanel
+              content={policy.content_md ?? ''}
+              status={policy.status}
+              onEdit={() => setEditing(true)}
+            />
           )}
         </div>
 
@@ -383,10 +403,20 @@ export default function PolicyDetailPage() {
         width="wide"
         footer={
           <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-            <button type="button" className={COLLEGE_BTN} onClick={() => setPublishOpen(false)} disabled={saving}>
+            <button
+              type="button"
+              className={COLLEGE_BTN}
+              onClick={() => setPublishOpen(false)}
+              disabled={saving}
+            >
               Cancel
             </button>
-            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={handlePublish} disabled={saving}>
+            <button
+              type="button"
+              className={COLLEGE_BTN_PRIMARY}
+              onClick={handlePublish}
+              disabled={saving}
+            >
               {saving ? 'Publishing…' : 'Publish'}
             </button>
           </div>
@@ -394,14 +424,18 @@ export default function PolicyDetailPage() {
       >
         <div>
           <label className={labelCn} htmlFor="publish-summary">
-            {isFirstPublish ? 'One-line summary of this version (optional)' : `What changed in v${policy.version + 1}? (optional)`}
+            {isFirstPublish
+              ? 'One-line summary of this version (optional)'
+              : `What changed in v${policy.version + 1}? (optional)`}
           </label>
           <input
             id="publish-summary"
             value={publishSummary}
             onChange={(e) => setPublishSummary(e.target.value)}
             className={inputCn}
-            placeholder={isFirstPublish ? 'First version approved by governors' : 'Updated DSL contact details'}
+            placeholder={
+              isFirstPublish ? 'First version approved by governors' : 'Updated DSL contact details'
+            }
           />
         </div>
       </FormSheet>
@@ -415,10 +449,20 @@ export default function PolicyDetailPage() {
         width="wide"
         footer={
           <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-            <button type="button" className={COLLEGE_BTN} onClick={() => setArchiveOpen(false)} disabled={saving}>
+            <button
+              type="button"
+              className={COLLEGE_BTN}
+              onClick={() => setArchiveOpen(false)}
+              disabled={saving}
+            >
               Keep it live
             </button>
-            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={handleArchive} disabled={saving}>
+            <button
+              type="button"
+              className={COLLEGE_BTN_PRIMARY}
+              onClick={handleArchive}
+              disabled={saving}
+            >
               {saving ? 'Archiving…' : 'Archive'}
             </button>
           </div>
@@ -436,7 +480,7 @@ function Meta({ policy }: { policy: PolicyDetail }) {
       <StatusPill tone={STATUS_TONE[policy.status]}>{STATUS_LABEL[policy.status]}</StatusPill>
       <span className="tabular-nums">Version {policy.version}</span>
       {policy.effective_from && <span>Effective from {fmt(policy.effective_from)}</span>}
-      {policy.owner_role && <span>Owned by {policy.owner_role}</span>}
+      {policy.owner_role && <span>Owned by {policy.owner_role.replace(/_/g, ' ')}</span>}
       {policy.review_due_at && <span>Next review {fmt(policy.review_due_at)}</span>}
     </span>
   );
@@ -473,7 +517,12 @@ function ReadPanel({
     );
   }
   return (
-    <motion.div variants={itemVariants} initial="hidden" animate="visible" className={cn(COLLEGE_CARD, 'sm:px-10 sm:py-10')}>
+    <motion.div
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+      className={cn(COLLEGE_CARD, 'sm:px-10 sm:py-10')}
+    >
       <article className="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white prose-h1:text-[26px] prose-h2:text-[20px] prose-h3:text-[16px] prose-p:text-[14px] prose-p:leading-relaxed prose-p:text-white prose-a:text-elec-yellow prose-strong:text-white prose-li:text-[14px] prose-li:text-white">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
       </article>
@@ -492,7 +541,13 @@ interface DraftState {
   requires_acknowledgement: boolean;
 }
 
-function EditPanel({ draft, onChange }: { draft: DraftState; onChange: (next: DraftState) => void }) {
+function EditPanel({
+  draft,
+  onChange,
+}: {
+  draft: DraftState;
+  onChange: (next: DraftState) => void;
+}) {
   return (
     <div className={cn(COLLEGE_CARD, 'space-y-5')}>
       <div>
@@ -513,15 +568,22 @@ function EditPanel({ draft, onChange }: { draft: DraftState; onChange: (next: Dr
             <label className={cn(labelCn, 'mb-0')} htmlFor="policy-body">
               Policy text
             </label>
-            <span className="text-[12px] tabular-nums text-white">{draft.content_md.length} characters</span>
+            <span className="text-[12px] tabular-nums text-white">
+              {draft.content_md.length} characters
+            </span>
           </div>
           <textarea
             id="policy-body"
             value={draft.content_md}
             onChange={(e) => onChange({ ...draft, content_md: e.target.value })}
             rows={24}
-            className={cn(textareaCn, 'min-h-[420px] font-mono text-[13px] md:text-[13px] leading-relaxed')}
-            placeholder={'# Heading\n\nWrite your policy. **Bold**, _italic_, lists and headings all work.'}
+            className={cn(
+              textareaCn,
+              'min-h-[420px] font-mono text-[13px] md:text-[13px] leading-relaxed'
+            )}
+            placeholder={
+              '# Heading\n\nWrite your policy. **Bold**, _italic_, lists and headings all work.'
+            }
           />
         </div>
         <div className="min-w-0">
@@ -593,7 +655,9 @@ function SettingsPanel({
               aria-label="Next review date"
             />
           ) : (
-            <span className="text-[13px] text-white">{policy.review_due_at ? fmt(policy.review_due_at) : '—'}</span>
+            <span className="text-[13px] text-white">
+              {policy.review_due_at ? fmt(policy.review_due_at) : '—'}
+            </span>
           )}
         </SettingRow>
         <SettingRow label="Staff must sign">
@@ -608,7 +672,9 @@ function SettingsPanel({
               <span className="text-[13px] text-white">Required</span>
             </label>
           ) : (
-            <span className="text-[13px] text-white">{policy.requires_acknowledgement ? 'Required' : 'Optional'}</span>
+            <span className="text-[13px] text-white">
+              {policy.requires_acknowledgement ? 'Required' : 'Optional'}
+            </span>
           )}
         </SettingRow>
       </div>
@@ -661,10 +727,14 @@ function AckPanel({
             label={`${count} of ${target}`}
             sub={`have signed version ${version}`}
             warn={pct < 80}
-            onClick={() => document.getElementById('ack-log')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() =>
+              document.getElementById('ack-log')?.scrollIntoView({ behavior: 'smooth' })
+            }
           />
           <p className="text-[12.5px] leading-snug text-white">
-            {pct >= 100 ? 'Everyone has signed the current version.' : 'The sign-off log below shows who still has to sign.'}
+            {pct >= 100
+              ? 'Everyone has signed the current version.'
+              : 'The sign-off log below shows who still has to sign.'}
           </p>
         </div>
       )}
@@ -674,7 +744,13 @@ function AckPanel({
 
 /* ──────────────────────────────────────────────────────── */
 
-function VersionsPanel({ versions, currentVersion }: { versions: PolicyVersion[]; currentVersion: number }) {
+function VersionsPanel({
+  versions,
+  currentVersion,
+}: {
+  versions: PolicyVersion[];
+  currentVersion: number;
+}) {
   return (
     <section className={cn(COLLEGE_CARD, 'p-0 sm:p-0')}>
       <h2 className="px-5 pt-5 text-[15px] font-semibold text-white sm:px-6">Version history</h2>
@@ -687,11 +763,17 @@ function VersionsPanel({ versions, currentVersion }: { versions: PolicyVersion[]
           {versions.map((v) => (
             <li key={v.id} className="px-5 py-3 sm:px-6">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[13.5px] font-semibold tabular-nums text-white">Version {v.version}</span>
+                <span className="text-[13.5px] font-semibold tabular-nums text-white">
+                  Version {v.version}
+                </span>
                 {v.version === currentVersion && <StatusPill tone="good">Current</StatusPill>}
               </div>
-              <div className="mt-0.5 text-[12px] tabular-nums text-white">{fmt(v.published_at)}</div>
-              {v.change_summary && <div className="mt-1 text-[12.5px] leading-snug text-white">{v.change_summary}</div>}
+              <div className="mt-0.5 text-[12px] tabular-nums text-white">
+                {fmt(v.published_at)}
+              </div>
+              {v.change_summary && (
+                <div className="mt-1 text-[12.5px] leading-snug text-white">{v.change_summary}</div>
+              )}
             </li>
           ))}
         </ul>

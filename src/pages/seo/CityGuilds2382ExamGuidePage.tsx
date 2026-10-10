@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What is the difference between the 2382-22 and the old 2382-18?',
     answer:
-      'The 2382-18 covered BS 7671:2018 (the original 18th Edition). The 2382-22 covers BS 7671:2018+A4:2026, which includes all three amendments to the 18th Edition. Amendment 4 introduced significant changes including updated requirements for AFDDs (arc fault detection devices), solar PV and battery storage installations, prosumer installations, and updated Appendix 4 tables. If you passed the 2382-18, you do not need to resit the 2382-22 unless your competent person scheme requires it, but the C&G 2382-22 is the current version and is what training providers now deliver.',
+      'The 2382-18 covered BS 7671:2018 (the original 18th Edition). The 2382-22 covers BS 7671:2018+A4:2026, which includes all three amendments to the 18th Edition. Amendment 2:2022 made AFDDs (arc fault detection devices) a requirement in higher-risk residential premises and added Chapter 82 for prosumer installations; Amendment 4:2026 added Chapter 57 for stationary batteries and updated Appendix 4. If you passed the 2382-18, you do not need to resit the 2382-22 unless your competent person scheme requires it, but the C&G 2382-22 is the current version and is what training providers now deliver.',
   },
   {
     question: 'Can I take the 2382 exam online?',
@@ -574,7 +574,7 @@ export default function CityGuilds2382ExamGuidePage() {
       title="City & Guilds 2382: 18th Edition Exam Guide"
       description="Complete guide to the City & Guilds 2382 18th Edition exam. Exam format, open book rules, study tips, common fail areas, preparation timeline."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

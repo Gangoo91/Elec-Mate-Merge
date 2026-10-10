@@ -32,6 +32,7 @@ import { GatewayGateCard } from '@/components/epa/GatewayGateCard';
 import type { GateLink } from '@/hooks/epa/useGatewayReadiness';
 import { P_BTN, StateChip, fmtDate } from './ui';
 import { assessorWithQualifications } from '@/lib/assessorQualifications';
+import { occasionsCheck } from '@/hooks/portfolio/useAcOccasions';
 
 type Plans = ReturnType<typeof useAssessmentPlans>;
 
@@ -128,9 +129,34 @@ export function ReadinessView({
     [ac.units]
   );
 
+  // A SEPARATE check, never folded into "every criterion passed" (the gate
+  // card above is unchanged): workplace criteria need two separate assessed
+  // occasions (C&G 5357-03 handbook p.14, held as qualification_occasion_rules).
+  const occ = useMemo(
+    () => occasionsCheck(ac.rows, portfolio.occasions.byKey),
+    [ac.rows, portfolio.occasions.byKey]
+  );
+
   // ELE-1872: criteria, hours, English and maths, duration and the
   // declarations are the gate (GatewayGateCard). This list is what else helps.
   const checks: GateCheck[] = [
+    ...(occ.needing > 0
+      ? [
+          {
+            key: 'occasions',
+            title: 'Two occasions on workplace units',
+            line:
+              occ.short === 0
+                ? `All ${occ.needing} workplace criteria have been passed on two separate occasions.`
+                : `${occ.met} of ${occ.needing} workplace criteria passed on two separate occasions. This is checked separately from criteria passed.`,
+            state: occ.short === 0 ? 'done' : 'todo',
+            action:
+              occ.short === 0
+                ? undefined
+                : { label: 'See coverage', run: () => onView('coverage') },
+          } as GateCheck,
+        ]
+      : []),
     ...(planTotal > 0
       ? [
           {
@@ -476,7 +502,7 @@ export function ReadinessView({
                     <span className="text-[13px] font-semibold text-white">
                       {r.unit_code} AC {r.ac_code}
                     </span>
-                    <StateChip state={r.state} />
+                    <StateChip state={r.state} pending={r.countersign_pending} />
                     <span className="ml-auto text-[12px] text-white">
                       {r.assessor_name
                         ? `${assessorWithQualifications(r.assessor_name, r.assessor_qualifications)} · `

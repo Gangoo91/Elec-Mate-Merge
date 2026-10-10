@@ -779,19 +779,19 @@ const ConduitBendingCalculator = () => {
                         and cable manufacturer&rsquo;s data where it is more onerous.
                       </p>
                       <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                        <div className="p-2 bg-white/[0.04] rounded-lg border-l-2 border-amber-400/40">
                           <span className="text-white">20mm:</span>{' '}
                           <span className="text-white">100mm min</span>
                         </div>
-                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                        <div className="p-2 bg-white/[0.04] rounded-lg border-l-2 border-amber-400/40">
                           <span className="text-white">25mm:</span>{' '}
                           <span className="text-white">125mm min</span>
                         </div>
-                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                        <div className="p-2 bg-white/[0.04] rounded-lg border-l-2 border-amber-400/40">
                           <span className="text-white">32mm:</span>{' '}
                           <span className="text-white">160mm min</span>
                         </div>
-                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                        <div className="p-2 bg-white/[0.04] rounded-lg border-l-2 border-amber-400/40">
                           <span className="text-white">40mm:</span>{' '}
                           <span className="text-white">200mm min</span>
                         </div>

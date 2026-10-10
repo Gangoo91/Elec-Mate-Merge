@@ -54,7 +54,7 @@ const keyTakeaways = [
   'A prescribed zone is within 150 mm of the top of the wall, within 150 mm of an angle formed by two adjoining walls, or horizontally and vertically from any point, accessory or switchgear. There is no prescribed zone at the floor line.',
   'A cable passing through a joist must be at least 50 mm from the top or bottom of the joist, or comply with Regulation 522.6.204 (Regulation 522.6.201).',
   'Regulation 411.3.4 requires 30 mA RCD additional protection for AC final circuits supplying luminaires within domestic premises — every lighting circuit needs an RCD-protected way on the board schedule.',
-  'Regulation 421.1.7 was redrafted at A4:2026: AFDDs are a requirement on socket-outlet final circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommended in all other premises. Decide this before you order the consumer unit.',
+  'Regulation 421.1.7 was redrafted at A2:2022: AFDDs are a requirement on socket-outlet final circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommended in all other premises. Decide this before you order the consumer unit.',
   'Part P notification is required for new circuits in dwellings, new consumer units, and work in special locations such as bathrooms and rooms containing a shower.',
 ];
 
@@ -432,7 +432,7 @@ const sections = [
               Regulation 421.1.7 — AFDDs, required in four building types
             </h4>
             <p className="mt-2 text-white">
-              A4:2026 redrafted this regulation, and it is no longer a flat recommendation. AFDDs
+              A2:2022 redrafted this regulation, and it is no longer a flat recommendation. AFDDs
               conforming to BS EN 62606 <strong>shall</strong> be provided for single-phase AC final
               circuits supplying socket-outlets with a rated current not exceeding 32 A in high rise
               residential buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built
@@ -790,7 +790,7 @@ export default function FirstFixElectricalPage() {
       title="First Fix Electrical: What It Is vs Second Fix"
       description="First fix is the cabling, back boxes and containment fitted before plastering. Zones within 150 mm, Table 52.1, 50 mm through joists, then second fix."
       datePublished="2025-07-01"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

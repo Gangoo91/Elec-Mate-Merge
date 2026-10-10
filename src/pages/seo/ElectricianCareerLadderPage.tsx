@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What qualifications do you need to become a senior electrician?',
     answer:
-      'There is no single qualification that grants the title of senior electrician — it is largely a recognition of experience and capability within an employer. However, the qualifications that typically differentiate senior electricians from qualified electricians are: 18th Edition (BS 7671:2018+A2:2022, mandatory for all current work), C&G 2391 Inspection and Testing (or equivalent — 2394 and 2395), SSSTS (Site Supervisors Safety Training Scheme), possibly a specialist qualification (EV, solar PV, fire alarm, data systems), and experience as a lead electrician or working foreman on increasingly large projects. In practice, most electricians reach senior level after 5 to 8 years of varied experience.',
+      'There is no single qualification that grants the title of senior electrician — it is largely a recognition of experience and capability within an employer. However, the qualifications that typically differentiate senior electricians from qualified electricians are: 18th Edition (BS 7671:2018+A4:2026, the current edition), C&G 2391 Inspection and Testing (or equivalent — 2394 and 2395), SSSTS (Site Supervisors Safety Training Scheme), possibly a specialist qualification (EV, solar PV, fire alarm, data systems), and experience as a lead electrician or working foreman on increasingly large projects. In practice, most electricians reach senior level after 5 to 8 years of varied experience.',
   },
   {
     question: 'What does a contracts supervisor do and what qualifications do they need?',
@@ -503,7 +503,7 @@ export default function ElectricianCareerLadderPage() {
       title="Electrician Career Ladder UK 2026 Guide"
       description="Complete guide to the UK electrician career ladder — apprentice, qualified electrician, senior electrician, contracts supervisor, contracts manager."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

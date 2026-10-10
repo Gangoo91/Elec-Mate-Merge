@@ -1,11 +1,12 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
+import { OTJ_RULE_SOURCE, OTJ_ST0152_HOURS } from '@/data/otjStandards';
 
 // Electrical business owner / employer guide. Audience: small electrical contractors and business owners considering taking on an apprentice.
 // CTA: Elec-Mate Business AI / Employer tier.
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const HowToHireAnElectricalApprenticeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-hire-an-electrical-apprentice',
@@ -23,10 +24,10 @@ export const HowToHireAnElectricalApprenticeConfig: GeneratedGuideConfig = {
   heroSubtitle:
     'A practical 2026 guide for UK electrical contractors hiring their first (or next) apprentice. Covers Apprenticeship Levy funding, employer obligations, training provider selection, day-one onboarding, and how to keep the apprentice through to AM2. This guide is for small electrical contractors and business owners considering taking on an apprentice.',
   keyTakeaways: [
-    'The Apprenticeship Levy applies to employers with pay bills above £3m — most small electrical contractors pay nothing but still access government funding for 95-100% of training costs.',
+    'The Apprenticeship Levy applies to employers with pay bills above £3m — most small electrical contractors pay nothing but still access government funding: all training costs for 16 to 24-year-olds and 95% for 25+ (starts from 1 August 2026).',
     'You need a training provider partnership in place before you advertise the vacancy — most electricians use local colleges.',
     'Minimum apprentice wage in 2026 is the Apprentice National Minimum Wage (typically £6.40/hour for under-19s or 1st-year over-19s); JIB rates apply if you\u2019re a JIB member.',
-    'You commit to 20% off-the-job training as a legal requirement — this is non-negotiable and audited.',
+    `You commit to releasing the apprentice for the off-the-job hours on their standard (${OTJ_ST0152_HOURS} for ST0152), in paid time. It is a statutory requirement and is audited.`,
     'Day-one onboarding: PPE, tools, mentoring assignment, OJT logbook, college enrolment confirmed, ECS card application.',
     'Retention through AM2 is the real challenge — many apprentices leave at year 2-3 if not mentored properly.',
   ],
@@ -38,7 +39,7 @@ export const HowToHireAnElectricalApprenticeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'If your annual UK pay bill is under £3m (true for most small electrical contractors), you pay only 5% of the apprentice\u2019s training costs (~£150-450 over 3-4 years). The Government covers the other 95% via the funding band. If you have under 50 employees and hire an apprentice aged 16-21, the Government covers 100%. The Levy itself only applies to employers paying £3m+ in salaries — outside that, the funding is essentially free training for the apprentice.',
+          text: 'If your annual UK pay bill is under £3m (true for most small electrical contractors), the Government pays all of the training and assessment costs, up to the funding band maximum, for an apprentice aged 16 to 24 at the start, for starts from 1 August 2026. For an apprentice aged 25 or over you pay 5% and the Government 95% (DfE funding rules 2026 to 2027, rules 213 to 214). A £2,000 hiring payment is also paid for a 16 to 24-year-old whose practical period starts from 1 October 2026 (rule 133). The Levy itself only applies to employers paying £3m+ in salaries — outside that, the funding is essentially free training for the apprentice.',
         },
       ],
     },
@@ -77,12 +78,12 @@ export const HowToHireAnElectricalApprenticeConfig: GeneratedGuideConfig = {
     },
     {
       id: 'twenty-percent-otj',
-      heading: '20% Off-the-Job Training',
-      tocLabel: '20% Off-the-Job Training',
+      heading: 'Off-the-Job Training Hours',
+      tocLabel: 'Off-the-Job Training Hours',
       blocks: [
         {
           type: 'paragraph',
-          text: 'A legal requirement of the Apprenticeship Standard. The apprentice must spend 20% of their working hours on off-the-job training — equivalent to one day per week. This includes college time, supervised on-site learning of new skills, attending CPD events, reading technical material, simulation work. Track every hour in the apprentice\u2019s logbook — your contract with the training provider includes audits.',
+          text: `A statutory requirement for every English apprenticeship. For starts from 1 August 2025 the apprentice must receive at least the off-the-job hours published on their standard, in paid working hours: ${OTJ_ST0152_HOURS} hours for Installation and Maintenance Electrician (ST0152), often delivered as about one day a week (${OTJ_RULE_SOURCE}). This includes college time, supervised on-site learning of new skills, attending CPD events, reading technical material, simulation work. Track every hour in the apprentice\u2019s logbook — your contract with the training provider includes audits.`,
         },
       ],
     },

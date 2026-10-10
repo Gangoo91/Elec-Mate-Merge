@@ -13,13 +13,25 @@ import {
   CollegeLinkCard,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
 } from '@/components/college/ui/CollegeUi';
-import { Bars, QueueGroup, QueueRow, daysSince, initialsOf, waitingLabel } from '@/components/college/assessment/AssessmentKit';
+import {
+  Bars,
+  QueueGroup,
+  QueueRow,
+  daysSince,
+  initialsOf,
+  waitingLabel,
+} from '@/components/college/assessment/AssessmentKit';
 import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useMyScope } from '@/components/college/people/useMyScope';
-import { FilterChips, ListLoading, SEARCH_CN, ScopeSwitch, plural } from '@/components/college/people/peopleKit';
+import {
+  FilterChips,
+  ListLoading,
+  SEARCH_CN,
+  ScopeSwitch,
+  plural,
+} from '@/components/college/people/peopleKit';
 import { STATE_SWATCH } from '@/hooks/portfolio/usePortfolioAcState';
 import {
   passedOf,
@@ -29,6 +41,7 @@ import {
   type WaitingSubmission,
 } from './useCollegePortfolioOverview';
 import { PortfolioToolsSheet } from './PortfolioToolsSheet';
+import { CountersignQueue } from '@/components/assessment/CountersignQueue';
 
 /* ==========================================================================
    CollegePortfolioHub — /college?section=portfolio. The tutor's portfolio
@@ -84,11 +97,31 @@ const HELP: PageHelpContent = {
     },
   ],
   legend: [
-    { swatch: STATE_SWATCH.iqa_confirmed, label: 'Passed or IQA confirmed', body: 'An assessor passed it.' },
-    { swatch: STATE_SWATCH.submitted, label: 'Submitted', body: 'Sent for assessment, waiting for a decision.' },
-    { swatch: STATE_SWATCH.referred, label: 'Needs more or not yet', body: 'Sent back with feedback.' },
-    { swatch: STATE_SWATCH.claimed, label: 'Claimed', body: 'The learner linked evidence but has not sent it yet.' },
-    { swatch: 'bg-orange-500', label: 'Waiting a week or more', body: 'Evidence that sits this long holds the learner up.' },
+    {
+      swatch: STATE_SWATCH.iqa_confirmed,
+      label: 'Passed or IQA confirmed',
+      body: 'An assessor passed it.',
+    },
+    {
+      swatch: STATE_SWATCH.submitted,
+      label: 'Submitted',
+      body: 'Sent for assessment, waiting for a decision.',
+    },
+    {
+      swatch: STATE_SWATCH.referred,
+      label: 'Needs more or not yet',
+      body: 'Sent back with feedback.',
+    },
+    {
+      swatch: STATE_SWATCH.claimed,
+      label: 'Claimed',
+      body: 'The learner linked evidence but has not sent it yet.',
+    },
+    {
+      swatch: 'bg-orange-500',
+      label: 'Waiting a week or more',
+      body: 'Evidence that sits this long holds the learner up.',
+    },
   ],
 };
 
@@ -107,7 +140,12 @@ const fmtDate = (iso: string | null) => {
   if (!iso) return null;
   const d = new Date(iso);
   const sameYear = d.getFullYear() === new Date().getFullYear();
-  return d.toLocaleDateString('en-GB', sameYear ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' });
+  return d.toLocaleDateString(
+    'en-GB',
+    sameYear
+      ? { day: 'numeric', month: 'short' }
+      : { day: 'numeric', month: 'short', year: 'numeric' }
+  );
 };
 
 const isActive = (s: string | null) => {
@@ -126,9 +164,18 @@ function CriteriaBar({ c }: { c: CriteriaCounts }) {
     [c.claimed, STATE_SWATCH.claimed],
   ];
   return (
-    <span className="flex h-2 w-full overflow-hidden rounded-full bg-white/[0.08]" aria-hidden="true">
+    <span
+      className="flex h-2 w-full overflow-hidden rounded-full bg-white/[0.08]"
+      aria-hidden="true"
+    >
       {parts.map(([n, cls], i) =>
-        n > 0 ? <span key={i} className={cn('h-full', cls)} style={{ width: `${Math.max(1.5, (n / total) * 100)}%` }} /> : null
+        n > 0 ? (
+          <span
+            key={i}
+            className={cn('h-full', cls)}
+            style={{ width: `${Math.max(1.5, (n / total) * 100)}%` }}
+          />
+        ) : null
       )}
     </span>
   );
@@ -154,9 +201,13 @@ export default function CollegePortfolioHub() {
   const [showAllWaiting, setShowAllWaiting] = useState(false);
   const [toolsFor, setToolsFor] = useState<PortfolioLearner | null>(null);
 
-  const allLearners = useMemo(() => (data?.learners ?? []).filter((l) => isActive(l.status)), [data]);
+  const allLearners = useMemo(
+    () => (data?.learners ?? []).filter((l) => isActive(l.status)),
+    [data]
+  );
   const learners = useMemo(
-    () => (scope === 'mine' ? allLearners.filter((l) => myStudentIds.has(l.student_id)) : allLearners),
+    () =>
+      scope === 'mine' ? allLearners.filter((l) => myStudentIds.has(l.student_id)) : allLearners,
     [allLearners, scope, myStudentIds]
   );
   const waiting = useMemo(() => {
@@ -194,7 +245,15 @@ export default function CollegePortfolioHub() {
 
   /* ── State distribution across the scoped learners ── */
   const distribution = useMemo(() => {
-    const t = { iqa_confirmed: 0, passed: 0, submitted: 0, referred: 0, claimed: 0, suggested: 0, not_started: 0 };
+    const t = {
+      iqa_confirmed: 0,
+      passed: 0,
+      submitted: 0,
+      referred: 0,
+      claimed: 0,
+      suggested: 0,
+      not_started: 0,
+    };
     for (const l of learners) {
       const c = l.criteria;
       if (!c) continue;
@@ -207,7 +266,12 @@ export default function CollegePortfolioHub() {
       t.not_started += c.not_started;
     }
     return [
-      { key: 'iqa_confirmed', label: 'IQA confirmed', n: t.iqa_confirmed, cls: STATE_SWATCH.iqa_confirmed },
+      {
+        key: 'iqa_confirmed',
+        label: 'IQA confirmed',
+        n: t.iqa_confirmed,
+        cls: STATE_SWATCH.iqa_confirmed,
+      },
       { key: 'passed', label: 'Passed', n: t.passed, cls: STATE_SWATCH.passed },
       { key: 'submitted', label: 'Submitted', n: t.submitted, cls: STATE_SWATCH.submitted },
       { key: 'referred', label: 'Needs more / not yet', n: t.referred, cls: STATE_SWATCH.referred },
@@ -241,7 +305,9 @@ export default function CollegePortfolioHub() {
     () => ({
       all: learners.length,
       waiting: learners.filter((l) => l.waiting > 0).length,
-      quiet: learners.filter((l) => l.user_id && ((daysSince(l.last_evidence_at) ?? Infinity) >= QUIET_DAYS)).length,
+      quiet: learners.filter(
+        (l) => l.user_id && (daysSince(l.last_evidence_at) ?? Infinity) >= QUIET_DAYS
+      ).length,
       not_joined: learners.filter((l) => !l.user_id).length,
     }),
     [learners]
@@ -252,10 +318,16 @@ export default function CollegePortfolioHub() {
     return learners
       .filter((l) => {
         if (filter === 'waiting' && l.waiting === 0) return false;
-        if (filter === 'quiet' && !(l.user_id && (daysSince(l.last_evidence_at) ?? Infinity) >= QUIET_DAYS)) return false;
+        if (
+          filter === 'quiet' &&
+          !(l.user_id && (daysSince(l.last_evidence_at) ?? Infinity) >= QUIET_DAYS)
+        )
+          return false;
         if (filter === 'not_joined' && l.user_id) return false;
         if (!q) return true;
-        return [l.name, l.cohort_name, l.qualification_code].some((s) => (s ?? '').toLowerCase().includes(q));
+        return [l.name, l.cohort_name, l.qualification_code].some((s) =>
+          (s ?? '').toLowerCase().includes(q)
+        );
       })
       .sort((a, b) => {
         if (b.waiting !== a.waiting) return b.waiting - a.waiting;
@@ -271,10 +343,37 @@ export default function CollegePortfolioHub() {
     <CollegePageHeader
       eyebrow="Assessment"
       title="Portfolios"
-      description="Evidence waiting for your decision, oldest first, and how far each learner is through their criteria."
+      description={
+        isLoading || !data
+          ? 'Evidence waiting for your decision, oldest first, and how far each learner is through their criteria.'
+          : [
+              waiting.length
+                ? `${plural(waiting.length, 'submission')} waiting for a decision from ${plural(figures.withWork, 'learner')}${
+                    figures.oldestDays !== null && figures.oldestDays >= 1
+                      ? `, the oldest for ${plural(figures.oldestDays, 'day')}`
+                      : ''
+                  }.`
+                : 'Nothing waiting for a decision.',
+              figures.total > 0
+                ? `${figures.passed.toLocaleString('en-GB')} of ${figures.total.toLocaleString('en-GB')} criteria passed across ${plural(figures.assessed, 'joined learner')}.`
+                : '',
+            ]
+              .filter(Boolean)
+              .join(' ')
+      }
       help={HELP}
       actions={
         <>
+          {scopeInfo.ready && (
+            <ScopeSwitch
+              scope={scope}
+              onChange={setScope}
+              hasMine={hasMine}
+              mineLabel="My learners"
+              mineCount={allLearners.filter((l) => myStudentIds.has(l.student_id)).length}
+              collegeCount={allLearners.length}
+            />
+          )}
           <button type="button" className={COLLEGE_BTN} onClick={() => navigate('/college/iqa')}>
             IQA sampling
           </button>
@@ -321,54 +420,17 @@ export default function CollegePortfolioHub() {
     );
   }
 
-  const shownWaiting = showAllWaiting ? waiting : waiting.slice(0, 8);
+  const shownWaiting = showAllWaiting ? waiting : waiting.slice(0, 6);
   const scopeWord = scope === 'mine' ? 'your learners' : 'the college';
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
       {header}
-
-      <ScopeSwitch
-        scope={scope}
-        onChange={setScope}
-        hasMine={hasMine}
-        mineLabel="My learners"
-        mineCount={allLearners.filter((l) => myStudentIds.has(l.student_id)).length}
-        collegeCount={allLearners.length}
-      />
-
-      <CollegeStats
-        items={[
-          {
-            label: 'Learners with work waiting',
-            value: String(figures.withWork),
-            sub: `of ${plural(learners.length, 'learner')}`,
-            warn: figures.withWork > 0 && (figures.oldestDays ?? 0) >= WAIT_URGENT_DAYS,
-            onClick: () => setFilter('waiting'),
-          },
-          {
-            label: 'Submissions waiting',
-            value: String(waiting.length),
-            sub: figures.resubmitted > 0 ? `${figures.resubmitted} resubmitted` : waiting.length ? 'Oldest first below' : 'Nothing to assess',
-            good: waiting.length === 0 && learners.length > 0,
-          },
-          {
-            label: 'Oldest waiting, days',
-            value: figures.oldestDays === null ? 'None' : String(figures.oldestDays),
-            sub: figures.oldest ? figures.oldest.name : 'All caught up',
-            warn: (figures.oldestDays ?? 0) >= WAIT_URGENT_DAYS,
-            onClick: figures.oldest ? () => openAssess(figures.oldest!.student_id) : undefined,
-          },
-          {
-            label: 'Criteria passed',
-            value: figures.pct === null ? '—' : `${figures.pct}%`,
-            sub:
-              figures.total > 0
-                ? `${figures.passed.toLocaleString('en-GB')} of ${figures.total.toLocaleString('en-GB')} criteria`
-                : 'No joined learners yet',
-          },
-        ]}
-      />
 
       {/* ── Waiting + charts ── */}
       <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
@@ -412,7 +474,11 @@ export default function CollegePortfolioHub() {
                       kind={STATUS_LABEL[w.status] ?? 'New'}
                       mine={scope === 'college' && myStudentIds.has(w.student_id)}
                       title={`${what}${more}`}
-                      body={w.item_count === 0 ? 'No evidence attached' : plural(w.item_count, 'piece of evidence', 'pieces of evidence')}
+                      body={
+                        w.item_count === 0
+                          ? 'No evidence attached'
+                          : plural(w.item_count, 'piece of evidence', 'pieces of evidence')
+                      }
                       meta={
                         <>
                           <b>{waitingLabel(days)}</b>
@@ -430,10 +496,19 @@ export default function CollegePortfolioHub() {
             </QueueGroup>
           )}
           {waiting.length > 8 && (
-            <button type="button" className={COLLEGE_LINK} onClick={() => setShowAllWaiting((v) => !v)}>
+            <button
+              type="button"
+              className={COLLEGE_LINK}
+              onClick={() => setShowAllWaiting((v) => !v)}
+            >
               {showAllWaiting ? 'Show fewer' : `Show all ${waiting.length}`}
             </button>
           )}
+          {/* Batch 2: trainee passes that need a qualified assessor's countersignature */}
+          <CountersignQueue
+            className="pt-3"
+            scopeStudentIds={scope === 'mine' ? myStudentIds : null}
+          />
         </motion.section>
 
         <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-1">
@@ -450,7 +525,13 @@ export default function CollegePortfolioHub() {
               {figures.total > 0 ? (
                 <Bars rows={distribution} labelWidth="9.5rem" />
               ) : (
-                <ChartEmpty text={scope === 'mine' ? 'None of your learners has joined yet. Switch to the whole college to see everyone.' : 'No learner has joined with a qualification yet.'} />
+                <ChartEmpty
+                  text={
+                    scope === 'mine'
+                      ? 'None of your learners has joined yet. Switch to the whole college to see everyone.'
+                      : 'No learner has joined with a qualification yet.'
+                  }
+                />
               )}
             </div>
           </motion.section>
@@ -512,7 +593,13 @@ export default function CollegePortfolioHub() {
                 : 'Add learners from People, then share the cohort join code so their portfolios link up.'
             }
             action={
-              <button type="button" className={COLLEGE_BTN} onClick={() => (scope === 'mine' ? setScope('college') : navigate('/college?section=students'))}>
+              <button
+                type="button"
+                className={COLLEGE_BTN}
+                onClick={() =>
+                  scope === 'mine' ? setScope('college') : navigate('/college?section=students')
+                }
+              >
                 {scope === 'mine' ? 'See the whole college' : 'Go to learners'}
               </button>
             }
@@ -562,18 +649,28 @@ export default function CollegePortfolioHub() {
                     </span>
                     <span className="min-w-0">
                       <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="truncate text-[15px] font-semibold text-white">{l.name}</span>
+                        <span className="break-words text-[15px] font-semibold text-white">
+                          {l.name}
+                        </span>
                         {scope === 'college' && myStudentIds.has(l.student_id) && (
-                          <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10.5px] font-bold text-black">Yours</span>
+                          <span className="shrink-0 rounded-full border border-white/[0.4] px-2 py-0.5 text-[12px] font-semibold text-white">
+                            Yours
+                          </span>
                         )}
                         {!l.user_id && (
-                          <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[10.5px] font-semibold text-white">
+                          <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[12px] font-semibold text-white">
                             Not joined
                           </span>
                         )}
                       </span>
-                      <span className="mt-0.5 block truncate text-[12.5px] text-white">
-                        {[l.cohort_name ?? 'No cohort', l.qualification_code].filter(Boolean).join(' · ')}
+                      <span className="mt-0.5 line-clamp-2 block text-[12.5px] leading-snug text-white lg:line-clamp-1">
+                        {[
+                          l.cohort_name ?? 'No cohort',
+                          l.qualification_title ||
+                            (l.qualification_code ? `Qualification ${l.qualification_code}` : null),
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}
                       </span>
                     </span>
                     {/* Criteria bar: own row on a phone, its own column on desktop */}
@@ -582,20 +679,34 @@ export default function CollegePortfolioHub() {
                         <>
                           <CriteriaBar c={c} />
                           <span className="mt-1.5 block text-[12px] tabular-nums text-white">
-                            <b className="font-semibold">{passed}</b> of {c.total} passed{pct !== null ? ` (${pct}%)` : ''}
+                            <b className="font-semibold">{passed}</b> of {c.total} passed
+                            {pct !== null ? ` (${pct}%)` : ''}
                             {c.submitted > 0 ? ` · ${c.submitted} submitted` : ''}
-                            {c.referred + c.iqa_rejected > 0 ? ` · ${c.referred + c.iqa_rejected} need more` : ''}
+                            {c.referred + c.iqa_rejected > 0
+                              ? ` · ${c.referred + c.iqa_rejected} need more`
+                              : ''}
                           </span>
                         </>
                       ) : (
                         <span className="block text-[12px] text-white">
-                          {l.user_id ? 'No qualification criteria yet' : 'Criteria show once they join'}
+                          {l.user_id
+                            ? 'No qualification criteria yet'
+                            : 'Criteria show once they join'}
                         </span>
                       )}
                     </span>
-                    <span className={cn('col-span-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-white lg:col-span-1 lg:block', !l.user_id && 'hidden')}>
+                    <span
+                      className={cn(
+                        'col-span-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-white lg:col-span-1 lg:block',
+                        !l.user_id && 'hidden'
+                      )}
+                    >
                       <span className={cn('block', quiet && 'text-orange-300')}>
-                        {l.last_evidence_at ? `Last evidence ${fmtDate(l.last_evidence_at)}` : l.user_id ? 'No evidence yet' : '—'}
+                        {l.last_evidence_at
+                          ? `Last evidence ${fmtDate(l.last_evidence_at)}`
+                          : l.user_id
+                            ? 'No evidence yet'
+                            : '—'}
                       </span>
                       {l.user_id && (
                         <span className="block lg:mt-0.5">
@@ -604,18 +715,27 @@ export default function CollegePortfolioHub() {
                         </span>
                       )}
                     </span>
-                    <span className={cn('col-span-2 lg:col-span-1 lg:block lg:text-right', l.waiting === 0 && 'hidden')}>
+                    <span
+                      className={cn(
+                        'col-span-2 lg:col-span-1 lg:block lg:text-right',
+                        l.waiting === 0 && 'hidden'
+                      )}
+                    >
                       {l.waiting > 0 ? (
                         <span
                           className={cn(
-                            'inline-flex h-7 items-center rounded-full px-2.5 text-[12px] font-bold',
-                            urgent ? 'bg-orange-500 text-black' : 'bg-sky-400 text-black'
+                            'inline-flex h-7 items-center rounded-full border px-2.5 text-[12px] font-semibold',
+                            urgent
+                              ? 'border-orange-400/70 text-orange-300'
+                              : 'border-white/[0.4] text-white'
                           )}
                         >
                           {l.waiting} waiting
                         </span>
                       ) : (
-                        <span className="hidden text-[12px] text-white lg:inline">Nothing waiting</span>
+                        <span className="hidden text-[12px] text-white lg:inline">
+                          Nothing waiting
+                        </span>
                       )}
                     </span>
                   </button>
@@ -641,8 +761,11 @@ export default function CollegePortfolioHub() {
         <div className="grid grid-cols-1 items-stretch gap-3 sm:grid-cols-3">
           <CollegeLinkCard
             title="IQA sampling"
-            body="Sample assessed criteria, confirm or query decisions and track actions."
-            figure={String(learners.reduce((n, l) => n + (l.criteria?.passed ?? 0), 0))}
+            body={`${plural(
+              learners.reduce((n, l) => n + (l.criteria?.passed ?? 0), 0),
+              'criterion',
+              'criteria'
+            )} passed and not yet confirmed by an IQA, across ${scopeWord}. Sample them, confirm or query decisions.`}
             onClick={() => navigate('/college/iqa')}
           />
           <CollegeLinkCard
@@ -656,9 +779,6 @@ export default function CollegePortfolioHub() {
             onClick={() => navigate('/college/evidence-pack')}
           />
         </div>
-        <p className="px-1 text-[12px] text-white">
-          The IQA figure is criteria passed but not yet confirmed by an IQA, across {scopeWord}.
-        </p>
       </motion.section>
 
       <PortfolioToolsSheet learner={toolsFor} onOpenChange={(o) => !o && setToolsFor(null)} />

@@ -186,7 +186,7 @@ export default function SeriesParallelCalculators() {
 
         {/* Live Results */}
         {seriesValidCount > 0 && (
-          <div className="p-4 rounded-xl border border-amber-400/20 bg-amber-400/5">
+          <div className="p-4 rounded-xl border border-amber-400/20 bg-white/[0.04]">
             <div className="text-center mb-3">
               <p className="text-xs text-white mb-1">Total Resistance</p>
               <div
@@ -286,7 +286,7 @@ export default function SeriesParallelCalculators() {
 
         {/* Live Results */}
         {parallelValidCount > 0 && (
-          <div className="p-4 rounded-xl border border-amber-400/20 bg-amber-400/5">
+          <div className="p-4 rounded-xl border border-amber-400/20 bg-white/[0.04]">
             <div className="text-center mb-3">
               <p className="text-xs text-white mb-1">Total Resistance</p>
               <div

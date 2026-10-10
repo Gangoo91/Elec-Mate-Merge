@@ -1040,7 +1040,7 @@ const skillsDevelopmentItems: ContentItem[] = [
             {
               term: 'Socket and lighting circuits',
               detail:
-                'Note the A4:2026 change: in domestic premises, AC final circuits supplying luminaires now require additional protection by a 30 mA RCD (Reg 411.3.4) — lighting is no longer the exception it used to be. Check whether the board you are working on actually provides it before you extend a lighting circuit.',
+                'Note Reg 411.3.4, in force since BS 7671:2018: in domestic premises, AC final circuits supplying luminaires require additional protection by a 30 mA RCD. Older boards often predate it. Check whether the board you are working on actually provides it before you extend a lighting circuit.',
             },
           ],
         },

@@ -46,7 +46,7 @@ const keyTakeaways = [
   'The 2391 inspection and testing exam combines written theory with practical assessment. Mock exams help with the written component; practical preparation needs hands-on time with test equipment.',
   'AM2 is a practical assessment — mock exams help with the underpinning knowledge, but you also need to practise the physical installation and testing tasks under timed conditions.',
   'Elec-Mate provides mock exams, flashcards, and structured revision for 18th Edition, 2391, AM2, and EPA — with progress tracking to show you exactly where to focus.',
-  'Amendment 4 (A4:2026) introduced three key exam topics: Reg 411.3.4 (mandatory RCD ≤30 mA on domestic luminaire circuits), Reg 421.1.7 (AFDD recommendation for AC final circuits), and Section 722 with Reg 722.311.201 (EV load curtailment in demand calculations). These are live questions in the current C&G 2382 paper.',
+  'Three key exam topics in BS 7671:2018+A4:2026: Reg 411.3.4 (mandatory RCD ≤30 mA on domestic luminaire circuits, since 2018), Reg 421.1.7 (AFDDs required in named higher-risk premises since A2:2022, recommended elsewhere), and Section 722 with Reg 722.311.201 (EV load curtailment in demand calculations). These are live questions in the current C&G 2382 paper.',
 ];
 
 const faqs = [
@@ -259,31 +259,31 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-elec-yellow shrink-0" />
-            18th Edition A4:2026 Key Changes — Live Exam Topics
+            18th Edition A4:2026: Live Exam Topics
           </h4>
           <p className="text-white text-sm mb-3">
-            Amendment 4 (2026) introduced several new requirements that are already appearing in the
-            current C&G 2382 paper. These three are the most tested:
+            These three areas of the current edition (BS 7671:2018+A4:2026) are among the most
+            tested in the C&G 2382 paper. Know which amendment each one came from:
           </p>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits.</strong> Within
-                domestic (household) premises, all AC final circuits supplying luminaires must now
+                domestic (household) premises, all AC final circuits supplying luminaires must
                 have additional protection by an RCD with a rated residual operating current not
-                exceeding 30 mA. This is a mandatory requirement ('shall'), not a recommendation.
+                exceeding 30 mA. This is a mandatory requirement ('shall'), in place since BS 7671:2018.
                 Exam questions test both the regulation number and the 30 mA threshold.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Reg 421.1.7 — AFDD recommendation.</strong> Arc fault detection devices
-                (AFDDs) are recommended — not mandatory — in AC final circuits of a fixed
-                installation to mitigate the risk of fire due to arc fault currents. Exam questions
-                distinguish the advisory wording here ('recommending') from the mandatory wording of
-                Reg 411.3.4.
+                <strong>Reg 421.1.7 — AFDDs.</strong> Since A2:2022, arc fault detection devices
+                (AFDDs) are required on single-phase AC final circuits supplying socket-outlets up to
+                32 A in high rise residential buildings, HMOs, purpose-built student accommodation
+                and care homes, and recommended elsewhere. Exam questions test where the wording is
+                mandatory and where it is only a recommendation.
               </span>
             </li>
             <li className="flex items-start gap-2">
@@ -673,7 +673,7 @@ export default function MockExamsElectricalPage() {
       title="Mock Exams: 18th Edition, 2391, AM2 & EPA"
       description="How to revise for UK electrical qualifications using mock exams: study schedule, weak-area technique, exam-day strategy, and common pitfalls."
       datePublished="2025-02-28"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"

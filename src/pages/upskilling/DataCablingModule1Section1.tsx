@@ -1363,7 +1363,7 @@ const DataCablingModule1Section1 = () => {
             </li>
             <li>
               <strong>§444 — Measures against electromagnetic disturbances.</strong> Carried forward
-              from earlier editions — not new in A4:2026, but directly relevant here. §444.410
+              from earlier editions — not new in A4:2026, but directly relevant here. §444.4.10
               explicitly cites BS EN 50174-1, BS EN 50174-2 and BS EN 50310 as the standards to
               apply for control / signalling / communication circuits inside buildings. §444.6.1
               references §528 for shared-containment segregation, and §444.6.2 sets a 130 mm minimum

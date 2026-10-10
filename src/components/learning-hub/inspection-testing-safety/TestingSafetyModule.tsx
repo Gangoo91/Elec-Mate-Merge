@@ -54,7 +54,7 @@ const TestingSafetyModule = ({ module, onModuleClick }: TestingSafetyModuleProps
                   {module.priority}
                 </Badge>
                 {module.interactive && (
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs px-2 py-1">
+                  <Badge className="bg-white/[0.06] text-elec-yellow border-white/[0.14] text-xs px-2 py-1">
                     <Zap className="h-3 w-3 mr-1" />
                     Interactive
                   </Badge>

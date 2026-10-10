@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'How long does the EPA synoptic project take?',
     answer:
-      'The EPA synoptic project for the Installation Electrician / Maintenance Electrician standard (ST0215) is a practical assessment carried out in a controlled environment, typically at the EPAO assessment centre. The project involves a practical installation task that tests your ability to install, inspect, and test an electrical installation to BS 7671 standards. The practical element typically takes around 6 hours, though the exact duration is set by the EPAO and specified in the assessment plan. You will be assessed on the quality of your installation, compliance with BS 7671, safe working practices, inspection and testing accuracy, and your ability to complete certification. The assessor observes your work throughout and marks against a structured criteria grid.',
+      'The EPA synoptic project for the Installation Electrician / Maintenance Electrician standard (ST0152) is a practical assessment carried out in a controlled environment, typically at the EPAO assessment centre. The project involves a practical installation task that tests your ability to install, inspect, and test an electrical installation to BS 7671 standards. The practical element typically takes around 6 hours, though the exact duration is set by the EPAO and specified in the assessment plan. You will be assessed on the quality of your installation, compliance with BS 7671, safe working practices, inspection and testing accuracy, and your ability to complete certification. The assessor observes your work throughout and marks against a structured criteria grid.',
   },
   {
     question: 'What questions are asked in the professional discussion?',
@@ -259,7 +259,7 @@ const sections = [
         </p>
         <p>
           To pass through the gateway for the Installation Electrician / Maintenance Electrician
-          standard (ST0215), you must have:
+          standard (ST0152), you must have:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -274,7 +274,7 @@ const sections = [
               <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition qualification</strong> — C&G 2382 (IET Wiring Regulations, BS
-                7671:2018+A2:2022). This is a mandatory gateway requirement.
+                7671:2018+A4:2026). This is a mandatory gateway requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -328,7 +328,7 @@ const sections = [
           environment, usually at the EPAO's assessment centre, and tests your ability to carry out
           a realistic electrical installation task from start to finish.
         </p>
-        <p>The synoptic project for ST0215 typically involves:</p>
+        <p>The synoptic project for ST0152 typically involves:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -599,7 +599,7 @@ export default function ApprenticeAssessmentGuidePage() {
       title="Apprentice Assessment Guide: What to Expect UK"
       description="Complete guide to electrical apprentice assessment in the UK. On-programme assessment, gateway requirements, EPA synoptic project."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

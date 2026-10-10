@@ -16,8 +16,7 @@ import {
   ClipboardList,
 } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -216,7 +215,7 @@ const portfolioSections = [
   {
     section: 'Section 10 — Progress reviews',
     contents:
-      'Copies of your 12-weekly progress review records showing your development over time.',
+      'Copies of your progress review records (at least every 3 months) showing your development over time.',
   },
 ];
 
@@ -272,309 +271,307 @@ const timeline = [
 
 const GatewayPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · EPA"
-        title="Gateway & readiness"
-        backTo="/apprentice/toolbox/end-point-assessment"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "The formal readiness checkpoint before EPA. A structured meeting where you, your employer, and your training provider must agree you're ready to be assessed."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · EPA"
+      area="End-point assessment"
+      title="Gateway & readiness"
+      backTo="/apprentice/toolbox/end-point-assessment"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "The formal readiness checkpoint before EPA. A structured meeting where you, your employer, and your training provider must agree you're ready to be assessed."
+        }
+      </p>
 
-        {/* ── What is Gateway ─────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-              CARD_SURFACE
-            )}
-          >
-            <div className="flex items-center gap-2">
-              <Lock className="h-4 w-4 text-elec-yellow/85" />
-              <Eyebrow>What is the Gateway?</Eyebrow>
-            </div>
-            <p className="text-[13.5px] text-white leading-relaxed">
-              The Gateway is the formal readiness checkpoint before you enter EPA. A structured
-              meeting between you, your employer, and your training provider — all three parties
-              must agree you're ready. You cannot start EPA until Gateway is passed. It exists to
-              protect you from being entered for assessment before you're prepared.
+      {/* ── What is Gateway ─────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+            CARD_SURFACE
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <Lock className="h-4 w-4 text-elec-yellow" />
+            <Eyebrow>What is the Gateway?</Eyebrow>
+          </div>
+          <p className="text-[14px] text-white leading-relaxed">
+            The Gateway is the formal readiness checkpoint before you enter EPA. A structured
+            meeting between you, your employer, and your training provider — all three parties must
+            agree you're ready. You cannot start EPA until Gateway is passed. It exists to protect
+            you from being entered for assessment before you're prepared.
+          </p>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold text-elec-yellow">When does Gateway happen?</span>{' '}
+              Typically the final 3–6 months of your apprenticeship — once you've completed the
+              learning programme, your Level 3 qualification, and built a comprehensive portfolio.
+              The AM2S end-point assessment comes after Gateway, not before it.
             </p>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-              <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">When does Gateway happen?</span>{' '}
-                Typically the final 3–6 months of your apprenticeship — once you've completed the
-                learning programme, your Level 3 qualification, and built a comprehensive portfolio.
-                The AM2S end-point assessment comes after Gateway, not before it.
-              </p>
-            </div>
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
 
-        {/* ── Gateway requirements ────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Gateway requirements"
-            title="Eight boxes that must tick"
-            meta="All must be met before Gateway can pass"
-          />
-          <ul className="space-y-2">
-            {gatewayRequirements.map((req) => (
-              <li
-                key={req.title}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                      {req.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{req.description}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── AM2S = the EPA ────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="The AM2S assessment"
-            title="The AM2S is your end-point assessment"
-            meta="Taken after Gateway — not a separate pre-gateway hurdle"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
-              CARD_SURFACE
-            )}
-          >
-            <p className="text-[13px] text-white leading-relaxed">
-              For ST0152 there is one practical end-point assessment: the AM2S (Achievement
-              Measurement 2 Standard), run by NET. It is an integrated assessment of your practical
-              and applied-knowledge competence, taken after you pass Gateway. There is no separate
-              "AM2 before Gateway" plus a different "EPA practical" — the AM2S is the EPA.
-            </p>
-            <div className="space-y-2">
-              <Eyebrow>AM2S key facts</Eyebrow>
-              <ul className="space-y-1.5">
-                {am2sFacts.map((fact) => (
-                  <li
-                    key={fact}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{fact}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
-              <Eyebrow className="text-elec-yellow/85">
-                AM2 vs AM2S vs AM2E — don't get them confused
-              </Eyebrow>
-              {am2Variants.map((v) => (
-                <p key={v.name} className="text-[12.5px] text-white leading-relaxed">
-                  <span className="font-semibold text-elec-yellow">{v.name}:</span> {v.who}
-                </p>
-              ))}
-            </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
-              <Eyebrow className="text-elec-yellow/85">The correct sequence</Eyebrow>
-              <p className="text-[12.5px] text-white leading-relaxed">
-                On-programme learning + Level 3 qualification + functional skills + fixed
-                off-the-job hours <span className="text-elec-yellow">→</span> Gateway sign-off{' '}
-                <span className="text-elec-yellow">→</span> AM2S (the practical and knowledge
-                end-point assessment by NET).
-              </p>
-            </div>
-            <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                <p className="text-[12.5px] text-white leading-relaxed">
-                  <span className="font-semibold text-red-300">If you don't pass the AM2S:</span>{' '}
-                  you can re-sit. Your training provider arranges additional support first. Most
-                  apprentices pass first time with proper preparation — use the AM2 Simulator in
-                  this app to practise.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── Gateway meeting ─────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="The gateway meeting"
-            title="Six steps from evidence to scheduling"
-            meta="Formal review where all three parties decide"
-          />
-          <ol className="space-y-2">
-            {gatewayMeetingSteps.map((item) => (
-              <li
-                key={item.step}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                    {item.step}
-                  </span>
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </motion.section>
-
-        {/* ── Readiness checklist ─────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Readiness checklist"
-            title="14 statements you should agree with"
-            meta="Tick honestly — your time and reputation matter"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-1.5">
-              {readinessChecklist.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── Not ready? ──────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="If you're not ready"
-            title="Delay beats failing"
-            meta="You have the right to say you're not ready"
-          />
-          <ul className="space-y-2">
-            {notReadyOptions.map((item) => (
-              <li
-                key={item.title}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-2.5">
-                  <AlertTriangle className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── Portfolio template ──────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Portfolio structure"
-            title="A 10-section template that works"
-            meta="A well-structured portfolio makes Gateway easier"
-          />
-          <ul className="space-y-2">
-            {portfolioSections.map((item) => (
-              <li
-                key={item.section}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <ClipboardList className="h-3.5 w-3.5 text-elec-yellow/85" />
-                  <h3 className="text-[13px] font-semibold text-elec-yellow tracking-tight">
-                    {item.section}
+      {/* ── Gateway requirements ────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Gateway requirements"
+          title="Eight boxes that must tick"
+          meta="All must be met before Gateway can pass"
+        />
+        <ul className="space-y-2">
+          {gatewayRequirements.map((req) => (
+            <li
+              key={req.title}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {req.title}
                   </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{req.description}</p>
                 </div>
-                <p className="text-[12.5px] text-white leading-relaxed">{item.contents}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── EPAO info ──────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Who runs your assessment"
-            title="NET delivers the AM2S"
-            meta="Independent assessment body — separate from your provider and employer"
-          />
-          <ul className="space-y-2">
-            {epaoInfo.map((item) => (
-              <li
-                key={item.title}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-2.5">
-                  <Award className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── Timeline ────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Timeline"
-            title="From Gateway to your certificate"
-            meta="Illustrative timeline — your provider and NET confirm each step"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-              CARD_SURFACE
-            )}
-          >
-            <ul className="space-y-2">
-              {timeline.map((item) => (
-                <li key={item.period} className="flex items-start gap-3">
-                  <CalendarDays className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span className="text-[11.5px] font-mono uppercase tracking-[0.14em] text-elec-yellow min-w-[70px] flex-shrink-0">
-                    {item.period}
-                  </span>
-                  <span className="text-[12.5px] text-white leading-relaxed">{item.event}</span>
+      {/* ── AM2S = the EPA ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="The AM2S assessment"
+          title="The AM2S is your end-point assessment"
+          meta="Taken after Gateway — not a separate pre-gateway hurdle"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4',
+            CARD_SURFACE
+          )}
+        >
+          <p className="text-[14px] text-white leading-relaxed">
+            For ST0152 there is one practical end-point assessment: the AM2S (Achievement
+            Measurement 2 Standard), run by NET. It is an integrated assessment of your practical
+            and applied-knowledge competence, taken after you pass Gateway. There is no separate
+            "AM2 before Gateway" plus a different "EPA practical" — the AM2S is the EPA.
+          </p>
+          <div className="space-y-2">
+            <Eyebrow>AM2S key facts</Eyebrow>
+            <ul className="space-y-1.5">
+              {am2sFacts.map((fact) => (
+                <li
+                  key={fact}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{fact}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-              <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Note:</span> Timelines vary
-                depending on NET centre availability, venue scheduling, and your personal readiness.
-                Your training provider will keep you updated as dates are confirmed.
+          </div>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <Eyebrow className="text-elec-yellow">
+              AM2 vs AM2S vs AM2E — don't get them confused
+            </Eyebrow>
+            {am2Variants.map((v) => (
+              <p key={v.name} className="text-[14px] text-white leading-relaxed">
+                <span className="font-semibold text-elec-yellow">{v.name}:</span> {v.who}
+              </p>
+            ))}
+          </div>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <Eyebrow className="text-elec-yellow">The correct sequence</Eyebrow>
+            <p className="text-[14px] text-white leading-relaxed">
+              On-programme learning + Level 3 qualification + functional skills + fixed off-the-job
+              hours <span className="text-elec-yellow">→</span> Gateway sign-off{' '}
+              <span className="text-elec-yellow">→</span> AM2S (the practical and knowledge
+              end-point assessment by NET).
+            </p>
+          </div>
+          <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+              <p className="text-[14px] text-white leading-relaxed">
+                <span className="font-semibold text-red-300">If you don't pass the AM2S:</span> you
+                can re-sit. Your training provider arranges additional support first. Most
+                apprentices pass first time with proper preparation — use the AM2 Simulator in this
+                app to practise.
               </p>
             </div>
           </div>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+        </div>
+      </motion.section>
+
+      {/* ── Gateway meeting ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="The gateway meeting"
+          title="Six steps from evidence to scheduling"
+          meta="Formal review where all three parties decide"
+        />
+        <ol className="space-y-2">
+          {gatewayMeetingSteps.map((item) => (
+            <li
+              key={item.step}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12px] font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  {item.step}
+                </span>
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
+
+      {/* ── Readiness checklist ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Readiness checklist"
+          title="14 statements you should agree with"
+          meta="Tick honestly — your time and reputation matter"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-1.5">
+            {readinessChecklist.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
+
+      {/* ── Not ready? ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="If you're not ready"
+          title="Delay beats failing"
+          meta="You have the right to say you're not ready"
+        />
+        <ul className="space-y-2">
+          {notReadyOptions.map((item) => (
+            <li
+              key={item.title}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-2.5">
+                <AlertTriangle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Portfolio template ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Portfolio structure"
+          title="A 10-section template that works"
+          meta="A well-structured portfolio makes Gateway easier"
+        />
+        <ul className="space-y-2">
+          {portfolioSections.map((item) => (
+            <li
+              key={item.section}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-center gap-2">
+                <ClipboardList className="h-3.5 w-3.5 text-elec-yellow" />
+                <h3 className="text-[13px] font-semibold text-elec-yellow tracking-tight">
+                  {item.section}
+                </h3>
+              </div>
+              <p className="text-[14px] text-white leading-relaxed">{item.contents}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── EPAO info ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Who runs your assessment"
+          title="NET delivers the AM2S"
+          meta="Independent assessment body — separate from your provider and employer"
+        />
+        <ul className="space-y-2">
+          {epaoInfo.map((item) => (
+            <li
+              key={item.title}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-2.5">
+                <Award className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Timeline ────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Timeline"
+          title="From Gateway to your certificate"
+          meta="Illustrative timeline — your provider and NET confirm each step"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+            CARD_SURFACE
+          )}
+        >
+          <ul className="space-y-2">
+            {timeline.map((item) => (
+              <li key={item.period} className="flex items-start gap-3">
+                <CalendarDays className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span className="text-[13px] text-elec-yellow min-w-[70px] flex-shrink-0">
+                  {item.period}
+                </span>
+                <span className="text-[14px] text-white leading-relaxed">{item.event}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Note:</span> Timelines vary depending
+              on NET centre availability, venue scheduling, and your personal readiness. Your
+              training provider will keep you updated as dates are confirmed.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+    </GuidePage>
   );
 };
 

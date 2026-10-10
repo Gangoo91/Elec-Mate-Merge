@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { ProfileType } from './types';
+import { isOfflineError, keepCopy, readCopy } from '@/lib/workerOfflineCache';
 import {
   isBiometricEnabled,
   authenticateAndGetCredentials,
@@ -62,6 +63,17 @@ export function useAuthSession() {
         if (error) {
           console.warn(`Profile fetch attempt ${retryCount + 1} failed:`, error.message);
 
+          // ELE-1828: no signal (a plant room, a basement) is not "no profile".
+          // Use this user's last copy so the app opens instead of spinning on
+          // ProtectedRoute's `user && !profile` for ever. Refetched on reconnect.
+          if (isOfflineError(error)) {
+            const copy = readCopy<ProfileType>(userId, 'profile');
+            if (copy) {
+              setProfile(copy);
+              return copy;
+            }
+          }
+
           // Retry on transient errors
           if (
             retryCount < MAX_RETRIES &&
@@ -79,6 +91,7 @@ export function useAuthSession() {
 
         if (data) {
           setProfile(data);
+          keepCopy(userId, 'profile', data);
 
           // Check if user opted for Elec-ID but doesn't have one yet
           // This handles cases where email was confirmed on a different device
@@ -120,6 +133,13 @@ export function useAuthSession() {
         return null;
       } catch (error) {
         console.error('Error in fetchProfile:', error);
+        if (isOfflineError(error)) {
+          const copy = readCopy<ProfileType>(userId, 'profile');
+          if (copy) {
+            setProfile(copy);
+            return copy;
+          }
+        }
         setProfile(null);
         return null;
       }
@@ -283,6 +303,19 @@ export function useAuthSession() {
       }
     })();
   }, [user?.id, user?.email_confirmed_at, queryClient]);
+
+  /*
+   * ELE-1828: a profile served from the phone's copy while offline is replaced
+   * with the real one as soon as the signal is back, so a plan or role change
+   * made meanwhile is never held past reconnect.
+   */
+  useEffect(() => {
+    const userId = user?.id;
+    if (!userId) return;
+    const onOnline = () => void fetchProfile(userId);
+    window.addEventListener('online', onOnline);
+    return () => window.removeEventListener('online', onOnline);
+  }, [user?.id, fetchProfile]);
 
   return {
     session,

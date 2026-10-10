@@ -17,6 +17,7 @@ import {
 } from './briefings';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { applySafetyScope, useSafetyScope } from './common/SafetyScope';
 
 /**
  * A type alias rather than an `interface` on purpose: TypeScript grants an
@@ -138,6 +139,8 @@ interface BriefingTemplate {
 
 const TeamBriefingTemplates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  // Personal (Electrical Hub) or the firm's briefings (Employer Hub).
+  const scope = useSafetyScope();
   const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAIWizard, setShowAIWizard] = useState(false);
@@ -212,10 +215,12 @@ const TeamBriefingTemplates = () => {
       } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data, error } = await supabase
-        .from('team_briefings')
-        .select('*')
-        .order('briefing_date', { ascending: false });
+      // Own briefings (or the firm's), said explicitly — never RLS alone.
+      const { data, error } = await applySafetyScope(
+        supabase.from('team_briefings').select('*'),
+        scope,
+        user.id
+      ).order('briefing_date', { ascending: false });
 
       if (error) throw error;
       setBriefings(
@@ -252,10 +257,44 @@ const TeamBriefingTemplates = () => {
     }
   };
 
+  /*
+   * Deep links (ELE-1944 / ELE-1942):
+   *  - ?id=<briefing> (the bell when someone signs) opens that briefing once loaded.
+   *  - ?job=<firm job> starts a new briefing for that job, crew on the register.
+   *  - ?new=1 starts a new briefing (the old AI briefing pack lands here).
+   * One-shot: the parameter is removed so Back and refresh show the list.
+   */
+  const linkedId = searchParams.get('id');
+  useEffect(() => {
+    if (!linkedId || loading) return;
+    const found = briefings.find((b) => b.id === linkedId);
+    if (found) setViewingBriefing(found);
+    const next = new URLSearchParams(searchParams);
+    next.delete('id');
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [linkedId, loading, briefings]);
+  useEffect(() => {
+    const job = searchParams.get('job');
+    const fresh = searchParams.get('new');
+    if (!job && !fresh) return;
+    setEditingBriefing(null);
+    setNearMissData(null);
+    setTemplateSeed(job ? { employer_job_id: job } : null);
+    setShowAIWizard(true);
+    const next = new URLSearchParams(searchParams);
+    next.delete('job');
+    next.delete('new');
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     fetchBriefings();
     checkForNearMissData();
-  }, [checkForNearMissData]);
+    // Refetch when the firm in scope changes (null and stable in personal scope).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkForNearMissData, scope.employerId]);
 
   const handleEdit = (briefing: TeamBriefing) => {
     setEditingBriefing(briefing);
@@ -446,6 +485,10 @@ const TeamBriefingTemplates = () => {
           const b = viewingBriefing;
           setViewingBriefing(null);
           handleEdit(b);
+        }}
+        onDeleted={() => {
+          setViewingBriefing(null);
+          fetchBriefings();
         }}
       />
     );

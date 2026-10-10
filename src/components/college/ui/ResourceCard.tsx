@@ -70,12 +70,11 @@ export function ResourceCard({
     resource.kind === 'link'
       ? hostFromUrl(resource.external_url)
       : `${prettyBytes(resource.size_bytes)}${
-          resource.duration_seconds
-            ? ` · ${prettyDuration(resource.duration_seconds)}`
-            : ''
+          resource.duration_seconds ? ` · ${prettyDuration(resource.duration_seconds)}` : ''
         }`;
 
   const acCount = resource.ac_count ?? 0;
+  const lessonCount = resource.lesson_count ?? 0;
   const tagging = Boolean(resource.ai_tagging);
 
   return (
@@ -89,7 +88,7 @@ export function ResourceCard({
         <ResourcePreview resource={resource} />
         <span
           className={cn(
-            'absolute top-2 left-2 text-[10px] font-medium uppercase tracking-[0.14em] rounded-full border px-2 py-0.5',
+            'absolute top-2 left-2 text-[12px] font-semibold rounded-full border px-2 py-0.5',
             kindTone
           )}
         >
@@ -100,7 +99,7 @@ export function ResourceCard({
         <div className="absolute top-2 right-2 flex items-center gap-1.5">
           {tagging && (
             <span
-              className="inline-flex items-center gap-1 text-[9.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow bg-elec-yellow/[0.1] border border-elec-yellow/30 rounded-full px-2 py-0.5"
+              className="inline-flex items-center gap-1 rounded-full border border-elec-yellow/60 bg-black/70 px-2 py-0.5 text-[12px] font-semibold text-elec-yellow"
               title="AI is tagging this resource with curriculum ACs"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow animate-pulse" />
@@ -109,7 +108,7 @@ export function ResourceCard({
           )}
           {acCount > 0 && (
             <span
-              className="inline-flex items-center gap-1 text-[10px] font-mono tabular-nums text-elec-yellow bg-elec-yellow/[0.1] border border-elec-yellow/30 rounded-full px-2 py-0.5"
+              className="inline-flex items-center gap-1 rounded-full border border-elec-yellow/60 bg-black/70 px-2 py-0.5 text-[12px] font-semibold tabular-nums text-elec-yellow"
               title={`Linked to ${acCount} assessment criter${acCount === 1 ? 'ion' : 'ia'}`}
             >
               {acCount} AC{acCount === 1 ? '' : 's'}
@@ -125,10 +124,8 @@ export function ResourceCard({
           onClick={onOpen}
           className="flex-1 min-w-0 text-left touch-manipulation"
         >
-          <div className="text-[13.5px] font-medium text-white truncate">
-            {resource.title}
-          </div>
-          <div className="mt-0.5 text-[11px] text-white truncate tabular-nums">
+          <div className="text-[13.5px] font-medium text-white truncate">{resource.title}</div>
+          <div className="mt-0.5 text-[12px] text-white truncate tabular-nums">
             {sourceLabel}
             {resource.uploader_name && (
               <>
@@ -137,20 +134,23 @@ export function ResourceCard({
               </>
             )}
           </div>
+          {lessonCount > 0 && (
+            <div className="mt-0.5 text-[12px] text-white">
+              Used in {lessonCount} lesson {lessonCount === 1 ? 'plan' : 'plans'}
+            </div>
+          )}
           {resource.tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
               {resource.tags.slice(0, 3).map((t) => (
                 <span
                   key={t}
-                  className="text-[10px] text-white bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
+                  className="text-[12px] text-white bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
                 >
                   {t}
                 </span>
               ))}
               {resource.tags.length > 3 && (
-                <span className="text-[10px] text-white">
-                  +{resource.tags.length - 3}
-                </span>
+                <span className="text-[12px] text-white">+{resource.tags.length - 3}</span>
               )}
             </div>
           )}
@@ -172,10 +172,7 @@ export function ResourceCard({
             align="end"
             className="bg-[hsl(0_0%_11%)] border border-white/[0.08] text-white min-w-[170px]"
           >
-            <DropdownMenuItem
-              onClick={() => onOpen()}
-              className="text-[13px]"
-            >
+            <DropdownMenuItem onClick={() => onOpen()} className="text-[13px]">
               {resource.kind === 'link' ? 'Open link' : 'Preview / download'}
             </DropdownMenuItem>
             {onDelete && (
@@ -207,12 +204,10 @@ function ResourcePreview({ resource }: { resource: CollegeResource }) {
           {label}
         </div>
         {resource.mime_type && resource.kind !== 'link' && (
-          <div className="mt-1 text-[10px] font-mono text-white/35">
-            {resource.mime_type}
-          </div>
+          <div className="mt-1 text-[12px] font-mono text-white">{resource.mime_type}</div>
         )}
         {resource.kind === 'link' && resource.external_url && (
-          <div className="mt-1 text-[10px] font-mono text-elec-yellow/70 truncate max-w-[80%] mx-auto">
+          <div className="mt-1 text-[12px] font-mono text-elec-yellow truncate max-w-[80%] mx-auto">
             {hostFromUrl(resource.external_url)}
           </div>
         )}

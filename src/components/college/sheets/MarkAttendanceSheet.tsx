@@ -6,7 +6,7 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   inputCn,
   labelCn,
   textareaCn,
@@ -42,9 +42,15 @@ interface Props {
   onSaved?: () => void;
 }
 
-export function MarkAttendanceSheet({ open, onOpenChange, studentId, studentName, onSaved }: Props) {
+export function MarkAttendanceSheet({
+  open,
+  onOpenChange,
+  studentId,
+  studentName,
+  onSaved,
+}: Props) {
   const { toast } = useToast();
-  const [status, setStatus] = useState<typeof STATUSES[number]['value']>('Present');
+  const [status, setStatus] = useState<(typeof STATUSES)[number]['value']>('Present');
   const [date, setDate] = useState<string>(() => new Date().toISOString().slice(0, 10));
   const [session, setSession] = useState<RegisterSession>(() => currentSession());
   const [notes, setNotes] = useState('');
@@ -61,23 +67,23 @@ export function MarkAttendanceSheet({ open, onOpenChange, studentId, studentName
   const handleSave = async () => {
     setSaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not signed in');
 
       // Upsert by (student_id, date, session): marking the same session again overwrites
-      const { error } = await supabase
-        .from('college_attendance')
-        .upsert(
-          {
-            student_id: studentId,
-            date,
-            session,
-            status,
-            notes: notes.trim() || null,
-            recorded_by: user.id,
-          },
-          { onConflict: ATTENDANCE_CONFLICT }
-        );
+      const { error } = await supabase.from('college_attendance').upsert(
+        {
+          student_id: studentId,
+          date,
+          session,
+          status,
+          notes: notes.trim() || null,
+          recorded_by: user.id,
+        },
+        { onConflict: ATTENDANCE_CONFLICT }
+      );
       if (error) throw new Error(error.message || 'Could not save attendance');
 
       toast({
@@ -108,7 +114,12 @@ export function MarkAttendanceSheet({ open, onOpenChange, studentId, studentName
       bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
       footer={
         <div className="grid grid-cols-2 gap-2.5">
-          <button type="button" onClick={() => onOpenChange(false)} disabled={saving} className={buttonSecondaryCn}>
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
             Cancel
           </button>
           <button type="button" onClick={handleSave} disabled={saving} className={buttonPrimaryCn}>
@@ -156,7 +167,13 @@ export function MarkAttendanceSheet({ open, onOpenChange, studentId, studentName
           <label className={labelCn} htmlFor="ma-date">
             Date
           </label>
-          <input id="ma-date" type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCn} />
+          <input
+            id="ma-date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className={inputCn}
+          />
         </div>
       </div>
 

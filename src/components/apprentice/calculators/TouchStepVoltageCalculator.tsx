@@ -682,8 +682,8 @@ const TouchStepVoltageCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">
@@ -812,8 +812,8 @@ const TouchStepVoltageCalculator = () => {
                 <div
                   className="rounded-xl border p-4 space-y-2"
                   style={{
-                    borderColor: `${config.gradientFrom}15`,
-                    background: `${config.gradientFrom}05`,
+                    borderColor: 'rgba(255, 255, 255, 0.12)',
+                    background: 'rgba(255, 255, 255, 0.04)',
                   }}
                 >
                   <p className="text-sm font-medium text-white">Standards References</p>

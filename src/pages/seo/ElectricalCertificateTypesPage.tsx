@@ -55,7 +55,7 @@ const keyTakeaways = [
   'Fire Alarm certificates (BS 5839), Emergency Lighting certificates (BS 5266), and Solar PV certificates (MCS) require specialist knowledge of their respective British Standards.',
   'Elec-Mate is the only app that has all 19 certificate types in one platform — with board scanner, voice test entry, defect code AI, remedial estimator, digital signatures, and PDF export.',
   'Every certificate type in Elec-Mate validates test results against BS 7671 maximum permitted values automatically, eliminating manual cross-referencing errors.',
-  'BS 7671:2018+A4:2026 introduced two key changes for domestic EICs: Reg 411.3.4 (mandatory 30 mA RCD on all luminaire circuits) and Reg 421.1.7 (recommended AFDDs on AC final circuits). EICs on domestic installations must now reflect both.',
+  'Two BS 7671 requirements shape domestic EICs: Reg 411.3.4 (mandatory 30 mA RCD on all luminaire circuits, since 2018) and Reg 421.1.7 (AFDDs recommended, and required in HMOs and similar premises since A2:2022). EICs on domestic installations must reflect both.',
 ];
 
 const faqs = [
@@ -254,21 +254,22 @@ const sections = [
               <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 411.3.4 — RCD on domestic lighting circuits (mandatory):</strong> All AC
-                final circuits supplying luminaires in domestic (household) premises must now be
+                final circuits supplying luminaires in domestic (household) premises must be
                 provided with additional protection by an RCD with a rated residual operating
-                current not exceeding 30 mA. This is a mandatory 'shall' requirement introduced by
-                A4:2026. EICs for domestic installations must record RCD protection on every
+                current not exceeding 30 mA. This is a mandatory 'shall' requirement that has applied
+                since BS 7671:2018. EICs for domestic installations must record RCD protection on every
                 lighting circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reg 421.1.7 — AFDD recommendation (advisory):</strong> Amendment 4
-                introduced a recommendation that arc fault detection devices (AFDDs) be installed in
-                AC final circuits of a fixed installation to mitigate fire risk from arc fault
-                currents. The regulation uses advisory ('recommending') rather than mandatory
-                language. EICs completed after A4:2026 commencement should record AFDD provision on
+                <strong>Reg 421.1.7 — AFDDs (recommended, required in some premises):</strong>{' '}
+                BS 7671:2018 introduced a recommendation that arc fault detection devices (AFDDs) be
+                installed in AC final circuits of a fixed installation to mitigate fire risk from arc
+                fault currents. Since A2:2022 they are required on single-phase socket-outlet
+                circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student
+                accommodation and care homes, and recommended elsewhere. EICs should record AFDD provision on
                 socket-outlet circuits, or note where AFDDs have not been fitted and the reason.
               </span>
             </li>
@@ -755,7 +756,7 @@ export default function ElectricalCertificateTypesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-08-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Hub"

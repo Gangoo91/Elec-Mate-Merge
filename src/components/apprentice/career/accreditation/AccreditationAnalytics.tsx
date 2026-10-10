@@ -1,15 +1,13 @@
 const Stat = ({ label, value }: { label: string; value: string }) => (
   <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 flex items-center justify-between">
     <span className="text-[12px] text-white">{label}</span>
-    <span className="text-[12px] text-white font-mono">{value}</span>
+    <span className="text-[12px] text-white">{value}</span>
   </div>
 );
 
 const Block = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
-  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-      {eyebrow}
-    </span>
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+    <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
     <div className="space-y-2">{children}</div>
   </div>
 );

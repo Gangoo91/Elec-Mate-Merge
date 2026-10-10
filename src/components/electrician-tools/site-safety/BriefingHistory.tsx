@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { applySafetyScope, useSafetyScope } from './common/SafetyScope';
 import {
   FileText,
   Search,
@@ -83,6 +84,7 @@ const briefingTypeConfig: Record<string, { label: string; color: string }> = {
 
 export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: BriefingHistoryProps) => {
   const { toast } = useToast();
+  const scope = useSafetyScope();
   const [briefings, setBriefings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -93,7 +95,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
   useEffect(() => {
     fetchBriefings();
     fetchCompanyProfile();
-  }, []);
+  }, [scope.employerId]);
 
   const fetchBriefings = async () => {
     try {
@@ -102,9 +104,12 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
       } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data, error } = await supabase
-        .from('team_briefings')
-        .select('*')
+      // Own briefings (or the firm's), said explicitly — never RLS alone.
+      const { data, error } = await applySafetyScope(
+        supabase.from('team_briefings').select('*'),
+        scope,
+        user.id
+      )
         .neq('status', 'cancelled')
         .order('briefing_date', { ascending: true });
 

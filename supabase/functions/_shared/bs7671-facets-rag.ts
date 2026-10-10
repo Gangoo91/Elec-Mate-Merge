@@ -59,6 +59,8 @@ interface SearchArgs {
   protectionMethod?: string | null;
   /** Skip vector retrieval if you don't want the embedding cost. */
   skipEmbedding?: boolean;
+  /** A precomputed embedding of `query` — saves a call when one query runs twice. */
+  embedding?: number[] | null;
 }
 
 /**
@@ -81,12 +83,13 @@ export async function searchFacets(supabase: any, args: SearchArgs): Promise<BS7
     equipmentCategory = null,
     protectionMethod = null,
     skipEmbedding = false,
+    embedding: givenEmbedding = null,
   } = args;
 
   if (!query || query.trim().length === 0) return [];
 
-  let embedding: number[] | null = null;
-  if (!skipEmbedding) {
+  let embedding: number[] | null = givenEmbedding;
+  if (!embedding && !skipEmbedding) {
     const openAiKey = Deno.env.get('OPENAI_API_KEY');
     if (openAiKey) {
       try {
@@ -155,7 +158,13 @@ export function formatFacetsForPrompt(facets: BS7671Facet[]): string {
         : f.regNumber
           ? f.documentType === 'bs5839'
             ? `BS 5839-1 cl ${f.regNumber}`
-            : `Reg ${f.regNumber}`
+            : // The On-Site Guide and GN3 number their own sections; "Reg 12.513"
+              // read as a BS 7671 regulation that does not exist (Mate, 10 Oct).
+              f.documentType === 'osg'
+              ? `OSG ${f.regNumber}`
+              : f.documentType === 'gn3'
+                ? `GN3 ${f.regNumber}`
+                : `Reg ${f.regNumber}`
           : f.documentType === 'bs5839'
             ? 'BS 5839-1'
             : f.documentType.toUpperCase();

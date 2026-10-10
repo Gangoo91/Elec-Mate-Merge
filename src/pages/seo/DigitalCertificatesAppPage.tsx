@@ -27,7 +27,7 @@ export default function DigitalCertificatesAppPage() {
       title="Digital Electrical Certificates App: EICR & EIC"
       description="Elec-Mate's digital certificates app for UK electricians: 19 certificate types including EICR, EIC, Minor Works, EV charger and Solar PV. 7-day free trial."
       datePublished="2026-01-10"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Digital Certificates App', href: '/tools/digital-certificates-app' },
@@ -65,7 +65,7 @@ export default function DigitalCertificatesAppPage() {
         'Elec-Mate supports 19 certificate types: EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing.',
         'The AI Board Scanner photographs a consumer unit and extracts circuit data, device ratings, and board layout in seconds — eliminating manual data entry on site.',
         'Voice Test Entry lets you speak test readings aloud while holding test leads, with AI transcribing them directly into the schedule of test results.',
-        'Certificate forms follow the A4:2026 Appendix 6 model forms, including the new fields for recording SPD (surge protective device) and AFDD (arc fault detection device) details introduced by Reg 722.826.3.201.',
+        'Certificate forms follow the A4:2026 Appendix 6 model forms, including the fields for recording SPD (surge protective device) and AFDD (arc fault detection device) details added to the model forms at A2:2022.',
         'Completed certificates export as professional PDFs and can be sent via email, WhatsApp, or any other sharing method directly from the app.',
         'All certificate types work fully offline with auto-save every 10 seconds and cloud sync when connectivity returns.',
       ]}
@@ -205,9 +205,9 @@ export default function DigitalCertificatesAppPage() {
                   <span className="font-semibold text-white">Defect Code AI</span> — describe any
                   defect in plain English and receive the correct C1/C2/C3/FI classification, the
                   specific BS 7671 regulation reference, and a professionally worded observation for
-                  your certificate. The AI covers A4:2026 additions including AFDD-related
-                  observations (Reg 421.1.7 — recommendation to install arc fault detection devices
-                  on AC final circuits) and SPD observations, which are the areas where electricians
+                  your certificate. The AI covers AFDD-related observations (Reg 421.1.7,
+                  required in HMOs and similar premises since A2:2022 and recommended elsewhere) and
+                  SPD observations, which are the areas where electricians
                   are most likely to need the correct regulation reference and least likely to know
                   it off the top of their head.
                 </li>
@@ -349,9 +349,9 @@ export default function DigitalCertificatesAppPage() {
                 <li>Prospective fault current against protective device breaking capacity</li>
               </ul>
               <p>
-                Certificate forms include the A4:2026 Appendix 6 fields for recording SPD and AFDD
-                details (Reg 722.826.3.201), covering the new device recording requirements that
-                older apps and paper forms do not yet include.
+                Certificate forms include the Appendix 6 fields for recording SPD and AFDD details,
+                added to the model forms at A2:2022, which some older apps and paper forms still
+                leave out.
               </p>
               <p>
                 Automatic validation catches errors before they appear on the final certificate. It
@@ -447,7 +447,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'Are certificates compliant with BS 7671?',
           answer:
-            'Yes. All certificate forms follow the model forms in BS 7671:2018+A4:2026 Appendix 6, including the new fields for recording SPD (surge protective device) and AFDD (arc fault detection device) details introduced in A4:2026 under Reg 722.826.3.201. Test results are automatically validated against maximum permitted values from the relevant BS 7671 tables. Observation codes (C1, C2, C3, FI) follow the standard classification system. The output PDF is formatted to meet scheme provider requirements.',
+            'Yes. All certificate forms follow the model forms in BS 7671:2018+A4:2026 Appendix 6, including the fields for recording SPD (surge protective device) and AFDD (arc fault detection device) details added to the model forms at A2:2022. Test results are automatically validated against maximum permitted values from the relevant BS 7671 tables. Observation codes (C1, C2, C3, FI) follow the standard classification system. The output PDF is formatted to meet scheme provider requirements.',
         },
         {
           question: 'Can I send certificates via WhatsApp?',

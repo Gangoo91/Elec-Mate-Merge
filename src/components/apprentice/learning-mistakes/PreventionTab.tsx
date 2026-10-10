@@ -125,12 +125,10 @@ const PreventionTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="flex items-baseline justify-between gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Prevention strategies
-          </span>
-          <span className="text-2xl font-mono text-white">{calculateProgress()}%</span>
+          <span className="text-[13px] font-semibold text-white">Prevention strategies</span>
+          <span className="text-2xl text-white">{calculateProgress()}%</span>
         </div>
 
         <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
@@ -153,31 +151,29 @@ const PreventionTab = () => {
 
               <div className="space-y-2">
                 {category.strategies.map((strategy) => (
-                  <div
+                  <label
                     key={strategy.id}
-                    className="flex items-start gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]"
+                    htmlFor={strategy.id}
+                    className="flex min-h-[56px] cursor-pointer items-start gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 touch-manipulation active:bg-white/[0.05]"
                   >
                     <Checkbox
                       id={strategy.id}
                       checked={completedItems.includes(strategy.id)}
                       onCheckedChange={() => toggleCompleted(strategy.id)}
-                      className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                      className="mt-0.5 h-5 w-5 border-white data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                     />
                     <div className="flex-1 space-y-1">
-                      <label
-                        htmlFor={strategy.id}
-                        className="text-[14px] font-medium text-white cursor-pointer block"
-                      >
+                      <span className="block text-[14px] font-medium text-white">
                         {strategy.title}
-                      </label>
-                      <p className="text-[13px] text-white leading-relaxed">
+                      </span>
+                      <p className="text-[14px] text-white leading-relaxed">
                         {strategy.description}
                       </p>
                       <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] mt-1">
                         {strategy.impact}
                       </span>
                     </div>
-                  </div>
+                  </label>
                 ))}
               </div>
             </div>
@@ -185,10 +181,8 @@ const PreventionTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Risk awareness & mitigation
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Risk awareness & mitigation</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-4">
             {commonRisks.map((riskCategory, index) => (

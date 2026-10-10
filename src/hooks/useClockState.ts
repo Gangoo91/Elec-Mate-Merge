@@ -4,6 +4,15 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { getCurrentPosition } from '@/utils/geolocation';
+import {
+  cancelPending,
+  newClientId,
+  outboxReady,
+  pendingOps,
+  submitWorkerAction,
+  OutboxRefusedError,
+} from '@/lib/workerOutbox';
+import { queuedToast } from '@/components/worker-tools/outboxToast';
 
 /**
  * One location fix at clock-in / clock-out (ELE-2000). Never blocks clocking:
@@ -107,8 +116,27 @@ interface OpenRow {
 }
 
 const CLOCK_POINTER_KEY = 'employer_clock_pointer';
+
+/** yyyy-mm-dd in the phone's time zone. */
+const localDay = (iso: string) => {
+  const d = new Date(iso);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
 const BREAK_STATE_KEY = 'employer_clock_breaks';
 const EMPTY_BREAKS: BreakState = { timesheetId: null, startedAt: null, accumMinutes: 0 };
+
+/**
+ * The last clock-out made through the outbox on this phone, so it can be
+ * undone (Job done clocks the worker out of the job, with Undo). Module-level:
+ * the Undo may be tapped from a different hook instance than the one that
+ * clocked out.
+ */
+let lastClockOut: {
+  state: ClockState;
+  breaks: BreakState;
+  opId: string;
+  clockOut: string;
+} | null = null;
 
 export const useClockState = () => {
   const [clockState, setClockState] = useState<ClockState | null>(null);
@@ -164,7 +192,28 @@ export const useClockState = () => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const pointer = storageGetJSONSync<{ timesheetId: string } | null>(CLOCK_POINTER_KEY, null);
+      const pointer = storageGetJSONSync<{ timesheetId: string; state?: ClockState } | null>(
+        CLOCK_POINTER_KEY,
+        null
+      );
+
+      // ELE-1828: a worker's clock-in / clock-out may still be on the phone,
+      // waiting for signal. The pointer carries the whole shift so it restores
+      // with no network, and a shift whose clock-out is waiting is not open.
+      await outboxReady();
+      if (cancelled) return;
+      const waitingIn = new Set(pendingOps('clock_in').map((o) => o.id));
+      const waitingOut = new Set(
+        pendingOps('clock_out').map((o) => String(o.payload.timesheetId))
+      );
+      if (pointer?.timesheetId && waitingOut.has(pointer.timesheetId)) {
+        storageRemoveSync(CLOCK_POINTER_KEY);
+        return;
+      }
+      if (pointer?.state && waitingIn.has(pointer.timesheetId)) {
+        setClockState(pointer.state);
+        return;
+      }
 
       // Distinguish the three outcomes: only a CONFIRMED missing row may drop
       // the pointer. A fetch error or an unmount mid-query (StrictMode double
@@ -206,7 +255,12 @@ export const useClockState = () => {
 
       if (pointer?.timesheetId) {
         const outcome = await restoreRow(buildOpenRowQuery(pointer.timesheetId));
-        if (outcome === 'restored' || outcome === 'aborted') return;
+        if (outcome === 'restored') return;
+        if (outcome === 'aborted') {
+          // No signal: show the shift the phone knows about.
+          if (pointer.state && !cancelled) setClockState(pointer.state);
+          return;
+        }
         // Confirmed gone (approved/removed while away) — release the pointer
         storageRemoveSync(CLOCK_POINTER_KEY);
       }
@@ -235,7 +289,7 @@ export const useClockState = () => {
         .limit(1)
         .maybeSingle();
       const open = openRaw as unknown as OpenRow | null;
-      if (open && !cancelled) {
+      if (open && !cancelled && !waitingOut.has(open.id)) {
         setClockState({
           timesheetId: open.id,
           employeeId: open.employee_id,
@@ -281,9 +335,63 @@ export const useClockState = () => {
       jobId: string,
       jobTitle: string,
       /** ELE-2000: the phone's one-off fix (workers). Office clock-ins pass none. */
-      fix?: ClockFix | null
+      fix?: ClockFix | null,
+      /** ELE-1828: workers' clock-ins go through the outbox (work with no signal). */
+      opts?: { offline?: boolean }
     ) => {
       setIsWorking(true);
+      if (opts?.offline) {
+        const clockInTime = new Date().toISOString();
+        const id = newClientId();
+        const newState: ClockState = {
+          timesheetId: id,
+          employeeId,
+          employeeName,
+          jobId,
+          jobTitle,
+          clockInTime,
+          clockInFix: fix ?? null,
+        };
+        try {
+          const { result } = await submitWorkerAction({
+            id,
+            kind: 'clock_in',
+            label: 'Clock in',
+            detail: jobTitle,
+            jobId,
+            queued_at: clockInTime,
+            payload: {
+              row: {
+                employee_id: employeeId,
+                job_id: jobId || null,
+                // Local date: the day the worker was on site.
+                date: localDay(clockInTime),
+                clock_in: clockInTime,
+                clock_out: null,
+                break_minutes: 0,
+                status: 'Pending',
+                ...fixColumns('clock_in', fix),
+              },
+            },
+          });
+          storageSetJSONSync(CLOCK_POINTER_KEY, { timesheetId: id, state: newState });
+          persistBreaks(EMPTY_BREAKS);
+          setClockState(newState);
+          if (result === 'sent') toast.success(`Clocked in to ${jobTitle}`);
+          else
+            queuedToast(
+              `Clocked in to ${jobTitle} at ${new Date(clockInTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
+            );
+          return true;
+        } catch (error) {
+          toast.error(
+            error instanceof OutboxRefusedError ? error.message : 'Couldn’t clock in. Try again.'
+          );
+          return false;
+        } finally {
+          setIsWorking(false);
+        }
+      }
       try {
         const clockInTime = new Date().toISOString();
         const { data, error } = await supabase
@@ -335,7 +443,12 @@ export const useClockState = () => {
   );
 
   const clockOut = useCallback(
-    async (breakMinutesOverride?: number, fix?: ClockFix | null) => {
+    async (
+      breakMinutesOverride?: number,
+      fix?: ClockFix | null,
+      /** ELE-1828: workers' clock-outs go through the outbox (work with no signal). */
+      opts?: { offline?: boolean; quiet?: boolean }
+    ) => {
       if (!clockState) {
         toast.error('Not currently clocked in');
         return false;
@@ -352,6 +465,59 @@ export const useClockState = () => {
       const totalHours = Math.max(0, diffMs / (1000 * 60 * 60) - breakMinutes / 60);
 
       setIsWorking(true);
+      if (opts?.offline) {
+        try {
+          const { result, op } = await submitWorkerAction({
+            kind: 'clock_out',
+            label: 'Clock out',
+            detail: clockState.jobTitle || null,
+            jobId: clockState.jobId || null,
+            queued_at: clockOutTime,
+            payload: {
+              timesheetId: clockState.timesheetId,
+              values: {
+                clock_out: clockOutTime,
+                break_minutes: breakMinutes,
+                total_hours: parseFloat(totalHours.toFixed(2)),
+                ...fixColumns('clock_out', fix),
+              },
+            },
+          });
+          // Kept so "Undo" (Job done clocks the worker out) can reopen the shift.
+          lastClockOut = {
+            state: clockState,
+            breaks: storedBreaks?.timesheetId === clockState.timesheetId ? storedBreaks : EMPTY_BREAKS,
+            opId: op.id,
+            clockOut: clockOutTime,
+          };
+          storageRemoveSync(CLOCK_POINTER_KEY);
+          persistBreaks(EMPTY_BREAKS);
+          setClockState(null);
+          const summary = `${totalHours.toFixed(1)} hours${breakMinutes > 0 ? ` (${breakMinutes}m break)` : ''}`;
+          if (result === 'sent') {
+            queryClient.invalidateQueries({ queryKey: ['timesheets'] });
+            queryClient.invalidateQueries({ queryKey: ['todays-hours'] });
+            if (!opts.quiet) toast.success(`Clocked out. ${summary} logged.`);
+          } else if (!opts.quiet) {
+            queuedToast(`Clocked out. ${summary}.`);
+          }
+          return true;
+        } catch (error) {
+          if (error instanceof OutboxRefusedError) {
+            // The office approved or removed the day while it was open.
+            storageRemoveSync(CLOCK_POINTER_KEY);
+            persistBreaks(EMPTY_BREAKS);
+            setClockState(null);
+            queryClient.invalidateQueries({ queryKey: ['timesheets'] });
+            toast.error(error.message);
+          } else {
+            toast.error('Couldn’t clock out. Try again.');
+          }
+          return false;
+        } finally {
+          setIsWorking(false);
+        }
+      }
       try {
         // Guard on status: if the row was approved/rejected while open, don't
         // silently rewrite an already-signed-off record.
@@ -406,6 +572,14 @@ export const useClockState = () => {
 
   const cancelClockIn = useCallback(async () => {
     if (!clockState) return;
+    // ELE-1828: a clock-in still waiting on the phone is simply not sent.
+    if (await cancelPending(clockState.timesheetId)) {
+      storageRemoveSync(CLOCK_POINTER_KEY);
+      persistBreaks(EMPTY_BREAKS);
+      setClockState(null);
+      toast.info('Clock in cancelled');
+      return;
+    }
     try {
       // Only delete a still-open Pending row — never a record that was
       // approved/rejected while this device thought the shift was open.
@@ -424,12 +598,56 @@ export const useClockState = () => {
     toast.info('Clock in cancelled');
   }, [clockState, persistBreaks]);
 
+  /**
+   * Undo the last clock-out made on this phone (gap #3: Job done clocks the
+   * worker out, with Undo). Still waiting to send: it is simply not sent.
+   * Already sent: the row is reopened, only while it is still Pending with the
+   * clock-out time this phone wrote, so nothing the office did is overwritten.
+   */
+  const undoClockOut = useCallback(async (): Promise<boolean> => {
+    const last = lastClockOut;
+    if (!last) return false;
+    const restore = () => {
+      lastClockOut = null;
+      storageSetJSONSync(CLOCK_POINTER_KEY, {
+        timesheetId: last.state.timesheetId,
+        state: last.state,
+      });
+      persistBreaks(last.breaks);
+      setClockState(last.state);
+      queryClient.invalidateQueries({ queryKey: ['timesheets'] });
+      queryClient.invalidateQueries({ queryKey: ['todays-hours'] });
+    };
+    if (await cancelPending(last.opId)) {
+      restore();
+      return true;
+    }
+    const { data, error } = await supabase
+      .from('employer_timesheets')
+      .update({
+        clock_out: null,
+        total_hours: null,
+        clock_out_location_status: null,
+        clock_out_lat: null,
+        clock_out_lng: null,
+        clock_out_accuracy_m: null,
+      } as never)
+      .eq('id', last.state.timesheetId)
+      .eq('status', 'Pending')
+      .eq('clock_out', last.clockOut)
+      .select('id');
+    if (error || !data || data.length === 0) return false;
+    restore();
+    return true;
+  }, [persistBreaks, queryClient]);
+
   return {
     isClockedIn: !!clockState,
     clockState,
     duration,
     clockIn,
     clockOut,
+    undoClockOut,
     cancelClockIn,
     isClockingOut: isWorking,
     isOnBreak:

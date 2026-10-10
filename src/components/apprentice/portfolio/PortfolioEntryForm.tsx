@@ -25,9 +25,18 @@ import { SingleSelectWithAdd } from '@/components/ui/single-select-with-add';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { ACPickerSheet } from '@/components/apprentice/portfolio/ACPickerSheet';
 
+/**
+ * Edits one existing portfolio entry.
+ *
+ * ELE-1916: this form no longer creates evidence. New evidence has one flow,
+ * UnifiedCaptureSheet (with presets for a photo, a reflection, a diary entry,
+ * a worksheet, a test sheet or a job), so every new row gets the same
+ * category, status, criteria format and capture source.
+ */
 export interface PortfolioEntryFormProps {
   categories: PortfolioCategory[];
-  initialData?: PortfolioEntry;
+  /** The entry being edited. Required: there is no create mode. */
+  initialData: PortfolioEntry;
   onSubmit: (data: Partial<PortfolioEntry>) => void;
   onCancel: () => void;
 }
@@ -107,29 +116,29 @@ const PortfolioEntryForm = ({
   const [currentStep, setCurrentStep] = useState(0);
   const [showACPicker, setShowACPicker] = useState(false);
   const [formData, setFormData] = useState({
-    title: initialData?.title || '',
-    description: initialData?.description || '',
-    categoryId: initialData?.category.id || '',
-    reflection: initialData?.reflection || '',
-    skills: initialData?.skills || [],
-    tags: initialData?.tags || [],
-    assessmentCriteria: initialData?.assessmentCriteria || [],
-    learningOutcomes: initialData?.learningOutcomes || [],
-    supervisorFeedback: initialData?.supervisorFeedback || '',
-    selfAssessment: initialData?.selfAssessment || 3,
-    status: initialData?.status || ('draft' as const),
-    timeSpent: initialData?.timeSpent || 0,
-    awardingBodyStandards: initialData?.awardingBodyStandards || [],
-    evidenceFiles: initialData?.evidenceFiles || ([] as PortfolioFile[]),
+    title: initialData.title || '',
+    description: initialData.description || '',
+    categoryId: initialData.category.id || '',
+    reflection: initialData.reflection || '',
+    skills: initialData.skills || [],
+    tags: initialData.tags || [],
+    assessmentCriteria: initialData.assessmentCriteria || [],
+    learningOutcomes: initialData.learningOutcomes || [],
+    supervisorFeedback: initialData.supervisorFeedback || '',
+    selfAssessment: initialData.selfAssessment || 3,
+    status: initialData.status || ('draft' as const),
+    timeSpent: initialData.timeSpent || 0,
+    awardingBodyStandards: initialData.awardingBodyStandards || [],
+    evidenceFiles: initialData.evidenceFiles || ([] as PortfolioFile[]),
     // Assessor-ready metadata
-    workDate: initialData?.metadata?.workDate || '',
-    siteRef: initialData?.metadata?.siteRef || '',
-    role: initialData?.metadata?.role || '',
-    evidenceType: (initialData?.metadata?.evidenceType || '') as EvidenceType | '',
-    witnessName: initialData?.metadata?.witness?.name || '',
-    witnessRole: initialData?.metadata?.witness?.role || '',
-    witnessDate: initialData?.metadata?.witness?.date || '',
-    authenticityConfirmed: initialData?.metadata?.authenticityConfirmed || false,
+    workDate: initialData.metadata?.workDate || '',
+    siteRef: initialData.metadata?.siteRef || '',
+    role: initialData.metadata?.role || '',
+    evidenceType: (initialData.metadata?.evidenceType || '') as EvidenceType | '',
+    witnessName: initialData.metadata?.witness?.name || '',
+    witnessRole: initialData.metadata?.witness?.role || '',
+    witnessDate: initialData.metadata?.witness?.date || '',
+    authenticityConfirmed: initialData.metadata?.authenticityConfirmed || false,
   });
 
   const handleSubmit = () => {
@@ -160,10 +169,10 @@ const PortfolioEntryForm = ({
     const submitData: Partial<PortfolioEntry> = {
       ...rest,
       category: selectedCategory,
-      dateCreated: initialData?.dateCreated || new Date().toISOString(),
+      dateCreated: initialData.dateCreated,
       evidenceFiles: rest.evidenceFiles,
       metadata: {
-        ...(initialData?.metadata || {}),
+        ...(initialData.metadata || {}),
         workDate: workDate || undefined,
         siteRef: siteRef.trim() || undefined,
         role: role.trim() || undefined,
@@ -172,7 +181,7 @@ const PortfolioEntryForm = ({
         authenticityConfirmed: authenticityConfirmed || undefined,
       },
       ...(formData.status === 'completed' &&
-        !initialData?.dateCompleted && {
+        !initialData.dateCompleted && {
           dateCompleted: new Date().toISOString(),
         }),
     };
@@ -291,7 +300,7 @@ const PortfolioEntryForm = ({
           title="Category"
           options={categoryOptions}
         />
-        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+        <p className="mt-1.5 text-[12.5px] leading-snug text-white">
           Choose the most relevant category for this work.
         </p>
       </div>
@@ -370,19 +379,19 @@ const PortfolioEntryForm = ({
             {formData.assessmentCriteria.slice(0, 6).map((ac) => (
               <span
                 key={ac}
-                className="inline-flex h-8 items-center rounded-lg border border-elec-yellow/50 px-2.5 font-mono text-[11px] text-elec-yellow"
+                className="inline-flex h-8 items-center rounded-lg border border-white/[0.2] px-2.5 text-[12.5px] font-semibold text-white"
               >
                 {ac}
               </span>
             ))}
             {formData.assessmentCriteria.length > 6 && (
-              <span className="inline-flex h-8 items-center rounded-lg border border-white/[0.14] px-2.5 text-[11px] text-white">
+              <span className="inline-flex h-8 items-center rounded-lg border border-white/[0.14] px-2.5 text-[12.5px] text-white">
                 +{formData.assessmentCriteria.length - 6} more
               </span>
             )}
           </div>
         )}
-        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+        <p className="mt-1.5 text-[12.5px] leading-snug text-white">
           Browse your qualification&rsquo;s units and pick the criteria this work demonstrates.
         </p>
       </div>
@@ -428,10 +437,10 @@ const PortfolioEntryForm = ({
         <EvidenceUploader
           files={formData.evidenceFiles}
           onFilesChange={handleFilesChange}
-          entryId={initialData?.id}
+          entryId={initialData.id}
           maxFiles={10}
         />
-        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+        <p className="mt-1.5 text-[12.5px] leading-snug text-white">
           Photos, documents or videos of your work. Up to 10 files, 10MB each.
         </p>
       </div>
@@ -614,7 +623,7 @@ const PortfolioEntryForm = ({
           className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2')}
         >
           <Check className="h-4 w-4" />
-          {initialData ? 'Save changes' : 'Create entry'}
+          Save changes
         </button>
       ) : (
         <button
@@ -636,7 +645,7 @@ const PortfolioEntryForm = ({
         if (!v) onCancel();
       }}
       eyebrow="Portfolio"
-      title={initialData ? 'Edit portfolio entry' : 'New portfolio entry'}
+      title="Edit portfolio entry"
       headerTrailing={
         <span className="text-[12px] tabular-nums text-white">
           Step {currentStep + 1} of {WIZARD_STEPS.length}

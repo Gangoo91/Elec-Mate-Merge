@@ -3,7 +3,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { supabase as typedSupabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 
 /* ==========================================================================
    SectionMockExams — a learner's mock exams, for their tutor (ELE-1815).
@@ -46,6 +46,22 @@ function when(iso: string): string {
 
 /** The learner's mock summary (ELE-1815), shared by the area page and the
  *  overview card's figure (ELE-2015). Null until loaded. */
+/**
+ * Direction of travel: the last three mocks against the three before, by five
+ * points or more (the same rule as the cohort view, get_cohort_mock_summary).
+ * Attempts arrive newest first.
+ */
+function trendWord(attempts: Array<{ percentage: number }>): string | null {
+  if (attempts.length < 4) return null;
+  const avg = (xs: Array<{ percentage: number }>) =>
+    xs.reduce((t, a) => t + Number(a.percentage), 0) / xs.length;
+  const recent = avg(attempts.slice(0, 3));
+  const prior = avg(attempts.slice(3, 6));
+  if (recent - prior >= 5) return 'improving';
+  if (prior - recent >= 5) return 'falling';
+  return 'steady';
+}
+
 export function useLearnerMockSummary(userId: string | null) {
   const [data, setData] = useState<Summary | null>(null);
   const [error, setError] = useState(false);
@@ -89,7 +105,7 @@ export function SectionMockExams({
 
   return (
     <section id={id} className="scroll-mt-6 space-y-3">
-      <HubSectionHeading>Mock exams</HubSectionHeading>
+      <CollegeHeading>Mock exams</CollegeHeading>
 
       {error ? (
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
@@ -111,6 +127,7 @@ export function SectionMockExams({
               <div className="text-[13px] font-semibold text-white">Recent results</div>
               <div className="text-[12px] tabular-nums text-white">
                 {data.attempts.filter((a) => a.passed).length} of {data.attempts.length} passed
+                {trendWord(data.attempts) ? ` · ${trendWord(data.attempts)}` : ''}
               </div>
             </div>
             <ul className="divide-y divide-white/[0.08]">
@@ -128,7 +145,7 @@ export function SectionMockExams({
                     {a.percentage}%
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[13.5px] font-semibold text-white">
+                    <span className="block line-clamp-2 text-[13.5px] font-semibold text-white">
                       {paperName(a)}
                     </span>
                     <span className="block text-[12px] text-white">
@@ -159,7 +176,7 @@ export function SectionMockExams({
                 {data.topics.slice(0, 8).map((t) => (
                   <li key={t.topic}>
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="min-w-0 truncate text-[13px] font-semibold text-white">
+                      <span className="min-w-0 line-clamp-2 text-[13px] font-semibold text-white">
                         {t.topic}
                       </span>
                       <span className="shrink-0 text-[12px] tabular-nums text-white">

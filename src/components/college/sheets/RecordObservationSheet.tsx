@@ -14,7 +14,7 @@ import {
   checkRowCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   inputCn,
   labelCn,
   textareaCn,
@@ -23,8 +23,15 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DictateButton } from '@/components/worker-tools/DictateButton';
 import { LearnerPicker } from '@/components/college/observe/LearnerPicker';
 import { CriteriaPicker, type PickedCriterion } from '@/components/college/observe/CriteriaPicker';
-import { ObservationMedia, type ObservationFile } from '@/components/college/observe/ObservationMedia';
-import type { ObservationKind, ObservationOutcome, ObservationLocationType } from '@/hooks/useCollegeObservations';
+import {
+  ObservationMedia,
+  type ObservationFile,
+} from '@/components/college/observe/ObservationMedia';
+import type {
+  ObservationKind,
+  ObservationOutcome,
+  ObservationLocationType,
+} from '@/hooks/useCollegeObservations';
 
 /* ==========================================================================
    RecordObservationSheet — observation and professional discussion as
@@ -76,9 +83,17 @@ interface FormState {
   action_points_text: string;
   follow_up_required: boolean;
   follow_up_date: string;
+  // Batch 2: questioning (kind = 'questioning').
+  questions: QA[];
+  question_mode: 'oral' | 'written';
+  question_delivery: 'face_to_face' | 'remote';
 }
 
-const todayIso = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
+type QA = { question: string; answer: string };
+const blankQA = (): QA => ({ question: '', answer: '' });
+
+const todayIso = () =>
+  new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
 
 const blank = (kind: ObservationKind): FormState => ({
   id: null,
@@ -98,6 +113,9 @@ const blank = (kind: ObservationKind): FormState => ({
   action_points_text: '',
   follow_up_required: false,
   follow_up_date: '',
+  questions: kind === 'questioning' ? [blankQA()] : [],
+  question_mode: 'oral',
+  question_delivery: 'face_to_face',
 });
 
 const OUTCOMES: { value: ObservationOutcome; label: string }[] = [
@@ -118,9 +136,13 @@ const lines = (s: string) =>
     .split('\n')
     .map((t) => t.replace(/^[-•*]\s*/, '').trim())
     .filter(Boolean);
-const appendText = (prev: string, chunk: string) => (prev.trim() ? `${prev.trimEnd()} ${chunk}` : chunk);
+const appendText = (prev: string, chunk: string) =>
+  prev.trim() ? `${prev.trimEnd()} ${chunk}` : chunk;
 
-type Rpc = (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown; error: { message: string } | null }>;
+type Rpc = (
+  fn: string,
+  args: Record<string, unknown>
+) => Promise<{ data: unknown; error: { message: string } | null }>;
 const rpc = supabase.rpc.bind(supabase) as unknown as Rpc;
 
 export function RecordObservationSheet({
@@ -140,7 +162,11 @@ export function RecordObservationSheet({
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [sending, setSending] = useState(false);
   const [passNow, setPassNow] = useState(false);
-  const [sent, setSent] = useState<{ itemId: string | null; passed: number; learnerJoined: boolean } | null>(null);
+  const [sent, setSent] = useState<{
+    itemId: string | null;
+    passed: number;
+    learnerJoined: boolean;
+  } | null>(null);
   const dirty = useRef(false);
   const saveChain = useRef<Promise<string | null>>(Promise.resolve(null));
   const formRef = useRef(form);
@@ -174,25 +200,38 @@ export function RecordObservationSheet({
           .eq('id', d.college_student_id as string)
           .maybeSingle();
         if (cancelled) return;
-        if (s) setLearner({ id: s.id as string, name: (s.name as string) ?? 'Learner', user_id: (s.user_id as string) ?? null });
+        if (s)
+          setLearner({
+            id: s.id as string,
+            name: (s.name as string) ?? 'Learner',
+            user_id: (s.user_id as string) ?? null,
+          });
         setForm({
           id: d.id as string,
-          kind: ((d.kind as ObservationKind) ?? 'observation'),
+          kind: (d.kind as ObservationKind) ?? 'observation',
           activity_title: (d.activity_title as string) ?? '',
           activity_summary: (d.activity_summary as string) ?? '',
           transcript: (d.transcript as string) ?? '',
           observed_at: (d.observed_at as string) ?? todayIso(),
           duration_minutes: (d.duration_minutes as number) ?? null,
-          location_type: ((d.location_type as ObservationLocationType) ?? ''),
+          location_type: (d.location_type as ObservationLocationType) ?? '',
           location: (d.location as string) ?? '',
           criteria: Array.isArray(d.criteria) ? (d.criteria as PickedCriterion[]) : [],
           media: Array.isArray(d.media) ? (d.media as ObservationFile[]) : [],
-          outcome: ((d.outcome as ObservationOutcome) ?? 'passed'),
+          outcome: (d.outcome as ObservationOutcome) ?? 'passed',
           feedback_strengths: (d.feedback_strengths as string) ?? '',
           feedback_areas: (d.feedback_areas as string) ?? '',
           action_points_text: ((d.action_points as string[]) ?? []).join('\n'),
           follow_up_required: !!d.follow_up_required,
           follow_up_date: (d.follow_up_date as string) ?? '',
+          questions:
+            Array.isArray(d.questions) && (d.questions as QA[]).length
+              ? (d.questions as QA[])
+              : d.kind === 'questioning'
+                ? [blankQA()]
+                : [],
+          question_mode: d.question_mode === 'written' ? 'written' : 'oral',
+          question_delivery: d.question_delivery === 'remote' ? 'remote' : 'face_to_face',
         });
         return;
       }
@@ -240,6 +279,15 @@ export function RecordObservationSheet({
     action_points: lines(f.action_points_text),
     follow_up_required: f.follow_up_required,
     follow_up_date: f.follow_up_required ? f.follow_up_date || null : null,
+    ...(f.kind === 'questioning'
+      ? {
+          questions: f.questions
+            .map((q) => ({ question: q.question.trim(), answer: q.answer.trim() }))
+            .filter((q) => q.question),
+          question_mode: f.question_mode,
+          question_delivery: f.question_delivery,
+        }
+      : {}),
   });
 
   /** Queue a save; each waits for the last so the id from the first insert is reused. */
@@ -248,15 +296,26 @@ export function RecordObservationSheet({
       const l = learnerRef.current;
       const f = formRef.current;
       if (!l || !f.activity_title.trim()) return f.id;
-      const { data, error } = await rpc('save_college_observation', { p: payload(f, l), p_send: send });
+      const { data, error } = await rpc('save_college_observation', {
+        p: payload(f, l),
+        p_send: send,
+      });
       if (error) throw new Error(error.message);
-      const res = (data ?? {}) as { id?: string; portfolio_item_id?: string | null; learner_joined?: boolean };
+      const res = (data ?? {}) as {
+        id?: string;
+        portfolio_item_id?: string | null;
+        learner_joined?: boolean;
+      };
       if (res.id && !formRef.current.id) {
         formRef.current = { ...formRef.current, id: res.id };
         setForm((p) => ({ ...p, id: res.id ?? p.id }));
       }
       if (send) {
-        setSent({ itemId: res.portfolio_item_id ?? null, passed: 0, learnerJoined: !!res.learner_joined });
+        setSent({
+          itemId: res.portfolio_item_id ?? null,
+          passed: 0,
+          learnerJoined: !!res.learner_joined,
+        });
       }
       return send ? (res.portfolio_item_id ?? null) : (res.id ?? null);
     };
@@ -294,7 +353,9 @@ export function RecordObservationSheet({
       const seen = new Set<string>();
       return ((data ?? []) as { activity_title: string }[])
         .map((r) => r.activity_title?.trim())
-        .filter((t): t is string => !!t && !seen.has(t.toLowerCase()) && !!seen.add(t.toLowerCase()))
+        .filter(
+          (t): t is string => !!t && !seen.has(t.toLowerCase()) && !!seen.add(t.toLowerCase())
+        )
         .slice(0, 6);
     },
   });
@@ -302,22 +363,35 @@ export function RecordObservationSheet({
   /* ── Send ──────────────────────────────────────────────────────────── */
   const first = learner?.name.split(' ')[0] || 'the learner';
   const isDiscussion = form.kind === 'professional_discussion';
+  const isQuestioning = form.kind === 'questioning';
+  const kindName = isQuestioning
+    ? 'Questioning'
+    : isDiscussion
+      ? 'Professional discussion'
+      : 'Observation';
+  const answered = form.questions.some((q) => q.question.trim() && q.answer.trim());
   const joined = !!learner?.user_id;
   const missing = !learner
     ? 'Pick a learner'
     : !form.activity_title.trim()
-      ? isDiscussion
-        ? 'Add what you discussed'
-        : 'Add what they did'
-      : joined && form.criteria.length === 0
-        ? isDiscussion
-          ? 'Tick the criteria discussed'
-          : 'Tick the criteria you saw'
-        : form.follow_up_required && !form.follow_up_date
-          ? 'Set the follow-up date'
-          : form.observed_at > todayIso()
-            ? 'The date is in the future'
-            : null;
+      ? isQuestioning
+        ? 'Add what you asked about'
+        : isDiscussion
+          ? 'Add what you discussed'
+          : 'Add what they did'
+      : isQuestioning && !answered
+        ? 'Add a question and their answer'
+        : joined && form.criteria.length === 0
+          ? isQuestioning
+            ? 'Tick the criteria covered'
+            : isDiscussion
+              ? 'Tick the criteria discussed'
+              : 'Tick the criteria you saw'
+          : form.follow_up_required && !form.follow_up_date
+            ? 'Set the follow-up date'
+            : form.observed_at > todayIso()
+              ? 'The date is in the future'
+              : null;
 
   const send = async () => {
     if (missing || !learner) {
@@ -333,7 +407,9 @@ export function RecordObservationSheet({
           p_learner_id: learner.user_id,
           p_criteria: form.criteria,
           p_decision: 'passed',
-          p_feedback: form.feedback_strengths.trim() || `${isDiscussion ? 'Discussed' : 'Observed'}: ${form.activity_title.trim()}`,
+          p_feedback:
+            form.feedback_strengths.trim() ||
+            `${isQuestioning ? 'Questioned' : isDiscussion ? 'Discussed' : 'Observed'}: ${form.activity_title.trim()}`,
           p_evidence_item_ids: [itemId],
           p_submission_id: null,
           p_method: form.kind,
@@ -377,27 +453,56 @@ export function RecordObservationSheet({
 
   /* ── Render ────────────────────────────────────────────────────────── */
   const kindSwitch = (
-    <div className="grid grid-cols-2 gap-2 py-2.5" role="radiogroup" aria-label="What are you recording?">
-      {(['observation', 'professional_discussion'] as ObservationKind[]).map((k) => (
-        <button
-          key={k}
-          type="button"
-          role="radio"
-          aria-checked={form.kind === k}
-          disabled={!!form.id || !!sent}
-          onClick={() => update({ kind: k, location_type: k === 'observation' ? form.location_type || 'workshop' : form.location_type })}
-          className={cn(chipBase, 'px-3', form.kind === k ? chipOn : chipOff, (form.id || sent) && form.kind !== k && 'opacity-40')}
-        >
-          {k === 'observation' ? (
-            'Observation'
-          ) : (
-            <>
-              <span className="sm:hidden">Discussion</span>
-              <span className="hidden sm:inline">Professional discussion</span>
-            </>
-          )}
-        </button>
-      ))}
+    // One joined control, like the register's morning/afternoon (10 Oct: two
+    // full-width buttons, one solid yellow, shouted over the learner list).
+    <div className="py-2.5">
+      <div
+        className="inline-flex w-full rounded-xl border border-white/[0.12] bg-white/[0.03] p-0.5 sm:w-auto"
+        role="radiogroup"
+        aria-label="What are you recording?"
+      >
+        {(['observation', 'professional_discussion', 'questioning'] as ObservationKind[]).map(
+          (k) => (
+            <button
+              key={k}
+              type="button"
+              role="radio"
+              aria-checked={form.kind === k}
+              disabled={!!form.id || !!sent}
+              onClick={() =>
+                update({
+                  kind: k,
+                  location_type:
+                    k === 'observation' ? form.location_type || 'workshop' : form.location_type,
+                  questions:
+                    k === 'questioning' && form.questions.length === 0
+                      ? [blankQA()]
+                      : form.questions,
+                })
+              }
+              className={cn(
+                'h-11 flex-1 rounded-[10px] px-3 text-[13.5px] font-semibold transition-colors touch-manipulation sm:flex-none sm:px-4',
+                form.kind === k ? 'bg-white text-black' : 'text-white hover:bg-white/[0.06]',
+                (form.id || sent) && form.kind !== k && 'opacity-40'
+              )}
+            >
+              {k === 'observation' ? (
+                'Observation'
+              ) : k === 'questioning' ? (
+                <>
+                  <span className="sm:hidden">Questions</span>
+                  <span className="hidden sm:inline">Questioning</span>
+                </>
+              ) : (
+                <>
+                  <span className="sm:hidden">Discussion</span>
+                  <span className="hidden sm:inline">Professional discussion</span>
+                </>
+              )}
+            </button>
+          )
+        )}
+      </div>
     </div>
   );
 
@@ -419,7 +524,7 @@ export function RecordObservationSheet({
         open={open}
         onOpenChange={(o) => (o ? null : onOpenChange(false))}
         width="wide"
-        eyebrow={isDiscussion ? 'Professional discussion' : 'Observation'}
+        eyebrow={kindName}
         title={`Sent to ${first}`}
         footer={
           <div className="grid grid-cols-2 gap-2.5">
@@ -454,7 +559,7 @@ export function RecordObservationSheet({
           </span>
           <p className="mt-5 max-w-md text-[16px] font-semibold text-white">
             {sent.learnerJoined
-              ? `It is in ${first}'s portfolio as evidence, marked "${isDiscussion ? 'Discussed with' : 'Observed by'}" you.`
+              ? `It is in ${first}'s portfolio as evidence, marked "${isQuestioning ? 'Questioned by' : isDiscussion ? 'Discussed with' : 'Observed by'}" you.`
               : `Saved and signed on ${first}'s college record.`}
           </p>
           <p className="mt-2 max-w-md text-[14px] leading-relaxed text-white">
@@ -478,7 +583,7 @@ export function RecordObservationSheet({
         open={open}
         onOpenChange={(o) => (o ? null : close())}
         width="wide"
-        eyebrow={isDiscussion ? 'Professional discussion' : 'Observation'}
+        eyebrow={kindName}
         title="Who are you assessing?"
         subheader={kindSwitch}
       >
@@ -487,8 +592,11 @@ export function RecordObservationSheet({
             <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" aria-label="Loading" />
           </div>
         ) : (
-          <div className="mx-auto w-full max-w-2xl">
-            <LearnerPicker autoFocus={false} onPick={(l) => setLearner({ id: l.id, name: l.name, user_id: l.user_id })} />
+          <div className="w-full">
+            <LearnerPicker
+              autoFocus={false}
+              onPick={(l) => setLearner({ id: l.id, name: l.name, user_id: l.user_id })}
+            />
           </div>
         )}
       </FormSheet>
@@ -501,8 +609,10 @@ export function RecordObservationSheet({
       open={open}
       onOpenChange={(o) => (o ? null : close())}
       width="wide"
-      eyebrow={`${isDiscussion ? 'Professional discussion' : 'Observation'} · ${learner.name}`}
-      title={isDiscussion ? 'What you discussed' : 'What you saw'}
+      eyebrow={`${kindName} · ${learner.name}`}
+      title={
+        isQuestioning ? 'What you asked' : isDiscussion ? 'What you discussed' : 'What you saw'
+      }
       subheader={
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">{kindSwitch}</div>
@@ -538,17 +648,27 @@ export function RecordObservationSheet({
     >
       {/* ── 1. What happened ── */}
       <div className="space-y-7">
-        <Block title={isDiscussion ? 'Topic' : 'Activity'}>
+        <Block title={isDiscussion || isQuestioning ? 'Topic' : 'Activity'}>
           <div>
             <label htmlFor="ro-title" className={labelCn}>
-              {isDiscussion ? 'What you discussed' : 'What they did'}
+              {isQuestioning
+                ? 'What you asked about'
+                : isDiscussion
+                  ? 'What you discussed'
+                  : 'What they did'}
             </label>
             <input
               id="ro-title"
               value={form.activity_title}
               onChange={(e) => update({ activity_title: e.target.value })}
               className={inputCn}
-              placeholder={isDiscussion ? 'e.g. Safe isolation and why each step matters' : 'e.g. Wired and tested a ring final circuit'}
+              placeholder={
+                isQuestioning
+                  ? 'e.g. Proving dead and the order of tests'
+                  : isDiscussion
+                    ? 'e.g. Safe isolation and why each step matters'
+                    : 'e.g. Wired and tested a ring final circuit'
+              }
               enterKeyHint="next"
             />
           </div>
@@ -593,19 +713,49 @@ export function RecordObservationSheet({
               />
             </div>
           </div>
-          <ChipRow label="Setting">
-            {SETTINGS.map((s) => (
-              <button
-                key={s.value}
-                type="button"
-                aria-pressed={form.location_type === s.value}
-                onClick={() => update({ location_type: form.location_type === s.value ? '' : s.value })}
-                className={cn(chipBase, 'px-3.5', form.location_type === s.value ? chipOn : chipOff)}
-              >
-                {s.label}
-              </button>
-            ))}
-          </ChipRow>
+          {!isQuestioning && (
+            <ChipRow label="Setting">
+              {SETTINGS.map((s) => (
+                <button
+                  key={s.value}
+                  type="button"
+                  aria-pressed={form.location_type === s.value}
+                  onClick={() =>
+                    update({ location_type: form.location_type === s.value ? '' : s.value })
+                  }
+                  className={cn(
+                    chipBase,
+                    'px-3.5',
+                    form.location_type === s.value ? chipOn : chipOff
+                  )}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </ChipRow>
+          )}
+          {isQuestioning && (
+            <>
+              <JoinedToggle
+                label="How you asked"
+                value={form.question_mode}
+                options={[
+                  ['oral', 'Oral'],
+                  ['written', 'Written'],
+                ]}
+                onChange={(v) => update({ question_mode: v as FormState['question_mode'] })}
+              />
+              <JoinedToggle
+                label="Face to face or remote"
+                value={form.question_delivery}
+                options={[
+                  ['face_to_face', 'Face to face'],
+                  ['remote', 'Remote'],
+                ]}
+                onChange={(v) => update({ question_delivery: v as FormState['question_delivery'] })}
+              />
+            </>
+          )}
           <ChipRow label="How long (minutes)">
             {DURATIONS.map((m) => (
               <button
@@ -613,7 +763,11 @@ export function RecordObservationSheet({
                 type="button"
                 aria-pressed={form.duration_minutes === m}
                 onClick={() => update({ duration_minutes: form.duration_minutes === m ? null : m })}
-                className={cn(chipBase, 'min-w-[52px] px-3 tabular-nums', form.duration_minutes === m ? chipOn : chipOff)}
+                className={cn(
+                  chipBase,
+                  'min-w-[52px] px-3 tabular-nums',
+                  form.duration_minutes === m ? chipOn : chipOff
+                )}
               >
                 {m}
               </button>
@@ -621,7 +775,70 @@ export function RecordObservationSheet({
           </ChipRow>
         </Block>
 
-        {isDiscussion ? (
+        {isQuestioning ? (
+          <Block title="Questions and answers">
+            <ol className="space-y-5">
+              {form.questions.map((q, i) => (
+                <li key={i} className="space-y-3 border-l border-white/[0.18] pl-3">
+                  <div className="flex items-end justify-between gap-3">
+                    <label htmlFor={`ro-q-${i}`} className={cn(labelCn, 'mb-0')}>
+                      Question {i + 1}
+                    </label>
+                    {form.questions.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          update({ questions: form.questions.filter((_, j) => j !== i) })
+                        }
+                        className="h-11 shrink-0 px-1 text-[13px] font-semibold text-white touch-manipulation"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                  <textarea
+                    id={`ro-q-${i}`}
+                    value={q.question}
+                    onChange={(e) =>
+                      update({
+                        questions: form.questions.map((x, j) =>
+                          j === i ? { ...x, question: e.target.value } : x
+                        ),
+                      })
+                    }
+                    rows={2}
+                    className={cn(textareaCn, 'min-h-[60px]')}
+                    placeholder="e.g. Why do you prove the tester before and after?"
+                    autoCapitalize="sentences"
+                  />
+                  <NarrativeField
+                    id={`ro-a-${i}`}
+                    label="Their answer, summarised"
+                    value={q.answer}
+                    onChange={(v) =>
+                      update({
+                        questions: form.questions.map((x, j) =>
+                          j === i ? { ...x, answer: v } : x
+                        ),
+                      })
+                    }
+                    placeholder="What they said, in their words where it matters."
+                    rows={3}
+                  />
+                </li>
+              ))}
+            </ol>
+            {form.questions.length < 40 && (
+              <button
+                type="button"
+                onClick={() => update({ questions: [...form.questions, blankQA()] })}
+                className={cn(buttonSecondaryCn, 'w-full sm:w-auto')}
+              >
+                Add a question
+              </button>
+            )}
+          </Block>
+        ) : isDiscussion ? (
           <Block title="The discussion">
             {joined && (
               <ObservationMedia
@@ -630,7 +847,9 @@ export function RecordObservationSheet({
                 onChange={(media) => update({ media })}
                 recorderLabel="Record the discussion"
                 showRecorderFirst
-                onTranscript={(chunk) => setForm((p) => ({ ...p, transcript: appendText(p.transcript, chunk) }))}
+                onTranscript={(chunk) =>
+                  setForm((p) => ({ ...p, transcript: appendText(p.transcript, chunk) }))
+                }
                 observationId={form.id}
                 onServerTranscript={(text) => {
                   dirty.current = true;
@@ -675,18 +894,27 @@ export function RecordObservationSheet({
 
       {/* ── 2. Criteria ── */}
       <div className="space-y-7 border-t border-white/[0.1] pt-6 lg:border-t-0 lg:pt-0">
-        <Block title={isDiscussion ? 'Criteria discussed' : 'Criteria you saw'}>
+        <Block
+          title={
+            isQuestioning
+              ? 'Criteria the questions covered'
+              : isDiscussion
+                ? 'Criteria discussed'
+                : 'Criteria you saw'
+          }
+        >
           {joined ? (
             <CriteriaPicker
               learnerUserId={learner.user_id as string}
               value={form.criteria}
               onChange={(criteria) => update({ criteria })}
-              verb={isDiscussion ? 'discussed' : 'saw'}
+              verb={isQuestioning ? 'asked about' : isDiscussion ? 'discussed' : 'saw'}
             />
           ) : (
             <p className="rounded-2xl border border-dashed border-white/[0.2] p-4 text-[13px] leading-relaxed text-white">
-              {first} has not joined Elec-Mate yet, so their criteria are not linked. You can still record and sign this
-              on the college record. Send them the cohort join code so it counts as evidence next time.
+              {first} has not joined Elec-Mate yet, so their criteria are not linked. You can still
+              record and sign this on the college record. Send them the cohort join code so it
+              counts as evidence next time.
             </p>
           )}
         </Block>
@@ -740,12 +968,22 @@ export function RecordObservationSheet({
           </div>
           {joined && form.outcome === 'passed' && form.criteria.length > 0 && (
             <label className={checkRowCn}>
-              <Checkbox checked={passNow} onCheckedChange={(v) => setPassNow(v === true)} className={checkboxCn} />
+              <Checkbox
+                checked={passNow}
+                onCheckedChange={(v) => setPassNow(v === true)}
+                className={checkboxCn}
+              />
               <span className="text-[14px] text-white">
-                Pass the {form.criteria.length} ticked {form.criteria.length === 1 ? 'criterion' : 'criteria'} now
+                Pass the {form.criteria.length} ticked{' '}
+                {form.criteria.length === 1 ? 'criterion' : 'criteria'} now
                 <span className="mt-0.5 block text-[12px] leading-snug text-white">
-                  Records your assessment decision, method {isDiscussion ? 'professional discussion' : 'observation'}.
-                  Leave it and decide later from Assess.
+                  Records your assessment decision, method{' '}
+                  {isQuestioning
+                    ? 'questioning'
+                    : isDiscussion
+                      ? 'professional discussion'
+                      : 'observation'}
+                  . Leave it and decide later from Assess.
                 </span>
               </span>
             </label>
@@ -812,6 +1050,46 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
       <h3 className="text-[15px] font-semibold tracking-tight text-white">{title}</h3>
       {children}
     </section>
+  );
+}
+
+/** A choice of two, as one joined control (the register's morning/afternoon). */
+function JoinedToggle({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: [string, string][];
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <span className={labelCn}>{label}</span>
+      <div
+        role="radiogroup"
+        aria-label={label}
+        className="inline-flex w-full rounded-xl border border-white/[0.12] bg-white/[0.03] p-0.5 sm:w-auto"
+      >
+        {options.map(([v, l]) => (
+          <button
+            key={v}
+            type="button"
+            role="radio"
+            aria-checked={value === v}
+            onClick={() => onChange(v)}
+            className={cn(
+              'h-11 flex-1 rounded-[10px] px-4 text-[13.5px] font-semibold touch-manipulation sm:flex-none',
+              value === v ? 'bg-white text-black' : 'text-white hover:bg-white/[0.06]'
+            )}
+          >
+            {l}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 

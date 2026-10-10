@@ -6,6 +6,7 @@ import { useActingControls } from '@/hooks/college/useCollegeAccess';
 import { inputCn, labelCn } from '@/components/forms/fieldStyles';
 import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY } from '@/components/college/ui/CollegeUi';
 import { cn } from '@/lib/utils';
+import { SupportViewAsPanel } from '@/components/college/support/SupportViewAsPanel';
 
 /* ==========================================================================
    Hub colleges: pilot access + founder pilot console (ELE-1965).
@@ -281,16 +282,16 @@ export function MonthlyAccessList({ data }: { data: ConsoleData }) {
 
 /* ── One college ────────────────────────────────────────────────────── */
 
-type Panel = null | 'start' | 'extend' | 'contract' | 'lapse' | 'nudge';
+type Panel = null | 'start' | 'extend' | 'contract' | 'lapse' | 'nudge' | 'viewas';
 
 function Figure({ label, value, sub }: { label: string; value: ReactNode; sub?: ReactNode }) {
   return (
     <div className="min-w-0">
-      <dt className="text-[11.5px] font-medium text-white">{label}</dt>
+      <dt className="text-[12px] font-medium text-white">{label}</dt>
       <dd className="mt-0.5 text-[17px] font-semibold leading-tight tabular-nums text-white">
         {value}
       </dd>
-      {sub && <dd className="text-[11.5px] leading-snug text-white">{sub}</dd>}
+      {sub && <dd className="text-[12px] leading-snug text-white">{sub}</dd>}
     </div>
   );
 }
@@ -467,6 +468,10 @@ export function CollegeAccessCard({
             Draft a nudge
           </button>
         )}
+        {/* ELE-1966: support view-as, read only, with the college's consent. */}
+        <button type="button" onClick={() => toggle('viewas')} className={COLLEGE_BTN}>
+          View as a staff member
+        </button>
         <button
           type="button"
           onClick={() => void openAs()}
@@ -476,6 +481,12 @@ export function CollegeAccessCard({
           Open as this college
         </button>
       </div>
+
+      {panel === 'viewas' && (
+        <div className="rounded-2xl border border-white/[0.08] p-4">
+          <SupportViewAsPanel collegeId={c.id} collegeName={c.name} />
+        </div>
+      )}
 
       {panel === 'start' && (
         <div className="grid gap-3 rounded-2xl border border-white/[0.08] p-4 sm:grid-cols-[1fr_1fr_2fr_auto] sm:items-end">

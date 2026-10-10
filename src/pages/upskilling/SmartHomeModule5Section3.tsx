@@ -556,7 +556,7 @@ const SmartHomeModule5Section3 = () => {
             className="text-white hover:text-elec-yellow hover:bg-transparent touch-manipulation"
             asChild
           >
-            <Link to="../section-2">
+            <Link to="/study-centre/upskilling/smart-home-module-5-section-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
               CCTV Types and Storage
             </Link>
@@ -565,7 +565,7 @@ const SmartHomeModule5Section3 = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             asChild
           >
-            <Link to="../section-4">
+            <Link to="/study-centre/upskilling/smart-home-module-5-section-4">
               Remote Access and Alerts
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

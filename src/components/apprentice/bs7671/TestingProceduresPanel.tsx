@@ -79,7 +79,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
             <Collapsible key={test.id}>
               <CollapsibleTrigger className="w-full flex items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.06] border border-white/[0.10] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors text-left">
                 <div className="min-w-0 flex-1 space-y-1">
-                  <div className="flex items-baseline gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <div className="flex items-baseline gap-2 text-[12px] font-medium text-white">
                     <span>{test.difficulty}</span>
                     <span className="text-white">·</span>
                     <span>{test.duration}</span>
@@ -92,7 +92,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
                       </>
                     )}
                   </div>
-                  <div className="text-[14px] font-medium text-white truncate">{test.title}</div>
+                  <div className="text-[14px] font-medium leading-snug text-white">{test.title}</div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {testDone && <CheckCircle className="h-4 w-4 text-elec-yellow" />}
@@ -105,7 +105,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
 
                   {test.testLimits.length > 0 && (
                     <div className="space-y-1.5">
-                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                      <h4 className="text-[12px] font-medium text-white">
                         Test limits
                       </h4>
                       <div className="space-y-1">
@@ -126,7 +126,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
 
                   {test.commonIssues.length > 0 && (
                     <div className="space-y-1.5">
-                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                      <h4 className="text-[12px] font-medium text-white">
                         Common issues
                       </h4>
                       <ul className="space-y-1.5">

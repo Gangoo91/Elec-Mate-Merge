@@ -73,7 +73,7 @@ const EmergencyContacts = () => {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="h-6 px-2 text-elec-yellow hover:bg-elec-yellow/10"
+                      className="h-6 px-2 text-elec-yellow hover:bg-white/[0.08]"
                     >
                       {contact.number}
                     </Button>

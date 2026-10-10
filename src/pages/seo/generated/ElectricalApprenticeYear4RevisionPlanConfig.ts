@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const ElectricalApprenticeYear4RevisionPlanConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-apprentice-year-4-revision-plan',
@@ -134,7 +134,7 @@ export const ElectricalApprenticeYear4RevisionPlanConfig: GeneratedGuideConfig =
     },
     {
       question: 'How many hours per week should I revise in Year 4?',
-      answer: 'A typical apprentice does 4-6 hours of focused revision per week during college blocks, plus the on-the-job training hours (typically 20% of working time = ~6-8 hours/week). Elec-Mate\u2019s OJT logger captures both.',
+      answer: 'A typical apprentice does 4-6 hours of focused revision per week during college blocks, plus your off-the-job training hours (for ST0152, a minimum set for the whole programme, roughly 6 hours a week on average). Elec-Mate\u2019s OJT logger captures both.',
     },
     {
       question: 'What is the next step after Year 4?',

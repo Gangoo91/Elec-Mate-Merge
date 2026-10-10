@@ -184,7 +184,7 @@ export function ProgrammeSetupSheet({
       }
     >
       {collegeManaged ? (
-        <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
           <dl className="space-y-3">
             {[
               { k: 'Off-the-job target', v: `${college?.totalHours ?? 0}h` },
@@ -216,7 +216,7 @@ export function ProgrammeSetupSheet({
               ]}
             />
             {standardCode && standardCode !== CUSTOM && (
-              <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+              <p className="mt-1.5 text-[12.5px] leading-snug text-white">
                 DfE off-the-job minimum for this standard. Your provider may set a higher figure —
                 use "Other" to match it.
               </p>
@@ -239,7 +239,7 @@ export function ProgrammeSetupSheet({
                 onChange={(e) => setCustomHours(e.target.value)}
                 className={inputCn}
               />
-              <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+              <p className="mt-1.5 text-[12.5px] leading-snug text-white">
                 The figure on your training plan / commitment statement.
               </p>
             </div>
@@ -321,10 +321,8 @@ export function ProgrammeSetupSheet({
 
           {/* Live preview of the pace — the reason to finish the form. */}
           {preview && (
-            <div
-              className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-            >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+            <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+              <span className="text-[13px] font-semibold text-elec-yellow">
                 Your off-the-job target
               </span>
               <div className="mt-2 flex items-baseline gap-2">

@@ -120,7 +120,7 @@ const ScienceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-3">
         {/* Physics concepts */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-purple-400 uppercase tracking-wider px-0.5 mb-2">Physics of Insulation Testing</p>
+          <p className="text-xs font-medium text-purple-400 px-0.5 mb-2">Physics of Insulation Testing</p>
         </motion.div>
 
         {physicsConcepts.map((concept) => {

@@ -14,6 +14,7 @@ import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { PermitSelector } from '../common/PermitSelector';
 import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { JobLinkField } from '../common/JobLinkField';
+import { stampSafetyInsert, useSafetyScope } from '../common/SafetyScope';
 import { FireWatchHistory, FollowUpsDue } from './FireWatchHistory';
 import {
   FilterBar,
@@ -76,6 +77,7 @@ function formatTime(totalSeconds: number): string {
 export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
   const haptic = useHaptic();
   const { toast } = useToast();
+  const scope = useSafetyScope();
   const [activeTab, setActiveTab] = useState<TabKey>('timer');
   const {
     data: historyRecords = [],
@@ -112,6 +114,10 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
   const [selectedPermitTitle, setSelectedPermitTitle] = useState('');
   const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the watch with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const [location, setLocation] = useState('');
   const [completerName, setCompleterName] = useState('');
   const [completerSig, setCompleterSig] = useState('');
@@ -208,6 +214,7 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
       if (Array.isArray(snap.checkIns)) setCheckIns(snap.checkIns);
       setLocation(snap.location ?? '');
       setLinkedJobId(snap.linkedJobId ?? null);
+      setEmployerJobId(snap.employerJobId ?? null);
       setSelectedPermitId(snap.selectedPermitId ?? null);
       setSelectedPermitTitle(snap.selectedPermitTitle ?? '');
       setNowTick(Date.now());
@@ -237,6 +244,7 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
             checkIns,
             location,
             linkedJobId,
+            employerJobId,
             selectedPermitId,
             selectedPermitTitle,
           })
@@ -259,6 +267,7 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
     checkIns,
     location,
     linkedJobId,
+    employerJobId,
     selectedPermitId,
     selectedPermitTitle,
   ]);
@@ -301,6 +310,8 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
     setSelectedPermitTitle('');
     setLinkedJobId(null);
     setLinkedJobTitle(null);
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
     setLocation('');
     setCheckIns([]);
     setShowCancelConfirm(false);
@@ -325,22 +336,30 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
       // on it, and only becomes 'completed' when the check is signed off.
       const endedAt = new Date();
       const followUpDueAt = new Date(startedAt.getTime() + FOLLOW_UP_AFTER_HOURS * 60 * 60 * 1000);
-      const { error } = await supabase.from('fire_watch_records').insert({
-        user_id: user.id,
-        start_time: startedAt.toISOString(),
-        end_time: endedAt.toISOString(),
-        duration_minutes: durationMins,
-        permit_id: selectedPermitId || null,
-        job_id: linkedJobId || null,
-        location: location.trim() || null,
-        checklist: checklist.map((c) => ({ id: c.id, label: c.label, checked: c.checked })),
-        status: 'awaiting_follow_up',
-        follow_up_due_at: followUpDueAt.toISOString(),
-        photos: photoUrls,
-        completed_by: completerName.trim() || null,
-        completed_signature: completerSig || null,
-        check_ins: checkIns,
-      });
+      // Firm scope stamps employer_id; the database checks it either way.
+      // employer_* columns are live but not yet in the generated types.
+      const { error } = await supabase.from('fire_watch_records').insert(
+        stampSafetyInsert(
+          {
+            user_id: user.id,
+            start_time: startedAt.toISOString(),
+            end_time: endedAt.toISOString(),
+            duration_minutes: durationMins,
+            permit_id: selectedPermitId || null,
+            job_id: linkedJobId || null,
+            location: location.trim() || null,
+            checklist: checklist.map((c) => ({ id: c.id, label: c.label, checked: c.checked })),
+            status: 'awaiting_follow_up',
+            follow_up_due_at: followUpDueAt.toISOString(),
+            photos: photoUrls,
+            completed_by: completerName.trim() || null,
+            completed_signature: completerSig || null,
+            check_ins: checkIns,
+            ...(employerJobId ? { employer_job_id: employerJobId } : {}),
+          },
+          scope
+        ) as never
+      );
       if (error) throw error;
       haptic.success();
       toast({
@@ -374,6 +393,8 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
     durationMins,
     selectedPermitId,
     linkedJobId,
+    employerJobId,
+    scope,
     location,
     completerName,
     completerSig,
@@ -491,6 +512,12 @@ export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
                         onSelect={(id, title) => {
                           setLinkedJobId(id);
                           setLinkedJobTitle(title);
+                        }}
+                        employerJobId={employerJobId}
+                        employerJobTitle={employerJobTitle}
+                        onSelectEmployerJob={(id, title) => {
+                          setEmployerJobId(id);
+                          setEmployerJobTitle(title);
                         }}
                       />
                     </section>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -33,6 +33,16 @@ export function useFlashcardProgress() {
   const { user } = useAuth();
   const [progress, setProgress] = useState<FlashcardProgress[]>([]);
   const [loading, setLoading] = useState(true);
+  /**
+   * The latest rows, updated the moment an answer is given (10 Oct 2026).
+   * Answers used to be worked out from `progress` as it stood at the last
+   * render, refreshed only by a refetch after the write: a card answered twice
+   * in quick succession (missed, then right when it came back) was computed
+   * from stale numbers, and a brand-new card's second answer tried a second
+   * INSERT and hit the unique key.
+   */
+  const latest = useRef<FlashcardProgress[]>([]);
+  latest.current = progress;
 
   // Fetch all progress for the user
   const fetchProgress = useCallback(async () => {
@@ -91,7 +101,9 @@ export function useFlashcardProgress() {
     async (setId: string, cardId: string, correct: boolean) => {
       if (!user) return;
 
-      const existing = progress.find((p) => p.flashcard_set_id === setId && p.card_id === cardId);
+      const existing = latest.current.find(
+        (p) => p.flashcard_set_id === setId && p.card_id === cardId
+      );
 
       // Calculate spaced repetition interval
       const calculateNextReview = (masteryLevel: number): Date => {
@@ -102,44 +114,49 @@ export function useFlashcardProgress() {
         return nextDate;
       };
 
-      if (existing) {
-        // Update existing progress
-        const newMastery = correct
+      const mastery = existing
+        ? correct
           ? Math.min(existing.mastery_level + 1, 5)
-          : Math.max(existing.mastery_level - 1, 0);
+          : Math.max(existing.mastery_level - 1, 0)
+        : correct
+          ? 1
+          : 0;
+      const fields = {
+        mastery_level: mastery,
+        correct_count: (existing?.correct_count ?? 0) + (correct ? 1 : 0),
+        incorrect_count: (existing?.incorrect_count ?? 0) + (correct ? 0 : 1),
+        last_reviewed_at: new Date().toISOString(),
+        next_review_at: calculateNextReview(mastery).toISOString(),
+      };
 
-        const { error } = await supabase
-          .from('user_flashcard_progress')
-          .update({
-            mastery_level: newMastery,
-            correct_count: existing.correct_count + (correct ? 1 : 0),
-            incorrect_count: existing.incorrect_count + (correct ? 0 : 1),
-            last_reviewed_at: new Date().toISOString(),
-            next_review_at: calculateNextReview(newMastery).toISOString(),
-          })
-          .eq('id', existing.id);
-
-        if (error) console.error('Error updating progress:', error);
-      } else {
-        // Create new progress entry
-        const { error } = await supabase.from('user_flashcard_progress').insert({
+      // Apply it locally at once, so the next answer builds on this one.
+      const row = {
+        ...(existing ?? {
+          id: `local-${setId}-${cardId}`,
           user_id: user.id,
           flashcard_set_id: setId,
           card_id: cardId,
-          mastery_level: correct ? 1 : 0,
-          correct_count: correct ? 1 : 0,
-          incorrect_count: correct ? 0 : 1,
-          last_reviewed_at: new Date().toISOString(),
-          next_review_at: calculateNextReview(correct ? 1 : 0).toISOString(),
-        });
+        }),
+        ...fields,
+      } as FlashcardProgress;
+      latest.current = existing
+        ? latest.current.map((p) => (p === existing ? row : p))
+        : [...latest.current, row];
+      setProgress(latest.current);
 
-        if (error) console.error('Error creating progress:', error);
+      // One upsert on the unique (user, deck, card) key: no insert-vs-update guess.
+      const { error } = await supabase
+        .from('user_flashcard_progress')
+        .upsert(
+          { user_id: user.id, flashcard_set_id: setId, card_id: cardId, ...fields },
+          { onConflict: 'user_id,flashcard_set_id,card_id' }
+        );
+      if (error) {
+        console.error('Error saving flashcard progress:', error);
+        void fetchProgress();
       }
-
-      // Refresh progress
-      fetchProgress();
     },
-    [user, progress, fetchProgress]
+    [user, fetchProgress]
   );
 
   /**

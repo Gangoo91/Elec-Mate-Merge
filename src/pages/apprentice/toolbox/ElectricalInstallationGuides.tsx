@@ -22,28 +22,26 @@
  */
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Shield } from 'lucide-react';
-import { itemVariants } from '@/components/college/primitives';
+import { Building2, Factory, Home, Shield, Sparkles } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubToolGrid,
-  HubSectionHeading,
-  type HubTool,
-} from '@/components/hub/HubPrimitives';
-import { CALLOUT, PANEL_LABEL_ACCENT } from '@/components/ui/panel-recipe';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+  LEARN_CALLOUT,
+  LEARN_LABEL_ACCENT,
+  LearnLinkList,
+  LearnSectionTitle,
+  learnChip,
+  type LearnLinkItem,
+} from '@/components/apprentice/learn-ui/learnUi';
 import { quickRefCards } from '@/data/installation-guides/installationQuickRefData';
 import { QuickReferencePanel } from '@/components/apprentice/installation-guides/QuickReferencePanel';
 import { cn } from '@/lib/utils';
 
 const BASE = '/apprentice/on-job-tools/electrical-installation-guides';
 
-const installationTypes: HubTool[] = [
+const installationTypes: (LearnLinkItem & { description: string; meta: string })[] = [
   {
     id: 'domestic',
+    icon: Home,
     title: 'Domestic',
     description: 'Houses, flats, extensions and rewires.',
     meta: 'Part P, RCDs, ring finals, bathroom zones',
@@ -51,6 +49,7 @@ const installationTypes: HubTool[] = [
   },
   {
     id: 'commercial',
+    icon: Building2,
     title: 'Commercial',
     description: 'Offices, retail and hospitality.',
     meta: 'Three-phase distribution, emergency lighting, fire alarm interfaces, Section 537',
@@ -58,6 +57,7 @@ const installationTypes: HubTool[] = [
   },
   {
     id: 'industrial',
+    icon: Factory,
     title: 'Industrial',
     description: 'Heavy plant, factories and motor control.',
     meta: 'ATEX zones, hazardous areas, IP/IK ratings, prospective fault current',
@@ -65,6 +65,7 @@ const installationTypes: HubTool[] = [
   },
   {
     id: 'specialist',
+    icon: Sparkles,
     title: 'Specialist',
     description: 'Special locations with their own Part 7 rules.',
     meta: 'EV charging, solar PV, heat pumps, swimming pools and saunas',
@@ -95,61 +96,72 @@ const ElectricalInstallationGuides = () => {
           work on. Reflects BS 7671:2018+A4:2026.
         </p>
 
-        <div className="space-y-3">
-          <HubSectionHeading>Quick reference</HubSectionHeading>
-          {/* Four across from sm up: there are seven cards, so three columns
-              leaves a lone chip on a third row. */}
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-3">
-            {quickRefCards.map((card) => {
-              const isActive = card.id === activeCardId;
-              const Icon = card.icon;
-              return (
-                <button
-                  key={card.id}
-                  onClick={() => toggleCard(card.id)}
-                  aria-pressed={isActive}
-                  className={cn(
-                    'flex min-h-[72px] flex-col items-center justify-center gap-1.5 rounded-xl border p-3',
-                    'transition-colors touch-manipulation active:scale-[0.98]',
-                    CARD_SURFACE,
-                    isActive
-                      ? 'border-elec-yellow'
-                      : 'border-elec-yellow/25 hover:border-elec-yellow/50'
-                  )}
-                >
-                  <Icon
-                    className={cn('h-5 w-5', isActive ? 'text-elec-yellow' : 'text-white')}
-                    aria-hidden
-                  />
-                  <span
+        <section className="space-y-3">
+          <LearnSectionTitle title="Quick reference" sub="Tap a topic to open it here." />
+          {/* A chip rail on a phone (one line, scrolls sideways), wrapping
+              from sm: up. It was a 3-across grid of icon-over-label tiles at
+              11px — the generated-looking tile the design language retires. */}
+          <div className="-mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:overflow-visible">
+              {quickRefCards.map((card) => {
+                const isActive = card.id === activeCardId;
+                const Icon = card.icon;
+                return (
+                  <button
+                    key={card.id}
+                    type="button"
+                    onClick={() => toggleCard(card.id)}
+                    aria-pressed={isActive}
                     className={cn(
-                      'text-center text-[11px] font-medium leading-tight',
-                      isActive ? 'text-elec-yellow' : 'text-white'
+                      learnChip(isActive),
+                      'inline-flex items-center gap-1.5 px-4 text-[13px]'
                     )}
                   >
+                    <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
                     {card.label}
-                  </span>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        </section>
 
         {activeCard && <QuickReferencePanel card={activeCard} />}
 
-        <HubToolGrid label="Choose the setting" cards={installationTypes} columns="four" />
+        <section className="space-y-3">
+          <LearnSectionTitle title="Choose the setting" />
+          <LearnLinkList
+            columns={2}
+            items={installationTypes.map((t) => ({
+              id: t.id,
+              icon: t.icon,
+              title: t.title,
+              to: t.to,
+              detail: (
+                <>
+                  {t.description}
+                  <span className="mt-1 block text-[12.5px] leading-snug text-white">{t.meta}</span>
+                </>
+              ),
+            }))}
+          />
+        </section>
 
-        <motion.div variants={itemVariants} className={cn(CALLOUT, 'space-y-1')}>
+        <div className={cn(LEARN_CALLOUT, 'space-y-1')}>
           <div className="flex items-center gap-2">
-            <Shield className="h-4 w-4 flex-shrink-0 text-elec-yellow" aria-hidden />
-            <span className={PANEL_LABEL_ACCENT}>Compliance</span>
+            <Shield
+              className="h-4 w-4 flex-shrink-0 text-elec-yellow"
+              strokeWidth={1.5}
+              aria-hidden
+            />
+            <span className={LEARN_LABEL_ACCENT}>Compliance</span>
           </div>
           <p className="text-[14px] leading-relaxed text-white">
             All electrical work must comply with BS 7671:2018+A4:2026, Part P of the Building
             Regulations, and GN3 for inspection and testing. Check for the latest amendments before
             you rely on anything here.
           </p>
-        </motion.div>
+        </div>
       </HubBody>
     </HubPage>
   );

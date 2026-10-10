@@ -82,11 +82,9 @@ const InteractiveProgressTracker = () => {
     .reduce((sum, m) => sum + m.points, 0);
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Progress tracker
-        </span>
+        <span className="text-[13px] font-semibold text-white">Progress tracker</span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
           Interactive progress tracker
         </h3>
@@ -97,10 +95,8 @@ const InteractiveProgressTracker = () => {
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Overall progress
-          </span>
-          <span className="text-[12px] text-white font-mono">
+          <span className="text-[13px] font-semibold text-white">Overall progress</span>
+          <span className="text-[12px] text-white">
             {totalPoints} / {maxPoints} pts · {Math.round((totalPoints / maxPoints) * 100)}%
           </span>
         </div>
@@ -118,12 +114,12 @@ const InteractiveProgressTracker = () => {
               size="sm"
               className={
                 isActive
-                  ? 'h-9 bg-elec-yellow text-black font-semibold touch-manipulation'
-                  : 'h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation'
+                  ? 'h-11 bg-elec-yellow text-black font-semibold touch-manipulation'
+                  : 'h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation'
               }
             >
               Year {year.year}
-              <span className="ml-2 text-[11px] opacity-70">
+              <span className="ml-2 text-[12.5px] opacity-70">
                 {Math.round(getYearProgress(year.year))}%
               </span>
             </Button>
@@ -151,7 +147,7 @@ const InteractiveProgressTracker = () => {
                   onClick={() => toggleMilestone(milestone.id)}
                   className={`w-full text-left rounded-lg border p-3 touch-manipulation transition-colors ${
                     isComplete
-                      ? 'border-elec-yellow/30 bg-white/[0.05]'
+                      ? 'border-white/[0.08] bg-white/[0.05]'
                       : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                   }`}
                 >
@@ -170,9 +166,7 @@ const InteractiveProgressTracker = () => {
                         {milestone.text}
                       </span>
                     </div>
-                    <span className="text-[12px] text-white font-mono">
-                      {milestone.points} pts
-                    </span>
+                    <span className="text-[12px] text-white">{milestone.points} pts</span>
                   </div>
                 </button>
               );
@@ -187,11 +181,9 @@ const InteractiveProgressTracker = () => {
             key={year.year}
             className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Year {year.year}
-            </span>
+            <span className="text-[13px] font-semibold text-white">Year {year.year}</span>
             <Progress value={getYearProgress(year.year)} className="h-1" />
-            <p className="text-[11px] text-white">
+            <p className="text-[12.5px] text-white">
               {year.milestones.filter((m) => completedMilestones.includes(m.id)).length} /{' '}
               {year.milestones.length}
             </p>

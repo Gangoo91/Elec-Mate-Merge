@@ -87,10 +87,8 @@ const CaseStudiesTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Real apprentice case studies
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Real apprentice case studies</span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {caseStudies.map((caseStudy) => {
             const isSelected = selectedCase === caseStudy.id;
@@ -113,8 +111,8 @@ const CaseStudiesTab = () => {
                   <span
                     className={
                       caseStudy.isSafety
-                        ? 'text-[10px] font-medium uppercase tracking-[0.18em] text-red-300 flex-shrink-0'
-                        : 'text-[10px] font-medium uppercase tracking-[0.18em] text-white flex-shrink-0'
+                        ? 'text-[13px] font-semibold text-red-300 flex-shrink-0'
+                        : 'text-[13px] font-semibold text-white flex-shrink-0'
                     }
                   >
                     {caseStudy.severity}
@@ -125,11 +123,11 @@ const CaseStudiesTab = () => {
                   {caseStudy.category}
                 </span>
 
-                <p className="text-[13px] text-white leading-relaxed line-clamp-3">
+                <p className="text-[14px] text-white leading-relaxed line-clamp-3">
                   {caseStudy.scenario}
                 </p>
 
-                <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                <span className="text-[13px] font-semibold text-elec-yellow">
                   {isSelected ? 'Tap to collapse' : 'Tap to read full case'}
                 </span>
               </button>
@@ -147,37 +145,27 @@ const CaseStudiesTab = () => {
             return (
               <>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Case study
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Case study</span>
                   <h2 className="text-[20px] font-semibold text-white leading-tight">
                     {currentCase.title}
                   </h2>
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    The scenario
-                  </span>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    {currentCase.scenario}
-                  </p>
+                  <span className="text-[13px] font-semibold text-white">The scenario</span>
+                  <p className="text-[14px] text-white leading-relaxed">{currentCase.scenario}</p>
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     How it was discovered
                   </span>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    {currentCase.discovery}
-                  </p>
+                  <p className="text-[14px] text-white leading-relaxed">{currentCase.discovery}</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Consequences
-                    </span>
+                    <span className="text-[13px] font-semibold text-white">Consequences</span>
                     <ul className="space-y-1.5">
                       {currentCase.consequences.map((consequence, index) => (
                         <li
@@ -192,9 +180,7 @@ const CaseStudiesTab = () => {
                   </div>
 
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Lessons learned
-                    </span>
+                    <span className="text-[13px] font-semibold text-white">Lessons learned</span>
                     <ul className="space-y-1.5">
                       {currentCase.lessons.map((lesson, index) => (
                         <li
@@ -210,24 +196,18 @@ const CaseStudiesTab = () => {
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Final outcome
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Final outcome</span>
                   <p className="text-[14px] text-white leading-relaxed">{currentCase.outcome}</p>
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Prevention strategy
-                  </span>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    {currentCase.prevention}
-                  </p>
+                  <span className="text-[13px] font-semibold text-white">Prevention strategy</span>
+                  <p className="text-[14px] text-white leading-relaxed">{currentCase.prevention}</p>
                 </div>
 
                 {currentCase.isSafety && (
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                    <span className="text-[13px] font-semibold text-elec-yellow">
                       Reporting honestly is safe
                     </span>
                     <p className="text-[14px] text-white leading-relaxed">

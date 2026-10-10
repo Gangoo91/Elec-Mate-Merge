@@ -18,7 +18,7 @@ export default function AIvsManualDesignPage() {
       title="AI vs Manual Electrical Design: Comparison"
       description="Compare AI-powered and manual electrical design for speed, accuracy, BS 7671 compliance, cost savings, and practical application."
       datePublished="2026-01-25"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -54,7 +54,7 @@ export default function AIvsManualDesignPage() {
         'BS 7671 compliance is more consistent with AI because every design check is applied systematically to every circuit, with no possibility of overlooking a requirement.',
         'Human expertise remains essential for non-standard installations, site-specific judgement calls, and situations where BS 7671 permits alternative approaches.',
         'The most effective approach is hybrid — use AI for the calculation-heavy design work and apply human expertise for interpretation, judgement, and site-specific decisions.',
-        'A4:2026 introduced new mandatory requirements — including 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), AFDD recommendations for AC final circuits (Reg 421.1.7), and bidirectional device selection rules (Reg 530.3.201) — that AI checks automatically on every design.',
+        'BS 7671:2018+A4:2026 carries requirements that AI checks automatically on every design, including 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4, since 2018), AFDDs on socket-outlet circuits (Reg 421.1.7) and bidirectional device selection rules (Reg 530.3.201).',
       ]}
       sections={[
         {
@@ -237,14 +237,16 @@ export default function AIvsManualDesignPage() {
                   storage, or V2G capability.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Regulation 411.3.4 (A4:2026)</span> —
+                  <span className="font-semibold text-white">Regulation 411.3.4 (since 2018)</span> —
                   mandatory additional protection by an RCD rated at no more than 30 mA on AC final
                   circuits supplying luminaires in domestic premises.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Regulation 421.1.7 (A4:2026)</span> —
-                  recommendation to install arc fault detection devices (AFDDs) in AC final circuits
-                  to mitigate the risk of fire due to arc fault currents.
+                  <span className="font-semibold text-white">Regulation 421.1.7</span> —
+                  arc fault detection devices (AFDDs) on AC final circuits to mitigate the risk of
+                  fire due to arc fault currents, required since A2:2022 on socket-outlet circuits up
+                  to 32 A in HMOs, care homes, purpose-built student accommodation and high rise
+                  residential buildings, and recommended elsewhere.
                 </li>
               </ul>
               <p>

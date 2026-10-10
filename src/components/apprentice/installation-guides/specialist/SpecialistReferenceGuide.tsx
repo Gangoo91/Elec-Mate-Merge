@@ -1138,7 +1138,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Contact Information */}
-      <Card className="border-elec-yellow/30 bg-white/5">
+      <Card className="border-white/[0.14] bg-white/5 p-4 sm:p-5">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
             <Users className="h-6 w-6 text-white" />

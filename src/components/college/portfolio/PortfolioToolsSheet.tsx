@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormSheet } from '@/components/forms/FormSheet';
-import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY, chipCn } from '@/components/college/ui/CollegeUi';
+import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY } from '@/components/college/ui/CollegeUi';
+import { JoinedToggle } from '@/components/college/assessment/AssessmentTabs';
 import StudentRequirementsPanel from './StudentRequirementsPanel';
 import EPAGatewayChecklist from './EPAGatewayChecklist';
 import type { PortfolioLearner } from './useCollegePortfolioOverview';
@@ -29,7 +30,9 @@ export function PortfolioToolsSheet({
   const go = (hash: string) => {
     if (!learner) return;
     onOpenChange(false);
-    navigate(`/college?section=student360&studentId=${encodeURIComponent(learner.student_id)}#${hash}`);
+    navigate(
+      `/college?section=student360&studentId=${encodeURIComponent(learner.student_id)}#${hash}`
+    );
   };
 
   return (
@@ -39,42 +42,57 @@ export function PortfolioToolsSheet({
       width="wide"
       eyebrow="Portfolio"
       title={learner?.name ?? ''}
-      description={learner?.qualification_title ?? (learner?.cohort_name ? `Cohort: ${learner.cohort_name}` : undefined)}
+      description={
+        learner?.qualification_title ??
+        (learner?.cohort_name ? `Cohort: ${learner.cohort_name}` : undefined)
+      }
+      bodyClassName="space-y-5 pt-4"
       subheader={
         ready ? (
-          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Portfolio tools">
-            <button type="button" role="tab" aria-selected={tab === 'requirements'} className={chipCn(tab === 'requirements')} onClick={() => setTab('requirements')}>
-              Extra requirements
-            </button>
-            <button type="button" role="tab" aria-selected={tab === 'gateway'} className={chipCn(tab === 'gateway')} onClick={() => setTab('gateway')}>
-              EPA gateway
-            </button>
+          <div className="pb-3">
+            <JoinedToggle
+              ariaLabel="Portfolio tools"
+              value={tab}
+              onChange={setTab}
+              items={[
+                { key: 'requirements' as Tab, label: 'Extra requirements' },
+                { key: 'gateway' as Tab, label: 'EPA gateway' },
+              ]}
+            />
           </div>
         ) : undefined
       }
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" className={COLLEGE_BTN} onClick={() => go('portfolio')}>
+            See their evidence
+          </button>
+          <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => go('assess')}>
+            Assess criteria
+          </button>
+        </div>
+      }
     >
-      <div className="flex flex-wrap gap-2">
-        <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => go('assess')}>
-          Assess criteria
-        </button>
-        <button type="button" className={COLLEGE_BTN} onClick={() => go('portfolio')}>
-          See their evidence
-        </button>
-      </div>
       {!learner ? null : !learner.user_id ? (
         <p className="text-[13.5px] text-white">
-          {learner.name.split(' ')[0]} hasn't joined Elec-Mate yet, so there is no portfolio to set requirements on. Send them the
-          cohort join code from their cohort page.
+          {learner.name.split(' ')[0]} hasn't joined Elec-Mate yet, so there is no portfolio to set
+          requirements on. Send them the cohort join code from their cohort page.
         </p>
       ) : !learner.qualification_id ? (
         <p className="text-[13.5px] text-white">
-          No qualification is set for {learner.name.split(' ')[0]} yet. Set their course or qualification on Student 360 and these
-          tools appear here.
+          No qualification is set for {learner.name.split(' ')[0]} yet. Set their course or
+          qualification on Student 360 and these tools appear here.
         </p>
       ) : tab === 'requirements' ? (
-        <StudentRequirementsPanel studentId={learner.user_id} qualificationId={learner.qualification_id} />
+        <StudentRequirementsPanel
+          studentId={learner.user_id}
+          qualificationId={learner.qualification_id}
+        />
       ) : (
-        <EPAGatewayChecklist studentId={learner.user_id} qualificationId={learner.qualification_id} />
+        <EPAGatewayChecklist
+          studentId={learner.user_id}
+          qualificationId={learner.qualification_id}
+        />
       )}
     </FormSheet>
   );

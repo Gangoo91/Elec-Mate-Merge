@@ -15,12 +15,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import {
-  COLLEGE_LIST,
-  COLLEGE_ROW,
-  CollegeSectionTitle,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
+import { QuietTabs } from '@/components/college/otj/hoursUi';
+import { COLLEGE_LIST, COLLEGE_ROW, CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import {
   fetchCollegeConfirmedHours,
   fmtProposalDate,
@@ -33,11 +29,16 @@ const SOURCE_WORDS: Record<OtjProposalSource, string> = {
   register: 'From the register',
   college_day: 'From their site diary (college day)',
   diary: 'From their site diary',
+  app_quiz: 'From their quizzes and mocks in the app',
 };
 
 type View = 'all' | 'waiting' | 'counted' | 'turned_down';
 
-function rowState(r: ConfirmedHoursRow): { label: string; tone: 'good' | 'wait' | 'bad'; view: View } {
+function rowState(r: ConfirmedHoursRow): {
+  label: string;
+  tone: 'good' | 'wait' | 'bad';
+  view: View;
+} {
   if (r.status === 'rejected') return { label: 'Turned down', tone: 'bad', view: 'turned_down' };
   if (r.entry_status === 'verified' || r.entry_status === 'verified_by_employer')
     return { label: 'Counted', tone: 'good', view: 'counted' };
@@ -73,7 +74,12 @@ export function ConfirmedHoursSection({ cohortId }: { cohortId?: string | null }
     [rows, cohortId]
   );
   const counts = useMemo(() => {
-    const c: Record<View, number> = { all: inCohort.length, waiting: 0, counted: 0, turned_down: 0 };
+    const c: Record<View, number> = {
+      all: inCohort.length,
+      waiting: 0,
+      counted: 0,
+      turned_down: 0,
+    };
     for (const r of inCohort) c[rowState(r).view] += 1;
     return c;
   }, [inCohort]);
@@ -89,33 +95,27 @@ export function ConfirmedHoursSection({ cohortId }: { cohortId?: string | null }
         sub="Hours from registers and site diaries that apprentices confirmed in the last 30 days, with where each came from."
       />
 
-      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-        {(
-          [
-            ['all', 'All'],
-            ['waiting', 'To sign off'],
-            ['counted', 'Counted'],
-            ['turned_down', 'Turned down'],
-          ] as Array<[View, string]>
-        ).map(([key, label]) => (
-          <button
-            key={key}
-            type="button"
-            aria-pressed={view === key}
-            onClick={() => setView(key)}
-            className={cn(chipCn(view === key), 'inline-flex items-center gap-2')}
-          >
-            {label}
-            <span className="tabular-nums">{counts[key]}</span>
-          </button>
-        ))}
-      </div>
-
       <div className={COLLEGE_LIST}>
+        <QuietTabs
+          label="Filter confirmed hours"
+          value={view}
+          onChange={setView}
+          className="mx-0 border-white/[0.06] px-2 sm:px-3"
+          tabs={(
+            [
+              ['all', 'All'],
+              ['waiting', 'To sign off'],
+              ['counted', 'Counted'],
+              ['turned_down', 'Turned down'],
+            ] as Array<[View, string]>
+          ).map(([key, label]) => ({ key, label, count: counts[key] }))}
+        />
         {loading ? (
           <div className="h-24 animate-pulse bg-white/[0.04]" />
         ) : error ? (
-          <p className="px-5 py-6 text-[13px] text-white">Could not load confirmed hours. {error}</p>
+          <p className="px-5 py-6 text-[13px] text-white">
+            Could not load confirmed hours. {error}
+          </p>
         ) : shown.length === 0 ? (
           <p className="px-5 py-6 text-[13px] text-white">Nothing in this view.</p>
         ) : (
@@ -142,10 +142,13 @@ export function ConfirmedHoursSection({ cohortId }: { cohortId?: string | null }
                     className={cn(COLLEGE_ROW, 'h-full items-start')}
                   >
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold text-white">
-                        {r.learner_name ?? 'Learner'} · {r.title}
+                      <span className="block break-words text-[14.5px] font-semibold leading-snug text-white">
+                        {r.learner_name ?? 'Learner'}
                       </span>
-                      <span className="block text-[12.5px] leading-snug text-elec-yellow">
+                      <span className="mt-0.5 line-clamp-2 block text-[13px] leading-snug text-white">
+                        {r.title}
+                      </span>
+                      <span className="mt-0.5 block text-[12.5px] leading-snug text-white">
                         {SOURCE_WORDS[r.source]} on {fmtProposalDate(r.activity_date)}
                         {mins ? `, ${fmtProposalMinutes(mins)}` : ''}
                         {changed ? ` (lesson ${fmtProposalMinutes(r.proposed_minutes)})` : ''}
@@ -158,9 +161,9 @@ export function ConfirmedHoursSection({ cohortId }: { cohortId?: string | null }
                     </span>
                     <span
                       className={cn(
-                        'shrink-0 rounded-full border px-2.5 py-1 text-[11.5px] font-semibold',
+                        'shrink-0 rounded-full border px-2.5 py-1 text-[12px] font-semibold',
                         s.tone === 'good' && 'border-emerald-400/40 text-emerald-300',
-                        s.tone === 'wait' && 'border-elec-yellow/50 text-elec-yellow',
+                        s.tone === 'wait' && 'border-white/[0.3] text-white',
                         s.tone === 'bad' && 'border-orange-400/40 text-orange-300'
                       )}
                     >

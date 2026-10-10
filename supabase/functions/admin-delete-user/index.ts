@@ -53,23 +53,28 @@ Deno.serve(async (req) => {
       throw new Error('userId is required');
     }
 
-    // Prevent deleting super admins
-    const { data: targetProfile } = await supabaseClient
-      .from('profiles')
-      .select('admin_role, full_name')
-      .eq('id', userId)
-      .single();
-
-    if (targetProfile?.admin_role === 'super_admin') {
-      throw new Error('Cannot delete a super admin');
-    }
-
-    // Create admin client for deletion
+    // Create admin client for the guard and the deletion. The target is read
+    // with the service role: read with the caller's login, a row hidden by RLS
+    // came back empty and the super-admin guard below was skipped.
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
+
+    // Prevent deleting super admins
+    const { data: targetProfile, error: targetError } = await supabaseAdmin
+      .from('profiles')
+      .select('admin_role, full_name')
+      .eq('id', userId)
+      .maybeSingle();
+
+    if (targetError) {
+      throw new Error(`Could not check the user: ${targetError.message}`);
+    }
+    if (targetProfile?.admin_role === 'super_admin') {
+      throw new Error('Cannot delete a super admin');
+    }
 
     // Clean up all NO ACTION FK references before deleting auth user
     const { error: cleanupError } = await supabaseAdmin.rpc('admin_cleanup_user_data', {
@@ -110,7 +115,11 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error) {
-    await captureException(error, { functionName: 'admin-delete-user', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'admin-delete-user',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('Error in admin-delete-user:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

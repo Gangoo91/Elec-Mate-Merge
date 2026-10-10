@@ -1,13 +1,7 @@
 import { supabase } from '@/integrations/supabase/client';
 
 export type StaffRole =
-  | 'tutor'
-  | 'head_of_department'
-  | 'support'
-  | 'admin'
-  | 'assessor'
-  | 'iqa'
-  | 'eqa';
+  'tutor' | 'head_of_department' | 'support' | 'admin' | 'assessor' | 'iqa' | 'eqa';
 
 export interface CollegeStaff {
   id: string;
@@ -35,13 +29,12 @@ export interface CollegeStaff {
   is_quality_nominee?: boolean | null;
   is_mental_health_lead?: boolean | null;
   archived_at?: string | null;
+  /** Batch 2: a trainee's passes need a qualified assessor's countersignature. Only staff managers set it. */
+  assessor_status?: 'qualified' | 'trainee' | null;
 }
 
 export const getCollegeStaff = async (collegeId?: string): Promise<CollegeStaff[]> => {
-  let query = supabase
-    .from('college_staff')
-    .select('*')
-    .order('name');
+  let query = supabase.from('college_staff').select('*').order('name');
 
   if (collegeId) {
     query = query.eq('college_id', collegeId);
@@ -58,11 +51,7 @@ export const getCollegeStaff = async (collegeId?: string): Promise<CollegeStaff[
 };
 
 export const getActiveCollegeStaff = async (collegeId?: string): Promise<CollegeStaff[]> => {
-  let query = supabase
-    .from('college_staff')
-    .select('*')
-    .eq('status', 'Active')
-    .order('name');
+  let query = supabase.from('college_staff').select('*').eq('status', 'Active').order('name');
 
   if (collegeId) {
     query = query.eq('college_id', collegeId);
@@ -79,11 +68,7 @@ export const getActiveCollegeStaff = async (collegeId?: string): Promise<College
 };
 
 export const getCollegeStaffById = async (id: string): Promise<CollegeStaff | null> => {
-  const { data, error } = await supabase
-    .from('college_staff')
-    .select('*')
-    .eq('id', id)
-    .single();
+  const { data, error } = await supabase.from('college_staff').select('*').eq('id', id).single();
 
   if (error) {
     console.error('Error fetching staff member:', error);
@@ -93,7 +78,10 @@ export const getCollegeStaffById = async (id: string): Promise<CollegeStaff | nu
   return data;
 };
 
-export const getCollegeStaffByRole = async (role: StaffRole, collegeId?: string): Promise<CollegeStaff[]> => {
+export const getCollegeStaffByRole = async (
+  role: StaffRole,
+  collegeId?: string
+): Promise<CollegeStaff[]> => {
   let query = supabase
     .from('college_staff')
     .select('*')
@@ -118,11 +106,7 @@ export const getCollegeStaffByRole = async (role: StaffRole, collegeId?: string)
 export const createCollegeStaff = async (
   staff: Omit<CollegeStaff, 'id' | 'created_at' | 'updated_at'>
 ): Promise<CollegeStaff> => {
-  const { data, error } = await supabase
-    .from('college_staff')
-    .insert(staff)
-    .select()
-    .single();
+  const { data, error } = await supabase.from('college_staff').insert(staff).select().single();
 
   if (error) {
     console.error('Error creating staff member:', error);
@@ -184,10 +168,7 @@ export const archiveCollegeStaff = async (id: string): Promise<boolean> => {
 };
 
 export const deleteCollegeStaff = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('college_staff')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('college_staff').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting staff member:', error);

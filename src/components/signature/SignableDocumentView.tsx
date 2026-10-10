@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { FileText, ExternalLink, CheckCircle2, Circle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { buildTermsList } from '@/utils/quoteTerms';
+import { contractHtml } from '@/lib/signatures/contractText';
 import {
   gbp,
   signedGbp,
@@ -391,6 +392,7 @@ function CertificateDoc({ d, tone }: { d: CertificateSnapshot; tone: Tone }) {
 
 function ContractDoc({ d, tone }: { d: ContractSnapshot; tone: Tone }) {
   const c = t(tone);
+  const html = useMemo(() => contractHtml(d.content), [d.content]);
   return (
     <>
       <Head
@@ -407,9 +409,25 @@ function ContractDoc({ d, tone }: { d: ContractSnapshot; tone: Tone }) {
           </div>
         ) : null}
         <div className={cn('max-h-[60vh] overflow-y-auto rounded-xl p-4', c.wash)}>
-          <p className={cn('text-[15px] leading-relaxed whitespace-pre-wrap', c.strong)}>
-            {d.content || 'No contract text.'}
-          </p>
+          {html ? (
+            // Contract templates are HTML (ELE-1982) — sanitised, never raw tags
+            <div
+              className={cn(
+                'text-[15px] leading-relaxed break-words',
+                '[&_h1]:mt-4 [&_h1]:mb-2 [&_h1]:text-[19px] [&_h1]:font-semibold',
+                '[&_h2]:mt-4 [&_h2]:mb-2 [&_h2]:text-[18px] [&_h2]:font-semibold first:[&_h2]:mt-0',
+                '[&_h3]:mt-4 [&_h3]:mb-1.5 [&_h3]:text-[16px] [&_h3]:font-semibold',
+                '[&_p]:mb-2 [&_ul]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1',
+                '[&_table]:mb-3 [&_table]:w-full [&_td]:py-1 [&_td]:pr-3 [&_td]:align-top [&_th]:py-1 [&_th]:pr-3 [&_th]:text-left',
+                c.strong
+              )}
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          ) : (
+            <p className={cn('text-[15px] leading-relaxed whitespace-pre-wrap', c.strong)}>
+              {d.content || 'No contract text.'}
+            </p>
+          )}
         </div>
       </div>
     </>

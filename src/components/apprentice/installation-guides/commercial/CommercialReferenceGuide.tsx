@@ -132,7 +132,7 @@ const CommercialReferenceGuide = () => {
     <div className="space-y-6">
       {/* Search Bar */}
       <Card variant="plain">
-        <CardContent className="p-4 p-0">
+        <CardContent className="p-0">
           <div className="relative">
             {!searchTerm && (
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-4 w-4 pointer-events-none" />
@@ -148,20 +148,20 @@ const CommercialReferenceGuide = () => {
       </Card>
 
       <Tabs defaultValue="cables" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="cables" className="flex items-center gap-2">
+        <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
+          <TabsTrigger value="cables" className="flex items-center gap-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             <Cable className="h-4 w-4" />
             Cables
           </TabsTrigger>
-          <TabsTrigger value="emergency" className="flex items-center gap-2">
+          <TabsTrigger value="emergency" className="flex items-center gap-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             <Lightbulb className="h-4 w-4" />
             Emergency
           </TabsTrigger>
-          <TabsTrigger value="fire-alarm" className="flex items-center gap-2">
+          <TabsTrigger value="fire-alarm" className="flex items-center gap-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             <AlertCircle className="h-4 w-4" />
             Fire Alarm
           </TabsTrigger>
-          <TabsTrigger value="standards" className="flex items-center gap-2">
+          <TabsTrigger value="standards" className="flex items-center gap-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             <BookOpen className="h-4 w-4" />
             Standards
           </TabsTrigger>
@@ -180,7 +180,7 @@ const CommercialReferenceGuide = () => {
               {filteredCables.map((cable, index) => (
                 <div
                   key={index}
-                  className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20"
+                  className="bg-white/10 p-4 rounded-lg border border-white/[0.14]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                     <div className="flex-1">

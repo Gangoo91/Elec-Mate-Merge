@@ -1,18 +1,37 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
-import { FileText, Mail, Phone, Plus, RefreshCw, Search } from 'lucide-react';
+import { FileText, Mail, Phone } from 'lucide-react';
 import { toast } from 'sonner';
-import { PageFrame, PageHero, StatStrip, IconButton } from '@/components/employer/editorial';
+import { PageHero } from '@/components/employer/editorial';
+import {
+  PageColumn,
+  TwoColumn,
+  FigureStrip,
+  FilterRow,
+  Segments,
+  SearchField,
+  HeroActions,
+  HeroPrimary,
+  RefreshIcon,
+  Rows,
+  Row,
+  PlainEmpty,
+  StatusPill as UiPill,
+  panel,
+  PanelTitle,
+} from '@/components/employer/pageParts/PageParts';
 import { FormSheet } from '@/components/forms/FormSheet';
-import { PageHelpButton, HowItWorks, type PageHelpContent, type HelpBlocker } from '@/components/hub/PageHelp';
+import {
+  PageHelpButton,
+  HowItWorks,
+  type PageHelpContent,
+  type HelpBlocker,
+} from '@/components/hub/PageHelp';
 import {
   inputCn,
   labelCn,
   cardCn,
-  chipBase,
-  chipOn,
-  chipOff,
   buttonPrimaryCn,
   buttonSecondaryCn,
 } from '@/components/forms/fieldStyles';
@@ -38,6 +57,7 @@ import { openExternalUrl } from '@/utils/open-external-url';
 import { useStorageUrls } from '@/utils/storageUrls';
 import { gbp } from '@/hooks/useFirmPriceBook';
 import type { MaterialOrder, POLine, Supplier } from '@/services/financeService';
+import { BillsAddressPanel } from '@/components/employer/wholesalers/BillsAddressPanel';
 
 /* ==========================================================================
    Procurement (ELE-1978) — buying materials for jobs.
@@ -60,12 +80,24 @@ const HELP: PageHelpContent = {
   title: 'Purchase orders',
   what: 'Order materials for a job, track the delivery, and check the supplier bills you what you agreed.',
   steps: [
-    { title: 'Order from the job', body: 'Open a job and tap Materials. The quote fills the order at your price-book buy prices.' },
-    { title: 'Send, then book it in', body: 'Nothing goes to the supplier until you tap Send. When it arrives, book in what came.' },
-    { title: 'Match the invoice', body: 'Upload the supplier invoice PDF or a photo. Overcharges and short deliveries are flagged, and the cost lands on the job.' },
+    {
+      title: 'Order from the job',
+      body: 'Open a job and tap Materials. The quote fills the order at your price-book buy prices.',
+    },
+    {
+      title: 'Send, then book it in',
+      body: 'Nothing goes to the supplier until you tap Send. When it arrives, book in what came.',
+    },
+    {
+      title: 'Match the invoice',
+      body: 'Upload the supplier invoice PDF or a photo. Overcharges and short deliveries are flagged, and the cost lands on the job.',
+    },
   ],
   notes: [
-    { title: 'Who sees prices', body: 'Office managers see orders and book deliveries in. Buy prices and invoices are for the owner and admins.' },
+    {
+      title: 'Who sees prices',
+      body: 'Office managers see orders and book deliveries in. Buy prices and invoices are for the owner and admins.',
+    },
     { title: 'Tools and test kit', body: 'PAT and calibration now live in the Kit register.' },
   ],
   tasks: [
@@ -79,9 +111,21 @@ const HELP: PageHelpContent = {
       ],
       who: 'Owner and admins.',
       tour: [
-        { target: 'procurement.tabs', text: 'Orders', caption: 'Start on the Orders tab.', opens: true },
-        { target: 'procurement.new', caption: 'Tap Raise an order. Nothing goes to the supplier until you send it.', opens: true },
-        { target: 'procurement.order-save', caption: 'Fill in the lines, then Save draft or Save & send.' },
+        {
+          target: 'procurement.tabs',
+          text: 'Orders',
+          caption: 'Start on the Orders tab.',
+          opens: true,
+        },
+        {
+          target: 'procurement.new',
+          caption: 'Tap Raise an order. Nothing goes to the supplier until you send it.',
+          opens: true,
+        },
+        {
+          target: 'procurement.order-save',
+          caption: 'Fill in the lines, then Save draft or Save & send.',
+        },
       ],
     },
     {
@@ -91,11 +135,15 @@ const HELP: PageHelpContent = {
         'Tap PO as PDF if you want to check it first.',
         'Tap Send to … The PO goes as a PDF to the supplier’s order email.',
       ],
-      after: 'If the button says Add an email to send, open Suppliers and add their order email first.',
+      after:
+        'If the button says Add an email to send, open Suppliers and add their order email first.',
       who: 'Owner and admins.',
       tour: [
         { target: 'procurement.list', caption: 'Tap the draft order.', opens: true },
-        { target: 'procurement.order-action', caption: 'Tap Send to the supplier. Check it first with PO as PDF.' },
+        {
+          target: 'procurement.order-action',
+          caption: 'Tap Send to the supplier. Check it first with PO as PDF.',
+        },
       ],
     },
     {
@@ -109,7 +157,10 @@ const HELP: PageHelpContent = {
       who: 'Owner, admins and office managers. Quantities only, no prices.',
       tour: [
         { target: 'procurement.list', caption: 'Tap the order that has arrived.', opens: true },
-        { target: 'procurement.order-action', caption: 'Tap Book a delivery in and count what came.' },
+        {
+          target: 'procurement.order-action',
+          caption: 'Tap Book a delivery in and count what came.',
+        },
       ],
     },
     {
@@ -122,7 +173,10 @@ const HELP: PageHelpContent = {
       who: 'Owner and admins.',
       tour: [
         { target: 'procurement.list', caption: 'Tap a sent order.', opens: true },
-        { target: 'procurement.match-invoice', caption: 'Tap here and pick the supplier’s invoice PDF or a photo.' },
+        {
+          target: 'procurement.match-invoice',
+          caption: 'Tap here and pick the supplier’s invoice PDF or a photo.',
+        },
       ],
     },
     {
@@ -135,7 +189,10 @@ const HELP: PageHelpContent = {
       who: 'Owner, admins and office managers.',
       tour: [
         { target: 'procurement.tabs', text: 'Suppliers', caption: 'Tap Suppliers.', opens: true },
-        { target: 'procurement.new', caption: 'Tap Add supplier, or add the big UK merchants in one go.' },
+        {
+          target: 'procurement.new',
+          caption: 'Tap Add supplier, or add the big UK merchants in one go.',
+        },
       ],
     },
   ],
@@ -157,16 +214,11 @@ const AWAITING = ['Sent', 'Confirmed', 'Part-received'];
 const statusChip = (status: string) => {
   switch (status) {
     case 'Received':
-      return 'border-emerald-500/40 text-emerald-300';
-    case 'Part-received':
-      return 'border-cyan-500/40 text-cyan-300';
-    case 'Sent':
-    case 'Confirmed':
-      return 'border-blue-500/40 text-blue-300';
+      return 'border-emerald-500/35 text-emerald-300';
     case 'Cancelled':
       return 'border-red-500/40 text-red-300';
     default:
-      return 'border-white/[0.3] text-white';
+      return 'border-white/[0.18] text-white';
   }
 };
 
@@ -180,12 +232,14 @@ const fmtDate = (v?: string | null) => {
 
 const todayIso = () => new Date().toISOString().split('T')[0];
 
-const listCardCn =
-  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] overflow-hidden';
-
 function StatusPill({ status }: { status: string }) {
   return (
-    <span className={cn('inline-flex h-6 items-center rounded-full border px-2.5 text-[11.5px] font-semibold', statusChip(status))}>
+    <span
+      className={cn(
+        'inline-flex h-6 items-center rounded-full border px-2.5 text-[11.5px] font-semibold',
+        statusChip(status)
+      )}
+    >
       {status}
     </span>
   );
@@ -209,7 +263,13 @@ export function ProcurementSection() {
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [receiveOrder, setReceiveOrder] = useState<MaterialOrder | null>(null);
 
-  const { data: orders = [], isLoading, isError, refetch, isFetching } = useMaterialOrders(contextJobId);
+  const {
+    data: orders = [],
+    isLoading,
+    isError,
+    refetch,
+    isFetching,
+  } = useMaterialOrders(contextJobId);
   const { data: suppliers = [] } = useSuppliers();
   const selected = orders.find((o) => o.id === selectedId) ?? null;
 
@@ -250,7 +310,9 @@ export function ProcurementSection() {
     const cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - 30);
     const spend30 = orders
-      .filter((o) => o.status !== 'Cancelled' && o.status !== 'Draft' && new Date(o.order_date) >= cutoff)
+      .filter(
+        (o) => o.status !== 'Cancelled' && o.status !== 'Draft' && new Date(o.order_date) >= cutoff
+      )
       .reduce((s, o) => s + Number(o.total ?? 0), 0);
     return {
       awaiting: awaiting.length,
@@ -268,7 +330,9 @@ export function ProcurementSection() {
       orders.filter(
         (o) =>
           !q ||
-          `${o.order_number} ${o.supplier?.name ?? ''} ${o.status} ${o.job_title ?? ''}`.toLowerCase().includes(q)
+          `${o.order_number} ${o.supplier?.name ?? ''} ${o.status} ${o.job_title ?? ''}`
+            .toLowerCase()
+            .includes(q)
       ),
     [orders, q]
   );
@@ -288,7 +352,8 @@ export function ProcurementSection() {
 
   // ── Send / preview (owner/admin only; an explicit tap) ───────────────
   const [sending, setSending] = useState(false);
-  const supplierFor = (o: MaterialOrder | null) => (o ? suppliers.find((s) => s.id === o.supplier_id) : undefined);
+  const supplierFor = (o: MaterialOrder | null) =>
+    o ? suppliers.find((s) => s.id === o.supplier_id) : undefined;
 
   const previewPo = async (o: MaterialOrder) => {
     try {
@@ -379,240 +444,330 @@ export function ProcurementSection() {
     });
   }
 
+  const newLabel =
+    tab === 'orders' ? (contextJob ? 'Order materials' : 'Raise an order') : 'Add supplier';
+  const canNew = money || tab === 'suppliers';
+  const onNew = () => (tab === 'orders' ? openNewOrder() : setShowSupplierDialog(true));
+
+  const statusLine =
+    stats.awaiting === 0 && stats.drafts === 0
+      ? contextJob
+        ? 'Nothing on order for this job.'
+        : 'Nothing on order right now.'
+      : [
+          stats.awaiting > 0
+            ? `${stats.awaiting} order${stats.awaiting === 1 ? '' : 's'} awaiting delivery`
+            : null,
+          stats.late > 0 ? `${stats.late} late` : null,
+          stats.today > 0 ? `${stats.today} due today` : null,
+          stats.awaiting === 0 && stats.drafts > 0
+            ? `${stats.drafts} draft${stats.drafts === 1 ? '' : 's'} not sent`
+            : null,
+        ]
+          .filter(Boolean)
+          .join(', ') + '.';
+
+  const dueSoon = orders
+    .filter((o) => AWAITING.includes(o.status))
+    .sort((x, y) => (x.expected_date ?? '9999').localeCompare(y.expected_date ?? '9999'))
+    .slice(0, 5);
+
+  const ordersList = isLoading ? (
+    <div className="space-y-2">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="h-[72px] animate-pulse rounded-xl bg-white/[0.05]" />
+      ))}
+    </div>
+  ) : isError ? (
+    <div className={panel}>
+      <PlainEmpty
+        bare
+        text="Your orders didn't load."
+        action="Try again"
+        onAction={() => refetch()}
+      />
+    </div>
+  ) : (
+    <section>
+      <PanelTitle
+        title={contextJob ? 'Orders for this job' : 'Orders'}
+        meta={`${filteredOrders.length}`}
+      />
+      <div className={cn(panel, 'overflow-hidden')}>
+        {filteredOrders.length === 0 ? (
+          <PlainEmpty
+            bare
+            text={
+              q
+                ? 'No orders match that search.'
+                : money
+                  ? 'Orders you raise show here. Order from a job and its quote fills the lines at your price-book buy prices.'
+                  : 'When the owner or an admin orders materials, you can track them and book deliveries in here.'
+            }
+            action={!q && money ? (contextJob ? 'Order materials' : 'Raise an order') : undefined}
+            onAction={!q && money ? () => openNewOrder() : undefined}
+          />
+        ) : (
+          <ul className="divide-y divide-white/[0.07]" data-help="procurement.list">
+            {filteredOrders.map((o) => {
+              const awaiting = AWAITING.includes(o.status);
+              const late = awaiting && !!o.expected_date && o.expected_date < today;
+              const flagged = (o.invoices_flagged ?? 0) > 0;
+              const lines = o.items?.length ?? 0;
+              const timing =
+                o.status === 'Received'
+                  ? `Arrived ${fmtDate(o.delivery_date)}`
+                  : o.expected_date
+                    ? `${late ? 'Was due' : 'Due'} ${fmtDate(o.expected_date)}`
+                    : 'No date set';
+              return (
+                <li key={o.id}>
+                  <Row
+                    chevron={false}
+                    title={o.supplier?.name ?? 'Supplier'}
+                    detail={`${o.order_number} · ${o.job_title ?? 'Stock'} · ${lines} line${lines === 1 ? '' : 's'} · ${timing}`}
+                    amount={money && o.total != null ? gbp(o.total) : undefined}
+                    status={
+                      late ? (
+                        <UiPill tone="red">Late</UiPill>
+                      ) : flagged ? (
+                        <UiPill tone="volt">Check invoice</UiPill>
+                      ) : (
+                        <StatusPill status={o.status} />
+                      )
+                    }
+                    onClick={() => setSelectedId(o.id)}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    </section>
+  );
+
+  const suppliersList = (
+    <section>
+      <PanelTitle title="Suppliers" meta={`${filteredSuppliers.length}`} />
+      <div className={cn(panel, 'overflow-hidden')}>
+        {filteredSuppliers.length === 0 ? (
+          q ? (
+            <PlainEmpty bare text="No suppliers match that search." />
+          ) : (
+            <div className="px-4 py-5 sm:px-5">
+              <p className="text-[14px] text-white">
+                Add the merchants you buy from. Their order email is where purchase orders go.
+              </p>
+              <button
+                type="button"
+                onClick={addCommonMerchants}
+                disabled={addingMerchants}
+                className={cn(buttonSecondaryCn, 'mt-4 px-6')}
+              >
+                {addingMerchants ? 'Adding…' : 'Add the big UK merchants'}
+              </button>
+              <p className="mt-2 text-[13px] text-white">
+                Edmundson, CEF, Rexel, YESSS, Screwfix and Denmans. Add account numbers after.
+              </p>
+            </div>
+          )
+        ) : (
+          <ul className="divide-y divide-white/[0.07]">
+            {filteredSuppliers.map((s) => (
+              <li key={s.id}>
+                <Row
+                  chevron={false}
+                  title={s.name}
+                  detail={[
+                    s.category,
+                    s.account_number ? `Account ${s.account_number}` : null,
+                    s.email ? 'Order email set' : 'No order email',
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                  status={
+                    money && Number(s.discount_percent) > 0 ? (
+                      <UiPill tone="green">{Number(s.discount_percent)}% off</UiPill>
+                    ) : !s.email ? (
+                      <UiPill tone="red">No email</UiPill>
+                    ) : undefined
+                  }
+                  onClick={() => setSelectedSupplier(s)}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  );
+
+  const side = (
+    <>
+      {tab === 'orders' && (
+        <section>
+          <PanelTitle title="Coming in" meta={dueSoon.length ? `${stats.awaiting}` : undefined} />
+          <div className={cn(panel, 'overflow-hidden')}>
+            {dueSoon.length === 0 ? (
+              <PlainEmpty
+                bare
+                text="Nothing is on its way. Sent orders show here by the day they are due."
+              />
+            ) : (
+              <Rows>
+                {dueSoon.map((o) => {
+                  const late = !!o.expected_date && o.expected_date < today;
+                  return (
+                    <Row
+                      key={o.id}
+                      title={o.supplier?.name ?? 'Supplier'}
+                      detail={
+                        <span className={late ? 'text-red-300' : undefined}>
+                          {o.expected_date
+                            ? `${late ? 'Was due' : o.expected_date === today ? 'Due today,' : 'Due'} ${fmtDate(o.expected_date)}`
+                            : 'No date set'}
+                        </span>
+                      }
+                      onClick={() => setSelectedId(o.id)}
+                      chevron
+                    />
+                  );
+                })}
+              </Rows>
+            )}
+          </div>
+        </section>
+      )}
+      {/* Gap #7: suppliers' invoices by email, matched to these orders */}
+      {tab === 'orders' && <BillsAddressPanel />}
+      <section>
+        <PanelTitle title="Related" />
+        <div className={cn(panel, 'overflow-hidden')}>
+          <Rows>
+            {tab === 'orders' ? (
+              <Row
+                title="Suppliers"
+                detail={
+                  suppliers.length === 0
+                    ? 'None yet, so orders have nowhere to go'
+                    : noEmail > 0
+                      ? `${suppliers.length} suppliers, ${noEmail} with no order email`
+                      : `${suppliers.length} supplier${suppliers.length === 1 ? '' : 's'}`
+                }
+                onClick={() => setTab('suppliers')}
+              />
+            ) : (
+              <Row
+                title="Orders"
+                detail={`${orders.length} order${orders.length === 1 ? '' : 's'}`}
+                onClick={() => setTab('orders')}
+              />
+            )}
+            <Row
+              title="Kit register"
+              detail="Tools, testers and calibration now live here"
+              onClick={() => setSearchParams({ section: 'kit' })}
+            />
+          </Rows>
+        </div>
+      </section>
+    </>
+  );
+
   return (
     <>
-      <PageFrame>
+      <PageColumn>
         <PageHero
-          eyebrow="Money"
           title="Purchase orders"
-          description="Order materials for a job, book deliveries in and check the supplier's invoice."
-          tone="cyan"
+          description={statusLine}
           actions={
-            <>
-              <PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'procurement', tab }} />
-              <IconButton onClick={() => refetch()} aria-label="Refresh">
-                <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-              </IconButton>
-            </>
+            <HeroActions>
+              {canNew && (
+                <HeroPrimary data-help="procurement.new" onClick={onNew}>
+                  {newLabel}
+                </HeroPrimary>
+              )}
+              <RefreshIcon onClick={() => refetch()} spinning={isFetching} />
+              <PageHelpButton
+                help={HELP}
+                blockers={helpBlockers}
+                askContext={{ page: 'procurement', tab }}
+              />
+            </HeroActions>
           }
         />
 
         <JobContextBar what="Orders" />
         <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'procurement', tab }} />
 
-        <StatStrip
-          columns={4}
-          stats={[
-            { label: 'Awaiting delivery', value: stats.awaiting, tone: 'cyan' },
-            { label: 'Due today', value: stats.today, tone: 'blue' },
-            { label: 'Late', value: stats.late, tone: stats.late > 0 ? 'red' : 'emerald' },
+        <FigureStrip
+          figures={[
+            {
+              label: 'Awaiting delivery',
+              value: stats.awaiting,
+              sub: 'Sent or part-received',
+              onOpen: () => setTab('orders'),
+            },
+            {
+              label: 'Due today',
+              value: stats.today,
+              sub: stats.today > 0 ? 'Book them in when they land' : 'Nothing due today',
+              tone: stats.today > 0 ? 'volt' : undefined,
+              onOpen: () => setTab('orders'),
+            },
+            {
+              label: 'Late',
+              value: stats.late,
+              sub: stats.late > 0 ? 'Past their due date' : 'Nothing late',
+              tone: stats.late > 0 ? 'red' : undefined,
+              onOpen: () => setTab('orders'),
+            },
             money
               ? stats.flagged > 0
-                ? { label: 'Invoices to check', value: stats.flagged, tone: 'orange' }
-                : { label: 'Spent in 30 days', value: gbp(Math.round(stats.spend30)), accent: true }
-              : { label: 'Drafts', value: stats.drafts, tone: 'purple' },
+                ? {
+                    label: 'Invoices to check',
+                    value: stats.flagged,
+                    sub: 'Overcharge or short',
+                    tone: 'volt',
+                    onOpen: () => setTab('orders'),
+                  }
+                : {
+                    label: 'Spent in 30 days',
+                    value: gbp(Math.round(stats.spend30)),
+                    sub: 'Orders placed',
+                    onOpen: () => setTab('orders'),
+                  }
+              : {
+                  label: 'Drafts',
+                  value: stats.drafts,
+                  sub: 'Not sent yet',
+                  onOpen: () => setTab('orders'),
+                },
           ]}
         />
 
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
-          <div className="flex gap-2" role="tablist" aria-label="Procurement" data-help="procurement.tabs">
-            {(
-              [
-                ['orders', `Orders · ${orders.length}`],
-                ['suppliers', `Suppliers · ${suppliers.length}`],
-              ] as const
-            ).map(([v, label]) => (
-              <button
-                key={v}
-                type="button"
-                role="tab"
-                aria-selected={tab === v}
-                onClick={() => setTab(v)}
-                className={cn(chipBase, 'whitespace-nowrap rounded-full px-5 text-[14px]', tab === v ? chipOn : chipOff)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-          <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={tab === 'orders' ? 'Search orders, suppliers, jobs' : 'Search suppliers'}
-              aria-label="Search"
-              className={cn(inputCn, 'pl-7')}
+        <FilterRow>
+          <div data-help="procurement.tabs" className="min-w-0" aria-label="Procurement">
+            <Segments
+              items={[
+                { value: 'orders' as Tab, label: 'Orders', count: orders.length },
+                { value: 'suppliers' as Tab, label: 'Suppliers', count: suppliers.length },
+              ]}
+              value={tab}
+              onChange={setTab}
             />
           </div>
-          {money && (
-            <button
-              type="button"
-              data-help="procurement.new"
-              onClick={() => (tab === 'orders' ? openNewOrder() : setShowSupplierDialog(true))}
-              className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2 px-5')}
-            >
-              <Plus className="h-4 w-4" aria-hidden />
-              {tab === 'orders' ? (contextJob ? 'Order materials' : 'Raise an order') : 'Add supplier'}
-            </button>
-          )}
-          {!money && tab === 'suppliers' && (
-            <button
-              type="button"
-              data-help="procurement.new"
-              onClick={() => setShowSupplierDialog(true)}
-              className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2 px-5')}
-            >
-              <Plus className="h-4 w-4" aria-hidden /> Add supplier
-            </button>
-          )}
-        </div>
+          <SearchField
+            className="w-full lg:w-72"
+            value={search}
+            onChange={setSearch}
+            placeholder={tab === 'orders' ? 'Search orders, suppliers, jobs' : 'Search suppliers'}
+          />
+        </FilterRow>
 
-        {tab === 'orders' ? (
-          isLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="h-[72px] animate-pulse rounded-xl bg-white/[0.05]" />
-              ))}
-            </div>
-          ) : isError ? (
-            <div className={cn(listCardCn, 'p-6 text-center')}>
-              <p className="text-[15px] font-semibold text-white">Couldn't load your orders</p>
-              <button type="button" onClick={() => refetch()} className="mt-2 h-11 text-[14px] font-semibold text-elec-yellow touch-manipulation">
-                Try again
-              </button>
-            </div>
-          ) : filteredOrders.length === 0 ? (
-            <div className={cn(listCardCn, 'p-6 text-center sm:p-10')}>
-              <p className="text-[16px] font-semibold text-white">
-                {q ? 'No orders match that search' : contextJob ? 'No orders for this job yet' : 'No purchase orders yet'}
-              </p>
-              {!q && (
-                <p className="mx-auto mt-1 max-w-md text-[13px] text-white">
-                  {money
-                    ? 'Order materials from a job and its quote fills the lines at your price-book buy prices.'
-                    : 'When the owner or an admin orders materials, you can track them and book deliveries in here.'}
-                </p>
-              )}
-              {!q && money && (
-                <button type="button" onClick={() => openNewOrder()} className={cn(buttonPrimaryCn, 'mx-auto mt-4 px-6')}>
-                  {contextJob ? 'Order materials' : 'Raise an order'}
-                </button>
-              )}
-            </div>
-          ) : (
-            <ul className={cn(listCardCn, 'divide-y divide-white/[0.08]')} data-help="procurement.list">
-              {filteredOrders.map((o) => {
-                const awaiting = AWAITING.includes(o.status);
-                const late = awaiting && !!o.expected_date && o.expected_date < today;
-                const lines = o.items?.length ?? 0;
-                const timing =
-                  o.status === 'Received'
-                    ? `Arrived ${fmtDate(o.delivery_date)}`
-                    : o.expected_date
-                      ? `${late ? 'Was due' : 'Due'} ${fmtDate(o.expected_date)}`
-                      : 'No date set';
-                return (
-                  <li key={o.id}>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedId(o.id)}
-                      className="flex min-h-[72px] w-full items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.06] sm:px-5"
-                    >
-                      <span className="min-w-0 flex-1">
-                        <span className="flex items-center gap-2">
-                          <span className="truncate text-[14.5px] font-semibold text-white">
-                            {o.supplier?.name ?? 'Supplier'}
-                          </span>
-                          <span className="shrink-0 text-[12.5px] tabular-nums text-white">{o.order_number}</span>
-                        </span>
-                        <span className="block truncate text-[12.5px] text-white">
-                          {o.job_title ?? 'Stock'} · {lines} line{lines === 1 ? '' : 's'} · {timing}
-                        </span>
-                        {(late || (o.invoices_flagged ?? 0) > 0) && (
-                          <span className="mt-0.5 block text-[12px] font-medium text-orange-300">
-                            {late ? 'Late' : ''}
-                            {late && (o.invoices_flagged ?? 0) > 0 ? ' · ' : ''}
-                            {(o.invoices_flagged ?? 0) > 0 ? 'Invoice needs a check' : ''}
-                          </span>
-                        )}
-                      </span>
-                      <span className="flex shrink-0 flex-col items-end gap-1">
-                        {money && o.total != null && (
-                          <span className="text-[15px] font-semibold tabular-nums text-white">{gbp(o.total)}</span>
-                        )}
-                        <StatusPill status={o.status} />
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )
-        ) : filteredSuppliers.length === 0 ? (
-          <div className={cn(listCardCn, 'p-6 text-center sm:p-10')}>
-            <p className="text-[16px] font-semibold text-white">{q ? 'No suppliers match that search' : 'No suppliers yet'}</p>
-            {!q && (
-              <>
-                <p className="mx-auto mt-1 max-w-md text-[13px] text-white">
-                  Add the merchants you buy from. Their order email is where purchase orders go.
-                </p>
-                <button
-                  type="button"
-                  onClick={addCommonMerchants}
-                  disabled={addingMerchants}
-                  className={cn(buttonSecondaryCn, 'mx-auto mt-4 px-6')}
-                >
-                  {addingMerchants ? 'Adding…' : 'Add the big UK merchants'}
-                </button>
-                <p className="mt-2 text-[12px] text-white">
-                  Edmundson, CEF, Rexel, YESSS, Screwfix and Denmans. Add account numbers after.
-                </p>
-              </>
-            )}
-          </div>
-        ) : (
-          <ul className={cn(listCardCn, 'divide-y divide-white/[0.08] lg:grid lg:grid-cols-2 lg:divide-y-0 lg:gap-px lg:bg-white/[0.08]')}>
-            {filteredSuppliers.map((s) => (
-              <li key={s.id} className="bg-[hsl(0_0%_9%)] lg:bg-[hsl(0_0%_10%)]">
-                <button
-                  type="button"
-                  onClick={() => setSelectedSupplier(s)}
-                  className="flex min-h-[64px] w-full items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.04] sm:px-5"
-                >
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14.5px] font-semibold text-white">{s.name}</span>
-                    <span className="block truncate text-[12.5px] text-white">
-                      {[
-                        s.category,
-                        s.account_number ? `Account ${s.account_number}` : null,
-                        s.email ? 'Order email set' : 'No order email',
-                      ]
-                        .filter(Boolean)
-                        .join(' · ')}
-                    </span>
-                  </span>
-                  {money && Number(s.discount_percent) > 0 && (
-                    <span className="shrink-0 text-[13px] font-semibold text-emerald-300">{Number(s.discount_percent)}% off</span>
-                  )}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <p className="text-[13px] text-white">
-          Tools, testers and calibration now live in the{' '}
-          <button
-            type="button"
-            onClick={() => setSearchParams({ section: 'kit' })}
-            className="h-11 font-semibold text-elec-yellow underline-offset-4 hover:underline touch-manipulation"
-          >
-            Kit register
-          </button>
-          .
-        </p>
-      </PageFrame>
+        <TwoColumn main={tab === 'orders' ? ordersList : suppliersList} side={side} />
+      </PageColumn>
 
       <OrderSheet
         order={selected}
@@ -661,7 +816,11 @@ export function ProcurementSection() {
           }}
         />
       )}
-      <ReceiveDeliverySheet open={!!receiveOrder} order={receiveOrder} onOpenChange={(o) => !o && setReceiveOrder(null)} />
+      <ReceiveDeliverySheet
+        open={!!receiveOrder}
+        order={receiveOrder}
+        onOpenChange={(o) => !o && setReceiveOrder(null)}
+      />
       <CreateSupplierDialog
         open={showSupplierDialog}
         supplier={editSupplier}
@@ -696,7 +855,10 @@ function OrderSheet({
   onReceive: (o: MaterialOrder) => void;
 }) {
   const { data: receipts = [] } = useGoodsReceipts(order?.id);
-  const { urls: noteUrls } = useStorageUrls('job-photos', receipts.map((r) => r.delivery_note_url));
+  const { urls: noteUrls } = useStorageUrls(
+    'job-photos',
+    receipts.map((r) => r.delivery_note_url)
+  );
   const { data: invoices = [] } = useSupplierInvoices(money ? order?.id : undefined);
   const matchInvoice = useMatchInvoice();
   const updateStatus = useUpdateOrderStatus();
@@ -733,7 +895,11 @@ function OrderSheet({
   const primary =
     money && order.status === 'Draft'
       ? {
-          label: sending ? 'Sending…' : supplier?.email ? `Send to ${supplier.name}` : 'Add an email to send',
+          label: sending
+            ? 'Sending…'
+            : supplier?.email
+              ? `Send to ${supplier.name}`
+              : 'Add an email to send',
           onClick: () => onSend(order),
           disabled: sending || !supplier?.email,
         }
@@ -752,7 +918,11 @@ function OrderSheet({
       footer={
         <div className="flex gap-2">
           {money && (
-            <button type="button" onClick={() => onPreview(order)} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+            <button
+              type="button"
+              onClick={() => onPreview(order)}
+              className={cn(buttonSecondaryCn, 'flex-1 px-4')}
+            >
               PO as PDF
             </button>
           )}
@@ -767,7 +937,11 @@ function OrderSheet({
               {primary.label}
             </button>
           ) : (
-            <button type="button" onClick={onClose} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+            <button
+              type="button"
+              onClick={onClose}
+              className={cn(buttonSecondaryCn, 'flex-1 px-4')}
+            >
               Close
             </button>
           )}
@@ -785,7 +959,10 @@ function OrderSheet({
                 {lines.map((l, i) => {
                   const got = Number(l.received_qty || 0);
                   return (
-                    <li key={`${l.name}-${i}`} className="flex items-start justify-between gap-3 py-2.5">
+                    <li
+                      key={`${l.name}-${i}`}
+                      className="flex items-start justify-between gap-3 py-2.5"
+                    >
                       <div className="min-w-0">
                         <p className="text-[14px] font-medium text-white">{l.name}</p>
                         <p className="text-[12.5px] text-white">
@@ -816,11 +993,17 @@ function OrderSheet({
                 </div>
                 <div className="flex justify-between pt-1">
                   <span className="font-semibold">Order total</span>
-                  <span className="text-[17px] font-semibold tabular-nums text-elec-yellow">{gbp(order.total)}</span>
+                  <span className="text-[17px] font-semibold tabular-nums text-elec-yellow">
+                    {gbp(order.total)}
+                  </span>
                 </div>
               </div>
             )}
-            {!money && <p className="text-[12px] text-white">Prices on orders are kept to the owner and admins.</p>}
+            {!money && (
+              <p className="text-[12px] text-white">
+                Prices on orders are kept to the owner and admins.
+              </p>
+            )}
           </section>
 
           {money && order.status !== 'Draft' && order.status !== 'Cancelled' && (
@@ -834,7 +1017,9 @@ function OrderSheet({
                 )}
               >
                 <FileText className="h-4 w-4" aria-hidden />
-                {matchInvoice.isPending ? 'Reading the invoice…' : 'Match the invoice (PDF or photo)'}
+                {matchInvoice.isPending
+                  ? 'Reading the invoice…'
+                  : 'Match the invoice (PDF or photo)'}
                 <input
                   type="file"
                   accept="application/pdf,image/*"
@@ -848,20 +1033,27 @@ function OrderSheet({
                 />
               </label>
               <p className="text-[12px] text-white">
-                The emailed PDF or a photo of the paper copy. It is checked against this order and what
-                arrived, and the cost goes on the job.
+                The emailed PDF or a photo of the paper copy. It is checked against this order and
+                what arrived, and the cost goes on the job.
               </p>
               {invoices.map((inv) => (
-                <div key={inv.id} className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3">
+                <div
+                  key={inv.id}
+                  className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3"
+                >
                   <div className="flex items-center justify-between gap-2">
                     <span className="truncate text-[14px] font-medium text-white">
                       {inv.supplier_name || 'Invoice'}
                       {inv.invoice_number ? ` · ${inv.invoice_number}` : ''}
                     </span>
-                    <span className="shrink-0 text-[14px] font-semibold tabular-nums text-white">{gbp(inv.invoice_total)}</span>
+                    <span className="shrink-0 text-[14px] font-semibold tabular-nums text-white">
+                      {gbp(inv.invoice_total)}
+                    </span>
                   </div>
                   {inv.matched ? (
-                    <p className="mt-1 text-[13px] font-medium text-emerald-300">Matches the order. Good to pay.</p>
+                    <p className="mt-1 text-[13px] font-medium text-emerald-300">
+                      Matches the order. Good to pay.
+                    </p>
                   ) : (
                     <ul className="mt-1 space-y-1">
                       {inv.variances.map((v, i) => (
@@ -883,7 +1075,10 @@ function OrderSheet({
             <h2 className="text-[15px] font-semibold text-white">Details</h2>
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[14px] text-white">
               <dt>Ordered</dt>
-              <dd className="text-right">{fmtDate(order.order_date)}{order.ordered_by ? ` by ${order.ordered_by}` : ''}</dd>
+              <dd className="text-right">
+                {fmtDate(order.order_date)}
+                {order.ordered_by ? ` by ${order.ordered_by}` : ''}
+              </dd>
               <dt>Needed by</dt>
               <dd className="text-right">{fmtDate(order.expected_date)}</dd>
               <dt>Delivery</dt>
@@ -907,13 +1102,21 @@ function OrderSheet({
                 </>
               )}
             </dl>
-            {order.notes && <p className="border-t border-white/[0.1] pt-3 text-[14px] text-white">{order.notes}</p>}
+            {order.notes && (
+              <p className="border-t border-white/[0.1] pt-3 text-[14px] text-white">
+                {order.notes}
+              </p>
+            )}
           </section>
 
           {needsEmail && supplier && (
             <section className={cardCn}>
-              <h2 className="text-[15px] font-semibold text-white">Order email for {supplier.name}</h2>
-              <p className="text-[13px] text-white">Add the address they take orders on. It is saved to the supplier.</p>
+              <h2 className="text-[15px] font-semibold text-white">
+                Order email for {supplier.name}
+              </h2>
+              <p className="text-[13px] text-white">
+                Add the address they take orders on. It is saved to the supplier.
+              </p>
               <div className="flex items-end gap-2">
                 <div className="flex-1">
                   <label className={labelCn} htmlFor="po-supplier-email">
@@ -929,7 +1132,12 @@ function OrderSheet({
                     className={inputCn}
                   />
                 </div>
-                <button type="button" onClick={saveEmail} disabled={updateSupplier.isPending} className={cn(buttonSecondaryCn, 'px-4')}>
+                <button
+                  type="button"
+                  onClick={saveEmail}
+                  disabled={updateSupplier.isPending}
+                  className={cn(buttonSecondaryCn, 'px-4')}
+                >
                   Save
                 </button>
               </div>
@@ -972,14 +1180,25 @@ function OrderSheet({
           {canCancel &&
             (confirmCancel ? (
               <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3">
-                <p className="text-[13px] text-red-300">Cancel {order.order_number}? The supplier is not told automatically.</p>
+                <p className="text-[13px] text-red-300">
+                  Cancel {order.order_number}? The supplier is not told automatically.
+                </p>
                 <div className="mt-2 flex gap-2">
-                  <button type="button" onClick={() => setConfirmCancel(false)} className={cn(buttonSecondaryCn, 'flex-1')}>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmCancel(false)}
+                    className={cn(buttonSecondaryCn, 'flex-1')}
+                  >
                     Keep it
                   </button>
                   <button
                     type="button"
-                    onClick={() => updateStatus.mutate({ id: order.id, status: 'Cancelled' }, { onSuccess: onClose })}
+                    onClick={() =>
+                      updateStatus.mutate(
+                        { id: order.id, status: 'Cancelled' },
+                        { onSuccess: onClose }
+                      )
+                    }
                     disabled={updateStatus.isPending}
                     className="h-12 flex-1 rounded-xl border border-red-500/30 bg-red-500/15 text-[14px] font-semibold text-red-300 touch-manipulation"
                   >
@@ -1030,11 +1249,19 @@ function SupplierSheet({
       footer={
         supplier ? (
           <div className="flex gap-2">
-            <button type="button" onClick={() => onEdit(supplier)} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+            <button
+              type="button"
+              onClick={() => onEdit(supplier)}
+              className={cn(buttonSecondaryCn, 'flex-1 px-4')}
+            >
               Edit
             </button>
             {money && (
-              <button type="button" onClick={() => onOrder(supplier)} className={cn(buttonPrimaryCn, 'flex-[1.6] px-4')}>
+              <button
+                type="button"
+                onClick={() => onOrder(supplier)}
+                className={cn(buttonPrimaryCn, 'flex-[1.6] px-4')}
+              >
                 Order from {supplier.name.split(' ')[0]}
               </button>
             )}
@@ -1084,20 +1311,36 @@ function SupplierSheet({
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[14px] text-white">
               <dt>Delivery</dt>
               <dd className="text-right">
-                {supplier.delivery_days == null ? '—' : supplier.delivery_days === 0 ? 'Same day' : `${supplier.delivery_days} day${supplier.delivery_days === 1 ? '' : 's'}`}
+                {supplier.delivery_days == null
+                  ? '—'
+                  : supplier.delivery_days === 0
+                    ? 'Same day'
+                    : `${supplier.delivery_days} day${supplier.delivery_days === 1 ? '' : 's'}`}
               </dd>
               {money && (
                 <>
                   <dt>Discount</dt>
-                  <dd className="text-right">{Number(supplier.discount_percent) > 0 ? `${Number(supplier.discount_percent)}%` : '—'}</dd>
+                  <dd className="text-right">
+                    {Number(supplier.discount_percent) > 0
+                      ? `${Number(supplier.discount_percent)}%`
+                      : '—'}
+                  </dd>
                   <dt>Credit limit</dt>
-                  <dd className="text-right">{supplier.credit_limit ? gbp(Number(supplier.credit_limit)) : '—'}</dd>
+                  <dd className="text-right">
+                    {supplier.credit_limit ? gbp(Number(supplier.credit_limit)) : '—'}
+                  </dd>
                   <dt>Balance</dt>
-                  <dd className="text-right">{supplier.balance ? gbp(Number(supplier.balance)) : '—'}</dd>
+                  <dd className="text-right">
+                    {supplier.balance ? gbp(Number(supplier.balance)) : '—'}
+                  </dd>
                 </>
               )}
             </dl>
-            {supplier.notes && <p className="border-t border-white/[0.1] pt-3 text-[14px] text-white">{supplier.notes}</p>}
+            {supplier.notes && (
+              <p className="border-t border-white/[0.1] pt-3 text-[14px] text-white">
+                {supplier.notes}
+              </p>
+            )}
           </section>
         </div>
       )}

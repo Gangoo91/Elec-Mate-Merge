@@ -86,9 +86,7 @@ const CPDGoals = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            CPD goals
-          </span>
+          <span className="text-[13px] font-semibold text-white">CPD goals</span>
           <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
             CPD goals
           </h2>
@@ -260,7 +258,7 @@ const CPDGoals = () => {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1 flex-1 min-w-0">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     {goal.status} · {goal.category}
                   </span>
                   <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -273,7 +271,7 @@ const CPDGoals = () => {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleEdit(goal)}
-                    className="h-9 w-9 p-0 text-white hover:bg-white/[0.05] touch-manipulation"
+                    className="h-11 w-9 p-0 text-white hover:bg-white/[0.05] touch-manipulation"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
@@ -281,7 +279,7 @@ const CPDGoals = () => {
                     size="sm"
                     variant="ghost"
                     onClick={() => deleteGoal(goal.id)}
-                    className="h-9 w-9 p-0 text-white hover:bg-white/[0.05] touch-manipulation"
+                    className="h-11 w-9 p-0 text-white hover:bg-white/[0.05] touch-manipulation"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -291,7 +289,7 @@ const CPDGoals = () => {
               <div className="rounded-lg border border-white/[0.10] bg-white/[0.02] p-3 space-y-2">
                 <div className="flex justify-between text-[13px]">
                   <span className="text-white">Progress</span>
-                  <span className="text-white font-mono">
+                  <span className="text-white">
                     {goal.currentHours} / {goal.targetHours} hours
                   </span>
                 </div>

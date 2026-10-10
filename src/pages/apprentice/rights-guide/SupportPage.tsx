@@ -1,5 +1,5 @@
 import { Phone, ExternalLink } from 'lucide-react';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -74,108 +74,102 @@ const mentalHealthLines: Helpline[] = [
 
 const SupportPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Support"
-        title="Support & helplines"
-        backTo="/apprentice/rights-and-pay"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "Free, confidential help — your employer is never told you've called. Save these numbers now. You'll never know when you or a colleague needs them."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Support"
+      area="Rights and pay"
+      title="Support & helplines"
+      backTo="/apprentice/rights-and-pay"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "Free, confidential help — your employer is never told you've called. Save these numbers now. You'll never know when you or a colleague needs them."
+        }
+      </p>
 
-        {/* Workplace & Rights Helplines */}
-        <div className="space-y-2">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Workplace & Rights
-              </span>
-            </div>
-          </div>
-
-          {helplines.map((line) => (
-            <div
-              key={line.name}
-              className={cn(
-                'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="py-4 sm:p-5 space-y-2">
-                <h3 className="font-semibold text-sm text-white">{line.name}</h3>
-                <a
-                  href={`tel:${line.number.replace(/\s/g, '')}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 touch-manipulation min-h-[44px]"
-                >
-                  <Phone className="h-4 w-4 text-white" />
-                  <span className="text-white font-bold text-sm">{line.number}</span>
-                  <ExternalLink className="h-3 w-3 text-white" />
-                </a>
-                <p className="text-white text-xs leading-relaxed">{line.description}</p>
-                <p className="text-white text-xs">{line.hours}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Mental Health */}
-        <div className="space-y-2">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Mental Health & Wellbeing
-              </span>
-            </div>
-          </div>
-
-          {mentalHealthLines.map((line) => (
-            <div
-              key={line.name}
-              className={cn(
-                'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="py-4 sm:p-5 space-y-2">
-                <h3 className="font-semibold text-sm text-white">{line.name}</h3>
-                <a
-                  href={`tel:${line.number.replace(/\s/g, '')}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 touch-manipulation min-h-[44px]"
-                >
-                  <Phone className="h-4 w-4 text-white" />
-                  <span className="text-white font-bold text-sm">{line.number}</span>
-                  <ExternalLink className="h-3 w-3 text-white" />
-                </a>
-                <p className="text-white text-xs leading-relaxed">{line.description}</p>
-                <p className="text-white text-xs">{line.hours}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Emergency */}
-        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-red-500/25 sm:bg-red-500/[0.04]">
-          <div className="py-4 sm:p-5 space-y-3">
-            <h3 className="text-red-400 font-bold text-sm">In Immediate Danger?</h3>
-            <a
-              href="tel:999"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-red-500/20 border border-red-500/30 touch-manipulation min-h-[44px]"
-            >
-              <Phone className="h-5 w-5 text-red-400" />
-              <span className="text-red-400 font-bold text-lg">Call 999</span>
-            </a>
-            <p className="text-white text-xs">
-              For electrical accidents, serious injuries, or any situation where someone is in
-              immediate danger. Always call 999 first, then notify your supervisor.
-            </p>
+      {/* Workplace & Rights Helplines */}
+      <div className="space-y-2">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Workplace & Rights</span>
           </div>
         </div>
-      </HubBody>
-    </HubPage>
+
+        {helplines.map((line) => (
+          <div
+            key={line.name}
+            className={cn(
+              'border-0 bg-transparent -mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="py-4 sm:p-5 space-y-2">
+              <h3 className="font-semibold text-sm text-white">{line.name}</h3>
+              <a
+                href={`tel:${line.number.replace(/\s/g, '')}`}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 touch-manipulation min-h-[44px]"
+              >
+                <Phone className="h-4 w-4 text-white" />
+                <span className="text-white font-bold text-sm">{line.number}</span>
+                <ExternalLink className="h-3 w-3 text-white" />
+              </a>
+              <p className="text-white text-[14px] leading-relaxed">{line.description}</p>
+              <p className="text-white text-xs">{line.hours}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Mental Health */}
+      <div className="space-y-2">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Mental Health & Wellbeing</span>
+          </div>
+        </div>
+
+        {mentalHealthLines.map((line) => (
+          <div
+            key={line.name}
+            className={cn(
+              'border-0 bg-transparent -mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="py-4 sm:p-5 space-y-2">
+              <h3 className="font-semibold text-sm text-white">{line.name}</h3>
+              <a
+                href={`tel:${line.number.replace(/\s/g, '')}`}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 touch-manipulation min-h-[44px]"
+              >
+                <Phone className="h-4 w-4 text-white" />
+                <span className="text-white font-bold text-sm">{line.number}</span>
+                <ExternalLink className="h-3 w-3 text-white" />
+              </a>
+              <p className="text-white text-[14px] leading-relaxed">{line.description}</p>
+              <p className="text-white text-xs">{line.hours}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Emergency */}
+      <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-red-500/25 sm:bg-red-500/[0.04]">
+        <div className="py-4 sm:p-5 space-y-3">
+          <h3 className="text-red-400 font-bold text-sm">In Immediate Danger?</h3>
+          <a
+            href="tel:999"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-red-500/20 border border-red-500/30 touch-manipulation min-h-[44px]"
+          >
+            <Phone className="h-5 w-5 text-red-400" />
+            <span className="text-red-400 font-bold text-lg">Call 999</span>
+          </a>
+          <p className="text-white text-xs">
+            For electrical accidents, serious injuries, or any situation where someone is in
+            immediate danger. Always call 999 first, then notify your supervisor.
+          </p>
+        </div>
+      </div>
+    </GuidePage>
   );
 };
 

@@ -405,7 +405,7 @@ const sections = [
               <p className="text-white text-sm leading-relaxed">
                 BS 7671:2018+A4:2026 Regulation 411.3.3 requires additional protection by an RCD
                 rated at not more than 30mA for socket outlets with a rated current not exceeding
-                32A. A4:2026 redrafted the regulation into three indents: (a) socket outlets in
+                32A. A2:2022 redrafted the regulation into three indents: (a) socket outlets in
                 locations where they are liable to be used by ordinary persons (BA1) or children
                 (BA2), (b) socket outlets in other locations, and (c) mobile equipment up to 32A for
                 use outdoors. The only exception is to indent (b) — not to (a) or (c) — and it
@@ -741,7 +741,7 @@ export default function SpurSocketRegsPage() {
       title="What Is a Spur Socket? Fused vs Unfused Rules"
       description="A spur is a branch off an existing circuit. Unfused: one single or twin socket only. Fused (FCU): multiple outlets. Spur sockets have one cable, not two."
       datePublished="2025-07-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

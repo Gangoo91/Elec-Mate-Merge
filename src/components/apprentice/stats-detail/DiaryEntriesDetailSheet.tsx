@@ -15,7 +15,7 @@
  * read as part of an editorial story rather than a Duolingo dashboard.
  */
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   ChevronRight,
   MapPin,
@@ -79,6 +79,7 @@ export function DiaryEntriesDetailSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
+        hideCloseButton
         className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >
         <div className="flex flex-col h-full">
@@ -110,7 +111,7 @@ export function DiaryEntriesDetailSheet({
                   'Start your diary'
                 ) : (
                   <>
-                    <span className="font-mono tabular-nums">{totalEntries}</span> entr
+                    <span className=" tabular-nums">{totalEntries}</span> entr
                     {totalEntries === 1 ? 'y' : 'ies'} on the record
                   </>
                 )}
@@ -163,10 +164,7 @@ export function DiaryEntriesDetailSheet({
                   meta={`${uniqueSitesCount} site${uniqueSitesCount === 1 ? '' : 's'} on record`}
                 />
                 <div
-                  className={cn(
-                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
-                    CARD_SURFACE
-                  )}
+                  className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
                 >
                   <ul className="space-y-3">
                     {topSites.map((site, i) => {
@@ -176,12 +174,12 @@ export function DiaryEntriesDetailSheet({
                         <li key={site.name} className="space-y-1.5">
                           <div className="flex items-baseline justify-between gap-3">
                             <div className="flex items-baseline gap-2 min-w-0 flex-1">
-                              <span className="text-[10px] font-mono text-white flex-shrink-0">
+                              <span className="text-[12.5px] text-white flex-shrink-0">
                                 {(i + 1).toString().padStart(2, '0')}
                               </span>
                               <span className="text-[13.5px] text-white truncate">{site.name}</span>
                             </div>
-                            <span className="text-[12px] font-mono text-white tabular-nums flex-shrink-0">
+                            <span className="text-[12px] text-white tabular-nums flex-shrink-0">
                               {site.count}
                             </span>
                           </div>
@@ -194,7 +192,7 @@ export function DiaryEntriesDetailSheet({
                                 ease: 'easeOut',
                                 delay: 0.1 + i * 0.04,
                               }}
-                              className="h-full rounded-full bg-elec-yellow/85"
+                              className="h-full rounded-full bg-elec-yellow"
                             />
                           </div>
                         </li>
@@ -219,17 +217,24 @@ export function DiaryEntriesDetailSheet({
                       <button
                         onClick={goToDiary}
                         className={cn(
-                          'w-full text-left rounded-2xl border border-elec-yellow/35 p-4 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation',
+                          'w-full text-left rounded-2xl border border-white/[0.08] p-4 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation',
                           CARD_SURFACE
                         )}
                       >
                         <p className="text-[13.5px] text-white leading-relaxed">{h.text}</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                          <span className="text-[12.5px] font-medium text-elec-yellow">
                             {h.site}
                           </span>
                           <span className="text-white">·</span>
-                          <span className="text-[10px] font-mono text-white">{h.date}</span>
+                          <span className="text-[12.5px] text-white">
+                            {/^\d{4}-\d{2}-\d{2}/.test(h.date)
+                              ? new Date(`${h.date.slice(0, 10)}T12:00:00`).toLocaleDateString(
+                                  'en-GB',
+                                  { weekday: 'short', day: 'numeric', month: 'short' }
+                                )
+                              : h.date}
+                          </span>
                         </div>
                       </button>
                     </li>
@@ -244,9 +249,9 @@ export function DiaryEntriesDetailSheet({
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-1.5"
+                className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 space-y-1.5"
               >
-                <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
+                <Eyebrow>Insight</Eyebrow>
                 <p className="text-[13.5px] text-white leading-relaxed">{insightText}</p>
               </motion.div>
             )}
@@ -255,7 +260,7 @@ export function DiaryEntriesDetailSheet({
             {totalEntries === 0 && (
               <div
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-6 sm:p-7 text-center space-y-3',
+                  'rounded-2xl border border-white/[0.08] p-6 sm:p-7 text-center space-y-3',
                   CARD_SURFACE
                 )}
               >
@@ -266,7 +271,7 @@ export function DiaryEntriesDetailSheet({
                 </p>
                 <button
                   onClick={goToDiary}
-                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border border-white/[0.14] text-white text-[13.5px] font-semibold hover:border-white/[0.3] active:bg-white/[0.06] transition-colors touch-manipulation"
                 >
                   Create first entry
                   <ChevronRight className="h-4 w-4" />
@@ -278,7 +283,7 @@ export function DiaryEntriesDetailSheet({
             {recommendations.length > 0 && (
               <section className="space-y-3">
                 <SectionHeader eyebrow="What to do next" title="Smart suggestions" />
-                <div className="space-y-2.5">
+                <div className="grid gap-2.5 sm:grid-cols-2">
                   {recommendations.map((rec) => (
                     <RecommendationCard
                       key={rec.id}
@@ -338,15 +343,15 @@ function KpiCell({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-elec-yellow/35 p-3.5 sm:p-5 space-y-1.5',
+        'rounded-2xl border border-white/[0.08] p-3.5 sm:p-5 space-y-1.5',
         CARD_SURFACE
       )}
     >
-      <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
+      <Eyebrow className="text-[12.5px] text-white">{label}</Eyebrow>
       <div className="flex items-baseline gap-1.5">
         <span
           className={cn(
-            'text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none',
+            'text-[22px] sm:text-[26px] font-semibold tabular-nums leading-none',
             highlight ? 'text-elec-yellow' : 'text-white'
           )}
         >
@@ -358,9 +363,7 @@ function KpiCell({
           />
         )}
       </div>
-      {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white block leading-snug">{sub}</span>
-      )}
+      {sub && <span className="text-[12.5px] text-white block leading-snug">{sub}</span>}
     </div>
   );
 }

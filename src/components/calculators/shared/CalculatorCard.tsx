@@ -71,7 +71,7 @@ export const CalculatorCard = ({
             {title}
           </h2>
           {badge && (
-            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+            <span className="text-[12px] font-semibold text-white">
               {badge}
             </span>
           )}
@@ -106,7 +106,7 @@ export const CalculatorSection = ({ title, children, className }: CalculatorSect
   return (
     <div className={cn('space-y-3', className)}>
       {title && (
-        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{title}</h3>
+        <h3 className="text-[14px] font-semibold text-white">{title}</h3>
       )}
       {children}
     </div>

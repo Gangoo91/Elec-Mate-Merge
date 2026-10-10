@@ -375,10 +375,8 @@ export const EvidenceUploader = ({
       {files.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-baseline justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Uploaded files
-            </span>
-            <span className="text-[12px] text-white font-mono">
+            <span className="text-[13px] font-semibold text-white">Uploaded files</span>
+            <span className="text-[12px] text-white">
               {files.length}/{maxFiles}
             </span>
           </div>
@@ -416,7 +414,7 @@ export const EvidenceUploader = ({
                         variant="ghost"
                         size="sm"
                         onClick={() => handlePreview(file)}
-                        className="h-9 w-9 p-0 hover:bg-white/[0.05] touch-manipulation"
+                        className="h-11 w-9 p-0 hover:bg-white/[0.05] touch-manipulation"
                       >
                         <Eye className="h-4 w-4 text-white" />
                       </Button>
@@ -426,7 +424,7 @@ export const EvidenceUploader = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => handleDelete(file)}
-                      className="h-9 w-9 p-0 hover:bg-red-500/[0.08] touch-manipulation"
+                      className="h-11 w-9 p-0 hover:bg-red-500/[0.08] touch-manipulation"
                     >
                       <Trash2 className="h-4 w-4 text-red-300" />
                     </Button>

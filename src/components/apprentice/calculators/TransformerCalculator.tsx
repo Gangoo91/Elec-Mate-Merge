@@ -483,8 +483,8 @@ const TransformerCalculator = () => {
                 <div
                   className="rounded-xl border p-3 space-y-3"
                   style={{
-                    borderColor: `${config.gradientFrom}15`,
-                    background: `${config.gradientFrom}05`,
+                    borderColor: 'rgba(255, 255, 255, 0.12)',
+                    background: 'rgba(255, 255, 255, 0.04)',
                   }}
                 >
                   <CalculatorInputGrid>
@@ -730,7 +730,7 @@ const TransformerCalculator = () => {
 
                     {/* Warnings */}
                     {result.warnings.length > 0 && (
-                      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 space-y-1">
+                      <div className="rounded-xl border border-amber-500/30 bg-white/[0.04] p-3 space-y-1">
                         {result.warnings.map((warning, idx) => (
                           <p key={idx} className="text-sm text-white flex items-start gap-2">
                             <span className="text-amber-400 mt-0.5">!</span>
@@ -769,8 +769,8 @@ const TransformerCalculator = () => {
                         <div
                           className="rounded-xl border p-3 space-y-2"
                           style={{
-                            borderColor: `${config.gradientFrom}15`,
-                            background: `${config.gradientFrom}05`,
+                            borderColor: 'rgba(255, 255, 255, 0.12)',
+                            background: 'rgba(255, 255, 255, 0.04)',
                           }}
                         >
                           <p className="text-sm text-white">
@@ -844,8 +844,8 @@ const TransformerCalculator = () => {
                         <div
                           className="rounded-xl border p-3 space-y-2"
                           style={{
-                            borderColor: `${config.gradientFrom}15`,
-                            background: `${config.gradientFrom}05`,
+                            borderColor: 'rgba(255, 255, 255, 0.12)',
+                            background: 'rgba(255, 255, 255, 0.04)',
                           }}
                         >
                           {result.recommendations.map((rec, idx) => (

@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { GuidePage, GuideIndex } from '@/components/apprentice/shared/GuideKit';
 
 interface Section {
   number: string;
@@ -73,40 +72,37 @@ export default function ProfessionalDevelopment() {
   const navigate = useNavigate();
 
   return (
-    <HubSubPage
+    <GuidePage
+      area="Professional development"
       title="Build your future"
       backTo="/apprentice"
       description="Pathways, certifications, soft skills and the industry connections that shape what comes after your apprenticeship."
     >
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Five sections</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="two"
-          cards={SECTIONS.map((s) => ({
-            id: s.slug,
-            eyebrow: s.eyebrow,
-            title: s.title,
-            description: s.description,
-            meta: s.meta,
-            onClick: () => navigate(`/apprentice/professional-development/${s.slug}`),
-          }))}
-        />
-      </motion.section>
+      <GuideIndex
+        title="Five sections"
+        columns={2}
+        items={SECTIONS.map((s) => ({
+          id: s.slug,
+          title: s.title,
+          description: s.description,
+          meta: s.meta,
+          onClick: () => navigate(`/apprentice/professional-development/${s.slug}`),
+        }))}
+      />
 
       <motion.div
         variants={itemVariants}
         className={cn(
-          'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
+          'rounded-2xl border border-white/[0.08] px-5 py-4 sm:px-6 sm:py-5',
           CARD_SURFACE
         )}
       >
-        <p className="text-[11.5px] leading-relaxed text-white max-w-3xl">
+        <p className="text-[14px] leading-relaxed text-white max-w-3xl">
           Based on UK industry data, DfE apprenticeship guidance and IET / ECA professional
           standards. Career and salary information reflects current UK averages — may vary by
           region, employer and experience level.
         </p>
       </motion.div>
-    </HubSubPage>
+    </GuidePage>
   );
 }

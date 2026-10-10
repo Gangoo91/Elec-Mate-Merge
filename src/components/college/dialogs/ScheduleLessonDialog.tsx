@@ -6,7 +6,7 @@ import {
   inputCn,
   labelCn,
 } from '@/components/forms/fieldStyles';
-import { chipCn } from '@/components/college/ui/CollegeUi';
+import { TeachToggle, choiceCn } from '@/components/college/teaching/TeachingKit';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { getMyCollegeId } from '@/lib/myCollege';
@@ -204,7 +204,7 @@ export function ScheduleLessonDialog({
               type="button"
               aria-pressed={cohortId === null}
               onClick={() => setCohortId(null)}
-              className={chipCn(cohortId === null)}
+              className={choiceCn(cohortId === null)}
             >
               No cohort
             </button>
@@ -221,7 +221,7 @@ export function ScheduleLessonDialog({
                   type="button"
                   aria-pressed={cohortId === c.id}
                   onClick={() => setCohortId(c.id)}
-                  className={chipCn(cohortId === c.id)}
+                  className={choiceCn(cohortId === c.id)}
                 >
                   {c.name}
                 </button>
@@ -232,19 +232,14 @@ export function ScheduleLessonDialog({
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
           <Field label="Date" htmlFor="sl-date">
-            <div className="mb-2 flex flex-wrap gap-2">
-              {dateChips.map((c) => (
-                <button
-                  key={c.value}
-                  type="button"
-                  aria-pressed={date === c.value}
-                  onClick={() => setDate(c.value)}
-                  className={chipCn(date === c.value)}
-                >
-                  {c.label}
-                </button>
-              ))}
-            </div>
+            {/* Today / Tomorrow / In 2 days / In a week: one joined control. */}
+            <TeachToggle
+              label="Date"
+              value={dateChips.some((c) => c.value === date) ? date : ''}
+              onChange={setDate}
+              options={dateChips.map((c) => ({ value: c.value, label: c.label }))}
+              className="mb-2 flex w-full [&>button]:flex-1 [&>button]:px-2"
+            />
             <input
               id="sl-date"
               type="date"
@@ -262,7 +257,7 @@ export function ScheduleLessonDialog({
                   type="button"
                   aria-pressed={startTime === t}
                   onClick={() => setStartTime(t)}
-                  className={cn(chipCn(startTime === t), 'tabular-nums')}
+                  className={cn(choiceCn(startTime === t), 'tabular-nums')}
                 >
                   {t}
                 </button>
@@ -285,7 +280,7 @@ export function ScheduleLessonDialog({
                   type="button"
                   aria-pressed={duration === d}
                   onClick={() => setDuration(d)}
-                  className={cn(chipCn(duration === d), 'tabular-nums')}
+                  className={cn(choiceCn(duration === d), 'tabular-nums')}
                 >
                   {d < 60 ? `${d} min` : `${Math.floor(d / 60)}${d % 60 ? '½' : ''} hr`}
                 </button>

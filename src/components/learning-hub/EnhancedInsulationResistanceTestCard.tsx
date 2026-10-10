@@ -52,7 +52,7 @@ const EnhancedInsulationResistanceTestCard = ({ onBack }: EnhancedInsulationResi
             )}
             <div>
               <h1 className="text-base font-semibold text-white">Insulation Resistance</h1>
-              <p className="text-[10px] text-white">BS 7671 Section 643.3</p>
+              <p className="text-[12px] text-white">BS 7671 Section 643.3</p>
             </div>
           </div>
         </div>

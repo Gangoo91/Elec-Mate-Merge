@@ -18,7 +18,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Initial functional test
         </span>
         <ol className="space-y-1.5">
@@ -38,12 +38,12 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Electrical test sequence
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Step 1 — prove the instrument
             </span>
             <ul className="space-y-1">
@@ -63,7 +63,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
             </ul>
           </div>
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Step 2 — 1×IΔn AC test (the A4:2026 test)
             </span>
             <ul className="space-y-1">
@@ -83,7 +83,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
             </ul>
           </div>
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Step 3 — test button
             </span>
             <ul className="space-y-1">
@@ -106,12 +106,12 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Maximum trip times at 1×IΔn (product standard BS EN 61008 / 61009)
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               General purpose RCDs
             </span>
             <div className="space-y-1">
@@ -126,7 +126,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
             </div>
           </div>
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Time delayed RCDs
             </span>
             <div className="space-y-1">
@@ -144,7 +144,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           RCD types and applications
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -183,7 +183,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
             },
           ].map((rcd, i) => (
             <div key={i} className="space-y-1.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[12px] font-medium text-white">
                 {rcd.type}
               </span>
               <ul className="space-y-1.5">
@@ -203,7 +203,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Test connection points
         </span>
         <div className="space-y-2">

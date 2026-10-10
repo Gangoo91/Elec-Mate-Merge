@@ -18,7 +18,10 @@ import { textareaCn } from '@/components/forms/fieldStyles';
 import { P_BTN_PRIMARY, fmtDate, fmtDateTime } from './ui';
 
 const OUTCOME: Record<NonNullable<ItemObservation['outcome']>, { label: string; cn: string }> = {
-  passed: { label: 'Competent', cn: 'border-emerald-400/40 bg-emerald-500/[0.12] text-emerald-300' },
+  passed: {
+    label: 'Competent',
+    cn: 'border-emerald-400/40 bg-emerald-500/[0.12] text-emerald-300',
+  },
   partial: { label: 'Partly there', cn: 'border-sky-400/40 bg-sky-500/[0.12] text-sky-200' },
   referred: { label: 'Not yet', cn: 'border-orange-500/40 bg-orange-500/10 text-orange-300' },
   not_yet: { label: 'Not yet', cn: 'border-orange-500/40 bg-orange-500/10 text-orange-300' },
@@ -48,14 +51,23 @@ export function ObservationPanel({
 }) {
   const [showTranscript, setShowTranscript] = useState(false);
   const discussion = obs.kind === 'professional_discussion';
+  // Batch 2: questioning, with the questions asked and the answers given.
+  const questioning = obs.kind === 'questioning';
+  const questionMeta = questioning
+    ? [
+        obs.question_mode === 'written' ? 'Written' : 'Oral',
+        obs.question_delivery === 'remote' ? 'remote' : 'face to face',
+      ].join(', ')
+    : null;
   const first = obs.observer_name.split(' ')[0] || 'Your assessor';
   const media = files.filter((f) => f.type.startsWith('audio/') || f.type.startsWith('video/'));
   const meta = [
     obs.observed_at ? fmtDate(obs.observed_at) : null,
     obs.observed_time ? obs.observed_time.slice(0, 5) : null,
     obs.duration_minutes ? `${obs.duration_minutes} min` : null,
-    obs.location_type ? SETTING[obs.location_type] ?? null : null,
+    obs.location_type ? (SETTING[obs.location_type] ?? null) : null,
     obs.location,
+    questionMeta,
   ].filter(Boolean);
 
   return (
@@ -63,15 +75,21 @@ export function ObservationPanel({
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[12px] font-medium text-elec-yellow">
-            {discussion ? 'Professional discussion' : 'Observation'}
+            {questioning ? 'Questioning' : discussion ? 'Professional discussion' : 'Observation'}
           </p>
           <p className="mt-0.5 text-[16px] font-semibold text-white">
-            {discussion ? 'Discussed with' : 'Observed by'} {obs.observer_name}
+            {questioning ? 'Questioned by' : discussion ? 'Discussed with' : 'Observed by'}{' '}
+            {obs.observer_name}
           </p>
           {meta.length > 0 && <p className="mt-0.5 text-[13px] text-white">{meta.join(' · ')}</p>}
         </div>
         {obs.outcome && (
-          <span className={cn('rounded-full border px-2.5 py-1 text-[12px] font-semibold', OUTCOME[obs.outcome].cn)}>
+          <span
+            className={cn(
+              'rounded-full border px-2.5 py-1 text-[12px] font-semibold',
+              OUTCOME[obs.outcome].cn
+            )}
+          >
             {OUTCOME[obs.outcome].label}
           </span>
         )}
@@ -86,9 +104,38 @@ export function ObservationPanel({
                 <audio controls preload="none" src={f.url} className="h-11 w-full" />
               </div>
             ) : (
-              <video key={f.url} controls playsInline preload="metadata" src={f.url} className="w-full rounded-xl" />
+              <video
+                key={f.url}
+                controls
+                playsInline
+                preload="metadata"
+                src={f.url}
+                className="w-full rounded-xl"
+              />
             )
           )}
+        </div>
+      )}
+
+      {questioning && (obs.questions ?? []).length > 0 && (
+        <div data-testid="questioning-answers">
+          <h4 className="text-[13px] font-semibold text-white">
+            {(obs.questions ?? []).length === 1
+              ? 'The question and your answer'
+              : `${(obs.questions ?? []).length} questions and your answers`}
+          </h4>
+          <ol className="mt-2 space-y-3">
+            {(obs.questions ?? []).map((q, i) => (
+              <li key={i} className="border-l border-white/[0.18] pl-3">
+                <p className="text-[14px] font-semibold leading-snug text-white">
+                  {i + 1}. {q.question}
+                </p>
+                <p className="mt-1 whitespace-pre-line text-[14px] leading-relaxed text-white">
+                  {q.answer || 'No answer recorded.'}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
       )}
 
@@ -97,13 +144,17 @@ export function ObservationPanel({
           {obs.strengths && (
             <div>
               <h4 className="text-[13px] font-semibold text-white">What went well</h4>
-              <p className="mt-1 whitespace-pre-line text-[14px] leading-relaxed text-white">{obs.strengths}</p>
+              <p className="mt-1 whitespace-pre-line text-[14px] leading-relaxed text-white">
+                {obs.strengths}
+              </p>
             </div>
           )}
           {obs.areas && (
             <div>
               <h4 className="text-[13px] font-semibold text-white">To work on</h4>
-              <p className="mt-1 whitespace-pre-line text-[14px] leading-relaxed text-white">{obs.areas}</p>
+              <p className="mt-1 whitespace-pre-line text-[14px] leading-relaxed text-white">
+                {obs.areas}
+              </p>
             </div>
           )}
         </div>
@@ -115,13 +166,18 @@ export function ObservationPanel({
           <ul className="mt-1.5 space-y-1.5">
             {obs.action_points.map((a, i) => (
               <li key={i} className="relative pl-4 text-[14px] leading-snug text-white">
-                <span aria-hidden className="absolute left-0 top-[8px] h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-[8px] h-1.5 w-1.5 rounded-full bg-elec-yellow"
+                />
                 {a}
               </li>
             ))}
           </ul>
           {obs.follow_up_date && (
-            <p className="mt-2 text-[13px] text-white">Follow-up booked for {fmtDate(obs.follow_up_date)}.</p>
+            <p className="mt-2 text-[13px] text-white">
+              Follow-up booked for {fmtDate(obs.follow_up_date)}.
+            </p>
           )}
         </div>
       )}
@@ -137,13 +193,15 @@ export function ObservationPanel({
             {showTranscript ? 'Hide the transcript' : 'Read the transcript'}
           </button>
           {showTranscript && (
-            <p className="whitespace-pre-line text-[14px] leading-relaxed text-white">{obs.transcript}</p>
+            <p className="whitespace-pre-line text-[14px] leading-relaxed text-white">
+              {obs.transcript}
+            </p>
           )}
         </div>
       )}
 
       {obs.content_hash && (
-        <p className="font-mono text-[11px] text-white" title={obs.content_hash}>
+        <p className="font-mono text-[12px] text-white" title={obs.content_hash}>
           Recorded fingerprint {shortHash(obs.content_hash)}
         </p>
       )}
@@ -155,9 +213,13 @@ export function ObservationPanel({
               <Check className="h-4 w-4" strokeWidth={3} aria-hidden />
             </span>
             <div className="min-w-0">
-              <p className="text-[14px] font-semibold text-white">You acknowledged this {fmtDateTime(obs.acknowledged_at)}</p>
+              <p className="text-[14px] font-semibold text-white">
+                You acknowledged this {fmtDateTime(obs.acknowledged_at)}
+              </p>
               {obs.learner_comment && (
-                <p className="mt-1 text-[14px] leading-relaxed text-white">"{obs.learner_comment}"</p>
+                <p className="mt-1 text-[14px] leading-relaxed text-white">
+                  "{obs.learner_comment}"
+                </p>
               )}
               <p className="mt-1 text-[13px] text-white">
                 {first} decides the criteria from it. You will see the decision here.
@@ -169,8 +231,8 @@ export function ObservationPanel({
             <div>
               <p className="text-[14px] font-semibold text-white">Read it, then acknowledge it</p>
               <p className="mt-0.5 text-[13px] leading-relaxed text-white">
-                Acknowledging tells {first} you have read this. If something is not right, say so below and {first} will
-                see it.
+                Acknowledging tells {first} you have read this. If something is not right, say so
+                below and {first} will see it.
               </p>
             </div>
             <label htmlFor="obs-ack-comment" className="sr-only">
@@ -189,7 +251,12 @@ export function ObservationPanel({
                 className="h-11 text-[14px]"
                 onText={(t) => onComment(comment.trim() ? `${comment.trimEnd()} ${t}` : t)}
               />
-              <button type="button" className={cn(P_BTN_PRIMARY, 'w-full')} onClick={onAcknowledge} disabled={busy}>
+              <button
+                type="button"
+                className={cn(P_BTN_PRIMARY, 'w-full')}
+                onClick={onAcknowledge}
+                disabled={busy}
+              >
                 {busy && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
                 Acknowledge
               </button>

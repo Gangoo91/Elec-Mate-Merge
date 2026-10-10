@@ -71,12 +71,10 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Summary
-        </span>
-        <span className="text-[12px] text-white font-mono">
+        <span className="text-[13px] font-semibold text-white">Summary</span>
+        <span className="text-[12px] text-white">
           {progress.completedCount}/{totalCount} · {percentage}%
         </span>
       </div>
@@ -103,12 +101,10 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
               key={section}
               className="p-2 rounded-lg bg-white/[0.06] border border-white/[0.10] text-center"
             >
-              <div className="text-[14px] font-medium text-white font-mono">
+              <div className="text-[14px] font-medium text-white">
                 {sectionProgress.checked}/{sectionProgress.total}
               </div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
-                {sectionLabelsMap[section]}
-              </div>
+              <div className="text-[13px] text-white mt-0.5">{sectionLabelsMap[section]}</div>
             </div>
           );
         })}
@@ -118,7 +114,7 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
         <Button
           onClick={handleExport}
           disabled={progress.completedCount === 0}
-          className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
+          className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white"
         >
           {allDone ? (
             <CheckCircle className="mr-2 h-4 w-4" />
@@ -131,7 +127,7 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
           onClick={handleShare}
           disabled={progress.completedCount === 0}
           variant="outline"
-          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation disabled:text-white/70"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation disabled:text-white"
         >
           <Share2 className="h-4 w-4" />
         </Button>
@@ -140,7 +136,7 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
             onClick={() => setShowConfirm(true)}
             disabled={progress.completedCount === 0}
             variant="outline"
-            className="h-11 border-red-500/30 hover:bg-red-500/[0.04] text-red-300 touch-manipulation disabled:text-white/70"
+            className="h-11 border-red-500/30 hover:bg-red-500/[0.04] text-red-300 touch-manipulation disabled:text-white"
           >
             <Trash2 className="h-4 w-4" />
           </Button>

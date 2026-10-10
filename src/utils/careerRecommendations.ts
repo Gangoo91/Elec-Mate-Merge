@@ -96,7 +96,7 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
       id: 'yellow-18th',
       title: '18th Edition Wiring Regulations',
       description:
-        'BS 7671:2018+A2:2022 - the essential regulations qualification every electrician needs.',
+        'BS 7671:2018+A4:2026 - the essential regulations qualification every electrician needs.',
       reason: 'Required for all qualified electricians',
       icon: 'book',
       priority: 'high',

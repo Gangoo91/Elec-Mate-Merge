@@ -1,0 +1,21 @@
+{
+  "type": "basic",
+  "parameters": [
+    {
+      "name": "apiKey",
+      "type": "password",
+      "label": "API key",
+      "required": true,
+      "help": "In Elec-Mate the firm owner opens Settings, Integrations and API, and creates a key (it starts emf_ and is shown once)."
+    }
+  ],
+  "communication": {
+    "url": "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/firm-api/v1",
+    "headers": { "Authorization": "Bearer {{parameters.apiKey}}" },
+    "response": {
+      "metadata": { "type": "text", "value": "Elec-Mate ({{join(body.scopes, ', ')}})" },
+      "error": { "message": "[{{statusCode}}] {{body.error.message}}" }
+    },
+    "log": { "sanitize": ["request.headers.authorization"] }
+  }
+}

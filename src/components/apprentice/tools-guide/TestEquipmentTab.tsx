@@ -80,9 +80,7 @@ const TestEquipmentTab = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Test equipment
-        </span>
+        <span className="text-[13px] font-semibold text-white">Test equipment</span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           Test equipment
         </h2>
@@ -113,7 +111,7 @@ const TestEquipmentTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[13px] font-semibold text-white">
           18th Edition testing & progression
         </span>
         <div className="space-y-2 text-[14px] text-white leading-relaxed">
@@ -123,9 +121,9 @@ const TestEquipmentTab = () => {
             before using complex equipment.
           </p>
           <p>
-            <strong>Year 3-4:</strong> Begin using multifunction testers under supervision. Learn all
-            test sequences and understand what the readings mean. Practice on training installations
-            first.
+            <strong>Year 3-4:</strong> Begin using multifunction testers under supervision. Learn
+            all test sequences and understand what the readings mean. Practice on training
+            installations first.
           </p>
           <p>
             <strong>Calibration:</strong> All test equipment must be calibrated annually with valid
@@ -140,9 +138,7 @@ const TestEquipmentTab = () => {
       </div>
 
       <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-          Critical safety reminders
-        </span>
+        <span className="text-[13px] font-semibold text-red-300">Critical safety reminders</span>
         <ul className="space-y-1.5 text-[14px] text-white leading-relaxed">
           <li className="flex items-start gap-2">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />

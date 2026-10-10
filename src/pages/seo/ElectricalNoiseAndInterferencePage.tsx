@@ -22,7 +22,7 @@ export default function ElectricalNoiseAndInterferencePage() {
       title="Electrical Noise & Interference: EMC Guide"
       description="Comprehensive guide to electromagnetic interference (EMI) and radio frequency interference (RFI) in electrical installations."
       datePublished="2025-08-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Electrical Noise', href: '/guides/electrical-noise-interference' },
@@ -407,7 +407,7 @@ export default function ElectricalNoiseAndInterferencePage() {
           content: (
             <>
               <p>
-                BS 7671:2018+A2:2022 includes specific requirements for electromagnetic
+                BS 7671:2018+A4:2026 includes specific requirements for electromagnetic
                 compatibility in Chapter 33 and Section 444. These requirements are often overlooked
                 during installation but can be critical for certification and compliance.
               </p>

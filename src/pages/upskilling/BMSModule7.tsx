@@ -1,4 +1,4 @@
-import { FileText, Code, MapPin, Upload, CheckCircle, Users } from 'lucide-react';
+import { FileText, Code, MapPin, Upload, CheckCircle, ClipboardCheck, Search } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
 import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
@@ -6,47 +6,60 @@ import useSEO from '@/hooks/useSEO';
 const sections = [
   {
     id: 1,
-    title: 'Design phase: I/O lists, schematics, network topology',
+    title: 'Design documents',
     icon: FileText,
-    description: 'System design documentation, I/O scheduling and network planning.',
+    description:
+      'The points schedule, the drawings and the description of operation: what each one says, how you install and test from it, and how to keep it true once the job changes.',
   },
   {
     id: 2,
-    title: 'Programming methods: function blocks, boolean logic, PID',
+    title: 'Control logic',
     icon: Code,
-    description: 'Control programming techniques used across BMS controllers.',
+    description:
+      'How to read the logic inside a BMS controller, so you can tell what a pump or fan will do before you walk to the plant room.',
   },
   {
     id: 3,
-    title: 'Addressing and device mapping',
+    title: 'Addressing and point mapping',
     icon: MapPin,
-    description: 'Device configuration, network addressing and point mapping.',
+    description:
+      'How each device gets a unique address, how a wire on a terminal becomes a named point, and how to keep drawings, software and labels in step.',
   },
   {
     id: 4,
-    title: 'Software upload and controller setup',
+    title: 'Controller set-up and software',
     icon: Upload,
-    description: 'Configuration deployment, firmware management and controller commissioning.',
+    description:
+      'What goes into a BMS controller, how it gets there, how the site keeps a true copy, and where the electrician’s part stops.',
   },
   {
     id: 5,
-    title: 'Pre-functional and functional commissioning',
+    title: 'Commissioning',
     icon: CheckCircle,
-    description: 'Stage-by-stage testing and verification procedures.',
+    description:
+      'The order a BMS is proved in, what each stage catches, where the electrician fits in, and how the results turn into records the owner keeps.',
   },
   {
     id: 6,
-    title: 'Client handover and documentation requirements',
-    icon: Users,
-    description: 'Project completion, training and the as-built handover pack.',
+    title: 'Handover',
+    icon: ClipboardCheck,
+    description:
+      'What the client needs on the day the system becomes theirs, how acceptance is recorded, and what you hand over for your own part of the work.',
+  },
+  {
+    id: 7,
+    title: 'Fault finding on a BMS',
+    icon: Search,
+    description:
+      'A method for any BMS fault: start with the person, read what the system already knows, then follow the point out to the field and halve the problem.',
   },
 ];
 
 export default function BMSModule7() {
   useSEO({
-    title: 'Module 7: BMS Design, Programming & Commissioning | BMS Course | Elec-Mate',
+    title: 'Module 7: Design, installation, commissioning and handover | BMS course | Elec-Mate',
     description:
-      'Design, programming, controller setup, commissioning and client handover for complete BMS deployments.',
+      'Points schedules, control logic, addressing, software, commissioning, handover and fault finding.',
   });
 
   return (
@@ -54,13 +67,15 @@ export default function BMSModule7() {
       backTo="../bms-course"
       backLabel="Building management systems"
       moduleNumber={7}
-      title="BMS design, programming and commissioning"
-      description="Complete system design, programming methods and the commissioning process."
+      title="Design, installation, commissioning and handover"
+      description="From the points schedule to handover: control logic, addressing, software, commissioning, documentation and fault finding."
       tone="yellow"
       sectionsCount={sections.length}
-      duration="75 mins"
+      duration="3 hrs 30 mins"
       prevModuleHref="../bms-module-6"
-      prevModuleLabel="Alarms, monitoring and data logging"
+      prevModuleLabel="Alarms, data and monitoring"
+      nextModuleHref="../bms-mock-exam"
+      nextModuleLabel="Mock exam"
     >
       {sections.map((section, index) => (
         <SectionCard

@@ -32,7 +32,6 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { sanitizeMoneyInput, parseMoney } from '@/utils/money-input';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { EXPENSE_CATEGORIES, formatCurrency } from '@/hooks/useExpenses';
 import type { ExpenseClaim } from '@/services/financeService';
 import { uploadReceipt } from '@/services/expenseReceiptService';
@@ -94,7 +93,6 @@ export function CreateExpenseSheet({
   employeeMode = false,
   currentEmployeeId,
 }: CreateExpenseSheetProps) {
-  const isMobile = useIsMobile();
   const [step, setStep] = useState(1);
   // Raw text mirror so partial decimals (e.g. "19.") survive editing.
   const [amountText, setAmountText] = useState('');
@@ -219,11 +217,8 @@ export function CreateExpenseSheet({
   return (
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
-        side={isMobile ? 'bottom' : 'right'}
-        className={cn(
-          'flex flex-col p-0 bg-[hsl(0_0%_8%)] border-white/[0.08]',
-          isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-full sm:max-w-xl lg:max-w-2xl'
-        )}
+        side="bottom"
+        className="flex h-[85vh] flex-col overflow-hidden rounded-t-2xl border-white/[0.08] bg-[hsl(0_0%_8%)] p-0"
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-white/[0.06] shrink-0">
@@ -257,296 +252,305 @@ export function CreateExpenseSheet({
         </SheetHeader>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {/* Step 1: Basic Info / Expense Details */}
-          {step === 1 && (
-            <FormCard eyebrow="Details">
-              {/* Employee dropdown - only show in admin mode */}
-              {!employeeMode && (
-                <Field label="Employee" required hint={errors.employee_id?.message}>
-                  <Select
-                    value={values.employee_id}
-                    onValueChange={(v) => setValue('employee_id', v)}
-                  >
-                    <SelectTrigger
-                      className={cn(selectTriggerClass, errors.employee_id && 'border-red-500/60')}
-                    >
-                      <SelectValue placeholder="Select employee" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {employees.map((emp) => (
-                        <SelectItem key={emp.id} value={emp.id}>
-                          {emp.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-              )}
-
-              <Field label="Amount" required hint={errors.amount?.message}>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-medium text-[13px]">
-                    £
-                  </span>
-                  <Input
-                    type="text"
-                    inputMode="decimal"
-                    placeholder="0.00"
-                    className={cn(
-                      inputClass,
-                      'pl-8 text-lg h-12',
-                      errors.amount && 'border-red-500/60'
-                    )}
-                    value={amountText}
-                    onChange={(e) => {
-                      const s = sanitizeMoneyInput(e.target.value);
-                      setAmountText(s);
-                      setValue('amount', parseMoney(s) ?? 0, { shouldValidate: true });
-                    }}
-                  />
-                </div>
-              </Field>
-
-              <Field label="Description" required hint={errors.description?.message}>
-                <Textarea
-                  placeholder="What was this expense for?"
-                  className={cn(textareaClass, 'min-h-[100px]', errors.description && 'border-red-500/60')}
-                  value={values.description}
-                  onChange={(e) => setValue('description', e.target.value)}
-                />
-              </Field>
-            </FormCard>
-          )}
-
-          {/* Step 2: Category & Job */}
-          {step === 2 && (
-            <>
-              <FormCard eyebrow="Category">
-                <div className="grid grid-cols-2 gap-2">
-                  {EXPENSE_CATEGORIES.map(({ id, label }) => {
-                    const Icon = categoryIcons[id];
-                    const isSelected = values.category === id;
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        onClick={() => setValue('category', id)}
-                        className={cn(
-                          'flex items-center gap-3 p-3 rounded-xl border transition-all touch-manipulation',
-                          'hover:bg-white/[0.04] active:scale-[0.98]',
-                          isSelected
-                            ? 'border-elec-yellow/60 bg-white/[0.06]'
-                            : 'border-white/[0.08] bg-[hsl(0_0%_9%)]'
-                        )}
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="mx-auto w-full max-w-5xl space-y-4">
+            {/* Step 1: Basic Info / Expense Details */}
+            {step === 1 && (
+              <FormCard eyebrow="Details">
+                <div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
+                  {/* Employee dropdown - only show in admin mode */}
+                  {!employeeMode && (
+                    <Field label="Employee" required hint={errors.employee_id?.message}>
+                      <Select
+                        value={values.employee_id}
+                        onValueChange={(v) => setValue('employee_id', v)}
                       >
-                        <Icon
+                        <SelectTrigger
                           className={cn(
-                            'h-5 w-5',
-                            isSelected ? 'text-elec-yellow' : 'text-white'
+                            selectTriggerClass,
+                            errors.employee_id && 'border-red-500/60'
                           )}
-                        />
-                        <span className="text-sm font-medium text-white">{label}</span>
-                        {isSelected && <Check className="h-4 w-4 text-elec-yellow ml-auto" />}
-                      </button>
-                    );
-                  })}
-                </div>
-              </FormCard>
+                        >
+                          <SelectValue placeholder="Select employee" />
+                        </SelectTrigger>
+                        <SelectContent className={selectContentClass}>
+                          {employees.map((emp) => (
+                            <SelectItem key={emp.id} value={emp.id}>
+                              {emp.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                  )}
 
-              {jobs.length > 0 && (
-                <FormCard eyebrow="Job link">
-                  <Field label="Link to job (optional)">
-                    <Select
-                      value={values.job_id || 'none'}
-                      onValueChange={(v) => setValue('job_id', v === 'none' ? null : v)}
-                    >
-                      <SelectTrigger className={selectTriggerClass}>
-                        <SelectValue placeholder="Select job" />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        <SelectItem value="none">No job linked</SelectItem>
-                        {jobs.map((job) => (
-                          <SelectItem key={job.id} value={job.id}>
-                            {job.title}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <Field label="Amount" required hint={errors.amount?.message}>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-medium text-[13px]">
+                        £
+                      </span>
+                      <Input
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="0.00"
+                        className={cn(
+                          inputClass,
+                          'pl-8 text-lg h-12',
+                          errors.amount && 'border-red-500/60'
+                        )}
+                        value={amountText}
+                        onChange={(e) => {
+                          const s = sanitizeMoneyInput(e.target.value);
+                          setAmountText(s);
+                          setValue('amount', parseMoney(s) ?? 0, { shouldValidate: true });
+                        }}
+                      />
+                    </div>
                   </Field>
-                </FormCard>
-              )}
-            </>
-          )}
-
-          {/* Step 3: Receipt (Admin mode only) */}
-          {step === 3 && !employeeMode && (
-            <FormCard eyebrow="Receipt">
-              <div className="text-center py-6">
-                <div className="inline-flex p-4 rounded-full bg-white/[0.06] mb-4">
-                  <Receipt className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="font-semibold text-white mb-2">Add receipt</h3>
-                <p className="text-sm text-white mb-6">
-                  Upload a photo of the receipt for this expense
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <SecondaryButton
-                    onClick={() => cameraInputRef.current?.click()}
-                    disabled={isUploadingReceipt}
-                  >
-                    <Camera className="h-4 w-4 mr-2" />
-                    {isUploadingReceipt ? 'Uploading…' : 'Take photo'}
-                  </SecondaryButton>
-                  <SecondaryButton
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={isUploadingReceipt}
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Upload file
-                  </SecondaryButton>
                 </div>
 
-                <p className="text-xs text-white mt-4">
-                  Supported formats: JPG, PNG, PDF (max 5MB)
-                </p>
-              </div>
+                <Field label="Description" required hint={errors.description?.message}>
+                  <Textarea
+                    placeholder="What was this expense for?"
+                    className={cn(
+                      textareaClass,
+                      'min-h-[100px]',
+                      errors.description && 'border-red-500/60'
+                    )}
+                    value={values.description}
+                    onChange={(e) => setValue('description', e.target.value)}
+                  />
+                </Field>
+              </FormCard>
+            )}
 
-              {/* Show preview if receipt uploaded */}
-              {values.receipt_url && (
-                <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)]">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-green-500/10 rounded-lg">
-                      <Check className="h-5 w-5 text-green-400" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-white">Receipt uploaded</p>
-                      <p className="text-sm text-white">{receiptName || 'Receipt attached'}</p>
-                    </div>
-                    <IconButton
-                      aria-label="Remove receipt"
-                      onClick={() => {
-                        setValue('receipt_url', null);
-                        setReceiptName(null);
-                      }}
-                    >
-                      <X className="h-4 w-4" />
-                    </IconButton>
+            {/* Step 2: Category & Job */}
+            {step === 2 && (
+              <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
+                <FormCard eyebrow="Category">
+                  <div className="grid grid-cols-2 gap-2">
+                    {EXPENSE_CATEGORIES.map(({ id, label }) => {
+                      const Icon = categoryIcons[id];
+                      const isSelected = values.category === id;
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => setValue('category', id)}
+                          className={cn(
+                            'flex items-center gap-3 p-3 rounded-xl border transition-all touch-manipulation',
+                            'hover:bg-white/[0.04] active:scale-[0.98]',
+                            isSelected
+                              ? 'border-elec-yellow/60 bg-white/[0.06]'
+                              : 'border-white/[0.08] bg-[hsl(0_0%_9%)]'
+                          )}
+                        >
+                          <Icon
+                            className={cn(
+                              'h-5 w-5',
+                              isSelected ? 'text-elec-yellow' : 'text-white'
+                            )}
+                          />
+                          <span className="text-sm font-medium text-white">{label}</span>
+                          {isSelected && <Check className="h-4 w-4 text-elec-yellow ml-auto" />}
+                        </button>
+                      );
+                    })}
                   </div>
-                </div>
-              )}
-            </FormCard>
-          )}
+                </FormCard>
 
-          {/* Step 3 (Employee) or Step 4 (Admin): Review */}
-          {((employeeMode && step === 3) || (!employeeMode && step === 4)) && (
-            <>
-              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                <div className="text-center mb-4">
-                  <p className="text-sm text-white">Total amount</p>
-                  <p className="text-3xl font-bold text-white">
-                    {formatCurrency(values.amount)}
+                {jobs.length > 0 && (
+                  <FormCard eyebrow="Job link">
+                    <Field label="Link to job (optional)">
+                      <Select
+                        value={values.job_id || 'none'}
+                        onValueChange={(v) => setValue('job_id', v === 'none' ? null : v)}
+                      >
+                        <SelectTrigger className={selectTriggerClass}>
+                          <SelectValue placeholder="Select job" />
+                        </SelectTrigger>
+                        <SelectContent className={selectContentClass}>
+                          <SelectItem value="none">No job linked</SelectItem>
+                          {jobs.map((job) => (
+                            <SelectItem key={job.id} value={job.id}>
+                              {job.title}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                  </FormCard>
+                )}
+              </div>
+            )}
+
+            {/* Step 3: Receipt (Admin mode only) */}
+            {step === 3 && !employeeMode && (
+              <FormCard eyebrow="Receipt">
+                <div className="text-center py-6">
+                  <div className="inline-flex p-4 rounded-full bg-white/[0.06] mb-4">
+                    <Receipt className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="font-semibold text-white mb-2">Add receipt</h3>
+                  <p className="text-sm text-white mb-6">
+                    Upload a photo of the receipt for this expense
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <SecondaryButton
+                      onClick={() => cameraInputRef.current?.click()}
+                      disabled={isUploadingReceipt}
+                    >
+                      <Camera className="h-4 w-4 mr-2" />
+                      {isUploadingReceipt ? 'Uploading…' : 'Take photo'}
+                    </SecondaryButton>
+                    <SecondaryButton
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploadingReceipt}
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Upload file
+                    </SecondaryButton>
+                  </div>
+
+                  <p className="text-xs text-white mt-4">
+                    Supported formats: JPG, PNG, PDF (max 5MB)
                   </p>
                 </div>
 
-                <div className="space-y-3 text-sm">
-                  {/* Only show Employee row in admin mode */}
-                  {!employeeMode && (
-                    <div className="flex justify-between py-2 border-b border-white/[0.06]">
-                      <span className="text-white">Employee</span>
-                      <span className="font-medium text-white">
-                        {selectedEmployee?.name || '-'}
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex justify-between py-2 border-b border-white/[0.06]">
-                    <span className="text-white">Category</span>
-                    <span className="font-medium flex items-center gap-1 text-white">
-                      <CategoryIcon className="h-4 w-4" />
-                      {values.category || '-'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/[0.06]">
-                    <span className="text-white">Description</span>
-                    <span className="font-medium text-right max-w-[200px] truncate text-white">
-                      {values.description || '-'}
-                    </span>
-                  </div>
-                  {selectedJob && (
-                    <div className="flex justify-between py-2 border-b border-white/[0.06]">
-                      <span className="text-white">Linked job</span>
-                      <span className="font-medium text-white">{selectedJob.title}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between py-2">
-                    <span className="text-white">Receipt</span>
-                    <span className="font-medium text-white">
-                      {values.receipt_url ? 'Attached' : 'Not attached'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Receipt upload option in employee mode (since we skip dedicated step) */}
-              {employeeMode && (
-                <FormCard eyebrow="Receipt">
-                  <div className="flex items-center justify-between">
+                {/* Show preview if receipt uploaded */}
+                {values.receipt_url && (
+                  <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)]">
                     <div className="flex items-center gap-3">
-                      <div
-                        className={cn(
-                          'p-2 rounded-lg',
-                          values.receipt_url ? 'bg-green-500/10' : 'bg-white/[0.06]'
-                        )}
-                      >
-                        {values.receipt_url ? (
-                          <Check className="h-5 w-5 text-green-400" />
-                        ) : (
-                          <Receipt className="h-5 w-5 text-white" />
-                        )}
+                      <div className="p-2 bg-green-500/10 rounded-lg">
+                        <Check className="h-5 w-5 text-green-400" />
                       </div>
-                      <div>
-                        <p className="font-medium text-sm text-white">
-                          {values.receipt_url ? 'Receipt attached' : 'Add receipt (optional)'}
-                        </p>
-                        <p className="text-xs text-white">
-                          {values.receipt_url ? 'Tap to remove' : 'Photo or file upload'}
-                        </p>
+                      <div className="flex-1">
+                        <p className="font-medium text-white">Receipt uploaded</p>
+                        <p className="text-sm text-white">{receiptName || 'Receipt attached'}</p>
                       </div>
-                    </div>
-                    {values.receipt_url ? (
                       <IconButton
                         aria-label="Remove receipt"
                         onClick={() => {
-                        setValue('receipt_url', null);
-                        setReceiptName(null);
-                      }}
+                          setValue('receipt_url', null);
+                          setReceiptName(null);
+                        }}
                       >
                         <X className="h-4 w-4" />
                       </IconButton>
-                    ) : (
-                      <div className="flex gap-2">
-                        <IconButton
-                          aria-label="Take photo"
-                          onClick={() => cameraInputRef.current?.click()}
-                          disabled={isUploadingReceipt}
-                        >
-                          <Camera className="h-4 w-4" />
-                        </IconButton>
-                        <IconButton
-                          aria-label="Upload file"
-                          onClick={() => fileInputRef.current?.click()}
-                          disabled={isUploadingReceipt}
-                        >
-                          <Upload className="h-4 w-4" />
-                        </IconButton>
+                    </div>
+                  </div>
+                )}
+              </FormCard>
+            )}
+
+            {/* Step 3 (Employee) or Step 4 (Admin): Review */}
+            {((employeeMode && step === 3) || (!employeeMode && step === 4)) && (
+              <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
+                  <div className="text-center mb-4">
+                    <p className="text-sm text-white">Total amount</p>
+                    <p className="text-3xl font-bold text-white">{formatCurrency(values.amount)}</p>
+                  </div>
+
+                  <div className="space-y-3 text-sm">
+                    {/* Only show Employee row in admin mode */}
+                    {!employeeMode && (
+                      <div className="flex justify-between py-2 border-b border-white/[0.06]">
+                        <span className="text-white">Employee</span>
+                        <span className="font-medium text-white">
+                          {selectedEmployee?.name || '-'}
+                        </span>
                       </div>
                     )}
+                    <div className="flex justify-between py-2 border-b border-white/[0.06]">
+                      <span className="text-white">Category</span>
+                      <span className="font-medium flex items-center gap-1 text-white">
+                        <CategoryIcon className="h-4 w-4" />
+                        {values.category || '-'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-white/[0.06]">
+                      <span className="text-white">Description</span>
+                      <span className="font-medium text-right max-w-[200px] truncate text-white">
+                        {values.description || '-'}
+                      </span>
+                    </div>
+                    {selectedJob && (
+                      <div className="flex justify-between py-2 border-b border-white/[0.06]">
+                        <span className="text-white">Linked job</span>
+                        <span className="font-medium text-white">{selectedJob.title}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between py-2">
+                      <span className="text-white">Receipt</span>
+                      <span className="font-medium text-white">
+                        {values.receipt_url ? 'Attached' : 'Not attached'}
+                      </span>
+                    </div>
                   </div>
-                </FormCard>
-              )}
-            </>
-          )}
+                </div>
+
+                {/* Receipt upload option in employee mode (since we skip dedicated step) */}
+                {employeeMode && (
+                  <FormCard eyebrow="Receipt">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={cn(
+                            'p-2 rounded-lg',
+                            values.receipt_url ? 'bg-green-500/10' : 'bg-white/[0.06]'
+                          )}
+                        >
+                          {values.receipt_url ? (
+                            <Check className="h-5 w-5 text-green-400" />
+                          ) : (
+                            <Receipt className="h-5 w-5 text-white" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm text-white">
+                            {values.receipt_url ? 'Receipt attached' : 'Add receipt (optional)'}
+                          </p>
+                          <p className="text-xs text-white">
+                            {values.receipt_url ? 'Tap to remove' : 'Photo or file upload'}
+                          </p>
+                        </div>
+                      </div>
+                      {values.receipt_url ? (
+                        <IconButton
+                          aria-label="Remove receipt"
+                          onClick={() => {
+                            setValue('receipt_url', null);
+                            setReceiptName(null);
+                          }}
+                        >
+                          <X className="h-4 w-4" />
+                        </IconButton>
+                      ) : (
+                        <div className="flex gap-2">
+                          <IconButton
+                            aria-label="Take photo"
+                            onClick={() => cameraInputRef.current?.click()}
+                            disabled={isUploadingReceipt}
+                          >
+                            <Camera className="h-4 w-4" />
+                          </IconButton>
+                          <IconButton
+                            aria-label="Upload file"
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={isUploadingReceipt}
+                          >
+                            <Upload className="h-4 w-4" />
+                          </IconButton>
+                        </div>
+                      )}
+                    </div>
+                  </FormCard>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Hidden receipt inputs — always mounted so both admin and employee
@@ -569,25 +573,29 @@ export function CreateExpenseSheet({
 
         {/* Footer */}
         <div className="p-4 border-t border-white/[0.06] shrink-0 pb-safe">
-          {step < totalSteps ? (
-            <PrimaryButton
-              fullWidth
-              onClick={() => setStep(step + 1)}
-              disabled={!canProceed()}
-            >
-              Continue
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </PrimaryButton>
-          ) : (
-            <PrimaryButton
-              fullWidth
-              onClick={handleSubmit(handleFormSubmit)}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit expense'}
-              <Check className="h-4 w-4 ml-2" />
-            </PrimaryButton>
-          )}
+          <div className="mx-auto flex w-full max-w-5xl justify-end">
+            {step < totalSteps ? (
+              <PrimaryButton
+                fullWidth
+                className="sm:w-auto sm:min-w-[14rem]"
+                onClick={() => setStep(step + 1)}
+                disabled={!canProceed()}
+              >
+                Continue
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </PrimaryButton>
+            ) : (
+              <PrimaryButton
+                fullWidth
+                className="sm:w-auto sm:min-w-[14rem]"
+                onClick={handleSubmit(handleFormSubmit)}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit expense'}
+                <Check className="h-4 w-4 ml-2" />
+              </PrimaryButton>
+            )}
+          </div>
         </div>
       </SheetContent>
     </Sheet>

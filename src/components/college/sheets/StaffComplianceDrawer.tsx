@@ -93,7 +93,7 @@ const CATEGORY_LABEL: Record<VaultRow['type']['category'], string> = {
 const CATEGORY_DESC: Record<VaultRow['type']['category'], string> = {
   statutory: 'Pre-employment statutory checks (Single Central Record).',
   qualification: 'Teaching, assessor and occupational qualifications.',
-  training: 'Recurring training — safeguarding, Prevent, first aid, etc.',
+  training: 'Recurring training such as safeguarding, Prevent and first aid.',
   declaration: 'Self-declarations and supplementary checks.',
 };
 
@@ -179,7 +179,7 @@ export function StaffComplianceDrawer({ open, onOpenChange, staffId }: Props) {
     <>
       <FormSheet
         width="wide"
-        bodyClassName="grid items-start gap-x-10 gap-y-6 lg:grid-cols-[22rem_minmax(0,1fr)]"
+        bodyClassName="grid grid-cols-[minmax(0,1fr)] items-start gap-x-10 gap-y-6 lg:grid-cols-[22rem_minmax(0,1fr)]"
         open={open}
         onOpenChange={onOpenChange}
         eyebrow="Compliance vault"
@@ -309,9 +309,13 @@ function IdentityStrip({
           </AvatarFallback>
         </Avatar>
         <div className="min-w-0 flex-1">
-          {core.email && <p className="truncate text-[13.5px] text-white">{core.email}</p>}
+          {core.email && (
+            <p className="text-[13.5px] text-white [overflow-wrap:anywhere]">{core.email}</p>
+          )}
           {core.phone && <p className="text-[13px] tabular-nums text-white">{core.phone}</p>}
-          {!core.email && !core.phone && <p className="text-[13px] text-white">No email or phone on file</p>}
+          {!core.email && !core.phone && (
+            <p className="text-[13px] text-white">No email or phone on file</p>
+          )}
         </div>
       </div>
 
@@ -491,7 +495,7 @@ function RequirementRow({ item, onEdit }: { item: VaultRow; onEdit: (row: VaultR
           {item.type.label}
           {item.type.is_scr_required && (
             <span
-              className="ml-2 text-[11px] font-semibold text-white"
+              className="ml-2 text-[12px] font-semibold text-white"
               title="Required for the Single Central Record"
             >
               SCR

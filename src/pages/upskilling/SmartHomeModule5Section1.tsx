@@ -524,7 +524,7 @@ const SmartHomeModule5Section1 = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             asChild
           >
-            <Link to="../section-2">
+            <Link to="/study-centre/upskilling/smart-home-module-5-section-2">
               CCTV Types and Storage
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

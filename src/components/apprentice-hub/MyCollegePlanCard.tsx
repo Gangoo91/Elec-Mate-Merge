@@ -1,13 +1,14 @@
+import { LC_FRAME } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useEffect, useMemo, useState } from 'react';
 import { aiProvenanceLine } from '@/hooks/portfolio/usePortfolioAcState';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useMyIlp } from '@/hooks/useMyIlp';
 import type { IlpGoal, GoalStatus } from '@/hooks/useStudentIlp';
 import { MyGoalSheet } from './MyGoalSheet';
+import { ProposeIlpGoalSheet } from './ProposeIlpGoalSheet';
 
 /* ==========================================================================
    MyCollegePlanCard — editorial. Typography-led, no decorative icons.
@@ -25,7 +26,7 @@ const STATUS_LABEL: Record<GoalStatus, string> = {
 };
 
 function formatDate(iso: string | null): string {
-  if (!iso) return '—';
+  if (!iso) return 'No date';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
@@ -34,6 +35,7 @@ export function MyCollegePlanCard() {
   const { ilp, goals, rollUp, loading, hasCollegeLink } = hook;
   const [openGoal, setOpenGoal] = useState<IlpGoal | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [proposing, setProposing] = useState(false);
 
   const visibleGoals = useMemo(() => (expanded ? goals : goals.slice(0, 4)), [goals, expanded]);
 
@@ -57,22 +59,16 @@ export function MyCollegePlanCard() {
   if (loading && !ilp) return <Skeleton />;
   if (!ilp) return <PlaceholderCard hasCollegeLink={hasCollegeLink} />;
 
-  const pct = rollUp.completion_percent;
-  // Volt once the plan is nearly done; neutral until then.
-  const ringColour = pct >= 80 ? 'stroke-elec-yellow' : 'stroke-white/55';
-
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         {/* Header — eyebrow + headline + tutor */}
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-            Your ILP
+          <div className="text-[15px] font-semibold tracking-tight text-white">
+            Your learning plan
           </div>
           {rollUp.unread_tutor_comments > 0 && (
-            <span className="text-[10.5px] tabular-nums text-white">
+            <span className="text-[12px] tabular-nums text-white">
               {rollUp.unread_tutor_comments} new from your tutor
             </span>
           )}
@@ -86,9 +82,17 @@ export function MyCollegePlanCard() {
         {ilp.tutor_name_snapshot && (
           <p className="mt-1 text-[12px] text-white">Set by {ilp.tutor_name_snapshot}</p>
         )}
-        {aiProvenanceLine(ilp.narrative_source, ilp.narrative_confirmed_by_name, ilp.narrative_confirmed_at) && (
+        {aiProvenanceLine(
+          ilp.narrative_source,
+          ilp.narrative_confirmed_by_name,
+          ilp.narrative_confirmed_at
+        ) && (
           <p className="mt-0.5 text-[12px] text-white">
-            {aiProvenanceLine(ilp.narrative_source, ilp.narrative_confirmed_by_name, ilp.narrative_confirmed_at)}
+            {aiProvenanceLine(
+              ilp.narrative_source,
+              ilp.narrative_confirmed_by_name,
+              ilp.narrative_confirmed_at
+            )}
           </p>
         )}
 
@@ -106,8 +110,8 @@ export function MyCollegePlanCard() {
           <div className="mt-4 space-y-1.5">
             <p className="text-[13px] font-medium text-white">No goals on your plan yet</p>
             <p className="text-[12.5px] leading-relaxed text-white">
-              Your tutor sets these at review. The dates below are what they've agreed so far —
-              nothing here needs anything from you.
+              Your tutor sets these at review. The dates below are what they've agreed so far.
+              Nothing here needs anything from you.
             </p>
             <dl className="pt-1.5 text-[12px] leading-relaxed sm:text-[12.5px] space-y-1">
               {ilp.target_completion_date && (
@@ -117,44 +121,18 @@ export function MyCollegePlanCard() {
             </dl>
           </div>
         ) : (
-          <div className="mt-4 sm:mt-5 grid grid-cols-[88px_minmax(0,1fr)] sm:grid-cols-[112px_minmax(0,1fr)] gap-4 sm:gap-5 items-center">
-            <div className="relative h-[88px] w-[88px] sm:h-[112px] sm:w-[112px]">
-              <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="15.5"
-                  fill="none"
-                  strokeWidth="2.5"
-                  className="stroke-white/[0.08]"
-                />
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="15.5"
-                  fill="none"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
-                  className={cn('transition-all duration-500', ringColour)}
-                />
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className="text-[20px] sm:text-[24px] font-semibold text-white tabular-nums leading-none">
-                  {pct}
-                  <span className="text-[12px] sm:text-[13px] text-white">%</span>
-                </div>
-                <div className="mt-0.5 text-[9.5px] sm:text-[10px] uppercase tracking-[0.16em] text-white">
-                  done
-                </div>
-              </div>
-            </div>
-            <dl className="text-[12px] sm:text-[12.5px] leading-relaxed space-y-1">
-              <Row label="Goals" value={`${rollUp.completed} of ${rollUp.total_goals} done`} />
+          // Words, not a dial: "1 of 2 goals done" says what a ring reading
+          // "50% DONE" only implies (College Hub design language, 8 Oct).
+          <div className="mt-4 space-y-1.5">
+            <p className="text-[18px] font-semibold leading-snug text-white">
+              {rollUp.completed} of {rollUp.total_goals}{' '}
+              {rollUp.total_goals === 1 ? 'goal' : 'goals'} done
+            </p>
+            <dl className="flex flex-wrap gap-x-5 gap-y-1 text-[12.5px] leading-relaxed">
               {ilp.target_completion_date && (
                 <Row label="Target" value={formatDate(ilp.target_completion_date)} />
               )}
-              {ilp.review_date && <Row label="Review" value={formatDate(ilp.review_date)} />}
+              {ilp.review_date && <Row label="Next review" value={formatDate(ilp.review_date)} />}
             </dl>
           </div>
         )}
@@ -176,12 +154,8 @@ export function MyCollegePlanCard() {
       {goals.length > 0 && (
         <div className="border-t border-white/[0.06] px-4 sm:px-5 py-4">
           <div className="flex items-baseline justify-between gap-3 mb-3">
-            <h4 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-white">
-              Your goals
-            </h4>
-            <span className="text-[10.5px] tabular-nums text-white">
-              {rollUp.total_goals} total
-            </span>
+            <h4 className="text-[13px] font-medium text-white">Your goals</h4>
+            <span className="text-[12px] tabular-nums text-white">{rollUp.total_goals} total</span>
           </div>
           <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
             <AnimatePresence initial={false}>
@@ -209,13 +183,34 @@ export function MyCollegePlanCard() {
             <button
               type="button"
               onClick={() => setExpanded((v) => !v)}
-              className="mt-3 text-[12px] font-medium text-white hover:text-white touch-manipulation"
+              className="mt-2 inline-flex h-11 items-center text-[13px] font-medium text-white touch-manipulation"
             >
               {expanded ? 'Show fewer' : `Show all ${goals.length} →`}
             </button>
           )}
         </div>
       )}
+
+      {/* The learner's side of the plan: suggest a goal; the tutor accepts,
+          changes or comes back on it (propose_ilp_goal, source='student'). */}
+      <div className="flex flex-col gap-2 border-t border-white/[0.06] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+        <p className="text-[13px] leading-snug text-white">
+          Something you want to work on? Suggest it and your tutor can add it to your plan.
+        </p>
+        <button
+          type="button"
+          onClick={() => setProposing(true)}
+          className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] px-4 text-[13.5px] font-semibold text-white touch-manipulation transition-colors hover:border-elec-yellow"
+        >
+          Suggest a goal
+        </button>
+      </div>
+
+      <ProposeIlpGoalSheet
+        open={proposing}
+        onOpenChange={setProposing}
+        onSubmitted={() => void hook.refresh()}
+      />
 
       <MyGoalSheet
         open={openGoal !== null}
@@ -264,7 +259,7 @@ function Narrative({
          * gets volt, the reassurance stays white.
          */
         className={cn(
-          'text-[10px] font-medium uppercase tracking-[0.16em] mb-1',
+          'text-[13px] font-medium mb-1',
           tone === 'emerald' ? 'text-white' : 'text-elec-yellow'
         )}
       >
@@ -301,9 +296,9 @@ function GoalRow({
   // Volt for done, red reserved for genuinely overdue, white for the rest.
   const statusCls =
     status === 'completed'
-      ? 'text-elec-yellow'
-      : status === 'overdue'
-        ? 'text-red-300'
+      ? 'font-semibold text-emerald-300'
+      : status === 'overdue' || status === 'blocked'
+        ? 'font-semibold text-orange-300'
         : 'text-white';
 
   return (
@@ -316,14 +311,18 @@ function GoalRow({
           onToggleComplete(!isComplete);
           if (!goal.student_acknowledged) onAcknowledge();
         }}
-        className={cn(
-          'mt-0.5 h-6 w-6 rounded-full border flex items-center justify-center flex-shrink-0 transition-all touch-manipulation',
-          isComplete
-            ? 'bg-white/[0.02] border-white/[0.06] text-white'
-            : 'border-white/25 text-transparent active:scale-95 hover:border-white/55'
-        )}
+        className="-ml-2.5 -mt-2 flex h-11 w-11 flex-shrink-0 items-center justify-center touch-manipulation"
       >
-        <Check className="h-3.5 w-3.5" strokeWidth={3} />
+        <span
+          className={cn(
+            'flex h-6 w-6 items-center justify-center rounded-full border transition-all',
+            isComplete
+              ? 'border-emerald-400/60 text-emerald-300'
+              : 'border-white/25 text-transparent active:scale-95 hover:border-white/55'
+          )}
+        >
+          <Check className="h-3.5 w-3.5" strokeWidth={3} />
+        </span>
       </button>
 
       <button
@@ -332,7 +331,7 @@ function GoalRow({
           onTap();
           if (!goal.student_acknowledged) onAcknowledge();
         }}
-        className="min-w-0 flex-1 text-left touch-manipulation"
+        className="min-h-11 min-w-0 flex-1 text-left touch-manipulation"
       >
         <div className="flex items-start justify-between gap-2">
           <h5
@@ -345,8 +344,8 @@ function GoalRow({
           </h5>
           <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
         </div>
-        <p className="mt-1 text-[10.5px] tabular-nums leading-relaxed">
-          <span className={cn('capitalize', statusCls)}>{STATUS_LABEL[status]}</span>
+        <p className="mt-1 text-[12px] tabular-nums leading-relaxed">
+          <span className={statusCls}>{STATUS_LABEL[status]}</span>
           {goal.target_date && (
             <>
               <Sep />
@@ -358,7 +357,7 @@ function GoalRow({
           {goal.priority === 'high' && !isComplete && (
             <>
               <Sep />
-              <span className="text-red-300/85">High priority</span>
+              <span className="text-red-300">High priority</span>
             </>
           )}
           {hasUnreadTutor && (
@@ -393,15 +392,8 @@ function Sep() {
 
 function PlaceholderCard({ hasCollegeLink }: { hasCollegeLink: boolean }) {
   return (
-    <section
-      className={cn(
-        'rounded-2xl border border-elec-yellow/35 px-4 sm:px-5 py-4 sm:py-5',
-        CARD_SURFACE
-      )}
-    >
-      <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-        Your ILP
-      </div>
+    <section className={cn(LC_FRAME, 'px-4 sm:px-5 py-4 sm:py-5')}>
+      <div className="text-[15px] font-semibold tracking-tight text-white">Your learning plan</div>
       {/*
        * No example goals. This card used to list three invented goals
        * ("Master three-phase voltage drop calculations · Due in 3 weeks")
@@ -424,9 +416,7 @@ function PlaceholderCard({ hasCollegeLink }: { hasCollegeLink: boolean }) {
 
 function Skeleton() {
   return (
-    <section
-      className={cn('rounded-2xl border border-white/[0.06] p-5 animate-pulse', CARD_SURFACE)}
-    >
+    <section className={cn(LC_FRAME, 'p-5 animate-pulse')}>
       <div className="h-3 w-1/4 rounded bg-white/[0.05]" />
       <div className="mt-3 h-5 w-3/4 rounded bg-white/[0.06]" />
       <div className="mt-2 h-2.5 w-1/3 rounded bg-white/[0.04]" />

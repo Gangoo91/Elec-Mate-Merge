@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
@@ -58,7 +58,11 @@ export async function callOtjStatusEdgeFn(
     if (!res.ok) {
       try {
         const j = await res.json();
-        return (j as { error?: string; detail?: string }).detail ?? (j as { error?: string }).error ?? `request_${res.status}`;
+        return (
+          (j as { error?: string; detail?: string }).detail ??
+          (j as { error?: string }).error ??
+          `request_${res.status}`
+        );
       } catch {
         return `request_${res.status}`;
       }
@@ -92,6 +96,11 @@ export interface InboxRow {
    *  Null on entries made before the question existed. */
   in_working_hours: boolean | null;
   outside_hours_compensated: boolean | null;
+  /** ELE-2052: what the funding-rules check flagged when the learner sent it, and their note. */
+  quality_check?: {
+    flags?: Array<{ code: string; severity: string; para: string; title: string }>;
+    learner_note?: string | null;
+  } | null;
 }
 
 export interface TutorOtjInbox {
@@ -135,6 +144,11 @@ export function useTutorOtjInbox(): TutorOtjInbox {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [fellBackToCollege, setFellBackToCollege] = useState(false);
+  // Only the latest fetch may write rows. While the scope membership loads
+  // the level reads "college", so a college-wide fetch started first could
+  // land after the My cohorts one and leave 58 rows under "My cohorts"
+  // while the inbox said 45 (seen 8 Oct).
+  const fetchSeq = useRef(0);
 
   // Resolve which college this staff member belongs to so we can scope
   // the realtime subscription + the "everyone in my college" query path.
@@ -165,6 +179,10 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       setLoading(false);
       return;
     }
+    // Wait for the scope to resolve before fetching anything.
+    if (!collegeScope.ready) return;
+    const seq = ++fetchSeq.current;
+    const stale = () => seq !== fetchSeq.current;
     setLoading(true);
     setError(null);
 
@@ -177,7 +195,6 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       if (scope === 'mine') {
         // Mine or My cohorts: the learners the shared scope resolved (auth
         // uids, the key college_otj_entries uses).
-        if (!collegeScope.ready) return;
         studentAuthUids = scopeKey ? scopeKey.split(',') : [];
         if (studentAuthUids.length === 0) {
           // Nothing assigned to this tutor yet: widen to the whole college
@@ -199,6 +216,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
           .from('college_students')
           .select('user_id')
           .eq('college_id', staffCollegeId);
+        if (stale()) return;
         studentAuthUids = ((students ?? []) as Array<{ user_id: string | null }>)
           .map((r) => r.user_id)
           .filter((u): u is string => Boolean(u));
@@ -215,7 +233,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       const { data: entries, error: eErr } = await supabase
         .from('college_otj_entries')
         .select(
-          'id, student_id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, evidence_urls, source_kind, verification_status, created_at, in_working_hours, outside_hours_compensated'
+          'id, student_id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, evidence_urls, source_kind, verification_status, created_at, in_working_hours, outside_hours_compensated, quality_check'
         )
         .in('student_id', studentAuthUids)
         .eq('source_kind', 'apprentice_submitted')
@@ -242,6 +260,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
         created_at: string | null;
         in_working_hours: boolean | null;
         outside_hours_compensated: boolean | null;
+        quality_check: InboxRow['quality_check'];
       }>;
 
       if (entryRows.length === 0) {
@@ -265,10 +284,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
           // from the learner's course instead.
           .select('id, user_id, name, cohort_id, course_id')
           .in('user_id', ids),
-        supabase
-          .from('profiles')
-          .select('id, full_name')
-          .in('id', ids),
+        supabase.from('public_profiles').select('id, full_name').in('id', ids),
       ]);
 
       const csRows = (csRes.data ?? []) as Array<{
@@ -300,7 +316,10 @@ export function useTutorOtjInbox(): TutorOtjInbox {
         if (row.name) nameByUid.set(row.user_id, row.name);
         csIdByUid.set(row.user_id, row.id);
         cohortIdByUid.set(row.user_id, row.cohort_id ?? null);
-        qualByUid.set(row.user_id, row.course_id ? (qualByCourse.get(row.course_id) ?? null) : null);
+        qualByUid.set(
+          row.user_id,
+          row.course_id ? (qualByCourse.get(row.course_id) ?? null) : null
+        );
       }
       for (const p of (profilesRes.data ?? []) as Array<{ id: string; full_name: string | null }>) {
         if (!nameByUid.has(p.id) && p.full_name) nameByUid.set(p.id, p.full_name);
@@ -340,17 +359,20 @@ export function useTutorOtjInbox(): TutorOtjInbox {
           evidence_urls: r.evidence_urls,
           in_working_hours: r.in_working_hours ?? null,
           outside_hours_compensated: r.outside_hours_compensated ?? null,
+          quality_check: r.quality_check ?? null,
           source_kind: r.source_kind,
           verification_status: r.verification_status,
           created_at: r.created_at,
         };
       });
 
+      if (stale()) return;
       setRows(hydrated);
     } catch (e) {
+      if (stale()) return;
       setError((e as Error).message);
     } finally {
-      setLoading(false);
+      if (!stale()) setLoading(false);
     }
   }, [tutorUid, scope, staffCollegeId, scopeKey, collegeScope.ready]);
 

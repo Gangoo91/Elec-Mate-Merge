@@ -30,14 +30,10 @@ import { useTutorRequirements } from '@/hooks/useTutorRequirements';
 import AddRequirementDialog from './AddRequirementDialog';
 import type { EvidenceTypeCode, TutorPortfolioRequirement } from '@/types/evidence';
 import {
-  SectionHeader,
-  StatStrip,
   ListCard,
   Pill,
   EmptyState,
   LoadingState,
-  Eyebrow,
-  PrimaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -177,68 +173,72 @@ export function StudentRequirementsPanel({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <Eyebrow>Evidence Requirements</Eyebrow>
-          <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-            Requirements
+      {/* Header: what this is, the figures as one status line, and the add
+          action (outlined: the sheet's one solid action is Assess criteria). */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <h3 className="text-[17px] font-semibold tracking-tight text-white">
+            Extra evidence requirements
           </h3>
           <p className="mt-1 text-[13px] text-white">
-            Manage custom requirements for this student
+            Requirements you set for this learner, on top of their qualification.
           </p>
+          <dl className="mt-3 grid grid-cols-3 divide-x divide-white/[0.1] text-white">
+            {[
+              [activeCount, 'Active'],
+              [completedCount, 'Completed'],
+              [unitRequirements.length, 'For the unit'],
+            ].map(([n, label], i) => (
+              <div key={String(label)} className={cn('min-w-0', i === 0 ? 'pr-4' : 'px-4')}>
+                <dd className="text-[20px] font-bold leading-none tabular-nums">{n}</dd>
+                <dt className="mt-1 text-[12.5px]">{label}</dt>
+              </div>
+            ))}
+          </dl>
         </div>
-        <PrimaryButton className="shrink-0" onClick={() => setIsAddDialogOpen(true)}>
-          Add Requirement
-        </PrimaryButton>
+        <button
+          type="button"
+          onClick={() => setIsAddDialogOpen(true)}
+          className="inline-flex h-11 w-full shrink-0 items-center justify-center rounded-xl border border-white/[0.14] px-4 text-[13.5px] font-semibold text-white touch-manipulation hover:border-elec-yellow active:bg-white/[0.06] sm:w-auto"
+        >
+          Add a requirement
+        </button>
       </div>
-
-      {/* Stats */}
-      <StatStrip
-        columns={3}
-        stats={[
-          { value: activeCount, label: 'Active', tone: 'amber' },
-          { value: completedCount, label: 'Completed', tone: 'green' },
-          { value: unitRequirements.length, label: 'Unit Reqs', tone: 'blue' },
-        ]}
-      />
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'unit' | 'tutor')}>
-        <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
+        <TabsList className="inline-flex h-auto rounded-xl border border-white/[0.14] bg-transparent p-0.5">
           <TabsTrigger
             value="tutor"
-            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
+            className="h-11 rounded-[10px] px-3.5 text-[13px] font-semibold text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black"
           >
-            Your Requirements
+            Yours
             {activeCount > 0 && (
-              <span className="ml-1.5 tabular-nums text-[11px]">{activeCount}</span>
+              <span className="ml-1.5 tabular-nums text-[12px]">{activeCount}</span>
             )}
           </TabsTrigger>
           <TabsTrigger
             value="unit"
-            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
+            className="h-11 rounded-[10px] px-3.5 text-[13px] font-semibold text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black"
           >
-            Unit Requirements
+            For the unit
           </TabsTrigger>
         </TabsList>
 
         {/* Tutor Requirements */}
-        <TabsContent value="tutor" className="mt-6 space-y-4">
+        <TabsContent value="tutor" className="mt-4 space-y-4">
           {isLoading ? (
             <LoadingState />
           ) : tutorRequirements.length === 0 ? (
             <EmptyState
               title="No custom requirements assigned"
-              description="Add specific evidence requirements for this student."
-              action="Add requirement"
-              onAction={() => setIsAddDialogOpen(true)}
+              description="Add one with Add a requirement above, for evidence this learner needs on top of their qualification."
             />
           ) : (
             <div className="space-y-5">
               {activeRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <Eyebrow>Active</Eyebrow>
+                  <h4 className="text-[13px] font-semibold text-white">Active</h4>
                   <div className="space-y-2">
                     {activeRequirements.map((req) => (
                       <RequirementCard
@@ -256,7 +256,7 @@ export function StudentRequirementsPanel({
 
               {completedRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <Eyebrow>Completed</Eyebrow>
+                  <h4 className="text-[13px] font-semibold text-white">Completed</h4>
                   <div className="space-y-2">
                     {completedRequirements.map((req) => (
                       <RequirementCard
@@ -276,7 +276,7 @@ export function StudentRequirementsPanel({
         </TabsContent>
 
         {/* Unit Requirements */}
-        <TabsContent value="unit" className="mt-6">
+        <TabsContent value="unit" className="mt-4">
           {unitLoading ? (
             <LoadingState />
           ) : unitRequirements.length === 0 ? (
@@ -428,7 +428,7 @@ function RequirementCard({
                   : 'bg-transparent border-white/[0.08] hover:border-elec-yellow'
               )}
             >
-              {isCompleted && <span className="text-green-400 text-[11px] font-bold">✓</span>}
+              {isCompleted && <span className="text-green-400 text-[12px] font-bold">✓</span>}
             </button>
             <h4
               className={cn(
@@ -455,7 +455,7 @@ function RequirementCard({
                 </Pill>
               ))}
             </div>
-            <span className="text-[11.5px] text-white tabular-nums">
+            <span className="text-[12px] text-white tabular-nums">
               {requirement.quantity_required}× required
             </span>
             {requirement.due_date && (
@@ -468,7 +468,7 @@ function RequirementCard({
           <DropdownMenuTrigger asChild>
             <button
               aria-label="Options"
-              className="shrink-0 h-9 w-9 rounded-full flex items-center justify-center text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
+              className="shrink-0 h-11 w-11 rounded-full flex items-center justify-center text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
             >
               <span className="text-lg leading-none">⋯</span>
             </button>

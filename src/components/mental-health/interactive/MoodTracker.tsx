@@ -4,11 +4,41 @@ import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const moodOptions = [
-  { value: 1, emoji: '😢', label: 'Struggling', message: "That's brave to say. You're not alone.", color: 'bg-red-500/15 border-red-500/20' },
-  { value: 2, emoji: '😔', label: 'Low', message: "Tough days happen. Let's get through this.", color: 'bg-orange-500/10 border-orange-500/30' },
-  { value: 3, emoji: '😐', label: 'Okay', message: "Okay is okay. Take it easy today.", color: 'bg-yellow-500/15 border-yellow-500/20' },
-  { value: 4, emoji: '🙂', label: 'Good', message: "Good to hear. Keep that going.", color: 'bg-emerald-500/10 border-emerald-500/30' },
-  { value: 5, emoji: '😊', label: 'Great', message: "Brilliant. Remember this feeling.", color: 'bg-elec-yellow/10 border-elec-yellow/40' },
+  {
+    value: 1,
+    emoji: '😢',
+    label: 'Struggling',
+    message: "That's brave to say. You're not alone.",
+    color: 'border-red-400/60',
+  },
+  {
+    value: 2,
+    emoji: '😔',
+    label: 'Low',
+    message: "Tough days happen. Let's get through this.",
+    color: 'border-orange-400/60',
+  },
+  {
+    value: 3,
+    emoji: '😐',
+    label: 'Okay',
+    message: 'Okay is okay. Take it easy today.',
+    color: 'border-amber-300/60',
+  },
+  {
+    value: 4,
+    emoji: '🙂',
+    label: 'Good',
+    message: 'Good to hear. Keep that going.',
+    color: 'border-emerald-400/60',
+  },
+  {
+    value: 5,
+    emoji: '😊',
+    label: 'Great',
+    message: 'Brilliant. Remember this feeling.',
+    color: 'border-white/[0.35]',
+  },
 ];
 
 const MoodTracker = () => {
@@ -40,18 +70,26 @@ const MoodTracker = () => {
     <div className="space-y-5 pt-4">
       {/* Mood selection */}
       <div>
-        <p className="text-sm text-white mb-4">How are you feeling right now?</p>
-        <div className="flex justify-between px-1">
+        <p className="mb-3 text-[14px] text-white">How are you feeling right now?</p>
+        {/* Five words, the chosen one white (10 Oct: no faded emoji row). */}
+        <div className="flex gap-1.5" role="group" aria-label="Your mood">
           {moodOptions.map((mood) => (
             <button
               key={mood.value}
-              onClick={() => { setSelectedMood(mood.value); setSaved(false); }}
-              className={cn('flex flex-col items-center gap-2 p-2 rounded-2xl touch-manipulation active:scale-[0.92] transition-all duration-200',
-                selectedMood === mood.value ? mood.color + 'border scale-110' : 'opacity-60 hover:opacity-80'
+              type="button"
+              aria-pressed={selectedMood === mood.value}
+              onClick={() => {
+                setSelectedMood(mood.value);
+                setSaved(false);
+              }}
+              className={cn(
+                'h-12 min-w-0 flex-auto rounded-xl border px-2 text-[13px] font-semibold transition-colors touch-manipulation active:scale-[0.97]',
+                selectedMood === mood.value
+                  ? 'border-white bg-white text-black'
+                  : 'border-white/[0.14] text-white hover:border-white/[0.35]'
               )}
             >
-              <span className={cn('text-3xl transition-all', selectedMood === mood.value ? '' : 'grayscale-[0.2]')}>{mood.emoji}</span>
-              <span className={cn('text-[10px] font-medium', selectedMood === mood.value ? 'text-white' : 'text-white')}>{mood.label}</span>
+              {mood.label}
             </button>
           ))}
         </div>
@@ -64,7 +102,7 @@ const MoodTracker = () => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className={cn('p-4 rounded-2xl border text-center', selectedOption.color)}
+            className={cn('rounded-2xl border bg-white/[0.03] p-4', selectedOption.color)}
           >
             <p className="text-sm text-white font-medium">{selectedOption.message}</p>
           </motion.div>
@@ -74,10 +112,13 @@ const MoodTracker = () => {
       {/* Notes */}
       {selectedMood !== null && (
         <div>
-          <p className="text-xs text-white mb-2">Want to add a note? (optional)</p>
+          <p className="mb-2 text-[13px] text-white">Want to add a note? (optional)</p>
           <textarea
             value={notes}
-            onChange={(e) => { setNotes(e.target.value); setSaved(false); }}
+            onChange={(e) => {
+              setNotes(e.target.value);
+              setSaved(false);
+            }}
             placeholder="What's on your mind..."
             className="w-full min-h-[80px] p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-white/20 focus:outline-none resize-none touch-manipulation"
             style={{ fontSize: '16px' }}
@@ -89,39 +130,52 @@ const MoodTracker = () => {
       {selectedMood !== null && !saved && (
         <button
           onClick={handleSave}
-          className="w-full h-12 rounded-2xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+          className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation transition-all active:scale-[0.98]"
         >
-          Save How I Feel
+          Save how I feel
         </button>
       )}
 
       {/* Saved confirmation */}
       {saved && selectedMood !== null && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-2">
-          <p className="text-xs text-white/85 font-medium">Logged for today</p>
+          <p className="text-[13px] font-medium text-white">Logged for today</p>
         </motion.div>
       )}
 
       {/* Weekly bar chart */}
       {moodHistory.length >= 2 && (
         <div className="pt-2">
-          <p className="text-[10px] font-bold text-white uppercase tracking-wider mb-3">Last 7 Days</p>
+          <p className="mb-3 text-[14px] font-semibold text-white">Last 7 days</p>
           <div className="flex items-end gap-1.5 h-16">
             {Array.from({ length: 7 }).map((_, i) => {
-              const d = new Date(); d.setDate(d.getDate() - (6 - i));
+              const d = new Date();
+              d.setDate(d.getDate() - (6 - i));
               const dateStr = d.toISOString().split('T')[0];
               const entry = moodHistory.find((e) => e.date === dateStr);
               const mood = entry?.mood || 0;
-              const barColors = ['', 'bg-red-400', 'bg-orange-400', 'bg-amber-400', 'bg-emerald-400', 'bg-elec-yellow'];
+              const barColors = [
+                '',
+                'bg-red-400',
+                'bg-orange-400',
+                'bg-amber-400',
+                'bg-emerald-400',
+                'bg-elec-yellow',
+              ];
               return (
                 <div key={i} className="flex-1 flex flex-col items-center gap-1">
                   <div className="w-full flex items-end justify-center" style={{ height: '44px' }}>
                     <div
-                      className={cn('w-full max-w-[18px] rounded-t-md transition-all', mood > 0 ? barColors[mood] : 'bg-white/[0.06]')}
+                      className={cn(
+                        'w-full max-w-[18px] rounded-t-md transition-all',
+                        mood > 0 ? barColors[mood] : 'bg-white/[0.06]'
+                      )}
                       style={{ height: mood > 0 ? `${(mood / 5) * 100}%` : '4px' }}
                     />
                   </div>
-                  <span className="text-[8px] text-white">{['S','M','T','W','T','F','S'][d.getDay()]}</span>
+                  <span className="text-[12px] text-white">
+                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'][d.getDay()]}
+                  </span>
                 </div>
               );
             })}

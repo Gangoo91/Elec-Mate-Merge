@@ -1,338 +1,176 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
-import { useOtjProgramme } from '@/hooks/useOtjProgramme';
+import { useAuth } from '@/contexts/AuthContext';
+import { useOtjSummary, type OtjRisk } from '@/hooks/useOtjSummary';
+import { LC_CARD, lcChip, type ChipTone } from '@/components/apprentice-hub/college-hub/learnerUi';
 
 /* ==========================================================================
-   MyComplianceCard — off-the-job compliance traffic light. Computes
-   verified hours vs the expected hours at this point in the programme:
+   MyComplianceCard — where the learner stands on off-the-job hours against
+   their plan, in words.
 
-     expected = (weeks elapsed / total programme weeks) × programme target
-     programme target = the FIXED off-the-job total for the apprentice's
-                        standard (DfE Annex C — 1,066 h for ST0152), taken
-                        from useOtjProgramme. It used to be 37.5 h × weeks ×
-                        20%, the rule that ended on 1 Aug 2025, which put a
-                        4-year programme at ~1,560 h and lit this card red.
-
-   Verdict:
-     verified >= expected            → green (on track / ahead)
-     verified >= expected × 0.8      → amber (slight slip)
-     verified <  expected × 0.8      → red (compliance risk)
-
-   The 6h-per-week baseline (used elsewhere in useApprenticeOtj) is a floor,
-   not the ESFA total — we compute the *programme-level* total here so the
-   card reflects defensible compliance rather than just weekly cadence.
+   8 Oct 2026: reads get_otj_summary (useOtjSummary), THE hours figure the
+   tutor and the employer read. It used to work out its own "expected by now"
+   from raw dates and count verified minutes only, so on the same screen it
+   said 4.0h expected where the tutor saw 3.3h planned, and ignored measured
+   app learning that the tutor counts. Now the three figures are the shared
+   ones: required for the programme, planned by today, counted so far.
    ========================================================================== */
 
-type Status = 'green' | 'amber' | 'red' | 'unknown';
-
-const STATUS_LABEL: Record<Status, string> = {
-  green: 'On track',
-  amber: 'Slipping',
-  red: 'Compliance risk',
-  unknown: 'No baseline',
-};
-
-const STATUS_TONE: Record<Status, string> = {
-  green: 'text-white',
-  amber: 'text-white',
-  red: 'text-white',
-  unknown: 'text-white',
-};
-
-const STATUS_BG: Record<Status, string> = {
-  green: 'bg-white/[0.02] border-white/[0.06]',
-  amber: 'bg-white/[0.02] border-white/[0.06]',
-  red: 'bg-white/[0.02] border-white/[0.06]',
-  unknown: 'bg-white/[0.02] border-white/[0.06]',
-};
-
-const STATUS_BAR: Record<Status, string> = {
-  green: 'bg-white/[0.02]',
-  amber: 'bg-white/[0.02]',
-  red: 'bg-white/[0.02]',
-  unknown: 'bg-white/[0.10]',
+const RISK: Record<OtjRisk, { label: string; tone: ChipTone }> = {
+  on_track: { label: 'On track', tone: 'done' },
+  slightly_behind: { label: 'Slightly behind', tone: 'action' },
+  behind: { label: 'Behind', tone: 'action' },
+  unknown: { label: 'No plan yet', tone: 'neutral' },
 };
 
 function fmtHours(h: number): string {
-  if (h >= 100) return `${Math.round(h)}h`;
+  if (!Number.isFinite(h) || h <= 0) return '0h';
+  if (h >= 100) return `${Math.round(h).toLocaleString('en-GB')}h`;
   if (h >= 10) return `${h.toFixed(0)}h`;
   return `${h.toFixed(1)}h`;
-}
-
-interface ProgrammeRow {
-  start_date: string | null;
-  expected_end_date: string | null;
 }
 
 export function MyComplianceCard() {
   // Settings → Reminders: keep the facts, drop the nudging (ELE-1804).
   const { hidden: hideReminders } = useLoggingReminders();
-  const otj = useOtjProgramme();
-  const [programme, setProgramme] = useState<ProgrammeRow | null>(null);
-  const [verifiedMin, setVerifiedMin] = useState(0);
-  const [pendingMin, setPendingMin] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [hasAnyData, setHasAnyData] = useState(false);
+  const { user } = useAuth();
+  const { data, loading, error, refresh } = useOtjSummary();
 
-  const fetchAll = useCallback(async () => {
-    const { data: u } = await supabase.auth.getUser();
-    const uid = u.user?.id;
-    if (!uid) {
-      setLoading(false);
-      return;
-    }
-
-    const [csRes, otjRes] = await Promise.all([
-      supabase
-        .from('college_students')
-        .select('start_date, expected_end_date')
-        .eq('user_id', uid)
-        .maybeSingle(),
-      supabase
-        .from('college_otj_entries')
-        .select('duration_minutes, verification_status')
-        .eq('student_id', uid)
-        .limit(500),
-    ]);
-
-    setProgramme((csRes.data as ProgrammeRow | null) ?? null);
-
-    let v = 0;
-    let p = 0;
-    if (otjRes.data) {
-      for (const r of otjRes.data as Array<{
-        duration_minutes: number | null;
-        verification_status: string;
-      }>) {
-        const m = r.duration_minutes ?? 0;
-        if (
-          r.verification_status === 'verified' ||
-          r.verification_status === 'verified_by_employer'
-        ) {
-          v += m;
-        } else if (r.verification_status === 'pending') {
-          p += m;
-        }
-      }
-    }
-    setVerifiedMin(v);
-    setPendingMin(p);
-    setHasAnyData(Boolean(csRes.data) || (otjRes.data?.length ?? 0) > 0);
-    setLoading(false);
-  }, []);
-
+  // A tutor verifying hours updates the figures without a reload.
   useEffect(() => {
-    fetchAll();
-  }, [fetchAll]);
-
-  // Realtime — verification flips immediately update the verdict.
-  useEffect(() => {
-    let chan: ReturnType<typeof supabase.channel> | null = null;
-    (async () => {
-      const { data: u } = await supabase.auth.getUser();
-      const uid = u.user?.id;
-      if (!uid) return;
-      chan = supabase
-        .channel(realtimeChannelName(`my_compliance:${uid}`))
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: 'college_otj_entries',
-            filter: `student_id=eq.${uid}`,
-          },
-          () => fetchAll()
-        )
-        .subscribe();
-    })();
+    const uid = user?.id;
+    if (!uid) return;
+    const chan = supabase
+      .channel(realtimeChannelName(`my_compliance:${uid}`))
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'college_otj_entries',
+          filter: `student_id=eq.${uid}`,
+        },
+        () => void refresh()
+      )
+      .subscribe();
     return () => {
-      if (chan) supabase.removeChannel(chan);
+      void supabase.removeChannel(chan);
     };
-  }, [fetchAll]);
+  }, [user?.id, refresh]);
 
-  const calc = useMemo(() => {
-    if (!programme?.start_date || !programme?.expected_end_date) {
-      return null;
-    }
-    const start = new Date(programme.start_date).getTime();
-    const end = new Date(programme.expected_end_date).getTime();
-    const now = Date.now();
-    if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return null;
+  if (loading) {
+    return <div className={cn(LC_CARD, 'h-40 animate-pulse')} aria-hidden />;
+  }
 
-    const totalMs = end - start;
-    const elapsedMs = Math.min(now - start, totalMs);
-    const totalWeeks = totalMs / (7 * 86_400_000);
-    const elapsedWeeks = Math.max(0, elapsedMs / (7 * 86_400_000));
-
-    const programmeTargetHours = otj.totalTargetHours;
-    const expectedHours = elapsedWeeks > 0 ? (elapsedWeeks / totalWeeks) * programmeTargetHours : 0;
-
-    const verifiedHours = verifiedMin / 60;
-    const ratio = expectedHours > 0 ? verifiedHours / expectedHours : 1;
-
-    let status: Status;
-    if (expectedHours <= 0) status = 'unknown';
-    else if (ratio >= 1) status = 'green';
-    else if (ratio >= 0.8) status = 'amber';
-    else status = 'red';
-
-    return {
-      verifiedHours,
-      pendingHours: pendingMin / 60,
-      expectedHours,
-      programmeTargetHours,
-      ratio,
-      status,
-      elapsedWeeks: Math.round(elapsedWeeks),
-      totalWeeks: Math.round(totalWeeks),
-    };
-  }, [programme, verifiedMin, pendingMin, otj.totalTargetHours]);
-
-  if (loading || otj.loading) return <Skeleton />;
-
-  // No programme dates set — render a quieter "no baseline" panel.
-  if (!calc) {
-    if (!hasAnyData) return null;
+  if (error || !data) {
     return (
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-      >
-        <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
-            Off-the-job compliance
-          </div>
-          <p className="mt-3 text-[12.5px] text-white leading-snug">
-            We can't calculate compliance yet — your programme start and end dates aren't set. Ask
-            your tutor to confirm them so we can show you whether you're on track.
-          </p>
-        </div>
+      <section className={LC_CARD}>
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">
+          Off-the-job hours against your plan
+        </h3>
+        <p className="mt-2 text-[13px] leading-snug text-white">
+          Could not load your hours just now.{' '}
+          <button
+            type="button"
+            onClick={() => void refresh()}
+            className="inline-flex h-11 items-center font-semibold text-elec-yellow touch-manipulation"
+          >
+            Try again
+          </button>
+        </p>
       </section>
     );
   }
 
-  const pct = Math.min(100, Math.round(calc.ratio * 100));
-  const status = calc.status;
+  const required = data.required_hours;
+  const planned = data.planned_to_date_hours;
+  const counted = data.counted_hours;
+  const risk = RISK[data.risk] ?? RISK.unknown;
+  const pct = required ? Math.min(100, (counted / required) * 100) : 0;
+  const plannedPct = required && planned != null ? Math.min(100, (planned / required) * 100) : null;
+
+  let verdict: string;
+  if (!required) {
+    verdict =
+      'Your college has not set how many off-the-job hours your programme needs yet. Ask your tutor to add it so you can see whether you are on track.';
+  } else if (planned == null) {
+    verdict =
+      'Your programme start and end dates are not set yet, so there is no plan to measure against. Ask your tutor to confirm them.';
+  } else if (data.risk === 'on_track') {
+    verdict = `You have ${fmtHours(counted)} counted, at or ahead of the ${fmtHours(planned)} your plan expects by today.`;
+  } else {
+    const gap = Math.max(0, planned - counted);
+    verdict = `Your plan expects ${fmtHours(planned)} by today and you have ${fmtHours(counted)} counted, ${fmtHours(gap)} short.`;
+    if (!hideReminders && data.weekly_needed_hours != null) {
+      verdict += ` About ${fmtHours(data.weekly_needed_hours)} a week from now on gets you to the total.`;
+    }
+  }
 
   return (
-    <section className={cn('rounded-2xl border overflow-hidden', STATUS_BG[status])}>
-      <div className="px-4 sm:px-5 py-4 sm:py-5">
-        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+    <section className={LC_CARD}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
+            Off-the-job hours against your plan
+          </h3>
+          <p className="mt-0.5 text-[12.5px] text-white">
+            The same figures your tutor and employer see
+          </p>
+        </div>
+        <span className={lcChip(risk.tone)}>{risk.label}</span>
+      </div>
+
+      <dl className="mt-4 grid grid-cols-3 gap-3 sm:gap-5">
+        <Fig value={fmtHours(counted)} label="Counted so far" />
+        <Fig value={planned != null ? fmtHours(planned) : 'Not set'} label="Planned by today" />
+        <Fig value={required ? fmtHours(required) : 'Not set'} label="Needed in total" />
+      </dl>
+
+      {required ? (
+        <div className="relative mt-4 h-2 overflow-hidden rounded-full bg-white/[0.08]" aria-hidden>
           <div
             className={cn(
-              'text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em]',
-              STATUS_TONE[status]
+              'h-full rounded-full',
+              data.risk === 'on_track' ? 'bg-emerald-400' : 'bg-orange-400'
             )}
-          >
-            Off-the-job compliance · {STATUS_LABEL[status]}
-          </div>
-          <span className="text-[10.5px] tabular-nums text-white">
-            week {calc.elapsedWeeks} of {calc.totalWeeks}
-          </span>
-        </div>
-
-        <div className="mt-3 grid grid-cols-3 gap-3 sm:gap-5">
-          <Stat value={fmtHours(calc.verifiedHours)} label="Verified" tone="text-white" />
-          <Stat value={fmtHours(calc.expectedHours)} label="Expected by now" tone="text-white" />
-          <Stat
-            value={fmtHours(calc.programmeTargetHours)}
-            label="Programme target"
-            tone="text-white"
+            style={{ width: `${Math.max(pct, counted > 0 ? 1 : 0)}%` }}
           />
-        </div>
-
-        {/* Progress bar — verified portion + pending overlay */}
-        <div className="mt-4 h-2 rounded-full bg-white/[0.05] overflow-hidden relative">
-          <div className={cn('h-full', STATUS_BAR[status])} style={{ width: `${pct}%` }} />
-          {calc.pendingHours > 0 && (
+          {plannedPct != null && (
             <div
-              className="absolute top-0 h-full bg-white/[0.18]"
-              style={{
-                left: `${pct}%`,
-                width: `${Math.min(
-                  100 - pct,
-                  Math.round((calc.pendingHours / calc.expectedHours) * 100)
-                )}%`,
-              }}
-              title="Pending verification"
+              className="absolute top-0 h-full w-0.5 bg-white"
+              style={{ left: `${plannedPct}%` }}
             />
           )}
         </div>
+      ) : null}
 
-        <p
-          className={cn(
-            'mt-3 text-[12px] leading-snug',
-            status === 'green'
-              ? 'text-white'
-              : status === 'amber'
-                ? 'text-elec-yellow'
-                : status === 'red'
-                  ? 'text-red-300'
-                  : 'text-white'
-          )}
-        >
-          {status === 'green' &&
-            (hideReminders
-              ? `You've covered ${pct}% of what's expected at this point.`
-              : `You've covered ${pct}% of what's expected at this point. Keep logging — every verified hour counts at gateway.`)}
-          {status === 'amber' &&
-            (hideReminders
-              ? `You're at ${pct}% of the expected pace.`
-              : `You're at ${pct}% of the expected pace. Submit any work activities you haven't logged yet — closing the gap now is easier than at gateway.`)}
-          {status === 'red' &&
-            (hideReminders
-              ? `You're at ${pct}% of the expected pace.`
-              : `You're at ${pct}% of the expected pace. This is a real gateway risk — submit work activities and ask your tutor for a 1-2-1 to plan catch-up hours.`)}
-          {status === 'unknown' &&
-            'Programme just started — your compliance baseline will activate once a few weeks have elapsed.'}
-          {calc.pendingHours > 0 && (
-            <>
-              {' '}
-              <span className="text-white">
-                ({fmtHours(calc.pendingHours)} pending tutor verification.)
-              </span>
-            </>
-          )}
+      <p className="mt-3 text-[13px] leading-snug text-white">{verdict}</p>
+      {(data.pending_hours > 0 || data.app_learning_hours > 0) && (
+        <p className="mt-1.5 text-[12.5px] leading-snug text-white">
+          {[
+            data.app_learning_hours > 0 &&
+              `${fmtHours(data.app_learning_hours)} of the counted hours is learning the app measured.`,
+            data.pending_hours > 0 &&
+              `${fmtHours(data.pending_hours)} more is waiting on your tutor and counts once they sign it off.`,
+          ]
+            .filter(Boolean)
+            .join(' ')}
         </p>
-      </div>
+      )}
     </section>
   );
 }
 
-function Stat({ value, label, tone }: { value: string; label: string; tone: string }) {
+function Fig({ value, label }: { value: string; label: string }) {
   return (
-    <div>
-      <div
-        className={cn('text-[20px] sm:text-[24px] font-semibold tabular-nums leading-none', tone)}
-      >
+    <div className="flex min-w-0 flex-col">
+      <dt className="order-2 mt-1.5 text-[12px] leading-tight text-white">{label}</dt>
+      <dd className="order-1 text-[20px] font-semibold leading-none tabular-nums text-white sm:text-[24px]">
         {value}
-      </div>
-      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">{label}</div>
+      </dd>
     </div>
-  );
-}
-
-function Skeleton() {
-  return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
-      <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
-        <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
-        <div className="grid grid-cols-3 gap-3">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="space-y-2">
-              <div className="h-6 w-12 rounded-md bg-white/[0.05]" />
-              <div className="h-3 w-14 rounded-full bg-white/[0.04]" />
-            </div>
-          ))}
-        </div>
-        <div className="h-2 rounded-full bg-white/[0.04]" />
-      </div>
-    </section>
   );
 }

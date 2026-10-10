@@ -50,6 +50,10 @@ export function useAllSafetyDocuments() {
       } = await supabase.auth.getUser();
       if (!user) return [];
 
+      // Every list is the signed-in person's own records, said explicitly.
+      // RLS also allows firm managers to read records their team filed against
+      // firm jobs; those must never land in a personal Documents list.
+
       const [
         nearMissRes,
         ramsRes,
@@ -66,27 +70,36 @@ export function useAllSafetyDocuments() {
       ] = await Promise.all([
         supabase
           .from('near_miss_reports')
-          .select('id, description, location, status, created_at, updated_at, reporter_signature, job_id')
+          .select(
+            'id, description, location, status, created_at, updated_at, reporter_signature, job_id'
+          )
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
           .from('rams_documents')
           .select('id, project_name, location, status, created_at, updated_at')
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
           .from('team_briefings')
           .select('id, briefing_name, location, status, created_at, updated_at')
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
           .from('permits_to_work')
           .select('id, title, location, status, created_at, updated_at, job_id')
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
           .from('coshh_assessments')
-          .select('id, substance_name, location_of_use, created_at, updated_at, assessor_signature, job_id')
+          .select(
+            'id, substance_name, location_of_use, created_at, updated_at, assessor_signature, job_id'
+          )
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
@@ -94,6 +107,7 @@ export function useAllSafetyDocuments() {
           .select(
             'id, template_title, location, overall_result, created_at, updated_at, inspector_signature, job_id'
           )
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
@@ -101,11 +115,15 @@ export function useAllSafetyDocuments() {
           .select(
             'id, injured_name, incident_description, location, created_at, updated_at, reporter_signature, is_riddor_reportable, job_id'
           )
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
           .from('safety_observations')
-          .select('id, description, observation_type, location, created_at, observer_signature, job_id')
+          .select(
+            'id, description, observation_type, location, created_at, observer_signature, job_id'
+          )
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         // electrician_site_diary is the table the diary writes (and its PDF
@@ -114,6 +132,7 @@ export function useAllSafetyDocuments() {
         supabase
           .from('electrician_site_diary')
           .select('id, site_name, site_address, entry_date, created_at, updated_at, job_id')
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
@@ -121,16 +140,21 @@ export function useAllSafetyDocuments() {
           .select(
             'id, circuit_description, site_address, status, created_at, updated_at, verifier_signature, job_id'
           )
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
           .from('fire_watch_records')
           .select('id, location, status, created_at, job_id')
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
         supabase
           .from('pre_use_checks')
-          .select('id, equipment_description, site_address, overall_result, created_at, signature, job_id')
+          .select(
+            'id, equipment_description, site_address, overall_result, created_at, signature, job_id'
+          )
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(200),
       ]);

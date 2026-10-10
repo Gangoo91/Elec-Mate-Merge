@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const Nvq2357VsApprenticeshipStandard5357Config: GeneratedGuideConfig = {
   pagePath: '/guides/nvq-2357-vs-apprenticeship-standard-5357',
@@ -78,7 +78,7 @@ export const Nvq2357VsApprenticeshipStandard5357Config: GeneratedGuideConfig = {
           ordered: false,
           items: [
             'Government-funded for under-25 apprentices (employer-subsidised over 25).',
-            'Includes mandatory 20% off-the-job training.',
+            'Includes mandatory off-the-job training: a minimum number of hours set for the standard.',
             'AM2 end-point assessment built in.',
           ],
         },

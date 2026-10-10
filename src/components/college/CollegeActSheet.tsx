@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ClipboardCheck, Clock, Eye, MessageSquare, MessagesSquare, Plus, UserCheck } from 'lucide-react';
+import {
+  ChevronRight,
+  Clock3,
+  ListChecks,
+  MessageSquareText,
+  MessagesSquare,
+  Plus,
+  ScanEye,
+  Stamp,
+} from 'lucide-react';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { FormSheet } from '@/components/forms/FormSheet';
@@ -30,7 +39,14 @@ import { useCollegeCan, type CollegeCapability } from '@/hooks/useCollegeCan';
 
 type Flow = null | 'observe' | 'discussion' | 'decide' | 'message';
 
-type ActTile = { key: string; label: string; hint: string; Icon: typeof Eye; onClick: () => void; primary?: boolean };
+type ActTile = {
+  key: string;
+  label: string;
+  hint: string;
+  Icon: typeof ScanEye;
+  onClick: () => void;
+  primary?: boolean;
+};
 
 /** The six tiles and the sheets they open. `close` runs before each action (closes the Act sheet). */
 function useCollegeActions(close: () => void, onRegister?: () => void) {
@@ -51,7 +67,7 @@ function useCollegeActions(close: () => void, onRegister?: () => void) {
       needs: 'register.take',
       label: 'Register',
       hint: 'Tap only who is missing',
-      Icon: UserCheck,
+      Icon: ListChecks,
       onClick: () => {
         close();
         if (onRegister) onRegister();
@@ -63,7 +79,7 @@ function useCollegeActions(close: () => void, onRegister?: () => void) {
       needs: 'observations.record',
       label: 'Observe',
       hint: 'Tick criteria, add a photo',
-      Icon: Eye,
+      Icon: ScanEye,
       onClick: () => start('observe'),
       primary: true,
     },
@@ -72,15 +88,15 @@ function useCollegeActions(close: () => void, onRegister?: () => void) {
       needs: 'assess.decide',
       label: 'Decide',
       hint: 'Pass or refer criteria',
-      Icon: ClipboardCheck,
+      Icon: Stamp,
       onClick: () => start('decide'),
     },
     {
       key: 'hours',
       needs: 'learners.edit',
       label: 'Verify hours',
-      hint: 'Off-the-job to approve',
-      Icon: Clock,
+      hint: 'Off-the-job, approve or verify',
+      Icon: Clock3,
       onClick: () => {
         close();
         navigate('/college/otj');
@@ -91,7 +107,7 @@ function useCollegeActions(close: () => void, onRegister?: () => void) {
       needs: 'messages.send',
       label: 'Message',
       hint: 'A learner, privately',
-      Icon: MessageSquare,
+      Icon: MessageSquareText,
       onClick: () => start('message'),
     },
     {
@@ -134,7 +150,7 @@ function useCollegeActions(close: () => void, onRegister?: () => void) {
         eyebrow="Message"
         title="Who to message?"
       >
-        <div className="mx-auto w-full max-w-2xl">
+        <div className="w-full">
           <LearnerPicker
             onPick={(l) => {
               setFlow(null);
@@ -183,29 +199,34 @@ export function CollegeActSheet({
             <SheetDescription className="mt-0.5 text-left text-[13px] text-white">
               Everything you do in the workshop, one tap from here.
             </SheetDescription>
-            <div className="mt-5 grid grid-cols-2 gap-2.5">
-              {tiles.map(({ key, label, hint, Icon, onClick, primary }) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={onClick}
-                  className={cn(
-                    'flex h-24 flex-col items-start justify-between rounded-2xl border p-3.5 text-left transition-colors touch-manipulation active:scale-[0.99]',
-                    primary
-                      ? 'border-elec-yellow bg-elec-yellow text-black'
-                      : 'border-white/[0.12] bg-white/[0.05] text-white active:bg-white/[0.1]'
-                  )}
-                >
-                  <Icon className={cn('h-5 w-5', primary ? 'text-black' : 'text-elec-yellow')} aria-hidden />
-                  <span className="w-full min-w-0">
-                    <span className="block text-[15px] font-semibold leading-tight">{label}</span>
-                    <span className={cn('mt-0.5 block truncate text-[11.5px]', primary ? 'text-black' : 'text-white')}>
-                      {hint}
+            {/* A plain list, like a native action sheet: one line icon in
+                white, the action and what it does, nothing painted. */}
+            <ul className="mt-4 divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03]">
+              {tiles.map(({ key, label, hint, Icon, onClick }) => (
+                <li key={key}>
+                  <button
+                    type="button"
+                    onClick={onClick}
+                    className="flex min-h-[60px] w-full items-center gap-3.5 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07]"
+                  >
+                    <Icon
+                      className="h-[18px] w-[18px] shrink-0 text-white"
+                      strokeWidth={1.75}
+                      aria-hidden
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[15px] font-semibold leading-tight text-white">
+                        {label}
+                      </span>
+                      <span className="mt-0.5 block text-[13px] leading-snug text-white">
+                        {hint}
+                      </span>
                     </span>
-                  </span>
-                </button>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
             <button
               type="button"
               onClick={() => onOpenChange(false)}
@@ -235,11 +256,20 @@ function DecidePicker({
 }) {
   const { data } = useCollegePortfolioOverview();
   const waiting = new Map(
-    (data?.learners ?? []).map((l) => [l.student_id, (l.criteria?.claimed ?? 0) + (l.criteria?.submitted ?? 0)])
+    (data?.learners ?? []).map((l) => [
+      l.student_id,
+      (l.criteria?.claimed ?? 0) + (l.criteria?.submitted ?? 0),
+    ])
   );
   return (
-    <FormSheet open={open} onOpenChange={onOpenChange} width="wide" eyebrow="Decide" title="Whose criteria?">
-      <div className="mx-auto w-full max-w-2xl">
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Decide"
+      title="Whose criteria?"
+    >
+      <div className="w-full">
         <LearnerPicker
           requireAccount
           onPick={(l) => onPick(l.id)}
@@ -273,7 +303,7 @@ export function CollegeActButton({ onRegister }: { onRegister?: () => void }) {
         type="button"
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
-        aria-label="Act: register, observe, decide, verify hours, message"
+        aria-label="Act: quick actions for the workshop"
         className="group flex h-11 shrink-0 items-center px-1.5 touch-manipulation"
       >
         <span className="inline-flex h-9 items-center gap-1 rounded-full bg-elec-yellow pl-2.5 pr-3.5 text-[13px] font-semibold text-black transition-opacity group-hover:opacity-90 group-active:scale-95">
@@ -291,33 +321,49 @@ export function CollegeActButton({ onRegister }: { onRegister?: () => void }) {
  * across on a phone (labels only, the hints do not fit), six across on a
  * wide screen.
  */
-export function CollegeActStrip({ onRegister }: { onRegister?: () => void }) {
+/** Live state shown under an action on the home strip ("45 waiting"). */
+export type ActMeta = Partial<Record<string, { text: string; warn?: boolean }>>;
+
+export function CollegeActStrip({ onRegister, meta }: { onRegister?: () => void; meta?: ActMeta }) {
   const { tiles, flows } = useCollegeActions(() => undefined, onRegister);
   if (tiles.length === 0) return null;
   return (
     <>
-      <div className="grid grid-cols-3 gap-2 lg:grid-cols-6 lg:gap-3">
-        {tiles.map(({ key, label, hint, Icon, onClick, primary }) => (
-          <button
-            key={key}
-            type="button"
-            onClick={onClick}
-            className={cn(
-              'flex min-h-[76px] flex-col items-start justify-between gap-2 rounded-2xl border p-3 text-left transition-colors touch-manipulation active:scale-[0.99] lg:min-h-[88px] lg:p-3.5',
-              primary
-                ? 'border-elec-yellow bg-elec-yellow text-black'
-                : 'border-white/[0.12] bg-white/[0.05] text-white hover:bg-white/[0.08] active:bg-white/[0.1]'
-            )}
-          >
-            <Icon className={cn('h-5 w-5', primary ? 'text-black' : 'text-elec-yellow')} aria-hidden />
-            <span className="w-full min-w-0">
-              <span className="block text-[14px] font-semibold leading-tight">{label}</span>
-              <span className={cn('mt-0.5 hidden truncate text-[11.5px] sm:block', primary ? 'text-black' : 'text-white')}>
-                {hint}
+      {/* Each action says what is waiting for it, so the row is worth its
+          place: "Verify hours, 45 waiting", "Register, Tue 09:30". One line
+          icon per action at the same 1.5 weight, nothing painted (10 Oct:
+          the stacked icon tiles with one solid yellow tile read as generated). */}
+      <div className="grid grid-cols-2 gap-2 lg:grid-cols-6">
+        {tiles.map(({ key, label, hint, Icon, onClick }) => {
+          const m = meta?.[key];
+          return (
+            <button
+              key={key}
+              type="button"
+              onClick={onClick}
+              className="group flex min-h-[64px] min-w-0 items-center gap-3 rounded-xl border border-white/[0.1] bg-white/[0.035] px-3.5 py-2.5 text-left text-white transition-colors touch-manipulation hover:border-white/[0.22] hover:bg-white/[0.06] active:bg-white/[0.09]"
+            >
+              <Icon
+                className="h-5 w-5 shrink-0 text-white transition-colors group-hover:text-elec-yellow"
+                strokeWidth={1.5}
+                aria-hidden
+              />
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[14.5px] font-semibold leading-tight">
+                  {label}
+                </span>
+                <span
+                  className={cn(
+                    'mt-0.5 block truncate text-[12.5px] leading-tight tabular-nums',
+                    m?.warn ? 'font-semibold text-orange-300' : 'text-white'
+                  )}
+                >
+                  {m?.text ?? hint}
+                </span>
               </span>
-            </span>
-          </button>
-        ))}
+            </button>
+          );
+        })}
       </div>
       {flows}
     </>

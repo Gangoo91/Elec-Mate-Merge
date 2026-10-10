@@ -1,5 +1,6 @@
 import { CheckCircle, FileText, Calculator, ClipboardList } from 'lucide-react';
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -60,123 +61,121 @@ const checklists: Checklist[] = [
 
 const ToolsPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Templates"
-        title="Tools & templates"
-        backTo="/apprentice/rights-and-pay"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "Practical checklists for staying on top of your rights, pay and training. Tick off each item — if something's missing, raise it with your employer or training provider early."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Templates"
+      area="Rights and pay"
+      title="Tools & templates"
+      backTo="/apprentice/rights-and-pay"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "Practical checklists for staying on top of your rights, pay and training. Tick off each item — if something's missing, raise it with your employer or training provider early."
+        }
+      </p>
 
-        {/* Checklists */}
-        {checklists.map((checklist) => (
-          <div
-            key={checklist.title}
-            className={cn(
-              'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-              CARD_SURFACE
-            )}
-          >
-            <div className="py-4 sm:p-5 space-y-4">
-              <div className="flex items-center gap-2">
-                {checklist.icon}
-                <HubSectionHeading>{checklist.title}</HubSectionHeading>
-              </div>
-              <ul className="space-y-2">
-                {checklist.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-white">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-
-        {/* Useful Templates */}
+      {/* Checklists */}
+      {checklists.map((checklist) => (
         <div
+          key={checklist.title}
           className={cn(
-            'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            'border-0 bg-transparent -mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
             CARD_SURFACE
           )}
         >
           <div className="py-4 sm:p-5 space-y-4">
-            <HubSectionHeading>Useful letter templates</HubSectionHeading>
-            <p className="text-white text-sm leading-relaxed">
-              If you need to raise an issue formally, keep it factual, polite, and in writing. Here
-              are the key points to include in common situations:
-            </p>
-
-            <div className="space-y-3">
-              {[
-                {
-                  title: 'Querying a Pay Discrepancy',
-                  points: [
-                    'State the pay period and hours worked',
-                    'Show what you were paid vs what you expected',
-                    'Reference your contract and the NMW rate',
-                    'Ask for a written explanation within 7 days',
-                    'If unresolved, report the underpayment to HMRC — they enforce NMW arrears and back-pay',
-                  ],
-                },
-                {
-                  title: 'Requesting Your Off-the-Job Training Hours',
-                  points: [
-                    `Reference the fixed off-the-job hours required by your apprenticeship standard (${DEFAULT_OTJ_STANDARD.otjHours.toLocaleString('en-GB')} hours for ${DEFAULT_OTJ_STANDARD.code})`,
-                    'State how many hours you have received vs expected',
-                    'Request a meeting to discuss a training plan',
-                    'Copy in your training provider if needed',
-                  ],
-                },
-                {
-                  title: 'Reporting a Safety Concern',
-                  points: [
-                    'Describe what you observed, with date and location',
-                    'Explain why you believe it is unsafe',
-                    'Reference the relevant regulation if known',
-                    'Request a written response and corrective action',
-                    'Keep a copy for your records',
-                  ],
-                },
-              ].map((template) => (
-                <div
-                  key={template.title}
-                  className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-2"
-                >
-                  <p className="text-white font-semibold text-sm">{template.title}</p>
-                  <ul className="space-y-1">
-                    {template.points.map((point) => (
-                      <li key={point} className="text-white text-xs flex items-start gap-2">
-                        <span className="text-elec-yellow mt-0.5">-</span>
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            <div className="flex items-center gap-2">
+              {checklist.icon}
+              <CollegeHeading>{checklist.title}</CollegeHeading>
             </div>
+            <ul className="space-y-2">
+              {checklist.items.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm text-white">
+                  <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+      ))}
 
-        {/* Tip */}
-        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-          <div className="py-4 sm:p-5">
-            <p className="text-white text-sm leading-relaxed">
-              <strong className="text-elec-yellow">Top tip:</strong> Always keep copies of your
-              apprenticeship agreement, payslips, training records, and any correspondence with your
-              employer. Digital photos of documents are fine. This evidence is essential if you ever
-              need to raise a formal complaint.
-            </p>
+      {/* Useful Templates */}
+      <div
+        className={cn(
+          'border-0 bg-transparent -mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+          CARD_SURFACE
+        )}
+      >
+        <div className="py-4 sm:p-5 space-y-4">
+          <CollegeHeading>Useful letter templates</CollegeHeading>
+          <p className="text-white text-sm leading-relaxed">
+            If you need to raise an issue formally, keep it factual, polite, and in writing. Here
+            are the key points to include in common situations:
+          </p>
+
+          <div className="space-y-3">
+            {[
+              {
+                title: 'Querying a Pay Discrepancy',
+                points: [
+                  'State the pay period and hours worked',
+                  'Show what you were paid vs what you expected',
+                  'Reference your contract and the NMW rate',
+                  'Ask for a written explanation within 7 days',
+                  'If unresolved, report the underpayment to HMRC — they enforce NMW arrears and back-pay',
+                ],
+              },
+              {
+                title: 'Requesting Your Off-the-Job Training Hours',
+                points: [
+                  `Reference the fixed off-the-job hours required by your apprenticeship standard (${DEFAULT_OTJ_STANDARD.otjHours.toLocaleString('en-GB')} hours for ${DEFAULT_OTJ_STANDARD.code})`,
+                  'State how many hours you have received vs expected',
+                  'Request a meeting to discuss a training plan',
+                  'Copy in your training provider if needed',
+                ],
+              },
+              {
+                title: 'Reporting a Safety Concern',
+                points: [
+                  'Describe what you observed, with date and location',
+                  'Explain why you believe it is unsafe',
+                  'Reference the relevant regulation if known',
+                  'Request a written response and corrective action',
+                  'Keep a copy for your records',
+                ],
+              },
+            ].map((template) => (
+              <div
+                key={template.title}
+                className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-2"
+              >
+                <p className="text-white font-semibold text-sm">{template.title}</p>
+                <ul className="space-y-1">
+                  {template.points.map((point) => (
+                    <li key={point} className="text-white text-xs flex items-start gap-2">
+                      <span className="text-elec-yellow mt-0.5">-</span>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-      </HubBody>
-    </HubPage>
+      </div>
+
+      {/* Tip */}
+      <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+        <div className="py-4 sm:p-5">
+          <p className="text-white text-sm leading-relaxed">
+            <strong className="text-elec-yellow">Top tip:</strong> Always keep copies of your
+            apprenticeship agreement, payslips, training records, and any correspondence with your
+            employer. Digital photos of documents are fine. This evidence is essential if you ever
+            need to raise a formal complaint.
+          </p>
+        </div>
+      </div>
+    </GuidePage>
   );
 };
 

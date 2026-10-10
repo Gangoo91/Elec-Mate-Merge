@@ -79,10 +79,8 @@ const SuppliersAndBudgetPanel = () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                      Tip
-                    </span>
+                  <div className="rounded-lg border border-white/[0.08] bg-white/[0.05] p-3 space-y-1">
+                    <span className="text-[13px] font-semibold text-elec-yellow">Tip</span>
                     <p className="text-[14px] text-white leading-relaxed">{phase.tip}</p>
                   </div>
                 </div>
@@ -91,10 +89,8 @@ const SuppliersAndBudgetPanel = () => {
         </section>
       ))}
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-          Top tip
-        </span>
+      <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-elec-yellow">Top tip</span>
         <p className="text-[14px] text-white leading-relaxed">{suppliersTip}</p>
       </div>
     </div>

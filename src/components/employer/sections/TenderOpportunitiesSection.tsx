@@ -1,22 +1,7 @@
-import { useState, type KeyboardEvent } from 'react';
+import { useState, type KeyboardEvent, type ReactNode } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import {
-  Search,
-  MapPin,
-  Filter,
-  Bookmark,
-  BookmarkCheck,
-  Clock,
-  Zap,
-  ExternalLink,
-  ChevronRight,
-  Loader2,
-  RefreshCw,
-  AlertCircle,
-} from 'lucide-react';
+import { Bookmark, BookmarkCheck, ExternalLink, ChevronRight, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -24,41 +9,58 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import FormSheet from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
+import { panel, Segments } from '@/components/employer/pageParts/PageParts';
 import {
   useSearchOpportunities,
   useSavedOpportunities,
   useSaveOpportunity,
   useRemoveSavedOpportunity,
-  useSyncOpportunities,
-  useTenderSources,
   formatOpportunityValue,
   formatDeadline,
-  getCategoryColor,
   getSectorDisplayName,
-  getComplexityBadge,
   type TenderOpportunity,
   type SearchFilters,
 } from '@/hooks/useOpportunities';
-import {
-  OpportunityDetailSheet,
-  type OpportunityEstimate,
-} from '../sheets/OpportunityDetailSheet';
+import { useTenderFeedSources } from '@/hooks/useTenderMatches';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { OpportunityDetailSheet, type OpportunityEstimate } from '../sheets/OpportunityDetailSheet';
 import {
   Field,
   FormCard,
   FormGrid,
   PrimaryButton,
-  SecondaryButton,
-  SheetShell,
   IconButton,
-  Eyebrow,
   inputClass,
   selectTriggerClass,
   selectContentClass,
-  fieldLabelClass,
 } from '@/components/employer/editorial';
+
+const tabTrigger =
+  'h-11 shrink-0 whitespace-nowrap rounded-full border border-white/[0.14] bg-white/[0.04] px-3.5 text-[13px] font-semibold text-white touch-manipulation data-[state=active]:border-elec-yellow data-[state=active]:bg-elec-yellow data-[state=active]:text-black';
+
+const quietBtn =
+  'h-11 shrink-0 rounded-xl border border-white/[0.14] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation hover:bg-white/[0.1]';
+
+/** One plain sentence inside a panel: the empty and error states. */
+function Note({ title, text }: { title: string; text: string }) {
+  return (
+    <div className={cn(panel, 'px-4 py-4 sm:px-5')}>
+      <p className="text-[15px] font-semibold text-white">{title}</p>
+      <p className="mt-0.5 max-w-xl text-[13px] leading-relaxed text-white">{text}</p>
+    </div>
+  );
+}
+
+function Spinner({ text }: { text: string }) {
+  return (
+    <div className={cn(panel, 'flex items-center gap-2 px-4 py-4 text-[14px] text-white sm:px-5')}>
+      <Loader2 className="h-4 w-4 animate-spin" /> {text}
+    </div>
+  );
+}
 
 interface TenderOpportunitiesSectionProps {
   onStartTender?: (opportunity: TenderOpportunity, estimate?: OpportunityEstimate) => void;
@@ -77,6 +79,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
   const [showFilters, setShowFilters] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState<TenderOpportunity | null>(null);
   const [activeTab, setActiveTab] = useState('search');
+  // Same rule as the matches card: notice values are for roles that see firm money.
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
 
   // Queries
   const searchQuery = useSearchOpportunities(
@@ -84,10 +89,10 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
     !!activePostcode
   );
   const savedQuery = useSavedOpportunities();
-  const sourcesQuery = useTenderSources();
+  const feedsQuery = useTenderFeedSources();
+  const liveFeeds = (feedsQuery.data ?? []).filter((f) => f.live > 0);
   const saveOpportunity = useSaveOpportunity();
   const removeSavedOpportunity = useRemoveSavedOpportunity();
-  const syncOpportunities = useSyncOpportunities();
 
   const handleSearch = () => {
     if (searchPostcode.trim()) {
@@ -117,165 +122,122 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
   const stats = searchQuery.data?.stats;
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
-      {/* Search Header */}
-      <div className="p-4 border-b border-white/[0.06] bg-[hsl(0_0%_12%)] flex-shrink-0">
-        <div className="flex gap-2 mb-3">
-          <div className="relative flex-1">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
+    // Phone: one scroll, the search controls scroll away above the list.
+    // Desktop: search on the left, results on the right, each scrolling.
+    <div className="h-full overflow-y-auto overscroll-contain lg:flex lg:overflow-hidden">
+      <div className="space-y-4 px-4 py-4 sm:px-6 lg:w-[24rem] lg:shrink-0 lg:overflow-y-auto lg:border-r lg:border-white/[0.08] lg:py-5 lg:pl-10">
+        <div>
+          <label
+            htmlFor="tender-postcode"
+            className="mb-1 block text-[13px] font-semibold text-white"
+          >
+            Postcode
+          </label>
+          <div className="flex gap-2">
             <Input
-              placeholder="Enter postcode (e.g. B15 2TT)"
+              id="tender-postcode"
+              placeholder="e.g. B15 2TT"
               value={searchPostcode}
               onChange={(e) => setSearchPostcode(e.target.value.toUpperCase())}
               onKeyPress={handleKeyPress}
-              className={`${inputClass} pl-10`}
+              className={cn(inputClass, 'flex-1')}
             />
+            <PrimaryButton
+              onClick={handleSearch}
+              disabled={!searchPostcode.trim() || searchQuery.isFetching}
+              className="shrink-0 text-[14px]"
+            >
+              {searchQuery.isFetching && <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />}
+              Search
+            </PrimaryButton>
           </div>
-          <PrimaryButton
-            onClick={handleSearch}
-            disabled={!searchPostcode.trim() || searchQuery.isFetching}
-          >
-            {searchQuery.isFetching ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Search className="h-4 w-4" />
-            )}
-          </PrimaryButton>
         </div>
 
-        {/* Radius Selector */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[12px] text-white">Within:</span>
-          {[10, 25, 50, 100].map((miles) => {
-            const active = filters.radius_miles === miles;
-            return (
-              <button
-                key={miles}
-                onClick={() => setFilters({ ...filters, radius_miles: miles })}
-                className={`h-9 px-3 rounded-full text-[12px] font-medium border touch-manipulation transition-colors ${active ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-              >
-                {miles} miles
-              </button>
-            );
-          })}
-          <SecondaryButton onClick={() => setShowFilters(true)} size="sm" className="ml-auto">
-            <Filter className="h-4 w-4 mr-1" />
-            Filters
-          </SecondaryButton>
+        <div>
+          <p className="mb-2 text-[13px] font-semibold text-white">Within</p>
+          <Segments<string>
+            wrap
+            items={[10, 25, 50, 100].map((miles) => ({
+              value: String(miles),
+              label: `${miles} miles`,
+            }))}
+            value={String(filters.radius_miles)}
+            onChange={(v) => setFilters({ ...filters, radius_miles: Number(v) })}
+          />
         </div>
 
-        {/* Open / Recently closed toggle */}
-        <div className="flex items-center gap-2 flex-wrap mt-3">
-          <span className="text-[12px] text-white">Show:</span>
-          {[
-            { value: 'live', label: 'Open to bid' },
-            { value: 'all', label: 'Open + recently closed' },
-            { value: 'closed', label: 'Recently closed' },
-          ].map((opt) => {
-            const active = (filters.status || 'live') === opt.value;
-            return (
-              <button
-                key={opt.value}
-                onClick={() => setFilters({ ...filters, status: opt.value })}
-                className={`h-9 px-3 rounded-full text-[12px] font-medium border touch-manipulation transition-colors ${active ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-              >
-                {opt.label}
-              </button>
-            );
-          })}
+        <div>
+          <p className="mb-2 text-[13px] font-semibold text-white">Show</p>
+          <Segments<string>
+            wrap
+            items={[
+              { value: 'live', label: 'Open to bid' },
+              { value: 'all', label: 'Open and closed' },
+              { value: 'closed', label: 'Recently closed' },
+            ]}
+            value={filters.status || 'live'}
+            onChange={(v) => setFilters({ ...filters, status: v })}
+          />
         </div>
+
+        <button type="button" onClick={() => setShowFilters(true)} className={quietBtn}>
+          Value, sector and sort
+        </button>
       </div>
 
-      {/* Tabs */}
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
-        className="flex-1 flex flex-col min-h-0 overflow-hidden"
+        className="flex flex-col lg:min-h-0 lg:flex-1 lg:overflow-hidden"
       >
-        <TabsList className="w-full justify-start rounded-none border-b border-white/[0.06] bg-transparent h-auto p-0 flex-shrink-0">
-          <TabsTrigger
-            value="search"
-            className="rounded-none border-b-2 border-transparent text-white data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent data-[state=active]:text-white px-4 py-3"
-          >
-            Search results
+        <TabsList className="sticky top-0 z-10 flex h-auto w-full flex-wrap justify-start gap-2 rounded-none border-y border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-2.5 sm:px-6 lg:static lg:border-t-0 lg:px-8">
+          <TabsTrigger value="search" className={tabTrigger}>
+            Results
             {opportunities.length > 0 && (
-              <Badge variant="secondary" className="ml-2 bg-white/[0.06] text-elec-yellow border-0">
-                {opportunities.length}
-              </Badge>
+              <span className="ml-1.5 tabular-nums">{opportunities.length}</span>
             )}
           </TabsTrigger>
-          <TabsTrigger
-            value="saved"
-            className="rounded-none border-b-2 border-transparent text-white data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent data-[state=active]:text-white px-4 py-3"
-          >
+          <TabsTrigger value="saved" className={tabTrigger}>
             Saved
             {(savedQuery.data?.length || 0) > 0 && (
-              <Badge variant="secondary" className="ml-2 bg-white/[0.08] text-white border-0">
-                {savedQuery.data?.length}
-              </Badge>
+              <span className="ml-1.5 tabular-nums">{savedQuery.data?.length}</span>
             )}
           </TabsTrigger>
-          <TabsTrigger
-            value="sources"
-            className="rounded-none border-b-2 border-transparent text-white data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent data-[state=active]:text-white px-4 py-3"
-          >
+          <TabsTrigger value="sources" className={tabTrigger}>
             Sources
           </TabsTrigger>
         </TabsList>
 
-        <div className="flex-1 min-h-0 overflow-auto">
-          {/* Search Results */}
-          <TabsContent value="search" className="m-0 p-4 min-h-full">
+        <div className="px-4 pb-8 pt-4 sm:px-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:px-8">
+          <TabsContent value="search" className="m-0">
             {!activePostcode ? (
-              <div className="text-center py-12">
-                <MapPin className="h-12 w-12 text-white mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">Find electrical contracts near you</h3>
-                <p className="text-white max-w-sm mx-auto">
-                  Enter your postcode to discover live tender opportunities from councils, NHS,
-                  housing associations and more.
-                </p>
-              </div>
+              <Note
+                title="Find electrical contracts near you"
+                text="Enter your postcode to see live tenders from councils, the NHS, housing associations and more."
+              />
             ) : searchQuery.isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-              </div>
+              <Spinner text="Searching" />
             ) : searchQuery.error ? (
-              <div className="text-center py-12">
-                <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">Search failed</h3>
-                <p className="text-white">{(searchQuery.error as Error).message}</p>
-              </div>
+              <Note title="Search failed" text={(searchQuery.error as Error).message} />
             ) : opportunities.length === 0 ? (
-              <div className="text-center py-12">
-                <Search className="h-12 w-12 text-white mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">No opportunities found</h3>
-                <p className="text-white max-w-sm mx-auto">
-                  Try expanding your search radius or adjusting filters. New opportunities are added
-                  daily.
-                </p>
-              </div>
+              <Note
+                title="Nothing found"
+                text="Try a wider distance or fewer filters. New tenders are added every day."
+              />
             ) : (
               <>
-                {/* Stats Bar */}
                 {stats && (
-                  <div className="flex items-center gap-4 mb-4 text-sm">
-                    <span className="text-white">
-                      <span className="font-semibold text-white">{stats.total}</span>{' '}
-                      opportunities
-                    </span>
-                    {stats.avg_value > 0 && (
-                      <span className="text-white">
-                        Avg:{' '}
-                        <span className="font-semibold text-white">
-                          £{stats.avg_value.toLocaleString()}
-                        </span>
-                      </span>
+                  <p className="mb-3 text-[13px] text-white">
+                    <span className="font-semibold">{stats.total}</span> found near {activePostcode}
+                    {canSeeMoney && stats.avg_value > 0 && (
+                      <>
+                        , average{' '}
+                        <span className="font-semibold">£{stats.avg_value.toLocaleString()}</span>
+                      </>
                     )}
-                  </div>
+                  </p>
                 )}
-
-                {/* Opportunity Cards */}
-                <div className="space-y-3">
+                <OpportunityList>
                   {opportunities.map((opp) => (
                     <OpportunityCard
                       key={opp.id}
@@ -284,29 +246,24 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                       onToggleSave={() => toggleSave(opp)}
                       onView={() => setSelectedOpportunity(opp)}
                       onStartTender={() => onStartTender?.(opp)}
+                      showValue={canSeeMoney}
                     />
                   ))}
-                </div>
+                </OpportunityList>
               </>
             )}
           </TabsContent>
 
-          {/* Saved Opportunities */}
-          <TabsContent value="saved" className="m-0 p-4 min-h-full">
+          <TabsContent value="saved" className="m-0">
             {savedQuery.isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-              </div>
+              <Spinner text="Loading saved tenders" />
             ) : (savedQuery.data?.length || 0) === 0 ? (
-              <div className="text-center py-12">
-                <Bookmark className="h-12 w-12 text-white mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">No saved opportunities</h3>
-                <p className="text-white max-w-sm mx-auto">
-                  Save opportunities you're interested in to track them here.
-                </p>
-              </div>
+              <Note
+                title="Nothing saved"
+                text="Tap the bookmark on a tender to keep it here while you decide."
+              />
             ) : (
-              <div className="space-y-3">
+              <OpportunityList>
                 {savedQuery.data?.map((opp) => (
                   <OpportunityCard
                     key={opp.id}
@@ -315,175 +272,153 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                     onToggleSave={() => removeSavedOpportunity.mutate(opp.id)}
                     onView={() => setSelectedOpportunity(opp)}
                     onStartTender={() => onStartTender?.(opp)}
+                    showValue={canSeeMoney}
                   />
                 ))}
-              </div>
+              </OpportunityList>
             )}
           </TabsContent>
 
-          {/* Sources */}
-          <TabsContent value="sources" className="m-0 p-4 min-h-full">
-            <div className="mb-4">
-              <h3 className="font-semibold text-white mb-1">
-                {sourcesQuery.data?.length
-                  ? `${sourcesQuery.data.length} integrated tender sources`
-                  : 'Integrated tender sources'}
+          {/* Sources: only the ones that actually feed the list (ELE-1994).
+              The catalogue table lists 27, most of which have never synced. */}
+          <TabsContent value="sources" className="m-0">
+            <div className="mb-3">
+              <h3 className="text-[16px] font-semibold tracking-tight text-white">
+                {liveFeeds.length
+                  ? `${liveFeeds.length} public tender sources`
+                  : 'Public tender sources'}
               </h3>
-              <p className="text-[13px] text-white">
-                We aggregate opportunities from government, housing, NHS, education, and
-                construction platforms.
+              <p className="mt-0.5 max-w-2xl text-[13px] leading-relaxed text-white">
+                Checked every morning. A notice drops off once its closing date passes. One with no
+                closing date drops off after 14 days without an update from its source.
               </p>
             </div>
 
-            <div className="space-y-3">
-              {sourcesQuery.data?.map((source) => (
-                <Card key={source.id} className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-white">{source.display_name}</span>
-                          {source.is_free ? (
-                            <Badge
-                              variant="outline"
-                              className="text-xs bg-green-500/10 text-green-400 border-green-500/30"
-                            >
-                              Free
-                            </Badge>
-                          ) : (
-                            <Badge
-                              variant="outline"
-                              className="text-xs bg-orange-500/10 text-orange-400 border-orange-500/30"
-                            >
-                              Premium
-                            </Badge>
-                          )}
-                          {source.is_active && (
-                            <div className="w-2 h-2 rounded-full bg-green-500" title="Active" />
-                          )}
-                        </div>
-                        <p className="text-[13px] text-white line-clamp-2">
-                          {source.description}
+            {feedsQuery.isLoading ? (
+              <Spinner text="Loading sources" />
+            ) : liveFeeds.length === 0 ? (
+              <Note
+                title={feedsQuery.error ? "Couldn't load the sources" : 'No sources checked yet'}
+                text={
+                  feedsQuery.error
+                    ? 'Check your connection, then open this tab again.'
+                    : 'The morning check has not brought in any notices yet.'
+                }
+              />
+            ) : (
+              <div className={cn(panel, 'overflow-hidden')}>
+                <ul className="divide-y divide-white/[0.07]">
+                  {liveFeeds.map((source) => (
+                    <li key={source.source} className="flex items-center gap-3 px-4 py-3 sm:px-5">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-[15px] font-semibold text-white">
+                          {source.display_name}
                         </p>
-                        {source.last_sync_at && (
-                          <p className="text-[11.5px] text-white mt-2">
-                            Last sync: {new Date(source.last_sync_at).toLocaleDateString('en-GB')} (
-                            {source.last_sync_count} opportunities)
-                          </p>
-                        )}
+                        <p className="mt-0.5 text-[13px] text-white">
+                          {source.live} open now
+                          {source.last_fetched
+                            ? ` · checked ${new Date(source.last_fetched).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
+                            : ''}
+                        </p>
                       </div>
-                      <div className="flex items-center gap-2 ml-4">
-                        {source.website_url && (
-                          <IconButton
-                            onClick={() => openExternalUrl(source.website_url!)}
-                            aria-label="Open source website"
-                          >
-                            <ExternalLink className="h-4 w-4" />
-                          </IconButton>
-                        )}
-                        {source.source_type === 'api' && source.name === 'contracts_finder' && (
-                          <IconButton
-                            onClick={() => syncOpportunities.mutate(source.name)}
-                            disabled={syncOpportunities.isPending}
-                            aria-label="Sync source"
-                          >
-                            <RefreshCw
-                              className={`h-4 w-4 ${syncOpportunities.isPending ? 'animate-spin' : ''}`}
-                            />
-                          </IconButton>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                      {source.website_url && (
+                        <IconButton
+                          onClick={() => openExternalUrl(source.website_url!)}
+                          aria-label={`Open ${source.display_name}`}
+                          className="shrink-0"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </IconButton>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </TabsContent>
         </div>
       </Tabs>
 
-      {/* Filter Sheet */}
-      <Sheet open={showFilters} onOpenChange={setShowFilters}>
-        <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0 overflow-hidden">
-          <SheetShell
-            eyebrow="Opportunities"
-            title="Filter opportunities"
-            description="Narrow by contract value, sector or sort order."
-            footer={
-              <PrimaryButton onClick={() => setShowFilters(false)} fullWidth size="lg">
-                Apply filters
-              </PrimaryButton>
-            }
-          >
-            <FormCard eyebrow="Contract value">
-              <FormGrid cols={2}>
-                <Field label="Min (£)">
-                  <Input
-                    type="number"
-                    placeholder="0"
-                    value={filters.min_value || ''}
-                    onChange={(e) =>
-                      setFilters({ ...filters, min_value: Number(e.target.value) || undefined })
-                    }
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Max (£)">
-                  <Input
-                    type="number"
-                    placeholder="No limit"
-                    value={filters.max_value || ''}
-                    onChange={(e) =>
-                      setFilters({ ...filters, max_value: Number(e.target.value) || undefined })
-                    }
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-            </FormCard>
+      <FormSheet
+        open={showFilters}
+        onOpenChange={setShowFilters}
+        width="wide"
+        title="Value, sector and sort"
+        description="Narrow by contract value, sector or sort order."
+        bodyClassName="grid gap-4 lg:grid-cols-2 lg:items-start"
+        footer={
+          <PrimaryButton onClick={() => setShowFilters(false)} fullWidth>
+            Apply filters
+          </PrimaryButton>
+        }
+      >
+        <FormCard eyebrow="Contract value">
+          <FormGrid cols={2}>
+            <Field label="Min (£)">
+              <Input
+                type="number"
+                placeholder="0"
+                value={filters.min_value || ''}
+                onChange={(e) =>
+                  setFilters({ ...filters, min_value: Number(e.target.value) || undefined })
+                }
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Max (£)">
+              <Input
+                type="number"
+                placeholder="No limit"
+                value={filters.max_value || ''}
+                onChange={(e) =>
+                  setFilters({ ...filters, max_value: Number(e.target.value) || undefined })
+                }
+                className={inputClass}
+              />
+            </Field>
+          </FormGrid>
+        </FormCard>
 
-            <FormCard eyebrow="Sector & sort">
-              <Field label="Sector">
-                <Select
-                  value={filters.sector || 'all'}
-                  onValueChange={(v) =>
-                    setFilters({ ...filters, sector: v === 'all' ? undefined : v })
-                  }
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="All sectors" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="all">All sectors</SelectItem>
-                    <SelectItem value="public">Public sector</SelectItem>
-                    <SelectItem value="local_authority">Local council</SelectItem>
-                    <SelectItem value="housing">Housing</SelectItem>
-                    <SelectItem value="healthcare">NHS / healthcare</SelectItem>
-                    <SelectItem value="education">Education</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
+        <FormCard eyebrow="Sector and sort">
+          <Field label="Sector">
+            <Select
+              value={filters.sector || 'all'}
+              onValueChange={(v) => setFilters({ ...filters, sector: v === 'all' ? undefined : v })}
+            >
+              <SelectTrigger className={selectTriggerClass}>
+                <SelectValue placeholder="All sectors" />
+              </SelectTrigger>
+              <SelectContent className={selectContentClass}>
+                <SelectItem value="all">All sectors</SelectItem>
+                <SelectItem value="public">Public sector</SelectItem>
+                <SelectItem value="local_authority">Local council</SelectItem>
+                <SelectItem value="housing">Housing</SelectItem>
+                <SelectItem value="healthcare">NHS and healthcare</SelectItem>
+                <SelectItem value="education">Education</SelectItem>
+              </SelectContent>
+            </Select>
+          </Field>
 
-              <Field label="Sort by">
-                <Select
-                  value={filters.sort_by || 'deadline'}
-                  onValueChange={(v) => setFilters({ ...filters, sort_by: v as any })}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="deadline">Deadline (soonest first)</SelectItem>
-                    <SelectItem value="distance">Distance (nearest first)</SelectItem>
-                    <SelectItem value="value">Value (highest first)</SelectItem>
-                    <SelectItem value="relevance">Relevance</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormCard>
-          </SheetShell>
-        </SheetContent>
-      </Sheet>
+          <Field label="Sort by">
+            <Select
+              value={filters.sort_by || 'deadline'}
+              onValueChange={(v) =>
+                setFilters({ ...filters, sort_by: v as SearchFilters['sort_by'] })
+              }
+            >
+              <SelectTrigger className={selectTriggerClass}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className={selectContentClass}>
+                <SelectItem value="deadline">Deadline (soonest first)</SelectItem>
+                <SelectItem value="distance">Distance (nearest first)</SelectItem>
+                {canSeeMoney && <SelectItem value="value">Value (highest first)</SelectItem>}
+                <SelectItem value="relevance">Relevance</SelectItem>
+              </SelectContent>
+            </Select>
+          </Field>
+        </FormCard>
+      </FormSheet>
 
       {/* Opportunity Detail Sheet */}
       <OpportunityDetailSheet
@@ -498,18 +433,36 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
         }}
         isSaved={selectedOpportunity ? isSaved(selectedOpportunity.id) : false}
         onToggleSave={() => selectedOpportunity && toggleSave(selectedOpportunity)}
+        canSeeMoney={canSeeMoney}
       />
     </div>
   );
 }
 
-// Opportunity Card Component
+function OpportunityList({ children }: { children: ReactNode }) {
+  return (
+    <div className={cn(panel, 'overflow-hidden')}>
+      <ul className="divide-y divide-white/[0.07]">{children}</ul>
+    </div>
+  );
+}
+
 interface OpportunityCardProps {
   opportunity: TenderOpportunity;
   isSaved: boolean;
   onToggleSave: () => void;
   onView: () => void;
   onStartTender?: () => void;
+  showValue?: boolean;
+}
+
+/** What kind of lead it is, and what to do about it. */
+function kindOf(o: TenderOpportunity): string {
+  if (o.status === 'closed') return 'Recently closed, approach the buyer';
+  const t = o.opportunity_type || 'tender';
+  if (t === 'planning') return 'Planning lead, approach early';
+  if (t === 'award') return 'Award, pitch as a subcontractor';
+  return 'Tender, open to bid';
 }
 
 function OpportunityCard({
@@ -517,127 +470,65 @@ function OpportunityCard({
   isSaved,
   onToggleSave,
   onView,
-  onStartTender,
+  showValue = true,
 }: OpportunityCardProps) {
   const deadline = formatDeadline(opportunity.deadline);
-  const complexity = getComplexityBadge(opportunity.estimated_complexity);
-
-  // Get scope preview text
-  const scopePreview = opportunity.scope_of_works || opportunity.description || '';
-  const hasScope = scopePreview.length > 0;
+  const deadlineText =
+    opportunity.opportunity_type === 'planning' && !opportunity.deadline
+      ? 'Pre-tender'
+      : deadline.text;
+  const detail = [
+    opportunity.client_name,
+    // Some sources append "Estimated value …" to the place name
+    (opportunity.location_text || '').replace(/\s*Estimated value.*$/i, '').trim() || null,
+    opportunity.distance_miles !== null && opportunity.distance_miles !== undefined
+      ? `${opportunity.distance_miles} miles`
+      : null,
+    opportunity.sector ? getSectorDisplayName(opportunity.sector) : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
   return (
-    <Card
-      className="bg-[hsl(0_0%_12%)] border-white/[0.06] hover:bg-[hsl(0_0%_14%)] active:bg-[hsl(0_0%_15%)] transition-colors cursor-pointer touch-manipulation active:scale-[0.99]"
-      onClick={onView}
-    >
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex-1 min-w-0">
-            {/* Title and Client */}
-            <div className="flex items-start gap-2 mb-2">
-              <Zap className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-              <div className="min-w-0">
-                {(() => {
-                  const t = opportunity.opportunity_type || 'tender';
-                  const badge =
-                    opportunity.status === 'closed'
-                      ? { label: 'Recently closed · approach the buyer', cls: 'bg-white/[0.08] text-white border-white/15' }
-                      : t === 'planning'
-                        ? { label: 'Planning lead · approach early', cls: 'bg-purple-500/15 text-purple-300 border-purple-500/25' }
-                        : t === 'award'
-                          ? { label: 'Award · pitch as subcontractor', cls: 'bg-blue-500/15 text-blue-300 border-blue-500/25' }
-                          : { label: 'Tender · open to bid', cls: 'bg-white/[0.06] text-elec-yellow border-elec-yellow/25' };
-                  return (
-                    <span className={`inline-block mb-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${badge.cls}`}>
-                      {badge.label}
-                    </span>
-                  );
-                })()}
-                <h4 className="font-medium text-sm line-clamp-2 text-white">{opportunity.title}</h4>
-                <p className="text-xs text-white truncate">{opportunity.client_name}</p>
-              </div>
-            </div>
-
-            {/* Location and Key Info */}
-            <div className="flex items-center gap-3 text-xs text-white mb-2 flex-wrap">
-              {opportunity.location_text && (
-                <span className="flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
-                  {opportunity.location_text}
-                </span>
-              )}
-              {opportunity.distance_miles !== null && opportunity.distance_miles !== undefined && (
-                <span className="text-elec-yellow font-medium">
-                  {opportunity.distance_miles} miles
-                </span>
-              )}
-              <span className="font-semibold text-white">
-                {formatOpportunityValue(opportunity)}
-              </span>
-              <span
-                className={`flex items-center gap-1 ${deadline.urgent ? 'text-orange-400' : ''}`}
-              >
-                <Clock className="h-3 w-3" />
-                {(opportunity.opportunity_type === 'planning' && !opportunity.deadline)
-                  ? 'Pre-tender'
-                  : deadline.text}
-              </span>
-            </div>
-
-            {/* Scope Preview */}
-            {hasScope && (
-              <div className="mb-2 p-2 rounded-lg bg-[hsl(0_0%_9%)] border border-white/[0.06]">
-                <p className="text-xs text-white line-clamp-2">{scopePreview}</p>
-              </div>
-            )}
-
-            {/* Categories */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <Badge variant="outline" className={complexity.color}>
-                {complexity.text}
-              </Badge>
-              {opportunity.categories?.slice(0, 2).map((cat) => (
-                <Badge key={cat} variant="outline" className={getCategoryColor(cat)}>
-                  {cat.replace('_', ' ')}
-                </Badge>
-              ))}
-              {opportunity.sector && (
-                <Badge variant="outline" className="bg-white/[0.06] text-white border-white/[0.08]">
-                  {getSectorDisplayName(opportunity.sector)}
-                </Badge>
-              )}
-              {opportunity.framework_required && (
-                <Badge
-                  variant="outline"
-                  className="bg-orange-500/10 text-orange-400 border-orange-500/30"
-                >
-                  Framework
-                </Badge>
-              )}
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-col items-end gap-1">
-            <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleSave();
-              }}
-              aria-label={isSaved ? 'Remove from saved' : 'Save opportunity'}
-            >
-              {isSaved ? (
-                <BookmarkCheck className="h-5 w-5 text-elec-yellow" />
-              ) : (
-                <Bookmark className="h-5 w-5" />
-              )}
-            </IconButton>
-            <ChevronRight className="h-4 w-4 text-white mr-2" />
-          </div>
+    <li>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onView}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onView();
+          }
+        }}
+        className="flex min-h-[60px] cursor-pointer items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60 sm:px-5"
+      >
+        <div className="min-w-0 flex-1">
+          <p className="line-clamp-2 text-[15px] font-semibold leading-snug text-white">
+            {opportunity.title}
+          </p>
+          {detail && <p className="mt-0.5 line-clamp-2 text-[13px] text-white">{detail}</p>}
+          <p className="mt-0.5 text-[12.5px] font-medium text-white">
+            <span className={deadline.urgent ? 'text-elec-yellow' : undefined}>{deadlineText}</span>
+            {showValue && ` · ${formatOpportunityValue(opportunity)}`}
+            {' · '}
+            {kindOf(opportunity)}
+            {opportunity.framework_required ? ' · Framework needed' : ''}
+          </p>
         </div>
-      </CardContent>
-    </Card>
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleSave();
+          }}
+          aria-label={isSaved ? 'Remove from saved' : 'Save opportunity'}
+          className={cn('shrink-0', isSaved && 'border-elec-yellow text-elec-yellow')}
+        >
+          {isSaved ? <BookmarkCheck className="h-4 w-4" /> : <Bookmark className="h-4 w-4" />}
+        </IconButton>
+        <ChevronRight aria-hidden className="h-4 w-4 shrink-0 text-white" />
+      </div>
+    </li>
   );
 }
 

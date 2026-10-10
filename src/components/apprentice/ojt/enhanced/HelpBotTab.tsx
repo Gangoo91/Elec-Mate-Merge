@@ -467,7 +467,7 @@ const HelpBotTab = () => {
         value: String(snapshot.recentPracticeCount),
         label: 'Practice · 14d',
         sub: snapshot.recentPracticeCount >= 5 ? 'Strong rhythm' : 'Keep going',
-        tone: snapshot.recentPracticeCount >= 5 ? 'text-emerald-300' : 'text-elec-yellow',
+        tone: snapshot.recentPracticeCount >= 5 ? 'text-emerald-300' : 'text-orange-300',
       });
     }
     if (snapshot.portfolioItems > 0) {
@@ -478,7 +478,7 @@ const HelpBotTab = () => {
           snapshot.portfolioRecent > 0
             ? `${snapshot.portfolioRecent} this fortnight`
             : 'Add evidence soon',
-        tone: snapshot.portfolioRecent > 0 ? 'text-emerald-300' : 'text-amber-300',
+        tone: snapshot.portfolioRecent > 0 ? 'text-emerald-300' : 'text-orange-300',
       });
     }
     if (snapshot.otjHours30d > 0 && tiles.length < 4) {
@@ -486,7 +486,7 @@ const HelpBotTab = () => {
         value: `${snapshot.otjHours30d}h`,
         label: 'OTJ · 30d',
         sub: snapshot.otjPendingHours > 0 ? `${snapshot.otjPendingHours}h pending` : 'All verified',
-        tone: snapshot.otjPendingHours > 0 ? 'text-amber-300' : 'text-emerald-300',
+        tone: snapshot.otjPendingHours > 0 ? 'text-orange-300' : 'text-emerald-300',
       });
     }
     if (snapshot.attendancePct !== null && tiles.length < 4) {
@@ -498,7 +498,7 @@ const HelpBotTab = () => {
           snapshot.attendancePct >= 90
             ? 'text-emerald-300'
             : snapshot.attendancePct >= 80
-              ? 'text-amber-300'
+              ? 'text-orange-300'
               : 'text-red-300',
       });
     }
@@ -515,7 +515,7 @@ const HelpBotTab = () => {
         value: String(snapshot.ilpGoalsActive),
         label: 'Active ILP goals',
         sub: 'Set by your tutor',
-        tone: 'text-elec-yellow',
+        tone: 'text-white',
       });
     }
 
@@ -523,7 +523,7 @@ const HelpBotTab = () => {
       <div className="px-4 sm:px-8 py-8 sm:py-12 space-y-8 sm:space-y-10">
         {/* Editorial lede — no icon, no avatar. Pure typography. */}
         <div className="space-y-3 sm:space-y-4 max-w-2xl">
-          <div className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
+          <div className="text-[13px] font-semibold text-elec-yellow">
             Dave · master sparky · 20 years on the tools
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-semibold tracking-tight leading-[1.05] text-white">
@@ -550,9 +550,7 @@ const HelpBotTab = () => {
         {/* Stats tiles — proof that Dave actually has the data */}
         {tiles.length > 0 && (
           <div className="space-y-2.5">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              What I'm looking at
-            </div>
+            <div className="text-[13px] font-semibold text-white">What I'm looking at</div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
               {tiles.slice(0, 4).map((t, i) => (
                 <div
@@ -564,10 +562,8 @@ const HelpBotTab = () => {
                   >
                     {t.value}
                   </div>
-                  <div className="mt-2 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
-                    {t.label}
-                  </div>
-                  <div className="text-[10.5px] text-white leading-tight mt-0.5">{t.sub}</div>
+                  <div className="mt-2 text-[13px] font-semibold text-white">{t.label}</div>
+                  <div className="text-[12.5px] text-white leading-tight mt-0.5">{t.sub}</div>
                 </div>
               ))}
             </div>
@@ -577,7 +573,7 @@ const HelpBotTab = () => {
         {/* Smart prompt cards — bigger, editorial. Each one is a hook
             that uses the apprentice's real data. */}
         <div className="space-y-2.5">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          <div className="text-[13px] font-semibold text-elec-yellow">
             Start here · personalised
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
@@ -588,7 +584,7 @@ const HelpBotTab = () => {
                 className={cn(CARD_BASE, CARD_NEUTRAL, 'px-4 py-3.5 sm:py-4')}
               >
                 <div className="flex items-baseline gap-2.5">
-                  <span className="text-[10px] font-mono tabular-nums text-elec-yellow/70 shrink-0 mt-0.5">
+                  <span className="text-[12.5px] tabular-nums text-elec-yellow shrink-0 mt-0.5">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="text-[13px] text-white leading-snug group-hover:text-white transition-colors">
@@ -602,9 +598,7 @@ const HelpBotTab = () => {
 
         {/* Topic shortcuts — discreet footer, monochrome */}
         <div className="space-y-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Or jump straight to a topic
-          </div>
+          <div className="text-[13px] font-semibold text-white">Or jump straight to a topic</div>
           <div className="flex flex-wrap gap-1.5">
             {[
               'Safe isolation',
@@ -619,7 +613,7 @@ const HelpBotTab = () => {
               <button
                 key={topic}
                 onClick={() => handleSendMessage(`Tell me about ${topic.toLowerCase()}`)}
-                className="px-3 py-1.5 text-[11px] bg-white/[0.03] hover:bg-elec-yellow/12 border border-white/[0.10] hover:border-elec-yellow/40 rounded-full transition-colors touch-manipulation text-white hover:text-white"
+                className="inline-flex h-11 items-center px-3.5 text-[13px] bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.10] hover:border-elec-yellow/40 rounded-full transition-colors touch-manipulation text-white hover:text-white"
               >
                 {topic}
               </button>
@@ -684,7 +678,7 @@ const HelpBotTab = () => {
                 <button
                   type="button"
                   onClick={() => setHistoryOpen(true)}
-                  className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11px] font-medium text-white hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] touch-manipulation transition-colors"
+                  className="inline-flex items-center gap-1.5 h-11 px-3 rounded-full text-[13px] font-medium text-white hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] touch-manipulation transition-colors"
                 >
                   <History className="h-3 w-3" />
                   History
@@ -695,7 +689,7 @@ const HelpBotTab = () => {
                 <button
                   type="button"
                   onClick={handleNewChat}
-                  className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11px] font-medium text-white hover:text-elec-yellow bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.08] hover:border-elec-yellow/30 touch-manipulation transition-colors"
+                  className="inline-flex items-center gap-1.5 h-11 px-3 rounded-full text-[13px] font-medium text-white hover:text-elec-yellow bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.08] hover:border-elec-yellow/30 touch-manipulation transition-colors"
                 >
                   <PlusCircle className="h-3 w-3" />
                   New chat
@@ -706,14 +700,12 @@ const HelpBotTab = () => {
             {/* Compact Follow-up chips - horizontal scroll on mobile */}
             {followUpQuestions.length > 0 && !isLoading && (
               <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1 mb-2 -mx-1 px-1">
-                <span className="text-[10px] text-muted-foreground shrink-0 hidden sm:inline">
-                  Try:
-                </span>
+                <span className="text-[12.5px] text-white shrink-0 hidden sm:inline">Try:</span>
                 {followUpQuestions.slice(0, 2).map((q, i) => (
                   <button
                     key={i}
                     onClick={() => handleFollowUp(q)}
-                    className="shrink-0 px-2.5 py-1 text-[11px] bg-white/[0.06] hover:bg-white/[0.08] border border-elec-yellow/20 rounded-full text-foreground/80 truncate max-w-[160px] touch-manipulation transition-colors"
+                    className="inline-flex h-11 items-center shrink-0 px-3 text-[13px] bg-white/[0.06] hover:bg-white/[0.08] border border-white/[0.08] rounded-full text-white truncate max-w-[160px] touch-manipulation transition-colors"
                   >
                     {q.length > 35 ? q.slice(0, 35) + '...' : q}
                   </button>

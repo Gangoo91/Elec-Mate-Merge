@@ -213,9 +213,9 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <table className="w-full text-[13px]">
                       <thead>
                         <tr className="border-b border-white/[0.08]">
-                          <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Circuit</th>
-                          <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Test V</th>
-                          <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Min IR</th>
+                          <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Circuit</th>
+                          <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Test V</th>
+                          <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Min IR</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/[0.06]">
@@ -245,7 +245,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-World Failure Scenarios */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mb-2 mt-4">Real-World Failure Scenarios</p>
+          <p className="text-[12px] font-medium text-white px-0.5 mb-2 mt-4">Real-World Failure Scenarios</p>
         </motion.div>
         {failureScenarios.map((scenario, i) => {
           const isOpen = expanded === `scenario-${i}`;

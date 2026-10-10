@@ -153,6 +153,21 @@ invoice_total is the grand total payable (inc VAT if shown). Numbers only, no cu
       }
     }
 
+    // Gap §4.4: ONE supplier-bill rule for the whole app, in SQL
+    // (_supplier_bill_check: 1% plus half a penny on the total and on each
+    // line; a smaller bill is a part delivery, not a variance). The checks
+    // above are the old 2% rule, kept only as the fallback for a database
+    // that doesn't have supplier_bill_check yet.
+    const { data: rule, error: ruleErr } = await supabase.rpc('supplier_bill_check', {
+      p_order: order_id,
+      p_bill_total: invTotal,
+      p_lines: inv.lines ?? [],
+    });
+    if (!ruleErr && rule && Array.isArray((rule as { variances?: unknown }).variances)) {
+      variances.length = 0;
+      variances.push(...((rule as { variances: Variance[] }).variances));
+    }
+
     const matched = variances.length === 0;
 
     // 3) Store the invoice + verdict.

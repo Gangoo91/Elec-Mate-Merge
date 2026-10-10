@@ -13,6 +13,14 @@
 #   COLLEGE_E2E_TUTOR_PASSWORD
 #   COLLEGE_E2E_LEARNER_EMAIL      the fixture learner (founder+collegedemo-learner@…)
 #   COLLEGE_E2E_LEARNER_PASSWORD
+#   COLLEGE_E2E_{ASSESSOR,IQA,ADMIN,EMPLOYER}_{EMAIL,PASSWORD}
+#                                  optional: the other fixture roles for the
+#                                  per-role access spec (55-role-access). Unset
+#                                  = that role is skipped by name.
+#
+# Node 22+: supabase-js's realtime client needs the native WebSocket that
+# Node 20 does not have ("Node.js detected but native WebSocket not found"
+# failed every nightly 8–10 Oct before any test ran).
 #
 # Nightly against production, and on every PR that touches college,
 # apprentice, migration or test paths. A red run blocks the demo, not the
@@ -60,7 +68,7 @@ jobs:
       - uses: actions/setup-node@v6
         if: steps.gate.outputs.run == 'true'
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
       - name: Install
         if: steps.gate.outputs.run == 'true'
@@ -84,6 +92,16 @@ jobs:
       COLLEGE_E2E_TUTOR_PASSWORD: ${{ secrets.COLLEGE_E2E_TUTOR_PASSWORD }}
       COLLEGE_E2E_LEARNER_EMAIL: ${{ secrets.COLLEGE_E2E_LEARNER_EMAIL }}
       COLLEGE_E2E_LEARNER_PASSWORD: ${{ secrets.COLLEGE_E2E_LEARNER_PASSWORD }}
+      # ELE-1914 per-role access spec (e2e/college/55-role-access.spec.ts).
+      # A role whose pair is unset is SKIPPED by name, never failed.
+      COLLEGE_E2E_ASSESSOR_EMAIL: ${{ secrets.COLLEGE_E2E_ASSESSOR_EMAIL }}
+      COLLEGE_E2E_ASSESSOR_PASSWORD: ${{ secrets.COLLEGE_E2E_ASSESSOR_PASSWORD }}
+      COLLEGE_E2E_IQA_EMAIL: ${{ secrets.COLLEGE_E2E_IQA_EMAIL }}
+      COLLEGE_E2E_IQA_PASSWORD: ${{ secrets.COLLEGE_E2E_IQA_PASSWORD }}
+      COLLEGE_E2E_ADMIN_EMAIL: ${{ secrets.COLLEGE_E2E_ADMIN_EMAIL }}
+      COLLEGE_E2E_ADMIN_PASSWORD: ${{ secrets.COLLEGE_E2E_ADMIN_PASSWORD }}
+      COLLEGE_E2E_EMPLOYER_EMAIL: ${{ secrets.COLLEGE_E2E_EMPLOYER_EMAIL }}
+      COLLEGE_E2E_EMPLOYER_PASSWORD: ${{ secrets.COLLEGE_E2E_EMPLOYER_PASSWORD }}
     steps:
       - uses: actions/checkout@v6
       - name: Secrets present?
@@ -95,10 +113,14 @@ jobs:
             echo "run=false" >> "$GITHUB_OUTPUT"
             echo "::notice::College fixture credentials not set — journeys skipped"
           fi
+          for r in ASSESSOR IQA ADMIN EMPLOYER; do
+            e="COLLEGE_E2E_${r}_PASSWORD"
+            if [ -z "${!e}" ]; then echo "::notice::COLLEGE_E2E_${r}_EMAIL / _PASSWORD not set — the $(echo "$r" | tr "[:upper:]" "[:lower:]") role in 55-role-access is skipped"; fi
+          done
       - uses: actions/setup-node@v6
         if: steps.gate.outputs.run == 'true'
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
       - name: Install
         if: steps.gate.outputs.run == 'true'
@@ -154,7 +176,7 @@ jobs:
       - uses: actions/setup-node@v6
         if: steps.gate.outputs.run == 'true'
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
       - name: Install
         if: steps.gate.outputs.run == 'true'

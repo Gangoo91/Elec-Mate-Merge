@@ -136,7 +136,7 @@ const SpecialLocationsPage = ({ onBack }: Props) => {
                       <div key={j} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                         <div className="flex items-center justify-between mb-1">
                           <p className="text-xs font-bold text-yellow-400">{z.zone}</p>
-                          <p className="text-[10px] text-white">{z.area}</p>
+                          <p className="text-[12px] text-white">{z.area}</p>
                         </div>
                         <p className="text-xs text-white">{z.rules}</p>
                       </div>

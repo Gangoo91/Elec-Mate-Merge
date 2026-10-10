@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 
 import { searchPages, OPEN_SEARCH_EVENT, MIN_QUERY_LENGTH } from '@/lib/searchPages';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 
 interface SidebarSearchProps {
@@ -27,14 +28,44 @@ interface SidebarSearchProps {
 }
 
 const SUGGESTIONS = ['quote', 'EICR', 'log hours', 'calendar'];
+
+/*
+ * ELE-1434 — "a fav tab for the search. Most frequent search?" (Alex).
+ * What is remembered is the PAGE someone opened from search, not the letters
+ * they typed: "eic", "EIC cert" and "certificate" all land on the same place,
+ * and the chip should be the place. Ranked by use, then recency; on this
+ * device only, like the rest of the menu state.
+ */
+const RECENTS_KEY = 'sidebar_search_picks';
+const MAX_RECENTS = 5;
+interface SearchPick {
+  path: string;
+  name: string;
+  count: number;
+  last: number;
+}
+const readPicks = (): SearchPick[] => {
+  const raw = storageGetJSONSync<SearchPick[]>(RECENTS_KEY, []);
+  return Array.isArray(raw) ? raw.filter((p) => p && typeof p.path === 'string' && p.name) : [];
+};
+const rankPicks = (picks: SearchPick[]) =>
+  [...picks].sort((a, b) => b.count - a.count || b.last - a.last).slice(0, MAX_RECENTS);
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
-export function SidebarSearch({ onPick, onRequestOpen, children, open: drawerOpen }: SidebarSearchProps) {
+export function SidebarSearch({
+  onPick,
+  onRequestOpen,
+  children,
+  open: drawerOpen,
+}: SidebarSearchProps) {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
+  const [focused, setFocused] = useState(false);
+  const [picks, setPicks] = useState<SearchPick[]>(readPicks);
+  const topPicks = useMemo(() => rankPicks(picks), [picks]);
 
   const results = useMemo(() => searchPages(query), [query]);
   const searching = query.trim().length > 0;
@@ -69,7 +100,23 @@ export function SidebarSearch({ onPick, onRequestOpen, children, open: drawerOpe
       ?.scrollIntoView({ block: 'nearest' });
   }, [active]);
 
-  const open = (path: string) => {
+  const remember = (path: string, name: string) => {
+    const now = Date.now();
+    // Fresh from storage: the desktop sidebar and the phone drawer are two
+    // mounted copies, and each must not overwrite the other's picks.
+    const current = readPicks();
+    const existing = current.find((p) => p.path === path);
+    const next = existing
+      ? current.map((p) => (p.path === path ? { ...p, name, count: p.count + 1, last: now } : p))
+      : [...current, { path, name, count: 1, last: now }];
+    // Keep the list short on disk; the long tail never reaches the chips.
+    const trimmed = [...next].sort((a, b) => b.last - a.last).slice(0, 20);
+    setPicks(trimmed);
+    storageSetJSONSync(RECENTS_KEY, trimmed);
+  };
+
+  const open = (path: string, name?: string) => {
+    if (name) remember(path, name);
     setQuery('');
     inputRef.current?.blur();
     navigate(path);
@@ -92,7 +139,7 @@ export function SidebarSearch({ onPick, onRequestOpen, children, open: drawerOpe
       setActive((i) => Math.max(i - 1, 0));
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      open(results[active].path);
+      open(results[active].path, results[active].name);
     }
   };
 
@@ -114,6 +161,11 @@ export function SidebarSearch({ onPick, onRequestOpen, children, open: drawerOpe
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onKeyDown}
+          onFocus={() => {
+            setPicks(readPicks());
+            setFocused(true);
+          }}
+          onBlur={() => setFocused(false)}
           placeholder="Search the app"
           aria-label="Search pages"
           role="combobox"
@@ -152,15 +204,35 @@ export function SidebarSearch({ onPick, onRequestOpen, children, open: drawerOpe
       </div>
 
       {!searching ? (
-        children
+        <>
+          {focused && topPicks.length > 0 && (
+            <div className="mb-3 px-1">
+              <p className="mb-2 text-[12px] font-medium text-white">Recent</p>
+              <div className="flex flex-wrap gap-2">
+                {topPicks.map((p) => (
+                  <button
+                    key={p.path}
+                    type="button"
+                    // Keep the input from blurring first, or the row vanishes
+                    // under the tap before the click lands.
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => open(p.path, p.name)}
+                    className="h-11 max-w-full truncate rounded-full border border-white/[0.12] bg-white/[0.06] px-4 text-[13.5px] font-medium text-white touch-manipulation active:bg-white/[0.12]"
+                  >
+                    {p.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {children}
+        </>
       ) : tooShort ? (
         <p className="px-2 py-4 text-[13px] text-white">Keep typing…</p>
       ) : results.length === 0 ? (
         <div className="px-2 py-5">
           <p className="text-[14px] font-semibold text-white">Nothing matches “{query.trim()}”</p>
-          <p className="mt-1 text-[13px] leading-snug text-white">
-            Try a page name or a job:
-          </p>
+          <p className="mt-1 text-[13px] leading-snug text-white">Try a page name or a job:</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {SUGGESTIONS.map((s) => (
               <button
@@ -200,7 +272,7 @@ export function SidebarSearch({ onPick, onRequestOpen, children, open: drawerOpe
                 >
                   <button
                     type="button"
-                    onClick={() => open(page.path)}
+                    onClick={() => open(page.path, page.name)}
                     onMouseEnter={() => setActive(i)}
                     className={cn(
                       'relative flex min-h-[48px] w-full flex-col justify-center overflow-hidden rounded-2xl border py-2.5 pl-4 pr-3 text-left touch-manipulation',
@@ -220,13 +292,17 @@ export function SidebarSearch({ onPick, onRequestOpen, children, open: drawerOpe
                     <span
                       className={cn(
                         'line-clamp-2 text-[15px] leading-snug transition-colors duration-200',
-                        on ? 'font-semibold tracking-tight text-elec-yellow' : 'font-medium text-white'
+                        on
+                          ? 'font-semibold tracking-tight text-elec-yellow'
+                          : 'font-medium text-white'
                       )}
                     >
                       {page.name}
                     </span>
                     {showSection && (
-                      <span className="mt-0.5 truncate text-[12px] text-white">{page.category}</span>
+                      <span className="mt-0.5 truncate text-[12px] text-white">
+                        {page.category}
+                      </span>
                     )}
                   </button>
                 </li>

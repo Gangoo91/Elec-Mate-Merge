@@ -24,7 +24,7 @@ export default function BoardScannerToolPage() {
       title="AI Board Scanner: Consumer Unit Photo Scan"
       description="Elec-Mate's AI Board Scanner photographs consumer units and automatically identifies MCBs, RCBOs, RCDs, circuit details, and board layout."
       datePublished="2026-01-15"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'AI Board Scanner', href: '/tools/board-scanner' },
@@ -175,8 +175,9 @@ export default function BoardScannerToolPage() {
                   <span className="font-semibold text-white">
                     AFDDs (Arc Fault Detection Devices)
                   </span>{' '}
-                  — identified by the AFDD marking and wider module width. Required under BS
-                  7671:2018+A2:2022 for certain high-risk locations.
+                  — identified by the AFDD marking and wider module width. Required for certain
+                  higher-risk residential buildings since A2:2022 (Regulation 421.1.7), and still
+                  under BS 7671:2018+A4:2026.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Main Switch / Isolator</span> — the

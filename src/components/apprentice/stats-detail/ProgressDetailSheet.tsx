@@ -10,7 +10,7 @@
  * pattern used across Portfolio / OJT Hub / Diary.
  */
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Target,
   ChevronRight,
@@ -155,6 +155,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
+        hideCloseButton
         className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >
         <div className="flex flex-col h-full">
@@ -188,9 +189,8 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 ) : critPct !== null ? (
                   <>
                     <h2 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold tracking-tight text-white leading-[1.05]">
-                      <span className="font-mono tabular-nums">{acTotals.passedAll}</span> of{' '}
-                      <span className="font-mono tabular-nums">{acTotals.total}</span> criteria
-                      passed
+                      <span className=" tabular-nums">{acTotals.passedAll}</span> of{' '}
+                      <span className=" tabular-nums">{acTotals.total}</span> criteria passed
                     </h2>
                     <p className="text-[13px] text-white leading-relaxed">
                       {critPct}% of your qualification, as your assessor has recorded it. Your study
@@ -201,7 +201,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 ) : (
                   <>
                     <h2 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold tracking-tight text-white leading-[1.05]">
-                      Study signal <span className="font-mono tabular-nums">{overallPercent}%</span>
+                      Study signal <span className=" tabular-nums">{overallPercent}%</span>
                     </h2>
                     <p className="text-[13px] text-white leading-relaxed">
                       Quizzes, flashcards, off-the-job hours, portfolio, streak and EPA practice,
@@ -218,7 +218,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 pt-8">
                 <XPProgressRing
                   xpToday={xp.xpToday}
                   dailyGoal={xp.dailyGoal}
@@ -279,15 +279,16 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                       : 'Mixed signal'
                 }
                 meta={
+                  // The trend is the chip on the right; saying it here too repeated it.
                   quizTrend !== 'no-data'
-                    ? trendLabels[quizTrend]
+                    ? undefined
                     : `${quizStats.totalQuizzes} attempt${quizStats.totalQuizzes === 1 ? '' : 's'}`
                 }
                 action={
                   quizTrend !== 'no-data' && (
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 text-[11px] font-medium',
+                        'inline-flex items-center gap-1 text-[12.5px] font-medium',
                         trendColours[quizTrend]
                       )}
                     >
@@ -299,7 +300,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               />
               <div
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+                  'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4',
                   CARD_SURFACE
                 )}
               >
@@ -318,17 +319,17 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                           >
                             <span className="truncate">{cat.subject}</span>
                             {strongestCategory?.subject === cat.subject && cat.score > 0 && (
-                              <span className="text-[9.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow flex-shrink-0">
+                              <span className="text-[12.5px] font-medium text-elec-yellow flex-shrink-0">
                                 Best
                               </span>
                             )}
                             {weakestCategory?.subject === cat.subject && cat.score > 0 && (
-                              <span className="text-[9.5px] font-medium uppercase tracking-[0.14em] text-red-300 flex-shrink-0">
+                              <span className="text-[12.5px] font-medium text-red-300 flex-shrink-0">
                                 Focus
                               </span>
                             )}
                           </button>
-                          <span className="text-[12.5px] font-mono text-white tabular-nums flex-shrink-0">
+                          <span className="text-[12.5px] text-white tabular-nums flex-shrink-0">
                             {cat.score}%
                           </span>
                         </div>
@@ -367,10 +368,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                   meta={`${totalMasteredCards} / ${totalFlashcards} mastered`}
                 />
                 <div
-                  className={cn(
-                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
-                    CARD_SURFACE
-                  )}
+                  className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
                 >
                   <ul className="space-y-3">
                     {flashcardInsights.map((set, i) => (
@@ -379,7 +377,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                           <span className="text-[13px] text-white truncate flex-1 min-w-0">
                             {set.title}
                           </span>
-                          <span className="text-[12px] font-mono text-white tabular-nums flex-shrink-0">
+                          <span className="text-[12px] text-white tabular-nums flex-shrink-0">
                             {set.progressPercent}%
                           </span>
                         </div>
@@ -393,7 +391,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                               set.progressPercent >= 80
                                 ? 'bg-elec-yellow'
                                 : set.progressPercent >= 40
-                                  ? 'bg-elec-yellow/60'
+                                  ? 'bg-white/60'
                                   : 'bg-white/25'
                             )}
                           />
@@ -418,22 +416,22 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               />
               <div
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
                   CARD_SURFACE
                 )}
               >
                 <div className="flex items-baseline justify-between gap-3">
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-[26px] sm:text-[30px] font-mono font-semibold tabular-nums leading-none text-white">
+                    <span className="text-[26px] sm:text-[30px] font-semibold tabular-nums leading-none text-white">
                       {ojtHours.logged}
                     </span>
-                    <span className="text-[13px] text-white font-mono">
+                    <span className="text-[13px] text-white">
                       / {ojtHours.target.toLocaleString('en-GB')}h
                     </span>
                   </div>
                   <span
                     className={cn(
-                      'text-[14px] font-mono tabular-nums',
+                      'text-[14px] tabular-nums',
                       ojtHours.percentComplete >= 50 ? 'text-elec-yellow' : 'text-white'
                     )}
                   >
@@ -459,9 +457,9 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-1.5"
+                className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 sm:p-5 space-y-1.5"
               >
-                <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
+                <Eyebrow>Insight</Eyebrow>
                 <p className="text-[13.5px] text-white leading-relaxed">{insightText}</p>
               </motion.div>
             )}
@@ -470,7 +468,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             {overallPercent === 0 && quizCategories.length === 0 && (
               <div
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-6 sm:p-7 text-center space-y-3',
+                  'rounded-2xl border border-white/[0.08] p-6 sm:p-7 text-center space-y-3',
                   CARD_SURFACE
                 )}
               >
@@ -481,7 +479,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 </p>
                 <button
                   onClick={goToStudyCentre}
-                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border border-white/[0.14] text-white text-[13.5px] font-semibold hover:border-white/[0.3] active:bg-white/[0.06] transition-colors touch-manipulation"
                 >
                   Open Study Centre
                   <ChevronRight className="h-4 w-4" />
@@ -493,7 +491,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             {smartRecs.length > 0 && (
               <section className="space-y-3">
                 <SectionHeader eyebrow="What to do next" title="Smart suggestions" />
-                <div className="space-y-2.5">
+                <div className="grid gap-2.5 sm:grid-cols-2">
                   {smartRecs.map((rec) => (
                     <RecommendationCard
                       key={rec.id}
@@ -534,14 +532,14 @@ function KpiCell({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-elec-yellow/35 p-3.5 sm:p-5 space-y-1.5',
+        'rounded-2xl border border-white/[0.08] p-3.5 sm:p-5 space-y-1.5',
         CARD_SURFACE
       )}
     >
-      <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
+      <Eyebrow className="text-[12.5px] text-white">{label}</Eyebrow>
       <div
         className={cn(
-          'text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none',
+          'text-[22px] sm:text-[26px] font-semibold tabular-nums leading-none',
           highlight ? 'text-elec-yellow' : 'text-white'
         )}
       >
@@ -558,9 +556,7 @@ function KpiCell({
           />
         </div>
       )}
-      {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white block leading-snug">{sub}</span>
-      )}
+      {sub && <span className="text-[12.5px] text-white block leading-snug">{sub}</span>}
     </div>
   );
 }

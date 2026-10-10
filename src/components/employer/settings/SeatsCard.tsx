@@ -17,15 +17,13 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 import {
-  ListCard,
-  ListCardHeader,
   ListBody,
   ListRow,
   Avatar,
-  Pill,
   LoadingBlocks,
   SecondaryButton,
 } from '@/components/employer/editorial';
+import { PanelHead, StatusPill, panelShellClass } from '@/components/employer/pageParts/PageParts';
 
 /** £/month per active seat — the Stripe price behind EMPLOYER_SEAT_PRICE_ID. */
 export const SEAT_PRICE_GBP = 9.99;
@@ -150,12 +148,8 @@ export function SeatsCard() {
         : `Seats are billed at ${gbp(SEAT_PRICE_GBP)} a month each on an Employer plan. Your account is not on one, so nothing is being charged for seats.`;
 
   return (
-    <ListCard>
-      <ListCardHeader
-        tone="emerald"
-        title="Team seats"
-        meta={<Pill tone="emerald">{active.length}</Pill>}
-      />
+    <div className={panelShellClass}>
+      <PanelHead title="Team seats" meta={<StatusPill tone="green">{active.length}</StatusPill>} />
 
       {isLoading ? (
         <div className="px-5 sm:px-6 py-4">
@@ -171,9 +165,7 @@ export function SeatsCard() {
         <>
           <div className="grid grid-cols-3 divide-x divide-white/[0.06] border-b border-white/[0.06]">
             <div className="px-4 sm:px-6 py-4">
-              <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-white">
-                Joined
-              </div>
+              <div className="text-[12px] font-semibold text-white">Joined</div>
               <div className="mt-1 text-[22px] font-semibold text-white tabular-nums">
                 {active.length}
                 {data?.cap != null && (
@@ -182,18 +174,14 @@ export function SeatsCard() {
               </div>
             </div>
             <div className="px-4 sm:px-6 py-4">
-              <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-white">
-                Invited
-              </div>
+              <div className="text-[12px] font-semibold text-white">Invited</div>
               <div className="mt-1 text-[22px] font-semibold text-white tabular-nums">
                 {pending.length}
               </div>
             </div>
             <div className="px-4 sm:px-6 py-4">
-              <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-white">
-                Monthly
-              </div>
-              <div className="mt-1 text-[17px] sm:text-[22px] font-semibold text-elec-yellow tabular-nums leading-[1.6]">
+              <div className="text-[12px] font-semibold text-white">Monthly</div>
+              <div className="mt-1 text-[17px] sm:text-[22px] font-semibold text-white tabular-nums leading-[1.6]">
                 {costLine}
               </div>
             </div>
@@ -214,12 +202,10 @@ export function SeatsCard() {
                     lead={<Avatar initials={initials(name)} />}
                     title={name}
                     subtitle={
-                      isActive
-                        ? s.employee?.team_role || 'Team member'
-                        : 'Invited, not joined yet'
+                      isActive ? s.employee?.team_role || 'Team member' : 'Invited, not joined yet'
                     }
                     trailing={
-                      <Pill tone={isActive ? 'emerald' : 'amber'}>
+                      <StatusPill tone={isActive ? 'green' : 'neutral'}>
                         {isActive
                           ? data?.billable
                             ? s.kind === 'apprentice'
@@ -227,7 +213,7 @@ export function SeatsCard() {
                               : gbp(SEAT_PRICE_GBP)
                             : 'Seat'
                           : 'Invited'}
-                      </Pill>
+                      </StatusPill>
                     }
                     onClick={
                       s.employee?.id
@@ -255,6 +241,6 @@ export function SeatsCard() {
           </div>
         </>
       )}
-    </ListCard>
+    </div>
   );
 }

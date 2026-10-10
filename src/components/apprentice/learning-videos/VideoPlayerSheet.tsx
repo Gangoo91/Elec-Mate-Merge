@@ -61,7 +61,7 @@ export function VideoPlayerSheet({
             <div className="px-4 pt-4 pb-6 space-y-4">
               <h3 className="text-[16px] font-semibold text-white leading-snug">{video.title}</h3>
 
-              <div className="flex items-baseline gap-2 flex-wrap text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <div className="flex items-baseline gap-2 flex-wrap text-[13px] font-semibold text-white">
                 <span className="normal-case tracking-normal text-[13px] text-white">
                   {video.channel}
                 </span>
@@ -71,7 +71,7 @@ export function VideoPlayerSheet({
                   {video.duration}
                 </span>
                 <span className="text-white">·</span>
-                <span>{video.level}</span>
+                <span className="capitalize">{video.level}</span>
                 <span className="text-white">·</span>
                 <span>{categoryLabels[video.category]}</span>
               </div>
@@ -81,7 +81,7 @@ export function VideoPlayerSheet({
                   onClick={onBookmarkToggle}
                   className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
                     isBookmarked
-                      ? 'bg-white/[0.05] border-elec-yellow/30 text-elec-yellow'
+                      ? 'bg-white/[0.05] border-white/[0.14] text-elec-yellow'
                       : 'bg-white/[0.02] border-white/[0.06] text-white'
                   }`}
                 >
@@ -103,7 +103,7 @@ export function VideoPlayerSheet({
 
               {relatedVideos.length > 0 && (
                 <div className="pt-4 border-t border-white/[0.06] space-y-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     More like this
                   </span>
                   <div className="space-y-2">
@@ -150,7 +150,7 @@ function RelatedVideoRow({
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/70 text-[9px] text-white font-mono">
+        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/70 text-[12px] text-white font-mono">
           {video.duration}
         </span>
       </button>
@@ -159,7 +159,7 @@ function RelatedVideoRow({
         <h5 className="text-[13px] font-medium text-white leading-tight line-clamp-2">
           {video.title}
         </h5>
-        <p className="text-[11px] text-white mt-1">{video.channel}</p>
+        <p className="text-[12px] text-white mt-1">{video.channel}</p>
       </button>
 
       <button

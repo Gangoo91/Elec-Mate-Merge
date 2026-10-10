@@ -10,16 +10,17 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegeHeading,
-  CollegePageHeader,
-  CollegeStats,
-} from '@/components/college/ui/CollegeUi';
-import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
+  TEACH_BTN,
+  TEACH_BTN_PRIMARY,
+  TEACH_LIST,
+  TeachingEmpty as CollegeEmpty,
+  TeachingHeader,
+  TeachingScreen,
+  plural,
+  TeachTabs,
+} from '@/components/college/teaching/TeachingKit';
 import { cn } from '@/lib/utils';
 import {
   useCollegeResources,
@@ -60,24 +61,31 @@ const KIND_ONE: Record<ResourceKind, string> = {
   other: 'File',
 };
 
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
-const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
-const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]';
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
-const LIST_CARD = COLLEGE_LIST;
+const LIST_CARD = TEACH_LIST;
 
 const HELP: PageHelpContent = {
   id: 'college-teaching-resources',
   title: 'Teaching resources',
-  what: 'The college\'s shared library of slides, handouts, videos and links. Anything here can be attached to a lesson and mapped to the assessment criteria it covers.',
+  what: "The college's shared library of slides, handouts, videos and links. Anything here can be attached to a lesson and mapped to the assessment criteria it covers.",
   steps: [
-    { title: 'Add to the library', body: 'Upload files (or drag them onto the list on a computer), or add a link to a video or web page.' },
-    { title: 'Tag and map', body: 'Open a resource to give it tags and map it to the assessment criteria it teaches.' },
-    { title: 'Use it in lessons', body: 'Search by title or tag and attach it to a lesson plan, so learners see it with the lesson.' },
+    {
+      title: 'Add to the library',
+      body: 'Upload files (or drag them onto the list on a computer), or add a link to a video or web page.',
+    },
+    {
+      title: 'Tag and map',
+      body: 'Open a resource to give it tags and map it to the assessment criteria it teaches.',
+    },
+    {
+      title: 'Use it in lessons',
+      body: 'Search by title or tag and attach it to a lesson plan, so learners see it with the lesson.',
+    },
   ],
-  notes: [{ title: 'Who sees what', body: 'Everything here is shared with staff at your college.' }],
+  notes: [
+    { title: 'Who sees what', body: 'Everything here is shared with staff at your college.' },
+  ],
 };
 
 function prettyBytes(n: number | null | undefined): string {
@@ -178,17 +186,45 @@ export function TeachingResourcesSection() {
 
   return (
     <TeachingScreen>
-      <CollegePageHeader
+      <TeachingHeader
         eyebrow="Resources"
         title="Teaching resources"
-        description="Slides, handouts, videos and links, shared across the college and mapped to the criteria they teach."
         help={HELP}
+        summary={
+          loading
+            ? 'Loading the library…'
+            : !hasResources
+              ? 'Nothing in the library yet. Upload slides, handouts and videos, or add a link, and map each one to the criteria it teaches.'
+              : `${plural(resources.length, 'resource')} shared across the college${linkCount > 0 ? `, ${linkCount} of them links` : ''}.`
+        }
+        sub={
+          hasResources ? (
+            taggedCount === resources.length ? (
+              'Every resource is mapped to the criteria it teaches.'
+            ) : (
+              <span>
+                <span className="font-semibold text-orange-400">
+                  {resources.length - taggedCount} not mapped to any criterion yet
+                </span>
+                , so they will not show on a criterion page. Open one to map it.
+              </span>
+            )
+          ) : undefined
+        }
         actions={
           <>
-            <button type="button" className={COLLEGE_BTN} onClick={() => setLinkDialogOpen(true)}>
+            <button
+              type="button"
+              className={cn(TEACH_BTN, 'flex-1 sm:flex-none')}
+              onClick={() => setLinkDialogOpen(true)}
+            >
               Add a link
             </button>
-            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={pickFiles}>
+            <button
+              type="button"
+              className={cn(TEACH_BTN_PRIMARY, 'flex-1 sm:flex-none')}
+              onClick={pickFiles}
+            >
               Upload files
             </button>
           </>
@@ -206,22 +242,6 @@ export function TeachingResourcesSection() {
           e.target.value = '';
         }}
       />
-
-      {hasResources && (
-        <CollegeStats
-          items={[
-            { label: 'Resources', value: String(resources.length), sub: linkCount > 0 ? `${linkCount} of them links` : 'shared across the college' },
-            {
-              label: 'Mapped to criteria',
-              value: String(taggedCount),
-              sub: taggedCount === resources.length ? 'every resource mapped' : `${resources.length - taggedCount} not yet mapped`,
-              warn: taggedCount < resources.length,
-            },
-            { label: 'Types', value: String(kinds.length), sub: kinds.slice(0, 2).map((k) => KIND_LABEL[k.kind].toLowerCase()).join(', ') || 'none yet' },
-            { label: 'Uploading', value: String(inProgressUploads.length), sub: inProgressUploads.length > 0 ? 'in progress now' : 'nothing in flight' },
-          ]}
-        />
-      )}
 
       {/* Upload in-flight panel */}
       {uploads.length > 0 && (
@@ -242,7 +262,7 @@ export function TeachingResourcesSection() {
                 Dismiss
               </button>
             ) : (
-              <span className="text-[11px] font-semibold tabular-nums text-elec-yellow">
+              <span className="text-[12px] font-semibold tabular-nums text-elec-yellow">
                 {inProgressUploads.length} in progress
               </span>
             )}
@@ -298,7 +318,7 @@ export function TeachingResourcesSection() {
                       </div>
                     )}
                     {u.status === 'error' && u.error && (
-                      <p className="text-[11.5px] leading-snug text-orange-400">{u.error}</p>
+                      <p className="text-[12px] leading-snug text-orange-400">{u.error}</p>
                     )}
                   </li>
                 );
@@ -317,7 +337,7 @@ export function TeachingResourcesSection() {
         <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
           <CollegeHeading>Library</CollegeHeading>
           {!loading && hasResources && (
-            <span className="text-[11px] font-semibold tabular-nums text-white">
+            <span className="text-[12px] font-semibold tabular-nums text-white">
               {filtered.length === resources.length
                 ? `${resources.length} item${resources.length === 1 ? '' : 's'}`
                 : `${filtered.length} of ${resources.length}`}
@@ -338,29 +358,20 @@ export function TeachingResourcesSection() {
               />
             </motion.div>
             {kinds.length > 1 && (
-              <motion.div
-                variants={itemVariants}
-                className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0"
-              >
-                <button
-                  type="button"
-                  onClick={() => setFilterKind('all')}
-                  className={cn(CHIP, filterKind === 'all' ? CHIP_ON : CHIP_OFF)}
-                >
-                  All
-                  <span className="text-[11px] tabular-nums opacity-70">{resources.length}</span>
-                </button>
-                {kinds.map(({ kind, count }) => (
-                  <button
-                    key={kind}
-                    type="button"
-                    onClick={() => setFilterKind(kind)}
-                    className={cn(CHIP, filterKind === kind ? CHIP_ON : CHIP_OFF)}
-                  >
-                    {KIND_LABEL[kind]}
-                    <span className="text-[11px] tabular-nums opacity-70">{count}</span>
-                  </button>
-                ))}
+              <motion.div variants={itemVariants}>
+                <TeachTabs
+                  label="Type"
+                  value={filterKind}
+                  onChange={setFilterKind}
+                  tabs={[
+                    { value: 'all', label: 'All', count: resources.length },
+                    ...kinds.map(({ kind, count }) => ({
+                      value: kind,
+                      label: KIND_LABEL[kind],
+                      count,
+                    })),
+                  ]}
+                />
               </motion.div>
             )}
           </>
@@ -374,10 +385,7 @@ export function TeachingResourcesSection() {
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
-          className={cn(
-            'relative',
-            dragOver && '[&>*:first-child]:border-elec-yellow'
-          )}
+          className={cn('relative', dragOver && '[&>*:first-child]:border-elec-yellow')}
         >
           {dragOver && (
             <div className="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center sm:flex">
@@ -394,12 +402,7 @@ export function TeachingResourcesSection() {
           ) : !hasResources ? (
             <CollegeEmpty
               title="No teaching resources yet"
-              body="Upload files or add a link. Drag and drop works on a computer. Everything is searchable by tag and can be mapped to assessment criteria."
-              action={
-                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={pickFiles}>
-                  Upload files
-                </button>
-              }
+              body="Drag and drop works on a computer. Everything is searchable by tag and can be mapped to assessment criteria."
             />
           ) : (
             <div className={LIST_CARD}>
@@ -446,9 +449,7 @@ export function TeachingResourcesSection() {
           await deleteResource(r.id);
           setPreviewResource(null);
         }}
-        linksSlot={
-          previewResource ? <ResourceLinksPanel resourceId={previewResource.id} /> : null
-        }
+        linksSlot={previewResource ? <ResourceLinksPanel resourceId={previewResource.id} /> : null}
       />
 
       <EditResourceDialog

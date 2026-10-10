@@ -27,6 +27,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import { useFirmPriceBook, normaliseName, gbp, priceFor, type FirmPriceBookItem } from '@/hooks/useFirmPriceBook';
 import { PriceBookPicker, type PickedPriceBookLine } from '@/components/employer/PriceBookPicker';
+import { useFirmSupplierCodes } from '@/hooks/useWholesalers';
 import type { MaterialOrder, Quote } from '@/services/financeService';
 
 /* ==========================================================================
@@ -49,6 +50,10 @@ interface OrderLine {
   price_book_item_id: string | null;
   /** True when the price book had no buy price for it. */
   needsPrice: boolean;
+  /** Set when the price came from the supplier's own price file (ELE-2066). */
+  tradePrice?: boolean;
+  /** Typed by hand: a supplier price never overwrites it. */
+  priceEdited?: boolean;
 }
 
 type DeliveryMode = 'Deliver to site' | 'Collection';
@@ -102,6 +107,8 @@ export function CreateOrderDialog({
   const { data: orderNumber } = useNextOrderNumber();
   const { data: suppliers = [] } = useSuppliers();
   const { data: priceBook = [] } = useFirmPriceBook();
+  // The wholesaler's product code and account price per item (owner/admin, ELE-2066).
+  const { data: supplierCodes } = useFirmSupplierCodes(open);
   const { data: jobs = [] } = useJobs();
   const { data: quotes = [] } = useQuotes();
   const createOrderMutation = useCreateMaterialOrder();
@@ -197,6 +204,30 @@ export function CreateOrderDialog({
     if (job?.location && !deliveryAddress.trim()) setDeliveryAddress(job.location);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobId, deliveryMode, jobs]);
+
+  const codeFor = (l: OrderLine) =>
+    l.price_book_item_id && supplierId
+      ? supplierCodes?.get(`${l.price_book_item_id}|${supplierId}`) ?? null
+      : null;
+
+  // Lines from the price book take this supplier's own account price when its
+  // price file has one.
+  useEffect(() => {
+    if (!supplierId || !supplierCodes || supplierCodes.size === 0) return;
+    setLines((prev) => {
+      let changed = false;
+      const next = prev.map((l) => {
+        const c = l.price_book_item_id ? supplierCodes.get(`${l.price_book_item_id}|${supplierId}`) : null;
+        if (l.priceEdited) return l;
+        if (!c || !(c.trade_price > 0)) return l.tradePrice ? { ...l, tradePrice: false } : l;
+        const price = c.trade_price.toFixed(2);
+        if (l.price === price && l.tradePrice) return l;
+        changed = true;
+        return { ...l, price, tradePrice: true, needsPrice: false };
+      });
+      return changed ? next : prev;
+    });
+  }, [supplierId, supplierCodes, lines.length]);
 
   const n = (v: string) => (Number.isFinite(Number(v)) ? Number(v) : 0);
   const subtotal = lines.reduce((s, l) => s + n(l.qty) * n(l.price), 0);
@@ -321,7 +352,7 @@ export function CreateOrderDialog({
         job_id: jobId,
         items: lines.map((l) => ({
           name: l.name,
-          sku: null,
+          sku: codeFor(l)?.product_code ?? null,
           unit: l.unit,
           qty: n(l.qty),
           unit_cost: Math.round(n(l.price) * 100) / 100,
@@ -468,7 +499,12 @@ export function CreateOrderDialog({
                               </p>
                             ) : (
                               <p className="text-[12px] text-white">
-                                {l.price_book_item_id ? 'From the price book' : 'Typed line'}
+                                {l.tradePrice && selectedSupplier
+                                  ? `Your ${selectedSupplier.name} price`
+                                  : l.price_book_item_id
+                                    ? 'From the price book'
+                                    : 'Typed line'}
+                                {codeFor(l) ? ` · Code ${codeFor(l)!.product_code}` : ''}
                               </p>
                             )}
                           </div>
@@ -503,7 +539,7 @@ export function CreateOrderDialog({
                               inputMode="decimal"
                               value={l.price}
                               placeholder="0.00"
-                              onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && updateLine(l.id, { price: e.target.value })}
+                              onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && updateLine(l.id, { price: e.target.value, tradePrice: false, priceEdited: true })}
                               className={inputCn}
                             />
                           </div>

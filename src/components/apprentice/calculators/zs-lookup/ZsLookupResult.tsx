@@ -124,14 +124,12 @@ const ZsLookupResult = ({
       {searchType === 'device' && results.length > 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
           <div className="flex justify-between items-start gap-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Device lookup results
-            </span>
+            <span className="text-[12px] font-medium text-white">Device lookup results</span>
             <Button
               variant="outline"
               size="sm"
               onClick={copyResults}
-              className="h-9 border-white/15 text-white hover:bg-white/[0.05] text-[12px] touch-manipulation"
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] text-[13px] touch-manipulation"
             >
               <Copy className="h-3.5 w-3.5 mr-1.5" />
               Copy
@@ -170,39 +168,66 @@ const ZsLookupResult = ({
             />
           </div>
 
-          {/* Mobile-friendly scrollable table wrapper */}
-          <div className="max-h-96 overflow-y-auto overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          {/* Phone: one row per device (name line, figures line) instead of a
+              500px table that scrolled sideways. Same figures as the table. */}
+          <ul className="divide-y divide-white/[0.06] sm:hidden">
+            {sortedResults.map((item, index) => {
+              const testValue =
+                item.testZs || `${(parseFloat(item.maxZs.replace('Ω', '')) * 0.8).toFixed(3)}Ω`;
+              return (
+                <li key={index} className="py-3">
+                  <p className="text-[14px] font-semibold text-white">
+                    {item.device} {item.curve} {item.rating}
+                  </p>
+                  <p className="mt-0.5 text-[13px] tabular-nums text-white">
+                    Max Zs <span className="font-semibold">{item.maxZs}</span>
+                    <span aria-hidden> · </span>
+                    80% test <span className="font-semibold">{testValue}</span>
+                    <span aria-hidden> · </span>
+                    {item.tableRef || 'Table 41.3'}
+                  </p>
+                </li>
+              );
+            })}
+            {sortedResults.length === 0 && (
+              <li className="py-4 text-center text-[13px] text-white">
+                No devices match your filter criteria
+              </li>
+            )}
+          </ul>
+
+          <div className="hidden max-h-96 overflow-y-auto overflow-x-auto sm:block">
             <table className="w-full text-[13px] min-w-[500px]">
               <thead className="sticky top-0 bg-[#0a0a0a]">
                 <tr className="border-b border-white/[0.06]">
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[12px] font-medium text-white whitespace-nowrap"
                     onClick={() => handleSort('device')}
                   >
                     Device {sortColumn === 'device' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[12px] font-medium text-white whitespace-nowrap"
                     onClick={() => handleSort('curve')}
                   >
                     Curve {sortColumn === 'curve' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[12px] font-medium text-white whitespace-nowrap"
                     onClick={() => handleSort('rating')}
                   >
                     Rating {sortColumn === 'rating' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[12px] font-medium text-white whitespace-nowrap"
                     onClick={() => handleSort('maxZs')}
                   >
                     Max Zs {sortColumn === 'maxZs' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                  <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                     80% Test
                   </th>
-                  <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                  <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                     Table
                   </th>
                 </tr>
@@ -216,17 +241,15 @@ const ZsLookupResult = ({
                     <tr key={index} className="border-b border-white/[0.04]">
                       <td className="p-2 text-white whitespace-nowrap">{item.device}</td>
                       <td className="p-2">
-                        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                           {item.curve}
                         </span>
                       </td>
-                      <td className="p-2 font-mono text-white whitespace-nowrap">
-                        {item.rating}
-                      </td>
+                      <td className="p-2 font-mono text-white whitespace-nowrap">{item.rating}</td>
                       <td className="p-2 font-mono text-white whitespace-nowrap">{item.maxZs}</td>
                       <td className="p-2 font-mono text-white whitespace-nowrap">{testValue}</td>
                       <td className="p-2">
-                        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                           {item.tableRef || 'Table 41.3'}
                         </span>
                       </td>
@@ -248,14 +271,14 @@ const ZsLookupResult = ({
       {searchType === 'compliance' && complianceCheck && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
           <div className="flex justify-between items-start gap-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Compliance check for Zs = {complianceCheck.measuredZs}Ω
             </span>
             <Button
               variant="outline"
               size="sm"
               onClick={copyResults}
-              className="h-9 border-white/15 text-white hover:bg-white/[0.05] text-[12px] touch-manipulation"
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] text-[13px] touch-manipulation"
             >
               <Copy className="h-3.5 w-3.5 mr-1.5" />
               Copy
@@ -268,29 +291,75 @@ const ZsLookupResult = ({
                 {complianceCheck.compliantDevices.length} compliant protection devices found.
               </p>
 
-              <div className="max-h-80 overflow-y-auto overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+              {/* Phone rows — see the results list above. */}
+              <ul className="divide-y divide-white/[0.06] sm:hidden">
+                {complianceCheck.compliantDevices.slice(0, 20).map((item: any, index: number) => {
+                  const headroom = (
+                    (parseFloat(item.margin.replace('Ω', '')) /
+                      parseFloat(item.maxZs.replace('Ω', ''))) *
+                    100
+                  ).toFixed(1);
+                  const testValue = parseFloat(item.maxZs.replace('Ω', '')) * 0.8;
+                  const measured = complianceCheck.measuredZs;
+                  let status = 'Pass (80%)';
+                  if (measured > testValue && measured <= parseFloat(item.maxZs.replace('Ω', ''))) {
+                    status = 'Pass (100%)';
+                  }
+                  return (
+                    <li key={index} className="py-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <p className="text-[14px] font-semibold text-white">
+                          {item.device} {item.curve} {item.rating}
+                        </p>
+                        <span className="shrink-0 rounded-md border border-white/15 px-2 py-0.5 text-[12px] text-white">
+                          {status}
+                        </span>
+                      </div>
+                      <p className="mt-0.5 text-[13px] tabular-nums text-white">
+                        Max Zs <span className="font-semibold">{item.maxZs}</span>
+                        <span aria-hidden> · </span>
+                        Margin <span className="font-semibold">{item.margin}</span>
+                      </p>
+                      <div className="mt-1.5 flex items-center gap-2">
+                        {getHeadroomBar(item.margin, item.maxZs)}
+                        <span className="text-[12px] tabular-nums text-white">
+                          {headroom}% headroom
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              {complianceCheck.compliantDevices.length > 20 && (
+                <p className="text-[12px] text-white sm:hidden">
+                  Showing top 20 results of {complianceCheck.compliantDevices.length} compliant
+                  devices.
+                </p>
+              )}
+
+              <div className="hidden max-h-80 overflow-y-auto overflow-x-auto sm:block">
                 <table className="w-full text-[13px] min-w-[600px]">
                   <thead className="sticky top-0 bg-[#0a0a0a]">
                     <tr className="border-b border-white/[0.06]">
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                      <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                         Device
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                      <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                         Curve
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                      <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                         Rating
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                      <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                         Max Zs
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                      <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                         Margin
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                      <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                         Headroom
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
+                      <th className="text-left p-2 text-[12px] font-medium text-white whitespace-nowrap">
                         Status
                       </th>
                     </tr>
@@ -319,7 +388,7 @@ const ZsLookupResult = ({
                           <tr key={index} className="border-b border-white/[0.04]">
                             <td className="p-2 text-white whitespace-nowrap">{item.device}</td>
                             <td className="p-2">
-                              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                                 {item.curve}
                               </span>
                             </td>
@@ -341,7 +410,7 @@ const ZsLookupResult = ({
                               </div>
                             </td>
                             <td className="p-2">
-                              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                                 {status}
                               </span>
                             </td>
@@ -351,7 +420,7 @@ const ZsLookupResult = ({
                   </tbody>
                 </table>
                 {complianceCheck.compliantDevices.length > 20 && (
-                  <p className="text-[11px] text-white mt-2">
+                  <p className="text-[12px] text-white mt-2">
                     Showing top 20 results of {complianceCheck.compliantDevices.length} compliant
                     devices.
                   </p>
@@ -361,7 +430,7 @@ const ZsLookupResult = ({
           ) : (
             <>
               <div className="rounded-lg border border-red-500/30 bg-red-500/[0.04] p-3 space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+                <span className="text-[12px] font-medium text-red-300">
                   No compliant protection devices found
                 </span>
                 <p className="text-[13px] text-white leading-relaxed">
@@ -370,9 +439,7 @@ const ZsLookupResult = ({
               </div>
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Remediation options
-                </span>
+                <span className="text-[12px] font-medium text-white">Remediation options</span>
                 <ul className="space-y-1.5">
                   {[
                     'Reduce circuit length or increase conductor size',
@@ -397,19 +464,14 @@ const ZsLookupResult = ({
 
       {/* Why this matters */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Why this matters
-        </span>
+        <span className="text-[12px] font-medium text-white">Why this matters</span>
         <ul className="space-y-1.5">
           {[
             'Zs values ensure protective devices operate within required disconnection times (0.4s for final circuits, 5s for distribution)',
             'Values in BS 7671 tables are maximum limits — actual installations should have margin for safety',
             '80% test values account for conductor temperature rise under fault conditions',
           ].map((item, i) => (
-            <li
-              key={i}
-              className="text-[13px] text-white leading-relaxed flex items-start gap-2"
-            >
+            <li key={i} className="text-[13px] text-white leading-relaxed flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>
             </li>
@@ -419,9 +481,7 @@ const ZsLookupResult = ({
 
       {/* Assumptions */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Key assumptions
-        </span>
+        <span className="text-[12px] font-medium text-white">Key assumptions</span>
         <ul className="space-y-1.5">
           {[
             'Nominal voltage: 230V (Uo) single phase',
@@ -430,10 +490,7 @@ const ZsLookupResult = ({
             '80% rule per Regulation 643.7.2 for ambient temperature testing',
             'TN system unless otherwise specified',
           ].map((item, i) => (
-            <li
-              key={i}
-              className="text-[13px] text-white leading-relaxed flex items-start gap-2"
-            >
+            <li key={i} className="text-[13px] text-white leading-relaxed flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>
             </li>

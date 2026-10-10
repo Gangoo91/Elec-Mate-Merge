@@ -402,8 +402,8 @@ const ArcFlashCalculator = () => {
               <div
                 className="p-4 rounded-xl border space-y-3"
                 style={{
-                  borderColor: `${config.gradientFrom}30`,
-                  background: `${config.gradientFrom}08`,
+                  borderColor: 'rgba(255, 255, 255, 0.12)',
+                  background: 'rgba(255, 255, 255, 0.04)',
                 }}
               >
                 <div className="flex items-center justify-between">
@@ -541,7 +541,7 @@ const ArcFlashCalculator = () => {
 
                 {/* Warnings */}
                 {result.warnings.length > 0 && (
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-amber-500/30 space-y-1">
                     {result.warnings.map((warning, i) => (
                       <p key={i} className="text-xs text-white flex items-start gap-2">
                         <AlertTriangle className="h-3 w-3 mt-0.5 shrink-0 text-amber-400" />
@@ -662,8 +662,8 @@ const ArcFlashCalculator = () => {
                     <div
                       className="rounded-xl border p-3 space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-3">
@@ -766,8 +766,8 @@ const ArcFlashCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">

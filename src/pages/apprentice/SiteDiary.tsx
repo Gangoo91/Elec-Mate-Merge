@@ -63,12 +63,18 @@ import { DiaryWeeklySummary } from '@/components/apprentice/site-diary/DiaryWeek
 import { DiaryNeedsYou, needsYouItems } from '@/components/apprentice/site-diary/DiaryNeedsYou';
 import { DiaryEntrySheet } from '@/components/apprentice/site-diary/DiaryEntrySheet';
 import { DiaryEntryDetailSheet } from '@/components/apprentice/site-diary/DiaryEntryDetailSheet';
+import { COLLEGE_BTN } from '@/components/college/ui/CollegeUi';
+import {
+  HOME_CARD,
+  ProgressPanel,
+  type ProgressCell,
+} from '@/components/apprentice/ApprenticeHomeUi';
 
 type ViewMode = 'history' | 'calendar';
 
-const CARD =
-  '-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
-const H2 = 'mb-3 text-[15px] font-semibold tracking-tight text-white';
+// The College Hub card (10 Oct): edge to edge on a phone, inset from sm:.
+const CARD = cn(HOME_CARD, 'p-4 sm:p-6');
+const H2 = 'mb-3 text-[17px] font-semibold tracking-tight text-white';
 
 export default function SiteDiary() {
   const navigate = useNavigate();
@@ -126,7 +132,8 @@ export default function SiteDiary() {
   // learner has claimed on an item (the one read model, ELE-1917).
   const evidencedACSet = useMemo(() => {
     const set = new Set<string>();
-    for (const it of portfolioItems) for (const c of it.claimed) set.add(`${c.unit_code}.${c.ac_code}`);
+    for (const it of portfolioItems)
+      for (const c of it.claimed) set.add(`${c.unit_code}.${c.ac_code}`);
     return set;
   }, [portfolioItems]);
 
@@ -331,6 +338,33 @@ export default function SiteDiary() {
     </section>
   ) : null;
 
+  const glanceCells: ProgressCell[] = [
+    {
+      colour: 'bg-orange-400',
+      value: currentStreak === 1 ? '1 day' : `${currentStreak} days`,
+      label: 'Streak',
+      meta: currentStreak > 0 ? 'Keep it today' : 'Log today to start',
+    },
+    {
+      colour: 'bg-teal-300',
+      value: String(glance.days),
+      label: 'Days logged',
+      meta: 'This month',
+    },
+    {
+      colour: 'bg-sky-400',
+      value: formatMinutes(glance.mins),
+      label: 'Training',
+      meta: glance.signed ? `${formatMinutes(glance.signed)} signed off` : 'This month',
+    },
+    {
+      colour: 'bg-emerald-400',
+      value: glance.portfolio === 1 ? '1 day' : `${glance.portfolio} days`,
+      label: 'In portfolio',
+      meta: 'For your assessor',
+    },
+  ];
+
   const todayLabel = new Date().toLocaleDateString('en-GB', {
     weekday: 'long',
     day: 'numeric',
@@ -396,15 +430,17 @@ export default function SiteDiary() {
                   <List className="h-5 w-5" />
                 )}
               </button>
+              {/* Outlined: the Today card's "Log today" is the page's one solid
+                  action. Icon-only on a phone, where "+ Log" squeezed the
+                  title to "Site di…". */}
               <button
                 type="button"
                 onClick={() => openNew(null)}
-                className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-elec-yellow px-3.5 text-[14px] font-bold text-black touch-manipulation"
+                aria-label="Log a day"
+                className={cn(COLLEGE_BTN, 'w-11 px-0 sm:w-auto sm:px-4')}
               >
-                <Plus className="h-4 w-4" />
-                {/* "Log today" squeezed the title to "Sit…" on a phone. */}
-                <span className="sm:hidden">Log</span>
-                <span className="hidden sm:inline">Log today</span>
+                <Plus className="h-4 w-4" strokeWidth={2} />
+                <span className="hidden sm:inline">Log a day</span>
               </button>
             </>
           )}
@@ -437,7 +473,7 @@ export default function SiteDiary() {
               <button
                 type="button"
                 onClick={() => void refresh()}
-                className="mt-3 h-11 rounded-xl border border-white/[0.22] px-4 text-[14px] font-semibold text-white touch-manipulation"
+                className={cn(COLLEGE_BTN, 'mt-3')}
               >
                 Try again
               </button>
@@ -460,7 +496,7 @@ export default function SiteDiary() {
                 <p className="mb-1.5 text-[12px] font-semibold text-white">A day looks like this</p>
                 <div className="flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-3">
                   <div className="flex w-12 shrink-0 flex-col items-center rounded-xl border border-white/[0.12] bg-white/[0.04] py-1.5">
-                    <span className="text-[11px] font-semibold leading-none text-white">Tue</span>
+                    <span className="text-[12px] font-semibold leading-none text-white">Tue</span>
                     <span className="mt-1 text-[20px] font-bold leading-none text-white">14</span>
                   </div>
                   <div className="min-w-0 flex-1 space-y-0.5">
@@ -515,49 +551,50 @@ export default function SiteDiary() {
                   the results sit right under the search box. */}
               {!focused && (
                 <section className={cn(CARD, 'relative overflow-hidden')}>
-                  {/* Gold hairline — the one place the page says "start here". */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow to-transparent"
-                  />
-                  <p className="text-[12.5px] font-semibold text-elec-yellow">{todayLabel}</p>
+                  <p className="text-[13px] font-medium text-white">{todayLabel}</p>
                   {todays.length === 0 ? (
                     <>
-                      <h2 className="mt-1 text-[18px] font-bold text-white">
+                      <h2 className="mt-1 text-[22px] font-bold leading-tight tracking-tight text-white sm:text-[24px]">
                         What did you do on site today?
                       </h2>
-                      <p className="mt-1 text-[13.5px] text-white">
+                      <p className="mt-1.5 text-[14px] text-white">
                         Where you were, what you did and one thing you learned.
                       </p>
-                      <button
-                        type="button"
-                        onClick={() => openNew(null)}
-                        className="mt-3 h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation sm:w-auto sm:px-8"
-                      >
-                        Log today
-                      </button>
-                      {recentSites.length > 0 && (
-                        // One tap: the form opens with the site filled in.
-                        <div className="mt-3">
-                          <p className="mb-2 text-[12.5px] font-semibold text-white">
-                            Or start at a recent site
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {recentSites.slice(0, 3).map((site) => (
-                              <button
-                                key={site}
-                                type="button"
-                                onClick={() => openNew(null, site)}
-                                aria-label={`Log today at ${site}`}
-                                className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-white/[0.16] bg-white/[0.06] px-4 text-[14px] font-medium text-white touch-manipulation hover:border-elec-yellow"
-                              >
-                                <MapPin className="h-4 w-4" aria-hidden />
-                                {displaySite(site)}
-                              </button>
-                            ))}
+                      <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
+                        <button
+                          type="button"
+                          onClick={() => openNew(null)}
+                          className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation transition-opacity hover:opacity-90 sm:w-auto sm:px-8"
+                        >
+                          Log today
+                        </button>
+                        {recentSites.length > 0 && (
+                          // One tap: the form opens with the site filled in.
+                          <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                            <p className="text-[13px] font-medium text-white">
+                              Or start at a recent site
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {recentSites.slice(0, 3).map((site) => (
+                                <button
+                                  key={site}
+                                  type="button"
+                                  onClick={() => openNew(null, site)}
+                                  aria-label={`Log today at ${site}`}
+                                  className={cn(COLLEGE_BTN, 'max-w-full')}
+                                >
+                                  <MapPin
+                                    className="h-4 w-4 shrink-0"
+                                    strokeWidth={1.5}
+                                    aria-hidden
+                                  />
+                                  {displaySite(site)}
+                                </button>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </>
                   ) : (
                     <div className="mt-1 space-y-3">
@@ -575,11 +612,7 @@ export default function SiteDiary() {
                           />
                         ))}
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => openNew(today)}
-                        className="h-11 rounded-xl border border-white/[0.22] px-4 text-[14px] font-semibold text-white touch-manipulation"
-                      >
+                      <button type="button" onClick={() => openNew(today)} className={COLLEGE_BTN}>
                         Add another site today
                       </button>
                     </div>
@@ -594,48 +627,9 @@ export default function SiteDiary() {
                 </section>
               )}
 
-              {/* At a glance — a solid colour bar per figure, matching the
-                  status dots (violet = portfolio, green = signed off). */}
-              {!focused && (
-                <section aria-label="At a glance" className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  {[
-                    {
-                      bar: 'bg-elec-yellow',
-                      value: currentStreak,
-                      label: currentStreak === 1 ? 'day in a row' : 'days in a row',
-                    },
-                    {
-                      bar: 'bg-sky-400',
-                      value: glance.days,
-                      label: `${glance.days === 1 ? 'day' : 'days'} logged this month`,
-                    },
-                    {
-                      bar: 'bg-emerald-400',
-                      value: formatMinutes(glance.mins),
-                      label: glance.signed
-                        ? `training this month · ${formatMinutes(glance.signed)} signed off`
-                        : 'training this month',
-                    },
-                    {
-                      bar: 'bg-violet-400',
-                      value: glance.portfolio,
-                      label:
-                        glance.portfolio === 1 ? 'day in your portfolio' : 'days in your portfolio',
-                    },
-                  ].map((g) => (
-                    <div
-                      key={g.bar}
-                      className="relative overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] px-4 pb-3 pt-4"
-                    >
-                      <span aria-hidden className={cn('absolute inset-x-0 top-0 h-1', g.bar)} />
-                      <p className="text-[24px] font-bold leading-none tabular-nums text-white">
-                        {g.value}
-                      </p>
-                      <p className="mt-1.5 text-[12px] leading-snug text-white">{g.label}</p>
-                    </div>
-                  ))}
-                </section>
-              )}
+              {/* At a glance — the hub's progress strip (10 Oct): a marker,
+                  a big figure and plain words; 2x2 on a phone. */}
+              {!focused && <ProgressPanel items={glanceCells} />}
 
               {/* 2 · This week and 3 · Needs you — on phones, in the flow */}
               {needsPanel && !focused && <div className="lg:hidden">{needsPanel}</div>}
@@ -675,7 +669,7 @@ export default function SiteDiary() {
                           setDateFilter(null);
                           setQuery('');
                         }}
-                        className="h-11 rounded-xl border border-white/[0.22] px-3.5 text-[13px] font-semibold text-white touch-manipulation"
+                        className={cn(COLLEGE_BTN, 'shrink-0')}
                       >
                         Show all
                       </button>

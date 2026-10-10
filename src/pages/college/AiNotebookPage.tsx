@@ -8,11 +8,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNotebook } from '@/hooks/useNotebook';
 import { NotebookShell } from '@/components/notebook/NotebookShell';
 import { CohortThisWeekCard } from '@/components/college/CohortThisWeekCard';
-import { cn } from '@/lib/utils';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
-import { COLLEGE_LIST, CollegeEmpty, CollegePageHeader, CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
+import {
+  AiMarker,
+  TeachingEmpty,
+  TeachingHeader,
+  TeachingScreen,
+} from '@/components/college/teaching/TeachingKit';
 
 /* ==========================================================================
    AiNotebookPage — /college/ai-notebook
@@ -36,9 +41,18 @@ const HELP: PageHelpContent = {
   title: 'Learner notebook',
   what: 'Ask a question about one learner and get an answer written from their record: criteria met, quiz attempts, off-the-job hours, observations, end-point judgements and their learning plan. It is AI, so check anything you act on.',
   steps: [
-    { title: 'Pick a learner', body: 'Your assigned learners are listed. If none are assigned to you, you see everyone at the college.' },
-    { title: 'Ask', body: 'Type a question or tap a ready one. Answers cite the evidence they used.' },
-    { title: 'Act on it', body: 'Suggested actions, like booking an observation, can be filed in one tap.' },
+    {
+      title: 'Pick a learner',
+      body: 'Your assigned learners are listed. If none are assigned to you, you see everyone at the college.',
+    },
+    {
+      title: 'Ask',
+      body: 'Type a question or tap a ready one. Answers cite the evidence they used.',
+    },
+    {
+      title: 'Act on it',
+      body: 'Suggested actions, like booking an observation, can be filed in one tap.',
+    },
   ],
 };
 
@@ -173,8 +187,24 @@ export default function AiNotebookPage() {
 
   const shown = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return q ? learners.filter((l) => l.name.toLowerCase().includes(q) || (l.cohort_name ?? '').toLowerCase().includes(q)) : learners;
+    return q
+      ? learners.filter(
+          (l) => l.name.toLowerCase().includes(q) || (l.cohort_name ?? '').toLowerCase().includes(q)
+        )
+      : learners;
   }, [learners, search]);
+
+  // Grouped by cohort like the observation learner picker: a grid of cards.
+  const groups = useMemo(() => {
+    const map = new Map<string, LearnerOption[]>();
+    for (const l of shown) {
+      const k = l.cohort_name ?? 'No cohort';
+      map.set(k, [...(map.get(k) ?? []), l]);
+    }
+    return [...map.entries()]
+      .sort(([a], [b]) => (a === 'No cohort' ? 1 : b === 'No cohort' ? -1 : a.localeCompare(b)))
+      .map(([name, rows]) => ({ name, rows }));
+  }, [shown]);
 
   // Render the picker as a standalone view when no learner selected.
   if (pickerOpen || !subjectStudentId) {
@@ -186,70 +216,107 @@ export default function AiNotebookPage() {
 
     return (
       <HubPage ground="landing">
-        <HubMasthead section="College" title="Learner notebook" backTo={BACK_TO} trailing={<PageHelpButton help={HELP} compact />} />
+        <HubMasthead section="College" title="Learner notebook" backTo={BACK_TO} />
         <HubBody pushContext={PUSH_CONTEXT}>
-          <CollegePageHeader
-            eyebrow="Teaching"
-            title="Learner notebook"
-            description="Every answer is written from one learner's record: criteria, quiz history, off-the-job hours, observations and end-point judgements. Pick who to ask about."
-          />
-
-          {loadingLearners ? (
-            <div className="flex items-center justify-center py-24">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
-            </div>
-          ) : learners.length === 0 ? (
-            <CollegeEmpty
-              title="No learners assigned to you yet"
-              body="Ask your college admin to add you to a cohort or assign you learners."
+          <TeachingScreen>
+            <TeachingHeader
+              eyebrow="Teaching"
+              title={
+                <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+                  Learner notebook <AiMarker />
+                </span>
+              }
+              help={HELP}
+              summary={
+                pendingPrompt ? (
+                  <>
+                    Pick a learner and the notebook asks:{' '}
+                    <span className="font-semibold">{pendingPrompt}</span>
+                  </>
+                ) : (
+                  "Every answer is written from one learner's record: criteria, quiz history, off-the-job hours, observations and end-point judgements. Pick who to ask about."
+                )
+              }
+              sub="AI can be wrong, so check anything you act on."
             />
-          ) : (
-            <section className="space-y-4">
-              <CollegeSectionTitle
-                title="Learners"
-                sub={shown.length === learners.length ? `${learners.length} learners` : `${shown.length} of ${learners.length}`}
+
+            {loadingLearners ? (
+              <div className="flex items-center justify-center py-24">
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+              </div>
+            ) : learners.length === 0 ? (
+              <TeachingEmpty
+                title="No learners assigned to you yet"
+                body="Ask your college admin to add you to a cohort or assign you learners."
               />
-              {learners.length > 6 && (
-                <input
-                  type="search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by name or cohort"
-                  aria-label="Search learners"
-                  className="h-11 w-full max-w-md rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
+            ) : (
+              <section className="space-y-4">
+                <CollegeSectionTitle
+                  title="Learners"
+                  sub={
+                    shown.length === learners.length
+                      ? `${learners.length} learners`
+                      : `${shown.length} of ${learners.length}`
+                  }
                 />
-              )}
-              <motion.ul
-                variants={itemVariants}
-                initial="hidden"
-                animate="visible"
-                className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0 2xl:grid-cols-3')}
-              >
-                {shown.map((l) => (
-                  <li key={l.id} className="lg:border-b lg:border-r lg:border-white/[0.06]">
-                    <button
-                      type="button"
-                      onClick={() => pick(l.id)}
-                      className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-6"
-                    >
-                      <span aria-hidden className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.1] text-[12px] font-bold text-white">
-                        {l.name
-                          .split(' ')
-                          .map((n) => n[0])
-                          .slice(0, 2)
-                          .join('')}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14.5px] font-semibold text-white">{l.name}</span>
-                        <span className="mt-0.5 block truncate text-[12.5px] text-white">{l.cohort_name ?? 'No cohort'}</span>
-                      </span>
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
-                    </button>
-                  </li>
-                ))}
-              </motion.ul>
-            </section>
-          )}
+                {learners.length > 6 && (
+                  <input
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search by name or cohort"
+                    aria-label="Search learners"
+                    className="input-underline h-11 w-full max-w-md rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
+                  />
+                )}
+                <div className="space-y-5">
+                  {groups.map((g) => (
+                    <section key={g.name} aria-label={g.name} className="space-y-2.5">
+                      {groups.length > 1 && (
+                        <h3 className="flex items-baseline gap-2 text-[14px] font-semibold text-white">
+                          {g.name}
+                          <span className="text-[12.5px] font-medium tabular-nums">
+                            {g.rows.length}
+                          </span>
+                        </h3>
+                      )}
+                      <motion.ul
+                        variants={itemVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                      >
+                        {g.rows.map((l) => (
+                          <li key={l.id}>
+                            <button
+                              type="button"
+                              onClick={() => pick(l.id)}
+                              className="flex h-full min-h-[64px] w-full items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-3 text-left transition-colors touch-manipulation hover:border-white/[0.22] hover:bg-white/[0.06] active:bg-white/[0.09]"
+                            >
+                              <span
+                                aria-hidden
+                                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[13px] font-semibold text-white"
+                              >
+                                {l.name
+                                  .split(' ')
+                                  .map((n) => n[0])
+                                  .slice(0, 2)
+                                  .join('')}
+                              </span>
+                              <span className="min-w-0 flex-1 text-[15px] font-semibold leading-snug text-white">
+                                {l.name}
+                              </span>
+                              <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                            </button>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    </section>
+                  ))}
+                </div>
+              </section>
+            )}
+          </TeachingScreen>
         </HubBody>
       </HubPage>
     );
@@ -257,9 +324,10 @@ export default function AiNotebookPage() {
 
   return (
     <NotebookShell
-      eyebrow="Learner notebook"
+      backTo={BACK_TO}
+      eyebrow="Learner notebook · uses AI"
       title="Ask anything about this learner"
-      description="Grounded in their actual ACs, quiz attempts, OTJ, observations, EPA verdicts, ILP. Cites evidence. Suggests tutor actions you can take in one tap."
+      description="Answers come from their record: criteria, quiz attempts, off-the-job hours, observations, end-point judgements and learning plan. Each answer cites the evidence it used. AI can be wrong, so check anything you act on."
       tone="amber"
       starterCards={STARTER_CARDS}
       conversations={nb.conversations}

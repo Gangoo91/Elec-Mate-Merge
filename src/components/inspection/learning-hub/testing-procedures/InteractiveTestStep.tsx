@@ -33,7 +33,7 @@ const InteractiveTestStep = ({
 
   const getCardStyle = () => {
     if (isCompleted) return 'border-green-500/30 bg-green-500/5';
-    if (isActive) return 'border-elec-yellow/50 bg-elec-yellow/5';
+    if (isActive) return 'border-elec-yellow/50 bg-white/[0.06]';
     return 'border-border bg-card';
   };
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -57,6 +58,8 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
 
     const selectedJob = jobs.find((j) => j.id === selectedJobId);
     if (!selectedJob) return;
+    // ELE-2061: warn or block on anyone without a right-to-work check.
+    if (!(await confirmRtw([employee.id], 'assign'))) return;
 
     try {
       await createAssignment.mutateAsync({

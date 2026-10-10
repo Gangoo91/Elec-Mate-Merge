@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { JobContextBar } from '@/components/employer/JobContextBar';
 import { useJobContext } from '@/hooks/useJobContext';
-import { RefreshCw } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useQuotes, useInvoices } from '@/hooks/useFinance';
 import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
@@ -26,30 +25,42 @@ import {
   ResponsiveFormModalBody,
 } from '@/components/ui/responsive-form-modal';
 import {
-  PageFrame,
   PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  IconButton,
-  EmptyState,
   LoadingBlocks,
   PrimaryButton,
   SecondaryButton,
   Field,
   inputClass,
-  type Tone,
 } from '@/components/employer/editorial';
+import {
+  PageColumn,
+  TwoColumn,
+  FigureStrip,
+  FilterRow,
+  Segments,
+  SearchField,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  RefreshIcon,
+  Rows,
+  Row,
+  StatusPill,
+  PlainEmpty,
+  panel,
+  PanelTitle,
+  type PillTone,
+} from '@/components/employer/pageParts/PageParts';
+import { cn } from '@/lib/utils';
 import { autoCompleteOff } from '@/lib/textEntry';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { QUOTES_HELP } from '@/components/employer/help/finance';
 import { useActingFirmId, useFirmCardPayments } from '@/hooks/useJobProfit';
 import { useFirmPriceBook } from '@/hooks/useFirmPriceBook';
+import { WhoOwesMe } from '@/components/employer/getpaid/WhoOwesMe';
+import { ChaseScheduleSheet } from '@/components/employer/getpaid/ChaseScheduleSheet';
+import { WinRatePanel } from '@/components/employer/quotes/WinRatePanel';
+import { useQuoteAttribution, attributionLine } from '@/hooks/useQuoteAttribution';
 
 type RowKind = 'quote' | 'invoice';
 
@@ -61,20 +72,12 @@ interface CombinedRow {
   jobTitle: string | null;
   total: number;
   status: string;
-  statusTone: Tone;
+  statusTone: PillTone;
   timestamp: number;
   timeAgo: string;
   /** Bridged in from the Electrical Hub — read-only here, edited in that hub. */
   isBridged: boolean;
   raw: Quote | Invoice;
-}
-
-function getInitials(name?: string | null) {
-  if (!name) return '??';
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return '??';
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
 function formatMoney(n: number) {
@@ -107,20 +110,18 @@ function timeAgo(iso: string | null | undefined) {
   return `${Math.floor(months / 12)}y ago`;
 }
 
-function quoteStatusTone(status: string): Tone {
+// One calm pill per row: green for won, red for lost, neutral otherwise.
+function quoteStatusTone(status: string): PillTone {
   switch (status) {
     case 'Approved':
     case 'Client Accepted':
     case 'Converted':
-      return 'emerald';
-    case 'Sent':
-      return 'blue';
+      return 'green';
     case 'Rejected':
     case 'Client Declined':
       return 'red';
-    case 'Draft':
     default:
-      return 'amber';
+      return 'neutral';
   }
 }
 
@@ -128,18 +129,14 @@ function quoteStatusTone(status: string): Tone {
 // through the portal, or already converted to an invoice.
 const WON_QUOTE_STATUSES = ['Approved', 'Client Accepted', 'Converted'];
 
-function invoiceStatusTone(status: string): Tone {
+function invoiceStatusTone(status: string): PillTone {
   switch (status) {
     case 'Paid':
-      return 'emerald';
+      return 'green';
     case 'Overdue':
       return 'red';
-    // Blue for Sent matches ViewInvoiceSheet — list and sheet must agree
-    case 'Sent':
-      return 'blue';
-    case 'Pending':
     default:
-      return 'amber';
+      return 'neutral';
   }
 }
 
@@ -186,7 +183,12 @@ export function QuotesInvoicesSection() {
     address?: string;
     lines?: { description: string; note?: string }[];
     title?: string;
+    /** ELE-2073: open the template picker first (a converted lead). */
+    templates?: boolean;
   } | null>(null);
+  // ELE-2065: ?view=owed is the "Who owes me" page (its own &invoice= opens a debtor).
+  const owedView = searchParams.get('view') === 'owed';
+  const [followUpOpen, setFollowUpOpen] = useState(false);
   useEffect(() => {
     if (searchParams.get('new') !== 'quote') return;
     // ELE-1832: a remedial quote from a signed certificate hands its
@@ -207,12 +209,15 @@ export function QuotesInvoicesSection() {
       address: searchParams.get('address') ?? undefined,
       lines,
       title: searchParams.get('title') ?? undefined,
+      templates: searchParams.get('template') === 'pick',
     });
     setShowCreateQuote(true);
     setSearchParams(
       (prev) => {
         const next = new URLSearchParams(prev);
-        ['new', 'client', 'email', 'phone', 'address', 'lines', 'title'].forEach((k) => next.delete(k));
+        ['new', 'client', 'email', 'phone', 'address', 'lines', 'title', 'template'].forEach((k) =>
+          next.delete(k)
+        );
         return next;
       },
       { replace: true }
@@ -223,7 +228,8 @@ export function QuotesInvoicesSection() {
   // (e.g. from a client's linked list).
   useEffect(() => {
     const qid = searchParams.get('quote');
-    const iid = searchParams.get('invoice');
+    // On the "Who owes me" view, &invoice= belongs to that page.
+    const iid = searchParams.get('view') === 'owed' ? null : searchParams.get('invoice');
     const tab = searchParams.get('tab');
     if (tab && ['all', 'quotes', 'invoices', 'overdue'].includes(tab)) {
       setActiveTab(tab as typeof activeTab);
@@ -266,8 +272,23 @@ export function QuotesInvoicesSection() {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ['quotes'] }),
       queryClient.invalidateQueries({ queryKey: ['invoices'] }),
+      queryClient.invalidateQueries({ queryKey: ['firm-debtors'] }),
     ]);
   };
+
+  const openOwed = () =>
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('view', 'owed');
+      return next;
+    });
+  const closeOwed = () =>
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete('view');
+      next.delete('invoice');
+      return next;
+    });
 
   // Outstanding, cash in (30 days) and open quotes come from the shared
   // finance model so this page, the Finance and Clients hubs, Reports and
@@ -279,8 +300,11 @@ export function QuotesInvoicesSection() {
 
   const wonThisMonth = useMemo(
     () =>
-      quotes.filter((q) => WON_QUOTE_STATUSES.includes(q.status) && isThisMonth(q.updated_at))
-        .length,
+      // accepted_at, not updated_at: any later edit or bulk
+      // update would count an old win as this month's.
+      quotes.filter(
+        (q) => WON_QUOTE_STATUSES.includes(q.status) && isThisMonth(q.accepted_at ?? q.updated_at)
+      ).length,
     [quotes]
   );
 
@@ -300,7 +324,10 @@ export function QuotesInvoicesSection() {
       client: q.client || 'Unknown client',
       jobTitle: q.job_title || q.description || null,
       total: Number(q.value || 0),
-      status: q.status,
+      // ELE-2065: an invoiced quote says so, with the invoice's number.
+      status: q.converted_invoice_id
+        ? `Invoiced${q.converted_invoice_number ? ` · ${q.converted_invoice_number}` : ''}`
+        : q.status,
       statusTone: quoteStatusTone(q.status),
       timestamp: new Date(q.updated_at || q.created_at || 0).getTime() || 0,
       timeAgo: timeAgo(q.updated_at || q.created_at),
@@ -323,6 +350,10 @@ export function QuotesInvoicesSection() {
     }));
     return [...qRows, ...iRows].sort((a, b) => b.timestamp - a.timestamp);
   }, [sortedQuotes, sortedInvoices]);
+  // ELE-2083: "Sent by" / "Raised by" on rows, once more than one person does the paperwork.
+  const attribution = useQuoteAttribution(
+    useMemo(() => combined.map((r) => (r.raw as { id: string }).id), [combined])
+  );
 
   const sendChase = async (inv: { id: string; client: string }, email: string) => {
     try {
@@ -402,9 +433,7 @@ export function QuotesInvoicesSection() {
     {
       value: 'invoices',
       label: 'Invoices',
-      count: contextJobId
-        ? scopedRows.filter((r) => r.kind === 'invoice').length
-        : invoices.length,
+      count: contextJobId ? scopedRows.filter((r) => r.kind === 'invoice').length : invoices.length,
     },
     {
       value: 'overdue',
@@ -441,30 +470,240 @@ export function QuotesInvoicesSection() {
   }
   const askContext = { page: 'quotes', tab: activeTab };
 
+  const kindLabel = (row: CombinedRow) => {
+    const n = row.number;
+    if (/^(quote|invoice|qte|inv)/i.test(n)) return n;
+    return `${row.kind === 'quote' ? 'Quote' : 'Invoice'} ${n}`;
+  };
+
+  // Live status line (the Overview's headline idea): what is owed, what is
+  // late and what is waiting on a customer. Same figures as the strip.
+  const statusLine = (() => {
+    if (contextJobId) return "This job's quotes and invoices.";
+    if (!money) return 'Create, send, track and get paid.';
+    const parts: string[] = [];
+    if (money.outstanding > 0) parts.push(`${formatHero(money.outstanding)} owed`);
+    if (money.overdueCount > 0)
+      parts.push(`${money.overdueCount} invoice${money.overdueCount === 1 ? '' : 's'} overdue`);
+    const first = parts.length ? parts.join(', ') + '.' : 'Nothing owed to you.';
+    const q =
+      money.openQuoteCount > 0
+        ? ` ${money.openQuoteCount} quote${money.openQuoteCount === 1 ? '' : 's'} waiting for an answer.`
+        : '';
+    return first + q;
+  })();
+
+  const waitingQuotes = useMemo(
+    () => sortedQuotes.filter((q) => q.status === 'Sent').slice(0, 5),
+    [sortedQuotes]
+  );
+
   const heroActions = (
-    <>
-      <PrimaryButton data-help="quotes.new-quote" onClick={() => setShowCreateQuote(true)}>
+    <HeroActions>
+      <HeroPrimary data-help="quotes.new-quote" onClick={() => setShowCreateQuote(true)}>
         New quote
-      </PrimaryButton>
-      <SecondaryButton data-help="quotes.new-invoice" onClick={() => setShowCreateInvoice(true)}>
+      </HeroPrimary>
+      <HeroSecondary data-help="quotes.new-invoice" onClick={() => setShowCreateInvoice(true)}>
         New invoice
-      </SecondaryButton>
-      <IconButton onClick={handleRefresh} aria-label="Refresh">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
+      </HeroSecondary>
+      <RefreshIcon onClick={handleRefresh} />
       <PageHelpButton help={QUOTES_HELP} blockers={helpBlockers} askContext={askContext} />
+    </HeroActions>
+  );
+
+  // Every row bridged from the Electrical Hub: say it once, not on each row.
+  const allBridged = filteredRows.length > 0 && filteredRows.every((r) => r.isBridged);
+
+  const listPanel = (
+    <section>
+      <PanelTitle
+        title={
+          activeTab === 'quotes'
+            ? 'Quotes'
+            : activeTab === 'invoices'
+              ? 'Invoices'
+              : activeTab === 'overdue'
+                ? 'Overdue invoices'
+                : 'Quotes and invoices'
+        }
+        meta={
+          allBridged && filteredRows.length
+            ? `${filteredRows.length} · made in the Electrical Hub`
+            : `${filteredRows.length}`
+        }
+      />
+      <div className={cn(panel, 'overflow-hidden')}>
+        {filteredRows.length === 0 ? (
+          <PlainEmpty
+            bare
+            text={
+              searchQuery
+                ? 'Nothing matches that. Try a client name, number or job.'
+                : activeTab === 'overdue'
+                  ? 'Nothing is overdue.'
+                  : 'Your quotes and invoices will show here.'
+            }
+            action={searchQuery || activeTab === 'overdue' ? undefined : 'New quote'}
+            onAction={
+              searchQuery || activeTab === 'overdue' ? undefined : () => setShowCreateQuote(true)
+            }
+          />
+        ) : (
+          <div data-help="quotes.list">
+            <Rows>
+              {filteredRows.map((row) => {
+                const overdue =
+                  row.kind === 'invoice' &&
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  isOverdueInvoice(row.raw as any);
+                const daysOver = overdue
+                  ? Math.max(
+                      1,
+                      Math.floor(
+                        (Date.now() -
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          new Date((row.raw as any).due_date).getTime()) /
+                          86400000
+                      )
+                    )
+                  : 0;
+                const detail = [
+                  kindLabel(row),
+                  row.jobTitle,
+                  overdue ? null : row.timeAgo,
+                  row.isBridged && !allBridged ? 'Electrical Hub' : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
+                // Who sent it gets its own line, so it is not cut off on a phone.
+                const sentBy = attribution.severalPeople
+                  ? attributionLine(
+                      attribution.map.get((row.raw as { id: string }).id),
+                      row.kind === 'quote' ? 'quote' : 'invoice'
+                    )
+                  : null;
+                return (
+                  <Row
+                    chevron={false}
+                    key={row.id}
+                    title={row.client}
+                    detail={detail}
+                    meta={sentBy ? <span className="block truncate">{sentBy}</span> : undefined}
+                    amount={`£${formatMoney(row.total)}`}
+                    status={
+                      overdue ? (
+                        <StatusPill tone="red">{daysOver}d overdue</StatusPill>
+                      ) : (
+                        <StatusPill tone={row.statusTone}>{row.status}</StatusPill>
+                      )
+                    }
+                    action={
+                      overdue ? (
+                        <button
+                          type="button"
+                          data-help="quotes.chase"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            handleChaseInvoice(row.raw as any);
+                          }}
+                          className="inline-flex h-11 items-center rounded-full border border-white/[0.14] bg-white/[0.04] px-4 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.08]"
+                        >
+                          Chase
+                        </button>
+                      ) : undefined
+                    }
+                    onClick={() => openRow(row)}
+                  />
+                );
+              })}
+            </Rows>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+
+  const agingRows: { label: string; value: number }[] = [
+    { label: '1 to 30 days', value: aging.d1_30 },
+    { label: '31 to 60 days', value: aging.d31_60 },
+    { label: '61 to 90 days', value: aging.d61_90 },
+    { label: 'Over 90 days', value: aging.d90_plus },
+  ];
+
+  const sidePanels = contextJobId ? undefined : (
+    <>
+      <section>
+        <PanelTitle
+          title="Overdue"
+          meta={aging.totalOverdue > 0 ? formatHero(aging.totalOverdue) : undefined}
+          action="Who owes me"
+          onAction={openOwed}
+        />
+        <div className={cn(panel, 'overflow-hidden')}>
+          {aging.totalOverdue > 0 ? (
+            <Rows>
+              {agingRows.map((a) => (
+                <div
+                  key={a.label}
+                  className="flex min-h-[48px] items-center justify-between gap-3 px-4 py-2.5 sm:px-5"
+                >
+                  <span className="text-[14px] text-white">{a.label}</span>
+                  <span
+                    className={cn(
+                      'text-[15px] font-semibold tabular-nums',
+                      a.value > 0 && a.label !== '1 to 30 days' ? 'text-red-400' : 'text-white'
+                    )}
+                  >
+                    {formatHero(a.value)}
+                  </span>
+                </div>
+              ))}
+            </Rows>
+          ) : (
+            <PlainEmpty
+              bare
+              text="Nothing is overdue. Late invoices show here by how long they are past due."
+            />
+          )}
+        </div>
+      </section>
+
+      <section>
+        <PanelTitle
+          title="Waiting for an answer"
+          meta={waitingQuotes.length ? `${waitingQuotes.length}` : undefined}
+          action="Follow-up"
+          onAction={() => setFollowUpOpen(true)}
+        />
+        <div className={cn(panel, 'overflow-hidden')}>
+          {waitingQuotes.length ? (
+            <Rows>
+              {waitingQuotes.map((q) => (
+                <Row
+                  chevron={false}
+                  key={q.id}
+                  title={q.client || 'Unknown client'}
+                  detail={`${q.quote_number || 'Quote'} · sent ${timeAgo(q.sent_date || q.created_at)}`}
+                  amount={`£${formatMoney(Number(q.value || 0))}`}
+                  onClick={() => setSelectedQuote(q)}
+                />
+              ))}
+            </Rows>
+          ) : (
+            <PlainEmpty bare text="Sent quotes the customer has not answered yet show here." />
+          )}
+        </div>
+      </section>
+
+      {/* ELE-2073: owner and admins only; renders nothing for anyone else. */}
+      <WinRatePanel />
     </>
   );
 
   const body = (
-    <PageFrame>
-      <PageHero
-        eyebrow="Money"
-        title="Quotes & Invoices"
-        description="Create, send, track and get paid."
-        tone="yellow"
-        actions={heroActions}
-      />
+    <PageColumn>
+      <PageHero title="Quotes & invoices" description={statusLine} actions={heroActions} />
 
       <HowItWorks help={QUOTES_HELP} blockers={helpBlockers} askContext={askContext} />
 
@@ -477,138 +716,60 @@ export function QuotesInvoicesSection() {
           {/* Firm-wide totals — hidden while filtered to one job so they are
               never read as that job's numbers (its money is on the job sheet). */}
           {!contextJobId && (
-          <StatStrip
-            columns={4}
-            stats={[
-              {
-                label: 'Outstanding £',
-                value: outstanding === undefined ? '—' : formatHero(outstanding),
-                tone: 'amber',
-              },
-              {
-                label: 'Cash in · 30 days',
-                value: paid30 === undefined ? '—' : formatHero(paid30),
-                tone: 'emerald',
-              },
-              {
-                label: 'Open quotes £',
-                value: openQuotesValue === undefined ? '—' : formatHero(openQuotesValue),
-                tone: 'blue',
-              },
-              { label: 'Won this month', value: wonThisMonth, accent: true },
-            ]}
-          />
+            <FigureStrip
+              figures={[
+                {
+                  label: 'Owed to you',
+                  value: outstanding === undefined ? '—' : formatHero(outstanding),
+                  sub:
+                    money && money.overdueCount > 0
+                      ? `${money.overdueCount} overdue`
+                      : 'Sent and not paid',
+                  tone: money && money.overdueCount > 0 ? 'red' : undefined,
+                  // ELE-2065: who owes what, aged, with the next chase.
+                  onOpen: money?.moneyVisible
+                    ? openOwed
+                    : () => setActiveTab(money && money.overdueCount > 0 ? 'overdue' : 'invoices'),
+                },
+                {
+                  label: 'Paid in, 30 days',
+                  value: paid30 === undefined ? '—' : formatHero(paid30),
+                  sub: 'Money received',
+                  onOpen: () => setActiveTab('invoices'),
+                },
+                {
+                  label: 'Open quotes',
+                  value: openQuotesValue === undefined ? '—' : formatHero(openQuotesValue),
+                  sub: money ? `${money.openQuoteCount} waiting` : undefined,
+                  onOpen: () => setActiveTab('quotes'),
+                },
+                {
+                  label: 'Won this month',
+                  value: wonThisMonth,
+                  sub: `Quote${wonThisMonth === 1 ? '' : 's'} accepted`,
+                  onOpen: () => setActiveTab('quotes'),
+                },
+              ]}
+            />
           )}
 
-          <div data-help="quotes.tabs">
-            <FilterBar
-              tabs={tabs}
-              activeTab={activeTab}
-              onTabChange={(v) => setActiveTab(v as typeof activeTab)}
-              search={searchQuery}
-              onSearchChange={setSearchQuery}
-              searchPlaceholder="Search quotes & invoices…"
-            />
-          </div>
-
-          {!contextJobId && activeTab === 'overdue' && aging.totalOverdue > 0 && (
-            <ListCard>
-              <ListCardHeader
-                tone="red"
-                title="Aging"
-                meta={<Pill tone="red">{formatHero(aging.totalOverdue)} overdue</Pill>}
+          <FilterRow>
+            <div data-help="quotes.tabs" className="min-w-0">
+              <Segments
+                items={tabs as { value: typeof activeTab; label: string; count?: number }[]}
+                value={activeTab}
+                onChange={setActiveTab}
               />
-              <div className="px-2 pb-2">
-                <StatStrip
-                  columns={4}
-                  stats={[
-                    { label: '1–30 days', value: formatHero(aging.d1_30), tone: 'amber' },
-                    { label: '31–60 days', value: formatHero(aging.d31_60), tone: 'orange' },
-                    { label: '61–90 days', value: formatHero(aging.d61_90), tone: 'red' },
-                    { label: '90+ days', value: formatHero(aging.d90_plus), tone: 'red' },
-                  ]}
-                />
-              </div>
-            </ListCard>
-          )}
-
-          <ListCard>
-            <ListCardHeader
-              tone="yellow"
-              title="Quotes & Invoices"
-              meta={<Pill tone="yellow">{filteredRows.length}</Pill>}
+            </div>
+            <SearchField
+              className="w-full lg:w-72"
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Search client, number or job"
             />
-            {filteredRows.length === 0 ? (
-              <div className="p-2">
-                <EmptyState
-                  title={searchQuery ? 'No matches' : 'Nothing here yet'}
-                  description={
-                    searchQuery
-                      ? 'Try a different client name, number or project.'
-                      : 'Create your first quote or invoice to start tracking the money.'
-                  }
-                  action={searchQuery ? undefined : 'New quote'}
-                  onAction={searchQuery ? undefined : () => setShowCreateQuote(true)}
-                />
-              </div>
-            ) : (
-              <div data-help="quotes.list">
-              <ListBody>
-                {filteredRows.map((row) => {
-                  const overdue =
-                    row.kind === 'invoice' &&
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    isOverdueInvoice(row.raw as any);
-                  const daysOver = overdue
-                    ? Math.max(
-                        1,
-                        Math.floor(
-                          (Date.now() -
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            new Date((row.raw as any).due_date).getTime()) /
-                            86400000
-                        )
-                      )
-                    : 0;
-                  return (
-                    <ListRow
-                      key={row.id}
-                      lead={<Avatar initials={getInitials(row.client)} />}
-                      title={`${row.kind.toUpperCase()} #${row.number} — ${row.client}`}
-                      subtitle={`${row.jobTitle ? `${row.jobTitle} · ` : ''}£${formatMoney(
-                        row.total
-                      )} · ${overdue ? `${daysOver}d overdue` : row.timeAgo}`}
-                      trailing={
-                        overdue ? (
-                          <div className="flex items-center gap-2">
-                            <Pill tone="red">{daysOver}d overdue</Pill>
-                            <SecondaryButton
-                              size="sm"
-                              data-help="quotes.chase"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                handleChaseInvoice(row.raw as any);
-                              }}
-                            >
-                              Chase
-                            </SecondaryButton>
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            {row.isBridged && <Pill tone="blue">Electrical Hub</Pill>}
-                            <Pill tone={row.statusTone}>{row.status}</Pill>
-                          </div>
-                        )
-                      }
-                      onClick={() => openRow(row)}
-                    />
-                  );
-                })}
-              </ListBody>
-              </div>
-            )}
-          </ListCard>
+          </FilterRow>
+
+          <TwoColumn main={listPanel} side={sidePanels} />
         </>
       )}
 
@@ -624,6 +785,7 @@ export function QuotesInvoicesSection() {
         prefillAddress={quotePrefill?.address}
         prefillLines={quotePrefill?.lines}
         prefillTitle={quotePrefill?.title}
+        openTemplates={quotePrefill?.templates}
         jobId={contextJobId ?? undefined}
         {...(contextJob && !quotePrefill ? { prefillClient: contextJob.client } : {})}
       />
@@ -700,15 +862,23 @@ export function QuotesInvoicesSection() {
           </ResponsiveFormModalBody>
         </ResponsiveFormModalContent>
       </ResponsiveFormModal>
-    </PageFrame>
+      <ChaseScheduleSheet open={followUpOpen} onOpenChange={setFollowUpOpen} initialTab="quotes" />
+    </PageColumn>
   );
 
-  if (isMobile) {
-    return (
-      <PullToRefresh onRefresh={handleRefresh} className="px-4 pb-20">
-        {body}
-      </PullToRefresh>
+  // ELE-2065: the "Who owes me" page lives on this section (?view=owed).
+  if (owedView) {
+    const owed = (
+      <WhoOwesMe
+        onBack={closeOwed}
+        focusInvoiceId={searchParams.get('invoice')}
+      />
     );
+    return isMobile ? <PullToRefresh onRefresh={handleRefresh}>{owed}</PullToRefresh> : owed;
+  }
+
+  if (isMobile) {
+    return <PullToRefresh onRefresh={handleRefresh}>{body}</PullToRefresh>;
   }
 
   return body;

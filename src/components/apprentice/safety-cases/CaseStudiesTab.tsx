@@ -620,9 +620,7 @@ const CaseStudiesTab = () => {
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Case studies library
-        </span>
+        <span className="text-[13px] font-semibold text-white">Case studies library</span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Real incident case studies
         </h2>
@@ -633,10 +631,8 @@ const CaseStudiesTab = () => {
       </div>
 
       {/* Filters */}
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Filter by severity
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Filter by severity</span>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setFilterSeverity('all')}
@@ -673,7 +669,7 @@ const CaseStudiesTab = () => {
           >
             {/* Title + meta */}
             <div className="space-y-2">
-              <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white flex-wrap">
+              <div className="flex items-baseline gap-3 text-[13px] font-semibold text-white flex-wrap">
                 <span>{study.severity}</span>
                 <span className="text-white">·</span>
                 <span>{study.category}</span>
@@ -708,9 +704,7 @@ const CaseStudiesTab = () => {
             {/* Causes & prevention */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Root causes
-                </span>
+                <span className="text-[13px] font-semibold text-white">Root causes</span>
                 <ul className="space-y-1.5">
                   {study.rootCauses.slice(0, 3).map((cause, causeIndex) => (
                     <li
@@ -722,17 +716,13 @@ const CaseStudiesTab = () => {
                     </li>
                   ))}
                   {study.rootCauses.length > 3 && (
-                    <li className="text-[12px] text-white">
-                      +{study.rootCauses.length - 3} more
-                    </li>
+                    <li className="text-[12px] text-white">+{study.rootCauses.length - 3} more</li>
                   )}
                 </ul>
               </div>
 
               <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Prevention measures
-                </span>
+                <span className="text-[13px] font-semibold text-white">Prevention measures</span>
                 <ul className="space-y-1.5">
                   {study.preventiveMeasures.slice(0, 3).map((measure, measureIndex) => (
                     <li
@@ -754,9 +744,7 @@ const CaseStudiesTab = () => {
 
             {/* Lesson learned */}
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Key lesson
-              </span>
+              <span className="text-[13px] font-semibold text-white">Key lesson</span>
               <p className="text-[14px] text-white leading-relaxed italic">
                 &ldquo;{study.lessonsLearned}&rdquo;
               </p>
@@ -784,7 +772,7 @@ const CaseStudiesTab = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Download className="h-3 w-3 mr-1" />
                   Report
@@ -792,14 +780,14 @@ const CaseStudiesTab = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Share2 className="h-3 w-3" />
                 </Button>
                 <Button
                   size="sm"
                   onClick={() => handleViewCase(study.id)}
-                  className="h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+                  className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
                 >
                   <Eye className="mr-1 h-3 w-3" />
                   View
@@ -811,11 +799,9 @@ const CaseStudiesTab = () => {
       </div>
 
       {/* Analytics summary */}
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Analytics
-          </span>
+          <span className="text-[13px] font-semibold text-white">Analytics</span>
           <p className="text-[14px] text-white leading-relaxed">
             These case studies are based on real incidents reported to the HSE and other safety
             organisations. They represent valuable learning opportunities that have shaped current
@@ -837,10 +823,8 @@ const CaseStudiesTab = () => {
             },
           ].map((m) => (
             <div key={m.label} className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {m.label}
-              </span>
-              <p className="text-[20px] font-semibold text-white font-mono">{m.value}</p>
+              <span className="text-[13px] font-semibold text-white">{m.label}</span>
+              <p className="text-[20px] font-semibold text-white">{m.value}</p>
             </div>
           ))}
         </div>

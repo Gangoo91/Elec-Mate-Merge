@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { GuidePage, GuideIndex } from '@/components/apprentice/shared/GuideKit';
 
 interface Section {
   number: string;
@@ -80,27 +79,24 @@ const SECTIONS: Section[] = [
 const LearningFromMistakes = () => {
   const navigate = useNavigate();
   return (
-    <HubSubPage
+    <GuidePage
+      area="Learning from mistakes"
       title="Everyone makes mistakes"
       backTo="/apprentice/toolbox"
       description="What separates a good electrician from a struggling one isn't fewer mistakes — it's how they handle them. Owning errors, learning fast, getting back to work."
     >
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Six chapters</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="three"
-          cards={SECTIONS.map((s) => ({
-            id: s.slug,
-            eyebrow: s.eyebrow,
-            title: s.title,
-            description: s.description,
-            meta: s.meta,
-            onClick: () => navigate(`/apprentice/toolbox/learning-from-mistakes/${s.slug}`),
-          }))}
-        />
-      </motion.section>
-    </HubSubPage>
+      <GuideIndex
+        title="Six chapters"
+        columns={3}
+        items={SECTIONS.map((s) => ({
+          id: s.slug,
+          title: s.title,
+          description: s.description,
+          meta: s.meta,
+          onClick: () => navigate(`/apprentice/toolbox/learning-from-mistakes/${s.slug}`),
+        }))}
+      />
+    </GuidePage>
   );
 };
 

@@ -22,6 +22,7 @@ import {
   useMyTasks,
   useUpForGrabsTasks,
   useUpdateTask,
+  sendMyTaskStatus,
   useTaskComments,
   useAddTaskComment,
   uploadTaskPhoto,
@@ -31,6 +32,8 @@ import {
   type TaskPriority,
 } from '@/hooks/useJobTasks';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
+import { OutboxRefusedError } from '@/lib/workerOutbox';
+import { queuedToast } from '@/components/worker-tools/outboxToast';
 import {
   WorkerPanel,
   GroupLabel,
@@ -67,6 +70,16 @@ const priorityRank: Record<TaskPriority, number> = {
 };
 
 
+
+/** ELE-1828: the change is on this phone, not with the office yet. */
+function WaitingBadge() {
+  return (
+    <span className="inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full border border-white/[0.2] px-2.5 text-[11.5px] font-bold text-white">
+      <span className="h-1.5 w-1.5 rounded-full bg-orange-400" aria-hidden />
+      Waiting to send
+    </span>
+  );
+}
 
 function StatusPill({ status }: { status: TaskStatus }) {
   return (
@@ -135,12 +148,13 @@ function TaskDetail({
 
   const setStatus = async (status: TaskStatus) => {
     try {
-      await updateTask.mutateAsync({ id: task.id, updates: { status } });
-      toast.success(
-        status === 'Done' ? 'Nice one. Marked done' : `Marked ${status.toLowerCase()}`
-      );
-    } catch {
-      toast.error('Could not update the task');
+      // ELE-1828: through the outbox, so a tick works with no signal.
+      const result = await sendMyTaskStatus(task, status);
+      const msg = status === 'Done' ? 'Nice one. Marked done' : `Marked ${status.toLowerCase()}`;
+      if (result === 'sent') toast.success(msg);
+      else queuedToast(msg);
+    } catch (e) {
+      toast.error(e instanceof OutboxRefusedError ? e.message : 'Could not update the task');
     }
   };
 
@@ -196,7 +210,10 @@ function TaskDetail({
           </p>
         </div>
         <div className="shrink-0 pt-1.5">
-          <StatusPill status={task.status} />
+          <span className="flex flex-col items-end gap-1.5">
+            <StatusPill status={task.status} />
+            {task.offline_pending && <WaitingBadge />}
+          </span>
         </div>
       </div>
 
@@ -287,7 +304,7 @@ function TaskDetail({
         </div>
         {task.photos.length === 0 ? (
           <p className="text-[13px] text-white px-0.5">
-            Show the office what the craic is — snap it as you go.
+            Add a photo so the office can see how it's going.
           </p>
         ) : (
           <TaskPhotoGrid photos={task.photos} />
@@ -403,6 +420,7 @@ function TaskRow({
             </span>
             {task.status === 'Blocked' && <SolidBadge tone="red">Blocked</SolidBadge>}
             {task.status === 'In Progress' && <SolidBadge tone="neutral">On it</SolidBadge>}
+            {task.offline_pending && <WaitingBadge />}
             {(task.priority === 'Urgent' || task.priority === 'High') && !isDone && (
               <SolidBadge tone={task.priority === 'Urgent' ? 'red' : 'neutral'}>{task.priority} priority</SolidBadge>
             )}
@@ -484,10 +502,15 @@ export default function MyTasksPage() {
   const step = async (task: JobTask, status: TaskStatus) => {
     setBusyId(task.id);
     try {
-      await updateTask.mutateAsync({ id: task.id, updates: { status } });
-      toast.success(status === 'Done' ? `Done — “${task.title}”` : `Started “${task.title}”`);
-    } catch {
-      toast.error('Couldn’t update the task. Try again');
+      // ELE-1828: through the outbox, so a tick works with no signal.
+      const result = await sendMyTaskStatus(task, status);
+      const msg = status === 'Done' ? `Done: “${task.title}”` : `Started “${task.title}”`;
+      if (result === 'sent') toast.success(msg);
+      else queuedToast(msg);
+    } catch (e) {
+      toast.error(
+        e instanceof OutboxRefusedError ? e.message : 'Couldn’t update the task. Try again'
+      );
     } finally {
       setBusyId(null);
     }
@@ -501,7 +524,7 @@ export default function MyTasksPage() {
         id: task.id,
         updates: { assignee_employee_id: me.id, status: 'In Progress' },
       });
-      toast.success(`You’re on it — “${task.title}”`);
+      toast.success(`You’re on it: “${task.title}”`);
     } catch {
       toast.error('Couldn’t take that task. Someone may have beaten you to it');
     } finally {

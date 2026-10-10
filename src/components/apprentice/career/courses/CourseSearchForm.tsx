@@ -32,9 +32,7 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        Find courses & training centres
-      </span>
+      <span className="text-[13px] font-semibold text-white">Find courses & training centres</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSearch)} className="flex flex-col md:flex-row gap-3">
           <FormField

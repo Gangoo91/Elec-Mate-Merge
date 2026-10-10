@@ -358,7 +358,7 @@ export function EmployerSearchSheet({
 function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="pt-3">
-      <h2 className="px-4 pb-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">{title}</h2>
+      <h2 className="px-4 pb-1 text-[12px] font-semibold text-elec-yellow">{title}</h2>
       <div className="divide-y divide-white/[0.06]">{children}</div>
     </section>
   );

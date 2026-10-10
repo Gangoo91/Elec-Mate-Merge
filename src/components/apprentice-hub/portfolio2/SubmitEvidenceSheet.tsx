@@ -20,11 +20,23 @@ import { cn } from '@/lib/utils';
 import { shortHash } from '@/lib/portfolio/contentHash';
 import { notifyPortfolioChanged, type PortfolioItemView } from '@/hooks/portfolio/usePortfolio';
 import { P_BTN_PRIMARY, P_INPUT, fmtDateTime } from './ui';
+import { AiUseRecord } from '@/components/college/ui/AiUseRecord';
+import { AI_DECLARATION_TEXT } from '@/lib/portfolio/aiUseRecord';
 
 export const DECLARATION_TEXT =
   'I confirm that the evidence I am submitting is my own work, that I carried out the activities it describes, ' +
   'and that any help I had is shown in it. I understand that my assessor may question me about it, and that ' +
   'submitting work that is not my own is malpractice.';
+
+/**
+ * ELE-2048: the declaration as signed. The AI paragraph is always part of it
+ * (JCQ: acknowledge any AI use); when an item sent is AI-assisted the learner's
+ * own explanation follows "How I used AI:", which the server requires.
+ */
+export function declarationFor(aiNote: string | null): string {
+  const base = `${DECLARATION_TEXT} ${AI_DECLARATION_TEXT}`;
+  return aiNote && aiNote.trim() ? `${base}\n\nHow I used AI: ${aiNote.trim()}` : base;
+}
 
 export function SubmitEvidenceSheet({
   items,
@@ -50,6 +62,7 @@ export function SubmitEvidenceSheet({
   const [name, setName] = useState('');
   const [signature, setSignature] = useState('');
   const [note, setNote] = useState('');
+  const [aiNote, setAiNote] = useState('');
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<{ bundle: string; at: string } | null>(null);
   // Fixed when the sheet opens: once sent, the item is no longer "needs more".
@@ -61,6 +74,7 @@ export function SubmitEvidenceSheet({
       setAgreed(false);
       setSignature('');
       setNote('');
+      setAiNote('');
       setDone(null);
       setWasResend(resend);
       setChosenIds(new Set(items.map((i) => i.id)));
@@ -75,8 +89,16 @@ export function SubmitEvidenceSheet({
     [items, chosenIds, selectable]
   );
   const unclaimed = chosen.filter((i) => i.claimed.length === 0);
+  // ELE-2048: AI-assisted evidence needs the learner's own line on how they used it.
+  const aiItems = chosen.filter((i) => i.aiAssisted);
+  const aiNoteOk = aiItems.length === 0 || aiNote.trim().length >= 10;
   const ready =
-    chosen.length > 0 && agreed && name.trim().length > 1 && signature.length > 0 && unclaimed.length === 0;
+    chosen.length > 0 &&
+    agreed &&
+    name.trim().length > 1 &&
+    signature.length > 0 &&
+    unclaimed.length === 0 &&
+    aiNoteOk;
   const unitList = useMemo(() => [...new Set(chosen.flatMap((i) => i.units))], [chosen]);
   const toggleItem = (id: string) =>
     setChosenIds((prev) => {
@@ -95,7 +117,7 @@ export function SubmitEvidenceSheet({
         p_item_ids: chosen.map((i) => i.id),
         p_typed_name: name.trim(),
         p_signature_image: signature,
-        p_declaration_text: DECLARATION_TEXT,
+        p_declaration_text: declarationFor(aiItems.length ? aiNote : null),
         p_note: note.trim() || null,
       } as never
     );
@@ -212,6 +234,9 @@ export function SubmitEvidenceSheet({
                       </>
                     )}
                   </p>
+                  {(i.aiAssisted || !!i.aiUse) && (
+                    <AiUseRecord aiAssisted={i.aiAssisted} aiUse={i.aiUse} audience="learner" className="mt-2" />
+                  )}
                 </li>
               ))}
             </ul>
@@ -233,8 +258,27 @@ export function SubmitEvidenceSheet({
           <section className="space-y-5">
             <h3 className="text-[13px] font-semibold text-white">Your declaration</h3>
             <p className="rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 text-[14px] leading-relaxed text-white">
-              {DECLARATION_TEXT}
+              {DECLARATION_TEXT} {AI_DECLARATION_TEXT}
             </p>
+            {aiItems.length > 0 && (
+              <div>
+                <label htmlFor="submit-ai-note" className="mb-1 block text-[12px] font-medium text-white">
+                  How you used AI on {aiItems.length === 1 ? 'this evidence' : `these ${aiItems.length} pieces`}
+                </label>
+                <textarea
+                  id="submit-ai-note"
+                  rows={3}
+                  value={aiNote}
+                  onChange={(e) => setAiNote(e.target.value)}
+                  placeholder="In your own words, e.g. I spoke my notes, the app drafted my reflective account and I rewrote the parts that were wrong."
+                  className="w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white caret-elec-yellow placeholder:text-white/25 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                  data-testid="submit-ai-note"
+                />
+                <p className="mt-1 text-[12px] text-white">
+                  Your assessor sees this with the AI record on each piece. It is signed with your declaration.
+                </p>
+              </div>
+            )}
             <button
               type="button"
               role="checkbox"

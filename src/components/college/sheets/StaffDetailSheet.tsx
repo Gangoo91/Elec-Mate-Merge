@@ -7,12 +7,18 @@ import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
 import { getInitials, getRoleLabel, formatUKDateShort } from '@/utils/collegeHelpers';
 import { cn } from '@/lib/utils';
+import { keyLabel } from '@/lib/college/labels';
 
 const sectionTitleCn = 'text-[15px] font-semibold text-white';
-const rowCn = 'flex items-baseline justify-between gap-4 border-b border-white/[0.06] py-2.5 text-[14px] last:border-b-0';
+const rowCn =
+  'flex items-baseline justify-between gap-4 border-b border-white/[0.06] py-2.5 text-[14px] last:border-b-0';
 
 const statusTextCn = (status: string | null | undefined) =>
-  status === 'Active' ? 'text-emerald-400' : status === 'On Leave' ? 'text-orange-300' : 'text-white';
+  status === 'Active'
+    ? 'text-emerald-400'
+    : status === 'On Leave'
+      ? 'text-orange-300'
+      : 'text-white';
 
 interface StaffDetailSheetProps {
   staff: CollegeStaff | null;
@@ -64,7 +70,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
       description={
         <>
           {getRoleLabel(staff.role)} · {staff.department || 'No department'} ·{' '}
-          <span className={statusTextCn(staff.status)}>{staff.status}</span>
+          <span className={statusTextCn(staff.status)}>{keyLabel(staff.status)}</span>
         </>
       }
       headerTrailing={
@@ -96,7 +102,9 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
             { label: 'Max hours a week', value: staff.max_teaching_hours ?? '—' },
           ].map((stat) => (
             <div key={stat.label} className="px-3 text-center first:pl-0 last:pr-0">
-              <div className="text-[24px] font-semibold leading-none tabular-nums text-white">{stat.value}</div>
+              <div className="text-[24px] font-semibold leading-none tabular-nums text-white">
+                {stat.value}
+              </div>
               <div className="mt-2 text-[12px] text-white">{stat.label}</div>
             </div>
           ))}
@@ -105,18 +113,18 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
         <section>
           <div className="flex items-baseline justify-between gap-3">
             <h3 className={sectionTitleCn}>Contact</h3>
-            <div className="flex items-center gap-4">
+            <div className="-my-2 flex items-center gap-2">
               {staff.phone && (
                 <a
                   href={`tel:${staff.phone}`}
-                  className="text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  className="inline-flex h-11 items-center px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
                   Call
                 </a>
               )}
               <a
                 href={`mailto:${staff.email}`}
-                className="text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                className="inline-flex h-11 items-center px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
               >
                 Email
               </a>
@@ -125,14 +133,20 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
           <div className="mt-2">
             <div className={rowCn}>
               <span className="text-white">Email</span>
-              <a href={`mailto:${staff.email}`} className="min-w-0 truncate text-right text-white hover:text-elec-yellow">
+              <a
+                href={`mailto:${staff.email}`}
+                className="inline-flex min-h-[44px] min-w-0 items-center justify-end break-all text-right text-white touch-manipulation hover:text-elec-yellow"
+              >
                 {staff.email}
               </a>
             </div>
             {staff.phone && (
               <div className={rowCn}>
                 <span className="text-white">Phone</span>
-                <a href={`tel:${staff.phone}`} className="tabular-nums text-white hover:text-elec-yellow">
+                <a
+                  href={`tel:${staff.phone}`}
+                  className="inline-flex min-h-[44px] items-center tabular-nums text-white touch-manipulation hover:text-elec-yellow"
+                >
                   {staff.phone}
                 </a>
               </div>
@@ -188,9 +202,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
           Cohorts{assignedCohorts.length > 0 ? ` (${assignedCohorts.length})` : ''}
         </h3>
         {assignedCohorts.length === 0 ? (
-          <p className="mt-2 text-[13px] text-white">
-            Not assigned to any cohorts yet.
-          </p>
+          <p className="mt-2 text-[13px] text-white">Not assigned to any cohorts yet.</p>
         ) : (
           <div className="mt-2">
             {assignedCohorts.map((cohort) => {
@@ -198,16 +210,21 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
               const maxStudents = cohort.max_students ?? 20;
               const capacityPercent = Math.min(100, (studentCount / maxStudents) * 100);
               return (
-                <div key={cohort.id} className="border-b border-white/[0.06] py-3.5 last:border-b-0">
+                <div
+                  key={cohort.id}
+                  className="border-b border-white/[0.06] py-3.5 last:border-b-0"
+                >
                   <div className="flex items-baseline justify-between gap-3">
-                    <div className="min-w-0 truncate text-[14px] font-medium text-white">{cohort.name}</div>
+                    <div className="min-w-0 truncate text-[14px] font-medium text-white">
+                      {cohort.name}
+                    </div>
                     <span
                       className={cn(
                         'shrink-0 text-[12.5px] font-medium',
                         cohort.status === 'Active' ? 'text-emerald-400' : 'text-white'
                       )}
                     >
-                      {cohort.status}
+                      {keyLabel(cohort.status)}
                     </span>
                   </div>
                   <div className="mt-2 flex items-baseline justify-between text-[12px] text-white">
@@ -219,7 +236,10 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                     </span>
                   </div>
                   <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/[0.06]">
-                    <div className="h-full rounded-full bg-elec-yellow" style={{ width: `${capacityPercent}%` }} />
+                    <div
+                      className="h-full rounded-full bg-elec-yellow"
+                      style={{ width: `${capacityPercent}%` }}
+                    />
                   </div>
                 </div>
               );

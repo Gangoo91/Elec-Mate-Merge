@@ -287,7 +287,7 @@ const TaxPlanningTab = () => {
           color: 'orange',
           icon: <TrendingUp className="h-4 w-4" />,
           content:
-            'Mandatory: £90,000 turnover | Voluntary: Any level | Deregistration: Below £88,000 | Flat Rate Scheme: 12.5% for electrical contractors | Annual accounting available',
+            'Mandatory: £90,000 turnover | Voluntary: Any level | Deregistration: Below £88,000 | Flat Rate Scheme: 9.5% general building or construction, 14.5% labour-only (16.5% if a limited cost trader) | Annual accounting available',
         },
         {
           title: 'CIS Quick Facts',

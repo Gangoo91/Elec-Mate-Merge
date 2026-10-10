@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Do apprentice electricians get paid for college days?',
     answer:
-      'Yes. Apprentice electricians are entitled to be paid for their college or training provider days. This is a legal requirement — the apprenticeship agreement must include paid time for off-the-job training, which typically accounts for at least 20% of the apprentice working hours. Most electrical apprentices attend college one day per week or in block release (one or two weeks at a time, several times per year). The employer pays the apprentice their normal hourly rate for these college days. Some employers also cover travel expenses to the college or training centre. If an employer is not paying for college days, the apprentice should raise this with their training provider or contact ACAS, as this is a breach of the apprenticeship agreement.',
+      'Yes. Apprentice electricians are entitled to be paid for their college or training provider days. This is a legal requirement — the apprenticeship agreement must include paid time for off-the-job training, with at least the minimum off-the-job hours published on the apprenticeship standard. Most electrical apprentices attend college one day per week or in block release (one or two weeks at a time, several times per year). The employer pays the apprentice their normal hourly rate for these college days. Some employers also cover travel expenses to the college or training centre. If an employer is not paying for college days, the apprentice should raise this with their training provider or contact ACAS, as this is a breach of the apprenticeship agreement.',
   },
   {
     question: 'Is it worth doing an electrical apprenticeship for the money?',
@@ -660,7 +660,7 @@ export default function ApprenticeSalaryUKPage() {
       title="Apprentice Electrician Pay 2026: Year 1-4 Rates UK"
       description="UK apprentice electrician pay 2026: Year 1 £14-18k, Year 4 £22-28k. NMW rates by age, JIB rates, London weighting, overtime, take-home explained."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

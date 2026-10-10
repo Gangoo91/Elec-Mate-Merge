@@ -128,10 +128,8 @@ const PayCalculator = () => {
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        Pay calculator
-      </span>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+      <span className="text-[13px] font-semibold text-white">Pay calculator</span>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
@@ -210,93 +208,83 @@ const PayCalculator = () => {
             <h4 className="text-[14px] font-semibold text-white">Your pay breakdown</h4>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Gross pay (before tax)
-              </span>
+              <span className="text-[13px] font-semibold text-white">Gross pay (before tax)</span>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">Hourly rate</span>
-                <span className="font-mono text-elec-yellow text-[13px]">
-                  £{results.hourlyRate}
-                </span>
+                <span className="text-elec-yellow text-[13px]">£{results.hourlyRate}</span>
               </div>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">Monthly gross</span>
-                <span className="font-mono text-white text-[13px]">£{results.monthlyGross}</span>
+                <span className="text-white text-[13px]">£{results.monthlyGross}</span>
               </div>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">Annual gross</span>
-                <span className="font-mono text-white text-[13px]">£{results.annualGross}</span>
+                <span className="text-white text-[13px]">£{results.annualGross}</span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Monthly deductions
-              </span>
+              <span className="text-[13px] font-semibold text-white">Monthly deductions</span>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">Income tax</span>
-                <span className="font-mono text-white text-[13px]">-£{results.incomeTax}</span>
+                <span className="text-white text-[13px]">-£{results.incomeTax}</span>
               </div>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">National Insurance</span>
-                <span className="font-mono text-white text-[13px]">
-                  -£{results.nationalInsurance}
-                </span>
+                <span className="text-white text-[13px]">-£{results.nationalInsurance}</span>
               </div>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">Pension ({pensionContribution}%)</span>
-                <span className="font-mono text-white text-[13px]">-£{results.pension}</span>
+                <span className="text-white text-[13px]">-£{results.pension}</span>
               </div>
 
               {hasStudentLoan && (
                 <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                   <span className="text-[13px] text-white">Student loan</span>
-                  <span className="font-mono text-white text-[13px]">
-                    -£{results.studentLoan}
-                  </span>
+                  <span className="text-white text-[13px]">-£{results.studentLoan}</span>
                 </div>
               )}
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.04]">
                 <span className="text-[13px] font-semibold text-white">Total deductions</span>
-                <span className="font-mono text-white text-[13px] font-semibold">
+                <span className="text-white text-[13px] font-semibold">
                   -£{results.totalDeductions}
                 </span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+              <span className="text-[13px] font-semibold text-elec-yellow">
                 Take-home pay (after tax)
               </span>
 
-              <div className="flex justify-between items-center p-3 rounded-lg border border-elec-yellow/20 bg-white/[0.05]">
+              <div className="flex justify-between items-center p-3 rounded-lg border border-white/[0.08] bg-white/[0.05]">
                 <span className="text-[14px] font-semibold text-white">Monthly net pay</span>
-                <span className="font-mono text-elec-yellow text-[18px] font-semibold">
+                <span className="text-elec-yellow text-[18px] font-semibold">
                   £{results.monthlyNet}
                 </span>
               </div>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">Weekly net pay</span>
-                <span className="font-mono text-white text-[13px]">£{results.weeklyNet}</span>
+                <span className="text-white text-[13px]">£{results.weeklyNet}</span>
               </div>
 
               <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
                 <span className="text-[13px] text-white">With overtime (net)</span>
-                <span className="font-mono text-white text-[13px]">
+                <span className="text-white text-[13px]">
                   £{results.monthlyNetWithOvertime}/month
                 </span>
               </div>
             </div>
 
-            <div className="text-[12px] text-white leading-relaxed space-y-1">
+            <div className="text-[14px] text-white leading-relaxed space-y-1">
               <p>
                 Tax and NI based on 2026/27 UK rates (8% employee NI). Wage defaults are the
                 minimums in force from 1 April 2026.

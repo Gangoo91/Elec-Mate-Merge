@@ -176,7 +176,7 @@ export function AiSignalsInspectorSheet({ open, onOpenChange, judgement }: Props
               <summary className="flex min-h-11 cursor-pointer items-center pt-3 text-[13px] font-medium text-white touch-manipulation">
                 Raw signals JSON
               </summary>
-              <pre className="overflow-x-auto whitespace-pre-wrap pb-2 text-[11px] text-white">
+              <pre className="overflow-x-auto whitespace-pre-wrap pb-2 text-[12px] text-white">
                 {JSON.stringify(judgement.signals_used, null, 2)}
               </pre>
             </details>

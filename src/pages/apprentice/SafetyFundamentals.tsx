@@ -8,19 +8,20 @@
  * red carries semantic weight here.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle2, ChevronRight, AlertTriangle, Siren } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Siren } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
-import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import {
+  Eyebrow,
+  GUIDE_CARD,
+  GuideIndex,
+  GuidePage,
+  SectionHeader,
+} from '@/components/apprentice/shared/GuideKit';
 
 interface Section {
   title: string;
   slug: string;
-  icon: string;
   readTime: string;
   blurb: string;
 }
@@ -29,42 +30,36 @@ const sections: Section[] = [
   {
     title: 'Safe isolation',
     slug: 'safe-isolation',
-    icon: '🔒',
     readTime: '12 min',
     blurb: 'The 7-step procedure that prevents most electrical accidents.',
   },
   {
     title: 'PPE & equipment',
     slug: 'ppe-equipment',
-    icon: '🦺',
     readTime: '10 min',
     blurb: "What to wear, when, and why it's your last line of defence.",
   },
   {
     title: 'Working at height',
     slug: 'working-at-height',
-    icon: '🪜',
     readTime: '10 min',
     blurb: 'Ladders, scaffolds, MEWPs — and the rules that keep you on the right side of HSE.',
   },
   {
     title: 'Emergency procedures',
     slug: 'emergency-procedures',
-    icon: '🚨',
     readTime: '12 min',
     blurb: 'What to do in the first sixty seconds — for you, your mates, and the public.',
   },
   {
     title: 'Risk assessment & RAMS',
     slug: 'risk-assessment',
-    icon: '📋',
     readTime: '10 min',
     blurb: 'Reading them, writing them, and why "dynamic" RAMS matter on site.',
   },
   {
     title: 'Site safety rules',
     slug: 'site-safety-rules',
-    icon: '🏗',
     readTime: '10 min',
     blurb: 'Inductions, permits, exclusion zones, sign-in books — the daily rituals.',
   },
@@ -91,38 +86,46 @@ const emergencyContacts = [
 ];
 
 const SafetyFundamentals = () => {
-  const navigate = useNavigate();
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Safety"
-        title="Safety fundamentals"
-        backTo="/apprentice/toolbox"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'Everything you need to stay safe on site as an electrical apprentice — safe isolation, PPE, emergency response, and the legal duties that sit behind them.'
-          }
+    <GuidePage
+      section="Apprentice · Safety"
+      area="Toolbox"
+      title="Safety fundamentals"
+      backTo="/apprentice/toolbox"
+      description="Everything you need to stay safe on site as an electrical apprentice — safe isolation, PPE, emergency response, and the legal duties that sit behind them."
+    >
+      {/* ── Critical warning ──────────────────────────────────────── */}
+      <motion.div
+        variants={itemVariants}
+        className="-mx-4 space-y-2 border-y border-red-500/30 bg-red-500/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5"
+      >
+        <div className="flex items-center gap-2">
+          <AlertTriangle className="h-4 w-4 flex-shrink-0 text-red-300" strokeWidth={1.5} />
+          <Eyebrow className="text-red-300">Electricity can kill</Eyebrow>
+        </div>
+        <p className="text-[14.5px] leading-relaxed text-white">
+          These aren't just guidelines — they're the difference between going home safely and not
+          going home at all. As an apprentice, safety is your{' '}
+          <span className="font-semibold text-red-300">number one priority</span>. Never compromise
+          on it, no matter what anyone tells you. You have the legal right to refuse unsafe work.
         </p>
+      </motion.div>
 
-        {/* ── Critical warning ──────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0" />
-              <Eyebrow className="text-red-300">Electricity can kill</Eyebrow>
-            </div>
-            <p className="text-[13.5px] text-white leading-relaxed">
-              These aren't just guidelines — they're the difference between going home safely and
-              not going home at all. As an apprentice, safety is your{' '}
-              <span className="font-semibold text-red-300">number one priority</span>. Never
-              compromise on it, no matter what anyone tells you. You have the legal right to refuse
-              unsafe work.
-            </p>
-          </div>
-        </motion.div>
+      {/* ── Section index ─────────────────────────────────────────── */}
+      <GuideIndex
+        title="Six topics to know cold"
+        sub={`${sections.length} short reads · all referenced to BS 7671 / HSE`}
+        columns={3}
+        items={sections.map((section) => ({
+          id: section.slug,
+          title: section.title,
+          description: section.blurb,
+          meta: `${section.readTime} read`,
+          to: `/apprentice/safety-fundamentals/${section.slug}`,
+        }))}
+      />
 
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-6">
         {/* ── Key facts ─────────────────────────────────────────────── */}
         <motion.section variants={itemVariants} className="space-y-3">
           <SectionHeader
@@ -130,62 +133,22 @@ const SafetyFundamentals = () => {
             title="Six things that should stick"
             meta="The numbers and rules behind the procedures"
           />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-1.5">
+          <div className={GUIDE_CARD}>
+            <ul className="space-y-2.5">
               {keyFacts.map((fact) => (
                 <li
                   key={fact}
-                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
+                  className="flex items-start gap-2.5 text-[14.5px] leading-relaxed text-white"
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2
+                    className="mt-1 h-4 w-4 flex-shrink-0 text-elec-yellow"
+                    strokeWidth={1.5}
+                  />
                   <span>{fact}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </motion.section>
-
-        {/* ── Section index ─────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Sections"
-            title="Six topics to know cold"
-            meta={`${sections.length} short reads · all referenced to BS 7671 / HSE`}
-          />
-          <ul className="space-y-2">
-            {sections.map((section, i) => (
-              <li key={section.slug}>
-                <button
-                  onClick={() => navigate(`/apprentice/safety-fundamentals/${section.slug}`)}
-                  className={cn(
-                    'w-full flex items-start gap-3 p-4 sm:p-5 rounded-2xl border border-elec-yellow/35 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation text-left',
-                    CARD_SURFACE
-                  )}
-                >
-                  <span className="text-[20px] sm:text-[22px] leading-none flex-shrink-0 mt-0.5">
-                    {section.icon}
-                  </span>
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <div className="flex items-baseline gap-2 min-w-0">
-                        <span className="text-[10px] font-mono text-white tabular-nums">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span className="text-[14px] font-semibold text-white truncate">
-                          {section.title}
-                        </span>
-                      </div>
-                      <span className="text-[10.5px] font-mono text-white tabular-nums flex-shrink-0">
-                        {section.readTime}
-                      </span>
-                    </div>
-                    <p className="text-[12.5px] text-white leading-relaxed">{section.blurb}</p>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-1" />
-                </button>
-              </li>
-            ))}
-          </ul>
         </motion.section>
 
         {/* ── Emergency contacts ────────────────────────────────────── */}
@@ -195,45 +158,43 @@ const SafetyFundamentals = () => {
             title="Emergency numbers — save these"
             meta="Save to your phone before you need them"
           />
-          <ul className="space-y-2">
+          <ul className="-mx-4 divide-y divide-white/[0.06] border-y border-red-500/30 bg-red-500/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x">
             {emergencyContacts.map((contact) => (
-              <li
-                key={contact.label}
-                className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-2 min-w-0 flex-1">
-                    <Siren className="h-4 w-4 text-red-300 flex-shrink-0 mt-0.5" />
-                    <div className="min-w-0 space-y-0.5">
-                      <p className="text-[13.5px] font-medium text-white leading-snug">
-                        {contact.label}
-                      </p>
-                      <p className="text-[12px] text-white leading-snug">{contact.note}</p>
-                    </div>
-                  </div>
-                  <a
-                    href={`tel:${contact.number.replace(/\s/g, '')}`}
-                    className="text-[14px] sm:text-[16px] font-mono font-semibold tabular-nums text-red-300 hover:text-red-200 transition-colors touch-manipulation whitespace-nowrap"
-                  >
+              <li key={contact.label}>
+                <a
+                  href={`tel:${contact.number.replace(/\s/g, '')}`}
+                  className="flex min-h-[64px] items-center gap-3 px-4 py-3 transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-5"
+                >
+                  <Siren
+                    className="h-[18px] w-[18px] flex-shrink-0 text-red-300"
+                    strokeWidth={1.5}
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[15px] font-semibold leading-snug text-white">
+                      {contact.label}
+                    </span>
+                    <span className="block text-[13px] leading-snug text-white">
+                      {contact.note}
+                    </span>
+                  </span>
+                  <span className="whitespace-nowrap text-[15px] font-semibold tabular-nums text-red-300">
                     {contact.number}
-                  </a>
-                </div>
+                  </span>
+                </a>
               </li>
             ))}
           </ul>
         </motion.section>
+      </div>
 
-        {/* ── Footnote ──────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants}>
-          <p className="text-[11px] text-white leading-relaxed">
-            Safety guidance referenced from BS 7671:2018+A4:2026, the Health and Safety at Work Act
-            1974, the Electricity at Work Regulations 1989, HSE guidance note GS38, and current
-            industry best practice. Always follow your employer's specific safety procedures and
-            risk assessments. If in doubt, stop work and ask your supervisor.
-          </p>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+      {/* ── Footnote ──────────────────────────────────────────────── */}
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        Safety guidance referenced from BS 7671:2018+A4:2026, the Health and Safety at Work Act
+        1974, the Electricity at Work Regulations 1989, HSE guidance note GS38, and current industry
+        best practice. Always follow your employer's specific safety procedures and risk
+        assessments. If in doubt, stop work and ask your supervisor.
+      </p>
+    </GuidePage>
   );
 };
 

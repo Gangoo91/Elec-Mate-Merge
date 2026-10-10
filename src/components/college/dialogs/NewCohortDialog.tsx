@@ -1,8 +1,14 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { FormSheet } from '@/components/forms/FormSheet';
-import { buttonPrimaryCn, buttonSecondaryCn, inputCn, labelCn } from '@/components/forms/fieldStyles';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { chipCn } from '@/components/college/ui/CollegeUi';
 import { cn } from '@/lib/utils';
@@ -37,7 +43,9 @@ const DELIVERY_MODES = [
 
 function SectionHeading({ children }: { children: ReactNode }) {
   return (
-    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">{children}</h3>
+    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">
+      {children}
+    </h3>
   );
 }
 
@@ -69,11 +77,35 @@ function Chips({
   );
 }
 
+const EMPTY_FORM = {
+  name: '',
+  code: '',
+  courseId: '',
+  leadTutorId: '',
+  startDate: '',
+  endDate: '',
+  maxStudents: '16',
+  status: 'Planning' as string,
+  deliveryMode: 'Day Release',
+  meetingDay: '',
+  meetingTime: '',
+  room: '',
+};
+
+/*
+ * 8 Oct 2026: each missing required field says so under itself on Create
+ * (the button used to just stay dim), a college with no course or no tutor
+ * is told where to go first, an end date before the start is caught, and a
+ * saved cohort ends on a screen with the next two steps (join code, learners).
+ */
 export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDialogProps) {
-  const { courses, staff, addCohort } = useCollegeSupabase();
+  const { courses, staff, cohorts, addCohort } = useCollegeSupabase();
   const { profile } = useAuth();
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [touched, setTouched] = useState(false);
+  const [done, setDone] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     code: '',
@@ -116,12 +148,44 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
   // Get selected course details
   const selectedCourse = courses.find((c) => c.id === formData.courseId);
 
-  const canSubmit =
-    !isSubmitting && !!formData.name && !!formData.code && !!formData.courseId && !!formData.leadTutorId;
+  const errors = {
+    courseId: !formData.courseId ? 'Pick the course this cohort is on.' : null,
+    name: !formData.name.trim() ? 'Give the cohort a name.' : null,
+    code: !formData.code.trim()
+      ? 'Type a code, or press Generate.'
+      : cohorts.some(
+            (c) => (c.code ?? '').trim().toLowerCase() === formData.code.trim().toLowerCase()
+          )
+        ? 'Another cohort already uses this code.'
+        : null,
+    leadTutorId: !formData.leadTutorId ? 'Pick who leads it.' : null,
+    endDate:
+      formData.startDate && formData.endDate && formData.endDate < formData.startDate
+        ? 'The end date is before the start date.'
+        : null,
+  };
+  const hasErrors = Object.values(errors).some(Boolean);
+  const fieldError = (k: keyof typeof errors) =>
+    touched && errors[k] ? (
+      <p className="mt-1.5 text-[12.5px] font-medium text-orange-300">{errors[k]}</p>
+    ) : null;
+  const canSubmit = !isSubmitting;
+
+  const reset = () => {
+    setFormData(EMPTY_FORM);
+    setTouched(false);
+    setError(null);
+    setDone(null);
+  };
+  const close = (o: boolean) => {
+    if (!o) reset();
+    onOpenChange(o);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.courseId || !formData.leadTutorId) return;
+    setTouched(true);
+    if (hasErrors) return;
     const college = collegeId ?? profile?.college_id ?? null;
     if (!college) {
       setError('Your account is not linked to a college yet. Reload the page and try again.');
@@ -134,7 +198,7 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
     try {
       await addCohort({
         college_id: college,
-        name: formData.name,
+        name: formData.name.trim(),
         course_id: formData.courseId,
         tutor_id: formData.leadTutorId,
         start_date: formData.startDate || null,
@@ -148,22 +212,7 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
         room: formData.room || null,
       });
 
-      // Reset form and close dialog
-      setFormData({
-        name: '',
-        code: '',
-        courseId: '',
-        leadTutorId: '',
-        startDate: '',
-        endDate: '',
-        maxStudents: '16',
-        status: 'Planning',
-        deliveryMode: 'Day Release',
-        meetingDay: '',
-        meetingTime: '',
-        room: '',
-      });
-      onOpenChange(false);
+      setDone(formData.name.trim());
     } catch (err) {
       const m = ((err as { message?: string })?.message ?? '').toLowerCase();
       setError(
@@ -195,14 +244,72 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
     return '';
   };
 
+  const go = (url: string) => {
+    close(false);
+    navigate(url);
+  };
+
+  if (done) {
+    return (
+      <FormSheet
+        open={open}
+        onOpenChange={close}
+        width="wide"
+        eyebrow="Cohorts"
+        title={`${done} is set up`}
+        description="The cohort is saved. Two things left before it runs."
+        footer={
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" onClick={reset} className={buttonSecondaryCn}>
+              Create another
+            </button>
+            <button type="button" onClick={() => close(false)} className={buttonPrimaryCn}>
+              Done
+            </button>
+          </div>
+        }
+      >
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="rounded-2xl border border-white/[0.08] p-4 sm:p-5">
+            <h3 className="text-[15px] font-semibold text-white">1. Make its join code</h3>
+            <p className="mt-2 text-[13.5px] leading-relaxed text-white">
+              Learners type it when they sign up, or open its link, and land in this cohort. One
+              code per cohort.
+            </p>
+            <button
+              type="button"
+              onClick={() => go('/college/setup')}
+              className={cn(buttonSecondaryCn, 'mt-4 w-auto px-5')}
+            >
+              Open join codes
+            </button>
+          </div>
+          <div className="rounded-2xl border border-white/[0.08] p-4 sm:p-5">
+            <h3 className="text-[15px] font-semibold text-white">2. Put learners in it</h3>
+            <p className="mt-2 text-[13.5px] leading-relaxed text-white">
+              Enrol them one at a time, or paste the class list from your MIS with Bulk enrol.
+            </p>
+            <button
+              type="button"
+              onClick={() => go('/college?section=students')}
+              className={cn(buttonSecondaryCn, 'mt-4 w-auto px-5')}
+            >
+              Go to learners
+            </button>
+          </div>
+        </div>
+      </FormSheet>
+    );
+  }
+
   return (
     <FormSheet
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={close}
       width="wide"
       eyebrow="Cohorts"
-      title="Create new cohort"
-      description="Course, name, code and lead tutor are required."
+      title="Create a cohort"
+      description="A group of learners on one course. Fields marked * are required."
       footer={
         <div className="grid grid-cols-2 gap-2.5">
           {error && (
@@ -215,13 +322,18 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
           )}
           <button
             type="button"
-            onClick={() => onOpenChange(false)}
+            onClick={() => close(false)}
             disabled={isSubmitting}
             className={buttonSecondaryCn}
           >
             Cancel
           </button>
-          <button type="submit" form="new-cohort-form" disabled={!canSubmit} className={buttonPrimaryCn}>
+          <button
+            type="submit"
+            form="new-cohort-form"
+            disabled={!canSubmit}
+            className={buttonPrimaryCn}
+          >
             {isSubmitting ? 'Creating…' : 'Create cohort'}
           </button>
         </div>
@@ -230,24 +342,41 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
       <form
         id="new-cohort-form"
         onSubmit={handleSubmit}
+        noValidate
         className="grid grid-cols-1 items-start gap-x-10 gap-y-8 lg:grid-cols-2"
       >
         <div className="min-w-0 space-y-8">
           <section className="space-y-5">
             <SectionHeading>Course</SectionHeading>
             <div>
-              <p className={labelCn}>Course</p>
-              <MobileSelectPicker
-                value={formData.courseId}
-                onValueChange={(v) => handleChange('courseId', v)}
-                title="Course"
-                placeholder="Select course"
-                options={activeCourses.map((c) => ({ value: c.id, label: c.name }))}
-              />
+              <p className={labelCn}>Course *</p>
+              {activeCourses.length === 0 ? (
+                <div className="space-y-2">
+                  <p className="text-[13px] leading-relaxed text-white">
+                    No courses yet. A cohort has to be on a course, so add the course first.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => go('/college?section=coursesetup')}
+                    className={cn(buttonSecondaryCn, 'w-auto px-5')}
+                  >
+                    Go to course setup
+                  </button>
+                </div>
+              ) : (
+                <MobileSelectPicker
+                  value={formData.courseId}
+                  onValueChange={(v) => handleChange('courseId', v)}
+                  title="Course"
+                  placeholder="Select course"
+                  options={activeCourses.map((c) => ({ value: c.id, label: c.name }))}
+                />
+              )}
+              {activeCourses.length > 0 && fieldError('courseId')}
             </div>
             <div>
               <label className={labelCn} htmlFor="nc-name">
-                Cohort name
+                Cohort name *
               </label>
               <input
                 id="nc-name"
@@ -257,10 +386,11 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
                 required
                 className={inputCn}
               />
+              {fieldError('name')}
             </div>
             <div>
               <label className={labelCn} htmlFor="nc-code">
-                Cohort code
+                Cohort code *
               </label>
               <div className="flex items-end gap-3">
                 <input
@@ -280,18 +410,21 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
                   Generate
                 </button>
               </div>
+              {fieldError('code')}
             </div>
           </section>
 
           <section className="space-y-5">
             <SectionHeading>Lead and status</SectionHeading>
             <div>
-              <p className={labelCn}>Lead tutor</p>
+              <p className={labelCn}>Lead tutor *</p>
               {tutors.length === 0 ? (
                 <p className="text-[13px] text-white">
-                  Nobody on your staff list can lead a cohort yet. Add a tutor first (College Hub, Tutors), then come back.
+                  Nobody on your staff list can lead a cohort yet. Add a tutor first (College Hub,
+                  Tutors), then come back.
                 </p>
-              ) : tutors.length <= 6 ? (
+              ) : null}
+              {tutors.length === 0 ? null : tutors.length <= 6 ? (
                 <Chips
                   value={formData.leadTutorId}
                   onChange={(v) => handleChange('leadTutorId', v)}
@@ -306,6 +439,7 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
                   options={tutors.map((t) => ({ value: t.id, label: t.name }))}
                 />
               )}
+              {tutors.length > 0 && fieldError('leadTutorId')}
             </div>
             <div>
               <p className={labelCn}>Status</p>
@@ -345,11 +479,12 @@ export function NewCohortDialog({ open, onOpenChange, collegeId }: NewCohortDial
                   onChange={(e) => handleChange('endDate', e.target.value)}
                   className={inputCn}
                 />
+                {fieldError('endDate')}
               </div>
             </div>
             <div className="max-w-[10rem]">
               <label className={labelCn} htmlFor="nc-max">
-                Max students
+                Places
               </label>
               <input
                 id="nc-max"

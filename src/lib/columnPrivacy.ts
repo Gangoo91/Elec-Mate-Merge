@@ -25,7 +25,7 @@
 import { supabase } from '@/integrations/supabase/client';
 
 export const JOB_COLUMNS = (
-  'id, title, client, location, lat, lng, status, progress, start_date, end_date, workers_count, description, created_at, updated_at, archived_at, is_template, cover_photo_url, position, user_id, client_id, board_stage, customer_id, completed_at, site_contact_name, site_contact_phone, access_notes, share_client_contact_with_crew, quoted_hours, job_type, recurring_contract_id, previous_visit_job_id'
+  'id, title, client, location, lat, lng, status, progress, start_date, end_date, workers_count, description, created_at, updated_at, archived_at, is_template, cover_photo_url, position, user_id, client_id, board_stage, customer_id, completed_at, site_contact_name, site_contact_phone, access_notes, share_client_contact_with_crew, quoted_hours, job_type, recurring_contract_id, previous_visit_job_id, required_credentials'
 ) as unknown as '*';
 
 export const EMPLOYEE_COLUMNS = (

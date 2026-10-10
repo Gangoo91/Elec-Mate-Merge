@@ -452,7 +452,7 @@ const SmartHomeModule7Section2 = () => {
             className="text-white hover:text-elec-yellow hover:bg-transparent touch-manipulation"
             asChild
           >
-            <Link to="../section-1">
+            <Link to="/study-centre/upskilling/smart-home-module-7-section-1">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous: Device Wiring
             </Link>
@@ -461,7 +461,7 @@ const SmartHomeModule7Section2 = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             asChild
           >
-            <Link to="../section-3">
+            <Link to="/study-centre/upskilling/smart-home-module-7-section-3">
               Next: Wi-Fi and RF Verification
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

@@ -11,6 +11,7 @@
  */
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { HOME_SURFACE } from '@/components/apprentice/ApprenticeHomeUi';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { formatMinutes, type SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { displaySite, sentenceCase } from '@/lib/site-diary/format';
@@ -67,11 +68,14 @@ export function DiaryEntryCard({ entry, onTap, otjState }: DiaryEntryCardProps) 
         day: 'numeric',
         month: 'long',
       })}, ${displaySite(entry.site_name)}`}
-      className="group flex w-full items-stretch gap-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-3 text-left transition-colors touch-manipulation hover:border-white/[0.3] sm:gap-4 sm:p-4"
+      className={cn(
+        'group flex w-full items-stretch gap-3.5 rounded-2xl border p-3.5 text-left touch-manipulation transition-colors hover:border-white/[0.16] active:bg-white/[0.04] sm:gap-4 sm:p-4',
+        HOME_SURFACE
+      )}
     >
       {/* Date tile */}
-      <div className="flex w-12 shrink-0 flex-col items-center justify-center self-start rounded-xl border border-white/[0.12] bg-white/[0.04] py-1.5">
-        <span className="text-[11px] font-semibold leading-none text-white">
+      <div className="flex w-[52px] shrink-0 flex-col items-center justify-center self-start rounded-xl border border-white/[0.1] bg-black/25 py-2">
+        <span className="text-[12px] font-semibold leading-none text-white">
           {d.toLocaleDateString('en-GB', { weekday: 'short' })}
         </span>
         <span className="mt-1 text-[20px] font-bold leading-none tabular-nums text-white">
@@ -81,7 +85,7 @@ export function DiaryEntryCard({ entry, onTap, otjState }: DiaryEntryCardProps) 
 
       {/* Words */}
       <div className="min-w-0 flex-1 space-y-1 self-center">
-        <p className="truncate text-[15.5px] font-semibold leading-tight text-white">
+        <p className="line-clamp-2 text-[15.5px] font-semibold leading-tight text-white">
           {displaySite(entry.site_name)}
         </p>
         {tasks && <p className="line-clamp-1 text-[13px] text-white">{tasks}</p>}
@@ -111,7 +115,7 @@ export function DiaryEntryCard({ entry, onTap, otjState }: DiaryEntryCardProps) 
             fallback={<div className="h-full w-full bg-white/[0.06]" />}
           />
           {morePhotos > 0 && (
-            <span className="absolute bottom-1 right-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[11px] font-semibold text-white">
+            <span className="absolute bottom-1 right-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[12px] font-semibold text-white">
               +{morePhotos}
             </span>
           )}

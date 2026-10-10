@@ -5,7 +5,6 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
   fieldFullCn,
   grid2Cn,
   inputCn,
@@ -23,6 +22,9 @@ import {
   type EvidenceRow,
 } from '@/hooks/useEvidencePack';
 
+/** A picked choice is white, not yellow: one solid yellow action per screen (10 Oct 2026). */
+const PICKED = 'border-white bg-white font-semibold text-black';
+
 /* ==========================================================================
    FileEvidenceSheet — file one document against an evidence-pack item.
 
@@ -33,7 +35,11 @@ import {
    kept and marked replaced.
    ========================================================================== */
 
-const ROLE_LABEL: Record<string, string> = { apprentice: 'Apprentice', employer: 'Employer', provider: 'College' };
+const ROLE_LABEL: Record<string, string> = {
+  apprentice: 'Apprentice',
+  employer: 'Employer',
+  provider: 'College',
+};
 const today = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
 
 export interface FileEvidenceTarget {
@@ -76,26 +82,33 @@ export function FileEvidenceSheet({
   const [saving, setSaving] = useState(false);
 
   const kind = target?.kind ?? 'other';
-  const roles = target?.needsSignatureFrom?.length ? target.needsSignatureFrom : (KIND_SIGNERS[kind] ?? []);
+  const roles = target?.needsSignatureFrom?.length
+    ? target.needsSignatureFrom
+    : (KIND_SIGNERS[kind] ?? []);
   const allRoles = Array.from(new Set([...roles, 'apprentice', 'employer', 'provider']));
 
   useEffect(() => {
     if (!open) return;
     setFile(null);
-    setTitle(kind === 'other' ? '' : target?.title ?? '');
+    setTitle(kind === 'other' ? '' : (target?.title ?? ''));
     setDocDate(today());
     setValidTo('');
     setSeen('');
     setNotes('');
     setSigners(
       Object.fromEntries(
-        allRoles.map((r) => [r, { on: roles.includes(r as never), name: r === 'apprentice' ? learnerName : '' }])
+        allRoles.map((r) => [
+          r,
+          { on: roles.includes(r as never), name: r === 'apprentice' ? learnerName : '' },
+        ])
       )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, target]);
 
-  const missingSigner = roles.find((r) => !signers[r]?.on || (signers[r]?.name ?? '').trim().length < 2);
+  const missingSigner = roles.find(
+    (r) => !signers[r]?.on || (signers[r]?.name ?? '').trim().length < 2
+  );
   const valid =
     !!target &&
     (kind !== 'other' || title.trim().length >= 3) &&
@@ -125,7 +138,9 @@ export function FileEvidenceSheet({
       });
       toast({
         title: target.current ? 'New version filed' : 'Filed',
-        description: target.current ? 'The earlier version is kept and marked replaced.' : undefined,
+        description: target.current
+          ? 'The earlier version is kept and marked replaced.'
+          : undefined,
       });
       onFiled();
       onOpenChange(false);
@@ -143,18 +158,23 @@ export function FileEvidenceSheet({
       open={open}
       onOpenChange={onOpenChange}
       eyebrow={target?.current ? `New version · ${learnerName}` : `File evidence · ${learnerName}`}
-      title={kind === 'other' ? 'Another document' : target?.title ?? ''}
+      title={kind === 'other' ? 'Another document' : (target?.title ?? '')}
       description={
         target?.employerLevel
           ? 'Filed against the employer, so it covers every apprentice they employ.'
-          : KIND_HINT[kind] ?? undefined
+          : (KIND_HINT[kind] ?? undefined)
       }
       footer={
         <div className="grid grid-cols-2 gap-2.5">
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
             Cancel
           </button>
-          <button type="button" onClick={save} disabled={!valid || saving} className={buttonPrimaryCn}>
+          <button
+            type="button"
+            onClick={save}
+            disabled={!valid || saving}
+            className={buttonPrimaryCn}
+          >
             {saving ? 'Filing…' : target?.current ? 'File new version' : 'File'}
           </button>
         </div>
@@ -165,7 +185,13 @@ export function FileEvidenceSheet({
           <label className={labelCn} htmlFor="fe-title">
             What is it
           </label>
-          <input id="fe-title" value={title} onChange={(e) => setTitle(e.target.value)} className={inputCn} placeholder="e.g. PPE issue record" />
+          <input
+            id="fe-title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className={inputCn}
+            placeholder="e.g. PPE issue record"
+          />
         </div>
       )}
 
@@ -186,7 +212,9 @@ export function FileEvidenceSheet({
           <span className="min-w-0 truncate text-[14px] text-white">
             {file ? file.name : 'Choose a PDF, photo or Word document'}
           </span>
-          <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">{file ? 'Change' : 'Choose'}</span>
+          <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">
+            {file ? 'Change' : 'Choose'}
+          </span>
         </button>
         <p className="mt-2 text-[12px] leading-relaxed text-white">
           Kept privately for your college. No file? Say where the original is kept in the notes.
@@ -198,13 +226,26 @@ export function FileEvidenceSheet({
           <label className={labelCn} htmlFor="fe-date">
             Dated
           </label>
-          <input id="fe-date" type="date" max={today()} value={docDate} onChange={(e) => setDocDate(e.target.value)} className={inputCn} />
+          <input
+            id="fe-date"
+            type="date"
+            max={today()}
+            value={docDate}
+            onChange={(e) => setDocDate(e.target.value)}
+            className={inputCn}
+          />
         </div>
         <div>
           <label className={labelCn} htmlFor="fe-to">
             Valid until (if it ends)
           </label>
-          <input id="fe-to" type="date" value={validTo} onChange={(e) => setValidTo(e.target.value)} className={inputCn} />
+          <input
+            id="fe-to"
+            type="date"
+            value={validTo}
+            onChange={(e) => setValidTo(e.target.value)}
+            className={inputCn}
+          />
         </div>
         {kind === 'id_residency' && (
           <div className={fieldFullCn}>
@@ -234,7 +275,11 @@ export function FileEvidenceSheet({
                   type="button"
                   aria-pressed={v.on}
                   onClick={() => setSigners((s) => ({ ...s, [r]: { ...v, on: !v.on } }))}
-                  className={cn(chipBase, 'w-32 shrink-0 px-3 text-[13px]', v.on ? chipOn : chipOff)}
+                  className={cn(
+                    chipBase,
+                    'w-32 shrink-0 px-3 text-[13px]',
+                    v.on ? PICKED : chipOff
+                  )}
                 >
                   {ROLE_LABEL[r]}
                   {needed ? ' *' : ''}
@@ -243,7 +288,9 @@ export function FileEvidenceSheet({
                   <input
                     aria-label={`${ROLE_LABEL[r]} name`}
                     value={v.name}
-                    onChange={(e) => setSigners((s) => ({ ...s, [r]: { ...v, name: e.target.value } }))}
+                    onChange={(e) =>
+                      setSigners((s) => ({ ...s, [r]: { ...v, name: e.target.value } }))
+                    }
                     placeholder="Name as signed"
                     className={inputCn}
                   />
@@ -254,8 +301,8 @@ export function FileEvidenceSheet({
         </div>
         {roles.length > 0 && missingSigner && (
           <p className="mt-3 text-[12.5px] leading-relaxed text-orange-300">
-            This needs signing by {roles.map((r) => ROLE_LABEL[r].toLowerCase()).join(', ')}. You can file it now; the
-            pack shows it as needing action until it is.
+            This needs signing by {roles.map((r) => ROLE_LABEL[r].toLowerCase()).join(', ')}. You
+            can file it now; the pack shows it as needing action until it is.
           </p>
         )}
       </div>
@@ -264,14 +311,24 @@ export function FileEvidenceSheet({
         <label className={labelCn} htmlFor="fe-notes">
           Notes
         </label>
-        <textarea id="fe-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} className={textareaCn} />
+        <textarea
+          id="fe-notes"
+          rows={2}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          className={textareaCn}
+        />
       </div>
 
       {target?.current && (
         <p className="text-[12.5px] leading-relaxed text-white">
           Replaces version {target.current.version}, filed{' '}
-          {new Date(target.current.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}. Both
-          are kept.
+          {new Date(target.current.created_at).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          })}
+          . Both are kept.
         </p>
       )}
       {KIND_LABEL[kind] && kind !== 'other' && kind !== 'custom' && (

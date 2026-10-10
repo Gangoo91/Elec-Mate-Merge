@@ -87,11 +87,11 @@ const quizQuestions = [
       'BS EN 50173-1, the cabling design standard, referenced by \u00a7716.521.101.',
       'BS 7671 \u00a7521.10.202, the wiring-system fire-collapse cable support rule.',
       'BS EN 60825-2, the optical-fibre communication laser-safety standard.',
-      'BS EN 50174-2, install planning inside buildings, referenced by \u00a7444.410(b).',
+      'BS EN 50174-2, install planning inside buildings, referenced by \u00a7444.4.10(b).',
     ],
     correctAnswer: 3,
     explanation:
-      'BS EN 50174-2:2018+A2:2024 is the install-practice standard. \u00a7444.410(b) of BS 7671:2018+A4:2026 references it verbatim: "BS EN 50174-2: Information technology \u2014 Cabling installation: Installation planning and practices inside buildings". This is the standard that defines bend radii, pulling tensions, support intervals, cable-management, identification, and the practical install rules that determine whether a Class EA channel is delivered or not. Pair it with BS EN 50174-1 (specification & QA) and BS EN 50310 (bonding networks) for the full install framework.',
+      'BS EN 50174-2:2018+A2:2024 is the install-practice standard. \u00a7444.4.10(b) of BS 7671:2018+A4:2026 references it verbatim: "BS EN 50174-2: Information technology \u2014 Cabling installation: Installation planning and practices inside buildings". This is the standard that defines bend radii, pulling tensions, support intervals, cable-management, identification, and the practical install rules that determine whether a Class EA channel is delivered or not. Pair it with BS EN 50174-1 (specification & QA) and BS EN 50310 (bonding networks) for the full install framework.',
   },
   {
     id: 2,
@@ -227,7 +227,7 @@ const faqs = [
       <>
         <strong>BS EN 50174-2:2018+A2:2024</strong> — Information technology — Cabling installation:
         Installation planning and practices inside buildings. Referenced verbatim in BS
-        7671:2018+A4:2026 §444.410(b). It defines the install-practice rules — bend radii, pulling
+        7671:2018+A4:2026 §444.4.10(b). It defines the install-practice rules — bend radii, pulling
         tensions, supports, separation from power, cable management, identification — that protect
         the Class certification at handover. Pair it with <strong>BS EN 50174-1</strong>{' '}
         (specification &amp; QA) and <strong>BS EN 50310</strong> (bonding networks for ICT) for the
@@ -357,7 +357,7 @@ const DataCablingModule2Section5 = () => {
 
         <TLDR
           points={[
-            'BS EN 50174-2 is the install-practice standard, referenced by BS 7671:2018+A4:2026 §444.410(b). It defines bend radii (typically 4× OD install / 8× OD service), pulling tensions (~110 N for 4-pair UTP), supports, separation from LV power, cable management and identification — the rules that protect the Class EA certification.',
+            'BS EN 50174-2 is the install-practice standard, referenced by BS 7671:2018+A4:2026 §444.4.10(b). It defines bend radii (typically 4× OD install / 8× OD service), pulling tensions (~110 N for 4-pair UTP), supports, separation from LV power, cable management and identification — the rules that protect the Class EA certification.',
             'BS 7671 §521.10.202 is the fire-collapse rule (NOT §521.10.1). Wiring systems shall be supported so they will not collapse prematurely in fire. Non-metallic cable ties / clips / trunking cannot be the sole means of support (NOTE 3); steel or copper clips, saddles, ties, or steel cable containment do meet the requirement (NOTES 2, 4).',
             'Separation from LV power scales with containment AND voltage / current. Annex A444 Table A444.1: open / no containment 200 mm, perforated 150 mm, fully-enclosed solid no separation needed beyond containment. Table A444.2 scales with disturbing voltage / current. Take the largest of every applicable rule; bond the containment per §444.5.3.1.',
             'Sustained PoE bundles are a thermal design problem. BS 7671 §716.523.1.101 NOTE 1: temperature rise raises insertion loss and degrades the channel. NOTE 2 references PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2 and ISO/IEC TS 29125 for bundle planning. The §716.523.2.101 hard cap of 750 mA per conductor bounds every PoE design from 15 April 2026.',
@@ -366,7 +366,7 @@ const DataCablingModule2Section5 = () => {
 
         <LearningOutcomes
           outcomes={[
-            'Identify BS EN 50174-2 as the install-practice standard for cabling inside UK buildings, and recognise BS 7671:2018+A4:2026 §444.410(b) as the regulatory hook',
+            'Identify BS EN 50174-2 as the install-practice standard for cabling inside UK buildings, and recognise BS 7671:2018+A4:2026 §444.4.10(b) as the regulatory hook',
             'State and apply the typical bend radii — 4× cable OD during installation, 8× cable OD long-term in service — and explain the physical reason for the two-radius rule',
             'Quote the typical maximum pulling tension for 4-pair UTP / Cat6A (~110 N), describe the damage caused by exceeding it, and apply practical defences (breakaway swivel, pull from box, lubrication, slow curves)',
             'Apply BS 7671 §521.10.202 (the fire-collapse rule) verbatim — including NOTES 2, 3 and 4 — and recognise that non-metallic ties / clips / trunking cannot be the sole means of support',
@@ -1052,7 +1052,7 @@ const DataCablingModule2Section5 = () => {
           <p>The five A4:2026 sections most directly relevant to install practice:</p>
           <ul className="list-disc pl-5 space-y-2 text-[14px]">
             <li>
-              <strong>§444 — EMC / segregation.</strong> §444.410 explicitly cites BS EN 50174-1, BS
+              <strong>§444 — EMC / segregation.</strong> §444.4.10 explicitly cites BS EN 50174-1, BS
               EN 50174-2 and BS EN 50310. §444.5.3.1 bonds every metallic screen / sheath /
               armouring / containment. §444.6.2 sets the 130 mm separation from HID lamps. Annex
               A444 Tables A444.1 / A444.2 give the segregation distances.
@@ -1161,7 +1161,7 @@ const DataCablingModule2Section5 = () => {
         <KeyTakeaways
           title="Worth remembering"
           points={[
-            'BS EN 50174-2 is the install-practice standard for cabling inside UK buildings — referenced by BS 7671 §444.410(b). Bend radii (4× OD install / 8× OD service), pulling tensions (~110 N for 4-pair UTP), supports, separation, identification.',
+            'BS EN 50174-2 is the install-practice standard for cabling inside UK buildings — referenced by BS 7671 §444.4.10(b). Bend radii (4× OD install / 8× OD service), pulling tensions (~110 N for 4-pair UTP), supports, separation, identification.',
             'BS 7671 §521.10.202 is the fire-collapse rule (NOT §521.10.1). Steel clips / saddles / ties or steel cable containment deemed compliant; plastic ties / clips / non-metallic trunking cannot be the SOLE means of support.',
             'Annex A444 Tables A444.1 + A444.2 + §444.6.2 give the separation rules from LV power and HID lamps. Take the LARGEST of every applicable rule. Bond the containment per §444.5.3.1 for the Annex A444 reductions to apply.',
             'Sustained Type 4 PoE++ is a thermal design problem. §716.523.1.101 NOTE 1 = temperature rise raises insertion loss. NOTE 2 = bundle planning references (PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2, ISO/IEC TS 29125). §716.523.2.101 = 750 mA per conductor hard cap.',

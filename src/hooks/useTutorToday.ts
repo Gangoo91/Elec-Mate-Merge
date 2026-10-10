@@ -604,7 +604,7 @@ export function useTutorToday() {
         title: `Follow-up · ${o.activity_title ?? 'Observation'}${
           o.student_name_snapshot ? ` (${o.student_name_snapshot})` : ''
         }`,
-        href: `/college/students/${o.college_student_id}#observations`,
+        href: `/college?section=student360&studentId=${o.college_student_id}#observations`,
       }));
 
       const thisWeek: TodayUpcomingDate[] = [...lessonRows, ...followUpRows]

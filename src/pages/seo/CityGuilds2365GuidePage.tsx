@@ -251,11 +251,11 @@ const sections = [
             </li>
             <li>
               <strong>Reg 411.3.4 — Mandatory 30 mA RCD on domestic lighting circuits.</strong>{' '}
-              A4:2026 introduced this regulation requiring that, within domestic (household)
+              BS 7671:2018 introduced this regulation requiring that, within domestic (household)
               premises, additional protection by an RCD with a rated residual operating current not
               exceeding 30 mA shall be provided for AC final circuits supplying luminaires. This is
-              a mandatory &#39;shall&#39; requirement — domestic lighting circuits must now be RCD
-              protected.
+              a mandatory &#39;shall&#39; requirement — domestic lighting circuits must be RCD
+              protected, as they have been since 2018.
             </li>
           </ul>
         </div>
@@ -732,7 +732,7 @@ export default function CityGuilds2365GuidePage() {
       title="City & Guilds 2365 Diploma 2026: Level 2 & 3"
       description="C&G 2365 Diploma in Electrical Installations: Level 2 vs 3 structure, unit list, exams + practicals, college routes + how it feeds NVQ + AM2."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Course Guide"

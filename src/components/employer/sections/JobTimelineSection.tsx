@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useCallback } from 'react';
-import { Users, MapPin } from 'lucide-react';
+import { Users, MapPin, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
 import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
 import { TIMELINE_HELP } from '@/components/employer/help/jobs';
 import { useQuery } from '@tanstack/react-query';
@@ -27,25 +27,33 @@ import {
 
 const inputDateOk = (v: string) => /^\d{4}-\d{2}-\d{2}$/.test(v);
 import {
+  frameClass,
+  twoColClass,
+  colClass,
+  panel,
+  PanelTitle,
+  HeroActions,
+  ToolButton,
+  StatusPill,
+  Initials,
+  Row,
+  RowList,
+  PlainEmpty,
+  Segments,
+} from '@/components/employer/pageParts/PageParts';
+import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
   Avatar,
   Pill,
   Dot,
-  EmptyState,
   LoadingBlocks,
   SecondaryButton,
   PrimaryButton,
   SheetShell,
   inputClass,
   fieldLabelClass,
-  type Tone,
 } from '@/components/employer/editorial';
 
 type RangeKey = 'week' | 'month' | 'quarter';
@@ -56,12 +64,10 @@ const RANGE_DAYS: Record<RangeKey, number> = {
   quarter: 84,
 };
 
-const WORKER_STATUS_TONE: Record<string, Tone> = {
-  'On Site': 'emerald',
-  'En Route': 'blue',
-  Office: 'amber',
+/** Only on site (green) and on leave (red) carry a colour; the rest are plain. */
+const WORKER_STATUS_PILL: Record<string, 'green' | 'red' | 'neutral'> = {
+  'On Site': 'green',
   'On Leave': 'red',
-  'Off Duty': 'purple',
 };
 
 /** Match Worker Tracking: a position older than this is history, not live. */
@@ -95,7 +101,7 @@ export function JobTimelineSection() {
   const movedRef = useRef(false);
   const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const { data: jobs = [], isLoading: jobsLoading } = useJobs();
+  const { data: jobs = [], isLoading: jobsLoading, refetch, isRefetching } = useJobs();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
   const { data: workerLocations = [] } = useWorkerLocations();
   const reschedule = useRescheduleJob();
@@ -307,6 +313,8 @@ export function JobTimelineSection() {
   const getInitials = (name: string) =>
     name
       .split(' ')
+      // Words only: "DEMO — Consumer unit" gave "D—".
+      .filter((part) => /^[\p{L}\p{N}]/u.test(part))
       .map((n) => n[0])
       .slice(0, 2)
       .join('')
@@ -316,101 +324,140 @@ export function JobTimelineSection() {
     new Date(`${d}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'short' }).charAt(0);
   const dayNum = (d: string) => Number(d.slice(8, 10));
 
+  const isNow = periodOffset === 0;
+  const periodWord =
+    range === 'week'
+      ? isNow
+        ? 'this week'
+        : 'that week'
+      : isNow
+        ? 'in this period'
+        : 'in that period';
+  const liveLine = (() => {
+    const n = jobsThisPeriod.length;
+    const shown =
+      n === 0 ? `No jobs booked ${periodWord}` : `${n} ${n === 1 ? 'job' : 'jobs'} ${periodWord}`;
+    const todo: string[] = [];
+    if (slippingCount > 0) todo.push(`${slippingCount} running late`);
+    if (onHoldCount > 0) todo.push(`${onHoldCount} on hold`);
+    if (todo.length) return `${shown}. ${todo.join(', ')}.`;
+    if (n === 0) return `${shown}.`;
+    return `${shown}. ${isDesktop ? 'Drag a bar to move a job; everyone on it moves too.' : 'Tap a job to change its dates.'}`;
+  })();
+
+  const heroActions = (
+    <HeroActions>
+      <ToolButton
+        label="Refresh timeline"
+        onClick={() => refetch()}
+        disabled={isRefetching}
+        icon={<RefreshCw className={cn('h-4 w-4', isRefetching && 'animate-spin')} />}
+      />
+      <PageHelpButton help={TIMELINE_HELP} askContext={{ page: 'timeline', tab: range }} />
+    </HeroActions>
+  );
+
   if (jobsLoading) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Operations"
-          title="Timeline"
-          description="Every booked job as a bar across the week, month or quarter."
-          tone="indigo"
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Timeline" description="Loading the timeline." />
         <LoadingBlocks />
       </PageFrame>
     );
   }
 
+  const activeTeam = employees.filter((e) => e.status === 'Active');
+
   return (
-    <PageFrame>
-      <PageHero
-        eyebrow="Operations"
-        title="Timeline"
-        description={
-          isDesktop
-            ? 'Drag a bar to move the job, or its right edge to change how long it runs. Everyone on it moves too, and the Diary shows the same dates.'
-            : isPhone
-              ? 'Tap a job to change its dates. Everyone on it moves too, and the Diary shows the same dates.'
-              : 'Tap a bar to change the job’s dates. Everyone on it moves too, and the Diary shows the same dates.'
-        }
-        tone="indigo"
-        actions={<PageHelpButton help={TIMELINE_HELP} askContext={{ page: 'timeline', tab: range }} />}
-      />
+    <PageFrame className={frameClass}>
+      <PageHero title="Timeline" description={liveLine} actions={heroActions} />
 
       <HowItWorks help={TIMELINE_HELP} askContext={{ page: 'timeline', tab: range }} />
 
       <StatStrip
         columns={3}
         stats={[
-          { label: 'Jobs shown', value: jobsThisPeriod.length },
-          { label: 'Running late', value: slippingCount, tone: 'orange' },
-          { label: 'On hold', value: onHoldCount, tone: 'red' },
+          {
+            label: 'Jobs shown',
+            value: jobsThisPeriod.length,
+            sub: rangeLabel(periodStart, periodEnd),
+          },
+          {
+            label: 'Running late',
+            value: slippingCount,
+            tone: slippingCount > 0 ? 'red' : undefined,
+            sub: slippingCount > 0 ? 'Past their end date' : 'Everything on time',
+          },
+          {
+            label: 'On hold',
+            value: onHoldCount,
+            tone: onHoldCount > 0 ? 'yellow' : undefined,
+            sub: onHoldCount > 0 ? 'Waiting on something' : 'Nothing stuck',
+          },
         ]}
       />
 
-      <div data-help="timeline.range">
-      <FilterBar
-        tabs={[
-          { value: 'week', label: 'Week' },
-          { value: 'month', label: 'Month' },
-          { value: 'quarter', label: 'Quarter' },
-        ]}
-        activeTab={range}
-        onTabChange={(v) => {
-          setRange(v as RangeKey);
-          setPeriodOffset(0);
-        }}
-        actions={
-          <div className="flex items-center gap-2">
-            <SecondaryButton onClick={() => setPeriodOffset((p) => p - 1)}>← Prev</SecondaryButton>
-            <SecondaryButton onClick={() => setPeriodOffset(0)}>Today</SecondaryButton>
-            <SecondaryButton onClick={() => setPeriodOffset((p) => p + 1)}>Next →</SecondaryButton>
-          </div>
-        }
-      />
+      <div data-help="timeline.range" className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <Segments
+          items={[
+            { value: 'week' as RangeKey, label: 'Week' },
+            { value: 'month' as RangeKey, label: 'Month' },
+            { value: 'quarter' as RangeKey, label: 'Quarter' },
+          ]}
+          value={range}
+          onChange={(v) => {
+            setRange(v);
+            setPeriodOffset(0);
+          }}
+        />
+        <div className="flex min-w-0 flex-1 items-center gap-2">
+          <p className="min-w-0 flex-1 truncate text-[15px] font-semibold text-white tabular-nums sm:text-right sm:pr-1">
+            {rangeLabel(periodStart, periodEnd)}
+          </p>
+          <button
+            type="button"
+            onClick={() => setPeriodOffset(0)}
+            disabled={isNow}
+            className="h-11 shrink-0 rounded-full border border-white/[0.14] px-4 text-[14px] font-semibold text-white touch-manipulation hover:bg-white/[0.06] disabled:opacity-40"
+          >
+            Today
+          </button>
+          <ToolButton
+            label="Previous"
+            onClick={() => setPeriodOffset((p) => p - 1)}
+            icon={<ChevronLeft className="h-4 w-4" />}
+          />
+          <ToolButton
+            label="Next"
+            onClick={() => setPeriodOffset((p) => p + 1)}
+            icon={<ChevronRight className="h-4 w-4" />}
+          />
+        </div>
       </div>
 
       {isPhone && (
-        <ListCard>
-          <ListCardHeader
-            tone="indigo"
-            title="Schedule"
-            meta={<Pill tone="indigo">{rangeLabel(periodStart, periodEnd)}</Pill>}
-          />
+        <section>
+          <PanelTitle title="Schedule" />
           {jobsThisPeriod.length === 0 ? (
-            <div className="p-8">
-              <EmptyState
-                title="No jobs in this period"
-                description="Switch range or step to a different period to see booked work."
-              />
-            </div>
+            <PlainEmpty text="Jobs booked in this period appear here by start date. Step to another week or pick a longer range." />
           ) : (
-            <div data-help="timeline.phone-list">
+            <div data-help="timeline.phone-list" className={cn(panel, 'overflow-hidden')}>
               {phoneGroups.map(([key, groupJobs]) => (
-                <section key={key} className="border-t border-white/[0.06] first:border-t-0">
-                  <div className="flex items-center justify-between gap-3 px-4 pt-4 pb-2">
+                <section key={key} className="border-t border-white/[0.07] first:border-t-0">
+                  <div className="flex items-center justify-between gap-3 px-4 pt-3 pb-1">
                     <h3
                       className={cn(
-                        'text-[12px] font-semibold uppercase tracking-[0.14em]',
+                        'text-[13px] font-semibold',
                         key === today ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
                       {groupLabel(key)}
                     </h3>
-                    <span className="text-[12px] text-white tabular-nums">
+                    <span className="text-[13px] text-white tabular-nums">
                       {groupJobs.length} {groupJobs.length === 1 ? 'job' : 'jobs'}
                     </span>
                   </div>
-                  <ul className="divide-y divide-white/[0.06]">
+                  <ul className="divide-y divide-white/[0.07]">
                     {groupJobs.map((job) => {
                       const sd = stageDef(job.stage);
                       const crew = crewNamesByJob.get(job.id) ?? [];
@@ -442,20 +489,20 @@ export function JobTimelineSection() {
                             />
                             <div className="min-w-0 flex-1">
                               <div className="flex items-start justify-between gap-2">
-                                <span className="text-[14.5px] font-semibold text-white leading-snug line-clamp-2">
+                                <span className="text-[15px] font-semibold text-white leading-snug line-clamp-2">
                                   {job.title}
                                 </span>
-                                <Pill tone={sd.tone}>{sd.label}</Pill>
+                                <StatusPill dot={sd.bar}>{sd.label}</StatusPill>
                               </div>
-                              <div className="mt-1 text-[12.5px] text-white tabular-nums">
+                              <div className="mt-1 text-[13px] text-white tabular-nums">
                                 {rangeLabel(job.startDate, job.endDate)}
                                 {late && (
-                                  <span className="ml-2 font-semibold text-orange-400">
+                                  <span className="ml-2 font-semibold text-red-400">
                                     Running late
                                   </span>
                                 )}
                               </div>
-                              <div className="mt-1 flex items-center gap-x-3 gap-y-1 flex-wrap text-[12.5px] text-white">
+                              <div className="mt-1 flex items-center gap-x-3 gap-y-1 flex-wrap text-[13px] text-white">
                                 <span className="inline-flex items-center gap-1 min-w-0">
                                   <Users className="h-3.5 w-3.5 shrink-0" />
                                   <span className="truncate">{crewText}</span>
@@ -477,26 +524,15 @@ export function JobTimelineSection() {
               ))}
             </div>
           )}
-        </ListCard>
+        </section>
       )}
 
       {!isPhone && (
         <div data-help="timeline.gantt">
-        <ListCard>
-          <ListCardHeader
-            tone="indigo"
-            title="Gantt"
-            meta={<Pill tone="indigo">{rangeLabel(periodStart, periodEnd)}</Pill>}
-          />
           {jobsThisPeriod.length === 0 ? (
-            <div className="p-8">
-              <EmptyState
-                title="No jobs in this period"
-                description="Switch range or step to a different period to see booked work."
-              />
-            </div>
+            <PlainEmpty text="Booked jobs appear here as bars across the days. Step to another period or pick a longer range." />
           ) : (
-            <div className="p-4 sm:p-6 overflow-x-auto">
+            <div className={cn(panel, 'p-4 sm:p-5 overflow-x-auto')}>
               <div
                 className="relative min-w-[640px] rounded-xl border border-white/[0.06] overflow-hidden"
                 style={{
@@ -517,9 +553,7 @@ export function JobTimelineSection() {
                         day === today && 'bg-white/[0.06]'
                       )}
                     >
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
-                        {dayLetter(day)}
-                      </div>
+                      <div className="text-[11px] font-semibold text-white">{dayLetter(day)}</div>
                       <div
                         className={cn(
                           'mx-auto mt-0.5 text-[11px] tabular-nums',
@@ -627,128 +661,115 @@ export function JobTimelineSection() {
                 {stagesShown.map((s) => (
                   <div key={s.id} className="flex items-center gap-1.5">
                     <span className={cn('h-2 w-2 rounded-full', s.bar)} />
-                    <span className="text-[11px] text-white">{s.label}</span>
+                    <span className="text-[12.5px] text-white">{s.label}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
-        </ListCard>
         </div>
       )}
 
-      {/* On phones the Schedule list above already lists every job. */}
-      {!isPhone && (
-        <ListCard>
-          <ListCardHeader
-            tone="indigo"
-            title="Jobs"
-            meta={<Pill tone="indigo">{jobsThisPeriod.length}</Pill>}
-          />
-          {jobsThisPeriod.length === 0 ? (
-            <div className="p-8">
-              <EmptyState
-                title="No booked jobs"
-                description="Jobs with a start date in this period appear here."
-              />
-            </div>
-          ) : (
-            <ListBody>
-              {jobsThisPeriod.map((job) => {
-                const sd = stageDef(job.stage);
-                return (
-                  <ListRow
-                    key={job.id}
-                    accent={sd.tone}
-                    lead={<Avatar initials={getInitials(job.title || 'JB')} />}
-                    title={job.title}
-                    subtitle={
-                      <span className="flex items-center gap-2">
-                        <span>{rangeLabel(job.startDate, job.endDate)}</span>
-                        <span className="text-white">·</span>
-                        <span className="inline-flex items-center gap-1 min-w-0">
-                          <MapPin className="h-3 w-3 shrink-0" />
-                          <span className="truncate">{job.location}</span>
-                        </span>
-                        <span className="text-white">·</span>
-                        <span className="inline-flex items-center gap-1">
-                          <Users className="h-3 w-3" />
-                          <span className="tabular-nums">{job.assignedWorkers}</span>
-                        </span>
-                      </span>
-                    }
-                    trailing={
-                      <>
-                        {showMoney && formatValue(job.value) && (
-                          <Pill tone="emerald">{formatValue(job.value)}</Pill>
-                        )}
-                        <Pill tone={sd.tone}>{sd.label}</Pill>
-                      </>
-                    }
-                    onClick={() => openJob(job.id)}
-                  />
-                );
-              })}
-            </ListBody>
-          )}
-        </ListCard>
-      )}
+      <div className={twoColClass}>
+        {/* On phones the Schedule list above already lists every job. */}
+        {!isPhone && (
+          <div className={colClass}>
+            <section>
+              <PanelTitle title="Jobs" meta={`${jobsThisPeriod.length}`} />
+              {jobsThisPeriod.length === 0 ? (
+                <PlainEmpty text="Jobs with a start date in this period appear here." />
+              ) : (
+                <RowList>
+                  {jobsThisPeriod.map((job) => {
+                    const sd = stageDef(job.stage);
+                    return (
+                      <Row
+                        key={job.id}
+                        onClick={() => openJob(job.id)}
+                        lead={<Initials text={getInitials(job.title || 'JB')} />}
+                        title={job.title}
+                        detail={[
+                          rangeLabel(job.startDate, job.endDate),
+                          job.location,
+                          `${job.assignedWorkers} on it`,
+                          showMoney ? formatValue(job.value) : null,
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}
+                        trailing={<StatusPill dot={sd.bar}>{sd.label}</StatusPill>}
+                      />
+                    );
+                  })}
+                </RowList>
+              )}
+            </section>
+          </div>
+        )}
 
-      {!employeesLoading && employees.length > 0 && (
-        <ListCard>
-          <ListCardHeader
-            tone="cyan"
-            title="Team availability"
-            meta={<Pill tone="cyan">{employees.filter((e) => e.status === 'Active').length}</Pill>}
-          />
-          <ListBody>
-            {employees
-              .filter((e) => e.status === 'Active')
-              .map((employee) => {
-                // Approved leave is the truth for "On Leave" (the old branch read
-                // a roster status that is never set, so it could not be true).
-                const leaveNow = board.leave.find(
-                  (l) =>
-                    l.employee_id === employee.id && l.start_date <= today && l.end_date >= today
-                );
-                const leaveInPeriod = board.leave.filter(
-                  (l) => l.employee_id === employee.id && l !== leaveNow
-                );
-                const loc = workerLocations.find((l) => l.employee_id === employee.id);
-                const isStale =
-                  !!loc &&
-                  (!loc.last_updated ||
-                    Date.now() - new Date(loc.last_updated).getTime() >
-                      STALE_AFTER_HOURS * 60 * 60 * 1000);
-                const status = leaveNow
-                  ? 'On Leave'
-                  : isStale
-                    ? 'Off Duty'
-                    : loc?.status || 'Office';
-                const onSite = status === 'On Site';
-                const leaveText = [
-                  leaveNow
-                    ? `${leaveLabel(leaveNow)} until ${rangeLabel(leaveNow.end_date)}`
-                    : null,
-                  ...leaveInPeriod.map(
-                    (l) => `${leaveLabel(l)} ${rangeLabel(l.start_date, l.end_date)}`
-                  ),
-                ]
-                  .filter(Boolean)
-                  .join(' · ');
-                return (
-                  <ListRow
-                    key={employee.id}
-                    lead={<Avatar initials={employee.avatar_initials} online={onSite} />}
-                    title={employee.name}
-                    subtitle={leaveText || employee.team_role}
-                    trailing={<Pill tone={WORKER_STATUS_TONE[status] ?? 'cyan'}>{status}</Pill>}
-                  />
-                );
-              })}
-          </ListBody>
-        </ListCard>
-      )}
+        {!employeesLoading && activeTeam.length > 0 && (
+          <div className={colClass}>
+            <section>
+              <PanelTitle title="Team availability" meta={`${activeTeam.length} people`} />
+              <RowList>
+                {activeTeam.map((employee) => {
+                  // Approved leave is the truth for "On Leave" (the old branch read
+                  // a roster status that is never set, so it could not be true).
+                  const leaveNow = board.leave.find(
+                    (l) =>
+                      l.employee_id === employee.id && l.start_date <= today && l.end_date >= today
+                  );
+                  const leaveInPeriod = board.leave.filter(
+                    (l) => l.employee_id === employee.id && l !== leaveNow
+                  );
+                  const loc = workerLocations.find((l) => l.employee_id === employee.id);
+                  const isStale =
+                    !!loc &&
+                    (!loc.last_updated ||
+                      Date.now() - new Date(loc.last_updated).getTime() >
+                        STALE_AFTER_HOURS * 60 * 60 * 1000);
+                  const status = leaveNow
+                    ? 'On Leave'
+                    : isStale
+                      ? 'Off Duty'
+                      : loc?.status || 'Office';
+                  const onSite = status === 'On Site';
+                  const leaveText = [
+                    leaveNow
+                      ? `${leaveLabel(leaveNow)} until ${rangeLabel(leaveNow.end_date)}`
+                      : null,
+                    ...leaveInPeriod.map(
+                      (l) => `${leaveLabel(l)} ${rangeLabel(l.start_date, l.end_date)}`
+                    ),
+                  ]
+                    .filter(Boolean)
+                    .join(' · ');
+                  return (
+                    <Row
+                      key={employee.id}
+                      lead={<Avatar initials={employee.avatar_initials} online={onSite} />}
+                      title={employee.name}
+                      detail={leaveText || employee.team_role}
+                      trailing={
+                        <StatusPill tone={WORKER_STATUS_PILL[status] ?? 'neutral'}>
+                          {status === 'On Site'
+                            ? 'On site'
+                            : status === 'On Leave'
+                              ? 'On leave'
+                              : status === 'Off Duty'
+                                ? 'Off duty'
+                                : status === 'En Route'
+                                  ? 'En route'
+                                  : status}
+                        </StatusPill>
+                      }
+                    />
+                  );
+                })}
+              </RowList>
+            </section>
+          </div>
+        )}
+      </div>
 
       <TimelineDatesSheet
         job={datesJob}
@@ -819,10 +840,12 @@ function TimelineDatesSheet({
             }
             footer={
               <>
-                <SecondaryButton onClick={() => onOpenJob(job.id)}>Open job</SecondaryButton>
+                <SecondaryButton onClick={() => onOpenJob(job.id)} className="lg:ml-auto">
+                  Open job
+                </SecondaryButton>
                 <PrimaryButton
                   data-help="timeline.save"
-                  className="flex-1"
+                  className="flex-1 lg:flex-none lg:px-10"
                   disabled={
                     saving ||
                     !inputDateOk(start) ||

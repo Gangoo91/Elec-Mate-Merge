@@ -15,7 +15,8 @@ export const Eyebrow = ({
 }) => (
   <span
     className={cn(
-      'text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow',
+      // 13px sentence case, no tracking (10 Oct): spaced capitals read as generated.
+      'text-[13px] font-semibold leading-snug text-elec-yellow',
       className
     )}
   >

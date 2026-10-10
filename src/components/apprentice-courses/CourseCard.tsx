@@ -46,7 +46,7 @@ export function CourseCard({
         {number && (
           <span
             className={cn(
-              'text-[11px] font-semibold tracking-wide uppercase',
+              'text-[12px] font-semibold',
               comingSoon ? 'text-elec-yellow/40' : 'text-elec-yellow'
             )}
           >
@@ -78,7 +78,7 @@ export function CourseCard({
       {/* Arrow or Coming Soon */}
       <div className="flex-shrink-0 self-start mt-1">
         {comingSoon ? (
-          <span className="text-[10px] font-medium text-white bg-white/10 px-2 py-1 rounded-full">
+          <span className="text-[12px] font-medium text-white bg-white/10 px-2 py-1 rounded-full">
             Soon
           </span>
         ) : (

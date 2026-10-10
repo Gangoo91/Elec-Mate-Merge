@@ -37,7 +37,7 @@ export default function AdvancedHelp() {
         title="Ask Dave · BS 7671 A4:2026"
         backTo="/apprentice"
         trailing={
-          <div className="inline-flex shrink-0 items-center gap-0.5 rounded-full border border-white/[0.10] bg-white/[0.04] p-0.5">
+          <div className="inline-flex shrink-0 items-center rounded-xl border border-white/[0.12] p-px">
             <SegBtn active={view === 'dave'} onClick={() => setView('dave')} label="Chat" />
             <SegBtn active={view === 'tips'} onClick={() => setView('tips')} label="Daily tips" />
           </div>
@@ -74,8 +74,8 @@ function SegBtn({
       type="button"
       onClick={onClick}
       className={cn(
-        'h-10 rounded-full px-3.5 text-[12px] font-semibold transition-colors touch-manipulation',
-        active ? 'bg-elec-yellow text-black' : 'text-white'
+        'h-11 rounded-[10px] px-3 text-[13px] font-semibold transition-colors touch-manipulation',
+        active ? 'bg-white text-black' : 'text-white hover:bg-white/[0.06]'
       )}
     >
       {label}

@@ -53,6 +53,14 @@ import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { NEAR_MISS_STANDARD_TEMPLATES } from '@/data/site-safety/near-miss-templates';
 import { JobLinkField } from './common/JobLinkField';
+import {
+  applySafetyScope,
+  isFirmScope,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useFirmManagerIds,
+  useSafetyScope,
+} from './common/SafetyScope';
 import { NearMissReport, Witness } from './types';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -276,6 +284,11 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
 }) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  // Personal: the user's own reports. Employer Hub: the firm's (employer_id).
+  // RLS lets only firm managers read firm incident records.
+  const scope = useSafetyScope();
+  const scopeKey = safetyScopeKey(scope).join(':');
+  const { ids: firmManagerIds } = useFirmManagerIds();
   const [showForm, setShowForm] = useState(!!launch?.startNew);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [reports, setReports] = useState<NearMissReport[]>([]);
@@ -294,6 +307,10 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
   const [reporterSig, setReporterSig] = useState('');
   const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the report with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
   const [showLoadTemplate, setShowLoadTemplate] = useState(false);
   const [peopleOpen, setPeopleOpen] = useState(false);
@@ -378,17 +395,21 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
       // "Total 10" and could never reach the other 30 — `useShowMore` pages at
       // 20, so the "Show more" button could not appear either. The list is
       // still paged for rendering; only the fetch ceiling moved.
-      const { data, error } = await supabase
-        .from('near_miss_reports')
-        .select('*')
-        .eq('user_id', user.id)
+      const { data, error } = await applySafetyScope(
+        supabase.from('near_miss_reports').select('*'),
+        scope,
+        user.id
+      )
         .order('created_at', { ascending: false })
         .limit(200);
       if (!error && data) setReports(data as unknown as NearMissReport[]);
       setLoadingReports(false);
     };
     loadReports();
-  }, [user]);
+    // `scopeKey` stands in for `scope`: the provider hands out a new object on
+    // each render, and the list should reload only when the scope changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, scopeKey]);
 
   // Escalation from Safety Observations
   useEffect(() => {
@@ -448,6 +469,8 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
     setReporterSig('');
     setLinkedJobId(null);
     setLinkedJobTitle(null);
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
   };
 
   const {
@@ -569,6 +592,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
         photos: photoUrls.length > 0 ? photoUrls : null,
         reporter_signature: reporterSig || null,
         job_id: linkedJobId,
+        ...(employerJobId ? { employer_job_id: employerJobId } : {}),
         // ⚠️ `likelihood` and `risk_rating` are NOT written here, and must not
         // be added back until the columns exist.
         //
@@ -585,7 +609,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
       };
       const { data, error } = await supabase
         .from('near_miss_reports')
-        .insert(insertData)
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(stampSafetyInsert(insertData, scope) as never)
         .select()
         .single();
       if (error) throw error;
@@ -653,6 +679,13 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
     ],
     [reports]
   );
+
+  // Employer Hub: a worker's shared report is read and countersigned, never
+  // deleted by the firm (same rule as useFirmRecordAccess, applied per row).
+  const canDeleteReport = (report: NearMissReport) => {
+    if (!isFirmScope(scope)) return true;
+    return !report.user_id || firmManagerIds.has(report.user_id);
+  };
 
   const handleDeleteReport = async (reportId: string) => {
     try {
@@ -877,6 +910,12 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
               onSelect={(id, title) => {
                 setLinkedJobId(id);
                 setLinkedJobTitle(title);
+              }}
+              employerJobId={employerJobId}
+              employerJobTitle={employerJobTitle}
+              onSelectEmployerJob={(id, title) => {
+                setEmployerJobId(id);
+                setEmployerJobTitle(title);
               }}
             />
           </FormCard>
@@ -1220,15 +1259,19 @@ export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyT
           {visibleReports.map((report) => (
             <SwipeableListItem
               key={report.id}
-              rightActions={[
-                {
-                  icon: Trash2,
-                  label: 'Delete',
-                  color: 'bg-red-500',
-                  textColor: 'text-white',
-                  onAction: () => setDeleteTarget(report.id),
-                },
-              ]}
+              rightActions={
+                canDeleteReport(report)
+                  ? [
+                      {
+                        icon: Trash2,
+                        label: 'Delete',
+                        color: 'bg-red-500',
+                        textColor: 'text-white',
+                        onAction: () => setDeleteTarget(report.id),
+                      },
+                    ]
+                  : []
+              }
             >
               <SafetyListCard>
                 <SafetyListRow

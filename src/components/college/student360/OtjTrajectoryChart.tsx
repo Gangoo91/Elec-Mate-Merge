@@ -42,7 +42,10 @@ function fmtDate(iso: string): string {
   });
 }
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 
 export function OtjTrajectoryChart({
   collegeStudentId,
@@ -186,7 +189,7 @@ export function OtjTrajectoryChart({
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center gap-4 text-[11.5px] text-white">
+      <div className="mt-3 flex flex-wrap items-center gap-4 text-[12px] text-white">
         <Legend swatch="bg-elec-yellow" label="Verified" />
         <Legend swatch="bg-white" label="Counted (app learning and verified)" />
         <Legend swatch="bg-white/[0.25]" label="Required" />
@@ -210,7 +213,7 @@ function Stat({
 }) {
   return (
     <div className="text-right">
-      <div className="text-[11px] font-medium text-white">{label}</div>
+      <div className="text-[12px] font-medium text-white">{label}</div>
       <div
         className={cn(
           'mt-0.5 text-[15px] font-semibold leading-none tabular-nums',
@@ -219,7 +222,7 @@ function Stat({
       >
         {value}
       </div>
-      {sub && <div className="mt-0.5 text-[11px] tabular-nums text-white">{sub}</div>}
+      {sub && <div className="mt-0.5 text-[12px] tabular-nums text-white">{sub}</div>}
     </div>
   );
 }

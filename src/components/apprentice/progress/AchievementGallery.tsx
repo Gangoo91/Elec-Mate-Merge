@@ -39,13 +39,8 @@ import {
   Zap,
   type LucideIcon,
 } from 'lucide-react';
-import { FormSheet } from '@/components/forms/FormSheet';
-import {
-  RARITY_COLOURS,
-  RARITY_BG_COLOURS,
-  type AchievementDef,
-  type AchievementRarity,
-} from '@/data/achievementDefinitions';
+import { ContentSheet } from '@/components/apprentice/ApprenticeHomeUi';
+import { RARITY_COLOURS, type AchievementDef } from '@/data/achievementDefinitions';
 import type { NextUpAchievement } from '@/hooks/useAchievementChecker';
 import { cn } from '@/lib/utils';
 
@@ -74,18 +69,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
 };
 
 const resolveIcon = (name: string): LucideIcon => ICON_MAP[name] ?? Trophy;
-
-/**
- * Border tints per rarity — derived locally to match the RARITY_COLOURS
- * palette (the data file only exports text + bg classes).
- */
-const RARITY_BORDERS: Record<AchievementRarity, string> = {
-  common: 'border-white/[0.10]',
-  uncommon: 'border-white/[0.14]',
-  rare: 'border-white/[0.18]',
-  epic: 'border-elec-yellow/20',
-  legendary: 'border-elec-yellow/30',
-};
 
 type GalleryAchievement = AchievementDef & { isUnlocked: boolean };
 
@@ -143,17 +126,17 @@ export function AchievementGallery({
             'flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5'
           )}
         >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-white/[0.05]">
-            <NextUpIcon icon={nextUpIcon} />
-          </span>
+          <NextUpIcon icon={nextUpIcon} />
           <span className="flex-1 min-w-0">
             <span className="flex items-baseline justify-between gap-2">
-              <span className="text-[13.5px] font-medium text-white truncate">{nextUp.title}</span>
-              <span className="text-[12px] tabular-nums text-white shrink-0">
-                {nextUp.current}/{nextUp.target}
+              <span className="min-w-0 text-[14px] font-semibold text-white">
+                Next: {nextUp.title}
+              </span>
+              <span className="shrink-0 text-[13px] tabular-nums text-white">
+                {nextUp.current} of {nextUp.target}
               </span>
             </span>
-            <span className="mt-1.5 block h-1 rounded-full bg-white/[0.06] overflow-hidden">
+            <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
               <span
                 className="block h-full rounded-full bg-elec-yellow transition-all"
                 style={{ width: `${nextUp.pct}%` }}
@@ -165,7 +148,7 @@ export function AchievementGallery({
 
       {/* Earned badges — always on show */}
       {unlocked.length > 0 && (
-        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2">
           {unlocked.map((badge) => (
             <BadgeTile key={badge.id} badge={badge} onSelect={setSelected} />
           ))}
@@ -196,7 +179,7 @@ export function AchievementGallery({
           </button>
 
           {showLocked && (
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2">
               {locked.map((badge) => (
                 <BadgeTile key={badge.id} badge={badge} onSelect={setSelected} />
               ))}
@@ -205,76 +188,61 @@ export function AchievementGallery({
         </>
       )}
 
-      {/* Badge detail — bottom sheet */}
-      <FormSheet
+      {/* Badge detail — a sheet sized to its few lines */}
+      <ContentSheet
         open={selected !== null}
         onOpenChange={(open) => !open && setSelected(null)}
-        eyebrow="Achievement"
+        eyebrow={
+          selected
+            ? selected.isUnlocked
+              ? 'Achievement earned'
+              : 'Achievement to earn'
+            : 'Achievement'
+        }
         title={selected?.title ?? 'Achievement'}
-        width="wide"
       >
         {selected && (
-          <div className="pt-1">
-            <div className="flex flex-col items-center text-center space-y-3">
-              {/* Big icon in rarity-tinted square */}
-              <span
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <BadgeIcon
+                icon={resolveIcon(selected.icon)}
                 className={cn(
-                  'flex h-16 w-16 items-center justify-center rounded-2xl border',
-                  selected.isUnlocked
-                    ? cn(RARITY_BORDERS[selected.rarity], RARITY_BG_COLOURS[selected.rarity])
-                    : 'border-white/[0.08] bg-white/[0.03]'
+                  'h-7 w-7 shrink-0',
+                  selected.isUnlocked ? RARITY_COLOURS[selected.rarity] : 'text-white'
                 )}
-              >
-                <BadgeIcon
-                  icon={resolveIcon(selected.icon)}
-                  className={cn(
-                    'h-8 w-8',
-                    selected.isUnlocked ? RARITY_COLOURS[selected.rarity] : 'text-white'
-                  )}
-                />
-              </span>
-
-              {/* Rarity chip */}
-              <span
-                className={cn(
-                  'inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-semibold capitalize',
-                  RARITY_COLOURS[selected.rarity],
-                  RARITY_BG_COLOURS[selected.rarity]
-                )}
-              >
-                {selected.rarity}
-              </span>
-
-              <div className="space-y-1">
-                {!selected.isUnlocked && <p className="text-[13px] font-semibold text-white">How to earn it</p>}
-                <p className="text-[13px] text-white leading-relaxed">{selected.description}</p>
-              </div>
-
-              <span className="text-[12.5px] font-semibold tabular-nums text-elec-yellow">
-                +{selected.xpBonus} XP
-              </span>
-
-              {/* Live progress — only the checker's nextUp badge has it */}
-              {nextUp && nextUp.id === selected.id && !selected.isUnlocked && (
-                <div className="w-full max-w-xs space-y-1.5 pt-1">
-                  <div className="flex items-baseline justify-between gap-2">
-                    <p className="text-[13px] font-semibold text-white">Progress</p>
-                    <span className="text-[12px] tabular-nums text-white">
-                      {nextUp.current}/{nextUp.target}
-                    </span>
-                  </div>
-                  <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-elec-yellow transition-all"
-                      style={{ width: `${nextUp.pct}%` }}
-                    />
-                  </div>
-                </div>
-              )}
+              />
+              <p className="text-[14px] font-medium capitalize text-white">
+                {selected.rarity} · <span className="normal-case">+{selected.xpBonus} XP</span>
+              </p>
             </div>
+
+            <div className="space-y-1">
+              {!selected.isUnlocked && (
+                <p className="text-[13.5px] font-semibold text-white">How to earn it</p>
+              )}
+              <p className="text-[14.5px] leading-relaxed text-white">{selected.description}</p>
+            </div>
+
+            {/* Live progress — only the checker's nextUp badge has it */}
+            {nextUp && nextUp.id === selected.id && !selected.isUnlocked && (
+              <div className="space-y-1.5">
+                <div className="flex items-baseline justify-between gap-2">
+                  <p className="text-[13.5px] font-semibold text-white">Progress</p>
+                  <span className="text-[13px] tabular-nums text-white">
+                    {nextUp.current} of {nextUp.target}
+                  </span>
+                </div>
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+                  <div
+                    className="h-full rounded-full bg-elec-yellow transition-all"
+                    style={{ width: `${nextUp.pct}%` }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         )}
-      </FormSheet>
+      </ContentSheet>
     </section>
   );
 }
@@ -292,30 +260,32 @@ function BadgeTile({
   onSelect: (b: GalleryAchievement) => void;
 }) {
   const Icon = resolveIcon(badge.icon);
+  // Icon beside the name, not stacked over it (10 Oct: icon-over-title tiles
+  // at 10.5px read as generated).
   return (
     <button
       type="button"
       onClick={() => onSelect(badge)}
       aria-label={`${badge.title}, ${badge.rarity}, ${badge.isUnlocked ? 'unlocked' : 'locked'}`}
       className={cn(
-        'flex flex-col items-center justify-center gap-2 rounded-xl border px-2 py-4 text-center touch-manipulation transition-colors',
+        'flex min-h-[52px] min-w-0 items-center gap-2.5 rounded-xl border px-3 py-2 text-left touch-manipulation transition-colors active:bg-white/[0.07]',
         badge.isUnlocked
-          ? cn(
-              RARITY_BORDERS[badge.rarity],
-              RARITY_BG_COLOURS[badge.rarity],
-              'hover:bg-white/[0.06]'
-            )
-          : 'border-white/[0.06] hover:bg-white/[0.03]'
+          ? 'border-white/[0.12] bg-white/[0.04] hover:border-white/[0.25]'
+          : 'border-dashed border-white/[0.12] hover:border-white/[0.25]'
       )}
     >
       <Icon
-        className={cn('h-5 w-5', badge.isUnlocked ? RARITY_COLOURS[badge.rarity] : 'text-white')}
-        strokeWidth={2}
+        className={cn(
+          'h-[18px] w-[18px] shrink-0',
+          badge.isUnlocked ? RARITY_COLOURS[badge.rarity] : 'text-white'
+        )}
+        strokeWidth={1.5}
+        aria-hidden
       />
       <span
         className={cn(
-          'text-[10.5px] leading-tight line-clamp-2 text-white',
-          badge.isUnlocked && 'font-medium'
+          'min-w-0 text-[13px] leading-tight line-clamp-2 text-white',
+          badge.isUnlocked ? 'font-semibold' : 'font-medium'
         )}
       >
         {badge.title}
@@ -327,11 +297,11 @@ function BadgeTile({
 /* Tiny wrappers so dynamic icons render cleanly with typed props */
 
 function NextUpIcon({ icon: Icon }: { icon: LucideIcon }) {
-  return <Icon className="h-4 w-4 text-elec-yellow" strokeWidth={2} />;
+  return <Icon className="h-5 w-5 shrink-0 text-white" strokeWidth={1.5} aria-hidden />;
 }
 
 function BadgeIcon({ icon: Icon, className }: { icon: LucideIcon; className?: string }) {
-  return <Icon className={className} strokeWidth={2} />;
+  return <Icon className={className} strokeWidth={1.5} aria-hidden />;
 }
 
 export default AchievementGallery;

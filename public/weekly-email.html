@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Sunday email · Elec-Mate</title>
+    <style>
+      * { box-sizing: border-box; }
+      /* .btn sets display, which beats the UA's [hidden] rule without this */
+      [hidden] { display: none !important; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: #000;
+        color: #fff;
+        line-height: 1.5;
+      }
+      .card {
+        width: 100%;
+        max-width: 460px;
+        background: #0a0a0a;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 20px;
+        padding: 32px 24px;
+        text-align: center;
+      }
+      .logo { width: 64px; height: 64px; border-radius: 14px; display: inline-block; margin-bottom: 20px; }
+      h1 { margin: 0 0 10px; font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: #fff; }
+      p { margin: 0 0 10px; font-size: 15px; color: #fff; }
+      .firm { font-weight: 600; }
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        margin-top: 20px;
+        padding: 0 20px;
+        border-radius: 12px;
+        background: #facc15;
+        color: #000;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        touch-action: manipulation;
+        width: 100%;
+        border: 0;
+        font-family: inherit;
+        cursor: pointer;
+      }
+      .btn:disabled { opacity: 1; cursor: default; }
+      .ghost { background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); margin-top: 10px; }
+      .err { margin-top: 14px; color: #fca5a5; font-size: 14px; }
+      .small { font-size: 13px; margin-top: 20px; }
+      .small a { color: #fff; }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <img class="logo" src="/pwa-512x512.png" alt="Elec-Mate" width="64" height="64" />
+      <h1 id="title">Sunday email</h1>
+      <p id="msg">This page manages the Sunday "your team this week" email.</p>
+      <p id="sub"></p>
+      <button id="toggle" class="btn" type="button" hidden></button>
+      <p id="err" class="err" role="alert" hidden></p>
+      <a class="btn ghost" href="https://www.elec-mate.com/employer">Open the Employer Hub</a>
+      <p class="small">Questions? Email <a href="mailto:info@elec-mate.com">info@elec-mate.com</a></p>
+    </main>
+    <script>
+      (function () {
+        var fn = 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1/employer-weekly-digest';
+        var p, state, firm, t;
+        try {
+          p = new URLSearchParams(location.search);
+          state = p.get('state');
+          firm = p.get('firm') || 'your firm';
+          t = p.get('t');
+        } catch (_) { return; }
+        var $ = function (id) { return document.getElementById(id); };
+        var toggle = $('toggle'), err = $('err');
+        var text = function (id, v) { $(id).textContent = v; };
+
+        var current;
+        function show(s) {
+          current = s;
+          err.hidden = true;
+          toggle.disabled = false;
+          if (s === 'confirm') {
+            text('title', 'Stop the Sunday email?');
+            text('msg', 'You will no longer get the Sunday "your team this week" email for ' + firm + '.');
+            text('sub', 'Everything else, including the alerts in the app, carries on as normal.');
+            toggle.textContent = 'Stop the Sunday email';
+            toggle.className = 'btn';
+            toggle.onclick = function () { send('unsubscribe', 'off'); };
+            toggle.hidden = !t;
+          } else if (s === 'off') {
+            text('title', 'Sunday email stopped');
+            text('msg', 'You will not get the Sunday "your team this week" email for ' + firm + ' any more.');
+            text('sub', 'Everything else, including the alerts in the app, carries on as normal.');
+            toggle.textContent = 'Turn it back on';
+            toggle.className = 'btn ghost';
+            toggle.onclick = function () { send('resubscribe', 'on'); };
+            toggle.hidden = !t;
+          } else if (s === 'on') {
+            text('title', 'Sunday email is on');
+            text('msg', 'You will get the Sunday "your team this week" email for ' + firm + ', every Sunday at 6pm.');
+            text('sub', 'Changed your mind? You can stop it below.');
+            toggle.textContent = 'Stop the Sunday email';
+            toggle.className = 'btn ghost';
+            toggle.onclick = function () { send('unsubscribe', 'off'); };
+            toggle.hidden = !t;
+          } else {
+            text('title', 'That link has not worked');
+            text('msg', 'The link may be incomplete or out of date. Write to info@elec-mate.com and we will sort it for you.');
+            text('sub', '');
+            toggle.hidden = true;
+          }
+        }
+
+        function send(action, next) {
+          toggle.disabled = true;
+          toggle.textContent = 'Saving…';
+          fetch(fn + '?' + action + '=' + encodeURIComponent(t), { method: 'POST' })
+            .then(function (r) { return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok && b && b.ok, b: b }; }); })
+            .then(function (res) {
+              if (!res.ok) { show('invalid'); return; }
+              if (res.b.firm) firm = res.b.firm;
+              show(next);
+            })
+            .catch(function () {
+              show(current);
+              err.textContent = 'That did not go through. Check your connection and try again.';
+              err.hidden = false;
+            });
+        }
+
+        show(state === 'confirm' || state === 'off' || state === 'on' ? state : 'invalid');
+      })();
+    </script>
+  </body>
+</html>

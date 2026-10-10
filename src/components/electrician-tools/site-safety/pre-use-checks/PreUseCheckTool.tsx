@@ -28,6 +28,7 @@ import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 import { SafetyPageHeader } from '../common/SafetyPageHeader';
+import { FirmRecordBar } from '../common/FirmRecordBar';
 
 interface PreUseCheckToolProps {
   onBack: () => void;
@@ -186,6 +187,7 @@ export function PreUseCheckTool({ onBack, launch }: PreUseCheckToolProps) {
     siteAddress: string;
     jobId: string | null;
     jobTitle: string | null;
+    employerJobId: string | null;
   } | null>(null);
 
   const handleCategorySelect = (key: CategoryKey) => {
@@ -201,6 +203,7 @@ export function PreUseCheckTool({ onBack, launch }: PreUseCheckToolProps) {
       siteAddress: check.site_address ?? '',
       jobId: check.job_id,
       jobTitle: jobTitleFor(check.job_id),
+      employerJobId: check.employer_job_id ?? null,
     });
     setSelectedCategory(check.equipment_type as CategoryKey);
     setShowForm(true);
@@ -242,6 +245,7 @@ export function PreUseCheckTool({ onBack, launch }: PreUseCheckToolProps) {
         initialSiteAddress={prefill?.siteAddress ?? launch?.siteAddress ?? ''}
         initialJobId={prefill?.jobId ?? launch?.jobId ?? null}
         initialJobTitle={prefill?.jobTitle ?? null}
+        initialEmployerJobId={prefill?.employerJobId ?? launch?.employerJobId ?? null}
       />
     );
   }
@@ -394,6 +398,12 @@ export function PreUseCheckTool({ onBack, launch }: PreUseCheckToolProps) {
                         </span>
                       </div>
                     }
+                  />
+                  <FirmRecordBar
+                    table="pre_use_checks"
+                    row={check}
+                    invalidate={[['pre-use-checks']]}
+                    className="mx-5 mb-3 block sm:mx-6"
                   />
                   {/* Three identical secondary buttons gave the row no shape.
                       Re-check is what an electrician came here to do; export

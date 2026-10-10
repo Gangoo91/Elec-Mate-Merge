@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { IOSInput } from '@/components/ui/ios-input';
-import { IOSSelect } from '@/components/ui/ios-select';
+import { ChevronDown } from 'lucide-react';
 import {
   CircuitInput,
   DomesticLoadType,
@@ -10,6 +9,8 @@ import {
 import { DEFAULT_CABLE_LENGTHS } from '@/lib/circuit-templates';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
+import { labelCn } from '@/components/forms/fieldStyles';
+import { ItemCard, TextField, SelectRow, ChipChoice } from './wizardUi';
 
 interface CircuitCardProps {
   circuit: CircuitInput;
@@ -88,32 +89,25 @@ export const CircuitCard = ({
   const loadOptions = getLoadOptions();
 
   return (
-    <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5">
-      {/* Header — editorial, no icons */}
-      <div className="flex items-start justify-between gap-3 mb-5">
-        <div className="flex items-baseline gap-2 flex-wrap">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
-            Circuit {String(index + 1).padStart(2, '0')}
-          </span>
-          {circuit.phases === 'three' && (
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-              · Three phase
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-3 shrink-0">
+    <ItemCard>
+      {/* Header */}
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <h4 className="min-w-0 truncate text-[15px] font-semibold text-white">
+          Circuit {index + 1}
+          {circuit.phases === 'three' && <span className="font-normal"> · Three phase</span>}
+        </h4>
+        <div className="-mr-2 flex shrink-0 items-center">
           <button
             type="button"
             onClick={onDuplicate}
-            className="text-[12px] text-white/60 hover:text-elec-yellow transition-colors touch-manipulation"
+            className="h-11 rounded-lg px-3 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.06] touch-manipulation"
           >
             Duplicate
           </button>
-          <span className="h-3 w-px bg-white/10" aria-hidden />
           <button
             type="button"
             onClick={onDelete}
-            className="text-[12px] text-white/60 hover:text-elec-yellow transition-colors touch-manipulation"
+            className="h-11 rounded-lg px-3 text-[13px] font-medium text-red-400 transition-colors hover:bg-white/[0.06] touch-manipulation"
           >
             Remove
           </button>
@@ -121,53 +115,58 @@ export const CircuitCard = ({
       </div>
 
       {/* Form Fields */}
-      <div className="space-y-4">
-        <IOSInput
-          label="Circuit Name *"
+      <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-6">
+        <TextField
+          className="col-span-2"
+          label="Circuit name *"
           value={circuit.name}
           onChange={(e) => onUpdate({ name: e.target.value })}
           placeholder="e.g., Kitchen Ring Main"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <IOSSelect
-            label="Load Type"
-            value={circuit.loadType}
-            onValueChange={(value) => {
-              const updates: Partial<CircuitInput> = { loadType: value as any };
+        <SelectRow
+          className="col-span-2 sm:col-span-1"
+          label="Load type"
+          value={circuit.loadType}
+          onValueChange={(value) => {
+            const updates: Partial<CircuitInput> = { loadType: value as any };
 
-              // Auto-fill cable length if currently empty
-              if (!circuit.cableLength) {
-                const defaultLength = DEFAULT_CABLE_LENGTHS[installationType]?.[value as any];
-                if (defaultLength) {
-                  updates.cableLength = defaultLength;
-                }
+            // Auto-fill cable length if currently empty
+            if (!circuit.cableLength) {
+              const defaultLength = DEFAULT_CABLE_LENGTHS[installationType]?.[value as any];
+              if (defaultLength) {
+                updates.cableLength = defaultLength;
               }
+            }
 
-              onUpdate(updates);
-            }}
-            options={loadOptions}
-          />
+            onUpdate(updates);
+          }}
+          options={loadOptions}
+        />
 
-          <IOSSelect
-            label="Phases *"
-            value={circuit.phases}
-            onValueChange={(v: 'single' | 'three') => onUpdate({ phases: v })}
+        <div className="col-span-2 sm:col-span-1">
+          <span className={labelCn}>Phases *</span>
+          <ChipChoice
+            ariaLabel="Phases"
+            columns="grid-cols-2"
             options={[
-              { value: 'single', label: 'Single Phase' },
-              { value: 'three', label: 'Three Phase' },
+              { value: 'single', label: 'Single phase' },
+              { value: 'three', label: 'Three phase' },
             ]}
+            value={circuit.phases}
+            onSelect={(v) => onUpdate({ phases: v as 'single' | 'three' })}
           />
         </div>
 
-        {/* Circuit Topology — only for socket circuits */}
+        {/* Circuit Topology, only for socket circuits */}
         {(circuit.loadType === 'socket' ||
           circuit.loadType === 'office-sockets' ||
           circuit.loadType === 'workshop-sockets') && (
-          <IOSSelect
-            label="Circuit Topology"
+          <SelectRow
+            className="col-span-2"
+            label="Circuit topology"
             value={circuit.circuitTopology || 'auto'}
-            onValueChange={(v: 'ring' | 'radial' | 'auto') => onUpdate({ circuitTopology: v })}
+            onValueChange={(v) => onUpdate({ circuitTopology: v as 'ring' | 'radial' | 'auto' })}
             options={[
               { value: 'auto', label: 'Auto-detect (designer decides)' },
               { value: 'ring', label: 'Ring Final Circuit', description: '32A, 2.5mm²' },
@@ -183,77 +182,66 @@ export const CircuitCard = ({
           />
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <IOSInput
-            label="Load Power (W) *"
-            type="number"
-            value={circuit.loadPower?.toString() || ''}
-            onChange={(e) =>
-              onUpdate({ loadPower: e.target.value ? Number(e.target.value) : undefined })
-            }
-            placeholder="Ring: 7360W | Lighting: 1000W"
-          />
+        <TextField
+          label="Load power (W) *"
+          type="number"
+          value={circuit.loadPower?.toString() || ''}
+          onChange={(e) =>
+            onUpdate({ loadPower: e.target.value ? Number(e.target.value) : undefined })
+          }
+          placeholder="Ring 7360, lighting 1000"
+        />
 
-          <IOSInput
-            label="Cable Run (m)"
-            type="number"
-            value={circuit.cableLength?.toString() || ''}
-            onChange={(e) =>
-              onUpdate({ cableLength: e.target.value ? Number(e.target.value) : undefined })
-            }
-            placeholder="e.g., 25"
-          />
-        </div>
-
-        {/* Advanced Options */}
-        <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-          <CollapsibleTrigger asChild>
-            <button
-              type="button"
-              className={cn(
-                'w-full h-11 px-4 rounded-xl flex items-center justify-between',
-                'bg-[hsl(0_0%_10%)] border border-white/[0.10]',
-                'hover:border-white/20 hover:bg-[hsl(0_0%_15%)]',
-                'text-[13px] font-medium text-white',
-                'transition-colors active:scale-[0.99]',
-                'touch-manipulation'
-              )}
-            >
-              <span>{showAdvanced ? 'Hide advanced options' : 'Show advanced options'}</span>
-              <span
-                className={cn(
-                  'text-[10.5px] font-semibold uppercase tracking-[0.18em]',
-                  showAdvanced ? 'text-elec-yellow' : 'text-white/50'
-                )}
-              >
-                {showAdvanced ? 'Close' : 'Open'}
-              </span>
-            </button>
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="mt-4 space-y-4">
-            <IOSSelect
-              label="Special Location"
-              value={circuit.specialLocation || 'none'}
-              onValueChange={(v) => onUpdate({ specialLocation: v as any })}
-              options={[
-                { value: 'none', label: 'None' },
-                { value: 'bathroom', label: 'Bathroom', description: 'Zones apply' },
-                { value: 'outdoor', label: 'Outdoor' },
-                { value: 'underground', label: 'Underground' },
-                { value: 'kitchen', label: 'Kitchen', description: 'RCD required' },
-              ]}
-            />
-
-            <IOSInput
-              label="Additional Notes"
-              value={circuit.notes || ''}
-              onChange={(e) => onUpdate({ notes: e.target.value })}
-              placeholder="Special requirements..."
-            />
-          </CollapsibleContent>
-        </Collapsible>
+        <TextField
+          label="Cable run (m)"
+          type="number"
+          value={circuit.cableLength?.toString() || ''}
+          onChange={(e) =>
+            onUpdate({ cableLength: e.target.value ? Number(e.target.value) : undefined })
+          }
+          placeholder="e.g., 25"
+        />
       </div>
-    </div>
+
+      {/* Advanced Options */}
+      <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced} className="mt-4">
+        <CollapsibleTrigger asChild>
+          <button
+            type="button"
+            className="flex h-11 w-full items-center justify-between border-t border-white/[0.10] pt-1 text-left text-[14px] font-medium text-white touch-manipulation"
+          >
+            <span>{showAdvanced ? 'Hide advanced options' : 'Show advanced options'}</span>
+            <ChevronDown
+              className={cn(
+                'h-5 w-5 text-white transition-transform',
+                showAdvanced && 'rotate-180'
+              )}
+            />
+          </button>
+        </CollapsibleTrigger>
+
+        <CollapsibleContent className="mt-3 grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-6">
+          <SelectRow
+            label="Special location"
+            value={circuit.specialLocation || 'none'}
+            onValueChange={(v) => onUpdate({ specialLocation: v as any })}
+            options={[
+              { value: 'none', label: 'None' },
+              { value: 'bathroom', label: 'Bathroom', description: 'Zones apply' },
+              { value: 'outdoor', label: 'Outdoor' },
+              { value: 'underground', label: 'Underground' },
+              { value: 'kitchen', label: 'Kitchen', description: 'RCD required' },
+            ]}
+          />
+
+          <TextField
+            label="Additional notes"
+            value={circuit.notes || ''}
+            onChange={(e) => onUpdate({ notes: e.target.value })}
+            placeholder="Special requirements..."
+          />
+        </CollapsibleContent>
+      </Collapsible>
+    </ItemCard>
   );
 };

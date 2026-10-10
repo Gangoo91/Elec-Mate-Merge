@@ -121,7 +121,7 @@ async function fetchMarkingQueue(
       .select('attempt_id, ai_score, tutor_override_score, tutor_override_at')
       .in('attempt_id', attemptIds),
     supabase.from('college_students').select('user_id, name').in('user_id', studentIds),
-    supabase.from('profiles').select('id, full_name').in('id', studentIds),
+    supabase.from('public_profiles').select('id, full_name').in('id', studentIds),
   ]);
 
   const gradeRows = (gradesRes.data ?? []) as Array<{

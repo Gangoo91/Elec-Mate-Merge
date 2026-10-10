@@ -1,6 +1,6 @@
+import { LC_FRAME } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { SESSION_LABEL, SESSION_SHORT, asSession } from '@/lib/college/attendanceSession';
@@ -150,13 +150,9 @@ export function MyAttendanceCard() {
   // Linked but no register marked yet — quiet panel so the learner knows it's coming.
   if (!calc) {
     return (
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-      >
+      <section className={LC_FRAME}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
-            Attendance
-          </div>
+          <div className="text-[15px] font-semibold tracking-tight text-white">Attendance</div>
           <p className="mt-3 text-[12.5px] text-white leading-snug">
             No attendance has been recorded yet. Once your tutor marks the register, your record
             shows here.
@@ -167,15 +163,13 @@ export function MyAttendanceCard() {
   }
 
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
+          <div className="text-[15px] font-semibold tracking-tight text-white">
             Attendance · {VERDICT_LABEL[calc.verdict]}
           </div>
-          <span className="text-[10.5px] tabular-nums text-white">
+          <span className="text-[12px] tabular-nums text-white">
             {calc.total} session{calc.total === 1 ? '' : 's'} recorded
           </span>
         </div>
@@ -193,7 +187,7 @@ export function MyAttendanceCard() {
           >
             {calc.rate}%
           </div>
-          <div className="pb-1 text-[11px] text-white leading-snug">
+          <div className="pb-1 text-[12px] text-white leading-snug">
             attended
             <br />
             <span className="text-white">
@@ -217,12 +211,12 @@ export function MyAttendanceCard() {
               <span
                 key={label}
                 className={cn(
-                  'inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full border tabular-nums',
+                  'inline-flex items-center gap-1.5 text-[12px] font-medium px-2.5 py-1 rounded-full border tabular-nums',
                   pillClass(label)
                 )}
               >
                 {label}
-                <span className="opacity-70">{n}</span>
+                <span>{n}</span>
               </span>
             ))}
         </div>
@@ -239,11 +233,11 @@ export function MyAttendanceCard() {
           )}
         >
           {calc.verdict === 'green' &&
-            'Strong attendance — colleges and employers look for this, and it keeps your funding clean.'}
+            'Strong attendance. Colleges and employers look for this, and it keeps your funding clean.'}
           {calc.verdict === 'amber' &&
             'A few missed sessions are adding up. If anything is getting in the way, tell your tutor early.'}
           {calc.verdict === 'red' &&
-            'Your attendance is below the usual target. Talk to your tutor — missed sessions affect your progress and your funding.'}
+            'Your attendance is below the usual target. Talk to your tutor: missed sessions affect your progress and your funding.'}
           {calc.absent > 0 && calc.verdict !== 'red' && (
             <>
               {' '}
@@ -256,9 +250,12 @@ export function MyAttendanceCard() {
 
         {/* Recent register */}
         <div className="mt-4 border-t border-white/[0.06] pt-3 space-y-1.5">
-          <div className="text-[10px] uppercase tracking-[0.16em] text-white">Recent</div>
+          <div className="text-[13px] text-white">Recent</div>
           {rows!.slice(0, 6).map((r, i) => (
-            <div key={`${r.date}-${r.session}-${i}`} className="flex items-center justify-between gap-3 py-0.5">
+            <div
+              key={`${r.date}-${r.session}-${i}`}
+              className="flex items-center justify-between gap-3 py-0.5"
+            >
               <span className="text-[12px] text-white tabular-nums">
                 {new Date(r.date).toLocaleDateString('en-GB', {
                   weekday: 'short',
@@ -273,7 +270,7 @@ export function MyAttendanceCard() {
               </span>
               <span
                 className={cn(
-                  'inline-flex items-center text-[10.5px] font-medium px-2 py-0.5 rounded-full border',
+                  'inline-flex items-center text-[12px] font-medium px-2 py-0.5 rounded-full border',
                   pillClass(r.status)
                 )}
               >
@@ -289,9 +286,7 @@ export function MyAttendanceCard() {
 
 function Skeleton() {
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
+    <section className={LC_FRAME}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="h-9 w-24 rounded-md bg-white/[0.05]" />

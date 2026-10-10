@@ -30,6 +30,8 @@ import {
   pullInvoiceStatusFromQuickBooks,
   refreshQuickBooksToken,
 } from '../_shared/quickbooks-invoice-status.ts';
+import { pullInvoiceStatusFromSage, refreshSageToken } from '../_shared/sage-invoice-status.ts';
+import { pullInvoiceStatusFromFreeAgent, refreshFreeAgentToken } from '../_shared/freeagent.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -38,7 +40,7 @@ const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY')!;
 const XERO_CLIENT_ID = Deno.env.get('XERO_CLIENT_ID');
 const XERO_CLIENT_SECRET = Deno.env.get('XERO_CLIENT_SECRET');
 
-type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
+type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks' | 'freeagent';
 
 interface PullResult {
   isPaid: boolean;
@@ -214,10 +216,17 @@ Deno.serve(async (req: Request) => {
         case 'quickbooks':
           pulled = await pullInvoiceStatusFromQuickBooks(accessToken, tenantId, externalId);
           break;
+        // ELE-2077
+        case 'sage':
+          pulled = await pullInvoiceStatusFromSage(accessToken, tenantId, externalId);
+          break;
+        case 'freeagent':
+          pulled = await pullInvoiceStatusFromFreeAgent(accessToken, externalId);
+          break;
         default:
           return errorResponse(
             `Pull-from-${provider} not yet supported`,
-            'Xero and QuickBooks are supported. Sage / FreshBooks will be added later.',
+            'Xero, QuickBooks, Sage and FreeAgent are supported. FreshBooks will be added later.',
             501
           );
       }
@@ -341,6 +350,10 @@ async function refreshAccessToken(
       return refreshXeroToken(refreshToken);
     case 'quickbooks':
       return refreshQuickBooksToken(refreshToken);
+    case 'sage':
+      return refreshSageToken(refreshToken);
+    case 'freeagent':
+      return refreshFreeAgentToken(refreshToken);
     default:
       throw new Error(`Refresh not implemented for ${provider}`);
   }

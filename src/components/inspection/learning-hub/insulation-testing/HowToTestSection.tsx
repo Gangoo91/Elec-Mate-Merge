@@ -104,7 +104,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* PPE */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">PPE Required</p>
+          <p className="text-[12px] font-medium text-white mb-3">PPE Required</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {['Safety glasses', 'Insulated gloves — handling charged conductors after testing', 'Safety boots with insulated soles', 'Electrical rated footwear'].map((item, i) => (
@@ -119,7 +119,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Equipment */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Equipment</p>
+          <p className="text-[12px] font-medium text-white mb-3">Test Equipment</p>
           <div className="space-y-2">
             {equipment.map((item, i) => (
               <div key={i} className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
@@ -164,7 +164,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Step-by-step procedure */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Step-by-Step Procedure</p>
+          <p className="text-[12px] font-medium text-white mb-3">Step-by-Step Procedure</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -173,7 +173,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* The three tests explained */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">The Three Tests Explained</p>
+          <p className="text-[12px] font-medium text-white mb-3">The Three Tests Explained</p>
         </motion.div>
 
         {threeTests.map((item, i) => (
@@ -188,7 +188,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes to Avoid</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Mistakes to Avoid</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

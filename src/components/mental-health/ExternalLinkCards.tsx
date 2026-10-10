@@ -1,25 +1,13 @@
 /**
- * ExternalLinkCards — calm 2-up card grid for curated outbound links
- * (trusted charities, guides, directories) across the Mental Health Hub.
- * One column on mobile, two on desktop. House style: dark card, hairline
- * border, tone rail — no glows, no gradients.
+ * ExternalLinkCards — curated outbound links (trusted charities, guides,
+ * directories) across the Mental Health Hub. A list on a phone (edge to
+ * edge, hairline rows), a grid of same-height cards from sm: up. Sentence
+ * case, all text white; `tone` is accepted for older callers but no longer
+ * paints a coloured rail (10 Oct design language).
  */
+import { ArrowUpRight } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { cn } from '@/lib/utils';
 import type { Tone } from '@/components/college/primitives';
-
-const toneRail: Record<string, string> = {
-  yellow: 'bg-elec-yellow/70',
-  blue: 'bg-blue-400/70',
-  emerald: 'bg-emerald-400/70',
-  purple: 'bg-purple-400/70',
-  red: 'bg-red-400/70',
-  orange: 'bg-orange-400/70',
-  amber: 'bg-amber-400/70',
-  cyan: 'bg-cyan-400/70',
-  indigo: 'bg-indigo-400/70',
-  green: 'bg-green-400/70',
-};
 
 export interface ExternalLinkCardItem {
   title: string;
@@ -31,33 +19,30 @@ export interface ExternalLinkCardItem {
 
 const ExternalLinkCards = ({ items }: { items: ExternalLinkCardItem[] }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.06] bg-[hsl(0_0%_12%)] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 sm:bg-transparent xl:grid-cols-3">
       {items.map((item) => (
-        <button
-          key={`${item.title}-${item.url}`}
-          type="button"
-          onClick={() => openExternalUrl(item.url)}
-          className="group flex items-stretch gap-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_14%)] p-5 text-left transition-colors touch-manipulation"
-        >
-          <span
-            aria-hidden
-            className={cn(
-              'w-[3px] rounded-full shrink-0 self-stretch',
-              toneRail[item.tone ?? 'cyan']
-            )}
-          />
-          <span className="flex-1 min-w-0 flex flex-col">
-            <span className="text-[14px] font-semibold text-white leading-snug">{item.title}</span>
-            <span className="mt-1 text-[12.5px] text-white/65 leading-relaxed">
-              {item.description}
+        <li key={`${item.title}-${item.url}`} className="sm:flex">
+          <button
+            type="button"
+            onClick={() => openExternalUrl(item.url)}
+            className="group flex w-full items-start gap-3 px-5 py-4 text-left transition-colors touch-manipulation active:bg-white/[0.07] sm:flex-col sm:gap-0 sm:rounded-2xl sm:border sm:border-white/[0.1] sm:bg-[hsl(0_0%_15%)] sm:p-5 sm:hover:border-white/[0.16] sm:hover:bg-[hsl(0_0%_17%)]"
+          >
+            <span className="min-w-0 flex-1">
+              <span className="block text-[15px] font-semibold leading-snug text-white">
+                {item.title}
+              </span>
+              <span className="mt-1 block text-[13px] leading-relaxed text-white">
+                {item.description}
+              </span>
             </span>
-            <span className="mt-3 text-[12px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow transition-colors">
-              {item.cta ?? 'Open'} →
+            <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 text-[13px] font-semibold text-elec-yellow sm:mt-3">
+              <span className="hidden sm:inline">{item.cta ?? 'Open'}</span>
+              <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} aria-hidden />
             </span>
-          </span>
-        </button>
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

@@ -1,0 +1,16 @@
+{
+  "name": "elec-mate-zapier",
+  "version": "1.0.0",
+  "description": "Elec-Mate firm API on Zapier (ELE-2077). Built on the read API in supabase/functions/firm-api. See docs/firm-api.md.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/app.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "zapier-platform-core": "^17.0.0"
+  }
+}

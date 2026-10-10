@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // On-Site Guide for low-voltage installations.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const section715ElvLightingA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-715-elv-lighting-a4-2026',
@@ -240,7 +240,7 @@ export const section715ElvLightingA4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'For a full summary of the changes introduced by Amendment 2:2022, see our [BS 7671 A4:2026 summary guide](/guides/bs-7671-a4-2026-summary). The AFDD requirements (Section 421.1.7), TN-C-S (PNB) earthing rules and new schedule columns all sit on the LV side and indirectly affect any final circuit that feeds an ELV driver.',
+            'For a full summary of the changes introduced by Amendment 4:2026, see our [BS 7671 A4:2026 summary guide](/guides/bs-7671-a4-2026-summary). The AFDD requirements (Regulation 421.1.7, required in named premises since A2:2022), TN-C-S (PNB) earthing rules and the schedule of test results all sit on the LV side and indirectly affect any final circuit that feeds an ELV driver.',
         },
       ],
     },
@@ -420,7 +420,7 @@ export const section715ElvLightingA4Config: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
-      description: 'The full set of changes introduced by Amendment 4 — AFDD, TN-C-S (PNB) earthing, new schedule columns, and model form updates.',
+      description: 'The full set of changes introduced by Amendment 4, including TN-C-S (PNB) earthing, Table 52.1, Chapter 57 and model form updates.',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -454,8 +454,8 @@ export const section715ElvLightingA4Config: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection',
-      description: 'How the A4:2026 RCD protection rules for luminaires interact with the ELV side of a Section 715 circuit and the LV side feeding the driver.',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
+      description: 'How the Reg 411.3.4 RCD protection rule for luminaires (since BS 7671:2018) interacts with the ELV side of a Section 715 circuit and the LV side feeding the driver.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },

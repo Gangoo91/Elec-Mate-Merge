@@ -33,7 +33,7 @@ const tocItems = [
   { id: 'cooker-control-unit', label: 'Cooker Control Unit Requirements' },
   { id: 'hob-and-oven', label: 'Hob and Oven on the Same Circuit' },
   { id: 'circuit-protection', label: 'Circuit Protection' },
-  { id: 'afdd-a4-2026', label: 'AFDD Requirement (A4:2026)' },
+  { id: 'afdd-a4-2026', label: 'AFDDs (Reg 421.1.7)' },
   { id: 'installation-method', label: 'Installation Method and Cable Route' },
   { id: 'voltage-drop', label: 'Voltage Drop Considerations' },
   { id: 'common-mistakes', label: 'Common Mistakes' },
@@ -48,7 +48,7 @@ const keyTakeaways = [
   'The cooker control unit must be positioned within 2 metres of the cooker and must include a double-pole switch for isolation.',
   "Elec-Mate's cable sizing calculator and diversity factor calculator handle the cooker circuit design calculations automatically, including correction factors and voltage drop verification.",
   'The maximum Zs from BS 7671 Table 41.3 for a 32A Type B MCB is 1.37 ohms. On site, apply the GN3 0.80 cold-conductor factor: your loop tester reading must not exceed 1.10 ohms (1.37 × 0.80). Omitting this factor is the most common cause of incorrect EICR pass/fail decisions on cooker circuits.',
-  'BS 7671 A4:2026 introduced Reg 421.1.7, recommending arc fault detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate fire risk from arc fault currents. A CCU circuit with an integral socket outlet in a domestic kitchen warrants AFDD consideration.',
+  'BS 7671 Reg 421.1.7 (since 2018) recommends arc fault detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate fire risk from arc fault currents. A CCU circuit with an integral socket outlet in a domestic kitchen warrants AFDD consideration.',
 ];
 
 const faqs = [
@@ -455,15 +455,17 @@ const sections = [
   },
   {
     id: 'afdd-a4-2026',
-    heading: 'Arc Fault Detection Devices (AFDDs) — A4:2026 Update',
+    heading: 'Arc Fault Detection Devices (AFDDs) — Reg 421.1.7',
     content: (
       <>
         <p>
-          BS 7671 Amendment A4:2026 introduced Regulation 421.1.7, which recommends the installation
-          of arc fault detection devices (AFDDs) on AC final circuits of a fixed installation to
-          mitigate the risk of fire caused by arc fault currents. The regulation is advisory (it
-          uses &ldquo;recommending&rdquo; rather than &ldquo;shall&rdquo;) but represents current
-          best practice and is increasingly expected by building control and fire risk assessors.
+          BS 7671 Regulation 421.1.7, introduced in 2018, recommends the installation of arc fault
+          detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate the
+          risk of fire caused by arc fault currents. Since A2:2022 AFDDs are required on
+          single-phase socket-outlet circuits up to 32 A in high rise residential buildings,
+          HMOs, purpose-built student accommodation and care homes. Elsewhere the regulation is
+          advisory (it uses &ldquo;recommending&rdquo; rather than &ldquo;shall&rdquo;) but
+          represents current best practice and is increasingly expected by building control and fire risk assessors.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">
@@ -486,7 +488,7 @@ const sections = [
               <strong>Practical installation note:</strong> AFDDs are available as combined
               AFDD/RCBO modules for most consumer unit formats. On a new installation or full
               rewire, fitting an AFDD/RCBO on the cooker circuit adds minimal cost and satisfies the
-              A4:2026 recommendation. On an EICR, the absence of an AFDD on a cooker circuit is not
+              Reg 421.1.7 recommendation. On an EICR, the absence of an AFDD on a cooker circuit is not
               itself a Code 2 defect, but the recommendation should be noted.
             </p>
           </div>
@@ -667,7 +669,7 @@ export default function CookerCircuitGuidePage() {
       title="Cooker Circuit Guide: Cable Size & Wiring UK"
       description="Complete guide to cooker circuit design and installation in the UK. Cable sizing with diversity factor, cooker control unit positioning."
       datePublished="2025-08-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

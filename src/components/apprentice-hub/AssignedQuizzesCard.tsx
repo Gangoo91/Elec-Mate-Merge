@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { LC_FRAME, lcChip } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useMyAssignedQuizzes, type AssignedQuiz } from '@/hooks/useMyAssignedQuizzes';
 
 /* ==========================================================================
@@ -20,7 +22,7 @@ const STATUS_PRIORITY: Record<AssignedQuiz['status'], number> = {
 };
 
 function formatDate(iso: string | null): string {
-  if (!iso) return '—';
+  if (!iso) return 'No date';
   const d = new Date(iso);
   const today = new Date();
   const diffDays = Math.round((d.getTime() - today.setHours(0, 0, 0, 0)) / 86_400_000);
@@ -100,12 +102,12 @@ export function AssignedQuizzesCard() {
   };
 
   if (loading) {
-    return <div className="h-[180px] animate-pulse rounded-2xl bg-white/[0.03]" />;
+    return <div className={cn(LC_FRAME, 'h-[180px] animate-pulse')} aria-hidden />;
   }
 
   if (quizzes.length === 0) {
     return (
-      <Section eyebrow="Quizzes & assessments" subtle="Nothing yet">
+      <Section eyebrow="Quizzes and assessments" subtle="Nothing yet">
         <p className="text-[13px] sm:text-[13.5px] text-white leading-relaxed">
           Quizzes and assessments will appear here when your tutor sends them.
         </p>
@@ -126,11 +128,13 @@ export function AssignedQuizzesCard() {
 
   return (
     <Section
-      eyebrow="Quizzes & assessments"
+      eyebrow="Quizzes and assessments"
       subtle={
         overdueCount > 0
-          ? `${pendingCount} pending · ${overdueCount} overdue`
-          : `${pendingCount} pending`
+          ? `${pendingCount} to do, ${overdueCount} overdue`
+          : pendingCount > 0
+            ? `${pendingCount} to do`
+            : 'All done'
       }
       subtleTone={overdueCount > 0 ? 'red' : undefined}
       accent={newQuizzes.length > 0}
@@ -154,9 +158,9 @@ export function AssignedQuizzesCard() {
         <button
           type="button"
           onClick={() => setShowAll(true)}
-          className="w-full px-1 py-3 text-left text-[12px] font-medium text-white hover:text-white touch-manipulation transition-colors"
+          className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
         >
-          View all {sorted.length} →
+          Show all {sorted.length}
         </button>
       )}
     </Section>
@@ -179,28 +183,12 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section
-      className={cn(
-        'rounded-2xl border overflow-hidden',
-        accent ? 'border-elec-yellow/30' : 'border-white/[0.06]'
-      )}
-    >
-      <header className="px-4 sm:px-5 pt-4 sm:pt-5 pb-3 flex items-baseline justify-between gap-3">
-        {/* Volt, like every other card eyebrow on these pages. This one was
-            white, so "Quizzes & assessments" read as a different kind of
-            thing from "Off-the-job training" sitting beside it. */}
-        <h2 className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-          {eyebrow}
-        </h2>
+    <section className={cn(LC_FRAME, accent && 'sm:border-white/[0.16]')}>
+      <header className="flex items-start justify-between gap-3 px-4 pb-2 pt-4 sm:px-5">
+        {/* Typography only, like every College Hub card title. */}
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">{eyebrow}</h3>
         {subtle && (
-          <span
-            className={cn(
-              'text-[11px] tabular-nums whitespace-nowrap',
-              subtleTone === 'red' ? 'text-red-300' : 'text-white'
-            )}
-          >
-            {subtle}
-          </span>
+          <span className={lcChip(subtleTone === 'red' ? 'action' : 'neutral')}>{subtle}</span>
         )}
       </header>
       <div className="px-4 sm:px-5 pb-2 sm:pb-3">{children}</div>
@@ -231,12 +219,12 @@ function NewArrivalsBanner({
   })();
 
   return (
-    <div className="-mt-1 mb-2 flex items-baseline justify-between gap-3 border-l-2 border-elec-yellow pl-3">
-      <p className="text-[12.5px] sm:text-[13px] font-medium text-white leading-snug">{headline}</p>
+    <div className="mb-1 flex items-center justify-between gap-3">
+      <p className="text-[13px] font-semibold leading-snug text-white">{headline}</p>
       <button
         type="button"
         onClick={onDismiss}
-        className="text-[11px] text-white hover:text-white touch-manipulation flex-shrink-0"
+        className="inline-flex h-11 flex-shrink-0 items-center px-1 text-[13px] font-semibold text-white touch-manipulation"
       >
         Got it
       </button>
@@ -247,7 +235,7 @@ function NewArrivalsBanner({
 function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onClick: () => void }) {
   const statusMeta = (() => {
     if (q.status === 'overdue')
-      return { label: 'Overdue', cls: 'text-red-300', accentLabel: 'Open' };
+      return { label: 'Overdue', cls: 'text-orange-300 font-semibold', accentLabel: 'Open' };
     if (q.status === 'completed') {
       /*
        * A completed quiz below the pass mark used to read exactly like one
@@ -263,7 +251,7 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
         q.best_percentage != null && q.pass_mark != null && q.best_percentage < q.pass_mark;
       return {
         label: q.best_percentage != null ? `${q.best_percentage}%` : 'Completed',
-        cls: belowPass ? 'text-elec-yellow font-semibold' : 'text-white',
+        cls: belowPass ? 'text-orange-300 font-semibold' : 'text-white',
         accentLabel: 'Open',
       };
     }
@@ -277,23 +265,19 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
       type="button"
       onClick={onClick}
       className={cn(
-        'group w-full -mx-4 sm:-mx-5 px-4 sm:px-5 py-3.5 flex items-baseline gap-4 text-left transition-colors touch-manipulation',
-        'hover:bg-white/[0.02] active:bg-white/[0.04]'
+        'group -mx-4 flex min-h-[60px] w-[calc(100%+2rem)] items-center gap-4 px-4 py-3.5 text-left transition-colors touch-manipulation sm:-mx-5 sm:w-[calc(100%+2.5rem)] sm:px-5',
+        'hover:bg-white/[0.04] active:bg-white/[0.07]'
       )}
     >
       <div className="min-w-0 flex-1">
         {/* Title */}
         <h3 className="text-[14.5px] sm:text-[14px] font-medium text-white leading-snug tracking-tight">
           <span className="break-words">{q.title}</span>
-          {isNew && (
-            <span className="ml-2 align-middle text-[9.5px] font-bold tracking-[0.12em] uppercase text-elec-yellow">
-              New
-            </span>
-          )}
+          {isNew && <span className={cn(lcChip('action'), 'ml-2 align-middle')}>New</span>}
         </h3>
 
         {/* Meta line — single sentence rather than chips */}
-        <p className="mt-1 text-[11.5px] sm:text-[11px] text-white tabular-nums leading-relaxed">
+        <p className="mt-1 text-[12.5px] text-white tabular-nums leading-relaxed">
           <span className={statusMeta.cls}>{statusMeta.label}</span>
           <Sep />
           <span>
@@ -314,7 +298,7 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
           {q.due_date && q.status !== 'completed' && (
             <>
               <Sep />
-              <span className={cn(q.status === 'overdue' && 'text-red-300 font-medium')}>
+              <span className={cn(q.status === 'overdue' && 'text-orange-300 font-semibold')}>
                 Due {formatDate(q.due_date)}
               </span>
             </>
@@ -328,7 +312,7 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
           {q.status === 'completed' && q.marking === 'awaiting' && (
             <>
               <Sep />
-              <span className="text-elec-yellow">Waiting for your tutor to mark</span>
+              <span>Waiting for your tutor to mark</span>
             </>
           )}
           {q.status === 'completed' && q.marking === 'marked' && (
@@ -340,8 +324,9 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
         </p>
       </div>
 
-      <span className="text-[12px] sm:text-[11.5px] font-medium text-elec-yellow whitespace-nowrap flex-shrink-0 group-hover:text-elec-yellow group-hover:underline underline-offset-4">
-        {statusMeta.accentLabel} →
+      <span className="inline-flex h-11 flex-shrink-0 items-center gap-1 whitespace-nowrap rounded-xl border border-white/[0.14] px-3 text-[13.5px] font-semibold text-white">
+        {statusMeta.accentLabel}
+        <ChevronRight className="h-4 w-4" aria-hidden />
       </span>
     </button>
   );

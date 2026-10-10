@@ -5,6 +5,7 @@
  * and checks a signed PDF link comes back and the file is a real PDF. Renders
  * are cached by fingerprint, so a re-run reuses the same files.
  */
+import { writeFileSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 import { actor, haveCreds, SUPABASE_URL } from './support';
 
@@ -18,6 +19,7 @@ test('college documents come back as real PDFs', async () => {
     { kind: 'college_value' },
     { kind: 'quality_report' },
     { kind: 'ofsted_lens' },
+    { kind: 'audit_pack' },
   ];
   if (plan) requests.push({ kind: 'lesson_plan', lessonPlanId: (plan as { id: string }).id });
   for (const body of requests) {
@@ -30,7 +32,10 @@ test('college documents come back as real PDFs', async () => {
     expect(res.ok, `${body.kind}: ${json.error ?? res.status}`).toBe(true);
     expect(json.url, `${body.kind} returned no link`).toBeTruthy();
     const pdf = await fetch(json.url as string);
-    const head = new Uint8Array(await pdf.arrayBuffer()).slice(0, 5);
+    const bytes = new Uint8Array(await pdf.arrayBuffer());
+    // SAVE_PDF_DIR=<folder> keeps each file for reading by eye.
+    if (process.env.SAVE_PDF_DIR) writeFileSync(`${process.env.SAVE_PDF_DIR}/${body.kind}.pdf`, bytes);
+    const head = bytes.slice(0, 5);
     expect(String.fromCharCode(...head), `${body.kind} is not a PDF`).toBe('%PDF-');
   }
 });

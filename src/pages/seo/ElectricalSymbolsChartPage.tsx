@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'Where are electrical symbols used on certificates?',
     answer:
-      'Electrical symbols appear on several sections of electrical installation certificates. On the EIC (Electrical Installation Certificate), they are used on the circuit chart (if provided) showing the arrangement of circuits and protective devices. On the distribution board schedule, symbols identify the type of protective device on each way — MCB, RCBO, RCD, fuse, etc. On the EICR (Electrical Installation Condition Report), the schedule of inspections references the type of devices installed, and the schedule of test results identifies the circuit type. Post-A4:2026 EIC and EICR schedules include additional columns for AFDD presence (introduced by Reg 421.1.7, Amendment A4:2026) and SPD presence — device symbols not found on pre-A4:2026 documents. Elec-Mate uses correct IEC 60617 symbols on all generated certificates and circuit diagrams, ensuring professional presentation and compliance with the standard.',
+      'Electrical symbols appear on several sections of electrical installation certificates. On the EIC (Electrical Installation Certificate), they are used on the circuit chart (if provided) showing the arrangement of circuits and protective devices. On the distribution board schedule, symbols identify the type of protective device on each way — MCB, RCBO, RCD, fuse, etc. On the EICR (Electrical Installation Condition Report), the schedule of inspections references the type of devices installed, and the schedule of test results identifies the circuit type. Post-A4:2026 EIC and EICR schedules include additional columns for AFDD presence (Reg 421.1.7) and SPD presence — device symbols not found on pre-A4:2026 documents. Elec-Mate uses correct IEC 60617 symbols on all generated certificates and circuit diagrams, ensuring professional presentation and compliance with the standard.',
   },
   {
     question: 'Are electrical symbols the same across Europe?',
@@ -435,11 +435,11 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>AFDD (Arc Fault Detection Device):</strong> A symbol introduced by Amendment
-                A4:2026 to BS 7671:2018. Shows the arc detection element alongside the overcurrent
+                <strong>AFDD (Arc Fault Detection Device):</strong> Shows the arc detection element
+                alongside the overcurrent
                 element. AFDDs detect series and parallel arc faults that could cause fire.
                 Regulation 421.1.7 recommends AFDDs for AC final circuits of a fixed installation to
-                mitigate the risk of fire due to the effects of arc fault currents.
+                mitigate the risk of fire due to the effects of arc fault currents, and since A2:2022 requires them on socket-outlet circuits up to 32 A in HMOs, high rise residential buildings, student accommodation and care homes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -464,7 +464,7 @@ const sections = [
           <div className="flex items-start gap-3">
             <div>
               <p className="text-white text-sm leading-relaxed">
-                <strong className="text-blue-300">A4:2026 — Domestic lighting circuits:</strong>{' '}
+                <strong className="text-blue-300">Domestic lighting circuits (since 2018):</strong>{' '}
                 Regulation 411.3.4 (BS 7671:2018+A4:2026) requires that, within domestic (household)
                 premises, AC final circuits supplying luminaires <em>shall</em> be provided with
                 additional protection by an RCD with a rated residual operating current not
@@ -689,7 +689,7 @@ export default function ElectricalSymbolsChartPage() {
       title="IEC 60617 Electrical Symbols: 114 Free UK SVGs"
       description="114 IEC 60617 symbols with meanings: sockets, switches, MCBs, RCBOs, RCDs, AFDDs, SPDs, lighting and wiring. Free SVGs for UK drawings and schedules."
       datePublished="2025-11-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference Guide"

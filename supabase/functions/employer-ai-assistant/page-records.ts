@@ -147,12 +147,20 @@ export async function fetchPageRecord(
     }
 
     if (kind === 'incident') {
-      const { data: i } = await caller
+      // deno-lint-ignore no-explicit-any
+      let { data: i } = (await caller
         .from('employer_incidents')
         .select('title, incident_type, severity, status, reported_at, location, riddor_reportable, riddor_category, riddor_reported_at, acknowledged_at, closed_at, injured_person, employer_jobs(title)')
         .eq('id', id)
         .eq('employer_id', firmId)
-        .maybeSingle();
+        .maybeSingle()) as { data: any };
+      if (!i) {
+        // ELE-2031: a Site Safety near miss / accident shared with the firm.
+        const { data: all } = await caller.rpc('get_firm_incidents', { p_firm: firmId });
+        // deno-lint-ignore no-explicit-any
+        const row = Array.isArray(all) ? (all as any[]).find((r) => r.id === id) : null;
+        if (row) i = { ...row, employer_jobs: row.job_title ? { title: row.job_title } : null };
+      }
       if (!i) return none;
       // deno-lint-ignore no-explicit-any
       const job = (i as any).employer_jobs?.title;

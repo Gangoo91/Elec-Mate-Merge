@@ -20,6 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
 import { SuccessCheckmark } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { keyLabel } from '@/lib/college/labels';
 
 interface RecordGradeSheetProps {
   assessmentId?: string;
@@ -27,13 +28,28 @@ interface RecordGradeSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const GRADE_OPTIONS: { value: string; label: string; description: string; tone: 'good' | 'warn' | 'bad' }[] = [
-  { value: 'Distinction', label: 'Distinction', description: 'Outstanding achievement', tone: 'good' },
+const GRADE_OPTIONS: {
+  value: string;
+  label: string;
+  description: string;
+  tone: 'good' | 'warn' | 'bad';
+}[] = [
+  {
+    value: 'Distinction',
+    label: 'Distinction',
+    description: 'Outstanding achievement',
+    tone: 'good',
+  },
   { value: 'Merit', label: 'Merit', description: 'Very good achievement', tone: 'good' },
   { value: 'Pass', label: 'Pass', description: 'Meets required standard', tone: 'good' },
   { value: 'Competent', label: 'Competent', description: 'Demonstrates competence', tone: 'good' },
   { value: 'Refer', label: 'Refer', description: 'Requires resubmission', tone: 'warn' },
-  { value: 'Not Yet Competent', label: 'Not Yet Competent', description: 'Does not meet standard', tone: 'bad' },
+  {
+    value: 'Not Yet Competent',
+    label: 'Not Yet Competent',
+    description: 'Does not meet standard',
+    tone: 'bad',
+  },
 ];
 
 export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGradeSheetProps) {
@@ -134,7 +150,8 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
     }
   };
 
-  const canSubmit = !!(formData.assessmentId || assessmentId) && !!formData.grade && !!formData.assessorId;
+  const canSubmit =
+    !!(formData.assessmentId || assessmentId) && !!formData.grade && !!formData.assessorId;
 
   return (
     <>
@@ -196,7 +213,7 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
           )}
 
           {selectedAssessment && (
-            <div className="border-l-2 border-elec-yellow pl-3.5">
+            <div className="card-surface rounded-2xl p-4">
               <p className="text-[15px] font-semibold text-white">{selectedAssessment.unit_name}</p>
               <dl className="mt-1.5 space-y-0.5 text-[13px] text-white">
                 <div>
@@ -205,7 +222,9 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
                 </div>
                 <div>
                   <dt className="inline">Type: </dt>
-                  <dd className="inline font-medium">{selectedAssessment.assessment_type}</dd>
+                  <dd className="inline font-medium">
+                    {keyLabel(selectedAssessment.assessment_type)}
+                  </dd>
                 </div>
                 {selectedAssessment.assessed_at && (
                   <div>
@@ -221,7 +240,7 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
                 )}
                 <div>
                   <dt className="inline">Status: </dt>
-                  <dd className="inline font-medium">{selectedAssessment.status}</dd>
+                  <dd className="inline font-medium">{keyLabel(selectedAssessment.status)}</dd>
                 </div>
               </dl>
             </div>
@@ -268,7 +287,11 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
           <p className={labelCn} id="rgs-grade-label">
             Grade
           </p>
-          <div className="mt-1 grid grid-cols-2 gap-2" role="group" aria-labelledby="rgs-grade-label">
+          <div
+            className="mt-1 grid grid-cols-2 gap-2"
+            role="group"
+            aria-labelledby="rgs-grade-label"
+          >
             {GRADE_OPTIONS.map((option) => {
               const on = formData.grade === option.value;
               return (
@@ -280,7 +303,7 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
                   className={cn(
                     'min-h-[56px] rounded-xl border px-3 py-2 text-left transition-colors touch-manipulation active:scale-[0.98]',
                     on
-                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      ? 'border-white bg-white text-black'
                       : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]'
                   )}
                 >

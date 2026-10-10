@@ -281,8 +281,12 @@ const OJTHub = lazyWithRetry(() => import('@/pages/apprentice/ojt-hub/OJTHub'));
 const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVideos'));
 const SiteDiary = lazyWithRetry(() => import('@/pages/apprentice/SiteDiary'));
 const EPASimulator = lazyWithRetry(() => import('@/pages/apprentice/epa/EPASimulator'));
+// ELE-2050 / ELE-2055: NET's AM2S checklist and the road to Gold Card
+const NetChecklistPage = lazyWithRetry(() => import('@/pages/apprentice/epa/NetChecklistPage'));
+const GoldCardRoadPage = lazyWithRetry(() => import('@/pages/apprentice/epa/GoldCardRoadPage'));
 const AM2Simulator = lazyWithRetry(() => import('@/pages/apprentice/am2/AM2Simulator'));
 const TakeQuizPage = lazyWithRetry(() => import('@/pages/apprentice/TakeQuizPage'));
+const ExportRecordPage = lazyWithRetry(() => import('@/pages/apprentice/ExportRecordPage'));
 
 const ApprenticeRoutes = () => (
   <>
@@ -292,6 +296,14 @@ const ApprenticeRoutes = () => (
         element={
           <LazyRoute>
             <ApprenticeHub />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="export"
+        element={
+          <LazyRoute>
+            <ExportRecordPage />
           </LazyRoute>
         }
       />
@@ -386,6 +398,9 @@ const ApprenticeRoutes = () => (
           </LazyRoute>
         }
       />
+      {/* The bare /apprentice/college has no page of its own; the college
+          home is /apprentice/college-plan. */}
+      <Route path="college" element={<Navigate to="/apprentice/college-plan" replace />} />
       <Route
         path="college/:section"
         element={
@@ -1266,6 +1281,22 @@ const ApprenticeRoutes = () => (
         element={
           <LazyRoute>
             <EPASimulator />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="net-checklist"
+        element={
+          <LazyRoute>
+            <NetChecklistPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="gold-card"
+        element={
+          <LazyRoute>
+            <GoldCardRoadPage />
           </LazyRoute>
         }
       />

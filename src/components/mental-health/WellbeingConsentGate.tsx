@@ -69,72 +69,93 @@ export function WellbeingConsentGate({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="mx-auto max-w-[36rem] px-5 pb-12 pt-8">
-      <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-        Wellbeing · before you start
-      </p>
-      <h1 className="mt-2 text-[28px] font-bold leading-tight tracking-[-0.02em] text-white">
-        This space is private to you
-      </h1>
-      <p className="mt-3 text-[16px] leading-relaxed text-white">
-        Mood check-ins, your journal, sleep log and safety plan are about your health, so the law
-        asks us to get your clear yes before we store them.
-      </p>
-
-      <ul className="mt-5 divide-y divide-white/[0.08] border-y border-white/[0.08]">
-        {[
-          'Only you can see what you enter. Your employer and college can’t.',
-          'Peer support messages are seen by the supporter you choose to talk to.',
-          'We never use it for adverts, statistics or to train AI.',
-          'Delete any entry, or everything, whenever you like — it’s also removed if you delete your account.',
-        ].map((t) => (
-          <li key={t} className="py-3 text-[15px] leading-snug text-white">
-            {t}
-          </li>
-        ))}
-      </ul>
-
-      <p className="mt-4 text-[13.5px] leading-relaxed text-white">
-        You can withdraw your consent at any time by deleting your entries. More in our{' '}
-        <Link to="/privacy" className="font-semibold text-elec-yellow underline underline-offset-2">
-          privacy notice
-        </Link>
-        .
-      </p>
-
-      {error && (
-        <p role="alert" className="mt-4 text-[13.5px] font-medium text-red-300">
-          {error}
+    // Wide on a desktop (10 Oct): the promise on the left, help-now on the
+    // right; one column on a phone with help-now last.
+    <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-8 px-4 pb-12 pt-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-start lg:gap-10 lg:px-8 lg:pt-10">
+      <div className="min-w-0">
+        <p className="text-[13px] font-semibold text-elec-yellow">Wellbeing · before you start</p>
+        <h1 className="mt-1.5 text-[28px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
+          This space is private to you
+        </h1>
+        <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-white">
+          Mood check-ins, your journal, sleep log and safety plan are about your health, so the law
+          asks us to get your clear yes before we store them.
         </p>
-      )}
 
-      <div className="mt-6 flex gap-2">
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className={cn(buttonSecondaryCn, 'flex-1')}
-        >
-          Not now
-        </button>
-        <button
-          type="button"
-          onClick={() => void agree()}
-          disabled={saving}
-          className={cn(buttonPrimaryCn, 'flex flex-1 items-center justify-center font-bold')}
-        >
-          {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'I agree, continue'}
-        </button>
+        <ul className="-mx-4 mt-5 divide-y divide-white/[0.08] border-y border-white/[0.08] sm:mx-0">
+          {[
+            'Only you can see what you enter. Your employer and college can’t.',
+            'Peer support messages are seen by the supporter you choose to talk to.',
+            'We never use it for adverts, statistics or to train AI.',
+            'Delete any entry, or everything, whenever you like — it’s also removed if you delete your account.',
+          ].map((t) => (
+            <li key={t} className="px-4 py-3 text-[15px] leading-snug text-white sm:px-0">
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-4 text-[13.5px] leading-relaxed text-white">
+          You can withdraw your consent at any time by deleting your entries. More in our{' '}
+          <Link
+            to="/privacy"
+            className="font-semibold text-elec-yellow underline underline-offset-2"
+          >
+            privacy notice
+          </Link>
+          .
+        </p>
+
+        {error && (
+          <p role="alert" className="mt-4 text-[13.5px] font-medium text-red-300">
+            {error}
+          </p>
+        )}
+
+        <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:max-w-md">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className={cn(buttonSecondaryCn, 'sm:flex-1')}
+          >
+            Not now
+          </button>
+          <button
+            type="button"
+            onClick={() => void agree()}
+            disabled={saving}
+            className={cn(buttonPrimaryCn, 'flex items-center justify-center font-bold sm:flex-1')}
+          >
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'I agree, continue'}
+          </button>
+        </div>
       </div>
 
-      <div className="mt-8 rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_11%)] p-4">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
-          Need help now?
+      {/* Crisis numbers whether or not they agree — and one tap to dial. */}
+      <div className="-mx-4 card-surface !border-red-400/40 p-5 max-sm:!rounded-none max-sm:!border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+        <p className="text-[15px] font-semibold text-red-300">Need help now?</p>
+        <p className="mt-1 text-[14px] leading-relaxed text-white">
+          Free and confidential. Electrical Industries Charity is weekdays 9 to 5.
         </p>
-        <p className="mt-1.5 text-[15px] leading-relaxed text-white">
-          In danger, call <strong>999</strong>. Samaritans: <strong>116 123</strong> (free, 24
-          hours). Text <strong>SHOUT</strong> to <strong>85258</strong>. Electrical Industries
-          Charity: <strong>0800 652 1618</strong> (weekdays 9–5).
-        </p>
+        <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
+          {[
+            { href: 'tel:999', label: 'In danger: 999', urgent: true },
+            { href: 'tel:116123', label: 'Samaritans 116 123', urgent: true },
+            { href: 'sms:85258?body=SHOUT', label: 'Text SHOUT to 85258', urgent: false },
+            { href: 'tel:08006521618', label: 'EIC 0800 652 1618', urgent: false },
+          ].map((c) => (
+            <a
+              key={c.href}
+              href={c.href}
+              className={cn(
+                'inline-flex h-11 items-center justify-center rounded-xl border px-3 text-[14px] font-semibold tabular-nums touch-manipulation active:bg-white/[0.06]',
+                c.urgent ? 'border-red-400/50 text-red-300' : 'border-white/[0.14] text-white'
+              )}
+            >
+              {c.label}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );

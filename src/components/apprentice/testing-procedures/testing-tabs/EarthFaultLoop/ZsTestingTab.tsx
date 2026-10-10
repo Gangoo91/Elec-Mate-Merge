@@ -1,4 +1,4 @@
-import { CALLOUT, PANEL } from '@/components/ui/panel-recipe';
+import { LEARN_CALLOUT, LEARN_CARD } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 import CommonIssuesCard from '../../CommonIssuesCard';
 import { zsIssues } from '../../commonIssues';
@@ -15,7 +15,7 @@ const ZsTestingTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className={cn(PANEL, "space-y-4")}>
+      <div className={cn(LEARN_CARD, "space-y-4")}>
         <div className="space-y-1">
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Earth fault loop impedance (Zs) testing
@@ -41,8 +41,8 @@ const ZsTestingTab = () => {
         <ZsLoopDiagram />
       </div>
 
-      <div className={cn(PANEL, "space-y-2")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className={cn(LEARN_CARD, "space-y-2")}>
+        <span className="text-[13px] font-semibold text-white">
           Measured or calculated
         </span>
         <p className="text-[14px] text-white leading-relaxed">
@@ -58,8 +58,8 @@ const ZsTestingTab = () => {
         </p>
       </div>
 
-      <div className={cn(CALLOUT, "space-y-1")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+      <div className={cn(LEARN_CALLOUT, "space-y-1")}>
+        <span className="text-[13px] font-semibold text-elec-yellow">
           Live test
         </span>
         <p className="text-[14px] text-white leading-relaxed">

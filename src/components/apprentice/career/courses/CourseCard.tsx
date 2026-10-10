@@ -19,15 +19,13 @@ interface CourseCardProps {
 
 const CourseCard = ({ course, onViewDetails }: CourseCardProps) => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-3">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            {course.provider}
-          </span>
+          <span className="text-[13px] font-semibold text-white">{course.provider}</span>
           <h3 className="text-[17px] font-semibold text-white leading-tight">{course.title}</h3>
         </div>
-        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
           {course.rating}★
         </span>
       </div>
@@ -57,9 +55,7 @@ const CourseCard = ({ course, onViewDetails }: CourseCardProps) => {
         </div>
 
         <div className="border-t border-white/[0.06] pt-3 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Upcoming dates
-          </span>
+          <span className="text-[13px] font-semibold text-white">Upcoming dates</span>
           <div className="flex flex-wrap gap-1.5">
             {course.nextDates.map((date, idx) => (
               <span
@@ -71,11 +67,11 @@ const CourseCard = ({ course, onViewDetails }: CourseCardProps) => {
             ))}
           </div>
           <div className="flex justify-between items-center pt-1">
-            <span className="text-[14px] text-white font-mono">{course.price}</span>
+            <span className="text-[14px] text-white">{course.price}</span>
             <Button
               variant="outline"
               size="sm"
-              className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+              className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
               onClick={() => onViewDetails(course)}
             >
               View details

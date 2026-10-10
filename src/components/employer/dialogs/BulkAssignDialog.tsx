@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
@@ -57,6 +58,8 @@ export function BulkAssignDialog({
 
     const selectedJob = jobs.find((j) => j.id === selectedJobId);
     if (!selectedJob) return;
+    // ELE-2061: warn or block on anyone without a right-to-work check.
+    if (!(await confirmRtw(selectedEmployees.map((e) => e.id), 'assign'))) return;
 
     const results = await Promise.allSettled(
       selectedEmployees.map((emp) =>

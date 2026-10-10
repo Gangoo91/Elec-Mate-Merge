@@ -13,7 +13,18 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { AIRAMSInput } from './AIRAMSInput';
-import { safeReturnTo } from '@/utils/safety-launch';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { safeReturnTo, type SafetyToolLaunch } from '@/utils/safety-launch';
+import { isFirmScope, ramsResultPath, safetyHomePath, useSafetyScope } from '../common/SafetyScope';
 import { copyRamsForNewJob } from '@/utils/rams-copy';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
@@ -43,6 +54,95 @@ const SAVE_RETRY_DELAYS = [5000, 15000, 30000]; // Exponential backoff: 5s, 15s,
 
 interface AIRAMSGeneratorProps {
   onBack?: () => void;
+  /**
+   * Employer Hub only (firm scope): the firm job and job pack this RAMS is
+   * started from, and the details to fill in. Ignored in personal scope.
+   */
+  firmLaunch?: SafetyToolLaunch;
+}
+
+/**
+ * File a generation job with the firm. The trigger on rams_generation_jobs
+ * checks the caller belongs to the firm (or is on the job's crew) and derives
+ * employer_id from the job, so this cannot tag a RAMS to someone else's firm.
+ */
+async function fileWithFirm(
+  generationJobId: string,
+  employerId: string,
+  launch?: SafetyToolLaunch
+): Promise<boolean> {
+  const { error } = await supabase
+    .from('rams_generation_jobs')
+    .update({
+      employer_id: employerId,
+      ...(launch?.employerJobId ? { employer_job_id: launch.employerJobId } : {}),
+    } as never)
+    .eq('id', generationJobId);
+  if (error) return false;
+  if (launch?.jobPackId) {
+    // The pack's ticks, as the Employer Hub generators set them: one
+    // generation writes both the RAMS and its method statement.
+    await supabase
+      .from('employer_job_packs')
+      .update({ rams_generated: true, method_statement_generated: true })
+      .eq('id', launch.jobPackId);
+  }
+  return true;
+}
+
+/** A firm run already made for this job from the same brief (ELE-1941). */
+interface EarlierFirmRun {
+  id: string;
+  status: string;
+  createdAt: string;
+}
+
+const sameText = (a: unknown, b: unknown) =>
+  String(a ?? '')
+    .trim()
+    .replace(/\s+/g, ' ')
+    .toLowerCase() ===
+  String(b ?? '')
+    .trim()
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
+
+/**
+ * Employer Hub only. A generation costs the same every time, so a second run
+ * for the same job, brief, site and project name is offered back instead of
+ * being paid for again. Read-only: the person can still choose to run it again.
+ */
+async function findEarlierFirmRun(
+  employerId: string,
+  employerJobId: string,
+  jobDescription: string,
+  projectInfo: { projectName: string; location: string }
+): Promise<EarlierFirmRun | null> {
+  const since = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString();
+  const { data, error } = await supabase
+    .from('rams_generation_jobs')
+    .select('id, status, created_at, job_description, project_info')
+    .eq('employer_id' as never, employerId as never)
+    .eq('employer_job_id' as never, employerJobId as never)
+    .in('status', ['complete', 'partial', 'pending', 'processing'])
+    .gte('created_at', since)
+    .order('created_at', { ascending: false })
+    .limit(10);
+  if (error || !data) return null;
+  type Row = {
+    id: string;
+    status: string;
+    created_at: string;
+    job_description: string | null;
+    project_info: { projectName?: string; location?: string } | null;
+  };
+  const hit = (data as unknown as Row[]).find(
+    (r) =>
+      sameText(r.job_description, jobDescription) &&
+      sameText(r.project_info?.projectName, projectInfo.projectName) &&
+      sameText(r.project_info?.location, projectInfo.location)
+  );
+  return hit ? { id: hit.id, status: hit.status, createdAt: hit.created_at } : null;
 }
 
 /**
@@ -86,9 +186,13 @@ function readLaunchContext(state: unknown, search: string): LaunchContext {
   return {};
 }
 
-export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
+export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack, firmLaunch }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  // Firm scope (Employer Hub): the RAMS is filed with the firm and opens in the
+  // hub. Personal scope behaves exactly as before.
+  const scope = useSafetyScope();
+  const firm = isFirmScope(scope);
   const [launch, setLaunch] = useState<LaunchContext>(() =>
     readLaunchContext(location.state, location.search)
   );
@@ -112,6 +216,13 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     jobId: string;
     timestamp: number;
     projectName: string;
+  } | null>(null);
+
+  // Employer Hub: an earlier run for the same job and brief, offered back
+  // before paying for the same generation again (ELE-1941).
+  const [earlierRun, setEarlierRun] = useState<{
+    run: EarlierFirmRun;
+    retry: () => void;
   } | null>(null);
 
   const lastErrorNotifiedJobRef = useRef<string | null>(null);
@@ -281,9 +392,9 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       /* ignore */
     }
     // returnTo rides in the URL so a refresh on the results page keeps it.
-    const qs = launch.returnTo ? `?returnTo=${encodeURIComponent(launch.returnTo)}` : '';
-    navigate(`/electrician/site-safety/ai-rams/${currentJobId}${qs}`, { replace: true });
-  }, [status, currentJobId, ramsData, methodData, navigate, launch.returnTo]);
+    const qs = launch.returnTo && !firm ? `?returnTo=${encodeURIComponent(launch.returnTo)}` : '';
+    navigate(`${ramsResultPath(scope, currentJobId)}${qs}`, { replace: true });
+  }, [status, currentJobId, ramsData, methodData, navigate, launch.returnTo, firm, scope]);
 
   // Show error notification (prevent duplicate toasts for old jobs)
   useEffect(() => {
@@ -470,8 +581,35 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       supervisor: string;
     },
     jobScale: 'domestic' | 'commercial' | 'industrial',
-    attachments?: Array<{ path: string; name: string; type: string; size: number }>
+    attachments?: Array<{ path: string; name: string; type: string; size: number }>,
+    opts?: { force?: boolean }
   ) => {
+    // Employer Hub: the same job, brief and site were generated already. Offer
+    // that run back rather than paying for it twice. Personal scope: unchanged.
+    if (
+      isFirmScope(scope) &&
+      firmLaunch?.employerJobId &&
+      !opts?.force &&
+      !(attachments && attachments.length)
+    ) {
+      const run = await findEarlierFirmRun(
+        scope.employerId,
+        firmLaunch.employerJobId,
+        jobDescription,
+        projectInfo
+      );
+      if (run) {
+        setEarlierRun({
+          run,
+          retry: () =>
+            void handleGenerate(jobDescription, projectInfo, jobScale, attachments, {
+              force: true,
+            }),
+        });
+        return;
+      }
+    }
+
     // Mark session as having active generation
     sessionStorage.setItem('rams-generation-active', 'true');
 
@@ -536,6 +674,17 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       }
     }
 
+    if (isFirmScope(scope)) {
+      const filed = await fileWithFirm(data.jobId, scope.employerId, firmLaunch);
+      if (!filed) {
+        toast({
+          title: 'Not filed with the firm',
+          description: 'The RAMS is generating, but it is saved to your own documents only.',
+          variant: 'destructive',
+        });
+      }
+    }
+
     setCurrentJobId(data.jobId);
     startPolling();
   };
@@ -554,6 +703,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       toast({ title: 'Could not copy that RAMS', description: res.error, variant: 'destructive' });
       return;
     }
+    if (isFirmScope(scope)) await fileWithFirm(res.id, scope.employerId, firmLaunch);
     try {
       sessionStorage.removeItem(LAUNCH_KEY);
     } catch {
@@ -564,8 +714,8 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       description:
         'Set the site details and emergency contacts for this site, check every hazard, then review and issue.',
     });
-    const qs = launch.returnTo ? `?returnTo=${encodeURIComponent(launch.returnTo)}` : '';
-    navigate(`/electrician/site-safety/ai-rams/${res.id}${qs}`);
+    const qs = launch.returnTo && !firm ? `?returnTo=${encodeURIComponent(launch.returnTo)}` : '';
+    navigate(`${ramsResultPath(scope, res.id)}${qs}`);
   };
 
   /**
@@ -798,8 +948,9 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     }
     if (launch.returnTo) navigate(launch.returnTo);
     else if (onBack) onBack();
-    else navigate('/electrician/site-safety');
+    else navigate(safetyHomePath(scope));
   }, [
+    scope,
     ramsData,
     methodData,
     currentJobId,
@@ -945,6 +1096,16 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
         {!showResults ? (
           <AIRAMSInput
+            seed={
+              firm && firmLaunch
+                ? {
+                    title: firmLaunch.siteName,
+                    location: firmLaunch.siteAddress,
+                    description: firmLaunch.description,
+                    people: firmLaunch.people,
+                  }
+                : undefined
+            }
             onStartFromPrevious={handleStartFromPrevious}
             onGenerate={handleGenerate}
             isProcessing={!!currentJobId && (status === 'pending' || status === 'processing')}
@@ -1144,6 +1305,51 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
           </>
         )}
       </main>
+
+      {/* Employer Hub: same job and brief generated already (ELE-1941) */}
+      <AlertDialog open={!!earlierRun} onOpenChange={(o) => !o && setEarlierRun(null)}>
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">
+              {earlierRun && ['pending', 'processing'].includes(earlierRun.run.status)
+                ? 'This job is already being generated'
+                : 'This job already has these documents'}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
+              {earlierRun
+                ? `The same brief for this job was generated on ${new Date(
+                    earlierRun.run.createdAt
+                  ).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                  })}. Open it to review and issue, or generate a fresh copy.`
+                : ''}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogCancel
+              className="h-11 touch-manipulation"
+              onClick={() => {
+                const retry = earlierRun?.retry;
+                setEarlierRun(null);
+                retry?.();
+              }}
+            >
+              Generate again
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              onClick={() => {
+                const id = earlierRun?.run.id;
+                setEarlierRun(null);
+                if (id) navigate(ramsResultPath(scope, id));
+              }}
+            >
+              Open it
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Celebration Modal */}
       {showCelebration && ramsData && methodData && (

@@ -158,5 +158,18 @@ export const CARD_NEUTRAL = cn(
   'active:from-white/[0.16]'
 );
 
+/**
+ * The quiet card for the College Hub and apprentice screens (10 Oct 2026):
+ * the same lit surface with a hairline WHITE edge instead of the gold one,
+ * so a screen of cards reads calm and the one yellow action stands out.
+ * Pair with CARD_BASE for a tappable card. CARD_NEUTRAL is unchanged.
+ */
+export const CARD_QUIET = cn(
+  'border-white/[0.10]',
+  CARD_SURFACE,
+  'hover:border-white/[0.2] hover:from-white/[0.13]',
+  'active:from-white/[0.15]'
+);
+
 /** Not available yet — dimmed, and callers should skip the action word. */
 export const CARD_DISABLED = 'border-white/[0.10] bg-white/[0.03] opacity-60';

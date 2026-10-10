@@ -1631,7 +1631,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
 
                         {/* Test measurement section */}
                         <div className="bg-background/50 rounded-lg p-3 border">
-                          <h5 className="font-medium text-xs text-muted-foreground mb-2 uppercase tracking-wide">
+                          <h5 className="font-medium text-xs text-muted-foreground mb-2">
                             Test Measurement
                           </h5>
                           <p className="text-sm font-mono text-foreground">
@@ -1641,7 +1641,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
 
                         {/* Interpretation */}
                         <div>
-                          <h5 className="font-medium text-xs text-yellow-400 mb-2 uppercase tracking-wide">
+                          <h5 className="font-medium text-xs text-yellow-400 mb-2">
                             Technical Interpretation
                           </h5>
                           <p className="text-sm text-muted-foreground">
@@ -1651,7 +1651,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
 
                         {/* Possible causes in grid layout for mobile */}
                         <div>
-                          <h5 className="font-medium text-xs text-orange-400 mb-2 uppercase tracking-wide">
+                          <h5 className="font-medium text-xs text-orange-400 mb-2">
                             Probable Causes
                           </h5>
                           <div className="grid gap-1.5">
@@ -1666,7 +1666,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
 
                         {/* Diagnostic steps */}
                         <div>
-                          <h5 className="font-medium text-xs text-blue-400 mb-3 uppercase tracking-wide">
+                          <h5 className="font-medium text-xs text-blue-400 mb-3">
                             Diagnostic Procedure
                           </h5>
                           <div className="space-y-2">
@@ -1686,7 +1686,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
 
                         {/* Rectification methods */}
                         <div>
-                          <h5 className="font-medium text-xs text-green-400 mb-3 uppercase tracking-wide">
+                          <h5 className="font-medium text-xs text-green-400 mb-3">
                             Rectification Methods
                           </h5>
                           <div className="space-y-2">
@@ -1703,7 +1703,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
 
                         {/* Regulation reference */}
                         <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-lg">
-                          <h5 className="font-medium text-xs text-blue-400 mb-1 uppercase tracking-wide flex items-center gap-2">
+                          <h5 className="font-medium text-xs text-blue-400 mb-1 flex items-center gap-2">
                             <BookOpen className="h-3 w-3" />
                             Regulatory Compliance
                           </h5>
@@ -2641,7 +2641,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
           </CardHeader>
           <CardContent className="p-4 sm:p-5 md:p-6 pt-0">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-              <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-elec-yellow/20 touch-manipulation active:scale-[0.99] transition-transform">
+              <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-white/[0.14] touch-manipulation active:scale-[0.99] transition-transform">
                 <Search className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow mx-auto mb-3" />
                 <h4 className="font-bold text-elec-yellow mb-2 text-base sm:text-lg">
                   Systematic Approach

@@ -53,15 +53,16 @@ import {
   Printer,
   Plus,
   X,
-  Truck,
-  Mail,
-  FileText,
-  Search,
-  Facebook,
   ImageIcon,
   Phone,
-  Inbox,
 } from 'lucide-react';
+import {
+  PanelTitle,
+  colClass,
+  frameClass,
+  heroPrimaryClass,
+  twoColClass,
+} from '@/components/employer/pageParts/PageParts';
 
 const PUBLIC_ORIGIN = 'https://elec-mate.com';
 
@@ -103,7 +104,10 @@ const HELP: PageHelpContent = {
       ],
       who: 'The owner or an admin.',
       tour: [
-        { target: 'quotepage.edit', caption: 'Fill in your page here, starting with the link name.' },
+        {
+          target: 'quotepage.edit',
+          caption: 'Fill in your page here, starting with the link name.',
+        },
         { target: 'quotepage.save', caption: 'Tap Save changes when you are done.' },
       ],
     },
@@ -133,7 +137,9 @@ const HELP: PageHelpContent = {
         'Under Get it seen, find Every invoice and quote.',
         'Switch it on. A Get a quote link goes at the bottom of every invoice and quote email while the page is live.',
       ],
-      tour: [{ target: 'quotepage.seen', caption: 'Switch on Every invoice and quote in this card.' }],
+      tour: [
+        { target: 'quotepage.seen', caption: 'Switch on Every invoice and quote in this card.' },
+      ],
     },
     {
       title: 'Show your scheme and insurance',
@@ -142,7 +148,9 @@ const HELP: PageHelpContent = {
         'If a switch is greyed out, add the scheme or insurer and expiry in Settings, Company, first.',
         'Anything out of date hides itself.',
       ],
-      tour: [{ target: 'quotepage.proof', caption: 'Switch on the proof you want customers to see.' }],
+      tour: [
+        { target: 'quotepage.proof', caption: 'Switch on the proof you want customers to see.' },
+      ],
     },
   ],
 };
@@ -233,7 +241,8 @@ export function QuotePageSection() {
   }, [config]);
 
   const saved = toDraft(config);
-  const dirty = JSON.stringify(draft) !== JSON.stringify(saved) || (!config?.lead_page_slug && !!draft.slug);
+  const dirty =
+    JSON.stringify(draft) !== JSON.stringify(saved) || (!config?.lead_page_slug && !!draft.slug);
   const savedSlug = config?.lead_page_slug ?? '';
   const isLive = !!config?.lead_page_enabled && !!savedSlug;
   const fullUrl = savedSlug ? `${PUBLIC_ORIGIN}/get-quote/${savedSlug}` : '';
@@ -248,7 +257,11 @@ export function QuotePageSection() {
     }
     const since = draft.since.trim();
     if (since && !/^\d{4}$/.test(since)) {
-      toast({ title: 'Check the year', description: 'Enter the year you started, for example 2014.', variant: 'destructive' });
+      toast({
+        title: 'Check the year',
+        description: 'Enter the year you started, for example 2014.',
+        variant: 'destructive',
+      });
       return null;
     }
     return {
@@ -282,12 +295,18 @@ export function QuotePageSection() {
   const toggleLive = async (on: boolean) => {
     if (on) {
       if (await save({ lead_page_enabled: true })) {
-        toast({ title: 'Your page is live', description: 'Now put it on the van and your Google profile.' });
+        toast({
+          title: 'Your page is live',
+          description: 'Now put it on the van and your Google profile.',
+        });
       }
     } else {
       try {
         await update.mutateAsync({ lead_page_enabled: false });
-        toast({ title: 'Page hidden', description: 'Anyone opening the link sees that it is switched off.' });
+        toast({
+          title: 'Page hidden',
+          description: 'Anyone opening the link sees that it is switched off.',
+        });
       } catch {
         /* hook toasts */
       }
@@ -331,7 +350,8 @@ export function QuotePageSection() {
 
   const trustLine = useMemo(() => {
     if (!config?.lead_page_show_registration || !config.registration_scheme) return null;
-    if (config.registration_expiry && new Date(config.registration_expiry) < new Date()) return null;
+    if (config.registration_expiry && new Date(config.registration_expiry) < new Date())
+      return null;
     return `${config.registration_scheme} registered`;
   }, [config]);
 
@@ -375,8 +395,8 @@ export function QuotePageSection() {
 
   if (isLoading) {
     return (
-      <PageFrame>
-        <PageHero eyebrow="Get work" title="Quote page" tone="cyan" />
+      <PageFrame className={frameClass}>
+        <PageHero title="Quote page" description="Loading your quote page." />
         <LoadingBlocks />
       </PageFrame>
     );
@@ -385,9 +405,9 @@ export function QuotePageSection() {
   // A failed background refresh keeps the page on screen; only no data at all shows this.
   if (!config) {
     return (
-      <PageFrame>
-        <PageHero eyebrow="Get work" title="Quote page" tone="cyan" />
-        <FormCard>
+      <PageFrame className={frameClass}>
+        <PageHero title="Quote page" />
+        <FormCard bleed>
           {mayManage ? (
             <>
               <p className="text-[14px] text-white">
@@ -397,8 +417,8 @@ export function QuotePageSection() {
             </>
           ) : (
             <p className="text-[14px] text-white">
-              Only the owner or an admin can change the quote page. Ask them to give you admin access
-              if you look after the firm's marketing.
+              Only the owner or an admin can change the quote page. Ask them to give you admin
+              access if you look after the firm's marketing.
             </p>
           )}
         </FormCard>
@@ -407,7 +427,8 @@ export function QuotePageSection() {
   }
 
   const s = config.stats;
-  const conv = (v: number, e: number) => (v > 0 ? `${Math.round((e / v) * 100)}% of views` : 'No views yet');
+  const conv = (v: number, e: number) =>
+    v > 0 ? `${Math.round((e / v) * 100)}% of views` : 'No views yet';
   const scheme =
     config.registration_scheme &&
     !(config.registration_expiry && new Date(config.registration_expiry) < new Date());
@@ -435,69 +456,39 @@ export function QuotePageSection() {
     });
   }
 
+  const headline = !savedSlug
+    ? 'Pick a link name and save it. Your link and QR code appear straight after.'
+    : isLive
+      ? s.enquiries_7 > 0
+        ? `Live. ${s.enquiries_7} request${s.enquiries_7 === 1 ? '' : 's'} in the last 7 days, from ${s.views_7} view${s.views_7 === 1 ? '' : 's'}.`
+        : `Live at ${shortDisplay}. No requests this week yet, so put it on the van and your Google profile.`
+      : 'Hidden. Anyone opening the link sees not available until you switch it on.';
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="Get work"
         title="Quote page"
-        description="Your own page where customers ask you for a quote, with photos. Put it on the van, your Google profile and every invoice, and requests drop straight into Leads."
-        tone="cyan"
+        description={headline}
         live={isLive ? { label: 'Live', tone: 'green' } : undefined}
         actions={
-          <PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'quotepage' }} />
+          <>
+            {savedSlug && (
+              <SecondaryButton
+                onClick={() => openExternalUrl(`${fullUrl}?preview=1`)}
+                className={heroPrimaryClass}
+              >
+                <ExternalLink className="h-4 w-4 mr-1.5" /> Preview
+              </SecondaryButton>
+            )}
+            <PageHelpButton
+              help={HELP}
+              blockers={helpBlockers}
+              askContext={{ page: 'quotepage' }}
+            />
+          </>
         }
       />
       <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'quotepage' }} />
-
-      {/* ── Live switch + link ─────────────────────────────────── */}
-      <div data-help="quotepage.live">
-      <FormCard>
-        <div className="flex items-center justify-between gap-4">
-          <div className="min-w-0">
-            <p className="text-[15px] font-semibold text-white">
-              {isLive ? 'Your page is live' : 'Your page is hidden'}
-            </p>
-            <p className="text-[13px] text-white">
-              {isLive
-                ? 'Anyone with the link or QR can ask you for a quote.'
-                : 'Switch it on when you are happy with it.'}
-            </p>
-          </div>
-          <Switch
-            checked={isLive}
-            disabled={update.isPending}
-            onCheckedChange={(v) => void toggleLive(v)}
-            aria-label="Quote page live"
-            className="data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-white/20"
-          />
-        </div>
-        {savedSlug && (
-          <>
-            <div className="rounded-xl border border-white/[0.12] bg-white/[0.05] px-3.5 py-3">
-              <p className="text-[12px] font-medium text-white">Your short link</p>
-              <p className="mt-0.5 text-[15px] font-semibold text-white break-all">{shortDisplay}</p>
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              <SecondaryButton onClick={() => copy(shortUrl, 'Link copied')} fullWidth>
-                {copied === 'Link copied' ? <Check className="h-4 w-4 mr-1.5" /> : <Copy className="h-4 w-4 mr-1.5" />}
-                Copy
-              </SecondaryButton>
-              <SecondaryButton onClick={share} fullWidth>
-                <Share2 className="h-4 w-4 mr-1.5" /> Share
-              </SecondaryButton>
-              <SecondaryButton onClick={() => openExternalUrl(`${fullUrl}?preview=1`)} fullWidth>
-                <ExternalLink className="h-4 w-4 mr-1.5" /> Preview
-              </SecondaryButton>
-            </div>
-            {!isLive && (
-              <p className="text-[13px] text-amber-300">
-                Preview shows "not available" until the page is live.
-              </p>
-            )}
-          </>
-        )}
-      </FormCard>
-      </div>
 
       {/* ── Numbers ────────────────────────────────────────────── */}
       <div className="space-y-2">
@@ -505,248 +496,331 @@ export function QuotePageSection() {
           columns={4}
           stats={[
             { label: 'Views, 7 days', value: s.views_7 },
-            { label: 'Requests, 7 days', value: s.enquiries_7, accent: s.enquiries_7 > 0 },
+            {
+              label: 'Requests, 7 days',
+              value: s.enquiries_7,
+              tone: s.enquiries_7 > 0 ? 'emerald' : undefined,
+              onClick: () => setSearchParams({ section: 'leads' }),
+            },
             { label: 'Views, 30 days', value: s.views_30 },
             {
               label: 'Requests, 30 days',
               value: s.enquiries_30,
               sub: conv(s.views_30, s.enquiries_30),
+              onClick: () => setSearchParams({ section: 'leads' }),
             },
           ]}
         />
-        <p className="text-[12px] text-white">
+        <p className="text-[12.5px] text-white">
           Views are counted from 7 October 2026, once per visitor per visit, with no third-party
           tracking. {config.leads_all} request{config.leads_all === 1 ? '' : 's'} from this page in
           total.
         </p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
+      <div className={twoColClass}>
         {/* ── Edit the page ────────────────────────────────────── */}
-        <div className="space-y-4">
-          <div data-help="quotepage.edit">
-          <FormCard eyebrow="Your page">
-            <Field label="Link name" hint="Changing it later breaks any QR codes you have printed." required>
-              <div className="flex items-center gap-1">
-                <span className="text-[14px] text-white whitespace-nowrap">elec-mate.com/q/</span>
-                <input
-                  value={draft.slug}
-                  onChange={(e) => {
-                    setDraft({ ...draft, slug: slugify(e.target.value) });
-                    setSlugError(null);
-                  }}
-                  placeholder="your-company"
-                  className={inputClass}
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  spellCheck={false}
-                  aria-label="Link name"
+        <div className={colClass}>
+          {/* ── Live switch + link ─────────────────────────────── */}
+          <section data-help="quotepage.live">
+            <PanelTitle title={isLive ? 'Your page is live' : 'Your page is hidden'} />
+            <FormCard bleed>
+              <div className="flex items-center justify-between gap-4">
+                <p className="min-w-0 text-[14px] text-white">
+                  {isLive
+                    ? 'Anyone with the link or QR can ask you for a quote.'
+                    : 'Switch it on when you are happy with it.'}
+                </p>
+                <Switch
+                  checked={isLive}
+                  disabled={update.isPending}
+                  onCheckedChange={(v) => void toggleLive(v)}
+                  aria-label="Quote page live"
+                  className="data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-white/20"
                 />
               </div>
-              {slugError && <p className="text-[13px] text-red-400">{slugError}</p>}
-            </Field>
+              {savedSlug && (
+                <>
+                  <div className="flex flex-col gap-3 border-t border-white/[0.1] pt-4 sm:flex-row sm:items-center">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[12.5px] font-medium text-white">Your short link</p>
+                      <p className="mt-0.5 break-all text-[16px] font-semibold text-white">
+                        {shortDisplay}
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 sm:flex sm:shrink-0">
+                      <SecondaryButton onClick={() => copy(shortUrl, 'Link copied')}>
+                        {copied === 'Link copied' ? (
+                          <Check className="h-4 w-4 mr-1.5" />
+                        ) : (
+                          <Copy className="h-4 w-4 mr-1.5" />
+                        )}
+                        Copy
+                      </SecondaryButton>
+                      <SecondaryButton onClick={share}>
+                        <Share2 className="h-4 w-4 mr-1.5" /> Share
+                      </SecondaryButton>
+                    </div>
+                  </div>
+                  {!isLive && (
+                    <p className="text-[13px] text-white">
+                      Preview shows "not available" until the page is live.
+                    </p>
+                  )}
+                </>
+              )}
+            </FormCard>
+          </section>
 
-            <Field label="Headline" hint="The big line at the top. Leave blank and we use your areas.">
-              <input
-                value={draft.headline}
-                onChange={(e) => setDraft({ ...draft, headline: e.target.value.slice(0, 120) })}
-                placeholder="Friendly, tidy electricians across Carlisle"
-                className={inputClass}
+          <section data-help="quotepage.edit">
+            <PanelTitle title="Your page" meta="What customers read" />
+            <FormCard bleed>
+              <Field
+                label="Link name"
+                hint="Changing it later breaks any QR codes you have printed."
+                required
+              >
+                <div className="flex items-center gap-1">
+                  <span className="text-[14px] text-white whitespace-nowrap">elec-mate.com/q/</span>
+                  <input
+                    value={draft.slug}
+                    onChange={(e) => {
+                      setDraft({ ...draft, slug: slugify(e.target.value) });
+                      setSlugError(null);
+                    }}
+                    placeholder="your-company"
+                    className={inputClass}
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    aria-label="Link name"
+                  />
+                </div>
+                {slugError && <p className="text-[13px] text-red-400">{slugError}</p>}
+              </Field>
+
+              <Field
+                label="Headline"
+                hint="The big line at the top. Leave blank and we use your areas."
+              >
+                <input
+                  value={draft.headline}
+                  onChange={(e) => setDraft({ ...draft, headline: e.target.value.slice(0, 120) })}
+                  placeholder="Friendly, tidy electricians across Carlisle"
+                  className={inputClass}
+                />
+              </Field>
+
+              <Field label="About you" hint="Two or three sentences. Who you are and how you work.">
+                <textarea
+                  value={draft.about}
+                  onChange={(e) => setDraft({ ...draft, about: e.target.value.slice(0, 1200) })}
+                  rows={4}
+                  placeholder="Family firm, 12 years in the trade. We turn up when we say, keep the place clean and explain everything before we start."
+                  className={textareaClass}
+                />
+              </Field>
+
+              <ChipEditor
+                label="What you do"
+                hint="These become the buttons customers tap first. Up to 12."
+                values={draft.services}
+                max={12}
+                suggestions={SERVICE_SUGGESTIONS}
+                placeholder="Add a service"
+                onChange={(services) => setDraft({ ...draft, services })}
               />
-            </Field>
 
-            <Field label="About you" hint="Two or three sentences. Who you are and how you work.">
-              <textarea
-                value={draft.about}
-                onChange={(e) => setDraft({ ...draft, about: e.target.value.slice(0, 1200) })}
-                rows={4}
-                placeholder="Family firm, 12 years in the trade. We turn up when we say, keep the place clean and explain everything before we start."
-                className={textareaClass}
+              <ChipEditor
+                label="Areas you cover"
+                hint="Towns or postcode areas, e.g. Carlisle, CA1, Penrith."
+                values={draft.areas}
+                max={20}
+                placeholder="Add a town or postcode area"
+                onChange={(areas) => setDraft({ ...draft, areas })}
               />
-            </Field>
 
-            <ChipEditor
-              label="What you do"
-              hint="These become the buttons customers tap first. Up to 12."
-              values={draft.services}
-              max={12}
-              suggestions={SERVICE_SUGGESTIONS}
-              placeholder="Add a service"
-              onChange={(services) => setDraft({ ...draft, services })}
-            />
+              <Field
+                label="Trading since"
+                hint="The year you started. Shown as 'Trading since 2014'."
+              >
+                <input
+                  value={draft.since}
+                  onChange={(e) =>
+                    setDraft({ ...draft, since: e.target.value.replace(/\D/g, '').slice(0, 4) })
+                  }
+                  inputMode="numeric"
+                  placeholder="2014"
+                  className={inputClass}
+                />
+              </Field>
 
-            <ChipEditor
-              label="Areas you cover"
-              hint="Towns or postcode areas, e.g. Carlisle, CA1, Penrith."
-              values={draft.areas}
-              max={20}
-              placeholder="Add a town or postcode area"
-              onChange={(areas) => setDraft({ ...draft, areas })}
-            />
+              <PrimaryButton
+                data-help="quotepage.save"
+                onClick={handleSave}
+                disabled={update.isPending || !dirty}
+                className="w-full sm:w-auto sm:min-w-[160px]"
+              >
+                {update.isPending ? 'Saving…' : dirty ? 'Save changes' : 'Saved'}
+              </PrimaryButton>
+            </FormCard>
+          </section>
 
-            <Field label="Trading since" hint="The year you started. Shown as 'Trading since 2014'.">
-              <input
-                value={draft.since}
-                onChange={(e) => setDraft({ ...draft, since: e.target.value.replace(/\D/g, '').slice(0, 4) })}
-                inputMode="numeric"
-                placeholder="2014"
-                className={inputClass}
-              />
-            </Field>
-
-            <PrimaryButton
-              data-help="quotepage.save"
-              onClick={handleSave}
-              disabled={update.isPending || !dirty}
-              fullWidth
-            >
-              {update.isPending ? 'Saving…' : dirty ? 'Save changes' : 'Saved'}
-            </PrimaryButton>
-          </FormCard>
-          </div>
-
-          <div data-help="quotepage.proof">
-          <FormCard eyebrow="Proof customers see">
-            <p className="text-[13px] text-white">
-              Only real facts from your account. Anything out of date is hidden automatically.
-            </p>
-            <ToggleRow
-              title="Registration scheme"
-              body={
-                scheme
-                  ? `Shows "${config.registration_scheme} registered".`
-                  : 'Add your scheme and number in Settings, Company, to show it.'
-              }
-              checked={config.lead_page_show_registration}
-              disabled={!scheme || update.isPending}
-              onChange={(v) => setFlag({ lead_page_show_registration: v })}
-            />
-            <ToggleRow
-              title="Insurance"
-              body={
-                insured
-                  ? 'Shows that you are insured, with your cover amount if set.'
-                  : 'Add your insurer and expiry in Settings, Company, to show it.'
-              }
-              checked={config.lead_page_show_insurance}
-              disabled={!insured || update.isPending}
-              onChange={(v) => setFlag({ lead_page_show_insurance: v })}
-            />
-            <ToggleRow
-              title="Certificates issued"
-              body="Shows how many electrical certificates your firm has completed in Elec-Mate, once it is 10 or more."
-              checked={config.lead_page_show_certs}
-              disabled={update.isPending}
-              onChange={(v) => setFlag({ lead_page_show_certs: v })}
-            />
-            <div className="border-t border-white/[0.1] pt-3">
-              <p className="text-[14px] font-semibold text-white">Reviews</p>
+          <section data-help="quotepage.proof">
+            <PanelTitle title="Proof customers see" />
+            <FormCard bleed>
               <p className="text-[13px] text-white">
-                Shown automatically once customers leave you a review through Elec-Mate. We never
-                show made-up or imported reviews.
+                Only real facts from your account. Anything out of date is hidden automatically.
               </p>
-            </div>
-          </FormCard>
-          </div>
+              <ToggleRow
+                title="Registration scheme"
+                body={
+                  scheme
+                    ? `Shows "${config.registration_scheme} registered".`
+                    : 'Add your scheme and number in Settings, Company, to show it.'
+                }
+                checked={config.lead_page_show_registration}
+                disabled={!scheme || update.isPending}
+                onChange={(v) => setFlag({ lead_page_show_registration: v })}
+              />
+              <ToggleRow
+                title="Insurance"
+                body={
+                  insured
+                    ? 'Shows that you are insured, with your cover amount if set.'
+                    : 'Add your insurer and expiry in Settings, Company, to show it.'
+                }
+                checked={config.lead_page_show_insurance}
+                disabled={!insured || update.isPending}
+                onChange={(v) => setFlag({ lead_page_show_insurance: v })}
+              />
+              <ToggleRow
+                title="Certificates issued"
+                body="Shows how many electrical certificates your firm has completed in Elec-Mate, once it is 10 or more."
+                checked={config.lead_page_show_certs}
+                disabled={update.isPending}
+                onChange={(v) => setFlag({ lead_page_show_certs: v })}
+              />
+              <div className="border-t border-white/[0.1] pt-3">
+                <p className="text-[14px] font-semibold text-white">Reviews</p>
+                <p className="text-[13px] text-white">
+                  Shown automatically once customers leave you a review through Elec-Mate. We never
+                  show made-up or imported reviews.
+                </p>
+              </div>
+            </FormCard>
+          </section>
         </div>
 
-        {/* ── Get it seen ──────────────────────────────────────── */}
-        <div className="space-y-4">
-          <div data-help="quotepage.seen">
-          <FormCard eyebrow="Get it seen">
-            {!savedSlug ? (
-              <p className="text-[14px] text-white">
-                Save a link name first and your QR code and links appear here.
-              </p>
-            ) : (
-              <>
-                <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <div className="rounded-2xl bg-white p-3 shrink-0">
-                    <QRCodeSVG
-                      id="quote-page-qr"
-                      value={shortUrl}
-                      size={150}
-                      level="M"
-                      marginSize={2}
-                      bgColor="#ffffff"
-                      fgColor="#0a0e17"
-                    />
-                  </div>
-                  <p className="text-[13px] text-white text-center sm:text-left">
-                    Scans straight to your page. Test it with your phone camera before you print.
-                  </p>
-                </div>
+        {/* ── Requests + get it seen ──────────────────────────── */}
+        <div className={colClass}>
+          <RecentRequests
+            recent={config.recent}
+            onOpenLeads={() => setSearchParams({ section: 'leads' })}
+          />
 
-                <SeenItem icon={Truck} title="Van and windows">
-                  <p>A big QR on the back doors gets scanned in traffic and on site.</p>
-                  <div className="grid grid-cols-2 gap-2 pt-1">
-                    <SecondaryButton onClick={() => artwork('van')} fullWidth>
-                      <Printer className="h-4 w-4 mr-1.5" /> Van sign PDF
-                    </SecondaryButton>
-                    <SecondaryButton onClick={() => artwork('poster')} fullWidth>
-                      <Printer className="h-4 w-4 mr-1.5" /> A4 poster
-                    </SecondaryButton>
-                    <SecondaryButton onClick={downloadPng} fullWidth>
-                      <ImageIcon className="h-4 w-4 mr-1.5" /> QR (PNG)
-                    </SecondaryButton>
-                    <SecondaryButton onClick={downloadSvg} fullWidth>
-                      <Download className="h-4 w-4 mr-1.5" /> QR (SVG)
-                    </SecondaryButton>
-                  </div>
-                  <p>Sign-writers want the SVG: it stays sharp at any size.</p>
-                </SeenItem>
-
-                <SeenItem icon={Search} title="Google Business Profile">
-                  <ol className="list-decimal pl-5 space-y-1">
-                    <li>Search your business name on Google and tap Edit profile.</li>
-                    <li>Open Contact, then Website (or Booking links).</li>
-                    <li>Paste your link and save. Google can take a few days to show it.</li>
-                  </ol>
-                  <SecondaryButton onClick={() => copy(fullUrl, 'Link for Google copied')} fullWidth>
-                    <Copy className="h-4 w-4 mr-1.5" /> Copy link for Google
-                  </SecondaryButton>
-                </SeenItem>
-
-                <SeenItem icon={FileText} title="Every invoice and quote">
-                  <div className="flex items-center justify-between gap-3">
-                    <p>
-                      Adds a "Get a quote" link to the bottom of every invoice and quote email you
-                      send, while the page is live.
+          <section data-help="quotepage.seen">
+            <PanelTitle title="Get it seen" />
+            <FormCard bleed>
+              {!savedSlug ? (
+                <p className="text-[14px] text-white">
+                  Save a link name first and your QR code and links appear here.
+                </p>
+              ) : (
+                <>
+                  <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <div className="rounded-2xl bg-white p-3 shrink-0">
+                      <QRCodeSVG
+                        id="quote-page-qr"
+                        value={shortUrl}
+                        size={150}
+                        level="M"
+                        marginSize={2}
+                        bgColor="#ffffff"
+                        fgColor="#0a0e17"
+                      />
+                    </div>
+                    <p className="text-[13px] text-white text-center sm:text-left">
+                      Scans straight to your page. Test it with your phone camera before you print.
                     </p>
-                    <Switch
-                      checked={config.lead_page_on_documents}
-                      disabled={update.isPending}
-                      onCheckedChange={(v) => setFlag({ lead_page_on_documents: v })}
-                      aria-label="Add the link to invoices and quotes"
-                      className="shrink-0 data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-white/20"
-                    />
                   </div>
-                </SeenItem>
 
-                <SeenItem icon={Mail} title="Email signature">
-                  <p className="rounded-lg bg-white/[0.06] px-3 py-2 font-mono text-[12.5px] break-all">
-                    Need an electrician? Get a free quote: {shortDisplay}
-                  </p>
-                  <SecondaryButton
-                    onClick={() => copy(`Need an electrician? Get a free quote: ${shortUrl}`, 'Signature line copied')}
-                    fullWidth
-                  >
-                    <Copy className="h-4 w-4 mr-1.5" /> Copy signature line
-                  </SecondaryButton>
-                </SeenItem>
+                  <SeenItem title="Van and windows">
+                    <p>A big QR on the back doors gets scanned in traffic and on site.</p>
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <SecondaryButton onClick={() => artwork('van')} fullWidth>
+                        <Printer className="h-4 w-4 mr-1.5" /> Van sign PDF
+                      </SecondaryButton>
+                      <SecondaryButton onClick={() => artwork('poster')} fullWidth>
+                        <Printer className="h-4 w-4 mr-1.5" /> A4 poster
+                      </SecondaryButton>
+                      <SecondaryButton onClick={downloadPng} fullWidth>
+                        <ImageIcon className="h-4 w-4 mr-1.5" /> QR (PNG)
+                      </SecondaryButton>
+                      <SecondaryButton onClick={downloadSvg} fullWidth>
+                        <Download className="h-4 w-4 mr-1.5" /> QR (SVG)
+                      </SecondaryButton>
+                    </div>
+                    <p>Sign-writers want the SVG: it stays sharp at any size.</p>
+                  </SeenItem>
 
-                <SeenItem icon={Facebook} title="Facebook and local groups">
-                  <p>Add the link to your page's Website field and pin a post with it.</p>
-                  <SecondaryButton onClick={share} fullWidth>
-                    <Share2 className="h-4 w-4 mr-1.5" /> Share the link
-                  </SecondaryButton>
-                </SeenItem>
-              </>
-            )}
-          </FormCard>
-          </div>
+                  <SeenItem title="Google Business Profile">
+                    <ol className="list-decimal pl-5 space-y-1">
+                      <li>Search your business name on Google and tap Edit profile.</li>
+                      <li>Open Contact, then Website (or Booking links).</li>
+                      <li>Paste your link and save. Google can take a few days to show it.</li>
+                    </ol>
+                    <SecondaryButton
+                      onClick={() => copy(fullUrl, 'Link for Google copied')}
+                      fullWidth
+                    >
+                      <Copy className="h-4 w-4 mr-1.5" /> Copy link for Google
+                    </SecondaryButton>
+                  </SeenItem>
 
-          <RecentRequests recent={config.recent} onOpenLeads={() => setSearchParams({ section: 'leads' })} />
+                  <SeenItem title="Every invoice and quote">
+                    <div className="flex items-center justify-between gap-3">
+                      <p>
+                        Adds a "Get a quote" link to the bottom of every invoice and quote email you
+                        send, while the page is live.
+                      </p>
+                      <Switch
+                        checked={config.lead_page_on_documents}
+                        disabled={update.isPending}
+                        onCheckedChange={(v) => setFlag({ lead_page_on_documents: v })}
+                        aria-label="Add the link to invoices and quotes"
+                        className="shrink-0 data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-white/20"
+                      />
+                    </div>
+                  </SeenItem>
+
+                  <SeenItem title="Email signature">
+                    <p className="rounded-lg bg-white/[0.06] px-3 py-2 font-mono text-[12.5px] break-all">
+                      Need an electrician? Get a free quote: {shortDisplay}
+                    </p>
+                    <SecondaryButton
+                      onClick={() =>
+                        copy(
+                          `Need an electrician? Get a free quote: ${shortUrl}`,
+                          'Signature line copied'
+                        )
+                      }
+                      fullWidth
+                    >
+                      <Copy className="h-4 w-4 mr-1.5" /> Copy signature line
+                    </SecondaryButton>
+                  </SeenItem>
+
+                  <SeenItem title="Facebook and local groups">
+                    <p>Add the link to your page's Website field and pin a post with it.</p>
+                    <SecondaryButton onClick={share} fullWidth>
+                      <Share2 className="h-4 w-4 mr-1.5" /> Share the link
+                    </SecondaryButton>
+                  </SeenItem>
+                </>
+              )}
+            </FormCard>
+          </section>
         </div>
       </div>
     </PageFrame>
@@ -785,21 +859,10 @@ function ToggleRow({
   );
 }
 
-function SeenItem({
-  icon: Icon,
-  title,
-  children,
-}: {
-  icon: typeof Truck;
-  title: string;
-  children: React.ReactNode;
-}) {
+function SeenItem({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="border-t border-white/[0.1] pt-4 space-y-2">
-      <div className="flex items-center gap-2">
-        <Icon className="h-4 w-4 text-elec-yellow" />
-        <h3 className="text-[14px] font-semibold text-white">{title}</h3>
-      </div>
+      <h3 className="text-[14px] font-semibold text-white">{title}</h3>
       <div className="space-y-2 text-[13px] text-white leading-relaxed">{children}</div>
     </div>
   );
@@ -922,58 +985,71 @@ function RecentRequests({
   });
 
   return (
-    <FormCard eyebrow="Latest requests">
-      {recent.length === 0 ? (
-        <div className="flex items-start gap-3">
-          <Inbox className="h-5 w-5 text-white shrink-0 mt-0.5" />
-          <p className="text-[13px] text-white">
+    <section>
+      <PanelTitle
+        title="Latest requests"
+        meta={recent.length > 0 ? `${recent.length}` : undefined}
+        action="Leads"
+        onAction={onOpenLeads}
+      />
+      <FormCard bleed>
+        {recent.length === 0 ? (
+          <p className="text-[14px] text-white">
             Nothing yet. Requests appear here and in Leads the moment a customer sends one.
           </p>
-        </div>
-      ) : (
-        <ul className="divide-y divide-white/[0.08]">
-          {recent.map((r) => (
-            <li key={r.id} className="py-3 first:pt-0">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[14px] font-semibold text-white truncate">{r.name}</p>
-                  <p className="text-[13px] text-white">
-                    {[r.job_type, r.postcode, r.timing].filter(Boolean).join(' · ') || 'Quote request'}
-                  </p>
+        ) : (
+          <ul className="divide-y divide-white/[0.08]">
+            {recent.map((r) => (
+              <li key={r.id} className="py-3 first:pt-0">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-[15px] font-semibold text-white truncate">{r.name}</p>
+                    <p className="text-[13px] text-white">
+                      {[r.job_type, r.postcode, r.timing].filter(Boolean).join(' · ') ||
+                        'Quote request'}
+                    </p>
+                  </div>
+                  <span className="text-[12px] text-white shrink-0">
+                    {formatDistanceToNow(new Date(r.created_at), { addSuffix: true })}
+                  </span>
                 </div>
-                <span className="text-[12px] text-white shrink-0">
-                  {formatDistanceToNow(new Date(r.created_at), { addSuffix: true })}
-                </span>
-              </div>
-              {(r.photos?.length ?? 0) > 0 && (
-                <div className="mt-2 flex gap-2">
-                  {r.photos.map((p) =>
-                    urls?.[p] ? (
-                      <a key={p} href={urls[p]} target="_blank" rel="noreferrer" className="touch-manipulation">
-                        <img src={urls[p]} alt="Customer photo" className="h-16 w-16 rounded-lg object-cover border border-white/[0.12]" />
-                      </a>
-                    ) : (
-                      <div key={p} className="h-16 w-16 rounded-lg bg-white/[0.06]" />
-                    )
-                  )}
-                </div>
-              )}
-              {r.phone && (
-                <a
-                  href={`tel:${r.phone.replace(/\s+/g, '')}`}
-                  className="mt-2 inline-flex items-center gap-1.5 h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
-                >
-                  <Phone className="h-4 w-4" /> Call {r.phone}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-      <SecondaryButton onClick={onOpenLeads} fullWidth>
-        Open Leads
-      </SecondaryButton>
-    </FormCard>
+                {(r.photos?.length ?? 0) > 0 && (
+                  <div className="mt-2 flex gap-2">
+                    {r.photos.map((p) =>
+                      urls?.[p] ? (
+                        <a
+                          key={p}
+                          href={urls[p]}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="touch-manipulation"
+                        >
+                          <img
+                            src={urls[p]}
+                            alt="Customer photo"
+                            className="h-16 w-16 rounded-lg object-cover border border-white/[0.12]"
+                          />
+                        </a>
+                      ) : (
+                        <div key={p} className="h-16 w-16 rounded-lg bg-white/[0.06]" />
+                      )
+                    )}
+                  </div>
+                )}
+                {r.phone && (
+                  <a
+                    href={`tel:${r.phone.replace(/\s+/g, '')}`}
+                    className="mt-2 inline-flex items-center gap-1.5 h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  >
+                    <Phone className="h-4 w-4" /> Call {r.phone}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </FormCard>
+    </section>
   );
 }
 

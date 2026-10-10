@@ -16,7 +16,7 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Earth fault loop path
         </span>
         <p className="text-[14px] text-white leading-relaxed font-mono">
@@ -24,19 +24,19 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Ze
             </span>
             <p className="text-[14px] text-white leading-relaxed">External earth loop impedance</p>
           </div>
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               R1
             </span>
             <p className="text-[14px] text-white leading-relaxed">Line conductor resistance</p>
           </div>
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               R2
             </span>
             <p className="text-[14px] text-white leading-relaxed">Earth conductor resistance</p>
@@ -45,7 +45,7 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Key test points
         </span>
         <div className="space-y-2">
@@ -69,12 +69,12 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Maximum Zs values (common protective devices)
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               MCBs (Type B)
             </span>
             <div className="space-y-1">
@@ -93,7 +93,7 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
             </div>
           </div>
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               MCBs (Type C)
             </span>
             <div className="space-y-1">
@@ -115,7 +115,7 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Test method considerations
         </span>
         <ul className="space-y-1.5">
@@ -137,7 +137,7 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Earth fault current
         </span>
         <p className="text-[14px] text-white leading-relaxed font-mono">If = 0.8 × Uo / Zs</p>

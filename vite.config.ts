@@ -123,6 +123,7 @@ export default defineConfig(({ mode }) => ({
       'lodash/debounce',
       'lodash/isEqual', // reportConflict.ts — with noDiscovery, a CJS subpath missing here breaks every route that loads it
       'react-dom/server', // engineerVerify.ts — CJS in the browser build
+      'pdf-lib', // netChecklistPdf.ts (ELE-2050) — its pako dependency is CJS
       'clsx',
       'tailwind-merge',
       'uuid',

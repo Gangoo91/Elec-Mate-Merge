@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { isActiveRosterRow } from '@/lib/workerTeam';
+import { WorkerOutboxPill } from '@/components/worker-tools/WorkerOutbox';
 import {
   PageHelpButton,
   HowItWorks,
@@ -101,6 +102,8 @@ export function WorkerToolPage({
                 {title}
               </h1>
             </div>
+            {/* ELE-1828: what's saved on this phone, waiting for signal. */}
+            <WorkerOutboxPill className="-my-1" />
             {/* Notifications live in the single global header bell (ELE-1379). */}
           </div>
         </div>

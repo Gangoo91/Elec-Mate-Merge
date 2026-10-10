@@ -1,0 +1,4 @@
+uuid,generated_job_id,company_uuid,status,job_address,job_description,date,completion_date,total_invoice_amount
+8a2d0e51-77c0-4f2a-b3e1-5a9c2e0b2001,1187,3f1c7a20-1b9d-4e11-9a51-0d6b8f1a1001,Completed,"14 Bridge Street, Otley LS21 1BQ",Periodic inspection and report for surgery,2026-07-14,2026-07-15,420.00
+8a2d0e51-77c0-4f2a-b3e1-5a9c2e0b2002,1188,3f1c7a20-1b9d-4e11-9a51-0d6b8f1a1002,Work Order,"22 Cleasby Road, Menston LS29 6JE",Kitchen rewire and new cooker circuit,2026-10-27,,1640.00
+8a2d0e51-77c0-4f2a-b3e1-5a9c2e0b2003,1189,3f1c7a20-1b9d-4e11-9a51-0d6b8f1a1003,Quote,"Stourton Road, Ilkley LS29 9BG",Replace court floodlight drivers,,,2950.00

@@ -34,12 +34,9 @@ import { type PageHelpContent } from '@/components/hub/PageHelp';
 import {
   COLLEGE_BTN,
   COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
   COLLEGE_LINK,
-  COLLEGE_LIST,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
   chipCn,
 } from '@/components/college/ui/CollegeUi';
 import { inputCn, labelCn } from '@/components/forms/fieldStyles';
@@ -58,6 +55,13 @@ import {
   type SetupCodeCheck,
   type SetupStep,
 } from '@/lib/collegeSetup';
+import { PEOPLE_LIST, PEOPLE_PANEL, StatusChip } from '@/components/college/people/peopleKit';
+import {
+  PROVIDER_TYPES,
+  PROVIDER_WORDS,
+  setProviderType,
+  type ProviderType,
+} from '@/lib/collegeProviderType';
 import { NewCohortDialog } from '@/components/college/dialogs/NewCohortDialog';
 import { BulkAddStudentsSheet } from '@/components/college/dialogs/BulkAddStudentsSheet';
 import { StaffRosterSheet } from '@/components/college/setup/StaffRosterSheet';
@@ -69,14 +73,32 @@ const HELP: PageHelpContent = {
   title: 'Setting up your college',
   what: 'Everything a new college needs before its first learner signs in, in order. Each step ticks itself off when it is done; you can come back to this page at any time.',
   steps: [
-    { title: 'Courses, then cohorts', body: 'Pick the qualifications you deliver from the catalogue, then make a cohort on one of them with its dates and lead tutor.' },
-    { title: 'Your staff', body: 'Paste name, email and role for each person. New people get a login by email; anyone who already uses Elec-Mate gets a link to join.' },
-    { title: 'Your safeguarding lead', body: 'Open the person in Staff and mark them designated safeguarding lead, with a deputy if you have one. They need a login: concerns raised in the app go straight to them, and until one is named they go to admins and heads of department.' },
-    { title: 'Your learners', body: 'Paste your MIS list. Each learner gets a login and their cohort join link by email. Running the same list twice is safe.' },
-    { title: 'The join code', body: 'Each cohort has one. Learners can also type it on the sign-up page: it links them to the cohort and applies your college discount.' },
+    {
+      title: 'Courses, then cohorts',
+      body: 'Pick the qualifications you deliver from the catalogue, then make a cohort on one of them with its dates and lead tutor.',
+    },
+    {
+      title: 'Your staff',
+      body: 'Paste name, email and role for each person. New people get a login by email; anyone who already uses Elec-Mate gets a link to join.',
+    },
+    {
+      title: 'Your safeguarding lead',
+      body: 'Open the person in Staff and mark them designated safeguarding lead, with a deputy if you have one. They need a login: concerns raised in the app go straight to them, and until one is named they go to admins and heads of department.',
+    },
+    {
+      title: 'Your learners',
+      body: 'Paste your MIS list. Each learner gets a login and their cohort join link by email. Running the same list twice is safe.',
+    },
+    {
+      title: 'The join code',
+      body: 'Each cohort has one. Learners can also type it on the sign-up page: it links them to the cohort and applies your college discount.',
+    },
   ],
   notes: [
-    { title: 'Who can create a college', body: 'Elec-Mate issues a set-up code with a signed order. One account belongs to one college.' },
+    {
+      title: 'Who can create a college',
+      body: 'Elec-Mate issues a set-up code with a signed order. One account belongs to one college.',
+    },
   ],
 };
 
@@ -94,7 +116,9 @@ function CollegeSetupPageInner() {
   const { user, profile, isLoading } = useAuth();
 
   // The set-up code survives a sign-in or account creation.
-  const [setupCode, setSetupCode] = useState<string>(() => (codeParam ?? storageGetSync(SETUP_CODE_KEY) ?? '').toUpperCase());
+  const [setupCode, setSetupCode] = useState<string>(() =>
+    (codeParam ?? storageGetSync(SETUP_CODE_KEY) ?? '').toUpperCase()
+  );
   useEffect(() => {
     if (codeParam) storageSetSync(SETUP_CODE_KEY, codeParam.toUpperCase());
   }, [codeParam]);
@@ -107,7 +131,11 @@ function CollegeSetupPageInner() {
 
   return (
     <HubPage ground="landing">
-      <HubMasthead section="College" title="Set up your college" backTo={isStaff ? '/college' : '/'} />
+      <HubMasthead
+        section="College"
+        title="Set up your college"
+        backTo={isStaff ? '/college' : '/'}
+      />
       <HubBody pushContext="Get notified when your learners join" hidePushPrompt={!user}>
         {isLoading ? (
           <div className="flex justify-center py-24">
@@ -138,18 +166,22 @@ function AccountStep({ setupCode }: { setupCode: string }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const strong = password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
+  const strong =
+    password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return setError('Enter your work email.');
     if (mode === 'new' && !name.trim()) return setError('Enter your name.');
-    if (mode === 'new' && !strong) return setError('Password needs 8+ characters, upper and lower case, and a number.');
+    if (mode === 'new' && !strong)
+      return setError('Password needs 8+ characters, upper and lower case, and a number.');
     setBusy(true);
     try {
       const res =
-        mode === 'new' ? await signUp(email.trim(), password, name.trim()) : await signIn(email.trim(), password);
+        mode === 'new'
+          ? await signUp(email.trim(), password, name.trim())
+          : await signIn(email.trim(), password);
       if (res?.error) setError(res.error.message ?? 'That did not work. Try again.');
     } finally {
       setBusy(false);
@@ -167,23 +199,41 @@ function AccountStep({ setupCode }: { setupCode: string }) {
         />
         <ul className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
           {[
-            ['Staff use it free', 'Your account, and every staff account you add, has the whole app at no cost.'],
-            ['Your set-up code', setupCode ? `We check code ${setupCode} as soon as you are signed in. Nothing to type again.` : 'Elec-Mate gives you a set-up code with your order. You will need it on the next step.'],
-            ['Nothing to install', 'Works in the browser on a laptop, and in the Elec-Mate app on a phone.'],
+            [
+              'Staff use it free',
+              'Your account, and every staff account you add, has the whole app at no cost.',
+            ],
+            [
+              'Your set-up code',
+              setupCode
+                ? `We check code ${setupCode} as soon as you are signed in. Nothing to type again.`
+                : 'Elec-Mate gives you a set-up code with your order. You will need it on the next step.',
+            ],
+            [
+              'Nothing to install',
+              'Works in the browser on a laptop, and in the Elec-Mate app on a phone.',
+            ],
           ].map(([t, b]) => (
-            <li key={t} className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-3.5">
+            <li
+              key={t}
+              className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-3.5"
+            >
               <p className="text-[14px] font-semibold text-white">{t}</p>
               <p className="mt-1 text-[12.5px] leading-snug text-white">{b}</p>
             </li>
           ))}
         </ul>
       </div>
-      <form onSubmit={submit} className={cn(COLLEGE_CARD, 'space-y-5 self-start')}>
+      <form onSubmit={submit} className={cn(PEOPLE_PANEL, 'space-y-5 self-start')}>
         <div className="flex gap-2">
           <button type="button" onClick={() => setMode('new')} className={chipCn(mode === 'new')}>
             New to Elec-Mate
           </button>
-          <button type="button" onClick={() => setMode('existing')} className={chipCn(mode === 'existing')}>
+          <button
+            type="button"
+            onClick={() => setMode('existing')}
+            className={chipCn(mode === 'existing')}
+          >
             I have an account
           </button>
         </div>
@@ -192,14 +242,27 @@ function AccountStep({ setupCode }: { setupCode: string }) {
             <label htmlFor="su-name" className={labelCn}>
               Your name
             </label>
-            <input id="su-name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" className={inputCn} />
+            <input
+              id="su-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              className={inputCn}
+            />
           </div>
         )}
         <div>
           <label htmlFor="su-email" className={labelCn}>
             Work email
           </label>
-          <input id="su-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" className={inputCn} />
+          <input
+            id="su-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
+            className={inputCn}
+          />
         </div>
         <div>
           <label htmlFor="su-pw" className={labelCn}>
@@ -213,9 +276,17 @@ function AccountStep({ setupCode }: { setupCode: string }) {
             autoComplete={mode === 'new' ? 'new-password' : 'current-password'}
             className={inputCn}
           />
-          {mode === 'new' && <p className="mt-1.5 text-[12px] text-white">8+ characters, upper and lower case, and a number.</p>}
+          {mode === 'new' && (
+            <p className="mt-1.5 text-[12px] text-white">
+              8+ characters, upper and lower case, and a number.
+            </p>
+          )}
         </div>
-        {error && <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">{error}</p>}
+        {error && (
+          <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
+            {error}
+          </p>
+        )}
         <button type="submit" disabled={busy} className={cn(COLLEGE_BTN_PRIMARY, 'w-full')}>
           {busy ? 'One moment…' : mode === 'new' ? 'Create my staff account' : 'Sign in'}
         </button>
@@ -241,6 +312,9 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
   const [shortTouched, setShortTouched] = useState(false);
   const [bodies, setBodies] = useState<string[]>([]);
   const [city, setCity] = useState('');
+  // ELE-1979: FE college, independent training provider or employer-provider.
+  const [ptype, setPtype] = useState<ProviderType>('fe_college');
+  const pwords = PROVIDER_WORDS[ptype];
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [firstAdminFor, setFirstAdminFor] = useState<string | null>(null);
@@ -267,7 +341,8 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const canCreate = (isPlatformAdmin || check?.valid) && name.trim().length >= 3 && /^[A-Z0-9]{2,12}$/.test(short);
+  const canCreate =
+    (isPlatformAdmin || check?.valid) && name.trim().length >= 3 && /^[A-Z0-9]{2,12}$/.test(short);
 
   const create = async () => {
     if (!canCreate || busy) return;
@@ -281,6 +356,9 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
         city,
         setupCode: isPlatformAdmin ? null : code,
       });
+      if (ptype !== 'fe_college') {
+        await setProviderType(res.college_id, ptype).catch(() => undefined);
+      }
       storageRemoveSync(SETUP_CODE_KEY);
       if (isPlatformAdmin) {
         toast({ title: `${res.name} created`, description: 'Now add its first admin.' });
@@ -307,7 +385,7 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
     <div className="space-y-8">
       <CollegePageHeader
         eyebrow="College Hub"
-        title="Create your college"
+        title={`Create your ${pwords.noun}`}
         description={
           isPlatformAdmin
             ? 'You are signed in as Elec-Mate. Create the college, then add its first admin: they get a login by email and finish the set-up.'
@@ -317,8 +395,11 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
       />
       <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
         {!isPlatformAdmin && (
-          <section className={cn(COLLEGE_CARD, 'space-y-4')}>
-            <CollegeSectionTitle title="Your set-up code" sub="It came with your order, for example SETUP-AB12CD34." />
+          <section className={cn(PEOPLE_PANEL, 'space-y-4')}>
+            <CollegeSectionTitle
+              title="Your set-up code"
+              sub="It came with your order, for example SETUP-AB12CD34."
+            />
             <div className="flex items-end gap-3">
               <div className="flex-1">
                 <label htmlFor="setup-code" className={labelCn}>
@@ -336,22 +417,63 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
                   className={cn(inputCn, 'font-mono tracking-wider')}
                 />
               </div>
-              <button type="button" onClick={() => void runCheck(code)} disabled={checking || !code.trim()} className={COLLEGE_BTN}>
+              <button
+                type="button"
+                onClick={() => void runCheck(code)}
+                disabled={checking || !code.trim()}
+                className={COLLEGE_BTN}
+              >
                 {checking ? 'Checking…' : 'Check'}
               </button>
             </div>
             {check && !check.valid && (
-              <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">{check.reason}</p>
+              <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
+                {check.reason}
+              </p>
             )}
-            {check?.valid && <p className="text-[13px] font-semibold text-emerald-300">Code accepted for {check.org_name}.</p>}
+            {check?.valid && (
+              <p className="text-[13px] font-semibold text-emerald-300">
+                Code accepted for {check.org_name}.
+              </p>
+            )}
           </section>
         )}
 
-        <section className={cn(COLLEGE_CARD, 'space-y-5', !isPlatformAdmin && !check?.valid && 'opacity-60')}>
-          <CollegeSectionTitle title="Your college" sub="You can change any of this later in Settings." />
+        <section
+          className={cn(
+            PEOPLE_PANEL,
+            'space-y-5',
+            !isPlatformAdmin && !check?.valid && 'opacity-60'
+          )}
+        >
+          <CollegeSectionTitle
+            title={`Your ${pwords.noun}`}
+            sub="You can change any of this later in Settings."
+          />
+          <div>
+            <span className={labelCn}>Type of provider</span>
+            <div className="mt-1 grid gap-2 sm:grid-cols-3" role="radiogroup" aria-label="Type of provider">
+              {PROVIDER_TYPES.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  role="radio"
+                  aria-checked={ptype === t}
+                  onClick={() => setPtype(t)}
+                  className={cn(
+                    'min-h-[56px] rounded-xl border px-3 py-2 text-left text-[13px] font-semibold text-white transition-colors touch-manipulation',
+                    ptype === t ? 'border-elec-yellow' : 'border-white/[0.14] hover:border-white/[0.3]'
+                  )}
+                >
+                  {PROVIDER_WORDS[t].label}
+                </button>
+              ))}
+            </div>
+            <p className="mt-1.5 text-[12px] text-white">{pwords.setupNote}</p>
+          </div>
           <div>
             <label htmlFor="col-name" className={labelCn}>
-              College name
+              {ptype === 'fe_college' ? 'College name' : 'Organisation name'}
             </label>
             <input
               id="col-name"
@@ -373,7 +495,12 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
                 value={short}
                 onChange={(e) => {
                   setShortTouched(true);
-                  setShort(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12));
+                  setShort(
+                    e.target.value
+                      .toUpperCase()
+                      .replace(/[^A-Z0-9]/g, '')
+                      .slice(0, 12)
+                  );
                 }}
                 className={cn(inputCn, 'font-mono tracking-wider')}
               />
@@ -383,7 +510,12 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
               <label htmlFor="col-city" className={labelCn}>
                 Town or city
               </label>
-              <input id="col-city" value={city} onChange={(e) => setCity(e.target.value)} className={inputCn} />
+              <input
+                id="col-city"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className={inputCn}
+              />
             </div>
           </div>
           <div>
@@ -404,9 +536,18 @@ function CreateStep({ setupCode, onCode }: { setupCode: string; onCode: (c: stri
               })}
             </div>
           </div>
-          {error && <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">{error}</p>}
-          <button type="button" onClick={() => void create()} disabled={!canCreate || busy} className={cn(COLLEGE_BTN_PRIMARY, 'w-full sm:w-auto')}>
-            {busy ? 'Creating…' : 'Create my college'}
+          {error && (
+            <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
+              {error}
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={() => void create()}
+            disabled={!canCreate || busy}
+            className={cn(COLLEGE_BTN_PRIMARY, 'w-full sm:w-auto')}
+          >
+            {busy ? 'Creating…' : `Create my ${pwords.noun}`}
           </button>
         </section>
       </div>
@@ -464,8 +605,14 @@ function Checklist() {
       .order('created_at', { ascending: false });
     const now = Date.now();
     setInvites(
-      ((data ?? []) as Array<InviteRow & { expires_at: string | null; max_uses: number | null; use_count: number }>).filter(
-        (r) => (!r.expires_at || new Date(r.expires_at).getTime() > now) && (r.max_uses == null || r.use_count < r.max_uses)
+      (
+        (data ?? []) as Array<
+          InviteRow & { expires_at: string | null; max_uses: number | null; use_count: number }
+        >
+      ).filter(
+        (r) =>
+          (!r.expires_at || new Date(r.expires_at).getTime() > now) &&
+          (r.max_uses == null || r.use_count < r.max_uses)
       )
     );
   };
@@ -478,11 +625,14 @@ function Checklist() {
       .select('awarding_bodies')
       .eq('id', status.college_id)
       .maybeSingle()
-      .then(({ data }) => setCollege((data as { awarding_bodies: string[] | null } | null) ?? null));
+      .then(({ data }) =>
+        setCollege((data as { awarding_bodies: string[] | null } | null) ?? null)
+      );
   }, [status?.college_id, status?.cohorts, status?.join_codes]);
 
   const activeCohorts = cohorts.filter((c) => (c.status ?? '').toLowerCase() !== 'archived');
-  const codeFor = (cohortId: string) => invites.find((i) => i.cohort_id === cohortId)?.invite_code ?? null;
+  const codeFor = (cohortId: string) =>
+    invites.find((i) => i.cohort_id === cohortId)?.invite_code ?? null;
 
   const makeCode = async (cohortId: string) => {
     if (!status) return;
@@ -543,7 +693,8 @@ function Checklist() {
       case 'learners':
         return setSheet('learners');
       case 'join':
-        if (activeCohorts[0] && !codeFor(activeCohorts[0].id)) return void makeCode(activeCohorts[0].id);
+        if (activeCohorts[0] && !codeFor(activeCohorts[0].id))
+          return void makeCode(activeCohorts[0].id);
         return document.getElementById('join-codes')?.scrollIntoView({ behavior: 'smooth' });
       case 'register':
         return navigate('/college?section=attendance');
@@ -557,7 +708,14 @@ function Checklist() {
   const actionLabel = (s: SetupStep): string | null => {
     if (s.key === 'joined') return null;
     if ((s.key === 'staff' || s.key === 'safeguarding') && !status.can_manage) return null;
-    if (s.done) return s.key === 'details' ? 'Edit' : s.key === 'register' ? null : s.key === 'safeguarding' ? 'Change' : 'Add more';
+    if (s.done)
+      return s.key === 'details'
+        ? 'Edit'
+        : s.key === 'register'
+          ? null
+          : s.key === 'safeguarding'
+            ? 'Change'
+            : 'Add more';
     return {
       details: 'Add details',
       courses: 'Pick courses',
@@ -579,9 +737,10 @@ function Checklist() {
         eyebrow={status.college_name}
         title={done === steps.length ? 'Your college is set up' : 'Set up your college'}
         description={
-          done === steps.length
-            ? 'Every step is done. This list stays here if you need it.'
-            : `About 20 minutes end to end. ${next ? `Next: ${next.title.toLowerCase()}.` : ''}`
+          (done === steps.length
+            ? 'Every step is done. This list stays here if you need it. '
+            : `${done} of ${steps.length} steps done, about 20 minutes end to end.${next ? ` Next: ${next.title.toLowerCase()}.` : ''} `) +
+          `${status.courses} course${status.courses === 1 ? '' : 's'}, ${status.staff} staff (${status.staff_linked} with a login), ${status.learners} learner${status.learners === 1 ? '' : 's'} on the roll (${status.learners_linked} joined).`
         }
         help={HELP}
         actions={
@@ -591,19 +750,14 @@ function Checklist() {
         }
       />
 
-      <CollegeStats
-        items={[
-          { label: 'Steps done', value: `${done} of ${steps.length}`, good: done === steps.length },
-          { label: 'Courses', value: String(status.courses) },
-          { label: 'Staff', value: String(status.staff), sub: `${status.staff_linked} with a login` },
-          { label: 'Learners', value: String(status.learners), sub: `${status.learners_linked} linked`, good: status.learners_linked > 0 },
-        ]}
-      />
-
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-start">
         <section className="space-y-3">
           <CollegeSectionTitle title="The steps" sub="Each ticks itself off when it is done." />
-          <motion.ol initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={COLLEGE_LIST}>
+          <motion.ol
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={PEOPLE_LIST}
+          >
             {steps.map((s, i) => {
               const label = actionLabel(s);
               return (
@@ -612,14 +766,17 @@ function Checklist() {
                     aria-hidden
                     className={cn(
                       'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[12.5px] font-bold tabular-nums',
-                      s.done ? 'border-emerald-400 bg-emerald-400 text-black' : 'border-white/[0.3] text-white'
+                      s.done
+                        ? 'border-emerald-400 bg-emerald-400 text-black'
+                        : 'border-white/[0.3] text-white'
                     )}
                   >
                     {s.done ? <Check className="h-4 w-4" /> : i + 1}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className={cn('text-[15px] font-semibold leading-snug text-white', s.done && 'line-through decoration-white/40')}>
+                    <p className="flex flex-wrap items-center gap-2 text-[15px] font-semibold leading-snug text-white">
                       {s.title}
+                      {s.done && <StatusChip tone="done">Done</StatusChip>}
                     </p>
                     <p className="mt-0.5 text-[13px] leading-snug text-white">
                       {s.key === 'staff' && !status.can_manage
@@ -633,7 +790,10 @@ function Checklist() {
                     <button
                       type="button"
                       onClick={() => act(s)}
-                      className={cn(s.done || s.key !== next?.key ? COLLEGE_BTN : COLLEGE_BTN_PRIMARY, 'shrink-0')}
+                      className={cn(
+                        s.done || s.key !== next?.key ? COLLEGE_BTN : COLLEGE_BTN_PRIMARY,
+                        'shrink-0'
+                      )}
                     >
                       {label}
                     </button>
@@ -654,17 +814,22 @@ function Checklist() {
         </section>
 
         <section id="join-codes" className="scroll-mt-20 space-y-3">
-          <CollegeSectionTitle title="Join codes" sub="One per cohort. Learners type it at sign-up or open the link." />
+          <CollegeSectionTitle
+            title="Join codes"
+            sub="One per cohort. Learners type it at sign-up or open the link."
+          />
           {activeCohorts.length === 0 ? (
-            <div className={cn(COLLEGE_CARD, 'space-y-3')}>
+            <div className={cn(PEOPLE_PANEL, 'space-y-3')}>
               <p className="text-[14px] font-semibold text-white">No cohort yet</p>
-              <p className="text-[13px] leading-relaxed text-white">A join code belongs to a cohort. Create one first.</p>
+              <p className="text-[13px] leading-relaxed text-white">
+                A join code belongs to a cohort. Create one first.
+              </p>
               <button type="button" onClick={() => setSheet('cohort')} className={COLLEGE_BTN}>
                 Create cohort
               </button>
             </div>
           ) : (
-            <ul className={COLLEGE_LIST}>
+            <ul className={PEOPLE_LIST}>
               {activeCohorts.map((c) => {
                 const code = codeFor(c.id);
                 const link = code ? `${window.location.origin}/college/join/${code}` : '';
@@ -673,16 +838,40 @@ function Checklist() {
                     <p className="text-[14px] font-semibold text-white">{c.name}</p>
                     {code ? (
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-mono text-[18px] font-bold tracking-[0.15em] text-elec-yellow">{code}</span>
-                        <button type="button" onClick={() => void copy(code, `c-${c.id}`)} className={COLLEGE_BTN}>
-                          {copied === `c-${c.id}` ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />} Code
+                        <span className="font-mono text-[18px] font-bold tracking-[0.15em] text-elec-yellow">
+                          {code}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => void copy(code, `c-${c.id}`)}
+                          className={COLLEGE_BTN}
+                        >
+                          {copied === `c-${c.id}` ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}{' '}
+                          Code
                         </button>
-                        <button type="button" onClick={() => void copy(link, `l-${c.id}`)} className={COLLEGE_BTN}>
-                          {copied === `l-${c.id}` ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />} Link
+                        <button
+                          type="button"
+                          onClick={() => void copy(link, `l-${c.id}`)}
+                          className={COLLEGE_BTN}
+                        >
+                          {copied === `l-${c.id}` ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}{' '}
+                          Link
                         </button>
                       </div>
                     ) : (
-                      <button type="button" onClick={() => void makeCode(c.id)} className={COLLEGE_BTN}>
+                      <button
+                        type="button"
+                        onClick={() => void makeCode(c.id)}
+                        className={COLLEGE_BTN}
+                      >
                         Make join code
                       </button>
                     )}
@@ -692,8 +881,8 @@ function Checklist() {
             </ul>
           )}
           <p className="text-[12.5px] leading-relaxed text-white">
-            A join code is not a discount code. If your college has a discount, Elec-Mate links it to your join codes,
-            so learners only ever need the one code.
+            A join code is not a discount code. If your college has a discount, Elec-Mate links it
+            to your join codes, so learners only ever need the one code.
           </p>
         </section>
       </div>

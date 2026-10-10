@@ -82,12 +82,10 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
 
               {this.state.error && (
                 <div className="p-4 rounded-xl bg-white/10 border border-white/10">
-                  <p className="text-sm font-mono text-red-400 mb-2">
-                    Error: {this.state.error.message}
-                  </p>
+                  <p className="text-sm text-red-400 mb-2">Error: {this.state.error.message}</p>
                   {process.env.NODE_ENV === 'development' && (
                     <details className="text-xs">
-                      <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80 active:text-elec-yellow transition-all touch-manipulation">
+                      <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow active:text-elec-yellow transition-all touch-manipulation">
                         Show Stack Trace
                       </summary>
                       <pre className="mt-3 p-3 rounded-lg bg-white/10 whitespace-pre-wrap text-white overflow-x-auto">

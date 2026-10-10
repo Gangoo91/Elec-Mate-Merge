@@ -40,6 +40,8 @@ import { ReEnergisationSheet } from './ReEnergisationSheet';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
+import { FirmRecordBar } from '../common/FirmRecordBar';
+import { useFirmRecordAccess } from '../common/SafetyScope';
 
 // ─── Status Config ───
 
@@ -127,6 +129,8 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const requestApproval = useRequestApproval();
   const updateRecord = useUpdateIsolationRecord();
+  // Employer Hub: a worker's shared isolation is read and countersigned, not changed.
+  const access = useFirmRecordAccess(record);
   const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = record.job_id
     ? (jobs.find((j) => j.id === record.job_id)?.title ?? null)
@@ -294,8 +298,14 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </div>
         </motion.div>
 
+        <FirmRecordBar
+          table="safe_isolation_records"
+          row={record}
+          invalidate={[['safe-isolation-records']]}
+        />
+
         {/* Signature enforcement warning + inline capture */}
-        {record.status === 'isolated' && !signaturesPresent && (
+        {record.status === 'isolated' && !signaturesPresent && access.canEdit && (
           <motion.div variants={itemVariants} className="space-y-3">
             <div className="rounded-2xl border border-amber-500/30 bg-white/[0.03] p-4 space-y-1">
               <Eyebrow className="text-amber-400">Signatures required</Eyebrow>
@@ -365,7 +375,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         )}
 
         {/* Re-energise button */}
-        {record.status === 'isolated' && (
+        {record.status === 'isolated' && access.canEdit && (
           <motion.div variants={itemVariants}>
             {!signaturesPresent && !inlineSignaturesValid && (
               <p className="text-xs text-amber-400 text-center mb-2">
@@ -550,24 +560,26 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </motion.div>
         )}
 
-        {record.status === 'isolated' && record.approval_status === 'not_required' && (
-          <motion.div variants={itemVariants}>
-            <SecondaryButton
-              fullWidth
-              onClick={() =>
-                requestApproval.mutate({
-                  table: 'safe_isolation_records',
-                  recordId: record.id,
-                })
-              }
-              disabled={requestApproval.isPending}
-            >
-              Request supervisor approval
-            </SecondaryButton>
-          </motion.div>
-        )}
+        {record.status === 'isolated' &&
+          record.approval_status === 'not_required' &&
+          access.canEdit && (
+            <motion.div variants={itemVariants}>
+              <SecondaryButton
+                fullWidth
+                onClick={() =>
+                  requestApproval.mutate({
+                    table: 'safe_isolation_records',
+                    recordId: record.id,
+                  })
+                }
+                disabled={requestApproval.isPending}
+              >
+                Request supervisor approval
+              </SecondaryButton>
+            </motion.div>
+          )}
 
-        {record.approval_status === 'pending' && (
+        {record.approval_status === 'pending' && access.canEdit && (
           <motion.div variants={itemVariants}>
             <SecondaryButton fullWidth onClick={() => setShowApproval(true)}>
               Review and approve

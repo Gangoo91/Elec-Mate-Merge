@@ -51,6 +51,8 @@ export function labelForType(type: ProposedAction['type']): string {
       return 'New project';
     case 'create-customer':
       return 'New customer';
+    case 'create-enquiry':
+      return 'New enquiry';
     case 'draft-message':
       return 'Draft email';
     case 'add-material':
@@ -89,6 +91,10 @@ export function primaryLine(
       return action.payload.title || '(no title)';
     case 'create-customer':
       return action.payload.name || '(no name)';
+    case 'create-enquiry':
+      return (
+        [action.payload.jobType, action.payload.name].filter(Boolean).join(' — ') || '(no name)'
+      );
     case 'draft-message':
       return action.payload.subject || '(no subject)';
     case 'add-material': {
@@ -147,6 +153,14 @@ export function secondaryLine(
     if (p.email) bits.push(p.email);
     if (p.phone) bits.push(p.phone);
     if (p.address) bits.push(p.address);
+    return bits.length ? bits.join(' · ') : null;
+  }
+  if (action.type === 'create-enquiry') {
+    const p = action.payload;
+    const bits: string[] = [];
+    if (p.address || p.postcode) bits.push([p.address, p.postcode].filter(Boolean).join(', '));
+    if (p.phone) bits.push(p.phone);
+    if (p.source) bits.push(`From ${p.source}`);
     return bits.length ? bits.join(' · ') : null;
   }
   if (action.type === 'draft-message') {
@@ -244,6 +258,8 @@ export function summarise(
       return `Created project: ${action.payload.title}`;
     case 'create-customer':
       return `Created customer: ${action.payload.name}`;
+    case 'create-enquiry':
+      return `Added to Enquiries: ${action.payload.name}`;
     case 'draft-message':
       return `Email ready: ${action.payload.subject}`;
     case 'add-material':

@@ -6,7 +6,8 @@ interface ShortcutHandler {
   meta?: boolean;
   shift?: boolean;
   alt?: boolean;
-  handler: () => void;
+  /** Gets the key event, e.g. to see where focus was when it was pressed. */
+  handler: (event: KeyboardEvent) => void;
   description?: string;
 }
 
@@ -14,6 +15,9 @@ export function useKeyboardShortcuts(shortcuts: ShortcutHandler[], enabled = tru
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
+      // Already handled, e.g. Escape that just closed a sheet (Radix marks it
+      // handled). Acting on it again would also navigate the page underneath.
+      if (event.defaultPrevented) return;
 
       // Don't trigger shortcuts when typing in inputs
       const target = event.target as HTMLElement;
@@ -35,7 +39,7 @@ export function useKeyboardShortcuts(shortcuts: ShortcutHandler[], enabled = tru
 
         if (keyMatch && ctrlMatch && shiftMatch && altMatch) {
           event.preventDefault();
-          shortcut.handler();
+          shortcut.handler(event);
           break;
         }
       }

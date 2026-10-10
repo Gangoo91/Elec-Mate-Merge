@@ -345,9 +345,66 @@ async function logPush(
       link: routeForPushType(alert.pushType, alert.data),
       metadata: { ...(alert.data ?? {}), ref_id: alert.referenceId },
     });
+  } else {
+    // ELE-2035 — the one unread row per ref is kept (no pile-up, ELE-1378),
+    // but its words must be today's. It used to keep the first day's text, so
+    // a bell read "£1,656.00 outstanding" for two months whatever the real
+    // figure became.
+    await supabase
+      .from('user_notifications')
+      .update({
+        title: alert.title,
+        message: alert.body,
+        metadata: { ...(alert.data ?? {}), ref_id: alert.referenceId },
+      } as never)
+      .eq('id', (existing as Array<{ id: string }>)[0].id);
   }
 
   return logId;
+}
+
+/**
+ * ELE-2035 — clear bell rows that no longer describe anything.
+ *
+ * An unread "quote expires in 3 days" or "N overdue invoices" row stayed in
+ * the bell until opened, long after the quote was accepted, declined,
+ * invoiced or expired, or the invoices were paid (Ro, SEB Electrics, 8 and 10
+ * Oct; 15 such quote rows and 4 overdue rows from August on 10 Oct). Each run
+ * now marks read any of those two kinds this run did not reproduce. Only
+ * these two types: their truth is recomputed in full on every run, so "not
+ * produced now" means "no longer true".
+ */
+/** Users whose alert queries failed this run — their bells are left alone. */
+const bellCheckUnsafe = new Set<string>();
+
+async function resolveStaleBells(
+  supabase: ReturnType<typeof createClient>,
+  userId: string,
+  alerts: PushAlert[]
+): Promise<void> {
+  if (bellCheckUnsafe.delete(userId)) return;
+  const live = new Set(
+    alerts
+      .filter((a) => a.type === 'expiring_quote' || a.type === 'overdue_invoices')
+      .map((a) => `${a.type}:${a.referenceId}`)
+  );
+  const { data: unread } = await supabase
+    .from('user_notifications')
+    .select('id, type, metadata')
+    .eq('user_id', userId)
+    .eq('is_read', false)
+    .in('type', ['expiring_quote', 'overdue_invoices']);
+  const stale = (
+    (unread ?? []) as Array<{ id: string; type: string; metadata: { ref_id?: string } | null }>
+  )
+    .filter((n) => !live.has(`${n.type}:${n.metadata?.ref_id ?? ''}`))
+    .map((n) => n.id);
+  if (stale.length > 0) {
+    await supabase
+      .from('user_notifications')
+      .update({ is_read: true } as never)
+      .in('id', stale);
+  }
 }
 
 /**
@@ -442,20 +499,70 @@ async function buildAlertsForUser(
 
   // ── Overdue invoices (24h grace period, exclude paid/cancelled) ─────
   const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
-  const { data: overdueInvoices } = await supabase
+  const { data: overdueRaw, error: overdueErr } = await supabase
     .from('invoices')
-    .select('id, invoice_number, client_data, total, due_date, status')
+    // total_paid was read below (part-payment netting) but never selected,
+    // so it was always undefined and nothing was ever netted off.
+    .select('id, invoice_number, client_data, total, total_paid, due_date, status, quote_id')
     .eq('user_id', userId)
-    .not('status', 'in', '("paid","Paid","cancelled","Cancelled")')
+    // ELE-2035 — a DRAFT was never sent, so it cannot be overdue. SEB's
+    // "3 overdue invoices £797.70" (8 and 10 Oct) was two drafts and one paid
+    // deposit.
+    .not('status', 'in', '("paid","Paid","cancelled","Cancelled","draft","Draft")')
     // Belt-and-braces: some invoices keep status 'overdue' after being paid
     // (paid_at set, status never updated) — they must NOT inflate the total (ELE-1378).
     .is('paid_at', null)
     .not('due_date', 'is', null)
     .lt('due_date', yesterday)
     .is('deleted_at', null)
+    .order('due_date', { ascending: true })
     .limit(10);
 
-  if (overdueInvoices && overdueInvoices.length > 0) {
+  // ELE-2035 — a deposit (DEP-) invoice lives here, but the money for it is
+  // often recorded on its QUOTE instead (deposit_paid_at, or a payment that
+  // brought total_paid up to the deposit). The DEP- row is then never marked
+  // paid and alerted forever. Settled on the quote = not owed.
+  const depositQuoteIds = (overdueRaw ?? [])
+    .map((inv) => (inv as { quote_id?: string | null }).quote_id)
+    .filter((id): id is string => !!id);
+  const settledQuotes = new Map<
+    string,
+    { deposit_paid_at: string | null; total_paid: number | null; invoice_status: string | null }
+  >();
+  if (depositQuoteIds.length > 0) {
+    const { data: qs } = await supabase
+      .from('quotes')
+      .select('id, deposit_paid_at, total_paid, invoice_status')
+      .in('id', depositQuoteIds);
+    for (const q of (qs ?? []) as Array<{
+      id: string;
+      deposit_paid_at: string | null;
+      total_paid: number | null;
+      invoice_status: string | null;
+    }>) {
+      settledQuotes.set(q.id, q);
+    }
+  }
+  type OverdueRow = {
+    id: string;
+    invoice_number: string | null;
+    client_data: unknown;
+    total: number | null;
+    total_paid: number | null;
+    due_date: string | null;
+    status: string | null;
+    quote_id: string | null;
+  };
+  const overdueInvoices = ((overdueRaw ?? []) as unknown as OverdueRow[]).filter((inv) => {
+    const quoteId = (inv as { quote_id?: string | null }).quote_id;
+    if (!quoteId) return true;
+    const q = settledQuotes.get(quoteId);
+    if (!q) return true;
+    if (q.deposit_paid_at || q.invoice_status === 'paid') return false;
+    return Number(q.total_paid ?? 0) + 0.01 < Number(inv.total ?? 0);
+  });
+
+  if (overdueInvoices.length > 0) {
     // Net off part-payments — quote-invoices track `total_paid`, and an
     // invoice half-settled is not the full amount outstanding.
     const totalOwed = overdueInvoices.reduce(
@@ -523,7 +630,8 @@ async function buildAlertsForUser(
     .from('invoices')
     .select('id, total')
     .eq('user_id', userId)
-    .not('status', 'in', '("paid","Paid","cancelled","Cancelled")')
+    // A draft was never sent — no "due tomorrow" nudge for it (ELE-2035).
+    .not('status', 'in', '("paid","Paid","cancelled","Cancelled","draft","Draft")')
     .is('paid_at', null)
     .gte('due_date', tomorrowStart)
     .lt('due_date', dayAfterStart)
@@ -547,19 +655,40 @@ async function buildAlertsForUser(
 
   // ── Expiring quotes (within 3 days) ──────────────────────────────
   const threeDays = new Date(now.getTime() + 3 * 86400000).toISOString();
-  const { data: expiringQuotes } = await supabase
+  const { data: expiringQuotes, error: expiringErr } = await supabase
     .from('quotes')
     .select('id, quote_number, client_data, expiry_date, total')
     .eq('user_id', userId)
     .eq('status', 'sent')
+    // ELE-2035 — `status` stays 'sent' after the client (or the electrician)
+    // accepts or declines; only acceptance_status moves. Without these two
+    // lines an accepted, declined or already-invoiced quote kept firing
+    // "expires in 3 days, still unanswered" every morning (Ro, 8 and 10 Oct):
+    // 37 of the 136 live 'sent' quotes were already actioned.
+    .eq('acceptance_status', 'pending')
+    .or('invoice_raised.is.null,invoice_raised.eq.false')
     .not('expiry_date', 'is', null)
     .gt('expiry_date', today)
     .lt('expiry_date', threeDays)
     .is('deleted_at', null)
     .limit(5);
 
+  // A failed read is not "nothing to say" — don't let resolveStaleBells
+  // clear true bells on the back of it (review, 10 Oct).
+  if (overdueErr || expiringErr) bellCheckUnsafe.add(userId);
+
   for (const quote of expiringQuotes ?? []) {
     const clientName = (quote.client_data as Record<string, unknown>)?.name || 'A client';
+    // The window is "within 3 days", so say how many: "3 days" on a quote
+    // expiring tomorrow was wrong two days out of three.
+    const daysLeft = Math.max(
+      1,
+      Math.ceil(
+        (new Date(String((quote as Record<string, unknown>).expiry_date)).getTime() -
+          now.getTime()) /
+          86400000
+      )
+    );
     const quoteTotal = Number((quote as Record<string, unknown>).total ?? 0);
     const quoteValue = quoteTotal
       ? new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(quoteTotal)
@@ -567,7 +696,10 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'expiring_quote',
       referenceId: quote.id,
-      title: `${clientName}'s quote expires in 3 days`,
+      title:
+        daysLeft === 1
+          ? `${clientName}'s quote expires tomorrow`
+          : `${clientName}'s quote expires in ${daysLeft} days`,
       body: quoteValue ? `${quoteValue}, still unanswered` : 'Still unanswered',
       pushType: 'quote',
       data: { role, quoteId: quote.id },
@@ -1853,6 +1985,7 @@ serve(async (req: Request): Promise<Response> => {
         }
 
         const alerts = await buildAlertsForUser(supabase, userId, role);
+        await resolveStaleBells(supabase, userId, alerts);
 
         // ── Generate "Your Day" morning briefing ──────────────────────
         if (alerts.length > 0) {

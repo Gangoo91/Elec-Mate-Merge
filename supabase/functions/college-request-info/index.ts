@@ -14,6 +14,11 @@
  *
  * No auth — public form. Rate-limit at the edge proxy if abuse appears.
  *
+ * ELE-1924 (10 Oct 2026): a college request is also kept in
+ * public.college_access_requests (with provider type, rough learner count and
+ * programmes) so Admin → Colleges → Hub colleges lists it. Best effort: a
+ * failed insert never fails the form.
+ *
  * Backward compatible: callers that omit `audience` default to 'college' and
  * may send the org as `college` (the original field) — existing ForCollegesPage
  * keeps working unchanged.
@@ -25,7 +30,7 @@
  *  - FOUNDER_NOTIFY_EMAIL (defaults to founder@elec-mate.com)
  */
 
-import { serve, corsHeaders } from '../_shared/deps.ts';
+import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 
 import { withSentry } from '../_shared/sentry.ts';
 const BREVO_CONTACTS_ENDPOINT = 'https://api.brevo.com/v3/contacts';
@@ -67,6 +72,12 @@ interface Payload {
   role?: string;
   phone?: string;
   message?: string;
+  /** ELE-1924: fe_college | itp | employer_provider. */
+  provider_type?: string;
+  /** ELE-1924: roughly how many learners. */
+  learner_estimate?: number | string;
+  /** ELE-1924: which programmes, free text. */
+  programmes?: string;
   /** Optional override for the Brevo SIGNUP_SOURCE attribute. */
   signup_source?: string;
   /** Optional UTM block from the landing page */
@@ -285,6 +296,35 @@ serve(withSentry('college-request-info', async (req) => {
         }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
+    }
+
+    // ELE-1924: keep the college request in the database too (best effort).
+    if (audience === 'college') {
+      const providerType = ['fe_college', 'itp', 'employer_provider'].includes(String(body.provider_type))
+        ? String(body.provider_type)
+        : null;
+      const est = parseInt(String(body.learner_estimate ?? ''), 10);
+      try {
+        const url = Deno.env.get('SUPABASE_URL');
+        const key = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+        if (url && key) {
+          const admin = createClient(url, key, { auth: { persistSession: false } });
+          const { error: insErr } = await admin.from('college_access_requests').insert({
+            name: name.slice(0, 120),
+            email,
+            organisation: organisation.slice(0, 160),
+            role: role || null,
+            provider_type: providerType,
+            learner_estimate: Number.isFinite(est) && est >= 0 && est <= 100000 ? est : null,
+            programmes: (body.programmes ?? '').trim().slice(0, 300) || null,
+            message: message || null,
+            utm: body.utm ?? {},
+          });
+          if (insErr) console.warn('[college-request-info] request insert failed', insErr.message);
+        }
+      } catch (err) {
+        console.warn('[college-request-info] request insert threw', err);
+      }
     }
 
     // Notify the founder. Fire-and-forget — even if the SMTP send fails,

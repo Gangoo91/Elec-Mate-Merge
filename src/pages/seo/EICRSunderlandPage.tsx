@@ -84,7 +84,7 @@ const faqs = [
   {
     question: 'Does BS 7671:2018+A4:2026 affect what must appear on an EICR in Sunderland?',
     answer:
-      'Yes. The A4:2026 amendment introduced Reg 133.1.3, which requires certain equipment usage — including the presence or absence of surge protective devices (SPDs) and arc fault detection devices (AFDDs) — to be recorded on the appropriate Part 6 electrical certification. The Appendix 6 model forms have been updated to include dedicated SPD and AFDD fields. An EICR produced in Sunderland from 2026 onwards must record AFDD status on qualifying circuits to be considered compliant with BS 7671:2018+A4:2026. Landlords receiving an updated report should check that the electrician is working to the current edition.',
+      'Yes. The Appendix 6 model forms have included dedicated fields for recording SPD and AFDD details since Amendment 2:2022, and the current condition report schedule of inspections asks the inspector to confirm that any AFDDs are operational. An EICR produced in Sunderland should therefore record AFDD status on qualifying circuits. Landlords receiving an updated report should check that the electrician is working to the current edition.',
   },
 ];
 
@@ -168,9 +168,9 @@ const sections = [
               <div>
                 <p className="font-bold text-white mb-1">Potentially dangerous</p>
                 <p className="text-white text-sm leading-relaxed">
-                  Not immediately dangerous, but urgent remedial action is required. Makes the report
-                  Unsatisfactory; landlords must complete rectification within 28 days under the 2020
-                  Regulations.
+                  Not immediately dangerous, but urgent remedial action is required. Makes the
+                  report Unsatisfactory; landlords must complete rectification within 28 days under
+                  the 2020 Regulations.
                 </p>
               </div>
             </div>
@@ -199,7 +199,8 @@ const sections = [
                 <p className="font-bold text-white mb-1">Further investigation required</p>
                 <p className="text-white text-sm leading-relaxed">
                   An issue exists that cannot be fully assessed without additional investigation. An
-                  FI on its own also makes the report Unsatisfactory and should be arranged promptly.
+                  FI on its own also makes the report Unsatisfactory and should be arranged
+                  promptly.
                 </p>
               </div>
             </div>
@@ -495,9 +496,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Lighting circuits without RCD protection (A4:2026):</strong> Reg 411.3.4 of
-                BS 7671:2018+A4:2026 requires that AC final circuits supplying luminaires in
-                domestic premises are protected by a 30&nbsp;mA RCD. Many older consumer units in
+                <strong>Lighting circuits without RCD protection (since BS 7671:2018):</strong> Reg
+                411.3.4 of BS 7671:2018+A4:2026 requires that AC final circuits supplying luminaires
+                in domestic premises are protected by a 30&nbsp;mA RCD. Many older consumer units in
                 Sunderland's Victorian and Edwardian stock protect lighting circuits by MCB only,
                 with no RCD. An EICR inspector will record this as a defect, and rectification
                 typically means a full consumer unit replacement — not just adding an individual
@@ -517,7 +518,8 @@ const sections = [
                 currents. Where a consumer unit replacement is triggered by missing RCD protection,
                 the inspector will also note AFDD provision (or absence) on qualifying circuits.
                 Landlords and electricians in Sunderland should factor AFDD fitment into consumer
-                unit upgrade quotes where the A4:2026 recommendation applies.
+                unit upgrade quotes where the Reg 421.1.7 recommendation applies, and treat AFDDs as
+                required on socket-outlet circuits up to 32&nbsp;A in HMOs (since A2:2022).
               </span>
             </li>
           </ul>
@@ -629,18 +631,15 @@ const sections = [
             <div className="flex items-start gap-4">
               <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">
-                  A4:2026: AFDD and Certification Fields
-                </h4>
+                <h4 className="font-bold text-white mb-1">AFDD and SPD Certification Fields</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Since A4:2026, Reg 133.1.3 requires that SPD and AFDD provision (or absence) is
-                  recorded on the appropriate Part 6 certification. The Appendix 6 model forms have
-                  been updated to include dedicated SPD and AFDD fields. Electricians completing
-                  EICRs in Sunderland should ensure their report records AFDD status on qualifying
-                  circuits — an omission makes the report non-compliant with
-                  BS&nbsp;7671:2018+A4:2026. Reg 421.1.7 recommends AFDD installation on AC final
-                  circuits where arc fault fire risk is a concern; where not fitted, the inspector
-                  must note the absence.
+                  Since A2:2022, the Appendix 6 model forms have included dedicated fields for
+                  recording the details of SPDs and AFDDs. Electricians completing EICRs in
+                  Sunderland should make sure the report records AFDD status on qualifying circuits.
+                  Reg 421.1.7 requires AFDDs on socket-outlet circuits up to 32&nbsp;A in high rise
+                  residential buildings, HMOs, purpose-built student accommodation and care homes,
+                  and recommends them elsewhere; where they are required but not fitted, the
+                  inspector should record the absence.
                 </p>
               </div>
             </div>
@@ -666,7 +665,7 @@ export default function EICRSunderlandPage() {
       title="EICR Sunderland: Electrical Inspection Guide"
       description="EICR requirements for Sunderland landlords and homeowners. Legal obligations under the 2020 Regulations, Sunderland City Council enforcement."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

@@ -303,7 +303,7 @@ export const checkZsCompliance = (
   }
 
   /*
-   * Lighting circuits in domestic premises — new at A4:2026.
+   * Lighting circuits in domestic premises (a requirement since BS 7671:2018).
    *
    * Reg 411.3.4 requires additional protection by a 30 mA RCD for AC final
    * circuits supplying luminaires within domestic (household) premises. Until

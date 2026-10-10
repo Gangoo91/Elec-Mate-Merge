@@ -4,7 +4,7 @@ const traditionalMethods = [
   {
     title: 'College Block Release',
     colour: 'text-elec-yellow',
-    border: 'border-elec-yellow/35',
+    border: 'border-white/[0.08]',
     desc: 'Full-time attendance at college for concentrated periods (typically 1-2 weeks). Intensive learning with dedicated facilities and expert instructors.',
     pros: [
       'Deep focus without work distractions',
@@ -60,7 +60,7 @@ const modernApproaches = [
   {
     title: 'Blended Learning',
     colour: 'text-elec-yellow',
-    border: 'border-elec-yellow/35',
+    border: 'border-white/[0.08]',
     desc: 'Combination of face-to-face and digital learning. Interactive online modules complemented by practical workshops and assessments.',
     pros: [
       'Flexible — learn theory online, practise in workshops',
@@ -78,7 +78,7 @@ const modernApproaches = [
   {
     title: 'Virtual Reality Training',
     colour: 'text-elec-yellow',
-    border: 'border-elec-yellow/35',
+    border: 'border-white/[0.08]',
     desc: 'Immersive simulation environments for hazardous scenario training. Safe practice of high-risk procedures and fault-finding techniques.',
     pros: [
       'Practise dangerous scenarios safely (e.g. fault finding on live systems)',
@@ -96,7 +96,7 @@ const modernApproaches = [
   {
     title: 'Mobile Learning',
     colour: 'text-elec-yellow',
-    border: 'border-elec-yellow/35',
+    border: 'border-white/[0.08]',
     desc: 'Smartphone and tablet-based learning platforms. Micro-learning modules for flexible study during paid working time.',
     pros: [
       'Learn anywhere — on the van, in the cabin, at home',
@@ -159,161 +159,160 @@ const providerCriteria = [
     ],
   },
 ];
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const DeliveryPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · OJT"
-        title="Delivery Methods"
-        backTo="/apprentice/toolbox/off-job-training-guide"
-      />
-      <HubBody>
-        {/* Traditional Methods */}
-        <div className="space-y-3">
-          <HubSectionHeading>Traditional methods</HubSectionHeading>
+    <GuidePage
+      section="Apprentice · OJT"
+      area="Off-the-job training"
+      title="Delivery Methods"
+      backTo="/apprentice/toolbox/off-job-training-guide"
+    >
+      {/* Traditional Methods */}
+      <div className="space-y-3">
+        <CollegeHeading>Traditional methods</CollegeHeading>
 
-          {traditionalMethods.map((method) => (
-            <div
-              key={method.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 space-y-3">
-                <h3 className="font-medium text-sm text-white">{method.title}</h3>
-                <p className="text-white text-sm">{method.desc}</p>
+        {traditionalMethods.map((method) => (
+          <div
+            key={method.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4 space-y-3">
+              <h3 className="font-medium text-sm text-white">{method.title}</h3>
+              <p className="text-white text-sm">{method.desc}</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
-                    <ul className="space-y-1">
-                      {method.pros.map((pro) => (
-                        <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                          {pro}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
-                    <ul className="space-y-1">
-                      {method.cons.map((con) => (
-                        <li key={con} className="flex items-start gap-1.5 text-xs text-white">
-                          <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
-                          {con}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
+                  <ul className="space-y-1">
+                    {method.pros.map((pro) => (
+                      <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                        {pro}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
+                  <ul className="space-y-1">
+                    {method.cons.map((con) => (
+                      <li key={con} className="flex items-start gap-1.5 text-xs text-white">
+                        <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
+                        {con}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
-        {/* Modern Approaches */}
-        <div className="space-y-3">
-          <HubSectionHeading>Modern approaches</HubSectionHeading>
+      {/* Modern Approaches */}
+      <div className="space-y-3">
+        <CollegeHeading>Modern approaches</CollegeHeading>
 
-          {modernApproaches.map((method) => (
-            <div
-              key={method.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 space-y-3">
-                <h3 className="font-medium text-sm text-white">{method.title}</h3>
-                <p className="text-white text-sm">{method.desc}</p>
+        {modernApproaches.map((method) => (
+          <div
+            key={method.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4 space-y-3">
+              <h3 className="font-medium text-sm text-white">{method.title}</h3>
+              <p className="text-white text-sm">{method.desc}</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
-                    <ul className="space-y-1">
-                      {method.pros.map((pro) => (
-                        <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                          {pro}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
-                    <ul className="space-y-1">
-                      {method.cons.map((con) => (
-                        <li key={con} className="flex items-start gap-1.5 text-xs text-white">
-                          <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
-                          {con}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
+                  <ul className="space-y-1">
+                    {method.pros.map((pro) => (
+                      <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                        {pro}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
+                  <ul className="space-y-1">
+                    {method.cons.map((con) => (
+                      <li key={con} className="flex items-start gap-1.5 text-xs text-white">
+                        <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
+                        {con}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
+      </div>
+
+      {/* Remote Learning Tips */}
+      <div className="space-y-3">
+        <CollegeHeading>Remote learning tips</CollegeHeading>
+
+        <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+          <div className="sm:p-5 space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <Lightbulb className="h-4 w-4 text-amber-400" />
+              <p className="text-white text-sm font-medium">
+                Getting the most from online sessions
+              </p>
+            </div>
+            <ul className="space-y-2">
+              {remoteLearningTips.map((tip) => (
+                <li key={tip} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
+      </div>
 
-        {/* Remote Learning Tips */}
-        <div className="space-y-3">
-          <HubSectionHeading>Remote learning tips</HubSectionHeading>
+      {/* Provider Selection */}
+      <div className="space-y-3">
+        <CollegeHeading>Provider selection criteria</CollegeHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-            <div className="sm:p-5 space-y-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Lightbulb className="h-4 w-4 text-amber-400" />
-                <p className="text-white text-sm font-medium">
-                  Getting the most from online sessions
-                </p>
-              </div>
-              <ul className="space-y-2">
-                {remoteLearningTips.map((tip) => (
-                  <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {tip}
+        {providerCriteria.map((section) => (
+          <div
+            key={section.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4">
+              <h3 className="text-elec-yellow font-semibold text-sm mb-2">{section.title}</h3>
+              <ul className="space-y-1">
+                {section.items.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-elec-yellow mt-0.5">·</span>
+                    {item}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-        </div>
-
-        {/* Provider Selection */}
-        <div className="space-y-3">
-          <HubSectionHeading>Provider selection criteria</HubSectionHeading>
-
-          {providerCriteria.map((section) => (
-            <div
-              key={section.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4">
-                <h3 className="text-elec-yellow font-semibold text-sm mb-2">{section.title}</h3>
-                <ul className="space-y-1">
-                  {section.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-white">
-                      <span className="text-elec-yellow/70 mt-0.5">·</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      </HubBody>
-    </HubPage>
+        ))}
+      </div>
+    </GuidePage>
   );
 };
 

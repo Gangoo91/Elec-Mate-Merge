@@ -23,7 +23,7 @@ export const QuickReferenceCard: React.FC<QuickReferenceCardProps> = ({
   className,
 }) => {
   return (
-    <Card className={cn('border-elec-yellow/30 bg-elec-yellow/5', className)}>
+    <Card className={cn('border-white/[0.14] bg-white/[0.06]', className)}>
       <CardHeader className="pb-3 sm:pb-4">
         <CardTitle className="text-sm sm:text-base md:text-lg text-elec-yellow flex items-center gap-2">
           {icon || <Info className="h-4 w-4 sm:h-5 sm:w-5" />}

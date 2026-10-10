@@ -9,7 +9,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -194,20 +193,18 @@ const QualificationConfirmationDialog = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
         <div className="flex flex-col h-full">
           {/* Drag handle */}
-          <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2 flex-shrink-0" />
+          <div className="w-12 h-1 bg-white/15 rounded-full mx-auto mt-3 mb-2 flex-shrink-0" />
 
           {/* Header */}
           <SheetHeader className="px-5 pb-4 flex-shrink-0">
-            <div className="flex items-center gap-2 mb-1">
-              <Badge className="bg-elec-yellow text-black font-semibold text-xs">
-                {qualification.level}
-              </Badge>
-              <span className="text-xs text-white">{qualification.awarding_body}</span>
-            </div>
-            <SheetTitle className="text-left text-lg leading-tight">
+            <p className="mb-1 text-[13px] font-medium text-white">
+              Level {qualification.level}
+              {qualification.awarding_body ? ` · ${qualification.awarding_body}` : ''}
+            </p>
+            <SheetTitle className="pr-10 text-left text-[20px] font-semibold leading-tight text-white">
               {qualification.title}
             </SheetTitle>
           </SheetHeader>
@@ -215,7 +212,7 @@ const QualificationConfirmationDialog = ({
           {/* Stats bar — three even cells, one accent colour (house rule:
               no rainbow icons), hairline-divided like every other stat strip */}
           <div className="px-5 pb-4 flex-shrink-0">
-            <div className="grid grid-cols-3 gap-[2px] bg-black border border-white/[0.08] rounded-xl overflow-hidden">
+            <div className="grid grid-cols-3 gap-px bg-white/[0.08] border border-white/[0.08] rounded-xl overflow-hidden">
               {[
                 { value: units.length, label: 'Units' },
                 { value: totalLOs, label: 'Outcomes' },
@@ -223,14 +220,12 @@ const QualificationConfirmationDialog = ({
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="bg-white/[0.06] px-2 py-2.5 flex flex-col items-center justify-center gap-0.5"
+                  className="bg-[hsl(0_0%_11%)] px-3 py-3 flex flex-col items-start justify-center gap-1"
                 >
-                  <span className="text-[16px] font-semibold tabular-nums leading-none text-white">
+                  <span className="text-[20px] font-semibold tabular-nums leading-none text-white">
                     {s.value}
                   </span>
-                  <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white">
-                    {s.label}
-                  </span>
+                  <span className="text-[13px] font-medium text-white">{s.label}</span>
                 </div>
               ))}
             </div>
@@ -240,9 +235,7 @@ const QualificationConfirmationDialog = ({
           <div className="flex-1 overflow-y-auto px-5 pb-4 space-y-5">
             {/* Units accordion */}
             <div className="space-y-3">
-              <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
-                Course Units
-              </h4>
+              <h4 className="text-[15px] font-semibold text-white">Course units</h4>
 
               {loadingReqs ? (
                 <div className="flex items-center justify-center py-8">
@@ -267,8 +260,7 @@ const QualificationConfirmationDialog = ({
                             'w-full text-left p-3.5 rounded-xl transition-all',
                             'bg-white/[0.03] border border-white/[0.08]',
                             'hover:border-white/[0.15] active:scale-[0.99] touch-manipulation',
-                            expandedUnits.has(unit.unitCode) &&
-                              'border-elec-yellow/30 bg-white/[0.05]'
+                            expandedUnits.has(unit.unitCode) && 'border-white/[0.2] bg-white/[0.05]'
                           )}
                         >
                           <div className="flex items-start gap-3">
@@ -290,7 +282,7 @@ const QualificationConfirmationDialog = ({
                               <p className="text-sm font-semibold text-white leading-tight">
                                 {unit.unitTitle}
                               </p>
-                              <p className="text-xs text-white mt-1">
+                              <p className="text-[13px] text-white mt-1">
                                 {unit.unitCode} · {unit.loCount} outcomes · {unit.acCount} ACs
                               </p>
                             </div>
@@ -301,18 +293,16 @@ const QualificationConfirmationDialog = ({
                         <div className="ml-4 mr-1 mt-2 mb-1 space-y-3 text-left">
                           {unit.learningOutcomes.map((lo) => (
                             <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-1.5">
-                              <p className="text-xs font-medium text-white text-left">
+                              <p className="text-[13px] font-medium text-white text-left">
                                 LO{lo.loNumber}: {lo.loText}
                               </p>
                               <div className="space-y-1 ml-3">
                                 {lo.acs.map((ac) => (
                                   <div
                                     key={`${unit.unitCode}-${ac.code}`}
-                                    className="flex items-start gap-2 text-xs text-white text-left"
+                                    className="flex items-start gap-2 text-[13px] text-white text-left"
                                   >
-                                    <span className="text-elec-yellow/70 flex-shrink-0 mt-px">
-                                      •
-                                    </span>
+                                    <span className="text-white flex-shrink-0 mt-px">•</span>
                                     <span className="text-left">
                                       <span className="font-medium text-white">{ac.code}</span>{' '}
                                       {ac.text}
@@ -350,7 +340,7 @@ const QualificationConfirmationDialog = ({
                     variant="outline"
                     size="sm"
                     onClick={() => setQuickDate(months)}
-                    className="flex-1 text-xs h-11 touch-manipulation active:scale-95 border-white/15 bg-white/[0.04]"
+                    className="flex-1 text-[13px] h-11 touch-manipulation active:scale-95 border-white/15 bg-white/[0.04]"
                   >
                     <Clock className="h-3 w-3 mr-1" />
                     {label}
@@ -366,7 +356,7 @@ const QualificationConfirmationDialog = ({
                 className="bg-background border-white/15 h-11 touch-manipulation"
               />
 
-              <p className="text-xs text-white">
+              <p className="text-[13px] text-white">
                 Set a goal to track your progress. You can change this later.
               </p>
             </div>

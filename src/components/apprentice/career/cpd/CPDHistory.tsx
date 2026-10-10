@@ -73,10 +73,8 @@ const CPDHistory = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Filter CPD records
-        </span>
+      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Filter CPD records</span>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
           <div className="relative md:col-span-2">
             {!searchTerm && (
@@ -141,12 +139,12 @@ const CPDHistory = () => {
             </span>
             <span>
               <span className="text-white">Total: </span>
-              <span className="text-white font-mono">{totalHours} hours</span>
+              <span className="text-white">{totalHours} hours</span>
             </span>
           </div>
           <Button
             variant="outline"
-            className="h-10 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             disabled={filteredEntries.length === 0}
           >
             <Download className="mr-2 h-4 w-4" />
@@ -163,7 +161,7 @@ const CPDHistory = () => {
       ) : filteredEntries.length === 0 ? (
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center space-y-2">
           <h3 className="text-[18px] font-semibold tracking-tight text-white">No entries match.</h3>
-          <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto">
+          <p className="text-[14px] leading-relaxed text-white max-w-md mx-auto">
             Loosen the filters or clear the search to widen the results.
           </p>
         </div>
@@ -184,22 +182,22 @@ const CPDHistory = () => {
                       )}
                     </div>
                     <div className="flex flex-wrap gap-1.5">
-                      <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                      <span className="text-[12.5px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                         {entry.is_verified ? 'Verified' : 'Pending'}
                       </span>
                       {entry.evidence_files && entry.evidence_files.length > 0 && (
-                        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                        <span className="text-[12.5px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                           Evidence
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                  <div className="flex flex-wrap items-center gap-1.5 text-[12.5px]">
                     <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {format(new Date(entry.date_completed), 'dd MMM yyyy')}
                     </span>
-                    <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                    <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {entry.hours} hours
                     </span>
                     <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
@@ -212,12 +210,10 @@ const CPDHistory = () => {
 
                   {entry.learning_outcomes && entry.learning_outcomes.length > 0 && (
                     <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-2.5 space-y-1">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                      <span className="text-[13px] font-semibold text-white">
                         Learning outcomes
                       </span>
-                      <p className="text-[12px] text-white">
-                        {entry.learning_outcomes.join(', ')}
-                      </p>
+                      <p className="text-[12px] text-white">{entry.learning_outcomes.join(', ')}</p>
                     </div>
                   )}
                 </div>
@@ -225,7 +221,7 @@ const CPDHistory = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-10 w-10 p-0 border-white/15 text-white hover:bg-white/[0.05] flex-shrink-0 touch-manipulation"
+                  className="h-11 w-10 p-0 border-white/15 text-white hover:bg-white/[0.05] flex-shrink-0 touch-manipulation"
                 >
                   <Eye className="h-4 w-4" />
                 </Button>

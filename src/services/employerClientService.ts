@@ -198,46 +198,147 @@ export const deleteClient = async (id: string): Promise<void> => {
   }
 };
 
-/** Find an existing client by (case-insensitive) name for this firm, or create one. */
-export const findOrCreateClientByName = async (name: string): Promise<EmployerClient> => {
+/**
+ * ELE-2065 §3A #14: the firm's clients that look like this one, strongest
+ * first: same email, same phone, same name once tidied (titles, spacing and
+ * punctuation ignored), then a close spelling. `exact` means it is safe to link
+ * without asking (no clash of two different emails). Read-only.
+ */
+export type ClientMatchReason = 'email' | 'phone' | 'name' | 'similar';
+export interface ClientMatch {
+  id: string;
+  name: string;
+  company_name: string | null;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
+  reason: ClientMatchReason;
+  exact: boolean;
+}
+
+export const findClientMatches = async (input: {
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+}): Promise<ClientMatch[]> => {
+  const name = (input.name ?? '').trim();
+  const email = (input.email ?? '').trim();
+  const phone = (input.phone ?? '').trim();
+  if (!name && !email && !phone) return [];
+  const employerId = await actingEmployerId();
+  const { data, error } = await db.rpc('match_firm_client', {
+    p_firm: employerId,
+    p_name: name || null,
+    p_email: email || null,
+    p_phone: phone || null,
+  });
+  if (error) throw error;
+  return (data ?? []) as ClientMatch[];
+};
+
+/** Groups of the firm's clients that share an email, a phone or a tidied name. */
+export interface ClientDuplicateGroup {
+  reason: 'email' | 'phone' | 'name';
+  clients: Array<{
+    id: string;
+    name: string;
+    email: string | null;
+    phone: string | null;
+    created_at: string;
+  }>;
+}
+
+export const getClientDuplicates = async (): Promise<ClientDuplicateGroup[]> => {
+  const employerId = await actingEmployerId();
+  const { data, error } = await db.rpc('get_firm_client_duplicates', { p_firm: employerId });
+  if (error) throw error;
+  return (data ?? []) as ClientDuplicateGroup[];
+};
+
+/**
+ * Find this firm's client for a record, or create one. Matches on email or
+ * phone first, then the tidied name, and only links on its own when that is
+ * safe (findClientMatches `exact`). A new client keeps the email and phone it
+ * was typed with, so the next match can find it.
+ */
+export const findOrCreateClientByName = async (
+  name: string,
+  contact?: { email?: string | null; phone?: string | null; address?: string | null }
+): Promise<EmployerClient> => {
   const trimmed = name.trim();
   const employerId = await actingEmployerId();
-  const { data: existing } = await db
-    .from('customers')
-    .select('*')
-    .eq('user_id', employerId)
-    .ilike('name', trimmed)
-    .limit(1)
-    .maybeSingle();
+  let matchId: string | null = null;
+  try {
+    const matches = await findClientMatches({
+      name: trimmed,
+      email: contact?.email,
+      phone: contact?.phone,
+    });
+    matchId = matches.find((m) => m.exact)?.id ?? null;
+  } catch {
+    // Fall back to the old exact-name lookup below.
+  }
+  const { data: existing } = matchId
+    ? await db.from('customers').select('*').eq('id', matchId).maybeSingle()
+    : await db
+        .from('customers')
+        .select('*')
+        .eq('user_id', employerId)
+        .ilike('name', trimmed)
+        .limit(1)
+        .maybeSingle();
   if (existing) return toClient(existing);
-  return createClient({
-    name: trimmed,
+  return createClient(newClientInput(trimmed, contact));
+};
+
+const newClientInput = (
+  name: string,
+  contact?: { email?: string | null; phone?: string | null; address?: string | null }
+): EmployerClientInput => {
+  const email = (contact?.email ?? '').trim();
+  return {
+    name: name.trim(),
     company_name: null,
-    email: null,
-    phone: null,
-    address: null,
+    email: /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? email : null,
+    phone: (contact?.phone ?? '').trim() || null,
+    address: (contact?.address ?? '').trim() || null,
     notes: null,
-  });
+  };
 };
 
 /** Link a just-created record to a client, creating the client from the
  *  free-text name if needed. Fire-and-forget friendly. Quotes and invoices are
- *  rows in `quotes` (customer_id); jobs use employer_jobs.customer_id. */
+ *  rows in `quotes` (customer_id); jobs use employer_jobs.customer_id.
+ *  ELE-2065: pass `clientId` when the person picked an existing client
+ *  ("This looks like an existing client"), and the contact details so the
+ *  match can use email and phone, not just the name. */
 export const linkRecordToClient = async (
   table: 'employer_jobs' | 'quotes',
   recordId: string,
-  clientName: string | null | undefined
+  clientName: string | null | undefined,
+  opts?: {
+    clientId?: string | null;
+    /** The person said "No, it's a new client": never link to a match. */
+    forceNew?: boolean;
+    email?: string | null;
+    phone?: string | null;
+    address?: string | null;
+  }
 ): Promise<string | null> => {
   const name = (clientName ?? '').trim();
-  if (!recordId || !name) return null;
-  const client = await findOrCreateClientByName(name);
+  if (!recordId || (!name && !opts?.clientId)) return null;
+  const clientId = opts?.clientId
+    ? opts.clientId
+    : opts?.forceNew
+      ? (await createClient(newClientInput(name, opts))).id
+      : (await findOrCreateClientByName(name, opts)).id;
   const target = table === 'employer_jobs' ? 'employer_jobs' : 'quotes';
-  await db.from(target).update({ customer_id: client.id }).eq('id', recordId);
+  await db.from(target).update({ customer_id: clientId }).eq('id', recordId);
   await db
     .from('customers')
     .update({ last_activity_at: new Date().toISOString() })
-    .eq('id', client.id);
-  return client.id;
+    .eq('id', clientId);
+  return clientId;
 };
 
 // The client's linked records, for the detail hub (deep-linkable rows).

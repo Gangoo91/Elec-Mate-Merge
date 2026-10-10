@@ -40,7 +40,7 @@ export function InDevelopmentBanner({ section }: { section?: string }) {
 
   return (
     <div className="border-b border-white/[0.1] bg-white/[0.04]">
-      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-[1600px] items-center gap-3 px-4 sm:px-6 lg:px-8">
         <p className="min-w-0 flex-1 truncate py-2 text-[13px] text-white">
           <span className="font-semibold text-elec-yellow">Beta</span> · This page is still being
           built.{' '}

@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Testing, 9th Edition), and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const tnCBannedNewInstallsA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/tn-c-banned-new-installations-a4-2026',
@@ -440,7 +440,7 @@ export const tnCBannedNewInstallsA4Config: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
-      description: 'The complete overview of Amendment 4:2026 — AFDD requirements, TN-C-S (PME/PNB) split, new schedule columns, model form changes and the TN-C prohibition.',
+      description: 'The complete overview of Amendment 4:2026, including the TN-C-S (PME/PNB) split, Table 52.1, Chapter 57, model form changes and the TN-C prohibition.',
       icon: 'BookOpen',
       category: 'Guide',
     },

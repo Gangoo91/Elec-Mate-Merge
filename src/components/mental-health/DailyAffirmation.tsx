@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Heart, Quote, RefreshCw, Share2, Volume2, VolumeX } from 'lucide-react';
+import { Heart, RefreshCw, Share2, Volume2, VolumeX } from 'lucide-react';
 import { toast } from 'sonner';
 import { copyToClipboard } from '@/utils/clipboard';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
@@ -142,67 +142,59 @@ export const DailyAffirmation = () => {
     toast.success('Copied to clipboard');
   };
 
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-5">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/60 via-amber-400/60 to-elec-yellow/60 opacity-70" />
-      <div className="flex items-start gap-3">
-        <div className="shrink-0 mt-0.5">
-          <Quote className="h-4 w-4 text-white/85" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Daily affirmation
-            </span>
-            {isPersonalised && (
-              <span className="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full border bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25">
-                For you · today
-              </span>
-            )}
-          </div>
-          <p
-            className={`mt-2 text-[15px] sm:text-base text-white font-medium leading-snug transition-opacity ${
-              isRefreshing ? 'opacity-40' : 'opacity-100'
-            }`}
-          >
-            “{text}”
-          </p>
-        </div>
-      </div>
+  const iconBtn =
+    'flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.08] disabled:opacity-50';
 
-      <div className="flex items-center justify-end gap-1 mt-3">
+  return (
+    <div className="-mx-4 card-surface p-5 max-sm:!rounded-none max-sm:!border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+      {/* Sentence case, no spaced capitals or tinted badge (10 Oct). */}
+      <p className="text-[13px] font-semibold text-elec-yellow">
+        {isPersonalised ? 'Today’s thought, for you' : 'Today’s thought'}
+      </p>
+      <p
+        className={`mt-2 text-[17px] font-medium leading-snug text-white transition-opacity sm:text-[18px] ${
+          isRefreshing ? 'opacity-40' : 'opacity-100'
+        }`}
+      >
+        “{text}”
+      </p>
+
+      <div className="-mb-2 -ml-2.5 mt-2 flex items-center gap-1">
         <button
           onClick={handleLike}
-          className={`h-10 w-10 rounded-full flex items-center justify-center touch-manipulation hover:bg-white/[0.06] transition-colors ${
-            isLiked ? 'text-white/85' : 'text-white'
-          }`}
+          className={iconBtn}
           aria-label={isLiked ? 'Unlike' : 'Like'}
+          aria-pressed={isLiked}
         >
-          <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
+          <Heart
+            className={`h-[18px] w-[18px] ${isLiked ? 'fill-current text-elec-yellow' : ''}`}
+            strokeWidth={1.5}
+          />
         </button>
         <button
           onClick={handleSpeak}
-          className={`h-10 w-10 rounded-full flex items-center justify-center touch-manipulation hover:bg-white/[0.06] transition-colors ${
-            isSpeaking ? 'text-white/85' : 'text-white'
-          }`}
+          className={iconBtn}
           aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
         >
-          {isSpeaking ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+          {isSpeaking ? (
+            <VolumeX className="h-[18px] w-[18px]" strokeWidth={1.5} />
+          ) : (
+            <Volume2 className="h-[18px] w-[18px]" strokeWidth={1.5} />
+          )}
         </button>
-        <button
-          onClick={handleShare}
-          className="h-10 w-10 rounded-full flex items-center justify-center text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
-          aria-label="Share"
-        >
-          <Share2 className="h-4 w-4" />
+        <button onClick={handleShare} className={iconBtn} aria-label="Share">
+          <Share2 className="h-[18px] w-[18px]" strokeWidth={1.5} />
         </button>
         <button
           onClick={() => loadAffirmation(true)}
           disabled={isRefreshing}
-          className="h-10 w-10 rounded-full flex items-center justify-center text-white hover:bg-white/[0.06] transition-colors touch-manipulation disabled:opacity-50"
-          aria-label="Refresh"
+          className={iconBtn}
+          aria-label="Another one"
         >
-          <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+          <RefreshCw
+            className={`h-[18px] w-[18px] ${isRefreshing ? 'animate-spin' : ''}`}
+            strokeWidth={1.5}
+          />
         </button>
       </div>
     </div>

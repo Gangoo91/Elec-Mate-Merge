@@ -33,6 +33,7 @@ import {
   qualificationAcLines,
   GROUNDING_RULES,
   type LearnerContext,
+  callerFrom,
 } from '../_shared/learner-context.ts';
 
 const corsHeaders = {
@@ -151,12 +152,21 @@ async function loadContext(
   // Look up explicit ACs (with descriptions) when ac_codes provided
   let acTargets: AcEntry[] = [];
   if (body.ac_codes && body.ac_codes.length > 0 && qualificationCode) {
+    // A criterion code repeats across units ("2.1" is in most of them), so a
+    // code may carry its unit as "<unit>:<ac>" (the criteria gaps view sends
+    // that). A bare code still matches every unit, as before.
+    const wanted = body.ac_codes.map((c) => {
+      const i = c.indexOf(':');
+      return i > 0 ? { unit: c.slice(0, i).trim(), ac: c.slice(i + 1).trim() } : { unit: null, ac: c.trim() };
+    });
     const { data: rows } = await sb
       .from('qualification_requirements')
       .select('qualification_code, unit_code, ac_code, description')
       .eq('qualification_code', qualificationCode)
-      .in('ac_code', body.ac_codes);
-    acTargets = (rows ?? []) as AcEntry[];
+      .in('ac_code', [...new Set(wanted.map((w) => w.ac))]);
+    acTargets = ((rows ?? []) as AcEntry[]).filter((r) =>
+      wanted.some((w) => w.ac === r.ac_code && (w.unit === null || w.unit === r.unit_code))
+    );
   }
 
   // For single learner — surface their weakest ACs as a hint
@@ -855,11 +865,12 @@ Deno.serve(async (req) => {
     let richCtx: LearnerContext | null = null;
     let raggedAcsBlock: string[] = [];
     if (body.college_student_id) {
-      richCtx = await loadLearnerContext(sb, body.college_student_id);
+      richCtx = await loadLearnerContext(sb, body.college_student_id, { asCaller: callerFrom(req) });
       if (richCtx) {
         const seeds: string[] = [];
         if (body.topic) seeds.push(body.topic);
-        if (body.ac_codes && body.ac_codes.length > 0) seeds.push(...body.ac_codes);
+        if (body.ac_codes && body.ac_codes.length > 0)
+          seeds.push(...body.ac_codes.map((c) => c.replace(/^[^:]*:/, '')));
         seeds.push(...bs7671SeedQueries(richCtx));
         const [qualKit, raggedAcs] = await Promise.all([
           loadQualificationKit(sb, richCtx.course?.code ?? null),

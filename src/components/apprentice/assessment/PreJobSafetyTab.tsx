@@ -101,9 +101,7 @@ const PreJobSafetyTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Pre-job safety assessment
-        </span>
+        <span className="text-[13px] font-semibold text-white">Pre-job safety assessment</span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
           Electricity at Work Regulations 1989 & CDM 2015
         </h2>
@@ -113,12 +111,10 @@ const PreJobSafetyTab = () => {
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Progress
-          </span>
-          <span className="text-[12px] text-white font-mono">
+          <span className="text-[13px] font-semibold text-white">Progress</span>
+          <span className="text-[12px] text-white">
             {checkedItems.length}/{totalItems} · {Math.round(completionRate)}%
           </span>
         </div>
@@ -130,18 +126,16 @@ const PreJobSafetyTab = () => {
         </div>
         <div className="grid grid-cols-3 gap-2 pt-1">
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-2 text-center">
-            <div className="text-[14px] font-medium text-white font-mono">
-              {checkedItems.length}
-            </div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">Checked</div>
+            <div className="text-[14px] font-medium text-white">{checkedItems.length}</div>
+            <div className="text-[13px] text-white mt-0.5">Checked</div>
           </div>
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-2 text-center">
-            <div className="text-[14px] font-medium text-white font-mono">{totalItems}</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">Total</div>
+            <div className="text-[14px] font-medium text-white">{totalItems}</div>
+            <div className="text-[13px] text-white mt-0.5">Total</div>
           </div>
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-2 text-center">
-            <div className="text-[14px] font-medium text-white font-mono">15-20</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">Mins</div>
+            <div className="text-[14px] font-medium text-white">15-20</div>
+            <div className="text-[13px] text-white mt-0.5">Mins</div>
           </div>
         </div>
       </div>
@@ -155,10 +149,8 @@ const PreJobSafetyTab = () => {
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {category.category}
-              </span>
-              <span className="text-[12px] text-white font-mono">
+              <span className="text-[13px] font-semibold text-white">{category.category}</span>
+              <span className="text-[12px] text-white">
                 {categoryChecked}/{category.items.length}
               </span>
             </div>
@@ -199,24 +191,20 @@ const PreJobSafetyTab = () => {
         );
       })}
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Essential safety tips
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Essential safety tips</span>
         <div className="space-y-3">
           {safetyTips.map((tip, index) => (
             <div key={index} className="space-y-1">
               <p className="text-[14px] text-white">{tip.title}</p>
-              <p className="text-[13px] text-white leading-relaxed">{tip.content}</p>
+              <p className="text-[14px] text-white leading-relaxed">{tip.content}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Notes & observations
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Notes & observations</span>
         <MobileInput
           label="Safety notes"
           value={notes}
@@ -241,9 +229,7 @@ const PreJobSafetyTab = () => {
 
       {!allDone && (
         <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-            Assessment incomplete
-          </span>
+          <span className="text-[13px] font-semibold text-red-300">Assessment incomplete</span>
           <p className="text-[14px] text-white leading-relaxed">
             You must complete all safety checks before proceeding with electrical work.{' '}
             {totalItems - checkedItems.length} items remaining.
@@ -252,10 +238,8 @@ const PreJobSafetyTab = () => {
       )}
 
       {allDone && (
-        <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-            Assessment complete
-          </span>
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+          <span className="text-[13px] font-semibold text-elec-yellow">Assessment complete</span>
           <p className="text-[14px] text-white leading-relaxed">
             All safety checks have been verified. You may proceed with work while maintaining
             continuous vigilance.

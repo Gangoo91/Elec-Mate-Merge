@@ -18,6 +18,19 @@ export const DECLINE_REASONS = [
 
 export type DeclineReasonKey = (typeof DECLINE_REASONS)[number]['key'];
 
+/**
+ * ELE-2027 — the same keys, worded for the CLIENT declining from the quote
+ * link. 'no_response' is left out: someone replying has not gone quiet.
+ * reject_quote_by_token accepts exactly these keys (and 'other:<note>').
+ */
+export const CLIENT_DECLINE_REASONS: ReadonlyArray<{ key: DeclineReasonKey; label: string }> = [
+  { key: 'price', label: 'The price' },
+  { key: 'timing', label: 'The timing' },
+  { key: 'competitor', label: 'Going with someone else' },
+  { key: 'cancelled', label: 'No longer need the work' },
+  { key: 'other', label: 'Something else' },
+];
+
 const OTHER_PREFIX = 'other:';
 
 /** Build the stored value. A note is only kept for "Other". */

@@ -24,13 +24,13 @@ const ComplianceChecker = () => {
         },
         {
           id: 'minimum-wage',
-          text: 'Apprentice minimum wage compliance (£6.81/hour for under 19s or first year)',
+          text: 'Apprentice minimum wage compliance (£8.00/hour from April 2026 for under 19s or first year)',
           regulation: 'National Minimum Wage Act 1998',
           penalty: 'Fines up to £20,000 per apprentice',
         },
         {
           id: 'off-job-training',
-          text: '20% off-the-job training documented and tracked',
+          text: 'Off-the-job hours for the standard documented and tracked',
           regulation: 'Apprenticeship Funding Rules',
           penalty: 'Funding clawback',
         },
@@ -78,7 +78,7 @@ const ComplianceChecker = () => {
       items: [
         {
           id: 'progress-reviews',
-          text: 'Regular progress reviews documented (minimum every 12 weeks)',
+          text: 'Regular progress reviews documented (at least every 3 months)',
           regulation: 'Apprenticeship Funding Rules',
           penalty: 'Funding issues',
         },

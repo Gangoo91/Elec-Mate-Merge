@@ -412,7 +412,7 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
                 </CalculatorInputGrid>
 
                 {Number.isFinite(computeFaultCurrent) && computeFaultCurrent > 0 && (
-                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/20">
                     <div className="flex items-center gap-2 text-sm">
                       <Zap className="h-4 w-4 text-orange-400" />
                       <span className="text-white">Calculated fault current:</span>
@@ -467,7 +467,7 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
               the one thing on the card that looked like it came from a different
               design. Hierarchy comes from the rule and the type, per the system. */}
               <div className="border-t border-white/[0.1] pt-1">
-                <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 px-1 py-2 text-sm font-medium text-white hover:text-white/90 transition-colors touch-manipulation">
+                <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 px-1 py-2 text-sm font-medium text-white hover:text-white transition-colors touch-manipulation">
                   <span>Advanced Options</span>
                   <ChevronDown
                     className={cn(
@@ -564,7 +564,7 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
                     className={cn(
                       'p-3 rounded-lg border text-sm',
                       result.isCompliant
-                        ? 'bg-amber-500/5 border-amber-500/20'
+                        ? 'bg-white/[0.04] border-amber-500/20'
                         : 'bg-red-500/5 border-red-500/20'
                     )}
                   >

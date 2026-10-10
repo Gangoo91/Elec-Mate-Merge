@@ -1,474 +1,709 @@
 /**
- * Every mock exam you've sat (ELE-1815).
+ * Mock exam history — redesigned 10 Oct 2026.
  *
- * Per paper first — attempts, best, last, the trend and a way back in — then
- * every attempt in date order, each opening its review. Before this there was
- * no screen at all: a result was gone once its page closed.
+ * Andrew: "they should be able to see what they've done and where they are
+ * and how they can be better", "back filled with everyone's history".
+ *
+ * History now covers everything a learner has sat (useMockHistory): mock
+ * exams, the in-app topic tests and AM2 assessments that lived in their own
+ * tables, and — for 561 older mocks — topic results filled in from their
+ * quiz_results twin (migration 20261010120000).
+ *
+ * The page answers the three questions in order:
+ *   hero              one sentence on where you stand + the one next step
+ *   What you've done  sittings, papers, passes, time, and a 12-week rhythm
+ *   Where you are     the paper you're working on, then every paper's verdict
+ *   How to get better weakest topics with Study / Practise, what's due
+ *   Everything        Papers · Topics · Attempts (?tab= so Back returns to it)
  */
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BookOpen, ChevronRight, RotateCcw } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowRight, BookOpen, ChevronRight, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  Hairline,
+  ProgressRing,
+  SC_CARD,
+  SC_LIST,
+  SC_ROW,
+  ScStats,
+} from '@/components/study-centre/ui/StudyKit';
 import useSEO from '@/hooks/useSEO';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import {
   paperName,
   useMockHistory,
   useRevisionPile,
   useTopicStats,
-  type PileItem,
+  type MockAttemptRow,
 } from '@/hooks/study-centre/useMockHistory';
 import { retakePathFor, studyLinkFor } from '@/lib/study-centre/mockStudyLinks';
 import {
+  forecastDot,
+  forecastFor,
+  forecastText,
+  mainPaper,
+  recentAverage,
+  recentPassMark,
+  topicBar,
+} from '@/lib/study-centre/mockInsights';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  CollegeSectionTitle,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { HowToGetBetter } from '@/components/study-centre/insights/HowToGetBetter';
+import {
   Delta,
-  MH_CARD,
   ScoreBadge,
   Sparkline,
+  TrendChart,
+  fmtDuration,
   fmtWhen,
 } from '@/components/study-centre/mock-history/MockBits';
 
-export default function MockHistoryPage() {
-  useSEO('Mock exam history | Study Centre', 'Every mock exam you’ve sat, and what to revise.');
-  const navigate = useNavigate();
-  const { rows, papers, loading, error, signedIn } = useMockHistory(200);
-  // Full pile here (this page is where you plan revision): it feeds the weak
-  // spots as well as the count.
-  const pile = useRevisionPile();
+type Tab = 'papers' | 'topics' | 'attempts';
 
-  // Weak spots across every mock: the pile grouped by topic, most first, each
-  // with where to study it (Jack: "tell me what to revise").
-  const weakSpots = useMemo(() => {
-    const by = new Map<string, { topic: string; count: number; sample: PileItem }>();
-    for (const it of pile.items.filter((x) => x.due)) {
-      const topic = it.t || it.paper;
-      const cur = by.get(topic) ?? { topic, count: 0, sample: it };
-      cur.count += 1;
-      by.set(topic, cur);
-    }
-    return [...by.values()]
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 6)
-      .map((w) => ({
-        ...w,
-        link: studyLinkFor(w.sample.x ?? w.sample.examSlug, w.sample.s, w.sample.m, w.sample.t),
-      }));
-  }, [pile.items]);
+const KIND_LABEL: Record<string, string> = { test: 'Topic test', am2: 'AM2' };
 
-  // Accuracy per topic across every mock (ELE-1815 round 4) — a percentage
-  // of what was asked, not a count of misses. Attempts from before 7 Oct have
-  // no topic stats, so the pile grouping above stays as the fallback.
-  const topicStats = useTopicStats();
-  const topicRows = useMemo(() => {
-    const pileByTopic = new Map<string, number>();
-    for (const it of pile.items.filter((x) => x.due)) {
-      const t = it.t || it.paper;
-      pileByTopic.set(t, (pileByTopic.get(t) ?? 0) + 1);
-    }
-    return [...topicStats.stats]
-      .sort((a, b) => a.pct - b.pct || b.answered - a.answered)
-      .map((t) => ({
-        ...t,
-        toRevise: pileByTopic.get(t.topic) ?? 0,
-        link: studyLinkFor(t.examSlug, t.section, t.module, t.topic),
-      }));
-  }, [topicStats.stats, pile.items]);
-  const [showAllTopics, setShowAllTopics] = useState(false);
+const HELP: PageHelpContent = {
+  id: 'mock-exam-history',
+  title: 'Mock exam history',
+  what: 'Everything you’ve sat, on any device: mock exams, topic tests and AM2 practice. How each paper is going, your strongest and weakest topics, and what to do next.',
+  steps: [
+    {
+      title: 'What you’ve done',
+      body: 'Every sitting, how many passed and your study rhythm over the last 12 weeks.',
+    },
+    {
+      title: 'Where you are',
+      body: 'The paper you’re working on, with a pass forecast from your last three sittings, then a verdict for every paper.',
+    },
+    {
+      title: 'How to get better',
+      body: 'Your weakest topics across everything you’ve sat. Study opens the lesson; Practise drills those questions.',
+    },
+    {
+      title: 'Open any sitting',
+      body: 'Attempts lists every sitting. Recent mocks show each question you got wrong; older ones show how you did by topic.',
+    },
+  ],
+  legend: [
+    { swatch: 'bg-emerald-400', label: 'Pass, or a strong topic (75% or more)' },
+    { swatch: 'bg-sky-400', label: 'Just passing, or 60–74% on a topic' },
+    { swatch: 'bg-orange-400', label: 'Below the pass mark, or a topic to work on' },
+  ],
+};
 
-  const summary = useMemo(() => {
-    const last10 = rows.slice(0, 10);
+/** Sittings per week for the last 12 weeks (Monday starts), oldest first. */
+function weeklyRhythm(rows: MockAttemptRow[]) {
+  const now = new Date();
+  const monday = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - ((now.getDay() + 6) % 7)
+  );
+  return Array.from({ length: 12 }, (_, i) => {
+    const start = new Date(
+      monday.getFullYear(),
+      monday.getMonth(),
+      monday.getDate() - (11 - i) * 7
+    );
+    const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 7);
+    const n = rows.filter((r) => {
+      const t = new Date(r.created_at);
+      return t >= start && t < end;
+    }).length;
     return {
-      attempts: rows.length,
-      passes: rows.filter((r) => r.passed).length,
-      avg: last10.length
-        ? Math.round(last10.reduce((n, r) => n + r.percentage, 0) / last10.length)
-        : null,
+      label: start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
+      n,
+      current: i === 11,
     };
-  }, [rows]);
+  });
+}
+
+export default function MockHistoryPage() {
+  useSEO(
+    'Mock exam history | Study Centre',
+    'Everything you’ve sat, where you are, and how to get better.'
+  );
+  const navigate = useNavigate();
+  const [params, setParams] = useSearchParams();
+  const tab: Tab = (['papers', 'topics', 'attempts'] as const).includes(params.get('tab') as Tab)
+    ? (params.get('tab') as Tab)
+    : 'papers';
+  const setTab = (t: Tab) => setParams(t === 'papers' ? {} : { tab: t }, { replace: true });
+
+  const history = useMockHistory(500);
+  const { rows, papers, loading, error, signedIn } = history;
+  const pile = useRevisionPile({ countOnly: true });
+  const due = pile.count;
+  const topicStats = useTopicStats();
+  const [showAllTopics, setShowAllTopics] = useState(false);
+  const [showAllAttempts, setShowAllAttempts] = useState(false);
+
+  const hero = useMemo(() => mainPaper(papers, rows), [papers, rows]);
+  const heroForecast = hero
+    ? forecastFor(hero.trend, hero.last.pass_mark ?? 60, hero.last.total_questions)
+    : null;
+  const heroRetake = hero ? retakePathFor(hero.slug, hero.retakePath) : null;
+
+  const avg = recentAverage(rows, 10);
+  const passMark = recentPassMark(rows, 10);
+  const passes = rows.filter((r) => r.passed).length;
+  const minutes = Math.round(rows.reduce((s, r) => s + (r.time_taken_seconds || 0), 0) / 60);
+  const firstDate = rows.length ? rows[rows.length - 1].created_at : null;
+  const weeks = useMemo(() => weeklyRhythm(rows), [rows]);
+  const weekMax = Math.max(1, ...weeks.map((w) => w.n));
+  const activeWeeks = weeks.filter((w) => w.n > 0).length;
+
+  const topicRows = useMemo(
+    () =>
+      [...topicStats.stats]
+        .sort((a, b) => a.pct - b.pct || b.answered - a.answered)
+        .map((t) => ({ ...t, link: studyLinkFor(t.examSlug, t.section, t.module, t.topic) })),
+    [topicStats.stats]
+  );
+
+  // Every paper with a verdict, newest activity first.
+  const paperVerdicts = useMemo(
+    () =>
+      papers.map((p) => ({
+        ...p,
+        forecast: forecastFor(p.trend, p.last.pass_mark ?? 60, p.last.total_questions),
+        retake: retakePathFor(p.slug, p.retakePath),
+      })),
+    [papers]
+  );
+
+  const verdict = (() => {
+    if (!rows.length) return '';
+    const since = firstDate
+      ? new Date(firstDate).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+      : '';
+    const done = `${rows.length} ${rows.length === 1 ? 'sitting' : 'sittings'} across ${papers.length} ${papers.length === 1 ? 'paper' : 'papers'}${since ? ` since ${since}` : ''}.`;
+    if (avg === null) return done;
+    return avg >= passMark
+      ? `${done} Your recent average is ${avg}%, above the pass mark.`
+      : `${done} Your recent average is ${avg}%, ${passMark - avg} points under the ${passMark}% pass mark.`;
+  })();
+
+  const nextAction =
+    due > 0
+      ? {
+          label: `Revise ${due} wrong ${due === 1 ? 'answer' : 'answers'}`,
+          to: '/study-centre/mock-exams/revise',
+        }
+      : avg !== null && avg < passMark
+        ? { label: 'Sit a weak spots mock', to: '/study-centre/mock-exams/targeted' }
+        : heroRetake
+          ? { label: `Sit ${hero?.name ?? 'it'} again`, to: heroRetake }
+          : { label: 'Sit a mock', to: '/study-centre/mock-exams' };
+
+  const attempts = showAllAttempts ? rows : rows.slice(0, 25);
 
   return (
-    <HubPage>
+    <HubPage ground="landing">
       <HubMasthead section="Study Centre" title="Mock exam history" backTo="/study-centre" />
       <HubBody>
+        {/* ── Hero ───────────────────────────────────────────────────── */}
+        <section className="relative -mx-4 overflow-hidden card-landing max-sm:!rounded-none max-sm:!border-x-0 px-5 py-6 sm:mx-0 sm:rounded-3xl sm:px-8 sm:py-8">
+          <Hairline />
+          <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-10">
+            <div className="min-w-0">
+              <div className="flex items-start justify-between gap-3">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                  Mock exams
+                </p>
+                <PageHelpButton help={HELP} className="-mt-2 lg:hidden" />
+              </div>
+              <h1 className="mt-1.5 text-[30px] font-bold leading-[1.05] tracking-tight text-white sm:text-[40px]">
+                Your mock exam history
+              </h1>
+              <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-white">
+                {loading
+                  ? 'Loading everything you’ve sat…'
+                  : rows.length
+                    ? verdict
+                    : 'Everything you sit lands here: your score against the pass mark, how it’s moving, and what to work on.'}
+              </p>
+            </div>
+            {avg !== null && (
+              <div className="flex items-center gap-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
+                <ProgressRing
+                  pct={avg}
+                  colour={avg >= passMark ? '#34d399' : '#fb923c'}
+                  label={`Recent average ${avg}%, pass mark ${passMark}%`}
+                >
+                  <span className="text-[13px] font-semibold text-white">Average</span>
+                  <span className="text-[26px] font-black leading-none tabular-nums text-white">
+                    {avg}%
+                  </span>
+                  <span className="text-[12px] font-semibold text-white">pass {passMark}%</span>
+                </ProgressRing>
+                {/* The latest sitting beside the average, so the row is never half empty on a phone. */}
+                {rows[0] && (
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/study-centre/mock-exams/history/${rows[0].id}`)}
+                    className="group flex min-w-0 flex-1 flex-col items-start justify-center self-stretch rounded-2xl border border-white/[0.14] bg-white/[0.04] px-4 py-3 text-left transition-colors touch-manipulation hover:border-white/[0.3] active:bg-white/[0.1] lg:hidden"
+                  >
+                    <span className="text-[13px] font-semibold text-white">
+                      Last sitting · {fmtWhen(rows[0].created_at)}
+                    </span>
+                    <span
+                      className={cn(
+                        'mt-1 text-[26px] font-black leading-none tabular-nums',
+                        rows[0].passed ? 'text-emerald-400' : 'text-orange-400'
+                      )}
+                    >
+                      {Math.round(rows[0].percentage)}%
+                    </span>
+                    <span className="mt-1 line-clamp-2 text-[12.5px] font-medium leading-snug text-white">
+                      {paperName(rows[0])}
+                    </span>
+                  </button>
+                )}
+                <PageHelpButton help={HELP} className="hidden lg:inline-flex" />
+              </div>
+            )}
+            <div className="flex flex-col gap-2 sm:flex-row lg:col-start-1 lg:row-start-2">
+              <button
+                type="button"
+                onClick={() => navigate(nextAction.to)}
+                className={cn(COLLEGE_BTN_PRIMARY, 'h-12 px-5 text-[14.5px]')}
+              >
+                {nextAction.label}
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/study-centre/mock-exams')}
+                className={cn(COLLEGE_BTN, 'h-12 px-5')}
+              >
+                All mock exams
+              </button>
+            </div>
+          </div>
+        </section>
+
         {!signedIn ? (
-          <p className="text-[14px] text-white">Sign in to see your mock exam history.</p>
-        ) : loading ? (
-          <div className="flex justify-center py-16" aria-label="Loading">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
-          </div>
+          <p className={SC_CARD}>Sign in to see your mock exam history.</p>
         ) : error ? (
-          <p className="text-[14px] text-white">{error}</p>
-        ) : rows.length === 0 ? (
-          <div className={cn(MH_CARD, 'p-5')}>
-            <p className="text-[14px] leading-relaxed text-white">
-              No mock exams yet. Sit one and it lands here with every question you got wrong.
-            </p>
-            <button
-              type="button"
-              onClick={() => navigate('/study-centre/mock-exams')}
-              className="mt-3 h-11 rounded-xl bg-elec-yellow px-4 text-[14px] font-bold text-black touch-manipulation"
-            >
-              Choose a mock exam
-            </button>
+          <p className={SC_CARD}>{error}</p>
+        ) : loading ? (
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4" aria-busy>
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="h-[96px] animate-pulse rounded-2xl card-landing" />
+            ))}
           </div>
-        ) : (
+        ) : rows.length === 0 ? null : (
           <>
-            {/* At a glance — solid colour bars, like the rest of the app */}
-            <section className="grid grid-cols-2 gap-2 sm:grid-cols-4" aria-label="At a glance">
-              {[
-                {
-                  bar: 'bg-elec-yellow',
-                  v: summary.attempts,
-                  l: summary.attempts === 1 ? 'attempt' : 'attempts',
-                },
-                {
-                  bar: 'bg-emerald-400',
-                  v: summary.passes,
-                  l: summary.passes === 1 ? 'pass' : 'passes',
-                },
-                {
-                  bar: 'bg-sky-400',
-                  v: summary.avg === null ? '—' : `${summary.avg}%`,
-                  l: 'average, last 10',
-                },
-                {
-                  bar: 'bg-orange-400',
-                  v: pile.loading ? '…' : pile.count,
-                  l: 'questions to revise',
-                },
-              ].map((g) => (
-                <div key={g.bar} className={cn(MH_CARD, 'relative overflow-hidden px-4 pb-3 pt-4')}>
-                  <span aria-hidden className={cn('absolute inset-x-0 top-0 h-1', g.bar)} />
-                  <p className="text-[24px] font-bold leading-none tabular-nums text-white">
-                    {g.v}
-                  </p>
-                  <p className="mt-1.5 text-[12px] text-white">{g.l}</p>
+            {/* ── What you've done ─────────────────────────────────────── */}
+            <section className="space-y-3" aria-labelledby="mh-done">
+              <CollegeSectionTitle id="mh-done" title="What you’ve done" />
+              <ScStats
+                items={[
+                  {
+                    label: 'Sittings',
+                    value: rows.length >= 500 ? '500+' : String(rows.length),
+                    sub: `${papers.length} ${papers.length === 1 ? 'paper' : 'papers'}`,
+                  },
+                  {
+                    label: 'Passed',
+                    value: `${Math.round((passes / rows.length) * 100)}%`,
+                    sub: `${passes} of ${rows.length}`,
+                    good: passes / rows.length >= 0.6,
+                  },
+                  {
+                    label: 'Time practising',
+                    value: minutes >= 120 ? `${Math.round(minutes / 60)}h` : `${minutes}m`,
+                    sub: 'under exam timing',
+                  },
+                  {
+                    label: 'Active weeks',
+                    value: `${activeWeeks}/12`,
+                    sub: 'weeks with a sitting',
+                  },
+                ]}
+              />
+              <div className={SC_CARD}>
+                <div className="mb-3 flex items-baseline justify-between">
+                  <p className="text-[13px] font-semibold text-white">Sittings per week</p>
+                  <p className="text-[12px] text-white">Last 12 weeks</p>
                 </div>
-              ))}
+                <div
+                  className="flex h-24 items-end gap-1.5"
+                  role="img"
+                  aria-label={`Sittings per week: ${weeks.map((w) => `${w.label} ${w.n}`).join(', ')}`}
+                >
+                  {weeks.map((w) => (
+                    <div
+                      key={w.label}
+                      className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1"
+                    >
+                      {w.n > 0 && (
+                        <span className="text-[12px] font-bold tabular-nums text-white">{w.n}</span>
+                      )}
+                      <div
+                        className={cn(
+                          'w-full rounded-t-md',
+                          w.n === 0
+                            ? 'bg-white/[0.1]'
+                            : w.current
+                              ? 'bg-elec-yellow'
+                              : 'bg-white/70'
+                        )}
+                        style={{ height: w.n === 0 ? 4 : `${Math.max(10, (w.n / weekMax) * 80)}%` }}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-1.5 flex justify-between text-[12px] text-white">
+                  <span>{weeks[0].label}</span>
+                  <span>This week</span>
+                </div>
+              </div>
             </section>
 
-            {pile.count > 0 && (
-              <section
-                className={cn(
-                  MH_CARD,
-                  'flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:p-5'
+            {/* ── Where you are ────────────────────────────────────────── */}
+            <section className="space-y-3" aria-labelledby="mh-where">
+              <CollegeSectionTitle
+                id="mh-where"
+                title="Where you are"
+                sub="Forecasts use your last three sittings of each paper."
+              />
+              <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+                {hero && heroForecast && (
+                  <div className={cn(SC_CARD, 'relative overflow-hidden')}>
+                    <Hairline />
+                    <p className="text-[12px] font-medium text-white">
+                      The paper you’re working on
+                    </p>
+                    <h2 className="mt-1 text-[20px] font-bold leading-tight text-white sm:text-[22px]">
+                      {hero.name}
+                    </h2>
+                    <p className="mt-1 text-[13px] text-white">
+                      {hero.attempts} {hero.attempts === 1 ? 'sitting' : 'sittings'} · best{' '}
+                      {hero.best}% · last {fmtWhen(hero.last.created_at).toLowerCase()}
+                    </p>
+                    <div className="mt-4 flex items-center gap-4">
+                      <ScoreBadge pct={hero.last.percentage} passed={hero.last.passed} size="lg" />
+                      <div className="min-w-0">
+                        <p
+                          className={cn(
+                            'flex items-center gap-2 text-[16px] font-bold',
+                            forecastText[heroForecast.tone]
+                          )}
+                        >
+                          <span
+                            aria-hidden
+                            className={cn(
+                              'h-2.5 w-2.5 rounded-full',
+                              forecastDot[heroForecast.tone]
+                            )}
+                          />
+                          {heroForecast.label}
+                        </p>
+                        <p className="mt-0.5 text-[13px] leading-snug text-white">
+                          {heroForecast.sentence}
+                        </p>
+                        <Delta now={hero.last.percentage} before={hero.previous?.percentage} />
+                      </div>
+                    </div>
+                    {hero.trend.length >= 2 && (
+                      <TrendChart
+                        values={hero.trend}
+                        passMark={hero.last.pass_mark ?? 60}
+                        className="mt-5 h-28"
+                      />
+                    )}
+                    <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+                      {heroRetake && (
+                        <button
+                          type="button"
+                          onClick={() => navigate(heroRetake)}
+                          className={cn(COLLEGE_BTN, 'sm:flex-1')}
+                        >
+                          <RotateCcw className="h-4 w-4" aria-hidden />
+                          Take it again
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/study-centre/mock-exams/history/${hero.last.id}`)}
+                        className={cn(COLLEGE_BTN, 'sm:flex-1')}
+                      >
+                        Review last sitting
+                      </button>
+                    </div>
+                  </div>
                 )}
-              >
-                <p className="flex-1 text-[14px] leading-snug text-white">
-                  <span className="font-bold">{pile.count}</span>{' '}
-                  {pile.count === 1 ? 'question' : 'questions'} you got wrong{' '}
-                  {pile.count === 1 ? 'is' : 'are'} due now. Each one comes back after a day, then
-                  three, then a week — get it right each time and it’s learned. On every device.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => navigate('/study-centre/mock-exams/revise')}
-                  className="h-12 rounded-xl bg-elec-yellow px-5 text-[15px] font-bold text-black touch-manipulation"
-                >
-                  Revise my wrong answers
-                </button>
-              </section>
-            )}
 
-            {/* A whole paper aimed at the weak spots: some you got wrong, the rest new. */}
-            {pile.items.length > 0 && (
-              <section
-                className={cn(
-                  MH_CARD,
-                  'relative flex flex-col gap-3 overflow-hidden p-4 sm:flex-row sm:items-center sm:p-5'
-                )}
-              >
-                <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-violet-400" />
-                <div className="flex-1 pl-1">
-                  <p className="text-[15px] font-bold text-white">Weak spots mock</p>
-                  <p className="text-[13.5px] leading-snug text-white">
-                    20 questions from your weakest topics — some you’ve got wrong before, the rest
-                    ones you haven’t seen. Timed, and saved to your history like any paper.
+                <div className={SC_LIST}>
+                  <p className="px-5 pb-2 pt-4 text-[13px] font-semibold text-white sm:px-6">
+                    Every paper
                   </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => navigate('/study-centre/mock-exams/targeted')}
-                  className="h-12 rounded-xl bg-white px-5 text-[15px] font-bold text-black touch-manipulation"
-                >
-                  Sit a weak spots mock
-                </button>
-              </section>
-            )}
-
-            {/* Weak spots across every mock */}
-            {topicRows.length > 0 && (
-              <section className="space-y-3">
-                <div className="flex items-end justify-between gap-3">
-                  <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-                    How you’re doing by topic
-                  </h2>
-                  <p className="text-[12px] text-white">Weakest first</p>
-                </div>
-                <div className={cn(MH_CARD, 'p-4 sm:p-5')}>
-                  <ul className="grid gap-x-6 gap-y-3 lg:grid-cols-2">
-                    {(showAllTopics ? topicRows : topicRows.slice(0, 8)).map((t) => {
-                      const bar =
-                        t.pct >= 75
-                          ? 'bg-emerald-400'
-                          : t.pct >= 60
-                            ? 'bg-sky-400'
-                            : 'bg-orange-400';
-                      return (
-                        <li key={t.topic} className="space-y-1.5">
-                          <div className="flex items-baseline justify-between gap-3">
-                            <span className="min-w-0 truncate text-[14px] font-semibold text-white">
-                              {t.topic}
-                            </span>
-                            <span className="shrink-0 text-[13px] font-bold tabular-nums text-white">
-                              {t.pct}%
-                            </span>
-                          </div>
-                          <div
-                            className="h-2 overflow-hidden rounded-full bg-white/[0.1]"
-                            role="img"
-                            aria-label={`${t.topic}: ${t.right} of ${t.answered} answered right`}
-                          >
-                            <div
-                              className={cn('h-full rounded-full', bar)}
-                              style={{ width: `${Math.max(t.pct, 3)}%` }}
-                            />
-                          </div>
-                          <div className="flex flex-wrap items-center justify-between gap-2">
-                            <span className="text-[12px] text-white">
-                              {t.right} of {t.answered} right
-                              {t.asked > t.answered && ` · ${t.asked - t.answered} skipped`}
-                              {t.toRevise > 0 && ` · ${t.toRevise} to revise`}
-                            </span>
-                            <span className="flex gap-1.5">
-                              {t.link && t.pct < 75 && (
-                                <button
-                                  type="button"
-                                  onClick={() => navigate(t.link!.to)}
-                                  aria-label={`Study ${t.topic}: ${t.link.label}`}
-                                  className="inline-flex h-9 items-center gap-1 rounded-lg border border-white/[0.22] px-2.5 text-[12.5px] font-semibold text-white touch-manipulation hover:border-elec-yellow"
-                                >
-                                  <BookOpen className="h-3.5 w-3.5" aria-hidden />
-                                  Study
-                                </button>
-                              )}
-                              {t.toRevise > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    navigate(
-                                      `/study-centre/mock-exams/revise?topic=${encodeURIComponent(t.topic)}`
-                                    )
-                                  }
-                                  className="h-9 rounded-lg bg-elec-yellow px-2.5 text-[12.5px] font-bold text-black touch-manipulation"
-                                >
-                                  Revise {t.toRevise}
-                                </button>
-                              )}
-                            </span>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  {topicRows.length > 8 && (
+                  {paperVerdicts.slice(0, 6).map((p) => (
+                    <button
+                      key={p.slug}
+                      type="button"
+                      onClick={() => navigate(`/study-centre/mock-exams/history/${p.last.id}`)}
+                      className={SC_ROW}
+                    >
+                      <ScoreBadge pct={p.last.percentage} passed={p.last.passed} size="sm" />
+                      <span className="min-w-0 flex-1">
+                        <span className="block break-words leading-snug text-[14px] font-semibold text-white">
+                          {p.name}
+                        </span>
+                        <span
+                          className={cn(
+                            'block text-[12.5px] font-semibold leading-snug',
+                            forecastText[p.forecast.tone]
+                          )}
+                        >
+                          {p.forecast.label} · {p.attempts}{' '}
+                          {p.attempts === 1 ? 'sitting' : 'sittings'}
+                        </span>
+                      </span>
+                      <Sparkline
+                        values={p.trend}
+                        passMark={p.last.pass_mark ?? 60}
+                        className="hidden w-[72px] sm:block"
+                      />
+                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                    </button>
+                  ))}
+                  {paperVerdicts.length > 6 && (
                     <button
                       type="button"
-                      onClick={() => setShowAllTopics((v) => !v)}
-                      className="mt-4 h-10 w-full rounded-lg border border-white/[0.18] text-[13px] font-semibold text-white touch-manipulation"
+                      onClick={() => {
+                        setTab('papers');
+                        document.getElementById('mh-all')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className={cn(
+                        SC_ROW,
+                        'justify-center text-[13.5px] font-semibold text-elec-yellow'
+                      )}
                     >
-                      {showAllTopics ? 'Show fewer' : `Show all ${topicRows.length} topics`}
+                      All {paperVerdicts.length} papers
                     </button>
                   )}
                 </div>
-              </section>
-            )}
+              </div>
+            </section>
 
-            {topicRows.length === 0 && weakSpots.length > 0 && (
-              <section className="space-y-3">
-                <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-                  Your weak spots
-                </h2>
-                <div className={cn(MH_CARD, 'p-4 sm:p-5')}>
-                  <p className="mb-3 text-[13.5px] text-white">
-                    Where your wrong answers are piling up, across every mock you’ve sat:
-                  </p>
-                  <ul className="grid gap-2 lg:grid-cols-2">
-                    {weakSpots.map((w) => (
-                      <li
-                        key={w.topic}
-                        className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-white/[0.12] bg-white/[0.03] p-3"
-                      >
-                        <span className="flex h-8 min-w-8 shrink-0 items-center justify-center rounded-lg bg-orange-400 px-2 text-[14px] font-bold text-black">
-                          {w.count}
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block text-[14px] font-semibold text-white">
-                            {w.topic}
-                          </span>
-                          {w.sample.t && (
-                            <span className="block text-[12px] text-white">{w.sample.paper}</span>
-                          )}
-                        </span>
-                        <span className="flex gap-2">
-                          {w.link && (
-                            <button
-                              type="button"
-                              onClick={() => navigate(w.link!.to)}
-                              aria-label={`Study ${w.topic}: ${w.link.label}`}
-                              className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-white/[0.22] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-elec-yellow"
-                            >
-                              <BookOpen className="h-4 w-4" aria-hidden />
-                              Study
-                            </button>
-                          )}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              navigate(
-                                `/study-centre/mock-exams/revise?topic=${encodeURIComponent(w.topic)}`
-                              )
-                            }
-                            className="h-10 rounded-lg bg-elec-yellow px-3 text-[13px] font-bold text-black touch-manipulation"
-                          >
-                            Revise {w.count}
-                          </button>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </section>
-            )}
+            {/* ── How to get better ────────────────────────────────────── */}
+            <section className="space-y-3" aria-labelledby="mh-better">
+              <CollegeSectionTitle
+                id="mh-better"
+                title="How to get better"
+                sub="From everything you’ve sat in the last year. Weakest first."
+              />
+              <HowToGetBetter history={history} dueCount={due} topicLimit={4} />
+            </section>
 
-            {/* Per paper */}
-            <section className="space-y-3">
-              <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-                Your papers
-              </h2>
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {papers.map((p) => {
-                  const retake = retakePathFor(p.slug, p.retakePath);
-                  return (
-                    <div key={p.slug} className={cn(MH_CARD, 'flex flex-col gap-3 p-4')}>
+            {/* ── Everything ───────────────────────────────────────────── */}
+            <section className="space-y-4" aria-labelledby="mh-all" id="mh-all">
+              <CollegeSectionTitle id="mh-all-title" title="Everything" />
+              <div
+                role="tablist"
+                aria-label="View"
+                className="-mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0"
+              >
+                {(
+                  [
+                    ['papers', `Papers · ${papers.length}`],
+                    ['topics', `Topics${topicRows.length ? ` · ${topicRows.length}` : ''}`],
+                    ['attempts', `Sittings · ${rows.length}`],
+                  ] as const
+                ).map(([id, label]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    role="tab"
+                    aria-selected={tab === id}
+                    onClick={() => setTab(id)}
+                    className={chipCn(tab === id)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {tab === 'papers' && (
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {paperVerdicts.map((p) => (
+                    <div
+                      key={p.slug}
+                      className="-mx-4 flex flex-col card-landing max-sm:!rounded-none max-sm:!border-x-0 p-5 sm:mx-0 sm:rounded-2xl"
+                    >
                       <div className="flex items-start gap-3">
                         <ScoreBadge pct={p.last.percentage} passed={p.last.passed} />
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-[15px] font-bold text-white">{p.name}</p>
-                          <p className="text-[12.5px] text-white">
-                            {p.attempts} {p.attempts === 1 ? 'attempt' : 'attempts'} · best {p.best}
+                          <p className="line-clamp-2 text-[15px] font-bold leading-snug text-white">
+                            {p.name}
+                          </p>
+                          <p className="mt-0.5 text-[12.5px] text-white">
+                            {p.attempts} {p.attempts === 1 ? 'sitting' : 'sittings'} · best {p.best}
                             % · {fmtWhen(p.last.created_at)}
                           </p>
-                          <Delta now={p.last.percentage} before={p.previous?.percentage} />
                         </div>
-                        <Sparkline values={p.trend} passMark={p.last.pass_mark ?? 60} />
+                        <Sparkline
+                          values={p.trend}
+                          passMark={p.last.pass_mark ?? 60}
+                          className="hidden w-[88px] sm:block"
+                        />
                       </div>
-                      <Forecast
-                        trend={p.trend}
-                        passMark={p.last.pass_mark ?? 60}
-                        total={p.last.total_questions}
-                      />
-                      <div className="mt-auto flex gap-2">
+                      <p className="mt-3 flex items-start gap-2 text-[12.5px] leading-snug text-white">
+                        <span
+                          aria-hidden
+                          className={cn(
+                            'mt-1 h-2 w-2 shrink-0 rounded-full',
+                            forecastDot[p.forecast.tone]
+                          )}
+                        />
+                        {p.forecast.sentence}
+                      </p>
+                      <div className="mt-4 flex gap-2 sm:mt-auto sm:pt-4">
                         <button
                           type="button"
                           onClick={() => navigate(`/study-centre/mock-exams/history/${p.last.id}`)}
-                          className="h-10 flex-1 rounded-lg bg-white px-3 text-[13px] font-semibold text-black touch-manipulation"
+                          className={cn(COLLEGE_BTN, 'h-11 flex-1 px-3 text-[13px]')}
                         >
-                          Last attempt
+                          Last sitting
                         </button>
-                        {retake && (
+                        {p.retake && (
                           <button
                             type="button"
-                            onClick={() => navigate(retake)}
-                            className="inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/[0.22] px-3 text-[13px] font-semibold text-white touch-manipulation"
+                            onClick={() => navigate(p.retake!)}
+                            className={cn(COLLEGE_BTN, 'h-11 flex-1 px-3 text-[13px]')}
                           >
                             <RotateCcw className="h-4 w-4" aria-hidden />
-                            Take again
+                            Again
                           </button>
                         )}
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            </section>
+                  ))}
+                </div>
+              )}
 
-            {/* Every attempt */}
-            <section className="space-y-3">
-              <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-                Every attempt
-              </h2>
-              <ul className={cn(MH_CARD, 'divide-y divide-white/[0.08] overflow-hidden')}>
-                {rows.map((r) => (
-                  <li key={r.id}>
+              {tab === 'topics' &&
+                (topicRows.length > 0 ? (
+                  <div className={SC_LIST}>
+                    {(showAllTopics ? topicRows : topicRows.slice(0, 15)).map((t) => (
+                      <div
+                        key={t.topic}
+                        className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:gap-5 sm:px-6"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-baseline justify-between gap-3">
+                            <span className="min-w-0 break-words leading-snug text-[14.5px] font-semibold text-white">
+                              {t.topic}
+                            </span>
+                            <span className="shrink-0 text-[14.5px] font-bold tabular-nums text-white">
+                              {t.pct}%
+                            </span>
+                          </div>
+                          <div
+                            className="mt-1.5 h-2 overflow-hidden rounded-full bg-white/[0.1]"
+                            role="img"
+                            aria-label={`${t.topic}: ${t.right} of ${t.answered} right`}
+                          >
+                            <div
+                              className={cn('h-full rounded-full', topicBar(t.pct))}
+                              style={{ width: `${Math.max(t.pct, 3)}%` }}
+                            />
+                          </div>
+                          <p className="mt-1 text-[12px] text-white">
+                            {t.right} of {t.answered} right
+                            {t.asked > t.answered && ` · ${t.asked - t.answered} skipped`}
+                          </p>
+                        </div>
+                        {t.link && t.pct < 75 && (
+                          <button
+                            type="button"
+                            onClick={() => navigate(t.link!.to)}
+                            aria-label={`Study ${t.topic}: ${t.link.label}`}
+                            className={cn(COLLEGE_BTN, 'h-11 shrink-0 px-3 text-[13px]')}
+                          >
+                            <BookOpen className="h-4 w-4" aria-hidden />
+                            Study
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    {topicRows.length > 15 && (
+                      <button
+                        type="button"
+                        onClick={() => setShowAllTopics((v) => !v)}
+                        className={cn(
+                          SC_ROW,
+                          'justify-center text-[13.5px] font-semibold text-elec-yellow'
+                        )}
+                      >
+                        {showAllTopics ? 'Show fewer' : `Show all ${topicRows.length} topics`}
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <p className={SC_CARD}>
+                    No topic results yet. Sit any mock or topic test and your strongest and weakest
+                    topics appear here.
+                  </p>
+                ))}
+
+              {tab === 'attempts' && (
+                <div className={SC_LIST}>
+                  {attempts.map((r) => (
                     <button
+                      key={r.id}
                       type="button"
                       onClick={() => navigate(`/study-centre/mock-exams/history/${r.id}`)}
-                      className="flex min-h-[60px] w-full items-center gap-3 px-4 py-2.5 text-left touch-manipulation hover:bg-white/[0.03] sm:px-5"
+                      className={SC_ROW}
                     >
                       <ScoreBadge pct={r.percentage} passed={r.passed} size="sm" />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold text-white">
-                          {paperName(r)}
+                        <span className="flex items-center gap-2">
+                          <span className="break-words leading-snug text-[14px] font-semibold text-white">
+                            {paperName(r)}
+                          </span>
+                          {r.kind && KIND_LABEL[r.kind] && (
+                            <span className="shrink-0 rounded-full border border-white/[0.2] px-2 py-0.5 text-[12px] font-semibold text-white">
+                              {KIND_LABEL[r.kind]}
+                            </span>
+                          )}
                         </span>
                         <span className="block text-[12px] text-white">
-                          {fmtWhen(r.created_at)} · {r.score}/{r.total_questions} right
+                          {fmtWhen(r.created_at)}
+                          {r.total_questions > 0 && ` · ${r.score} of ${r.total_questions} right`}
+                          {r.time_taken_seconds > 0 && ` · ${fmtDuration(r.time_taken_seconds)}`}
                         </span>
                       </span>
                       <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
                     </button>
-                  </li>
-                ))}
-              </ul>
+                  ))}
+                  {rows.length > 25 && (
+                    <button
+                      type="button"
+                      onClick={() => setShowAllAttempts((v) => !v)}
+                      className={cn(
+                        SC_ROW,
+                        'justify-center text-[13.5px] font-semibold text-elec-yellow'
+                      )}
+                    >
+                      {showAllAttempts ? 'Show fewer' : `Show all ${rows.length} sittings`}
+                    </button>
+                  )}
+                </div>
+              )}
             </section>
           </>
         )}
       </HubBody>
     </HubPage>
-  );
-}
-
-/**
- * Pass forecast from the last three attempts on a paper against its own pass
- * mark: on track, nearly there, or how many more right answers a sitting needs.
- */
-function Forecast({
-  trend,
-  passMark,
-  total,
-}: {
-  trend: number[];
-  passMark: number;
-  total: number;
-}) {
-  const recent = trend.slice(-3);
-  if (recent.length < 2) {
-    return (
-      <p className="text-[12.5px] text-white">
-        Sit it again for a pass forecast — one attempt isn’t a trend yet.
-      </p>
-    );
-  }
-  const avgRaw = recent.reduce((n, v) => n + v, 0) / recent.length;
-  const avg = Math.round(avgRaw);
-  // From the unrounded average: marks needed minus marks being scored.
-  const more = Math.max(1, Math.ceil((passMark / 100) * total - (avgRaw / 100) * total - 1e-9));
-  const tone = avgRaw >= passMark + 5 ? 'done' : avgRaw >= passMark ? 'close' : 'short';
-  return (
-    <p className="flex items-start gap-2 text-[12.5px] leading-snug text-white">
-      <span
-        aria-hidden
-        className={cn(
-          'mt-1 h-2 w-2 shrink-0 rounded-full',
-          tone === 'done' ? 'bg-emerald-400' : tone === 'close' ? 'bg-sky-400' : 'bg-orange-400'
-        )}
-      />
-      <span>
-        {tone === 'done'
-          ? `On track — averaging ${avg}% over your last ${recent.length}, pass mark ${passMark}%.`
-          : tone === 'close'
-            ? `Just over the line — averaging ${avg}% against ${passMark}%. One bad sitting and it’s a fail.`
-            : `Not there yet — averaging ${avg}% against ${passMark}%. About ${more} more right ${more === 1 ? 'answer' : 'answers'} a sitting would do it.`}
-      </span>
-    </p>
   );
 }

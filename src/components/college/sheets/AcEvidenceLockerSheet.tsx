@@ -12,6 +12,7 @@ import {
   type AcState,
 } from '@/hooks/portfolio/usePortfolioAcState';
 import type { AcCellRow, EvidenceTypeCode } from '@/hooks/useAcMatrix';
+import { captureLine } from '@/lib/portfolio/captureStamp';
 import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
 
 /* ==========================================================================
@@ -66,6 +67,8 @@ interface EvidencePiece {
   href: string | null;
   /** Optional preview metadata — for portfolio, public URL of first file. */
   preview_url: string | null;
+  /** "Taken 7 Oct 2026, 09:12 · near Coventry" when the item carries a capture stamp. */
+  capture?: string | null;
 }
 
 interface Props {
@@ -118,15 +121,22 @@ export function AcEvidenceLockerSheet({
           .eq('unit_code', cell.unit_code)
           .eq('ac_code', cell.ac_code)
           .neq('source', 'ai_suggested');
-        const typedIds = ((typed ?? []) as Array<{ portfolio_item_id: string }>).map((t) => t.portfolio_item_id);
+        const typedIds = ((typed ?? []) as Array<{ portfolio_item_id: string }>).map(
+          (t) => t.portfolio_item_id
+        );
         const base = supabase
           .from('portfolio_items')
-          .select('id, title, description, category, file_type, file_url, storage_urls, created_at')
+          .select(
+            'id, title, description, category, file_type, file_url, storage_urls, created_at, captured_at, captured_at_source, capture_place, capture_lat, capture_lng'
+          )
           .eq('user_id', studentUserId);
         const { data: pRows } = typedIds.length
-          ? await base.or(`id.in.(${typedIds.join(',')}),assessment_criteria_met.cs.{${cell.ac_code}}`)
+          ? await base.or(
+              `id.in.(${typedIds.join(',')}),assessment_criteria_met.cs.{${cell.ac_code}}`
+            )
           : await base.contains('assessment_criteria_met', [cell.ac_code]);
-        for (const p of (pRows ?? []) as Array<{
+        // `as unknown`: the generated types predate the capture-stamp columns.
+        for (const p of (pRows ?? []) as unknown as Array<{
           id: string;
           title: string;
           description: string | null;
@@ -135,6 +145,11 @@ export function AcEvidenceLockerSheet({
           file_url: string | null;
           storage_urls: unknown;
           created_at: string | null;
+          captured_at?: string | null;
+          captured_at_source?: string | null;
+          capture_place?: string | null;
+          capture_lat?: number | string | null;
+          capture_lng?: number | string | null;
         }>) {
           const cat = (p.category ?? '').toLowerCase();
           const known: EvidenceTypeCode[] = [
@@ -169,8 +184,17 @@ export function AcEvidenceLockerSheet({
             description: p.description,
             occurred_at: p.created_at,
             recorded_by: studentName,
-            href: `/college/students/${studentId}#portfolio`,
+            href: `/college?section=student360&studentId=${studentId}#portfolio`,
             preview_url: preview_url ?? p.file_url ?? null,
+            capture: p.captured_at
+              ? captureLine({
+                  at: p.captured_at,
+                  source: p.captured_at_source === 'photo' ? 'photo' : 'device',
+                  place: p.capture_place ?? null,
+                  lat: p.capture_lat == null ? null : Number(p.capture_lat),
+                  lng: p.capture_lng == null ? null : Number(p.capture_lng),
+                })
+              : null,
           });
         }
       }
@@ -197,7 +221,7 @@ export function AcEvidenceLockerSheet({
           description: o.activity_summary,
           occurred_at: o.observed_at,
           recorded_by: o.assessor_name_snapshot,
-          href: `/college/students/${studentId}#observations`,
+          href: `/college?section=student360&studentId=${studentId}#observations`,
           preview_url: null,
         });
       }
@@ -269,12 +293,20 @@ export function AcEvidenceLockerSheet({
       {/* ── Left: what the judgement rests on ── */}
       <div className="space-y-7">
         <Section
-          title={requirement ? `Requirement (${requirement.is_mandatory ? 'mandatory' : 'stretch'})` : 'Requirement'}
+          title={
+            requirement
+              ? `Requirement (${requirement.is_mandatory ? 'mandatory' : 'stretch'})`
+              : 'Requirement'
+          }
           aside={
             <span
               className={cn(
                 'text-[12.5px] font-semibold',
-                meets ? 'text-emerald-300' : requirement?.is_mandatory ? 'text-orange-300' : 'text-white'
+                meets
+                  ? 'text-emerald-300'
+                  : requirement?.is_mandatory
+                    ? 'text-orange-300'
+                    : 'text-white'
               )}
             >
               {meets ? 'Met' : requirement?.is_mandatory ? 'Gap' : 'No requirement set'}
@@ -287,9 +319,17 @@ export function AcEvidenceLockerSheet({
                 {requirement.required_codes.map((rc) => {
                   const n = cell.by_type[rc] ?? 0;
                   return (
-                    <li key={rc} className="flex items-center justify-between gap-3 px-4 py-2.5 text-[13.5px] text-white">
+                    <li
+                      key={rc}
+                      className="flex items-center justify-between gap-3 px-4 py-2.5 text-[13.5px] text-white"
+                    >
                       <span>{TYPE_LABEL[rc] ?? rc}</span>
-                      <span className={cn('font-semibold tabular-nums', n > 0 ? 'text-emerald-300' : 'text-orange-300')}>
+                      <span
+                        className={cn(
+                          'font-semibold tabular-nums',
+                          n > 0 ? 'text-emerald-300' : 'text-orange-300'
+                        )}
+                      >
                         {n > 0 ? `${n} filed` : 'Missing'}
                       </span>
                     </li>
@@ -297,8 +337,8 @@ export function AcEvidenceLockerSheet({
                 })}
               </ul>
               <p className="text-[13px] tabular-nums text-white">
-                At least {requirement.quantity_required} piece{requirement.quantity_required === 1 ? '' : 's'} needed ·{' '}
-                {totalEvidence} linked
+                At least {requirement.quantity_required} piece
+                {requirement.quantity_required === 1 ? '' : 's'} needed · {totalEvidence} linked
               </p>
               {requirement.guidance && (
                 <p className="text-[13px] leading-relaxed text-white">{requirement.guidance}</p>
@@ -329,15 +369,16 @@ export function AcEvidenceLockerSheet({
             <div className="rounded-2xl border border-dashed border-white/[0.14] px-5 py-8 text-center">
               <p className="text-[14px] font-semibold text-white">No evidence yet</p>
               <p className="mx-auto mt-1 max-w-sm text-[13px] leading-relaxed text-white">
-                Record an observation, ask the apprentice to upload a portfolio item tagged {cell.ac_code}, or log
-                an OTJ entry that references it.
+                Record an observation, ask the apprentice to upload a portfolio item tagged{' '}
+                {cell.ac_code}, or log an OTJ entry that references it.
               </p>
             </div>
           )}
           {grouped.map(([type, list]) => (
             <div key={type} className="space-y-2">
               <h4 className="text-[13px] font-semibold text-white">
-                {TYPE_LABEL[type] ?? type} <span className="font-normal tabular-nums">· {list.length}</span>
+                {TYPE_LABEL[type] ?? type}{' '}
+                <span className="font-normal tabular-nums">· {list.length}</span>
               </h4>
               <ul className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]">
                 {list.map((piece) => (
@@ -349,15 +390,24 @@ export function AcEvidenceLockerSheet({
                       }}
                       className="block px-4 py-3 transition-colors touch-manipulation hover:bg-white/[0.04]"
                     >
-                      <div className="truncate text-[14px] font-medium text-white">{piece.title}</div>
+                      <div className="truncate text-[14px] font-medium text-white">
+                        {piece.title}
+                      </div>
                       {piece.description && (
-                        <div className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-white">{piece.description}</div>
+                        <div className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-white">
+                          {piece.description}
+                        </div>
                       )}
                       {(piece.recorded_by || piece.occurred_at) && (
                         <div className="mt-1 text-[12px] tabular-nums text-white">
                           {[piece.recorded_by, piece.occurred_at ? fmtDay(piece.occurred_at) : null]
                             .filter(Boolean)
                             .join(' · ')}
+                        </div>
+                      )}
+                      {piece.capture && (
+                        <div className="mt-0.5 text-[12px] tabular-nums text-white">
+                          {piece.capture}
                         </div>
                       )}
                     </a>
@@ -386,7 +436,8 @@ export function AcEvidenceLockerSheet({
         ) : (
           <Section top title="Decision">
             <p className={hintCn}>
-              {studentName.split(' ')[0] || 'This learner'} has not joined yet, so there is nothing to decide on.
+              {studentName.split(' ')[0] || 'This learner'} has not joined yet, so there is nothing
+              to decide on.
             </p>
           </Section>
         )}
@@ -394,7 +445,12 @@ export function AcEvidenceLockerSheet({
         {/* Job ideas — only when there's a real gap. AI on-demand. */}
         {!cell.meets_requirement && (
           <div className="border-t border-white/[0.1] pt-4">
-            <JobIdeasPanel studentId={studentId} acCodesFocus={[cell.ac_code]} title="Try this on a job" variant="inline" />
+            <JobIdeasPanel
+              studentId={studentId}
+              acCodesFocus={[cell.ac_code]}
+              title="Try this on a job"
+              variant="inline"
+            />
           </div>
         )}
       </div>
@@ -432,13 +488,22 @@ function LockerDecision({
     [rows, unitCode, acCode]
   );
   const provenance = row
-    ? aiProvenanceLine(row.decision_feedback_source, row.assessor_name, row.decision_feedback_confirmed_at ?? row.decided_at)
+    ? aiProvenanceLine(
+        row.decision_feedback_source,
+        row.assessor_name,
+        row.decision_feedback_confirmed_at ?? row.decided_at
+      )
     : null;
 
   // The evidence locker's per-criterion draft (ai-draft-judgement), offered in the sheet.
   const draftWithAi = useCallback(async () => {
     const { data, error } = await supabase.functions.invoke('ai-draft-judgement', {
-      body: { student_id: studentId, qualification_code: qualificationCode, unit_code: unitCode, ac_code: acCode },
+      body: {
+        student_id: studentId,
+        qualification_code: qualificationCode,
+        unit_code: unitCode,
+        ac_code: acCode,
+      },
     });
     if (error) throw new Error(error.message);
     const out = (data ?? {}) as { narrative?: string; verdict?: string };
@@ -452,7 +517,12 @@ function LockerDecision({
         title="Decision"
         aside={
           row ? (
-            <span className={cn('rounded-full border px-2.5 py-0.5 text-[12px] font-semibold', STATE_CHIP[row.state as AcState])}>
+            <span
+              className={cn(
+                'rounded-full border px-2.5 py-0.5 text-[12px] font-semibold',
+                STATE_CHIP[row.state as AcState]
+              )}
+            >
               {STATE_LABEL[row.state as AcState]}
             </span>
           ) : null
@@ -461,7 +531,9 @@ function LockerDecision({
         {loading ? (
           <div className="h-16 animate-pulse rounded-xl bg-white/[0.04]" />
         ) : !row ? (
-          <p className={hintCn}>This criterion is not on {studentName.split(' ')[0] || 'the learner'}'s qualification.</p>
+          <p className={hintCn}>
+            This criterion is not on {studentName.split(' ')[0] || 'the learner'}'s qualification.
+          </p>
         ) : row.decision_id ? (
           <div className="space-y-2">
             <p className="text-[13px] text-white">
@@ -469,18 +541,28 @@ function LockerDecision({
               {row.decided_at ? ` · ${fmtDay(row.decided_at)}` : ''}
             </p>
             {row.decision_feedback && (
-              <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white">{row.decision_feedback}</p>
+              <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white">
+                {row.decision_feedback}
+              </p>
             )}
             {provenance && <p className={hintCn}>{provenance}</p>}
             {row.iqa_verdict && (
-              <p className={cn('text-[12.5px] font-semibold', row.iqa_verdict === 'confirmed' ? 'text-emerald-300' : 'text-orange-300')}>
+              <p
+                className={cn(
+                  'text-[12.5px] font-semibold',
+                  row.iqa_verdict === 'confirmed' ? 'text-emerald-300' : 'text-orange-300'
+                )}
+              >
                 IQA {row.iqa_verdict === 'confirmed' ? 'confirmed' : 'not confirmed'}
                 {row.iqa_feedback ? `: ${row.iqa_feedback}` : ''}
               </p>
             )}
           </div>
         ) : (
-          <p className={hintCn}>No decision yet. Record passed, needs more or not yet; the learner sees it straight away.</p>
+          <p className={hintCn}>
+            No decision yet. Record passed, needs more or not yet; the learner sees it straight
+            away.
+          </p>
         )}
         <button
           type="button"

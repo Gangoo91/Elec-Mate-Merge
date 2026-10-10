@@ -53,7 +53,7 @@ const QuickLinksPage = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Regulations by Test Type</p>
+          <p className="text-[12px] font-medium text-white mb-3">Regulations by Test Type</p>
         </motion.div>
 
         {testRegLinks.map((item, i) => (
@@ -73,7 +73,7 @@ const QuickLinksPage = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Special Locations — Part 7 &amp; 8</p>
+          <p className="text-[12px] font-medium text-white mb-3">Special Locations — Part 7 &amp; 8</p>
         </motion.div>
 
         {specialLocationRegs.map((item, i) => (

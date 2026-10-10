@@ -47,7 +47,7 @@ const keyTakeaways = [
   'Emergency lighting to BS 5266-1:2016 is required in all means of escape, including bar areas, function rooms, toilets, corridors, and all exit routes. Maintained or non-maintained luminaires are both acceptable.',
   'Fire detection systems in pubs and licensed premises must comply with BS 5839-1:2017 (commercial-grade systems with a central control panel). Grade D domestic systems are not appropriate for licensed premises.',
   'Gaming machine circuits are frequently found to be inadequately protected or on overloaded circuits during EICR inspections of licensed premises. Each machine should ideally be on a dedicated circuit with appropriate MCB protection. Under BS 7671:2018+A4:2026 Reg 411.3.3, omission of 30 mA RCD protection on socket-outlets in public areas requires a documented risk assessment — in a customer-access environment this will almost always conclude RCD protection is necessary.',
-  'BS 7671:2018+A4:2026 introduces Reg 421.1.7, which recommends arc fault detection devices (AFDDs) in AC final circuits to reduce fire risk from arc fault currents. Pubs with pre-1990 wiring are prime candidates for an AFDD recommendation on the EICR. The regulation is advisory, not mandatory.',
+  'BS 7671 Reg 421.1.7 recommends arc fault detection devices (AFDDs) to reduce fire risk from arc fault currents. Since A2:2022 they are required only in named premises such as HMOs and care homes, so for a pub they are advisory. Pubs with pre-1990 wiring are prime candidates for an AFDD recommendation on the EICR.',
 ];
 
 const faqs = [
@@ -323,19 +323,21 @@ const sections = [
           </h4>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li>
-              <strong>Revised Reg 411.3.3 — RCD risk-assessment route.</strong> A4:2026 revises Reg
-              411.3.3 so that omission of RCD protection on socket-outlets rated 32 A and below now
-              requires a documented risk assessment for non-dwellings. Inspectors must check that
-              any unprotected socket-outlet circuit is backed by a recorded risk assessment — not
-              simply an absence of RCD. In a public access environment such as a pub, the risk
-              assessment outcome will almost always mandate RCD protection.
+              <strong>Reg 411.3.3 — RCD risk-assessment route.</strong> Not new in A4:2026: since
+              the 2018 edition (redrafted at A2:2022), omitting RCD protection on socket-outlets
+              rated 32 A and below requires a documented risk assessment, and the exception never
+              covers sockets liable to be used by ordinary persons or children. Inspectors must
+              check that any unprotected socket-outlet circuit is backed by a recorded risk
+              assessment — not simply an absence of RCD. In a public access environment such as a
+              pub, the risk assessment outcome will almost always mandate RCD protection.
             </li>
             <li>
-              <strong>New Reg 421.1.7 — AFDD recommendation.</strong> A4:2026 introduces Reg
-              421.1.7, which recommends the installation of arc fault detection devices (AFDDs) in
-              AC final circuits to mitigate the risk of fire from arc fault currents. The
-              recommendation is advisory, not mandatory — but for pubs with pre-1990 wiring, where
-              ageing insulation increases arc fault risk, inspectors should consider noting AFDD
+              <strong>Reg 421.1.7 — AFDD recommendation.</strong> Reg 421.1.7 recommends the
+              installation of arc fault detection devices (AFDDs) to mitigate the risk of fire from
+              arc fault currents. Since A2:2022 they are required only in named premises (high rise
+              residential buildings, HMOs, purpose-built student accommodation and care homes), so
+              in a pub the recommendation is advisory. For pubs with pre-1990 wiring, where ageing
+              insulation increases arc fault risk, inspectors should consider noting AFDD
               installation as a recommendation on the EICR.
             </li>
             <li>
@@ -456,9 +458,9 @@ const sections = [
               active insulation degradation is the cause.
             </li>
             <li>
-              <strong>RCD operating time (Reg 643.8)</strong> — a general non-delay 30 mA RCD
-              must operate within a maximum of 300 ms when tested at its rated residual operating
-              current (I&Delta;n). Testing is carried out with suitable equipment to BS EN 61557-6.
+              <strong>RCD operating time (Reg 643.8)</strong> — a general non-delay 30 mA RCD must
+              operate within a maximum of 300 ms when tested at its rated residual operating current
+              (I&Delta;n). Testing is carried out with suitable equipment to BS EN 61557-6.
             </li>
             <li>
               <strong>Prospective fault current (Reg 643.7.3.201)</strong> — prospective
@@ -744,7 +746,7 @@ export default function PubLicensedPremisesEICRPage() {
       title="EICR for Pubs & Licensed Premises UK: Licensing"
       description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Licensed Premises Guide"

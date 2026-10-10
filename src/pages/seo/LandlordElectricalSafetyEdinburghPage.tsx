@@ -47,7 +47,7 @@ const keyTakeaways = [
   'Under the Repairing Standard, Edinburgh landlords must ensure the electrical installation in a let property is in a reasonable state of repair and in proper working order. An EICR (or Electrical Installation Condition Report) is the standard means of demonstrating compliance.',
   'Disputes and enforcement relating to the Repairing Standard are handled by the First-tier Tribunal for Scotland (Housing and Property Chamber) — NOT by City of Edinburgh Council, which handles HMO licensing separately.',
   'RCD protection is required on socket-outlet circuits (rated at 32 A or below) under Regulation 411.3.3 of BS 7671. Absence of RCD protection is a common finding that renders an EICR Unsatisfactory, triggering the Repairing Standard obligation to carry out remedial work.',
-  'BS 7671:2018+A4:2026 introduces Regulation 411.3.4, which requires additional protection by a 30 mA RCD on all AC final circuits supplying luminaires (lighting circuits) within domestic premises. This is a new A4:2026 requirement and a common C2 or C3 observation in Edinburgh rental EICRs — landlords should expect remedial quotes for lighting circuit RCD protection when upgrading older installations.',
+  'Regulation 411.3.4 of BS 7671:2018+A4:2026 requires additional protection by a 30 mA RCD on all AC final circuits supplying luminaires (lighting circuits) within domestic premises. It has applied since BS 7671:2018 and is a common C2 or C3 observation in Edinburgh rental EICRs — landlords should expect remedial quotes for lighting circuit RCD protection when upgrading older installations.',
   "Edinburgh's private rented sector is one of the largest in Scotland, with a high concentration of tenement flats that frequently have ageing electrical installations requiring attention.",
 ];
 
@@ -454,12 +454,13 @@ const sections = [
                 <strong>Common Edinburgh remedial work</strong> — typical remedial work in Edinburgh
                 rental properties includes fitting RCD protection on socket-outlet circuits
                 (Regulation 411.3.3), fitting 30 mA RCD protection on lighting circuits (Regulation
-                411.3.4 — new in BS 7671:2018+A4:2026), replacing outdated plastic consumer units
+                411.3.4, a requirement since BS 7671:2018), replacing outdated plastic consumer units
                 with metal enclosures, upgrading earthing and bonding, and replacing deteriorated
                 rubber-insulated cables common in the tenement stock. Where a consumer unit is being
-                replaced, Regulation 421.1.7 (introduced by Amendment 2:2022) recommends consideration of arc
-                fault detection devices (AFDDs) on AC final circuits to mitigate fire risk —
-                particularly relevant in high-risk or HMO premises.
+                replaced, Regulation 421.1.7 applies to arc
+                fault detection devices (AFDDs): since Amendment 2:2022 they are required on
+                socket-outlet final circuits up to 32 A in HMOs and other named higher-risk
+                premises, and recommended elsewhere.
               </span>
             </li>
           </ul>
@@ -630,7 +631,7 @@ export default function LandlordElectricalSafetyEdinburghPage() {
       title="Landlord Safety Edinburgh: Repairing Standard"
       description="Landlord electrical safety requirements in Edinburgh. Housing (Scotland) Act 2006 Repairing Standard, HMO rules and EICR costs explained."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide — Scotland"

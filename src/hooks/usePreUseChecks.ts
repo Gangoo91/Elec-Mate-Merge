@@ -1,6 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  applySafetyScope,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 export interface CheckItem {
   id: string;
@@ -11,7 +18,7 @@ export interface CheckItem {
   photoUrl?: string;
 }
 
-export interface PreUseCheck {
+export interface PreUseCheck extends FirmRecordFields {
   id: string;
   user_id: string;
   equipment_id: string | null;
@@ -425,19 +432,21 @@ export function getStatutoryInspectionStatus(
 }
 
 export function usePreUseChecks() {
+  // Personal: the user's own checks. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['pre-use-checks'],
+    queryKey: ['pre-use-checks', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<PreUseCheck[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('pre_use_checks')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('pre_use_checks').select('*'),
+        scope,
+        user.id
+      ).order('created_at', { ascending: false });
 
       if (error) throw error;
       return (data ?? []) as unknown as PreUseCheck[];
@@ -449,6 +458,7 @@ export function usePreUseChecks() {
 export function useCreatePreUseCheck() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (check: {
@@ -463,6 +473,8 @@ export function useCreatePreUseCheck() {
       actions_required?: string;
       photos?: string[];
       job_id?: string | null;
+      /** Firm job (employer_jobs) — shares the check with the firm. */
+      employer_job_id?: string | null;
     }) => {
       const {
         data: { user },
@@ -471,10 +483,9 @@ export function useCreatePreUseCheck() {
 
       const { data, error } = await supabase
         .from('pre_use_checks')
-        .insert({
-          user_id: user.id,
-          ...check,
-        })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(stampSafetyInsert({ user_id: user.id, ...check }, scope) as never)
         .select()
         .single();
 

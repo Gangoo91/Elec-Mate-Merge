@@ -19,7 +19,7 @@ import { supabase } from '@/integrations/supabase/client';
 type PayState =
   | { state: 'loading' }
   | {
-      state: 'ready' | 'paid' | 'adjusted' | 'unavailable' | 'not_found';
+      state: 'ready' | 'paid' | 'adjusted' | 'cancelled' | 'unavailable' | 'not_found';
       checkoutUrl?: string;
       amount?: number;
       invoiceNumber?: string | null;
@@ -52,7 +52,10 @@ const InvoicePay = () => {
           setData({ state: 'unavailable' });
           return;
         }
-        setData(res);
+        // L1: invoice-pay answers a cancelled or void invoice as 'adjusted'
+        // with reason 'cancelled' (what the older page can show); this page
+        // has its own cancelled view.
+        setData(res.reason === 'cancelled' ? { ...res, state: 'cancelled' } : res);
         if (res.state === 'ready' && res.checkoutUrl && !cancelled && !redirected.current) {
           redirected.current = true;
           window.location.replace(res.checkoutUrl);
@@ -158,6 +161,21 @@ const InvoicePay = () => {
               <p className="text-[14px] text-white">
                 A credit note has been issued against it, so the amount owed has changed. Please
                 check with {d.businessName ?? 'the business that sent it'} before paying.
+              </p>
+            </div>
+            <ContactButtons email={d.businessEmail} phone={d.businessPhone} />
+          </div>
+        )}
+
+        {d?.state === 'cancelled' && (
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <h1 className="text-[22px] font-semibold tracking-tight text-white">
+                This invoice has been cancelled
+              </h1>
+              <p className="text-[14px] text-white">
+                There is nothing to pay. If you think that is wrong, get in touch with{' '}
+                {d.businessName ?? 'the business that sent it'}.
               </p>
             </div>
             <ContactButtons email={d.businessEmail} phone={d.businessPhone} />

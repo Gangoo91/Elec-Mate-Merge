@@ -1,6 +1,6 @@
 const utilityToneClass = (utility: string) =>
   utility === 'High utility'
-    ? 'text-elec-yellow border-elec-yellow/30 bg-white/[0.05]'
+    ? 'text-elec-yellow border-white/[0.08] bg-white/[0.05]'
     : 'text-white border-white/10 bg-white/[0.03]';
 
 const Section = ({
@@ -12,11 +12,9 @@ const Section = ({
   description?: string;
   children: React.ReactNode;
 }) => (
-  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {eyebrow}
-      </span>
+      <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
       {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
@@ -247,10 +245,8 @@ const StudyFundamentalsTab = () => {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Study fundamentals
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Study fundamentals</span>
         <p className="text-[14px] text-white leading-relaxed">
           Master the core principles of effective learning. These evidence-based fundamentals form
           the foundation of successful study practices for electrical apprenticeships and beyond.
@@ -266,9 +262,7 @@ const StudyFundamentalsTab = () => {
               key={s.label}
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {s.label}
-              </span>
+              <span className="text-[13px] font-semibold text-white">{s.label}</span>
               <p className="text-[16px] font-semibold text-white">{s.value}</p>
             </div>
           ))}
@@ -288,24 +282,24 @@ const StudyFundamentalsTab = () => {
               <div className="flex items-start justify-between gap-3">
                 <h4 className="text-[16px] font-semibold text-white">{principle.principle}</h4>
                 <span
-                  className={`flex-shrink-0 text-[10px] font-medium uppercase tracking-[0.14em] px-2 py-0.5 rounded-md border ${utilityToneClass(
+                  className={`flex-shrink-0 text-[13px] font-semibold px-2 py-0.5 rounded-md border ${utilityToneClass(
                     principle.utility
                   )}`}
                 >
                   {principle.utility}
                 </span>
               </div>
-              <p className="text-[13px] text-white leading-relaxed">{principle.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{principle.description}</p>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     Implementation techniques
                   </span>
                   <ul className="space-y-1">
                     {principle.techniques.map((technique, techIndex) => (
                       <li
                         key={techIndex}
-                        className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{technique}</span>
@@ -314,10 +308,8 @@ const StudyFundamentalsTab = () => {
                   </ul>
                 </div>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Time investment
-                  </span>
-                  <p className="text-[13px] text-white leading-relaxed">
+                  <span className="text-[13px] font-semibold text-white">Time investment</span>
+                  <p className="text-[14px] text-white leading-relaxed">
                     {principle.timeInvestment}
                   </p>
                 </div>
@@ -342,7 +334,7 @@ const StudyFundamentalsTab = () => {
                 {env.elements.map((element, elementIndex) => (
                   <li
                     key={elementIndex}
-                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{element}</span>
@@ -364,34 +356,28 @@ const StudyFundamentalsTab = () => {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <h4 className="text-[14px] font-semibold text-white">{technique.technique}</h4>
-                  <p className="text-[13px] text-white leading-relaxed">{technique.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{technique.description}</p>
                 </div>
                 <Pill>{technique.timeRequired}</Pill>
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Step-by-step process
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Step-by-step process</span>
                   <ol className="space-y-1.5">
                     {technique.steps.map((step, stepIndex) => (
                       <li
                         key={stepIndex}
-                        className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
-                        <span className="w-5 flex-shrink-0 text-white font-mono">
-                          {stepIndex + 1}.
-                        </span>
+                        <span className="w-5 flex-shrink-0 text-white">{stepIndex + 1}.</span>
                         <span>{step}</span>
                       </li>
                     ))}
                   </ol>
                 </div>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Best used for
-                  </span>
-                  <p className="text-[13px] text-white leading-relaxed">{technique.bestFor}</p>
+                  <span className="text-[13px] font-semibold text-white">Best used for</span>
+                  <p className="text-[14px] text-white leading-relaxed">{technique.bestFor}</p>
                 </div>
               </div>
             </div>
@@ -407,14 +393,10 @@ const StudyFundamentalsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{strategy.strategy}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{strategy.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{strategy.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  How to implement
-                </span>
-                <p className="text-[13px] text-white leading-relaxed">
-                  {strategy.implementation}
-                </p>
+                <span className="text-[13px] font-semibold text-white">How to implement</span>
+                <p className="text-[14px] text-white leading-relaxed">{strategy.implementation}</p>
               </div>
             </div>
           ))}
@@ -458,8 +440,8 @@ const StudyFundamentalsTab = () => {
               className="flex flex-col gap-1 rounded-md border border-white/[0.06] bg-white/[0.02] p-4 min-h-11 hover:bg-white/[0.04] active:bg-white/[0.06] transition-colors touch-manipulation"
             >
               <span className="text-[14px] font-semibold text-white">{line.name}</span>
-              <span className="text-[12px] text-white leading-relaxed">{line.detail}</span>
-              <span className="text-[13px] font-mono text-elec-yellow">{line.label}</span>
+              <span className="text-[14px] text-white leading-relaxed">{line.detail}</span>
+              <span className="text-[13px] text-elec-yellow">{line.label}</span>
             </a>
           ))}
         </div>
@@ -474,41 +456,41 @@ const StudyFundamentalsTab = () => {
                 className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
               >
                 <h4 className="text-[12px] font-semibold text-white">{day}</h4>
-                <div className="space-y-2 text-[12px] text-white leading-relaxed">
+                <div className="space-y-2 text-[14px] text-white leading-relaxed">
                   {index < 5 ? (
                     <>
                       <div>
-                        <div className="text-white font-mono">6:30-7:00</div>
+                        <div className="text-white">6:30-7:00</div>
                         Quick review
                       </div>
                       <div>
-                        <div className="text-white font-mono">19:00-20:30</div>
+                        <div className="text-white">19:00-20:30</div>
                         Main study
                       </div>
                       <div>
-                        <div className="text-white font-mono">21:00-21:15</div>
+                        <div className="text-white">21:00-21:15</div>
                         Tomorrow prep
                       </div>
                     </>
                   ) : index === 5 ? (
                     <>
                       <div>
-                        <div className="text-white font-mono">9:00-11:00</div>
+                        <div className="text-white">9:00-11:00</div>
                         Deep study
                       </div>
                       <div>
-                        <div className="text-white font-mono">14:00-15:00</div>
+                        <div className="text-white">14:00-15:00</div>
                         Practice tests
                       </div>
                     </>
                   ) : (
                     <>
                       <div>
-                        <div className="text-white font-mono">10:00-11:00</div>
+                        <div className="text-white">10:00-11:00</div>
                         Week review
                       </div>
                       <div>
-                        <div className="text-white font-mono">15:00-16:00</div>
+                        <div className="text-white">15:00-16:00</div>
                         Next week plan
                       </div>
                     </>

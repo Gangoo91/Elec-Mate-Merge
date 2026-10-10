@@ -16,9 +16,18 @@ export interface QuoteStatusLike {
   acceptance_status?: string;
   invoice_raised?: boolean;
   expiryDate?: string | Date | null;
+  /** ELE-2065: the Employer Hub raises a separate invoice row and stamps the quote. */
+  settings?: unknown;
 }
 
-export const isQuoteInvoiced = (q: QuoteStatusLike): boolean => !!q.invoice_raised;
+/** ELE-2065: true when the Employer Hub invoiced this quote (settings.convertedInvoiceId). */
+export const isQuoteInvoicedInHub = (q: { settings?: unknown }): boolean => {
+  const s = q.settings as { convertedInvoiceId?: unknown } | null | undefined;
+  return typeof s?.convertedInvoiceId === 'string' && s.convertedInvoiceId !== '';
+};
+
+export const isQuoteInvoiced = (q: QuoteStatusLike): boolean =>
+  !!q.invoice_raised || isQuoteInvoicedInHub(q);
 
 export const isQuoteWon = (q: QuoteStatusLike): boolean =>
   q.acceptance_status === 'accepted' || q.status === 'approved';

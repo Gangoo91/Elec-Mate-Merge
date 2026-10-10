@@ -780,7 +780,7 @@ const CommercialCircuitGuide = () => {
           </Alert>
 
           {threePhaseDistribution.systems.map((system, index) => (
-            <div key={index} className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
+            <div key={index} className="bg-white/10 p-4 rounded-lg border border-white/[0.14]">
               <div className="flex items-center gap-3 mb-3">
                 <h4 className="font-medium text-white">{system.type}</h4>
                 <Badge variant="outline" className="border-elec-yellow text-elec-yellow">

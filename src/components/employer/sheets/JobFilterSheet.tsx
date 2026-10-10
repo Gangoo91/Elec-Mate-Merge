@@ -73,67 +73,74 @@ export function JobFilterSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
         <SheetShell
           eyebrow="Filters"
           title="Filter jobs"
           description="Narrow down your job list by status and value."
           footer={
             <>
-              <SecondaryButton onClick={handleClearAll} fullWidth>
+              <SecondaryButton
+                onClick={handleClearAll}
+                fullWidth
+                className="lg:ml-auto lg:w-auto lg:px-8"
+              >
                 <X className="h-4 w-4 mr-1" />
                 Clear all
               </SecondaryButton>
-              <PrimaryButton onClick={() => onOpenChange(false)} fullWidth>
+              <PrimaryButton
+                onClick={() => onOpenChange(false)}
+                fullWidth
+                className="lg:w-auto lg:px-10"
+              >
                 Apply{activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
               </PrimaryButton>
             </>
           }
         >
-          <FormCard eyebrow="Status">
-            <div className="flex flex-wrap gap-2">
-              {STATUS_OPTIONS.map((option) => {
-                const isSelected = filters.statuses.includes(option.value);
-                return (
-                  <button
-                    key={option.value}
-                    onClick={() => handleStatusToggle(option.value)}
-                    className={cn(
-                      'inline-flex items-center gap-2 px-3 py-2 rounded-full border text-[12.5px] font-medium transition-colors touch-manipulation',
-                      isSelected
-                        ? 'bg-white/[0.06] border-elec-yellow/60 text-white'
-                        : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-white/[0.06]'
-                    )}
-                  >
-                    <span className={cn('w-1.5 h-1.5 rounded-full', option.dot)} />
-                    {option.label}
-                    {isSelected && <X className="h-3 w-3 text-white" />}
-                  </button>
-                );
-              })}
-            </div>
-          </FormCard>
-
-          <FormCard eyebrow="Value range">
-            <div className="space-y-4">
-              <label className={fieldLabelClass}>Set minimum and maximum project value</label>
-              <Slider
-                value={[filters.minValue, filters.maxValue]}
-                onValueChange={handleValueChange}
-                max={maxJobValue}
-                step={1000}
-                className="w-full"
-              />
-              <div className="flex justify-between items-center">
-                <Pill tone="yellow">{formatValue(filters.minValue)}</Pill>
-                <span className="text-[11px] text-white">to</span>
-                <Pill tone="yellow">{formatValue(filters.maxValue)}</Pill>
+          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-6 lg:space-y-0">
+            <FormCard eyebrow="Status">
+              <div className="flex flex-wrap gap-2">
+                {STATUS_OPTIONS.map((option) => {
+                  const isSelected = filters.statuses.includes(option.value);
+                  return (
+                    <button
+                      key={option.value}
+                      onClick={() => handleStatusToggle(option.value)}
+                      className={cn(
+                        'inline-flex h-11 items-center gap-2 px-4 rounded-full border text-[13px] font-semibold transition-colors touch-manipulation',
+                        isSelected
+                          ? 'bg-white/[0.06] border-elec-yellow text-white'
+                          : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-white/[0.06]'
+                      )}
+                    >
+                      <span className={cn('w-1.5 h-1.5 rounded-full', option.dot)} />
+                      {option.label}
+                      {isSelected && <X className="h-3 w-3 text-white" />}
+                    </button>
+                  );
+                })}
               </div>
-            </div>
-          </FormCard>
+            </FormCard>
+
+            <FormCard eyebrow="Value range">
+              <div className="space-y-4">
+                <label className={fieldLabelClass}>Set minimum and maximum project value</label>
+                <Slider
+                  value={[filters.minValue, filters.maxValue]}
+                  onValueChange={handleValueChange}
+                  max={maxJobValue}
+                  step={1000}
+                  className="w-full"
+                />
+                <div className="flex justify-between items-center">
+                  <Pill tone="yellow">{formatValue(filters.minValue)}</Pill>
+                  <span className="text-[11px] text-white">to</span>
+                  <Pill tone="yellow">{formatValue(filters.maxValue)}</Pill>
+                </div>
+              </div>
+            </FormCard>
+          </div>
         </SheetShell>
       </SheetContent>
     </Sheet>

@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'SPDs (Surge Protective Devices) protect electrical installations against transient overvoltages caused by lightning strikes, switching surges, and supply disturbances.',
-  'Under BS 7671:2018+A2:2022, Regulation 443.4 requires a risk assessment to determine whether SPDs are needed — and in most domestic installations the answer is yes.',
+  'Under BS 7671:2018+A4:2026, Regulation 443.4.1 makes SPD protection mandatory where a transient overvoltage could cause serious injury or loss of life, or significant financial or data loss. In all other cases it must be provided unless the owner declares it is not required.',
   'Type 1 SPDs protect against direct lightning current, Type 2 against indirect surges, and Type 3 provides fine protection at the point of use.',
   'SPDs must be coordinated: Type 2 at the consumer unit is the most common domestic arrangement, with Type 3 added at sensitive equipment if needed.',
   'Elec-Mate includes an AI regulations lookup that can instantly confirm SPD requirements for any installation scenario under BS 7671.',
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'Are SPDs a legal requirement in the UK?',
     answer:
-      'SPDs are not universally mandatory under UK law, but BS 7671:2018+A2:2022 Regulation 443.4 requires a risk assessment for every new or rewired installation. If the risk assessment determines that transient overvoltages could cause serious injury, loss of life, or disruption to critical equipment (such as medical devices, fire alarm systems, or IT infrastructure), then SPDs must be fitted. In practice, the risk assessment almost always concludes that SPDs are required for domestic installations, because the cost of fitting an SPD is low compared to the consequence of a surge damaging the installation. The IET Guidance Note 8 (Earthing and Bonding) and the IET Commentary on BS 7671 both support this interpretation. For existing installations, there is no retrospective requirement to fit SPDs, but they should be recommended as an improvement (C3 observation) during an EICR if they are absent.',
+      'SPDs are not required by statute, but BS 7671:2018+A4:2026 Regulation 443.4.1 makes them mandatory where a transient overvoltage could result in serious injury to, or loss of, human life (443.4.1(a)) or significant financial or data loss (443.4.1(c)). For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required. In practice, that means an SPD is the default on new and rewired domestic installations. For existing installations, there is no retrospective requirement to fit SPDs, but they should be recommended as an improvement (C3 observation) during an EICR if they are absent.',
   },
   {
     question: 'What is the difference between Type 1, Type 2, and Type 3 SPDs?',
@@ -162,10 +162,10 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
-          , SPDs are no longer optional extras. Regulation 443.4 requires a risk assessment for
-          every new installation, and the outcome almost always mandates SPD protection.
+          , SPDs are no longer optional extras. Regulation 443.4.1 makes them mandatory in some
+          cases and the default in all others, unless the owner declares they are not required.
         </p>
       </>
     ),
@@ -248,9 +248,12 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 443.4 of BS 7671:2018+A2:2022 sets out the conditions under which SPDs must be
-          installed. The regulation requires a risk assessment to be carried out for every new
-          installation, and the result of that assessment determines whether SPDs are needed.
+          Regulation 443.4.1 of BS 7671:2018+A4:2026 sets out when SPDs must be installed. They are
+          mandatory where the consequence of a transient overvoltage could be serious injury or
+          loss of life (443.4.1(a)) or significant financial or data loss (443.4.1(c)); limb (b)
+          was deleted by the A2:2022 Corrigendum. For all other cases they shall be provided unless
+          the owner declares they are not required. The points below are the usual reasons an
+          installation falls into the mandatory cases or needs a Type 1 device.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -289,17 +292,14 @@ const sections = [
           </ul>
         </div>
         <p>
-          In practice, the risk assessment for a typical domestic installation almost always
-          concludes that SPDs should be fitted. The IET Guidance Note 8 makes clear that the low
-          cost of an SPD versus the potential consequence of a surge makes protection cost-effective
-          in nearly all cases. The only common exception is where the installation contains no
-          sensitive equipment and the consequence of a surge would be limited to minor inconvenience
-          — which is rare in modern homes with boiler controls, LED lighting, and smart devices.
+          In practice, a typical domestic installation gets an SPD: it is the default unless the
+          owner declares otherwise, and the low cost of an SPD against the cost of a surge damaging
+          boiler controls, LED drivers and smart devices makes it an easy recommendation.
         </p>
         <p>
-          If the risk assessment concludes that SPDs are not required, the designer must document
-          the reasoning. Simply omitting SPDs without a documented risk assessment is a
-          non-compliance with Regulation 443.4.
+          If SPDs are left out of a case not covered by 443.4.1(a) or (c), record the owner&apos;s
+          declaration that they are not required. Simply omitting SPDs without that declaration is
+          a non-compliance with Regulation 443.4.1.
         </p>
         <SEOAppBridge
           title="Check SPD requirements with AI regulations lookup"
@@ -315,7 +315,7 @@ const sections = [
     content: (
       <>
         <p>
-          Several regulations within BS 7671:2018+A2:2022 govern the selection, installation, and
+          Several regulations within BS 7671:2018+A4:2026 govern the selection, installation, and
           testing of SPDs. The key regulations are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -323,10 +323,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 443.4</strong> — requires a risk assessment to determine whether
-                protection against transient overvoltages is necessary. Where the consequence of
-                overvoltage could result in serious injury, loss of life, or interruption of
-                critical services, SPDs must be provided.
+                <strong>Regulation 443.4.1</strong> — SPDs must be provided where the consequence of
+                a transient overvoltage could be serious injury or loss of life, or significant
+                financial or data loss. In all other cases they shall be provided unless the owner
+                declares they are not required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -375,8 +375,8 @@ const sections = [
           <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition qualification
           </SEOInternalLink>
-          , Section 534 and Regulation 443.4 are commonly examined topics. Understanding the risk
-          assessment process, SPD selection criteria, and the 0.5 m conductor length rule are
+          , Section 534 and Regulation 443.4 are commonly examined topics. Understanding when 443.4.1
+          makes SPDs mandatory, SPD selection criteria, and the 0.5 m conductor length rule are
           essential for both the exam and practical installation work.
         </p>
       </>
@@ -546,7 +546,7 @@ const sections = [
                 <strong>EICR recording</strong> — record the SPD status on the{' '}
                 <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>. If the
                 SPD indicator shows failure, record it as a C2 observation. If an SPD is absent
-                where the risk assessment would require one, record it as C3.
+                where Regulation 443.4.1 would require one on new work, record it as C3.
               </span>
             </li>
           </ul>
@@ -602,10 +602,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Missing risk assessment documentation.</strong> Even if you fit an SPD, you
-                need to document the risk assessment under Regulation 443.4. Record why the SPD was
-                deemed necessary, the type selected, and the protection mode. Without this
-                documentation, the installation is technically non-compliant.
+                <strong>Missing documentation.</strong> Record why the SPD was fitted (or the
+                owner&apos;s declaration if it was not), the type selected and the protection mode
+                under Regulation 443.4.1. Without this, the decision cannot be shown on the
+                certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -642,9 +642,9 @@ export default function SPDGuidePage() {
   return (
     <GuideTemplate
       title="SPD Installation Guide: BS 7671 443.4"
-      description="Installer-focused SPD walkthrough for UK electricians: Type 1/2/3 selection, 443.4 risk assessment, CU mounting, conductor lengths, and end-of-life checks."
+      description="Installer-focused SPD walkthrough for UK electricians: Type 1/2/3 selection, when 443.4.1 makes SPDs mandatory, CU mounting, conductor lengths and end-of-life checks."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"
@@ -652,11 +652,11 @@ export default function SPDGuidePage() {
       heroTitle={
         <>
           SPD Installation Walkthrough:{' '}
-          <span className="text-elec-yellow">443.4 Risk Assessment to Final Sign-Off</span>
+          <span className="text-elec-yellow">443.4.1 to Final Sign-Off</span>
         </>
       }
       noindex={true}
-      heroSubtitle="Surge Protective Devices are required in almost every new domestic installation under BS 7671. This guide covers Type 1, 2, and 3 SPDs, the Regulation 443.4 risk assessment, installation methods, coordination, and the common mistakes that catch electricians out."
+      heroSubtitle="Surge Protective Devices are required in almost every new domestic installation under BS 7671. This guide covers Type 1, 2, and 3 SPDs, when Regulation 443.4.1 makes them mandatory, installation methods, coordination, and the common mistakes that catch electricians out."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -868,7 +868,7 @@ const FiberOpticsModule3Section2 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-1">
+            <Link to="/study-centre/upskilling/fiber-optics-module-3-section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Cable Types
             </Link>
@@ -878,7 +878,7 @@ const FiberOpticsModule3Section2 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-3">
+            <Link to="/study-centre/upskilling/fiber-optics-module-3-section-3">
               Next: Routing and Containment
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

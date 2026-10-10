@@ -51,7 +51,7 @@ const restorationChecklist = [
 const ChecklistSection = ({ title, items }: { title: string; items: string[] }) => (
   <>
     <motion.div variants={itemVariants}>
-      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">{title}</p>
+      <p className="text-[12px] font-medium text-white mb-3">{title}</p>
     </motion.div>
     <motion.div variants={itemVariants}>
       <div className="space-y-1.5">

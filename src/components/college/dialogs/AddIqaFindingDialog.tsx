@@ -4,13 +4,9 @@ import { cn } from '@/lib/utils';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { inputCn, labelCn, selectTriggerCn, textareaCn } from '@/components/forms/fieldStyles';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY, chipCn } from '@/components/college/ui/CollegeUi';
+import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY } from '@/components/college/ui/CollegeUi';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import {
-  useIqaFindings,
-  type FindingType,
-  type FindingSeverity,
-} from '@/hooks/useIqaFindings';
+import { useIqaFindings, type FindingType, type FindingSeverity } from '@/hooks/useIqaFindings';
 
 /* ==========================================================================
    AddIqaFindingDialog — IQA raises a finding against an assessor (and
@@ -57,10 +53,26 @@ interface FormState {
 // ('Good Practice', 'Area for Improvement', …) are mapped in useIqaFindings,
 // never here.
 const FINDING_TYPES: { value: FindingType; label: string; explain: string }[] = [
-  { value: 'commendation', label: 'Good practice', explain: 'Worth sharing at the next standardisation meeting.' },
-  { value: 'observation', label: 'For improvement', explain: 'Not wrong, but could be better. No formal action needed.' },
-  { value: 'action', label: 'Action required', explain: 'Needs a written action plan, and ideally a due date.' },
-  { value: 'concern', label: 'Concern', explain: 'A risk to a decision or to the learner. Escalate if serious.' },
+  {
+    value: 'commendation',
+    label: 'Good practice',
+    explain: 'Worth sharing at the next standardisation meeting.',
+  },
+  {
+    value: 'observation',
+    label: 'For improvement',
+    explain: 'Not wrong, but could be better. No formal action needed.',
+  },
+  {
+    value: 'action',
+    label: 'Action required',
+    explain: 'Needs a written action plan, and ideally a due date.',
+  },
+  {
+    value: 'concern',
+    label: 'Concern',
+    explain: 'A risk to a decision or to the learner. Escalate if serious.',
+  },
 ];
 
 const SEVERITIES: { value: FindingSeverity; label: string }[] = [
@@ -102,16 +114,12 @@ export function AddIqaFindingDialog({ open, onOpenChange, prefill }: Props) {
     });
   }, [open, prefill]);
 
-  const update = (patch: Partial<FormState>) =>
-    setForm((p) => ({ ...p, ...patch }));
+  const update = (patch: Partial<FormState>) => setForm((p) => ({ ...p, ...patch }));
 
   const iqaCandidates = useMemo(
     () =>
       staff.filter(
-        (s) =>
-          s.role === 'tutor' ||
-          s.role === 'head_of_department' ||
-          s.role === 'admin'
+        (s) => s.role === 'tutor' || s.role === 'head_of_department' || s.role === 'admin'
       ),
     [staff]
   );
@@ -169,7 +177,6 @@ export function AddIqaFindingDialog({ open, onOpenChange, prefill }: Props) {
     }
   };
 
-  const typeMeta = FINDING_TYPES.find((t) => t.value === form.finding_type);
   const needsPlan = form.finding_type === 'action';
 
   return (
@@ -205,44 +212,59 @@ export function AddIqaFindingDialog({ open, onOpenChange, prefill }: Props) {
         <section className="space-y-5">
           <div>
             <p className={labelCn}>Finding type</p>
-            <div className="mt-1 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-              {FINDING_TYPES.map((t) => (
-                <button
-                  key={t.value}
-                  type="button"
-                  aria-pressed={form.finding_type === t.value}
-                  onClick={() => update({ finding_type: t.value })}
-                  className={cn(chipCn(form.finding_type === t.value), 'h-11')}
-                >
-                  {t.label}
-                </button>
-              ))}
+            {/* Four equal tiles, each saying what the type means; the
+                chosen one is white (Andrew, 10 Oct: no chip rows). */}
+            <div className="mt-1 grid grid-cols-2 gap-2">
+              {FINDING_TYPES.map((t) => {
+                const on = form.finding_type === t.value;
+                return (
+                  <button
+                    key={t.value}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => update({ finding_type: t.value })}
+                    className={cn(
+                      'flex min-h-[88px] flex-col items-start rounded-xl border p-3 text-left transition-colors touch-manipulation',
+                      on
+                        ? 'border-white bg-white text-black'
+                        : 'border-white/[0.14] text-white hover:border-white/[0.3] active:bg-white/[0.06]'
+                    )}
+                  >
+                    <span className="text-[14px] font-semibold leading-snug">{t.label}</span>
+                    <span className="mt-1 text-[12.5px] leading-snug">{t.explain}</span>
+                  </button>
+                );
+              })}
             </div>
-            {typeMeta && <p className="mt-2 text-[12.5px] text-white">{typeMeta.explain}</p>}
           </div>
 
           <div>
             <p className={labelCn}>Severity (optional)</p>
-            <div className="mt-1 flex flex-wrap gap-2">
-              <button
-                type="button"
-                aria-pressed={form.severity === ''}
-                onClick={() => update({ severity: '' })}
-                className={cn(chipCn(form.severity === ''), 'h-11')}
-              >
-                Not set
-              </button>
-              {SEVERITIES.map((s) => (
-                <button
-                  key={s.value}
-                  type="button"
-                  aria-pressed={form.severity === s.value}
-                  onClick={() => update({ severity: s.value })}
-                  className={cn(chipCn(form.severity === s.value), 'h-11')}
-                >
-                  {s.label}
-                </button>
-              ))}
+            {/* A joined toggle: four short choices. */}
+            <div
+              role="group"
+              aria-label="Severity"
+              className="mt-1 grid grid-cols-4 gap-0.5 rounded-xl border border-white/[0.14] p-0.5"
+            >
+              {[{ value: '' as const, label: 'Not set' }, ...SEVERITIES].map((s) => {
+                const on = form.severity === s.value;
+                return (
+                  <button
+                    key={s.label}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => update({ severity: s.value })}
+                    className={cn(
+                      'h-11 rounded-[10px] px-1 text-[13px] transition-colors touch-manipulation',
+                      on
+                        ? 'bg-white font-semibold text-black'
+                        : 'font-medium text-white hover:bg-white/[0.06]'
+                    )}
+                  >
+                    {s.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

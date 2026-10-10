@@ -33,7 +33,7 @@ const cardCn =
   'bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5';
 
 const headingCn = 'mb-3 text-[15px] font-semibold tracking-tight text-white';
-const eyebrowCn = 'text-[11px] font-medium uppercase tracking-[0.18em] text-white';
+const eyebrowCn = 'text-[13px] font-semibold text-white';
 
 /** Limits worth having in front of you while learning a given test. */
 const REFERENCE_FOR_STEP: Record<string, string[]> = {
@@ -174,11 +174,11 @@ const StepRow: React.FC<StepRowProps> = ({ step, done, open, onToggleOpen, onCom
                   </div>
                 ))}
               </div>
-              <p className="mt-1 text-[11px] text-white">{table.source}</p>
+              <p className="mt-1 text-[12px] text-white">{table.source}</p>
             </div>
           ))}
 
-          <div className="rounded-xl border border-amber-500/30 bg-amber-500/[0.08] p-3">
+          <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-amber-400 bg-white/[0.04] p-3">
             <p className={eyebrowCn}>Where it goes wrong</p>
             <p className="mt-1 text-[13px] leading-relaxed text-white">{step.watchOut}</p>
           </div>
@@ -270,7 +270,7 @@ export const LearnPath: React.FC<LearnPathProps> = ({ onNavigateToSection }) => 
   );
 
   return (
-    <div className="space-y-6 px-4 py-4">
+    <div className="space-y-6">
       <section className={cardCn}>
         <div className="flex items-baseline justify-between">
           <p className="text-[15px] font-semibold tracking-tight text-white">Your progress</p>

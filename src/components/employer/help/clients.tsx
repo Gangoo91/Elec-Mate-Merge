@@ -47,7 +47,10 @@ export const CLIENTS_HELP: PageHelpContent = {
       ],
       tour: [
         { target: 'clients.list', caption: 'Tap a client to open their record.', opens: true },
-        { target: 'clients.actions', caption: 'Paid, outstanding and open quotes sit above these buttons.' },
+        {
+          target: 'clients.actions',
+          caption: 'Paid, outstanding and open quotes sit above these buttons.',
+        },
       ],
     },
     {
@@ -59,7 +62,10 @@ export const CLIENTS_HELP: PageHelpContent = {
       ],
       tour: [
         { target: 'clients.list', caption: 'Open the client first.', opens: true },
-        { target: 'clients.new-quote', caption: 'Tap New quote or New job. Their details come with it.' },
+        {
+          target: 'clients.new-quote',
+          caption: 'Tap New quote or New job. Their details come with it.',
+        },
       ],
     },
     {
@@ -85,10 +91,7 @@ export const CLIENTS_HELP: PageHelpContent = {
     },
     {
       title: 'Remove a client',
-      steps: [
-        'Open the client and scroll to the bottom.',
-        'Tap the bin, then Delete.',
-      ],
+      steps: ['Open the client and scroll to the bottom.', 'Tap the bin, then Delete.'],
       after:
         'A client with any quote, invoice, job or certificate cannot be deleted. That keeps the history together for the whole firm.',
     },
@@ -175,7 +178,7 @@ export const LEADS_HELP: PageHelpContent = {
   notes: [
     {
       title: 'Win rate',
-      body: 'Won divided by everything decided (won plus lost). Open leads do not count against you.',
+      body: 'Won out of everything decided (won plus lost). Open leads do not count. Quotes use the same rule, with expired quotes counted as decided.',
     },
   ],
 };
@@ -187,7 +190,7 @@ export const CLIENTS_HUB_HELP: PageHelpContent = {
   steps: [
     {
       title: 'Get work',
-      body: 'Quote page brings requests in. They land in Leads.',
+      body: 'Email, website, quote page, calls, texts and bookings all land in Enquiries.',
     },
     {
       title: 'Keep the customer',
@@ -203,13 +206,14 @@ export const CLIENTS_HUB_HELP: PageHelpContent = {
       title: 'Find your way round',
       steps: [
         'Quote page: your own page and QR code where customers ask for a quote.',
-        'Leads: enquiries until they are won or lost.',
+        'Enquiries: every way a customer gets in touch, until the quote is accepted.',
         'Clients: every customer and what they owe.',
         'Quotes & Invoices: raise, send and chase. Tenders: bids for bigger work. Client portal: links and messages.',
+        'Review requests: one honest review request to each customer after they pay, with who clicked.',
       ],
       tour: [
         { target: 'clientshub.quotepage', caption: 'Quote page: where new requests come from.' },
-        { target: 'clientshub.leads', caption: 'Leads: every enquiry until it is won.' },
+        { target: 'clientshub.leads', caption: 'Enquiries: every way in, in one place.' },
         { target: 'clientshub.clients', caption: 'Clients: every customer and their balance.' },
       ],
     },
@@ -225,11 +229,15 @@ export const CLIENTS_HUB_HELP: PageHelpContent = {
 export const SMART_DOCS_HELP: PageHelpContent = {
   id: 'employer-smart-docs',
   title: 'Smart Docs',
-  what: 'AI drafts the paperwork from your job details and you check it before it goes anywhere. Your last five documents show at the top.',
+  what: 'Every document a job has, in one place: RAMS, job pack, briefings, quotes and invoices, certificates and signatures, with who has signed. AI drafts the ones it still needs and you check them before they go anywhere.',
   steps: [
     {
+      title: 'Pick a job',
+      body: 'Under Start a document, pick the job in For a job. Each card then says whether the job has it, and its documents list below. Leave it on All jobs for the most recent across the firm.',
+    },
+    {
       title: 'Pick the document',
-      body: 'AI Design for a circuit design spec, AI quote for a priced draft quote.',
+      body: 'Tap a card: Safety documents for RAMS and method statement, Design spec for a circuit design, AI quote for a priced draft quote.',
     },
     {
       title: 'Give it the job',
@@ -244,16 +252,16 @@ export const SMART_DOCS_HELP: PageHelpContent = {
     {
       title: 'Draft a design spec',
       steps: [
-        'Tap AI Design Spec.',
+        'Tap the Design spec card.',
         'Work through Project, Supply, Circuits, Install, Validate and Review, tapping Next.',
         'Tap Generate Design, then Download PDF from the results.',
       ],
-      tour: [{ target: 'smartdocs.design', caption: 'Tap AI Design Spec to start a design.' }],
+      tour: [{ target: 'smartdocs.design', caption: 'Tap Design spec to start a design.' }],
     },
     {
       title: 'Draft a quote',
       steps: [
-        'Tap AI quote.',
+        'Tap the AI quote card.',
         'Tap Start a draft, pick a job or describe the work, then Draft my quote.',
         'Check the lines and tap Save draft and review. You send it from the quote builder.',
       ],
@@ -263,7 +271,7 @@ export const SMART_DOCS_HELP: PageHelpContent = {
   notes: [
     {
       title: 'RAMS, method statements and briefing packs',
-      body: 'These cards open the safety document tools. They have their own help on each page.',
+      body: 'The Safety documents and Briefing pack cards open the safety tools. They have their own help on each page.',
     },
     {
       title: 'Who sees the counts',
@@ -275,8 +283,12 @@ export const SMART_DOCS_HELP: PageHelpContent = {
 export const AI_DESIGN_HELP: PageHelpContent = {
   id: 'employer-ai-design',
   title: 'AI Design',
-  what: 'Design a whole installation. Each circuit is sized, protected and checked, and you get a branded design schedule as a PDF.',
+  what: 'Design a whole installation for one of your jobs. Each circuit is sized, protected and checked. The design is saved to the job, where the crew can read it, and you can put its PDF in the job pack or quote from it.',
   steps: [
+    {
+      title: 'Pick the job',
+      body: 'Under The job, pick the job. Its name, site and client fill in the first step, and the design is saved to it as soon as it starts.',
+    },
     {
       title: 'Describe the job',
       body: 'Six steps: Project, Supply, Circuits, Install, Validate and Review. Tap Next to move on.',
@@ -300,7 +312,9 @@ export const AI_DESIGN_HELP: PageHelpContent = {
         'Validate runs a pre-flight check. Fix anything it flags, then Review.',
         'Tap Generate Design.',
       ],
-      tour: [{ target: 'aidesign.wizard', text: 'Next', caption: 'Fill in each step, then tap Next.' }],
+      tour: [
+        { target: 'aidesign.wizard', text: 'Next', caption: 'Fill in each step, then tap Next.' },
+      ],
     },
     {
       title: 'Get the PDF',
@@ -315,6 +329,10 @@ export const AI_DESIGN_HELP: PageHelpContent = {
     {
       title: 'You sign it off',
       body: 'The design is a draft to check against BS 7671 and site conditions. It does not replace your own judgement.',
+    },
+    {
+      title: 'After the design',
+      body: 'Open a saved design from the list. Add to job pack puts its PDF in the job’s pack. Start a quote opens a quote for the job with its cable and devices as lines, priced from the design for you to check.',
     },
   ],
 };
@@ -341,11 +359,17 @@ export const SETTINGS_HELP: PageHelpContent = {
     {
       title: 'Update company details',
       steps: [
-        'Change any field under General.',
+        'Open Company and change any field.',
         'A bar appears at the bottom. Tap Save all, or Discard to undo.',
       ],
       who: 'The account owner. Managers can see settings but not change company details, branding or payments.',
-      tour: [{ target: 'settings.general', caption: 'Change the details here. Save all appears at the bottom.' }],
+      tour: [
+        { target: 'settings.menu.general', caption: 'Open Company.', opens: true, optional: true },
+        {
+          target: 'settings.general',
+          caption: 'Change the details here. Save all appears at the bottom.',
+        },
+      ],
     },
     {
       title: 'Add your logo and colours',
@@ -355,7 +379,18 @@ export const SETTINGS_HELP: PageHelpContent = {
         'Check the live preview, then tap Save branding.',
       ],
       who: 'The account owner.',
-      tour: [{ target: 'settings.branding', caption: 'Upload your logo, pick colours, then Save branding.' }],
+      tour: [
+        {
+          target: 'settings.menu.branding',
+          caption: 'Open Branding.',
+          opens: true,
+          optional: true,
+        },
+        {
+          target: 'settings.branding',
+          caption: 'Upload your logo, pick colours, then Save branding.',
+        },
+      ],
     },
     {
       title: 'Add a manager',
@@ -367,7 +402,18 @@ export const SETTINGS_HELP: PageHelpContent = {
       after:
         'Next time they open Elec-Mate with that email they are asked to accept. Office runs jobs, team, quotes, invoices and approvals without seeing job profit or pay rates. Admin can do everything you can. Neither needs a paid seat. Make Office or Make Admin changes it later.',
       who: 'The account owner only.',
-      tour: [{ target: 'settings.managers', caption: 'Owners: tap Add manager here, then pick Office or Admin.' }],
+      tour: [
+        {
+          target: 'settings.menu.managers',
+          caption: 'Open Managers.',
+          opens: true,
+          optional: true,
+        },
+        {
+          target: 'settings.managers',
+          caption: 'Owners: tap Add manager here, then pick Office or Admin.',
+        },
+      ],
     },
     {
       title: 'Set up card payments',
@@ -379,7 +425,15 @@ export const SETTINGS_HELP: PageHelpContent = {
       after:
         'Once connected, every invoice you send carries a Pay now link and marks itself paid. 1% platform fee plus Stripe fees on each card payment.',
       who: 'The account owner only.',
-      tour: [{ target: 'settings.payments', caption: 'Connect Stripe here so invoices carry Pay now.' }],
+      tour: [
+        {
+          target: 'settings.menu.payments',
+          caption: 'Open Card payments.',
+          opens: true,
+          optional: true,
+        },
+        { target: 'settings.payments', caption: 'Connect Stripe here so invoices carry Pay now.' },
+      ],
     },
     {
       title: 'Add your bank details to invoices',
@@ -389,7 +443,15 @@ export const SETTINGS_HELP: PageHelpContent = {
         'Tap Save.',
       ],
       who: 'The account owner.',
-      tour: [{ target: 'settings.bank', caption: 'Bank details printed on every invoice. Tap Save.' }],
+      tour: [
+        {
+          target: 'settings.menu.bank',
+          caption: 'Open Bank details.',
+          opens: true,
+          optional: true,
+        },
+        { target: 'settings.bank', caption: 'Bank details printed on every invoice. Tap Save.' },
+      ],
     },
     {
       title: 'Turn on QS sign-off',
@@ -399,18 +461,26 @@ export const SETTINGS_HELP: PageHelpContent = {
         'If you are the QS yourself, also switch on I am my own Qualifying Supervisor.',
       ],
       who: 'The account owner.',
-      tour: [{ target: 'settings.qs', caption: 'Switch these on to require QS countersigning.' }],
+      tour: [
+        { target: 'settings.menu.qs', caption: 'Open QS sign-off.', opens: true, optional: true },
+        { target: 'settings.qs', caption: 'Switch these on to require QS countersigning.' },
+      ],
     },
     {
       title: 'Get office emails',
-      steps: [
-        'Under Notifications, type the office email.',
-        'Tap Save next to it.',
-      ],
+      steps: ['Under Notifications, type the office email.', 'Tap Save next to it.'],
       who: 'The account owner.',
       after:
         'It gets incidents and near misses, client payments, and a weekday morning summary of timesheets, leave and expenses waiting, plus renewals. Leave it empty to stop them. In-app alerts carry on either way.',
-      tour: [{ target: 'settings.notifications', caption: 'Put the office email here and save it.' }],
+      tour: [
+        {
+          target: 'settings.menu.notifications',
+          caption: 'Open Notifications.',
+          opens: true,
+          optional: true,
+        },
+        { target: 'settings.notifications', caption: 'Put the office email here and save it.' },
+      ],
     },
   ],
 };

@@ -121,8 +121,8 @@ export function LeaveOutSheet({
               className={cn(
                 'min-h-11 rounded-xl border px-3.5 py-2 text-left text-[13px] leading-snug touch-manipulation',
                 reason === r
-                  ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                  : 'border-white/[0.12] bg-white/[0.06] text-white'
+                  ? 'border-white bg-white font-semibold text-black'
+                  : 'border-white/[0.14] text-white active:bg-white/[0.06]'
               )}
             >
               {r}

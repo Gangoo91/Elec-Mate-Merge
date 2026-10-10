@@ -1,10 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Search, Star } from 'lucide-react';
 import { useMentalHealth } from '@/contexts/MentalHealthContext';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { cn } from '@/lib/utils';
-import { PageHero, FilterBar, EmptyState, Eyebrow } from '@/components/college/primitives';
+import { P_TAB_LINE, P_TAB_RAIL, pTab } from '@/components/apprentice-hub/portfolio2/ui';
+import { COLLEGE_BTN, CollegeEmpty } from '@/components/college/ui/CollegeUi';
+import { WellbeingIntro } from '@/components/mental-health/wellbeingUi';
+
+const TYPE_LABEL: Record<string, string> = {
+  document: 'Guide',
+  video: 'Video',
+  tool: 'In the app',
+};
 
 const resources = [
   {
@@ -161,96 +169,112 @@ const ResourcesLibraryTab = () => {
   };
 
   return (
-    <div className="space-y-8 sm:space-y-10">
-      <PageHero
-        eyebrow="Library"
-        title="Resources & guides"
-        description="Curated, trusted reading and short videos. Star anything you want to come back to."
-        tone="blue"
-      />
-
-      <FilterBar
-        tabs={tabsWithCounts}
-        activeTab={category}
-        onTabChange={setCategory}
-        search={search}
-        onSearchChange={setSearch}
-        searchPlaceholder="Search resources..."
+    <div className="space-y-6 sm:space-y-8">
+      <WellbeingIntro
+        label="Library"
+        title="Resources and guides"
+        description="Trusted reading and short videos. Star anything you want to come back to."
       />
 
       <div className="space-y-3">
-        <Eyebrow>{filtered.length} resources</Eyebrow>
-
-        {filtered.length === 0 ? (
-          <EmptyState
-            title="No resources found"
-            description="Try a different search term or category."
-            action="Clear filters"
-            onAction={() => {
-              setSearch('');
-              setCategory('all');
-            }}
+        {/* Quiet text tabs with counts (10 Oct design language), then search */}
+        <div className={P_TAB_RAIL} role="tablist" aria-label="Topic">
+          {tabsWithCounts.map((t) => {
+            const on = category === t.value;
+            return (
+              <button
+                key={t.value}
+                type="button"
+                role="tab"
+                aria-selected={on}
+                onClick={() => setCategory(t.value)}
+                className={pTab(on)}
+              >
+                {t.label}
+                <span className="tabular-nums">{t.count}</span>
+                {on && <span className={P_TAB_LINE} aria-hidden />}
+              </button>
+            );
+          })}
+        </div>
+        <div className="relative">
+          <Search
+            className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+            strokeWidth={1.5}
+            aria-hidden
           />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {filtered.map((r) => {
-              const isFav = favoriteResources.includes(r.id);
-              const tone = r.type === 'video' ? 'red' : r.type === 'tool' ? 'yellow' : 'blue';
-              return (
-                /* Star is a SIBLING of the card button, not a child — nested
-                   <button> inside <button> is invalid DOM (console warning). */
-                <div key={r.id} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => openResource(r)}
-                    className="group w-full h-full flex items-stretch gap-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_14%)] p-5 pr-14 text-left transition-colors touch-manipulation"
-                  >
-                    <span
-                      aria-hidden
-                      className={cn(
-                        'w-[3px] rounded-full shrink-0 self-stretch',
-                        tone === 'red' && 'bg-red-400/70',
-                        tone === 'yellow' && 'bg-elec-yellow/70',
-                        tone === 'blue' && 'bg-blue-400/70'
-                      )}
-                    />
-                    <span className="flex-1 min-w-0 flex flex-col">
-                      <span className="text-[14px] font-semibold text-white leading-snug">
-                        {r.title}
-                      </span>
-                      <span className="mt-1 text-[12.5px] text-white/65 leading-relaxed">
-                        {r.sub}
-                      </span>
-                      <span className="mt-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.12em] text-white/45">
-                        <span>{r.source}</span>
-                        <span aria-hidden>·</span>
-                        <span>{r.type}</span>
-                      </span>
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => toggleFavoriteResource(r.id)}
-                    className="absolute top-2 right-2 h-11 w-11 flex items-center justify-center rounded-full hover:bg-white/[0.06] touch-manipulation"
-                    aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
-                  >
-                    <Star
-                      className={cn(
-                        'h-4 w-4',
-                        isFav ? 'fill-elec-yellow text-elec-yellow' : 'text-white/60'
-                      )}
-                    />
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search resources"
+            aria-label="Search resources"
+            enterKeyHint="search"
+            className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white caret-elec-yellow placeholder:text-white/25 transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 touch-manipulation"
+          />
+        </div>
       </div>
 
-      <p className="text-[11.5px] text-white text-center">
-        Star resources to save them. All links go to official, trusted sources.
-      </p>
+      {filtered.length === 0 ? (
+        <CollegeEmpty
+          title="Nothing matches that"
+          body="Try a different word or topic."
+          action={
+            <button
+              type="button"
+              className={COLLEGE_BTN}
+              onClick={() => {
+                setSearch('');
+                setCategory('all');
+              }}
+            >
+              Show everything
+            </button>
+          }
+        />
+      ) : (
+        <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.06] bg-[hsl(0_0%_12%)] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 sm:bg-transparent xl:grid-cols-3">
+          {filtered.map((r) => {
+            const isFav = favoriteResources.includes(r.id);
+            return (
+              /* Star is a SIBLING of the card button, not a child — nested
+                 <button> inside <button> is invalid DOM (console warning). */
+              <li key={r.id} className="relative sm:flex">
+                <button
+                  type="button"
+                  onClick={() => openResource(r)}
+                  className="flex w-full flex-col px-5 py-4 pr-14 text-left transition-colors touch-manipulation active:bg-white/[0.07] sm:rounded-2xl sm:border sm:border-white/[0.1] sm:bg-[hsl(0_0%_15%)] sm:p-5 sm:pr-14 sm:hover:border-white/[0.16] sm:hover:bg-[hsl(0_0%_17%)]"
+                >
+                  <span className="text-[15px] font-semibold leading-snug text-white">
+                    {r.title}
+                  </span>
+                  <span className="mt-1 text-[13px] leading-relaxed text-white">{r.sub}</span>
+                  <span className="mt-2 text-[12.5px] font-medium text-white sm:mt-auto sm:pt-3">
+                    {r.source} · {TYPE_LABEL[r.type] ?? r.type}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => toggleFavoriteResource(r.id)}
+                  className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-xl touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.08]"
+                  aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
+                  aria-pressed={isFav}
+                >
+                  <Star
+                    className={cn(
+                      'h-[18px] w-[18px]',
+                      isFav ? 'fill-elec-yellow text-elec-yellow' : 'text-white'
+                    )}
+                    strokeWidth={1.5}
+                  />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      <p className="text-[13px] text-white">Every link goes to an official, trusted source.</p>
     </div>
   );
 };

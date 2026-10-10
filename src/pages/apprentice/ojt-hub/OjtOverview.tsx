@@ -21,7 +21,7 @@ import {
 } from '@/data/otjActivityTypes';
 
 const cardCn = cn(
-  '-mx-4 rounded-none border-y border-elec-yellow/35 p-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6',
+  '-mx-4 rounded-none border-y border-white/[0.08] p-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6',
   CARD_SURFACE
 );
 
@@ -115,9 +115,7 @@ export function OjtHeroCard({
   return (
     <section className={cardCn} aria-label="Your off-the-job hours">
       <div className="flex items-start justify-between gap-4">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
-          Off-the-job hours
-        </p>
+        <p className="text-[12px] font-semibold text-elec-yellow">Off-the-job hours</p>
         <span className={cn('text-[13px] font-semibold', status.tone)}>{status.word}</span>
       </div>
 
@@ -150,12 +148,16 @@ export function OjtHeroCard({
           />
         )}
       </div>
-      <div className="mt-2 flex justify-between text-[12px] text-white">
+      <div className="mt-2 flex items-center justify-between text-[13px] text-white">
         <span>{Math.round(pct)}% done</span>
         {planned != null && planned > 0 ? (
           <span>Where you should be today: {fmtH(planned)}</span>
         ) : summary?.required_source === 'not_set' || !summary?.start_date ? (
-          <button type="button" onClick={onSetProgramme} className="font-semibold text-elec-yellow">
+          <button
+            type="button"
+            onClick={onSetProgramme}
+            className="-my-2 inline-flex h-11 items-center px-1 font-semibold text-elec-yellow touch-manipulation"
+          >
             Set your programme dates
           </button>
         ) : null}
@@ -273,7 +275,8 @@ export function AppLearningCard({
             Learning in the app
           </h2>
           <p className="mt-1 text-[13px] leading-snug text-white">
-            Recorded as you learn. Tracked time counts towards your hours; quizzes and mocks count once you confirm them.
+            Recorded as you learn. Tracked time counts towards your hours; quizzes and mocks count
+            once you confirm them.
           </p>
         </div>
         <div className="shrink-0 text-right">
@@ -294,7 +297,7 @@ export function AppLearningCard({
           const h = d.minutes > 0 ? Math.max(6, (d.minutes / maxDay) * 100) : 3;
           return (
             <div key={d.key} className="flex h-full flex-col items-center justify-end gap-1.5">
-              <span className="text-[11px] font-semibold tabular-nums text-white">
+              <span className="text-[12.5px] font-semibold tabular-nums text-white">
                 {d.minutes > 0 ? fmtMins(d.minutes) : ''}
               </span>
               <div
@@ -424,7 +427,7 @@ export function AppLearningCard({
       )}
 
       {total > 0 && (
-        <p className="mt-4 rounded-xl border border-white/[0.12] px-3.5 py-3 text-[13px] leading-relaxed text-white">
+        <p className="mt-4 rounded-xl border border-white/[0.12] px-3.5 py-3 text-[14px] leading-relaxed text-white">
           {approved >= total
             ? 'Your tutor has approved all of it.'
             : approved > 0
@@ -450,16 +453,14 @@ export function OjtRequirementsCard() {
         {OTJ_RULES.map((r) => (
           <div key={r.title} className="rounded-xl border border-white/[0.12] p-3.5">
             <h3 className="text-[14px] font-semibold text-white">{r.title}</h3>
-            <p className="mt-1 text-[13px] leading-relaxed text-white">{r.body}</p>
+            <p className="mt-1 text-[14px] leading-relaxed text-white">{r.body}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-5 grid gap-5 border-t border-white/[0.12] pt-5 sm:grid-cols-2">
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
-            Counts
-          </p>
+          <p className="text-[12px] font-semibold text-elec-yellow">Counts</p>
           <ul className="mt-2 space-y-2">
             {OTJ_COUNTS.map((t) => (
               <li key={t} className="flex gap-2.5 text-[13px] leading-snug text-white">
@@ -480,9 +481,7 @@ export function OjtRequirementsCard() {
           </ul>
         </div>
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white">
-            Does not count
-          </p>
+          <p className="text-[12px] font-semibold text-white">Does not count</p>
           <ul className="mt-2 space-y-2">
             {OTJ_DOES_NOT_COUNT.map((t) => (
               <li key={t} className="flex gap-2.5 text-[13px] leading-snug text-white">
@@ -497,7 +496,7 @@ export function OjtRequirementsCard() {
         </div>
       </div>
 
-      <p className="mt-5 text-[12px] leading-relaxed text-white">Source: {OTJ_RULES_SOURCE}.</p>
+      <p className="mt-5 text-[14px] leading-relaxed text-white">Source: {OTJ_RULES_SOURCE}.</p>
     </section>
   );
 }

@@ -46,9 +46,11 @@ interface EditorialCostResultsProps {
 }
 
 const fmtGBP = (n: number) =>
-  new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 }).format(
-    isFinite(n) ? n : 0
-  );
+  new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    maximumFractionDigits: 0,
+  }).format(isFinite(n) ? n : 0);
 
 const fmtGBP2 = (n: number) =>
   new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
@@ -56,6 +58,19 @@ const fmtGBP2 = (n: number) =>
   );
 
 const round2 = (n: number) => Math.round((n || 0) * 100) / 100;
+
+/** Plain-words reason an estimated line has no live price. */
+function estimateWhy(
+  reason: string | null | undefined,
+  unitPrice: number | null | undefined
+): string {
+  const r = (reason ?? '').toLowerCase();
+  if (r.startsWith('not a product')) return 'Not a product — add your own figure.';
+  if (!unitPrice) return 'No price found — add your own.';
+  if (r.includes('implausible') || r.includes('different category'))
+    return 'Typical trade price — no reliable live match. Check before sending.';
+  return 'Typical trade price — no live match. Check before sending.';
+}
 
 export const EditorialCostResults = ({
   inputs,
@@ -164,7 +179,9 @@ export const EditorialCostResults = ({
   const recommendedTier = selectedTierKey;
   const recommendedAmount = tierAmounts[selectedTierKey] ?? tierTarget;
   const profit = round2(recommendedAmount - breakEven);
-  const margin = round2(recommendedAmount > 0 ? ((recommendedAmount - breakEven) / recommendedAmount) * 100 : 0);
+  const margin = round2(
+    recommendedAmount > 0 ? ((recommendedAmount - breakEven) / recommendedAmount) * 100 : 0
+  );
   const profitPerHour = round2(totalLabourHours > 0 ? profit / totalLabourHours : 0);
 
   const materialsNet = round2(materials.subtotal ?? 0);
@@ -181,7 +198,8 @@ export const EditorialCostResults = ({
    * asbestos likely") rather than feeling arbitrary.
    */
   const contingencyReasons = useMemo(() => {
-    if (!Array.isArray(risks) || risks.length === 0) return [] as Array<{ title: string; pct: number }>;
+    if (!Array.isArray(risks) || risks.length === 0)
+      return [] as Array<{ title: string; pct: number }>;
     return risks
       .filter((r: any) => Number(r?.contingencyPercent) > 0)
       .map((r: any) => ({
@@ -205,7 +223,9 @@ export const EditorialCostResults = ({
     if (!refineOf || !parentStructuredData) return null;
 
     const parentRecommended = round2(
-      parentStructuredData?.recommendedQuote?.amount ?? parentStructuredData?.summary?.grandTotal ?? 0
+      parentStructuredData?.recommendedQuote?.amount ??
+        parentStructuredData?.summary?.grandTotal ??
+        0
     );
     const parentTotalHours = round2(
       (parentStructuredData?.labour?.tasks ?? []).reduce(
@@ -220,19 +240,33 @@ export const EditorialCostResults = ({
     // perfect identity match but good enough to surface what changed.
     const parentDescs = new Set(
       (parentStructuredData?.materials?.items ?? []).map((it: any) =>
-        String(it.description ?? '').toLowerCase().trim()
+        String(it.description ?? '')
+          .toLowerCase()
+          .trim()
       )
     );
     const currentDescs = new Set(
       (materials.items ?? []).map((it: any) =>
-        String(it.description ?? '').toLowerCase().trim()
+        String(it.description ?? '')
+          .toLowerCase()
+          .trim()
       )
     );
     const added = (materials.items ?? []).filter(
-      (it: any) => !parentDescs.has(String(it.description ?? '').toLowerCase().trim())
+      (it: any) =>
+        !parentDescs.has(
+          String(it.description ?? '')
+            .toLowerCase()
+            .trim()
+        )
     );
     const removed = (parentStructuredData?.materials?.items ?? []).filter(
-      (it: any) => !currentDescs.has(String(it.description ?? '').toLowerCase().trim())
+      (it: any) =>
+        !currentDescs.has(
+          String(it.description ?? '')
+            .toLowerCase()
+            .trim()
+        )
     );
 
     return {
@@ -437,7 +471,15 @@ export const EditorialCostResults = ({
       toast.info('No matched materials to export');
       return;
     }
-    const header = ['Quantity', 'Unit', 'Description', 'Supplier', 'Unit Price', 'Total', 'Product URL'];
+    const header = [
+      'Quantity',
+      'Unit',
+      'Description',
+      'Supplier',
+      'Unit Price',
+      'Total',
+      'Product URL',
+    ];
     const rows = items.map((it: any) => [
       String(it.quantity ?? ''),
       String(it.unit ?? ''),
@@ -447,14 +489,16 @@ export const EditorialCostResults = ({
       it.total ? Number(it.total).toFixed(2) : '',
       String(it.source?.productUrl ?? ''),
     ]);
-    const csv = [header, ...rows]
-      .map((r) => r.map((c) => `"${c}"`).join(','))
-      .join('\n');
+    const csv = [header, ...rows].map((r) => r.map((c) => `"${c}"`).join(',')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    const supplierTag = filterSupplier ? `-${filterSupplier.replace(/\s+/g, '-').toLowerCase()}` : '';
-    const projectTag = (inputs.projectName || 'estimate').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40);
+    const supplierTag = filterSupplier
+      ? `-${filterSupplier.replace(/\s+/g, '-').toLowerCase()}`
+      : '';
+    const projectTag = (inputs.projectName || 'estimate')
+      .replace(/[^a-zA-Z0-9]/g, '-')
+      .slice(0, 40);
     a.href = url;
     a.download = `cost-engineer${supplierTag}-${projectTag}.csv`;
     a.click();
@@ -473,7 +517,14 @@ export const EditorialCostResults = ({
     if (!name || !name.trim()) return;
     setSavingTemplate(true);
     try {
+      // user_id is NOT NULL with no default — without it every save failed
+      // ("Could not save template"); 0 templates existed on 10 Oct 2026.
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Sign in again to save templates');
       const { error } = await supabase.from('cost_engineer_templates').insert({
+        user_id: user.id,
         name: name.trim().slice(0, 80),
         inputs: inputs as any,
         source_job_id: jobId ?? null,
@@ -511,6 +562,9 @@ export const EditorialCostResults = ({
       // break-even. Quote Hub treats this as the headline price the
       // client will see on the formal quotation.
       totalCost: recommendedAmount,
+      // The tier price IS the sell price — the quote must come to it.
+      sellTotalExVat: recommendedAmount,
+      materialsMarkupPercent: round2(materials.markup ?? inputs.markupPercent ?? 0),
       vatAmount: summary.vat,
       breakdown: {
         materialsTotal: materialsNet,
@@ -533,7 +587,24 @@ export const EditorialCostResults = ({
         projectType: inputs.projectType,
       },
     });
-    toast.success(`Transferring ${tierCells.find((t) => t.key === selectedTierKey)?.label} tier to Quote Hub`);
+    // Record that this estimate became a quote. quote_outcome had never been
+    // set on any of 391 jobs, so whether estimates turn into quotes was
+    // unknowable. Only from empty/draft — never over a recorded won or lost.
+    if (jobId) {
+      // .then() is what SENDS the request — `void builder` never did (review).
+      supabase
+        .from('cost_engineer_jobs')
+        .update({ quote_outcome: 'sent', quote_outcome_at: new Date().toISOString() })
+        .eq('id', jobId)
+        .or('quote_outcome.is.null,quote_outcome.eq.draft')
+        .then(
+          () => {},
+          () => {}
+        );
+    }
+    toast.success(
+      `Transferring ${tierCells.find((t) => t.key === selectedTierKey)?.label} tier to Quote Hub`
+    );
     navigate(`/electrician/quote-builder/create?costSessionId=${sessionId}`);
   };
 
@@ -656,8 +727,7 @@ export const EditorialCostResults = ({
           {summary.vat !== undefined && (
             <div className="text-[11.5px] text-white/55 tabular-nums flex flex-wrap gap-x-3 gap-y-0.5">
               <span>
-                Subtotal{' '}
-                <span className="text-white/75">{fmtGBP2(recommendedAmount)}</span>
+                Subtotal <span className="text-white/75">{fmtGBP2(recommendedAmount)}</span>
               </span>
               {summary.vat > 0 && (
                 <>
@@ -876,7 +946,10 @@ export const EditorialCostResults = ({
                 </div>
                 <ul className="space-y-1">
                   {inputs.attachments.map((a, i) => (
-                    <li key={a.id} className="text-[12.5px] text-white/75 flex items-baseline gap-2">
+                    <li
+                      key={a.id}
+                      className="text-[12.5px] text-white/75 flex items-baseline gap-2"
+                    >
                       <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/45 w-6">
                         {String(i + 1).padStart(2, '0')}
                       </span>
@@ -1002,10 +1075,15 @@ export const EditorialCostResults = ({
           number="03"
           eyebrow="MATERIALS"
           title="Line items."
-          aside={`${(materials.items ?? []).length} items · ${fmtGBP(materialsNet)} net`}
+          aside={(() => {
+            const all = materials.items ?? [];
+            const live = all.filter((x: any) => x?.source?.table === 'marketplace_products').length;
+            const own = all.filter((x: any) => x?.source?.table === 'price_book').length;
+            return `${all.length} items · ${own ? `${own} your ${own === 1 ? 'price' : 'prices'} · ` : ''}${live} live ${live === 1 ? 'price' : 'prices'} · ${fmtGBP(materialsNet)} net`;
+          })()}
         >
           <div className="-mx-4 sm:mx-0 bg-[hsl(0_0%_10%)] border-y sm:border sm:border-white/[0.08] sm:rounded-2xl overflow-hidden">
-            <div className="hidden sm:grid grid-cols-12 gap-3 px-5 py-3 border-b border-white/[0.06] text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <div className="hidden sm:grid grid-cols-12 gap-3 px-5 py-3 border-b border-white/[0.06] text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
               <div className="col-span-5">Item</div>
               <div className="col-span-2 text-right">Qty</div>
               <div className="col-span-2 text-right">Unit £</div>
@@ -1026,13 +1104,13 @@ export const EditorialCostResults = ({
                       <div className="text-[14px] font-medium text-white">
                         {it.description || it.item}
                       </div>
-                      <div className="text-[11px] text-white/55 flex flex-wrap items-center gap-1.5 mt-0.5">
+                      <div className="text-[11px] text-white flex flex-wrap items-center gap-1.5 mt-0.5">
                         <span>{it.category ?? 'General'}</span>
                         {/* Supplier + freshness + review chips are
                             internal trust signals — hidden in client view. */}
                         {!clientView && it.supplier && (
                           <>
-                            <span className="text-white/30">·</span>
+                            <span className="text-white">·</span>
                             {productUrl ? (
                               <a
                                 href={productUrl}
@@ -1052,19 +1130,31 @@ export const EditorialCostResults = ({
                             {freshness}
                           </span>
                         )}
+                        {!clientView && src?.table === 'price_book' && (
+                          <span className="inline-flex items-center text-[10px] uppercase tracking-[0.14em] border border-emerald-500/40 text-emerald-400 rounded-full px-1.5 py-0.5">
+                            Your price
+                          </span>
+                        )}
                         {!clientView && !isLive && src?.table === 'estimated' && (
-                          <span className="inline-flex items-center text-[10px] uppercase tracking-[0.14em] border border-amber-400/40 bg-amber-400/[0.06] text-amber-400 rounded-full px-1.5 py-0.5">
-                            Review
+                          <span className="inline-flex items-center text-[10px] uppercase tracking-[0.14em] border border-amber-400/40 text-amber-400 rounded-full px-1.5 py-0.5">
+                            Estimate
                           </span>
                         )}
                       </div>
+                      {/* Why it's an estimate, in plain words — the chip alone
+                          gave no way to judge whether to trust the figure. */}
+                      {!clientView && !isLive && src?.table === 'estimated' && (
+                        <div className="mt-1 text-[11.5px] leading-snug text-amber-300">
+                          {estimateWhy(src?.reason, it.unitPrice)}
+                        </div>
+                      )}
                     </div>
-                    <div className="sm:col-span-2 sm:text-right text-[12.5px] tabular-nums text-white/75 mt-1 sm:mt-0">
-                      <span className="sm:hidden text-white/50">Qty: </span>
+                    <div className="sm:col-span-2 sm:text-right text-[12.5px] tabular-nums text-white mt-1 sm:mt-0">
+                      <span className="sm:hidden text-white">Qty: </span>
                       {it.quantity} {it.unit}
                     </div>
-                    <div className="sm:col-span-2 sm:text-right text-[12.5px] tabular-nums text-white/75">
-                      <span className="sm:hidden text-white/50">Unit: </span>
+                    <div className="sm:col-span-2 sm:text-right text-[12.5px] tabular-nums text-white">
+                      <span className="sm:hidden text-white">Unit: </span>
                       {fmtGBP2(it.unitPrice ?? 0)}
                     </div>
                     <div className="sm:col-span-3 sm:text-right text-[14px] font-semibold tabular-nums text-elec-yellow">
@@ -1074,8 +1164,10 @@ export const EditorialCostResults = ({
                 );
               })}
             </div>
-            <div className="px-5 py-3 border-t border-white/[0.06] flex justify-between text-[12px] text-white/65">
-              <span className="uppercase tracking-[0.18em] text-[10px] font-semibold">Subtotal</span>
+            <div className="px-5 py-3 border-t border-white/[0.06] flex justify-between text-[12px] text-white">
+              <span className="uppercase tracking-[0.18em] text-[10px] font-semibold">
+                Subtotal
+              </span>
               <span className="tabular-nums font-semibold text-white">{fmtGBP2(materialsNet)}</span>
             </div>
           </div>
@@ -1147,7 +1239,9 @@ export const EditorialCostResults = ({
               );
             })}
             <div className="px-5 py-3 border-t border-white/[0.06] flex justify-between text-[12px] text-white/65">
-              <span className="uppercase tracking-[0.18em] text-[10px] font-semibold">Subtotal</span>
+              <span className="uppercase tracking-[0.18em] text-[10px] font-semibold">
+                Subtotal
+              </span>
               <span className="tabular-nums font-semibold text-white">{fmtGBP2(labourTotal)}</span>
             </div>
           </div>
@@ -1160,9 +1254,15 @@ export const EditorialCostResults = ({
               ['Travel', profitability.jobOverheads?.travel],
               ['Permits & fees', profitability.jobOverheads?.permitsAndFees],
               ['Waste disposal', profitability.jobOverheads?.wasteDisposal],
-              ['Allocated business overheads', profitability.jobOverheads?.allocatedBusinessOverheads],
+              [
+                'Allocated business overheads',
+                profitability.jobOverheads?.allocatedBusinessOverheads,
+              ],
             ].map(([label, value]) => (
-              <div key={String(label)} className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4">
+              <div
+                key={String(label)}
+                className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4"
+              >
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
                   {label}
                 </div>
@@ -1211,30 +1311,30 @@ export const EditorialCostResults = ({
 
         {/* 06 CONFIDENCE — internal trust dashboard, hidden in client view. */}
         {!clientView && (
-        <Section
-          number="06"
-          eyebrow="CONFIDENCE"
-          title="How sure are we?"
-          aside={
-            matsMatched !== undefined && matsTotal !== undefined
-              ? `${matsMatched} of ${matsTotal} materials matched`
-              : undefined
-          }
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <ConfidenceCell
-              label="Materials"
-              value={matsConfidence}
-              caption={
-                matsMatched !== undefined && matsTotal !== undefined
-                  ? `${matsMatched}/${matsTotal} priced live`
-                  : undefined
-              }
-            />
-            <ConfidenceCell label="Labour" value={labourConfidence} />
-            <ConfidenceCell label="Overall" value={avgConfidence} highlight />
-          </div>
-        </Section>
+          <Section
+            number="06"
+            eyebrow="CONFIDENCE"
+            title="How sure are we?"
+            aside={
+              matsMatched !== undefined && matsTotal !== undefined
+                ? `${matsMatched} of ${matsTotal} materials matched`
+                : undefined
+            }
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <ConfidenceCell
+                label="Materials"
+                value={matsConfidence}
+                caption={
+                  matsMatched !== undefined && matsTotal !== undefined
+                    ? `${matsMatched}/${matsTotal} priced live`
+                    : undefined
+                }
+              />
+              <ConfidenceCell label="Labour" value={labourConfidence} />
+              <ConfidenceCell label="Overall" value={avgConfidence} highlight />
+            </div>
+          </Section>
         )}
 
         {/* 07 RISK ──────────────────────────── */}
@@ -1250,19 +1350,23 @@ export const EditorialCostResults = ({
                       ? 'border-emerald-500/30 text-emerald-400'
                       : 'border-amber-500/40 text-amber-400';
                 return (
-                  <div
-                    key={i}
-                    className={cn('bg-[hsl(0_0%_10%)] border rounded-2xl p-4', tone)}
-                  >
+                  <div key={i} className={cn('bg-[hsl(0_0%_10%)] border rounded-2xl p-4', tone)}>
                     <div className="flex items-baseline gap-2">
                       <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/50">
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className={cn('text-[10.5px] uppercase tracking-[0.18em] font-semibold', tone)}>
+                      <span
+                        className={cn(
+                          'text-[10.5px] uppercase tracking-[0.18em] font-semibold',
+                          tone
+                        )}
+                      >
                         {sev}
                       </span>
                     </div>
-                    <div className="mt-1 text-[14.5px] font-semibold text-white">{r.title || r.risk}</div>
+                    <div className="mt-1 text-[14.5px] font-semibold text-white">
+                      {r.title || r.risk}
+                    </div>
                     {r.mitigation && (
                       <div className="mt-1 text-[12.5px] text-white/70 leading-snug">
                         Mitigation: {r.mitigation}
@@ -1290,7 +1394,9 @@ export const EditorialCostResults = ({
                     )}
                   >
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-[14.5px] font-semibold text-white">{u.opportunity}</span>
+                      <span className="text-[14.5px] font-semibold text-white">
+                        {u.opportunity}
+                      </span>
                       <span className="text-[14px] font-semibold tabular-nums text-elec-yellow">
                         +{fmtGBP(u.price ?? 0)}
                       </span>
@@ -1299,7 +1405,9 @@ export const EditorialCostResults = ({
                       Win rate {winRate}% · timing: {u.timing ?? 'now'}
                     </div>
                     {u.script && (
-                      <div className="mt-2 text-[12px] text-white/75 leading-snug italic">"{u.script}"</div>
+                      <div className="mt-2 text-[12px] text-white/75 leading-snug italic">
+                        "{u.script}"
+                      </div>
                     )}
                   </div>
                 );
@@ -1325,7 +1433,9 @@ export const EditorialCostResults = ({
                   <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/45 shrink-0 mt-0.5 w-7">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <div className="text-[13px] text-white/85 leading-snug flex-1">{flag.message}</div>
+                  <div className="text-[13px] text-white/85 leading-snug flex-1">
+                    {flag.message}
+                  </div>
                 </div>
               ))}
             </div>
@@ -1381,7 +1491,9 @@ export const EditorialCostResults = ({
                     </span>
                   </div>
                   {c.description && (
-                    <div className="mt-1 text-[12px] text-white/70 leading-snug">{c.description}</div>
+                    <div className="mt-1 text-[12px] text-white/70 leading-snug">
+                      {c.description}
+                    </div>
                   )}
                 </div>
               ))}
@@ -1390,44 +1502,46 @@ export const EditorialCostResults = ({
         )}
 
         {/* 12 ORDER MATERIALS — internal procurement tool, hidden in client view. */}
-        {!clientView && materialsBySupplier.filter((g) => g.supplier !== 'Unmatched' && g.total > 0).length > 0 && (
-          <Section
-            number="12"
-            eyebrow="ORDER LIST"
-            title="Send to your supplier."
-            aside="Download a CSV per supplier — paste straight into their cart"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {materialsBySupplier
-                .filter((g) => g.supplier !== 'Unmatched' && g.total > 0)
-                .map((g) => (
-                  <button
-                    key={g.supplier}
-                    type="button"
-                    onClick={() => handleExportMaterials(g.supplier)}
-                    className="bg-[hsl(0_0%_10%)] border border-white/[0.10] hover:border-elec-yellow/40 rounded-2xl p-4 text-left transition-colors active:scale-[0.99] touch-manipulation"
-                  >
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-[14px] font-semibold text-white">{g.supplier}</span>
-                      <span className="text-[13px] tabular-nums text-elec-yellow">
-                        {fmtGBP2(g.total)}
-                      </span>
-                    </div>
-                    <div className="mt-1 text-[11.5px] text-white/55 tabular-nums">
-                      {g.lines.length} item{g.lines.length === 1 ? '' : 's'} · download CSV
-                    </div>
-                  </button>
-                ))}
-            </div>
-            <button
-              type="button"
-              onClick={() => handleExportMaterials()}
-              className="mt-3 h-11 px-4 bg-[hsl(0_0%_10%)] border border-white/[0.10] hover:border-white/25 rounded-xl text-[13px] font-medium text-white transition-colors active:scale-[0.99] touch-manipulation"
+        {!clientView &&
+          materialsBySupplier.filter((g) => g.supplier !== 'Unmatched' && g.total > 0).length >
+            0 && (
+            <Section
+              number="12"
+              eyebrow="ORDER LIST"
+              title="Send to your supplier."
+              aside="Download a CSV per supplier — paste straight into their cart"
             >
-              Download all materials (one CSV)
-            </button>
-          </Section>
-        )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {materialsBySupplier
+                  .filter((g) => g.supplier !== 'Unmatched' && g.total > 0)
+                  .map((g) => (
+                    <button
+                      key={g.supplier}
+                      type="button"
+                      onClick={() => handleExportMaterials(g.supplier)}
+                      className="bg-[hsl(0_0%_10%)] border border-white/[0.10] hover:border-elec-yellow/40 rounded-2xl p-4 text-left transition-colors active:scale-[0.99] touch-manipulation"
+                    >
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="text-[14px] font-semibold text-white">{g.supplier}</span>
+                        <span className="text-[13px] tabular-nums text-elec-yellow">
+                          {fmtGBP2(g.total)}
+                        </span>
+                      </div>
+                      <div className="mt-1 text-[11.5px] text-white/55 tabular-nums">
+                        {g.lines.length} item{g.lines.length === 1 ? '' : 's'} · download CSV
+                      </div>
+                    </button>
+                  ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => handleExportMaterials()}
+                className="mt-3 h-11 px-4 bg-[hsl(0_0%_10%)] border border-white/[0.10] hover:border-white/25 rounded-xl text-[13px] font-medium text-white transition-colors active:scale-[0.99] touch-manipulation"
+              >
+                Download all materials (one CSV)
+              </button>
+            </Section>
+          )}
 
         {/* ACTION STRIP ─────────────────────────────── */}
         <section className="space-y-3 pt-4">
@@ -1532,7 +1646,9 @@ const HeadlineCell = ({
   tone: 'yellow' | 'white';
 }) => (
   <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
-    <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">{label}</div>
+    <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+      {label}
+    </div>
     <div
       className={cn(
         'mt-1 text-[15px] sm:text-[17px] font-semibold tabular-nums',
@@ -1568,7 +1684,9 @@ const Section = ({
         </h3>
       </div>
       {aside && (
-        <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 tabular-nums">{aside}</span>
+        <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 tabular-nums">
+          {aside}
+        </span>
       )}
     </div>
     {children}
@@ -1593,7 +1711,9 @@ const ConfidenceCell = ({
     )}
   >
     <div className="flex items-baseline justify-between gap-3">
-      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">{label}</span>
+      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+        {label}
+      </span>
       <span
         className={cn(
           'text-[20px] font-semibold tabular-nums',

@@ -21,21 +21,21 @@
  * uses for both viewing and creating.
  */
 import { useMemo, useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
+  COLLEGE_BTN,
   COLLEGE_BTN_PRIMARY,
   COLLEGE_LINK,
   COLLEGE_LIST,
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
+import { FilterChips, FilterSheetButton } from '@/components/college/people/peopleKit';
 import { Ring, VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
 import { Bars, ScopeToggle, useScope } from '@/components/college/assessment/AssessmentKit';
 import { useMyLearners } from '@/components/college/assessment/useMyLearners';
@@ -51,7 +51,12 @@ const DAY_MS = 86_400_000;
 
 /** Today's calendar date in Europe/London as YYYY-MM-DD. */
 function londonTodayIso(): string {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/London',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
 }
 function isoToUtc(iso: string): number {
   const [y, m, d] = iso.split('-').map(Number);
@@ -76,16 +81,34 @@ const HELP: PageHelpContent = {
   title: 'Learning plans',
   what: 'Every learner\u2019s current individual learning plan: its targets, how many are met, and when the plan is next reviewed. Overdue reviews sit on the right so nothing slips.',
   steps: [
-    { title: 'Clear overdue reviews', body: 'The list on the right is every plan whose review date has passed, oldest first. Tap one to open the plan and review it.' },
-    { title: 'Read the charts', body: 'Review status and plan status are tappable: tap a bar to filter the list to just those plans.' },
-    { title: 'Create a plan', body: 'Create an ILP lets you pick a learner and build their plan. It is the same plan Student 360 shows.' },
+    {
+      title: 'Clear overdue reviews',
+      body: 'The list on the right is every plan whose review date has passed, oldest first. Tap one to open the plan and review it.',
+    },
+    {
+      title: 'Read the charts',
+      body: 'Review status and plan status are tappable: tap a bar to filter the list to just those plans.',
+    },
+    {
+      title: 'Create a plan',
+      body: 'Create an ILP lets you pick a learner and build their plan. It is the same plan Student 360 shows.',
+    },
   ],
   legend: [
     { swatch: 'bg-orange-500', label: 'Overdue', body: 'The review date has passed.' },
     { swatch: 'bg-elec-yellow', label: 'Due this week', body: 'Book it in before it slips.' },
-    { swatch: 'bg-emerald-400', label: 'Targets met', body: 'Completed or verified targets on active plans.' },
+    {
+      swatch: 'bg-emerald-400',
+      label: 'Targets met',
+      body: 'Completed or verified targets on active plans.',
+    },
   ],
-  notes: [{ title: 'My learners', body: 'Opens on the cohorts you lead. Switch to Everyone for the whole college.' }],
+  notes: [
+    {
+      title: 'My learners',
+      body: 'Opens on the cohorts you lead. Switch to Everyone for the whole college.',
+    },
+  ],
 };
 
 export function ILPManagementSection() {
@@ -150,9 +173,11 @@ export function ILPManagementSection() {
   };
   const allIlps = ilps;
   const mineIlpCount = allIlps.filter((i) => isMineStudent(i.student_id)).length;
-  const scopedIlps = scope === 'mine' ? allIlps.filter((i) => isMineStudent(i.student_id)) : allIlps;
+  const scopedIlps =
+    scope === 'mine' ? allIlps.filter((i) => isMineStudent(i.student_id)) : allIlps;
   const scopedStudents = scope === 'mine' ? students.filter((s) => isMineStudent(s.id)) : students;
-  const scopedOverdue = scope === 'mine' ? overdueReviews.filter((i) => isMineStudent(i.student_id)) : overdueReviews;
+  const scopedOverdue =
+    scope === 'mine' ? overdueReviews.filter((i) => isMineStudent(i.student_id)) : overdueReviews;
   const activeCohorts = useMemo(
     () =>
       cohorts.filter(
@@ -231,7 +256,8 @@ export function ILPManagementSection() {
             goals.some((g) => (g.title ?? '').toLowerCase().includes(q));
           const matchesStatus = filterStatus === 'all' || statusOf(ilp.status) === filterStatus;
           const matchesCohort = filterCohort === 'all' || student?.cohort_id === filterCohort;
-          const matchesReview = filterReview === 'all' || reviewState(ilp.review_date) === filterReview;
+          const matchesReview =
+            filterReview === 'all' || reviewState(ilp.review_date) === filterReview;
           return matchesSearch && matchesStatus && matchesCohort && matchesReview;
         })
         // Overdue first, then soonest review.
@@ -250,7 +276,10 @@ export function ILPManagementSection() {
     .map((ilp) => {
       const student = ilp.student_id ? studentById.get(ilp.student_id) : undefined;
       const overdueDays = ilp.review_date
-        ? Math.max(0, Math.round((isoToUtc(todayIso) - isoToUtc(ilp.review_date.slice(0, 10))) / DAY_MS))
+        ? Math.max(
+            0,
+            Math.round((isoToUtc(todayIso) - isoToUtc(ilp.review_date.slice(0, 10))) / DAY_MS)
+          )
         : null;
       return { ilp, student, overdueDays };
     })
@@ -262,7 +291,23 @@ export function ILPManagementSection() {
     later: activeIlps.filter((i) => reviewState(i.review_date) === 'later').length,
     none: activeIlps.filter((i) => reviewState(i.review_date) === 'none').length,
   };
-  const showList = () => document.getElementById('ilp-plans')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // One sentence carries what the old row of four tiles repeated.
+  const summary = [
+    `${activeIlps.length} active ${activeIlps.length === 1 ? 'plan' : 'plans'}${scope === 'mine' ? ' in your cohorts' : ''}.`,
+    scopedOverdue.length
+      ? `${scopedOverdue.length} ${scopedOverdue.length === 1 ? 'review is' : 'reviews are'} overdue${dueThisWeek ? ` and ${dueThisWeek} due this week` : ''}.`
+      : dueThisWeek
+        ? `${dueThisWeek} ${dueThisWeek === 1 ? 'review is' : 'reviews are'} due this week.`
+        : 'No reviews overdue.',
+    activeLearnersWithoutPlan > 0
+      ? `${activeLearnersWithoutPlan} active ${activeLearnersWithoutPlan === 1 ? 'learner has' : 'learners have'} no plan.`
+      : '',
+    targets.total > 0 ? `${targets.done} of ${targets.total} targets met.` : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+  const showList = () =>
+    document.getElementById('ilp-plans')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const clearFilters = () => {
     setFilterStatus('all');
     setFilterCohort('all');
@@ -278,277 +323,305 @@ export function ILPManagementSection() {
         description={
           ilpsLoading
             ? 'Every learner\u2019s plan, its targets and when it is next reviewed.'
-            : `${activeIlps.length} active ${activeIlps.length === 1 ? 'plan' : 'plans'}${scope === 'mine' ? ' in your cohorts' : ''}. ${
-                scopedOverdue.length ? `${scopedOverdue.length} ${scopedOverdue.length === 1 ? 'review is' : 'reviews are'} overdue.` : 'No reviews overdue.'
-              }`
+            : summary
         }
         help={HELP}
         actions={
           <>
-            <ScopeToggle scope={scope} onChange={setScope} my={my} mineCount={mineIlpCount} allCount={allIlps.length} />
-            <button type="button" onClick={() => setCreateOpen(true)} className={COLLEGE_BTN_PRIMARY}>
+            <ScopeToggle
+              scope={scope}
+              onChange={setScope}
+              my={my}
+              mineCount={mineIlpCount}
+              allCount={allIlps.length}
+            />
+            <button
+              type="button"
+              onClick={() => setCreateOpen(true)}
+              className={COLLEGE_BTN_PRIMARY}
+            >
               Create an ILP
             </button>
           </>
         }
       />
 
-      <CollegeStats
-        items={[
-          {
-            label: 'Reviews due this week',
-            value: String(dueThisWeek),
-            sub: scopedOverdue.length > 0 ? `${scopedOverdue.length} already overdue` : dueThisWeek > 0 ? 'Book them in' : 'Nothing due this week',
-            warn: scopedOverdue.length > 0,
-            onClick: () => {
-              setFilterReview('soon');
-              showList();
-            },
-          },
-          {
-            label: 'Active plans',
-            value: String(activeIlps.length),
-            sub:
-              draftCount > 0 || archivedCount > 0
-                ? [draftCount > 0 ? `${draftCount} draft` : null, archivedCount > 0 ? `${archivedCount} archived` : null].filter(Boolean).join(' · ')
-                : 'Current versions on file',
-            onClick: () => {
-              setFilterStatus('active');
-              showList();
-            },
-          },
-          {
-            label: 'No plan',
-            value: String(activeLearnersWithoutPlan),
-            sub: activeLearnersWithoutPlan > 0 ? 'Tap to create one' : 'Every active learner has one',
-            warn: activeLearnersWithoutPlan > 0,
-            onClick: activeLearnersWithoutPlan > 0 ? () => setCreateOpen(true) : undefined,
-          },
-          {
-            label: 'Targets met',
-            value: targets.pct === null ? '\u2014' : `${targets.pct}%`,
-            sub: targets.total === 0 ? 'No targets on active plans' : `${targets.done} of ${targets.total} on active plans`,
-            good: targets.pct !== null && targets.pct >= 50,
-          },
-        ]}
-      />
-
-      <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
-        <section className={VIS_CARD}>
-          <VisHead title="Reviews" sub="Active plans by next review. Tap to filter." />
-          <div className="mt-4">
-            <Bars
-              labelWidth="7rem"
-              onPick={(k) => {
-                setFilterStatus('active');
-                setFilterReview(k as ReviewFilter);
-                showList();
-              }}
-              rows={[
-                { key: 'overdue', label: 'Overdue', n: reviewCounts.overdue, cls: 'bg-orange-500' },
-                { key: 'soon', label: 'Due this week', n: reviewCounts.soon, cls: 'bg-elec-yellow' },
-                { key: 'later', label: 'Later', n: reviewCounts.later, cls: 'bg-emerald-400' },
-                { key: 'none', label: 'No date set', n: reviewCounts.none, cls: 'bg-white' },
-              ]}
-            />
-          </div>
-        </section>
-        <section className={VIS_CARD}>
-          <VisHead title="Plans" sub="Plan status across learners. Tap to filter." />
-          <div className="mt-4">
-            <Bars
-              labelWidth="7rem"
-              onPick={(k) => {
-                if (k === 'none') return setCreateOpen(true);
-                setFilterReview('all');
-                setFilterStatus(k);
-                showList();
-              }}
-              rows={[
-                { key: 'active', label: 'Active', n: activeIlps.length, cls: 'bg-emerald-400' },
-                { key: 'draft', label: 'Draft', n: draftCount, cls: 'bg-white' },
-                { key: 'archived', label: 'Archived', n: archivedCount, cls: 'bg-white/40' },
-                { key: 'none', label: 'No plan yet', n: activeLearnersWithoutPlan, cls: 'bg-orange-400' },
-              ]}
-            />
-          </div>
-        </section>
-        <section className={cn(VIS_CARD, 'flex flex-col')}>
-          <VisHead title="Targets" sub="Met on active plans" />
-          <div className="flex flex-1 items-center justify-center pt-2">
-            <Ring
-              pct={targets.pct}
-              value={targets.pct === null ? '\u2014' : `${targets.pct}%`}
-              label={targets.total === 0 ? 'No targets yet' : `${targets.done} of ${targets.total} met`}
-              sub="Completed or verified"
-            />
-          </div>
-        </section>
-      </div>
-
-      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
-        <section className="min-w-0 space-y-3">
-          <CollegeSectionTitle
-            id="ilp-plans"
-            title="Plans"
-            sub="Overdue first, then the soonest review. Tap a plan to open it."
-            action={
-              filterStatus !== 'all' || filterCohort !== 'all' || filterReview !== 'all' || searchQuery ? (
-                <button type="button" onClick={clearFilters} className={COLLEGE_LINK}>
-                  Clear filters
-                </button>
-              ) : undefined
-            }
-          />
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by learner or target"
-              aria-label="Search learning plans"
-              className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
-            />
-          </div>
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-            {(
-              [
-                ['all', 'All', scopedIlps.length],
-                ['active', 'Active', activeIlps.length],
-                ['draft', 'Draft', draftCount],
-                ['archived', 'Archived', archivedCount],
-              ] as const
-            ).map(([value, label, n]) => (
-              <button key={value} type="button" onClick={() => setFilterStatus(value)} className={chipCn(filterStatus === value)}>
-                {label} <span className="tabular-nums">{n}</span>
-              </button>
-            ))}
-            {filterReview !== 'all' && (
-              <button type="button" onClick={() => setFilterReview('all')} className={chipCn(true)}>
-                {{ overdue: 'Overdue', soon: 'Due this week', later: 'Later', none: 'No date' }[filterReview]} ×
-              </button>
-            )}
-          </div>
-          {activeCohorts.length > 1 && (
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-              <button type="button" onClick={() => setFilterCohort('all')} className={chipCn(filterCohort === 'all')}>
-                All cohorts
-              </button>
-              {activeCohorts.map((cohort) => (
-                <button
-                  key={cohort.id}
-                  type="button"
-                  onClick={() => setFilterCohort(cohort.id)}
-                  className={chipCn(filterCohort === cohort.id)}
-                >
-                  {cohort.name}
-                </button>
-              ))}
+      {/* On a phone the list comes first and the charts follow it. */}
+      <div className="flex flex-col gap-8 sm:gap-10">
+        <div className="order-last grid grid-cols-1 items-stretch gap-4 sm:order-none lg:grid-cols-3">
+          <section className={VIS_CARD}>
+            <VisHead title="Reviews" sub="Active plans by next review. Tap to filter." />
+            <div className="mt-4">
+              <Bars
+                labelWidth="7rem"
+                onPick={(k) => {
+                  setFilterStatus('active');
+                  setFilterReview(k as ReviewFilter);
+                  showList();
+                }}
+                rows={[
+                  {
+                    key: 'overdue',
+                    label: 'Overdue',
+                    n: reviewCounts.overdue,
+                    cls: 'bg-orange-500',
+                  },
+                  {
+                    key: 'soon',
+                    label: 'Due this week',
+                    n: reviewCounts.soon,
+                    cls: 'bg-elec-yellow',
+                  },
+                  { key: 'later', label: 'Later', n: reviewCounts.later, cls: 'bg-emerald-400' },
+                  { key: 'none', label: 'No date set', n: reviewCounts.none, cls: 'bg-white' },
+                ]}
+              />
             </div>
-          )}
-
-          {ilpsLoading ? (
-            <div className="space-y-2">
-              {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="h-[64px] animate-pulse rounded-2xl bg-white/[0.04]" />
-              ))}
+          </section>
+          <section className={VIS_CARD}>
+            <VisHead title="Plans" sub="Plan status across learners. Tap to filter." />
+            <div className="mt-4">
+              <Bars
+                labelWidth="7rem"
+                onPick={(k) => {
+                  if (k === 'none') return setCreateOpen(true);
+                  setFilterReview('all');
+                  setFilterStatus(k);
+                  showList();
+                }}
+                rows={[
+                  { key: 'active', label: 'Active', n: activeIlps.length, cls: 'bg-emerald-400' },
+                  { key: 'draft', label: 'Draft', n: draftCount, cls: 'bg-white' },
+                  { key: 'archived', label: 'Archived', n: archivedCount, cls: 'bg-white/40' },
+                  {
+                    key: 'none',
+                    label: 'No plan yet',
+                    n: activeLearnersWithoutPlan,
+                    cls: 'bg-orange-400',
+                  },
+                ]}
+              />
             </div>
-          ) : filteredILPs.length === 0 ? (
-            <CollegeEmpty
-              title={scopedIlps.length === 0 ? (scope === 'mine' ? 'No plans for your learners yet' : 'No learning plans yet') : 'Nothing matches these filters'}
-              body={
-                scopedIlps.length === 0
-                  ? 'Create an ILP for a learner. Targets, review dates and progress then show here and in their Student 360.'
-                  : 'Try another status, review or cohort, or clear the search.'
-              }
+          </section>
+          <section className={cn(VIS_CARD, 'flex flex-col')}>
+            <VisHead title="Targets" sub="Met on active plans" />
+            <div className="flex flex-1 items-center justify-center pt-2">
+              <Ring
+                pct={targets.pct}
+                value={targets.pct === null ? '\u2014' : `${targets.pct}%`}
+                label={
+                  targets.total === 0 ? 'No targets yet' : `${targets.done} of ${targets.total} met`
+                }
+                sub="Completed or verified"
+              />
+            </div>
+          </section>
+        </div>
+
+        <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_420px]">
+          <section className="min-w-0 space-y-3">
+            <CollegeSectionTitle
+              id="ilp-plans"
+              title="Plans"
+              sub="Overdue first, then the soonest review. Tap a plan to open it."
               action={
-                scopedIlps.length === 0 ? (
-                  <button type="button" onClick={() => setCreateOpen(true)} className={COLLEGE_BTN_PRIMARY}>
-                    Create an ILP
-                  </button>
-                ) : (
+                filterStatus !== 'all' ||
+                filterCohort !== 'all' ||
+                filterReview !== 'all' ||
+                searchQuery ? (
                   <button type="button" onClick={clearFilters} className={COLLEGE_LINK}>
                     Clear filters
                   </button>
-                )
+                ) : undefined
               }
             />
-          ) : (
-            <ul className={COLLEGE_LIST}>
-              {filteredILPs.map((ilp) => {
-                const student = ilp.student_id ? studentById.get(ilp.student_id) : undefined;
-                const goals = goalsByIlp.get(ilp.id) ?? [];
-                const done = goals.filter((g) => goalDone(g.status)).length;
-                const state = reviewState(ilp.review_date);
-                const status = statusOf(ilp.status);
-                const reason = [
-                  cohortName(student?.cohort_id),
-                  tutorName(ilp.reviewed_by),
-                  goals.length > 0 ? `${done}/${goals.length} targets met` : 'No targets yet',
-                  ilp.review_date ? `review ${shortDate(ilp.review_date)}` : 'no review date',
-                ]
-                  .filter(Boolean)
-                  .join(' · ');
-                const chips: Array<{ label: string; warn?: boolean }> = [];
-                if (state === 'overdue') chips.push({ label: 'Review overdue', warn: true });
-                else if (state === 'soon') chips.push({ label: 'Review this week' });
-                if (status !== 'active') chips.push({ label: statusLabel(ilp.status) });
-                const pct = goals.length > 0 ? Math.round((done / goals.length) * 100) : null;
-                return (
+            <div className="relative">
+              <Search
+                className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                aria-hidden="true"
+              />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by learner or target"
+                aria-label="Search learning plans"
+                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+              />
+            </div>
+            <FilterChips
+              label="Plan status"
+              value={filterStatus}
+              onChange={setFilterStatus}
+              items={[
+                { value: 'all', label: 'All', count: scopedIlps.length },
+                { value: 'active', label: 'Active', count: activeIlps.length },
+                { value: 'draft', label: 'Draft', count: draftCount },
+                { value: 'archived', label: 'Archived', count: archivedCount },
+              ]}
+            />
+            {(activeCohorts.length > 1 || filterReview !== 'all') && (
+              <div className="flex flex-wrap items-center gap-2">
+                {activeCohorts.length > 1 && (
+                  <FilterSheetButton
+                    label="Cohort"
+                    value={filterCohort}
+                    onChange={setFilterCohort}
+                    items={[
+                      { value: 'all', label: 'All cohorts' },
+                      ...activeCohorts.map((c) => ({ value: c.id, label: c.name })),
+                    ]}
+                  />
+                )}
+                {filterReview !== 'all' && (
+                  <button
+                    type="button"
+                    onClick={() => setFilterReview('all')}
+                    aria-label="Clear the review date filter"
+                    className={COLLEGE_BTN}
+                  >
+                    {
+                      {
+                        overdue: 'Overdue',
+                        soon: 'Due this week',
+                        later: 'Later',
+                        none: 'No date',
+                      }[filterReview]
+                    }
+                    <X className="h-4 w-4" strokeWidth={1.5} aria-hidden />
+                  </button>
+                )}
+              </div>
+            )}
+
+            {ilpsLoading ? (
+              <div className="space-y-2">
+                {[0, 1, 2, 3].map((i) => (
+                  <div key={i} className="h-[64px] animate-pulse rounded-2xl bg-white/[0.04]" />
+                ))}
+              </div>
+            ) : filteredILPs.length === 0 ? (
+              <CollegeEmpty
+                title={
+                  scopedIlps.length === 0
+                    ? scope === 'mine'
+                      ? 'No plans for your learners yet'
+                      : 'No learning plans yet'
+                    : 'Nothing matches these filters'
+                }
+                body={
+                  scopedIlps.length === 0
+                    ? 'Create an ILP for a learner. Targets, review dates and progress then show here and in their Student 360.'
+                    : 'Try another status, review or cohort, or clear the search.'
+                }
+                action={
+                  scopedIlps.length === 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => setCreateOpen(true)}
+                      className={COLLEGE_BTN_PRIMARY}
+                    >
+                      Create an ILP
+                    </button>
+                  ) : (
+                    <button type="button" onClick={clearFilters} className={COLLEGE_LINK}>
+                      Clear filters
+                    </button>
+                  )
+                }
+              />
+            ) : (
+              <ul className={COLLEGE_LIST}>
+                {filteredILPs.map((ilp) => {
+                  const student = ilp.student_id ? studentById.get(ilp.student_id) : undefined;
+                  const goals = goalsByIlp.get(ilp.id) ?? [];
+                  const done = goals.filter((g) => goalDone(g.status)).length;
+                  const state = reviewState(ilp.review_date);
+                  const status = statusOf(ilp.status);
+                  const reason = [
+                    cohortName(student?.cohort_id),
+                    tutorName(ilp.reviewed_by),
+                    goals.length === 0 ? 'No targets yet' : null,
+                    ilp.review_date ? `review ${shortDate(ilp.review_date)}` : 'no review date',
+                  ]
+                    .filter(Boolean)
+                    .join(' · ');
+                  const chips: Array<{ label: string; warn?: boolean }> = [];
+                  if (state === 'overdue') chips.push({ label: 'Review overdue', warn: true });
+                  else if (state === 'soon') chips.push({ label: 'Review this week' });
+                  if (status !== 'active') chips.push({ label: statusLabel(ilp.status) });
+                  const pct = goals.length > 0 ? Math.round((done / goals.length) * 100) : null;
+                  return (
+                    <CLearnerRow
+                      key={ilp.id}
+                      name={student?.name ?? 'Unknown learner'}
+                      chips={chips}
+                      mine={scope === 'all' && isMineStudent(ilp.student_id)}
+                      sub={reason}
+                      figure={goals.length === 0 ? undefined : `${done} of ${goals.length}`}
+                      figureSub={goals.length === 0 ? undefined : 'targets met'}
+                      pct={pct}
+                      tone={
+                        state === 'overdue' ? 'warn' : pct !== null && pct >= 100 ? 'good' : 'plain'
+                      }
+                      onOpen={() => openIlp(ilp.student_id)}
+                    />
+                  );
+                })}
+              </ul>
+            )}
+          </section>
+
+          <aside className="order-first space-y-3 xl:order-none xl:sticky xl:top-16">
+            <CollegeSectionTitle
+              title="Overdue reviews"
+              sub="Longest overdue first. Tap to open the plan."
+            />
+            {overdueRows.length === 0 ? (
+              <CollegeEmpty
+                title="No reviews overdue"
+                body="When a plan passes its review date it appears here until it is reviewed."
+              />
+            ) : (
+              <ul className={COLLEGE_LIST}>
+                {overdueRows.slice(0, 10).map(({ ilp, student, overdueDays }) => (
                   <CLearnerRow
                     key={ilp.id}
                     name={student?.name ?? 'Unknown learner'}
-                    chips={chips}
-                    mine={scope === 'all' && isMineStudent(ilp.student_id)}
-                    sub={reason}
-                    figure={pct === null ? '\u2014' : `${pct}%`}
-                    pct={pct}
-                    tone={state === 'overdue' ? 'warn' : pct !== null && pct >= 100 ? 'good' : 'plain'}
+                    sub={[
+                      cohortName(student?.cohort_id),
+                      ilp.review_date ? `due ${shortDate(ilp.review_date)}` : 'review overdue',
+                    ].join(' · ')}
+                    figure={
+                      overdueDays !== null
+                        ? `${overdueDays} ${overdueDays === 1 ? 'day' : 'days'}`
+                        : undefined
+                    }
+                    figureSub={overdueDays !== null ? 'overdue' : undefined}
+                    // A month late is when a plan stops steering anything.
+                    tone={overdueDays !== null && overdueDays >= 28 ? 'warn' : 'plain'}
                     onOpen={() => openIlp(ilp.student_id)}
                   />
-                );
-              })}
-            </ul>
-          )}
-        </section>
-
-        <aside className="order-first space-y-3 xl:order-none xl:sticky xl:top-16">
-          <CollegeSectionTitle title="Overdue reviews" sub="Longest overdue first. Tap to open the plan." />
-          {overdueRows.length === 0 ? (
-            <CollegeEmpty title="No reviews overdue" body="When a plan passes its review date it appears here until it is reviewed." />
-          ) : (
-            <ul className={COLLEGE_LIST}>
-              {overdueRows.slice(0, 10).map(({ ilp, student, overdueDays }) => (
-                <CLearnerRow
-                  key={ilp.id}
-                  name={student?.name ?? 'Unknown learner'}
-                  sub={[cohortName(student?.cohort_id), ilp.review_date ? `due ${shortDate(ilp.review_date)}` : 'review overdue'].join(' · ')}
-                  figure={overdueDays !== null ? `${overdueDays}d` : undefined}
-                  figureSub={overdueDays !== null ? 'overdue' : undefined}
-                  // A month late is when a plan stops steering anything.
-                  tone={overdueDays !== null && overdueDays >= 28 ? 'warn' : 'plain'}
-                  onOpen={() => openIlp(ilp.student_id)}
-                />
-              ))}
-              {overdueRows.length > 10 && (
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFilterStatus('active');
-                      setFilterReview('overdue');
-                      showList();
-                    }}
-                    className="flex h-12 w-full items-center justify-center text-[13px] font-semibold text-white hover:bg-white/[0.04]"
-                  >
-                    {overdueRows.length - 10} more overdue
-                  </button>
-                </li>
-              )}
-            </ul>
-          )}
-        </aside>
+                ))}
+                {overdueRows.length > 10 && (
+                  <li>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFilterStatus('active');
+                        setFilterReview('overdue');
+                        showList();
+                      }}
+                      className="flex h-12 w-full items-center justify-center text-[13px] font-semibold text-white hover:bg-white/[0.04]"
+                    >
+                      {overdueRows.length - 10} more overdue
+                    </button>
+                  </li>
+                )}
+              </ul>
+            )}
+          </aside>
+        </div>
       </div>
 
       {/* Unified ILP editor, same data + UI as Student 360 (writes

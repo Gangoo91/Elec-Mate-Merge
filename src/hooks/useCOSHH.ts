@@ -1,8 +1,16 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  applySafetyScope,
+  firmWriteErrorMessage,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
-export interface COSHHAssessment {
+export interface COSHHAssessment extends FirmRecordFields {
   id: string;
   user_id: string;
   substance_name: string;
@@ -42,22 +50,26 @@ export type CreateCOSHHInput = Omit<
   'id' | 'user_id' | 'created_at' | 'updated_at' | 'pdf_url'
 > & {
   photos?: string[];
+  /** Firm job (employer_jobs) — shares the assessment with the firm. */
+  employer_job_id?: string | null;
 };
 
 export function useCOSHHAssessments() {
+  // Personal: the user's own assessments. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['coshh-assessments'],
+    queryKey: ['coshh-assessments', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<COSHHAssessment[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('coshh_assessments')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('coshh_assessments').select('*'),
+        scope,
+        user.id
+      ).order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as COSHHAssessment[];
@@ -68,6 +80,7 @@ export function useCOSHHAssessments() {
 export function useCreateCOSHH() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (input: CreateCOSHHInput): Promise<COSHHAssessment> => {
@@ -78,7 +91,9 @@ export function useCreateCOSHH() {
 
       const { data, error } = await supabase
         .from('coshh_assessments')
-        .insert({ ...input, user_id: user.id })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(stampSafetyInsert({ ...input, user_id: user.id }, scope) as never)
         .select('*')
         .single();
 
@@ -90,7 +105,11 @@ export function useCreateCOSHH() {
       toast({ title: 'Assessment saved', description: 'COSHH assessment has been saved.' });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -98,6 +117,7 @@ export function useCreateCOSHH() {
 export function useUpdateCOSHH() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async ({
@@ -106,7 +126,8 @@ export function useUpdateCOSHH() {
     }: Partial<CreateCOSHHInput> & { id: string }): Promise<COSHHAssessment> => {
       const { data, error } = await supabase
         .from('coshh_assessments')
-        .update(input)
+        // employer_job_id is live but not yet in the generated types.
+        .update(input as never)
         .eq('id', id)
         .select('*')
         .single();
@@ -119,7 +140,11 @@ export function useUpdateCOSHH() {
       toast({ title: 'Assessment updated', description: 'COSHH assessment has been updated.' });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -127,6 +152,7 @@ export function useUpdateCOSHH() {
 export function useDeleteCOSHH() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
@@ -139,14 +165,19 @@ export function useDeleteCOSHH() {
       toast({ title: 'Assessment deleted', description: 'COSHH assessment has been removed.' });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
 
 export function useCOSHHOverdueReviews() {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['coshh-assessments', 'overdue'],
+    queryKey: ['coshh-assessments', 'overdue', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<COSHHAssessment[]> => {
       const {
         data: { user },
@@ -155,10 +186,11 @@ export function useCOSHHOverdueReviews() {
 
       const today = new Date().toISOString().split('T')[0];
 
-      const { data, error } = await supabase
-        .from('coshh_assessments')
-        .select('*')
-        .eq('user_id', user.id)
+      const { data, error } = await applySafetyScope(
+        supabase.from('coshh_assessments').select('*'),
+        scope,
+        user.id
+      )
         .lt('review_date', today)
         .order('review_date', { ascending: true });
 
@@ -169,8 +201,9 @@ export function useCOSHHOverdueReviews() {
 }
 
 export function useCOSHHUpcomingReviews(withinDays = 30) {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['coshh-assessments', 'upcoming', withinDays],
+    queryKey: ['coshh-assessments', 'upcoming', withinDays, ...safetyScopeKey(scope)],
     queryFn: async (): Promise<COSHHAssessment[]> => {
       const {
         data: { user },
@@ -182,10 +215,11 @@ export function useCOSHHUpcomingReviews(withinDays = 30) {
       futureDate.setDate(futureDate.getDate() + withinDays);
       const futureDateStr = futureDate.toISOString().split('T')[0];
 
-      const { data, error } = await supabase
-        .from('coshh_assessments')
-        .select('*')
-        .eq('user_id', user.id)
+      const { data, error } = await applySafetyScope(
+        supabase.from('coshh_assessments').select('*'),
+        scope,
+        user.id
+      )
         .gte('review_date', today)
         .lte('review_date', futureDateStr)
         .order('review_date', { ascending: true });

@@ -20,7 +20,8 @@ export interface ExamExit {
 }
 
 /** Readable name for a path, so a caller only has to pass the route. */
-function labelForPath(path: string): string {
+export function labelForPath(path: string): string {
+  if (path.startsWith('/study-centre/mock-exams/history')) return 'your mocks';
   if (path.startsWith('/study-centre/mock-exams')) return 'mock exams';
   if (path.startsWith('/study-centre/apprentice')) return 'course';
   if (path.startsWith('/study-centre')) return 'Study Centre';

@@ -340,7 +340,9 @@ export function useComplianceScore() {
 
       const allItems = [...(businessResult.data || []), ...(qualificationsResult.data || [])];
 
-      if (allItems.length === 0) return { score: 100, message: 'No compliance items to track' };
+      // Nothing tracked is "not started", never a perfect score (ELE-1985).
+      if (allItems.length === 0)
+        return { score: null as number | null, message: 'Not started: add your first item' };
 
       const today = new Date().toISOString().split('T')[0];
       const sevenDaysFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
@@ -371,7 +373,7 @@ export function useComplianceScore() {
       else if (score < 70) message = 'Warning: Several items need attention';
       else if (score < 90) message = 'Good: Some items expiring soon';
 
-      return { score, message };
+      return { score: score as number | null, message };
     },
   });
 }

@@ -19,13 +19,13 @@ const SupplyQualityPage = ({ onBack }: Props) => (
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
+          <p className="text-[12px] font-medium text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">Supply quality issues are problems with the incoming electrical supply that affect equipment operation — voltage variations, frequency deviations, harmonics, and transients. Unlike wiring faults, these may not trip any protective device but can cause equipment malfunction, overheating, and premature failure.</p>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <p className="text-[12px] font-medium text-white mb-3">Symptoms</p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['Lights flickering or dimming — especially under load changes', 'Equipment malfunctioning despite correct wiring — random errors, resets, shutdowns', 'Motors running hot, vibrating, or making unusual noise', 'Voltage readings outside 230V ±10% (below 207V or above 253V)', 'Electronic equipment producing audible hum or buzzing', 'Neutral conductor running warm or hot — indicates current flowing in the neutral'].map((s, i) => (
@@ -39,7 +39,7 @@ const SupplyQualityPage = ({ onBack }: Props) => (
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
+        <p className="text-[12px] font-medium text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -60,7 +60,7 @@ const SupplyQualityPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
+        <p className="text-[12px] font-medium text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {['Measure supply voltage at the origin: L-N, L-E, and N-E. Record all three.', 'Check N-E voltage specifically — should be near 0V. Any significant voltage (&gt;5V) indicates a neutral problem.', 'If voltage is outside 207-253V: log voltage over 24 hours to capture variations under different load conditions.', 'For flickering: measure voltage during the flicker event. Correlate with load changes (motors starting, heating switching).', 'For three-phase: measure all three phase voltages. They should be balanced within 2-3%. Imbalance >5% indicates a neutral issue.', 'For harmonics: use a power quality analyser. Measure THD and individual harmonic components. Identify the source loads.', 'For a suspected loose neutral: check all neutral connections from the meter to the consumer unit. Retorque all neutral bar connections.', 'If the supply itself is the problem: contact the DNO with your logged voltage data. They will investigate their network.'].map((step, i) => (
@@ -83,7 +83,7 @@ const SupplyQualityPage = ({ onBack }: Props) => (
 
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
+          <p className="text-[12px] font-medium text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Office Block — Flickering Lights, All Floors</p>
           <p className="text-sm text-white">Multiple tenants report lights flickering. Problem affects all floors. Gets worse during business hours.</p>
           <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">

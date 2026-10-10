@@ -25,7 +25,7 @@ const SECTIONS = [
   'epatracking', 'progresstracking', 'portfolio', 'workqueue', 'compliancedocs', 'safeguardingqueue',
   'ltisettings', 'collegesettings', 'employerportal', 'otjtraining', 'qualitydashboard', 'timetable',
   'aiilpgenerator', 'iqaworkflow', 'batchoperations', 'assessmentcalendar', 'resourceanalytics',
-  'masteryqueue', 'iqaotjaudit', 'tutorobs', 'auditlog', 'tutorworkload',
+  'iqaotjaudit', 'tutorobs', 'auditlog', 'tutorworkload',
 ];
 
 for (const viewport of ['desktop', 'phone'] as const) {
@@ -42,13 +42,28 @@ for (const viewport of ['desktop', 'phone'] as const) {
     const problems: string[] = [];
     for (const url of urls) {
       const before = errors.length;
-      await page.goto(url);
+      // The dev server reloads when files change mid-run; an aborted
+      // navigation is retried, a page that really fails still fails.
+      for (let attempt = 0; ; attempt++) {
+        try {
+          await page.goto(url);
+          break;
+        } catch (e) {
+          if (attempt >= 2 || !String(e).includes('ERR_ABORTED')) throw e;
+          await page.waitForTimeout(1500);
+        }
+      }
       await page.waitForLoadState('networkidle').catch(() => undefined);
       await page.waitForTimeout(700);
       if (errors.length > before) problems.push(`${url}: ${errors.slice(before).join(' | ')}`);
       if (viewport === 'phone') {
-        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-        if (overflow > 1) problems.push(`${url}: overflows the phone by ${overflow}px`);
+        // A page that navigates itself after loading is a finding, not a crash:
+        // name it and where it went, then carry on with the sweep.
+        const overflow = await page
+          .evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+          .catch(() => null);
+        if (overflow === null) problems.push(`${url}: navigated by itself to ${page.url()}`);
+        else if (overflow > 1) problems.push(`${url}: overflows the phone by ${overflow}px`);
       }
     }
     expect(problems).toEqual([]);

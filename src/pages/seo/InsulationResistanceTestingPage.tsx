@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'What electronic equipment is damaged by insulation resistance testing?',
     answer:
-      'Many modern electrical components contain electronics that are rated for the circuit voltage (230V or lower) and will be damaged or destroyed by the 500V or 1000V IR test voltage. Items to always disconnect before IR testing include: LED luminaires and LED drivers, fluorescent light fittings with electronic ballasts, variable speed drives (VSDs) and inverters, surge protective devices (SPDs, also called surge protectors), arc fault detection devices (AFDDs — under the A4:2026 redraft of Reg 421.1.7 these are now required on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommended for the same circuits in all other premises), programmable thermostats, occupancy sensors and presence detectors, socket outlets with USB charging ports, and any connected electronic appliances. Note that SPDs are particularly important to disconnect — they contain metal oxide varistors (MOVs) that conduct at voltages above their clamping voltage, which is typically well below the 500V test voltage. AFDDs are equally vulnerable: their internal electronics are designed for 230V operation and will be damaged by 500V DC. Failure to disconnect either gives a spurious low IR reading and may permanently damage the device.',
+      'Many modern electrical components contain electronics that are rated for the circuit voltage (230V or lower) and will be damaged or destroyed by the 500V or 1000V IR test voltage. Items to always disconnect before IR testing include: LED luminaires and LED drivers, fluorescent light fittings with electronic ballasts, variable speed drives (VSDs) and inverters, surge protective devices (SPDs, also called surge protectors), arc fault detection devices (AFDDs — since A2:2022, Reg 421.1.7 has required these on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommended for the same circuits in all other premises), programmable thermostats, occupancy sensors and presence detectors, socket outlets with USB charging ports, and any connected electronic appliances. Note that SPDs are particularly important to disconnect — they contain metal oxide varistors (MOVs) that conduct at voltages above their clamping voltage, which is typically well below the 500V test voltage. AFDDs are equally vulnerable: their internal electronics are designed for 230V operation and will be damaged by 500V DC. Failure to disconnect either gives a spurious low IR reading and may permanently damage the device.',
   },
   {
     question: 'What does a low insulation resistance reading indicate?',
@@ -436,12 +436,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Identify and disconnect AFDDs</strong> — under the A4:2026 redraft of Reg
-                421.1.7, arc fault detection devices are now <em>required</em> on single-phase AC
+                <strong>Identify and disconnect AFDDs</strong> — since A2:2022, Reg 421.1.7 has
+                made arc fault detection devices <em>required</em> on single-phase AC
                 final circuits supplying socket-outlets rated up to 32 A in high rise residential
-                buildings, houses in multiple occupation, purpose-built student accommodation and
+                buildings (the A4:2026 wording), houses in multiple occupation, purpose-built student accommodation and
                 care homes, and <em>recommended</em> for the same circuits in all other premises.
-                Expect to meet them far more often on A4:2026 boards. Their internal electronics are
+                Expect to meet them more often on newer boards. Their internal electronics are
                 vulnerable to 500V DC test voltages. Check for AFDDs alongside SPDs before applying
                 any test voltage.
               </span>
@@ -538,7 +538,7 @@ const sections = [
                   unit, distribution board, and sub-boards for SPDs and disconnect them from the
                   circuit. An SPD left in circuit drags the reading down and can falsely condemn a
                   sound installation. Also check for arc fault detection devices (AFDDs), which Reg
-                  421.1.7 now requires on socket-outlet final circuits up to 32 A in high rise
+                  421.1.7 has required since A2:2022 on socket-outlet final circuits up to 32 A in high rise
                   residential buildings, HMOs, purpose-built student accommodation and care homes,
                   and recommends elsewhere. AFDDs contain electronics that are equally vulnerable to
                   500V DC test voltages and must be disconnected before testing.
@@ -578,7 +578,7 @@ export default function InsulationResistanceTestingPage() {
       title="Minimum Insulation Resistance: 1 MΩ at 500V DC"
       description="BS 7671 minimum insulation resistance is 1 MΩ for 230V/400V circuits tested at 500V DC; SELV/PELV 0.5 MΩ at 250V DC. Reg 643.3 Table 64 values explained."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

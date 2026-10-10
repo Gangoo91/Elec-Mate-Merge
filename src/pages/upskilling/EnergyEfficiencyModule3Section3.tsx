@@ -990,7 +990,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             variant="outline"
             className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
           >
-            <Link to="../section-2" className="flex items-center gap-2">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-3-section-2" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               <span>Previous: Data Collection Methods</span>
             </Link>
@@ -999,7 +999,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             asChild
             className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
-            <Link to="../section-4" className="flex items-center gap-2">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-3-section-4" className="flex items-center gap-2">
               <span>Next: Tools and Software for Audits</span>
               <ArrowRight className="w-4 h-4" />
             </Link>

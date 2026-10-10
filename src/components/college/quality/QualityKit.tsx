@@ -31,26 +31,39 @@ export const TONE_HEX: Record<Tone, string> = {
   volt: 'hsl(47 100% 50%)',
 };
 
+/*
+ * Chips are coloured by border and text only (8 Oct 2026 brief): green done,
+ * orange needs action, neutral otherwise. A translucent fill read muddy on
+ * the landing ground, so "bad" (expired, critical) shares the orange of
+ * "needs action" and the word carries the difference.
+ */
 const PILL: Record<Tone, string> = {
-  good: 'border-emerald-400/40 bg-emerald-500/15 text-white',
-  warn: 'border-orange-400/50 bg-orange-500/15 text-white',
-  bad: 'border-red-400/50 bg-red-500/15 text-white',
-  info: 'border-sky-400/40 bg-sky-500/15 text-white',
-  neutral: 'border-white/[0.14] bg-white/[0.06] text-white',
-  volt: 'border-elec-yellow/50 bg-elec-yellow/15 text-white',
+  good: 'border-emerald-400/60 text-emerald-300',
+  warn: 'border-orange-400/60 text-orange-300',
+  bad: 'border-orange-400/60 text-orange-300',
+  info: 'border-white/[0.18] text-white',
+  neutral: 'border-white/[0.18] text-white',
+  volt: 'border-white/[0.18] text-white',
 };
 
-/** A small status pill. Text stays white; the tone is in the border and dot. */
-export function StatusPill({ tone = 'neutral', children, className }: { tone?: Tone; children: ReactNode; className?: string }) {
+/** A small status chip. The tone is in the border and text, never a fill. */
+export function StatusPill({
+  tone = 'neutral',
+  children,
+  className,
+}: {
+  tone?: Tone;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <span
       className={cn(
-        'inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full border px-2.5 text-[11.5px] font-semibold',
+        'inline-flex h-6 shrink-0 items-center rounded-full border px-2.5 text-[12px] font-semibold',
         PILL[tone],
         className
       )}
     >
-      <span className={cn('h-1.5 w-1.5 rounded-full', TONE_BG[tone])} aria-hidden />
       {children}
     </span>
   );
@@ -100,8 +113,14 @@ export function BarList({
         const inner = (
           <>
             <span className="min-w-0">
-              <span className="block truncate text-[12.5px] text-white">{r.label}</span>
-              {r.sub && <span className="block truncate text-[11.5px] text-white">{r.sub}</span>}
+              <span className="block text-[12.5px] leading-snug text-white sm:truncate">
+                {r.label}
+              </span>
+              {r.sub && (
+                <span className="block text-[12px] leading-snug text-white sm:truncate">
+                  {r.sub}
+                </span>
+              )}
             </span>
             <span className="h-2.5 overflow-hidden rounded-full bg-white/[0.08]">
               <motion.span
@@ -126,7 +145,11 @@ export function BarList({
         return (
           <li key={r.id ?? r.label}>
             {r.onClick ? (
-              <button type="button" onClick={r.onClick} className={cn(cls, 'min-h-11 touch-manipulation rounded-lg hover:bg-white/[0.04]')}>
+              <button
+                type="button"
+                onClick={r.onClick}
+                className={cn(cls, 'min-h-11 touch-manipulation rounded-lg hover:bg-white/[0.04]')}
+              >
                 {inner}
               </button>
             ) : (
@@ -147,7 +170,13 @@ export interface Segment {
 }
 
 /** One stacked bar that splits a whole into states, with a tappable key. */
-export function SegmentBar({ segments, emptyText = 'Nothing to show yet' }: { segments: Segment[]; emptyText?: string }) {
+export function SegmentBar({
+  segments,
+  emptyText = 'Nothing to show yet',
+}: {
+  segments: Segment[];
+  emptyText?: string;
+}) {
   const total = segments.reduce((s, x) => s + x.n, 0);
   if (total === 0) return <ChartEmpty text={emptyText} className="h-20" />;
   return (
@@ -178,7 +207,11 @@ export function SegmentBar({ segments, emptyText = 'Nothing to show yet' }: { se
           return (
             <li key={s.label}>
               {s.onClick ? (
-                <button type="button" onClick={s.onClick} className="inline-flex min-h-11 items-center gap-1.5 touch-manipulation">
+                <button
+                  type="button"
+                  onClick={s.onClick}
+                  className="inline-flex min-h-11 items-center gap-1.5 touch-manipulation"
+                >
                   {body}
                 </button>
               ) : (
@@ -208,32 +241,53 @@ export function Donut({
   if (total === 0) return <ChartEmpty text={emptyText} />;
   const data = segments.filter((s) => s.n > 0);
   return (
-    <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center">
-      <div className="relative h-[140px] w-[140px] shrink-0">
+    // Donut and legend side by side at every width (10 Oct): stacked on a
+    // phone the legend sat a screen below the chart it explains.
+    <div className="flex flex-row items-center gap-4">
+      <div className="relative h-[120px] w-[120px] shrink-0 sm:h-[140px] sm:w-[140px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={data} dataKey="n" nameKey="label" innerRadius={46} outerRadius={66} paddingAngle={data.length > 1 ? 2 : 0} stroke="none" isAnimationActive>
+            <Pie
+              data={data}
+              dataKey="n"
+              nameKey="label"
+              innerRadius="66%"
+              outerRadius="96%"
+              paddingAngle={data.length > 1 ? 2 : 0}
+              stroke="none"
+              isAnimationActive
+            >
               {data.map((s) => (
                 <Cell key={s.label} fill={TONE_HEX[s.tone]} />
               ))}
             </Pie>
             <Tooltip
-              contentStyle={{ backgroundColor: 'hsl(0 0% 8%)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: '0.75rem', fontSize: 12 }}
+              contentStyle={{
+                backgroundColor: 'hsl(0 0% 8%)',
+                border: '1px solid rgba(255,255,255,0.14)',
+                borderRadius: '0.75rem',
+                fontSize: 12,
+              }}
               labelStyle={{ color: 'white' }}
               itemStyle={{ color: 'white' }}
             />
           </PieChart>
         </ResponsiveContainer>
         <span className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[22px] font-bold leading-none tabular-nums text-white">{centre ?? total}</span>
-          {centreSub && <span className="mt-1 text-[11px] text-white">{centreSub}</span>}
+          <span className="text-[20px] font-bold leading-none tabular-nums text-white sm:text-[22px]">
+            {centre ?? total}
+          </span>
+          {centreSub && <span className="mt-1 text-[12px] text-white">{centreSub}</span>}
         </span>
       </div>
       <ul className="w-full min-w-0 space-y-1">
         {segments.map((s) => {
           const body = (
             <>
-              <span className={cn('h-2.5 w-2.5 shrink-0 rounded-full', TONE_BG[s.tone])} aria-hidden />
+              <span
+                className={cn('h-2.5 w-2.5 shrink-0 rounded-full', TONE_BG[s.tone])}
+                aria-hidden
+              />
               <span className="min-w-0 flex-1 truncate text-[12.5px] text-white">{s.label}</span>
               <span className="text-[13px] font-semibold tabular-nums text-white">{s.n}</span>
             </>
@@ -241,7 +295,11 @@ export function Donut({
           return (
             <li key={s.label}>
               {s.onClick ? (
-                <button type="button" onClick={s.onClick} className="flex min-h-11 w-full items-center gap-2 rounded-lg px-1 text-left touch-manipulation hover:bg-white/[0.04]">
+                <button
+                  type="button"
+                  onClick={s.onClick}
+                  className="flex min-h-11 w-full items-center gap-2 rounded-lg px-1 text-left touch-manipulation hover:bg-white/[0.04]"
+                >
                   {body}
                 </button>
               ) : (

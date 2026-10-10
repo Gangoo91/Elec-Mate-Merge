@@ -30,7 +30,7 @@ export function UsesAi({ variant = 'pill', className }: UsesAiProps) {
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 items-center gap-1 rounded-full border border-white/[0.14] px-1.5 py-0.5 align-middle text-[10px] font-medium leading-none text-white',
+        'inline-flex shrink-0 items-center gap-1 rounded-full border border-white/[0.14] px-2 py-0.5 align-middle text-[12px] font-medium leading-none text-white',
         className
       )}
       title="This uses AI. Check the result before you rely on it."

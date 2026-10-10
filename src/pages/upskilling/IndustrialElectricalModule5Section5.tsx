@@ -1245,7 +1245,7 @@ const IndustrialElectricalModule5Section5: React.FC = () => {
             className="flex items-center gap-2 border-white/20 text-foreground hover:bg-white/5 min-h-[44px] touch-manipulation"
             asChild
           >
-            <Link to="../section-4">
+            <Link to="/study-centre/upskilling/industrial-electrical-module-5-section-4">
               <ChevronLeft className="w-5 h-5" />
               <span className="hidden sm:inline">Previous: PLC Diagnostics</span>
               <span className="sm:hidden">Previous</span>

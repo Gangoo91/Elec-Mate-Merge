@@ -13,7 +13,7 @@
  *     at /apprentice/ojt-hub.
  */
 
-import { useNavigate } from 'react-router-dom';
+import { useSmartBack } from '@/lib/navHistory';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -36,7 +36,9 @@ interface ApprenticeHubNavProps {
 }
 
 export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: ApprenticeHubNavProps) {
-  const navigate = useNavigate();
+  // Back to where the portfolio was opened from (My college, a do-next card,
+  // Today); opened cold, to the dashboard.
+  const smartBack = useSmartBack();
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-background/85 backdrop-blur-xl border-b border-white/[0.06]">
@@ -44,7 +46,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
         <div className="flex items-center gap-3 sm:gap-5 h-14">
           {/* Back */}
           <button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => smartBack('/dashboard')}
             className="flex items-center gap-2 text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
             aria-label="Back"
           >

@@ -135,9 +135,7 @@ const HandToolsTab = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Hand tools
-        </span>
+        <span className="text-[13px] font-semibold text-white">Hand tools</span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           Essential hand tools
         </h2>
@@ -186,7 +184,7 @@ const HandToolsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[13px] font-semibold text-white">
           UK electrical standards & budget guidance
         </span>
         <div className="space-y-2 text-[14px] text-white leading-relaxed">

@@ -5,6 +5,7 @@ import { MobileButton } from '@/components/ui/mobile-button';
 import { FileDown, Share2, Copy, FileStack } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { stampSafetyInsert, useSafetyScope } from './common/SafetyScope';
 import jsPDF from 'jspdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { copyToClipboard } from '@/utils/clipboard';
@@ -17,6 +18,7 @@ interface QuickActionsPanelProps {
 
 export const QuickActionsPanel = ({ briefing, onRefresh }: QuickActionsPanelProps) => {
   const { toast } = useToast();
+  const scope = useSafetyScope();
   const [generating, setGenerating] = useState(false);
 
   const handleGeneratePDF = async () => {
@@ -130,12 +132,15 @@ export const QuickActionsPanel = ({ briefing, onRefresh }: QuickActionsPanelProp
       const { id, created_at, updated_at, status, pdf_url, ...cloneData } = briefing;
 
       const { error } = await supabase.from('team_briefings').insert([
-        {
-          ...cloneData,
-          briefing_name: `${briefing.briefing_name} (Copy)`,
-          status: 'scheduled',
-          completed: false,
-        },
+        stampSafetyInsert(
+          {
+            ...cloneData,
+            briefing_name: `${briefing.briefing_name} (Copy)`,
+            status: 'scheduled',
+            completed: false,
+          },
+          scope
+        ) as never,
       ]);
 
       if (error) throw error;

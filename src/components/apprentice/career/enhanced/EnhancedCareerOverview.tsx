@@ -17,9 +17,7 @@ import {
 } from 'lucide-react';
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-    {children}
-  </span>
+  <span className="text-[13px] font-semibold text-white">{children}</span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
@@ -31,10 +29,7 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 const Bullets = ({ items }: { items: string[] }) => (
   <ul className="space-y-1.5">
     {items.map((item, idx) => (
-      <li
-        key={idx}
-        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-      >
+      <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
       </li>
@@ -136,8 +131,7 @@ const EnhancedCareerOverview = () => {
     },
     {
       title: 'Infrastructure investment',
-      description:
-        'Major investment in EV charging networks, grid modernisation, and housing.',
+      description: 'Major investment in EV charging networks, grid modernisation, and housing.',
       impact: 'Sustained job creation across sectors.',
     },
   ];
@@ -367,7 +361,7 @@ const EnhancedCareerOverview = () => {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <p className="text-[14px] text-white leading-relaxed">
           The UK electrical industry offers diverse career paths with strong job security,
           competitive salaries, and opportunities for continuous professional growth.
@@ -436,7 +430,9 @@ const EnhancedCareerOverview = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white">
                     <div>Foundation: Electrical Mate, Trainee Installer</div>
                     <div>Development: Improver, Installation Electrician</div>
-                    <div>Specialisation: Testing and Inspection, EV Installer, Industrial Maintenance</div>
+                    <div>
+                      Specialisation: Testing and Inspection, EV Installer, Industrial Maintenance
+                    </div>
                     <div>Mastery: Supervisor, Qualified Supervisor (QS), Project Manager</div>
                   </div>
                 </div>
@@ -574,8 +570,8 @@ const EnhancedCareerOverview = () => {
                 <div className="space-y-1">
                   <Eyebrow>Skills to focus on</Eyebrow>
                   <p className="text-[14px] text-white leading-relaxed">
-                    Testing and verification, commissioning, data cabling, basic PLC awareness,
-                    safe systems of work.
+                    Testing and verification, commissioning, data cabling, basic PLC awareness, safe
+                    systems of work.
                   </p>
                 </div>
               </div>
@@ -617,8 +613,8 @@ const EnhancedCareerOverview = () => {
                 <div className="space-y-1">
                   <Eyebrow>Assessment methods</Eyebrow>
                   <p className="text-[14px] text-white leading-relaxed">
-                    Portfolio evidence, on-site observations, written and practical exams,
-                    AM2 / EPA as applicable.
+                    Portfolio evidence, on-site observations, written and practical exams, AM2 / EPA
+                    as applicable.
                   </p>
                 </div>
                 <div className="space-y-1">
@@ -759,8 +755,8 @@ const EnhancedCareerOverview = () => {
                 <div className="space-y-1">
                   <Eyebrow>Day rates and pricing</Eyebrow>
                   <p className="text-[14px] text-white leading-relaxed">
-                    Typical day rate £180-£350+ depending on region. Price by value with
-                    allowances for testing, certification, and warranty.
+                    Typical day rate £180-£350+ depending on region. Price by value with allowances
+                    for testing, certification, and warranty.
                   </p>
                 </div>
                 <div className="space-y-2">

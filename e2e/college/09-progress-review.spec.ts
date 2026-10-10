@@ -23,17 +23,25 @@ test('the booked review is on the tutor board and on the learner home', async ({
     .order('scheduled_at', { ascending: true })
     .limit(1);
   const review = (data ?? [])[0] as { scheduled_at: string } | undefined;
-  test.skip(!review, 'No upcoming review on the fixture learner (run scripts/college-demo/refresh_northgate_demo.sql)');
+  test.skip(
+    !review,
+    'No upcoming review on the fixture learner (run scripts/college-demo/refresh_northgate_demo.sql)'
+  );
 
   const day = new Date(review!.scheduled_at).toLocaleDateString('en-GB', {
-    weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Europe/London',
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    timeZone: 'Europe/London',
   }); // e.g. "Tue 20 Oct"
 
   const tutor = await signedInPage(browser, 'tutor');
   await tutor.page.goto('/college/reviews');
   const row = tutor.page.getByText('Demo Learner (fixture)').first();
   await expect(row).toBeVisible();
-  await expect(tutor.page.getByText(new RegExp(`Booked ${day}`)).first()).toBeVisible();
+  await expect(
+    tutor.page.getByText(new RegExp(`Booked(?: late)?(?: ·)? ${day}`)).first()
+  ).toBeVisible();
 
   const learner = await signedInPage(browser, 'learner');
   await learner.page.goto('/apprentice/college-plan');

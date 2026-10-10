@@ -19,7 +19,12 @@ import { useCreateQuote, useNextQuoteNumber, useUpdateQuoteDraft } from '@/hooks
 import type { Quote } from '@/services/financeService';
 import { useFirmQuoteDefaults } from '@/hooks/useFirmQuoteDefaults';
 import { LineSourceTag } from '@/components/employer/quotes/LineSourceTag';
-import { isLineSource, needsCheck, type AIQuoteStamp, type LineSource } from '@/services/aiQuoteService';
+import {
+  isLineSource,
+  needsCheck,
+  type AIQuoteStamp,
+  type LineSource,
+} from '@/services/aiQuoteService';
 import { useFirmPriceBook } from '@/hooks/useFirmPriceBook';
 import { PriceBookPicker, type PickedPriceBookLine } from '@/components/employer/PriceBookPicker';
 import { sendQuote as sendQuoteService } from '@/services/financeService';
@@ -43,6 +48,20 @@ import {
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
 import { autoCompleteOff } from '@/lib/textEntry';
+import {
+  OptionTabs,
+  OptionsCard,
+  StagesCard,
+  stagesValid,
+  OPTION_IDS,
+  type QuoteOptionMeta,
+  type QuoteStage,
+} from '@/components/employer/quotes/QuoteBuilderExtras';
+import {
+  QuoteTemplateSheet,
+  SaveQuoteTemplateSheet,
+} from '@/components/employer/quotes/QuoteTemplateSheet';
+import type { QuoteTemplate } from '@/hooks/useQuotesThatWin';
 
 interface LineItem {
   id: string;
@@ -76,7 +95,14 @@ interface CreateQuoteDialogProps {
   prefillAddress?: string;
   prefillAmount?: number;
   /** ELE-1832: one unpriced line per open certificate observation (remedial quote). */
-  prefillLines?: { description: string; note?: string }[];
+  prefillLines?: {
+    description: string;
+    note?: string;
+    /** Priced lines (e.g. a design's materials, ELE-1943). Default: 1 item at £0. */
+    quantity?: number;
+    unit?: string;
+    unitPrice?: number;
+  }[];
   prefillTitle?: string;
   /** When raised from a job, links the quote to it. */
   jobId?: string;
@@ -85,6 +111,53 @@ interface CreateQuoteDialogProps {
    * and editing. Saving updates that row; nothing new is numbered.
    */
   editQuote?: Quote | null;
+  /** ELE-2073: open the template picker straight away (a converted lead). */
+  openTemplates?: boolean;
+  /**
+   * ELE-2094: the step an edited draft opens on. Default Review (4); a draft
+   * started from an enquiry has no lines yet, so it opens on Labour (2).
+   */
+  editStartStep?: 2 | 3 | 4;
+}
+
+/** ELE-2073: stored quote items back into the builder's labour and material lines. */
+function parseStoredItems(items: unknown): { labour: LabourItem[]; lines: LineItem[] } {
+  const rows = (Array.isArray(items) ? items : []) as Array<Record<string, unknown>>;
+  const num = (v: unknown, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
+  const isLabour = (l: Record<string, unknown>) =>
+    l.type === 'labour' || l.category === 'labour' || (!l.type && (l.unit === 'hour' || l.unit === 'day'));
+  return {
+    labour: rows.filter(isLabour).map((l) => {
+      const hours = num(l.quantity, 1);
+      const rate = num(l.unitPrice);
+      return {
+        id: String(l.id ?? crypto.randomUUID()),
+        description: String(l.description ?? 'Labour'),
+        hours,
+        hourlyRate: rate,
+        total: Math.round(hours * rate * 100) / 100,
+        source: isLineSource(l.source) ? l.source : undefined,
+        basis: typeof l.basis === 'string' ? l.basis : undefined,
+      };
+    }),
+    lines: rows
+      .filter((l) => !isLabour(l))
+      .map((l) => {
+        const qty = num(l.quantity, 1);
+        const price = num(l.unitPrice);
+        return {
+          id: String(l.id ?? crypto.randomUUID()),
+          description: String(l.description ?? 'Item'),
+          quantity: qty,
+          unit: String(l.unit ?? 'each'),
+          unitPrice: price,
+          total: Math.round(qty * price * 100) / 100,
+          source: isLineSource(l.source) ? l.source : undefined,
+          priceBookItemId: typeof l.priceBookItemId === 'string' ? l.priceBookItemId : null,
+          note: typeof l.notes === 'string' ? l.notes : undefined,
+        };
+      }),
+  };
 }
 
 const LABOUR_PRESETS = [
@@ -106,6 +179,8 @@ export function CreateQuoteDialog({
   prefillTitle,
   jobId,
   editQuote,
+  openTemplates,
+  editStartStep = 4,
 }: CreateQuoteDialogProps) {
   const isEdit = !!editQuote;
   const [step, setStep] = useState(1);
@@ -151,6 +226,16 @@ export function CreateQuoteDialog({
   // Sell prices only — office managers may quote, never see buy prices.
   const { data: priceBook = [] } = useFirmPriceBook();
   const [pickerOpen, setPickerOpen] = useState(false);
+  // ELE-2073: up to three priced options and job templates; ELE-2065: payment
+  // stages. With options, the labour and material lines being edited belong
+  // to optionLines[activeOption]; the others wait in optionLines.
+  const [optionMeta, setOptionMeta] = useState<QuoteOptionMeta[]>([]);
+  const [optionLines, setOptionLines] = useState<{ labour: LabourItem[]; lines: LineItem[] }[]>([]);
+  const [activeOption, setActiveOption] = useState(0);
+  const [stages, setStages] = useState<QuoteStage[] | null>(null);
+  const [jobType, setJobType] = useState<string | null>(null);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
+  const [saveTemplateOpen, setSaveTemplateOpen] = useState(false);
   const recentPriced = priceBook
     .filter((i) => i.sell_price != null)
     .sort((a, b) => (b.price_updated_at ?? '').localeCompare(a.price_updated_at ?? ''))
@@ -201,18 +286,30 @@ export function CreateQuoteDialog({
     if (prefillTitle) setJobTitle(prefillTitle);
     if (prefillLines?.length) {
       setLineItems(
-        prefillLines.map((l) => ({
-          id: crypto.randomUUID(),
-          description: l.description,
-          quantity: 1,
-          unit: 'item',
-          unitPrice: 0,
-          total: 0,
-          note: l.note,
-        }))
+        prefillLines.map((l) => {
+          const quantity = l.quantity ?? 1;
+          const unitPrice = l.unitPrice ?? 0;
+          return {
+            id: crypto.randomUUID(),
+            description: l.description,
+            quantity,
+            unit: l.unit ?? 'item',
+            unitPrice,
+            total: Math.round(quantity * unitPrice * 100) / 100,
+            note: l.note,
+          };
+        })
       );
     }
-  }, [prefillClient, prefillEmail, prefillPhone, prefillAddress, prefillAmount, prefillLines, prefillTitle]);
+  }, [
+    prefillClient,
+    prefillEmail,
+    prefillPhone,
+    prefillAddress,
+    prefillAmount,
+    prefillLines,
+    prefillTitle,
+  ]);
 
   // ELE-1990: a new quote starts from the FIRM's VAT position, not a fixed 20%.
   useEffect(() => {
@@ -233,7 +330,7 @@ export function CreateQuoteDialog({
     if (!open || !editQuote) return;
     const settings = (editQuote.settings ?? {}) as Record<string, unknown>;
     const num = (v: unknown, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
-    setStep(4);
+    setStep(editStartStep);
     setClient(editQuote.client === 'Client' ? '' : editQuote.client || '');
     setClientAddress(editQuote.client_address || '');
     setClientEmail(editQuote.client_email || '');
@@ -263,7 +360,9 @@ export function CreateQuoteDialog({
     }
     const lines = (editQuote.line_items ?? []) as Array<Record<string, unknown>>;
     const isLabour = (l: Record<string, unknown>) =>
-      l.type === 'labour' || l.category === 'labour' || (!l.type && (l.unit === 'hour' || l.unit === 'day'));
+      l.type === 'labour' ||
+      l.category === 'labour' ||
+      (!l.type && (l.unit === 'hour' || l.unit === 'day'));
     setLabourItems(
       lines.filter(isLabour).map((l) => {
         const hours = num(l.quantity, 1);
@@ -301,7 +400,40 @@ export function CreateQuoteDialog({
     setItemQuantityInputs({});
     setLabourHoursInputs({});
     setItemPriceInputs({});
-  }, [open, editQuote]);
+    // ELE-2073 / ELE-2065: a draft's options, stages and job type.
+    const storedOptions = Array.isArray(settings.options)
+      ? (settings.options as Array<Record<string, unknown>>)
+      : [];
+    if (storedOptions.length >= 2) {
+      const parsed = storedOptions.map((o) => parseStoredItems(o.items));
+      setOptionMeta(
+        storedOptions.map((o, i) => ({
+          id: String(o.id ?? OPTION_IDS[i]),
+          label: String(o.label ?? ''),
+          description: String(o.description ?? ''),
+        }))
+      );
+      setOptionLines(parsed);
+      setActiveOption(0);
+      setLabourItems(parsed[0].labour);
+      setLineItems(parsed[0].lines);
+    } else {
+      setOptionMeta([]);
+      setOptionLines([]);
+      setActiveOption(0);
+    }
+    setStages(
+      Array.isArray(settings.stages) && settings.stages.length
+        ? (settings.stages as QuoteStage[]).map((s) => ({ ...s, percent: Number(s.percent) || 0 }))
+        : null
+    );
+    setJobType(typeof settings.jobType === 'string' ? settings.jobType : null);
+  }, [open, editQuote]); // eslint-disable-line react-hooks/exhaustive-deps -- editStartStep is read once when a draft opens
+
+  // ELE-2073: a converted lead opens straight onto the template picker.
+  useEffect(() => {
+    if (open && openTemplates && !isEdit) setTemplatesOpen(true);
+  }, [open, openTemplates, isEdit]);
 
   const voiceContext = useOptionalVoiceFormContext();
 
@@ -419,6 +551,126 @@ export function CreateQuoteDialog({
   );
   const { subtotal, vatAmount, notionalVat, cisAmount, total, amountDue } = money;
 
+  /* ── ELE-2073 options and templates ─────────────────────────────────── */
+  const totalsFor = (lab: LabourItem[], mat: LineItem[]) =>
+    calcEmployerTotals(
+      [
+        { total: lab.reduce((s, i) => s + i.total, 0), type: 'labour' },
+        { total: mat.reduce((s, i) => s + i.total, 0), type: 'material' },
+      ],
+      { vatRate: Number(vatRate), reverseCharge, cisEnabled, cisRate: Number(cisRate) }
+    );
+  const hasOptions = optionMeta.length >= 2;
+  const optionSnapshot = () =>
+    optionLines.map((o, i) => (i === activeOption ? { labour: labourItems, lines: lineItems } : o));
+  const optionTotals = hasOptions ? optionSnapshot().map((o) => totalsFor(o.labour, o.lines).total) : [];
+  const freshCopy = (o: { labour: LabourItem[]; lines: LineItem[] }) => ({
+    labour: o.labour.map((x) => ({ ...x, id: crypto.randomUUID() })),
+    lines: o.lines.map((x) => ({ ...x, id: crypto.randomUUID() })),
+  });
+  const loadOption = (snap: { labour: LabourItem[]; lines: LineItem[] }[], i: number) => {
+    setOptionLines(snap);
+    setLabourItems(snap[i].labour);
+    setLineItems(snap[i].lines);
+    setActiveOption(i);
+    setItemQuantityInputs({});
+    setLabourHoursInputs({});
+    setItemPriceInputs({});
+  };
+  const selectOption = (i: number) => {
+    if (i === activeOption) return;
+    loadOption(optionSnapshot(), i);
+  };
+  const startOptions = () => {
+    const current = { labour: labourItems, lines: lineItems };
+    setOptionMeta([
+      { id: OPTION_IDS[0], label: 'Standard', description: '' },
+      { id: OPTION_IDS[1], label: 'Upgraded', description: '' },
+    ]);
+    loadOption([current, freshCopy(current)], 1);
+    setStep(2);
+    toast.info('Option 2 starts as a copy of option 1. Change its labour and materials.');
+  };
+  const addOption = () => {
+    if (optionMeta.length >= 3) return;
+    const snap = optionSnapshot();
+    const used = new Set(optionMeta.map((o) => o.id));
+    const id = OPTION_IDS.find((x) => !used.has(x)) ?? `O${optionMeta.length + 1}`;
+    setOptionMeta([...optionMeta, { id, label: 'Premium', description: '' }]);
+    loadOption([...snap, freshCopy(snap[activeOption])], snap.length);
+    setStep(2);
+  };
+  const clearOptions = () => {
+    setOptionMeta([]);
+    setOptionLines([]);
+    setActiveOption(0);
+  };
+  const removeOption = (i: number) => {
+    const snap = optionSnapshot();
+    const keep = snap.filter((_, j) => j !== i);
+    const meta = optionMeta.filter((_, j) => j !== i);
+    if (keep.length < 2) {
+      setLabourItems(keep[0]?.labour ?? []);
+      setLineItems(keep[0]?.lines ?? []);
+      clearOptions();
+      return;
+    }
+    setOptionMeta(meta);
+    loadOption(keep, Math.min(activeOption > i ? activeOption - 1 : activeOption, keep.length - 1));
+  };
+  const applyTemplate = (t: QuoteTemplate) => {
+    const lab: LabourItem[] = t.labour.map((l) => ({
+      id: crypto.randomUUID(),
+      description: l.description,
+      hours: Number(l.hours) || 0,
+      hourlyRate: Number(l.hourlyRate) || 0,
+      total: Math.round((Number(l.hours) || 0) * (Number(l.hourlyRate) || 0) * 100) / 100,
+      ...(l.basis ? { basis: l.basis } : {}),
+    }));
+    const mat: LineItem[] = t.lines.map((l) => ({
+      id: crypto.randomUUID(),
+      description: l.description,
+      quantity: Number(l.quantity) || 1,
+      unit: l.unit || 'each',
+      unitPrice: Number(l.unitPrice) || 0,
+      total: Math.round((Number(l.quantity) || 1) * (Number(l.unitPrice) || 0) * 100) / 100,
+      ...(l.priceBookItemId ? { source: 'price_book' as LineSource, priceBookItemId: l.priceBookItemId } : {}),
+      ...(l.unpriced ? { note: 'Not in your price book: price it before sending.' } : {}),
+    }));
+    setLabourItems((prev) => [...prev, ...lab]);
+    setLineItems((prev) => [...prev, ...mat]);
+    if (!jobTitle.trim()) setJobTitle(t.name);
+    if (!description.trim() && t.description) setDescription(t.description);
+    setJobType(t.job_type || t.name);
+    const unpriced = t.lines.filter((l) => l.unpriced).length;
+    toast.success(
+      `${t.name} added${unpriced ? `. ${unpriced} material${unpriced === 1 ? ' is' : 's are'} not in your price book yet, so price ${unpriced === 1 ? 'it' : 'them'}.` : '.'}`
+    );
+    if (step === 1 && client.trim()) setStep(2);
+  };
+  const toStoredItems = (lab: LabourItem[], mat: LineItem[]) => [
+    ...lab.map((item) => ({
+      id: item.id,
+      description: item.description,
+      quantity: item.hours,
+      unit: 'hour',
+      unitPrice: item.hourlyRate,
+      total: item.total,
+      totalPrice: item.total,
+      type: 'labour',
+      category: 'labour',
+      ...(item.source ? { source: item.source } : {}),
+      ...(item.basis ? { basis: item.basis } : {}),
+    })),
+    ...mat.map(({ note, ...item }) => ({
+      ...item,
+      totalPrice: item.total,
+      type: 'material',
+      category: 'materials',
+      ...(note ? { notes: note } : {}),
+    })),
+  ];
+
   const addLabourItem = () => {
     if (!newLabour.description) return;
     const hours = Number(newLabour.hours) || 1;
@@ -477,7 +729,10 @@ export function CreateQuoteDialog({
     setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
   };
 
-  const addFromPriceBook = (item: { name: string; unit: string; sell_price: number | null }, qty = 1) => {
+  const addFromPriceBook = (
+    item: { name: string; unit: string; sell_price: number | null },
+    qty = 1
+  ) => {
     const price = Number(item.sell_price ?? 0);
     const lineItem: LineItem = {
       id: crypto.randomUUID(),
@@ -540,28 +795,44 @@ export function CreateQuoteDialog({
     const validUntil = new Date();
     validUntil.setDate(validUntil.getDate() + Number(validityDays));
 
-    const allLineItems = [
-      ...labourItems.map((item) => ({
-        id: item.id,
-        description: item.description,
-        quantity: item.hours,
-        unit: 'hour',
-        unitPrice: item.hourlyRate,
-        total: item.total,
-        totalPrice: item.total,
-        type: 'labour',
-        category: 'labour',
-        ...(item.source ? { source: item.source } : {}),
-        ...(item.basis ? { basis: item.basis } : {}),
-      })),
-      ...lineItems.map(({ note, ...item }) => ({
-        ...item,
-        totalPrice: item.total,
-        type: 'material',
-        category: 'materials',
-        ...(note ? { notes: note } : {}),
-      })),
-    ];
+    // ELE-2073: with options the quote row carries the FIRST option (the
+    // customer's pick replaces it on the accept page); every option is kept in
+    // settings.options with its own items and totals.
+    const optionSnap = hasOptions ? optionSnapshot() : null;
+    if (optionSnap && optionSnap.some((o) => o.labour.length + o.lines.length === 0)) {
+      toast.error('Every option needs at least one labour or material line.');
+      return;
+    }
+    if (!stagesValid(stages)) {
+      toast.error('The payment stages need names and must add up to 100%.');
+      return;
+    }
+    const primary = optionSnap ? optionSnap[0] : { labour: labourItems, lines: lineItems };
+    const allLineItems = toStoredItems(primary.labour, primary.lines);
+    // These shadow the on-screen figures, which belong to the option being edited.
+    const { subtotal, vatAmount, total, cisAmount } = totalsFor(primary.labour, primary.lines);
+    const extraSettings: Record<string, unknown> = {
+      ...(optionSnap
+        ? {
+            options: optionSnap.map((o, i) => {
+              const t = totalsFor(o.labour, o.lines);
+              return {
+                id: optionMeta[i].id,
+                label: optionMeta[i].label.trim() || `Option ${i + 1}`,
+                description: optionMeta[i].description.trim() || null,
+                items: toStoredItems(o.labour, o.lines),
+                subtotal: t.subtotal,
+                vat_amount: t.vatAmount,
+                total: t.total,
+              };
+            }),
+          }
+        : {}),
+      ...(stages
+        ? { stages: stages.map((s) => ({ id: s.id, label: s.label.trim(), percent: Number(s.percent) || 0 })) }
+        : {}),
+      ...(jobType ? { jobType } : {}),
+    };
 
     const email = clientEmail.trim();
     const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
@@ -605,13 +876,23 @@ export function CreateQuoteDialog({
               depositPercentage: undefined,
               depositAmount: undefined,
               ...depositSettings,
+              // null clears options / stages the draft no longer has.
+              options: null,
+              stages: null,
+              ...extraSettings,
             },
           },
         });
       } catch {
         return; // the hook has already said why
       }
-      if (client) linkRecordToClient('quotes', editQuote.id, client).catch(() => {});
+      // ELE-2065 §3A #14: match on email and phone too, not just the name.
+      if (client)
+        linkRecordToClient('quotes', editQuote.id, client, {
+          email: clientEmail,
+          phone: clientPhone,
+          address: clientAddress,
+        }).catch(() => {});
       if (sendImmediately && !willSend) {
         toast.info('Draft saved. Add a client email to send it.');
       } else if (willSend) {
@@ -624,7 +905,9 @@ export function CreateQuoteDialog({
           toast.error('Draft saved. The email failed to send. Open it and use Send email.');
         }
       } else {
-        toast.success(editQuote.quote_number ? `Quote ${editQuote.quote_number} saved` : 'Quote saved');
+        toast.success(
+          editQuote.quote_number ? `Quote ${editQuote.quote_number} saved` : 'Quote saved'
+        );
       }
       resetForm();
       onOpenChange(false);
@@ -654,7 +937,7 @@ export function CreateQuoteDialog({
       subtotal,
       vat_amount: vatAmount,
       cis_amount: cisAmount,
-      settings: depositSettings,
+      settings: { ...depositSettings, ...extraSettings },
       // Quote type omits the finance fields (subtotal/vat/cis/job_id); the real
       // fix is completing that shared type, not casting here.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -662,7 +945,11 @@ export function CreateQuoteDialog({
 
     // Auto-link into the CRM so the client record builds itself (non-fatal).
     if (createdQuote?.id && client) {
-      linkRecordToClient('quotes', createdQuote.id, client).catch(() => {});
+      linkRecordToClient('quotes', createdQuote.id, client, {
+        email: clientEmail,
+        phone: clientPhone,
+        address: clientAddress,
+      }).catch(() => {});
     }
 
     if (sendImmediately && !willSend) {
@@ -710,6 +997,11 @@ export function CreateQuoteDialog({
     setItemPriceInputs({});
     setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
     setNewLabour({ description: '', hours: '', hourlyRate: '' });
+    setOptionMeta([]);
+    setOptionLines([]);
+    setActiveOption(0);
+    setStages(null);
+    setJobType(null);
   };
 
   const canProceed = () => {
@@ -731,7 +1023,7 @@ export function CreateQuoteDialog({
   const currentStepLabel = stepLabels[step - 1];
 
   const NavigationButtons = () => (
-    <div className="flex gap-3 mt-6 pt-4 border-t border-white/[0.06]">
+    <div className="flex w-full gap-3 sm:w-auto sm:min-w-[24rem]">
       {step > 1 ? (
         <SecondaryButton onClick={() => setStep(step - 1)} fullWidth size="lg">
           <ChevronLeft className="h-4 w-4 mr-1" />
@@ -783,7 +1075,7 @@ export function CreateQuoteDialog({
     switch (step) {
       case 1:
         return (
-          <div className="space-y-4">
+          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
             <FormCard eyebrow="Client">
               <Field label="Client name" required>
                 <Input
@@ -992,7 +1284,7 @@ export function CreateQuoteDialog({
 
       case 2:
         return (
-          <div className="space-y-4">
+          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
             {labourItems.length > 0 && (
               <FormCard eyebrow="Labour added">
                 <div className="space-y-2">
@@ -1009,7 +1301,9 @@ export function CreateQuoteDialog({
                           <div className="mt-1 flex flex-wrap items-center gap-1.5">
                             <LineSourceTag source={item.source} />
                             {item.basis && (
-                              <span className="text-[11.5px] text-white leading-snug">{item.basis}</span>
+                              <span className="text-[11.5px] text-white leading-snug">
+                                {item.basis}
+                              </span>
                             )}
                           </div>
                         )}
@@ -1128,7 +1422,7 @@ export function CreateQuoteDialog({
 
       case 3:
         return (
-          <div className="space-y-4">
+          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
             {lineItems.length > 0 && (
               <FormCard eyebrow="Materials added">
                 <div className="space-y-2">
@@ -1145,7 +1439,9 @@ export function CreateQuoteDialog({
                           <div className="mt-1 flex flex-wrap items-center gap-1.5">
                             <LineSourceTag source={item.source} />
                             {item.note && (
-                              <span className="text-[11.5px] text-white leading-snug">{item.note}</span>
+                              <span className="text-[11.5px] text-white leading-snug">
+                                {item.note}
+                              </span>
                             )}
                           </div>
                         )}
@@ -1170,7 +1466,9 @@ export function CreateQuoteDialog({
                             }}
                             className={`${inputClass} w-20 text-center`}
                           />
-                          <span className="whitespace-nowrap text-[12px] text-white">{item.unit} at £</span>
+                          <span className="whitespace-nowrap text-[12px] text-white">
+                            {item.unit} at £
+                          </span>
                           <Input
                             type="text"
                             inputMode="decimal"
@@ -1182,7 +1480,10 @@ export function CreateQuoteDialog({
                             onBlur={(e) => {
                               const val = Math.max(0, Number(e.target.value) || 0);
                               if (val !== item.unitPrice) updateUnitPrice(item.id, val);
-                              setItemPriceInputs((prev) => ({ ...prev, [item.id]: val.toFixed(2) }));
+                              setItemPriceInputs((prev) => ({
+                                ...prev,
+                                [item.id]: val.toFixed(2),
+                              }));
                             }}
                             className={`${inputClass} w-24 text-center`}
                           />
@@ -1295,7 +1596,7 @@ export function CreateQuoteDialog({
 
       case 4:
         return (
-          <div className="space-y-4">
+          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
             {aiStamp && (
               <FormCard eyebrow="AI draft, check before sending">
                 <p className="text-[13px] text-white leading-relaxed">
@@ -1315,7 +1616,9 @@ export function CreateQuoteDialog({
                     Labour or Materials and confirm each one; typing a price marks it checked.
                   </p>
                 ) : (
-                  <p className="text-[12.5px] text-white">Every estimated price has been checked.</p>
+                  <p className="text-[12.5px] text-white">
+                    Every estimated price has been checked.
+                  </p>
                 )}
                 {aiStamp.siteChecks?.length > 0 && (
                   <div className="border-t border-white/[0.1] pt-3">
@@ -1439,6 +1742,35 @@ export function CreateQuoteDialog({
               </Field>
             </FormCard>
 
+            <OptionsCard
+              options={optionMeta}
+              totals={optionTotals}
+              onStart={startOptions}
+              onChange={(i, patch) =>
+                setOptionMeta((prev) => prev.map((o, j) => (j === i ? { ...o, ...patch } : o)))
+              }
+              onRemove={removeOption}
+              onClear={clearOptions}
+            />
+
+            <StagesCard
+              stages={stages}
+              total={hasOptions ? (optionTotals[0] ?? total) : total}
+              onChange={setStages}
+            />
+
+            <FormCard eyebrow="Template">
+              <p className="text-[13px] text-white">
+                Quote this kind of job often? Save the labour and materials as a template for next time.
+              </p>
+              <SecondaryButton
+                onClick={() => setSaveTemplateOpen(true)}
+                disabled={labourItems.length + lineItems.length === 0}
+              >
+                Save as a template
+              </SecondaryButton>
+            </FormCard>
+
             {labourItems.length > 0 && (
               <FormCard eyebrow="Labour breakdown">
                 <div className="space-y-1.5">
@@ -1534,31 +1866,82 @@ export function CreateQuoteDialog({
           </div>
 
           <div className="flex-1 overflow-y-auto overscroll-contain">
-            <div className="px-5 py-5 pb-32 space-y-4">
+            <div className="mx-auto w-full max-w-[88rem] px-5 py-5 pb-8">
+              {/* ELE-2073: start from a job template. */}
+              {step === 1 && !isEdit && (
+                <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                  <div className="min-w-0">
+                    <p className="text-[14px] font-semibold text-white">Start from a template</p>
+                    <p className="mt-0.5 text-[13px] text-white">
+                      Consumer unit change, EV charger, rewire and your own saved jobs, priced from your price
+                      book.
+                    </p>
+                  </div>
+                  <SecondaryButton onClick={() => setTemplatesOpen(true)} className="sm:w-auto">
+                    Choose a template
+                  </SecondaryButton>
+                </div>
+              )}
+              {step >= 2 && (
+                <OptionTabs
+                  options={optionMeta}
+                  active={activeOption}
+                  totals={optionTotals}
+                  onSelect={selectOption}
+                  onAdd={addOption}
+                />
+              )}
               {renderStepContent()}
-              <NavigationButtons />
             </div>
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] text-white uppercase tracking-[0.14em] font-medium block">
-                  Quote total
+          {/* Sticky footer: the running total and the step's primary action. */}
+          <div className="flex-shrink-0 border-t border-white/[0.06] bg-[hsl(0_0%_8%)] px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+            <div className="mx-auto flex w-full max-w-[88rem] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-baseline justify-between gap-3 sm:block">
+                <span className="text-[13px] font-semibold text-white">
+                  Quote total{' '}
+                  <span className="font-normal">
+                    · {labourItems.length + lineItems.length} item
+                    {labourItems.length + lineItems.length !== 1 ? 's' : ''}
+                  </span>
                 </span>
-                <span className="text-[11px] text-white">
-                  {labourItems.length + lineItems.length} item
-                  {labourItems.length + lineItems.length !== 1 ? 's' : ''}
+                <span className="block text-[22px] font-semibold tabular-nums text-white sm:text-[24px]">
+                  £{total.toFixed(2)}
                 </span>
               </div>
-              <span className="text-[26px] font-semibold text-elec-yellow tabular-nums">
-                £{total.toFixed(2)}
-              </span>
+              <NavigationButtons />
             </div>
           </div>
         </div>
       </SheetContent>
-      <PriceBookPicker open={pickerOpen} onOpenChange={setPickerOpen} mode="sell" onAdd={addPicked} />
+      <PriceBookPicker
+        open={pickerOpen}
+        onOpenChange={setPickerOpen}
+        mode="sell"
+        onAdd={addPicked}
+      />
+      <QuoteTemplateSheet open={templatesOpen} onOpenChange={setTemplatesOpen} onPick={applyTemplate} />
+      <SaveQuoteTemplateSheet
+        key={saveTemplateOpen ? 'open' : 'closed'}
+        open={saveTemplateOpen}
+        onOpenChange={setSaveTemplateOpen}
+        defaultName={jobTitle || jobType || ''}
+        jobType={jobType}
+        labour={labourItems.map((l) => ({
+          description: l.description,
+          hours: l.hours,
+          hourlyRate: l.hourlyRate,
+          ...(l.basis ? { basis: l.basis } : {}),
+        }))}
+        lines={lineItems.map((l) => ({
+          description: l.description,
+          quantity: l.quantity,
+          unit: l.unit,
+          unitPrice: l.unitPrice,
+          priceBookItemId: l.priceBookItemId ?? null,
+        }))}
+      />
     </Sheet>
   );
 }

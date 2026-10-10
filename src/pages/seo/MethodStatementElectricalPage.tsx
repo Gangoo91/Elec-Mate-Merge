@@ -56,7 +56,7 @@ const keyTakeaways = [
   'The method statement must be specific to the job and site — generic template method statements that do not address the actual work being done are increasingly being rejected by safety-conscious clients.',
   'Together with the risk assessment, the method statement forms a RAMS pack (Risk Assessment and Method Statement) — the standard safety document package for electrical contracting.',
   'Elec-Mate generates professional, site-specific method statements from a plain-English job description in under 60 seconds using its AI Health and Safety agent and RAMS Generator.',
-  'Post-A4:2026 method statements for domestic consumer unit changes and rewires must address two new design checkpoints: AFDDs on socket-outlet final circuits not exceeding 32 A (Reg 421.1.7 — a requirement in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes; recommended elsewhere) and RCD protection not exceeding 30 mA on all final circuits supplying luminaires in domestic premises (Reg 411.3.4, mandatory).',
+  'Method statements for domestic consumer unit changes and rewires to BS 7671:2018+A4:2026 must address two design checkpoints: AFDDs on socket-outlet final circuits not exceeding 32 A (Reg 421.1.7 — a requirement in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes; recommended elsewhere) and RCD protection not exceeding 30 mA on all final circuits supplying luminaires in domestic premises (Reg 411.3.4, mandatory).',
   'Safe isolation described in a method statement must follow the OSG Reg 12.5 minimum three-stage sequence before testing dead: (1) positively identify the isolation point, (2) check the VID condition, (3) confirm VID functioning on a known live source.',
 ];
 
@@ -134,7 +134,7 @@ const commonMethodStatements = [
       'Building control notification under Part P via a competent person scheme',
       'Customer handover with the EIC and operating instructions',
     ],
-    checkpointsHeading: 'A4:2026 Design & Commissioning Checkpoints',
+    checkpointsHeading: 'BS 7671 Design & Commissioning Checkpoints',
     checkpoints: [
       {
         label: 'AFDDs (Reg 421.1.7):',
@@ -162,7 +162,7 @@ const commonMethodStatements = [
       'Part P building control notification',
       'Customer handover, addressing the period when the supply was isolated and power was lost',
     ],
-    checkpointsHeading: 'A4:2026 Design & Commissioning Checkpoints',
+    checkpointsHeading: 'BS 7671 Design & Commissioning Checkpoints',
     checkpoints: [
       {
         label: 'AFDDs (Reg 421.1.7):',
@@ -759,7 +759,7 @@ export default function MethodStatementElectricalPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-01-28"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

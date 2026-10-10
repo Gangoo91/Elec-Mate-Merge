@@ -536,7 +536,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 421.1.7 — Arc Fault Detection Devices (AFDDs)</strong> —
-                Redrafted in BS&nbsp;7671:2018+A4:2026. AFDDs are now a <em>requirement</em> for
+                Since A2:2022, AFDDs have been a <em>requirement</em> for
                 final circuits supplying socket-outlets rated up to 32&nbsp;A in higher-risk
                 residential buildings, houses in multiple occupation, purpose-built student
                 accommodation and care homes. For all other premises — including commercial kitchens
@@ -669,7 +669,7 @@ export default function RestaurantKitchenElectricalCostPage() {
       title="Restaurant Kitchen Electrical Cost UK 2026"
       description="How much does restaurant kitchen electrical installation cost in 2026? UK guide covering 3-phase supply, extraction interlock, IP ratings."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

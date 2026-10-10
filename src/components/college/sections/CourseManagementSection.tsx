@@ -32,13 +32,17 @@ import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
   COLLEGE_BTN,
   COLLEGE_BTN_PRIMARY,
-  chipCn,
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
 } from '@/components/college/ui/CollegeUi';
-import { NameBadge } from '@/components/college/people/peopleKit';
+import { choiceCn } from '@/components/college/teaching/TeachingKit';
+import {
+  NameBadge,
+  PEOPLE_CARD,
+  StatusChip,
+  TOP_LINE,
+} from '@/components/college/people/peopleKit';
 import { useCollegeCan } from '@/hooks/useCollegeCan';
 
 /**
@@ -55,7 +59,7 @@ import { useCollegeCan } from '@/hooks/useCollegeCan';
  * RLS: same-college staff insert/update (scoped by _ch_same_college(college_id)),
  * so college_id must be the staff's own college — taken from the profile.
  *
- * College Hub kit (7 Oct 2026): header with "?" → figures → one card per
+ * College Hub kit (7 Oct 2026): header with "?" (counts in its sentence) → one card per
  * course with its enrolments and off-the-job target → the course form as a
  * wide FormSheet.
  */
@@ -65,12 +69,24 @@ const HELP: PageHelpContent = {
   title: 'Course setup',
   what: 'The courses your college runs: what learners enrol on. Each course carries the off-the-job hours its apprenticeship standard needs, and every learner enrolled on it inherits that target.',
   steps: [
-    { title: 'Add a course', body: 'Pick its qualification first: that fills in the name, code, awarding body and level for you.' },
-    { title: 'Set the standard', body: 'Choose the apprenticeship standard it delivers. That sets the off-the-job hours. Choose Custom to type hours yourself.' },
-    { title: 'Keep it tidy', body: 'Mark a course Inactive when you stop running it. Learners already on it keep their record.' },
+    {
+      title: 'Add a course',
+      body: 'Pick its qualification first: that fills in the name, code, awarding body and level for you.',
+    },
+    {
+      title: 'Set the standard',
+      body: 'Choose the apprenticeship standard it delivers. That sets the off-the-job hours. Choose Custom to type hours yourself.',
+    },
+    {
+      title: 'Keep it tidy',
+      body: 'Mark a course Inactive when you stop running it. Learners already on it keep their record.',
+    },
   ],
   notes: [
-    { title: 'Off-the-job target not set', body: 'Learners on a course with no target have nothing to measure their hours against. Set it once here.' },
+    {
+      title: 'Off-the-job target not set',
+      body: 'Learners on a course with no target have nothing to measure their hours against. Set it once here.',
+    },
   ],
   source: 'Off-the-job hours per standard: DfE apprenticeship funding rules, Annex C.',
 };
@@ -100,7 +116,8 @@ export function CourseManagementSection() {
       // Only learners still on the programme: withdrawn, completed and break
       // in learning rows are not "enrolled". Case-insensitive, the data mixes.
       for (const r of (data ?? []) as { course_id: string | null; status: string | null }[]) {
-        if (r.course_id && ((r.status ?? '').trim().toLowerCase() || 'active') === 'active') m[r.course_id] = (m[r.course_id] ?? 0) + 1;
+        if (r.course_id && ((r.status ?? '').trim().toLowerCase() || 'active') === 'active')
+          m[r.course_id] = (m[r.course_id] ?? 0) + 1;
       }
       return m;
     },
@@ -124,42 +141,47 @@ export function CourseManagementSection() {
   };
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
       <CollegePageHeader
         eyebrow="Courses and admin"
         title="Course setup"
-        description="The courses your college runs. Each one sets the off-the-job hours its learners need."
+        description={
+          courses.length === 0
+            ? 'The courses your college runs. Each one sets the off-the-job hours its learners need. None added yet.'
+            : `${active.length} course${active.length === 1 ? '' : 's'} running${archived.length > 0 ? ` (${archived.length} inactive)` : ''}, with ${enrolledTotal} learner${enrolledTotal === 1 ? '' : 's'} enrolled. ` +
+              (otjUnset > 0
+                ? `${otjUnset} running course${otjUnset === 1 ? ' has' : 's have'} no off-the-job target, so their learners have nothing to measure against.`
+                : 'Every running course has its off-the-job target set.')
+        }
         help={HELP}
         actions={
           canManage ? (
-            <button type="button" onClick={openCreate} className={COLLEGE_BTN_PRIMARY}>
+            <button
+              type="button"
+              onClick={openCreate}
+              className={cn(COLLEGE_BTN_PRIMARY, 'w-full sm:w-auto')}
+            >
               Add course
             </button>
           ) : undefined
         }
       />
 
-      {!isLoading && courses.length > 0 && (
-        <CollegeStats
-          items={[
-            { label: 'Courses running', value: String(active.length), sub: archived.length > 0 ? `${archived.length} inactive` : 'What learners enrol on' },
-            { label: 'Learners enrolled', value: String(enrolledTotal), sub: enrolledTotal > 0 ? 'Across running courses' : 'No enrolments yet' },
-            {
-              label: 'Hours target not set',
-              value: String(otjUnset),
-              sub: otjUnset > 0 ? 'Learners inherit no hours target' : 'Every running course has one',
-              warn: otjUnset > 0,
-            },
-          ]}
-        />
-      )}
-
       {isLoading ? (
         <LoadingState />
       ) : courses.length === 0 ? (
         <CollegeEmpty
           title="No courses yet"
-          body="Add the courses your college delivers so learners can be enrolled and inherit their off-the-job hours target."
+          body={
+            canManage
+              ? 'Add the courses your college delivers. A course comes first: cohorts sit on a course, and learners enrolled on it inherit its off-the-job hours target.'
+              : 'Your college admin or head of department adds courses. Once they have, they show here with their enrolments and off-the-job target.'
+          }
           action={
             canManage ? (
               <button type="button" onClick={openCreate} className={COLLEGE_BTN_PRIMARY}>
@@ -171,13 +193,24 @@ export function CourseManagementSection() {
       ) : (
         <>
           <section className="space-y-3">
-            <CollegeSectionTitle title="Running" sub={`${active.length} course${active.length === 1 ? '' : 's'}`} />
+            <CollegeSectionTitle
+              title="Running"
+              sub={`${active.length} course${active.length === 1 ? '' : 's'}`}
+            />
             {active.length === 0 ? (
-              <CollegeEmpty title="Nothing running" body="Every course is inactive. Open one below and set it to Active." />
+              <CollegeEmpty
+                title="Nothing running"
+                body="Every course is inactive. Open one below and set it to Active."
+              />
             ) : (
               <div className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {active.map((c) => (
-                  <CourseRow key={c.id} course={c} enrolled={enrolment[c.id] ?? 0} onClick={() => canManage && setEditing(c)} />
+                  <CourseRow
+                    key={c.id}
+                    course={c}
+                    enrolled={enrolment[c.id] ?? 0}
+                    onClick={canManage ? () => setEditing(c) : undefined}
+                  />
                 ))}
               </div>
             )}
@@ -188,7 +221,12 @@ export function CourseManagementSection() {
               <CollegeSectionTitle title="Inactive" sub={`${archived.length}`} />
               <div className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {archived.map((c) => (
-                  <CourseRow key={c.id} course={c} enrolled={enrolment[c.id] ?? 0} onClick={() => canManage && setEditing(c)} />
+                  <CourseRow
+                    key={c.id}
+                    course={c}
+                    enrolled={enrolment[c.id] ?? 0}
+                    onClick={canManage ? () => setEditing(c) : undefined}
+                  />
                 ))}
               </div>
             </section>
@@ -217,43 +255,73 @@ function CourseRow({
 }: {
   course: CollegeCourse;
   enrolled: number;
-  onClick: () => void;
+  /** Absent when the viewer cannot edit courses: the card is then not a button. */
+  onClick?: () => void;
 }) {
   const needsOtj = course.otj_required_hours == null && isActiveStatus(course.status);
   const fig = (label: string, value: string, warn?: boolean) => (
     <div className="min-w-0">
-      <dd className={cn('text-[20px] font-bold leading-none tabular-nums', warn ? 'text-orange-400' : 'text-white')}>{value}</dd>
+      <dd
+        className={cn(
+          'text-[20px] font-bold leading-none tabular-nums',
+          warn ? 'text-orange-400' : 'text-white'
+        )}
+      >
+        {value}
+      </dd>
       <dt className="mt-1 text-[12px] text-white">{label}</dt>
     </div>
   );
-  return (
-    <motion.button
-      variants={itemVariants}
-      type="button"
-      onClick={onClick}
-      className={cn(
-        'group flex h-full w-full flex-col rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 text-left transition-colors touch-manipulation hover:border-white/[0.2]',
-        needsOtj && 'border-orange-400/40'
-      )}
-    >
+  const body = (
+    <>
+      <span aria-hidden className={TOP_LINE} />
       <span className="flex w-full items-start justify-between gap-3">
         <span className="min-w-0">
           <span className="flex flex-wrap items-center gap-2">
             <span className="text-[15px] font-semibold leading-snug text-white">{course.name}</span>
             {!isActiveStatus(course.status) && <NameBadge>{course.status ?? 'Inactive'}</NameBadge>}
+            {needsOtj && <StatusChip tone="action">Hours target not set</StatusChip>}
           </span>
           <span className="mt-1 block text-[12.5px] leading-snug text-white">
-            {[course.code, course.level, course.awarding_body].filter(Boolean).join(' · ') || 'No details yet'}
+            {[course.code, course.level, course.awarding_body].filter(Boolean).join(' · ') ||
+              'No details yet'}
           </span>
         </span>
-        <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow" aria-hidden />
+        {onClick && (
+          <ChevronRight
+            className="mt-0.5 h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow"
+            aria-hidden
+          />
+        )}
       </span>
       <dl className="mt-auto grid grid-cols-3 gap-3 pt-4">
         {fig('enrolled', String(enrolled))}
-        {fig('off-the-job', course.otj_required_hours != null ? `${course.otj_required_hours}h` : 'Not set', needsOtj)}
-        {fig('months', course.duration_months != null ? String(course.duration_months) : '—')}
+        {fig(
+          'off-the-job',
+          course.otj_required_hours != null ? `${course.otj_required_hours}h` : 'Not set',
+          needsOtj
+        )}
+        {fig(
+          'long',
+          course.duration_months != null ? `${course.duration_months} months` : 'Not set'
+        )}
       </dl>
+    </>
+  );
+  return onClick ? (
+    <motion.button
+      variants={itemVariants}
+      type="button"
+      onClick={onClick}
+      aria-label={`Edit ${course.name}`}
+      className={cn(PEOPLE_CARD, 'p-4 sm:p-5')}
+    >
+      {body}
     </motion.button>
+  ) : (
+    <motion.div variants={itemVariants} className={cn(PEOPLE_CARD, 'p-4 sm:p-5')}>
+      {body}
+    </motion.div>
   );
 }
 
@@ -292,8 +360,7 @@ function courseToForm(course: CollegeCourse | null): FormState {
     level: course.level ?? '',
     awarding_body: course.awarding_body ?? '',
     duration_months: course.duration_months != null ? String(course.duration_months) : '',
-    otj_required_hours:
-      course.otj_required_hours != null ? String(course.otj_required_hours) : '',
+    otj_required_hours: course.otj_required_hours != null ? String(course.otj_required_hours) : '',
     status: course.status ?? 'Active',
     standardCode: matched ? matched.code : course.otj_required_hours != null ? 'custom' : '',
     qualification_id: course.qualification_id ?? '',
@@ -315,7 +382,7 @@ function FieldLabel({
         {children}
         {required && <span className="ml-1 text-elec-yellow">*</span>}
       </label>
-      {hint && <p className="mb-1.5 text-[11px] leading-snug text-white">{hint}</p>}
+      {hint && <p className="mb-1.5 text-[12px] leading-snug text-white">{hint}</p>}
     </>
   );
 }
@@ -421,158 +488,161 @@ function CourseFormSheet({
       title={course ? course.name || 'Edit course' : 'Add a course'}
       description="What learners enrol on. The off-the-job hours flow to every learner enrolled on this course."
       footer={
-        <div className="flex gap-2">
-          <button type="button" onClick={onClose} className={cn(COLLEGE_BTN, 'flex-1 sm:flex-none')}>
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={onClose} className={cn(COLLEGE_BTN, 'w-full')}>
             Cancel
           </button>
-          <button type="button" onClick={handleSave} disabled={!valid || saving} className={cn(COLLEGE_BTN_PRIMARY, 'flex-1 sm:flex-none')}>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!valid || saving}
+            className={cn(COLLEGE_BTN_PRIMARY, 'w-full')}
+          >
             {saving ? 'Saving…' : course ? 'Save changes' : 'Add course'}
           </button>
         </div>
       }
     >
-          <div className="grid gap-x-8 gap-y-5 lg:grid-cols-2">
-            <div>
-              <FieldLabel required>Course name</FieldLabel>
-              <input
-                className={INPUT}
-                value={form.name}
-                onChange={(e) => set('name', e.target.value)}
-                placeholder="e.g. Level 3 Electrical Installation"
-                autoFocus
-              />
-            </div>
+      <div className="grid grid-cols-1 gap-x-8 gap-y-5 lg:grid-cols-2 [&>*]:min-w-0">
+        <div>
+          <FieldLabel required>Course name</FieldLabel>
+          <input
+            className={INPUT}
+            value={form.name}
+            onChange={(e) => set('name', e.target.value)}
+            placeholder="e.g. Level 3 Electrical Installation"
+            autoFocus
+          />
+        </div>
 
-            <div>
-              <FieldLabel hint="Links the course to its qualification — drives AC coverage and BS 7671 matching. Picking one fills in any blank details below.">
-                Qualification
-              </FieldLabel>
-              <Select
-                value={form.qualification_id || 'none'}
-                onValueChange={(v) => onPickQualification(v === 'none' ? '' : v)}
-              >
-                <SelectTrigger className={SELECT_TRIGGER}>
-                  <SelectValue placeholder="Link a qualification" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="none">Not linked</SelectItem>
-                  {/* Keep an existing link visible even if that qualification isn't
+        <div>
+          <FieldLabel hint="Links the course to its qualification, so its units and criteria are there for learners and lesson plans. Picking one fills in any blank details below.">
+            Qualification
+          </FieldLabel>
+          <Select
+            value={form.qualification_id || 'none'}
+            onValueChange={(v) => onPickQualification(v === 'none' ? '' : v)}
+          >
+            <SelectTrigger className={SELECT_TRIGGER}>
+              <SelectValue placeholder="Link a qualification" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="none">Not linked</SelectItem>
+              {/* Keep an existing link visible even if that qualification isn't
                       in the pickable catalogue (e.g. no LO/AC data loaded yet). */}
-                  {form.qualification_id &&
-                    !quals.some((q) => q.id === form.qualification_id) && (
-                      <SelectItem value={form.qualification_id}>
-                        Currently linked qualification
-                      </SelectItem>
-                    )}
-                  {quals.map((q) => (
-                    <SelectItem key={q.id} value={q.id}>
-                      {q.awarding_body} · {q.code} · {q.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+              {form.qualification_id && !quals.some((q) => q.id === form.qualification_id) && (
+                <SelectItem value={form.qualification_id}>
+                  Currently linked qualification
+                </SelectItem>
+              )}
+              {quals.map((q) => (
+                <SelectItem key={q.id} value={q.id}>
+                  {q.awarding_body} · {q.code} · {q.title}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
-              <div>
-                <FieldLabel hint="Your internal or awarding-body code.">Course code</FieldLabel>
-                <input
-                  className={INPUT}
-                  value={form.code}
-                  onChange={(e) => set('code', e.target.value)}
-                  placeholder="e.g. 2365-03"
-                />
-              </div>
-              <div>
-                <FieldLabel>Awarding body</FieldLabel>
-                <input
-                  className={INPUT}
-                  value={form.awarding_body}
-                  onChange={(e) => set('awarding_body', e.target.value)}
-                  placeholder="e.g. City & Guilds"
-                />
-              </div>
-            </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
+          <div>
+            <FieldLabel hint="Your internal or awarding-body code.">Course code</FieldLabel>
+            <input
+              className={INPUT}
+              value={form.code}
+              onChange={(e) => set('code', e.target.value)}
+              placeholder="e.g. 2365-03"
+            />
+          </div>
+          <div>
+            <FieldLabel>Awarding body</FieldLabel>
+            <input
+              className={INPUT}
+              value={form.awarding_body}
+              onChange={(e) => set('awarding_body', e.target.value)}
+              placeholder="e.g. City & Guilds"
+            />
+          </div>
+        </div>
 
-            <div>
-              <FieldLabel hint="Sets the off-the-job training target. Pick the standard this course delivers, or choose Custom to enter hours directly.">
-                Apprenticeship standard
-              </FieldLabel>
-              <Select value={form.standardCode} onValueChange={onPickStandard}>
-                <SelectTrigger className={SELECT_TRIGGER}>
-                  <SelectValue placeholder="Select a standard" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {OTJ_STANDARDS.map((s) => (
-                    <SelectItem key={s.code} value={s.code}>
-                      {s.name} · {s.code} · {s.otjHours}h
-                    </SelectItem>
-                  ))}
-                  <SelectItem value="custom">Custom / other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+        <div>
+          <FieldLabel hint="Sets the off-the-job training target. Pick the standard this course delivers, or choose Custom to enter hours directly.">
+            Apprenticeship standard
+          </FieldLabel>
+          <Select value={form.standardCode} onValueChange={onPickStandard}>
+            <SelectTrigger className={SELECT_TRIGGER}>
+              <SelectValue placeholder="Select a standard" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              {OTJ_STANDARDS.map((s) => (
+                <SelectItem key={s.code} value={s.code}>
+                  {s.name} · {s.code} · {s.otjHours}h
+                </SelectItem>
+              ))}
+              <SelectItem value="custom">Custom / other</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
-              <div>
-                <FieldLabel hint="Inherited by enrolled learners (an individual override is still respected).">
-                  Off-the-job hours
-                </FieldLabel>
-                <input
-                  className={INPUT}
-                  type="number"
-                  inputMode="numeric"
-                  min={0}
-                  value={form.otj_required_hours}
-                  onChange={(e) => {
-                    set('otj_required_hours', e.target.value);
-                    set('standardCode', 'custom');
-                  }}
-                  placeholder="e.g. 1066"
-                />
-              </div>
-              <div>
-                <FieldLabel>Level</FieldLabel>
-                <input
-                  className={INPUT}
-                  value={form.level}
-                  onChange={(e) => set('level', e.target.value)}
-                  placeholder="e.g. Level 3"
-                />
-              </div>
-            </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
+          <div>
+            <FieldLabel hint="Inherited by enrolled learners (an individual override is still respected).">
+              Off-the-job hours
+            </FieldLabel>
+            <input
+              className={INPUT}
+              type="number"
+              inputMode="numeric"
+              min={0}
+              value={form.otj_required_hours}
+              onChange={(e) => {
+                set('otj_required_hours', e.target.value);
+                set('standardCode', 'custom');
+              }}
+              placeholder="e.g. 1066"
+            />
+          </div>
+          <div>
+            <FieldLabel>Level</FieldLabel>
+            <input
+              className={INPUT}
+              value={form.level}
+              onChange={(e) => set('level', e.target.value)}
+              placeholder="e.g. Level 3"
+            />
+          </div>
+        </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
-              <div>
-                <FieldLabel>Duration (months)</FieldLabel>
-                <input
-                  className={INPUT}
-                  type="number"
-                  inputMode="numeric"
-                  min={0}
-                  value={form.duration_months}
-                  onChange={(e) => set('duration_months', e.target.value)}
-                  placeholder="e.g. 48"
-                />
-              </div>
-              <div>
-                <FieldLabel>Status</FieldLabel>
-                <div className="flex gap-2">
-                  {['Active', 'Inactive'].map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => set('status', s)}
-                      className={cn(chipCn(form.status === s), 'h-11 flex-1')}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-              </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
+          <div>
+            <FieldLabel>Duration (months)</FieldLabel>
+            <input
+              className={INPUT}
+              type="number"
+              inputMode="numeric"
+              min={0}
+              value={form.duration_months}
+              onChange={(e) => set('duration_months', e.target.value)}
+              placeholder="e.g. 48"
+            />
+          </div>
+          <div>
+            <FieldLabel>Status</FieldLabel>
+            <div className="flex gap-2">
+              {['Active', 'Inactive'].map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => set('status', s)}
+                  className={cn(choiceCn(form.status === s), 'h-11 flex-1')}
+                >
+                  {s}
+                </button>
+              ))}
             </div>
           </div>
-
+        </div>
+      </div>
     </FormSheet>
   );
 }

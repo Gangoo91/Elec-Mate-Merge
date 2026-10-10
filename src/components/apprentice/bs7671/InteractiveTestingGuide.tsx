@@ -81,7 +81,7 @@ const InteractiveTestingGuide = ({
 
   const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <span className="text-[12px] font-medium text-white">
         {eyebrow}
       </span>
       <div className="text-[14px] text-white leading-relaxed">{children}</div>
@@ -102,7 +102,7 @@ const InteractiveTestingGuide = ({
         </Button>
 
         <div className="space-y-2">
-          <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <div className="flex items-baseline gap-3 text-[12px] font-medium text-white">
             <span>{guide.difficulty}</span>
             <span className="text-white">·</span>
             <span>{guide.duration}</span>
@@ -119,7 +119,7 @@ const InteractiveTestingGuide = ({
       {/* Progress strip */}
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Progress
           </span>
           <span className="text-[12px] text-white font-mono">
@@ -166,7 +166,7 @@ const InteractiveTestingGuide = ({
       <div className="space-y-4">
         <div className="flex items-baseline justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Step {currentStep + 1} of {guide.steps.length}
             </span>
             <h3 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
@@ -185,7 +185,7 @@ const InteractiveTestingGuide = ({
         <Section eyebrow="Instructions">
           <p>{currentStepData.instruction}</p>
           {currentStepData.regulationReference && (
-            <p className="mt-2 text-[11px] text-white font-mono">
+            <p className="mt-2 text-[12px] text-white font-mono">
               Ref: {currentStepData.regulationReference}
             </p>
           )}
@@ -199,7 +199,7 @@ const InteractiveTestingGuide = ({
 
         {currentStepData.safetyWarning && (
           <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+            <span className="text-[12px] font-medium text-red-300">
               Safety warning
             </span>
             <p className="text-[14px] text-white leading-relaxed">
@@ -209,7 +209,7 @@ const InteractiveTestingGuide = ({
         )}
 
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Equipment
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -225,8 +225,8 @@ const InteractiveTestingGuide = ({
         </div>
 
         {currentStepData.tips && currentStepData.tips.length > 0 && (
-          <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          <div className="rounded-xl border border-white/[0.14] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[12px] font-medium text-elec-yellow/85">
               Pro tips
             </span>
             <ul className="space-y-1.5">
@@ -247,7 +247,7 @@ const InteractiveTestingGuide = ({
           <Collapsible open={troubleshootingOpen} onOpenChange={setTroubleshootingOpen}>
             <CollapsibleTrigger asChild>
               <button className="w-full rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 flex items-center justify-between text-left touch-manipulation h-auto min-h-[44px]">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[12px] font-medium text-white">
                   Troubleshooting
                 </span>
                 <ChevronDown
@@ -281,7 +281,7 @@ const InteractiveTestingGuide = ({
             variant="outline"
             onClick={handlePrevious}
             disabled={currentStep === 0}
-            className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white/70 touch-manipulation"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white touch-manipulation"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Previous
@@ -303,7 +303,7 @@ const InteractiveTestingGuide = ({
               <Button
                 onClick={handleComplete}
                 disabled={!isStepCompleted}
-                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white"
               >
                 Complete test
                 <CheckCircle className="h-4 w-4 ml-2" />
@@ -323,7 +323,7 @@ const InteractiveTestingGuide = ({
 
       {/* Test Overview */}
       <div className="space-y-4 pt-4 border-t border-white/[0.10]">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Test overview
         </span>
 
@@ -331,7 +331,7 @@ const InteractiveTestingGuide = ({
 
         {guide.testLimits.length > 0 && (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Test limits
             </span>
             <div className="space-y-1">

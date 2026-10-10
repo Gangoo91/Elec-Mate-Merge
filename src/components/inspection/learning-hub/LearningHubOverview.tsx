@@ -60,7 +60,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       {/* Header Section */}
       <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-6 px-3 sm:px-4">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4 md:mb-6">
-          <div className="p-2 sm:p-2.5 md:p-3 bg-elec-yellow/10 rounded-full">
+          <div className="p-2 sm:p-2.5 md:p-3 bg-white/[0.06] rounded-full">
             <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground text-center">
@@ -88,13 +88,13 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           return (
             <Card
               key={module.id}
-              className="bg-elec-gray border border-elec-yellow/30 rounded-lg sm:rounded-xl md:rounded-2xl hover:scale-[1.02] sm:hover:scale-105 hover:border-elec-yellow/50 transition-all duration-300 group cursor-pointer touch-manipulation min-h-[44px]"
+              className="bg-elec-gray border border-white/[0.14] rounded-lg sm:rounded-xl md:rounded-2xl hover:scale-[1.02] sm:hover:scale-105 hover:border-elec-yellow/50 transition-all duration-300 group cursor-pointer touch-manipulation min-h-[44px]"
               onClick={handleClick}
             >
               <div className="text-center space-y-3 sm:space-y-4 p-4 sm:p-5 md:p-6">
                 {/* Icon */}
                 <div className="flex justify-center">
-                  <div className="p-2 sm:p-2.5 md:p-3 bg-elec-yellow/10 rounded-xl md:rounded-2xl">
+                  <div className="p-2 sm:p-2.5 md:p-3 bg-white/[0.06] rounded-xl md:rounded-2xl">
                     <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
                   </div>
                 </div>

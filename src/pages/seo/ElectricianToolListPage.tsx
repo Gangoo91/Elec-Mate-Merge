@@ -49,7 +49,7 @@ const keyTakeaways = [
   'Cordless power tools have largely replaced corded equivalents for electricians -- the time saved not dealing with extension leads and RCDs pays for the premium in weeks.',
   'Calibrate your test equipment annually (or as specified by the manufacturer) to maintain accuracy, comply with scheme requirements, and ensure your test results are legally defensible.',
   'When recording measured earth fault loop impedance (Zs), your reading must satisfy Zs(measured) ≤ 0.8 × (Uo / Ia) per GN3 Reg 1.16.9 -- the 0.8 factor corrects for conductors at operating temperature. Apply this check before marking a circuit as compliant.',
-  'BS 7671:2018+A4:2026 Reg 421.1.7 now requires Arc Fault Detection Devices (AFDDs) on socket-outlet final circuits up to 32 A in high rise residential buildings (HRRBs), HMOs, purpose-built student accommodation and care homes, and recommends them elsewhere. Verify that your test instruments support AFDD testing.',
+  'BS 7671 Reg 421.1.7 has required Arc Fault Detection Devices (AFDDs) on socket-outlet final circuits up to 32 A in high rise residential buildings (HRRBs), HMOs, purpose-built student accommodation and care homes since A2:2022, and recommends them elsewhere. Verify that your test instruments support AFDD testing.',
 ];
 
 const faqs = [
@@ -237,8 +237,9 @@ const sections = [
           The leading VDE tool brands are <strong className="text-elec-yellow">Knipex</strong>{' '}
           (pliers and cutters), <strong className="text-elec-yellow">Wera</strong> and{' '}
           <strong className="text-elec-yellow">Wiha</strong> (screwdrivers), and{' '}
-          <strong className="text-elec-yellow">C.K.</strong> (complete ranges including cable tools).
-          All offer excellent quality and are widely available from UK electrical wholesalers.
+          <strong className="text-elec-yellow">C.K.</strong> (complete ranges including cable
+          tools). All offer excellent quality and are widely available from UK electrical
+          wholesalers.
         </p>
       </>
     ),
@@ -326,25 +327,31 @@ const sections = [
                 <tr className="border-b border-white/10">
                   <td className="py-2.5 pr-3 font-semibold">Megger MFT1741</td>
                   <td className="py-2.5 pr-3">GBP 700-GBP 850</td>
-                  <td className="py-2.5">Industry standard; widely supported and familiar to most UK electricians</td>
+                  <td className="py-2.5">
+                    Industry standard; widely supported and familiar to most UK electricians
+                  </td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-2.5 pr-3 font-semibold">Fluke 1664FC</td>
                   <td className="py-2.5 pr-3">GBP 900-GBP 1,100</td>
-                  <td className="py-2.5">Bluetooth wireless data download; saves time on large schedules</td>
+                  <td className="py-2.5">
+                    Bluetooth wireless data download; saves time on large schedules
+                  </td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3 font-semibold">Metrel MI3155</td>
                   <td className="py-2.5 pr-3">GBP 600-GBP 800</td>
-                  <td className="py-2.5">Strong value; comparable performance at a lower price point</td>
+                  <td className="py-2.5">
+                    Strong value; comparable performance at a lower price point
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p className="text-white text-xs mt-3">
-            All three perform the same core tests: insulation resistance, continuity (R1+R2),
-            earth fault loop impedance (Zs and Ze), RCD trip time and current, prospective fault
-            current (PFC/PSCC) and polarity. Prices are indicative market guidance, not a quote.
+            All three perform the same core tests: insulation resistance, continuity (R1+R2), earth
+            fault loop impedance (Zs and Ze), RCD trip time and current, prospective fault current
+            (PFC/PSCC) and polarity. Prices are indicative market guidance, not a quote.
           </p>
         </div>
         <p>
@@ -374,13 +381,12 @@ const sections = [
           <p className="text-white text-sm">
             Under BS 7671:2018+A4:2026, Reg 421.1.7 has been redrafted. It is now a{' '}
             <strong>requirement</strong> to protect final circuits supplying socket-outlets with a
-            rated current not exceeding 32 A using Arc Fault Detection Devices (AFDDs) in high
-            rise residential buildings (HRRBs), Houses in Multiple Occupation, purpose-built
-            student accommodation and care homes. For all other premises, the regulation{' '}
+            rated current not exceeding 32 A using Arc Fault Detection Devices (AFDDs) in high rise
+            residential buildings (HRRBs), Houses in Multiple Occupation, purpose-built student
+            accommodation and care homes. For all other premises, the regulation{' '}
             <strong>recommends</strong> AFDDs for single-phase AC final circuits supplying
             socket-outlets not exceeding 32 A. Check that your multifunction tester or a
-            supplementary instrument supports AFDD operation testing — not all older instruments
-            do.
+            supplementary instrument supports AFDD operation testing — not all older instruments do.
           </p>
         </div>
         <SEOAppBridge
@@ -607,11 +613,15 @@ const sections = [
                   <td className="py-2.5">GBP 100-GBP 250</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2.5 pr-3">VDE hand tools (screwdrivers, pliers, cutters, strippers, spanners)</td>
+                  <td className="py-2.5 pr-3">
+                    VDE hand tools (screwdrivers, pliers, cutters, strippers, spanners)
+                  </td>
                   <td className="py-2.5">GBP 200-GBP 500</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2.5 pr-3">Power tools (SDS drill, combi drill, impact driver, jigsaw)</td>
+                  <td className="py-2.5 pr-3">
+                    Power tools (SDS drill, combi drill, impact driver, jigsaw)
+                  </td>
                   <td className="py-2.5">GBP 300-GBP 800</td>
                 </tr>
                 <tr className="border-b border-white/10">

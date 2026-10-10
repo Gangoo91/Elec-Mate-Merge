@@ -12,7 +12,9 @@ import { haveCreds, learnerContext, signedInPage } from './support';
 
 test.skip(!haveCreds(), 'College fixture credentials are not available');
 
-test('join link and college home show the learner their college, cohort and tutor', async ({ browser }) => {
+test('join link and college home show the learner their college, cohort and tutor', async ({
+  browser,
+}) => {
   const ctx = await learnerContext();
   expect(ctx.cohort_name, 'the join code put the learner in a cohort').toBeTruthy();
   expect(ctx.tutor_name, 'the cohort has a tutor').toBeTruthy();
@@ -22,7 +24,9 @@ test('join link and college home show the learner their college, cohort and tuto
     await page.goto(url);
     await expect(page.getByText(ctx.college_name).first()).toBeVisible();
     await expect(page.getByText(ctx.cohort_name!).first()).toBeVisible();
-    await expect(page.getByText(`Tutor: ${ctx.tutor_name}`).first()).toBeVisible();
+    await expect(
+      page.getByText(new RegExp(`Tutor:? ${ctx.tutor_name!.replace(/[()]/g, '\\$&')}`)).first()
+    ).toBeVisible();
   }
   expect(errors, 'no uncaught page errors').toEqual([]);
 });

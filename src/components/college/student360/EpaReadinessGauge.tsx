@@ -147,7 +147,7 @@ export function EpaReadinessGauge({
           <div className="text-[13px] font-semibold text-white">Readiness</div>
           {cohort?.percentileLabel && cohort.cohortSize > 1 && (
             <span
-              className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-semibold text-white"
+              className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-semibold text-white"
               title={`Cohort of ${cohort.cohortSize}`}
             >
               {cohort.percentileLabel} of cohort
@@ -229,7 +229,7 @@ export function EpaReadinessGauge({
         </div>
 
         {/* Band labels under track */}
-        <div className="relative mt-1 h-4 text-[11px] font-medium text-white">
+        <div className="relative mt-1 h-4 text-[12px] font-medium text-white">
           {BAND_ORDER.map(([k, l]) => {
             const [lo, hi] = (bands as unknown as Record<string, [number, number]>)[k] ?? [0, 0];
             return (
@@ -270,7 +270,7 @@ export function EpaReadinessGauge({
                     {meta.label}
                   </span>
                   {v.synthetic && (
-                    <span className="inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 text-[10px] font-semibold text-white">
+                    <span className="inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-semibold text-white">
                       Inferred
                     </span>
                   )}

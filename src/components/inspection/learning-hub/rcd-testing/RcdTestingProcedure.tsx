@@ -45,7 +45,7 @@ const RcdTestingProcedure = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">RCD Testing</h1>
-              <p className="text-[10px] text-white">BS 7671 Reg 411.3.3 & 514.12.2</p>
+              <p className="text-[12px] text-white">BS 7671 Reg 411.3.3 & 514.12.2</p>
             </div>
           </div>
         </div>

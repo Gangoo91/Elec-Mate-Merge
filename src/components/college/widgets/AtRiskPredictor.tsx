@@ -147,7 +147,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           </span>
           <span
             className={cn(
-              'shrink-0 rounded-full border px-2 py-0.5 text-[11.5px] font-semibold',
+              'shrink-0 rounded-full border px-2 py-0.5 text-[12px] font-semibold',
               student.riskLevel === 'critical'
                 ? 'border-red-400/40 text-red-300'
                 : student.riskLevel === 'high'
@@ -296,7 +296,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               >
                 {f.value}
               </div>
-              <div className="mt-1 text-[11px] text-white">{f.label}</div>
+              <div className="mt-1 text-[12px] text-white">{f.label}</div>
             </button>
           );
         })}

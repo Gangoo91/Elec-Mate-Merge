@@ -525,7 +525,7 @@ export function OffGridSystemCalculator() {
                 )}
 
                 {result.warnings.length > 0 && (
-                  <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                  <div className="p-4 rounded-xl bg-white/[0.04] border border-orange-500/30">
                     <div className="flex items-start gap-2 mb-2">
                       <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
                       <span className="text-sm font-medium text-orange-300">Warnings</span>
@@ -578,7 +578,7 @@ export function OffGridSystemCalculator() {
 
                 {/* Wire loss warning */}
                 {result.wireLossWarning && (
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-amber-500/30">
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                       <div>
@@ -654,8 +654,8 @@ export function OffGridSystemCalculator() {
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2 text-sm">
@@ -695,8 +695,8 @@ export function OffGridSystemCalculator() {
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <p className="text-sm text-white">
@@ -730,8 +730,8 @@ export function OffGridSystemCalculator() {
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2 text-sm text-white">

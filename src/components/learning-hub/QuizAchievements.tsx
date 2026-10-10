@@ -63,7 +63,7 @@ const QuizAchievements = () => {
       case 'progress':
         return 'from-green-500/20 to-emerald-500/20 border-green-500/30';
       case 'performance':
-        return 'from-elec-yellow/20 to-amber-500/20 border-elec-yellow/30';
+        return 'from-white/[0.08] to-amber-500/20 border-white/[0.14]';
       case 'milestone':
         return 'from-blue-500/20 to-cyan-500/20 border-blue-500/30';
       case 'advanced':
@@ -96,13 +96,13 @@ const QuizAchievements = () => {
         case 'progress':
           return 'bg-green-500/20 text-green-400';
         case 'performance':
-          return 'bg-elec-yellow/20 text-elec-yellow';
+          return 'bg-white/[0.06] text-elec-yellow';
         case 'milestone':
           return 'bg-blue-500/20 text-blue-400';
         case 'advanced':
           return 'bg-purple-500/20 text-purple-400';
         default:
-          return 'bg-elec-yellow/20 text-elec-yellow';
+          return 'bg-white/[0.06] text-elec-yellow';
       }
     }
     return 'bg-neutral-600 text-white';
@@ -193,7 +193,7 @@ const QuizAchievements = () => {
             variant="outline"
             size="sm"
             onClick={() => setShowUnlockedOnly(!showUnlockedOnly)}
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black text-xs w-full sm:w-auto"
+            className="border-white/[0.14] text-elec-yellow hover:bg-elec-yellow hover:text-black text-xs w-full sm:w-auto"
           >
             <Filter className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
             {showUnlockedOnly ? 'Show All' : 'Unlocked Only'}
@@ -225,7 +225,7 @@ const QuizAchievements = () => {
 
       <CardContent className="p-4 sm:p-6">
         {recentlyUnlocked.length > 0 && (
-          <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/30 rounded-xl shadow-lg shadow-elec-yellow/20">
+          <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gradient-to-r from-white/[0.08] to-amber-500/10 border border-white/[0.14] rounded-xl shadow-lg shadow-elec-yellow/20">
             <h4 className="text-elec-yellow font-medium mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
               <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
               Recently Unlocked!
@@ -234,7 +234,7 @@ const QuizAchievements = () => {
               {recentlyUnlocked.map((achievement) => (
                 <div
                   key={achievement.id}
-                  className="text-xs sm:text-sm text-foreground bg-card/50 p-2 rounded-lg border border-elec-yellow/20"
+                  className="text-xs sm:text-sm text-foreground bg-card/50 p-2 rounded-lg border border-white/[0.14]"
                 >
                   🎉 {achievement.title}
                 </div>

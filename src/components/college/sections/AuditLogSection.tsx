@@ -15,11 +15,15 @@ import {
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
 } from '@/components/college/ui/CollegeUi';
 import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
 import { BarList, ChartEmpty } from '@/components/college/quality/QualityKit';
-import { useAuditLog, type AuditFilters, type AuditRow } from '@/components/college/quality/useAuditLog';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import {
+  useAuditLog,
+  type AuditFilters,
+  type AuditRow,
+} from '@/components/college/quality/useAuditLog';
 
 /* ==========================================================================
    AuditLogSection — read-only view of college_activity.
@@ -69,7 +73,8 @@ const ENTITY_LABEL: Record<string, string> = {
   lesson_plan: 'Lesson plan',
 };
 
-const actionLabel = (a: string) => FRIENDLY_ACTIONS[a] ?? a.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
+const actionLabel = (a: string) =>
+  FRIENDLY_ACTIONS[a] ?? a.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
 const entityLabel = (e: string | null) =>
   e ? (ENTITY_LABEL[e] ?? e.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase())) : null;
 
@@ -78,41 +83,80 @@ const HELP: PageHelpContent = {
   title: 'Audit log',
   what: 'A permanent record of the sensitive things staff do in the College Hub: who did it, when, and to which record. Inspectors and awarding bodies can ask you to prove an action happened; this is where you show them.',
   steps: [
-    { title: 'Narrow it down', body: 'Search by name, or pick an action, a record type and a date range.' },
-    { title: 'Read an entry', body: 'Each line says what happened, who did it and when. Extra detail recorded with the action shows underneath.' },
-    { title: 'Download the evidence', body: 'Download CSV saves exactly what is on screen, ready to attach to an audit or inspection pack.' },
+    {
+      title: 'Narrow it down',
+      body: 'Search by name, or pick an action, a record type and a date range.',
+    },
+    {
+      title: 'Read an entry',
+      body: 'Each line says what happened, who did it and when. Extra detail recorded with the action shows underneath.',
+    },
+    {
+      title: 'Download the evidence',
+      body: 'Download CSV saves exactly what is on screen, ready to attach to an audit or inspection pack.',
+    },
   ],
   notes: [
-    { title: 'Nothing can be deleted', body: 'The log is append-only. No one, including admins, can edit or remove an entry.' },
-    { title: 'Who can see it', body: 'Admins, heads of department, IQAs and quality nominees at your college.' },
-    { title: 'Dates', body: 'Entries are grouped by UK date (Europe/London), so an action just after midnight in summer time sits on the right day.' },
+    {
+      title: 'Nothing can be deleted',
+      body: 'The log is append-only. No one, including admins, can edit or remove an entry.',
+    },
+    {
+      title: 'Who can see it',
+      body: 'Admins, heads of department, IQAs and quality nominees at your college.',
+    },
+    {
+      title: 'Dates',
+      body: 'Entries are grouped by UK date (Europe/London), so an action just after midnight in summer time sits on the right day.',
+    },
   ],
 };
 
 // Group by the UK calendar day, not the UTC one (en-CA gives YYYY-MM-DD).
-const LONDON_DAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit' });
+const LONDON_DAY = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/London',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
 const dayKey = (iso: string) => LONDON_DAY.format(new Date(iso));
 const monthKey = (iso: string) => dayKey(iso).slice(0, 7);
 const fmtDay = (key: string) =>
-  new Date(`${key}T12:00`).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  new Date(`${key}T12:00`).toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
 
 function Details({ details }: { details: Record<string, unknown> }) {
-  const entries = Object.entries(details).filter(([, v]) => v !== null && v !== undefined && v !== '');
+  const entries = Object.entries(details).filter(
+    ([, v]) => v !== null && v !== undefined && v !== ''
+  );
   if (entries.length === 0) return null;
   return (
     <dl className="mt-1.5 grid grid-cols-1 gap-x-4 gap-y-0.5 sm:grid-cols-2">
       {entries.slice(0, 8).map(([k, v]) => (
         <div key={k} className="flex min-w-0 gap-1.5 text-[12px] leading-snug">
           <dt className="shrink-0 text-white">{k.replace(/_/g, ' ')}:</dt>
-          <dd className="min-w-0 truncate font-medium text-white">{typeof v === 'object' ? JSON.stringify(v) : String(v)}</dd>
+          <dd className="min-w-0 truncate font-medium text-white">
+            {typeof v === 'object' ? JSON.stringify(v) : String(v)}
+          </dd>
         </div>
       ))}
     </dl>
   );
 }
 
+const ROLE_WORD: Record<string, string> = {
+  admin: 'admin',
+  head_of_department: 'head of department',
+  iqa: 'IQA',
+};
+
 export function AuditLogSection() {
   const { toast } = useToast();
+  const { staff } = useCollegeSupabase();
   const [search, setSearch] = useState('');
   const [filterAction, setFilterAction] = useState<string | null>(null);
   const [filterEntity, setFilterEntity] = useState<string | null>(null);
@@ -144,9 +188,13 @@ export function AuditLogSection() {
   }, [rows, search]);
 
   // Options come from the loaded rows so only real actions are offered.
-  const actionOptions = useMemo(() => Array.from(new Set(rows.map((r) => r.action))).sort(), [rows]);
+  const actionOptions = useMemo(
+    () => Array.from(new Set(rows.map((r) => r.action))).sort(),
+    [rows]
+  );
   const entityOptions = useMemo(
-    () => Array.from(new Set(rows.map((r) => r.entity_type).filter((e): e is string => !!e))).sort(),
+    () =>
+      Array.from(new Set(rows.map((r) => r.entity_type).filter((e): e is string => !!e))).sort(),
     [rows]
   );
 
@@ -229,18 +277,38 @@ export function AuditLogSection() {
   };
 
   if (canRead === false) {
+    // Name who can open it, so "ask one of them" is not a dead end.
+    const askable = staff.filter(
+      (m) =>
+        ['admin', 'head_of_department', 'iqa'].includes((m.role ?? '').toLowerCase()) &&
+        (m.status ?? '').toLowerCase() !== 'archived'
+    );
     return (
       <div className="space-y-8 sm:space-y-10">
         <CollegePageHeader
-          eyebrow="Quality & compliance"
+          eyebrow="Quality and compliance"
           title="Audit log"
           description="Every sensitive action in the College Hub: who did it, when and to which record. Nothing here can be edited or deleted."
           help={HELP}
         />
-        <CollegeEmpty
-          title="For admins and quality staff"
-          body="The audit log is open to admins, heads of department, IQAs and quality nominees. If you need it for an audit or inspection, ask one of them to download the CSV, or ask an admin to change your role."
-        />
+        {/* Full width, left aligned (Andrew, 10 Oct: no narrow column on desktop). */}
+        <div className={cn(COLLEGE_CARD, 'space-y-3 sm:py-7')}>
+          <p className="text-[15px] font-semibold text-white">For admins and quality staff</p>
+          <p className="text-[14px] leading-relaxed text-white">
+            The audit log is open to admins, heads of department, IQAs and quality nominees. If you
+            need it for an audit or inspection, ask one of them to download the CSV, or ask an admin
+            to change your role.
+          </p>
+          {askable.length > 0 && (
+            <p className="text-[14px] leading-relaxed text-white">
+              <span className="font-semibold">At your college: </span>
+              {askable
+                .map((m) => `${m.name} (${ROLE_WORD[(m.role ?? '').toLowerCase()] ?? m.role})`)
+                .join(', ')}
+              .
+            </p>
+          )}
+        </div>
       </div>
     );
   }
@@ -248,28 +316,32 @@ export function AuditLogSection() {
   return (
     <div className="space-y-8 sm:space-y-10">
       <CollegePageHeader
-        eyebrow="Quality & compliance"
+        eyebrow="Quality and compliance"
         title="Audit log"
-        description="Every sensitive action in the College Hub: who did it, when and to which record. Nothing here can be edited or deleted."
+        description={
+          loading
+            ? 'Every sensitive action in the College Hub: who did it, when and to which record. Nothing here can be edited or deleted.'
+            : filtered.length === 0
+              ? anyFilter
+                ? 'Nothing matches these filters. Nothing here can be edited or deleted.'
+                : 'Nothing has been logged yet. Every sensitive action will appear here: who did it, when and to which record.'
+              : `${filtered.length} ${filtered.length === 1 ? 'entry' : 'entries'}${anyFilter ? ' match your filters' : ' (the most recent 500)'}, ${stats.week} in the last 7 days, by ${stats.people} ${stats.people === 1 ? 'person' : 'people'}.` +
+                (stats.last
+                  ? ` Last one ${new Date(stats.last).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' })}.`
+                  : '') +
+                ' Nothing here can be edited or deleted.'
+        }
         help={HELP}
         actions={
-          <button type="button" onClick={handleExport} disabled={filtered.length === 0} className={COLLEGE_BTN_PRIMARY}>
+          <button
+            type="button"
+            onClick={handleExport}
+            disabled={filtered.length === 0}
+            className={COLLEGE_BTN_PRIMARY}
+          >
             Download CSV{filtered.length > 0 ? ` (${filtered.length})` : ''}
           </button>
         }
-      />
-
-      <CollegeStats
-        items={[
-          { label: 'Entries', value: loading ? '…' : String(filtered.length), sub: anyFilter ? 'Matching your filters' : 'Most recent 500' },
-          { label: 'Last 7 days', value: loading ? '…' : String(stats.week), sub: 'Actions recorded' },
-          { label: 'People', value: loading ? '…' : String(stats.people), sub: 'Staff who appear' },
-          {
-            label: 'Last entry',
-            value: loading ? '…' : stats.last ? new Date(stats.last).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'Europe/London' }) : 'None',
-            sub: stats.last ? new Date(stats.last).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' }) : 'Nothing logged yet',
-          },
-        ]}
       />
 
       {/* Charts: when, and what. */}
@@ -280,18 +352,37 @@ export function AuditLogSection() {
         className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]"
       >
         <motion.div variants={itemVariants} className={VIS_CARD}>
-          <VisHead title="Activity, last 12 months" sub={`${monthlyTotal} ${monthlyTotal === 1 ? 'action' : 'actions'} in the last 12 months`} />
+          <VisHead
+            title="Activity, last 12 months"
+            sub={`${monthlyTotal} ${monthlyTotal === 1 ? 'action' : 'actions'} in the last 12 months`}
+          />
           <div className="mt-4 h-40">
             {monthlyTotal === 0 ? (
               <ChartEmpty text="Nothing recorded in the last 12 months" className="h-40" />
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={monthly} margin={{ top: 4, right: 4, bottom: 0, left: -24 }}>
-                  <XAxis dataKey="label" tick={{ fill: 'white', fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
-                  <YAxis allowDecimals={false} tick={{ fill: 'white', fontSize: 11 }} tickLine={false} axisLine={false} />
+                  <XAxis
+                    dataKey="label"
+                    tick={{ fill: 'white', fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                    interval={0}
+                  />
+                  <YAxis
+                    allowDecimals={false}
+                    tick={{ fill: 'white', fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
                   <Tooltip
                     cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                    contentStyle={{ backgroundColor: 'hsl(0 0% 8%)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: '0.75rem', fontSize: 12 }}
+                    contentStyle={{
+                      backgroundColor: 'hsl(0 0% 8%)',
+                      border: '1px solid rgba(255,255,255,0.14)',
+                      borderRadius: '0.75rem',
+                      fontSize: 12,
+                    }}
                     labelStyle={{ color: 'white' }}
                     itemStyle={{ color: 'white' }}
                     formatter={(v: number) => [v, 'Actions']}
@@ -328,7 +419,11 @@ export function AuditLogSection() {
           sub="Search and filters change the list, the figures and the download."
           action={
             anyFilter ? (
-              <button type="button" onClick={clearFilters} className="h-11 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="h-11 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+              >
                 Clear filters
               </button>
             ) : undefined
@@ -383,13 +478,25 @@ export function AuditLogSection() {
               <label htmlFor="audit-from" className={labelCn}>
                 From
               </label>
-              <input id="audit-from" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className={inputCn} />
+              <input
+                id="audit-from"
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className={inputCn}
+              />
             </div>
             <div>
               <label htmlFor="audit-to" className={labelCn}>
                 To
               </label>
-              <input id="audit-to" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className={inputCn} />
+              <input
+                id="audit-to"
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className={inputCn}
+              />
             </div>
           </div>
         </div>
@@ -399,7 +506,13 @@ export function AuditLogSection() {
       <section className="space-y-3">
         <CollegeSectionTitle
           title="Entries"
-          sub={loading ? 'Loading…' : filtered.length === 0 ? 'None' : `${filtered.length} ${filtered.length === 1 ? 'entry' : 'entries'}, newest first`}
+          sub={
+            loading
+              ? 'Loading…'
+              : filtered.length === 0
+                ? 'None'
+                : `${filtered.length} ${filtered.length === 1 ? 'entry' : 'entries'}, newest first`
+          }
         />
 
         {error && (
@@ -436,16 +549,27 @@ export function AuditLogSection() {
                 <ul className={COLLEGE_LIST}>
                   {items.map((row) => (
                     <li key={row.id} className="flex items-start gap-3 px-5 py-3.5 sm:px-6">
-                      <span aria-hidden className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-elec-yellow" />
+                      <span
+                        aria-hidden
+                        className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-elec-yellow"
+                      />
                       <span className="min-w-0 flex-1">
-                        <span className="block text-[14px] font-semibold leading-tight text-white">{actionLabel(row.action)}</span>
+                        <span className="block text-[14px] font-semibold leading-tight text-white">
+                          {actionLabel(row.action)}
+                        </span>
                         <span className="mt-0.5 block text-[12.5px] leading-tight text-white">
-                          {[row.actor_name ?? 'Unknown person', entityLabel(row.entity_type)].filter(Boolean).join(' · ')}
+                          {[row.actor_name ?? 'Unknown person', entityLabel(row.entity_type)]
+                            .filter(Boolean)
+                            .join(' · ')}
                         </span>
                         {row.details && <Details details={row.details} />}
                       </span>
                       <span className="shrink-0 text-right text-[12px] tabular-nums text-white">
-                        {new Date(row.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' })}
+                        {new Date(row.created_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          timeZone: 'Europe/London',
+                        })}
                       </span>
                     </li>
                   ))}

@@ -10,7 +10,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // it promises; ECS related-page href fixed (route is ...-2026).
 
 const published = '2026-05-18';
-const modified = '2026-08-07';
+const modified = '2026-10-10';
 
 export const qualHub5357Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-complete-guide',
@@ -39,7 +39,7 @@ export const qualHub5357Config: GeneratedGuideConfig = {
     'End-point assessment: the AM2. Every unit must be passed before you sit it.',
     'On completion you are graded a JIB Electrician and can hold an ECS Gold Card. Approved Electrician is a higher grade applied for later — the SJIB grading definitions require two years as a graded Electrician first.',
     'JIB national standard rate from 5 January 2026 (transport provided): £18.38/hour for an Electrician, £20.08 for an Approved Electrician.',
-    'Funding in England: levy-paying employers pay from their levy account; smaller employers co-invest 5% with government paying 95%. The apprentice pays nothing towards training.',
+    'Funding in England: levy-paying employers pay from their levy account; smaller employers pay nothing for apprentices aged 16 to 24 and 5% for those aged 25 or over (starts from 1 August 2026). The apprentice pays nothing towards training.',
   ],
   sections: [
     {
@@ -150,7 +150,7 @@ export const qualHub5357Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Funding differs by nation. In England, an employer that pays the Apprenticeship Levy funds the training from its levy account. A smaller employer that does not pay the levy co-invests 5% of the cost with government paying the other 95%, and an employer with fewer than 50 staff pays nothing at all towards an apprentice aged 16 to 21. Either way, the apprentice pays nothing towards training. Scotland, Wales and Northern Ireland run their own apprenticeship funding systems.',
+          text: 'Funding differs by nation. In England, an employer that pays the Apprenticeship Levy funds the training from its levy account. For starts from 1 August 2026, an employer that does not pay the levy pays nothing for an apprentice aged 16 to 24 at the start, and 5% for one aged 25 or over with government paying the other 95% (DfE funding rules 2026 to 2027, rules 213 to 214). Either way, the apprentice pays nothing towards training. Scotland, Wales and Northern Ireland run their own apprenticeship funding systems.',
         },
         {
           type: 'paragraph',
@@ -192,7 +192,7 @@ export const qualHub5357Config: GeneratedGuideConfig = {
     },
     {
       question: 'How much does City & Guilds 5357 cost?',
-      answer: 'Apprentices pay nothing towards training. In England the employer either draws on its Apprenticeship Levy account or co-invests 5% with government paying 95%, and employers with fewer than 50 staff pay nothing for an apprentice aged 16 to 21. Adult learners funding themselves outside an apprenticeship pay commercial course fees that vary widely by provider — get a written quote covering registration, exam and re-sit fees before you commit.',
+      answer: 'Apprentices pay nothing towards training. In England the employer either draws on its Apprenticeship Levy account or, if it does not pay the levy, pays nothing for an apprentice aged 16 to 24 and 5% for one aged 25 or over (starts from 1 August 2026). Adult learners funding themselves outside an apprenticeship pay commercial course fees that vary widely by provider — get a written quote covering registration, exam and re-sit fees before you commit.',
     },
     {
       question: 'What does City & Guilds 5357 qualify me to do?',

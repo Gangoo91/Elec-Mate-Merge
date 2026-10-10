@@ -32,10 +32,9 @@ interface EPAProfessionalDiscussionProps {
   enrolmentCode?: string | null;
 }
 
+/** A small label in sentence case (10 Oct: spaced capitals read as generated). */
 const Eyebrow = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <span className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}>
-    {children}
-  </span>
+  <span className={cn('block text-[13px] font-semibold text-white', className)}>{children}</span>
 );
 
 const ComponentBar = ({ label, score }: { label: string; score: number }) => {
@@ -161,9 +160,9 @@ export function EPAProfessionalDiscussion({
 
   if (!isSessionActive && !sessionResult) {
     return (
-      <div className="px-4 sm:px-6 py-6 space-y-6">
+      <div className="space-y-6 py-6">
         <div className="space-y-2">
-          <Eyebrow>Questions on your portfolio</Eyebrow>
+          <Eyebrow className="text-elec-yellow">Questions on your portfolio</Eyebrow>
           <h2 className="text-[24px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
             Explain your own work, AC by AC
           </h2>
@@ -192,7 +191,7 @@ export function EPAProfessionalDiscussion({
             ].map((skill) => (
               <span
                 key={skill}
-                className="text-[12px] text-white px-2.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.06]"
+                className="rounded-full border border-white/[0.14] px-3 py-1 text-[13px] text-white"
               >
                 {skill}
               </span>
@@ -203,7 +202,7 @@ export function EPAProfessionalDiscussion({
         {/* Flow */}
         <div className="space-y-2">
           <Eyebrow>How it works</Eyebrow>
-          <ol className="space-y-2">
+          <ol className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.06] bg-[hsl(0_0%_12%)] sm:mx-0 sm:rounded-2xl sm:border-x lg:grid lg:grid-cols-5 lg:divide-x lg:divide-y-0">
             {[
               {
                 title: 'Portfolio scan',
@@ -220,13 +219,10 @@ export function EPAProfessionalDiscussion({
               },
               { title: 'Result', desc: 'Predicted grade, strengths, and targeted improvements' },
             ].map((step, i) => (
-              <li
-                key={i}
-                className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4"
-              >
+              <li key={i} className="px-5 py-3.5 lg:py-4">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-[11px] font-mono text-elec-yellow flex-shrink-0">
-                    {String(i + 1).padStart(2, '0')}
+                  <span className="w-4 shrink-0 text-[14px] font-semibold tabular-nums text-white">
+                    {i + 1}
                   </span>
                   <div className="flex-1 min-w-0 space-y-1">
                     <span className="text-[14px] font-medium text-white block">{step.title}</span>
@@ -272,7 +268,7 @@ export function EPAProfessionalDiscussion({
                 <>Start mock discussion →</>
               )}
             </button>
-            <div className="flex items-baseline gap-2 text-[10px] uppercase tracking-[0.18em] text-white">
+            <div className="flex items-baseline gap-2 text-[13px] text-white">
               <span>{portfolioEntries.length} portfolio entries</span>
               <span>·</span>
               <span>~15 min session</span>
@@ -296,7 +292,7 @@ export function EPAProfessionalDiscussion({
       .slice(0, 6);
 
     return (
-      <div className="px-4 sm:px-6 py-6 space-y-6">
+      <div className="space-y-6 py-6">
         {/* Score */}
         <section className="space-y-2">
           <Eyebrow>Result · {gradeDisplay(grade).label}</Eyebrow>
@@ -395,14 +391,14 @@ export function EPAProfessionalDiscussion({
                   className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
                 >
                   <div className="flex items-baseline gap-3">
-                    <span className="text-[11px] font-mono text-white flex-shrink-0">
+                    <span className="text-[12px] font-mono text-white flex-shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <p className="text-[14px] text-white leading-snug flex-1">{q.question}</p>
                     {score && (
                       <span
                         className={cn(
-                          'text-[11px] font-mono px-1.5 py-0.5 rounded-md border flex-shrink-0',
+                          'text-[12px] font-mono px-1.5 py-0.5 rounded-md border flex-shrink-0',
                           qGradeClass
                         )}
                       >
@@ -445,9 +441,7 @@ export function EPAProfessionalDiscussion({
           <Eyebrow>
             Question {currentQuestionIndex + 1} / {totalCount}
           </Eyebrow>
-          <span className="text-[10px] font-mono text-white uppercase tracking-[0.18em]">
-            {answeredCount} answered
-          </span>
+          <span className="text-[12px] font-medium text-white">{answeredCount} answered</span>
         </div>
         <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
           <div
@@ -476,17 +470,17 @@ export function EPAProfessionalDiscussion({
               <div className="flex items-baseline gap-2 flex-wrap">
                 <Eyebrow>Assessor question</Eyebrow>
                 {currentQuestion.targetLO && (
-                  <span className="text-[10px] font-mono text-white uppercase tracking-[0.14em]">
+                  <span className="text-[12px] font-medium text-white">
                     LO {currentQuestion.targetLO}
                   </span>
                 )}
                 {currentQuestion.targetAC && (
-                  <span className="text-[10px] font-mono text-elec-yellow uppercase tracking-[0.14em]">
+                  <span className="text-[12px] font-medium text-elec-yellow">
                     {currentQuestion.targetAC}
                   </span>
                 )}
                 {currentQuestion.questionType && (
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white">
+                  <span className="text-[12px] font-medium text-white">
                     {currentQuestion.questionType}
                   </span>
                 )}
@@ -583,7 +577,7 @@ export function EPAProfessionalDiscussion({
                         'Tap to speak'
                       )}
                     </span>
-                    <span className="ml-auto text-[10px] font-mono text-white uppercase tracking-[0.14em]">
+                    <span className="ml-auto text-[12px] font-medium text-white">
                       {responseText.length} chars
                     </span>
                   </div>

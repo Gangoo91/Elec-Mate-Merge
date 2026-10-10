@@ -2,14 +2,15 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Check, PenLine, Search } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { COLLEGE_BTN_PRIMARY } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  COLLEGE_LINK,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeStats,
-} from '@/components/college/ui/CollegeUi';
+  AiMarker,
+  TEACH_BTN,
+  TEACH_PANEL,
+  TeachingEmpty,
+  TeachingHeader,
+  plural,
+} from '@/components/college/teaching/TeachingKit';
 import {
   Bars,
   BulkBar,
@@ -20,13 +21,18 @@ import {
   daysSince,
   useQueueKeys,
   useSelection,
-  waitingLabel,
 } from '@/components/college/assessment/AssessmentKit';
-import { useMarkingQueue, type MarkingQueueItem, type MarkingStatus } from '@/hooks/useMarkingQueue';
+import {
+  useMarkingQueue,
+  type MarkingQueueItem,
+  type MarkingStatus,
+} from '@/hooks/useMarkingQueue';
+import { TextTabs } from '@/components/college/assessment/AssessmentTabs';
 import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
 import { cn } from '@/lib/utils';
 import { useCollegeScope } from '@/components/college/scope/useCollegeScope';
 import { CollegeScopeTabs } from '@/components/college/scope/CollegeScopeSwitch';
+import { AGE_BAND_LABEL, FigureLine, bandRows } from '@/components/college/QueueFigures';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -40,6 +46,11 @@ import { useToast } from '@/hooks/use-toast';
    approves, x ticks), swipe on a phone (right to mark, left to tick). Shows
    quizzes you set, narrowed by the one College Hub scope (ELE-1886). Data unchanged: useMarkingQueue, the
    per-attempt review sheet, the ai-grade-free-response function.
+
+   8 Oct 2026: the four figure tiles became the header sentence; one solid
+   yellow at most (the focused row's Mark, or Approve when ticked), every
+   other row's Mark is outlined; "Score all" says what it does and that it
+   uses AI. The keyboard flow is unchanged.
    ========================================================================== */
 
 type Filter = 'needs_mark' | 'all' | 'awaiting_review' | 'awaiting_ai' | 'signed_off' | 'auto';
@@ -65,24 +76,46 @@ const HELP: PageHelpContent = {
   title: 'Marking',
   what: 'Written answers on your quizzes. Each one is pre-scored against your mark scheme; you read it, change the score if you disagree, and sign it off. Nothing counts until you do.',
   steps: [
-    { title: 'Quizzes you set', body: 'Every attempt on a quiz you created lands here, whichever cohort the learner is in. "Needs a human mark" shows only the ones with written answers still to sign off; "Everything" shows auto-marked ones too. The switch at the top (Mine, My cohorts, Whole college) narrows it to those learners.' },
-    { title: 'Start at the top', body: 'The attempt that has waited longest comes first. Over a week is orange.' },
-    { title: 'Open and mark', body: 'Tap Mark to read each answer with its suggested score. Change any score, add feedback, and approve.' },
-    { title: 'Approve several at once', body: 'Tick attempts whose suggested scores you accept and press Approve. Every answer on them is signed off at that score.' },
-    { title: 'Use the keyboard', body: 'On a computer: j and k move, Enter opens, Shift+A approves, x ticks, Esc clears.' },
+    {
+      title: 'Quizzes you set',
+      body: 'Every attempt on a quiz you created lands here, whichever cohort the learner is in. "Needs a human mark" shows only the ones with written answers still to sign off; "Everything" shows auto-marked ones too. The switch at the top (Mine, My cohorts, Whole college) narrows it to those learners.',
+    },
+    {
+      title: 'Start at the top',
+      body: 'The attempt that has waited longest comes first. Over a week is orange.',
+    },
+    {
+      title: 'Open and mark',
+      body: 'Tap Mark to read each answer with its suggested score. Change any score, add feedback, and approve.',
+    },
+    {
+      title: 'Approve several at once',
+      body: 'Tick attempts whose suggested scores you accept and press Approve. Every answer on them is signed off at that score.',
+    },
+    {
+      title: 'Use the keyboard',
+      body: 'On a computer: j and k move, Enter opens, Shift+A approves, x ticks, Esc clears.',
+    },
+    {
+      title: 'Suggested marks use AI',
+      body: 'An AI model reads each written answer against your mark scheme and suggests a score with its reasons. It is a suggestion: you change it or approve it.',
+    },
   ],
   legend: [
     { swatch: 'bg-orange-500', label: 'Waiting a week or more', body: 'Sign these off first.' },
-    { swatch: 'bg-orange-400', label: 'Below the pass mark', body: 'The score is under the quiz pass mark.' },
+    {
+      swatch: 'bg-orange-400',
+      label: 'Below the pass mark',
+      body: 'The score is under the quiz pass mark.',
+    },
   ],
   notes: [
-    { title: 'Still to score', body: 'Answers not pre-scored yet. Score them all runs the scoring for every one; you still sign each off.' },
+    {
+      title: 'Still to score',
+      body: 'Answers not pre-scored yet. Suggest marks runs the AI scoring for every one; you still sign each off.',
+    },
   ],
 };
-
-function plural(n: number, one: string, many = `${one}s`) {
-  return `${n} ${n === 1 ? one : many}`;
-}
 
 function formatRel(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
@@ -125,7 +158,9 @@ export default function MarkingQueuePage() {
       .from('tutor_quiz_answer_grades')
       .select('id, ai_score, tutor_override_score')
       .eq('attempt_id', attemptId);
-    const pending = (rows ?? []).filter((r) => r.ai_score != null && r.tutor_override_score == null);
+    const pending = (rows ?? []).filter(
+      (r) => r.ai_score != null && r.tutor_override_score == null
+    );
     for (const r of pending) {
       await supabase
         .from('tutor_quiz_answer_grades')
@@ -136,7 +171,9 @@ export default function MarkingQueuePage() {
         })
         .eq('id', r.id);
     }
-    await supabase.functions.invoke('ai-grade-free-response', { body: { attempt_id: attemptId } }).catch(() => undefined);
+    await supabase.functions
+      .invoke('ai-grade-free-response', { body: { attempt_id: attemptId } })
+      .catch(() => undefined);
   };
 
   const approveIds = async (ids: string[]) => {
@@ -155,7 +192,10 @@ export default function MarkingQueuePage() {
       await refresh();
       sel.clear();
       toast({
-        title: failed === 0 ? `Approved ${ids.length}` : `Approved ${ids.length - failed} of ${ids.length}`,
+        title:
+          failed === 0
+            ? `Approved ${ids.length}`
+            : `Approved ${ids.length - failed} of ${ids.length}`,
         description: failed === 0 ? 'Sign-off recorded.' : `${failed} could not be signed off.`,
         variant: failed === 0 ? undefined : 'destructive',
       });
@@ -172,7 +212,9 @@ export default function MarkingQueuePage() {
     try {
       for (let i = 0; i < targets.length; i++) {
         try {
-          await supabase.functions.invoke('ai-grade-free-response', { body: { attempt_id: targets[i].attempt_id } });
+          await supabase.functions.invoke('ai-grade-free-response', {
+            body: { attempt_id: targets[i].attempt_id },
+          });
         } catch {
           // best-effort; continue
         }
@@ -186,7 +228,8 @@ export default function MarkingQueuePage() {
 
   const filtered = useMemo(() => {
     let list = items;
-    if (filter === 'needs_mark') list = list.filter((i) => i.status === 'awaiting_review' || i.status === 'awaiting_ai');
+    if (filter === 'needs_mark')
+      list = list.filter((i) => i.status === 'awaiting_review' || i.status === 'awaiting_ai');
     else if (filter === 'auto') list = list.filter((i) => i.status === 'no_free_response');
     else if (filter !== 'all') list = list.filter((i) => i.status === filter);
     const q = search.trim().toLowerCase();
@@ -223,7 +266,10 @@ export default function MarkingQueuePage() {
     setDeepLinked(true);
   }, [allItems, deepLinked, openItem, loading]);
 
-  const reviewable = useMemo(() => new Set(visible.filter((i) => i.status === 'awaiting_review').map((i) => i.attempt_id)), [visible]);
+  const reviewable = useMemo(
+    () => new Set(visible.filter((i) => i.status === 'awaiting_review').map((i) => i.attempt_id)),
+    [visible]
+  );
   const keys = useMemo(() => visible.map((i) => i.attempt_id), [visible]);
   const sel = useSelection(keys);
   const selectedIds = Array.from(sel.selected).filter((k) => reviewable.has(k));
@@ -254,7 +300,14 @@ export default function MarkingQueuePage() {
   });
 
   const counts = useMemo(() => {
-    const c: Record<Filter, number> = { needs_mark: 0, all: items.length, awaiting_review: 0, awaiting_ai: 0, signed_off: 0, auto: 0 };
+    const c: Record<Filter, number> = {
+      needs_mark: 0,
+      all: items.length,
+      awaiting_review: 0,
+      awaiting_ai: 0,
+      signed_off: 0,
+      auto: 0,
+    };
     for (const i of items) {
       if (i.status === 'no_free_response') c.auto += 1;
       else c[i.status] += 1;
@@ -265,7 +318,10 @@ export default function MarkingQueuePage() {
 
   const review = items.filter((i) => i.status === 'awaiting_review');
   const reviewAges = review.map((i) => daysSince(i.submitted_at));
-  const oldest = reviewAges.reduce<number | null>((m, d) => (d === null ? m : m === null ? d : Math.max(m, d)), null);
+  const oldest = reviewAges.reduce<number | null>(
+    (m, d) => (d === null ? m : m === null ? d : Math.max(m, d)),
+    null
+  );
   const overWeek = reviewAges.filter((d) => d !== null && d >= 7).length;
   const scored = items.filter((i) => i.pct != null);
   const bands = [0, 0, 0, 0];
@@ -275,22 +331,33 @@ export default function MarkingQueuePage() {
   }
   const belowPass = scored.filter((i) => i.passed_by_score === false).length;
 
-  const urgentRows = visible.filter((i) => i.status === 'awaiting_review' && (daysSince(i.submitted_at) ?? 0) >= 7);
-  const otherRows = visible.filter((i) => !urgentRows.includes(i));
+  // Age bands for what is waiting on a tutor, oldest first; anything else
+  // (approved, auto-marked, still to score) in one group under it.
+  const waitingBands = bandRows(
+    visible.filter((i) => i.status === 'awaiting_review'),
+    (i) => daysSince(i.submitted_at)
+  );
+  const otherRows = visible.filter((i) => i.status !== 'awaiting_review');
   const listLabel = FILTER_DEFS.find((f) => f.key === filter)?.label ?? 'Queue';
 
   const renderRow = (item: MarkingQueueItem) => {
     const age = daysSince(item.submitted_at);
     const waiting = item.status === 'awaiting_review';
-    const urgent = waiting && age !== null && age >= 7;
     const scoreBit =
       item.pct != null ? (
-        <span className={cn('font-semibold', item.passed_by_score === false && 'text-orange-300')}>{item.pct}%</span>
+        <span className={cn('font-semibold', item.passed_by_score === false && 'text-orange-300')}>
+          {item.pct}%
+        </span>
       ) : null;
     return (
       <li key={item.attempt_id} data-qkey={item.attempt_id}>
         <SwipeRow
-          right={{ label: waiting ? 'Mark' : 'Open', icon: <PenLine className="h-5 w-5" aria-hidden />, tone: 'go', onAction: () => openItem(item) }}
+          right={{
+            label: waiting ? 'Mark' : 'Open',
+            icon: <PenLine className="h-5 w-5" aria-hidden />,
+            tone: 'go',
+            onAction: () => openItem(item),
+          }}
           left={
             waiting
               ? {
@@ -301,37 +368,57 @@ export default function MarkingQueuePage() {
               : undefined
           }
         >
-        <QueueRow
-          name={item.student_name}
-          kind={STATUS_LABEL[item.status]}
-          title={item.quiz_title}
-          body={
-            <>
-              {scoreBit}
-              {scoreBit ? ' · ' : ''}
-              {waiting
-                ? `${plural(item.n_awaiting_review, 'answer')} to sign off`
-                : item.status === 'awaiting_ai'
-                  ? `${item.n_awaiting_ai} still to score`
-                  : item.last_signed_off_at
-                    ? `Approved ${formatRel(item.last_signed_off_at)}`
-                    : STATUS_LABEL[item.status]}
-            </>
-          }
-          meta={
-            <>
-              <b className="font-semibold">{waiting ? waitingLabel(age) : item.submitted_at ? `Sent ${formatRel(item.submitted_at)}` : ''}</b>
-              {item.cohort_name ? ` · ${item.cohort_name}` : ''}
-            </>
-          }
-          urgent={urgent}
-          action={waiting ? 'Mark' : 'Open'}
-          onOpen={() => openItem(item)}
-          selectable={waiting}
-          selected={sel.has(item.attempt_id)}
-          onToggle={() => sel.toggle(item.attempt_id)}
-          focused={kb.focus === item.attempt_id}
-        />
+          <QueueRow
+            name={item.student_name}
+            kind={filter === 'all' ? STATUS_LABEL[item.status] : undefined}
+            title={item.quiz_title}
+            body={
+              <>
+                {scoreBit}
+                {scoreBit ? ' · ' : ''}
+                {waiting
+                  ? `${plural(item.n_awaiting_review, 'answer')} to sign off`
+                  : item.status === 'awaiting_ai'
+                    ? `${item.n_awaiting_ai} still to score`
+                    : item.last_signed_off_at
+                      ? `Approved ${formatRel(item.last_signed_off_at)}`
+                      : STATUS_LABEL[item.status]}
+              </>
+            }
+            meta={[
+              waiting
+                ? age !== null
+                  ? `Sent ${age <= 0 ? 'today' : age === 1 ? 'yesterday' : `${age} days ago`}`
+                  : null
+                : item.submitted_at
+                  ? `Sent ${formatRel(item.submitted_at)}`
+                  : null,
+              (item.cohort_name ?? '').replace(/\s*\(.*\)$/, '') || null,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+            // Neutral avatar and an outlined verb: the waiting days carry the
+            // urgency. Only the focused row's verb is solid (one per screen).
+            urgent={false}
+            trailing={
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'hidden h-11 min-w-[104px] shrink-0 items-center justify-center rounded-xl px-3 text-[13px] font-bold sm:inline-flex',
+                  kb.focus === item.attempt_id
+                    ? 'bg-elec-yellow text-black'
+                    : 'border border-white/[0.18] text-white'
+                )}
+              >
+                {waiting ? 'Mark' : 'Open'}
+              </span>
+            }
+            onOpen={() => openItem(item)}
+            selectable={waiting}
+            selected={sel.has(item.attempt_id)}
+            onToggle={() => sel.toggle(item.attempt_id)}
+            focused={kb.focus === item.attempt_id}
+          />
         </SwipeRow>
       </li>
     );
@@ -341,113 +428,82 @@ export default function MarkingQueuePage() {
     <HubPage ground="landing">
       <HubMasthead section="College" title="Marking" backTo="/college" />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-        <CollegePageHeader
-          eyebrow="Marking"
-          title={
-            loading
-              ? 'Gathering answers…'
-              : counts.awaiting_review === 0
-                ? 'Nothing to sign off'
-                : `${plural(counts.awaiting_review, 'attempt')} to sign off`
-          }
-          description={
-            loading
-              ? 'Written answers on your quizzes, pre-scored and waiting for you.'
-              : counts.awaiting_review === 0
-                ? 'When a learner sends written answers on one of your quizzes, they land here pre-scored for you to check.'
-                : `${overWeek ? `${overWeek} waiting over a week. ` : ''}Pre-scored against your mark scheme; nothing counts until you approve it.`
-          }
+        <TeachingHeader
+          eyebrow="Assessment"
+          title="Marking"
           help={HELP}
-          actions={
-            <>
-              <CollegeScopeTabs />
-              {(counts.awaiting_ai > 0 || bulkGrading) && (
-                <button type="button" onClick={() => void handleBulkGrade()} disabled={!!bulkGrading} className={COLLEGE_LINK}>
-                  {bulkGrading ? `Scoring ${bulkGrading.done} of ${bulkGrading.total}…` : `Score all ${counts.awaiting_ai}`}
-                </button>
-              )}
-            </>
+          actions={<CollegeScopeTabs />}
+          summary={
+            loading ? (
+              'Gathering written answers on your quizzes…'
+            ) : counts.awaiting_review === 0 && counts.awaiting_ai === 0 ? (
+              'Nothing to sign off. Written answers on your quizzes land here pre-scored for you to check.'
+            ) : (
+              <FigureLine
+                className="mt-1"
+                items={[
+                  { n: counts.awaiting_review, label: 'to sign off' },
+                  overWeek > 0
+                    ? { n: overWeek, label: 'over a week', tone: 'warn' }
+                    : oldest !== null
+                      ? { n: oldest === 0 ? 'Today' : `${oldest} days`, label: 'the oldest' }
+                      : { n: null, label: '' },
+                  stats.avg_pct != null
+                    ? { n: `${stats.avg_pct}%`, label: 'average score' }
+                    : { n: null, label: '' },
+                  belowPass
+                    ? { n: belowPass, label: 'below the pass mark' }
+                    : { n: null, label: '' },
+                ]}
+              />
+            )
+          }
+          sub={
+            loading
+              ? undefined
+              : `Nothing counts until you approve it. ${stats.approved_today} approved in the last 24 hours, ${stats.approved_total} in all.${
+                  counts.awaiting_ai > 0
+                    ? ` ${plural(counts.awaiting_ai, 'attempt')} not pre-scored yet.`
+                    : ''
+                }`
           }
         />
 
-        <CollegeStats
-          items={[
-            {
-              label: 'To sign off',
-              value: loading ? '—' : String(counts.awaiting_review),
-              sub: oldest !== null ? `Oldest ${oldest === 0 ? 'today' : `${oldest} days`}` : 'Nothing waiting',
-              warn: oldest !== null && oldest >= 7,
-              onClick: () => setFilter('awaiting_review'),
-            },
-            {
-              label: 'Still to score',
-              value: loading ? '—' : String(counts.awaiting_ai),
-              sub: counts.awaiting_ai ? 'Not pre-scored yet' : 'Everything scored',
-              onClick: () => setFilter('awaiting_ai'),
-            },
-            {
-              label: 'Approved in 24 hours',
-              value: loading ? '—' : String(stats.approved_today),
-              sub: `${stats.approved_total} in all`,
-              good: stats.approved_today > 0,
-              onClick: () => setFilter('signed_off'),
-            },
-            {
-              label: 'Average score',
-              value: loading || stats.avg_pct == null ? '—' : `${stats.avg_pct}%`,
-              sub: belowPass ? `${belowPass} below the pass mark` : 'Across scored attempts',
-              warn: belowPass > 0,
-            },
-          ]}
-        />
+        {/* Who and what: the College Hub scope, and the AI pre-scoring. Its
+            own row so the header sentence keeps its width. */}
+        <div
+          className={cn(
+            '-mt-4 flex-wrap items-center justify-end gap-3 sm:-mt-6',
+            counts.awaiting_ai > 0 || bulkGrading ? 'flex' : 'hidden'
+          )}
+        >
+          {(counts.awaiting_ai > 0 || bulkGrading) && (
+            <span className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => void handleBulkGrade()}
+                disabled={!!bulkGrading}
+                className={TEACH_BTN}
+              >
+                {bulkGrading
+                  ? `Suggesting ${bulkGrading.done} of ${bulkGrading.total}…`
+                  : `Suggest marks for ${plural(counts.awaiting_ai, 'attempt')}`}
+              </button>
+              <AiMarker />
+            </span>
+          )}
+        </div>
 
-        {!loading && scored.length > 0 && (
-          <section className={cn(COLLEGE_CARD, 'grid gap-6 lg:grid-cols-2')}>
-            <div className="min-w-0">
-              <p className="mb-3 text-[13px] font-semibold text-white">Scores across attempts</p>
-              <Bars
-                rows={[
-                  { label: 'Under 40%', n: bands[0], cls: 'bg-orange-500' },
-                  { label: '40 to 59%', n: bands[1], cls: 'bg-elec-yellow' },
-                  { label: '60 to 79%', n: bands[2], cls: 'bg-white' },
-                  { label: '80% and over', n: bands[3], cls: 'bg-emerald-500' },
-                ]}
-              />
-            </div>
-            <div className="min-w-0">
-              <p className="mb-3 text-[13px] font-semibold text-white">How long sign-offs have waited</p>
-              <Bars
-                rows={[
-                  { label: 'Today', n: reviewAges.filter((d) => (d ?? 0) <= 0).length, cls: 'bg-emerald-500' },
-                  { label: '1 to 3 days', n: reviewAges.filter((d) => d !== null && d >= 1 && d <= 3).length, cls: 'bg-white' },
-                  { label: '4 to 6 days', n: reviewAges.filter((d) => d !== null && d >= 4 && d <= 6).length, cls: 'bg-elec-yellow' },
-                  { label: 'A week or more', n: overWeek, cls: 'bg-orange-500' },
-                ]}
-              />
-            </div>
-          </section>
-        )}
-
-        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]">
-          <nav aria-label="Marking filters" className="lg:sticky lg:top-16">
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden">
-              {FILTER_DEFS.map((f) => (
-                <button
-                  key={f.key}
-                  type="button"
-                  aria-pressed={filter === f.key}
-                  onClick={() => setFilter(f.key)}
-                  className={cn(
-                    'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
-                    filter === f.key ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white'
-                  )}
-                >
-                  {f.label}
-                  <span className="tabular-nums">{counts[f.key]}</span>
-                </button>
-              ))}
-            </div>
-            <ul className="hidden overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-2 lg:block">
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[280px_minmax(0,1fr)] lg:grid-rows-[auto_1fr] xl:grid-cols-[320px_minmax(0,1fr)]">
+          <nav aria-label="Marking filters" className="lg:col-start-1 lg:row-start-1">
+            <TextTabs
+              className="lg:hidden"
+              ariaLabel="Which attempts to show"
+              value={filter}
+              onChange={setFilter}
+              items={FILTER_DEFS.map((f) => ({ key: f.key, label: f.label, count: counts[f.key] }))}
+            />
+            <ul className="hidden overflow-hidden card-surface rounded-2xl !border-white/[0.08] p-2 lg:block">
               {FILTER_DEFS.map((f) => (
                 <li key={f.key}>
                   <button
@@ -461,7 +517,14 @@ export default function MarkingQueuePage() {
                   >
                     <span className="min-w-0 flex-1">
                       <span className="block text-[14px] font-semibold">{f.label}</span>
-                      <span className={cn('block truncate text-[11.5px]', filter === f.key ? 'text-black' : 'text-white')}>{f.hint}</span>
+                      <span
+                        className={cn(
+                          'block truncate text-[12px]',
+                          filter === f.key ? 'text-black' : 'text-white'
+                        )}
+                      >
+                        {f.hint}
+                      </span>
                     </span>
                     <span
                       className={cn(
@@ -477,16 +540,19 @@ export default function MarkingQueuePage() {
             </ul>
           </nav>
 
-          <section className="min-w-0 space-y-4">
+          <section className="min-w-0 space-y-4 lg:col-start-2 lg:row-span-2 lg:row-start-1">
             <div className="relative">
-              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
+              <Search
+                className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                aria-hidden="true"
+              />
               <input
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Find a learner, quiz or cohort"
                 aria-label="Find a learner, quiz or cohort"
-                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
               />
             </div>
 
@@ -494,10 +560,16 @@ export default function MarkingQueuePage() {
               {reviewable.size > 0 ? (
                 <button
                   type="button"
-                  onClick={() => (selectedIds.length === reviewable.size ? sel.clear() : sel.setAll(Array.from(reviewable)))}
+                  onClick={() =>
+                    selectedIds.length === reviewable.size
+                      ? sel.clear()
+                      : sel.setAll(Array.from(reviewable))
+                  }
                   className="h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
-                  {selectedIds.length === reviewable.size ? 'Untick all' : `Tick all ${reviewable.size} to sign off`}
+                  {selectedIds.length === reviewable.size
+                    ? 'Untick all'
+                    : `Tick all ${reviewable.size} to sign off`}
                 </button>
               ) : (
                 <span />
@@ -519,7 +591,7 @@ export default function MarkingQueuePage() {
                 ))}
               </div>
             ) : filtered.length === 0 ? (
-              <CollegeEmpty
+              <TeachingEmpty
                 title={
                   items.length === 0
                     ? 'Nothing to mark yet'
@@ -537,13 +609,21 @@ export default function MarkingQueuePage() {
               />
             ) : (
               <>
-                {urgentRows.length > 0 && (
-                  <QueueGroup title="Waiting a week or more" urgent count={urgentRows.length}>
-                    {urgentRows.map(renderRow)}
+                {waitingBands.map((g) => (
+                  <QueueGroup
+                    key={g.band}
+                    title={AGE_BAND_LABEL[g.band]}
+                    urgent={g.band !== 'recent'}
+                    count={g.rows.length}
+                  >
+                    {g.rows.map(renderRow)}
                   </QueueGroup>
-                )}
+                ))}
                 {otherRows.length > 0 && (
-                  <QueueGroup title={urgentRows.length ? 'Everything else' : listLabel} count={otherRows.length}>
+                  <QueueGroup
+                    title={waitingBands.length ? 'Everything else' : listLabel}
+                    count={otherRows.length}
+                  >
                     {otherRows.map(renderRow)}
                   </QueueGroup>
                 )}
@@ -559,13 +639,71 @@ export default function MarkingQueuePage() {
               </>
             )}
           </section>
+          {!loading && scored.length > 0 && (
+            // Showcase pass (10 Oct): the two charts sit under the filters on a
+            // wide screen so the queue starts at the top; after it on a phone.
+            <section
+              className={cn(
+                TEACH_PANEL,
+                'order-last grid gap-6 p-5 sm:grid-cols-2 lg:order-none lg:col-start-1 lg:row-start-2 lg:grid-cols-1'
+              )}
+            >
+              <div className="min-w-0">
+                <p className="mb-3 text-[13px] font-semibold text-white">Scores across attempts</p>
+                <Bars
+                  labelWidth="6.5rem"
+                  rows={[
+                    { label: 'Under 40%', n: bands[0], cls: 'bg-orange-500' },
+                    { label: '40 to 59%', n: bands[1], cls: 'bg-elec-yellow' },
+                    { label: '60 to 79%', n: bands[2], cls: 'bg-white' },
+                    { label: '80% and over', n: bands[3], cls: 'bg-emerald-500' },
+                  ]}
+                />
+              </div>
+              <div className="min-w-0">
+                <p className="mb-3 text-[13px] font-semibold text-white">
+                  How long sign-offs have waited
+                </p>
+                <Bars
+                  labelWidth="6.5rem"
+                  rows={[
+                    {
+                      label: 'Today',
+                      n: reviewAges.filter((d) => (d ?? 0) <= 0).length,
+                      cls: 'bg-emerald-500',
+                    },
+                    {
+                      label: '1 to 3 days',
+                      n: reviewAges.filter((d) => d !== null && d >= 1 && d <= 3).length,
+                      cls: 'bg-white',
+                    },
+                    {
+                      label: '4 to 6 days',
+                      n: reviewAges.filter((d) => d !== null && d >= 4 && d <= 6).length,
+                      cls: 'bg-elec-yellow',
+                    },
+                    { label: 'A week or more', n: overWeek, cls: 'bg-orange-500' },
+                  ]}
+                />
+              </div>
+            </section>
+          )}
         </div>
       </HubBody>
 
       <BulkBar count={selectedIds.length} onClear={sel.clear}>
-        <span className="hidden text-[12.5px] text-white sm:inline">Accept the suggested scores and sign off</span>
-        <button type="button" onClick={() => void approveIds(selectedIds)} disabled={!!approving} className={COLLEGE_BTN_PRIMARY}>
-          {approving ? `Approving ${approving.done} of ${approving.total}…` : `Approve ${selectedIds.length}`}
+        <span className="hidden text-[12.5px] text-white sm:inline">
+          Accept the suggested scores and sign off
+        </span>
+        <button
+          type="button"
+          onClick={() => void approveIds(selectedIds)}
+          disabled={!!approving}
+          className={COLLEGE_BTN_PRIMARY}
+        >
+          {approving
+            ? `Approving ${approving.done} of ${approving.total}…`
+            : `Approve ${selectedIds.length}`}
         </button>
       </BulkBar>
 

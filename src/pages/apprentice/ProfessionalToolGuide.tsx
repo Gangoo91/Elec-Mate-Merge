@@ -1,12 +1,9 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Search, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { itemVariants } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
 import {
   CATEGORY_COUNT,
   ESSENTIAL_COUNT,
@@ -15,6 +12,8 @@ import {
 } from '@/data/professional-tools/counts';
 import { TOOL_CHAPTERS, chapterHref } from '@/data/professional-tools/chapters';
 import KitByYear from '@/components/apprentice/professional-tools-v2/KitByYear';
+import { GuideFacts, GuideIndex, GuidePage } from '@/components/apprentice/shared/GuideKit';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 
 /**
  * Professional tool guide — the index.
@@ -56,18 +55,18 @@ const ProfessionalToolGuide = () => {
   }, [isSearching, trimmed]);
 
   return (
-    <HubSubPage
+    <GuidePage
       title="Professional tool guide"
       backTo="/apprentice/on-job-tools"
       description={`${TOOL_COUNT} tools across ${CATEGORY_COUNT} categories — what each one is for, what to look for, and where UK electricians actually buy theirs. Built from years of supplier and trade feedback.`}
     >
-      <motion.div variants={itemVariants}>
-        <HubKpiRow>
-          <HubKpi label="Tools" value={String(TOOL_COUNT)} accent />
-          <HubKpi label="Essential" value={String(ESSENTIAL_COUNT)} />
-          <HubKpi label="Suppliers" value={String(SUPPLIER_COUNT)} />
-        </HubKpiRow>
-      </motion.div>
+      <GuideFacts
+        items={[
+          { label: 'Tools', value: String(TOOL_COUNT) },
+          { label: 'Essential', value: String(ESSENTIAL_COUNT) },
+          { label: 'Suppliers', value: String(SUPPLIER_COUNT) },
+        ]}
+      />
 
       {/* Leads, because "what do I buy this year" is the question people
           arrive with. The six category chapters below are the reference you
@@ -75,7 +74,7 @@ const ProfessionalToolGuide = () => {
       <KitByYear />
 
       <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-        <HubSectionHeading>Look up a category</HubSectionHeading>
+        <CollegeHeading>Look up a category</CollegeHeading>
 
         <div className="relative">
           <Search
@@ -101,48 +100,22 @@ const ProfessionalToolGuide = () => {
               type="button"
               onClick={() => setQuery('')}
               aria-label="Clear search"
-              className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+              className="absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
             >
               <X className="h-4 w-4" />
             </button>
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {visible.map((chapter) => (
-            <Link
-              key={chapter.slug}
-              to={chapterHref(chapter.slug)}
-              className={cn(
-                CARD_BASE,
-                CARD_NEUTRAL,
-                'group relative flex min-h-[140px] flex-col overflow-hidden px-4 py-3.5 sm:p-5',
-                'lg:hover:-translate-y-0.5 lg:hover:border-elec-yellow/60',
-                'touch-manipulation'
-              )}
-            >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
-              />
-              <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-                {chapter.eyebrow}
-              </span>
-              <h3 className="mt-1.5 text-[15px] font-semibold leading-tight tracking-tight text-white">
-                {chapter.label}
-              </h3>
-              <p className="mt-1.5 text-[12.5px] leading-snug text-white">{chapter.description}</p>
-              {/* An explicit affordance — the card is a destination, not a toggle. */}
-              <span className="mt-auto flex items-center gap-1.5 pt-3 text-[12px] font-medium text-elec-yellow">
-                Open
-                <ArrowRight
-                  aria-hidden
-                  className="h-3.5 w-3.5 transition-transform lg:group-hover:translate-x-0.5"
-                />
-              </span>
-            </Link>
-          ))}
-        </div>
+        <GuideIndex
+          columns={3}
+          items={visible.map((chapter) => ({
+            id: chapter.slug,
+            title: chapter.label,
+            description: chapter.description,
+            to: chapterHref(chapter.slug),
+          }))}
+        />
 
         {visible.length === 0 && (
           <p className="text-[13px] text-white">
@@ -156,26 +129,22 @@ const ProfessionalToolGuide = () => {
       <motion.div
         variants={itemVariants}
         className={cn(
-          'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
+          'rounded-2xl border border-white/[0.08] px-5 py-4 sm:px-6 sm:py-5',
           CARD_SURFACE
         )}
       >
         <div className="mb-2 flex items-baseline gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-            Compliance
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            · Standards
-          </span>
+          <span className="text-[13px] font-semibold text-elec-yellow">Compliance</span>
+          <span className="text-[13px] font-semibold text-white">· Standards</span>
         </div>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+        <p className="max-w-3xl text-[14px] leading-relaxed text-white">
           Hand tools used on or near live equipment must be{' '}
           <span className="text-amber-200">VDE certified to BS EN 60900</span>. Test equipment must
           comply with <span className="text-amber-200">GS38</span> and be calibrated annually.
           Voltage indicators must meet <span className="text-amber-200">BS EN 61243-3</span>.
         </p>
       </motion.div>
-    </HubSubPage>
+    </GuidePage>
   );
 };
 

@@ -50,8 +50,8 @@ const keyTakeaways = [
   'Ze directly affects every Zs reading on the installation — a high Ze pushes up Zs on every circuit, potentially causing widespread compliance failures.',
   'If measured Ze significantly exceeds the distributor-quoted typical maximum for the earthing arrangement, the DNO (Distribution Network Operator) should be queried because the supply earth may be defective.',
   'Elec-Mate records Ze at the origin on the EICR, validates it against expected values for the declared earthing arrangement, and uses it to cross-check every Zs reading in the schedule of test results.',
-  // grounded: bs7671_facets — Reg 421.1.7 (A4:2026) recommends AFDDs; Appendix 6 schedule of inspections simplified with an example initial-verification checklist added. No SPD/AFDD "Ze field" claim is supported by the RAG.
-  'BS 7671:2018+A4:2026 introduced Regulation 421.1.7 recommending arc fault detection devices (AFDDs) and simplified the Appendix 6 schedule of inspections, adding an example initial-verification checklist. Use the current A4:2026 model forms when completing EICRs and EICs.',
+  // grounded: printed BS 7671 front matter — Reg 421.1.7 AFDD recommendation dates from 2018 and the requirement in named premises from A2:2022; the simplified Appendix 6 schedule of inspections and example initial-verification checklist are also A2:2022 changes. No SPD/AFDD "Ze field" claim is supported by the RAG.
+  'A2:2022 made arc fault detection devices (AFDDs) a requirement in named higher-risk premises (Regulation 421.1.7) and simplified the Appendix 6 schedule of inspections, adding an example initial-verification checklist. Use the current A4:2026 model forms when completing EICRs and EICs.',
 ];
 
 const faqs = [
@@ -784,7 +784,7 @@ export default function ZeValuesUKPage() {
       // in the listing.
       description="Maximum Ze for TN-S, TN-C-S (PME) and TT supplies, with the distributor-quoted limits, how to measure Ze safely, why PME differs, and what to do when your reading is too high. Free Ze checker with the result emailed to you."
       datePublished="2025-08-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

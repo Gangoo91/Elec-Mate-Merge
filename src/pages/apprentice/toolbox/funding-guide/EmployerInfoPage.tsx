@@ -10,8 +10,7 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, AlertTriangle, Building2, Users } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { NMW_RATES, NMW_EFFECTIVE_LABEL } from '@/data/nmwRates';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -28,12 +27,12 @@ const levyFacts = [
 
 const smeFacts = [
   'Annual payroll under £3 million (most electrical contractors)',
-  'Pay only 5% of training costs — government pays 95%',
-  'Maximum £1,150 for a Level 3 Electrical apprenticeship',
-  '100% funded for under-25s at non-levy employers (from August 2026)',
-  'Can receive levy transfer for 100% funded training — zero cost',
+  'Apprentices aged 16 to 24 at the start: training fully funded, you pay nothing (starts from 1 Aug 2026)',
+  'Apprentices aged 25 or over: you pay 5% of training costs, government pays 95% (up to £1,150 on a £23,000 band)',
+  '£2,000 hiring payment for taking on a 16 to 24-year-old, where the practical period starts from 1 Oct 2026',
+  'Can receive a levy transfer to cover a 25+ apprentice in full',
   'Reserve funding through the apprenticeship service portal',
-  'Co-investment paid monthly — approximately £24/month',
+  'For 25+, the 5% is paid to the training provider, usually monthly',
 ];
 
 const dasSteps = [
@@ -72,9 +71,10 @@ const yearByYear: YearCost[] = [
     phase: 'Investment phase',
     rows: [
       { label: 'Apprentice wages (NMW)', value: '~£12,500' },
-      { label: 'Co-investment share', value: '~£288' },
+      { label: 'Co-investment share (16 to 24)', value: '£0' },
       { label: 'CITB grant received', value: '−£2,500', positive: true },
       { label: 'Age incentive (if eligible)', value: '−£1,000', positive: true },
+      { label: 'Hiring payment (if eligible)', value: '−£2,000', positive: true },
     ],
     narrative:
       'Apprentice is mostly learning in Year 1 — college days, basic site tasks, and shadowing. Limited productive output but building foundation skills.',
@@ -84,7 +84,7 @@ const yearByYear: YearCost[] = [
     phase: 'Growing productivity',
     rows: [
       { label: 'Apprentice wages (NMW/age rate)', value: '~£14,500' },
-      { label: 'Co-investment share', value: '~£288' },
+      { label: 'Co-investment share (16 to 24)', value: '£0' },
       { label: 'CITB grant received', value: '−£2,500', positive: true },
     ],
     narrative:
@@ -95,7 +95,7 @@ const yearByYear: YearCost[] = [
     phase: 'Significant productivity',
     rows: [
       { label: 'Apprentice wages (NMW/age rate)', value: '~£17,000' },
-      { label: 'Co-investment share', value: '~£288' },
+      { label: 'Co-investment share (16 to 24)', value: '£0' },
       { label: 'CITB grant received', value: '−£2,500', positive: true },
     ],
     narrative:
@@ -106,7 +106,7 @@ const yearByYear: YearCost[] = [
     phase: 'Near-qualified',
     rows: [
       { label: 'Apprentice wages (NMW/age rate)', value: '~£20,000' },
-      { label: 'Co-investment share', value: '~£288' },
+      { label: 'Co-investment share (16 to 24)', value: '£0' },
       { label: 'CITB grant received', value: '−£2,500', positive: true },
       { label: 'CITB completion bonus', value: '−£3,500', positive: true },
     ],
@@ -155,7 +155,7 @@ const supervisionRequirements = [
   'Supervision level decreases as competence increases over the 4 years',
   'Release the apprentice for college/training as agreed (typically 1 day/week)',
   'Provide a range of work experiences across the standard requirements',
-  'Support progress reviews (minimum every 12 weeks with training provider)',
+  'Support progress reviews (at least every 3 months, with the training provider)',
   'Allow time for portfolio evidence collection and on-the-job training',
   'Provide appropriate PPE, tools, and site access',
 ];
@@ -170,12 +170,13 @@ const hireComparison = [
 ];
 
 const caseStudyBullets = [
-  'Training cost: £0 (secured a levy transfer through training provider)',
+  'Training cost: £0 (16 to 24-year-olds at non-levy employers are fully funded for starts from 1 Aug 2026)',
   'CITB grants received over 4 years: £13,500',
   'Age incentive received: £1,000',
+  'Hiring payment received: £2,000 (practical period starting from 1 Oct 2026)',
   'NI savings over 4 years: approximately £8,000',
   'Total apprentice wages paid over 4 years: approximately £64,000',
-  'Net cost after grants and savings: approximately £42,000',
+  'Net cost after grants and savings: approximately £39,500',
   'Result: a fully qualified electrician trained to their exact standards',
   'Equivalent hire would cost: £35k salary + £5k recruitment + £3k retraining = £43k in year one alone',
 ];
@@ -184,346 +185,347 @@ const stats = [
   { value: '£23k', label: 'Government funding band per Level 3 apprentice (Skills England, 2025)' },
   { value: '£13.5k', label: 'CITB grants available per apprentice over 4 years' },
   { value: '4 years', label: 'Typical time to a fully trained, qualified electrician' },
-  { value: '£1,150', label: 'Most an SME pays towards training (5% of the band)' },
+  {
+    value: '£0',
+    label: 'What a non-levy SME pays towards training for a 16 to 24-year-old (from Aug 2026)',
+  },
   { value: '£0', label: 'What the apprentice ever pays towards training' },
   { value: 'Up to 50%', label: 'Of annual levy a large employer can transfer to you' },
 ];
 
 const EmployerInfoPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Funding"
-        title="Employer information"
-        backTo="/apprentice/toolbox/apprenticeship-funding"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'The business case for apprentices — how funding works, what it costs and returns year by year, common concerns answered, and how the maths actually stacks up vs hiring qualified.'
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Funding"
+      area="Apprenticeship funding"
+      title="Employer information"
+      backTo="/apprentice/toolbox/apprenticeship-funding"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          'The business case for apprentices — how funding works, what it costs and returns year by year, common concerns answered, and how the maths actually stacks up vs hiring qualified.'
+        }
+      </p>
 
-        {/* ── Intro ───────────────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
-              CARD_SURFACE
-            )}
-          >
-            <Eyebrow>Made for employers</Eyebrow>
-            <p className="text-[13.5px] text-white leading-relaxed">
-              This section helps employers understand apprenticeship funding and make the business
-              case. Share it with employers who are unfamiliar with how funding works or need
-              convincing that taking on an apprentice is a smart investment.
+      {/* ── Intro ───────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2',
+            CARD_SURFACE
+          )}
+        >
+          <Eyebrow>Made for employers</Eyebrow>
+          <p className="text-[14px] text-white leading-relaxed">
+            This section helps employers understand apprenticeship funding and make the business
+            case. Share it with employers who are unfamiliar with how funding works or need
+            convincing that taking on an apprentice is a smart investment.
+          </p>
+        </div>
+      </motion.div>
+
+      {/* ── Levy vs Non-Levy ────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Levy vs non-levy"
+          title="Two paths to fund apprentice training"
+          meta="Your payroll size decides which one"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          <FactsCard
+            label="Levy-paying employers"
+            sublabel="Annual payroll over £3m"
+            items={levyFacts}
+            tip="If you're not using all your levy funds, consider transferring up to 50% to supply chain partners or other employers. Many smaller firms are actively seeking levy transfers — builds goodwill and develops your talent pipeline."
+          />
+          <FactsCard
+            label="Non-levy employers (SMEs)"
+            sublabel="Annual payroll under £3m"
+            items={smeFacts}
+            tip="Ask your training provider about levy transfer opportunities — many large employers have unused funds available. A levy transfer means you pay nothing at all for training."
+          />
+        </div>
+      </motion.section>
+
+      {/* ── DAS registration ────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="How to register on DAS"
+          title="Digital Apprenticeship Service setup"
+          meta="apprenticeships.education.gov.uk · 7 steps"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+            CARD_SURFACE
+          )}
+        >
+          <ol className="space-y-2">
+            {dasSteps.map((step, i) => (
+              <li key={step} className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12.5px] font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  {i + 1}
+                </span>
+                <span className="text-[14px] text-white leading-relaxed">{step}</span>
+              </li>
+            ))}
+          </ol>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Note:</span> Most training providers
+              walk you through this for free. Many will set up the account on your behalf with your
+              permission.
             </p>
           </div>
-        </motion.div>
+        </div>
+      </motion.section>
 
-        {/* ── Levy vs Non-Levy ────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Levy vs non-levy"
-            title="Two paths to fund apprentice training"
-            meta="Your payroll size decides which one"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-            <FactsCard
-              label="Levy-paying employers"
-              sublabel="Annual payroll over £3m"
-              items={levyFacts}
-              tip="If you're not using all your levy funds, consider transferring up to 50% to supply chain partners or other employers. Many smaller firms are actively seeking levy transfers — builds goodwill and develops your talent pipeline."
-            />
-            <FactsCard
-              label="Non-levy employers (SMEs)"
-              sublabel="Annual payroll under £3m"
-              items={smeFacts}
-              tip="Ask your training provider about levy transfer opportunities — many large employers have unused funds available. A levy transfer means you pay nothing at all for training."
-            />
-          </div>
-        </motion.section>
-
-        {/* ── DAS registration ────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="How to register on DAS"
-            title="Digital Apprenticeship Service setup"
-            meta="apprenticeships.education.gov.uk · 7 steps"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-              CARD_SURFACE
-            )}
-          >
-            <ol className="space-y-2">
-              {dasSteps.map((step, i) => (
-                <li key={step} className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-white/[0.05] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                    {i + 1}
-                  </span>
-                  <span className="text-[12.5px] text-white leading-relaxed">{step}</span>
-                </li>
-              ))}
-            </ol>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-              <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Note:</span> Most training
-                providers walk you through this for free. Many will set up the account on your
-                behalf with your permission.
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── Provider criteria ───────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Choosing a training provider"
-            title="10 things to check before you commit"
-            meta="The provider has a massive impact on your apprentice's success"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-1.5">
-              {providerCriteria.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── Year-by-year ────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Year-by-year cost & return"
-            title="Investment in Y1, return from Y2"
-            meta="Productivity rises each year while wages stay below qualified rates"
-          />
-          <ul className="space-y-2.5">
-            {yearByYear.map((y) => (
+      {/* ── Provider criteria ───────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Choosing a training provider"
+          title="10 things to check before you commit"
+          meta="The provider has a massive impact on your apprentice's success"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-1.5">
+            {providerCriteria.map((item) => (
               <li
-                key={y.year}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-                  CARD_SURFACE
-                )}
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
               >
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                    Year {y.year} — {y.phase}
-                  </h3>
-                </div>
-                <ul className="space-y-1.5">
-                  {y.rows.map((row) => (
-                    <li
-                      key={row.label}
-                      className="flex items-start justify-between gap-3 text-[12.5px] text-white"
-                    >
-                      <span>{row.label}</span>
-                      <span
-                        className={cn(
-                          'font-mono tabular-nums font-semibold flex-shrink-0',
-                          row.positive ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      >
-                        {row.value}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-[12.5px] text-white leading-relaxed pt-1 border-t border-white/[0.04]">
-                  {y.narrative}
-                </p>
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-        </motion.section>
+        </div>
+      </motion.section>
 
-        {/* ── Wage rates ──────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow={`Apprentice wage rates · ${NMW_EFFECTIVE_LABEL}`}
-            title="Minimum hourly rates"
-            meta="JIB-graded employers typically pay above minimum"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-              CARD_SURFACE
-            )}
-          >
-            <ul className="space-y-1.5">
-              {wageRates.map((rate) => (
-                <li
-                  key={rate.label}
-                  className="flex items-start justify-between gap-3 text-[12.5px] text-white"
-                >
-                  <span>{rate.label}</span>
-                  <span className="font-mono tabular-nums font-semibold text-elec-yellow flex-shrink-0">
-                    {rate.value}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-              <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Note:</span> Many electrical
-                employers pay above minimum from Year 2 onwards. JIB-graded employers follow JIB
-                recommended rates which are typically higher.
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── Common concerns ─────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Common employer concerns"
-            title="Five worries — answered"
-            meta="The questions that come up in every conversation"
-          />
-          <ul className="space-y-2">
-            {concerns.map((c) => (
-              <li
-                key={c.question}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
-              >
+      {/* ── Year-by-year ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Year-by-year cost & return"
+          title="Investment in Y1, return from Y2"
+          meta="Productivity rises each year while wages stay below qualified rates"
+        />
+        <ul className="space-y-2.5">
+          {yearByYear.map((y) => (
+            <li
+              key={y.year}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
                 <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                  {c.question}
+                  Year {y.year} — {y.phase}
                 </h3>
-                <p className="text-[13px] text-white leading-relaxed">{c.answer}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── Supervision ─────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Supervision requirements"
-            title="What's expected of the employer"
-            meta="Decreases as competence increases"
-            action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
-                <Users className="h-4 w-4 text-elec-yellow" />
-              </span>
-            }
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-1.5">
-              {supervisionRequirements.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── Apprentice vs hire ──────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Apprentice vs hiring qualified"
-            title="The maths on hiring instead"
-            meta="What it actually costs to skip the apprenticeship"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-              CARD_SURFACE
-            )}
-          >
-            <p className="text-[13px] text-white leading-relaxed">
-              Hiring a qualified electrician typically costs:
-            </p>
-            <ul className="space-y-1.5">
-              {hireComparison.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <AlertTriangle className="h-3.5 w-3.5 text-white flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-              <p className="text-[12.5px] text-white leading-relaxed">
-                An apprentice costs significantly less in Year 1–2, becomes productive from Year 2,
-                and is fully qualified by Year 4 — trained exactly to your standards, loyal to your
-                business, at a fraction of the total cost.
+              </div>
+              <ul className="space-y-1.5">
+                {y.rows.map((row) => (
+                  <li
+                    key={row.label}
+                    className="flex items-start justify-between gap-3 text-[12.5px] text-white"
+                  >
+                    <span>{row.label}</span>
+                    <span
+                      className={cn(
+                        'tabular-nums font-semibold flex-shrink-0',
+                        row.positive ? 'text-elec-yellow' : 'text-white'
+                      )}
+                    >
+                      {row.value}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[14px] text-white leading-relaxed pt-1 border-t border-white/[0.04]">
+                {y.narrative}
               </p>
-            </div>
-          </div>
-        </motion.section>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Case study ──────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Case study"
-            title="Typical SME electrical contractor"
-            meta="6-person firm · £180k payroll · non-levy · 17-yo apprentice on L3"
-            action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
-                <Building2 className="h-4 w-4 text-elec-yellow" />
-              </span>
-            }
-          />
-          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5">
-            <ul className="space-y-1.5">
-              {caseStudyBullets.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── Industry stats ──────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Industry statistics"
-            title="Six numbers worth knowing"
-            meta="The macro case for apprenticeships in UK electrical"
-          />
-          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-            {stats.map((stat) => (
+      {/* ── Wage rates ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow={`Apprentice wage rates · ${NMW_EFFECTIVE_LABEL}`}
+          title="Minimum hourly rates"
+          meta="JIB-graded employers typically pay above minimum"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+            CARD_SURFACE
+          )}
+        >
+          <ul className="space-y-1.5">
+            {wageRates.map((rate) => (
               <li
-                key={stat.label}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-3 sm:p-4 text-center space-y-1.5',
-                  CARD_SURFACE
-                )}
+                key={rate.label}
+                className="flex items-start justify-between gap-3 text-[12.5px] text-white"
               >
-                <p className="text-[20px] sm:text-[24px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
-                  {stat.value}
-                </p>
-                <p className="text-[11px] text-white leading-snug">{stat.label}</p>
+                <span>{rate.label}</span>
+                <span className="tabular-nums font-semibold text-elec-yellow flex-shrink-0">
+                  {rate.value}
+                </span>
               </li>
             ))}
           </ul>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Note:</span> Many electrical
+              employers pay above minimum from Year 2 onwards. JIB-graded employers follow JIB
+              recommended rates which are typically higher.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── Common concerns ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Common employer concerns"
+          title="Five worries — answered"
+          meta="The questions that come up in every conversation"
+        />
+        <ul className="space-y-2">
+          {concerns.map((c) => (
+            <li
+              key={c.question}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                {c.question}
+              </h3>
+              <p className="text-[14px] text-white leading-relaxed">{c.answer}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Supervision ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Supervision requirements"
+          title="What's expected of the employer"
+          meta="Decreases as competence increases"
+          action={
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.05]">
+              <Users className="h-4 w-4 text-elec-yellow" />
+            </span>
+          }
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-1.5">
+            {supervisionRequirements.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
+
+      {/* ── Apprentice vs hire ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Apprentice vs hiring qualified"
+          title="The maths on hiring instead"
+          meta="What it actually costs to skip the apprenticeship"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+            CARD_SURFACE
+          )}
+        >
+          <p className="text-[14px] text-white leading-relaxed">
+            Hiring a qualified electrician typically costs:
+          </p>
+          <ul className="space-y-1.5">
+            {hireComparison.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <AlertTriangle className="h-3.5 w-3.5 text-white flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <p className="text-[14px] text-white leading-relaxed">
+              An apprentice costs significantly less in Year 1–2, becomes productive from Year 2,
+              and is fully qualified by Year 4 — trained exactly to your standards, loyal to your
+              business, at a fraction of the total cost.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── Case study ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Case study"
+          title="Typical SME electrical contractor"
+          meta="6-person firm · £180k payroll · non-levy · 17-yo apprentice on L3"
+          action={
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.05]">
+              <Building2 className="h-4 w-4 text-elec-yellow" />
+            </span>
+          }
+        />
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <ul className="space-y-1.5">
+            {caseStudyBullets.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
+
+      {/* ── Industry stats ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Industry statistics"
+          title="Six numbers worth knowing"
+          meta="The macro case for apprenticeships in UK electrical"
+        />
+        <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+          {stats.map((stat) => (
+            <li
+              key={stat.label}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-3 sm:p-4 text-center space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <p className="text-[20px] sm:text-[24px] font-semibold tabular-nums text-elec-yellow leading-none">
+                {stat.value}
+              </p>
+              <p className="text-[12.5px] text-white leading-snug">{stat.label}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+    </GuidePage>
   );
 };
 
@@ -542,7 +544,7 @@ function FactsCard({
 }) {
   return (
     <div
-      className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3', CARD_SURFACE)}
+      className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3', CARD_SURFACE)}
     >
       <div className="space-y-0.5">
         <h3 className="text-[15px] font-semibold text-elec-yellow tracking-tight">{label}</h3>
@@ -550,17 +552,14 @@ function FactsCard({
       </div>
       <ul className="space-y-1.5">
         {items.map((item) => (
-          <li
-            key={item}
-            className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-          >
-            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+          <li key={item} className="flex items-start gap-2 text-[14px] text-white leading-relaxed">
+            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
-      <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-        <p className="text-[12px] text-white leading-relaxed">
+      <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3">
+        <p className="text-[14px] text-white leading-relaxed">
           <span className="font-semibold text-elec-yellow">Tip: </span>
           {tip}
         </p>

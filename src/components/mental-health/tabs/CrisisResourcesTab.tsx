@@ -1,5 +1,4 @@
-import { Download, Phone } from 'lucide-react';
-import { openExternalUrl } from '@/utils/open-external-url';
+import { Download } from 'lucide-react';
 import ExternalLinkCards from '@/components/mental-health/ExternalLinkCards';
 import LocalResourceFinder from '@/components/mental-health/crisis/LocalResourceFinder';
 import { generateCrisisPlanPdf, generateEmergencyContactsPdf } from '@/utils/crisisResourcesPdf';
@@ -8,13 +7,13 @@ import {
   onlineResources,
 } from '@/components/mental-health/crisis/CrisisResourcesData';
 import {
-  PageHero,
-  SectionHeader,
-  ListCard,
-  ListRow,
-  Pill,
-  Eyebrow,
-} from '@/components/college/primitives';
+  ContactButton,
+  ContactRow,
+  WB_CARD,
+  WB_LIST,
+  WellbeingIntro,
+  WellbeingSection,
+} from '@/components/mental-health/wellbeingUi';
 import { recordCrisisEvent } from '@/services/mentalHealthService';
 
 const onCrisisDial = (label: string) => {
@@ -28,11 +27,6 @@ const onCrisisText = (label: string) => {
   });
 };
 
-const PHONE_PRIMARY =
-  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25 text-[13px] font-semibold touch-manipulation';
-const PHONE_SECONDARY =
-  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-semibold touch-manipulation';
-
 const CrisisResourcesTab = () => {
   const priorityHelplines = emergencyContacts.filter(
     (c) => c.type === 'emergency' || c.type === 'crisis'
@@ -43,180 +37,158 @@ const CrisisResourcesTab = () => {
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      <PageHero
-        eyebrow="Crisis support"
-        title="You're not alone"
-        description="If you feel unsafe or overwhelmed, reach out now. Speed matters — pick the option that feels easiest."
+      <WellbeingIntro
         tone="red"
+        label="Crisis support"
+        title="You're not alone"
+        description="If you feel unsafe or overwhelmed, reach out now. Pick whichever feels easiest."
       />
 
-      {/* Primary actions */}
-      <div className="space-y-3">
-        <Eyebrow>Reach out now</Eyebrow>
-        <ListCard>
-          <ListRow
-            accent="red"
-            title="Call 999"
-            subtitle="Immediate danger or medical emergency"
-            trailing={
-              <a
-                href="tel:999"
-                onClick={() => onCrisisDial('999 Emergency')}
-                className={PHONE_PRIMARY}
-                aria-label="Call 999"
-              >
-                999
-              </a>
-            }
-          />
-          <ListRow
-            accent="blue"
-            title="Call Samaritans"
-            subtitle="Free 24/7 support — someone to listen"
-            trailing={
-              <a
-                href="tel:116123"
-                onClick={() => onCrisisDial('Samaritans 116 123')}
-                className={PHONE_PRIMARY}
-                aria-label="Call Samaritans on 116 123"
-              >
-                116 123
-              </a>
-            }
-          />
-          <ListRow
-            accent="purple"
-            title="Text SHOUT"
-            subtitle="24/7 text support — if speaking feels harder"
-            trailing={
-              <a
-                href="sms:85258?body=SHOUT"
-                onClick={() => onCrisisText('SHOUT 85258')}
-                className={PHONE_SECONDARY}
-                aria-label="Text SHOUT to 85258"
-              >
-                85258
-              </a>
-            }
-          />
-        </ListCard>
-      </div>
+      {/* Two columns on a wide screen: reach out now and the priority lines
+          on the left, finding local and longer-term help on the right. */}
+      <div className="grid grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-6">
+        <div className="min-w-0 space-y-8">
+          <WellbeingSection title="Reach out now">
+            <ul className={WB_LIST}>
+              <ContactRow
+                title="Call 999"
+                detail="Immediate danger or a medical emergency"
+                action={
+                  <ContactButton
+                    urgent
+                    href="tel:999"
+                    label="999"
+                    ariaLabel="Call 999"
+                    onClick={() => onCrisisDial('999 Emergency')}
+                  />
+                }
+              />
+              <ContactRow
+                title="Call Samaritans"
+                detail="Free, 24/7. Someone to listen."
+                action={
+                  <ContactButton
+                    urgent
+                    href="tel:116123"
+                    label="116 123"
+                    ariaLabel="Call Samaritans on 116 123"
+                    onClick={() => onCrisisDial('Samaritans 116 123')}
+                  />
+                }
+              />
+              <ContactRow
+                title="Text SHOUT"
+                detail="24/7 by text, if speaking feels harder"
+                action={
+                  <ContactButton
+                    kind="text"
+                    href="sms:85258?body=SHOUT"
+                    label="85258"
+                    ariaLabel="Text SHOUT to 85258"
+                    onClick={() => onCrisisText('SHOUT 85258')}
+                  />
+                }
+              />
+            </ul>
+            <p className="text-[13.5px] leading-relaxed text-white">
+              A smaller first step is still a real first step. If calling feels too hard, start with
+              a text.
+            </p>
+          </WellbeingSection>
 
-      {/* Encouragement */}
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-        <div className="flex items-start gap-3">
-          <Pill tone="emerald">Note</Pill>
-          <p className="text-[13px] text-white leading-relaxed">
-            A smaller first step is still a real first step. If calling feels too difficult, start
-            with a text.
-          </p>
+          <WellbeingSection title="Crisis and urgent support">
+            <ul className={WB_LIST}>
+              {priorityHelplines.map((c) => (
+                <ContactRow
+                  key={`${c.name}-${c.phone}`}
+                  title={c.name}
+                  detail={`${c.description} · ${c.hours}`}
+                  action={
+                    <ContactButton
+                      urgent
+                      href={`tel:${c.phone.replace(/\s/g, '')}`}
+                      label={c.phone}
+                      ariaLabel={`Call ${c.name} on ${c.phone}`}
+                      onClick={() => onCrisisDial(`${c.name} ${c.phone}`)}
+                    />
+                  }
+                />
+              ))}
+            </ul>
+          </WellbeingSection>
+        </div>
+
+        <div className="min-w-0 space-y-8">
+          <WellbeingSection title="Find local help">
+            <div className={WB_CARD}>
+              <LocalResourceFinder />
+            </div>
+          </WellbeingSection>
+
+          <WellbeingSection title="Ongoing support">
+            <ul className={WB_LIST}>
+              {supportLines.map((c) => (
+                <ContactRow
+                  key={`${c.name}-${c.phone}`}
+                  title={c.name}
+                  detail={c.description}
+                  action={
+                    <ContactButton
+                      href={`tel:${c.phone.replace(/\s/g, '')}`}
+                      label={c.phone}
+                      ariaLabel={`Call ${c.name} on ${c.phone}`}
+                    />
+                  }
+                />
+              ))}
+            </ul>
+          </WellbeingSection>
+
+          {/* Printable resources — a plan made on a good day, kept for a bad one */}
+          <WellbeingSection title="Keep it on paper">
+            <ul className={WB_LIST}>
+              {[
+                {
+                  title: 'Crisis plan template',
+                  detail: 'Fill in by hand: warning signs, coping steps, people to call.',
+                  onClick: () => generateCrisisPlanPdf(),
+                },
+                {
+                  title: 'Emergency contacts card',
+                  detail: 'Wallet-size card of every verified helpline. Print and cut out.',
+                  onClick: () => generateEmergencyContactsPdf(),
+                },
+              ].map((d) => (
+                <li key={d.title}>
+                  <button
+                    type="button"
+                    onClick={d.onClick}
+                    className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
+                  >
+                    <Download className="h-[18px] w-[18px] shrink-0 text-white" strokeWidth={1.5} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[15px] font-semibold text-white">{d.title}</span>
+                      <span className="mt-0.5 block text-[13px] leading-snug text-white">
+                        {d.detail}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </WellbeingSection>
         </div>
       </div>
 
-      {/* Crisis helplines */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Priority lines" title="Crisis & urgent support" />
-        <ListCard>
-          {priorityHelplines.map((c) => (
-            <ListRow
-              key={`${c.name}-${c.phone}`}
-              accent="red"
-              title={c.name}
-              subtitle={`${c.description} · ${c.hours}`}
-              trailing={
-                <a
-                  href={`tel:${c.phone.replace(/\s/g, '')}`}
-                  onClick={() => onCrisisDial(`${c.name} ${c.phone}`)}
-                  className={PHONE_PRIMARY}
-                  aria-label={`Call ${c.name} on ${c.phone}`}
-                >
-                  {c.phone}
-                </a>
-              }
-            />
-          ))}
-        </ListCard>
-      </div>
-
-      {/* Local resource finder */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Nearby" title="Find local help" />
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-          <LocalResourceFinder />
-        </div>
-      </div>
-
-      {/* Support lines */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Long-term" title="Ongoing support" />
-        <ListCard>
-          {supportLines.map((c) => (
-            <ListRow
-              key={`${c.name}-${c.phone}`}
-              accent="yellow"
-              title={c.name}
-              subtitle={c.description}
-              trailing={
-                <a
-                  href={`tel:${c.phone.replace(/\s/g, '')}`}
-                  className={PHONE_SECONDARY}
-                  aria-label={`Call ${c.name} on ${c.phone}`}
-                >
-                  {c.phone}
-                </a>
-              }
-            />
-          ))}
-        </ListCard>
-      </div>
-
-      {/* Printable resources — a plan made on a good day, kept for a bad one */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Keep on paper" title="Printable resources" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button
-            onClick={() => generateCrisisPlanPdf()}
-            className="flex items-center gap-3 p-4 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_14%)] text-left touch-manipulation transition-colors"
-          >
-            <Download className="h-4 w-4 text-red-400 shrink-0" />
-            <span className="flex-1 min-w-0">
-              <span className="block text-[13.5px] font-semibold text-white">
-                Crisis plan template
-              </span>
-              <span className="block text-[12px] text-white/70 leading-snug mt-0.5">
-                Fill in by hand — warning signs, coping steps, people to call.
-              </span>
-            </span>
-          </button>
-          <button
-            onClick={() => generateEmergencyContactsPdf()}
-            className="flex items-center gap-3 p-4 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_14%)] text-left touch-manipulation transition-colors"
-          >
-            <Phone className="h-4 w-4 text-red-400 shrink-0" />
-            <span className="flex-1 min-w-0">
-              <span className="block text-[13.5px] font-semibold text-white">
-                Emergency contacts card
-              </span>
-              <span className="block text-[12px] text-white/70 leading-snug mt-0.5">
-                Wallet-size card of every verified helpline — print and cut out.
-              </span>
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Online resources */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Online" title="Trusted resources" />
+      <WellbeingSection title="Trusted resources online">
         <ExternalLinkCards
           items={onlineResources.map((r) => ({
             title: r.title,
             description: r.description,
             url: r.url || '',
-            tone: 'cyan' as const,
           }))}
         />
-      </div>
+      </WellbeingSection>
     </div>
   );
 };

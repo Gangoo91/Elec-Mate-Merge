@@ -240,8 +240,8 @@ const sections = [
           design, inspection and testing, and fault diagnosis.
         </p>
         <p>
-          Alongside the qualification, apprentices must spend at least 20% of paid hours on
-          off-the-job training, and you will build a portfolio of site evidence throughout.
+          Alongside the qualification, apprentices must complete at least the off-the-job
+          training hours set for their standard, in paid time (DfE funding rules 2026 to 2027, rules 85 to 86), and you will build a portfolio of site evidence throughout.
           Elec-Mate's study centre includes free{' '}
           <SEOInternalLink href="/mock-exams/level-2-electrical-principles">
             unit-by-unit Level 2 mock exams
@@ -423,7 +423,7 @@ export default function StartingElectricalApprenticeshipPage() {
       title="Starting an Electrical Apprenticeship: 2026"
       description="How to start an electrical apprenticeship: routes in, what you study, 2026 pay, year-by-year expectations, the AM2 and a September checklist."
       datePublished="2026-07-17"
-      dateModified="2026-07-17"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

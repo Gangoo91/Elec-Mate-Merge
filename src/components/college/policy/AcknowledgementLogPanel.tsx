@@ -2,11 +2,20 @@ import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { usePolicyAckLog, type AckLogRow, type AckStatus } from '@/hooks/usePolicyAckLog';
+import { useToast } from '@/hooks/use-toast';
+import { chipCn } from '@/components/college/ui/CollegeUi';
+import { QBTN, QCARD, QCHIP_ROW, QLIST } from '@/components/college/quality/QualityHubKit';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ==========================================================================
    AcknowledgementLogPanel — rendered on the policy detail page. Shows every
    staff member's sign-off status for the current version. The audit pack
    foundation: who has signed, who hasn't, who needs to re-sign.
+
+   8 Oct 2026: restyled to the College Hub kit (all text white, chips with
+   border and text only), states said in words ("Not signed", "Needs to
+   re-sign"), and "Copy names to chase" puts everyone still to sign on the
+   clipboard for a message.
    ========================================================================== */
 
 interface Props {
@@ -24,8 +33,8 @@ const STATUS_TONE: Record<AckStatus, 'emerald' | 'amber' | 'red'> = {
 
 const STATUS_LABEL: Record<AckStatus, string> = {
   signed: 'Signed',
-  outdated: 'Outdated',
-  outstanding: 'Outstanding',
+  outdated: 'Needs to re-sign',
+  outstanding: 'Not signed',
 };
 
 type Filter = 'all' | AckStatus;
@@ -38,6 +47,7 @@ export function AcknowledgementLogPanel({
 }: Props) {
   const { rows, loading } = usePolicyAckLog(policyId, currentVersion);
   const [filter, setFilter] = useState<Filter>('all');
+  const { toast } = useToast();
 
   const counts = useMemo(() => {
     const c = { all: rows.length, signed: 0, outdated: 0, outstanding: 0 };
@@ -50,14 +60,31 @@ export function AcknowledgementLogPanel({
     [rows, filter]
   );
 
+  const chase = rows.filter((r) => r.status !== 'signed');
+  const copyChase = async () => {
+    const text = chase.map((r) => r.name).join('\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: `Copied ${chase.length} ${chase.length === 1 ? 'name' : 'names'}`,
+        description: 'Paste them into a message to chase sign-off.',
+      });
+    } catch {
+      toast({
+        title: 'Could not copy',
+        description: 'Your browser blocked the clipboard.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   if (!requiresAcknowledgement) {
     return (
       <Section title="Sign-off log">
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
-          <p className="text-[12.5px] text-white/65 leading-relaxed max-w-prose">
-            This policy doesn't require staff acknowledgement. Toggle{' '}
-            <span className="text-white">"Requires acknowledgement"</span> in Settings to start
-            tracking sign-off.
+        <div className={QCARD}>
+          <p className="max-w-prose text-[13px] leading-relaxed text-white">
+            This policy does not ask staff to acknowledge it. Turn on Requires acknowledgement in
+            its settings to start tracking who has read and signed it.
           </p>
         </div>
       </Section>
@@ -67,10 +94,10 @@ export function AcknowledgementLogPanel({
   if (status === 'draft') {
     return (
       <Section title="Sign-off log">
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
-          <p className="text-[12.5px] text-white/65 leading-relaxed max-w-prose">
-            Acknowledgement starts after publication. Publish v1 to surface this on every staff
-            member's home.
+        <div className={QCARD}>
+          <p className="max-w-prose text-[13px] leading-relaxed text-white">
+            Sign-off starts when it is published. Publish it and every member of staff is asked to
+            read and sign it on their home screen.
           </p>
         </div>
       </Section>
@@ -78,7 +105,7 @@ export function AcknowledgementLogPanel({
   }
 
   // Archived: still show historical sign-offs (key audit evidence) with a
-  // clear disclaimer that the policy is retired.
+  // clear note that the policy is retired.
 
   if (loading && rows.length === 0) {
     return (
@@ -91,102 +118,75 @@ export function AcknowledgementLogPanel({
   if (rows.length === 0) {
     return (
       <Section title="Sign-off log">
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
-          <p className="text-[12.5px] text-white/65 leading-relaxed max-w-prose">
-            No staff in your college yet. Add tutors via{' '}
-            <span className="text-white">People → Tutors</span> and they'll appear here.
+        <div className={QCARD}>
+          <p className="max-w-prose text-[13px] leading-relaxed text-white">
+            No staff in your college yet. Add tutors under People and they appear here.
           </p>
         </div>
       </Section>
     );
   }
 
-  const filterChips: {
-    value: Filter;
-    label: string;
-    count: number;
-    tone: 'green' | 'amber' | 'red' | 'neutral';
-  }[] = [
-    { value: 'all', label: 'All', count: counts.all, tone: 'neutral' },
-    { value: 'outstanding', label: 'Outstanding', count: counts.outstanding, tone: 'red' },
-    { value: 'outdated', label: 'Outdated', count: counts.outdated, tone: 'amber' },
-    { value: 'signed', label: 'Signed', count: counts.signed, tone: 'green' },
+  const filterChips: { value: Filter; label: string; count: number }[] = [
+    { value: 'all', label: 'All', count: counts.all },
+    { value: 'outstanding', label: 'Not signed', count: counts.outstanding },
+    { value: 'outdated', label: 'Signed an old version', count: counts.outdated },
+    { value: 'signed', label: 'Signed', count: counts.signed },
   ];
 
   return (
     <Section
       title="Sign-off log"
-      eyebrow={status === 'archived' ? 'Audit · historical' : 'Audit'}
-      sub={`${counts.signed}/${counts.all} signed for v${currentVersion}`}
+      sub={
+        counts.signed === counts.all
+          ? `Everyone has signed version ${currentVersion}.`
+          : `${counts.signed} of ${counts.all} staff have signed version ${currentVersion}; ${chase.length} still to sign.`
+      }
+      action={
+        chase.length > 0 && status !== 'archived' ? (
+          <button type="button" onClick={() => void copyChase()} className={QBTN}>
+            Copy names to chase
+          </button>
+        ) : undefined
+      }
     >
       {status === 'archived' && (
-        <div className="mb-3 rounded-2xl border border-blue-500/25 bg-blue-500/[0.04] px-4 py-3">
-          <p className="text-[11.5px] text-blue-200/85 leading-relaxed">
-            <span className="font-semibold uppercase tracking-[0.06em] mr-2 text-blue-200">
-              Archived
-            </span>
-            This policy is retired. The sign-off list below is historical evidence — new staff don't
-            need to sign it.
+        <div className={cn(QCARD, 'mb-3')}>
+          <p className="text-[13px] leading-relaxed text-white">
+            <span className="font-semibold">Archived. </span>
+            This policy is retired. The list below is kept as evidence of who signed it; new staff
+            do not need to.
           </p>
         </div>
       )}
 
-      {/* Filter chips */}
-      <div className="-mx-1 overflow-x-auto scrollbar-hide mb-3">
-        <div className="flex items-center gap-1.5 px-1 min-w-max">
-          {filterChips.map((c) => {
-            const active = c.value === filter;
-            return (
-              <button
-                key={c.value}
-                type="button"
-                onClick={() => setFilter(c.value)}
-                className={cn(
-                  'h-9 px-3.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation whitespace-nowrap border inline-flex items-center gap-1.5',
-                  active
-                    ? c.tone === 'red'
-                      ? 'bg-red-500/[0.12] border-red-500/40 text-red-200'
-                      : c.tone === 'amber'
-                        ? 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
-                        : c.tone === 'green'
-                          ? 'bg-emerald-500/[0.12] border-emerald-500/40 text-emerald-200'
-                          : 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
-                )}
-              >
-                {c.label}
-                <span
-                  className={cn(
-                    'tabular-nums text-[10.5px] px-1.5 py-0.5 rounded-full',
-                    active && c.tone === 'neutral'
-                      ? 'bg-black/15 text-black/70'
-                      : active && c.tone === 'red'
-                        ? 'bg-red-500/20 text-red-200'
-                        : active && c.tone === 'amber'
-                          ? 'bg-amber-500/20 text-amber-200'
-                          : active && c.tone === 'green'
-                            ? 'bg-emerald-500/20 text-emerald-200'
-                            : 'bg-white/[0.08] text-white/60'
-                  )}
-                >
-                  {c.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+      <div className={cn(QCHIP_ROW, 'mb-3')}>
+        {filterChips.map((c) => (
+          <button
+            key={c.value}
+            type="button"
+            onClick={() => setFilter(c.value)}
+            className={cn(
+              chipCn(c.value === filter),
+              'inline-flex items-center gap-1.5 whitespace-nowrap'
+            )}
+          >
+            {c.label}
+            <span className="tabular-nums">{c.count}</span>
+          </button>
+        ))}
       </div>
 
       {filtered.length === 0 ? (
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5 text-center">
-          <p className="text-[12.5px] text-white/65 leading-relaxed">
+        <div className={QCARD}>
+          <p className="text-[13px] leading-relaxed text-white">
             {filter === 'signed'
-              ? 'Nobody has signed v' + currentVersion + ' yet — chase the outstanding list.'
+              ? `Nobody has signed version ${currentVersion} yet. Chase the not signed list.`
               : 'No one in this filter.'}
           </p>
         </div>
       ) : (
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04]">
+        <div className={QLIST}>
           {filtered.map((r) => (
             <AckRow key={r.staff_id} row={r} currentVersion={currentVersion} />
           ))}
@@ -200,29 +200,25 @@ export function AcknowledgementLogPanel({
 
 function Section({
   title,
-  eyebrow,
   sub,
+  action,
   children,
 }: {
   title: string;
-  eyebrow?: string;
   sub?: string;
+  action?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
     <section className="mt-10">
-      <div className="flex items-end justify-between gap-4 flex-wrap mb-3">
-        <div>
-          {eyebrow && (
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              {eyebrow}
-            </div>
-          )}
-          <h2 className="mt-1 text-[20px] sm:text-[24px] font-semibold text-white tracking-tight leading-tight">
+      <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+        <div className="min-w-0">
+          <h2 className="text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[24px]">
             {title}
           </h2>
+          {sub && <p className="mt-1 text-[13px] text-white">{sub}</p>}
         </div>
-        {sub && <div className="text-[11.5px] tabular-nums text-white/55">{sub}</div>}
+        {action}
       </div>
       {children}
     </section>
@@ -240,84 +236,57 @@ function AckRow({ row, currentVersion }: { row: AckLogRow; currentVersion: numbe
     .map((w) => w[0])
     .join('')
     .toUpperCase();
-
-  const ringClass =
-    tone === 'emerald'
-      ? 'ring-emerald-500/40'
-      : tone === 'amber'
-        ? 'ring-amber-500/40'
-        : 'ring-red-500/40';
+  const role =
+    row.role === 'iqa' ? 'IQA' : row.role.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
   return (
-    <div className="px-4 sm:px-5 py-3.5 flex items-center gap-3 flex-wrap">
-      <Avatar className={cn('h-9 w-9 ring-1 shrink-0', ringClass)}>
-        <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-[11px] font-semibold">
+    <div className="flex min-h-[60px] flex-wrap items-center gap-3 px-4 py-3 sm:px-5">
+      <Avatar className="h-9 w-9 shrink-0">
+        <AvatarFallback className="bg-white/[0.08] text-[12px] font-semibold text-white">
           {initials}
         </AvatarFallback>
       </Avatar>
-      <div className="flex-1 min-w-0">
-        <div className="text-[13px] font-medium text-white truncate">{row.name}</div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/55">
-          <span className="capitalize truncate">{row.role.replace(/_/g, ' ')}</span>
-          {row.department && (
-            <>
-              <span className="text-white/25">·</span>
-              <span className="truncate">{row.department}</span>
-            </>
-          )}
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-[14px] font-semibold text-white">{row.name}</div>
+        <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] text-white">
+          <span className="truncate">{keyLabel(role)}</span>
+          {row.department && <span className="truncate">· {row.department}</span>}
           {!row.user_id && (
-            <>
-              <span className="text-white/25">·</span>
-              <span className="text-amber-300/85">No login linked</span>
-            </>
+            <span className="text-orange-300">
+              · No login linked, so they cannot sign in the app
+            </span>
           )}
         </div>
       </div>
       <div className="shrink-0 text-right">
-        <StatusBadge status={row.status} />
-        <div className="mt-1 text-[10.5px] text-white/55 tabular-nums">
-          {row.status === 'signed' ? (
-            row.signed_at && (
-              <>
-                {new Date(row.signed_at).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </>
-            )
-          ) : row.status === 'outdated' ? (
-            <>
-              Signed v{row.signed_version} ·{' '}
-              {row.signed_at
-                ? new Date(row.signed_at).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                  })
-                : ''}
-            </>
-          ) : (
-            <>Never signed v{currentVersion}</>
+        <span
+          className={cn(
+            'inline-flex h-6 items-center rounded-full border px-2.5 text-[12px] font-semibold',
+            tone === 'emerald'
+              ? 'border-emerald-400/60 text-emerald-300'
+              : 'border-orange-400/60 text-orange-300'
           )}
+        >
+          {STATUS_LABEL[row.status]}
+        </span>
+        <div className="mt-1 text-[12px] tabular-nums text-white">
+          {row.status === 'signed'
+            ? row.signed_at &&
+              new Date(row.signed_at).toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              })
+            : row.status === 'outdated'
+              ? `Signed version ${row.signed_version}${
+                  row.signed_at
+                    ? ` on ${new Date(row.signed_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
+                    : ''
+                }`
+              : `Not signed version ${currentVersion}`}
         </div>
       </div>
     </div>
-  );
-}
-
-function StatusBadge({ status }: { status: AckStatus }) {
-  const tone = STATUS_TONE[status];
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center h-6 px-2 rounded-full border text-[10.5px] font-semibold tracking-[0.04em] uppercase',
-        tone === 'emerald' && 'bg-emerald-500/[0.08] border-emerald-500/30 text-emerald-200',
-        tone === 'amber' && 'bg-amber-500/[0.08] border-amber-500/30 text-amber-200',
-        tone === 'red' && 'bg-red-500/[0.08] border-red-500/30 text-red-200'
-      )}
-    >
-      {STATUS_LABEL[status]}
-    </span>
   );
 }
 
@@ -325,13 +294,13 @@ function StatusBadge({ status }: { status: AckStatus }) {
 
 function Skeleton() {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04] animate-pulse">
+    <div className={cn(QLIST, 'animate-pulse')}>
       {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="px-4 sm:px-5 py-3.5 flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full bg-white/[0.06] shrink-0" />
+        <div key={i} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
+          <div className="h-9 w-9 shrink-0 rounded-full bg-white/[0.06]" />
           <div className="flex-1 space-y-1.5">
-            <div className="h-3 w-1/3 bg-white/[0.06] rounded" />
-            <div className="h-2 w-1/2 bg-white/[0.04] rounded" />
+            <div className="h-3 w-1/3 rounded bg-white/[0.06]" />
+            <div className="h-2 w-1/2 rounded bg-white/[0.04]" />
           </div>
           <div className="h-6 w-20 rounded-full bg-white/[0.04]" />
         </div>

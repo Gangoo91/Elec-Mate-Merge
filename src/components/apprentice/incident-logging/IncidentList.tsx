@@ -188,7 +188,7 @@ const IncidentList = ({
           <div key={incident.id} className={containerClass}>
             <div className="flex items-start justify-between gap-3 flex-wrap">
               <div className="space-y-2 flex-1 min-w-0">
-                <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white flex-wrap">
+                <div className="flex items-baseline gap-3 text-[13px] font-semibold text-white flex-wrap">
                   <span>{getStatusLabel(incident.status)}</span>
                   <span className="text-white">·</span>
                   <span>{getSeverityLabel(incident.severity)}</span>
@@ -198,7 +198,7 @@ const IncidentList = ({
                 <h3 className="text-[16px] font-semibold text-white leading-snug">
                   {incident.title}
                 </h3>
-                <div className="flex items-baseline gap-3 text-[12px] text-white font-mono flex-wrap">
+                <div className="flex items-baseline gap-3 text-[12px] text-white flex-wrap">
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     {format(new Date(incident.date_occurred), 'MMM dd, yyyy HH:mm')}
@@ -215,7 +215,7 @@ const IncidentList = ({
                   variant="outline"
                   size="sm"
                   onClick={() => onView(incident.id)}
-                  className="h-9 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Eye className="h-4 w-4" />
                 </Button>
@@ -225,7 +225,7 @@ const IncidentList = ({
                       variant="outline"
                       size="sm"
                       onClick={() => onEdit(incident.id)}
-                      className="h-9 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                      className="h-11 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
@@ -233,7 +233,7 @@ const IncidentList = ({
                       variant="outline"
                       size="sm"
                       onClick={() => handleDelete(incident.id)}
-                      className="h-9 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                      className="h-11 w-9 p-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -246,7 +246,7 @@ const IncidentList = ({
               {incident.description}
             </p>
 
-            <div className="text-[11px] text-white font-mono pt-2 border-t border-white/[0.06]">
+            <div className="text-[12.5px] text-white pt-2 border-t border-white/[0.06]">
               Created {format(new Date(incident.created_at), 'MMM dd, yyyy')}
               {incident.submitted_at && (
                 <span className="ml-3">

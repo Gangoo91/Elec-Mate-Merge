@@ -255,7 +255,7 @@ function ManageView({
       await navigator.clipboard?.writeText(publicUrl(token));
       toast({ title: 'Link copied' });
     } catch {
-      toast({ title: 'Copy failed — link shown below' });
+      toast({ title: 'Copy failed. The link is below' });
     }
   };
 

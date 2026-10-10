@@ -32,7 +32,7 @@ const inlineChecks = [
     ],
     correctIndex: 0,
     explanation:
-      'BS EN 50173-1 is the umbrella performance standard and BS EN 50173-2 is the office-specific application part — both apply to a UK office. BS EN 50174-1 (QA, documentation) and BS EN 50174-2 (planning, pulling, separation, supports) apply on every install inside a building. BS EN 50310 (ICT bonding) is implicit because BS 7671 §444.410 makes it mandatory. -174-3 (outside buildings) only applies if the cabling crosses property boundaries or is buried externally. -173-5 (data centres) only applies to actual data-centre work.',
+      'BS EN 50173-1 is the umbrella performance standard and BS EN 50173-2 is the office-specific application part — both apply to a UK office. BS EN 50174-1 (QA, documentation) and BS EN 50174-2 (planning, pulling, separation, supports) apply on every install inside a building. BS EN 50310 (ICT bonding) is implicit because BS 7671 §444.4.10 makes it mandatory. -174-3 (outside buildings) only applies if the cabling crosses property boundaries or is buried externally. -173-5 (data centres) only applies to actual data-centre work.',
   },
   {
     id: 'datacabling-m6s3-2m-mesh',
@@ -74,7 +74,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      '§545.1.2 verbatim — 2.5 mm² Cu (with mechanical protection) or 4 mm² Cu (without). 16 mm² Al is permitted but BS EN 50310 (the bonding standard called up by §444.410) requires copper. §545 is entirely new in A4:2026 — before this Amendment, ICT functional earthing was either ad-hoc or covered only by BS EN 50310. From 15 April 2026 it is regulated by BS 7671 itself.',
+      '§545.1.2 verbatim — 2.5 mm² Cu (with mechanical protection) or 4 mm² Cu (without). 16 mm² Al is permitted but BS EN 50310 (the bonding standard called up by §444.4.10) requires copper. §545 is entirely new in A4:2026 — before this Amendment, ICT functional earthing was either ad-hoc or covered only by BS EN 50310. From 15 April 2026 it is regulated by BS 7671 itself.',
   },
 ];
 
@@ -104,7 +104,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS EN 50174-2 is the inside-buildings install practice. -1 covers specification, QA, documentation discipline. -3 covers outside-buildings (buried, aerial, between buildings). All three are in the same series and BS 7671 §444.410 names -1 and -2 by paragraph as mandatory inside UK buildings.',
+      'BS EN 50174-2 is the inside-buildings install practice. -1 covers specification, QA, documentation discipline. -3 covers outside-buildings (buried, aerial, between buildings). All three are in the same series and BS 7671 §444.4.10 names -1 and -2 by paragraph as mandatory inside UK buildings.',
   },
   {
     id: 3,
@@ -146,7 +146,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'Which BS EN standard governs ICT BONDING — the Telecommunications Bonding Backbone, the bonding ring, the connection of communicating equipment to the equipotential network — and is named verbatim in BS 7671 §444.410(c)?',
+      'Which BS EN standard governs ICT BONDING — the Telecommunications Bonding Backbone, the bonding ring, the connection of communicating equipment to the equipotential network — and is named verbatim in BS 7671 §444.4.10(c)?',
     options: [
       'BS EN 50173-1.',
       'BS EN 50174-2.',
@@ -155,7 +155,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS EN 50310 is the ICT-bonding EN. §444.410(c) verbatim names it as one of the three standards that "shall be applied" for control / signalling / communication circuits. From 15 April 2026 it is regulatorily mandatory in any UK building hosting ICT cabling. It interlocks with BS 7671 §545 (functional earthing — new in A4:2026) and §444.1.x (bonding network types).',
+      'BS EN 50310 is the ICT-bonding EN. §444.4.10(c) verbatim names it as one of the three standards that "shall be applied" for control / signalling / communication circuits. From 15 April 2026 it is regulatorily mandatory in any UK building hosting ICT cabling. It interlocks with BS 7671 §545 (functional earthing — new in A4:2026) and §444.1.x (bonding network types).',
   },
   {
     id: 7,
@@ -183,7 +183,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS EN 50174-3 covers outside-buildings work: buried cables, aerial spans, building-to-building runs, environmental protection, lightning protection of external runs. §444.410 names -1 and -2 verbatim but not -3 — the outside-buildings standard is implicit on any campus job that crosses property or building boundaries.',
+      'BS EN 50174-3 covers outside-buildings work: buried cables, aerial spans, building-to-building runs, environmental protection, lightning protection of external runs. §444.4.10 names -1 and -2 verbatim but not -3 — the outside-buildings standard is implicit on any campus job that crosses property or building boundaries.',
   },
   {
     id: 9,
@@ -226,7 +226,7 @@ const faqs = [
         and the channel / permanent-link models. BS EN 50174 is the INSTALLATION practice standard —
         how to plan, pull, support, separate and document the cabling, in three parts: -1
         specification &amp; QA, -2 inside buildings, -3 outside buildings. The two are read
-        together: -50173 says what; -50174 says how. BS 7671 §444.410 names BS EN 50174-1, -2 and BS
+        together: -50173 says what; -50174 says how. BS 7671 §444.4.10 names BS EN 50174-1, -2 and BS
         EN 50310 verbatim — those are mandatory inside UK buildings from 15 April 2026.
       </>
     ),
@@ -304,7 +304,7 @@ const faqs = [
         inter-building fibre is outside §716{`'`}s scope (no PoE on fibre) but inside §444.4.9{`'`}s
         preference (metal-free fibre between buildings with separate bonding). On a campus job you
         would expect: §444.4.9-compliant metal-free fibre between buildings, §716-compliant Cat 6A
-        inside each building, §444.410-mandated BS EN 50174-1, -2 and BS EN 50310 across the whole
+        inside each building, §444.4.10-mandated BS EN 50174-1, -2 and BS EN 50310 across the whole
         installation.
       </>
     ),
@@ -340,7 +340,7 @@ const DataCablingModule6Section3 = () => {
         <TLDR
           points={[
             'BS EN 50173 series (performance) and BS EN 50174 series (install practice) apply together — pick BS EN 50173-1 + the application-specific part (-2 office / -3 industrial / -4 residential / -5 data centre / -6 distributed buildings), plus BS EN 50174-1 + -2 inside buildings or -1 + -3 outside buildings.',
-            'BS 7671:2018+A4:2026 §444.410 verbatim: BS EN 50174-1, BS EN 50174-2 and BS EN 50310 "shall be applied" inside UK buildings. From 15 April 2026 these EN documents are regulatorily mandatory.',
+            'BS 7671:2018+A4:2026 §444.4.10 verbatim: BS EN 50174-1, BS EN 50174-2 and BS EN 50310 "shall be applied" inside UK buildings. From 15 April 2026 these EN documents are regulatorily mandatory.',
             'BS 7671:2018+A4:2026 §444.1.3 verbatim: maximum mesh size 2 m × 2 m for the common meshed bonding star network in ICT-dense installations. §444.4.9 verbatim: metal-free optical fibre is preferred between separate buildings with separate equipotential bonding systems.',
             'BS 7671:2018+A4:2026 §545 (NEW IN A4:2026) introduces ICT functional earthing: 2.5 mm² Cu min with mechanical protection, 4 mm² Cu without (§545.1.2 verbatim). The new MFET (Main Functional Earthing Terminal) is connected once to the MET (§545.1.1).',
           ]}
@@ -350,7 +350,7 @@ const DataCablingModule6Section3 = () => {
           outcomes={[
             'List the BS EN 50173 multi-part structure (-1 through -6) and pick the right parts for offices, industrial, residential, data centres and distributed buildings',
             'List the BS EN 50174 series (-1 spec & QA, -2 inside buildings, -3 outside buildings) and identify which part applies to a given job',
-            'Quote BS 7671:2018+A4:2026 §444.410 verbatim and explain why BS EN 50174-1, BS EN 50174-2 and BS EN 50310 are mandatory inside UK buildings from 15 April 2026',
+            'Quote BS 7671:2018+A4:2026 §444.4.10 verbatim and explain why BS EN 50174-1, BS EN 50174-2 and BS EN 50310 are mandatory inside UK buildings from 15 April 2026',
             'Quote BS 7671:2018+A4:2026 §444.1.3 verbatim and explain the 2 m × 2 m mesh limit for the common meshed bonding star network in ICT-dense installations',
             'Quote BS 7671:2018+A4:2026 §444.4.9 verbatim and explain why metal-free optical fibre is preferred between separate buildings with separate equipotential bonding',
             'Quote BS 7671:2018+A4:2026 §545.1.1 / §545.1.2 verbatim and apply the new ICT functional-earthing rules — 2.5 mm² Cu / 4 mm² Cu CSA limits, the MFET concept, the connection-to-MET rule',
@@ -442,7 +442,7 @@ const DataCablingModule6Section3 = () => {
         <ConceptBlock
           title="BS EN 50174-1 / -2 / -3 — the installation discipline that delivers the Class"
           plainEnglish="BS EN 50173 specifies what the channel must measure to. BS EN 50174 specifies how to install it so it actually does. The series is in three parts: -1 specification &amp; QA (the documentation, the records, the labelling), -2 inside buildings (bend radii, supports, separation from power, pulling tensions, bundle sizes), -3 outside buildings (buried, aerial, between buildings)."
-          onSite="On any UK install inside a building, BS EN 50174-1 + BS EN 50174-2 are MANDATORY under BS 7671 §444.410. -3 applies if any part of the install is outside the building — buried in the ground between two structures, aerial across a courtyard, or in a service trench between blocks on a campus. The QA documentation discipline in -1 §6 is what produces the labelling and records covered in Section 4 of this module."
+          onSite="On any UK install inside a building, BS EN 50174-1 + BS EN 50174-2 are MANDATORY under BS 7671 §444.4.10. -3 applies if any part of the install is outside the building — buried in the ground between two structures, aerial across a courtyard, or in a service trench between blocks on a campus. The QA documentation discipline in -1 §6 is what produces the labelling and records covered in Section 4 of this module."
         >
           <p>The BS EN 50174 series:</p>
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -452,7 +452,7 @@ const DataCablingModule6Section3 = () => {
                 assurance.
               </strong>{' '}
               The QA discipline. §6 covers administration: identifier hierarchy, records, as-built
-              drawings, change control. Named verbatim in BS 7671 §444.410(a) as mandatory inside UK
+              drawings, change control. Named verbatim in BS 7671 §444.4.10(a) as mandatory inside UK
               buildings.
             </li>
             <li>
@@ -463,14 +463,14 @@ const DataCablingModule6Section3 = () => {
               TP, 8× for shielded), pulling tensions (typically 110 N for Cat 6A — exceed and you
               stretch the geometry that delivers NEXT performance), supports (TIA-569-E minimum
               spacings; metallic per §521.10.202), separation from power (Annex A444 Tables A444.1 /
-              A444.2). Named verbatim in BS 7671 §444.410(b) as mandatory.
+              A444.2). Named verbatim in BS 7671 §444.4.10(b) as mandatory.
             </li>
             <li>
               <strong>
                 BS EN 50174-3:2013+A2:2022 — Installation planning and practices outside buildings.
               </strong>{' '}
               Buried cables, aerial spans, building-to-building runs, external lightning and surge
-              protection of ICT cabling. NOT named in §444.410 directly — but implicit on any campus
+              protection of ICT cabling. NOT named in §444.4.10 directly — but implicit on any campus
               or external job through §444 itself and BS EN 50310{`'`}s bonding requirements.
             </li>
           </ul>
@@ -482,7 +482,7 @@ const DataCablingModule6Section3 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 · §444.410 (Inside buildings — verbatim, repeated)"
+          source="BS 7671:2018+A4:2026 · §444.4.10 (Inside buildings — verbatim, repeated)"
           clause={
             <>
               Within a building, the requirements and recommendations of the following standards
@@ -493,7 +493,7 @@ const DataCablingModule6Section3 = () => {
               Telecommunications bonding networks for buildings and other structures.
             </>
           }
-          meaning="The same §444.410 cite repeats here because Section 3 is where it really lives — these are the building-and-campus standards. From 15 April 2026, ANY UK building hosting control, signalling or communication circuits is regulated by BS 7671 against BS EN 50174-1 + BS EN 50174-2 + BS EN 50310. Failing to apply them is failing BS 7671. Note: §444.410 does NOT name BS EN 50173 or BS EN 50346 — but those are picked up by §716.2(a) (50173-1) and by the testing requirement in -50174 itself."
+          meaning="The same §444.4.10 cite repeats here because Section 3 is where it really lives — these are the building-and-campus standards. From 15 April 2026, ANY UK building hosting control, signalling or communication circuits is regulated by BS 7671 against BS EN 50174-1 + BS EN 50174-2 + BS EN 50310. Failing to apply them is failing BS 7671. Note: §444.4.10 does NOT name BS EN 50173 or BS EN 50346 — but those are picked up by §716.2(a) (50173-1) and by the testing requirement in -50174 itself."
           cite="Verified verbatim from bs7671_regulations.full_text · A4:2026 edition · BS 7671:2018+A4:2026, published 15 April 2026"
         />
 
@@ -505,7 +505,7 @@ const DataCablingModule6Section3 = () => {
 
         <ConceptBlock
           title="BS EN 50310 ICT bonding — and the 2 m × 2 m mesh limit from §444.1.3"
-          plainEnglish="BS EN 50310 is the ICT-bonding standard called up by BS 7671 §444.410(c). It describes the Telecommunications Bonding Backbone (TBB), the bonding ring conductor, the connection of communicating equipment to the equipotential network, and the mesh-size requirements that bound common-mode interference loops. BS 7671 §444.1.x mirrors BS EN 50310 at the regulation level — and the key number is 2 m × 2 m maximum mesh size in any area where ICT equipment is susceptible to electromagnetic interference."
+          plainEnglish="BS EN 50310 is the ICT-bonding standard called up by BS 7671 §444.4.10(c). It describes the Telecommunications Bonding Backbone (TBB), the bonding ring conductor, the connection of communicating equipment to the equipotential network, and the mesh-size requirements that bound common-mode interference loops. BS 7671 §444.1.x mirrors BS EN 50310 at the regulation level — and the key number is 2 m × 2 m maximum mesh size in any area where ICT equipment is susceptible to electromagnetic interference."
           onSite="In a comms room, a data centre, or any high-density ICT space, the bond network is not a single peripheral conductor — it is a mesh. Copper strips (typically 25 mm × 3 mm flat or 8 mm round per §444.5.3) running across the floor and walls at intervals, connected at every crossing, all bonded back to the main earthing terminal. The mesh density must be 2 m × 2 m maximum per §444.1.3. BS EN 50310 gives the design detail; §444 sets the limit."
         >
           <p>The four bonding network topologies in §444.1:</p>
@@ -686,7 +686,7 @@ const DataCablingModule6Section3 = () => {
             viewBox="0 0 900 720"
             className="w-full h-auto"
             role="img"
-            aria-label="A layered stack diagram of the UK standards landscape for structured cabling. From bottom to top: Layer 1 BS 7671:2018+A4:2026, the UK wiring regulations, marked as the foundation. Layer 2 BS 6701:2016+A1:2017, customer-premises telecoms wiring and demarcation. Layer 3 BS EN 50310, the ICT bonding network, marked mandatory under §444.410. Layer 4 BS EN 50174 series, parts 1, 2 and 3, install practice, marked mandatory under §444.410. Layer 5 BS EN 50173 series, generic cabling performance, the Class definitions. Layer 6 at the top is the international cross-reference: ANSI/TIA-568 series and ISO/IEC 11801 series, valid international references not the UK regulatory pointer. A bottom legend explains the colour coding and the meaning of the mandatory marker."
+            aria-label="A layered stack diagram of the UK standards landscape for structured cabling. From bottom to top: Layer 1 BS 7671:2018+A4:2026, the UK wiring regulations, marked as the foundation. Layer 2 BS 6701:2016+A1:2017, customer-premises telecoms wiring and demarcation. Layer 3 BS EN 50310, the ICT bonding network, marked mandatory under §444.4.10. Layer 4 BS EN 50174 series, parts 1, 2 and 3, install practice, marked mandatory under §444.4.10. Layer 5 BS EN 50173 series, generic cabling performance, the Class definitions. Layer 6 at the top is the international cross-reference: ANSI/TIA-568 series and ISO/IEC 11801 series, valid international references not the UK regulatory pointer. A bottom legend explains the colour coding and the meaning of the mandatory marker."
           >
             {/* ===== Title band ===== */}
             <text
@@ -824,7 +824,7 @@ const DataCablingModule6Section3 = () => {
               fontStyle="italic"
               fontFamily="system-ui"
             >
-              BS 7671 §444.410(a) and (b) — “shall be applied”
+              BS 7671 §444.4.10(a) and (b) — “shall be applied”
             </text>
 
             <line
@@ -868,7 +868,7 @@ const DataCablingModule6Section3 = () => {
               fontStyle="italic"
               fontFamily="system-ui"
             >
-              BS 7671 §444.410(c) — “shall be applied” · coupled to §545 functional earthing
+              BS 7671 §444.4.10(c) — “shall be applied” · coupled to §545 functional earthing
             </text>
 
             <line
@@ -1032,7 +1032,7 @@ const DataCablingModule6Section3 = () => {
               strokeWidth="2"
             />
             <text x="104" y="666" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-              ★ Mandatory under BS 7671 §444.410
+              ★ Mandatory under BS 7671 §444.4.10
             </text>
 
             {/* Legend col 2 */}
@@ -1113,10 +1113,10 @@ const DataCablingModule6Section3 = () => {
             </li>
             <li>
               <strong>BS EN 50174-1 + -2.</strong> Specification &amp; QA + planning &amp; practices
-              inside buildings. MANDATORY under BS 7671 §444.410.
+              inside buildings. MANDATORY under BS 7671 §444.4.10.
             </li>
             <li>
-              <strong>BS EN 50310.</strong> ICT bonding network. MANDATORY under BS 7671 §444.410.
+              <strong>BS EN 50310.</strong> ICT bonding network. MANDATORY under BS 7671 §444.4.10.
             </li>
             <li>
               <strong>BS EN 50346.</strong> Testing of installed cabling.
@@ -1150,7 +1150,7 @@ const DataCablingModule6Section3 = () => {
             [
               'Installation practice — inside buildings',
               'BS EN 50174-1 + 50174-2',
-              '§444.410(a) and (b) — mandatory',
+              '§444.4.10(a) and (b) — mandatory',
             ],
             [
               'Installation practice — outside buildings',
@@ -1160,7 +1160,7 @@ const DataCablingModule6Section3 = () => {
             [
               'ICT bonding network',
               'BS EN 50310',
-              '§444.410(c) — mandatory · §444.1.3 sets 2 m × 2 m mesh limit',
+              '§444.4.10(c) — mandatory · §444.1.3 sets 2 m × 2 m mesh limit',
             ],
             [
               'Testing of installed cabling',
@@ -1204,7 +1204,7 @@ const DataCablingModule6Section3 = () => {
               'parallel — fire-stopping interacts with §521.10.202',
             ],
           ]}
-          notes="From 15 April 2026, every row in the BS 7671 hook column with §444.410 / §716 / §545 / §444 / §528 / §544 reference is regulatorily mandatory. Rows with parallel / cross-reference text are best-practice or implicit. The 2 m × 2 m mesh size (§444.1.3), the metal-free fibre preference between buildings (§444.4.9), the 130 mm separation from HID lamps (§444.6.2), and the new §545 / §716 sections are the headline numbers for any UK building / campus structured-cabling job from April 2026."
+          notes="From 15 April 2026, every row in the BS 7671 hook column with §444.4.10 / §716 / §545 / §444 / §528 / §544 reference is regulatorily mandatory. Rows with parallel / cross-reference text are best-practice or implicit. The 2 m × 2 m mesh size (§444.1.3), the metal-free fibre preference between buildings (§444.4.9), the 130 mm separation from HID lamps (§444.6.2), and the new §545 / §716 sections are the headline numbers for any UK building / campus structured-cabling job from April 2026."
         />
 
         <InlineCheck
@@ -1279,7 +1279,7 @@ const DataCablingModule6Section3 = () => {
         <KeyTakeaways
           title="Worth remembering"
           points={[
-            'BS EN 50173 is multi-part performance: -1 general, -2 office, -3 industrial, -4 residential, -5 data centre, -6 distributed buildings. BS EN 50174 is multi-part install practice: -1 spec & QA, -2 inside buildings, -3 outside. BS EN 50310 is ICT bonding. All three named verbatim in BS 7671 §444.410.',
+            'BS EN 50173 is multi-part performance: -1 general, -2 office, -3 industrial, -4 residential, -5 data centre, -6 distributed buildings. BS EN 50174 is multi-part install practice: -1 spec & QA, -2 inside buildings, -3 outside. BS EN 50310 is ICT bonding. All three named verbatim in BS 7671 §444.4.10.',
             'BS 7671:2018+A4:2026 §444.1.3 verbatim: 2 m × 2 m maximum mesh size for the common meshed bonding star network in ICT-dense installations.',
             'BS 7671:2018+A4:2026 §444.4.9 verbatim: metal-free optical fibre is preferred between separate buildings with separate equipotential bonding systems.',
             'BS 7671:2018+A4:2026 §545 (NEW IN A4:2026): ICT functional earthing — 2.5 mm² Cu / 4 mm² Cu min CSAs, MFET concept, single connection to MET. §545.1.5 — combined protective + functional must satisfy protective requirements.',

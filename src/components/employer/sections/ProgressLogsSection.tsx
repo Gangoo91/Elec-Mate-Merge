@@ -51,10 +51,7 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
   Avatar,
-  IconButton,
-  Pill,
   EmptyState,
   LoadingBlocks,
   PrimaryButton,
@@ -65,6 +62,17 @@ import {
   selectTriggerClass,
   selectContentClass,
 } from '@/components/employer/editorial';
+import {
+  frameClass,
+  panel,
+  PanelTitle,
+  HeroActions,
+  HeroPrimary,
+  ToolButton,
+  PlainEmpty,
+  Segments,
+  SearchField,
+} from '@/components/employer/pageParts/PageParts';
 
 /* ==========================================================================
    Site diary (ELE-1964). One diary per job: the office's daily logs and the
@@ -86,14 +94,17 @@ const weatherOptions: WeatherCondition[] = [
 type RangeFilter = 'today' | 'week' | 'month' | 'all';
 type WhoFilter = 'all' | 'team' | 'office';
 
-const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
 const cardCn =
   'rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.07] to-white/[0.03]';
 
 function initials(name?: string | null) {
   if (!name) return '··';
-  const parts = name.trim().split(/\s+/);
+  // Words only: "Demo Worker (test)" gave "D(".
+  const parts = name
+    .trim()
+    .split(/\s+/)
+    .filter((part) => /^[\p{L}\p{N}]/u.test(part));
+  if (parts.length === 0) return '··';
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
@@ -247,8 +258,7 @@ export function ProgressLogsSection() {
         (r === 'month' && isThisMonth(d))
       );
     }).length;
-
-  const tabs = [
+  const tabs: { value: RangeFilter; label: string; count: number }[] = [
     { value: 'today', label: 'Today', count: countFor('today') },
     { value: 'week', label: 'This week', count: countFor('week') },
     { value: 'month', label: 'This month', count: countFor('month') },
@@ -261,6 +271,7 @@ export function ProgressLogsSection() {
     team: filtered.filter((e) => e.kind === 'team').length,
     photos: filtered.reduce((n, e) => n + e.photos.length, 0),
     shared: filtered.filter((e) => e.shared_with_client).length,
+    toSign: filtered.filter((e) => e.kind === 'office' && !e.signed_off).length,
   };
   const rangeWord =
     rangeFilter === 'today'
@@ -274,12 +285,17 @@ export function ProgressLogsSection() {
   /* ---------- grouping: day → job ---------- */
   const onSiteMap = useMemo(() => {
     const m = new Map<string, { names: string[]; hours: number }>();
-    onSite.forEach((o) => m.set(`${o.job_id}|${o.date}`, { names: o.names ?? [], hours: Number(o.hours ?? 0) }));
+    onSite.forEach((o) =>
+      m.set(`${o.job_id}|${o.date}`, { names: o.names ?? [], hours: Number(o.hours ?? 0) })
+    );
     return m;
   }, [onSite]);
 
   const groups = useMemo(() => {
-    const days: { date: string; jobs: { jobId: string; title: string; client: string | null; items: DiaryEntry[] }[] }[] = [];
+    const days: {
+      date: string;
+      jobs: { jobId: string; title: string; client: string | null; items: DiaryEntry[] }[];
+    }[] = [];
     for (const e of filtered) {
       let day = days.find((d) => d.date === e.entry_date);
       if (!day) {
@@ -331,7 +347,8 @@ export function ProgressLogsSection() {
     setUploadingPhotos(true);
     try {
       const { urls, failed } = await uploadJobPhotos(files, 'progress-logs');
-      if (urls.length) setFormData((prev) => ({ ...prev, photos: [...(prev.photos || []), ...urls] }));
+      if (urls.length)
+        setFormData((prev) => ({ ...prev, photos: [...(prev.photos || []), ...urls] }));
       if (failed.length) {
         toast({
           title: `${failed.length} photo${failed.length === 1 ? '' : 's'} not added`,
@@ -340,7 +357,11 @@ export function ProgressLogsSection() {
         });
       }
     } catch {
-      toast({ title: 'Upload failed', description: 'Could not upload photos. Try again.', variant: 'destructive' });
+      toast({
+        title: 'Upload failed',
+        description: 'Could not upload photos. Try again.',
+        variant: 'destructive',
+      });
     } finally {
       setUploadingPhotos(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -354,7 +375,10 @@ export function ProgressLogsSection() {
   };
   const handleAddMaterial = () => {
     if (!newMaterial.item.trim()) return;
-    setFormData((prev) => ({ ...prev, materials_list: [...prev.materials_list, { ...newMaterial }] }));
+    setFormData((prev) => ({
+      ...prev,
+      materials_list: [...prev.materials_list, { ...newMaterial }],
+    }));
     setNewMaterial({ item: '', quantity: '', cost: 0 });
   };
 
@@ -369,14 +393,18 @@ export function ProgressLogsSection() {
     }
     const workCompleted = [
       formData.work_description.trim(),
-      formData.work_items.length ? 'Completed items:\n' + formData.work_items.map((w) => `• ${w}`).join('\n') : null,
+      formData.work_items.length
+        ? 'Completed items:\n' + formData.work_items.map((w) => `• ${w}`).join('\n')
+        : null,
       formData.hours_worked ? `Hours worked: ${formData.hours_worked}` : null,
     ]
       .filter(Boolean)
       .join('\n\n');
     const materialsText = formData.materials_list.length
       ? formData.materials_list
-          .map((m) => `${m.item}${m.quantity ? ` ×${m.quantity}` : ''}${m.cost ? ` (£${m.cost})` : ''}`)
+          .map(
+            (m) => `${m.item}${m.quantity ? ` ×${m.quantity}` : ''}${m.cost ? ` (£${m.cost})` : ''}`
+          )
           .join(', ')
       : null;
     try {
@@ -441,36 +469,47 @@ export function ProgressLogsSection() {
     });
   }
 
+  const liveLine = (() => {
+    if (isLoading) return 'Loading the diary.';
+    if (entries.length === 0)
+      return "Nothing written yet. The team's notes from site land here with their photos.";
+    const n = stats.entries;
+    const head =
+      n === 0
+        ? `No entries ${rangeWord}`
+        : `${n} ${n === 1 ? 'entry' : 'entries'} ${rangeWord}${stats.team ? `, ${stats.team} from the team` : ''}`;
+    if (stats.toSign > 0)
+      return `${head}. ${stats.toSign} daily ${stats.toSign === 1 ? 'log' : 'logs'} to sign off.`;
+    return `${head}.`;
+  })();
+
   const heroActions = (
-    <>
-      <PrimaryButton data-help="progresslogs.new" onClick={() => setShowCreateSheet(true)}>
-        <Plus className="h-4 w-4 mr-1.5" />
+    <HeroActions>
+      <HeroPrimary
+        data-help="progresslogs.new"
+        onClick={() => setShowCreateSheet(true)}
+        icon={<Plus className="h-4 w-4" />}
+      >
         Write a log
-      </PrimaryButton>
-      <IconButton onClick={handleRefresh} aria-label="Refresh diary">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
+      </HeroPrimary>
+      <ToolButton
+        label="Refresh diary"
+        onClick={handleRefresh}
+        icon={<RefreshCw className="h-4 w-4" />}
+      />
       <PageHelpButton
         help={PROGRESS_LOGS_HELP}
         blockers={helpBlockers}
         askContext={{ page: 'progresslogs', tab: rangeFilter }}
       />
-    </>
+    </HeroActions>
   );
 
-  const hero = (
-    <PageHero
-      eyebrow="Jobs"
-      title="Site diary"
-      description="What happened on site each day: the office's logs and the team's notes, with their photos."
-      tone="emerald"
-      actions={heroActions}
-    />
-  );
+  const hero = <PageHero title="Site diary" description={liveLine} actions={heroActions} />;
 
   if (isLoading) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
         {hero}
         <LoadingBlocks />
       </PageFrame>
@@ -479,7 +518,7 @@ export function ProgressLogsSection() {
 
   if (error) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
         {hero}
         <EmptyState
           title="Couldn't load the diary"
@@ -494,216 +533,244 @@ export function ProgressLogsSection() {
   const filtersActive = who !== 'all' || !!person || !!jobFilter;
 
   const content = (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       {hero}
 
-      <HowItWorks help={PROGRESS_LOGS_HELP} blockers={helpBlockers} askContext={{ page: 'progresslogs', tab: rangeFilter }} />
+      <HowItWorks
+        help={PROGRESS_LOGS_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'progresslogs', tab: rangeFilter }}
+      />
 
       <JobContextBar what="Site diary" />
 
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Entries', value: stats.entries, sub: rangeWord, tone: 'emerald' },
-          { label: 'From the team', value: stats.team, sub: rangeWord, tone: 'blue' },
-          { label: 'Photos', value: stats.photos, sub: rangeWord, tone: 'cyan' },
+          { label: 'Entries', value: stats.entries, sub: rangeWord },
+          { label: 'From the team', value: stats.team, sub: rangeWord },
+          { label: 'Photos', value: stats.photos, sub: rangeWord },
           { label: 'Shared with client', value: stats.shared, sub: rangeWord },
         ]}
       />
 
-      <div data-help="progresslogs.tabs">
-        <FilterBar
-          tabs={tabs}
-          activeTab={rangeFilter}
-          onTabChange={(v) => setRangeFilter(v as RangeFilter)}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search notes, people, jobs…"
+      <div
+        data-help="progresslogs.tabs"
+        className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
+      >
+        <Segments items={tabs} value={rangeFilter} onChange={setRangeFilter} />
+        <SearchField
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Search notes, people, jobs"
+          className="lg:w-80"
         />
       </div>
 
-      <div data-help="progresslogs.who" className="flex flex-col gap-2 lg:flex-row lg:items-center">
-        <div className="flex gap-2 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none]">
-          {(
-            [
-              ['all', 'Everyone'],
-              ['team', 'From the team'],
-              ['office', 'Office logs'],
-            ] as [WhoFilter, string][]
-          ).map(([v, l]) => (
-            <button
-              key={v}
-              type="button"
-              onClick={() => setWho(v)}
-              className={cn(
-                'h-11 shrink-0 rounded-full border px-4 text-[13px] touch-manipulation',
-                who === v ? chipOn : chipOff
-              )}
-            >
-              {l}
-            </button>
-          ))}
-        </div>
-        <div className="grid grid-cols-2 gap-2 lg:ml-auto lg:w-[28rem]">
-          <Select value={person || 'all'} onValueChange={(v) => setPerson(v === 'all' ? '' : v)}>
-            <SelectTrigger className={selectTriggerClass} aria-label="Filter by person">
-              <SelectValue placeholder="Anyone" />
-            </SelectTrigger>
-            <SelectContent className={selectContentClass}>
-              <SelectItem value="all">Anyone</SelectItem>
-              {people.map((p) => (
-                <SelectItem key={p} value={p}>
-                  {p}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {!contextJobId ? (
-            <Select value={jobFilter || 'all'} onValueChange={(v) => setJobFilter(v === 'all' ? '' : v)}>
-              <SelectTrigger className={selectTriggerClass} aria-label="Filter by job">
-                <SelectValue placeholder="Every job" />
+      <div className="flex flex-col gap-6 sm:gap-8 lg:grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-start lg:gap-8">
+        <aside data-help="progresslogs.who" className="space-y-3 lg:order-2 lg:sticky lg:top-4">
+          <PanelTitle
+            title="Show"
+            action={filtersActive ? 'Clear' : undefined}
+            onAction={() => {
+              setWho('all');
+              setPerson('');
+              setJobFilter('');
+            }}
+          />
+          <Segments
+            items={[
+              { value: 'all' as WhoFilter, label: 'Everyone' },
+              { value: 'team' as WhoFilter, label: 'From the team' },
+              { value: 'office' as WhoFilter, label: 'Office logs' },
+            ]}
+            value={who}
+            onChange={setWho}
+            quiet
+            className="lg:w-full"
+          />
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
+            <Select value={person || 'all'} onValueChange={(v) => setPerson(v === 'all' ? '' : v)}>
+              <SelectTrigger className={selectTriggerClass} aria-label="Filter by person">
+                <SelectValue placeholder="Anyone" />
               </SelectTrigger>
               <SelectContent className={selectContentClass}>
-                <SelectItem value="all">Every job</SelectItem>
-                {diaryJobs.map(([id, title]) => (
-                  <SelectItem key={id} value={id}>
-                    {title}
+                <SelectItem value="all">Anyone</SelectItem>
+                {people.map((p) => (
+                  <SelectItem key={p} value={p}>
+                    {p}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
+            {!contextJobId ? (
+              <Select
+                value={jobFilter || 'all'}
+                onValueChange={(v) => setJobFilter(v === 'all' ? '' : v)}
+              >
+                <SelectTrigger className={selectTriggerClass} aria-label="Filter by job">
+                  <SelectValue placeholder="Every job" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="all">Every job</SelectItem>
+                  {diaryJobs.map(([id, title]) => (
+                    <SelectItem key={id} value={id}>
+                      {title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <span />
+            )}
+          </div>
+        </aside>
+
+        <div className="min-w-0 lg:order-1">
+          {filtered.length === 0 ? (
+            <PlainEmpty
+              text={
+                entries.length === 0
+                  ? "Daily logs and the team's progress notes from Worker Tools appear here, by day and job."
+                  : searchQuery || filtersActive
+                    ? 'Nothing matches this search or filter.'
+                    : `No entries ${rangeWord}.`
+              }
+              action={
+                entries.length === 0
+                  ? 'Write a log'
+                  : searchQuery || filtersActive
+                    ? 'Clear filters'
+                    : 'Show all'
+              }
+              onAction={() => {
+                if (entries.length === 0) setShowCreateSheet(true);
+                else if (searchQuery || filtersActive) {
+                  setSearchQuery('');
+                  setWho('all');
+                  setPerson('');
+                  setJobFilter('');
+                } else setRangeFilter('all');
+              }}
+            />
           ) : (
-            <span />
+            <div className="space-y-6 sm:space-y-8" data-help="progresslogs.list">
+              {groups.map((day) => (
+                <section key={day.date} aria-label={dayLabel(day.date)} className="space-y-3">
+                  <PanelTitle
+                    title={dayLabel(day.date)}
+                    meta={format(parseISO(day.date), 'd MMM yyyy')}
+                  />
+                  {day.jobs.map((job) => {
+                    const crew = onSiteMap.get(`${job.jobId}|${day.date}`);
+                    return (
+                      <div key={job.jobId} className={cn(panel, 'overflow-hidden')}>
+                        <div className="flex flex-col gap-1 border-b border-white/[0.07] px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                          <button
+                            type="button"
+                            onClick={() => openJob(job.jobId)}
+                            className="min-w-0 text-left touch-manipulation"
+                          >
+                            <span className="block truncate text-[15px] font-semibold text-white">
+                              {job.title}
+                            </span>
+                            {job.client && (
+                              <span className="block truncate text-[13px] text-white">
+                                {job.client}
+                              </span>
+                            )}
+                          </button>
+                          <span className="text-[13px] text-white sm:shrink-0">
+                            {crew && crew.names.length
+                              ? `On site: ${crew.names.join(', ')}${crew.hours ? ` · ${crew.hours} hrs` : ''}`
+                              : 'No clock-ins that day'}
+                          </span>
+                        </div>
+                        <ul className="divide-y divide-white/[0.07]">
+                          {job.items.map((e) => (
+                            <li key={`${e.kind}:${e.id}`}>
+                              <div
+                                role="button"
+                                tabIndex={0}
+                                onClick={() => setSelectedKey(`${e.kind}:${e.id}`)}
+                                onKeyDown={(ev) => {
+                                  if (ev.key === 'Enter' || ev.key === ' ') {
+                                    ev.preventDefault();
+                                    setSelectedKey(`${e.kind}:${e.id}`);
+                                  }
+                                }}
+                                className="block w-full cursor-pointer px-4 py-3.5 text-left touch-manipulation hover:bg-white/[0.04] sm:px-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60"
+                              >
+                                <div className="flex items-start gap-3">
+                                  <Avatar initials={initials(e.author_name)} size="sm" />
+                                  <div className="min-w-0 flex-1">
+                                    <div className="flex items-baseline gap-2">
+                                      <span className="min-w-0 truncate text-[15px] font-semibold text-white">
+                                        {e.author_name}
+                                      </span>
+                                      <span className="ml-auto shrink-0 text-[13px] tabular-nums text-white">
+                                        {format(parseISO(e.created_at), 'HH:mm')}
+                                      </span>
+                                    </div>
+                                    <p className="text-[13px] text-white">
+                                      {e.kind === 'team' ? 'Team note' : 'Daily log'}
+                                      {e.shared_with_client && ' · Shared with client'}
+                                      {e.kind === 'office' &&
+                                        (e.signed_off ? (
+                                          <span className="text-emerald-400"> · Signed off</span>
+                                        ) : (
+                                          <span className="text-elec-yellow"> · To sign off</span>
+                                        ))}
+                                    </p>
+                                    <p className="mt-1.5 line-clamp-4 whitespace-pre-wrap text-[14px] leading-relaxed text-white">
+                                      {e.body || 'No words, photos only.'}
+                                    </p>
+                                    {(e.weather || e.workers_on_site || e.edited_at) && (
+                                      <p className="mt-1.5 text-[13px] text-white">
+                                        {[
+                                          e.weather,
+                                          e.workers_on_site ? `${e.workers_on_site} on site` : null,
+                                          e.edited_at ? 'Edited' : null,
+                                        ]
+                                          .filter(Boolean)
+                                          .join(' · ')}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                                {e.photos.length > 0 && (
+                                  <div className="mt-3 flex gap-2 pl-11">
+                                    {e.photos.slice(0, 4).map((p, i) => (
+                                      <PhotoTile
+                                        key={p}
+                                        url={photoSrcs[p]}
+                                        loading={photosLoading && !photoSrcs[p]}
+                                        alt={`Photo ${i + 1} from ${e.author_name}`}
+                                        className="h-16 w-16 sm:h-20 sm:w-20"
+                                        onClick={() => openPhotos(e, i)}
+                                      >
+                                        {i === 3 && e.photos.length > 4 && (
+                                          <span className="absolute inset-0 flex items-center justify-center bg-black/60 text-[13px] font-semibold text-white">
+                                            +{e.photos.length - 4}
+                                          </span>
+                                        )}
+                                      </PhotoTile>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </section>
+              ))}
+            </div>
           )}
         </div>
       </div>
-
-      {filtered.length === 0 ? (
-        <EmptyState
-          title={entries.length === 0 ? 'Nothing in the diary yet' : 'Nothing matches'}
-          description={
-            entries.length === 0
-              ? 'Write the first daily log, or ask the team to add a progress note from Worker Tools. Both land here.'
-              : searchQuery || filtersActive
-                ? 'Try a different search, or clear the filters.'
-                : `No entries ${rangeWord}. Try All.`
-          }
-          action={entries.length === 0 ? 'Write a log' : searchQuery || filtersActive ? 'Clear filters' : 'Show all'}
-          onAction={() => {
-            if (entries.length === 0) setShowCreateSheet(true);
-            else if (searchQuery || filtersActive) {
-              setSearchQuery('');
-              setWho('all');
-              setPerson('');
-              setJobFilter('');
-            } else setRangeFilter('all');
-          }}
-        />
-      ) : (
-        <div className="space-y-6" data-help="progresslogs.list">
-          {groups.map((day) => (
-            <section key={day.date} aria-label={dayLabel(day.date)} className="space-y-3">
-              <h2 className="text-[15px] font-semibold tracking-tight text-white">
-                {dayLabel(day.date)}
-                <span className="ml-2 text-[12px] font-normal text-white">
-                  {format(parseISO(day.date), 'd MMM yyyy')}
-                </span>
-              </h2>
-              {day.jobs.map((job) => {
-                const crew = onSiteMap.get(`${job.jobId}|${day.date}`);
-                return (
-                  <div key={job.jobId} className={cn(cardCn, 'overflow-hidden')}>
-                    <div className="flex flex-col gap-1 border-b border-white/[0.08] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                      <button
-                        type="button"
-                        onClick={() => openJob(job.jobId)}
-                        className="min-w-0 text-left touch-manipulation"
-                      >
-                        <span className="block truncate text-[14px] font-semibold text-white">{job.title}</span>
-                        {job.client && <span className="block truncate text-[12px] text-white">{job.client}</span>}
-                      </button>
-                      <span className="text-[12px] text-white">
-                        {crew && crew.names.length
-                          ? `On site: ${crew.names.join(', ')}${crew.hours ? ` · ${crew.hours} hrs` : ''}`
-                          : 'No clock-ins that day'}
-                      </span>
-                    </div>
-                    <ul className="divide-y divide-white/[0.08]">
-                      {job.items.map((e) => (
-                        <li key={`${e.kind}:${e.id}`}>
-                          <div
-                            role="button"
-                            tabIndex={0}
-                            onClick={() => setSelectedKey(`${e.kind}:${e.id}`)}
-                            onKeyDown={(ev) => {
-                              if (ev.key === 'Enter' || ev.key === ' ') {
-                                ev.preventDefault();
-                                setSelectedKey(`${e.kind}:${e.id}`);
-                              }
-                            }}
-                            className="block w-full cursor-pointer px-4 py-3.5 text-left touch-manipulation hover:bg-white/[0.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60"
-                          >
-                            <div className="flex items-start gap-3">
-                              <Avatar initials={initials(e.author_name)} size="sm" />
-                              <div className="min-w-0 flex-1">
-                                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                                  <span className="text-[14px] font-semibold text-white">{e.author_name}</span>
-                                  <Pill tone={e.kind === 'team' ? 'blue' : 'emerald'}>
-                                    {e.kind === 'team' ? 'Team note' : 'Daily log'}
-                                  </Pill>
-                                  {e.shared_with_client && <Pill tone="purple">Shared with client</Pill>}
-                                  {e.kind === 'office' && e.signed_off && <Pill tone="emerald">Signed off</Pill>}
-                                  <span className="ml-auto text-[12px] tabular-nums text-white">
-                                    {format(parseISO(e.created_at), 'HH:mm')}
-                                  </span>
-                                </div>
-                                <p className="mt-1.5 line-clamp-4 whitespace-pre-wrap text-[13.5px] leading-relaxed text-white">
-                                  {e.body || 'No words, photos only.'}
-                                </p>
-                                {(e.weather || e.workers_on_site || e.edited_at) && (
-                                  <p className="mt-1.5 text-[12px] text-white">
-                                    {[
-                                      e.weather,
-                                      e.workers_on_site ? `${e.workers_on_site} on site` : null,
-                                      e.edited_at ? 'Edited' : null,
-                                    ]
-                                      .filter(Boolean)
-                                      .join(' · ')}
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-                            {e.photos.length > 0 && (
-                              <div className="mt-3 flex gap-2 pl-11">
-                                {e.photos.slice(0, 4).map((p, i) => (
-                                  <PhotoTile
-                                    key={p}
-                                    url={photoSrcs[p]}
-                                    loading={photosLoading && !photoSrcs[p]}
-                                    alt={`Photo ${i + 1} from ${e.author_name}`}
-                                    className="h-16 w-16 sm:h-20 sm:w-20"
-                                    onClick={() => openPhotos(e, i)}
-                                  >
-                                    {i === 3 && e.photos.length > 4 && (
-                                      <span className="absolute inset-0 flex items-center justify-center bg-black/60 text-[13px] font-semibold text-white">
-                                        +{e.photos.length - 4}
-                                      </span>
-                                    )}
-                                  </PhotoTile>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              })}
-            </section>
-          ))}
-        </div>
-      )}
 
       {/* ---------- one entry ---------- */}
       <FormSheet
@@ -771,7 +838,9 @@ export function ProgressLogsSection() {
                 .map(([label, v]) => (
                   <div key={label as string} className={cn(cardCn, 'p-4 space-y-2')}>
                     <h3 className="text-sm font-semibold text-white">{label}</h3>
-                    <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-white">{v}</p>
+                    <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-white">
+                      {v}
+                    </p>
                   </div>
                 ))}
             </div>
@@ -782,7 +851,9 @@ export function ProgressLogsSection() {
                 <dl className="grid grid-cols-2 gap-3 text-[13px]">
                   <div>
                     <dt className="text-[12px] text-white">Date</dt>
-                    <dd className="font-medium text-white">{format(parseISO(selected.entry_date), 'd MMM yyyy')}</dd>
+                    <dd className="font-medium text-white">
+                      {format(parseISO(selected.entry_date), 'd MMM yyyy')}
+                    </dd>
                   </div>
                   <div>
                     <dt className="text-[12px] text-white">Written by</dt>
@@ -837,7 +908,9 @@ export function ProgressLogsSection() {
                   <Switch
                     checked={selected.shared_with_client}
                     disabled={setShared.isPending}
-                    onCheckedChange={(v) => setShared.mutate({ kind: selected.kind, id: selected.id, shared: v })}
+                    onCheckedChange={(v) =>
+                      setShared.mutate({ kind: selected.kind, id: selected.id, shared: v })
+                    }
                     aria-label="Share with the client"
                   />
                 </div>
@@ -902,7 +975,10 @@ export function ProgressLogsSection() {
         <div className="space-y-5">
           <div className="space-y-2" data-help="progresslogs.form-job">
             <Label className="text-white text-[12px] font-medium">Job</Label>
-            <Select value={formData.job_id} onValueChange={(v) => setFormData((p) => ({ ...p, job_id: v }))}>
+            <Select
+              value={formData.job_id}
+              onValueChange={(v) => setFormData((p) => ({ ...p, job_id: v }))}
+            >
               <SelectTrigger className={selectTriggerClass}>
                 <SelectValue placeholder="Pick the job" />
               </SelectTrigger>
@@ -930,7 +1006,9 @@ export function ProgressLogsSection() {
               <Label className="text-white text-[12px] font-medium">Weather</Label>
               <Select
                 value={formData.weather}
-                onValueChange={(v) => setFormData((p) => ({ ...p, weather: v as WeatherCondition }))}
+                onValueChange={(v) =>
+                  setFormData((p) => ({ ...p, weather: v as WeatherCondition }))
+                }
               >
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue />
@@ -951,7 +1029,9 @@ export function ProgressLogsSection() {
                 inputMode="numeric"
                 min={0}
                 value={formData.workers_on_site}
-                onChange={(e) => setFormData((p) => ({ ...p, workers_on_site: parseInt(e.target.value) || 0 }))}
+                onChange={(e) =>
+                  setFormData((p) => ({ ...p, workers_on_site: parseInt(e.target.value) || 0 }))
+                }
                 className={inputClass}
               />
             </div>
@@ -963,7 +1043,9 @@ export function ProgressLogsSection() {
                 min={0}
                 step={0.5}
                 value={formData.hours_worked}
-                onChange={(e) => setFormData((p) => ({ ...p, hours_worked: parseFloat(e.target.value) || 0 }))}
+                onChange={(e) =>
+                  setFormData((p) => ({ ...p, hours_worked: parseFloat(e.target.value) || 0 }))
+                }
                 className={inputClass}
               />
             </div>
@@ -994,12 +1076,18 @@ export function ProgressLogsSection() {
             {formData.work_items.length > 0 && (
               <ul className="space-y-1.5">
                 {formData.work_items.map((item, i) => (
-                  <li key={i} className="flex items-center justify-between gap-2 rounded-xl bg-white/[0.05] px-3 py-2">
+                  <li
+                    key={i}
+                    className="flex items-center justify-between gap-2 rounded-xl bg-white/[0.05] px-3 py-2"
+                  >
                     <span className="text-[13px] text-white">{item}</span>
                     <button
                       type="button"
                       onClick={() =>
-                        setFormData((p) => ({ ...p, work_items: p.work_items.filter((_, x) => x !== i) }))
+                        setFormData((p) => ({
+                          ...p,
+                          work_items: p.work_items.filter((_, x) => x !== i),
+                        }))
                       }
                       className="flex h-11 w-11 items-center justify-center rounded-full text-white touch-manipulation"
                       aria-label={`Remove ${item}`}
@@ -1033,18 +1121,27 @@ export function ProgressLogsSection() {
                 type="number"
                 inputMode="decimal"
                 value={newMaterial.cost || ''}
-                onChange={(e) => setNewMaterial((p) => ({ ...p, cost: parseFloat(e.target.value) || 0 }))}
+                onChange={(e) =>
+                  setNewMaterial((p) => ({ ...p, cost: parseFloat(e.target.value) || 0 }))
+                }
                 placeholder="£"
                 className={inputClass}
               />
-              <SecondaryButton onClick={handleAddMaterial} className="h-11 w-11 px-0" aria-label="Add material">
+              <SecondaryButton
+                onClick={handleAddMaterial}
+                className="h-11 w-11 px-0"
+                aria-label="Add material"
+              >
                 <Plus className="h-4 w-4" />
               </SecondaryButton>
             </div>
             {formData.materials_list.length > 0 && (
               <ul className="space-y-1.5">
                 {formData.materials_list.map((m, i) => (
-                  <li key={i} className="flex items-center justify-between gap-2 rounded-xl bg-white/[0.05] px-3 py-2">
+                  <li
+                    key={i}
+                    className="flex items-center justify-between gap-2 rounded-xl bg-white/[0.05] px-3 py-2"
+                  >
                     <span className="text-[13px] text-white">
                       {m.item}
                       {m.quantity ? ` ×${m.quantity}` : ''}
@@ -1053,7 +1150,10 @@ export function ProgressLogsSection() {
                     <button
                       type="button"
                       onClick={() =>
-                        setFormData((p) => ({ ...p, materials_list: p.materials_list.filter((_, x) => x !== i) }))
+                        setFormData((p) => ({
+                          ...p,
+                          materials_list: p.materials_list.filter((_, x) => x !== i),
+                        }))
                       }
                       className="flex h-11 w-11 items-center justify-center rounded-full text-white touch-manipulation"
                       aria-label={`Remove ${m.item}`}
@@ -1088,10 +1188,20 @@ export function ProgressLogsSection() {
             <div className="flex flex-wrap gap-2">
               {(formData.photos || []).map((p) => (
                 <div key={p} className="relative">
-                  <PhotoTile url={photoSrcs[p]} loading={!photoSrcs[p]} alt="Site photo" className="h-20 w-20" />
+                  <PhotoTile
+                    url={photoSrcs[p]}
+                    loading={!photoSrcs[p]}
+                    alt="Site photo"
+                    className="h-20 w-20"
+                  />
                   <button
                     type="button"
-                    onClick={() => setFormData((prev) => ({ ...prev, photos: (prev.photos || []).filter((x) => x !== p) }))}
+                    onClick={() =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        photos: (prev.photos || []).filter((x) => x !== p),
+                      }))
+                    }
                     className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black text-white touch-manipulation"
                     aria-label="Remove photo"
                   >
@@ -1106,7 +1216,11 @@ export function ProgressLogsSection() {
                 className="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-white/25 text-white disabled:opacity-50 touch-manipulation"
                 aria-label="Add photos"
               >
-                {uploadingPhotos ? <Loader2 className="h-5 w-5 animate-spin" /> : <Camera className="h-5 w-5" />}
+                {uploadingPhotos ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Camera className="h-5 w-5" />
+                )}
                 <span className="text-[11px]">Add</span>
               </button>
             </div>
@@ -1114,7 +1228,9 @@ export function ProgressLogsSection() {
           <div className={cn(cardCn, 'flex items-center justify-between gap-3 p-4')}>
             <div className="min-w-0">
               <p className="text-sm font-semibold text-white">Share with the client</p>
-              <p className="mt-0.5 text-[12.5px] text-white">Off keeps it to your team. You can change it later.</p>
+              <p className="mt-0.5 text-[12.5px] text-white">
+                Off keeps it to your team. You can change it later.
+              </p>
             </div>
             <Switch
               checked={!!formData.shared_with_client}
@@ -1135,7 +1251,11 @@ export function ProgressLogsSection() {
         />
       )}
 
-      <ViewJobSheet job={jobSheetJob} open={!!jobSheetJob} onOpenChange={(o) => !o && setJobSheetJob(null)} />
+      <ViewJobSheet
+        job={jobSheetJob}
+        open={!!jobSheetJob}
+        onOpenChange={(o) => !o && setJobSheetJob(null)}
+      />
 
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
         <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06]">
@@ -1149,8 +1269,13 @@ export function ProgressLogsSection() {
             <AlertDialogCancel className="h-11 bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]">
               Keep it
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="h-11 bg-red-500/90 text-white hover:bg-red-500">
-              {deleteProgressLog.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="h-11 bg-red-500/90 text-white hover:bg-red-500"
+            >
+              {deleteProgressLog.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              ) : null}
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -1159,11 +1284,5 @@ export function ProgressLogsSection() {
     </PageFrame>
   );
 
-  return isMobile ? (
-    <PullToRefresh onRefresh={handleRefresh}>
-      {content}
-    </PullToRefresh>
-  ) : (
-    content
-  );
+  return isMobile ? <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh> : content;
 }

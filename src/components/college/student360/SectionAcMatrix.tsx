@@ -30,6 +30,13 @@ import {
   type AcState,
   type AcStateRow,
 } from '@/hooks/portfolio/usePortfolioAcState';
+import {
+  occasionCounter,
+  occasionKey,
+  useAcOccasions,
+  type AcOccasionRow,
+} from '@/hooks/portfolio/useAcOccasions';
+import { OccasionsGrid } from '@/components/portfolio/OccasionsGrid';
 
 /* ==========================================================================
    SectionAcMatrix — premium AC coverage view on Student 360.
@@ -108,7 +115,7 @@ const CARD = cn(
   CARD_SURFACE
 );
 
-type ViewMode = 'matrix' | 'list';
+type ViewMode = 'matrix' | 'list' | 'grid';
 
 const acKey = (cell: AcCellRow) => `${cell.unit_code}:${cell.ac_code}`;
 
@@ -120,6 +127,8 @@ const acKey = (cell: AcCellRow) => `${cell.unit_code}:${cell.ac_code}`;
  * not carry. Null for a learner with no account (old coverage rows only).
  */
 const AcStateCtx = createContext<Map<string, AcState> | null>(null);
+/** Separate assessed occasions per criterion (C&G 5357 workplace units need two). */
+const OccCtx = createContext<Map<string, AcOccasionRow> | null>(null);
 
 /** Bar order, done first. */
 const STATE_ORDER: AcState[] = [
@@ -143,6 +152,8 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
   const { toast } = useToast();
   const { data, loading, error, evidenceTypes, refresh } = useAcMatrix(studentId, studentUserId);
   const acState = usePortfolioAcState(studentUserId);
+  // Reloads with every decision (acState.rows updates live).
+  const occasions = useAcOccasions(studentUserId, acState.rows);
   const stateMap = useMemo(() => {
     if (!studentUserId || acState.rows.length === 0) return null;
     // Only overlay the state onto the same qualification's grid: a learner
@@ -406,320 +417,350 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
 
   return (
     <AcStateCtx.Provider value={stateMap}>
-      <section className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <CollegeHeading>AC coverage</CollegeHeading>
-          <span
-            className={cn(
-              'text-[11px] font-semibold tabular-nums',
-              t.gaps > 0 ? 'text-red-300' : 'text-white'
-            )}
-          >
-            {t.gaps > 0
-              ? `${t.gaps} gap${t.gaps === 1 ? '' : 's'}`
-              : `${completionPct}% ${stateMap ? 'passed' : 'complete'}`}
-          </span>
-        </div>
-        <div className={CARD}>
-          {/* Header */}
-          <div className="px-4 sm:px-5 pt-4 pb-4 border-b border-white/[0.10]">
-            <div className="flex items-end justify-between gap-4 flex-wrap">
-              <div className="min-w-0">
-                <h3 className="text-[13px] font-semibold text-white">
-                  {data.qualification_code} · {t.total} criteria
-                </h3>
-                <p className="mt-1 text-[12px] text-white">
-                  {stateMap ? (
-                    <>
-                      {st.passedAll} of {st.total} passed · {st.iqa_confirmed} IQA confirmed ·{' '}
-                      {st.submitted} submitted · {needMore} need more · {st.claimed} claimed ·{' '}
-                    </>
-                  ) : (
-                    <>
-                      {completionPct}% complete · {t.confirmed} confirmed ·{' '}
-                      {t.evidenced + t.assessed} evidenced · {t.in_progress} in progress ·{' '}
-                    </>
-                  )}
-                  <span className={t.gaps ? 'text-red-300' : ''}>
-                    {t.gaps} gap{t.gaps === 1 ? '' : 's'}
-                  </span>
-                </p>
-                {/* Progress bar */}
-                <div className="mt-3 h-1.5 w-full max-w-md rounded-full bg-white/[0.08] overflow-hidden">
-                  <div
-                    className={cn(
-                      'h-full rounded-full transition-all',
-                      stateMap ? 'bg-emerald-400' : 'bg-elec-yellow'
-                    )}
-                    style={{ width: `${completionPct}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* View mode + filters */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={() => setMode('matrix')}
-                    className={cn(
-                      'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
-                      mode === 'matrix'
-                        ? 'bg-white/[0.10] text-white'
-                        : 'bg-transparent text-white hover:text-white'
-                    )}
-                  >
-                    Matrix
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMode('list')}
-                    className={cn(
-                      'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
-                      mode === 'list'
-                        ? 'bg-white/[0.10] text-white'
-                        : 'bg-transparent text-white hover:text-white'
-                    )}
-                  >
-                    List
-                  </button>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setFilterGapsOnly((x) => !x)}
-                  className={cn(
-                    'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
-                    filterGapsOnly
-                      ? 'border-red-400/40 bg-red-500/[0.06] text-red-300'
-                      : 'border-white/[0.10] text-white hover:border-white/[0.20]'
-                  )}
-                >
-                  {filterGapsOnly ? 'Showing gaps' : 'Gaps only'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBulkMode((x) => !x)}
-                  className={cn(
-                    'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
-                    bulkMode
-                      ? 'border-elec-yellow text-elec-yellow'
-                      : 'border-white/[0.10] text-white hover:border-white/[0.20]'
-                  )}
-                  title="Tick several criteria and record one decision for them"
-                >
-                  {bulkMode ? 'Deciding several: on' : 'Decide several'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (!data) return;
-                    const allCollapsed = data.units.every((u) => collapsed.has(u.unit_code));
-                    if (allCollapsed) setCollapsed(new Set());
-                    else setCollapsed(new Set(data.units.map((u) => u.unit_code)));
-                  }}
-                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
-                >
-                  {data && data.units.every((u) => collapsed.has(u.unit_code))
-                    ? 'Expand all'
-                    : 'Collapse all'}
-                </button>
-                {studentUserId ? (
-                  <button
-                    type="button"
-                    onClick={() => setPackOpen(true)}
-                    className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
-                    title="Evidence pack PDF: every criterion with its evidence and decision"
-                  >
-                    PDF
-                  </button>
-                ) : null}
-                <button
-                  type="button"
-                  onClick={() => void refresh()}
-                  disabled={loading}
-                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation disabled:opacity-50"
-                >
-                  {loading ? 'Refreshing…' : 'Refresh'}
-                </button>
-              </div>
-            </div>
-
-            {/* Search */}
-            <div className="mt-4">
-              <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Filter by AC code, criterion text or unit"
-                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[14px] font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-              />
-            </div>
+      <OccCtx.Provider value={stateMap ? occasions.byKey : null}>
+        <section className="space-y-3">
+          <div className="flex items-end justify-between gap-4">
+            <CollegeHeading>AC coverage</CollegeHeading>
+            <span
+              className={cn(
+                'text-[12px] font-semibold tabular-nums',
+                t.gaps > 0 ? 'text-orange-300' : 'text-white'
+              )}
+            >
+              {t.gaps > 0
+                ? `${t.gaps} gap${t.gaps === 1 ? '' : 's'}`
+                : stateMap
+                  ? `${st.passedAll} of ${st.total} passed`
+                  : `${completionPct}% complete`}
+            </span>
           </div>
+          <div className={CARD}>
+            {/* Header */}
+            <div className="px-4 sm:px-5 pt-4 pb-4 border-b border-white/[0.10]">
+              <div className="flex items-end justify-between gap-4 flex-wrap">
+                <div className="min-w-0">
+                  <h3 className="text-[13px] font-semibold text-white">
+                    {data.qualification_code ? `Qualification ${data.qualification_code} · ` : ''}
+                    {t.total} criteria
+                  </h3>
+                  <p className="mt-1 text-[12px] text-white">
+                    {stateMap ? (
+                      <>
+                        {st.passedAll} of {st.total} passed · {st.iqa_confirmed} IQA confirmed ·{' '}
+                        {st.submitted} submitted · {needMore} need more · {st.claimed} claimed
+                        ·{' '}
+                      </>
+                    ) : (
+                      <>
+                        {completionPct}% complete · {t.confirmed} confirmed ·{' '}
+                        {t.evidenced + t.assessed} evidenced · {t.in_progress} in progress ·{' '}
+                      </>
+                    )}
+                    <span className={t.gaps ? 'text-red-300' : ''}>
+                      {t.gaps} gap{t.gaps === 1 ? '' : 's'}
+                    </span>
+                  </p>
+                  {/* Progress bar */}
+                  <div className="mt-3 h-1.5 w-full max-w-md rounded-full bg-white/[0.08] overflow-hidden">
+                    <div
+                      className={cn(
+                        'h-full rounded-full transition-all',
+                        stateMap ? 'bg-emerald-400' : 'bg-elec-yellow'
+                      )}
+                      style={{ width: `${completionPct}%` }}
+                    />
+                  </div>
+                </div>
 
-          {/* Body */}
-          <div className="divide-y divide-white/[0.10]">
-            {filteredUnits.length === 0 && (
-              <div className="px-4 sm:px-5 py-8 text-center text-[12.5px] text-white">
-                No criteria match the current filter.
-              </div>
-            )}
-            {filteredUnits.map((unit) => {
-              const isCollapsed = collapsed.has(unit.unit_code);
-              return (
-                <div key={unit.unit_code}>
-                  {/* Unit header */}
+                {/* View mode + filters */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {/* Matrix or list: one joined toggle, the chosen view white. */}
+                  <div
+                    role="radiogroup"
+                    aria-label="View"
+                    className="inline-flex rounded-xl border border-white/[0.12] p-0.5"
+                  >
+                    {(
+                      [
+                        ['matrix', 'Matrix'],
+                        ['list', 'List'],
+                        ...(stateMap ? ([['grid', 'Gap grid']] as const) : []),
+                      ] as const
+                    ).map(([v, label]) => (
+                      <button
+                        key={v}
+                        type="button"
+                        role="radio"
+                        aria-checked={mode === v}
+                        onClick={() => setMode(v)}
+                        className={cn(
+                          'h-11 rounded-[10px] px-4 text-[13px] font-semibold transition-colors touch-manipulation',
+                          mode === v ? 'bg-white text-black' : 'text-white hover:bg-white/[0.06]'
+                        )}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
                   <button
                     type="button"
-                    onClick={() => toggleUnit(unit.unit_code)}
-                    className="w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-3.5 text-left hover:bg-white/[0.06] transition-colors touch-manipulation"
+                    onClick={() => setFilterGapsOnly((x) => !x)}
+                    className={cn(
+                      'h-11 px-3 rounded-lg border text-[12px] font-medium transition-colors touch-manipulation',
+                      filterGapsOnly
+                        ? 'border-red-400/40 bg-red-500/[0.06] text-red-300'
+                        : 'border-white/[0.10] text-white hover:border-white/[0.20]'
+                    )}
                   >
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline gap-2 flex-wrap">
-                        <span className="text-[12px] font-semibold text-white">
-                          {unit.unit_code}
-                        </span>
-                        <span className="text-[12.5px] text-white truncate">{unit.unit_title}</span>
-                      </div>
-                      <div className="mt-1 flex items-center gap-3 text-[10.5px] text-white">
-                        <UnitMiniBar
-                          stats={unit.stats}
-                          total={unit.stats.total}
-                          unitCode={unit.unit_code}
-                        />
-                        {unit.stats.gaps > 0 && (
-                          <span className="text-red-300 tabular-nums">
-                            {unit.stats.gaps} gap{unit.stats.gaps === 1 ? '' : 's'}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <span
-                      className={cn(
-                        'shrink-0 text-white text-[14px] transition-transform',
-                        isCollapsed ? '' : 'rotate-180'
-                      )}
-                      aria-hidden
-                    >
-                      ▾
-                    </span>
+                    {filterGapsOnly ? 'Showing gaps' : 'Gaps only'}
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setBulkMode((x) => !x)}
+                    className={cn(
+                      'h-11 px-3 rounded-lg border text-[12px] font-medium transition-colors touch-manipulation',
+                      bulkMode
+                        ? 'border-elec-yellow text-elec-yellow'
+                        : 'border-white/[0.10] text-white hover:border-white/[0.20]'
+                    )}
+                    title="Tick several criteria and record one decision for them"
+                  >
+                    {bulkMode ? 'Deciding several: on' : 'Decide several'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!data) return;
+                      const allCollapsed = data.units.every((u) => collapsed.has(u.unit_code));
+                      if (allCollapsed) setCollapsed(new Set());
+                      else setCollapsed(new Set(data.units.map((u) => u.unit_code)));
+                    }}
+                    className="h-11 px-3 rounded-lg border border-white/[0.10] text-[12px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
+                  >
+                    {data && data.units.every((u) => collapsed.has(u.unit_code))
+                      ? 'Expand all'
+                      : 'Collapse all'}
+                  </button>
+                  {studentUserId ? (
+                    <button
+                      type="button"
+                      onClick={() => setPackOpen(true)}
+                      className="h-11 px-3 rounded-lg border border-white/[0.10] text-[12px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
+                      title="Evidence pack PDF: every criterion with its evidence and decision"
+                    >
+                      PDF
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    onClick={() => void refresh()}
+                    disabled={loading}
+                    className="h-11 px-3 rounded-lg border border-white/[0.10] text-[12px] font-medium text-white hover:border-white/[0.20] touch-manipulation disabled:opacity-50"
+                  >
+                    {loading ? 'Refreshing…' : 'Refresh'}
+                  </button>
+                </div>
+              </div>
 
-                  {!isCollapsed && (
-                    <div className="px-4 sm:px-5 pb-4">
-                      {unit.los.map((lo) => (
-                        <div key={lo.lo_number} className="mt-3">
-                          <div className="mb-2 text-[12px] font-semibold text-white">
-                            LO {lo.lo_number} · {lo.lo_text}
-                          </div>
-                          {mode === 'matrix' ? (
-                            <MatrixGrid
-                              rows={lo.acs}
-                              evidenceTypes={visibleEvidenceTypes}
-                              bulkMode={bulkMode}
-                              selectedAcs={selectedAcs}
-                              onToggleSelect={toggleAcSelected}
-                              onOpenAc={(ac) => setOpenLocker(ac)}
-                            />
-                          ) : (
-                            <ListView
-                              rows={lo.acs}
-                              bulkMode={bulkMode}
-                              selectedAcs={selectedAcs}
-                              onToggleSelect={toggleAcSelected}
-                              onOpenAc={(ac) => setOpenLocker(ac)}
-                            />
+              {/* Search (the gap grid has its own unit list) */}
+              <div className={cn('mt-4', mode === 'grid' && stateMap && 'hidden')}>
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Filter by AC code, criterion text or unit"
+                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[14px] font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
+                />
+              </div>
+            </div>
+
+            {/* Gap grid: every criterion by unit, with occasions (separate read). */}
+            {mode === 'grid' && stateMap && (
+              <div className="px-4 py-4 sm:px-5">
+                <OccasionsGrid
+                  rows={acState.rows}
+                  occasions={occasions.byKey}
+                  className="!mx-0 rounded-2xl border-x"
+                  onOpenCriterion={(unit, ac) => {
+                    const cell = cellIndex.get(`${unit}:${ac}`);
+                    if (cell) setOpenLocker(cell);
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Body */}
+            <div
+              className={cn(
+                'divide-y divide-white/[0.10]',
+                mode === 'grid' && stateMap && 'hidden'
+              )}
+            >
+              {filteredUnits.length === 0 && (
+                <div className="px-4 sm:px-5 py-8 text-center text-[12.5px] text-white">
+                  No criteria match the current filter.
+                </div>
+              )}
+              {filteredUnits.map((unit) => {
+                const isCollapsed = collapsed.has(unit.unit_code);
+                return (
+                  <div key={unit.unit_code}>
+                    {/* Unit header */}
+                    <button
+                      type="button"
+                      onClick={() => toggleUnit(unit.unit_code)}
+                      className="w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-3.5 text-left hover:bg-white/[0.06] transition-colors touch-manipulation"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          <span className="text-[12px] font-semibold text-white">
+                            {unit.unit_code}
+                          </span>
+                          <span className="text-[12.5px] text-white line-clamp-2">
+                            {unit.unit_title}
+                          </span>
+                        </div>
+                        <div className="mt-1 flex items-center gap-3 text-[12px] text-white">
+                          <UnitMiniBar
+                            stats={unit.stats}
+                            total={unit.stats.total}
+                            unitCode={unit.unit_code}
+                          />
+                          {unit.stats.gaps > 0 && (
+                            <span className="text-red-300 tabular-nums">
+                              {unit.stats.gaps} gap{unit.stats.gaps === 1 ? '' : 's'}
+                            </span>
                           )}
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                      </div>
+                      <span
+                        className={cn(
+                          'shrink-0 text-white text-[14px] transition-transform',
+                          isCollapsed ? '' : 'rotate-180'
+                        )}
+                        aria-hidden
+                      >
+                        ▾
+                      </span>
+                    </button>
 
-          {/* Bulk mode helper strip — visible whenever bulk mode is on */}
-          {bulkMode && (
-            <div className="border-t border-white/[0.10] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 flex-wrap text-[11.5px] text-white">
-              <span>
-                Tap rows to tick them, then record one decision. Each criterion still gets its own
-                decision on the record.
-              </span>
-              <div className="flex items-center gap-2">
+                    {!isCollapsed && (
+                      <div className="px-4 sm:px-5 pb-4">
+                        {unit.los.map((lo) => (
+                          <div key={lo.lo_number} className="mt-3">
+                            <div className="mb-2 text-[12px] font-semibold text-white">
+                              LO {lo.lo_number} · {lo.lo_text}
+                            </div>
+                            {mode === 'matrix' ? (
+                              <MatrixGrid
+                                rows={lo.acs}
+                                evidenceTypes={visibleEvidenceTypes}
+                                bulkMode={bulkMode}
+                                selectedAcs={selectedAcs}
+                                onToggleSelect={toggleAcSelected}
+                                onOpenAc={(ac) => setOpenLocker(ac)}
+                              />
+                            ) : (
+                              <ListView
+                                rows={lo.acs}
+                                bulkMode={bulkMode}
+                                selectedAcs={selectedAcs}
+                                onToggleSelect={toggleAcSelected}
+                                onOpenAc={(ac) => setOpenLocker(ac)}
+                              />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bulk mode helper strip — visible whenever bulk mode is on */}
+            {bulkMode && (
+              <div className="border-t border-white/[0.10] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 flex-wrap text-[12px] text-white">
+                <span>
+                  Tap rows to tick them, then record one decision. Each criterion still gets its own
+                  decision on the record.
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={selectAllVisible}
+                    className="h-11 px-3 rounded-lg border border-white/[0.10] text-[12px] hover:border-white/[0.20] touch-manipulation"
+                  >
+                    Select all visible
+                  </button>
+                  <button
+                    type="button"
+                    onClick={clearSelection}
+                    disabled={selectedAcs.size === 0}
+                    className="h-11 px-3 rounded-lg border border-white/[0.10] text-[12px] hover:border-white/[0.20] touch-manipulation disabled:opacity-40"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Ticked criteria → the one decision sheet */}
+            {bulkMode && selectedAcs.size > 0 && (
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.10] bg-white/[0.04] px-4 py-3 sm:px-5">
+                <span className="text-[12.5px] font-semibold text-white">
+                  {selectedAcs.size} criteri{selectedAcs.size === 1 ? 'on' : 'a'} ticked
+                </span>
                 <button
                   type="button"
-                  onClick={selectAllVisible}
-                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation"
+                  onClick={() => setDeciding(true)}
+                  disabled={!studentUserId}
+                  className="h-11 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
                 >
-                  Select all visible
-                </button>
-                <button
-                  type="button"
-                  onClick={clearSelection}
-                  disabled={selectedAcs.size === 0}
-                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation disabled:opacity-40"
-                >
-                  Clear
+                  Record decision for {selectedAcs.size}
                 </button>
               </div>
-            </div>
-          )}
+            )}
+            {deciding && studentUserId && (
+              <MatrixDecision
+                learnerId={studentUserId}
+                learnerName={studentName}
+                keys={selectedAcs}
+                draftWithAi={draftWithAi}
+                onClose={() => setDeciding(false)}
+                onRecorded={() => {
+                  clearSelection();
+                  setBulkMode(false);
+                  void refresh();
+                }}
+              />
+            )}
 
-          {/* Ticked criteria → the one decision sheet */}
-          {bulkMode && selectedAcs.size > 0 && (
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.10] bg-white/[0.04] px-4 py-3 sm:px-5">
-              <span className="text-[12.5px] font-semibold text-white">
-                {selectedAcs.size} criteri{selectedAcs.size === 1 ? 'on' : 'a'} ticked
-              </span>
-              <button
-                type="button"
-                onClick={() => setDeciding(true)}
-                disabled={!studentUserId}
-                className="h-11 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
-              >
-                Record decision for {selectedAcs.size}
-              </button>
-            </div>
-          )}
-          {deciding && studentUserId && (
-            <MatrixDecision
-              learnerId={studentUserId}
-              learnerName={studentName}
-              keys={selectedAcs}
-              draftWithAi={draftWithAi}
-              onClose={() => setDeciding(false)}
-              onRecorded={() => {
-                clearSelection();
-                setBulkMode(false);
-                void refresh();
+            {/* Evidence locker drawer */}
+            <AcEvidenceLockerSheet
+              open={openLocker != null}
+              onOpenChange={(o) => {
+                if (!o) setOpenLocker(null);
               }}
+              cell={openLocker}
+              studentId={studentId}
+              studentUserId={studentUserId}
+              studentName={studentName}
+              onChanged={() => void refresh()}
             />
-          )}
-
-          {/* Evidence locker drawer */}
-          <AcEvidenceLockerSheet
-            open={openLocker != null}
-            onOpenChange={(o) => {
-              if (!o) setOpenLocker(null);
-            }}
-            cell={openLocker}
-            studentId={studentId}
-            studentUserId={studentUserId}
-            studentName={studentName}
-            onChanged={() => void refresh()}
-          />
-          {studentUserId ? (
-            <ExportPackSheet
-              open={packOpen}
-              onOpenChange={setPackOpen}
-              learnerUserId={studentUserId}
-              learnerName={studentName ?? undefined}
-              mode="staff"
-              focus="evidence_pack"
-            />
-          ) : null}
-        </div>
-      </section>
+            {studentUserId ? (
+              <ExportPackSheet
+                open={packOpen}
+                onOpenChange={setPackOpen}
+                learnerUserId={studentUserId}
+                learnerName={studentName ?? undefined}
+                mode="staff"
+                focus="evidence_pack"
+              />
+            ) : null}
+          </div>
+        </section>
+      </OccCtx.Provider>
     </AcStateCtx.Provider>
   );
 }
@@ -743,7 +784,7 @@ function MatrixGrid({
 }) {
   return (
     <div className="overflow-x-auto -mx-1 px-1">
-      <table className="w-full border-collapse text-[11.5px] tabular-nums">
+      <table className="w-full border-collapse text-[12px] tabular-nums">
         <thead>
           <tr>
             {bulkMode && <th className="w-7 pb-1.5 align-bottom" aria-label="Select" />}
@@ -791,7 +832,7 @@ function MatrixGrid({
                   <td className="py-2 pl-1 pr-1 align-middle">
                     <span
                       className={cn(
-                        'inline-flex items-center justify-center h-5 w-5 rounded border text-[11px] font-bold',
+                        'inline-flex items-center justify-center h-5 w-5 rounded border text-[12px] font-bold',
                         isSelected
                           ? 'bg-elec-yellow border-elec-yellow text-black'
                           : 'border-white/30 bg-transparent text-transparent'
@@ -810,7 +851,7 @@ function MatrixGrid({
                 <td className="py-2 pr-3 text-[12px] text-white max-w-[300px]">
                   <div className="line-clamp-2">{cell.ac_text}</div>
                   {cell.requirement?.is_mandatory && cell.missing_types.length > 0 && (
-                    <div className="mt-0.5 text-[10.5px] text-red-300">
+                    <div className="mt-0.5 text-[12px] text-red-300">
                       Missing:{' '}
                       {cell.missing_types.map((m) => EVIDENCE_TYPE_LABEL[m] ?? m).join(', ')}
                     </div>
@@ -859,19 +900,19 @@ function CountCell({
     if (isRequired && isMandatoryAc) {
       return (
         <span
-          className="inline-flex items-center justify-center h-6 w-6 rounded border border-red-400/40 bg-red-500/[0.06] text-red-300 text-[10px] font-semibold"
+          className="inline-flex items-center justify-center h-6 w-6 rounded border border-red-400/40 bg-red-500/[0.06] text-red-300 text-[12px] font-semibold"
           title="Required type, no evidence"
         >
           ·
         </span>
       );
     }
-    return <span className="text-white/[0.35] text-[11px]">–</span>;
+    return <span className="text-white/[0.35] text-[12px]">–</span>;
   }
   return (
     <span
       className={cn(
-        'inline-flex items-center justify-center h-6 min-w-[24px] px-1.5 rounded text-[11px] font-semibold tabular-nums',
+        'inline-flex items-center justify-center h-6 min-w-[24px] px-1.5 rounded text-[12px] font-semibold tabular-nums',
         isRequired
           ? 'bg-emerald-500/[0.12] text-emerald-200 border border-emerald-500/30'
           : 'bg-white/[0.04] text-white border border-white/[0.08]'
@@ -885,16 +926,28 @@ function CountCell({
 
 function StatusChip({ cell }: { cell: AcCellRow }) {
   const states = useContext(AcStateCtx);
+  const occ = useContext(OccCtx);
   const state = states?.get(acKey(cell));
   if (state) {
+    const counter = occasionCounter(occ?.get(occasionKey(cell.unit_code, cell.ac_code)));
     return (
-      <span
-        className={cn(
-          'inline-flex items-center h-6 px-2 rounded-full border text-[10.5px] font-semibold whitespace-nowrap',
-          STATE_CHIP[state]
+      <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+        <span
+          className={cn(
+            'inline-flex items-center h-6 px-2 rounded-full border text-[12px] font-semibold whitespace-nowrap',
+            STATE_CHIP[state]
+          )}
+        >
+          {STATE_LABEL[state]}
+        </span>
+        {counter && (
+          <span
+            className="text-[12px] font-semibold tabular-nums text-white"
+            title="Separate assessed occasions"
+          >
+            {counter}
+          </span>
         )}
-      >
-        {STATE_LABEL[state]}
       </span>
     );
   }
@@ -903,7 +956,7 @@ function StatusChip({ cell }: { cell: AcCellRow }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 h-6 px-2 rounded-full border text-[10.5px] font-semibold',
+        'inline-flex items-center gap-1.5 h-6 px-2 rounded-full border text-[12px] font-semibold',
         tone.chipBg,
         tone.text
       )}
@@ -951,7 +1004,7 @@ function ListView({
               {bulkMode && (
                 <span
                   className={cn(
-                    'mt-0.5 inline-flex items-center justify-center h-5 w-5 rounded border text-[11px] font-bold shrink-0',
+                    'mt-0.5 inline-flex items-center justify-center h-5 w-5 rounded border text-[12px] font-bold shrink-0',
                     isSelected
                       ? 'bg-elec-yellow border-elec-yellow text-black'
                       : 'border-white/30 bg-transparent text-transparent'
@@ -966,7 +1019,7 @@ function ListView({
               </div>
               <div className="min-w-0 flex-1">
                 <div className="text-[13px] text-white leading-snug">{cell.ac_text}</div>
-                <div className="mt-1 flex items-center flex-wrap gap-2 text-[10.5px] text-white">
+                <div className="mt-1 flex items-center flex-wrap gap-2 text-[12px] text-white">
                   <StatusChip cell={cell} />
                   <span className="text-white">·</span>
                   <span className="tabular-nums">{totalEvidence} evidence</span>

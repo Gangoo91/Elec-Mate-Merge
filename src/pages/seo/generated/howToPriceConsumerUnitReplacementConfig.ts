@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const howToPriceConsumerUnitReplacementConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-consumer-unit-replacement-as-an-electrician',
@@ -26,7 +26,7 @@ export const howToPriceConsumerUnitReplacementConfig: GeneratedGuideConfig = {
   keyTakeaways: [
     'Typical fair-margin price for consumer unit replacement: £450–650 (10–14 way RCBO board, domestic) in 2026. Minimum floor £380; top end £900.',
     'Target hourly rate for self-employed electricians quoting CU swaps: £55–75 (excluding VAT). Below this band you are subsidising the customer.',
-    'Regulatory references: BS 7671:2018+A4:2026 (Chapter 53 + Section 442 + AFDD Reg 421.1.7.101), Part P notification, BS EN 61439-3.',
+    'Regulatory references: BS 7671:2018+A4:2026 (Chapter 53 + Section 442 + AFDD Reg 421.1.7), Part P notification, BS EN 61439-3.',
     'Always quote the certification (EIC / MWC / specific) as a deliverable — never include it as a freebie. Without the certificate your work is not legally valid.',
     'Below-market quotes from competitors usually mean missing insurance, missing scheme membership, missing test sweep, or missing certificate. Educate clients, don\u2019t race to the bottom.',
     'Your scheme fee (~£500/year), professional indemnity (~£500–1,000/year), calibrated test kit (~£1,200 every 3–5 years) and ongoing CPD are all real costs that justify the band.',
@@ -117,11 +117,11 @@ export const howToPriceConsumerUnitReplacementConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Pricing without understanding the regulatory requirements is how electricians end up doing extra work for free. The relevant references for consumer unit replacement are: BS 7671:2018+A4:2026 (Chapter 53 + Section 442 + AFDD Reg 421.1.7.101), Part P notification, BS EN 61439-3. Quoting must factor in: time on-site, certification time, scheme-notification time, and any DNO coordination required.',
+          text: 'Pricing without understanding the regulatory requirements is how electricians end up doing extra work for free. The relevant references for consumer unit replacement are: BS 7671:2018+A4:2026 (Chapter 53 + Section 442 + AFDD Reg 421.1.7), Part P notification, BS EN 61439-3. Quoting must factor in: time on-site, certification time, scheme-notification time, and any DNO coordination required.',
         },
         {
           type: 'paragraph',
-          text: 'BS 7671:2018+A4:2026 (the 18th Edition published 15 April 2026) is the current standard. Any quote that does not factor in current A4:2026 requirements — including AFDDs in HMOs, updated SPD thresholds, and the new Schedule of Tests columns — is under-quoting on certified-compliance work.',
+          text: 'BS 7671:2018+A4:2026 (the 18th Edition published 15 April 2026) is the current standard. Any quote that does not factor in current requirements, including AFDDs in HMOs (required since A2:2022), the SPD risk assessment and the full Schedule of Test Results, is under-quoting on certified-compliance work.',
         },
       ],
     },

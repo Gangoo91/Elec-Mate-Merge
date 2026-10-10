@@ -55,16 +55,16 @@ import { storageGetJSONSync, storageRemoveSync, storageSetJSONSync } from '@/uti
 const MAX_PHOTOS = 5;
 
 /** A lit card per core step — the sheet was one dark block (Andrew, 6 Oct). */
-const STEP_CARD =
-  'rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5';
+const STEP_CARD = 'card-surface rounded-2xl p-4 sm:p-5';
 const STEP_LABEL = 'mb-3 flex items-center gap-2.5 text-[15px] font-semibold text-white';
 
-/** Solid yellow step number — colour as a solid shape, never a tint. */
+/** Step number — a quiet outlined figure (10 Oct: one solid yellow per screen,
+ *  and that is Save). */
 function StepNo({ n }: { n: number }) {
   return (
     <span
       aria-hidden
-      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-elec-yellow text-[12px] font-bold text-black"
+      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/[0.35] text-[12px] font-semibold text-white"
     >
       {n}
     </span>
@@ -98,8 +98,15 @@ const TASK_CHIPS_SHOWN = 6;
 
 const chipBase =
   'inline-flex min-h-[44px] items-center rounded-xl border px-3.5 text-[14px] touch-manipulation transition-colors';
-const chipOn = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
+// The chosen chip is white, as in the College Hub kit (10 Oct): yellow is kept
+// for the one action, Save.
+const chipOn = 'border-white bg-white font-semibold text-black';
 const chipOff = 'border-white/[0.12] bg-white/[0.06] font-medium text-white';
+const segCn = (on: boolean) =>
+  cn(
+    'inline-flex h-11 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-[10px] px-3 text-[13.5px] font-semibold transition-colors touch-manipulation sm:flex-none sm:px-5',
+    on ? 'bg-white text-black' : 'text-white hover:bg-white/[0.06] active:bg-white/[0.08]'
+  );
 
 /* ── Draft ──────────────────────────────────────────────────────────── */
 
@@ -668,15 +675,19 @@ export function DiaryEntrySheet({
             <button
               type="button"
               onClick={discardDraft}
-              className="h-9 rounded-lg border border-white/[0.22] px-3 text-[13px] font-semibold text-white touch-manipulation"
+              className="h-11 rounded-xl border border-white/[0.22] px-3 text-[13px] font-semibold text-white touch-manipulation"
             >
               Start again
             </button>
           </div>
         ) : null}
 
-        {/* Date — three chips, not a tiny text link */}
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Which day">
+        {/* Date — one joined toggle of three (10 Oct design language) */}
+        <div
+          className="flex w-full rounded-xl border border-white/[0.12] bg-white/[0.03] p-0.5 sm:inline-flex sm:w-auto"
+          role="group"
+          aria-label="Which day"
+        >
           {[
             { id: 'today', label: 'Today', value: today },
             { id: 'yesterday', label: 'Yesterday', value: yesterday },
@@ -691,7 +702,7 @@ export function DiaryEntrySheet({
                   setChangingDate(false);
                   setDate(d.value);
                 }}
-                className={cn(chipBase, on ? chipOn : chipOff)}
+                className={segCn(on)}
               >
                 {d.label}
               </button>
@@ -701,10 +712,7 @@ export function DiaryEntrySheet({
             type="button"
             aria-pressed={changingDate || (date !== today && date !== yesterday)}
             onClick={() => setChangingDate((v) => !v)}
-            className={cn(
-              chipBase,
-              changingDate || (date !== today && date !== yesterday) ? chipOn : chipOff
-            )}
+            className={segCn(changingDate || (date !== today && date !== yesterday))}
           >
             {date !== today && date !== yesterday ? shortDate(date) : 'Pick a day'}
           </button>
@@ -782,7 +790,7 @@ export function DiaryEntrySheet({
                 className={cn(
                   'mb-1 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border px-3 text-[13px] font-semibold touch-manipulation',
                   speech.isListening
-                    ? 'border-elec-yellow bg-elec-yellow text-black'
+                    ? 'border-white bg-white text-black'
                     : 'border-white/[0.18] text-white'
                 )}
               >
@@ -1189,13 +1197,11 @@ export function DiaryEntrySheet({
                     onClick={() => setMood(on ? null : m)}
                     className={cn(
                       'flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-xl border px-1 touch-manipulation',
-                      on
-                        ? 'border-elec-yellow bg-elec-yellow text-black'
-                        : 'border-white/[0.12] text-white'
+                      on ? 'border-white bg-white text-black' : 'border-white/[0.12] text-white'
                     )}
                   >
                     <span className="text-[22px] leading-none">{MOOD_EMOJI[m]}</span>
-                    <span className="text-[11.5px] font-medium leading-tight">{MOOD_LABEL[m]}</span>
+                    <span className="text-[12px] font-medium leading-tight">{MOOD_LABEL[m]}</span>
                   </button>
                 );
               })}

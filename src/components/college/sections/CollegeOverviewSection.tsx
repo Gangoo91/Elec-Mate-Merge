@@ -30,12 +30,13 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import { HubAlertLine } from '@/components/hub/HubPrimitives';
 import { CollegeHeading } from '@/components/college/ui/CollegeUi';
-import { CollegeActStrip } from '@/components/college/CollegeActSheet';
+import { CollegeActStrip, type ActMeta } from '@/components/college/CollegeActSheet';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { CreateInviteSheet } from '@/components/college/sheets/CreateInviteSheet';
 import { CollegeSetupHomeCard } from '@/components/college/setup/CollegeSetupHomeCard';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { useDemoMode } from '@/lib/demoMode';
 import { useRecomputeRisk } from '@/hooks/useStudentRisk';
 import { AtRiskPredictor } from '@/components/college/widgets/AtRiskPredictor';
 import {
@@ -43,7 +44,6 @@ import {
   HomeComplianceCard,
   HomeGatewayCard,
 } from '@/components/college/widgets/HomeDetailCards';
-import { EPACountdown } from '@/components/college/widgets/EPACountdown';
 import { ActivityFeed } from '@/components/college/widgets/ActivityFeed';
 import { MyComplianceWidget } from '@/components/college/widgets/MyComplianceWidget';
 import { ComplianceLeadsWidget } from '@/components/college/widgets/ComplianceLeadsWidget';
@@ -188,6 +188,7 @@ export function CollegeOverviewSection({
   onRegister,
 }: CollegeOverviewSectionProps) {
   const navigate = useNavigate();
+  const demoCollege = useDemoMode();
   const { students, getPendingGradesData, isLoading } = useCollegeSupabase();
   const {
     data: today,
@@ -262,7 +263,13 @@ export function CollegeOverviewSection({
         kind: i.kind,
         waitingDays: i.waitingDays,
         title: i.learner ?? i.title,
-        reason: i.learner ? [i.title, i.body].filter(Boolean).join(' · ') : i.body,
+        // App learning rows all carry the same explanation; the hours say it.
+        reason:
+          i.kind === 'app_learning'
+            ? i.title
+            : i.learner
+              ? [i.title, i.body].filter(Boolean).join(' · ')
+              : i.body,
         action: i.action,
         urgent: i.urgent,
         go: () => navigate(i.href),
@@ -279,6 +286,12 @@ export function CollegeOverviewSection({
   }, [needs]);
   const filteredNeeds = needFilter === 'all' ? needs : needs.filter((n) => n.kind === needFilter);
   const shown = filteredNeeds.slice(0, 7);
+  const oldestDays = needs.reduce((m, n) => Math.max(m, n.waitingDays ?? 0), 0);
+  // Age bands (showcase pass, 10 Oct): one orange header per band instead of
+  // "Waiting 59 days" in orange on every row.
+  const bandOf = (d: number | null | undefined) =>
+    d == null || d < 7 ? 'recent' : d >= 28 ? 'month' : 'week';
+  const bandCount = (b: string) => filteredNeeds.filter((n) => bandOf(n.waitingDays) === b).length;
   const hidden = filteredNeeds.length - shown.length;
   // ELE-1886: the home figures follow the one College Hub scope (masthead
   // switch). Needs you is already scoped by useUnifiedInbox.
@@ -303,6 +316,58 @@ export function CollegeOverviewSection({
   const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
 
   const next = today?.nextLesson ?? null;
+  // This week without the class already shown in the Today card.
+  const laterThisWeek = useMemo(
+    () =>
+      (today?.thisWeek ?? [])
+        .filter((w) => !(next && w.href === `/college/lessons/${next.id}`))
+        .slice(0, 6),
+    [today, next]
+  );
+
+  // What is waiting behind each action on the strip, from the same inbox and
+  // week the page already reads. Orange only when something is overdue.
+  const actMeta = useMemo<ActMeta>(() => {
+    const count = (kinds: InboxKind[]) => {
+      const rows = inboxItems.filter((i) => kinds.includes(i.kind));
+      return { n: rows.length, late: rows.some((i) => i.urgent) };
+    };
+    const waiting = (
+      c: { n: number; late: boolean },
+      word = 'waiting',
+      none = 'Nothing waiting'
+    ) => (c.n > 0 ? { text: `${c.n} ${word}`, warn: c.late } : { text: none });
+    const observeDue = (today?.thisWeek ?? []).filter((w) => w.kind === 'observation_due').length;
+    const meta: ActMeta = {
+      decide: waiting(count(['evidence', 'marking']), 'to mark'),
+      hours: waiting(count(['hours', 'app_learning'])),
+      message: waiting(count(['message']), 'unread', 'None new'),
+      observe: { text: observeDue > 0 ? `${observeDue} due this week` : 'None due' },
+      discussion: { text: 'Record one' },
+    };
+    if (next) {
+      // Short enough for a phone: "Today 09:30", "Tue 09:30", or the date
+      // when the class is more than a week away.
+      const time = next.scheduled_start_time?.slice(0, 5) ?? '';
+      const [y, mo, d] = next.scheduled_date.split('-').map(Number);
+      const days = Math.round(
+        (new Date(y, (mo ?? 1) - 1, d ?? 1).getTime() -
+          new Date(new Date().toDateString()).getTime()) /
+          86_400_000
+      );
+      const day = next.is_today
+        ? 'Today'
+        : days === 1
+          ? 'Tomorrow'
+          : days < 7
+            ? new Date(y, (mo ?? 1) - 1, d ?? 1).toLocaleDateString('en-GB', { weekday: 'short' })
+            : fmtLessonDay(next.scheduled_date);
+      meta.register = { text: `${day}${time ? ` ${time}` : ''}` };
+    } else if (today) {
+      meta.register = { text: 'No class booked' };
+    }
+    return meta;
+  }, [inboxItems, today, next]);
   const todayLabel = new Date().toLocaleDateString('en-GB', {
     weekday: 'long',
     day: 'numeric',
@@ -319,8 +384,9 @@ export function CollegeOverviewSection({
       title: 'Assess',
       items: [
         {
-          label: 'Marking',
-          hint: 'Submissions waiting for a decision',
+          // "Marking" is the inbox's word for quiz answers; this is grading.
+          label: 'Grading',
+          hint: 'Grades waiting to be recorded',
           count: pendingAssessments || undefined,
           go: () => onNavigate('grading'),
         },
@@ -411,6 +477,16 @@ export function CollegeOverviewSection({
           hint: 'Answers, and a message to Elec-Mate',
           go: () => navigate('/college/help'),
         },
+        // ELE-1854: the presenter's QR, only in the demo college.
+        ...(demoCollege
+          ? [
+              {
+                label: 'Try it on your phone',
+                hint: 'A QR that gives a visitor a demo learner',
+                go: () => navigate('/college/try-on-phone'),
+              },
+            ]
+          : []),
         {
           label: 'Settings',
           hint: 'College, courses and cohorts',
@@ -440,10 +516,8 @@ export function CollegeOverviewSection({
       <motion.header variants={itemVariants} initial="hidden" animate="visible" className="min-w-0">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-              {todayLabel}
-            </p>
-            <h1 className="mt-2 text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[36px]">
+            <p className="text-[13px] font-medium text-white">{todayLabel}</p>
+            <h1 className="mt-1.5 text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[32px]">
               {greeting}
               {firstName ? `, ${firstName}` : ''}
             </h1>
@@ -457,42 +531,65 @@ export function CollegeOverviewSection({
               ? `Your class starts at ${next.scheduled_start_time?.slice(0, 5) ?? 'today'}.`
               : next
                 ? `Next class ${lessonWhen(next)}.`
-                : 'No class in the timetable.'}{' '}
-          {todayPending ? null : needsTotal === 0 ? (
-            'Nothing is waiting on you.'
-          ) : (
-            <>
-              {plural(needsTotal, 'thing')} need{needsTotal === 1 ? 's' : ''} you
-              {urgentCount > 0 ? (
-                <>
-                  ,{' '}
-                  <span className="font-semibold text-orange-400">
-                    {urgentCount === needsTotal
-                      ? needsTotal === 1
-                        ? 'waiting'
-                        : 'all waiting'
-                      : `${urgentCount} of them waiting`}{' '}
-                    over a week
-                  </span>
-                </>
-              ) : null}
-              .
-            </>
-          )}
+                : 'No class in the timetable.'}
         </p>
-        <p className="mt-1 text-[13px] text-white">
-          {plural(scopedStudents.length, 'learner')} in {plural(cohorts.length, 'cohort')}
-          {scope.level === 'college' ? '' : ` (${SCOPE_LABEL[scope.level]})`}
-          {attendanceAll != null && (
-            <>
-              {' · '}
-              <span className={cn(attendanceAll < 85 && 'font-semibold text-orange-400')}>
-                attendance {attendanceAll}%
-              </span>{' '}
-              over the last 4 weeks
-            </>
-          )}
-        </p>
+        {/* One status line of figures: bold number, plain word, hairline
+            between. Orange only where something is overdue (10 Oct: the
+            sentence version shouted the overdue count mid-paragraph). */}
+        {!todayPending && (
+          <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 text-[13.5px] text-white sm:flex sm:flex-wrap sm:items-center sm:gap-x-5">
+            {(
+              [
+                needsTotal === 0
+                  ? { n: null, label: 'Nothing waiting on you' }
+                  : { n: needsTotal, label: 'waiting on you' },
+                urgentCount > 0 ? { n: urgentCount, label: 'over a week', warn: true } : null,
+                {
+                  n: scopedStudents.length,
+                  label: `${scopedStudents.length === 1 ? 'learner' : 'learners'} in ${plural(cohorts.length, 'cohort')}${
+                    scope.level === 'college' ? '' : ` (${SCOPE_LABEL[scope.level]})`
+                  }`,
+                },
+                attendanceAll != null
+                  ? {
+                      n: `${attendanceAll}%`,
+                      label: 'attendance',
+                      more: ', last 4 weeks',
+                      warn: attendanceAll < 85,
+                    }
+                  : null,
+              ].filter(Boolean) as {
+                n: number | string | null;
+                label: string;
+                more?: string;
+                warn?: boolean;
+              }[]
+            ).map((f, i) => (
+              <div key={f.label} className="flex min-w-0 items-baseline gap-1.5">
+                {i > 0 && (
+                  <span
+                    aria-hidden
+                    className="mr-3.5 hidden h-3.5 w-px self-center bg-white/[0.18] sm:block"
+                  />
+                )}
+                {f.n != null && (
+                  <dt
+                    className={cn(
+                      'text-[15px] font-semibold tabular-nums',
+                      f.warn ? 'text-orange-300' : 'text-white'
+                    )}
+                  >
+                    {f.n}
+                  </dt>
+                )}
+                <dd className={cn(f.warn && 'text-orange-300')}>
+                  {f.label}
+                  {f.more && <span className="hidden sm:inline">{f.more}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )}
       </motion.header>
 
       {/* ── Quick actions: the Act tiles, one tap each. No bottom bar in the
@@ -508,14 +605,14 @@ export function CollegeOverviewSection({
         <h2 id="college-quick-actions" className="sr-only">
           Quick actions
         </h2>
-        <CollegeActStrip onRegister={onRegister} />
+        <CollegeActStrip onRegister={onRegister} meta={inboxLoading ? undefined : actMeta} />
       </motion.section>
 
       {/* ── New college: the set-up checklist until it is done (ELE-1855) ── */}
       <CollegeSetupHomeCard />
 
       {/* ── 1. Two columns: the day on the left, the work on the right ── */}
-      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] xl:grid-rows-[auto_1fr_auto]">
         <div className="min-w-0 space-y-6 xl:col-start-1 xl:row-start-1">
           {/* Today */}
           <motion.section
@@ -525,7 +622,7 @@ export function CollegeOverviewSection({
             className="space-y-3"
           >
             <motion.div variants={itemVariants} className="flex h-9 items-end">
-              <CollegeHeading>Today</CollegeHeading>
+              <CollegeHeading>{next && !next.is_today ? 'Coming up' : 'Today'}</CollegeHeading>
             </motion.div>
             <motion.div
               variants={itemVariants}
@@ -549,7 +646,7 @@ export function CollegeOverviewSection({
                       </p>
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+                      <p className="text-[13px] font-semibold text-elec-yellow">
                         {next.is_today
                           ? next.is_mine
                             ? 'Your class today'
@@ -588,9 +685,7 @@ export function CollegeOverviewSection({
               ) : (
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
-                      No class scheduled
-                    </p>
+                    <p className="text-[13px] font-semibold text-elec-yellow">No class scheduled</p>
                     <h3 className="mt-1 text-[19px] font-semibold leading-tight tracking-tight text-white sm:text-[22px]">
                       Nothing in the timetable yet
                     </h3>
@@ -615,7 +710,7 @@ export function CollegeOverviewSection({
         {/* Phones: Needs you comes straight after Today (order); desktop: right column. */}
         <div className="order-last min-w-0 space-y-6 xl:order-none xl:col-start-1 xl:row-start-2">
           {/* This week */}
-          {!todayPending && (today?.thisWeek?.length ?? 0) > 0 && (
+          {!todayPending && laterThisWeek.length > 0 && (
             <motion.section
               variants={containerVariants}
               initial="hidden"
@@ -623,190 +718,69 @@ export function CollegeOverviewSection({
               className="space-y-3"
             >
               <motion.div variants={itemVariants}>
-                <CollegeHeading>This week</CollegeHeading>
+                <CollegeHeading>Later this week</CollegeHeading>
               </motion.div>
               <motion.ol
                 variants={itemVariants}
                 className="-mx-4 border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x divide-y divide-white/[0.06] overflow-hidden"
               >
-                {(today?.thisWeek ?? []).slice(0, 6).map((w, i) => (
-                  <li key={`${w.date}-${i}`}>
-                    <button
-                      type="button"
-                      onClick={() => navigate(w.href)}
-                      className="flex min-h-[56px] w-full items-center gap-4 px-5 py-2.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04]"
-                    >
-                      <span className="w-14 shrink-0 text-[12px] font-semibold leading-tight text-white">
-                        {fmtLessonDay(w.date)}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold text-white">
-                          {w.title}
+                {laterThisWeek.map((w, i) => {
+                  const firstOfDay = i === 0 || laterThisWeek[i - 1].date !== w.date;
+                  const [y, mo, d] = w.date.split('-').map(Number);
+                  const day = new Date(y, (mo ?? 1) - 1, d ?? 1);
+                  // "Cable selection · 09:30" and "Follow-up · Task (Learner)"
+                  // become a title and a plain second line.
+                  let title = w.title;
+                  let sub: string = WEEK_KIND[w.kind];
+                  const time =
+                    w.kind === 'lesson' ? title.match(/ · (\d{2}:\d{2})$/)?.[1] : undefined;
+                  if (time) {
+                    title = title.slice(0, -` · ${time}`.length);
+                    sub = `${time} · Class`;
+                  }
+                  if (w.kind === 'observation_due') {
+                    const m = title.match(/^Follow-up · (.*?)(?: \((.*)\))?$/);
+                    if (m) {
+                      title = m[1];
+                      sub = m[2] ? `Observation due · ${m[2]}` : 'Observation due';
+                    }
+                  }
+                  return (
+                    <li key={`${w.date}-${i}`}>
+                      <button
+                        type="button"
+                        onClick={() => navigate(w.href)}
+                        className="flex min-h-[60px] w-full items-center gap-4 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07]"
+                      >
+                        {/* A calendar day block on the first row of each day. */}
+                        <span className="w-10 shrink-0 text-center" aria-hidden={!firstOfDay}>
+                          {firstOfDay && (
+                            <>
+                              <span className="block text-[12px] font-medium leading-none text-white">
+                                {day.toLocaleDateString('en-GB', { weekday: 'short' })}
+                              </span>
+                              <span className="mt-1 block text-[19px] font-bold leading-none tabular-nums text-white">
+                                {d}
+                              </span>
+                            </>
+                          )}
                         </span>
-                        <span className="block text-[12px] text-white">{WEEK_KIND[w.kind]}</span>
-                      </span>
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
-                    </button>
-                  </li>
-                ))}
+                        <span className="min-w-0 flex-1">
+                          <span className="line-clamp-2 text-[14px] font-semibold leading-snug text-white">
+                            {title}
+                          </span>
+                          <span className="mt-0.5 line-clamp-2 block text-[12.5px] text-white">
+                            {sub}
+                          </span>
+                        </span>
+                        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                      </button>
+                    </li>
+                  );
+                })}
               </motion.ol>
             </motion.section>
           )}
-
-          {/* Your learners */}
-          <motion.section
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-3"
-          >
-            <motion.div variants={itemVariants} className="flex items-end justify-between gap-3">
-              <CollegeHeading>Your learners</CollegeHeading>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => (onFindLearner ? onFindLearner() : onNavigate('students'))}
-                  className="inline-flex h-11 items-center gap-1.5 rounded-xl px-2.5 text-[12.5px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
-                >
-                  <Search className="h-3.5 w-3.5" aria-hidden /> Find
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setInviteOpen(true)}
-                  className="inline-flex h-11 items-center rounded-xl px-2.5 text-[12.5px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06]"
-                >
-                  Share a join code
-                </button>
-              </div>
-            </motion.div>
-            {!collegeHasLearners ? (
-              <motion.div
-                variants={itemVariants}
-                className={cn(CARD_SURFACE, 'rounded-3xl border border-white/[0.08] p-5 sm:p-6')}
-              >
-                <p className="text-[17px] font-semibold tracking-tight text-white">
-                  No learners yet.
-                </p>
-                <p className="mt-1 text-[13.5px] font-medium leading-snug text-white">
-                  Create a cohort, then share its join code. Learners who join appear here with
-                  their attendance, hours and evidence.
-                </p>
-                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('cohorts')}
-                    className={btnPrimary}
-                  >
-                    Create a cohort
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setInviteOpen(true)}
-                    className={btnSecondary}
-                  >
-                    Share a join code
-                  </button>
-                </div>
-              </motion.div>
-            ) : allCohortStats.length === 0 && !todayPending ? (
-              <motion.div
-                variants={itemVariants}
-                className={cn(CARD_SURFACE, 'rounded-2xl border border-white/[0.14] p-5')}
-              >
-                <p className="text-[15px] font-semibold text-white">
-                  {plural(students.length, 'learner')} on the roll, no cohorts yet.
-                </p>
-                <p className="mt-1 text-[13px] font-medium text-white">
-                  Put learners into cohorts so registers, lessons and quizzes go to the right group.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('cohorts')}
-                  className={cn(btnSecondary, 'mt-4')}
-                >
-                  Set up cohorts
-                </button>
-              </motion.div>
-            ) : (
-              <motion.ul
-                variants={itemVariants}
-                className="-mx-4 border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x divide-y divide-white/[0.06] overflow-hidden"
-              >
-                {(todayPending ? [] : cohorts).map((c) => (
-                  <li key={c.id}>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        navigate(`/college?section=students&cohort=${encodeURIComponent(c.id)}`)
-                      }
-                      className="flex w-full items-center gap-4 px-5 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04]"
-                    >
-                      <span className="min-w-0 flex-1">
-                        <span className="flex items-center gap-2">
-                          <span className="text-[14.5px] font-semibold leading-snug text-white">
-                            {c.name}
-                          </span>
-                          {c.is_mine && (
-                            <span className="shrink-0 rounded-full bg-elec-yellow px-2 py-0.5 text-[10.5px] font-bold text-black">
-                              Yours
-                            </span>
-                          )}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[12.5px] text-white">
-                          {[
-                            plural(c.learners, 'learner'),
-                            c.next_lesson ? `next ${lessonWhen(c.next_lesson)}` : 'no class booked',
-                          ].join(' · ')}
-                        </span>
-                      </span>
-                      <span className="shrink-0 text-right">
-                        <span className="block text-[15px] font-bold tabular-nums text-white">
-                          {c.attendance_pct === null ? '—' : `${c.attendance_pct}%`}
-                        </span>
-                        <span className="block text-[11px] text-white">attendance</span>
-                      </span>
-                      <span
-                        className={cn(
-                          'w-[76px] shrink-0 rounded-full px-2 py-1 text-center text-[11px] font-semibold',
-                          c.at_risk > 0
-                            ? 'bg-orange-500 text-black'
-                            : 'border border-white/[0.16] text-white'
-                        )}
-                      >
-                        {c.at_risk > 0 ? `${c.at_risk} check-in` : 'All fine'}
-                      </span>
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
-                    </button>
-                  </li>
-                ))}
-                {todayPending && [0, 1, 2].map((i) => <li key={i} className="h-[68px]" />)}
-                {!todayPending && cohorts.length === 0 && (
-                  <li className="px-5 py-4 text-[13px] text-white">
-                    None of {scope.level === 'mine' ? 'your learners’' : 'your'} cohorts here. Pick
-                    Whole college at the top to see every cohort.
-                  </li>
-                )}
-              </motion.ul>
-            )}
-
-            {today && !todayPending && collegeHasLearners && (
-              <div className="flex items-center justify-between gap-3 px-1">
-                <span className="text-[12px] font-medium text-white">
-                  {riskUpdated
-                    ? `Check-in flags updated ${riskUpdated}`
-                    : 'Check-in flags: none computed yet'}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => void handleRecompute()}
-                  disabled={recomputing}
-                  className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow touch-manipulation disabled:opacity-60"
-                >
-                  {recomputing ? 'Recomputing…' : 'Recompute'}
-                </button>
-              </div>
-            )}
-          </motion.section>
         </div>
 
         {/* Needs you */}
@@ -823,7 +797,9 @@ export function CollegeOverviewSection({
                 ? 'Loading…'
                 : needsTotal === 0
                   ? 'Nothing waiting'
-                  : `${plural(needsTotal, 'thing')}, oldest first`}
+                  : oldestDays && oldestDays > 1
+                    ? `${plural(needsTotal, 'thing')}, oldest ${oldestDays} days`
+                    : `${plural(needsTotal, 'thing')}, oldest first`}
             </span>
           </motion.div>
 
@@ -840,24 +816,35 @@ export function CollegeOverviewSection({
             className="-mx-4 border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x overflow-hidden"
           >
             {needKinds.length > 1 && (
-              <div className="flex gap-1.5 overflow-x-auto border-b border-white/[0.06] px-4 py-3 sm:px-5">
-                {[['all', needsTotal] as [NeedKind | 'all', number], ...needKinds].map(([k, n]) => (
-                  <button
-                    key={k}
-                    type="button"
-                    aria-pressed={needFilter === k}
-                    onClick={() => setNeedFilter(k)}
-                    className={cn(
-                      'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[12px] font-semibold touch-manipulation',
-                      needFilter === k
-                        ? 'border-white bg-white text-black'
-                        : 'border-white/[0.14] text-white'
-                    )}
-                  >
-                    {k === 'all' ? 'All' : KIND_LABEL[k]}
-                    <span className="tabular-nums">{n}</span>
-                  </button>
-                ))}
+              // Quiet text tabs with counts, underlined like the area navigation.
+              <div className="flex overflow-x-auto border-b border-white/[0.06] px-2 [scrollbar-width:none] sm:px-3 [&::-webkit-scrollbar]:hidden">
+                {[['all', needsTotal] as [NeedKind | 'all', number], ...needKinds].map(([k, n]) => {
+                  const on = needFilter === k;
+                  return (
+                    <button
+                      key={k}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setNeedFilter(k)}
+                      className={cn(
+                        'relative inline-flex h-12 shrink-0 items-center gap-1.5 whitespace-nowrap px-3 text-[13px] touch-manipulation transition-colors',
+                        on
+                          ? 'font-semibold text-white'
+                          : 'font-medium text-white hover:text-elec-yellow'
+                      )}
+                    >
+                      {k === 'all' ? 'All' : KIND_LABEL[k]}
+                      <span className="tabular-nums">{n}</span>
+                      <span
+                        aria-hidden
+                        className={cn(
+                          'absolute inset-x-3 bottom-0 h-[2px] rounded-full',
+                          on ? 'bg-elec-yellow' : 'bg-transparent'
+                        )}
+                      />
+                    </button>
+                  );
+                })}
               </div>
             )}
             {todayPending ? (
@@ -882,10 +869,12 @@ export function CollegeOverviewSection({
               </div>
             ) : (
               <ul className="divide-y divide-white/[0.06]">
-                {shown.map((row) => {
+                {shown.map((row, idx) => {
+                  const band = bandOf(row.waitingDays);
+                  const bandStart = idx === 0 || bandOf(shown[idx - 1].waitingDays) !== band;
                   const initials =
                     row.kind === 'marking'
-                      ? 'M'
+                      ? 'Q'
                       : row.kind === 'iqa'
                         ? 'IQ'
                         : row.title
@@ -898,11 +887,40 @@ export function CollegeOverviewSection({
                   const waiting =
                     row.waitingDays == null
                       ? null
-                      : row.waitingDays === 0
-                        ? 'today'
-                        : `waiting ${plural(row.waitingDays, 'day')}`;
+                      : row.waitingDays <= 0
+                        ? 'Today'
+                        : row.waitingDays === 1
+                          ? 'Yesterday'
+                          : `${row.waitingDays} days`;
+                  const showKind = needFilter === 'all';
                   return (
                     <li key={row.id}>
+                      {bandStart && (
+                        <div className="flex items-center justify-between gap-3 bg-white/[0.025] px-4 py-2 sm:px-5">
+                          <span
+                            className={cn(
+                              'flex items-center gap-2 text-[12.5px] font-semibold',
+                              band === 'recent' ? 'text-white' : 'text-orange-300'
+                            )}
+                          >
+                            <span
+                              aria-hidden
+                              className={cn(
+                                'h-1.5 w-1.5 rounded-full',
+                                band === 'recent' ? 'bg-emerald-400' : 'bg-orange-400'
+                              )}
+                            />
+                            {band === 'month'
+                              ? 'Waiting over 4 weeks'
+                              : band === 'week'
+                                ? 'Waiting over a week'
+                                : 'This week'}
+                          </span>
+                          <span className="text-[12.5px] font-semibold tabular-nums text-white">
+                            {bandCount(band)}
+                          </span>
+                        </div>
+                      )}
                       <div
                         role="button"
                         tabIndex={0}
@@ -913,50 +931,55 @@ export function CollegeOverviewSection({
                             row.go();
                           }
                         }}
-                        className="flex w-full cursor-pointer items-center gap-3.5 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-5"
+                        className="flex w-full cursor-pointer items-center gap-3.5 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-5"
                       >
                         <span
                           aria-hidden="true"
                           className={cn(
                             'flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[13px] font-bold',
-                            row.urgent ? 'bg-orange-500 text-black' : 'bg-white/[0.1] text-white'
+                            'bg-white/[0.1] text-white'
                           )}
                         >
                           {initials || '•'}
                         </span>
+                        {/* Same row as the inbox bell: the name gets its own
+                            line, the reason wraps, the kind sits with the wait. */}
                         <span className="min-w-0 flex-1">
-                          <span className="flex items-center gap-2">
-                            <span className="truncate text-[14.5px] font-semibold leading-tight text-white">
-                              {row.title}
-                            </span>
-                            <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[10.5px] font-semibold text-white">
-                              {KIND_LABEL[row.kind]}
-                            </span>
+                          <span className="block truncate text-[15px] font-semibold leading-snug text-white">
+                            {row.title}
                           </span>
-                          <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">
+                          <span className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-white">
                             {row.reason}
                           </span>
+                          <span className="mt-1 block text-[12.5px] font-medium text-white lg:hidden">
+                            {[showKind ? KIND_LABEL[row.kind] : null, waiting]
+                              .filter(Boolean)
+                              .join(' · ')}
+                          </span>
+                        </span>
+                        {/* Wide screens: how long and what kind, in their own
+                            right-aligned column, so the waits line up to scan. */}
+                        <span className="hidden w-[112px] shrink-0 flex-col items-end gap-0.5 text-right lg:flex">
+                          {showKind && (
+                            <span className="text-[12.5px] font-medium text-white">
+                              {KIND_LABEL[row.kind]}
+                            </span>
+                          )}
                           {waiting && (
-                            <span
-                              className={cn(
-                                'mt-1 block text-[11.5px] font-semibold',
-                                row.urgent ? 'text-orange-300' : 'text-white'
-                              )}
-                            >
+                            <span className="text-[13px] font-semibold tabular-nums text-white">
                               {waiting}
                             </span>
                           )}
                         </span>
-                        <span
-                          className={cn(
-                            'inline-flex h-10 w-[88px] shrink-0 items-center justify-center rounded-xl text-[13px] font-bold',
-                            row.urgent
-                              ? 'bg-elec-yellow text-black'
-                              : 'border border-white/[0.18] text-white'
-                          )}
-                        >
+                        {/* The inbox's verb, outlined: orange already marks what
+                            is overdue, so no row is painted solid yellow. */}
+                        <span className="hidden h-11 min-w-[96px] shrink-0 items-center justify-center rounded-xl border border-white/[0.18] px-3 text-[13px] font-semibold text-white sm:inline-flex">
                           {row.action}
                         </span>
+                        <ChevronRight
+                          className="h-4 w-4 shrink-0 text-white sm:hidden"
+                          aria-hidden
+                        />
                       </div>
                     </li>
                   );
@@ -975,6 +998,152 @@ export function CollegeOverviewSection({
             )}
           </motion.div>
         </motion.section>
+
+        {/* Your learners: full width under both columns, the cohorts as cards
+            side by side on a wide screen (10 Oct: as a list down the left
+            column it ran far below Needs you and left the right half empty). */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="order-last min-w-0 space-y-3 xl:order-none xl:col-span-2 xl:row-start-3"
+        >
+          <motion.div variants={itemVariants} className="flex items-end justify-between gap-3">
+            <CollegeHeading>Your learners</CollegeHeading>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => (onFindLearner ? onFindLearner() : onNavigate('students'))}
+                className="inline-flex h-11 items-center gap-1.5 rounded-xl px-2.5 text-[12.5px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
+              >
+                <Search className="h-3.5 w-3.5" aria-hidden /> Find
+              </button>
+              <button
+                type="button"
+                onClick={() => setInviteOpen(true)}
+                className="inline-flex h-11 items-center rounded-xl px-2.5 text-[12.5px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06]"
+              >
+                Share a join code
+              </button>
+            </div>
+          </motion.div>
+          {!collegeHasLearners ? (
+            <motion.div
+              variants={itemVariants}
+              className={cn(CARD_SURFACE, 'rounded-3xl border border-white/[0.08] p-5 sm:p-6')}
+            >
+              <p className="text-[17px] font-semibold tracking-tight text-white">
+                No learners yet.
+              </p>
+              <p className="mt-1 text-[13.5px] font-medium leading-snug text-white">
+                Create a cohort, then share its join code. Learners who join appear here with their
+                attendance, hours and evidence.
+              </p>
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                <button type="button" onClick={() => onNavigate('cohorts')} className={btnPrimary}>
+                  Create a cohort
+                </button>
+                <button type="button" onClick={() => setInviteOpen(true)} className={btnSecondary}>
+                  Share a join code
+                </button>
+              </div>
+            </motion.div>
+          ) : allCohortStats.length === 0 && !todayPending ? (
+            <motion.div
+              variants={itemVariants}
+              className={cn(CARD_SURFACE, 'rounded-2xl border border-white/[0.14] p-5')}
+            >
+              <p className="text-[15px] font-semibold text-white">
+                {plural(students.length, 'learner')} on the roll, no cohorts yet.
+              </p>
+              <p className="mt-1 text-[13px] font-medium text-white">
+                Put learners into cohorts so registers, lessons and quizzes go to the right group.
+              </p>
+              <button
+                type="button"
+                onClick={() => onNavigate('cohorts')}
+                className={cn(btnSecondary, 'mt-4')}
+              >
+                Set up cohorts
+              </button>
+            </motion.div>
+          ) : (
+            <motion.ul
+              variants={itemVariants}
+              className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 sm:bg-none xl:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]"
+            >
+              {(todayPending ? [] : cohorts).map((c) => (
+                <li
+                  key={c.id}
+                  className="sm:overflow-hidden sm:rounded-2xl sm:border sm:border-white/[0.08] sm:bg-gradient-to-b sm:from-white/[0.07] sm:to-white/[0.025]"
+                >
+                  <button
+                    type="button"
+                    onClick={() =>
+                      navigate(`/college?section=students&cohort=${encodeURIComponent(c.id)}`)
+                    }
+                    className="flex w-full items-center gap-4 px-5 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07]"
+                  >
+                    {/* Three plain lines: the cohort, its week, how it is
+                        doing. The figure and two pills that sat beside the
+                        name squeezed it to two lines on a phone. */}
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[15px] font-semibold leading-snug text-white">
+                        {c.name}
+                        {c.is_mine && (
+                          <span className="ml-2 text-[12.5px] font-medium text-white">Yours</span>
+                        )}
+                      </span>
+                      <span className="mt-0.5 block text-[13px] leading-snug text-white">
+                        {[
+                          plural(c.learners, 'learner'),
+                          c.next_lesson ? `next ${lessonWhen(c.next_lesson)}` : 'no class booked',
+                        ].join(' · ')}
+                      </span>
+                      <span className="mt-1 block text-[13px] font-semibold leading-snug">
+                        <span className="text-white">
+                          {c.attendance_pct === null
+                            ? 'No attendance yet'
+                            : `${c.attendance_pct}% attendance`}
+                        </span>
+                        <span className="text-white"> · </span>
+                        <span className={c.at_risk > 0 ? 'text-orange-300' : 'text-white'}>
+                          {c.at_risk > 0 ? `${c.at_risk} to check in with` : 'all fine'}
+                        </span>
+                      </span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                  </button>
+                </li>
+              ))}
+              {todayPending && [0, 1, 2].map((i) => <li key={i} className="h-[68px]" />)}
+              {!todayPending && cohorts.length === 0 && (
+                <li className="px-5 py-4 text-[13px] text-white">
+                  None of {scope.level === 'mine' ? 'your learners’' : 'your'} cohorts here. Pick
+                  Whole college at the top to see every cohort.
+                </li>
+              )}
+            </motion.ul>
+          )}
+
+          {today && !todayPending && collegeHasLearners && (
+            <div className="flex items-center justify-between gap-3 px-1">
+              <span className="text-[12px] font-medium text-white">
+                {riskUpdated
+                  ? `Check-in flags updated ${riskUpdated}`
+                  : 'Check-in flags: none computed yet'}
+              </span>
+              <button
+                type="button"
+                onClick={() => void handleRecompute()}
+                disabled={recomputing}
+                className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow touch-manipulation disabled:opacity-60"
+              >
+                {recomputing ? 'Recomputing…' : 'Recompute'}
+              </button>
+            </div>
+          )}
+        </motion.section>
       </div>
 
       {/* Statutory, so it stays on the front page, after the work. */}
@@ -990,45 +1159,48 @@ export function CollegeOverviewSection({
         animate="visible"
         className="space-y-3"
       >
-        <CollegeHeading>Everything else</CollegeHeading>
-        <motion.div variants={itemVariants} className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          {groups.map((g) => (
-            <div
-              key={g.title}
-              className="-mx-4 overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x"
-            >
-              <p className="px-5 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                {g.title}
-              </p>
-              <ul className="divide-y divide-white/[0.06]">
-                {g.items.map((m) => (
-                  <li key={m.label}>
-                    <button
-                      type="button"
-                      onClick={m.go}
-                      className="flex min-h-[60px] w-full items-center gap-3 px-5 py-2.5 text-left transition-colors touch-manipulation hover:bg-white/[0.04]"
-                    >
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14.5px] font-semibold text-white">
-                          {m.label}
-                        </span>
-                        <span className="block text-[12.5px] leading-snug text-white">
-                          {m.hint}
-                        </span>
-                      </span>
-                      {m.count ? (
-                        <span className="shrink-0 rounded-full bg-elec-yellow px-2 py-0.5 text-[11.5px] font-bold tabular-nums text-black">
-                          {m.count}
-                        </span>
-                      ) : null}
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </motion.div>
+        <CollegeHeading>All areas</CollegeHeading>
+        {/* One even grid of equal cards, one per area, in the order of the
+            work (assess, teach, apprenticeship rules, college). Andrew, 10 Oct:
+            "make all these the same size cards". Grouped columns of 3, 5, 4
+            and 6 rows could never line up. On a phone it is one list. */}
+        <motion.ul
+          variants={itemVariants}
+          className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 sm:bg-none lg:grid-cols-3 xl:grid-cols-4"
+        >
+          {groups
+            .flatMap((g) => g.items)
+            // Settings is in the area navigation on every page, and the demo
+            // QR sits beside More detail, so the grid is an even 16.
+            .filter((m) => m.label !== 'Settings' && m.label !== 'Try it on your phone')
+            .map((m) => (
+              <li
+                key={m.label}
+                className="sm:overflow-hidden sm:rounded-2xl sm:border sm:border-white/[0.08] sm:bg-gradient-to-b sm:from-white/[0.07] sm:to-white/[0.025]"
+              >
+                <button
+                  type="button"
+                  onClick={m.go}
+                  className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:h-[84px]"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[15px] font-semibold leading-tight text-white">
+                      {m.label}
+                    </span>
+                    <span className="mt-1 line-clamp-2 text-[13px] leading-snug text-white">
+                      {m.hint}
+                    </span>
+                  </span>
+                  {m.count ? (
+                    <span className="shrink-0 rounded-full bg-elec-yellow px-2 py-0.5 text-[12px] font-bold tabular-nums text-black">
+                      {m.count}
+                    </span>
+                  ) : null}
+                  <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                </button>
+              </li>
+            ))}
+        </motion.ul>
       </motion.section>
 
       {/* ── 5. More detail (collapsed) ───────────────────────────────── */}
@@ -1038,7 +1210,15 @@ export function CollegeOverviewSection({
         animate="visible"
         className="space-y-3"
       >
-        <motion.div variants={itemVariants}>
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            // minmax(0,…): an implicit track grew to the truncated line's full
+            // width and pushed both cards past a phone's right edge.
+            'grid grid-cols-[minmax(0,1fr)] gap-3',
+            demoCollege && 'sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]'
+          )}
+        >
           <button
             type="button"
             onClick={toggleMore}
@@ -1058,6 +1238,22 @@ export function CollegeOverviewSection({
               aria-hidden
             />
           </button>
+          {/* ELE-1854: the presenter's QR, demo college only. */}
+          {demoCollege && (
+            <button
+              type="button"
+              onClick={() => navigate('/college/try-on-phone')}
+              className="flex min-h-[64px] w-full items-center justify-between gap-4 rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-5 py-3 text-left text-white transition-colors touch-manipulation hover:border-white/[0.18]"
+            >
+              <span className="min-w-0">
+                <span className="block text-[14.5px] font-semibold">Try it on your phone</span>
+                <span className="block truncate text-[12.5px]">
+                  A QR that gives a visitor a demo learner
+                </span>
+              </span>
+              <ChevronRight className="h-4 w-4 shrink-0" aria-hidden />
+            </button>
+          )}
         </motion.div>
 
         {moreOpen && (

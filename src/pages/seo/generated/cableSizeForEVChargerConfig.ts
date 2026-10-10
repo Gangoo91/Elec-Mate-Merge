@@ -276,7 +276,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'AFDD Changes A4:2026 — EV Charging Exemption',
+      title: 'AFDDs in A4:2026: EV Charging Exemption',
       description:
         'EV chargers conforming to BS EN 61851 are exempt from the standard AFDD requirements.',
       icon: 'Zap',

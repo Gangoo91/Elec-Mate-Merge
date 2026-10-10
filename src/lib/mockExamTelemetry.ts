@@ -202,6 +202,8 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
     }
     const id = (data as { id?: string } | null)?.id;
     if (id) setLastSaved({ id, examSlug, at: Date.now() });
+    // The server awards mock XP on insert (trg_xp_on_mock_attempt); show it.
+    if (id && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('elecmate:xp-check'));
   });
 
   // ── Per-question aggregates ───────────────────────────────────────────

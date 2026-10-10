@@ -818,7 +818,7 @@ const DomesticPlanningSection = () => {
           </div>
         </CardHeader>
         <CardContent className="p-0">
-          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-3">Essential Documents to Maintain</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>

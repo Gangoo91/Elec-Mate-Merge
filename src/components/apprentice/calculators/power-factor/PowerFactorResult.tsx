@@ -9,7 +9,7 @@ const PowerFactorResult = ({ powerFactor }: PowerFactorResultProps) => {
     <div>
       {powerFactor !== null ? (
         <div className="text-center space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white block">
+          <span className="text-[12px] font-medium text-white block">
             Power factor
           </span>
           <div className="flex items-center justify-center gap-3">

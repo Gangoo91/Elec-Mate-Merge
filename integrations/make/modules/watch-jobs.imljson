@@ -1,0 +1,39 @@
+{
+  "name": "watchJobs",
+  "label": "Watch Jobs",
+  "description": "Triggers when a job is created or changed. Uses ?since with the time of the last run, so each change arrives once.",
+  "type": "trigger",
+  "connection": "elec-mate",
+  "communication": {
+    "url": "/jobs",
+    "method": "GET",
+    "qs": {
+      "since": "{{ifempty(epoch.lastChange, parameters.from)}}",
+      "limit": 500,
+      "offset": "{{(pagination.page - 1) * 500}}"
+    },
+    "response": {
+      "iterate": "{{body.data}}",
+      "output": "{{item}}",
+      "trigger": { "id": "{{item.id}}-{{item.updated_at}}", "date": "{{item.updated_at}}", "type": "date", "order": "asc" }
+    },
+    "pagination": { "condition": "{{body.next_offset != null}}" }
+  },
+  "parameters": [
+    { "name": "from", "type": "date", "label": "Start from", "help": "Jobs changed after this date and time, for the first run." }
+  ],
+  "interface": [
+    { "name": "id", "type": "text", "label": "Job ID" },
+    { "name": "title", "type": "text", "label": "Title" },
+    { "name": "client", "type": "text", "label": "Client" },
+    { "name": "customer_id", "type": "text", "label": "Customer ID" },
+    { "name": "location", "type": "text", "label": "Location" },
+    { "name": "status", "type": "text", "label": "Status" },
+    { "name": "stage", "type": "text", "label": "Board stage" },
+    { "name": "start_date", "type": "date", "label": "Start date" },
+    { "name": "end_date", "type": "date", "label": "End date" },
+    { "name": "completed_at", "type": "date", "label": "Completed at" },
+    { "name": "created_at", "type": "date", "label": "Created at" },
+    { "name": "updated_at", "type": "date", "label": "Updated at" }
+  ]
+}

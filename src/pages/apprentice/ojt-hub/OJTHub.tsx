@@ -73,13 +73,12 @@ import {
 } from '@/hooks/useStudentOtjVerification';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, GuideActions } from '@/components/apprentice/shared/GuideKit';
 import {
   HubPage,
   HubBody,
   HubMasthead,
   HubAlertLine,
-  HubQuickStart,
   HubWorkList,
   type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
@@ -1075,8 +1074,7 @@ export default function OJTHub() {
           }}
         />
 
-        <HubQuickStart
-          label="Start something"
+        <GuideActions
           items={[
             {
               title: 'Add training',
@@ -1259,7 +1257,7 @@ function AttestationBadge({ row, link }: { row: OtjEntryRow; link: MyEmployerLin
   return (
     <span
       className={cn(
-        'inline-flex max-w-full items-center truncate rounded-md border px-1.5 py-0.5 text-[11px] font-semibold leading-tight text-white',
+        'inline-flex max-w-full items-center truncate rounded-md border px-1.5 py-0.5 text-[12.5px] font-semibold leading-tight text-white',
         a.tone === 'volt' && 'border-elec-yellow/70',
         a.tone === 'white' && 'border-white/[0.35]',
         a.tone === 'red' && 'border-red-400/80'
@@ -1316,9 +1314,7 @@ function VerificationPanel({
             CARD_SURFACE
           )}
         >
-          <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-white">
-            Your employer
-          </p>
+          <p className="text-[12px] font-semibold text-white">Your employer</p>
           <p className="mt-1 text-[14px] font-semibold leading-tight text-white">
             {employerLink.companyName}
           </p>
@@ -1378,7 +1374,7 @@ function VerificationPanel({
       {pending.length > 0 && (
         <ul
           className={cn(
-            '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x',
             CARD_SURFACE
           )}
         >
@@ -1403,7 +1399,7 @@ function VerificationPanel({
                 </div>
                 <span className="shrink-0 text-[15px] font-semibold leading-tight tabular-nums text-white">
                   {(row.duration_minutes / 60).toFixed(1)}
-                  <span className="ml-0.5 text-[10px] font-medium text-white">h</span>
+                  <span className="ml-0.5 text-[12.5px] font-medium text-white">h</span>
                 </span>
               </div>
               {/*
@@ -1517,12 +1513,12 @@ function RecentEntries({
       ) : recent.length === 0 ? (
         <div
           className={cn(
-            'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
+            'rounded-2xl border border-white/[0.08] p-6 text-center space-y-2',
             CARD_SURFACE
           )}
         >
           <Eyebrow>No logged training yet</Eyebrow>
-          <p className="text-[13px] text-white leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Learning in the app counts by itself. Training away from the app counts once you log it
             with "Add training", ready for your tutor or supervisor to sign off.
           </p>
@@ -1539,7 +1535,7 @@ function RecentEntries({
         */
         <ul
           className={cn(
-            '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x',
             CARD_SURFACE
           )}
         >
@@ -1595,7 +1591,7 @@ function RecentEntries({
                   )}
                 >
                   {(row.duration_minutes / 60).toFixed(1)}
-                  <span className="ml-0.5 text-[10px] font-medium text-white">h</span>
+                  <span className="ml-0.5 text-[12.5px] font-medium text-white">h</span>
                 </span>
               </li>
             );

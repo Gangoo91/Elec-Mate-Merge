@@ -32,7 +32,7 @@ const OUTCOME_LABEL: Record<ObservationOutcome, string> = {
 };
 
 const CHIP =
-  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[12px] font-semibold tabular-nums';
 const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
 const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
 const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
@@ -51,7 +51,10 @@ const ACTION_BTN =
 const TEXT_BTN =
   'flex h-11 items-center px-2 text-[12px] font-semibold text-white transition-colors touch-manipulation';
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -78,9 +81,14 @@ export function SectionObservations({
   const { toast } = useToast();
   const navigate = useNavigate();
   // ELE-1873: drafts carry on here, and a professional discussion starts here.
-  const [sheet, setSheet] = useState<{ draftId: string | null; kind: 'observation' | 'professional_discussion' } | null>(null);
+  const [sheet, setSheet] = useState<{
+    draftId: string | null;
+    kind: 'observation' | 'professional_discussion' | 'questioning';
+  } | null>(null);
   const decide = (o: CollegeObservation) =>
-    navigate(`/college?section=student360&studentId=${studentId}&focus=${o.portfolio_item_id}#assess`);
+    navigate(
+      `/college?section=student360&studentId=${studentId}&focus=${o.portfolio_item_id}#assess`
+    );
 
   const onView = async (path: string) => {
     const { data, error } = await supabase.storage
@@ -108,6 +116,13 @@ export function SectionObservations({
             className={cn(ACTION_BTN, 'no-print text-white')}
           >
             Discussion
+          </button>
+          <button
+            type="button"
+            onClick={() => setSheet({ draftId: null, kind: 'questioning' })}
+            className={cn(ACTION_BTN, 'no-print text-white')}
+          >
+            Questions
           </button>
           <button type="button" onClick={onAdd} className={cn(ACTION_BTN, 'no-print')}>
             Record observation
@@ -185,9 +200,10 @@ function ObservationRow({
 }) {
   const sent = !!obs.sent_at;
   const draft = !sent && !obs.assessor_signed;
-  const criteria = (obs.criteria ?? []).length > 0
-    ? obs.criteria.map((c) => `${c.unit_code} AC ${c.ac_code}`)
-    : obs.acs_evidenced;
+  const criteria =
+    (obs.criteria ?? []).length > 0
+      ? obs.criteria.map((c) => `${c.unit_code} AC ${c.ac_code}`)
+      : obs.acs_evidenced;
   const [expanded, setExpanded] = useState(false);
 
   const settingLabel =
@@ -205,13 +221,22 @@ function ObservationRow({
 
   const acsCount = criteria.length;
   const followUpOverdue =
-    obs.follow_up_required && !!obs.follow_up_date && new Date(obs.follow_up_date).getTime() < Date.now();
+    obs.follow_up_required &&
+    !!obs.follow_up_date &&
+    new Date(obs.follow_up_date).getTime() < Date.now();
 
   return (
     <li className="px-4 py-3.5 sm:px-5">
       <div className="flex flex-wrap items-center gap-1.5">
         {obs.kind === 'professional_discussion' && (
           <span className={cn(CHIP, CHIP_NEUTRAL)}>Discussion</span>
+        )}
+        {obs.kind === 'questioning' && (
+          <span className={cn(CHIP, CHIP_NEUTRAL)}>
+            Questioning
+            {obs.question_mode ? `, ${obs.question_mode === 'written' ? 'written' : 'oral'}` : ''}
+            {obs.question_delivery === 'remote' ? ', remote' : ''}
+          </span>
         )}
         {draft ? (
           <span className={cn(CHIP, CHIP_VOLT)}>Draft</span>
@@ -226,15 +251,15 @@ function ObservationRow({
           </span>
         )}
         {obs.grade && (
-          <span className="text-[11px] font-semibold tabular-nums text-white">{obs.grade}</span>
+          <span className="text-[12px] font-semibold tabular-nums text-white">{obs.grade}</span>
         )}
         {obs.assessor_signed && !sent && (
-          <span className="text-[11px] font-semibold text-emerald-300">Signed</span>
+          <span className="text-[12px] font-semibold text-emerald-300">Signed</span>
         )}
         {obs.follow_up_required && (
           <span
             className={cn(
-              'text-[11px] font-semibold tabular-nums',
+              'text-[12px] font-semibold tabular-nums',
               followUpOverdue ? 'text-red-300' : 'text-elec-yellow'
             )}
           >
@@ -246,7 +271,7 @@ function ObservationRow({
       <h3 className="mt-1.5 text-[14px] font-semibold leading-tight text-white">
         {obs.activity_title}
       </h3>
-      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] tabular-nums text-white">
+      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] tabular-nums text-white">
         <span>{formatDate(obs.observed_at)}</span>
         {obs.observed_time && <span>{obs.observed_time.slice(0, 5)}</span>}
         {obs.duration_minutes && <span>{obs.duration_minutes}m</span>}
@@ -257,17 +282,17 @@ function ObservationRow({
 
       {acsCount > 0 && (
         <div className="mt-2.5 flex flex-wrap items-center gap-1">
-          <span className="mr-1 text-[11px] font-medium text-white">Criteria</span>
+          <span className="mr-1 text-[12px] font-medium text-white">Criteria</span>
           {criteria.slice(0, expanded ? undefined : 8).map((ac) => (
             <span
               key={ac}
-              className="inline-flex items-center rounded-md border border-white/[0.14] bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10.5px] tabular-nums text-white"
+              className="inline-flex items-center rounded-md border border-white/[0.14] bg-white/[0.06] px-1.5 py-0.5 font-mono text-[12px] tabular-nums text-white"
             >
               {ac}
             </span>
           ))}
           {!expanded && acsCount > 8 && (
-            <span className="text-[11px] tabular-nums text-white">+{acsCount - 8} more</span>
+            <span className="text-[12px] tabular-nums text-white">+{acsCount - 8} more</span>
           )}
         </div>
       )}
@@ -281,6 +306,24 @@ function ObservationRow({
         >
           {obs.activity_summary}
         </p>
+      )}
+
+      {obs.kind === 'questioning' && (obs.questions ?? []).length > 0 && (
+        <ol className="mt-2.5 space-y-1.5" data-testid="obs-questions">
+          {(obs.questions ?? []).slice(0, expanded ? undefined : 2).map((q, i) => (
+            <li key={i} className="text-[12.5px] leading-snug text-white">
+              <span className="font-semibold">
+                {i + 1}. {q.question}
+              </span>
+              {q.answer ? <span className="block">{q.answer}</span> : null}
+            </li>
+          ))}
+          {!expanded && (obs.questions ?? []).length > 2 && (
+            <li className="text-[12px] text-white">
+              and {(obs.questions ?? []).length - 2} more questions
+            </li>
+          )}
+        </ol>
       )}
 
       {obs.learner_comment && (
@@ -302,23 +345,31 @@ function ObservationRow({
                   rel="noopener noreferrer"
                   className="flex h-11 items-center rounded-xl border border-white/[0.14] px-3 text-[12px] font-semibold text-white touch-manipulation"
                 >
-                  {m.type.startsWith('image/') ? 'Photo' : m.type.startsWith('video/') ? 'Video' : m.type.startsWith('audio/') ? 'Recording' : 'File'}
+                  {m.type.startsWith('image/')
+                    ? 'Photo'
+                    : m.type.startsWith('video/')
+                      ? 'Video'
+                      : m.type.startsWith('audio/')
+                        ? 'Recording'
+                        : 'File'}
                 </a>
               ))}
             </div>
           )}
           {obs.content_hash && (
-            <p className="font-mono text-[10.5px] text-white" title={obs.content_hash}>
+            <p className="font-mono text-[12px] text-white" title={obs.content_hash}>
               Fingerprint {obs.content_hash.slice(0, 8)}…{obs.content_hash.slice(-4)}
             </p>
           )}
-          {obs.feedback_strengths && <FeedbackBlock label="Strengths" text={obs.feedback_strengths} />}
+          {obs.feedback_strengths && (
+            <FeedbackBlock label="Strengths" text={obs.feedback_strengths} />
+          )}
           {obs.feedback_areas && (
             <FeedbackBlock label="Areas for development" text={obs.feedback_areas} />
           )}
           {obs.action_points.length > 0 && (
             <div>
-              <div className="text-[11px] font-semibold text-elec-yellow">Action points</div>
+              <div className="text-[12px] font-semibold text-elec-yellow">Action points</div>
               <ul className="mt-1 space-y-1">
                 {obs.action_points.map((ap, i) => (
                   <li key={i} className="relative pl-4 text-[12.5px] leading-snug text-white">
@@ -333,13 +384,12 @@ function ObservationRow({
             </div>
           )}
           {obs.ksbs_observed.length > 0 && (
-            <div className="text-[11.5px] text-white">
-              KSBs:{' '}
-              <span className="font-mono tabular-nums">{obs.ksbs_observed.join(', ')}</span>
+            <div className="text-[12px] text-white">
+              KSBs: <span className="font-mono tabular-nums">{obs.ksbs_observed.join(', ')}</span>
             </div>
           )}
           {(obs.qualification_code || obs.unit_code) && (
-            <div className="text-[11.5px] text-white">
+            <div className="text-[12px] text-white">
               {obs.qualification_code && (
                 <span>
                   Qualification <span className="font-mono">{obs.qualification_code}</span>
@@ -405,7 +455,7 @@ function ObservationRow({
 function FeedbackBlock({ label, text }: { label: string; text: string }) {
   return (
     <div>
-      <div className="text-[11px] font-semibold text-elec-yellow">{label}</div>
+      <div className="text-[12px] font-semibold text-elec-yellow">{label}</div>
       <p className="mt-0.5 whitespace-pre-line text-[12.5px] leading-relaxed text-white">{text}</p>
     </div>
   );

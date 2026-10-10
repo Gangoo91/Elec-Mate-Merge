@@ -10,10 +10,8 @@ interface AccreditationDetailViewProps {
 }
 
 const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
-  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-      {eyebrow}
-    </span>
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+    <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
     <div>{children}</div>
   </div>
 );
@@ -27,10 +25,7 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 const Bullets = ({ items }: { items: string[] }) => (
   <ul className="space-y-1.5">
     {items.map((item, idx) => (
-      <li
-        key={idx}
-        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-      >
+      <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
       </li>
@@ -52,7 +47,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
       </Button>
 
       <div className="space-y-3">
-        <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <div className="flex flex-wrap items-baseline gap-3 text-[13px] font-semibold text-white">
           <span>{accreditation.level}</span>
           <span className="text-white">·</span>
           <span>{accreditation.category}</span>
@@ -77,8 +72,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
           { label: 'Investment', value: accreditation.cost },
           {
             label: 'Locations',
-            value:
-              accreditation.locations.length > 1 ? 'Multiple' : accreditation.locations[0],
+            value: accreditation.locations.length > 1 ? 'Multiple' : accreditation.locations[0],
           },
           { label: 'Popularity', value: `${accreditation.popularity}%` },
         ].map((item) => (
@@ -86,9 +80,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             key={item.label}
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              {item.label}
-            </span>
+            <span className="text-[13px] font-semibold text-white">{item.label}</span>
             <div className="text-[14px] text-white">{item.value}</div>
           </div>
         ))}
@@ -139,15 +131,15 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
               <div>
                 <h5 className="text-[14px] text-white mb-1">Industry standing</h5>
                 <p className="text-[14px] text-white leading-relaxed">
-                  Gain credibility within the electrical industry, setting you apart from non-accredited
-                  professionals.
+                  Gain credibility within the electrical industry, setting you apart from
+                  non-accredited professionals.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Consumer trust</h5>
                 <p className="text-[14px] text-white leading-relaxed">
-                  Customers actively seek accredited professionals, providing immediate confidence in
-                  your services.
+                  Customers actively seek accredited professionals, providing immediate confidence
+                  in your services.
                 </p>
               </div>
             </div>
@@ -158,15 +150,15 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
               <div>
                 <h5 className="text-[14px] text-white mb-1">Pricing</h5>
                 <p className="text-[14px] text-white leading-relaxed">
-                  Many accredited professionals are able to charge a premium relative to non-accredited
-                  competitors.
+                  Many accredited professionals are able to charge a premium relative to
+                  non-accredited competitors.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Marketing</h5>
                 <p className="text-[14px] text-white leading-relaxed">
-                  Use accreditation logos and marketing materials to win contracts and build trust with
-                  potential clients.
+                  Use accreditation logos and marketing materials to win contracts and build trust
+                  with potential clients.
                 </p>
               </div>
               <div>
@@ -226,8 +218,8 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
               <div>
                 <h5 className="text-[14px] text-white mb-1">Type of work</h5>
                 <p className="text-[14px] text-white leading-relaxed">
-                  Domestic, commercial, or industrial work with evidence of competence across multiple
-                  areas.
+                  Domestic, commercial, or industrial work with evidence of competence across
+                  multiple areas.
                 </p>
               </div>
               <div>
@@ -289,9 +281,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
           {accreditation.prerequisites && accreditation.prerequisites.length > 0 && (
             <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                Critical prerequisites
-              </span>
+              <span className="text-[13px] font-semibold text-red-300">Critical prerequisites</span>
               <ul className="space-y-1.5">
                 {accreditation.prerequisites.map((p, idx) => (
                   <li key={idx} className="text-[14px] text-white leading-relaxed">
@@ -338,7 +328,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
                   key={idx}
                   className="flex items-start gap-3 text-[14px] text-white leading-relaxed"
                 >
-                  <span className="flex-shrink-0 w-6 h-6 rounded-md border border-white/10 bg-white/[0.03] flex items-center justify-center text-[12px] text-white font-mono">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-md border border-white/10 bg-white/[0.03] flex items-center justify-center text-[12px] text-white">
                     {idx + 1}
                   </span>
                   <span>{step}</span>
@@ -414,7 +404,8 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
 
           <Section eyebrow="Total timeline">
             <p className="text-[14px] text-white leading-relaxed">
-              Approximately 6-12 weeks from start to finish, broken down across the four phases above.
+              Approximately 6-12 weeks from start to finish, broken down across the four phases
+              above.
             </p>
           </Section>
         </TabsContent>
@@ -548,8 +539,8 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
               <div>
                 <h5 className="text-[14px] text-white mb-1">Market recognition</h5>
                 <p className="text-[14px] text-white leading-relaxed">
-                  Recognised by {accreditation.popularity}% of UK electrical professionals and trusted
-                  by major contractors nationwide.
+                  Recognised by {accreditation.popularity}% of UK electrical professionals and
+                  trusted by major contractors nationwide.
                 </p>
               </div>
               <div>

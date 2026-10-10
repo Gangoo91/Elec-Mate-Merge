@@ -69,7 +69,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Pre-test */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Before You Start</p>
+          <p className="text-[12px] font-medium text-white mb-3">Before You Start</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {preTestChecks.map((item, i) => (
@@ -84,7 +84,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Ring circuit strategy */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Ring Circuit Testing Strategy</p>
+          <p className="text-[12px] font-medium text-white mb-3">Ring Circuit Testing Strategy</p>
         </motion.div>
 
         {ringCircuitStrategy.map((item, i) => (
@@ -103,7 +103,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Common defects */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects Found</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Defects Found</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -119,7 +119,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Troubleshooting */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
+          <p className="text-[12px] font-medium text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
@@ -140,7 +140,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Pro tips */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
+          <p className="text-[12px] font-medium text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -159,7 +159,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* TT System specifics */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">TT Systems — Additional Considerations</p>
+          <p className="text-[12px] font-medium text-white mb-3">TT Systems — Additional Considerations</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

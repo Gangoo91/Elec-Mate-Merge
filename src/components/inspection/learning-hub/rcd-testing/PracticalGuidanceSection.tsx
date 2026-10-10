@@ -58,7 +58,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Troubleshooting */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
+          <p className="text-[12px] font-medium text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
@@ -79,7 +79,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Common defects from RAG */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects Found</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Defects Found</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -95,7 +95,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Maintenance intervals */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Testing & Maintenance Intervals</p>
+          <p className="text-[12px] font-medium text-white mb-3">Testing & Maintenance Intervals</p>
         </motion.div>
 
         {maintenanceIntervals.map((item, i) => (
@@ -111,7 +111,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Pro tips */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
+          <p className="text-[12px] font-medium text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

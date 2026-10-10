@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const howToPriceFullRewireConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-full-rewire-as-an-electrician',
@@ -76,7 +76,7 @@ export const howToPriceFullRewireConfig: GeneratedGuideConfig = {
             'Price per circuit + per outlet, not per day — a 3-bed has 8-12 circuits and 35-50 outlets typically',
             'Chase + plaster patching is normally excluded — call this out explicitly in the quote',
             'Smoke alarm system to BS 5839-6 Grade D2 is now mandatory on rewires — add the alarm spec separately',
-            'AFDDs in HMOs / certain residential settings under A4:2026 — factor in £15-25 per AFDD-protected way',
+            'AFDDs in HMOs and the other premises named in Reg 421.1.7 (required since A2:2022) — factor in £15-25 per AFDD-protected way',
             'Time on site for a 3-bed rewire is typically 8-15 working days — pad the schedule for snags',
             'Customer-supplied materials (sockets, switches) reduce your margin — quote as \'electrician supplied\' by default',
           ],
@@ -122,7 +122,7 @@ export const howToPriceFullRewireConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text: 'BS 7671:2018+A4:2026 (the 18th Edition published 15 April 2026) is the current standard. Any quote that does not factor in current A4:2026 requirements — including AFDDs in HMOs, updated SPD thresholds, and the new Schedule of Tests columns — is under-quoting on certified-compliance work.',
+          text: 'BS 7671:2018+A4:2026 (the 18th Edition published 15 April 2026) is the current standard. Any quote that does not factor in current requirements, including AFDDs in HMOs (required since A2:2022), the SPD risk assessment and the full Schedule of Test Results, is under-quoting on certified-compliance work.',
         },
       ],
     },

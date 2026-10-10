@@ -1,15 +1,16 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
+import { OTJ_HOURS_FLOOR, OTJ_RULE_SOURCE, OTJ_ST0152_HOURS } from '@/data/otjStandards';
 
 // Off-The-Job Training for Electrical Employers — apprentice / electrician / employer content.
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const OffTheJobTrainingEmployerGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/off-the-job-training-employer-guide',
   title: 'Off-The-Job Training for Electrical Employers',
-  description: 'A practical employer guide to OTJ training requirements. How to plan the 20% minimum, what activities count, the ESFA audit…',
+  description: 'A practical employer guide to OTJ training requirements. How to plan the minimum hours for the standard, what activities count, and the evidence…',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,
@@ -20,10 +21,10 @@ export const OffTheJobTrainingEmployerGuideConfig: GeneratedGuideConfig = {
   heroHighlight: 'Complete 2026 Guide',
   heroSuffix: '— For UK Electrical Trade',
   heroSubtitle:
-    'A practical employer guide to OTJ training requirements. How to plan the 20% minimum, what activities count, the ESFA audit, and how to avoid the most common compliance traps. This guide is for electrical contractors and small business owners managing apprentice OTJ requirements.',
+    'A practical employer guide to OTJ training requirements. How to plan the minimum hours for the standard, what activities count, the evidence your provider needs, and how to avoid the most common compliance traps. This guide is for electrical contractors and small business owners managing apprentice OTJ requirements.',
   keyTakeaways: [
-    'You are legally responsible for ensuring your apprentice gets 20% of contracted hours as OTJ training.',
-    'Failure to meet 20% can result in apprenticeship funding being clawed back at the ESFA audit.',
+    `You must release your apprentice, in paid working hours, for at least the OTJ hours published on their standard: ${OTJ_ST0152_HOURS} for ST0152 starts from August 2025 (${OTJ_RULE_SOURCE}).`,
+    'If the OTJ policy is not met, funds are at risk of recovery from the training provider (DfE funding rules 2026 to 2027, rule 82.4), so providers check it closely.',
     'Cost the OTJ time into the apprentice\u2019s wage — you pay for that time even though they\u2019re not productively working.',
     'Plan OTJ activities in advance — supervised learning on new skills, CPD events, scheme courses, reading time.',
     'Document everything: the apprentice\u2019s logbook is the audit evidence, but your contemporaneous records matter too.',
@@ -37,18 +38,18 @@ export const OffTheJobTrainingEmployerGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Under the Apprenticeship Standard, the apprentice must spend a minimum 20% of their contracted hours on Off-the-Job training. This is a legal requirement. You are responsible for ensuring it happens AND for paying the apprentice during that time. Failure to meet 20% can result in: ESFA clawback of apprenticeship funding (~£15-27k per apprentice), loss of ESFA-approved employer status, and reputational damage with the training provider.',
+          text: `Off-the-job training is a statutory requirement for an English apprenticeship (DfE funding rules 2026 to 2027, rule 82). For starts from 1 August 2025 the minimum is the number of hours published on the front of the standard: ${OTJ_ST0152_HOURS} for Installation and Maintenance Electrician (ST0152), never below ${OTJ_HOURS_FLOOR} (rules 85 to 86). It must happen in the apprentice\u2019s normal paid working hours (rule 82.1). You agree to release them for it in the apprenticeship agreement and training plan; if the policy is not met, funds are at risk of recovery from the provider (rule 82.4). Apprenticeships that started before August 2025 keep the old rule: 20% of normal working hours capped at 30 a week.`,
         },
       ],
     },
     {
       id: 'planning-the-20-percent',
-      heading: 'Planning the 20%',
-      tocLabel: 'Planning the 20%',
+      heading: 'Planning the Hours',
+      tocLabel: 'Planning the Hours',
       blocks: [
         {
           type: 'paragraph',
-          text: 'For a 40-hour working week, plan 8 hours of OTJ per week. Most employers structure this as: 1 day per week at college (year 1-3), additional supervised on-site learning of new skills, scheduled CPD events. Build OTJ into your apprentice\u2019s timetable from day one. Don\u2019t leave it as "we\u2019ll fit it in when we can" — that\u2019s how apprentices end up short at year-end.',
+          text: `Spread the standard\u2019s total across the planned duration: ${OTJ_ST0152_HOURS} hours over a typical four-year ST0152 programme is roughly 6 hours a week once holidays are taken out. Most employers structure this as: 1 day per week at college (year 1-3), additional supervised on-site learning of new skills, scheduled CPD events. Build OTJ into your apprentice\u2019s timetable from day one. Don\u2019t leave it as "we\u2019ll fit it in when we can" — that\u2019s how apprentices end up short at year-end.`,
         },
       ],
     },
@@ -76,12 +77,12 @@ export const OffTheJobTrainingEmployerGuideConfig: GeneratedGuideConfig = {
     },
     {
       id: 'esfa-audit',
-      heading: 'The ESFA Audit Process',
-      tocLabel: 'The ESFA Audit Process',
+      heading: 'Evidence and Audit',
+      tocLabel: 'Evidence and Audit',
       blocks: [
         {
           type: 'paragraph',
-          text: 'ESFA may audit your apprenticeship arrangements at any time during or after the apprenticeship. Audit typically reviews: the apprentice\u2019s OTJ logbook, your contemporaneous training records, the training provider\u2019s confirmation of college attendance, evidence of supervised learning (signed mentor notes). If insufficient evidence is presented, the ESFA can claw back the apprenticeship funding from the employer (you, not the apprentice).',
+          text: 'The training provider is responsible for evidencing all off-the-job training, even where you deliver some of it (DfE funding rules 2026 to 2027, rule 91). The DfE can audit the provider\u2019s records, which typically means: the apprentice\u2019s OTJ log, your contemporaneous training records, college attendance, and evidence of supervised learning (signed mentor notes). If the evidence is not there, funds are at risk of recovery from the provider (rule 82.4), and your provider will expect you to help put it right.',
         },
       ],
     },
@@ -92,7 +93,7 @@ export const OffTheJobTrainingEmployerGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'The Elec-Mate Employer tier auto-tracks OTJ hours across your apprentice team. Each apprentice logs activities on their phone; the employer dashboard aggregates and shows you exactly where each one is against the 20% target. Generates audit-ready reports in PDF. Integrates with the apprentice\u2019s NVQ portfolio. 7-day free trial — see how much simpler OTJ tracking is when it\u2019s on autopilot.',
+          text: 'The Elec-Mate Employer tier auto-tracks OTJ hours across your apprentice team. Each apprentice logs activities on their phone; the employer dashboard aggregates and shows you exactly where each one is against their standard\u2019s OTJ total. Generates audit-ready reports in PDF. Integrates with the apprentice\u2019s NVQ portfolio. 7-day free trial — see how much simpler OTJ tracking is when it\u2019s on autopilot.',
         },
       ],
     },

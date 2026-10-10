@@ -197,16 +197,16 @@ const IndustrialReferenceGuide = () => {
       </Card>
 
       <Tabs defaultValue="standards" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="standards">Standards</TabsTrigger>
-          <TabsTrigger value="emergency">Emergency Systems</TabsTrigger>
-          <TabsTrigger value="testing">Testing Procedures</TabsTrigger>
-          <TabsTrigger value="protection">Protection Devices</TabsTrigger>
+        <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
+          <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="standards">Standards</TabsTrigger>
+          <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="emergency">Emergency Systems</TabsTrigger>
+          <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="testing">Testing Procedures</TabsTrigger>
+          <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="protection">Protection Devices</TabsTrigger>
         </TabsList>
 
         <TabsContent value="standards" className="space-y-4">
           {standardsAndRegulations.map((category, index) => (
-            <Card key={index} className="border-white/[0.10] bg-white/5">
+            <Card key={index} className="border-white/[0.10] bg-white/5 p-4 sm:p-5">
               <CardHeader className="p-0 pb-3">
                 <div className="flex items-center gap-2">
                   <CardTitle className="text-[15px] font-semibold tracking-tight text-white">

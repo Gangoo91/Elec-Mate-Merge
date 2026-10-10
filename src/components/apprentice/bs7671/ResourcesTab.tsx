@@ -254,7 +254,7 @@ const ResourcesTab = () => {
         return {
           bg: 'bg-white/[0.06]',
           text: 'text-elec-yellow',
-          border: 'border-elec-yellow/30',
+          border: 'border-white/[0.14]',
         };
       default:
         return { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20' };
@@ -386,7 +386,7 @@ const ResourcesTab = () => {
 
                         <Button
                           size="sm"
-                          className="h-9 bg-white/[0.06] hover:bg-white/[0.08] text-elec-yellow border border-elec-yellow/30 touch-manipulation"
+                          className="h-9 bg-white/[0.06] hover:bg-white/[0.08] text-elec-yellow border border-white/[0.14] touch-manipulation"
                         >
                           {resource.downloadUrl ? (
                             <>
@@ -477,10 +477,10 @@ const ResourcesTab = () => {
       </Card>
 
       {/* Disclaimer */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
+      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/[0.14] overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardContent className="pt-6 relative">
-          <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/30">
+          <div className="p-4 rounded-xl bg-white/[0.06] border border-white/[0.14]">
             <div className="flex items-start gap-3">
               <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                 <AlertTriangle className="h-4 w-4 text-elec-yellow" />

@@ -18,9 +18,7 @@ interface TrainingCenterDetailsModalProps {
 
 const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-      {eyebrow}
-    </span>
+    <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
     <div>{children}</div>
   </div>
 );
@@ -39,7 +37,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
           {/* Header */}
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1 space-y-2">
-              <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <div className="flex flex-wrap items-baseline gap-3 text-[13px] font-semibold text-white">
                 <span>{center.location}</span>
                 <span className="text-white">·</span>
                 <span>Rated {center.rating}</span>
@@ -72,9 +70,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                 key={item.label}
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  {item.label}
-                </span>
+                <span className="text-[13px] font-semibold text-white">{item.label}</span>
                 <div className="text-[14px] text-white">{item.value}</div>
               </div>
             ))}
@@ -88,9 +84,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                 <div>{center.website}</div>
               </div>
               <div className="mt-4 pt-3 border-t border-white/[0.06]">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Opening hours
-                </span>
+                <span className="text-[13px] font-semibold text-white">Opening hours</span>
                 <div className="grid grid-cols-2 gap-1 mt-2 text-[14px] text-white">
                   <div>Monday - Friday</div>
                   <div>08:30 - 17:00</div>
@@ -110,9 +104,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                   ))}
                 </div>
                 <div className="pt-3 border-t border-white/[0.06]">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Featured courses
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Featured courses</span>
                   <ul className="mt-2 space-y-1.5">
                     {center.courses.slice(0, 5).map((course, idx) => (
                       <li

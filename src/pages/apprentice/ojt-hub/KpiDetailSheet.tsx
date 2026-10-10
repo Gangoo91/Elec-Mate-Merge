@@ -76,7 +76,7 @@ export function KpiDetailSheet({
                 <div className="mx-auto w-full max-w-2xl">
                   <SheetHeader className="pb-4 pt-2">
                     <SheetTitle className="text-left">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                      <span className="text-[13px] font-semibold text-elec-yellow">
                         {detail.label}
                       </span>
                       <div className="mt-1 flex items-baseline gap-2.5">
@@ -95,7 +95,7 @@ export function KpiDetailSheet({
                   {detail.rows.length > 0 && (
                     <div
                       className={cn(
-                        'space-y-3 rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
+                        'space-y-3 rounded-2xl border border-white/[0.08] p-4 sm:p-5',
                         CARD_SURFACE
                       )}
                     >
@@ -133,9 +133,7 @@ export function KpiDetailSheet({
                       CARD_SURFACE
                     )}
                   >
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                      What to do
-                    </span>
+                    <span className="text-[13px] font-semibold text-elec-yellow">What to do</span>
                     <p className="text-[14px] font-semibold leading-snug text-white">
                       {detail.advice}
                     </p>

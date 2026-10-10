@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // the Electric Vehicles (Smart Charge Points) Regulations 2021.
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/v2h-bidirectional-ev-charging',
@@ -178,7 +178,7 @@ export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'BS 7671:2018+A4:2026 introduced Chapter 82 — Prosumer\'s Electrical Installations (PEIs) — for dwellings that both consume and produce electricity. A V2H bidirectional EV charger is a prosumer source, and Chapter 82 governs how it integrates with the rest of the installation. Section 722 takes explicit account of this: Reg 722.826.3.201 ties EV charging installations to the prosumer requirements of Chapter 82. Section 712 governs solar PV systems only, so a vehicle acting as a source is treated under Section 722 and Chapter 82, not Section 712. A note in Chapter 57 (Stationary Secondary Batteries) reinforces the point, directing the reader to "Section 722 and Chapter 82" for the supply of a fixed installation by electric vehicles.',
+          text: 'Chapter 82 of BS 7671 — Prosumer\'s Electrical Installations (PEIs), introduced at A2:2022 and carried into A4:2026 — applies to dwellings that both consume and produce electricity. A V2H bidirectional EV charger is a prosumer source, and Chapter 82 governs how it integrates with the rest of the installation. Section 722 takes explicit account of this: Reg 722.826.3.201 ties EV charging installations to the prosumer requirements of Chapter 82. Section 712 governs solar PV systems only, so a vehicle acting as a source is treated under Section 722 and Chapter 82, not Section 712. A note in Chapter 57 (Stationary Secondary Batteries) reinforces the point, directing the reader to "Section 722 and Chapter 82" for the supply of a fixed installation by electric vehicles.',
         },
         {
           type: 'list',
@@ -439,7 +439,7 @@ export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
       href: '/guides/section-712-prosumer-a4-2026',
       title: 'Section 712 Prosumer — A4:2026',
       description:
-        "The expanded prosumer rules in Amendment 4:2026 — BS 7671 Chapter 82 (Prosumer's Electrical Installations) alongside Section 712 (solar PV) — labelling, isolation, protective coordination for generation and storage.",
+        "The prosumer rules in BS 7671:2018+A4:2026 — Chapter 82 (Prosumer's Electrical Installations) alongside Section 712 (solar PV) — labelling, isolation, protective coordination for generation and storage.",
       icon: 'BookOpen',
       category: 'Guide',
     },

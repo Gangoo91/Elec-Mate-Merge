@@ -22,7 +22,7 @@ const apprenticeRights = [
   },
   {
     title: 'Progress monitoring',
-    desc: 'Regular reviews (minimum every 12 weeks) with your training provider and employer to check your development',
+    desc: 'Regular reviews (at least every 3 months) with your training provider and employer to check your development',
   },
   {
     title: 'Written training plan',
@@ -111,276 +111,271 @@ Kind regards,
 [Your Name]
 [Apprenticeship Standard: ST0152]`,
 };
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const RightsPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · OJT"
-        title="Your Rights"
-        backTo="/apprentice/toolbox/off-job-training-guide"
-      />
-      <HubBody>
-        {/* Your Pay */}
-        <div className="space-y-3">
-          <HubSectionHeading>Your pay</HubSectionHeading>
+    <GuidePage
+      section="Apprentice · OJT"
+      area="Off-the-job training"
+      title="Your Rights"
+      backTo="/apprentice/toolbox/off-job-training-guide"
+    >
+      {/* Your Pay */}
+      <div className="space-y-3">
+        <CollegeHeading>Your pay</CollegeHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-            <div className="sm:p-5 space-y-3">
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-semibold tabular-nums text-elec-yellow leading-none">
-                  £8.00
-                </span>
-                <span className="text-[13px] text-white">
-                  per hour · apprentice minimum from 1 Apr 2026
-                </span>
-              </div>
-              <ul className="space-y-2">
-                {payFacts.map((fact) => (
-                  <li key={fact} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {fact}
-                  </li>
-                ))}
-              </ul>
+        <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+          <div className="sm:p-5 space-y-3">
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-semibold tabular-nums text-elec-yellow leading-none">
+                £8.00
+              </span>
+              <span className="text-[13px] text-white">
+                per hour · apprentice minimum from 1 Apr 2026
+              </span>
             </div>
+            <ul className="space-y-2">
+              {payFacts.map((fact) => (
+                <li key={fact} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {fact}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* Your Rights */}
-        <div className="space-y-3">
-          <HubSectionHeading>Your rights as an apprentice</HubSectionHeading>
+      {/* Your Rights */}
+      <div className="space-y-3">
+        <CollegeHeading>Your rights as an apprentice</CollegeHeading>
 
-          {apprenticeRights.map((right) => (
-            <div
-              key={right.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 flex items-start gap-3">
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-medium text-white text-sm">{right.title}</h3>
-                  <p className="text-white text-sm mt-1">{right.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Employer Responsibilities */}
-        <div className="space-y-3">
-          <HubSectionHeading>Employer responsibilities</HubSectionHeading>
-
-          {employerDuties.map((duty) => (
-            <div
-              key={duty.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 flex items-start gap-3">
-                <Target className="h-5 w-5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-medium text-white text-sm">{duty.title}</h3>
-                  <p className="text-white text-sm mt-1">{duty.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Key Legislation */}
-        <div className="space-y-3">
-          <HubSectionHeading>Key legislation</HubSectionHeading>
-
-          <p className="text-white text-sm">
-            Your rights are backed by law. Here are the key pieces of legislation that protect you:
-          </p>
-
-          {legislation.map((law) => (
-            <div
-              key={law.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4">
-                <div className="flex items-start gap-2">
-                  <Scale className="h-5 w-5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium text-white text-sm">{law.title}</h3>
-                    <p className="text-white text-sm mt-1">{law.desc}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Apprenticeship Agreement */}
-        <div className="space-y-3">
-          <HubSectionHeading>Your apprenticeship agreement</HubSectionHeading>
-
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-            <div className="sm:p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-amber-400" />
-                <p className="text-white text-sm font-medium">
-                  You have a legal right to a signed copy
-                </p>
-              </div>
-              <p className="text-white text-sm">
-                Your apprenticeship agreement is a legally binding document. It must contain:
-              </p>
-              <ul className="space-y-2">
-                {agreementContents.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-white text-sm mt-2">
-                If you do not have a signed copy of your apprenticeship agreement, ask your training
-                provider for one immediately. You should have received this at the start of your
-                apprenticeship.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Template for Raising Concerns */}
-        <div className="space-y-3">
-          <HubSectionHeading>Raising concerns</HubSectionHeading>
-
+        {apprenticeRights.map((right) => (
           <div
+            key={right.title}
             className={cn(
-              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
               CARD_SURFACE
             )}
           >
-            <div className="sm:p-5 space-y-3">
-              <p className="text-white text-sm">
-                If your employer is not providing your OJT, use this template as a starting point.
-                Always copy your training provider in:
-              </p>
-              <div className="bg-white/10 rounded-lg p-3 sm:p-4 space-y-2">
-                <p className="text-elec-yellow text-sm font-medium break-words">
-                  {templateWording.subject}
-                </p>
-                <p className="text-white text-[13px] whitespace-pre-line break-words leading-relaxed">
-                  {templateWording.body}
-                </p>
+            <div className="sm:p-5 py-4 flex items-start gap-3">
+              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-white text-sm">{right.title}</h3>
+                <p className="text-white text-sm mt-1">{right.desc}</p>
               </div>
-              <p className="text-white text-xs mt-2">
-                Adapt this to your situation. Keep a copy of everything you send. If the issue is
-                not resolved within 4 weeks, escalate to your training provider.
-              </p>
             </div>
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* When Things Go Wrong */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                When Things Go Wrong
-              </span>
+      {/* Employer Responsibilities */}
+      <div className="space-y-3">
+        <CollegeHeading>Employer responsibilities</CollegeHeading>
+
+        {employerDuties.map((duty) => (
+          <div
+            key={duty.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4 flex items-start gap-3">
+              <Target className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-white text-sm">{duty.title}</h3>
+                <p className="text-white text-sm mt-1">{duty.desc}</p>
+              </div>
             </div>
           </div>
+        ))}
+      </div>
 
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
-            <div className="p-4 sm:p-5 space-y-4">
-              <p className="text-white text-sm">
-                If your employer is not meeting their off-the-job training obligations:
-              </p>
+      {/* Key Legislation */}
+      <div className="space-y-3">
+        <CollegeHeading>Key legislation</CollegeHeading>
 
-              <div className="space-y-3">
+        <p className="text-white text-sm">
+          Your rights are backed by law. Here are the key pieces of legislation that protect you:
+        </p>
+
+        {legislation.map((law) => (
+          <div
+            key={law.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4">
+              <div className="flex items-start gap-2">
+                <Scale className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="font-medium text-amber-400 text-sm">
-                    Step 1: Document the Issues
-                  </h3>
-                  <ul className="mt-1 space-y-1">
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Keep records of missed training time with dates and reasons
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Note specific incidents (e.g. "asked to stay on site instead of college")
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Calculate the hours shortfall against your training plan
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Save any text messages or emails as evidence
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-medium text-amber-400 text-sm">Step 2: Raise It Formally</h3>
-                  <ul className="mt-1 space-y-1">
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Use the template above to write to your employer
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Copy your training provider into all correspondence
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Raise it at your next progress review — it will be recorded
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-medium text-amber-400 text-sm">
-                    Step 3: Seek External Support
-                  </h3>
-                  <ul className="mt-1 space-y-1">
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Use the gov.uk "report a problem with your apprenticeship" route to complain
-                      about your training provider
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Call the National Apprenticeship Helpline on 0800 015 0600
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Speak to ACAS on 0300 123 1100 for free, impartial employment advice
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      Contact a relevant trade union (e.g. Unite) for support
-                    </li>
-                    <li className="text-white text-sm flex items-start gap-2">
-                      <span className="text-red-300 mt-0.5">·</span>
-                      As a last resort, you can transfer to a different employer
-                    </li>
-                  </ul>
+                  <h3 className="font-medium text-white text-sm">{law.title}</h3>
+                  <p className="text-white text-sm mt-1">{law.desc}</p>
                 </div>
               </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Apprenticeship Agreement */}
+      <div className="space-y-3">
+        <CollegeHeading>Your apprenticeship agreement</CollegeHeading>
+
+        <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+          <div className="sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <FileText className="h-4 w-4 text-amber-400" />
+              <p className="text-white text-sm font-medium">
+                You have a legal right to a signed copy
+              </p>
+            </div>
+            <p className="text-white text-sm">
+              Your apprenticeship agreement is a legally binding document. It must contain:
+            </p>
+            <ul className="space-y-2">
+              {agreementContents.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="text-white text-sm mt-2">
+              If you do not have a signed copy of your apprenticeship agreement, ask your training
+              provider for one immediately. You should have received this at the start of your
+              apprenticeship.
+            </p>
+          </div>
         </div>
-      </HubBody>
-    </HubPage>
+      </div>
+
+      {/* Template for Raising Concerns */}
+      <div className="space-y-3">
+        <CollegeHeading>Raising concerns</CollegeHeading>
+
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
+          <div className="sm:p-5 space-y-3">
+            <p className="text-white text-sm">
+              If your employer is not providing your OJT, use this template as a starting point.
+              Always copy your training provider in:
+            </p>
+            <div className="bg-white/10 rounded-lg p-3 sm:p-4 space-y-2">
+              <p className="text-elec-yellow text-sm font-medium break-words">
+                {templateWording.subject}
+              </p>
+              <p className="text-white text-[14px] whitespace-pre-line break-words leading-relaxed">
+                {templateWording.body}
+              </p>
+            </div>
+            <p className="text-white text-xs mt-2">
+              Adapt this to your situation. Keep a copy of everything you send. If the issue is not
+              resolved within 4 weeks, escalate to your training provider.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* When Things Go Wrong */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-red-300">When Things Go Wrong</span>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
+          <div className="p-4 sm:p-5 space-y-4">
+            <p className="text-white text-sm">
+              If your employer is not meeting their off-the-job training obligations:
+            </p>
+
+            <div className="space-y-3">
+              <div>
+                <h3 className="font-medium text-amber-400 text-sm">Step 1: Document the Issues</h3>
+                <ul className="mt-1 space-y-1">
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Keep records of missed training time with dates and reasons
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Note specific incidents (e.g. "asked to stay on site instead of college")
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Calculate the hours shortfall against your training plan
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Save any text messages or emails as evidence
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-medium text-amber-400 text-sm">Step 2: Raise It Formally</h3>
+                <ul className="mt-1 space-y-1">
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Use the template above to write to your employer
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Copy your training provider into all correspondence
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Raise it at your next progress review — it will be recorded
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-medium text-amber-400 text-sm">
+                  Step 3: Seek External Support
+                </h3>
+                <ul className="mt-1 space-y-1">
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Use the gov.uk "report a problem with your apprenticeship" route to complain
+                    about your training provider
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Call the National Apprenticeship Helpline on 0800 015 0600
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Speak to ACAS on 0300 123 1100 for free, impartial employment advice
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    Contact a relevant trade union (e.g. Unite) for support
+                  </li>
+                  <li className="text-white text-sm flex items-start gap-2">
+                    <span className="text-red-300 mt-0.5">·</span>
+                    As a last resort, you can transfer to a different employer
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </GuidePage>
   );
 };
 

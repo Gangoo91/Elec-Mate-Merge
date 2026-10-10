@@ -10,20 +10,21 @@ import { statusTone, textareaClass, type Tone } from '@/components/college/primi
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
 import { FormSheet } from '@/components/forms/FormSheet';
+import { CollegeEmpty, CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
+import { TextTabs } from '@/components/college/assessment/AssessmentTabs';
+import { VisHead } from '@/components/college/student360/Student360Visuals';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
-import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
-import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+  QBTN as COLLEGE_BTN,
+  QBTN_PRIMARY as COLLEGE_BTN_PRIMARY,
+  QCARD as COLLEGE_CARD,
+  QCARD as VIS_CARD,
+  QCHIP_ROW,
+  QLIST as COLLEGE_LIST,
+  QualityHeader,
+} from '@/components/college/quality/QualityHubKit';
+import { plural } from '@/components/college/quality/qualityText';
+import { FigureLine } from '@/components/college/QueueFigures';
 import {
-  BarList,
   Donut,
   SegmentBar,
   StatusPill,
@@ -31,7 +32,6 @@ import {
 } from '@/components/college/quality/QualityKit';
 import {
   IqaFlowStrip,
-  uniqueLabels,
   useIqaSampleVerdicts,
   type FlowStep,
 } from '@/components/college/quality/IqaVisuals';
@@ -51,6 +51,7 @@ import { AddIqaFindingDialog } from '@/components/college/dialogs/AddIqaFindingD
 import { AddStandardisationMeetingDialog } from '@/components/college/dialogs/AddStandardisationMeetingDialog';
 import { CoverageMatrixTab } from '@/components/college/iqa/CoverageMatrixTab';
 import { AssessorDriftPanel } from '@/components/college/iqa/AssessorDriftPanel';
+import { CpdTab, PracticeTab, StrategyTab } from '@/components/college/iqa/IqaQualityRecords';
 import { useEqaVisitPackExport } from '@/hooks/useEqaVisitPackExport';
 
 /* ==========================================================================
@@ -143,7 +144,41 @@ function qTone(t: Tone): QTone {
   return 'neutral';
 }
 
-type Tab = 'sampling' | 'findings' | 'standardisation' | 'coverage';
+type Tab =
+  'sampling' | 'strategy' | 'findings' | 'standardisation' | 'practice' | 'cpd' | 'coverage';
+/** Batch 2 tabs carry their own actions (and EQA reads them only). */
+const OWN_ACTION_TABS = new Set<Tab>(['strategy', 'practice', 'cpd', 'coverage']);
+
+/**
+ * Where a plan stands against its target (showcase pass, 10 Oct). A running
+ * plan is read against the share of its period gone, so a plan half way
+ * through at 12% of a 25% target is on pace, not "below target".
+ */
+function planPace(p: IqaSamplingPlan) {
+  const sampled = p.sampled_count ?? 0;
+  // Never more than 100%: the stored total can lag the samples taken.
+  const total = Math.max(p.total_assessments ?? 0, sampled);
+  const pct = total > 0 ? Math.round((sampled / total) * 100) : 0;
+  const target = p.target_sample_percent ?? 0;
+  const start = Date.parse(p.period_start);
+  const end = Date.parse(p.period_end);
+  const now = Date.now();
+  const ended = Number.isFinite(end) && end < now;
+  const gone =
+    ended || !(end > start) ? 1 : Math.max(0, Math.min(1, (now - start) / (end - start)));
+  const expected = Math.round(target * gone);
+  const ok = pct >= (ended ? target : expected);
+  const label = ended
+    ? ok
+      ? 'Ended, target met'
+      : 'Ended below target'
+    : ok
+      ? pct >= target
+        ? 'Target met'
+        : 'On pace'
+      : 'Behind pace';
+  return { sampled, total, pct, target, expected, ended, ok, label };
+}
 
 export default function IqaDashboardPage() {
   const navigate = useNavigate();
@@ -153,8 +188,9 @@ export default function IqaDashboardPage() {
   const [addPlanOpen, setAddPlanOpen] = useState(false);
   // ELE-1898: plans and findings are IQA work (college_can 'iqa.sample'),
   // the same check the sampling and findings policies make.
-  const { can } = useCollegeCan();
+  const { can, collegeId, staffId: myStaffId } = useCollegeCan();
   const canIqa = can('iqa.sample');
+  const readOnly = can('read_only');
   const [addFindingOpen, setAddFindingOpen] = useState(false);
   const [addMeetingOpen, setAddMeetingOpen] = useState(false);
   // In-app close-note flow (replaces window.prompt). Holds the finding being
@@ -188,7 +224,11 @@ export default function IqaDashboardPage() {
     try {
       await downloadLearnerDocument({ kind: 'iqa_report' });
     } catch (e) {
-      toast({ title: 'Could not make the IQA report', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not make the IQA report',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setReportBusy(false);
     }
@@ -255,8 +295,10 @@ export default function IqaDashboardPage() {
     const agreePct = decided > 0 ? Math.round((v.agree / decided) * 100) : null;
     const closed = findings.filter((f) => !isFindingOpen(f)).length;
     const escalated = findings.filter((f) => f.status === 'escalated').length;
+    // The last meeting that has happened: a future date is planned, not held.
+    const todayIso = new Date().toISOString().slice(0, 10);
     const lastMeeting = meetings.reduce<string | null>(
-      (acc, m) => (!acc || m.date > acc ? m.date : acc),
+      (acc, m) => (m.date.slice(0, 10) <= todayIso && (!acc || m.date > acc) ? m.date : acc),
       null
     );
     const meetingActions = meetings.reduce((n, m) => n + (m.action_items?.length ?? 0), 0);
@@ -291,6 +333,8 @@ export default function IqaDashboardPage() {
   };
 
   const totalSamples = verdicts.length;
+  const paces = plans.map((p) => ({ plan: p, pace: planPace(p) }));
+  const behindPlans = paces.filter((x) => !x.pace.ok).length;
   const flow: FlowStep[] = [
     {
       key: 'plan',
@@ -309,8 +353,13 @@ export default function IqaDashboardPage() {
       key: 'sample',
       label: 'Sample',
       value: String(totalSamples),
-      sub: `${stats.plansOnTarget} of ${plans.length} plans at target`,
-      state: plans.length === 0 ? 'todo' : stats.plansOnTarget < plans.length ? 'now' : 'done',
+      sub:
+        behindPlans > 0
+          ? `${plural(behindPlans, 'plan')} behind pace`
+          : plans.length > 0
+            ? 'Every plan on pace'
+            : 'No plans yet',
+      state: plans.length === 0 ? 'todo' : behindPlans > 0 ? 'now' : 'done',
       onClick: () => goTab('sampling'),
     },
     {
@@ -345,47 +394,56 @@ export default function IqaDashboardPage() {
     {
       key: 'closure',
       label: 'Closure',
-      value: `${stats.closed} closed`,
+      value: findings.length > 0 ? `${Math.round((stats.closed / findings.length) * 100)}%` : '—',
       sub:
         findings.length > 0
-          ? `${findings.length - stats.closed} still to close`
+          ? `${stats.closed} of ${findings.length} closed`
           : 'Closed actions show here',
-      state: findings.length === 0 ? 'todo' : stats.closed === findings.length ? 'done' : 'now',
+      // Open findings already show orange on Actions; closure stays neutral.
+      state: findings.length > 0 && stats.closed === findings.length ? 'done' : 'todo',
       onClick: () => goTab('findings'),
     },
   ];
 
-  const coverageLabels = uniqueLabels(
-    plans
-      .slice(0, 8)
-      .map((p) => `${p.qualification_code ?? 'All'}${p.unit_code ? ` · ${p.unit_code}` : ''}`)
-  );
-  const coverageRows = plans.slice(0, 8).map((p, i) => {
-    // Never more than 100%: the stored total can lag the samples taken.
-    const total = Math.max(p.total_assessments ?? 0, p.sampled_count ?? 0);
-    const pct = total > 0 ? Math.round(((p.sampled_count ?? 0) / total) * 100) : 0;
-    const target = p.target_sample_percent ?? 0;
-    return {
-      label: coverageLabels[i],
-      sub: `Target ${target}% · ${p.sampled_count ?? 0} of ${total}`,
-      n: pct,
-      tone: (pct >= target ? 'good' : 'warn') as 'good' | 'warn',
-      onClick: () => navigate(`/college/iqa/sampling/${p.id}`),
-    };
-  });
+  const coverageRows = paces.slice(0, 8);
 
   return (
     <HubPage ground="landing">
       <HubMasthead section="College" title="IQA" backTo="/college?section=qualityhub" />
       <HubBody pushContext="Get notified when IQA findings fall due and samples need a verdict">
-        <CollegePageHeader
+        <QualityHeader
           eyebrow="Internal quality assurance"
-          title={
-            plansLoading
-              ? 'Checking your plans…'
-              : `${plans.length} sampling ${plans.length === 1 ? 'plan' : 'plans'}, ${stats.agreePct === null ? 'no verdicts yet' : `${stats.agreePct}% agreement`}`
+          title="IQA"
+          summary={
+            plansLoading ? (
+              'Checking your plans…'
+            ) : plans.length === 0 ? (
+              'No sampling plans yet. Set a plan for each assessor and unit, then sample their decisions and give a verdict on each.'
+            ) : (
+              <FigureLine
+                className="mt-1"
+                items={[
+                  { n: stats.activePlans, label: `of ${plural(plans.length, 'plan')} running` },
+                  behindPlans > 0
+                    ? { n: behindPlans, label: 'behind pace', tone: 'warn' }
+                    : { n: null, label: 'Every plan on pace', tone: 'good' },
+                  stats.v.pending > 0
+                    ? { n: stats.v.pending, label: 'awaiting a verdict' }
+                    : { n: null, label: 'No verdicts waiting' },
+                  stats.overdueFindings > 0
+                    ? { n: stats.overdueFindings, label: 'findings overdue', tone: 'warn' }
+                    : stats.openFindings > 0
+                      ? { n: stats.openFindings, label: 'findings open' }
+                      : { n: null, label: 'No findings open', tone: 'good' },
+                ]}
+              />
+            )
           }
-          description="Plan what to sample, give verdicts on assessor decisions, turn problems into actions and keep the standardisation record an EQA visit expects."
+          sub={
+            stats.agreePct === null
+              ? 'No verdicts yet.'
+              : `You agreed with the assessor on ${stats.agreePct}% of ${plural(stats.decided, 'verdict')}.`
+          }
           help={HELP}
           actions={
             <>
@@ -398,65 +456,98 @@ export default function IqaDashboardPage() {
                 <Download className="h-4 w-4" aria-hidden />
                 {exportingPack ? 'Building…' : 'EQA visit pack'}
               </button>
-              <button type="button" onClick={handleIqaReport} disabled={reportBusy} className={COLLEGE_BTN}>
+              <button
+                type="button"
+                onClick={handleIqaReport}
+                disabled={reportBusy}
+                className={COLLEGE_BTN}
+              >
                 <Download className="h-4 w-4" aria-hidden />
                 {reportBusy ? 'Making the PDF…' : 'IQA report (PDF)'}
               </button>
-              {activeTab !== 'coverage' && (activeTab === 'standardisation' || canIqa) && (
-                <button type="button" onClick={heroAction} className={COLLEGE_BTN_PRIMARY}>
-                  {activeTab === 'sampling'
-                    ? 'New plan'
-                    : activeTab === 'findings'
-                      ? 'Log finding'
-                      : 'New meeting'}
-                </button>
-              )}
             </>
+          }
+          primary={
+            !OWN_ACTION_TABS.has(activeTab) && (activeTab === 'standardisation' || canIqa) ? (
+              <button type="button" onClick={heroAction} className={COLLEGE_BTN_PRIMARY}>
+                {activeTab === 'sampling'
+                  ? 'New plan'
+                  : activeTab === 'findings'
+                    ? 'Log finding'
+                    : 'New meeting'}
+              </button>
+            ) : undefined
           }
         />
 
         <IqaFlowStrip steps={flow} />
 
-        <AreaHero
-          figures={[
-            {
-              label: 'Active plans',
-              value: String(stats.activePlans),
-              sub: `${plans.length} in total`,
-            },
-            {
-              label: 'Plans at target',
-              value: `${stats.plansOnTarget}/${plans.length}`,
-              sub: 'Sampled at or above the target %',
-              warn: plans.length > 0 && stats.plansOnTarget < plans.length,
-              good: plans.length > 0 && stats.plansOnTarget === plans.length,
-            },
-            {
-              label: 'Agreement',
-              value: stats.agreePct === null ? '—' : `${stats.agreePct}%`,
-              sub: `${stats.v.agree} of ${stats.decided} verdicts agree`,
-              warn: stats.agreePct !== null && stats.agreePct < 80,
-              good: stats.agreePct !== null && stats.agreePct >= 90,
-            },
-            {
-              label: 'Open findings',
-              value: String(stats.openFindings),
-              sub:
-                stats.overdueFindings > 0 ? `${stats.overdueFindings} overdue` : 'Awaiting closure',
-              warn: stats.overdueFindings > 0,
-            },
-          ]}
-          chartTitle="Sampling coverage by plan (% sampled)"
-          chart={
-            coverageRows.length === 0 ? (
-              <p className="text-[12.5px] text-white">
-                No plans yet. Set a sampling plan to see coverage here.
-              </p>
-            ) : (
-              <BarList rows={coverageRows} suffix="%" max={100} />
-            )
-          }
-          side={
+        <motion.section initial="hidden" animate="visible" className={VIS_CARD}>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <div>
+              <div className="mb-1 flex items-baseline justify-between gap-3">
+                <p className="text-[13px] font-semibold text-white">Sampling coverage by plan</p>
+                <p className="text-[12.5px] text-white">The white tick is the target</p>
+              </div>
+              {coverageRows.length === 0 ? (
+                <p className="text-[12.5px] text-white">
+                  No plans yet. Set a sampling plan to see coverage here.
+                </p>
+              ) : (
+                <ul className="divide-y divide-white/[0.06]">
+                  {coverageRows.map(({ plan: p, pace }) => (
+                    <li key={p.id}>
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/college/iqa/sampling/${p.id}`)}
+                        className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 py-3 text-left touch-manipulation transition-colors hover:bg-white/[0.03] sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)_8.5rem]"
+                      >
+                        <span className="min-w-0">
+                          <span className="block truncate text-[14px] font-semibold text-white">
+                            {p.qualification_code ?? 'All qualifications'}
+                            {p.unit_code ? ` · unit ${p.unit_code}` : ''}
+                          </span>
+                          <span
+                            className={cn(
+                              'block text-[12.5px]',
+                              pace.ok ? 'text-white' : 'font-semibold text-orange-300'
+                            )}
+                          >
+                            {pace.label}
+                            {!pace.ended && !pace.ok ? `, ${pace.expected}% due by now` : ''}
+                          </span>
+                        </span>
+                        <span className="order-last col-span-2 sm:order-none sm:col-span-1">
+                          <span className="relative block h-2 rounded-full bg-white/[0.08]">
+                            <span
+                              className={cn(
+                                'absolute inset-y-0 left-0 rounded-full',
+                                pace.ok ? 'bg-emerald-400' : 'bg-orange-400'
+                              )}
+                              style={{ width: `${Math.max(pace.pct, pace.pct > 0 ? 1.5 : 0)}%` }}
+                            />
+                            <span
+                              aria-hidden
+                              className="absolute -top-1 h-4 w-[3px] -translate-x-1/2 rounded-full bg-white ring-2 ring-[hsl(0_0%_14%)]"
+                              style={{ left: `${Math.min(100, pace.target)}%` }}
+                              title={`Target ${pace.target}%`}
+                            />
+                          </span>
+                        </span>
+                        <span className="text-right">
+                          <span className="block text-[14px] font-semibold tabular-nums text-white">
+                            {pace.sampled} of {pace.total}
+                          </span>
+                          <span className="block text-[12.5px] tabular-nums text-white">
+                            {pace.pct}%, target {pace.target}%
+                          </span>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             <div>
               <p className="mb-3 text-[13px] font-semibold text-white">Sample verdicts</p>
               <Donut
@@ -471,8 +562,8 @@ export default function IqaDashboardPage() {
                 ]}
               />
             </div>
-          }
-        />
+          </div>
+        </motion.section>
 
         <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2">
           <motion.section initial="hidden" animate="visible" className={VIS_CARD}>
@@ -508,7 +599,7 @@ export default function IqaDashboardPage() {
                 <dd
                   className={cn(
                     'mt-1 text-[18px] font-bold leading-tight text-white',
-                    !stats.lastMeeting && 'text-orange-400'
+                    !stats.lastMeeting && 'text-orange-300'
                   )}
                 >
                   {stats.lastMeeting ? formatDate(stats.lastMeeting) : 'None yet'}
@@ -519,7 +610,7 @@ export default function IqaDashboardPage() {
                 <dd
                   className={cn(
                     'mt-1 text-[18px] font-bold tabular-nums',
-                    stats.recentMeetings === 0 ? 'text-orange-400' : 'text-white'
+                    stats.recentMeetings === 0 ? 'text-orange-300' : 'text-white'
                   )}
                 >
                   {stats.recentMeetings}
@@ -552,44 +643,51 @@ export default function IqaDashboardPage() {
             title={
               activeTab === 'sampling'
                 ? 'Sampling plans'
-                : activeTab === 'findings'
-                  ? 'Findings and actions'
-                  : activeTab === 'standardisation'
-                    ? 'Standardisation meetings'
-                    : 'Coverage'
+                : activeTab === 'strategy'
+                  ? 'Sampling strategy'
+                  : activeTab === 'findings'
+                    ? 'Findings and actions'
+                    : activeTab === 'standardisation'
+                      ? 'Standardisation meetings'
+                      : activeTab === 'practice'
+                        ? 'Observations of assessor practice'
+                        : activeTab === 'cpd'
+                          ? 'Assessor and IQA CPD'
+                          : 'Coverage'
             }
             sub={
               activeTab === 'sampling'
                 ? 'Open a plan to add samples and give verdicts'
-                : activeTab === 'findings'
-                  ? 'Close each one with a note when it is resolved'
-                  : activeTab === 'standardisation'
-                    ? 'Topics, attendees, decisions and actions'
-                    : 'Which units and assessors have been sampled'
+                : activeTab === 'strategy'
+                  ? 'The written strategy behind the plans, every version kept'
+                  : activeTab === 'findings'
+                    ? 'Close each one with a note when it is resolved'
+                    : activeTab === 'standardisation'
+                      ? 'Topics, attendees, decisions and actions'
+                      : activeTab === 'practice'
+                        ? 'You watching an assessor assess: findings and actions'
+                        : activeTab === 'cpd'
+                          ? 'Hours and reflections this year'
+                          : 'Which units and assessors have been sampled'
             }
           />
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
-              {(
-                [
-                  { value: 'sampling', label: 'Sampling', count: plans.length },
-                  { value: 'findings', label: 'Findings', count: findings.length },
-                  { value: 'standardisation', label: 'Standardisation', count: meetings.length },
-                  { value: 'coverage', label: 'Coverage' },
-                ] as Array<{ value: Tab; label: string; count?: number }>
-              ).map((t) => (
-                <button
-                  key={t.value}
-                  type="button"
-                  onClick={() => setActiveTab(t.value)}
-                  className={chipCn(activeTab === t.value)}
-                >
-                  {t.label}
-                  {t.count !== undefined && <span className="ml-1.5 tabular-nums">{t.count}</span>}
-                </button>
-              ))}
-            </div>
-            {activeTab !== 'coverage' && (
+            <TextTabs
+              className="lg:border-b-0"
+              ariaLabel="IQA records"
+              value={activeTab}
+              onChange={setActiveTab}
+              items={[
+                { key: 'sampling' as Tab, label: 'Sampling', count: plans.length },
+                { key: 'strategy' as Tab, label: 'Strategy' },
+                { key: 'findings' as Tab, label: 'Findings', count: findings.length },
+                { key: 'standardisation' as Tab, label: 'Standardisation', count: meetings.length },
+                { key: 'practice' as Tab, label: 'Assessor practice' },
+                { key: 'cpd' as Tab, label: 'CPD' },
+                { key: 'coverage' as Tab, label: 'Coverage' },
+              ]}
+            />
+            {!OWN_ACTION_TABS.has(activeTab) && (
               <label className="relative block w-full lg:w-80">
                 <Search
                   className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
@@ -645,6 +743,12 @@ export default function IqaDashboardPage() {
                 }
               }}
             />
+          ) : activeTab === 'strategy' ? (
+            <StrategyTab collegeId={collegeId} plans={plans} canWrite={canIqa && !readOnly} />
+          ) : activeTab === 'practice' ? (
+            <PracticeTab collegeId={collegeId} canWrite={canIqa && !readOnly} />
+          ) : activeTab === 'cpd' ? (
+            <CpdTab collegeId={collegeId} myStaffId={myStaffId} readOnly={readOnly} />
           ) : activeTab === 'standardisation' ? (
             <StandardisationTab
               meetings={meetings}
@@ -810,15 +914,10 @@ function SamplingTab({
 }
 
 function SamplingPlanRow({ plan, onOpen }: { plan: IqaSamplingPlan; onOpen: () => void }) {
-  const target = plan.target_sample_percent ?? 0;
-  const sampled = plan.sampled_count ?? 0;
-  // Never more than 100%: the stored total can lag the samples taken.
-  const total = Math.max(plan.total_assessments ?? 0, sampled);
-  const sampledPct = total > 0 ? Math.round((sampled / total) * 100) : 0;
-  const onTrack = sampledPct >= target;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const ended = new Date(plan.period_end) < today;
+  const pace = planPace(plan);
+  const { target, sampled, total } = pace;
+  const sampledPct = pace.pct;
+  const onTrack = pace.ok;
 
   return (
     <button
@@ -829,13 +928,8 @@ function SamplingPlanRow({ plan, onOpen }: { plan: IqaSamplingPlan; onOpen: () =
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            {ended ? (
-              <StatusPill tone="neutral">Period ended</StatusPill>
-            ) : (
-              <StatusPill tone={onTrack ? 'good' : 'warn'}>
-                {onTrack ? 'On track' : 'Catching up'}
-              </StatusPill>
-            )}
+            {/* Words that say where the plan stands, ended or not. */}
+            <StatusPill tone={onTrack ? 'good' : 'warn'}>{pace.label}</StatusPill>
             <span className="text-[12px] tabular-nums text-white">Target {target}%</span>
           </div>
           <div className="mt-1 text-[14px] font-medium text-white group-hover:underline underline-offset-2">
@@ -867,7 +961,7 @@ function SamplingPlanRow({ plan, onOpen }: { plan: IqaSamplingPlan; onOpen: () =
       </div>
       <div className="mt-3 h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
         <div
-          className={cn('h-full transition-all', onTrack ? 'bg-emerald-400' : 'bg-amber-400')}
+          className={cn('h-full transition-all', onTrack ? 'bg-emerald-400' : 'bg-orange-400')}
           style={{ width: `${Math.min(100, sampledPct)}%` }}
         />
       </div>
@@ -969,17 +1063,17 @@ function FindingRow({
             {finding.severity && (
               <span
                 className={cn(
-                  'inline-flex items-center h-5 px-1.5 rounded-md border text-[11px] font-semibold tracking-[0.06em] uppercase',
+                  'inline-flex items-center h-6 px-2 rounded-full border text-[12px] font-semibold capitalize',
                   finding.severity === 'critical'
-                    ? 'bg-red-500/[0.08] border-red-500/30 text-white'
-                    : 'bg-amber-500/[0.08] border-amber-500/30 text-white'
+                    ? 'border-orange-400/60 text-orange-300'
+                    : 'border-white/[0.2] text-white'
                 )}
               >
                 {finding.severity}
               </span>
             )}
             {overdue && (
-              <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-red-500/[0.08] border border-red-500/30 text-[11px] font-semibold tracking-[0.06em] uppercase text-white">
+              <span className="inline-flex items-center h-6 px-2 rounded-full border border-orange-400/60 text-[12px] font-semibold text-orange-300">
                 Overdue
               </span>
             )}
@@ -1007,13 +1101,13 @@ function FindingRow({
             )}
           </div>
           {finding.action_plan && (
-            <div className="mt-2 pl-3 border-l-2 border-elec-yellow/40 text-[12.5px] text-white leading-snug">
+            <div className="mt-2 rounded-xl bg-white/[0.04] px-3 py-2 text-[12.5px] text-white leading-snug">
               <span className="text-white font-medium">Action: </span>
               {finding.action_plan}
             </div>
           )}
           {finding.resolution_notes && !isFindingOpen(finding) && (
-            <div className="mt-2 pl-3 border-l-2 border-emerald-500/40 text-[12.5px] text-white leading-snug">
+            <div className="mt-2 rounded-xl bg-white/[0.04] px-3 py-2 text-[12.5px] text-white leading-snug">
               <span className="font-medium">Resolved: </span>
               {finding.resolution_notes}
               {finding.closed_at && (
@@ -1024,24 +1118,24 @@ function FindingRow({
         </div>
       </div>
       {canAct ? (
-      <div className="mt-3 flex items-center justify-end gap-2 flex-wrap">
-        {isFindingOpen(finding) && (
+        <div className="mt-3 flex items-center justify-end gap-2 flex-wrap">
+          {isFindingOpen(finding) && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="h-11 px-4 rounded-xl border border-emerald-400/50 text-[12.5px] font-semibold text-white hover:border-emerald-300 transition-colors touch-manipulation"
+            >
+              Close finding
+            </button>
+          )}
           <button
             type="button"
-            onClick={onClose}
-            className="h-11 px-4 rounded-xl border border-emerald-400/50 text-[12.5px] font-semibold text-white hover:bg-emerald-500/[0.12] transition-colors touch-manipulation"
+            onClick={onDelete}
+            className="h-11 px-4 rounded-xl text-[12.5px] font-semibold text-white hover:text-red-300 transition-colors touch-manipulation"
           >
-            Close finding
+            Delete
           </button>
-        )}
-        <button
-          type="button"
-          onClick={onDelete}
-          className="h-11 px-4 rounded-xl text-[12.5px] font-semibold text-white hover:bg-red-500/[0.10] transition-colors touch-manipulation"
-        >
-          Delete
-        </button>
-      </div>
+        </div>
       ) : null}
     </div>
   );
@@ -1176,7 +1270,7 @@ function MeetingRow({
         <button
           type="button"
           onClick={onDelete}
-          className="h-11 px-4 rounded-xl text-[12.5px] font-semibold text-white hover:bg-red-500/[0.10] transition-colors touch-manipulation"
+          className="h-11 px-4 rounded-xl text-[12.5px] font-semibold text-white hover:text-red-300 transition-colors touch-manipulation"
         >
           Delete
         </button>

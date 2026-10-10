@@ -70,7 +70,8 @@ export function AddCommentDialog({
     if (!content.trim()) {
       toast({
         title: 'Type a quick draft first',
-        description: 'Paste the learner work or rough feedback notes — Mate will rewrite it in your voice.',
+        description:
+          'Paste the learner work or rough feedback notes and Mate will rewrite it in your voice.',
         variant: 'destructive',
       });
       return;
@@ -78,7 +79,12 @@ export function AddCommentDialog({
     try {
       const result = await generateInVoice({
         learnerWork: content.trim(),
-        kind: contextType === 'evidence' ? 'portfolio' : contextType === 'assessment' ? 'quiz' : 'portfolio',
+        kind:
+          contextType === 'evidence'
+            ? 'portfolio'
+            : contextType === 'assessment'
+              ? 'quiz'
+              : 'portfolio',
       });
       if (result?.feedback) {
         setContent(result.feedback);
@@ -126,7 +132,7 @@ export function AddCommentDialog({
       case 'head_of_department':
         return 'bg-purple-500/10 text-purple-400';
       case 'student':
-        return 'bg-elec-yellow/10 text-elec-yellow';
+        return 'bg-white/[0.1] text-white';
       default:
         return 'bg-[hsl(0_0%_12%)] text-white';
     }
@@ -213,13 +219,17 @@ export function AddCommentDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent hideCloseButton className="sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+      <ResponsiveDialogContent
+        hideCloseButton
+        className="sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white"
+      >
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="flex items-center gap-2 text-white">Add Comment</ResponsiveDialogTitle>
+          <ResponsiveDialogTitle className="flex items-center gap-2 text-white">
+            Add Comment
+          </ResponsiveDialogTitle>
           {contextTitle && (
             <p className="text-sm text-white">
-              On {getContextLabel()}:{' '}
-              <span className="font-medium text-white">{contextTitle}</span>
+              On {getContextLabel()}: <span className="font-medium text-white">{contextTitle}</span>
             </p>
           )}
         </ResponsiveDialogHeader>
@@ -251,7 +261,7 @@ export function AddCommentDialog({
               type="button"
               onClick={handlePolishInVoice}
               disabled={generating || !content.trim()}
-              className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-elec-yellow/30 bg-elec-yellow/10 px-3 py-1.5 text-[11px] font-semibold text-elec-yellow hover:bg-elec-yellow/20 disabled:opacity-40 touch-manipulation"
+              className="mt-2 inline-flex items-center gap-1.5 min-h-11 rounded-full border border-white/[0.16] px-3.5 text-[12px] font-semibold text-white hover:border-elec-yellow disabled:opacity-40 touch-manipulation"
             >
               <Sparkles className="h-3 w-3" />
               {generating ? 'Drafting…' : 'Polish in my voice'}
@@ -286,7 +296,7 @@ export function AddCommentDialog({
                             >
                               <Avatar className="h-6 w-6">
                                 <AvatarFallback
-                                  className={`text-[10px] ${getRoleColor(user.role)}`}
+                                  className={`text-[12px] ${getRoleColor(user.role)}`}
                                 >
                                   {user.initials}
                                 </AvatarFallback>
@@ -311,7 +321,7 @@ export function AddCommentDialog({
                 {selectedMentions.map((mention) => (
                   <span
                     key={mention.id}
-                    className="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full border border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow text-[11px]"
+                    className="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full border border-white/[0.16] text-white text-[12px]"
                   >
                     @{mention.name}
                     <button

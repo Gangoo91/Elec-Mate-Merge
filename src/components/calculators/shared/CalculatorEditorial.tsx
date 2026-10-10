@@ -101,7 +101,7 @@ export const CalculatorEditorial = ({ content }: CalculatorEditorialProps) => {
                 <dl className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3">
                   {content.workedExample.inputs.map((input, i) => (
                     <div key={i}>
-                      <dt className="text-[11px] leading-tight text-white">{input.label}</dt>
+                      <dt className="text-[13px] leading-snug text-white">{input.label}</dt>
                       <dd className="mt-0.5 text-[13.5px] font-semibold tabular-nums leading-tight text-white">
                         {input.value}
                       </dd>
@@ -112,7 +112,7 @@ export const CalculatorEditorial = ({ content }: CalculatorEditorialProps) => {
 
               {/* The working, as a monospace block — this is the bit an
                   apprentice copies into a portfolio, so it has to line up. */}
-              <div className="space-y-1 rounded-xl border border-white/[0.12] bg-black/40 p-3 font-mono text-[11.5px] leading-relaxed text-white">
+              <div className="space-y-1 rounded-xl border border-white/[0.12] bg-black/40 p-3 font-mono text-[12px] leading-relaxed text-white">
                 {content.workedExample.steps.map((step, i) => (
                   <p key={i}>{step}</p>
                 ))}
@@ -166,7 +166,7 @@ export const CalculatorEditorial = ({ content }: CalculatorEditorialProps) => {
                 </table>
               </div>
               {content.quickReference.footnote && (
-                <p className="text-[11.5px] leading-relaxed text-white">
+                <p className="text-[13px] leading-relaxed text-white">
                   {content.quickReference.footnote}
                 </p>
               )}
@@ -181,7 +181,7 @@ export const CalculatorEditorial = ({ content }: CalculatorEditorialProps) => {
                   {citation.tableRefs.map((ref, ti) => (
                     <span
                       key={ti}
-                      className="rounded border border-elec-yellow/50 px-1.5 py-0.5 text-[10.5px] font-semibold text-elec-yellow"
+                      className="rounded border border-elec-yellow/50 px-1.5 py-0.5 text-[12px] font-semibold text-elec-yellow"
                     >
                       {ref}
                     </span>
@@ -240,7 +240,7 @@ const Disclosure = ({
 /** A titled block. A rule and a heading, not a nested card. */
 const Block = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section className="space-y-2 border-t border-white/[0.10] pt-3.5 first:border-0 first:pt-0">
-    <h4 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+    <h4 className="text-[14px] font-semibold text-white">
       {title}
     </h4>
     <div className="space-y-2.5">{children}</div>

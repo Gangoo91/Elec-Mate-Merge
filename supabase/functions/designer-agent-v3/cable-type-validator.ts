@@ -130,7 +130,11 @@ export function validateCableType(
 
   // Rule 3: Fire / emergency circuits — must be FP200/FP400 or MICC
   if (describesFireCircuit(circuit) && !FIRE_RATED_PATTERN.test(cableType)) {
-    const newType = `${cableSize} mm² FP200 enhanced`;
+    // FP200 is a STANDARD fire-resisting cable. BS 5839-1 recommends ENHANCED
+    // (120 min, BS EN 50200 / BS 8434-2) only for critical cases — e.g. an
+    // unsprinklered high-rise with phased evacuation — so don't call it
+    // enhanced here.
+    const newType = `${cableSize} mm² FP200 (standard fire-resisting)`;
     logger?.info?.('🛡️ Cable tripwire: fire circuit → FP200', {
       circuit: circuit.name,
       before: cableType,
@@ -148,8 +152,8 @@ export function validateCableType(
         before: cableType,
         after: newType,
         reason:
-          'Fire alarm / emergency lighting / smoke detection circuit must use fire-rated cable to maintain integrity during fire (BS 5266-1, BS 5839-1, BS 7671 Section 560).',
-        reg: '560.7 · BS 5266-1 · BS 5839-1',
+          'Fire alarm / emergency lighting / smoke detection circuit needs fire-resisting cable to keep working in a fire (BS 7671 560.8.1, BS 5839-1). Standard grade shown; BS 5839-1 recommends enhanced (120 min) where prolonged integrity is needed, e.g. an unsprinklered high-rise with phased evacuation.',
+        reg: '560.8.1 · BS 5839-1',
       },
     };
   }

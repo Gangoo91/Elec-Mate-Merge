@@ -15,7 +15,7 @@ export interface ReviewBlockOptions {
 }
 
 const DEFAULT_MSG =
-  'Happy with the work? A quick review really helps a small business like ours — it only takes a minute.';
+  'We would be grateful for an honest review of the work. It helps a small business like ours, and only takes a minute.';
 
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

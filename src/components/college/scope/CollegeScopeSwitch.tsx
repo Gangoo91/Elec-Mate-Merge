@@ -53,7 +53,7 @@ export function CollegeScopeSwitch() {
         sideOffset={6}
         className="w-72 border-white/[0.12] bg-[hsl(0_0%_10%)] p-1.5 text-white"
       >
-        <DropdownMenuLabel className="px-2.5 pb-1.5 pt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+        <DropdownMenuLabel className="px-2.5 pb-1.5 pt-1 text-[13px] font-semibold text-elec-yellow">
           Whose work to show
         </DropdownMenuLabel>
         {LEVELS.map((v) => {
@@ -78,7 +78,7 @@ export function CollegeScopeSwitch() {
             </DropdownMenuItem>
           );
         })}
-        <p className="px-2.5 pb-1 pt-2 text-[11.5px] leading-snug text-white">
+        <p className="px-2.5 pb-1 pt-2 text-[12px] leading-snug text-white">
           One setting for the whole College Hub: inbox, home, marking and hours. Saved to your
           account.
         </p>

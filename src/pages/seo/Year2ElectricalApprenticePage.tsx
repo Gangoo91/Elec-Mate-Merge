@@ -145,7 +145,7 @@ const sections = [
         </p>
         <p>
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations, 18th Edition) requires that every new installation,
           alteration, and addition is inspected and tested before it can be connected to the supply.
@@ -637,7 +637,7 @@ export default function Year2ElectricalApprenticePage() {
       title="Year 2 Apprentice Testing Guide: Continuity, RCD"
       description="Year 2 testing walkthrough for UK electrical apprentices. Continuity, insulation resistance, polarity, earth fault loop impedance, and RCD — every test."
       datePublished="2025-10-01"
-      dateModified="2026-05-19"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

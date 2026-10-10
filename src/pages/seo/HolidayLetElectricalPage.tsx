@@ -47,8 +47,8 @@ const keyTakeaways = [
   'PAT testing of all portable appliances is recommended annually or at each deep clean. Guests bring and use unfamiliar appliances — portable appliance safety is a significant risk area for holiday lets.',
   'Smoke alarms and carbon monoxide alarms are not currently mandated by statute for holiday lets in England, but the Regulatory Reform (Fire Safety) Order 2005 may apply to larger properties. Smoke and CO alarms are considered essential duty-of-care measures.',
   'Having a current EICR certificate and PAT testing records is a significant marketing advantage on platforms such as Airbnb, Booking.com, and holiday cottage directories, where guests increasingly ask about safety credentials.',
-  'BS 7671:2018+A4:2026 (Regulation 411.3.4) now requires 30 mA RCD protection on lighting circuits in domestic premises. Holiday lets inspected under A4:2026 will receive a C2 observation if lighting circuits lack RCD protection.',
-  'BS 7671:2018+A4:2026 introduced Regulation 421.1.7, recommending arc fault detection devices (AFDDs) on AC final circuits to reduce fire risk from arc faults. AFDDs are recommended, not mandatory, in high-rise residential buildings and recommended for all other domestic premises including holiday lets.',
+  'BS 7671:2018+A4:2026 (Regulation 411.3.4, in place since 2018) requires 30 mA RCD protection on lighting circuits in domestic premises. Holiday lets inspected under A4:2026 will receive a C2 observation if lighting circuits lack RCD protection.',
+  'Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends arc fault detection devices (AFDDs) to reduce fire risk from arc faults. Since A2:2022 they are required on socket-outlet circuits in high rise residential buildings, HMOs, student accommodation and care homes, and recommended elsewhere, including most holiday lets.',
 ];
 
 const faqs = [
@@ -408,9 +408,9 @@ const sections = [
           RCD (Residual Current Device) protection is a fundamental electrical safety measure.
           Regulation 411.3.3 of BS 7671:2018+A4:2026 requires 30 mA RCD protection on socket-outlet
           circuits — a requirement that applies to new and replacement installations regardless of
-          property type. A4:2026 also introduced mandatory 30 mA RCD protection on lighting circuits
-          in domestic premises (Regulation 411.3.4) and recommends arc fault detection devices
-          (AFDDs) on AC final circuits (Regulation 421.1.7).
+          property type. Since BS 7671:2018 it has also required 30 mA RCD protection on lighting
+          circuits in domestic premises (Regulation 411.3.4), and it recommends arc fault detection
+          devices (AFDDs) on AC final circuits (Regulation 421.1.7).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -426,22 +426,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA RCD on lighting circuits (A4:2026 — Regulation 411.3.4)</strong> — BS
-                7671:2018+A4:2026 now requires 30 mA RCD additional protection on AC final circuits
+                <strong>30 mA RCD on lighting circuits (Regulation 411.3.4)</strong> — BS
+                7671:2018+A4:2026 requires 30 mA RCD additional protection on AC final circuits
                 supplying luminaires within domestic (household) premises. A holiday let used as
-                domestic accommodation is within scope. Installations completed or upgraded under
-                A4:2026 must provide RCD-protected lighting circuits; legacy installations without
+                domestic accommodation is within scope. Installations completed or upgraded since
+                2019 must provide RCD-protected lighting circuits; legacy installations without
                 it will attract a C2 observation on inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AFDDs recommended — Regulation 421.1.7 (A4:2026)</strong> — BS
-                7671:2018+A4:2026 introduced Regulation 421.1.7, recommending arc fault detection
-                devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents.
-                The wording is advisory for most premises (not &apos;shall&apos;), but AFDDs are
-                recommended, not mandatory, in high-rise residential buildings. For holiday lets, fitting AFDDs
+                <strong>AFDDs recommended — Regulation 421.1.7</strong> — BS 7671 has
+                recommended arc fault detection devices (AFDDs) since 2018 to mitigate fire risk from
+                arc fault currents. Since A2:2022 they are required on socket-outlet circuits in high
+                rise residential buildings, HMOs, student accommodation and care homes; for other
+                premises the wording is advisory. For holiday lets, fitting AFDDs
                 demonstrates a higher standard of electrical safety and is consistent with the
                 duty-of-care obligations under the Occupiers Liability Act 1957.
               </span>
@@ -705,7 +705,7 @@ export default function HolidayLetElectricalPage() {
       title="Do You Need an EICR for a Holiday Let? (UK 2026)"
       description="No mandatory EICR for UK holiday lets — but the Occupiers Liability Act, Airbnb and insurers expect one. Inspection frequency, PAT testing and alarms."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Holiday Let Guide"

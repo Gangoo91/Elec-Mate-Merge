@@ -17,7 +17,7 @@ export const LEARNER_RECORD_TEMPLATE_ID =
 export async function renderLearnerRecord(
   payload: unknown,
   filename: string,
-  opts: { timeoutMs?: number } = {}
+  opts: { timeoutMs?: number; templateId?: string } = {}
 ): Promise<Uint8Array> {
   const apiKey = Deno.env.get('PDFMONKEY_API_KEY');
   if (!apiKey) throw new Error('PDFMONKEY_API_KEY is not set');
@@ -28,7 +28,7 @@ export async function renderLearnerRecord(
     headers,
     body: JSON.stringify({
       document: {
-        document_template_id: LEARNER_RECORD_TEMPLATE_ID,
+        document_template_id: opts.templateId || LEARNER_RECORD_TEMPLATE_ID,
         payload,
         status: 'pending',
         meta: JSON.stringify({ _filename: filename }),
@@ -59,7 +59,9 @@ export async function renderLearnerRecord(
     if (!res.ok) throw new Error(`PDFMonkey download failed (${res.status})`);
     return new Uint8Array(await res.arrayBuffer());
   } finally {
-    fetch(`${PDFMONKEY_API}/documents/${documentId}`, { method: 'DELETE', headers }).catch(() => {});
+    fetch(`${PDFMONKEY_API}/documents/${documentId}`, { method: 'DELETE', headers }).catch(
+      () => {}
+    );
   }
 }
 

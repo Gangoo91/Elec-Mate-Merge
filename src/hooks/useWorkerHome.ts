@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { OFFLINE_FIRST, offlineSnapshot } from '@/lib/workerOfflineCache';
 import { useAuth } from '@/contexts/AuthContext';
 
 /**
@@ -46,12 +47,15 @@ export function useWorkerHome(opts: { enabled?: boolean } = {}) {
     enabled: !!user && (opts.enabled ?? true),
     staleTime: 60 * 1000,
     refetchInterval: 60 * 1000,
-    queryFn: async (): Promise<WorkerHome | null> => {
-      // Cast: this RPC postdates the last types.ts regeneration.
-      const { data, error } = await supabase.rpc('get_worker_home' as never);
-      if (error) throw error;
-      return (data as unknown as WorkerHome) ?? null;
-    },
+    // ELE-1828: the Worker Tools hub opens with no signal.
+    ...OFFLINE_FIRST,
+    queryFn: () =>
+      offlineSnapshot('worker-home', async (): Promise<WorkerHome | null> => {
+        // Cast: this RPC postdates the last types.ts regeneration.
+        const { data, error } = await supabase.rpc('get_worker_home' as never);
+        if (error) throw error;
+        return (data as unknown as WorkerHome) ?? null;
+      }),
   });
 }
 

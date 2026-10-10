@@ -143,7 +143,10 @@ const SiteSafety = lazyWithRetry(() => import('@/pages/electrician-tools/SiteSaf
 const AgentSelectorPage = lazyWithRetry(() => import('@/pages/electrician-tools/AgentSelectorPage'));
 const CircuitDesigner = lazyWithRetry(() => import('@/pages/electrician-tools/CircuitDesigner'));
 const CostEngineerPage = lazyWithRetry(() => import('@/pages/electrician-tools/CostEngineerPage'));
-// CostEngineerQuotes — re-add when the cost-engineer redesign lands.
+// Restored 10 Oct 2026: dropped on 4 May only to unbreak a build while the
+// page was unfinished; the page shipped 31 minutes later but the route never
+// came back, so the header's "My Quotes" led to a not-found page for months.
+const CostEngineerQuotes = lazyWithRetry(() => import('@/pages/electrician-tools/CostEngineerQuotes'));
 const InstallationSpecialistPage = lazyWithRetry(
   () => import('@/pages/electrician-tools/InstallationSpecialistPage')
 );
@@ -170,12 +173,14 @@ const WTApprenticeHoursPage = lazyWithRetry(
 const WTMyTasksPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyTasksPage'));
 const WTSignOffsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/SignOffsPage'));
 const WTCredentialsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/CredentialsPage'));
+const WTLearningPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/LearningPage'));
 const WTMyEquipmentPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyEquipmentPage'));
 const WTMyVanPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyVanPage'));
 const WTProgressNotesPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/ProgressNotesPage'));
 const WTExpensesPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/ExpensesPage'));
 const WTReportsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/ReportsPage'));
 const WTQsReviewPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/QsReviewPage'));
+const WTRightToWorkPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/RightToWorkPage'));
 const CalendarPage = lazyWithRetry(() => import('@/pages/electrician/CalendarPage'));
 const SnaggingPage = lazyWithRetry(() => import('@/pages/electrician/SnaggingPage'));
 const BusinessAIPage = lazyWithRetry(() => import('@/components/business-ai/BusinessAIPage'));
@@ -216,6 +221,7 @@ const ElectricianHubRoutes = () => (
     <Route path="worker-tools/tasks" element={<LazyRoute><WTMyTasksPage /></LazyRoute>} />
     <Route path="worker-tools/signoffs" element={<LazyRoute><WTSignOffsPage /></LazyRoute>} />
     <Route path="worker-tools/credentials" element={<LazyRoute><WTCredentialsPage /></LazyRoute>} />
+    <Route path="worker-tools/learning" element={<LazyRoute><WTLearningPage /></LazyRoute>} />
     <Route path="worker-tools/equipment" element={<LazyRoute><WTMyEquipmentPage /></LazyRoute>} />
     <Route path="worker-tools/van" element={<LazyRoute><WTMyVanPage /></LazyRoute>} />
     <Route path="worker-tools/progress-notes" element={<LazyRoute><WTProgressNotesPage /></LazyRoute>} />
@@ -224,6 +230,7 @@ const ElectricianHubRoutes = () => (
     <Route path="worker-tools/qs-reviews" element={<LazyRoute><WTQsReviewPage /></LazyRoute>} />
     <Route path="worker-tools/apprentice-hours" element={<LazyRoute><WTApprenticeHoursPage /></LazyRoute>} />
     <Route path="worker-tools/crew" element={<LazyRoute><WTCrewApprovalsPage /></LazyRoute>} />
+    <Route path="worker-tools/right-to-work" element={<LazyRoute><WTRightToWorkPage /></LazyRoute>} />
 
     {/* Business AI - sales, onboarding, dashboard */}
     <Route
@@ -971,7 +978,14 @@ const ElectricianHubRoutes = () => (
         </LazyRoute>
       }
     />
-    {/* cost-engineer/quotes — route restored when CostEngineerQuotes ships. */}
+    <Route
+      path="cost-engineer/quotes"
+      element={
+        <LazyRoute>
+          <CostEngineerQuotes />
+        </LazyRoute>
+      }
+    />
     <Route
       path="installation-specialist"
       element={

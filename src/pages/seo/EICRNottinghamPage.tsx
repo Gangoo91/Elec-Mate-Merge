@@ -507,14 +507,15 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-white mb-2">
-            BS 7671:2018+A4:2026 — AFDD and Updated Model Forms
+            BS 7671:2018+A4:2026 — AFDDs and the Model Forms
           </h4>
           <p className="text-white text-sm leading-relaxed">
-            The A4:2026 amendment introduced Reg 421.1.7, which recommends installation of arc fault
-            detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc
-            fault currents. The Appendix 6 model forms have been updated (Reg 133.1.3; Reg
-            722.826.3.201) to include dedicated fields for recording AFDD and SPD presence on all
-            certification documents. For Nottingham&apos;s older housing stock, the absence of AFDDs
+            Reg 421.1.7, introduced in 2018, recommends installation of arc fault detection devices
+            (AFDDs) on AC final circuits to mitigate the risk of fire from arc fault currents. Since
+            A2:2022 it requires them on socket-outlet circuits up to 32 A in HMOs, purpose-built
+            student accommodation, care homes and high rise residential buildings. The Appendix 6
+            model forms have included dedicated fields for recording AFDD and SPD details since
+            A2:2022. For Nottingham&apos;s older single-family housing stock, the absence of AFDDs
             on AC final circuits may be noted as a C3 observation — improvement recommended, not
             immediately dangerous. Inspectors must complete the relevant AFDD field on the updated
             EICR form where applicable.
@@ -667,7 +668,7 @@ export default function EICRNottinghamPage() {
       title="EICR Nottingham: Safety Certificate Cost 2026"
       description="EICR cost in Nottingham 2026: prices by property type, selective licensing rules, landlord obligations and observation codes. Get a compliant report today."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

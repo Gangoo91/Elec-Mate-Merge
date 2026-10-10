@@ -467,7 +467,7 @@ const SmartHomeModule3Section2 = () => {
             className="text-white hover:text-elec-yellow hover:bg-transparent touch-manipulation"
             asChild
           >
-            <Link to="../section-1">
+            <Link to="/study-centre/upskilling/smart-home-module-3-section-1">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
@@ -476,7 +476,7 @@ const SmartHomeModule3Section2 = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             asChild
           >
-            <Link to="../section-3">Next Section</Link>
+            <Link to="/study-centre/upskilling/smart-home-module-3-section-3">Next Section</Link>
           </Button>
         </nav>
       </article>

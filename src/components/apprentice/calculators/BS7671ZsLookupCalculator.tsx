@@ -499,17 +499,17 @@ const BS7671ZsLookupCalculator = ({ onResult }: CalculatorResultReporter = {}) =
         />
       ) : (
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 h-12 bg-white/5 rounded-xl p-1">
+          <TabsList className="grid w-full grid-cols-3 h-auto bg-white/5 rounded-xl p-1">
             {tabs.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="flex items-center gap-2 text-sm font-semibold rounded-lg data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+                  className="min-h-11 touch-manipulation text-white flex items-center gap-2 font-semibold rounded-lg min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black"
                 >
-                  <IconComponent className="h-4 w-4" />
-                  <span className="hidden sm:inline">{tab.label}</span>
+                  <IconComponent className="hidden h-4 w-4 sm:block" />
+                  <span>{tab.label}</span>
                 </TabsTrigger>
               );
             })}

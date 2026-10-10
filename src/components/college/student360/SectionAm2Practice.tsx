@@ -80,15 +80,11 @@ export function SectionAm2Practice({
   useEffect(() => {
     if (!userId) return;
     let cancelled = false;
-    void db
-      .from('profiles')
-      .select('am2_exam_date')
-      .eq('id', userId)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (!cancelled)
-          setExamDate((data as { am2_exam_date?: string | null } | null)?.am2_exam_date ?? null);
-      });
+    // ELE-2020: staff can't read a learner's profile row; the college-scoped
+    // RPC returns just the exam date.
+    void db.rpc('get_learner_am2_exam_date', { p_user: userId }).then(({ data }) => {
+      if (!cancelled) setExamDate((data as string | null) ?? null);
+    });
     return () => {
       cancelled = true;
     };
@@ -182,7 +178,7 @@ export function SectionAm2Practice({
         <div className={cn('rounded-2xl border border-white/[0.14] p-5', CARD_SURFACE)}>
           <p className="text-[14.5px] font-semibold text-white">No AM2 practice yet</p>
           <p className="mt-1 text-[13px] leading-relaxed text-white">
-            {first} hasn’t run the AM2 simulator. It’s in their Apprentice Hub under AM2 — the
+            {first} hasn’t run the AM2 simulator. It’s in their Apprentice Hub under AM2: the
             sections, a full mock day and drills built from their mistakes.
           </p>
         </div>
@@ -211,10 +207,7 @@ export function SectionAm2Practice({
           <div className="grid gap-3 lg:grid-cols-2">
             {/* Sections */}
             <div
-              className={cn(
-                'overflow-hidden rounded-3xl border border-white/[0.08]',
-                CARD_SURFACE
-              )}
+              className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}
             >
               <div className="flex items-center justify-between border-b border-white/[0.1] px-4 py-3 sm:px-5">
                 <p className="text-[13px] font-semibold text-white">Sections</p>
@@ -231,7 +224,9 @@ export function SectionAm2Practice({
                         {s.key}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-[13.5px] font-semibold text-white">{s.title}</p>
+                        <p className="line-clamp-2 text-[13.5px] font-semibold text-white">
+                          {s.title}
+                        </p>
                         <p className="text-[12px] text-white">
                           {view.runsBySection[s.key] ?? 0} run
                           {(view.runsBySection[s.key] ?? 0) === 1 ? '' : 's'} · bar {s.barLabel}
@@ -241,7 +236,7 @@ export function SectionAm2Practice({
                         <p className="font-mono text-[15px] font-bold tabular-nums text-white">
                           {last != null ? `${last}%` : '—'}
                         </p>
-                        <p className={cn('text-[11.5px] font-semibold', 'text-white')}>
+                        <p className={cn('text-[12px] font-semibold', 'text-white')}>
                           {s.status === 'ready'
                             ? 'Ready'
                             : s.status === 'practising'
@@ -253,7 +248,7 @@ export function SectionAm2Practice({
                   );
                 })}
               </ul>
-              <p className="border-t border-white/[0.07] px-4 py-2.5 text-[11.5px] text-white sm:px-5">
+              <p className="border-t border-white/[0.07] px-4 py-2.5 text-[12px] text-white sm:px-5">
                 Ready = the last two Assessment runs at the bar (exam sittings for E).
               </p>
             </div>
@@ -280,7 +275,7 @@ export function SectionAm2Practice({
                         key={`${w.sec}-${w.tag}`}
                         className="flex items-center gap-3 px-4 py-2.5 sm:px-5"
                       >
-                        <span className="shrink-0 rounded-md border border-white/[0.25] px-1.5 py-0.5 text-[11px] font-bold text-white">
+                        <span className="shrink-0 rounded-md border border-white/[0.25] px-1.5 py-0.5 text-[12px] font-bold text-white">
                           {w.sec}
                         </span>
                         <span className="min-w-0 flex-1 text-[13px] text-white">
@@ -311,7 +306,7 @@ export function SectionAm2Practice({
                       <span className="w-14 shrink-0 text-[12px] text-white">
                         {when(r.completed_at)}
                       </span>
-                      <span className="min-w-0 flex-1 truncate text-[13px] text-white">
+                      <span className="min-w-0 flex-1 line-clamp-2 text-[13px] text-white">
                         {SECTION_FOR_TYPE[r.session_type] ?? r.session_type}
                         {r.component_scores?.mode
                           ? ` · ${MODE_LABEL[r.component_scores.mode] ?? ''}`

@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'What training plan should I provide for an electrical apprentice?',
     answer:
-      'The training plan should map out how the apprentice will gain experience of all the activities required to complete their NVQ units and apprenticeship standard KSBs over the duration of the apprenticeship. A good training plan considers: the range of installation types the employer can provide (domestic, commercial, industrial, specialist — the more varied, the richer the portfolio evidence); planned rotation across different job types to ensure the apprentice gains experience in all mandatory unit areas; scheduled assessor observation visits that align with planned job activities; progression milestones (when the apprentice should be able to carry out specific tasks with reduced supervision); and support for off-the-job training requirements (typically 20% of the apprenticeship time). Review the training plan with the apprentice and training provider at the beginning of the apprenticeship and at each progress review. Adjust as the apprentice develops faster or slower than anticipated.',
+      'The training plan should map out how the apprentice will gain experience of all the activities required to complete their NVQ units and apprenticeship standard KSBs over the duration of the apprenticeship. A good training plan considers: the range of installation types the employer can provide (domestic, commercial, industrial, specialist — the more varied, the richer the portfolio evidence); planned rotation across different job types to ensure the apprentice gains experience in all mandatory unit areas; scheduled assessor observation visits that align with planned job activities; progression milestones (when the apprentice should be able to carry out specific tasks with reduced supervision); and support for off-the-job training requirements (the minimum hours set for the apprenticeship standard). Review the training plan with the apprentice and training provider at the beginning of the apprenticeship and at each progress review. Adjust as the apprentice develops faster or slower than anticipated.',
   },
 ];
 
@@ -412,7 +412,7 @@ const sections = [
       <>
         <p>
           The End Point Assessment Organisation (EPAO) for the electrical installation
-          apprenticeship standard (ST0215) is EMTA (Engineering and Manufacturing Training
+          apprenticeship standard (ST0152) is EMTA (Engineering and Manufacturing Training
           Association). EMTA manages the AM2 assessment process, appoints and trains AM2 assessors,
           and issues the End Point Assessment certificates.
         </p>
@@ -524,7 +524,7 @@ export default function SupervisingApprenticesPage() {
       title="Supervising Electrical Apprentices UK: Employer"
       description="Complete guide for UK electrical employers supervising apprentices. Supervision ratios, live conductor rules, JIB apprenticeship wage rates 2026."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Employer Guide"

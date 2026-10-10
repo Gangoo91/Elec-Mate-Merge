@@ -3,12 +3,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useJobHubSummary } from '@/hooks/useJobHubSummary';
 import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
 import { CreateInvoiceDialog } from '@/components/employer/dialogs/CreateInvoiceDialog';
+import { useJobHasStagedQuote } from '@/components/employer/quotes/PaymentStages';
 import { cn } from '@/lib/utils';
 import { JobProfitBlock } from '@/components/employer/jobs/JobProfitBlock';
 import {
   Receipt,
   FileText,
-  Wallet,
   ShieldCheck,
   AlertTriangle,
 } from 'lucide-react';
@@ -39,7 +39,7 @@ function MoneyStat({
 }) {
   return (
     <div className="min-w-0">
-      <p className="text-[10.5px] uppercase tracking-wider text-white font-medium">{label}</p>
+      <p className="text-[12px] text-white font-medium">{label}</p>
       <p
         className={cn(
           'mt-0.5 text-[16px] font-semibold tabular-nums truncate',
@@ -136,6 +136,7 @@ export function JobControlCentre({
   jobClient?: string;
 }) {
   const { data, isLoading } = useJobHubSummary(jobId);
+  const billedInStages = useJobHasStagedQuote(jobId);
   const queryClient = useQueryClient();
   const [showQuote, setShowQuote] = useState(false);
   const [showInvoice, setShowInvoice] = useState(false);
@@ -173,12 +174,7 @@ export function JobControlCentre({
       <div className="-mx-5 rounded-none border-y sm:mx-0 sm:rounded-2xl sm:border border-white/[0.1] bg-[hsl(0_0%_9%)] p-4 sm:p-5 space-y-4">
         {/* Money flow */}
         <div>
-          <div className="flex items-center gap-2 mb-3">
-            <Wallet className="h-3.5 w-3.5 text-elec-yellow" />
-            <p className="text-[10.5px] uppercase tracking-[0.16em] text-elec-yellow font-semibold">
-              Money flow
-            </p>
-          </div>
+          <h3 className="mb-3 text-[14px] font-semibold text-white">Money flow</h3>
           <div
             className={cn(
               'grid grid-cols-2 gap-3',
@@ -235,9 +231,7 @@ export function JobControlCentre({
         {/* Linked documents — exactly which quotes/invoices belong to this job */}
         {((data.quotes?.length ?? 0) > 0 || (data.invoices?.length ?? 0) > 0) && (
           <div>
-            <p className="text-[10.5px] uppercase tracking-[0.16em] text-white font-semibold mb-2">
-              Linked documents
-            </p>
+            <h3 className="mb-2 text-[14px] font-semibold text-white">Linked documents</h3>
             <div className="space-y-1.5">
               {(data.quotes ?? []).map((q) => (
                 <DocRow
@@ -321,9 +315,15 @@ export function JobControlCentre({
             onClick={() => setShowInvoice(true)}
             className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-11 rounded-xl border border-elec-yellow/25 bg-white/[0.06] px-4 text-[12.5px] font-semibold text-elec-yellow hover:bg-white/[0.06] active:scale-[0.98] transition touch-manipulation"
           >
-            <Receipt className="h-4 w-4" /> Invoice this job
+            <Receipt className="h-4 w-4" /> {billedInStages ? 'Invoice extras' : 'Invoice this job'}
           </button>
         </div>
+        {billedInStages && (
+          <p className="text-[12.5px] leading-snug text-white">
+            This job is billed in stages. Mark each stage done under Payment stages; use Invoice
+            extras only for work outside the quote.
+          </p>
+        )}
       </div>
 
       <CreateQuoteDialog

@@ -432,5 +432,84 @@ export async function generateCompetenceMatrixPdf(
     drawLegendAndFooter();
   }
 
+  // ── Training evidence (ELE-1834) — briefings signed and attested hours.
+  // Its own page and its own columns: evidence of training, never a ticket.
+  const trained = matrix.workers.filter(
+    (w) =>
+      w.training &&
+      (w.training.briefingsSigned > 0 ||
+        w.training.otjAttestedMinutes > 0 ||
+        w.training.otjCollegeVerifiedMinutes > 0)
+  );
+  if (trained.length > 0) {
+    const hrs = (m: number) => (m > 0 ? `${Math.round((m / 60) * 10) / 10} h` : '—');
+    const tx = {
+      worker: marginX,
+      briefings: marginX + 80,
+      last: marginX + 125,
+      attested: marginX + 175,
+      college: pageW - marginX,
+    };
+    const drawTrainingHeader = (y: number): number => {
+      doc.setFillColor(brand[0], brand[1], brand[2]);
+      doc.rect(marginX, y, pageW - marginX * 2, 7, 'F');
+      const headText = readableTextOn(brand);
+      doc.setTextColor(headText[0], headText[1], headText[2]);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('Worker', tx.worker + 2, y + 4.8);
+      doc.text('Briefings signed', tx.briefings, y + 4.8);
+      doc.text('Last briefing', tx.last, y + 4.8);
+      doc.text('Training hours attested by the firm', tx.attested, y + 4.8);
+      doc.text('Verified by college', tx.college - 2, y + 4.8, { align: 'right' });
+      doc.setFont('helvetica', 'normal');
+      return y + 7;
+    };
+
+    doc.addPage();
+    let y = drawPageHeader();
+    y = drawSectionTitle('Training evidence', y);
+    doc.setFontSize(8);
+    doc.setTextColor(90, 90, 90);
+    doc.text(
+      "Briefings and toolbox talks signed, and apprentices' off-the-job training hours. Evidence of training, not a qualification.",
+      marginX,
+      y + 3.5
+    );
+    y += 7;
+    y = drawTrainingHeader(y);
+
+    const rowH = 6.5;
+    trained.forEach((w, idx) => {
+      if (y + rowH > bottomLimit) {
+        drawLegendAndFooter();
+        doc.addPage();
+        y = drawPageHeader();
+        y = drawSectionTitle('Training evidence (continued)', y);
+        y = drawTrainingHeader(y + 2);
+      }
+      if (idx % 2 === 1) {
+        doc.setFillColor(246, 246, 246);
+        doc.rect(marginX, y, pageW - marginX * 2, rowH, 'F');
+      }
+      const t = w.training!;
+      doc.setFontSize(7.5);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(30, 30, 30);
+      doc.text(doc.splitTextToSize(w.name, 74)[0] ?? '', tx.worker + 2, y + 4.4);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(60, 60, 60);
+      doc.text(t.briefingsSigned > 0 ? String(t.briefingsSigned) : '—', tx.briefings, y + 4.4);
+      doc.text(t.lastBriefingOn ? fmt(t.lastBriefingOn) : '—', tx.last, y + 4.4);
+      doc.text(hrs(t.otjAttestedMinutes), tx.attested, y + 4.4);
+      doc.text(hrs(t.otjCollegeVerifiedMinutes), tx.college - 2, y + 4.4, { align: 'right' });
+      doc.setDrawColor(232, 232, 232);
+      doc.setLineWidth(0.15);
+      doc.line(marginX, y + rowH, pageW - marginX, y + rowH);
+      y += rowH;
+    });
+    drawLegendAndFooter();
+  }
+
   return doc;
 }

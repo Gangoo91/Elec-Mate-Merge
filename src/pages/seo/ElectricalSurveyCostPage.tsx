@@ -47,7 +47,7 @@ const keyTakeaways = [
   'Commercial electrical surveys cost from £300 to £2,000+ depending on the size and complexity of the installation, and are required under the Electricity at Work Regulations 1989.',
   'Large installation assessments for industrial or multi-site properties are priced per distribution board or per day, typically £500 to £1,500 per day.',
   'Elec-Mate helps electricians complete surveys faster and produce professional reports on site, turning every inspection into a priced remedial quote before leaving the property.',
-  'BS 7671:2018+A4:2026 introduced two key changes that affect domestic survey scope: Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits, and Reg 411.3.4 mandates 30 mA RCD protection on lighting circuits in domestic premises. Older boards without these features will typically attract C3 observations under A4:2026 surveys.',
+  'Two BS 7671 requirements, neither new in A4:2026, shape domestic survey scope: Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits (required in HMOs and similar premises since A2:2022), and Reg 411.3.4 has mandated 30 mA RCD protection on domestic lighting circuits since 2018. Older boards without these features often attract observations.',
 ];
 
 const faqs = [
@@ -448,14 +448,15 @@ const sections = [
             <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
-                BS 7671:2018+A4:2026 update — wider survey scope
+                BS 7671:2018+A4:2026 — survey scope
               </p>
               <p className="text-white text-sm leading-relaxed">
-                From 2026, surveys must assess compliance with two A4:2026 requirements that were
-                not in the 18th edition: <strong>Reg 421.1.7</strong> recommends arc fault detection
-                devices (AFDDs) in AC final circuits to mitigate fire risk, and{' '}
+                Surveys should assess two requirements that are often mistaken for A4:2026 changes
+                but are older: <strong>Reg 421.1.7</strong> recommends arc fault detection devices
+                (AFDDs) in AC final circuits to mitigate fire risk (since 2018, and required on
+                socket-outlet circuits in HMOs and similar premises since A2:2022), and{' '}
                 <strong>Reg 411.3.4</strong> requires 30&thinsp;mA RCD additional protection on AC
-                final circuits supplying luminaires in domestic premises. Older consumer units that
+                final circuits supplying luminaires in domestic premises (since 2018). Older consumer units that
                 lack AFDD protection or have unprotected lighting circuits will typically attract C3
                 (Improvement Recommended) observations — and in some cases C2 where a specific risk
                 is identified. Homeowners and landlords should budget for potential remedial work
@@ -637,7 +638,7 @@ export default function ElectricalSurveyCostPage() {
       title="Electrical Survey Cost UK 2026: What to Expect"
       description="Complete guide to electrical survey costs in the UK for 2026. Pre-purchase survey prices, commercial EICR costs, large installation assessments."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

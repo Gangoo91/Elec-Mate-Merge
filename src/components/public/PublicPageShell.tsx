@@ -48,25 +48,34 @@ export const PublicLead = ({ children }: { children: React.ReactNode }) => (
   <p className="mt-4 text-[17px] leading-[1.55] text-white">{children}</p>
 );
 
-/** The landing card: lit gradient surface, gold edge, volt hairline across the top. */
+/**
+ * The landing card: lit gradient surface, gold edge, volt hairline across the
+ * top. `quiet` (10 Oct) drops the gold for a hairline white edge, for a list
+ * of cards where a gold edge on every one is noise.
+ */
 export const PublicCard = ({
   children,
   className,
+  quiet = false,
 }: {
   children: React.ReactNode;
   className?: string;
+  quiet?: boolean;
 }) => (
   <div
     className={cn(
-      'relative overflow-hidden rounded-2xl border border-elec-yellow/35 p-5 sm:p-6',
+      'relative overflow-hidden rounded-2xl border p-5 sm:p-6',
+      quiet ? 'border-white/[0.10]' : 'border-elec-yellow/35',
       CARD_SURFACE,
       className
     )}
   >
-    <span
-      aria-hidden
-      className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
-    />
+    {!quiet && (
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
+      />
+    )}
     {children}
   </div>
 );

@@ -82,15 +82,10 @@ function ActionCard({
         // the three verbs on one line together. Stacked on a phone the cards
         // have no one to line up with, and it just adds dead space under the
         // shorter ones.
-        'touch-manipulation p-4 sm:min-h-[148px] lg:hover:-translate-y-0.5'
+        'touch-manipulation p-4 sm:min-h-[148px] lg:hover:-translate-y-0.5 active:scale-[0.98]'
       )}
     >
-      <span
-        className={cn(
-          'text-[10px] font-semibold uppercase tracking-[0.18em]',
-          primary ? 'text-black/70' : 'text-white'
-        )}
-      >
+      <span className={cn('text-[13px] font-semibold', primary ? 'text-black/70' : 'text-white')}>
         {KIND_LABEL[action.kind] ?? 'Next up'}
       </span>
 
@@ -105,10 +100,7 @@ function ActionCard({
 
       {/* The reason. The line doing the work, so it gets the room. */}
       <span
-        className={cn(
-          'mt-1 text-[12px] leading-relaxed',
-          primary ? 'text-black/70' : 'text-white'
-        )}
+        className={cn('mt-1 text-[12px] leading-relaxed', primary ? 'text-black/70' : 'text-white')}
       >
         {action.reason}
       </span>
@@ -135,9 +127,14 @@ export interface NextUpCardProps {
   /** Current study streak, shown beside the heading when it is worth keeping. */
   streak?: number;
   className?: string;
+  /**
+   * College Hub kit heading (Study Centre front, ELE-2024): white 17px title,
+   * no streak pill — the page's stats row already carries the streak.
+   */
+  plainHeading?: boolean;
 }
 
-export function NextUpCard({ streak, className }: NextUpCardProps) {
+export function NextUpCard({ streak, className, plainHeading = false }: NextUpCardProps) {
   const navigate = useNavigate();
   const { actions, isLoading } = useNextBestActions(3);
 
@@ -154,31 +151,48 @@ export function NextUpCard({ streak, className }: NextUpCardProps) {
       animate="visible"
       className={cn('theme-v2 space-y-3', className)}
     >
-      <motion.div variants={itemVariants} className="flex items-center justify-between gap-3">
-        <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+      {plainHeading ? (
+        <motion.h2
+          variants={itemVariants}
+          className="text-[17px] font-semibold tracking-tight text-white"
+        >
           What to do next
-        </h2>
-        {typeof streak === 'number' && streak >= 2 && (
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-elec-yellow/25 bg-elec-yellow/[0.08] py-1 pl-2 pr-2.5 text-[11.5px] font-semibold tabular-nums text-white">
-            <Flame aria-hidden className="h-3.5 w-3.5 text-elec-yellow" />
-            {streak} day{streak === 1 ? '' : 's'}
-          </span>
-        )}
-      </motion.div>
+        </motion.h2>
+      ) : (
+        <motion.div variants={itemVariants} className="flex items-center justify-between gap-3">
+          <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+            What to do next
+          </h2>
+          {typeof streak === 'number' && streak >= 2 && (
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-elec-yellow/25 bg-elec-yellow/[0.08] py-1 pl-2 pr-2.5 text-[12px] font-semibold tabular-nums text-white">
+              <Flame aria-hidden className="h-3.5 w-3.5 text-elec-yellow" />
+              {streak} day{streak === 1 ? '' : 's'}
+            </span>
+          )}
+        </motion.div>
+      )}
 
       {/* The hub's own auto-fit grid, so this row and "Start something" below
           it break at exactly the same widths. */}
       <motion.div
         variants={itemVariants}
-        className="grid grid-cols-1 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] sm:gap-3"
+        className={
+          plainHeading
+            ? // Study Centre front (ELE-2024): a swipe row on a phone (next card
+              // peeking so it reads as more), the lead card full width over two
+              // on desktop so a third card is never left on its own.
+              cn(
+                '-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+                'sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0',
+                '[&>*]:w-[84%] [&>*]:shrink-0 [&>*]:snap-start sm:[&>*]:w-auto',
+                actions.length >= 3 && 'sm:[&>*:first-child]:col-span-2',
+                actions.length === 1 && '[&>*]:w-full sm:[&>*]:col-span-2'
+              )
+            : 'grid grid-cols-1 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] sm:gap-3'
+        }
       >
         {actions.slice(0, 3).map((a, i) => (
-          <ActionCard
-            key={a.kind}
-            action={a}
-            primary={i === 0}
-            onOpen={() => navigate(a.route)}
-          />
+          <ActionCard key={a.kind} action={a} primary={i === 0} onOpen={() => navigate(a.route)} />
         ))}
       </motion.div>
     </motion.section>

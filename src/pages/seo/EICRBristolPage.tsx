@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-cost-bristol',
     title: 'EICR Cost in Bristol',
-    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Bristol.',
+    description:
+      'Local EICR price bands by property size, hourly rates, and remedial costs for Bristol.',
     icon: Home,
     category: 'Guide',
   },
@@ -180,29 +181,32 @@ const sections = [
           present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <h3 className="font-bold text-white mb-2">A4:2026 Changes Relevant to Bristol EICRs</h3>
+          <h3 className="font-bold text-white mb-2">
+            BS 7671 Requirements Relevant to Bristol EICRs
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-2">
-            BS 7671:2018+A4:2026 introduced two requirements that directly affect how domestic EICRs
-            are assessed in Bristol:
+            Two BS 7671 requirements, neither of them new in A4:2026, directly affect how domestic
+            EICRs are assessed in Bristol:
           </p>
           <ul className="space-y-2 text-white text-sm">
             <li>
-              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> A4:2026 makes
-              AFDDs a <em>requirement</em> for single-phase AC final circuits supplying
-              socket-outlets rated up to 32 A in Houses in Multiple Occupation, purpose-built
-              student accommodation, care homes, and higher-risk residential buildings. For all
-              other premises the regulation <em>recommends</em> AFDDs on the same circuits. Given
-              Bristol's large HMO and student-let stock, this is a material change — inspectors
-              record AFDD presence on the EICR, and the EICR confirms AFDDs are operational
-              (Regs 421.1.7, 532.6 and 651.2(e)).
+              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> Since A2:2022,
+              Regulation 421.1.7 has made AFDDs a <em>requirement</em> for single-phase AC final
+              circuits supplying socket-outlets rated up to 32 A in Houses in Multiple Occupation,
+              purpose-built student accommodation, care homes, and higher-risk residential
+              buildings. For all other premises the regulation <em>recommends</em> AFDDs on the same
+              circuits. Given Bristol's large HMO and student-let stock, this matters — inspectors
+              record AFDD presence on the EICR, and the EICR confirms AFDDs are operational (Regs
+              421.1.7, 532.6 and 651.2(e)).
             </li>
             <li>
               <strong>Reg 411.3.4 — RCD protection on domestic lighting circuits:</strong> Within
               domestic premises, additional protection by an RCD with a rated residual operating
               current not exceeding 30 mA <em>shall</em> be provided for AC final circuits supplying
               luminaires. This is a mandatory requirement. Domestic lighting circuits without RCD
-              protection (&le;30 mA) are now non-compliant and should attract a C2 observation on an
-              EICR of an existing installation.
+              protection (&le;30 mA) do not meet this requirement, which has been in BS 7671 since
+              the 2018 edition, and should be coded on an EICR of an existing installation according
+              to the risk found.
             </li>
           </ul>
         </div>
@@ -309,8 +313,7 @@ const sections = [
           These are indicative market prices for the inspection and report only — not a quote.
           Remedial work identified during the EICR is priced separately. Some electricians offer a
           combined EICR and remedial package at a reduced total cost. For a national comparison, see
-          our{' '}
-          <SEOInternalLink href="/guides/eicr-cost-uk">EICR cost UK guide</SEOInternalLink>.
+          our <SEOInternalLink href="/guides/eicr-cost-uk">EICR cost UK guide</SEOInternalLink>.
         </p>
       </>
     ),
@@ -562,15 +565,15 @@ const sections = [
         </p>
         <p>
           Under BS 7671:2018+A4:2026, older Bristol properties face two additional compliance
-          considerations. First, domestic lighting circuits that have never had RCD protection are
-          now non-compliant under Reg 411.3.4, which requires that all AC final circuits supplying
-          luminaires in domestic premises are protected by an RCD with a rated residual operating
-          current not exceeding 30 mA. Victorian terraces in Bedminster and Southville that were
-          rewired before RCD protection on lighting became standard will typically attract a C2
-          observation on this point. Second, properties with aluminium wiring, ageing
-          rubber-insulated cables, or complex multi-conversion wiring are prime candidates for AFDD
-          under Reg 421.1.7, which recommends arc fault detection devices on AC final circuits to
-          mitigate fire risk from arc fault currents.
+          considerations. First, domestic lighting circuits that have never had RCD protection do
+          not meet Reg 411.3.4 (in BS 7671 since the 2018 edition), which requires that all AC final
+          circuits supplying luminaires in domestic premises are protected by an RCD with a rated
+          residual operating current not exceeding 30 mA. Victorian terraces in Bedminster and
+          Southville that were rewired before RCD protection on lighting became standard will
+          typically attract a C2 observation on this point. Second, properties with aluminium
+          wiring, ageing rubber-insulated cables, or complex multi-conversion wiring are prime
+          candidates for AFDD under Reg 421.1.7, which recommends arc fault detection devices on AC
+          final circuits to mitigate fire risk from arc fault currents.
         </p>
       </>
     ),
@@ -600,8 +603,8 @@ const sections = [
           </p>
         </div>
         <p>
-          A programme of measurements then follows, applying the relevant tests from BS 7671
-          Chapter 64. The dead tests are completed in sequence before the supply is restored:
+          A programme of measurements then follows, applying the relevant tests from BS 7671 Chapter
+          64. The dead tests are completed in sequence before the supply is restored:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-[0.5fr_1.3fr_1fr] gap-px bg-white/10 text-xs sm:text-sm">
@@ -680,8 +683,8 @@ const sections = [
         <p>
           The required frequency of EICRs depends on the property type and use. Under BS 7671
           Chapter 65, Reg 651.1 requires periodic inspection and testing of every electrical
-          installation where required, and Reg 652.1 sets the frequency having regard to the type
-          of installation, its use and operation, and the maintenance and external influences it is
+          installation where required, and Reg 652.1 sets the frequency having regard to the type of
+          installation, its use and operation, and the maintenance and external influences it is
           subject to. Typical intervals by property type are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

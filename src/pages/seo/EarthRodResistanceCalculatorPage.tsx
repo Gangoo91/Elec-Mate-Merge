@@ -21,7 +21,7 @@ export default function EarthRodResistanceCalculatorPage() {
       title="Earth Rod Resistance Calculator: Ra ≤ 200Ω (TT)"
       description="Earth rod resistance calculation: R = (ρ/2πL) × ln(4L/d), UK soil resistivity values, parallel-rod correction and the BS 7671 Ra × IΔn ≤ 50V TT check."
       datePublished="2026-01-22"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {
@@ -61,7 +61,7 @@ export default function EarthRodResistanceCalculatorPage() {
         'For TT systems, Ra × IΔn ≤ 50 V must be satisfied per BS 7671 Reg 411.5.3, where Ra is the sum of the earth electrode resistance and the PE conductor connecting it to the exposed-conductive-parts, and IΔn is the RCD rated residual operating current.',
         'The maximum Zs (total earth fault loop impedance) values from BS 7671 Table 41.5 are 1,667 Ω for a 30 mA RCD and 500 Ω for a 100 mA RCD — these are loop impedance limits, not electrode resistance targets. In practice, Table 41.5 Note 2 states that electrode resistance values above 200 Ω may be unstable due to soil condition changes; aim for Ra ≤ 200 Ω for any RCD rated 100 mA or below.',
         'Parallel earth rods reduce the combined resistance — two rods spaced at least their length apart give approximately half the resistance of a single rod.',
-        'A4:2026 update (Reg 411.3.4): in domestic premises, additional protection by a ≤30 mA RCD is now mandatory for all AC final circuits supplying luminaires — relevant for any TT domestic installation design.',
+        'Reg 411.3.4 (since BS 7671:2018): in domestic premises, additional protection by a ≤30 mA RCD is mandatory for all AC final circuits supplying luminaires, which matters for any TT domestic installation design.',
         'Elec-Mate calculates earth rod resistance instantly for single and parallel rod configurations, with UK soil resistivity values built in.',
       ]}
       sections={[

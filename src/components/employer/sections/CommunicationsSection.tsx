@@ -14,7 +14,17 @@
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { BellRing, Eye, Hash, MessageSquare, Pin, PinOff, Plus, Search, Trash2 } from 'lucide-react';
+import {
+  BellRing,
+  Eye,
+  Hash,
+  MessageSquare,
+  Pin,
+  PinOff,
+  Plus,
+  Search,
+  Trash2,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import {
@@ -28,6 +38,14 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { PageFrame, PageHero, LoadingBlocks } from '@/components/employer/editorial';
+import { panel } from '@/components/employer/overview/HomeSections';
+import {
+  HeroActions,
+  PlainEmpty,
+  heroBtn,
+  frameClass,
+  rowBtnSecondary,
+} from '@/components/employer/pageParts/PageParts';
 import { HowItWorks, PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { usePinCommunication, useDeleteCommunication } from '@/hooks/useCommunications';
 import { teamCommsKeys, useActingFirmId, useChase, useOfficeInbox } from '@/hooks/useTeamComms';
@@ -84,7 +102,10 @@ const COMMS_HELP: PageHelpContent = {
       who: 'Owner, admins and office managers.',
       tour: [
         { target: 'comms.new', caption: 'Tap New message.', opens: true },
-        { target: 'comms.audience', caption: 'Pick who it is for: everyone, a job’s crew, or chosen people.' },
+        {
+          target: 'comms.audience',
+          caption: 'Pick who it is for: everyone, a job’s crew, or chosen people.',
+        },
         { target: 'comms.send', caption: 'Fill in the title and message, then tap Send.' },
       ],
     },
@@ -108,7 +129,12 @@ const COMMS_HELP: PageHelpContent = {
       ],
       who: 'Owner, admins and office managers.',
       tour: [
-        { target: 'comms.filters', text: 'Awaiting sign-off', caption: 'Awaiting sign-off lists messages still waiting on people.', opens: true },
+        {
+          target: 'comms.filters',
+          text: 'Awaiting sign-off',
+          caption: 'Awaiting sign-off lists messages still waiting on people.',
+          opens: true,
+        },
         { target: 'comms.list', caption: 'Tap the message.', opens: true },
         { target: 'comms.chase', caption: 'Tap Chase to nudge everyone who has not done it yet.' },
       ],
@@ -119,7 +145,13 @@ const COMMS_HELP: PageHelpContent = {
         'Tap New replies to see threads with something new.',
         'Open the thread. Reply to everyone, or tap someone’s reply to answer just them.',
       ],
-      tour: [{ target: 'comms.filters', text: 'New replies', caption: 'New replies shows threads with something new.' }],
+      tour: [
+        {
+          target: 'comms.filters',
+          text: 'New replies',
+          caption: 'New replies shows threads with something new.',
+        },
+      ],
     },
   ],
 };
@@ -253,7 +285,7 @@ export const CommunicationsSection = () => {
 
   const list = (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-4">
+      <div className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-4">
         <Search className="h-4 w-4 shrink-0 text-white" />
         <input
           value={search}
@@ -262,10 +294,7 @@ export const CommunicationsSection = () => {
           className="h-11 w-full bg-transparent text-[16px] text-white placeholder:text-white/40 focus:outline-none sm:text-[14px]"
         />
       </div>
-      <div
-        data-help="comms.filters"
-        className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] sm:mx-0 sm:px-0"
-      >
+      <div data-help="comms.filters" className="flex flex-wrap gap-2">
         {filters.map(([k, label, n]) => (
           <button
             key={k}
@@ -273,10 +302,10 @@ export const CommunicationsSection = () => {
             onClick={() => setFilter(k)}
             aria-pressed={filter === k}
             className={cn(
-              'h-11 shrink-0 whitespace-nowrap rounded-full border px-4 text-[13px] touch-manipulation',
+              'h-11 whitespace-nowrap rounded-full border px-3.5 text-[13px] touch-manipulation',
               filter === k
                 ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                : 'border-white/[0.12] bg-white/[0.05] font-medium text-white'
+                : 'border-white/[0.14] bg-white/[0.04] font-medium text-white'
             )}
           >
             {label} <span className="tabular-nums">{n}</span>
@@ -285,24 +314,27 @@ export const CommunicationsSection = () => {
       </div>
 
       {shown.length === 0 ? (
-        <div className="rounded-2xl border border-white/[0.1] bg-white/[0.03] px-5 py-10 text-center">
-          <p className="text-[15px] font-semibold text-white">
-            {threads.length === 0 ? 'No messages yet' : 'Nothing here'}
-          </p>
-          <p className="mx-auto mt-1.5 max-w-sm text-[13px] text-white">
-            {threads.length === 0
-              ? 'Send your first message to the team. They can reply, and you see who has read it.'
-              : 'Try another filter.'}
-          </p>
-          {threads.length === 0 && (
-            <button
-              type="button"
-              onClick={() => setComposeOpen(true)}
-              className="mt-4 inline-flex h-11 items-center gap-2 rounded-full bg-elec-yellow px-5 text-[14px] font-semibold text-black touch-manipulation"
-            >
-              <Plus className="h-4 w-4" /> New message
-            </button>
-          )}
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            stacked
+            text={
+              threads.length === 0
+                ? 'Messages you send show here, with replies and who has read them.'
+                : 'Nothing here. Try another filter.'
+            }
+            action={
+              threads.length === 0 ? (
+                <button
+                  type="button"
+                  onClick={() => setComposeOpen(true)}
+                  className={rowBtnSecondary}
+                >
+                  <Plus className="h-4 w-4" /> New message
+                </button>
+              ) : undefined
+            }
+          />
         </div>
       ) : (
         <div
@@ -326,7 +358,9 @@ export const CommunicationsSection = () => {
                 onClick={() => open(t.id)}
                 chips={
                   <>
-                    <RowChip tone={complete ? 'green' : t.requires_acknowledgement ? 'amber' : 'neutral'}>
+                    <RowChip
+                      tone={complete ? 'green' : t.requires_acknowledgement ? 'amber' : 'neutral'}
+                    >
                       {p.n} of {p.of} {p.word}
                     </RowChip>
                     <RowChip>{audienceLabel(t)}</RowChip>
@@ -429,46 +463,56 @@ export const CommunicationsSection = () => {
   ) : null;
 
   const heroActions = (
-    <>
+    <HeroActions stretchFirst>
       <button
         type="button"
         data-help="comms.new"
         onClick={() => setComposeOpen(true)}
-        className="inline-flex h-11 items-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[14px] font-semibold text-black touch-manipulation sm:px-5"
+        className={cn(
+          heroBtn,
+          'inline-flex items-center justify-center gap-1.5 bg-elec-yellow text-black touch-manipulation'
+        )}
       >
         <Plus className="h-4 w-4" /> New message
       </button>
       <button
         type="button"
         onClick={() => setChatOpen(true)}
-        className="inline-flex h-11 items-center gap-1.5 rounded-full border border-white/[0.14] bg-white/[0.06] px-3.5 text-[14px] font-medium text-white touch-manipulation sm:px-4"
+        aria-label="Team chat"
+        className={cn(
+          heroBtn,
+          'inline-flex w-11 shrink-0 items-center justify-center gap-1.5 border border-white/[0.18] bg-white/[0.06] px-0 text-white touch-manipulation sm:w-auto sm:px-5'
+        )}
       >
-        <Hash className="h-4 w-4" /> Team chat
+        <Hash className="h-4 w-4" />
+        <span className="hidden sm:inline">Team chat</span>
       </button>
       <PageHelpButton help={COMMS_HELP} askContext={{ page: 'comms', tab: filter }} />
-    </>
+    </HeroActions>
   );
 
+  // Where the inbox stands, in one line.
+  const heroLine = (() => {
+    const bits = [
+      stats.unreadReplies > 0 &&
+        `${stats.unreadReplies} new ${stats.unreadReplies === 1 ? 'reply' : 'replies'}`,
+      stats.awaiting > 0 &&
+        `${stats.awaiting} ${stats.awaiting === 1 ? 'message' : 'messages'} awaiting sign-off`,
+    ].filter(Boolean) as string[];
+    if (bits.length > 0) {
+      const s = bits.join(', ');
+      return `${s.charAt(0).toUpperCase()}${s.slice(1)}.`;
+    }
+    if (isLoading || !firmId)
+      return 'Messages to your team with replies, read receipts and sign-off.';
+    return stats.total === 0
+      ? 'Nothing sent yet. Messages go out with replies, read receipts and sign-off.'
+      : `All caught up. ${stats.total} ${stats.total === 1 ? 'message' : 'messages'} sent.`;
+  })();
+
   return (
-    <PageFrame className="space-y-6 sm:space-y-8 lg:space-y-8">
-      <PageHero
-        eyebrow="People"
-        title="Communications"
-        description={
-          stats.unreadReplies > 0 || stats.awaiting > 0
-            ? [
-                stats.unreadReplies > 0 &&
-                  `${stats.unreadReplies} new ${stats.unreadReplies === 1 ? 'reply' : 'replies'}`,
-                stats.awaiting > 0 &&
-                  `${stats.awaiting} ${stats.awaiting === 1 ? 'message' : 'messages'} awaiting sign-off`,
-              ]
-                .filter(Boolean)
-                .join(' · ')
-            : 'Messages to your team with replies, read receipts and sign-off.'
-        }
-        tone="purple"
-        actions={heroActions}
-      />
+    <PageFrame className={frameClass}>
+      <PageHero title="Communications" description={heroLine} actions={heroActions} />
 
       <HowItWorks help={COMMS_HELP} askContext={{ page: 'comms', tab: filter }} />
 
@@ -476,19 +520,26 @@ export const CommunicationsSection = () => {
         <LoadingBlocks />
       ) : (
         <>
-
-          <div className="lg:grid lg:grid-cols-[minmax(340px,420px)_1fr] lg:gap-6">
+          <div className="lg:grid lg:grid-cols-[minmax(360px,440px)_1fr] lg:gap-8">
             <div>{list}</div>
             {thread ? (
               <div className="fixed inset-0 z-[80] h-[100dvh] lg:sticky lg:inset-auto lg:top-20 lg:z-auto lg:h-[calc(100dvh-10rem)] lg:self-start lg:overflow-hidden lg:rounded-2xl lg:border lg:border-white/[0.1]">
                 {thread}
               </div>
             ) : (
-              <div className="hidden lg:sticky lg:top-20 lg:flex lg:h-[calc(100dvh-10rem)] lg:self-start lg:flex-col lg:items-center lg:justify-center lg:rounded-2xl lg:border lg:border-dashed lg:border-white/[0.12]">
-                <MessageSquare className="h-8 w-8 text-white" />
-                <p className="mt-3 text-[15px] font-semibold text-white">Pick a message</p>
-                <p className="mt-1 text-[13px] text-white">
-                  See replies, who has read it, and chase the rest.
+              <div
+                className={cn(
+                  panel,
+                  'hidden lg:sticky lg:top-20 lg:flex lg:self-start lg:flex-col lg:items-center lg:justify-center lg:px-8 lg:text-center',
+                  threads.length === 0 ? 'lg:h-[320px]' : 'lg:h-[calc(100dvh-10rem)]'
+                )}
+              >
+                <MessageSquare className="h-7 w-7 text-white" aria-hidden />
+                <p className="mt-3 text-[16px] font-semibold text-white">
+                  {threads.length === 0 ? 'Your first message opens here' : 'Pick a message'}
+                </p>
+                <p className="mt-1 max-w-sm text-[14px] text-white">
+                  The thread shows replies, who has read it, and lets you chase the rest.
                 </p>
               </div>
             )}

@@ -341,8 +341,8 @@ export const LoadCalculator = () => {
             <div
               className="space-y-4 p-4 rounded-xl border"
               style={{
-                borderColor: `${config.gradientFrom}30`,
-                background: `${config.gradientFrom}08`,
+                borderColor: 'rgba(255, 255, 255, 0.12)',
+                background: 'rgba(255, 255, 255, 0.04)',
               }}
             >
               <h4 className="font-medium text-white flex items-center gap-2 text-sm">
@@ -434,7 +434,7 @@ export const LoadCalculator = () => {
                           <span
                             className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border capitalize"
                             style={{
-                              borderColor: `${config.gradientFrom}40`,
+                              borderColor: 'rgba(255, 255, 255, 0.12)',
                               color: config.gradientFrom,
                             }}
                           >
@@ -476,7 +476,7 @@ export const LoadCalculator = () => {
 
                 <div className="space-y-4 animate-fade-in">
                   {/* Status Chip */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-amber-400/20">
                     <span className="text-xs font-semibold text-amber-300">Maximum Demand</span>
                     <span className="text-sm font-bold text-elec-yellow">
                       {results.totalMaximumDemand.toFixed(2)} kW
@@ -555,7 +555,7 @@ export const LoadCalculator = () => {
                     </div>
                   </ResultsGrid>
 
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-amber-500/20">
                     <p className="text-xs text-white">
                       <strong>Note:</strong> Based on Method C installation. Consider derating
                       factors for final design.

@@ -25,12 +25,10 @@ const CareerPathCard = ({
     .replace(/[^a-z0-9-]/g, '');
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-4 animate-fade-in">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-4 animate-fade-in max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            {requirements}
-          </span>
+          <span className="text-[13px] font-semibold text-white">{requirements}</span>
           <h3 className="text-[18px] font-semibold text-white leading-tight">{title}</h3>
         </div>
         <BookmarkButton careerPathId={careerPathId} />
@@ -40,9 +38,7 @@ const CareerPathCard = ({
 
       <div className="space-y-3 mt-auto">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Key skills
-          </span>
+          <span className="text-[13px] font-semibold text-white">Key skills</span>
           <ul className="grid grid-cols-2 gap-x-2 gap-y-1">
             {skills.map((skill, idx) => (
               <li key={idx} className="flex items-center gap-2 text-[13px] text-white">
@@ -55,15 +51,11 @@ const CareerPathCard = ({
 
         <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/[0.06]">
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Salary range
-            </span>
+            <span className="text-[13px] font-semibold text-white">Salary range</span>
             <p className="text-[13px] text-white">{salaryRange}</p>
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Time to achieve
-            </span>
+            <span className="text-[13px] font-semibold text-white">Time to achieve</span>
             <p className="text-[13px] text-white">{timeToAchieve}</p>
           </div>
         </div>

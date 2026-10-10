@@ -14,6 +14,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useState } from 'react';
+import { winRate as winRateOf } from '@/utils/winRate';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ChevronRight, Trophy, MoreHorizontal } from 'lucide-react';
@@ -109,7 +110,13 @@ const CostEngineerQuotes = () => {
       return rows.filter((r) =>
         ['lost_too_high', 'lost_too_low', 'lost_other'].includes(r.quote_outcome ?? '')
       );
-    return rows.filter((r) => !r.quote_outcome || r.quote_outcome === 'draft');
+    // Open = no decision yet, including ones sent to a quote and waiting.
+    return rows.filter(
+      (r) =>
+        !['won', 'lost_too_high', 'lost_too_low', 'lost_other', 'abandoned'].includes(
+          r.quote_outcome ?? ''
+        )
+    );
   }, [rows, filter]);
 
   const stats = useMemo(() => {
@@ -120,15 +127,16 @@ const CostEngineerQuotes = () => {
     const wonValue = rows
       .filter((r) => r.quote_outcome === 'won')
       .reduce(
-        (sum, r) =>
-          sum + Number(r.output_data?.structuredData?.recommendedQuote?.amount ?? 0),
+        (sum, r) => sum + Number(r.output_data?.structuredData?.recommendedQuote?.amount ?? 0),
         0
       );
     return {
       total: rows.length,
       won: wonCount,
       decided,
-      winRate: decided > 0 ? Math.round((wonCount / decided) * 100) : null,
+      // The one win-rate definition (utils/winRate). Estimates have no
+      // "expired" state, so decided is won + lost here.
+      winRate: winRateOf({ won: wonCount, lost: decided - wonCount }),
       wonValue,
     };
   }, [rows]);
@@ -140,12 +148,9 @@ const CostEngineerQuotes = () => {
     outcome: 'won' | 'lost_too_high' | 'lost_too_low' | 'lost_other' | 'abandoned'
   ) => {
     setOpenMenuId(null);
+    const previous = rows.find((r) => r.id === rowId)?.quote_outcome ?? null;
     // Optimistic update so the chip flips immediately.
-    setRows((prev) =>
-      prev.map((r) =>
-        r.id === rowId ? { ...r, quote_outcome: outcome } : r
-      )
-    );
+    setRows((prev) => prev.map((r) => (r.id === rowId ? { ...r, quote_outcome: outcome } : r)));
     const { error } = await supabase
       .from('cost_engineer_jobs')
       .update({ quote_outcome: outcome, quote_outcome_at: new Date().toISOString() })
@@ -153,9 +158,7 @@ const CostEngineerQuotes = () => {
     if (error) {
       toast.error('Could not update outcome', { description: error.message });
       // Revert on failure.
-      setRows((prev) =>
-        prev.map((r) => (r.id === rowId ? { ...r, quote_outcome: r.quote_outcome } : r))
-      );
+      setRows((prev) => prev.map((r) => (r.id === rowId ? { ...r, quote_outcome: previous } : r)));
       return;
     }
     toast.success(`Marked as ${OUTCOME_LABEL[outcome]?.label ?? outcome}`);
@@ -192,7 +195,7 @@ const CostEngineerQuotes = () => {
               <span>Cost Engineer</span>
             </button>
             <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/75 hidden sm:inline">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
                 Saved
               </span>
               <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
@@ -217,9 +220,9 @@ const CostEngineerQuotes = () => {
             <span className="text-elec-yellow">{stats.total}</span>{' '}
             <span className="text-white">quotes.</span>
           </h1>
-          <p className="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/85 max-w-2xl">
-            Every estimate you've run. Tap one to reopen, refine or send to Quote Hub. Mark won
-            and lost so the next quote learns from this one.
+          <p className="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white max-w-2xl">
+            Every estimate you've run. Tap one to reopen, refine or send to Quote Hub. Mark each one
+            won or lost to see your win rate and what you're winning.
           </p>
         </motion.section>
 
@@ -253,10 +256,10 @@ const CostEngineerQuotes = () => {
               type="button"
               onClick={() => setFilter(f.k)}
               className={cn(
-                'h-9 px-3 rounded-xl text-[12px] font-medium border transition-colors touch-manipulation',
+                'h-11 px-3.5 rounded-xl text-[13px] font-medium border transition-colors touch-manipulation',
                 filter === f.k
-                  ? 'bg-elec-yellow/10 border-elec-yellow/50 text-elec-yellow'
-                  : 'bg-[hsl(0_0%_10%)] border-white/[0.10] text-white/75 hover:border-white/20'
+                  ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                  : 'bg-[hsl(0_0%_10%)] border-white/[0.10] text-white hover:border-white/20'
               )}
             >
               {f.label}
@@ -267,14 +270,16 @@ const CostEngineerQuotes = () => {
         {/* List */}
         <motion.section variants={itemVariants} className="space-y-2">
           {loading ? (
-            <div className="text-[13px] text-white/55 py-8 text-center">Loading…</div>
+            <div className="text-[13px] text-white py-8 text-center">Loading…</div>
           ) : filtered.length === 0 ? (
             <div className="-mx-4 sm:mx-0 bg-[hsl(0_0%_10%)] border-y sm:border sm:border-white/[0.10] sm:rounded-2xl px-6 py-10 text-center">
               <Eyebrow>NOTHING HERE</Eyebrow>
               <h3 className="mt-2 text-[15px] font-semibold text-white">
-                {filter === 'all' ? "You haven't quoted anything yet." : 'No quotes in this filter.'}
+                {filter === 'all'
+                  ? "You haven't quoted anything yet."
+                  : 'No quotes in this filter.'}
               </h3>
-              <p className="mt-1 text-[13px] text-white/60 max-w-sm mx-auto leading-snug">
+              <p className="mt-1 text-[13px] text-white max-w-sm mx-auto leading-snug">
                 Open the Cost Engineer to brief a job and your estimates will land here.
               </p>
             </div>
@@ -288,9 +293,7 @@ const CostEngineerQuotes = () => {
                 row.output_data?.originalQuery?.slice(0, 60) ||
                 'Untitled estimate';
               const clientInfo = row.project_context?.clientInfo ?? '';
-              const outcome = row.quote_outcome
-                ? OUTCOME_LABEL[row.quote_outcome] ?? null
-                : null;
+              const outcome = row.quote_outcome ? (OUTCOME_LABEL[row.quote_outcome] ?? null) : null;
               const isComplete = row.status === 'complete';
 
               return (
@@ -317,8 +320,9 @@ const CostEngineerQuotes = () => {
                       <div className="text-[14px] sm:text-[15px] font-semibold text-white truncate">
                         {projectName}
                       </div>
-                      <div className="mt-1 text-[11.5px] text-white/55 truncate">
-                        {clientInfo || 'No client'} · {fmtRelative(row.completed_at ?? row.created_at)}
+                      <div className="mt-1 text-[11.5px] text-white truncate">
+                        {clientInfo || 'No client'} ·{' '}
+                        {fmtRelative(row.completed_at ?? row.created_at)}
                         {row.refine_of && (
                           <span className="ml-1 uppercase tracking-[0.14em] text-elec-yellow/70">
                             · refined
@@ -336,7 +340,10 @@ const CostEngineerQuotes = () => {
                         ) : isComplete ? (
                           <OutcomePill label="Open" tone="neutral" />
                         ) : (
-                          <OutcomePill label={STATUS_LABEL[row.status] ?? row.status} tone="neutral" />
+                          <OutcomePill
+                            label={STATUS_LABEL[row.status] ?? row.status}
+                            tone="neutral"
+                          />
                         )}
                         {isComplete && (
                           <button
@@ -348,10 +355,10 @@ const CostEngineerQuotes = () => {
                             className="h-7 w-7 rounded-md hover:bg-white/[0.05] flex items-center justify-center touch-manipulation"
                             aria-label="Mark outcome"
                           >
-                            <MoreHorizontal className="h-4 w-4 text-white/55" />
+                            <MoreHorizontal className="h-4 w-4 text-white" />
                           </button>
                         )}
-                        {isComplete && <ChevronRight className="h-4 w-4 text-white/40" />}
+                        {isComplete && <ChevronRight className="h-4 w-4 text-white" />}
                       </div>
                     </div>
                   </div>
@@ -401,7 +408,7 @@ const CostEngineerQuotes = () => {
                 <div className="text-[14px] font-semibold text-white">
                   Winning {stats.winRate}% of decided quotes
                 </div>
-                <div className="mt-1 text-[12.5px] text-white/65 leading-snug">
+                <div className="mt-1 text-[12.5px] text-white leading-snug">
                   Future estimates will surface this on the tier cards so you know which margin
                   policy is actually closing.
                 </div>
@@ -426,7 +433,7 @@ const StatCell = ({
   tone?: 'good' | 'yellow' | 'neutral';
 }) => (
   <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
-    <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+    <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
       {label}
     </div>
     <div
@@ -455,13 +462,13 @@ const OutcomeButton = ({
     type="button"
     onClick={onClick}
     className={cn(
-      'h-9 px-3 rounded-xl text-[12px] font-medium border transition-colors touch-manipulation',
+      'h-11 px-3.5 rounded-xl text-[13px] font-medium border transition-colors touch-manipulation',
       tone === 'good' &&
         'bg-emerald-500/[0.06] border-emerald-500/30 text-emerald-400 hover:border-emerald-500/60',
       tone === 'warn' &&
         'bg-amber-400/[0.06] border-amber-400/30 text-amber-400 hover:border-amber-400/60',
       tone === 'neutral' &&
-        'bg-[hsl(0_0%_10%)] border-white/[0.10] text-white/75 hover:border-white/30'
+        'bg-[hsl(0_0%_10%)] border-white/[0.10] text-white hover:border-white/30'
     )}
   >
     {children}
@@ -474,7 +481,7 @@ const OutcomePill = ({ label, tone }: { label: string; tone: 'good' | 'warn' | '
       'text-[10px] uppercase tracking-[0.14em] font-semibold border rounded-full px-1.5 py-0.5 whitespace-nowrap',
       tone === 'good' && 'text-emerald-400 border-emerald-400/30 bg-emerald-400/[0.06]',
       tone === 'warn' && 'text-amber-400 border-amber-400/30 bg-amber-400/[0.06]',
-      tone === 'neutral' && 'text-white/65 border-white/15 bg-white/[0.04]'
+      tone === 'neutral' && 'text-white border-white/15 bg-white/[0.04]'
     )}
   >
     {label}

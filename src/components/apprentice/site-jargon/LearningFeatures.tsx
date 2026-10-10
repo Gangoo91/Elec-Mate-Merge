@@ -52,7 +52,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             {currentTermIndex + 1} of {shuffledTerms.length}
           </span>
           <Button
@@ -73,7 +73,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
               {currentTerm.term}
             </h3>
             {currentTerm.difficulty && (
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[13px] font-semibold capitalize text-white">
                 {currentTerm.difficulty}
               </span>
             )}
@@ -87,10 +87,8 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
 
               {currentTerm.commonUsage && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Common usage
-                  </span>
-                  <p className="text-[13px] text-white italic leading-relaxed">
+                  <span className="text-[13px] font-semibold text-white">Common usage</span>
+                  <p className="text-[14px] text-white italic leading-relaxed">
                     "{currentTerm.commonUsage}"
                   </p>
                 </div>
@@ -98,10 +96,8 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
 
               {currentTerm.context && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Context
-                  </span>
-                  <p className="text-[13px] text-white leading-relaxed">{currentTerm.context}</p>
+                  <span className="text-[13px] font-semibold text-white">Context</span>
+                  <p className="text-[14px] text-white leading-relaxed">{currentTerm.context}</p>
                 </div>
               )}
 
@@ -157,11 +153,9 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
   }
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Study mode
-        </span>
+        <span className="text-[13px] font-semibold text-white">Study mode</span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">Flashcards</h3>
       </div>
 
@@ -187,9 +181,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
 
       {studiedCount > 0 && (
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Last session
-          </span>
+          <span className="text-[13px] font-semibold text-white">Last session</span>
           <p className="text-[14px] text-white leading-relaxed">
             You studied <strong className="text-elec-yellow">{studiedCount} terms</strong> in your
             last session. Keep it up.
@@ -198,10 +190,8 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
       )}
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Tip
-        </span>
-        <p className="text-[13px] text-white leading-relaxed">
+        <span className="text-[13px] font-semibold text-white">Tip</span>
+        <p className="text-[14px] text-white leading-relaxed">
           Use the search and category filters on the Browse tab first, then study only the filtered
           terms. This lets you focus on specific categories like safety terms or testing
           terminology.

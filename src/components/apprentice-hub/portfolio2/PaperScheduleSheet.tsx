@@ -46,7 +46,10 @@ const FIELDS: { key: Key; label: string; unit?: string; wide?: boolean }[] = [
 ];
 
 const blankRow = (): PaperCircuit =>
-  ({ ...Object.fromEntries(FIELDS.map((f) => [f.key, ''])), unclear: [] }) as unknown as PaperCircuit;
+  ({
+    ...Object.fromEntries(FIELDS.map((f) => [f.key, ''])),
+    unclear: [],
+  }) as unknown as PaperCircuit;
 
 type Step = 'photo' | 'reading' | 'confirm' | 'making';
 
@@ -167,7 +170,12 @@ export function PaperScheduleSheet({
       footer={
         step === 'confirm' || step === 'making' ? (
           <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
-            <button type="button" className={P_BTN} onClick={() => setStep('photo')} disabled={busy}>
+            <button
+              type="button"
+              className={P_BTN}
+              onClick={() => setStep('photo')}
+              disabled={busy}
+            >
               Retake
             </button>
             <button
@@ -185,7 +193,10 @@ export function PaperScheduleSheet({
     >
       <div className="space-y-5 py-2">
         {error && (
-          <p role="alert" className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-3 text-[13px] text-white">
+          <p
+            role="alert"
+            className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-3 text-[13px] text-white"
+          >
             {error}
           </p>
         )}
@@ -195,12 +206,16 @@ export function PaperScheduleSheet({
             <div className="flex items-start gap-3">
               <ScanLine className="mt-0.5 h-5 w-5 shrink-0 text-elec-yellow" aria-hidden />
               <p className="text-[14px] leading-relaxed text-white">
-                Lay the sheet flat in good light and fill the frame with the table. Up to 3 photos if it
-                runs over more than one page. Client names and addresses are not read.
+                Lay the sheet flat in good light and fill the frame with the table. Up to 3 photos
+                if it runs over more than one page. Client names and addresses are not read.
               </p>
             </div>
             <div className="grid gap-2 sm:grid-cols-2">
-              <button type="button" className={P_BTN_PRIMARY} onClick={() => cameraRef.current?.click()}>
+              <button
+                type="button"
+                className={P_BTN_PRIMARY}
+                onClick={() => cameraRef.current?.click()}
+              >
                 <Camera className="h-4 w-4" /> Take a photo
               </button>
               <button type="button" className={P_BTN} onClick={() => pickRef.current?.click()}>
@@ -235,7 +250,9 @@ export function PaperScheduleSheet({
         {step === 'reading' && (
           <div className={cn(P_CARD, 'flex items-center gap-3')}>
             <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" aria-hidden />
-            <p className="text-[14px] text-white">Reading your schedule. This takes about 10 to 30 seconds.</p>
+            <p className="text-[14px] text-white">
+              Reading your schedule. This takes about 10 to 30 seconds.
+            </p>
           </div>
         )}
 
@@ -255,7 +272,10 @@ export function PaperScheduleSheet({
 
               <ul className="space-y-3">
                 {rows.map((r, i) => (
-                  <li key={i} className="rounded-2xl border border-white/[0.12] bg-white/[0.03] p-4">
+                  <li
+                    key={i}
+                    className="rounded-2xl border border-white/[0.12] bg-white/[0.03] p-4"
+                  >
                     <div className="mb-3 flex items-center justify-between gap-2">
                       <p className="text-[14px] font-semibold text-white">
                         Circuit {r.circuitNumber || i + 1}
@@ -276,11 +296,16 @@ export function PaperScheduleSheet({
                         const id = `ps-${i}-${f.key}`;
                         return (
                           <div key={f.key} className={cn(f.wide && 'col-span-2')}>
-                            <label htmlFor={id} className="flex items-center gap-1.5 text-[11.5px] font-medium text-white">
+                            <label
+                              htmlFor={id}
+                              className="flex items-center gap-1.5 text-[12.5px] font-medium text-white"
+                            >
                               {f.label}
                               {f.unit ? <span className="font-normal">({f.unit})</span> : null}
                               {unclear && (
-                                <span className="rounded bg-amber-400 px-1 text-[10px] font-bold text-black">Check</span>
+                                <span className="rounded bg-amber-400 px-1 text-[12px] font-bold text-black">
+                                  Check
+                                </span>
                               )}
                             </label>
                             <input
@@ -301,7 +326,11 @@ export function PaperScheduleSheet({
                   </li>
                 ))}
               </ul>
-              <button type="button" className={P_BTN} onClick={() => setRows((prev) => [...prev, blankRow()])}>
+              <button
+                type="button"
+                className={P_BTN}
+                onClick={() => setRows((prev) => [...prev, blankRow()])}
+              >
                 <Plus className="h-4 w-4" /> Add a circuit
               </button>
 
@@ -329,7 +358,9 @@ export function PaperScheduleSheet({
                 />
                 <span className="text-[13.5px] leading-snug text-white">
                   I have checked every reading against my paper schedule, and these are tests I did.
-                  {unclearLeft > 0 ? ` ${unclearLeft} cell${unclearLeft === 1 ? ' is' : 's are'} still marked Check.` : ''}
+                  {unclearLeft > 0
+                    ? ` ${unclearLeft} cell${unclearLeft === 1 ? ' is' : 's are'} still marked Check.`
+                    : ''}
                 </span>
               </label>
             </div>
@@ -339,21 +370,20 @@ export function PaperScheduleSheet({
               {previews.filter(Boolean).length === 0 ? (
                 <p className="text-[13px] text-white">Attached as a PDF.</p>
               ) : (
-                previews
-                  .filter(Boolean)
-                  .map((u, i) => (
-                    <a key={u} href={u} target="_blank" rel="noreferrer" className="block">
-                      <img
-                        src={u}
-                        alt={`Paper schedule photo ${i + 1}`}
-                        className="w-full rounded-xl border border-white/[0.12] object-contain"
-                      />
-                    </a>
-                  ))
+                previews.filter(Boolean).map((u, i) => (
+                  <a key={u} href={u} target="_blank" rel="noreferrer" className="block">
+                    <img
+                      src={u}
+                      alt={`Paper schedule photo ${i + 1}`}
+                      className="w-full rounded-xl border border-white/[0.12] object-contain"
+                    />
+                  </a>
+                ))
               )}
               <p className="text-[12.5px] leading-snug text-white">
-                The photo goes with the evidence so your assessor can compare. Suggested criteria come
-                next; you tick only what the work really shows, and only your assessor can pass one.
+                The photo goes with the evidence so your assessor can compare. Suggested criteria
+                come next; you tick only what the work really shows, and only your assessor can pass
+                one.
               </p>
             </aside>
           </div>

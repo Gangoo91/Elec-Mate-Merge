@@ -77,6 +77,40 @@ export interface SharedDecision {
   decided_at: string | null;
   iqa_verdict: string | null;
   iqa_at: string | null;
+  /** ELE-1870: the assessor's qualifications when they decided. */
+  assessor_qualifications?: string[] | null;
+  /** ELE-1882: the college the decision was made at, or "Independent assessor". */
+  assessed_at?: string | null;
+}
+
+/**
+ * ELE-2016: every criterion with the same states get_portfolio_ac_state gives
+ * (an AI suggestion reads as not_started: it is never shown as fact).
+ */
+export interface SharedCriterion {
+  unit_code: string;
+  unit_title: string | null;
+  lo_number: number | null;
+  ac_code: string;
+  ac_text: string | null;
+  state:
+    | 'not_started'
+    | 'claimed'
+    | 'submitted'
+    | 'referred'
+    | 'not_yet'
+    | 'passed'
+    | 'iqa_confirmed'
+    | 'iqa_rejected';
+}
+
+/** ELE-2016: hours as the OTJ source of truth counts them. */
+export interface SharedOtj {
+  verified_hours: number | null;
+  required_hours: number | null;
+  college_verified_hours: number | null;
+  employer_attested_hours: number | null;
+  frozen_at: string | null;
 }
 
 /** ELE-1885: a signed witness statement (reviewer-safe fields only). */
@@ -108,6 +142,10 @@ export interface SharedPortfolioStructuredData {
   /** Optional until 20261008061000 is applied. */
   decisions?: SharedDecision[];
   witnesses?: SharedWitness[];
+  /** Optional until 20261010180200 is applied. */
+  criteria?: SharedCriterion[];
+  item_criteria?: { item_id: string; unit_code: string; ac_code: string }[];
+  otj?: SharedOtj | null;
 }
 
 // ============================================

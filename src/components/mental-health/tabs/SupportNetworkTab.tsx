@@ -1,10 +1,12 @@
-import { PageHero, SectionHeader, ListCard, ListRow, Pill } from '@/components/college/primitives';
 import ExternalLinkCards from '@/components/mental-health/ExternalLinkCards';
-
-const PHONE_PRIMARY =
-  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25 text-[13px] font-semibold touch-manipulation';
-const PHONE_SECONDARY =
-  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-semibold touch-manipulation';
+import {
+  ContactButton,
+  ContactRow,
+  WB_LIST,
+  WellbeingIntro,
+  WellbeingNote,
+  WellbeingSection,
+} from '@/components/mental-health/wellbeingUi';
 
 const quickContacts = [
   {
@@ -91,97 +93,76 @@ const onlineResources = [
 const SupportNetworkTab = () => {
   return (
     <div className="space-y-8 sm:space-y-10">
-      <PageHero
-        eyebrow="Support network"
-        title="Talk to someone, today."
-        description="This is the place for real support options, not more admin. Start with the fastest way to talk, then use trade-specific or longer-term help if that fits better."
-        tone="emerald"
+      <WellbeingIntro
+        label="Support network"
+        title="Talk to someone, today"
+        description="Real support, not more admin. Start with the fastest way to talk, then trade-specific or longer-term help if that fits better."
       />
 
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Fastest help" title="Talk now" />
-        <ListCard>
-          {quickContacts.map((c) => (
-            <ListRow
-              key={c.name}
-              accent="emerald"
-              title={c.name}
-              subtitle={`${c.availability} · ${c.description}`}
-              trailing={
-                <a
-                  href={c.href}
-                  className={PHONE_PRIMARY}
-                  aria-label={`${c.isSms ? 'Text' : 'Call'} ${c.name}`}
-                >
-                  {c.displayPhone}
-                </a>
-              }
-            />
-          ))}
-        </ListCard>
-      </div>
+      <WellbeingNote tone="red">
+        <span className="font-semibold text-red-300">Not safe right now? </span>
+        Call{' '}
+        <a href="tel:999" className="font-semibold text-red-300 underline underline-offset-2">
+          999
+        </a>
+        , call Samaritans on{' '}
+        <a href="tel:116123" className="font-semibold text-red-300 underline underline-offset-2">
+          116 123
+        </a>
+        , or text SHOUT to <span className="font-semibold text-red-300">85258</span>.
+      </WellbeingNote>
 
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Trade-focused" title="Built for the trade" />
-        <ListCard>
-          {industryContacts.map((c) => (
-            <ListRow
-              key={c.name}
-              accent="amber"
-              title={c.name}
-              subtitle={c.description}
-              trailing={
-                c.isLink ? (
-                  <a
+      <div className="grid grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-6">
+        <WellbeingSection title="Talk now" className="min-w-0">
+          <ul className={WB_LIST}>
+            {quickContacts.map((c) => (
+              <ContactRow
+                key={c.name}
+                title={c.name}
+                detail={`${c.availability}. ${c.description}`}
+                action={
+                  <ContactButton
                     href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={PHONE_SECONDARY}
-                    aria-label={`Visit ${c.name}`}
-                  >
-                    {c.cta} →
-                  </a>
-                ) : (
-                  <a href={c.href} className={PHONE_SECONDARY} aria-label={`Call ${c.name}`}>
-                    {c.cta}
-                  </a>
-                )
-              }
-            />
-          ))}
-        </ListCard>
+                    kind={c.isSms ? 'text' : 'call'}
+                    label={c.displayPhone.replace(/^Text /, '')}
+                    ariaLabel={`${c.isSms ? 'Text' : 'Call'} ${c.name} on ${c.displayPhone}`}
+                  />
+                }
+              />
+            ))}
+          </ul>
+        </WellbeingSection>
+
+        <WellbeingSection title="Built for the trade" className="min-w-0">
+          <ul className={WB_LIST}>
+            {industryContacts.map((c) => (
+              <ContactRow
+                key={c.name}
+                title={c.name}
+                detail={c.description}
+                action={
+                  <ContactButton
+                    href={c.href}
+                    kind={c.isLink ? 'visit' : 'call'}
+                    label={c.cta}
+                    ariaLabel={`${c.isLink ? 'Visit' : 'Call'} ${c.name}`}
+                  />
+                }
+              />
+            ))}
+          </ul>
+        </WellbeingSection>
       </div>
 
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Online" title="Keep useful links close" />
+      <WellbeingSection title="Keep useful links close">
         <ExternalLinkCards
           items={onlineResources.map((r) => ({
             title: r.name,
             description: r.description,
             url: r.url,
-            tone: 'cyan' as const,
           }))}
         />
-      </div>
-
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-        <div className="flex items-start gap-3">
-          <Pill tone="red">Crisis</Pill>
-          <p className="text-[13px] text-white leading-relaxed">
-            If you feel unsafe or at immediate risk, skip this section and go straight to crisis
-            support. Call{' '}
-            <a href="tel:999" className="font-semibold text-red-400">
-              999
-            </a>
-            , call{' '}
-            <a href="tel:116123" className="font-semibold text-red-400">
-              116 123
-            </a>
-            , or text SHOUT to <span className="font-semibold text-red-400">85258</span>. Fastest
-            route to help matters most.
-          </p>
-        </div>
-      </div>
+      </WellbeingSection>
     </div>
   );
 };

@@ -48,7 +48,7 @@ const keyTakeaways = [
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or inspected by Building Control.',
   'BS 7671:2018+A4:2026 Regulation 421.1.201 requires that consumer units in domestic premises shall comply with BS EN 61439-3 and have their enclosure manufactured from non-combustible material (or be enclosed in a non-combustible cabinet complying with Regulation 132.12). Since January 2016, following Amendment 3 to BS 7671:2008, all new domestic consumer units must use a non-combustible (metal) enclosure.',
   'An Electrical Installation Certificate (EIC) must be issued after every consumer unit replacement. Regulation 644.1 of BS 7671:2018+A4:2026 requires an EIC, based on the model in Appendix 6, upon completion of verification of a new installation, addition or alteration — including the replacement of a distribution board or consumer unit.',
-  'Under BS 7671:2018+A4:2026 (Regulation 421.1.7), arc fault detection devices (AFDDs) conforming to BS EN 62606 are now required for single-phase socket-outlet final circuits rated up to 32 A in high-rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes. For all other premises, AFDDs are recommended for those circuits.',
+  'Under BS 7671:2018+A4:2026 (Regulation 421.1.7), arc fault detection devices (AFDDs) conforming to BS EN 62606 are required (since A2:2022) for single-phase socket-outlet final circuits rated up to 32 A in high-rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes. For all other premises, AFDDs are recommended for those circuits.',
 ];
 
 const faqs = [
@@ -656,7 +656,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Arc fault detection (AFDD)</strong> — under Regulation 421.1.7 of BS
-                7671:2018+A4:2026, AFDDs conforming to BS EN 62606 are now required on single-phase
+                7671:2018+A4:2026, AFDDs conforming to BS EN 62606 are required (since A2:2022) on single-phase
                 socket-outlet final circuits rated up to 32 A in high-rise residential buildings,
                 houses in multiple occupation, purpose-built student accommodation and care homes;
                 in all other premises they are recommended for those circuits. AFDDs detect the
@@ -836,7 +836,7 @@ export default function ConsumerUnitReplacementCostPage() {
       title="Consumer Unit Replacement Cost 2026: Price Guide"
       description="How much does a consumer unit replacement cost in 2026? Complete UK price guide covering material costs, labour, Part P notification, EIC certification."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

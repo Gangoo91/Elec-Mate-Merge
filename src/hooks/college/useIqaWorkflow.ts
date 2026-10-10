@@ -282,34 +282,20 @@ export function useIqaWorkflow(collegeId?: string | null): UseIqaWorkflowResult 
     staleTime: 30_000,
   });
 
-  // canWrite — staff with IQA / quality_nominee / admin role for this college
+  // canWrite: asked of the database, the same rule RLS applies
+  // (can_write_college_iqa → college_can('iqa.sample'), plus legacy profile
+  // roles). ELE-1092/ELE-1100: the old client copy tested role strings and
+  // missed the 'iqa' role (and acting/bootstrap/read-only), so an IQA without
+  // a qualification recorded saw read-only screens the database would accept.
   const canWriteQuery = useQuery({
     queryKey: ['iqa-workflow', 'can-write', resolvedCollegeId, user?.id],
     queryFn: async () => {
       if (!resolvedCollegeId || !user?.id) return false;
-      const { data: staff } = await supabase
-        .from('college_staff')
-        .select('role, is_quality_nominee, iqa_qual, status, college_id')
-        .eq('user_id', user.id)
-        .eq('college_id', resolvedCollegeId)
-        .eq('status', 'Active')
-        .maybeSingle();
-      if (staff) {
-        const s = staff as {
-          role: string | null;
-          is_quality_nominee: boolean | null;
-          iqa_qual: string | null;
-        };
-        if (s.is_quality_nominee || (s.iqa_qual && s.iqa_qual.trim().length > 0)) return true;
-        if (s.role === 'admin' || s.role === 'head_of_department') return true;
-      }
-      const { data: prof } = await supabase
-        .from('profiles')
-        .select('college_role')
-        .eq('id', user.id)
-        .maybeSingle();
-      const role = (prof as { college_role: string | null } | null)?.college_role ?? '';
-      return ['admin', 'iqa', 'lead_iqa', 'quality_nominee'].includes(role);
+      const { data, error } = await supabase.rpc('can_write_college_iqa' as never, {
+        target_college: resolvedCollegeId,
+      } as never);
+      if (error) return false;
+      return data === true;
     },
     enabled: !!resolvedCollegeId && !!user?.id,
     staleTime: 60_000,

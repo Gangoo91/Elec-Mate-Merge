@@ -9,7 +9,7 @@ const CableSizingInfo = () => {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <span className="text-[12px] font-medium text-white">
         Cable selection factors
       </span>
       <p className="text-[14px] text-white leading-relaxed">

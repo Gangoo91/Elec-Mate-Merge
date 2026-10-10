@@ -157,11 +157,20 @@ export interface GatewayItem {
   state?: 'green' | 'amber' | 'red';
   /** From the gate: where it is fixed ('coverage', 'hours', 'start_date', ...). */
   link?: string;
+  /** From the gate: a signature over 6 months old (NET), or within 30 days of it. */
+  signatureAge?: 'expired' | 'expiring' | null;
 }
 
 /** What buildEpaReadiness needs of get_gateway_readiness (useGatewayReadiness). */
 export interface GateLike {
-  items: Array<{ key: string; label: string; state: string; sentence: string; link: string }>;
+  items: Array<{
+    key: string;
+    label: string;
+    state: string;
+    sentence: string;
+    link: string;
+    figures?: Record<string, unknown> | null;
+  }>;
 }
 
 /** The gate's lines as sign-off items: met means green, nothing else. */
@@ -170,6 +179,8 @@ export function gateItems(gate: GateLike): GatewayItem[] {
     const state = (
       i.state === 'green' || i.state === 'amber' ? i.state : 'red'
     ) as GatewayItem['state'];
+    const sig = (i.figures as { signature?: { expired?: boolean; expiring?: boolean } } | null)
+      ?.signature;
     return {
       key: i.key,
       label: i.label,
@@ -177,6 +188,7 @@ export function gateItems(gate: GateLike): GatewayItem[] {
       detail: i.sentence,
       state,
       link: i.link,
+      signatureAge: sig?.expired ? 'expired' : sig?.expiring ? 'expiring' : null,
     };
   });
 }
@@ -368,7 +380,7 @@ export function buildEpaReadiness(
 
   const headline = {
     starting: `Start with ${what} practice — Section C is the shortest.`,
-    building: `${ready} of ${sections.length || 4} ${what} sections at the practice bar · ${total ? `${Math.round(coverage * 100)}% of your ACs covered · ` : ''}${done} of ${items.length} gateway requirements met.`,
+    building: `${ready} of ${sections.length || 4} ${what} sections at the practice bar · ${total ? `${signed} of ${total} criteria passed · ` : ''}${done} of ${items.length} gateway requirements met.`,
     am2_ready: `Every ${what} section is at the practice bar. ${items.length - done} gateway requirement${items.length - done === 1 ? '' : 's'} not met yet.`,
     gateway_ready: `${what} practice is done and every gateway requirement is met. Your employer and provider decide when you go through.`,
     gateway_passed: `Gateway passed — keep your ${what} practice sharp until the day.`,

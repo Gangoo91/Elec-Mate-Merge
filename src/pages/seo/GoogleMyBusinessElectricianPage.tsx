@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'How do I get more Google reviews?',
     answer:
-      'The most effective strategy is simple: ask every satisfied customer immediately after completing the job. Create a direct review link (in your Google Business Profile dashboard, go to "Ask for reviews" to get a short link). Send this link by text message or WhatsApp within an hour of completing the job — while the customer is still pleased with the work. You can say: "Thanks for choosing [your business name]. If you were happy with the work, a Google review would really help — here is the link: [link]." Do NOT offer incentives for reviews (this violates Google\'s policies). Do NOT buy fake reviews (Google detects and removes them, and may suspend your listing).',
+      'The most effective strategy is simple: ask every customer, the same way, soon after completing the job. Asking only the customers you think were pleased is treated as misleading under UK consumer law (the DMCC Act 2024). Create a direct review link (in your Google Business Profile dashboard, go to "Ask for reviews" to get a short link). Send this link by text message or WhatsApp within an hour of completing the job — while the customer is still pleased with the work. You can say: "Thanks for choosing [your business name]. We would be grateful for an honest Google review. Here is the link: [link]." Do NOT offer incentives for reviews (this violates Google\'s policies). Do NOT buy fake reviews (Google detects and removes them, and may suspend your listing).',
   },
   {
     question: 'How do I respond to a negative review?',

@@ -473,6 +473,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         onNoChanges={handleRaiseInvoiceNoChanges}
         onHasChanges={handleRaiseInvoiceWithChanges}
         loading={loading}
+        quoteId={selectedQuote?.id}
       />
     </Card>
   );

@@ -42,7 +42,9 @@ const SEND_FLAGS = [
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">{children}</h3>
+    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">
+      {children}
+    </h3>
   );
 }
 
@@ -123,7 +125,6 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
         expected_end_date: formData.expected_end_date || null,
         status: formData.status,
         risk_level: formData.risk_level,
-        progress_percent: formData.progress_percent ? parseInt(formData.progress_percent) : 0,
         // Inclusion data — used by AI to generate named inclusive strategies.
         send_flags: formData.send_flags,
         eal: formData.eal,
@@ -342,20 +343,8 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
               ))}
             </div>
           </div>
-          <div className="max-w-xs">
-            <label className={labelCn} htmlFor="es-progress">
-              Progress (%)
-            </label>
-            <input
-              id="es-progress"
-              type="number"
-              min="0"
-              max="100"
-              value={formData.progress_percent}
-              onChange={(e) => handleChange('progress_percent', e.target.value)}
-              className={inputCn}
-            />
-          </div>
+          {/* 8 Oct 2026: no typed "Progress (%)". Progress is criteria passed,
+              worked out from the portfolio (get_portfolio_ac_state). */}
         </section>
       </div>
 

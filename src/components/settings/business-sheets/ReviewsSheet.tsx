@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 import { hintCn, inputCn, labelCn, textareaCn } from '@/components/settings/formStyles';
 
 const DEFAULT_REVIEW_MESSAGE =
-  'Thanks for choosing us — it was a pleasure doing the work. If you were happy, a quick review really helps a small business like ours. It only takes a minute.';
+  'Thanks for choosing us. It was a pleasure doing the work. We would be grateful for an honest review: it helps a small business like ours, and only takes a minute.';
 
 interface ReviewLink {
   url: string;

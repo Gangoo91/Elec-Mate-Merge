@@ -773,19 +773,19 @@ const IndustrialCircuitGuide = () => {
 
       <Tabs defaultValue="starting" className="w-full">
         <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-1 h-auto">
-          <TabsTrigger value="starting" className="text-xs px-2 py-2">
+          <TabsTrigger value="starting" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Motor Starting
           </TabsTrigger>
-          <TabsTrigger value="protection" className="text-xs px-2 py-2">
+          <TabsTrigger value="protection" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Motor Protection
           </TabsTrigger>
-          <TabsTrigger value="control" className="text-xs px-2 py-2">
+          <TabsTrigger value="control" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Control Circuits
           </TabsTrigger>
-          <TabsTrigger value="estop" className="text-xs px-2 py-2">
+          <TabsTrigger value="estop" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             E-Stop & LOTO
           </TabsTrigger>
-          <TabsTrigger value="cables" className="text-xs px-2 py-2">
+          <TabsTrigger value="cables" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Cables & Sizing
           </TabsTrigger>
         </TabsList>
@@ -1260,7 +1260,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Critical Warning */}
-          <Card className="border-red-500/50 bg-white/[0.06]">
+          <Card className="border-red-500/50 bg-white/[0.06] p-4 sm:p-5">
             <CardHeader className="p-0 pb-3">
               <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <AlertTriangle className="h-6 w-6" />
@@ -1442,7 +1442,7 @@ const IndustrialCircuitGuide = () => {
               </div>
 
               {/* Formula Box */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-2">Cable Sizing Formula</h3>
                 <p className="text-white text-sm mb-2">
                   Minimum Cable Rating = Design Current / (Cg x Ca x Ci x Cc)
@@ -1522,7 +1522,7 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4 p-0">
               {/* Basics */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">Understanding Power Factor</h3>
                 <div className="space-y-2 text-sm text-white">
                   <p>
@@ -1545,7 +1545,7 @@ const IndustrialCircuitGuide = () => {
               </div>
 
               {/* Causes */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">
                   Common Causes of Low Power Factor
                 </h3>
@@ -1560,13 +1560,13 @@ const IndustrialCircuitGuide = () => {
               </div>
 
               {/* Solutions */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">PFC Solutions</h3>
                 <div className="space-y-3">
                   {powerFactorCorrection.solutions.map((sol, index) => (
                     <div
                       key={index}
-                      className="bg-white/[0.06] p-3 rounded border border-elec-yellow/10"
+                      className="bg-white/[0.06] p-3 rounded border border-white/[0.14]"
                     >
                       <h4 className="text-white font-medium mb-1">{sol.method}</h4>
                       <p className="text-white text-sm mb-2">{sol.description}</p>
@@ -1656,7 +1656,7 @@ const IndustrialCircuitGuide = () => {
               </div>
 
               {/* THD Info */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-2">Total Harmonic Distortion (THD)</h3>
                 <p className="text-white text-sm mb-1">{harmonicFiltering.thd.definition}</p>
                 <p className="text-white text-sm mb-1">{harmonicFiltering.thd.limits}</p>

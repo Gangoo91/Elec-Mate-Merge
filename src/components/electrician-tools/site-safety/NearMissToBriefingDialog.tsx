@@ -24,6 +24,7 @@ import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
 import { supabase } from '@/integrations/supabase/client';
 import type { Json } from '@/integrations/supabase/types';
 import { toast } from '@/hooks/use-toast';
+import { isFirmScope, stampSafetyInsert, useSafetyScope } from './common/SafetyScope';
 import { useNavigate } from 'react-router-dom';
 
 interface NearMissReport {
@@ -67,6 +68,7 @@ const asBullets = (value: unknown): string =>
   Array.isArray(value) ? value.map((v) => `• ${String(v)}`).join('\n') : '';
 
 export const NearMissToBriefingDialog = ({ open, onClose, nearMissReport }: Props) => {
+  const scope = useSafetyScope();
   const navigate = useNavigate();
   const [generating, setGenerating] = useState(false);
   const [briefingData, setBriefingData] = useState({
@@ -154,7 +156,7 @@ export const NearMissToBriefingDialog = ({ open, onClose, nearMissReport }: Prop
 
       const { data: briefing, error: briefingError } = await supabase
         .from('team_briefings')
-        .insert(briefingPayload)
+        .insert(stampSafetyInsert(briefingPayload, scope) as never)
         .select()
         .single();
 
@@ -182,7 +184,11 @@ export const NearMissToBriefingDialog = ({ open, onClose, nearMissReport }: Prop
       });
 
       onClose();
-      navigate('/electrician/site-safety?tab=briefings');
+      navigate(
+        isFirmScope(scope)
+          ? '/employer?section=site-safety&tool=team-briefing'
+          : '/electrician/site-safety?tab=briefings'
+      );
     } catch (error) {
       console.error('Error creating briefing:', error);
       toast({

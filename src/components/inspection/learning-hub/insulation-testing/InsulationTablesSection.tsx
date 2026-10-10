@@ -44,7 +44,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Quick reference */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Quick Reference</p>
+          <p className="text-[12px] font-medium text-white mb-3">Quick Reference</p>
           <div className="grid grid-cols-3 gap-2">
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3 text-center">
               <p className="text-xs text-white">New installation</p>
@@ -66,7 +66,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* BS 7671 minimum values */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671 Minimum Values — Table 61</p>
+          <p className="text-[12px] font-medium text-white mb-3">BS 7671 Minimum Values — Table 61</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -118,7 +118,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* Temperature correction */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Temperature Correction Factors</p>
+          <p className="text-[12px] font-medium text-white mb-3">Temperature Correction Factors</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

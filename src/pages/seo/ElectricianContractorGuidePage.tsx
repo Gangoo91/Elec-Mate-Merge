@@ -46,7 +46,7 @@ const keyTakeaways = [
   'Moving from sole trader to limited company typically makes financial sense once profits exceed approximately £30,000-£40,000 per year — the corporation tax rate of 25% (for profits over £250,000) or the small profits rate of 19% is more tax-efficient than higher-rate income tax.',
   'Employing your first electrician or apprentice brings legal obligations including employer liability insurance (minimum £5 million), PAYE registration, workplace pensions auto-enrolment, and compliance with the Employment Rights Act 1996.',
   'The Construction Industry Scheme (CIS) requires contractors to deduct 20% (or 30% for unregistered subcontractors) from labour payments and report these deductions to HMRC monthly — failure to comply attracts penalties and interest.',
-  'Electrical apprenticeships are funded by the Education and Skills Funding Agency (ESFA) — for employers with a payroll under £3 million, the government pays 95% of training costs, making apprentices a cost-effective way to grow your team.',
+  'Electrical apprenticeships are funded by the Department for Education — for employers that do not pay the levy, the government pays all training costs for apprentices aged 16 to 24 and 95% for those aged 25 or over (starts from 1 August 2026), making apprentices a cost-effective way to grow your team.',
   'Elec-Mate gives your entire team access to certificates, calculators, AI tools, and training on their phones — one subscription covers everything your operatives need on site, from EICR forms to RAMS generation.',
 ];
 
@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'How much does it cost to employ an apprentice electrician?',
     answer:
-      'The direct costs of employing an apprentice electrician include: wages — the National Minimum Wage for apprentices (aged under 19, or aged 19+ in the first year of the apprenticeship) is £6.40 per hour (2025/26 rate). For apprentices aged 19+ beyond their first year, the standard NMW/NLW for their age applies. Many employers pay above the minimum to attract better candidates. Employers National Insurance contributions — 13.8% on earnings above the secondary threshold. Workplace pension contributions — minimum 3% employer contribution under auto-enrolment. Training costs — for employers with a payroll below £3 million (no Apprenticeship Levy obligation), the government pays 95% of the training costs and you pay the remaining 5%. For a Level 3 Installation Electrician apprenticeship, the total training cost is typically £18,000 (ESFA funding band), so your contribution is approximately £900 over the duration of the apprenticeship. Employers with fewer than 50 employees who take on an apprentice aged 16-18 pay 0% of the training costs — the government covers 100%. Additional costs include tools, PPE, workwear, test equipment, and supervision time.',
+      'The direct costs of employing an apprentice electrician include: wages — the National Minimum Wage for apprentices (aged under 19, or aged 19+ in the first year of the apprenticeship) is £8.00 per hour (from 1 April 2026). For apprentices aged 19+ beyond their first year, the standard NMW/NLW for their age applies. Many employers pay above the minimum to attract better candidates. Employers National Insurance contributions — 15% on earnings above the secondary threshold, though nothing is due on an apprentice under 25 below the apprentice upper secondary threshold (£50,270 a year). Workplace pension contributions — minimum 3% employer contribution under auto-enrolment. Training costs — for employers that do not pay the Apprenticeship Levy, the government pays all training costs for an apprentice aged 16 to 24 at the start and 95% for one aged 25 or over, for starts from 1 August 2026 (DfE funding rules 2026 to 2027, rules 213 to 214). The funding band maximum for the Installation and Maintenance Electrician standard (ST0152) is £23,000, so a 25+ apprentice costs you up to £1,150. Additional costs include tools, PPE, workwear, test equipment, and supervision time.',
   },
   {
     question: 'Do I need to register with NICEIC or NAPIT as a contractor?',
@@ -313,12 +313,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Funding: What You Actually Pay</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  For employers with a payroll below £3 million (no Apprenticeship Levy), the
-                  government pays 95% of the training costs. For a Level 3 Installation Electrician
-                  apprenticeship at the maximum funding band of £18,000, your contribution is
-                  approximately £900 over the full duration. If you have fewer than 50 employees and
-                  the apprentice is aged 16-18, you pay nothing — 100% government funded. You can
-                  also claim a £1,000 incentive payment for taking on an apprentice aged 16-18.
+                  For employers that do not pay the Apprenticeship Levy, the government pays all of
+                  the training costs for an apprentice aged 16 to 24 at the start, and 95% for one
+                  aged 25 or over, for starts from 1 August 2026 (DfE funding rules 2026 to 2027, rules 213 to 214). At the ST0152 funding band
+                  maximum of £23,000, a 25+ apprentice costs you up to £1,150. You also receive a
+                  £1,000 incentive for an apprentice aged 16 to 18 and a £2,000 hiring payment for a
+                  16 to 24-year-old whose practical period starts from 1 October 2026.
                 </p>
               </div>
             </div>
@@ -689,7 +689,7 @@ export default function ElectricianContractorGuidePage() {
       title="Electrical Contractor Guide: Running a Team UK"
       description="Complete guide to growing an electrical contracting business in the UK. Sole trader to limited company, employing staff, apprenticeships."
       datePublished="2025-09-10"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

@@ -11,6 +11,7 @@ import {
   Users,
   Package,
   Receipt,
+  Inbox,
 } from 'lucide-react';
 import type { ProposedAction } from './types';
 
@@ -23,6 +24,8 @@ export function ActionIcon({ action }: { action: ProposedAction }) {
       return <AlertTriangle className={cn(cls, 'text-orange-400')} />;
     case 'create-project':
       return <FolderKanban className={cn(cls, 'text-purple-300')} />;
+    case 'create-enquiry':
+      return <Inbox className={cn(cls, 'text-sky-300')} />;
     case 'create-customer':
       return <UserPlus className={cn(cls, 'text-cyan-300')} />;
     case 'draft-message':

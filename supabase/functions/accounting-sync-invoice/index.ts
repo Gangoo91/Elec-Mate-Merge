@@ -1,6 +1,6 @@
 /**
  * Accounting Invoice Sync
- * Syncs invoices to connected accounting software (Xero, QuickBooks, Sage, FreshBooks)
+ * Syncs invoices to connected accounting software (Xero, QuickBooks, Sage, FreshBooks, FreeAgent)
  */
 
 import { corsHeaders } from '../_shared/cors.ts';
@@ -17,6 +17,7 @@ import {
 } from '../_shared/xero-accounts.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { fa, faId, findOrCreateFreeAgentContact, refreshFreeAgentToken } from '../_shared/freeagent.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -49,7 +50,7 @@ const QUICKBOOKS_BASE_URL =
     ? 'https://quickbooks.api.intuit.com'
     : 'https://sandbox-quickbooks.api.intuit.com';
 
-type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
+type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks' | 'freeagent';
 
 interface TokenData {
   accessToken: string;
@@ -402,6 +403,11 @@ Deno.serve(async (req: Request) => {
           number
         > | null) ?? null,
       vatAmount: parseFloat(String(invoice.vat_amount)),
+      vatRate: (() => {
+        const v = (invoice.settings as Record<string, unknown> | null)?.vatRate;
+        const n = typeof v === 'number' ? v : typeof v === 'string' ? parseFloat(v) : NaN;
+        return Number.isFinite(n) ? n : null;
+      })(),
       total: parseFloat(String(invoice.total)),
       notes: invoice.notes,
       currency: 'GBP',
@@ -625,6 +631,14 @@ Deno.serve(async (req: Request) => {
           const fbResult = await syncToFreshBooks(accessToken, tenantId, invoiceData);
           externalInvoiceId = fbResult.invoiceId;
           break;
+
+        case 'freeagent': {
+          // ELE-2077
+          const faResult = await syncToFreeAgent(accessToken, invoiceData);
+          externalInvoiceId = faResult.invoiceId;
+          externalInvoiceUrl = faResult.invoiceUrl;
+          break;
+        }
 
         default:
           return await fail(`Provider "${provider}" not supported`, undefined, 400);
@@ -864,6 +878,8 @@ async function refreshAccessToken(
       return refreshSageToken(refreshToken);
     case 'freshbooks':
       return refreshFreshBooksToken(refreshToken);
+    case 'freeagent':
+      return refreshFreeAgentToken(refreshToken);
     default:
       throw new Error(`Refresh not implemented for ${provider}`);
   }
@@ -1040,6 +1056,8 @@ interface InvoiceData {
    */
   grant?: { amount: number; label: string } | null;
   vatAmount: number;
+  /** L14: the VAT rate the invoice was raised at (settings.vatRate), when set. */
+  vatRate?: number | null;
   total: number;
   notes?: string;
   currency: string;
@@ -2952,6 +2970,127 @@ async function findOrCreateSageContact(
   const newId = createResult.id || createResult.$key;
   console.log('Created new contact:', newId);
   return newId;
+}
+
+/**
+ * ELE-2077 — FreeAgent. Same line arithmetic as Sage (FreeAgent also derives
+ * each line from quantity × price), the discount as its own line at the same
+ * VAT rate, and the invoice marked as sent so it counts in the books.
+ *
+ * Refused, with a reason, rather than posted wrong:
+ *  - reverse-charge (CIS DRC) invoices: FreeAgent's DRC handling is not
+ *    mapped yet, and a plain 0% invoice would misstate the VAT return;
+ *  - grant (OZEV) invoices: a grant needs a no-VAT negative line that we have
+ *    not proved against FreeAgent's VAT engine.
+ */
+async function syncToFreeAgent(accessToken: string, invoice: InvoiceData): Promise<SyncResult> {
+  if (invoice.reverseCharge) {
+    throw new SyncBlockedError(
+      'Reverse-charge invoices are not sent to FreeAgent yet',
+      'Raise this one in FreeAgent by hand, with the domestic reverse charge set, so your VAT return is right.'
+    );
+  }
+  if (invoice.grant && invoice.grant.amount > 0) {
+    throw new SyncBlockedError(
+      'Invoices with a grant are not sent to FreeAgent yet',
+      'Raise this one in FreeAgent by hand so the grant carries no VAT.'
+    );
+  }
+
+  const contactUrl = await findOrCreateFreeAgentContact(accessToken, invoice.client);
+  const discount = invoice.discount?.amount ?? 0;
+  const netTarget = (invoice.total || 0) - (invoice.vatAmount || 0);
+  const salesNetTarget = round2(netTarget + discount);
+  const netLines = buildNetLines(invoice.items, salesNetTarget, invoice.categoryAdjustments);
+  assertLinesReconcile(netLines, salesNetTarget, 'FreeAgent');
+  assertLinesAreSelfConsistent(netLines, 'FreeAgent');
+
+  // L14: the invoice's own VAT rate, not 20% for every VAT invoice. UK
+  // standard (20%) or reduced (5%) rate, from settings.vatRate, else from the
+  // VAT on the invoice itself; refused if neither rate gives the VAT the
+  // customer was charged (a mixed-rate invoice cannot be posted at one rate).
+  const vatCharged = invoice.vatAmount || 0;
+  let ratePct = 0;
+  if (vatCharged > 0) {
+    const stated = Number(invoice.vatRate);
+    const implied = netTarget > 0 ? (vatCharged / netTarget) * 100 : 20;
+    ratePct =
+      stated === 20 || stated === 5 ? stated : Math.abs(implied - 5) < Math.abs(implied - 20) ? 5 : 20;
+    const expected = round2((netTarget * ratePct) / 100);
+    if (Math.abs(expected - vatCharged) > Math.max(0.1, vatCharged * 0.01)) {
+      throw new SyncBlockedError(
+        'The VAT on this invoice does not match a single UK VAT rate',
+        'Raise this one in FreeAgent by hand with the right VAT on each line.'
+      );
+    }
+  }
+  const rate = ratePct === 20 ? '20.0' : ratePct === 5 ? '5.0' : '0.0';
+  const items: Record<string, string>[] = netLines.map((l) => ({
+    item_type: 'Services',
+    description: l.description || 'Work',
+    quantity: String(l.quantity),
+    price: String(l.unitAmount),
+    sales_tax_rate: rate,
+  }));
+  if (discount > 0) {
+    items.push({
+      item_type: 'Discount',
+      description: invoice.discount?.label ?? 'Discount',
+      quantity: '1',
+      price: String(-discount),
+      sales_tax_rate: rate,
+    });
+  }
+
+  const dated = invoice.date?.split('T')[0] ?? new Date().toISOString().slice(0, 10);
+  const due = invoice.dueDate?.split('T')[0];
+  const termsDays = due
+    ? Math.max(0, Math.round((Date.parse(due) - Date.parse(dated)) / 86_400_000))
+    : 30;
+  const body = {
+    invoice: {
+      contact: contactUrl,
+      dated_on: dated,
+      payment_terms_in_days: termsDays,
+      reference: invoice.invoiceNumber,
+      currency: 'GBP',
+      comments: invoice.notes || undefined,
+      invoice_items: items,
+    },
+  };
+
+  let invoiceId: string;
+  if (invoice.externalInvoiceId) {
+    // Re-sync: replace the lines on the invoice we made before. FreeAgent ADDS
+    // any item sent without an id, so the old lines are removed in the same
+    // request with { id, _destroy: 1 } (dev.freeagent.com/docs/invoices).
+    const path = `/invoices/${encodeURIComponent(invoice.externalInvoiceId)}`;
+    const existing = await fa<{ invoice: { invoice_items?: { url?: string }[] } }>(
+      accessToken,
+      path
+    );
+    const destroy = (existing.invoice?.invoice_items ?? [])
+      .map((it) => faId(it.url))
+      .filter(Boolean)
+      .map((id) => ({ id: Number(id), _destroy: 1 }));
+    await fa(accessToken, path, {
+      method: 'PUT',
+      body: JSON.stringify({
+        invoice: { ...body.invoice, invoice_items: [...destroy, ...body.invoice.invoice_items] },
+      }),
+    });
+    invoiceId = invoice.externalInvoiceId;
+  } else {
+    const created = await fa<{ invoice: { url: string } }>(accessToken, '/invoices', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+    invoiceId = faId(created.invoice?.url);
+    if (!invoiceId) throw new Error('FreeAgent did not return the new invoice');
+    // New invoices start as Draft; mark as sent so they count as income.
+    await fa(accessToken, `/invoices/${invoiceId}/transitions/mark_as_sent`, { method: 'PUT' });
+  }
+  return { invoiceId, invoiceUrl: `https://secure.freeagent.com/invoices/${invoiceId}` };
 }
 
 async function syncToFreshBooks(

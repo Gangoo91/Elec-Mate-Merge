@@ -285,16 +285,16 @@ const CableSizingCalculator = () => {
                   onValueChange={(v) => setInputMode(v as 'current' | 'load')}
                   className="w-full"
                 >
-                  <TabsList className="grid w-full grid-cols-2 h-12 bg-white/[0.04] rounded-xl p-1">
+                  <TabsList className="grid w-full grid-cols-2 h-auto bg-white/[0.04] rounded-xl p-1">
                     <TabsTrigger
                       value="current"
-                      className="text-sm font-semibold rounded-lg data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+                      className="min-h-11 touch-manipulation text-white font-semibold rounded-lg min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black"
                     >
                       Current
                     </TabsTrigger>
                     <TabsTrigger
                       value="load"
-                      className="text-sm font-semibold rounded-lg data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+                      className="min-h-11 touch-manipulation text-white font-semibold rounded-lg min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black"
                     >
                       Load
                     </TabsTrigger>
@@ -307,8 +307,8 @@ const CableSizingCalculator = () => {
                 <div
                   className="space-y-4 p-4 rounded-xl border"
                   style={{
-                    borderColor: `${config.gradientFrom}30`,
-                    background: `${config.gradientFrom}08`,
+                    borderColor: 'rgba(255, 255, 255, 0.12)',
+                    background: 'rgba(255, 255, 255, 0.04)',
                   }}
                 >
                   <h4 className="font-medium text-white flex items-center gap-2 text-sm">
@@ -357,8 +357,8 @@ const CableSizingCalculator = () => {
                     <div
                       className="p-3 rounded-xl border"
                       style={{
-                        borderColor: `${config.gradientFrom}40`,
-                        background: `${config.gradientFrom}10`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="flex items-center gap-2 mb-1">

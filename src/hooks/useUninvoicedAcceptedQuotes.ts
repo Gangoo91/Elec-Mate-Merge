@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { isQuoteInvoicedInHub } from '@/utils/quote-status';
 
 /**
  * Accepted quotes that never became an invoice.
@@ -56,7 +57,7 @@ export interface UninvoicedSummary {
  * Because this hook fails quiet by design, that would have shown up as the card
  * simply never appearing, with nothing in the console to explain it.
  */
-const ROW = `id, quote_number, client_data, job_details, total, accepted_at, first_sent_at, acceptance_method`;
+const ROW = `id, quote_number, client_data, job_details, total, accepted_at, first_sent_at, acceptance_method, settings`;
 
 export function useUninvoicedAcceptedQuotes(): UninvoicedSummary {
   const { user } = useAuth();
@@ -116,7 +117,10 @@ export function useUninvoicedAcceptedQuotes(): UninvoicedSummary {
        * electricians. Halving it is the right answer: the half that goes is
        * not real.
        */
-      const agreed = rows.filter((r) => r.first_sent_at || r.acceptance_method);
+      const agreed = rows.filter(
+        // ELE-2065: a quote the Employer Hub already invoiced isn't unbilled.
+        (r) => (r.first_sent_at || r.acceptance_method) && !isQuoteInvoicedInHub(r)
+      );
 
       const now = Date.now();
       return agreed.map((r) => {

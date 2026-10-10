@@ -510,7 +510,7 @@ const CableCurrentCapacityCalculator = ({ onResult }: CalculatorResultReporter =
     }
     if (margin >= 10) {
       return (
-        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-amber-500/10 border border-amber-500/20 text-amber-400">
+        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-white/[0.04] border border-amber-500/20 text-amber-400">
           Adequate ({margin.toFixed(1)}%)
         </span>
       );
@@ -812,7 +812,7 @@ const CableCurrentCapacityCalculator = ({ onResult }: CalculatorResultReporter =
 
                   {/* Warnings */}
                   {result.warnings.length > 0 && (
-                    <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                    <div className="p-4 rounded-xl bg-white/[0.04] border border-orange-500/30">
                       <div className="flex items-center gap-2 mb-1">
                         <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0" />
                         <span className="font-medium text-sm text-white">Warnings</span>

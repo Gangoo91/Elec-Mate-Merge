@@ -47,7 +47,7 @@ const keyTakeaways = [
   'Regulation 12 requires adequate precautions when working on equipment made dead — the legal basis for safe isolation procedures.',
   'Regulation 14 prohibits working on or near live conductors unless it is unreasonable for it to be dead, it is reasonable to work live, and suitable precautions are taken.',
   'Regulation 16 requires that persons carrying out electrical work must be competent — or supervised by a competent person — to prevent danger and injury.',
-  'BS 7671:2018+A4:2026 (A4) tightened the construction requirements that underpin Regulation 4: AFDDs are mandatory for socket-outlet final circuits rated up to 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes (recommended elsewhere) under Reg 421.1.7, and 30 mA RCD protection is required for AC final circuits supplying luminaires in domestic premises under Reg 411.3.4.',
+  'The current BS 7671:2018+A4:2026 sets construction requirements that underpin Regulation 4, some older than A4: AFDDs have been mandatory (since A2:2022) for socket-outlet final circuits rated up to 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes (recommended elsewhere) under Reg 421.1.7, and 30 mA RCD protection has been required for AC final circuits supplying luminaires in domestic premises under Reg 411.3.4 since 2018.',
 ];
 
 const faqs = [
@@ -345,7 +345,7 @@ const sections = [
           <ul className="space-y-2 text-white text-sm">
             <li>
               <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> AFDDs conforming
-              to BS EN 62606 are now <em>mandatory</em> for single-phase AC final circuits supplying
+              to BS EN 62606 have been <em>mandatory</em> since A2:2022 for single-phase AC final circuits supplying
               socket-outlets rated not exceeding 32 A in the four building types in the table below.
               For all other premises AFDDs are <em>recommended</em> for the same circuits. Where
               used, an AFDD must be placed at the origin of the circuit it protects.
@@ -353,7 +353,7 @@ const sections = [
             <li>
               <strong>Reg 411.3.4 — RCD protection for luminaire circuits:</strong> Within domestic
               (household) premises, additional protection by an RCD with a rated residual operating
-              current not exceeding 30 mA must now be provided for AC final circuits supplying
+              current not exceeding 30 mA must be provided (since BS 7671:2018) for AC final circuits supplying
               luminaires. An RCBO rated at or below 30 mA satisfies this requirement.
             </li>
           </ul>
@@ -777,7 +777,7 @@ export default function ElectricityAtWorkRegsPage() {
       title="Electricity at Work Regulations 1989"
       description="Electricity at Work Regulations 1989 for electricians and employers: Regulation 4 systems, 12 safe isolation, 14 live working, 16 competence."
       datePublished="2025-04-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

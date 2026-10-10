@@ -1131,7 +1131,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
             asChild
             className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-yellow-400"
           >
-            <Link to="../section-2" className="flex items-center gap-2">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-3-section-2" className="flex items-center gap-2">
               <span>Next: Thermal Imaging Surveys</span>
               <ArrowLeft className="w-4 h-4 rotate-180" />
             </Link>

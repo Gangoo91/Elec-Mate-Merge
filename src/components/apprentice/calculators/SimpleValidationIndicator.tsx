@@ -22,10 +22,10 @@ const SimpleValidationIndicator = ({
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Safety validation
         </span>
-        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
           {getStatusText()}
         </span>
       </div>
@@ -33,25 +33,25 @@ const SimpleValidationIndicator = ({
       {/* Safety Factors */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white">Temperature</div>
+          <div className="text-[12px] text-white">Temperature</div>
           <div className="text-[14px] font-mono text-white">
             {(validation.safetyFactors.temperatureDerating * 100).toFixed(0)}%
           </div>
         </div>
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white">Grouping</div>
+          <div className="text-[12px] text-white">Grouping</div>
           <div className="text-[14px] font-mono text-white">
             {(validation.safetyFactors.groupingFactor * 100).toFixed(0)}%
           </div>
         </div>
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white">Safety margin</div>
+          <div className="text-[12px] text-white">Safety margin</div>
           <div className="text-[14px] font-mono text-white">
             {(validation.safetyFactors.safetyMargin * 100).toFixed(0)}%
           </div>
         </div>
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white">BS 7671</div>
+          <div className="text-[12px] text-white">BS 7671</div>
           <div className="text-[14px]">
             {validation.complianceChecks.bs7671 ? (
               <CheckCircle className="h-5 w-5 text-elec-yellow mx-auto" />
@@ -65,7 +65,7 @@ const SimpleValidationIndicator = ({
       {/* Critical Alerts */}
       {validation.criticalAlerts.length > 0 && (
         <div className="rounded-lg border border-red-500/30 bg-red-500/[0.04] p-3 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          <span className="text-[12px] font-medium text-red-300">
             Critical safety alerts
           </span>
           <ul className="space-y-1.5">
@@ -85,7 +85,7 @@ const SimpleValidationIndicator = ({
       {/* Errors */}
       {validation.errors.length > 0 && (
         <div className="rounded-lg border border-red-500/30 bg-red-500/[0.04] p-3 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          <span className="text-[12px] font-medium text-red-300">
             Errors
           </span>
           <ul className="space-y-1.5">
@@ -105,7 +105,7 @@ const SimpleValidationIndicator = ({
       {/* Warnings */}
       {validation.warnings.length > 0 && (
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Warnings
           </span>
           <ul className="space-y-1.5">

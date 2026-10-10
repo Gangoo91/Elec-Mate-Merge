@@ -7,23 +7,40 @@ import {
   Briefcase,
   X,
   CheckSquare,
-  Square,
+  ListChecks,
   Send,
   Mail,
   Link2,
-  KeyRound,
+  Plus,
   Loader2,
 } from 'lucide-react';
 import { formatDistanceToNowStrict, parseISO, differenceInCalendarDays } from 'date-fns';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useRtwStatusMap, RTW_STATUS_LABEL } from '@/hooks/useRightToWork';
 import { useTeamInviteHistory, useChaseTeamInvite, inviteLink } from '@/hooks/useTeamInvites';
 import { TeamInviteSheet } from '@/components/employer/sheets/TeamInviteSheet';
 import { copyToClipboard } from '@/utils/clipboard';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import FormSheet from '@/components/forms/FormSheet';
+import { panel, PanelTitle } from '@/components/employer/overview/HomeSections';
+import {
+  HeroActions,
+  Initials,
+  PlainEmpty,
+  Row,
+  Tag,
+  colClass,
+  filterStack,
+  heroBtn,
+  frameClass,
+  rowBtnPrimary,
+  rowBtnSecondary,
+  rowsClass,
+  twoColClass,
+} from '@/components/employer/pageParts/PageParts';
+import { cn } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import { AddEmployeeDialog } from '@/components/employer/dialogs/AddEmployeeDialog';
@@ -41,30 +58,17 @@ import {
   PageHero,
   StatStrip,
   FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
   Avatar,
-  Pill,
   IconButton,
-  EmptyState,
   LoadingBlocks,
-  Eyebrow,
   PrimaryButton,
   SecondaryButton,
   checkboxClass,
-  type Tone,
 } from '@/components/employer/editorial';
 import type { Employee } from '@/services/employeeService';
 import { TEAM_ROLES, toTeamRole, type TeamRole } from '@/lib/teamRoles';
-import {
-  PageHelpButton,
-  HowItWorks,
-  type HelpBlocker,
-} from '@/components/hub/PageHelp';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { TEAM_HELP } from '@/components/employer/help/people';
-
 
 type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 // ELE-1951: Active (joined) / Invited (added, never signed in) / Archived.
@@ -87,23 +91,6 @@ const SORT_OPTIONS: { value: SortKey; label: string }[] = [
   { value: 'rate', label: 'Hourly rate (high first)' },
   { value: 'newest', label: 'Recently added' },
 ];
-
-const ROLE_TONE: Record<TeamRole, Tone> = {
-  QS: 'yellow',
-  Supervisor: 'blue',
-  Operative: 'emerald',
-  Apprentice: 'amber',
-  'Project Manager': 'purple',
-  'Apprentice Co-ordinator': 'orange',
-  Subcontractor: 'cyan',
-};
-
-const AVAILABILITY_TONE: Record<AvailabilityStatus, Tone> = {
-  Available: 'emerald',
-  'On Job': 'blue',
-  'On Leave': 'amber',
-  Unavailable: 'red',
-};
 
 const getAvailability = (employee: Employee): AvailabilityStatus => {
   if (employee.status === 'On Leave') return 'On Leave';
@@ -171,13 +158,12 @@ export function EmployeesSection() {
       let cap: number | null = null;
       let comped = false;
       {
-        const { data: prof } = await supabase
-          .from('profiles')
-          .select('employer_seat_cap, free_access_granted')
-          .eq('id', firm)
-          .maybeSingle();
-        cap = (prof as { employer_seat_cap?: number | null } | null)?.employer_seat_cap ?? null;
-        comped = (prof as { free_access_granted?: boolean } | null)?.free_access_granted === true;
+        // ELE-2020: a manager can't read the owner's profile row, so the
+        // firm's seat terms come from a firm-scoped RPC.
+        const { data: terms } = await supabase.rpc('get_firm_seat_terms', { p_firm: firm });
+        const prof = terms?.[0] ?? null;
+        cap = prof?.employer_seat_cap ?? null;
+        comped = prof?.free_access_granted === true;
       }
       return { active: count ?? 0, cap, comped };
     },
@@ -355,6 +341,9 @@ export function EmployeesSection() {
     return sorted;
   }, [tabFilteredEmployees, searchQuery, selectedRoles, selectedAvailability, sortBy, workerType]);
 
+  // ELE-2061: Checked / Due / Missing on every row.
+  const { map: rtwMap } = useRtwStatusMap();
+
   const handleItemClick = (employee: Employee) => {
     if (multiSelectMode) {
       toggleEmployeeSelection(employee.id);
@@ -452,15 +441,57 @@ export function EmployeesSection() {
     });
   }
 
+  // Where the team stands, in one line.
+  const heroLine = (() => {
+    // Same definition as the Overview (ELE-2086): everyone active on the roster
+    // is on the team; "not joined" is the part of it without the app yet.
+    const bits = [`${activeEmployees.length} on the team`];
+    if (invitedEmployees.length > 0)
+      bits.push(
+        `${invitedEmployees.length} ${invitedEmployees.length === 1 ? "hasn't" : "haven't"} joined yet`
+      );
+    if (onLeaveCount > 0) bits.push(`${onLeaveCount} on leave`);
+    return `${bits.join(', ')}.${seatSummary}`;
+  })();
+
+  const heroActions = (
+    <HeroActions stretchFirst>
+      <PrimaryButton
+        data-help="team.add"
+        onClick={() => setAddEmployeeDialogOpen(true)}
+        className={heroBtn}
+      >
+        <Plus className="h-4 w-4 mr-1.5" />
+        Add team member
+      </PrimaryButton>
+      <span data-help="team.select" className="contents">
+        <IconButton
+          onClick={() => setMultiSelectMode((v) => !v)}
+          aria-label={multiSelectMode ? 'Exit multi-select' : 'Multi-select'}
+          className={cn('shrink-0', multiSelectMode && 'border-elec-yellow text-elec-yellow')}
+        >
+          {multiSelectMode ? (
+            <CheckSquare className="h-4 w-4" />
+          ) : (
+            <ListChecks className="h-4 w-4" />
+          )}
+        </IconButton>
+      </span>
+      <PageHelpButton
+        help={TEAM_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'team', tab: activeTab }}
+      />
+      <IconButton onClick={() => refetch()} aria-label="Refresh" className="shrink-0">
+        <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
+      </IconButton>
+    </HeroActions>
+  );
+
   if (isLoading) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="People"
-          title="Team"
-          description={`Manage every operative, supervisor and PM on your books.${seatSummary}`}
-          tone="blue"
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Team" description={`Everyone on your books.${seatSummary}`} />
         <LoadingBlocks />
       </PageFrame>
     );
@@ -468,59 +499,45 @@ export function EmployeesSection() {
 
   if (error) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="People"
-          title="Team"
-          description="Manage every operative, supervisor and PM on your books."
-          tone="blue"
-        />
-        <EmptyState
-          title="Failed to load team"
-          description="Please try again in a moment."
-          action="Retry"
-          onAction={() => refetch()}
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Team" description="Everyone on your books." />
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text="The team didn't load. Check your connection and try again."
+            action={
+              <button type="button" onClick={() => refetch()} className={rowBtnSecondary}>
+                Retry
+              </button>
+            }
+          />
+        </div>
       </PageFrame>
     );
   }
 
+  const typeCount = (t: WorkerTypeFilter) =>
+    t === 'all'
+      ? tabFilteredEmployees.length
+      : tabFilteredEmployees.filter((e) => workerTypeOf(e.team_role) === t).length;
+
+  const statusTag = (employee: Employee) => {
+    const availability = getAvailability(employee);
+    const liveStatus = liveStatusByEmployee.get(employee.id);
+    if (!employee.user_id && employee.status !== 'Archived')
+      return <Tag tone="yellow">Invited</Tag>;
+    if (liveStatus === 'On Site') return <Tag tone="green">On site</Tag>;
+    if (liveStatus === 'En Route') return <Tag tone="neutral">En route</Tag>;
+    if (availability === 'On Job') return <Tag tone="neutral">On a job</Tag>;
+    if (availability === 'On Leave') return <Tag tone="outline">On leave</Tag>;
+    if (availability === 'Unavailable') return <Tag tone="outline">Unavailable</Tag>;
+    return <Tag tone="outline">Available</Tag>;
+  };
+
   return (
     <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
-      <PageFrame>
-        <PageHero
-          eyebrow="People"
-          title="Team"
-          description={`Manage every operative, supervisor and PM on your books.${seatSummary}`}
-          tone="blue"
-          actions={
-            <>
-              <PrimaryButton data-help="team.add" onClick={() => setAddEmployeeDialogOpen(true)}>
-                Add team member
-              </PrimaryButton>
-              <IconButton onClick={() => refetch()} aria-label="Refresh">
-                <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
-              </IconButton>
-              <span data-help="team.select" className="contents">
-                <IconButton
-                  onClick={() => setMultiSelectMode((v) => !v)}
-                  aria-label={multiSelectMode ? 'Exit multi-select' : 'Multi-select'}
-                >
-                  {multiSelectMode ? (
-                    <CheckSquare className="h-4 w-4" />
-                  ) : (
-                    <Square className="h-4 w-4" />
-                  )}
-                </IconButton>
-              </span>
-              <PageHelpButton
-                help={TEAM_HELP}
-                blockers={helpBlockers}
-                askContext={{ page: 'team', tab: activeTab }}
-              />
-            </>
-          }
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Team" description={heroLine} actions={heroActions} />
 
         <HowItWorks
           help={TEAM_HELP}
@@ -534,448 +551,539 @@ export function EmployeesSection() {
             {
               label: 'Joined',
               value: joinedEmployees.length,
-              tone: 'emerald',
+              sub: 'Using the app',
               onClick: () => setActiveTab('active'),
             },
             {
               label: 'Not joined',
               value: invitedEmployees.length,
-              tone: invitedEmployees.length > 0 ? 'orange' : 'emerald',
+              tone: invitedEmployees.length > 0 ? 'yellow' : undefined,
               sub: invitedEmployees.length > 0 ? 'Chase them' : 'Everyone is in',
               onClick: () => setActiveTab('invited'),
             },
-            { label: 'On leave', value: onLeaveCount, tone: 'blue' },
+            {
+              label: 'On leave',
+              value: onLeaveCount,
+              sub: onLeaveCount === 0 ? 'Everyone in' : 'Today',
+            },
             {
               label: 'Archived',
               value: archivedCount,
+              sub: 'Past team',
               onClick: () => setActiveTab('archived'),
             },
           ]}
         />
 
-        {multiSelectMode && (
-          <ListCard>
-            <ListCardHeader
-              tone="yellow"
-              title={`${selectedEmployeeIds.length} selected`}
-              meta={
+        <div className={twoColClass}>
+          <div className={colClass}>
+            {multiSelectMode && (
+              <div className={cn(panel, 'flex flex-wrap items-center gap-2 px-4 py-3 sm:px-5')}>
+                <span className="text-[15px] font-semibold text-white tabular-nums">
+                  {selectedEmployeeIds.length} selected
+                </span>
                 <button
                   onClick={selectAllEmployees}
-                  className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                  className="h-11 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
                   Select all
                 </button>
-              }
-            />
-            <div className="flex items-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4">
-              <SecondaryButton
-                onClick={() => setBulkMessageOpen(true)}
-                disabled={selectedEmployeeIds.length === 0}
-              >
-                <MessageSquare className="h-4 w-4 mr-2" />
-                Message
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={() => setBulkAssignDialogOpen(true)}
-                disabled={selectedEmployeeIds.length === 0}
-              >
-                <Briefcase className="h-4 w-4 mr-2" />
-                Assign
-              </PrimaryButton>
-              <div className="ml-auto">
-                <IconButton onClick={exitMultiSelect} aria-label="Exit multi-select">
-                  <X className="h-4 w-4" />
-                </IconButton>
-              </div>
-            </div>
-          </ListCard>
-        )}
-
-        <div
-          className="flex gap-2 overflow-x-auto hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0"
-          data-help="team.type"
-        >
-          {WORKER_TYPE_FILTERS.map((t) => {
-            const count =
-              t.value === 'all'
-                ? tabFilteredEmployees.length
-                : tabFilteredEmployees.filter((e) => workerTypeOf(e.team_role) === t.value).length;
-            const active = workerType === t.value;
-            return (
-              <button
-                key={t.value}
-                type="button"
-                aria-pressed={active}
-                onClick={() => setWorkerType(t.value)}
-                className={`h-11 shrink-0 rounded-full border px-4 text-[13px] touch-manipulation ${
-                  active
-                    ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
-                    : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
-                }`}
-              >
-                {t.label} <span className="tabular-nums">{count}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        <div data-help="team.tabs">
-        <FilterBar
-          tabs={[
-            { value: 'active', label: 'Active', count: joinedEmployees.length },
-            { value: 'invited', label: 'Invited', count: invitedEmployees.length },
-            { value: 'archived', label: 'Archived', count: archivedCount },
-          ]}
-          activeTab={activeTab}
-          onTabChange={(value) => setActiveTab(value as FilterTab)}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search team…"
-          actions={
-            <button
-              onClick={() => setFilterOpen(true)}
-              className="h-11 shrink-0 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12.5px] font-medium touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors inline-flex items-center gap-2"
-            >
-              Filters
-              {filterCount > 0 && <Pill tone="yellow">{filterCount}</Pill>}
-            </button>
-          }
-        />
-        </div>
-
-        {activeTab === 'invited' ? (
-          <div className="space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <p className="text-[13px] text-white">
-                Added to the team but never signed in. Each gets the invite email; you can send up
-                to three reminders, a day apart.
-              </p>
-              <SecondaryButton
-                data-help="team.team-code"
-                onClick={() => setTeamCodeOpen(true)}
-                className="shrink-0"
-              >
-                <KeyRound className="h-4 w-4 mr-1.5" />
-                Team code
-              </SecondaryButton>
-            </div>
-            {filteredEmployees.length === 0 ? (
-              <EmptyState
-                title={searchQuery.trim() ? 'No matches' : 'Everyone has joined'}
-                description={
-                  searchQuery.trim()
-                    ? 'Try a different search.'
-                    : 'Nobody is waiting on an invite. New people you add show here until they sign in.'
-                }
-              />
-            ) : (
-              <div className="-mx-4 sm:mx-0 bg-white/[0.04] border-y sm:border border-white/[0.06] sm:rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
-                {filteredEmployees.map((employee) => {
-                  const hist = inviteHistory?.get(employee.id);
-                  const extra = employee as Employee & {
-                    link_declined_at?: string | null;
-                    invite_chase_count?: number;
-                  };
-                  const declined = !!extra.link_declined_at;
-                  const chases = extra.invite_chase_count ?? 0;
-                  const hoursSinceLast = hist
-                    ? (Date.now() - new Date(hist.lastSentAt).getTime()) / 36e5
-                    : Infinity;
-                  const waitHours = Math.max(0, Math.ceil(24 - hoursSinceLast));
-                  const canChase =
-                    !!employee.email && !declined && chases < 3 && hoursSinceLast >= 24;
-                  const status = !employee.email
-                    ? 'No email address. Add one to invite them'
-                    : declined
-                      ? 'Said the invite wasn’t for them. Check the email address'
-                      : !hist
-                        ? 'No invite sent yet'
-                        : `Sent ${
-                            hoursSinceLast < 1 / 60
-                              ? 'just now'
-                              : formatDistanceToNowStrict(parseISO(hist.lastSentAt), { addSuffix: true })
-                          }${
-                            hist.sends > 1 ? ` · ${hist.sends} emails` : ''
-                          } · not joined`;
-                  const expiry = hist?.liveToken && hist.expiresAt
-                    ? differenceInCalendarDays(parseISO(hist.expiresAt), new Date())
-                    : null;
-                  return (
-                    <div key={employee.id} className="px-4 sm:px-5 py-4 space-y-3">
-                      <button
-                        onClick={() => handleItemClick(employee)}
-                        className="w-full flex items-start gap-3 text-left touch-manipulation"
-                      >
-                        <Avatar initials={employee.avatar_initials || getInitials(employee.name)} />
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[14px] font-semibold text-white truncate">
-                              {employee.name}
-                            </span>
-                            <Pill tone={ROLE_TONE[getTeamRole(employee.team_role)]}>
-                              {getTeamRole(employee.team_role)}
-                            </Pill>
-                          </div>
-                          <div className="mt-0.5 text-[12.5px] text-white truncate">
-                            {employee.email || 'No email'}
-                          </div>
-                          <div
-                            className={`mt-1 text-[12.5px] ${declined || !employee.email ? 'text-orange-300' : 'text-white'}`}
-                          >
-                            {status}
-                            {expiry !== null && expiry <= 3 && expiry >= 0
-                              ? ` · link expires ${expiry === 0 ? 'today' : `in ${expiry} day${expiry === 1 ? '' : 's'}`}`
-                              : ''}
-                            {hist?.expired ? ' · link expired' : ''}
-                          </div>
-                        </div>
-                      </button>
-                      <div className="flex gap-2">
-                        <PrimaryButton
-                          data-help="team.chase"
-                          fullWidth
-                          onClick={() => handleChase(employee)}
-                          disabled={!canChase || chasingId === employee.id}
-                        >
-                          {chasingId === employee.id ? (
-                            <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
-                          ) : (
-                            <Mail className="h-4 w-4 mr-1.5" />
-                          )}
-                          {!employee.email || declined
-                            ? 'Fix email first'
-                            : chases >= 3
-                              ? 'Chased 3 times'
-                              : hoursSinceLast < 24
-                                ? `Chase in ${waitHours}h`
-                                : hist
-                                  ? 'Send reminder'
-                                  : 'Send invite'}
-                        </PrimaryButton>
-                        <SecondaryButton
-                          fullWidth
-                          onClick={() => handleCopyLink(employee)}
-                          disabled={!hist?.liveToken}
-                        >
-                          <Link2 className="h-4 w-4 mr-1.5" />
-                          Copy link
-                        </SecondaryButton>
-                      </div>
-                    </div>
-                  );
-                })}
+                <div className="ml-auto flex items-center gap-2">
+                  <button
+                    type="button"
+                    className={rowBtnSecondary}
+                    onClick={() => setBulkMessageOpen(true)}
+                    disabled={selectedEmployeeIds.length === 0}
+                  >
+                    <MessageSquare className="h-4 w-4" />
+                    Message
+                  </button>
+                  <button
+                    type="button"
+                    className={rowBtnPrimary}
+                    onClick={() => setBulkAssignDialogOpen(true)}
+                    disabled={selectedEmployeeIds.length === 0}
+                  >
+                    <Briefcase className="h-4 w-4" />
+                    Assign
+                  </button>
+                  <IconButton onClick={exitMultiSelect} aria-label="Exit multi-select">
+                    <X className="h-4 w-4" />
+                  </IconButton>
+                </div>
               </div>
             )}
-          </div>
-        ) : filteredEmployees.length === 0 ? (
-          <EmptyState
-            title={
-              hasActiveFilters || searchQuery.trim() ? 'No matches' : 'No team members yet'
-            }
-            description={
-              hasActiveFilters || searchQuery.trim()
-                ? 'Try adjusting your filters or search.'
-                : 'Add your first operative, supervisor or PM to get started.'
-            }
-            action={hasActiveFilters ? 'Clear filters' : 'Add team member'}
-            onAction={hasActiveFilters ? clearFilters : () => setAddEmployeeDialogOpen(true)}
-          />
-        ) : (
-          <div data-help="team.list">
-          <ListCard>
-            <ListCardHeader
-              tone="blue"
-              title="Team"
-              meta={<Pill tone="blue">{filteredEmployees.length}</Pill>}
-            />
-            <ListBody>
-              {filteredEmployees.map((employee) => {
-                const isSelected = selectedEmployeeIds.includes(employee.id);
-                const availability = getAvailability(employee);
-                const liveStatus = liveStatusByEmployee.get(employee.id);
-                const isOnSite = liveStatus === 'On Site' || liveStatus === 'En Route';
-                const teamRole = getTeamRole(employee.team_role);
-                const subtitleParts: string[] = [employee.role];
-                if (employee.certifications_count > 0)
-                  subtitleParts.push(`${employee.certifications_count} certs`);
-                if (employee.active_jobs_count > 0)
-                  subtitleParts.push(`${employee.active_jobs_count} jobs`);
 
+            {/* Phone: the type filter as one wrapping row of chips */}
+            <div className="flex flex-wrap gap-2 lg:hidden" data-help="team.type">
+              {WORKER_TYPE_FILTERS.map((t) => {
+                const active = workerType === t.value;
                 return (
-                  <ListRow
-                    key={employee.id}
-                    lead={
-                      <div className="flex items-center gap-2.5">
-                        {multiSelectMode && (
-                          <Checkbox
-                            checked={isSelected}
-                            onCheckedChange={() => toggleEmployeeSelection(employee.id)}
-                            onClick={(e) => e.stopPropagation()}
-                            className={checkboxClass}
-                          />
-                        )}
-                        <Avatar
-                          initials={employee.avatar_initials || getInitials(employee.name)}
-                          online={
-                            isOnSite || availability === 'Available' || availability === 'On Job'
-                          }
-                        />
-                      </div>
-                    }
-                    title={employee.name}
-                    subtitle={subtitleParts.join(' · ')}
-                    trailing={
-                      <>
-                        <Pill tone={ROLE_TONE[teamRole]}>{teamRole}</Pill>
-                        {!employee.user_id && employee.status !== 'Archived' ? (
-                          <Pill tone="amber">Invited</Pill>
-                        ) : isOnSite ? (
-                          <Pill tone={liveStatus === 'En Route' ? 'blue' : 'emerald'}>
-                            {liveStatus}
-                          </Pill>
-                        ) : (
-                          <Pill tone={AVAILABILITY_TONE[availability]}>{availability}</Pill>
-                        )}
-                      </>
-                    }
-                    onClick={() => handleItemClick(employee)}
-                  />
+                  <button
+                    key={t.value}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => setWorkerType(t.value)}
+                    className={cn(
+                      'h-11 rounded-full border px-4 text-[13px] touch-manipulation',
+                      active
+                        ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                        : 'bg-white/[0.04] border-white/[0.14] text-white font-medium'
+                    )}
+                  >
+                    {t.label} <span className="tabular-nums">{typeCount(t.value)}</span>
+                  </button>
                 );
               })}
-            </ListBody>
-          </ListCard>
-          </div>
-        )}
+            </div>
 
-        <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
-          <SheetContent
-            side="bottom"
-            className="h-[80vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-white/[0.06]"
-          >
-            <SheetHeader className="px-5 sm:px-6 pt-5 pb-4 border-b border-white/[0.06]">
-              <div className="flex items-center justify-between">
-                <SheetTitle className="text-white">Filter team</SheetTitle>
-                {hasActiveFilters && (
-                  <button
-                    onClick={clearFilters}
-                    className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-                  >
-                    Clear all
-                  </button>
-                )}
-              </div>
-            </SheetHeader>
+            {/* The phone chips above are display:none on desktop but still take
+                the column's space-y margin, so pull the tabs back up there. */}
+            <div data-help="team.tabs" className={cn(filterStack, !multiSelectMode && 'lg:!mt-0')}>
+              <FilterBar
+                tabs={[
+                  { value: 'active', label: 'Active', count: joinedEmployees.length },
+                  { value: 'invited', label: 'Invited', count: invitedEmployees.length },
+                  { value: 'archived', label: 'Archived', count: archivedCount },
+                ]}
+                activeTab={activeTab}
+                onTabChange={(value) => setActiveTab(value as FilterTab)}
+                search={searchQuery}
+                onSearchChange={setSearchQuery}
+                searchPlaceholder="Search team…"
+                actions={
+                  <SecondaryButton onClick={() => setFilterOpen(true)} className="shrink-0">
+                    Filters
+                    {filterCount > 0 && (
+                      <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-elec-yellow px-1.5 text-[11px] font-bold text-black tabular-nums">
+                        {filterCount}
+                      </span>
+                    )}
+                  </SecondaryButton>
+                }
+              />
+            </div>
 
-            <ScrollArea className="h-[calc(80vh-160px)]">
-              <div className="px-5 sm:px-6 py-5 space-y-6">
-                <div>
-                  <Eyebrow>Sort by</Eyebrow>
-                  <div className="mt-3 grid grid-cols-2 gap-2">
-                    {SORT_OPTIONS.filter((o) => canSeeMoney || o.value !== 'rate').map((opt) => {
-                      const active = sortBy === opt.value;
+            {activeTab === 'invited' ? (
+              <section>
+                <PanelTitle
+                  title="Not joined yet"
+                  meta={filteredEmployees.length > 0 ? filteredEmployees.length : undefined}
+                />
+                <p className="-mt-1 mb-3 text-[13px] text-white">
+                  Added to the team but never signed in. Each gets the invite email; you can send up
+                  to three reminders, a day apart.
+                </p>
+                {filteredEmployees.length === 0 ? (
+                  <div className={panel}>
+                    <PlainEmpty
+                      bare
+                      text={
+                        searchQuery.trim()
+                          ? 'No matches. Try a different search.'
+                          : 'Everyone has joined. New people you add show here until they sign in.'
+                      }
+                    />
+                  </div>
+                ) : (
+                  <div className={cn(panel, rowsClass)}>
+                    {filteredEmployees.map((employee) => {
+                      const hist = inviteHistory?.get(employee.id);
+                      const extra = employee as Employee & {
+                        link_declined_at?: string | null;
+                        invite_chase_count?: number;
+                      };
+                      const declined = !!extra.link_declined_at;
+                      const chases = extra.invite_chase_count ?? 0;
+                      const hoursSinceLast = hist
+                        ? (Date.now() - new Date(hist.lastSentAt).getTime()) / 36e5
+                        : Infinity;
+                      const waitHours = Math.max(0, Math.ceil(24 - hoursSinceLast));
+                      const canChase =
+                        !!employee.email && !declined && chases < 3 && hoursSinceLast >= 24;
+                      const status = !employee.email
+                        ? 'No email address. Add one to invite them'
+                        : declined
+                          ? 'Said the invite wasn’t for them. Check the email address'
+                          : !hist
+                            ? 'No invite sent yet'
+                            : `Sent ${
+                                hoursSinceLast < 1 / 60
+                                  ? 'just now'
+                                  : formatDistanceToNowStrict(parseISO(hist.lastSentAt), {
+                                      addSuffix: true,
+                                    })
+                              }${hist.sends > 1 ? ` · ${hist.sends} emails` : ''} · not joined`;
+                      const expiry =
+                        hist?.liveToken && hist.expiresAt
+                          ? differenceInCalendarDays(parseISO(hist.expiresAt), new Date())
+                          : null;
                       return (
-                        <button
-                          key={opt.value}
-                          type="button"
-                          onClick={() => setSortBy(opt.value)}
-                          className={`h-11 px-3 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation text-left ${
-                            active
-                              ? 'bg-elec-yellow text-black border-elec-yellow'
-                              : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08] hover:bg-white/[0.05]'
-                          }`}
+                        <div
+                          key={employee.id}
+                          className="flex flex-col gap-3 px-4 py-3.5 sm:px-5 md:flex-row md:items-center"
                         >
-                          {opt.label}
-                        </button>
+                          <button
+                            onClick={() => handleItemClick(employee)}
+                            className="flex min-w-0 flex-1 items-center gap-3 text-left touch-manipulation"
+                          >
+                            <Initials name={employee.name} />
+                            <div className="min-w-0 flex-1">
+                              <div className="truncate text-[15px] font-semibold text-white">
+                                {employee.name}
+                              </div>
+                              <div className="mt-0.5 truncate text-[13px] text-white">
+                                {getTeamRole(employee.team_role)} · {employee.email || 'No email'}
+                              </div>
+                              <div
+                                className={cn(
+                                  'mt-0.5 text-[12.5px] font-medium',
+                                  declined || !employee.email ? 'text-red-300' : 'text-white'
+                                )}
+                              >
+                                {status}
+                                {expiry !== null && expiry <= 3 && expiry >= 0
+                                  ? ` · link expires ${expiry === 0 ? 'today' : `in ${expiry} day${expiry === 1 ? '' : 's'}`}`
+                                  : ''}
+                                {hist?.expired ? ' · link expired' : ''}
+                              </div>
+                            </div>
+                          </button>
+                          <div className="flex gap-2 md:shrink-0">
+                            <button
+                              type="button"
+                              data-help="team.chase"
+                              className={cn(rowBtnPrimary, 'flex-1 md:flex-none')}
+                              onClick={() => handleChase(employee)}
+                              disabled={!canChase || chasingId === employee.id}
+                            >
+                              {chasingId === employee.id ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Mail className="h-4 w-4" />
+                              )}
+                              {!employee.email || declined
+                                ? 'Fix email first'
+                                : chases >= 3
+                                  ? 'Chased 3 times'
+                                  : hoursSinceLast < 24
+                                    ? `Chase in ${waitHours}h`
+                                    : hist
+                                      ? 'Send reminder'
+                                      : 'Send invite'}
+                            </button>
+                            <button
+                              type="button"
+                              className={cn(rowBtnSecondary, 'flex-1 md:flex-none')}
+                              onClick={() => handleCopyLink(employee)}
+                              disabled={!hist?.liveToken}
+                            >
+                              <Link2 className="h-4 w-4" />
+                              Copy link
+                            </button>
+                          </div>
+                        </div>
                       );
                     })}
                   </div>
-                </div>
-
-                <div>
-                  <Eyebrow>Availability</Eyebrow>
-                  <ListCard className="mt-3">
-                    <ListBody>
-                      {(
-                        ['Available', 'On Job', 'On Leave', 'Unavailable'] as AvailabilityStatus[]
-                      ).map((status) => (
-                        <ListRow
-                          key={status}
-                          lead={
-                            <Checkbox
-                              checked={selectedAvailability.includes(status)}
-                              onCheckedChange={() => toggleAvailability(status)}
-                              className={checkboxClass}
-                            />
-                          }
-                          title={status}
-                          trailing={<Pill tone={AVAILABILITY_TONE[status]}>{status}</Pill>}
-                          onClick={() => toggleAvailability(status)}
-                        />
-                      ))}
-                    </ListBody>
-                  </ListCard>
-                </div>
-
-                <div>
-                  <Eyebrow>Role</Eyebrow>
-                  <ListCard className="mt-3">
-                    <ListBody>
-                      {TEAM_ROLES.map((role) => (
-                        <ListRow
-                          key={role}
-                          lead={
-                            <Checkbox
-                              checked={selectedRoles.includes(role)}
-                              onCheckedChange={() => toggleRole(role)}
-                              className={checkboxClass}
-                            />
-                          }
-                          title={role}
-                          trailing={<Pill tone={ROLE_TONE[role]}>{role}</Pill>}
-                          onClick={() => toggleRole(role)}
-                        />
-                      ))}
-                    </ListBody>
-                  </ListCard>
-                </div>
+                )}
+              </section>
+            ) : filteredEmployees.length === 0 ? (
+              <div className={panel}>
+                <PlainEmpty
+                  bare
+                  text={
+                    hasActiveFilters || searchQuery.trim()
+                      ? 'No matches. Try other filters or a different search.'
+                      : activeTab === 'archived'
+                        ? 'Nobody archived. People you archive keep their records here.'
+                        : 'No one on the team yet. Add your first operative, supervisor or PM and they get an invite.'
+                  }
+                  action={
+                    hasActiveFilters ? (
+                      <button type="button" onClick={clearFilters} className={rowBtnSecondary}>
+                        Clear filters
+                      </button>
+                    ) : activeTab === 'active' && !searchQuery.trim() ? (
+                      <button
+                        type="button"
+                        onClick={() => setAddEmployeeDialogOpen(true)}
+                        className={rowBtnSecondary}
+                      >
+                        Add team member
+                      </button>
+                    ) : undefined
+                  }
+                />
               </div>
-            </ScrollArea>
+            ) : (
+              <section data-help="team.list">
+                <PanelTitle
+                  title={activeTab === 'archived' ? 'Archived' : 'The team'}
+                  meta={filteredEmployees.length}
+                />
+                <div className={cn(panel, rowsClass)}>
+                  {filteredEmployees.map((employee) => {
+                    const isSelected = selectedEmployeeIds.includes(employee.id);
+                    const liveStatus = liveStatusByEmployee.get(employee.id);
+                    const teamRole = getTeamRole(employee.team_role);
+                    const detailParts: string[] = [teamRole];
+                    if (employee.role && employee.role !== teamRole)
+                      detailParts.push(employee.role);
+                    if (employee.certifications_count > 0)
+                      detailParts.push(`${employee.certifications_count} certs`);
+                    if (employee.active_jobs_count > 0)
+                      detailParts.push(`${employee.active_jobs_count} jobs`);
 
-            <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]">
-              <PrimaryButton onClick={() => setFilterOpen(false)} fullWidth>
-                Show {filteredEmployees.length} results
-              </PrimaryButton>
-            </div>
-          </SheetContent>
-        </Sheet>
+                    return (
+                      <Row
+                        key={employee.id}
+                        lead={
+                          <div className="flex shrink-0 items-center gap-3">
+                            {multiSelectMode && (
+                              <Checkbox
+                                checked={isSelected}
+                                onCheckedChange={() => toggleEmployeeSelection(employee.id)}
+                                onClick={(e) => e.stopPropagation()}
+                                className={checkboxClass}
+                              />
+                            )}
+                            {employee.photo_url ? (
+                              <Avatar
+                                initials={employee.avatar_initials || getInitials(employee.name)}
+                                photo={employee.photo_url}
+                                online={liveStatus === 'On Site' ? true : undefined}
+                                className="[&>div]:h-10 [&>div]:w-10 [&>div]:rounded-full"
+                              />
+                            ) : (
+                              <Initials name={employee.name} live={liveStatus === 'On Site'} />
+                            )}
+                          </div>
+                        }
+                        title={employee.name}
+                        detail={(() => {
+                          const rtw = rtwMap.get(employee.id);
+                          if (!rtw || activeTab === 'archived') return detailParts.join(' · ');
+                          const tone =
+                            rtw.status === 'missing' || rtw.status === 'overdue'
+                              ? 'font-semibold text-red-400'
+                              : rtw.status === 'due'
+                                ? 'font-semibold text-elec-yellow'
+                                : 'text-white';
+                          return (
+                            <>
+                              {detailParts.join(' · ')} ·{' '}
+                              <span className={tone}>
+                                Right to work {RTW_STATUS_LABEL[rtw.status].toLowerCase()}
+                              </span>
+                            </>
+                          );
+                        })()}
+                        trailing={statusTag(employee)}
+                        onClick={() => handleItemClick(employee)}
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+          </div>
 
-        <Sheet open={bulkMessageOpen} onOpenChange={setBulkMessageOpen}>
-          <SheetContent side="bottom" className="p-0 rounded-t-2xl overflow-hidden">
-            <div className="bg-background px-4 pt-4 pb-8 space-y-4">
-              <SheetHeader>
-                <SheetTitle className="text-left text-base">
-                  Message {selectedEmployeeIds.length} team member
-                  {selectedEmployeeIds.length === 1 ? '' : 's'}
-                </SheetTitle>
-              </SheetHeader>
-              <Textarea
-                value={bulkMessageText}
-                onChange={(e) => setBulkMessageText(e.target.value)}
-                placeholder="Type your message…"
-                rows={4}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-              />
-              <PrimaryButton
-                onClick={handleBulkMessage}
-                disabled={!bulkMessageText.trim()}
-                fullWidth
+          <div className={colClass}>
+            <section className="hidden lg:block" data-help="team.type">
+              <PanelTitle title="Show" />
+              <div className={cn(panel, rowsClass)}>
+                {WORKER_TYPE_FILTERS.map((t) => {
+                  const active = workerType === t.value;
+                  return (
+                    <button
+                      key={t.value}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => setWorkerType(t.value)}
+                      className={cn(
+                        'flex min-h-[52px] w-full items-center justify-between gap-3 px-4 py-2.5 text-left touch-manipulation transition-colors sm:px-5',
+                        active ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]'
+                      )}
+                    >
+                      <span className="flex items-center gap-3">
+                        <span
+                          aria-hidden
+                          className={cn(
+                            'h-2 w-2 rounded-full',
+                            active ? 'bg-elec-yellow' : 'bg-transparent'
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            'text-[15px] text-white',
+                            active ? 'font-semibold' : 'font-medium'
+                          )}
+                        >
+                          {t.label}
+                        </span>
+                      </span>
+                      <span className="text-[15px] font-semibold text-white tabular-nums">
+                        {typeCount(t.value)}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* "Show" above is desktop-only; drop its margin on a phone. */}
+            <section className="max-lg:!mt-0">
+              <PanelTitle title="Bringing people in" />
+              <div className={cn(panel, rowsClass)}>
+                <Row
+                  title="Add someone"
+                  detail="With an email address they get an invite straight away."
+                  onClick={() => setAddEmployeeDialogOpen(true)}
+                />
+                <Row
+                  data-help="team.team-code"
+                  title="Team code"
+                  detail="Share one code. People sign up and join your firm."
+                  onClick={() => setTeamCodeOpen(true)}
+                />
+                {invitedEmployees.length > 0 && activeTab !== 'invited' && (
+                  <Row
+                    title="Chase who hasn't joined"
+                    detail={`${invitedEmployees.length} waiting on an invite`}
+                    trailing={<Tag tone="yellow">{invitedEmployees.length}</Tag>}
+                    onClick={() => setActiveTab('invited')}
+                  />
+                )}
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <FormSheet
+          open={filterOpen}
+          onOpenChange={setFilterOpen}
+          title="Filter the team"
+          description="Sort the list, or show only some roles or availability."
+          headerTrailing={
+            hasActiveFilters ? (
+              <button
+                onClick={clearFilters}
+                className="h-11 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
               >
-                <Send className="h-4 w-4 mr-2" />
-                Send message
-              </PrimaryButton>
+                Clear all
+              </button>
+            ) : undefined
+          }
+          width="wide"
+          bodyClassName="grid gap-6 [&>*]:min-w-0 lg:grid-cols-3 lg:gap-8 lg:items-start"
+          footer={
+            <PrimaryButton onClick={() => setFilterOpen(false)} fullWidth size="lg">
+              Show {filteredEmployees.length} {filteredEmployees.length === 1 ? 'person' : 'people'}
+            </PrimaryButton>
+          }
+        >
+          <div>
+            <h3 className="mb-3 text-[15px] font-semibold text-white">Sort by</h3>
+            <div className="grid grid-cols-2 gap-2 lg:grid-cols-1">
+              {SORT_OPTIONS.filter((o) => canSeeMoney || o.value !== 'rate').map((opt) => {
+                const active = sortBy === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setSortBy(opt.value)}
+                    className={cn(
+                      'h-11 rounded-xl border px-3 text-left text-[13px] font-medium transition-colors touch-manipulation',
+                      active
+                        ? 'bg-elec-yellow text-black border-elec-yellow font-semibold'
+                        : 'bg-white/[0.04] text-white border-white/[0.12] hover:bg-white/[0.06]'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
             </div>
-          </SheetContent>
-        </Sheet>
+          </div>
+
+          <div>
+            <h3 className="mb-3 text-[15px] font-semibold text-white">Availability</h3>
+            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04]">
+              <div className={rowsClass}>
+                {(['Available', 'On Job', 'On Leave', 'Unavailable'] as AvailabilityStatus[]).map(
+                  (status) => (
+                    <Row
+                      key={status}
+                      chevron={false}
+                      lead={
+                        <Checkbox
+                          checked={selectedAvailability.includes(status)}
+                          onCheckedChange={() => toggleAvailability(status)}
+                          onClick={(e) => e.stopPropagation()}
+                          className={checkboxClass}
+                        />
+                      }
+                      title={status === 'On Job' ? 'On a job' : status}
+                      onClick={() => toggleAvailability(status)}
+                    />
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-3 text-[15px] font-semibold text-white">Role</h3>
+            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04]">
+              <div className={rowsClass}>
+                {TEAM_ROLES.map((role) => (
+                  <Row
+                    key={role}
+                    chevron={false}
+                    lead={
+                      <Checkbox
+                        checked={selectedRoles.includes(role)}
+                        onCheckedChange={() => toggleRole(role)}
+                        onClick={(e) => e.stopPropagation()}
+                        className={checkboxClass}
+                      />
+                    }
+                    title={role}
+                    onClick={() => toggleRole(role)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </FormSheet>
+
+        <FormSheet
+          open={bulkMessageOpen}
+          onOpenChange={setBulkMessageOpen}
+          title={`Message ${selectedEmployeeIds.length} team member${selectedEmployeeIds.length === 1 ? '' : 's'}`}
+          description="They get it in the app and can reply."
+          width="lg"
+          footer={
+            <PrimaryButton
+              onClick={handleBulkMessage}
+              disabled={!bulkMessageText.trim()}
+              fullWidth
+              size="lg"
+            >
+              <Send className="h-4 w-4 mr-2" />
+              Send message
+            </PrimaryButton>
+          }
+        >
+          <Textarea
+            value={bulkMessageText}
+            onChange={(e) => setBulkMessageText(e.target.value)}
+            placeholder="Type your message…"
+            rows={6}
+            className="min-h-[160px] rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white caret-elec-yellow placeholder:text-white/35 focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 touch-manipulation"
+          />
+        </FormSheet>
 
         <AddEmployeeDialog open={addEmployeeDialogOpen} onOpenChange={setAddEmployeeDialogOpen} />
 

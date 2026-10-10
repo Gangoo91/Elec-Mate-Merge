@@ -6,47 +6,54 @@ import useSEO from '@/hooks/useSEO';
 const sections = [
   {
     id: 1,
-    title: 'HVAC systems in BMS (AHU, FCU, chillers, boilers)',
+    title: 'The plant a BMS runs',
     icon: Wind,
-    description: 'HVAC equipment integration and the control points each unit exposes.',
+    description:
+      'Boilers, heat pumps, chillers, pumps, AHUs and room units: what each controls for itself, and what the BMS is there to command and watch.',
   },
   {
     id: 2,
-    title: 'Control strategies: temperature, pressure, flow',
+    title: 'Control loops',
     icon: Gauge,
-    description: 'Process control methods and tuning fundamentals.',
+    description:
+      'How a BMS holds a temperature or a pressure where it should be, why loops misbehave, and how to tell a tuning problem from a fault you can fix with a spanner.',
   },
   {
     id: 3,
-    title: 'Time scheduling and occupancy programming',
+    title: 'Time and occupancy',
     icon: Clock,
-    description: 'Automated scheduling, occupancy detection and setback strategies.',
+    description:
+      'Time programmes, holidays, optimisers, presence and the override button: the controls that decide when plant runs at all.',
   },
   {
     id: 4,
-    title: 'Demand-based control and load shedding',
+    title: 'Demand-based control and load management',
     icon: Battery,
-    description: 'Energy optimisation and load management during peak demand.',
+    description:
+      'Making plant follow the real load, and keeping the site under its electrical limit when everything wants to run at once.',
   },
   {
     id: 5,
-    title: 'Override functions and seasonal settings',
+    title: 'Overrides, frost protection and seasonal change',
     icon: Power,
-    description: 'Manual overrides, holiday modes and seasonal adjustments.',
+    description:
+      'Who is in charge of a piece of plant at any moment, what stops it freezing when nobody is in, and how heating and cooling are kept from fighting.',
   },
   {
     id: 6,
-    title: 'Alarm responses and safety shutdowns',
+    title: 'Plant safety interlocks and shutdowns',
     icon: AlertTriangle,
-    description: 'Emergency procedures, interlocks and safety system responses.',
+    description:
+      'What protects people and plant is wired so it works whatever the software does. The BMS watches it, tells someone, and brings the plant back properly afterwards.',
   },
 ];
 
 export default function BMSModule3() {
   useSEO({
-    title: 'Module 3: HVAC Integration & Scheduling | BMS Course | Elec-Mate',
+    title:
+      'Module 3: Controlling heating, ventilation and air conditioning | BMS course | Elec-Mate',
     description:
-      'HVAC control strategies, scheduling, demand-based control, overrides and safety shutdowns within a BMS.',
+      'The plant a BMS runs and how it controls it: loops, schedules, demand-based control, overrides and hardwired safeties.',
   });
 
   return (
@@ -54,15 +61,15 @@ export default function BMSModule3() {
       backTo="../bms-course"
       backLabel="Building management systems"
       moduleNumber={3}
-      title="HVAC integration and scheduling logic"
-      description="HVAC control strategies, scheduling and demand-based optimisation."
+      title="Controlling heating, ventilation and air conditioning"
+      description="The plant a BMS runs and how it controls it: loops, schedules, demand-based control, overrides and the safeties that must never depend on software."
       tone="yellow"
       sectionsCount={sections.length}
-      duration="65 mins"
+      duration="3 hrs"
       prevModuleHref="../bms-module-2"
-      prevModuleLabel="Control devices and field sensors"
+      prevModuleLabel="Field devices and signals"
       nextModuleHref="../bms-module-4"
-      nextModuleLabel="Lighting, access and environmental control"
+      nextModuleLabel="Lighting, access, blinds and metering"
     >
       {sections.map((section, index) => (
         <SectionCard

@@ -1,8 +1,13 @@
 /**
  * Quality & Compliance Hub (College Hub redesign, 7 Oct 2026).
  *
- *   header + "?" → four live figures → readiness at a glance (chart)
- *   → start something → safeguarding & IQA → inspection → records
+ *   header (one sentence with the counts, the first job as the primary)
+ *   → needs you + staff checks bar → start something → safeguarding & IQA
+ *   → inspection → records
+ *
+ * 8 Oct 2026: the four figure tiles and the readiness panel went (they
+ * repeated the sentence and Compliance docs); the first job became the
+ * page's one primary action.
  *
  * Built from the College Hub kit (CollegeUi). Every figure is live:
  * open safeguarding concerns (designated leads only; the hook returns
@@ -19,10 +24,19 @@ import { useComplianceStats } from '@/hooks/useComplianceStats';
 import { useSafeguardingRouting } from '@/components/college/quality/useSafeguardingRouting';
 import { SCR_LEGEND, scrCounts, scrSegments } from '@/components/college/quality/complianceStatus';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
-import { CollegePageHeader, CollegeSectionTitle, CollegeStats } from '@/components/college/ui/CollegeUi';
-import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import { SegmentBar } from '@/components/college/quality/QualityKit';
-import { LinkGroup, QualityScreen, QuickActions } from '@/components/college/quality/QualityHubKit';
+import {
+  LinkGroup,
+  QBTN_PRIMARY,
+  QPanel,
+  QualityHeader,
+  QualityScreen,
+  QuickActions,
+  WorkRows,
+  type WorkRow,
+} from '@/components/college/quality/QualityHubKit';
+import { cap, joinAnd, plural } from '@/components/college/quality/qualityText';
 
 interface QualityComplianceHubProps {
   onNavigate: (section: CollegeSection) => void;
@@ -33,16 +47,28 @@ const HELP: PageHelpContent = {
   title: 'Quality and compliance',
   what: 'Everything that keeps the college safe and inspection-ready in one place: safeguarding, internal quality assurance (IQA), staff checks, policies, and the documents an inspector or auditor will ask for.',
   steps: [
-    { title: 'Check the figures', body: 'The four figures at the top are live. Orange means something needs doing; tap a figure to go straight to it.' },
-    { title: 'Start with what is due', body: 'Sample work for IQA, close evidence gaps, or update the improvement plan from Start something.' },
-    { title: 'Keep the paper trail', body: 'Staff checks, policies, reports and the audit log are under Records, ready to print or download.' },
+    {
+      title: 'Start with Needs you',
+      body: 'Everything waiting on someone, most urgent first. Orange means it needs doing; tap a row to go straight to it.',
+    },
+    {
+      title: 'Keep the cycle moving',
+      body: 'Sample work for IQA, rehearse an inspection, draft the self-assessment or update the improvement plan from Start something.',
+    },
+    {
+      title: 'Keep the paper trail',
+      body: 'Staff checks, policies, reports and the audit log are under Records, ready to print or download.',
+    },
   ],
   notes: [
     {
       title: 'Safeguarding',
       body: 'Designated safeguarding leads and their deputies see and act on concerns. If the college has no lead with an account, admins and heads of department are told instead and can see and act on them until a lead is set. Everyone else sees who the leads are and how to raise one.',
     },
-    { title: 'Staff checks', body: 'In date, expiring within 60 days, awaiting verification, expired, or missing, from the single central record. The same states and colours are used in Compliance docs and the audit pack.' },
+    {
+      title: 'Staff checks',
+      body: 'In date, expiring within 60 days, awaiting verification, expired, or missing, from the single central record. The same states and colours are used in Compliance docs and the audit pack.',
+    },
   ],
   legend: SCR_LEGEND,
 };
@@ -71,92 +97,153 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
   const inDatePct = compliance.inDatePct;
   const unacknowledged = openConcerns.filter((c) => !c.isAcknowledged).length;
 
-  const firstJob = noLead
-    ? 'No one would be told about a safeguarding concern: there is no designated lead, admin or head of department with an account. Set a lead in Compliance docs.'
-    : fallbackOnly && !isDsl
-      ? 'No designated safeguarding lead is set. Concerns go to admins and heads of department until one is. Set a lead in Compliance docs.'
-    : isDsl && unacknowledged > 0
-      ? `${unacknowledged} safeguarding ${unacknowledged === 1 ? 'concern has' : 'concerns have'} not been acknowledged. Open the queue first.`
-      : compliance.expired > 0
-        ? `${compliance.expired} staff ${compliance.expired === 1 ? 'check has' : 'checks have'} expired. Renew them before anything else; an inspector will ask.`
-        : compliance.missing > 0
-          ? `${compliance.missing} staff ${compliance.missing === 1 ? 'check is' : 'checks are'} not on file. Upload them in Compliance docs.`
-          : iqaAwaiting > 0
-            ? `${iqaAwaiting} IQA ${iqaAwaiting === 1 ? 'verdict is' : 'verdicts are'} waiting. Sample and decide them on the IQA dashboard.`
-            : 'Nothing urgent. Keep sampling, and rehearse an inspection before the next one is due.';
+  /* The sentence under the title carries the counts (no figure tiles). */
+  const bits: string[] = [];
+  if (isDsl && safeguardingOpen > 0)
+    bits.push(
+      `${plural(safeguardingOpen, 'open safeguarding concern')}${unacknowledged > 0 ? ` (${unacknowledged} not acknowledged)` : ''}`
+    );
+  if (!complianceLoading) {
+    if (compliance.expired > 0)
+      bits.push(plural(compliance.expired, 'staff check expired', 'staff checks expired'));
+    if (compliance.missing > 0) bits.push(`${compliance.missing} not on file`);
+    if (compliance.expiring > 0) bits.push(`${compliance.expiring} expiring within 60 days`);
+  }
+  if (iqaAwaiting > 0) bits.push(plural(iqaAwaiting, 'IQA verdict', 'IQA verdicts') + ' waiting');
+  const summary = complianceLoading
+    ? 'Reading your records…'
+    : bits.length === 0
+      ? 'Nothing needs you right now. Staff checks are in date and no IQA verdicts are waiting.'
+      : `${cap(joinAnd(bits))}.`;
+
+  /* The page's one primary action follows the first job. */
+  const primary =
+    noLead || (fallbackOnly && !isDsl)
+      ? { label: 'Set a safeguarding lead', go: () => onNavigate('compliancedocs') }
+      : isDsl && unacknowledged > 0
+        ? { label: 'Open the safeguarding queue', go: () => onNavigate('safeguardingqueue') }
+        : compliance.expired > 0 || compliance.missing > 0
+          ? { label: 'Fix staff checks', go: () => onNavigate('compliancedocs') }
+          : { label: 'Sample work', go: () => navigate('/college/iqa') };
+
+  const needs: WorkRow[] = [];
+  if (noLead)
+    needs.push({
+      id: 'nolead',
+      title: 'No one would be told about a safeguarding concern',
+      sub: 'There is no designated lead, admin or head of department with an account.',
+      trailing: 'Set a lead',
+      warn: true,
+      onClick: () => onNavigate('compliancedocs'),
+    });
+  if (isDsl && safeguardingOpen > 0)
+    needs.push({
+      id: 'sg',
+      title: plural(safeguardingOpen, 'open safeguarding concern'),
+      sub:
+        unacknowledged > 0
+          ? `${unacknowledged} not acknowledged yet. Acknowledge first, then act.`
+          : 'All acknowledged. Record actions and close when done.',
+      trailing: unacknowledged > 0 ? 'Act now' : 'Open',
+      warn: unacknowledged > 0,
+      onClick: () => onNavigate('safeguardingqueue'),
+    });
+  if (compliance.expired > 0)
+    needs.push({
+      id: 'exp',
+      title: plural(compliance.expired, 'staff check has expired', 'staff checks have expired'),
+      sub: 'Not valid today. An inspector will ask for these first.',
+      trailing: 'Renew',
+      warn: true,
+      onClick: () => onNavigate('compliancedocs'),
+    });
+  if (compliance.missing > 0)
+    needs.push({
+      id: 'miss',
+      title: plural(
+        compliance.missing,
+        'staff check is not on file',
+        'staff checks are not on file'
+      ),
+      sub:
+        compliance.pending_verification > 0
+          ? `${compliance.pending_verification} more uploaded and waiting to be verified.`
+          : 'Never uploaded to the single central record.',
+      trailing: 'Upload',
+      warn: true,
+      onClick: () => onNavigate('compliancedocs'),
+    });
+  if (compliance.expiring > 0)
+    needs.push({
+      id: 'soon',
+      title:
+        plural(compliance.expiring, 'staff check expires', 'staff checks expire') +
+        ' within 60 days',
+      sub: 'Renew before the date passes.',
+      trailing: 'Plan renewal',
+      onClick: () => onNavigate('compliancedocs'),
+    });
+  if (iqaAwaiting > 0)
+    needs.push({
+      id: 'iqa',
+      title: plural(iqaAwaiting, 'IQA sample is', 'IQA samples are') + ' waiting for a verdict',
+      sub: 'Agree, disagree or return each one on its sampling plan.',
+      trailing: 'Give verdicts',
+      warn: true,
+      onClick: () => navigate('/college/iqa'),
+    });
 
   return (
     <QualityScreen>
-      <CollegePageHeader
+      <QualityHeader
         eyebrow="Quality & compliance"
         title="Quality and compliance"
-        description="Safeguarding, IQA, staff checks and the evidence an inspector will ask for, kept live in one place."
+        summary={summary}
+        sub="Safeguarding, IQA, staff checks and the evidence an inspector will ask for, kept live in one place."
         help={HELP}
+        primary={
+          <button type="button" onClick={primary.go} className={QBTN_PRIMARY}>
+            {primary.label}
+          </button>
+        }
       />
 
-      <CollegeStats
-        items={[
-          isDsl
-            ? {
-                label: 'Safeguarding',
-                value: String(safeguardingOpen),
-                sub: unacknowledged > 0 ? `${unacknowledged} not acknowledged` : safeguardingOpen > 0 ? 'open concerns' : 'nothing open',
-                warn: unacknowledged > 0,
-                onClick: () => onNavigate('safeguardingqueue'),
-              }
-            : noLead
-              ? { label: 'Safeguarding', value: 'No lead', sub: 'a concern would alert no one', warn: true, onClick: () => onNavigate('safeguardingqueue') }
-              : fallbackOnly
-                ? { label: 'Safeguarding', value: 'No DSL', sub: 'admins and heads of department are told', onClick: () => onNavigate('safeguardingqueue') }
-                : { label: 'Safeguarding', value: 'Leads', sub: 'who to tell, and how', onClick: () => onNavigate('safeguardingqueue') },
-          {
-            label: 'IQA verdicts due',
-            value: String(iqaAwaiting),
-            sub: iqaAwaiting > 0 ? 'samples waiting' : 'nothing waiting',
-            warn: iqaAwaiting > 0,
-            onClick: () => navigate('/college/iqa'),
-          },
-          {
-            label: 'Staff checks in date',
-            value: complianceLoading ? '…' : inDatePct == null ? 'None' : `${inDatePct}%`,
-            sub: compliance.total > 0 ? `${compliance.valid} of ${compliance.total} checks` : 'nothing on file yet',
-            good: inDatePct != null && inDatePct >= 95,
-            onClick: () => onNavigate('compliancedocs'),
-          },
-          {
-            label: 'Expired or missing',
-            value: complianceLoading ? '…' : String(complianceProblems),
-            sub: compliance.expiring > 0 ? `${compliance.expiring} more expiring soon` : 'staff checks',
-            warn: complianceProblems > 0,
-            onClick: () => onNavigate('compliancedocs'),
-          },
-        ]}
-      />
-
-      <section className="space-y-4">
-        <CollegeSectionTitle title="Readiness at a glance" sub="Staff checks from the single central record, and the first thing to do." />
-        <AreaHero
-          figures={[
-            { label: 'In date', value: String(compliance.valid), good: compliance.valid > 0 && complianceProblems === 0 },
-            { label: 'Expiring soon', value: String(compliance.expiring), warn: compliance.expiring > 0, sub: 'within 60 days' },
-            { label: 'Expired', value: String(compliance.expired), warn: compliance.expired > 0 },
-            { label: 'Missing', value: String(compliance.missing), warn: compliance.missing > 0, sub: compliance.pending_verification > 0 ? `not on file · ${compliance.pending_verification} awaiting verification` : 'not on file' },
-          ]}
-          chartTitle="Staff checks by state"
-          chart={
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-6">
+        <section className="space-y-4">
+          <CollegeSectionTitle
+            title="Needs you"
+            sub={
+              needs.length === 0
+                ? 'Nothing waiting.'
+                : `${plural(needs.length, 'thing')} to sort, most urgent first`
+            }
+          />
+          {needs.length > 0 ? (
+            <WorkRows rows={needs} />
+          ) : (
+            <QPanel>
+              <p className="text-[14px] text-white">
+                Nothing urgent. Keep sampling, and rehearse an inspection before the next one is
+                due.
+              </p>
+            </QPanel>
+          )}
+        </section>
+        <section className="space-y-4">
+          <CollegeSectionTitle title="Staff checks" sub="The single central record, by state" />
+          <QPanel>
             <SegmentBar
               emptyText="No staff checks on file yet. Add staff in Compliance docs."
               segments={scrSegments(compliance, () => onNavigate('compliancedocs'))}
             />
-          }
-          side={
-            <div>
-              <p className="text-[13px] font-semibold text-white">Do this first</p>
-              <p className="mt-1.5 text-[13.5px] leading-relaxed text-white">{firstJob}</p>
-            </div>
-          }
-        />
-      </section>
+            <p className="mt-2 text-[13px] text-white">
+              {compliance.total > 0
+                ? `${compliance.valid} of ${compliance.total} checks in date${inDatePct != null ? ` (${inDatePct}%)` : ''}.`
+                : 'Nothing on file yet.'}
+            </p>
+          </QPanel>
+        </section>
+      </div>
 
       <section className="space-y-4">
         <CollegeSectionTitle title="Start something" />
@@ -164,14 +251,27 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
           items={[
             {
               title: 'Sample work',
-              body: iqaAwaiting > 0 ? `${iqaAwaiting} verdict${iqaAwaiting === 1 ? '' : 's'} due` : 'IQA sampling and verdicts',
+              body:
+                iqaAwaiting > 0
+                  ? `${plural(iqaAwaiting, 'verdict')} due`
+                  : 'IQA sampling and verdicts',
               onClick: () => navigate('/college/iqa'),
-              primary: true,
             },
-            { title: 'Close evidence gaps', body: 'The funding evidence pack, live', onClick: () => navigate('/college/evidence-pack') },
-            { title: 'Rehearse an inspection', body: 'Mate plays the inspector', onClick: () => navigate('/college/compliance/rehearsal') },
-            { title: 'Draft the SAR', body: 'Self-assessment report', onClick: () => navigate('/college/compliance/sar') },
-            { title: 'Update the QIP', body: 'Actions, owners and due dates', onClick: () => navigate('/college/compliance/qip') },
+            {
+              title: 'Rehearse an inspection',
+              body: 'Mate plays the inspector',
+              onClick: () => navigate('/college/compliance/rehearsal'),
+            },
+            {
+              title: 'Draft the SAR',
+              body: 'Self-assessment report',
+              onClick: () => navigate('/college/compliance/sar'),
+            },
+            {
+              title: 'Update the QIP',
+              body: 'Actions, owners and due dates',
+              onClick: () => navigate('/college/compliance/qip'),
+            },
           ]}
         />
       </section>
@@ -181,70 +281,105 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
         items={[
           {
             title: 'Safeguarding',
-            figure: isDsl && safeguardingOpen > 0 ? String(safeguardingOpen) : undefined,
-            body: isDsl
+            status: isDsl
               ? safeguardingOpen > 0
-                ? 'open concerns'
-                : 'No open concerns. Every concern logged at your college, in one place.'
+                ? `${safeguardingOpen} open`
+                : 'Nothing open'
+              : noLead
+                ? 'No lead set'
+                : undefined,
+            body: isDsl
+              ? 'Every concern logged at your college, in one place.'
               : 'Who your designated leads are and how to raise a concern.',
             warn: (isDsl && unacknowledged > 0) || noLead,
             onClick: () => onNavigate('safeguardingqueue'),
           },
           {
             title: 'IQA dashboard',
-            figure: iqaAwaiting > 0 ? String(iqaAwaiting) : undefined,
-            body: iqaAwaiting > 0 ? 'verdicts due' : 'Sampling plans, findings, standardisation and coverage.',
+            status: iqaAwaiting > 0 ? `${plural(iqaAwaiting, 'verdict')} due` : undefined,
+            body: 'Sampling plans, findings, standardisation and coverage.',
             warn: iqaAwaiting > 0,
             onClick: () => navigate('/college/iqa'),
           },
-          { title: 'IQA workflow', body: 'Findings, standardisation prep and assessor agreement.', onClick: () => onNavigate('iqaworkflow') },
-          { title: 'IQA off-the-job audit', body: 'Sample and audit off-the-job verification decisions.', onClick: () => onNavigate('iqaotjaudit') },
+          {
+            title: 'IQA workflow',
+            body: 'Findings, standardisation prep and assessor agreement.',
+            onClick: () => onNavigate('iqaworkflow'),
+          },
+          {
+            title: 'IQA off-the-job audit',
+            body: 'Check off-the-job hours an assessor has already verified.',
+            onClick: () => onNavigate('iqaotjaudit'),
+          },
         ]}
       />
 
       <LinkGroup
         title="Inspection readiness"
         items={[
-          { title: 'Ofsted lens', body: 'Your figures set against what inspectors look at, rated live.', onClick: () => navigate('/college/compliance/ofsted') },
-          { title: 'Quality dashboard', body: 'Quality figures, learners at risk and the evidence behind them.', onClick: () => onNavigate('qualitydashboard') },
+          {
+            title: 'Ofsted lens',
+            body: 'Your evidence against the areas Ofsted inspects, live.',
+            onClick: () => navigate('/college/compliance/ofsted'),
+          },
+          {
+            title: 'Quality dashboard',
+            body: 'Quality figures against target, learners at risk and the evidence behind them.',
+            onClick: () => onNavigate('qualitydashboard'),
+          },
           {
             title: 'Funding evidence pack',
             body: 'Every apprentice’s funding evidence, live from the record, with what is missing and who it affects.',
             onClick: () => navigate('/college/evidence-pack'),
           },
-          { title: 'Audit pack', body: 'Staff checks, policies and sign-offs, ready to print.', onClick: () => navigate('/college/compliance/pack') },
-          { title: 'Lesson observations', body: 'Peer, head of department, IQA and learning-walk observations for every tutor.', onClick: () => onNavigate('tutorobs') },
-          { title: 'Compliance overview', body: 'The SAR, QIP, rehearsal and audit pack together.', onClick: () => navigate('/college/compliance') },
+          {
+            title: 'Audit pack',
+            body: 'Staff checks, policies and sign-offs, ready to print.',
+            onClick: () => navigate('/college/compliance/pack'),
+          },
+          {
+            title: 'Lesson observations',
+            body: 'Peer, head of department, IQA and learning-walk observations for every tutor.',
+            onClick: () => onNavigate('tutorobs'),
+          },
+          {
+            title: 'Compliance overview',
+            body: 'The SAR, QIP, rehearsal and audit pack together.',
+            onClick: () => navigate('/college/compliance'),
+          },
         ]}
       />
 
       <LinkGroup
         title="Records"
         items={[
-          { title: 'Reports', body: 'Off-the-job, attendance, progress, EPA and coverage exports.', onClick: () => navigate('/college/reports') },
           {
-            title: 'Compliance docs',
-            figure:
+            title: 'Reports',
+            body: 'Off-the-job, attendance, progress, EPA and coverage exports.',
+            onClick: () => navigate('/college/reports'),
+          },
+          {
+            title: 'Staff records and policies',
+            status:
               complianceProblems > 0
-                ? String(complianceProblems)
+                ? `${complianceProblems} expired or missing`
                 : compliance.expiring > 0
-                  ? String(compliance.expiring)
+                  ? `${compliance.expiring} expiring soon`
                   : compliance.total > 0
-                    ? String(compliance.total)
+                    ? 'All in date'
                     : undefined,
-            body:
-              complianceProblems > 0
-                ? 'expired or missing'
-                : compliance.expiring > 0
-                  ? 'expiring soon'
-                  : compliance.total > 0
-                    ? 'records on file'
-                    : 'Policies, DBS checks and staff documentation.',
+            body: 'DBS, right to work, references, declarations and the policies staff sign.',
             warn: complianceProblems > 0,
             onClick: () => onNavigate('compliancedocs'),
           },
           ...(can('quality.view')
-            ? [{ title: 'Audit log', body: 'Permanent record of every sensitive action, built for audits.', onClick: () => onNavigate('auditlog') }]
+            ? [
+                {
+                  title: 'Audit log',
+                  body: 'Permanent record of every sensitive action, built for audits.',
+                  onClick: () => onNavigate('auditlog'),
+                },
+              ]
             : []),
         ]}
       />

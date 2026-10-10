@@ -28,7 +28,7 @@ const faqs = [
   {
     question: 'What is an electrical apprentice portfolio and why do I need one?',
     answer:
-      'An electrical apprentice portfolio is a structured collection of evidence that demonstrates your on-the-job competence across the knowledge, skills, and behaviours defined in the apprenticeship standard (ST0215 for Installation Electrician / Maintenance Electrician). You need it for two critical reasons. First, it is a gateway requirement for the End Point Assessment (EPA) — you cannot attempt the EPA without a comprehensive portfolio. Second, the portfolio forms the basis of the professional discussion component of the EPA, where an assessor will review your entries and ask questions about your experiences. A well-organised, thorough portfolio strengthens your performance in the professional discussion and demonstrates your progression from novice to competent professional over the course of the apprenticeship.',
+      'An electrical apprentice portfolio is a structured collection of evidence that demonstrates your on-the-job competence across the knowledge, skills, and behaviours defined in the apprenticeship standard (ST0152 for Installation Electrician / Maintenance Electrician). You need it for two critical reasons. First, it is a gateway requirement for the End Point Assessment (EPA) — you cannot attempt the EPA without a comprehensive portfolio. Second, the portfolio forms the basis of the professional discussion component of the EPA, where an assessor will review your entries and ask questions about your experiences. A well-organised, thorough portfolio strengthens your performance in the professional discussion and demonstrates your progression from novice to competent professional over the course of the apprenticeship.',
   },
   {
     question: 'What types of evidence should I include in my portfolio?',
@@ -38,7 +38,7 @@ const faqs = [
   {
     question: 'How do I map portfolio evidence to the apprenticeship standard?',
     answer:
-      'The apprenticeship standard (ST0215) defines specific knowledge, skills, and behaviour criteria that you must demonstrate. Each piece of portfolio evidence should be tagged against one or more of these criteria to show that you have covered the full standard. For example, a photograph of a domestic consumer unit installation with a description of the circuit protection you selected and why could map to the "installation" skills criterion, the "BS 7671" knowledge criterion, and the "safe working" behaviour criterion. Elec-Mate automates this mapping process — when you add a portfolio entry, the AI suggests which criteria it covers and flags any criteria where you are lacking evidence, so you can proactively fill gaps before your EPA gateway review.',
+      'The apprenticeship standard (ST0152) defines specific knowledge, skills, and behaviour criteria that you must demonstrate. Each piece of portfolio evidence should be tagged against one or more of these criteria to show that you have covered the full standard. For example, a photograph of a domestic consumer unit installation with a description of the circuit protection you selected and why could map to the "installation" skills criterion, the "BS 7671" knowledge criterion, and the "safe working" behaviour criterion. Elec-Mate automates this mapping process — when you add a portfolio entry, the AI suggests which criteria it covers and flags any criteria where you are lacking evidence, so you can proactively fill gaps before your EPA gateway review.',
   },
   {
     question: 'What is the difference between a digital and paper portfolio?',
@@ -68,7 +68,7 @@ const features = [
     icon: FolderOpen,
     title: 'Criteria Mapping',
     description:
-      'AI-powered mapping of evidence to ST0215 apprenticeship standard criteria. See exactly which criteria are covered and which need more evidence at a glance.',
+      'AI-powered mapping of evidence to ST0152 apprenticeship standard criteria. See exactly which criteria are covered and which need more evidence at a glance.',
   },
   {
     icon: Clock,
@@ -260,7 +260,7 @@ export default function ApprenticePortfolioGuidePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              The apprenticeship standard (ST0215) defines three categories of requirements:
+              The apprenticeship standard (ST0152) defines three categories of requirements:
               knowledge, skills, and behaviours. Your portfolio must include evidence across all
               three. Here are the key evidence types and how they map to the standard.
             </p>
@@ -336,7 +336,7 @@ export default function ApprenticePortfolioGuidePage() {
               discussion.
             </p>
             <p>
-              The ST0215 standard for Installation Electrician / Maintenance Electrician defines
+              The ST0152 standard for Installation Electrician / Maintenance Electrician defines
               knowledge criteria covering areas such as electrical science, BS 7671:2018+A4:2026
               wiring regulations, health and safety legislation, installation design, inspection and
               testing, and fault diagnosis. Skills criteria cover practical installation, safe
@@ -449,7 +449,7 @@ export default function ApprenticePortfolioGuidePage() {
             </p>
             <p>
               <strong>Gap analysis:</strong> The portfolio dashboard shows a visual map of your
-              evidence coverage across all ST0215 criteria. Red areas need evidence, amber areas
+              evidence coverage across all ST0152 criteria. Red areas need evidence, amber areas
               have some coverage, and green areas are well-documented. Weekly reports highlight
               which criteria need attention, so you can proactively seek opportunities to generate
               evidence in those areas — for example, asking your supervisor to let you observe or
@@ -525,7 +525,7 @@ export default function ApprenticePortfolioGuidePage() {
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <Award className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
-              <p className="text-2xl font-bold text-white mb-1">ST0215</p>
+              <p className="text-2xl font-bold text-white mb-1">ST0152</p>
               <p className="text-sm text-white">Criteria Mapped</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">

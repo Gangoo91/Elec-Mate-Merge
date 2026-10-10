@@ -39,6 +39,7 @@ import {
   uploadLeadPagePhoto,
   type LeadPageData,
 } from '@/hooks/usePublicLeadPage';
+import { BookingWidget } from '@/components/booking/BookingWidget';
 
 const DEFAULT_SERVICES = [
   'Fault finding',
@@ -158,7 +159,7 @@ export default function GetQuoteView() {
   const { slug } = useParams<{ slug: string }>();
   const [params] = useSearchParams();
   const isPreview = params.get('preview') === '1';
-  const { data, isLoading, isError, refetch } = useLeadPage(slug);
+  const { data, isLoading, isError, refetch } = useLeadPage(slug, isPreview);
 
   useEffect(() => {
     if (data?.found && slug && !isPreview) void recordLeadPageView(slug);
@@ -276,7 +277,9 @@ function QuotePage({ data, slug, isPreview }: { data: LeadPageData; slug: string
 
       {isPreview && (
         <div className="bg-slate-900 text-white text-center text-[13px] font-medium py-2 px-4">
-          Preview: this is how customers see your page. Views from here are not counted.
+          {data.enabled === false
+            ? 'Preview: your page is switched off, so customers see "not available" and requests can\'t be sent. Switch it on in the Employer Hub when you are happy.'
+            : 'Preview: this is how customers see your page. Views from here are not counted.'}
         </div>
       )}
 
@@ -339,6 +342,8 @@ function QuotePage({ data, slug, isPreview }: { data: LeadPageData; slug: string
 
           {/* Form (second on phone, right + sticky on desktop) */}
           <section className="mt-7 lg:mt-10 lg:row-span-2 lg:sticky lg:top-6" id="request">
+            {/* ELE-2079: book a visit straight into the diary, when the firm takes online bookings. */}
+            <BookingWidget bookingKey={slug} source="quote_page" brand={pal.brand} onBrand={pal.on} className="mb-4" />
             {done ? (
               <Confirmation name={name} phone={data.phone} reference={done.reference} pal={pal} />
             ) : (
@@ -348,6 +353,7 @@ function QuotePage({ data, slug, isPreview }: { data: LeadPageData; slug: string
                 services={services.length ? services : DEFAULT_SERVICES}
                 pal={pal}
                 onDone={setDone}
+                blocked={isPreview && data.enabled === false}
               />
             )}
           </section>
@@ -469,11 +475,14 @@ function RequestForm({
   services,
   pal,
   onDone,
+  blocked = false,
 }: {
   slug: string;
   name: string;
   services: string[];
   pal: Pal;
+  /** Preview of a switched-off page: the form shows but cannot send. */
+  blocked?: boolean;
   onDone: (r: { reference: string | null }) => void;
 }) {
   const startedAt = useRef(Date.now());
@@ -535,6 +544,7 @@ function RequestForm({
   const reachMissing = tried && !contact.phone.trim() && !contact.email.trim();
 
   const send = async () => {
+    if (blocked) return setErr('This is a preview of a switched-off page, so nothing is sent.');
     setTried(true);
     setErr(null);
     if (contact.name.trim().length < 2) return setErr('Please add your name.');
@@ -816,7 +826,7 @@ function RequestForm({
 
             <button
               type="submit"
-              disabled={busy}
+              disabled={busy || blocked}
               className="w-full h-12 rounded-xl font-semibold text-[16px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-70 touch-manipulation"
               style={{ background: pal.brand, color: pal.on }}
             >

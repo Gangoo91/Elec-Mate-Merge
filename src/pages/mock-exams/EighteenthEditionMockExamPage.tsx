@@ -27,7 +27,7 @@ export default function EighteenthEditionMockExamPage() {
         },
         {
           q: 'Does this mock exam cover Amendment 4 (A4:2026)?',
-          a: 'Yes. The question bank is written against BS 7671:2018+A4:2026, including the changes Amendment 4 made: AFDD recommendations under Regulation 421.1.7, the Type AC RCD restriction, and Section 722 EV charging requirements.',
+          a: 'Yes. The question bank is written against BS 7671:2018+A4:2026, the current edition, including the AFDD rules in Regulation 421.1.7, the Type AC RCD restriction and the Section 722 EV charging requirements.',
         },
         {
           q: 'Can I practise specific 18th Edition topics instead of a full paper?',

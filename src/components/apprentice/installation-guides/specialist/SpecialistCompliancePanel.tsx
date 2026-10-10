@@ -28,7 +28,7 @@ const SpecialistCompliancePanel = () => (
   <div className="space-y-6">
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Standards
         </span>
         <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -61,7 +61,7 @@ const SpecialistCompliancePanel = () => (
     </div>
 
     <div className="rounded-xl border border-red-500/30 bg-white/[0.06] p-4 sm:p-5 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+      <span className="text-[12px] font-medium text-red-300">
         Specialist installation safety
       </span>
       <div className="space-y-2 text-[14px] text-white leading-relaxed">

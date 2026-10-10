@@ -723,22 +723,22 @@ const SolarPVGuide = () => {
         </CardHeader>
         <CardContent className="p-0">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white/[0.06] p-3 rounded-lg border border-elec-yellow/30">
+            <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.14]">
               <Award className="h-5 w-5 text-elec-yellow mb-2" />
               <p className="text-xs text-white">Certification Required</p>
               <p className="text-sm font-medium text-white">MCS Certified</p>
             </div>
-            <div className="bg-white/[0.06] p-3 rounded-lg border border-elec-yellow/30">
+            <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.14]">
               <FileCheck className="h-5 w-5 text-elec-yellow mb-2" />
               <p className="text-xs text-white">Grid Connection</p>
               <p className="text-sm font-medium text-white">G98/G99</p>
             </div>
-            <div className="bg-white/[0.06] p-3 rounded-lg border border-elec-yellow/30">
+            <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.14]">
               <BadgePoundSterling className="h-5 w-5 text-elec-yellow mb-2" />
               <p className="text-xs text-white">Export Payment</p>
               <p className="text-sm font-medium text-white">SEG Available</p>
             </div>
-            <div className="bg-white/[0.06] p-3 rounded-lg border border-elec-yellow/30">
+            <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.14]">
               <Clock className="h-5 w-5 text-elec-yellow mb-2" />
               <p className="text-xs text-white">Typical Install</p>
               <p className="text-sm font-medium text-white">1-2 Days</p>
@@ -771,9 +771,9 @@ const SolarPVGuide = () => {
         <CardContent className="space-y-4 p-0">
           {howSolarWorks.stages.map((stage, idx) => (
             <div key={idx} className="relative">
-              <div className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
+              <div className="p-4 rounded-lg border border-white/[0.14] bg-white/[0.06]">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full border border-elec-yellow/40 bg-white/[0.06] flex items-center justify-center">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full border border-white/[0.14] bg-white/[0.06] flex items-center justify-center">
                     <stage.icon className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <div className="flex-1">
@@ -816,12 +816,12 @@ const SolarPVGuide = () => {
         </CardHeader>
         <CardContent className="p-0">
           <Tabs defaultValue="panels" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="panels">Panels</TabsTrigger>
-              <TabsTrigger value="inverters">Inverters</TabsTrigger>
-              <TabsTrigger value="dc-isolators">DC Isolators</TabsTrigger>
-              <TabsTrigger value="ac-isolator">AC Isolator</TabsTrigger>
-              <TabsTrigger value="meter">Meter</TabsTrigger>
+            <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-5">
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="panels">Panels</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="inverters">Inverters</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="dc-isolators">DC Isolators</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="ac-isolator">AC Isolator</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="meter">Meter</TabsTrigger>
             </TabsList>
             {systemComponents.map((component, idx) => (
               <TabsContent
@@ -1256,10 +1256,10 @@ const SolarPVGuide = () => {
         </CardHeader>
         <CardContent className="p-0">
           <Tabs defaultValue="dc" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="dc">DC Side Tests</TabsTrigger>
-              <TabsTrigger value="ac">AC Side Tests</TabsTrigger>
-              <TabsTrigger value="docs">Documentation</TabsTrigger>
+            <TabsList className="grid h-auto w-full grid-cols-3 gap-1">
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="dc">DC Side Tests</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="ac">AC Side Tests</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="docs">Documentation</TabsTrigger>
             </TabsList>
 
             <TabsContent value="dc" className="space-y-3">

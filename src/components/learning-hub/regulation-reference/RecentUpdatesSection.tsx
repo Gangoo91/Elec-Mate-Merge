@@ -63,7 +63,7 @@ const RecentUpdatesSection = () => {
   ];
 
   return (
-    <Card className="bg-gradient-to-br from-neutral-800 to-neutral-900 border-elec-yellow/20">
+    <Card className="bg-gradient-to-br from-neutral-800 to-neutral-900 border-white/[0.14]">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-elec-yellow flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl">
@@ -142,7 +142,7 @@ const RecentUpdatesSection = () => {
           })}
         </div>
 
-        <div className="mt-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+        <div className="mt-6 p-4 rounded-lg bg-white/[0.06] border border-white/[0.14]">
           <p className="text-sm text-white">
             <strong className="text-elec-yellow">Important:</strong> All installations commenced
             after 1st October 2024 must comply with BS 7671:2018 Amendment 3:2024. Ensure your

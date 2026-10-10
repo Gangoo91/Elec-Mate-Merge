@@ -1,8 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus, RefreshCw, Search, Upload } from 'lucide-react';
-import { PageFrame, PageHero, StatStrip, IconButton } from '@/components/employer/editorial';
-import { PageHelpButton, HowItWorks, type PageHelpContent, type HelpBlocker } from '@/components/hub/PageHelp';
+import { PageHero } from '@/components/employer/editorial';
+import {
+  PageColumn,
+  FigureStrip,
+  FilterRow,
+  Segments,
+  SearchField,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  RefreshIcon,
+} from '@/components/employer/pageParts/PageParts';
+import {
+  PageHelpButton,
+  HowItWorks,
+  type PageHelpContent,
+  type HelpBlocker,
+} from '@/components/hub/PageHelp';
 import {
   inputCn,
   labelCn,
@@ -29,6 +44,7 @@ import {
 } from '@/hooks/useFirmPriceBook';
 import { EditPriceBookItemSheet } from '../dialogs/EditPriceBookItemSheet';
 import { ImportPriceBookDialog } from '../dialogs/ImportPriceBookDialog';
+import { WholesalersPanel } from '../wholesalers/WholesalersPanel';
 
 /* ==========================================================================
    Price book (ELE-1991) — ONE list for the firm.
@@ -46,19 +62,34 @@ const HELP: PageHelpContent = {
   title: 'The price book',
   what: (
     <>
-      One price list for the whole firm. It is the same list the owner keeps in the Electrical
-      Hub, so a price changed here is changed there too. Quotes, purchase orders and van stock all
-      use it.
+      One price list for the whole firm. It is the same list the owner keeps in the Electrical Hub,
+      so a price changed here is changed there too. Quotes, purchase orders and van stock all use
+      it.
     </>
   ),
   steps: [
-    { title: 'Add what you buy and sell', body: 'Add items one by one, import a merchant price list, or save lines from a quote in the Electrical Hub.' },
-    { title: 'Set buy, markup and sell', body: 'Give a buy price and markup and the sell price works itself out. Quotes use the sell price.' },
-    { title: 'Keep it honest', body: 'When a supplier invoice is matched to an order, the price you actually paid shows against the item, so you spot price rises.' },
+    {
+      title: 'Add what you buy and sell',
+      body: 'Add items one by one, import a merchant price list, or save lines from a quote in the Electrical Hub.',
+    },
+    {
+      title: 'Set buy, markup and sell',
+      body: 'Give a buy price and markup and the sell price works itself out. Quotes use the sell price.',
+    },
+    {
+      title: 'Keep it honest',
+      body: 'When a supplier invoice is matched to an order, the price you actually paid shows against the item, so you spot price rises.',
+    },
   ],
   notes: [
-    { title: 'Who sees what', body: 'Office managers see sell prices only. Buy prices, markup and what you paid are for the owner and admins.' },
-    { title: 'Labour rates', body: 'Your day and hourly rates sit under Labour & markup. They feed quotes and job profit.' },
+    {
+      title: 'Who sees what',
+      body: 'Office managers see sell prices only. Buy prices, markup and what you paid are for the owner and admins.',
+    },
+    {
+      title: 'Labour rates',
+      body: 'Your day and hourly rates sit under Labour & markup. They feed quotes and job profit.',
+    },
   ],
   tasks: [
     {
@@ -70,7 +101,12 @@ const HELP: PageHelpContent = {
         'Tap Add to price book.',
       ],
       tour: [
-        { target: 'pricebook.tabs', text: 'Items', caption: 'Start on the Items tab.', opens: true },
+        {
+          target: 'pricebook.tabs',
+          text: 'Items',
+          caption: 'Start on the Items tab.',
+          opens: true,
+        },
         { target: 'pricebook.add', caption: 'Tap Add item to add something you buy or fit.' },
       ],
     },
@@ -83,8 +119,34 @@ const HELP: PageHelpContent = {
       ],
       after: 'Items already in the book get the new price. The rest are added.',
       tour: [
-        { target: 'pricebook.tabs', text: 'Items', caption: 'Start on the Items tab.', opens: true },
-        { target: 'pricebook.import', caption: 'Tap Import and pick your CSV or Excel price list.' },
+        {
+          target: 'pricebook.tabs',
+          text: 'Items',
+          caption: 'Start on the Items tab.',
+          opens: true,
+        },
+        {
+          target: 'pricebook.import',
+          caption: 'Tap Import and pick your CSV or Excel price list.',
+        },
+      ],
+    },
+    {
+      title: 'Bring in your wholesaler account prices',
+      steps: [
+        'Tap the Wholesalers tab, then Add account. Pick the wholesaler and add your account number, branch and order email.',
+        'Ask the branch for your account price file (CSV or Excel). Elec-Mate has no live price link with any wholesaler yet.',
+        'Tap Import prices on the account and choose the file. Check the columns, then tick any close matches.',
+        'Tap Save. Linked items get the new buy price, and big moves are flagged on open quotes.',
+      ],
+      who: 'Owner and admins only.',
+      tour: [
+        {
+          target: 'pricebook.tabs',
+          text: 'Wholesalers',
+          caption: 'Tap the Wholesalers tab.',
+          opens: true,
+        },
       ],
     },
     {
@@ -95,7 +157,10 @@ const HELP: PageHelpContent = {
         'Tap Save changes.',
       ],
       tour: [
-        { target: 'pricebook.check', caption: 'Tap Needs a check to see items that are unpriced or out of date.' },
+        {
+          target: 'pricebook.check',
+          caption: 'Tap Needs a check to see items that are unpriced or out of date.',
+        },
         { target: 'pricebook.list', caption: 'Tap an item to update its price.', optional: true },
       ],
     },
@@ -118,13 +183,17 @@ const HELP: PageHelpContent = {
       who: 'Only the owner can change the rates. Others see them.',
       tour: [
         { target: 'pricebook.tabs', text: 'Labour', caption: 'Tap Labour & markup.', opens: true },
-        { target: 'pricebook.save-rates', caption: 'Enter your rates, then tap Save rates.', optional: true },
+        {
+          target: 'pricebook.save-rates',
+          caption: 'Enter your rates, then tap Save rates.',
+          optional: true,
+        },
       ],
     },
   ],
 };
 
-type Tab = 'items' | 'rates';
+type Tab = 'items' | 'wholesalers' | 'rates';
 type Filter = 'all' | 'attention';
 const ALL = 'All';
 const PAGE = 60;
@@ -137,7 +206,8 @@ function needsAttention(i: FirmPriceBookItem) {
   if (i.sell_price == null) return true;
   const age = daysSince(i.price_updated_at);
   if (age != null && age > PRICE_BOOK_STALE_DAYS) return true;
-  if (i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02) return true;
+  if (i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02)
+    return true;
   return false;
 }
 
@@ -180,7 +250,11 @@ export function PriceBookSection() {
         .eq('user_id', firmId as string)
         .maybeSingle();
       if (error) throw error;
-      return (data ?? null) as { day_rate: number | null; hourly_rate: number | null; markup: number | null } | null;
+      return (data ?? null) as {
+        day_rate: number | null;
+        hourly_rate: number | null;
+        markup: number | null;
+      } | null;
     },
   });
   const defaultMarkup = rates?.markup != null && rates.markup > 0 ? Number(rates.markup) : 30;
@@ -223,7 +297,8 @@ export function PriceBookSection() {
     const priced = items.filter((i) => i.sell_price != null).length;
     const attention = items.filter(needsAttention).length;
     const paidMore = items.filter(
-      (i) => i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02
+      (i) =>
+        i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02
     ).length;
     const withBuy = items.filter((i) => i.buy_price != null && i.markup_percent != null);
     const avgMarkup = withBuy.length
@@ -273,114 +348,129 @@ export function PriceBookSection() {
     setShowEdit(true);
   };
 
+  const statusLine =
+    isLoading || isError
+      ? 'One price list for quotes and orders, shared with your Electrical Hub price book.'
+      : items.length === 0
+        ? 'Nothing in the price book yet. Quotes and orders pull their prices from here.'
+        : `${items.length.toLocaleString()} item${items.length === 1 ? '' : 's'}${
+            stats.attention > 0
+              ? `, ${stats.attention.toLocaleString()} need a check`
+              : ', all priced and up to date'
+          }. Shared with your Electrical Hub price book.`;
+
   return (
-    <PageFrame>
+    <PageColumn>
       <PageHero
-        eyebrow="Money"
         title="Price book"
-        description="One price list for quotes and orders, shared with your Electrical Hub price book."
-        tone="amber"
+        description={statusLine}
         actions={
-          <>
-            <PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'pricebook', tab }} />
-            <IconButton onClick={() => refetch()} aria-label="Refresh">
-              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-            </IconButton>
-          </>
+          <HeroActions>
+            <HeroPrimary
+              data-help="pricebook.add"
+              onClick={() => {
+                setTab('items');
+                openNew();
+              }}
+            >
+              Add item
+            </HeroPrimary>
+            <HeroSecondary
+              data-help="pricebook.import"
+              onClick={() => {
+                setTab('items');
+                setShowImport(true);
+              }}
+            >
+              Import
+            </HeroSecondary>
+            <RefreshIcon onClick={() => refetch()} spinning={isFetching} />
+            <PageHelpButton
+              help={HELP}
+              blockers={helpBlockers}
+              askContext={{ page: 'pricebook', tab }}
+            />
+          </HeroActions>
         }
       />
 
       <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'pricebook', tab }} />
 
-      <StatStrip
-        columns={4}
-        stats={[
-          { label: 'Items', value: items.length.toLocaleString(), tone: 'amber' },
-          { label: 'With a sell price', value: stats.priced.toLocaleString(), tone: 'emerald' },
+      <FigureStrip
+        figures={[
+          {
+            label: 'Items',
+            value: items.length.toLocaleString(),
+            sub: `${Math.max(0, categories.length - 1)} categories`,
+          },
+          {
+            label: 'With a sell price',
+            value: stats.priced.toLocaleString(),
+            sub: 'Ready for quotes',
+          },
           {
             label: 'Need a check',
             value: stats.attention.toLocaleString(),
-            tone: stats.attention > 0 ? 'orange' : 'emerald',
-            onClick: () => {
+            sub: stats.attention > 0 ? 'No price, old or paid more' : 'All up to date',
+            tone: stats.attention > 0 ? 'volt' : undefined,
+            onOpen: () => {
               setTab('items');
               setFilter('attention');
             },
           },
           moneyVisible
-            ? {
-                label: stats.paidMore > 0 ? 'Paid above book' : 'Average markup',
-                value:
-                  stats.paidMore > 0
-                    ? stats.paidMore.toLocaleString()
-                    : stats.avgMarkup != null
-                      ? `${stats.avgMarkup}%`
-                      : '—',
-                tone: stats.paidMore > 0 ? 'red' : 'blue',
-              }
-            : { label: 'Categories', value: Math.max(0, categories.length - 1), tone: 'blue' },
+            ? stats.paidMore > 0
+              ? {
+                  label: 'Paid above book',
+                  value: stats.paidMore.toLocaleString(),
+                  sub: 'Last invoice cost more',
+                  tone: 'red',
+                }
+              : {
+                  label: 'Average markup',
+                  value: stats.avgMarkup != null ? `${stats.avgMarkup}%` : '—',
+                  sub: stats.avgMarkup != null ? 'On items with a buy price' : 'No buy prices yet',
+                }
+            : { label: 'Categories', value: Math.max(0, categories.length - 1) },
         ]}
       />
 
-      <div className="flex gap-2" role="tablist" aria-label="Price book" data-help="pricebook.tabs">
-        {(
-          [
-            ['items', 'Items'],
-            ['rates', moneyVisible ? 'Labour & markup' : 'Labour rates'],
-          ] as const
-        ).map(([v, label]) => (
-          <button
-            key={v}
-            type="button"
-            role="tab"
-            aria-selected={tab === v}
-            onClick={() => setTab(v)}
-            className={cn(chipBase, 'rounded-full px-5 text-[14px]', tab === v ? chipOn : chipOff)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      <FilterRow>
+        <div data-help="pricebook.tabs" className="min-w-0" aria-label="Price book">
+          <Segments
+            items={[
+              { value: 'items' as Tab, label: 'Items' },
+              ...(moneyVisible ? [{ value: 'wholesalers' as Tab, label: 'Wholesalers' }] : []),
+              { value: 'rates' as Tab, label: moneyVisible ? 'Labour & markup' : 'Labour rates' },
+            ]}
+            value={tab}
+            onChange={setTab}
+          />
+        </div>
+        {tab === 'items' && (
+          <SearchField
+            className="w-full lg:w-72"
+            value={search}
+            onChange={setSearch}
+            placeholder="Search items or suppliers"
+          />
+        )}
+      </FilterRow>
 
-      {tab === 'items' ? (
+      {tab === 'wholesalers' && moneyVisible ? (
+        <WholesalersPanel />
+      ) : tab === 'items' ? (
         <section className="space-y-4">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
-            <div className="relative flex-1">
-              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
-              <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search items or suppliers"
-                aria-label="Search the price book"
-                className={cn(inputCn, 'pl-7')}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-2 lg:flex">
-              <button
-                type="button"
-                data-help="pricebook.import"
-                onClick={() => setShowImport(true)}
-                className={cn(buttonSecondaryCn, 'inline-flex items-center justify-center gap-2 px-4')}
-              >
-                <Upload className="h-4 w-4" aria-hidden /> Import
-              </button>
-              <button
-                type="button"
-                data-help="pricebook.add"
-                onClick={openNew}
-                className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2 px-5')}
-              >
-                <Plus className="h-4 w-4" aria-hidden /> Add item
-              </button>
-            </div>
-          </div>
-
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0">
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               data-help="pricebook.check"
               onClick={() => setFilter(filter === 'attention' ? 'all' : 'attention')}
-              className={cn(chipBase, 'shrink-0 whitespace-nowrap rounded-full px-4 text-[13px]', filter === 'attention' ? chipOn : chipOff)}
+              className={cn(
+                chipBase,
+                'shrink-0 whitespace-nowrap rounded-full px-4 text-[13px]',
+                filter === 'attention' ? chipOn : chipOff
+              )}
             >
               Needs a check · {stats.attention}
             </button>
@@ -389,7 +479,11 @@ export function PriceBookSection() {
                 key={c}
                 type="button"
                 onClick={() => setCategory(c)}
-                className={cn(chipBase, 'shrink-0 whitespace-nowrap rounded-full px-4 text-[13px]', category === c ? chipOn : chipOff)}
+                className={cn(
+                  chipBase,
+                  'shrink-0 whitespace-nowrap rounded-full px-4 text-[13px]',
+                  category === c ? chipOn : chipOff
+                )}
               >
                 {c}
               </button>
@@ -405,7 +499,11 @@ export function PriceBookSection() {
           ) : isError ? (
             <div className={cn(listCardCn, 'p-6 text-center')}>
               <p className="text-[15px] font-semibold text-white">Couldn't load the price book</p>
-              <button type="button" onClick={() => refetch()} className="mt-2 h-11 text-[14px] font-semibold text-elec-yellow touch-manipulation">
+              <button
+                type="button"
+                onClick={() => refetch()}
+                className="mt-2 h-11 text-[14px] font-semibold text-elec-yellow touch-manipulation"
+              >
                 Try again
               </button>
             </div>
@@ -417,10 +515,18 @@ export function PriceBookSection() {
                 from quotes in the Electrical Hub land here too.
               </p>
               <div className="mx-auto mt-4 flex max-w-sm gap-2">
-                <button type="button" onClick={() => setShowImport(true)} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+                <button
+                  type="button"
+                  onClick={() => setShowImport(true)}
+                  className={cn(buttonSecondaryCn, 'flex-1 px-4')}
+                >
                   Import
                 </button>
-                <button type="button" onClick={openNew} className={cn(buttonPrimaryCn, 'flex-1 px-4')}>
+                <button
+                  type="button"
+                  onClick={openNew}
+                  className={cn(buttonPrimaryCn, 'flex-1 px-4')}
+                >
                   Add item
                 </button>
               </div>
@@ -428,7 +534,9 @@ export function PriceBookSection() {
           ) : filtered.length === 0 ? (
             <div className={cn(listCardCn, 'p-6 text-center')}>
               <p className="text-[14px] text-white">
-                {filter === 'attention' ? 'Every item is priced and up to date.' : 'Nothing matches that search.'}
+                {filter === 'attention'
+                  ? 'Every item is priced and up to date.'
+                  : 'Nothing matches that search.'}
               </p>
             </div>
           ) : (
@@ -437,7 +545,9 @@ export function PriceBookSection() {
               <div
                 className={cn(
                   'hidden border-b border-white/[0.1] px-5 py-3 text-[12px] font-semibold text-white lg:grid lg:gap-4',
-                  moneyVisible ? 'lg:grid-cols-[minmax(0,2.4fr)_0.9fr_0.7fr_0.9fr_1fr_1.1fr]' : 'lg:grid-cols-[minmax(0,2.6fr)_1fr_1.2fr]'
+                  moneyVisible
+                    ? 'lg:grid-cols-[minmax(0,2.4fr)_0.9fr_0.7fr_0.9fr_1fr_1.1fr]'
+                    : 'lg:grid-cols-[minmax(0,2.6fr)_1fr_1.2fr]'
                 )}
               >
                 <span>Item</span>
@@ -464,7 +574,9 @@ export function PriceBookSection() {
                         )}
                       >
                         <span className="min-w-0">
-                          <span className="block truncate text-[14.5px] font-medium text-white">{i.name}</span>
+                          <span className="block truncate text-[14.5px] font-medium text-white">
+                            {i.name}
+                          </span>
                           <span className="block truncate text-[12.5px] text-white">
                             {i.category} · per {i.unit}
                             {moneyVisible && i.buy_price != null ? (
@@ -475,32 +587,42 @@ export function PriceBookSection() {
                             ) : null}
                             {i.supplier ? <span className="lg:hidden"> · {i.supplier}</span> : null}
                           </span>
-                          {reason && <span className="mt-0.5 block text-[12px] font-medium text-orange-300">{reason}</span>}
+                          {reason && (
+                            <span className="mt-0.5 block text-[12.5px] font-semibold text-elec-yellow">
+                              {reason}
+                            </span>
+                          )}
                         </span>
                         {moneyVisible && (
-                          <span className="hidden text-right text-[14px] tabular-nums text-white lg:block">{gbp(i.buy_price)}</span>
+                          <span className="hidden text-right text-[14px] tabular-nums text-white lg:block">
+                            {gbp(i.buy_price)}
+                          </span>
                         )}
                         {moneyVisible && (
                           <span className="hidden text-right text-[14px] tabular-nums text-white lg:block">
                             {i.markup_percent != null ? `${i.markup_percent}%` : '—'}
                           </span>
                         )}
-                        <span className="text-right text-[15px] font-semibold tabular-nums text-elec-yellow">
+                        <span className="text-right text-[15px] font-semibold tabular-nums text-white">
                           {gbp(i.sell_price)}
                         </span>
                         {moneyVisible && (
                           <span
                             className={cn(
                               'hidden text-right text-[14px] tabular-nums lg:block',
-                              i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02
-                                ? 'text-orange-300'
+                              i.last_paid_price != null &&
+                                i.buy_price != null &&
+                                i.last_paid_price > i.buy_price * 1.02
+                                ? 'text-red-400'
                                 : 'text-white'
                             )}
                           >
                             {gbp(i.last_paid_price)}
                           </span>
                         )}
-                        <span className="hidden truncate pl-3 text-[14px] text-white lg:block">{i.supplier ?? '—'}</span>
+                        <span className="hidden truncate pl-3 text-[14px] text-white lg:block">
+                          {i.supplier ?? '—'}
+                        </span>
                       </button>
                     </li>
                   );
@@ -508,7 +630,11 @@ export function PriceBookSection() {
               </ul>
               {filtered.length > limit && (
                 <div className="border-t border-white/[0.08] p-4">
-                  <button type="button" onClick={() => setLimit((l) => l + PAGE)} className={cn(buttonSecondaryCn, 'w-full')}>
+                  <button
+                    type="button"
+                    onClick={() => setLimit((l) => l + PAGE)}
+                    className={cn(buttonSecondaryCn, 'w-full')}
+                  >
                     Show more ({(filtered.length - limit).toLocaleString()} left)
                   </button>
                 </div>
@@ -532,7 +658,9 @@ export function PriceBookSection() {
                   id="rate-day"
                   inputMode="decimal"
                   value={dayRate}
-                  onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && setDayRate(e.target.value)}
+                  onChange={(e) =>
+                    /^\d*\.?\d{0,2}$/.test(e.target.value) && setDayRate(e.target.value)
+                  }
                   disabled={!isOwner}
                   placeholder="0.00"
                   className={inputCn}
@@ -546,7 +674,9 @@ export function PriceBookSection() {
                   id="rate-hour"
                   inputMode="decimal"
                   value={hourlyRate}
-                  onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && setHourlyRate(e.target.value)}
+                  onChange={(e) =>
+                    /^\d*\.?\d{0,2}$/.test(e.target.value) && setHourlyRate(e.target.value)
+                  }
                   disabled={!isOwner}
                   placeholder="0.00"
                   className={inputCn}
@@ -570,7 +700,9 @@ export function PriceBookSection() {
                     id="rate-markup"
                     inputMode="decimal"
                     value={markup}
-                    onChange={(e) => /^\d*\.?\d{0,1}$/.test(e.target.value) && setMarkup(e.target.value)}
+                    onChange={(e) =>
+                      /^\d*\.?\d{0,1}$/.test(e.target.value) && setMarkup(e.target.value)
+                    }
                     disabled={!isOwner}
                     placeholder="30"
                     className={inputCn}
@@ -612,7 +744,8 @@ export function PriceBookSection() {
         onOpenChange={setShowImport}
         moneyVisible={moneyVisible}
         defaultMarkup={defaultMarkup}
+        onUseWholesalers={moneyVisible ? () => setTab('wholesalers') : undefined}
       />
-    </PageFrame>
+    </PageColumn>
   );
 }

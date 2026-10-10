@@ -342,17 +342,17 @@ const ACPowerCalculator = () => {
 
             {/* Tabbed Input Methods */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 h-12 bg-white/5 rounded-xl p-1">
+              <TabsList className="grid w-full grid-cols-2 h-auto bg-white/5 rounded-xl p-1">
                 <TabsTrigger
                   value="voltage-current"
-                  className="flex items-center gap-2 text-sm font-semibold rounded-lg data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400"
+                  className="min-h-11 touch-manipulation text-white flex items-center gap-2 font-semibold rounded-lg min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black"
                 >
                   <Zap className="h-4 w-4" />
                   <span>From V & I</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="power-components"
-                  className="flex items-center gap-2 text-sm font-semibold rounded-lg data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400"
+                  className="min-h-11 touch-manipulation text-white flex items-center gap-2 font-semibold rounded-lg min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black"
                 >
                   <Battery className="h-4 w-4" />
                   <span>From Power</span>
@@ -499,7 +499,7 @@ const ACPowerCalculator = () => {
 
                 <div className="space-y-4 animate-fade-in">
                   {/* PF Status Chip */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-amber-400/20">
                     <span className="text-xs font-semibold text-amber-300">PF</span>
                     <span className={cn('text-sm font-semibold', status.color)}>{status.text}</span>
                   </div>

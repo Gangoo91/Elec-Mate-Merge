@@ -4,14 +4,7 @@ import useSEO from '@/hooks/useSEO';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-  HubToolGrid,
-} from '@/components/hub/HubPrimitives';
+import { CatalogueShell } from '@/components/study-centre/course-catalogue';
 
 type Level = 'Foundation' | 'Intermediate';
 
@@ -150,44 +143,24 @@ export default function PersonalDevelopmentIndex() {
     return map;
   }, [allProgress]);
 
-  const totalCompleted = Object.values(completedById).reduce((a, b) => a + b, 0);
   const totalHours = COURSES.reduce((acc, c) => {
     const m = c.duration.match(/(\d+)\s*hour/);
     return acc + (m ? parseInt(m[1], 10) : 0);
   }, 0);
 
   return (
-    <HubPage>
-      <HubMasthead section="Study centre" title="Personal development" backTo="/study-centre" />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          Leadership, emotional intelligence, resilience and the soft skills that round out a
-          career.
-        </p>
-
-        <HubKpiRow>
-          <HubKpi label="Courses" value={String(COURSES.length)} context="Available now" accent />
-          <HubKpi label="Completed" value={String(totalCompleted)} context="Sections done" />
-          <HubKpi label="Total time" value={`${totalHours}h`} context="Across all courses" />
-          <HubKpi label="Format" value="Soft" context="Skills & mindset" />
-        </HubKpiRow>
-
-        <HubToolGrid
-          label="All courses"
-          columns="three"
-          cards={COURSES.map((c) => {
-            const completed = completedById[c.id] ?? 0;
-            return {
-              id: c.id,
-              eyebrow: c.level,
-              title: c.title,
-              description: c.description,
-              meta: `${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`,
-              to: c.link,
-            };
-          })}
-        />
-      </HubBody>
-    </HubPage>
+    <CatalogueShell
+      title="Personal development"
+      description="Leadership, emotional intelligence, resilience and the soft skills that round out a career."
+      courses={COURSES.map((c) => ({
+        id: c.id,
+        title: c.title,
+        description: c.description,
+        level: c.level,
+        duration: c.duration,
+        to: c.link,
+        done: completedById[c.id] ?? 0,
+      }))}
+    />
   );
 }

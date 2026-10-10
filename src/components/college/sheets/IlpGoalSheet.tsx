@@ -7,7 +7,7 @@ import {
   buttonSecondaryCn,
   chipBase,
   chipOff,
-  chipOn,
+  chipOnQuiet as chipOn,
   fieldFullCn,
   grid2Cn,
   inputCn,
@@ -17,12 +17,7 @@ import {
 } from '@/components/forms/fieldStyles';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { SuccessCheckmark } from '@/components/college/primitives';
-import type {
-  IlpGoal,
-  GoalCategory,
-  GoalPriority,
-  StudentIlpHook,
-} from '@/hooks/useStudentIlp';
+import type { IlpGoal, GoalCategory, GoalPriority, StudentIlpHook } from '@/hooks/useStudentIlp';
 import { useSuggestIlpGoal, type IlpGoalProposal } from '@/hooks/useSuggestIlpGoal';
 
 /* ==========================================================================
@@ -177,8 +172,7 @@ export function IlpGoalSheet({
     if (!valid || saving) return;
     setSaving(true);
     try {
-      const tutorCommentChanged =
-        (goal?.tutor_comment ?? '') !== form.tutor_comment.trim();
+      const tutorCommentChanged = (goal?.tutor_comment ?? '') !== form.tutor_comment.trim();
       if (mode === 'add') {
         await addGoal({
           title: form.title.trim(),
@@ -226,7 +220,9 @@ export function IlpGoalSheet({
 
   const handleDelete = async () => {
     if (!goal) return;
-    const ok = window.confirm(`Remove the goal "${goal.title}"? The learner will no longer see it.`);
+    const ok = window.confirm(
+      `Remove the goal "${goal.title}"? The learner will no longer see it.`
+    );
     if (!ok) return;
     try {
       await removeGoal(goal.id);
@@ -318,7 +314,9 @@ export function IlpGoalSheet({
               )}
             </div>
             {canRefine && (
-              <p className={hintCn}>Make it SMART rewrites your title as a specific, dated goal you can edit.</p>
+              <p className={hintCn}>
+                Make it SMART rewrites your title as a specific, dated goal you can edit.
+              </p>
             )}
           </div>
           <div>
@@ -425,10 +423,14 @@ export function IlpGoalSheet({
                   </span>
                 )}
               </p>
-              <p className="mt-1 whitespace-pre-line text-[14px] leading-relaxed text-white">{goal.student_comment}</p>
+              <p className="mt-1 whitespace-pre-line text-[14px] leading-relaxed text-white">
+                {goal.student_comment}
+              </p>
             </div>
           ) : (
-            <p className="text-[13px] leading-relaxed text-white">The learner has not replied on this goal yet.</p>
+            <p className="text-[13px] leading-relaxed text-white">
+              The learner has not replied on this goal yet.
+            </p>
           )}
           <div>
             <label htmlFor="ilp-comment" className={labelCn}>
@@ -546,7 +548,10 @@ function ProposalsPanel({
       {status === 'loading' && (
         <div className="space-y-2.5 animate-pulse" aria-label="Thinking">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="rounded-2xl border border-white/[0.06] bg-white/[0.04] px-4 py-4">
+            <div
+              key={i}
+              className="rounded-2xl border border-white/[0.06] bg-white/[0.04] px-4 py-4"
+            >
               <div className="h-2.5 w-1/3 rounded bg-white/[0.08]" />
               <div className="mt-2 h-2 w-2/3 rounded bg-white/[0.06]" />
             </div>
@@ -561,7 +566,9 @@ function ProposalsPanel({
       )}
 
       {status === 'done' && proposals.length === 0 && (
-        <p className="text-[13px] text-white">No proposals came back. Try again, or write the goal yourself.</p>
+        <p className="text-[13px] text-white">
+          No proposals came back. Try again, or write the goal yourself.
+        </p>
       )}
 
       {status === 'done' && proposals.length > 0 && (
@@ -585,18 +592,26 @@ function ProposalsPanel({
                       <span>AC {p.ac_link}</span>
                     </>
                   )}
-                  {p.target_date && <span className="ml-auto tabular-nums">Due {p.target_date}</span>}
+                  {p.target_date && (
+                    <span className="ml-auto tabular-nums">Due {p.target_date}</span>
+                  )}
                 </div>
-                <h4 className="mt-1.5 text-[14.5px] font-semibold leading-snug text-white">{p.title}</h4>
+                <h4 className="mt-1.5 text-[14.5px] font-semibold leading-snug text-white">
+                  {p.title}
+                </h4>
                 {p.description && (
-                  <p className="mt-1 line-clamp-3 text-[13px] leading-snug text-white">{p.description}</p>
+                  <p className="mt-1 line-clamp-3 text-[13px] leading-snug text-white">
+                    {p.description}
+                  </p>
                 )}
                 {p.rationale && (
                   <p className="mt-2 border-t border-white/[0.06] pt-2 text-[12px] leading-snug text-white">
                     Why: {p.rationale}
                   </p>
                 )}
-                <span className="mt-2 block text-[12.5px] font-semibold text-elec-yellow">Use this goal</span>
+                <span className="mt-2 block text-[12.5px] font-semibold text-elec-yellow">
+                  Use this goal
+                </span>
               </button>
             </li>
           ))}

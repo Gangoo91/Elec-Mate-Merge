@@ -134,9 +134,7 @@ const EducationalResourcesTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Educational resources
-        </span>
+        <span className="text-[13px] font-semibold text-white">Educational resources</span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
           Regulations, standards & practical guidance
         </h2>
@@ -178,7 +176,7 @@ const EducationalResourcesTab = () => {
                 className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4"
               >
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     {regulation.category}
                   </span>
                   <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -187,9 +185,7 @@ const EducationalResourcesTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Key areas
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Key areas</span>
                   <ul className="space-y-1.5">
                     {regulation.keyAreas.map((area, index) => (
                       <li
@@ -204,21 +200,13 @@ const EducationalResourcesTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    What this means
-                  </span>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    {regulation.whatItMeans}
-                  </p>
+                  <span className="text-[13px] font-semibold text-white">What this means</span>
+                  <p className="text-[14px] text-white leading-relaxed">{regulation.whatItMeans}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Where to find more
-                  </span>
-                  <p className="text-[14px] text-white leading-relaxed">
-                    {regulation.whereToFind}
-                  </p>
+                  <span className="text-[13px] font-semibold text-white">Where to find more</span>
+                  <p className="text-[14px] text-white leading-relaxed">{regulation.whereToFind}</p>
                 </div>
               </div>
             ))}
@@ -236,7 +224,7 @@ const EducationalResourcesTab = () => {
                   <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
                     {guide.title}
                   </h3>
-                  <p className="text-[13px] text-white leading-relaxed">{guide.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{guide.description}</p>
                 </div>
                 <ul className="space-y-1.5">
                   {guide.items.map((item, itemIndex) => (
@@ -257,28 +245,24 @@ const EducationalResourcesTab = () => {
         <TabsContent value="resources" className="space-y-4 mt-5">
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Official publications
-              </span>
+              <span className="text-[13px] font-semibold text-white">Official publications</span>
               <div className="space-y-3">
                 {officialPublications.map((pub, index) => (
                   <div key={index} className="space-y-1">
                     <p className="text-[14px] text-white">{pub.title}</p>
-                    <p className="text-[13px] text-white leading-relaxed">{pub.description}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{pub.description}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                Emergency procedures
-              </span>
+              <span className="text-[13px] font-semibold text-red-300">Emergency procedures</span>
               <div className="space-y-3">
                 {emergencyProcedures.map((proc, index) => (
                   <div key={index} className="space-y-1">
                     <p className="text-[14px] text-white">{proc.title}</p>
-                    <p className="text-[13px] text-white leading-relaxed">{proc.description}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{proc.description}</p>
                   </div>
                 ))}
               </div>
@@ -286,9 +270,7 @@ const EducationalResourcesTab = () => {
           </div>
 
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Pro tip
-            </span>
+            <span className="text-[13px] font-semibold text-white">Pro tip</span>
             <p className="text-[14px] text-white leading-relaxed">
               Regulations and best practices evolve regularly. Stay updated by subscribing to
               industry publications, attending training courses, and participating in professional

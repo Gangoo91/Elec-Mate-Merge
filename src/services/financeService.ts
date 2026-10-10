@@ -65,6 +65,9 @@ export interface Quote {
   /** A data: URL captured on the public quote page. */
   signature_url?: string | null;
   public_token?: string | null;
+  /** ELE-2065: set once the quote has been invoiced (settings.convertedInvoiceId). */
+  converted_invoice_id?: string | null;
+  converted_invoice_number?: string | null;
 }
 
 export interface Invoice {
@@ -89,6 +92,8 @@ export interface Invoice {
   subtotal?: number | null;
   vat_amount?: number | null;
   cis_amount?: number | null;
+  /** From get_employer_invoice_tax: false when the firm is not VAT registered. */
+  vat_registered?: boolean;
   created_at: string;
   updated_at: string;
   // From the shared `quotes` row (ELE-1947).
@@ -206,7 +211,16 @@ export async function getQuotes(): Promise<Quote[]> {
   // Cast: RPC postdates the last types.ts regeneration.
   const { data, error } = await supabase.rpc('get_employer_bridged_quotes' as never);
   if (error) throw error;
-  return ((data ?? []) as unknown as Quote[]).sort(
+  const rows = (data ?? []) as unknown as Quote[];
+  // ELE-2065: a quote invoiced in the Hub carries the invoice's id and number
+  // in settings (link_invoice_to_quote), so every screen can tell it's done.
+  for (const q of rows) {
+    const s = (q.settings ?? {}) as { convertedInvoiceId?: unknown; convertedInvoiceNumber?: unknown };
+    q.converted_invoice_id = typeof s.convertedInvoiceId === 'string' ? s.convertedInvoiceId : null;
+    q.converted_invoice_number =
+      typeof s.convertedInvoiceNumber === 'string' ? s.convertedInvoiceNumber : null;
+  }
+  return rows.sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 }
@@ -292,6 +306,8 @@ export async function createQuote(
       // The firm job this quote is for (ELE-1947): drives job money.
       // employer_job_id (6 Oct) is newer than the generated types.
       ...({ employer_job_id: q.job_id ?? null } as unknown as Record<string, never>),
+      // ELE-2083: who raised it (the column defaults to auth.uid() too).
+      ...({ created_by_user_id: user.id } as unknown as Record<string, never>),
     })
     .select()
     .single();
@@ -305,6 +321,44 @@ export async function createQuote(
     updated_at: (data as { updated_at: string }).updated_at,
     source: 'electrical_hub',
   } as Quote;
+}
+
+/** ELE-2083: stamp who sent it, after the send succeeded. Never blocks the send. */
+async function recordSentBy(id: string, as: 'quote' | 'invoice'): Promise<void> {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return;
+    const col = as === 'quote' ? 'sent_by_user_id' : 'invoice_sent_by_user_id';
+    await supabase
+      .from('quotes')
+      .update({ [col]: user.id } as never)
+      .eq('id', id);
+  } catch {
+    /* attribution only */
+  }
+}
+
+/** ELE-2083: who raised and who sent each quote/invoice, by row id. Older rows
+ *  come back with null names, so screens show nothing rather than a guess. */
+export interface QuoteAttribution {
+  id: string;
+  created_by_name: string | null;
+  sent_by_name: string | null;
+  invoice_sent_by_name: string | null;
+}
+
+export async function getQuoteAttribution(ids: string[]): Promise<Map<string, QuoteAttribution>> {
+  const out = new Map<string, QuoteAttribution>();
+  if (ids.length === 0) return out;
+  // Cast: RPC postdates the last types.ts regeneration.
+  const { data, error } = await supabase.rpc('get_quote_attribution' as never, {
+    p_ids: ids,
+  } as never);
+  if (error) return out;
+  for (const r of (data ?? []) as unknown as QuoteAttribution[]) out.set(r.id, r);
+  return out;
 }
 
 /** ELE-1990: { id, name } of the signed-in person, for settings.createdBy. */
@@ -538,6 +592,7 @@ export async function sendQuote(id: string): Promise<Quote> {
     // Same path as the Electrical Hub: builds the PDF, emails the client with
     // the accept link, and marks the quote sent server-side.
     await invokeOrExplain('send-quote-resend', { quoteId: id });
+    await recordSentBy(id, 'quote');
     const { data: row } = await supabase
       .from('quotes')
       .select('id, quote_number, created_at, updated_at')
@@ -563,7 +618,39 @@ export async function getInvoices(): Promise<Invoice[]> {
   // is retired (6 Oct).
   const { data, error } = await supabase.rpc('get_employer_bridged_invoices' as never);
   if (error) throw error;
-  return ((data ?? []) as unknown as Invoice[]).sort(
+  const invoices = (data ?? []) as unknown as Invoice[];
+
+  // ELE-2064: the bridged read carries no VAT/CIS treatment, so a reverse-charge
+  // invoice showed "VAT @ 20%" and no wording on screen. Merge it in from
+  // get_employer_invoice_tax; if that read fails the list still loads.
+  if (invoices.length > 0) {
+    const { data: tax } = await supabase.rpc('get_employer_invoice_tax' as never, {
+      p_ids: invoices.map((i) => i.id),
+    } as never);
+    const byId = new Map(
+      ((tax ?? []) as unknown as Array<{
+        id: string;
+        vat_rate: number | null;
+        reverse_charge: boolean;
+        cis_enabled: boolean;
+        cis_rate: number | null;
+        cis_amount: number | null;
+        vat_registered?: boolean;
+      }>).map((t) => [t.id, t])
+    );
+    for (const inv of invoices) {
+      const t = byId.get(inv.id);
+      if (!t) continue;
+      inv.vat_rate = Number(t.vat_rate ?? 20);
+      inv.reverse_charge = !!t.reverse_charge;
+      inv.cis_enabled = !!t.cis_enabled;
+      if (t.cis_rate != null) inv.cis_rate = Number(t.cis_rate);
+      inv.cis_amount = Number(t.cis_amount ?? 0);
+      if (t.vat_registered != null) inv.vat_registered = !!t.vat_registered;
+    }
+  }
+
+  return invoices.sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 }
@@ -599,7 +686,9 @@ export async function createInvoice(
   const inv = invoice as Invoice & {
     client_email?: string | null;
     client_phone?: string | null;
+    client_address?: string | null;
     client_id?: string | null;
+    from_quote_id?: string | null;
     vat_rate?: number;
     reverse_charge?: boolean;
     cis_enabled?: boolean;
@@ -611,6 +700,8 @@ export async function createInvoice(
     .from('quotes')
     .insert({
       user_id: ownerId,
+      // ELE-2083: who raised it (the column defaults to auth.uid() too).
+      ...({ created_by_user_id: user.id } as unknown as Record<string, never>),
       // ELE-1947: both numbers are allocated by the assign_document_numbers
       // trigger from the owner's counters (see createQuote).
       quote_number: null,
@@ -624,10 +715,18 @@ export async function createInvoice(
         name: inv.client,
         email: inv.client_email ?? null,
         phone: inv.client_phone ?? null,
+        // ELE-2065 §3A #10: the address used to be dropped, so the invoice PDF
+        // and the Xero contact had none.
+        address: inv.client_address?.trim() || null,
         ...(inv.client_id ? { customerId: inv.client_id } : {}),
       },
       items: inv.line_items ?? [],
       settings: {
+        // ELE-2065 §3A #10: the quote a whole-quote invoice came from, on the
+        // row itself, so the link survives even if link_invoice_to_quote fails
+        // afterwards. Not for stage invoices (PaymentStages passes quote_id and
+        // links them with stageOf): fromQuoteId marks the deposit carrier.
+        ...(inv.from_quote_id ? { fromQuoteId: inv.from_quote_id } : {}),
         vatRate: inv.vat_rate ?? 20,
         vatRegistered: (inv.vat_rate ?? 0) > 0,
         reverseCharge: inv.reverse_charge ?? false,
@@ -754,6 +853,7 @@ export async function sendInvoice(
   // the same `quotes` row. Replaces generate-invoice-link + send-finance-document,
   // which read the empty employer tables.
   const result = await invokeOrExplain('send-invoice-resend', { invoiceId: id });
+  await recordSentBy(id, 'invoice');
   const { data: after } = await supabase
     .from('quotes')
     .select('public_token, stripe_payment_link_url')

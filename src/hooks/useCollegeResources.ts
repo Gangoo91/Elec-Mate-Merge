@@ -48,6 +48,8 @@ export interface CollegeResource {
   updated_at: string;
   uploader_name?: string | null;
   ac_count?: number;
+  /** Lesson plans this resource is attached to (resource_lesson_links). ELE-1092. */
+  lesson_count?: number;
   ai_tagging?: boolean;
 }
 
@@ -135,16 +137,23 @@ export function useCollegeResources() {
       // Fetch AC link counts per resource for badge display
       const resourceIds = (data ?? []).map((r) => r.id as string);
       const countByResource = new Map<string, number>();
+      const lessonsByResource = new Map<string, number>();
       if (resourceIds.length > 0) {
-        const { data: linkRows } = await supabase
-          .from('resource_ac_links')
-          .select('resource_id')
-          .in('resource_id', resourceIds);
+        const [{ data: linkRows }, { data: lessonRows }] = await Promise.all([
+          supabase.from('resource_ac_links').select('resource_id').in('resource_id', resourceIds),
+          supabase
+            .from('resource_lesson_links' as never)
+            .select('resource_id')
+            .in('resource_id', resourceIds),
+        ]);
         for (const row of (linkRows ?? []) as { resource_id: string }[]) {
           countByResource.set(
             row.resource_id,
             (countByResource.get(row.resource_id) ?? 0) + 1
           );
+        }
+        for (const row of ((lessonRows as unknown as { resource_id: string }[]) ?? [])) {
+          lessonsByResource.set(row.resource_id, (lessonsByResource.get(row.resource_id) ?? 0) + 1);
         }
       }
 
@@ -155,6 +164,7 @@ export function useCollegeResources() {
           ...r,
           uploader_name: r.college_staff?.name ?? null,
           ac_count: countByResource.get(r.id) ?? 0,
+          lesson_count: lessonsByResource.get(r.id) ?? 0,
         }))
       );
     } catch (e) {

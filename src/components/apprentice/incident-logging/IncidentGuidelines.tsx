@@ -15,9 +15,7 @@ const IncidentGuidelines = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            When to report incidents
-          </span>
+          <span className="text-[13px] font-semibold text-white">When to report incidents</span>
 
           <div className="space-y-4">
             <div className="space-y-2">
@@ -63,9 +61,7 @@ const IncidentGuidelines = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Legal requirements (UK)
-          </span>
+          <span className="text-[13px] font-semibold text-white">Legal requirements (UK)</span>
 
           <div className="space-y-3">
             <div className="space-y-1">
@@ -109,9 +105,7 @@ const IncidentGuidelines = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            How to report effectively
-          </span>
+          <span className="text-[13px] font-semibold text-white">How to report effectively</span>
 
           <div className="space-y-3">
             {[
@@ -161,33 +155,27 @@ const IncidentGuidelines = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Emergency contacts
-          </span>
+          <span className="text-[13px] font-semibold text-white">Emergency contacts</span>
 
           <div className="space-y-3">
             <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                Emergency services
-              </span>
-              <p className="text-2xl font-mono text-white">999</p>
+              <span className="text-[13px] font-semibold text-red-300">Emergency services</span>
+              <p className="text-2xl text-white">999</p>
               <p className="text-[13px] text-white">
                 For immediate medical assistance or fire/police response
               </p>
             </div>
 
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[13px] font-semibold text-white">
                 HSE incident contact centre
               </span>
-              <p className="text-[18px] font-mono text-white">0345 300 9923</p>
+              <p className="text-[18px] text-white">0345 300 9923</p>
               <p className="text-[13px] text-white">For reporting RIDDOR incidents</p>
             </div>
 
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Site safety officer
-              </span>
+              <span className="text-[13px] font-semibold text-white">Site safety officer</span>
               <p className="text-[14px] text-white leading-relaxed">
                 Contact your site safety officer or supervisor for non-emergency incidents
               </p>
@@ -196,8 +184,8 @@ const IncidentGuidelines = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Common electrical industry incidents
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -219,12 +207,12 @@ const IncidentGuidelines = () => {
             },
             {
               title: 'Manual handling',
-              description: 'Back injuries, muscle strains from lifting heavy equipment or materials',
+              description:
+                'Back injuries, muscle strains from lifting heavy equipment or materials',
             },
             {
               title: 'Environmental',
-              description:
-                'Chemical spills, improper waste disposal, environmental contamination',
+              description: 'Chemical spills, improper waste disposal, environmental contamination',
             },
             {
               title: 'Near misses',
@@ -238,17 +226,15 @@ const IncidentGuidelines = () => {
             return (
               <div key={idx} className={containerClass}>
                 <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
-                <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
               </div>
             );
           })}
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Additional resources
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Additional resources</span>
         <div className="space-y-3">
           {[
             {

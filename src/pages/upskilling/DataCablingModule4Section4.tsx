@@ -105,7 +105,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS EN 50174-1 §6 is the European labelling / administration clause. The wider standard BS EN 50174-1 covers specification and quality assurance for cabling installation. §444.410(a) of BS 7671 explicitly cites it as the standard to apply for control / signalling / communication circuits — bringing the labelling discipline formally into BS 7671 compliance.',
+      'BS EN 50174-1 §6 is the European labelling / administration clause. The wider standard BS EN 50174-1 covers specification and quality assurance for cabling installation. §444.4.10(a) of BS 7671 explicitly cites it as the standard to apply for control / signalling / communication circuits — bringing the labelling discipline formally into BS 7671 compliance.',
   },
   {
     id: 3,
@@ -115,11 +115,11 @@ const quizQuestions = [
       '§411.3.1, the requirement for protective earthing and automatic disconnection.',
       '§528.3.5, the prohibition on running general cables in a lift or hoist well.',
       '§544.1.2, the sizing requirement for main protective bonding conductors.',
-      '§444.410, which applies BS EN 50174-1/-2 and 50310 to comms circuits.',
+      '§444.4.10, which applies BS EN 50174-1/-2 and 50310 to comms circuits.',
     ],
     correctAnswer: 3,
     explanation:
-      '§444.410 is the gateway clause. By citing BS EN 50174-1 explicitly, BS 7671:2018+A4:2026 brings the labelling / administration discipline of BS EN 50174-1 §6 into the wiring-regs compliance envelope. On a UK 2026 cabling job, BS 7671 §444.410 + BS EN 50174-1 §6 + TIA-606-D give the full administration framework.',
+      '§444.4.10 is the gateway clause. By citing BS EN 50174-1 explicitly, BS 7671:2018+A4:2026 brings the labelling / administration discipline of BS EN 50174-1 §6 into the wiring-regs compliance envelope. On a UK 2026 cabling job, BS 7671 §444.4.10 + BS EN 50174-1 §6 + TIA-606-D give the full administration framework.',
   },
   {
     id: 4,
@@ -226,7 +226,7 @@ const faqs = [
     answer: (
       <>
         On a UK job, the harmonised European standard applies — BS EN 50174-1 §6. BS 7671
-        §444.410(a) explicitly cites BS EN 50174-1 as the labelling / administration standard for
+        §444.4.10(a) explicitly cites BS EN 50174-1 as the labelling / administration standard for
         control / signalling / communication circuits. TIA-606-D is North American / international
         and is widely referenced as the more detailed administration document — they are aligned in
         principle, with only minor differences. Many UK specifications cite both. The competent
@@ -328,7 +328,7 @@ const DataCablingModule4Section4 = () => {
 
         <TLDR
           points={[
-            'The administration discipline is set by ANSI/TIA-606-D (2021) globally and BS EN 50174-1 §6 in Europe / UK. BS 7671 §444.410(a) explicitly cites BS EN 50174-1 as the standard to apply for control / signalling / communication circuits — bringing labelling formally into UK wiring-regs compliance.',
+            'The administration discipline is set by ANSI/TIA-606-D (2021) globally and BS EN 50174-1 §6 in Europe / UK. BS 7671 §444.4.10(a) explicitly cites BS EN 50174-1 as the standard to apply for control / signalling / communication circuits — bringing labelling formally into UK wiring-regs compliance.',
             'A hierarchical identifier names every link — site / campus / building / floor / TR / patch panel / port (e.g. "B1-03-TRB-PP2-08"). The same identifier appears on the cable both ends, on the outlet, on the patch-panel port, and in the connection-records database. Every link uniquely identified, end to end.',
             'Colour-coding is allowed as an optional supplement: blue voice, white data, red fire / safety, green CCTV / security, yellow utility, purple management — site agrees scheme at design stage and documents it. Colour is a visual cue; the unique identifier remains the authoritative label.',
             'Records at handover are the administration system: connection-records database, as-built drawings, test results, labelling-scheme key, fire-stopping register linked to cable IDs. Without records, the 15-20 year cabling life collapses to the first fault.',
@@ -337,7 +337,7 @@ const DataCablingModule4Section4 = () => {
 
         <LearningOutcomes
           outcomes={[
-            'Cite ANSI/TIA-606-D (2021) and BS EN 50174-1 §6 as the parallel administration standards; explain how BS 7671 §444.410(a) brings the EN 50174-1 discipline into UK compliance',
+            'Cite ANSI/TIA-606-D (2021) and BS EN 50174-1 §6 as the parallel administration standards; explain how BS 7671 §444.4.10(a) brings the EN 50174-1 discipline into UK compliance',
             'Construct a hierarchical identifier scheme — site / campus / building / floor / TR / patch panel / port — appropriate to the project size and topology',
             'Apply identifiers consistently on cable labels, outlet labels and patch-panel port labels; specify durable label formats that survive 15-20 years',
             'Specify colour-coding conventions as an optional supplement to the identifier scheme — voice / data / safety / security / utility / management',
@@ -355,7 +355,7 @@ const DataCablingModule4Section4 = () => {
         <ConceptBlock
           title="TIA-606-D (US / international) and BS EN 50174-1 §6 (UK / Europe) — same principle"
           plainEnglish="Cable identification and administration is governed by two parallel standards: ANSI/TIA-606-D (2021) — the Administration Standard for Telecommunications Infrastructure (North American / international); and BS EN 50174-1 §6 — the Administration / Quality Assurance section of the European cabling-installation standard. Both define the same principle: every cable, every outlet, every patch panel, every port has a unique identifier in a hierarchical scheme, recorded so the records survive personnel changes."
-          onSite="On a UK 2026 job, BS EN 50174-1 §6 is the binding standard — cited from BS 7671 §444.410(a). TIA-606-D is the more detailed reference document. Many UK specifications cite both. The competent contractor reads BS EN 50174-1 §6 first, then layers TIA-606-D detail where the EN clause is silent or ambiguous."
+          onSite="On a UK 2026 job, BS EN 50174-1 §6 is the binding standard — cited from BS 7671 §444.4.10(a). TIA-606-D is the more detailed reference document. Many UK specifications cite both. The competent contractor reads BS EN 50174-1 §6 first, then layers TIA-606-D detail where the EN clause is silent or ambiguous."
         >
           <p>The labelling discipline, in the words of the standards:</p>
           <ul className="list-disc pl-5 space-y-2 text-[14px]">
@@ -368,15 +368,15 @@ const DataCablingModule4Section4 = () => {
             <li>
               <strong>BS EN 50174-1 §6.</strong> Administration / Quality Assurance section of BS EN
               50174-1 (Information technology cabling installation: Specification and quality
-              assurance). Aligned with TIA-606-D in principle. Cited from BS 7671 §444.410(a) as the
+              assurance). Aligned with TIA-606-D in principle. Cited from BS 7671 §444.4.10(a) as the
               standard to apply for control / signalling / communication circuits inside buildings.
               Binding on UK jobs from 15 April 2026.
             </li>
             <li>
-              <strong>BS 7671 §444.410.</strong> The wiring-regs gateway. By citing BS EN 50174-1
+              <strong>BS 7671 §444.4.10.</strong> The wiring-regs gateway. By citing BS EN 50174-1
               explicitly, BS 7671 brings the labelling / administration discipline of BS EN 50174-1
               §6 into the UK wiring-regs compliance envelope. On a UK 2026 cabling job, the
-              framework is BS 7671 §444.410 + BS EN 50174-1 §6 + TIA-606-D for additional detail.
+              framework is BS 7671 §444.4.10 + BS EN 50174-1 §6 + TIA-606-D for additional detail.
             </li>
           </ul>
           <p>
@@ -388,7 +388,7 @@ const DataCablingModule4Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 · §444.410 (Inside buildings — verbatim, the labelling / admin gateway)"
+          source="BS 7671:2018+A4:2026 · §444.4.10 (Inside buildings — verbatim, the labelling / admin gateway)"
           clause={
             <>
               Within a building, the requirements and recommendations of the following standards
@@ -404,7 +404,7 @@ const DataCablingModule4Section4 = () => {
               structures.
             </>
           }
-          meaning="§444.410 is the gateway clause that brings the BS EN 50174 / 50310 standard family into BS 7671 compliance. For labelling and administration specifically, BS EN 50174-1 (sub-clause §6) is the binding standard. TIA-606-D is the parallel international document and is widely referenced for additional detail. The wiring-regs hook is §444.410(a); the labelling / administration substance lives in BS EN 50174-1 §6."
+          meaning="§444.4.10 is the gateway clause that brings the BS EN 50174 / 50310 standard family into BS 7671 compliance. For labelling and administration specifically, BS EN 50174-1 (sub-clause §6) is the binding standard. TIA-606-D is the parallel international document and is widely referenced for additional detail. The wiring-regs hook is §444.4.10(a); the labelling / administration substance lives in BS EN 50174-1 §6."
           cite="Verified verbatim from bs7671_regulations.full_text · A4:2026 edition · BS 7671:2018+A4:2026, published 15 April 2026"
         />
 
@@ -986,7 +986,7 @@ const DataCablingModule4Section4 = () => {
               fontSize="10"
               fontFamily="system-ui"
             >
-              Cited from BS 7671 §444.410(a) — binding on UK jobs from 15 April 2026
+              Cited from BS 7671 §444.4.10(a) — binding on UK jobs from 15 April 2026
             </text>
           </svg>
         </div>
@@ -1204,7 +1204,7 @@ const DataCablingModule4Section4 = () => {
         <KeyTakeaways
           title="Worth remembering"
           points={[
-            'TIA-606-D (2021) and BS EN 50174-1 §6 are the parallel administration standards. BS 7671 §444.410(a) explicitly cites BS EN 50174-1 — bringing the labelling / administration discipline into UK wiring-regs compliance.',
+            'TIA-606-D (2021) and BS EN 50174-1 §6 are the parallel administration standards. BS 7671 §444.4.10(a) explicitly cites BS EN 50174-1 — bringing the labelling / administration discipline into UK wiring-regs compliance.',
             'Hierarchical identifier: site / campus / building / floor / TR / patch panel / port. Same identifier on the cable both ends, on the outlet, on the patch-panel port, in the connection-records database. Every link uniquely named.',
             'Colour-coding is optional but valuable. Common UK conventions: blue voice, white data, red fire / safety, green CCTV / security, yellow utility, purple management. Site-agreed at design stage; documented in the labelling-scheme key.',
             'Durable labels only — laser-printed adhesive, factory-pre-printed, engraved plaques. Hand-written paper labels are NOT compliant; they fall off / fade / get over-written. Specify label format at tender stage.',

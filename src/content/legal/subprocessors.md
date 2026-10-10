@@ -29,6 +29,8 @@ If we add or replace a sub-processor that handles your clients' data, we'll upda
 |---|---|---|---|
 | Brevo | All our emails — receipts, reminders, documents you send to clients, and marketing | Email address, name, email content, preferences | EU (France) |
 | Twilio or Vonage | Text-message verification codes (one or the other) | Phone number | USA / UK |
+| Twilio | Texts with your clients, missed calls and voicemail on your Elec-Mate number, and WhatsApp messages when they are sent through Twilio | Your clients' phone numbers, the content of texts and WhatsApp messages, call details and voicemail recordings | USA (Twilio Inc.), unless Twilio's Ireland region is used for texts |
+| Meta (WhatsApp Business Platform) | Sending and receiving WhatsApp messages with your clients | Your clients' WhatsApp numbers and profile names, message content and attachments (Meta keeps message content for up to 30 days) | USA, unless Meta's local storage in another country is switched on |
 | Apple, Google and your browser's push service | App and browser notifications | Device token, notification content | USA |
 
 ## Documents and signing

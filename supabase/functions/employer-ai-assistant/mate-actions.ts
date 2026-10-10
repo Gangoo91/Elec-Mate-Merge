@@ -166,6 +166,26 @@ export const ACTION_TOOLS = [
     ['audience', 'title', 'body']
   ),
   fn(
+    'reschedule_job',
+    "Move a job to new dates, exactly as dragging it in the Diary does: everyone booked on it moves with it and gets the diary update. Give the job (name or id) and the new start (and end for a multi-day job; default keeps its length)." + CONFIRM_RULE,
+    {
+      job: { type: 'string', description: 'Job title words or id.' },
+      start: { type: 'string', description: 'New first day, YYYY-MM-DD.' },
+      end: { type: 'string', description: 'New last day, YYYY-MM-DD. Omit to keep the job the same length.' },
+    },
+    ['job', 'start']
+  ),
+  fn(
+    'send_pack_to_worker',
+    "Send an existing RAMS or job pack to one named worker to read and sign in Worker Tools (\"send Dan the RAMS for Orchard Close\"). Same send as RAMS & packs: if they already have it unsigned, it re-sends it as a reminder; if they are not on the pack yet, it adds them and sends it. Give the worker and the job as the words the user used; give pack only when the job has more than one pack. Managers only (owner, admin, office)." + CONFIRM_RULE,
+    {
+      employee: { type: 'string', description: 'Worker name or id.' },
+      job: { type: 'string', description: 'Job title words or id, e.g. "Orchard Close".' },
+      pack: { type: 'string', description: 'Pack title words, only when the job has more than one pack.' },
+    },
+    ['employee', 'job']
+  ),
+  fn(
     'chase_signature',
     'Email the signer a reminder for an open signature request (Signatures "Chase by email"). Once a day at most, six emails in all.' + CONFIRM_RULE,
     { id: { type: 'string', description: 'Signature request id.' } },
@@ -176,6 +196,11 @@ export const ACTION_TOOLS = [
 export const ACTION_NAMES = new Set(ACTION_TOOLS.map((t) => t.function.name));
 /** Actions that move money: refused for anyone who cannot see the firm's money. */
 export const MONEY_ACTIONS = new Set(['mark_expenses_paid']);
+/** Actions only a manager (owner, admin, office) may take: refused for crew. */
+export const MANAGER_ACTIONS = new Set(['send_pack_to_worker']);
+const MANAGER_ROLES = new Set(['owner', 'admin', 'office']);
+const managerRefusal = (role: string) =>
+  `Sending a RAMS or job pack is for the owner, an admin or the office. As ${/^[aeiou]/i.test(role) ? 'an' : 'a'} ${role} you can see your own packs in Worker Tools.`;
 
 // ── Small helpers ──────────────────────────────────────────────────────────
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -267,6 +292,18 @@ async function pickJob(ctx: ActionCtx, ref: unknown): Promise<{ job?: { id: stri
   const { data: part } = await base().ilike('title', `%${likeEscape(r)}%`).limit(6);
   if (part?.length === 1) return { job: part[0] };
   if ((part?.length ?? 0) > 1) return { error: `More than one job matches "${r}": ${part!.map((j: { title: string }) => j.title).join(', ')}. Which one?` };
+  // People say "the Orchard Close CU job" for "Consumer unit upgrade, 14 Orchard Close":
+  // match every meaningful word, in any order, against the title and address.
+  const words = lc(r).replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter((w) => w.length > 2 && !['the', 'job', 'one', 'for', 'and', 'next'].includes(w));
+  if (words.length) {
+    const { data: all } = await base().limit(500);
+    const hits = ((all ?? []) as { id: string; title: string; location: string | null }[]).filter((j) => {
+      const hay = lc(`${j.title} ${j.location ?? ''}`);
+      return words.every((w) => hay.includes(w));
+    });
+    if (hits.length === 1) return { job: hits[0] };
+    if (hits.length > 1) return { error: `More than one job matches "${r}": ${hits.slice(0, 6).map((j) => j.title).join(', ')}. Which one?` };
+  }
   return { error: `No open job called "${r}".` };
 }
 
@@ -413,6 +450,7 @@ export async function previewAction(ctx: ActionCtx, name: string, rawArgs: Recor
       `Marking expenses paid is for the owner or an admin. As ${ctx.role === 'office' ? 'the office manager' : 'a ' + ctx.role} you can approve or reject claims, and the owner or an admin pays them from Expenses.`
     );
   }
+  if (MANAGER_ACTIONS.has(name) && !MANAGER_ROLES.has(ctx.role)) return refuse(managerRefusal(ctx.role));
   try {
     switch (name) {
       case 'approve_timesheets':
@@ -433,6 +471,10 @@ export async function previewAction(ctx: ActionCtx, name: string, rawArgs: Recor
         return await previewMessage(ctx, rawArgs);
       case 'chase_signature':
         return await previewChaseSignature(ctx, rawArgs);
+      case 'reschedule_job':
+        return await previewReschedule(ctx, rawArgs);
+      case 'send_pack_to_worker':
+        return await previewSendPack(ctx, rawArgs);
     }
     return refuse('Unknown action.');
   } catch (e) {
@@ -760,6 +802,40 @@ async function previewBooking(ctx: ActionCtx, a: Record<string, unknown>): Promi
   });
 }
 
+async function previewReschedule(ctx: ActionCtx, a: Record<string, unknown>): Promise<PreviewOutcome> {
+  const job = await pickJob(ctx, a.job);
+  if (!job.job) return refuse(job.error ?? 'Say which job.');
+  const start = String(a.start ?? '');
+  if (!YMD_RE.test(start)) return refuse('Give the new start as YYYY-MM-DD.');
+  const { data: cur } = await ctx.caller.from('employer_jobs').select('start_date, end_date').eq('id', job.job.id).maybeSingle();
+  const len = cur?.start_date ? Math.max(0, diffDays(ymd(cur.end_date || cur.start_date), ymd(cur.start_date))) : 0;
+  const end = YMD_RE.test(String(a.end ?? '')) ? String(a.end) : addDays(start, len);
+  if (end < start) return refuse('The end date is before the start date.');
+  if (start < todayYmd()) return refuse('That date has passed. Pick today or later.');
+  const { data: crewRows } = await ctx.caller
+    .from('employer_job_assignments')
+    .select('status, employer_employees(name)')
+    .eq('job_id', job.job.id);
+  const crew = ((crewRows ?? []) as unknown as { status: string | null; employer_employees: { name: string | null } | null }[])
+    .filter((r) => !['removed', 'cancelled', 'ended'].includes(lc(r.status ?? 'assigned')))
+    .map((r) => r.employer_employees?.name)
+    .filter(Boolean) as string[];
+  const warnings: string[] = [];
+  if (!cur?.start_date) warnings.push('The job had no dates yet; this puts it in the Diary.');
+  if (isWeekend(start)) warnings.push('That starts on a weekend.');
+  return await makeCard(ctx, 'reschedule_job', { job_id: job.job.id, start, end, was_start: cur?.start_date ?? null, was_end: cur?.end_date ?? null }, {
+    title: `Move ${job.job.title}`,
+    lines: [
+      { label: 'Was', value: cur?.start_date ? rangeLabel(ymd(cur.start_date), cur.end_date ? ymd(cur.end_date) : null) : 'No dates' },
+      { label: 'Now', value: rangeLabel(start, end) },
+      { label: 'Crew', value: crew.length ? `${crew.join(', ')} ${crew.length === 1 ? 'moves' : 'move'} with it and ${crew.length === 1 ? 'gets' : 'get'} the update` : 'Nobody booked yet' },
+    ],
+    warnings,
+    undo: 'Move it back in the Diary if you change your mind.',
+    confirm_label: 'Move the job',
+  });
+}
+
 async function previewMessage(ctx: ActionCtx, a: Record<string, unknown>): Promise<PreviewOutcome> {
   const title = clean(a.title, 200);
   const body = cleanBody(a.body, 8000);
@@ -837,6 +913,83 @@ async function previewChaseSignature(ctx: ActionCtx, a: Record<string, unknown>)
   });
 }
 
+/**
+ * ELE-2085: send an existing RAMS / job pack to one named worker. The pack is
+ * where the RAMS goes to the crew (RAMS & packs, Worker Tools Sign-offs), so
+ * this reuses the pack's own send: chase_pack_signoff when they already have
+ * it unsigned, else add them to the pack and send_job_pack (idempotent: only
+ * people without a sign-off row get one, so nobody who already has it is sent
+ * it again).
+ */
+async function previewSendPack(ctx: ActionCtx, a: Record<string, unknown>): Promise<PreviewOutcome> {
+  const people = await firmPeople(ctx);
+  const pick = pickPerson(people, a.employee);
+  if (!pick.emp) return refuse(pick.error ?? 'Say who.');
+  const emp = pick.emp;
+  if (lc(emp.status) === 'archived') return refuse(`${emp.name} is archived, so nothing new goes to them.`);
+  const job = await pickJob(ctx, a.job);
+  if (!job.job) return refuse(job.error ?? 'Say which job.');
+  const { data: packRows } = await ctx.caller
+    .from('employer_job_packs')
+    .select('id, title, status, assigned_workers, sent_to_workers_at, rams_generated, method_statement_generated, briefing_pack_generated')
+    .eq('employer_id', ctx.firmId)
+    .eq('job_id', job.job.id)
+    .order('created_at', { ascending: false })
+    .limit(20);
+  let packs = (packRows ?? []) as Row[];
+  if (!packs.length) return refuse(`There is no RAMS or job pack on ${job.job.title} yet. Make one in RAMS & packs first.`);
+  const packRef = clean(a.pack, 200);
+  if (packs.length > 1 && packRef) {
+    const words = lc(packRef).split(/\s+/).filter((w) => w.length > 2);
+    const hits = packs.filter((p) => words.every((w) => lc(p.title).includes(w)));
+    if (hits.length) packs = hits;
+  }
+  if (packs.length > 1) {
+    return refuse(`${job.job.title} has ${packs.length} packs: ${packs.slice(0, 6).map((p) => p.title || 'Untitled').join(', ')}. Which one?`);
+  }
+  const pack = packs[0];
+  const { data: ackRows } = await ctx.caller
+    .from('employer_job_pack_acknowledgements')
+    .select('id, employee_id, acknowledged_at')
+    .eq('job_pack_id', pack.id)
+    .limit(500);
+  const acks = (ackRows ?? []) as Row[];
+  const mine = acks.find((x) => x.employee_id === emp.id);
+  if (mine?.acknowledged_at) return refuse(`${emp.name} already signed ${pack.title || 'that pack'} on ${dayLabel(mine.acknowledged_at)}.`);
+  const docs = [pack.rams_generated && 'RAMS', pack.method_statement_generated && 'method statement', pack.briefing_pack_generated && 'briefing']
+    .filter(Boolean)
+    .join(', ');
+  const warnings: string[] = [];
+  if (!pack.rams_generated) warnings.push('This pack has no RAMS in it yet. They will sign the pack as it stands.');
+  if (!emp.user_id) {
+    if (mine) return refuse(`${emp.name} has not joined the app yet, so a reminder cannot reach them. Chase their invite from Team first.`);
+    warnings.push(`${emp.name} has not joined the app yet. It will be waiting for them when they do, but no notification goes now.`);
+  }
+  const mode = mine ? 'chase' : 'send';
+  // The first send of a pack goes to everyone on it who has no sign-off row yet.
+  const assigned: string[] = Array.isArray(pack.assigned_workers) ? pack.assigned_workers : [];
+  const alsoGets = mode === 'send'
+    ? assigned.filter((id) => id !== emp.id && !acks.some((x) => x.employee_id === id))
+        .map((id) => people.find((p) => p.id === id)?.name)
+        .filter(Boolean) as string[]
+    : [];
+  if (alsoGets.length) warnings.push(`The pack has not gone to ${alsoGets.join(', ')} yet, so they get it too.`);
+  return await makeCard(ctx, 'send_pack_to_worker', {
+    mode, pack_id: pack.id, employee_id: emp.id, ack_id: mine?.id ?? null, add_to_pack: !assigned.includes(emp.id),
+  }, {
+    title: mode === 'chase' ? `Remind ${emp.name} to sign ${pack.title || 'the pack'}` : `Send ${pack.title || 'the pack'} to ${emp.name}`,
+    lines: [
+      { label: 'Who', value: emp.name },
+      { label: 'Job', value: `${job.job.title}${job.job.location ? `, ${job.job.location}` : ''}` },
+      { label: 'Pack', value: `${pack.title || 'Job pack'}${docs ? ` (${docs})` : ''}` },
+      { label: 'What happens', value: mode === 'chase' ? 'They already have it unsigned: a reminder goes to their phone.' : `It lands in their Worker Tools Sign-offs to read and sign${assigned.includes(emp.id) ? '' : ', and they are added to the pack'}.` },
+    ],
+    warnings,
+    undo: 'A sent pack cannot be unsent. You can take them off the pack in RAMS & packs.',
+    confirm_label: mode === 'chase' ? 'Send reminder' : 'Send pack',
+  });
+}
+
 // ── Execute (from the user's Confirm only) ─────────────────────────────────
 const result = (action: string, ok: boolean, title: string, lines: CardLine[] = [], links: CardLink[] = []): ResultCard => ({
   card: 'result', ok, action, title, lines, links,
@@ -863,6 +1016,7 @@ export async function executeAction(ctx: ActionCtx, p: ActionPayload): Promise<R
   if (MONEY_ACTIONS.has(p.t) && !ctx.canSeeMoney) {
     return result(p.t, false, 'Only the owner or an admin can mark expenses paid.');
   }
+  if (MANAGER_ACTIONS.has(p.t) && !MANAGER_ROLES.has(ctx.role)) return result(p.t, false, managerRefusal(ctx.role));
   switch (p.t) {
     case 'approve_timesheets': {
       const ids: string[] = (a.ids ?? []).filter((x: string) => UUID_RE.test(x));
@@ -971,6 +1125,47 @@ export async function executeAction(ctx: ActionCtx, p: ActionPayload): Promise<R
       return result(p.t, true, 'Message sent', [{ label: 'Title', value: a.title }], [
         { label: 'Open the message', section: 'comms', params: UUID_RE.test(id) ? { thread: id } : {} },
       ]);
+    }
+    case 'reschedule_job': {
+      // useRescheduleJob: the same RPC the Diary drag uses; bookings move with
+      // the job and the crew get the batched diary update.
+      const { error } = await ctx.caller.rpc('reschedule_job', { p_job: a.job_id, p_start: a.start, p_end: a.end });
+      if (error) return result(p.t, false, error.message);
+      await audit(ctx, 'move', 'job', a.job_id, { name: 'job dates', from: a.was_start, to: a.start, end: a.end, nonce: n });
+      return result(p.t, true, 'Job moved', [{ label: 'Now', value: rangeLabel(a.start, a.end) }], [
+        { label: 'Open Diary', section: 'diary' },
+        { label: 'Open the job', section: 'jobs', params: { job: a.job_id } },
+      ]);
+    }
+    case 'send_pack_to_worker': {
+      const links: CardLink[] = [{ label: 'Open the pack', section: 'jobpacks', params: { pack: a.pack_id } }];
+      if (a.mode === 'chase') {
+        // ViewJobPackSheet chaseOne: the same RPC (worker_notify pushes the reminder).
+        const { data, error } = await ctx.caller.rpc('chase_pack_signoff', { p_ack_id: a.ack_id });
+        const err = error?.message ?? (data as Row | null)?.error;
+        if (err) {
+          const why = err === 'already_signed' ? 'They have signed it since.' : err === 'worker_not_linked' ? 'They have not joined the app yet.' : String(err);
+          return result(p.t, false, `Reminder not sent. ${why}`, [], links);
+        }
+        await audit(ctx, 'chase', 'job_pack_signoff', a.ack_id, { name: 'pack sign-off reminder', job_pack_id: a.pack_id, employee_id: a.employee_id, nonce: n });
+        return result(p.t, true, 'Reminder sent', [], links);
+      }
+      // ViewJobPackSheet: add them to the pack, then send_job_pack (the
+      // sign-off row's INSERT trigger pushes "Job pack to sign").
+      const { data: cur, error: readErr } = await ctx.caller
+        .from('employer_job_packs').select('id, assigned_workers').eq('id', a.pack_id).eq('employer_id', ctx.firmId).maybeSingle();
+      if (readErr || !cur) return result(p.t, false, 'That pack is no longer there, or you cannot change it.');
+      const assigned: string[] = Array.isArray(cur.assigned_workers) ? cur.assigned_workers : [];
+      if (!assigned.includes(a.employee_id)) {
+        const { error: upErr } = await ctx.caller
+          .from('employer_job_packs').update({ assigned_workers: [...assigned, a.employee_id] }).eq('id', a.pack_id).select('id');
+        if (upErr) return result(p.t, false, `Not sent: ${upErr.message}`, [], links);
+      }
+      const { data, error } = await ctx.caller.rpc('send_job_pack', { p_pack_id: a.pack_id });
+      const err = error?.message ?? (data as Row | null)?.error;
+      if (err) return result(p.t, false, `Not sent: ${err === 'not_found' ? 'that pack is not on your account.' : err}`, [], links);
+      await audit(ctx, 'send', 'job_pack', a.pack_id, { name: 'job pack to worker', employee_id: a.employee_id, added_to_pack: !assigned.includes(a.employee_id), new_signoffs: (data as Row | null)?.new_signoffs ?? null, nonce: n });
+      return result(p.t, true, 'Pack sent', [{ label: 'Sign-offs created', value: String((data as Row | null)?.new_signoffs ?? 1) }], links);
     }
     case 'chase_signature': {
       // useChaseSignatureRequest: send-signature-request gates through record_signature_send as the caller.

@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { TimeEntry } from '@/types/time-tracking';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Pencil, Save, Trash2, Plus, Zap } from 'lucide-react';
-import { useTimeToPortfolio } from '@/hooks/portfolio/useTimeToPortfolio';
-import { useUniversalPortfolio } from '@/hooks/portfolio/useUniversalPortfolio';
-import TimeEntryToPortfolioDialog from '@/components/apprentice/portfolio/TimeEntryToPortfolioDialog';
+import { Pencil, Save, Trash2 } from 'lucide-react';
+import { AddHoursToPortfolio } from '../AddHoursToPortfolio';
 
 interface LogbookEntryRowProps {
   entry: TimeEntry;
@@ -18,14 +16,9 @@ interface LogbookEntryRowProps {
 
 const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [showPortfolioDialog, setShowPortfolioDialog] = useState(false);
   const [editedDuration, setEditedDuration] = useState<number>(entry.duration);
   const [editedActivity, setEditedActivity] = useState<string>(entry.activity);
   const [editedNotes, setEditedNotes] = useState<string>(entry.notes);
-
-  const { convertTimeEntryToPortfolio, quickConvertTimeEntry, isConverting, categories } =
-    useTimeToPortfolio();
-  const { convertTimeEntryToUniversal } = useUniversalPortfolio();
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -38,23 +31,6 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
       notes: editedNotes,
     });
     setIsEditing(false);
-  };
-
-  const handleAddToPortfolio = async (portfolioData: any) => {
-    try {
-      await convertTimeEntryToPortfolio(entry, portfolioData);
-      setShowPortfolioDialog(false);
-    } catch (error) {
-      // Error handling is done in the hook
-    }
-  };
-
-  const handleQuickAdd = async () => {
-    try {
-      await quickConvertTimeEntry(entry);
-    } catch (error) {
-      // Error handling is done in the hook
-    }
   };
 
   return (
@@ -131,41 +107,12 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                   </>
                 )}
 
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={handleQuickAdd}
-                  disabled={isConverting}
-                  className="text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
-                  title="Quick add to portfolio"
-                >
-                  <Zap className="h-4 w-4" />
-                </Button>
-
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setShowPortfolioDialog(true)}
-                  className="text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
-                  title="Custom add to portfolio"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
+                <AddHoursToPortfolio entry={entry} variant="icon" />
               </div>
             </td>
           </>
         )}
       </tr>
-
-      {/* Portfolio Dialog */}
-      <TimeEntryToPortfolioDialog
-        timeEntry={entry}
-        categories={categories}
-        isOpen={showPortfolioDialog}
-        onClose={() => setShowPortfolioDialog(false)}
-        onSubmit={handleAddToPortfolio}
-        isLoading={isConverting}
-      />
     </>
   );
 };

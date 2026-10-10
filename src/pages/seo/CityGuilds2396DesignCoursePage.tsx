@@ -30,7 +30,7 @@ const tocItems = [
   { id: 'overview', label: 'What Is the 2396?' },
   { id: 'who-needs-it', label: 'Who Needs It?' },
   { id: 'course-content', label: 'Course Content' },
-  { id: 'a4-2026-updates', label: 'A4:2026 Design Updates' },
+  { id: 'a4-2026-updates', label: 'Key Design Rules (A4:2026)' },
   { id: 'exam-format', label: 'Exam Format' },
   { id: 'prerequisites', label: 'Prerequisites and Entry Requirements' },
   { id: 'career-benefits', label: 'Career Benefits' },
@@ -46,7 +46,7 @@ const keyTakeaways = [
   'The course covers design calculations (cable sizing, voltage drop, fault current, earth fault loop impedance, protective device discrimination), load assessment, circuit arrangements, and documentation.',
   'The exam consists of a written design project — you are given a scenario and must produce a complete electrical installation design with calculations, schedules, and specification. It is not multiple choice.',
   'The 2396 is increasingly valued by employers and clients. It distinguishes you from electricians who install but do not design, and it is essential if you want to tender for larger commercial and industrial projects.',
-  'BS 7671:2018+A4:2026 introduced three changes designers must now address: arc fault detection devices (AFDDs) recommended for AC final circuits (Reg 421.1.7), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), and a design requirement to consider surge protective devices in accordance with Section 534.',
+  'Three BS 7671:2018+A4:2026 rules designers must address, none of them new in A4: arc fault detection devices (AFDDs) on socket-outlet circuits (Reg 421.1.7), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4) and surge protective devices in accordance with Section 534.',
   'A key distinction-level exam point: the tabulated maximum Zs values in BS 7671 Table 41.3 are calculated at operating temperature. On-site cold-measured Zs must not exceed 80% of the tabulated value (the GN3 site limit). For a 32 A Type B MCB the tabulated max Zs is 1.37 Ω — so the maximum acceptable cold-measured site reading is 1.10 Ω.',
 ];
 
@@ -318,12 +318,13 @@ const sections = [
   },
   {
     id: 'a4-2026-updates',
-    heading: 'A4:2026 Design Updates — What Changed for Designers',
+    heading: 'BS 7671:2018+A4:2026: Key Rules for Designers',
     content: (
       <>
         <p>
-          The 2396 exam is now set against BS 7671:2018+A4:2026. Three A4 changes are directly
-          relevant to electrical installation designers and are likely to feature in exam scenarios:
+          The 2396 exam is now set against BS 7671:2018+A4:2026. Three rules in it are directly
+          relevant to electrical installation designers and are likely to feature in exam scenarios.
+          None of them is new in A4, but all are commonly examined:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
@@ -334,11 +335,12 @@ const sections = [
                   Arc Fault Detection Devices — Reg 421.1.7
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Regulation 421.1.7 recommends the installation of arc fault detection devices
-                  (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire
-                  due to arc fault currents. The wording is advisory rather than mandatory — it uses
-                  &apos;recommending&apos; rather than &apos;shall&apos; — but designers should
-                  consider AFDDs and document their decision, particularly for domestic
+                  Regulation 421.1.7 covers arc fault detection devices (AFDDs) in AC final circuits
+                  of a fixed installation, to mitigate the risk of fire due to arc fault currents.
+                  Since A2:2022 they shall be provided on single-phase AC final circuits supplying
+                  socket-outlets up to 32 A in high rise residential buildings, HMOs, purpose-built
+                  student accommodation and care homes. Elsewhere they are recommended, so designers
+                  should consider AFDDs and document their decision, particularly for domestic
                   installations where cables may be concealed or routed through combustible
                   materials.
                 </p>
@@ -356,8 +358,9 @@ const sections = [
                   Regulation 411.3.4 requires that, within domestic (household) premises, additional
                   protection by an RCD with a rated residual operating current not exceeding 30 mA
                   shall be provided for AC final circuits supplying luminaires. This is a mandatory
-                  requirement — note the word &apos;shall&apos;. Domestic lighting circuits must now
-                  be protected by a 30 mA RCD or RCBO, not just an MCB. This changes the consumer
+                  requirement — note the word &apos;shall&apos;. It has applied since BS 7671:2018:
+                  domestic lighting circuits must be protected by a 30 mA RCD or RCBO, not just an
+                  MCB. This changes the consumer
                   unit design for new domestic installations and rewires.
                 </p>
               </div>
@@ -384,7 +387,7 @@ const sections = [
           </div>
         </div>
         <p className="text-sm text-white mt-2">
-          Last reviewed for BS 7671:2018+A4:2026 (effective January 2026).
+          Last reviewed for BS 7671:2018+A4:2026 (issued 15 April 2026).
         </p>
       </>
     ),
@@ -578,7 +581,7 @@ export default function CityGuilds2396DesignCoursePage() {
       title="City & Guilds 2396 Design Course: Electrical"
       description="Complete guide to the City & Guilds 2396 Electrical Installation Design qualification. Course content, exam format, prerequisites, career benefits."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

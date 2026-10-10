@@ -58,10 +58,10 @@ const ProtectiveDeviceSection = ({
     >
       <CollapsibleTrigger className="w-full flex items-center justify-between touch-manipulation min-h-[44px]">
         <div className="flex items-baseline gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Protective device check
           </span>
-          <span className="text-[11px] text-white font-mono hidden sm:inline">
+          <span className="text-[12px] text-white font-mono hidden sm:inline">
             BS 7671 Reg 433.1
           </span>
         </div>
@@ -77,7 +77,7 @@ const ProtectiveDeviceSection = ({
         {/* Device summary — the selection itself lives on the input form, since
             App 4 §5.1.1 sizes the cable on In and Cf depends on the device. */}
         <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Device sized on
           </span>
           <p className="text-[14px] font-medium text-white">
@@ -101,7 +101,7 @@ const ProtectiveDeviceSection = ({
                   : 'border-red-500/30 bg-red-500/[0.04]'
               }`}
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[12px] font-medium text-white">
                 {validation.allPassed
                   ? 'All BS 7671 coordination checks passed'
                   : 'Coordination check failed'}
@@ -118,7 +118,7 @@ const ProtectiveDeviceSection = ({
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[14px] font-medium text-white">Check 1: Ib ≤ In</span>
                       <span
-                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.ibLessEqualIn.passed ? 'text-white' : 'text-red-300'}`}
+                        className={`text-[12px] font-medium flex-shrink-0 ${validation.checks.ibLessEqualIn.passed ? 'text-white' : 'text-red-300'}`}
                       >
                         {validation.checks.ibLessEqualIn.passed ? 'Pass' : 'Fail'}
                       </span>
@@ -140,7 +140,7 @@ const ProtectiveDeviceSection = ({
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[14px] font-medium text-white">Check 2: In ≤ Iz</span>
                       <span
-                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.inLessEqualIz.passed ? 'text-white' : 'text-red-300'}`}
+                        className={`text-[12px] font-medium flex-shrink-0 ${validation.checks.inLessEqualIz.passed ? 'text-white' : 'text-red-300'}`}
                       >
                         {validation.checks.inLessEqualIz.passed ? 'Pass' : 'Fail'}
                       </span>
@@ -164,7 +164,7 @@ const ProtectiveDeviceSection = ({
                         Check 3: I₂ ≤ 1.45 × Iz
                       </span>
                       <span
-                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.i2LessEqual145Iz.passed ? 'text-white' : 'text-red-300'}`}
+                        className={`text-[12px] font-medium flex-shrink-0 ${validation.checks.i2LessEqual145Iz.passed ? 'text-white' : 'text-red-300'}`}
                       >
                         {validation.checks.i2LessEqual145Iz.passed ? 'Pass' : 'Fail'}
                       </span>
@@ -182,7 +182,7 @@ const ProtectiveDeviceSection = ({
             {/* Suggestions if failed */}
             {validation.suggestions.length > 0 && (
               <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[12px] font-medium text-white">
                   Suggestions
                 </span>
                 <ul className="space-y-1.5">
@@ -201,7 +201,7 @@ const ProtectiveDeviceSection = ({
 
             {/* Device Reference Info */}
             <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[12px] font-medium text-white">
                 Device I₂ values
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">

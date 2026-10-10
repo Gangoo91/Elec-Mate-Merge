@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
+import { OFFLINE_FIRST, offlineSnapshot } from '@/lib/workerOfflineCache';
 
 export interface Timesheet {
   id: string;
@@ -230,7 +231,10 @@ export const useTimesheets = (startDate?: string, endDate?: string) => {
 export const useEmployeeTimesheets = (employeeId: string) => {
   return useQuery({
     queryKey: ['timesheets', 'employee', employeeId],
-    queryFn: () => getTimesheetsByEmployee(employeeId),
+    // ELE-1828: a worker's days still show with no signal.
+    ...OFFLINE_FIRST,
+    queryFn: () =>
+      offlineSnapshot(`timesheets:${employeeId}`, () => getTimesheetsByEmployee(employeeId)),
     enabled: !!employeeId,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes

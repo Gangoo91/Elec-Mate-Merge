@@ -165,7 +165,7 @@ export function verificationSentence(item: {
 /** What the profile-level "approved" flag honestly means. */
 export const ELEC_MATE_APPROVAL_LABEL = 'Approved by Elec-Mate';
 export const ELEC_MATE_APPROVAL_EXPLAINER =
-  'An Elec-Mate admin reviewed this Elec-ID profile. That is not a check of the ECS card or any qualification — each item shows its own verification.';
+  'An Elec-Mate admin reviewed this Elec-ID profile. That is not a check of the ECS card or any qualification. Each item shows its own verification.';
 
 /** True when the item is something the person holds now (not planned training). */
 export const isHeld = (item: Pick<CredentialItem, 'training_status'>): boolean =>

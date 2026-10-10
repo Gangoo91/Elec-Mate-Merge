@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'Most home EV charger faults fall into five categories: error codes and EVSE communication failures, supply voltage problems, RCD nuisance tripping, earthing faults, and vehicle-side issues — understanding which category applies narrows diagnosis significantly.',
   'EVSE (Electric Vehicle Supply Equipment) communicates with the vehicle via the IEC 61851-1 pilot signal. A fault in this signal — often caused by a damaged cable, corroded connector, or faulty control board — will prevent charging from starting.',
-  "Nuisance RCD tripping on EV charger circuits is common and is frequently caused by DC leakage from the vehicle's on-board charger. An RCD Type B (or Type A with DC leakage protection) is required under BS 7671:2018+A2:2022 Regulation 722.531.3.101.",
+  "Nuisance RCD tripping on EV charger circuits is common and is frequently caused by DC leakage from the vehicle's on-board charger. An RCD Type B (or Type A with DC leakage protection) is required under BS 7671:2018+A4:2026 Regulation 722.531.3.101.",
   'Earthing faults on EV charger installations — particularly missing or high-resistance earth paths — are a safety hazard and will prevent the EVSE from authorising a charge session. The installation must comply with BS 7671 Section 722.',
   'Only OZEV-approved (formerly OLEV-approved) installers should carry out rectification work on a home EV charger installation. Using an unapproved installer may invalidate the manufacturer warranty and any OZEV grant conditions.',
 ];
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'Why does my RCD keep tripping when I plug in my EV charger?',
     answer:
-      'EV on-board chargers produce a small DC leakage current that can trip standard Type AC or Type A RCDs. BS 7671:2018+A2:2022 Regulation 722.531.3.101 requires RCD Type B, or a Type A RCD with additional DC leakage protection, on EV charger circuits. If your installation has an older Type AC RCD, upgrading to Type B or fitting an EV-specific Type A+DC device will usually resolve nuisance tripping. This work must be carried out by a qualified electrician.',
+      'EV on-board chargers produce a small DC leakage current that can trip standard Type AC or Type A RCDs. BS 7671:2018+A4:2026 Regulation 722.531.3.101 requires RCD Type B, or a Type A RCD with additional DC leakage protection, on EV charger circuits. If your installation has an older Type AC RCD, upgrading to Type B or fitting an EV-specific Type A+DC device will usually resolve nuisance tripping. This work must be carried out by a qualified electrician.',
   },
   {
     question: 'My EV charger worked fine and then suddenly stopped — what happened?',
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'Do I need a dedicated circuit for my home EV charger?',
     answer:
-      "Yes. BS 7671:2018+A2:2022 Section 722 and most charger manufacturer installation requirements specify a dedicated final circuit for an EV charger rated at 7.4 kW (32 A single-phase) or higher. The circuit should be wired in 6 mm² cable (or 10 mm² for longer runs) with appropriate RCD protection. Sharing the circuit with other loads is not compliant and will cause nuisance tripping and potentially damage the vehicle's on-board charger.",
+      "Yes. BS 7671:2018+A4:2026 Section 722 and most charger manufacturer installation requirements specify a dedicated final circuit for an EV charger rated at 7.4 kW (32 A single-phase) or higher. The circuit should be wired in 6 mm² cable (or 10 mm² for longer runs) with appropriate RCD protection. Sharing the circuit with other loads is not compliant and will cause nuisance tripping and potentially damage the vehicle's on-board charger.",
   },
   {
     question: 'When must I call an OZEV-approved installer?',
@@ -287,7 +287,7 @@ const sections = [
                 <strong>Voltage transients and harmonics</strong> — switching loads (inverters,
                 VFDs) on the same distribution network can introduce voltage transients. Smart
                 charger control electronics are sensitive to these. A surge protection device (SPD)
-                at the consumer unit, required under BS 7671:2018+A2:2022 Regulation 443, can
+                at the consumer unit, required under BS 7671:2018+A4:2026 Regulation 443.4, can
                 mitigate transient damage to the EVSE.
               </span>
             </li>
@@ -320,7 +320,7 @@ const sections = [
                 nuisance tripping. Vehicle on-board chargers can produce a small DC component in
                 their leakage current. Type AC and Type A RCDs are not designed to respond to DC
                 leakage and can become desensitised or permanently biased open — which means they
-                may fail to trip on a genuine AC fault. BS 7671:2018+A2:2022 Regulation 722.531.3.101
+                may fail to trip on a genuine AC fault. BS 7671:2018+A4:2026 Regulation 722.531.3.101
                 requires either an RCD Type B, or a Type A RCD with an additional device providing
                 DC leakage protection up to 6 mA. Compliant installation is essential.
               </span>
@@ -389,10 +389,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>PME prohibition on outdoor sockets</strong> — BS 7671:2018+A2:2022
-                Regulation 722.411.4 prohibits the use of the PME earthing terminal (TN-C-S) for
-                outdoor EV charging points connected to the general mass of earth. An additional
-                earth electrode is required in these situations.
+                <strong>PME restriction outdoors</strong> — BS 7671:2018+A4:2026 Regulation
+                722.411.4.1 says a PME earthing facility shall not be used for the protective
+                conductor of a charging point outdoors unless one of methods (b) to (e) is used, for
+                example a separate earth electrode or a device that disconnects on an open PEN.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -522,7 +522,7 @@ export default function EVChargerNotWorkingPage() {
       title="EV Charger Not Working: EVSE Fault Finding UK"
       description="Home EV charger not working? This guide explains error codes, EVSE communication faults, supply voltage issues, RCD nuisance tripping, earthing faults."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

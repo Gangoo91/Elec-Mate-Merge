@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
+import { fetchFirmIncidents } from '@/hooks/useIncidents';
 
 /* ==========================================================================
    useJobDetailSignals — the actual cross-section items that need attention on
@@ -51,10 +52,21 @@ export function useJobDetailSignals(jobId: string | null | undefined) {
       const cutoff = new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10);
 
       const [incRes, invRes, assignRes] = await Promise.all([
-        supabase
-          .from('employer_incidents')
-          .select('id, title, severity, status')
-          .eq('job_id', jobId),
+        // ELE-2031: every source of the firm's incidents (managers only).
+        fetchFirmIncidents()
+          .then((rows) => ({
+            data: rows
+              .filter((r) => r.job_id === jobId)
+              .map((r) => ({ id: r.id, title: r.title, severity: r.severity, status: r.status })),
+          }))
+          .catch(() => ({
+            data: [] as {
+              id: string;
+              title: string | null;
+              severity: string | null;
+              status: string | null;
+            }[],
+          })),
         supabase
           .rpc('employer_invoices_unified')
           .select('id, invoice_number, amount, due_date, status, job_id')

@@ -396,9 +396,7 @@ export function StudentMessageSheet({
               <SheetHeader className="pb-4 pt-2">
                 <div className="flex items-start justify-between gap-3">
                   <SheetTitle className="min-w-0 text-left">
-                    <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                      Messages
-                    </span>
+                    <span className="block text-[13px] font-medium text-elec-yellow">Messages</span>
                     <span className="mt-1 block text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[24px]">
                       {studentName}
                     </span>
@@ -475,7 +473,7 @@ export function StudentMessageSheet({
                               </div>
                             </div>
                             {t.unread_count_tutor > 0 && (
-                              <span className="shrink-0 rounded-full bg-elec-yellow px-2 py-0.5 text-[11px] font-semibold tabular-nums text-black">
+                              <span className="shrink-0 rounded-full bg-elec-yellow px-2 py-0.5 text-[12px] font-semibold tabular-nums text-black">
                                 {t.unread_count_tutor}
                               </span>
                             )}
@@ -553,7 +551,7 @@ export function StudentMessageSheet({
                               className={cn(
                                 'max-w-[82%] rounded-2xl px-4 py-2.5 text-white transition-opacity lg:max-w-[70%]',
                                 fromTutor
-                                  ? 'rounded-br-md bg-elec-yellow/[0.12]'
+                                  ? 'rounded-br-md border border-white/[0.14] bg-white/[0.12]'
                                   : 'rounded-bl-md border border-white/[0.08] bg-white/[0.05]',
                                 isOptimistic && 'opacity-60'
                               )}
@@ -561,7 +559,7 @@ export function StudentMessageSheet({
                               <div className="whitespace-pre-wrap text-[14px] leading-relaxed">
                                 {m.body}
                               </div>
-                              <div className="mt-1 flex items-center gap-1.5 text-[11px] tabular-nums text-white">
+                              <div className="mt-1 flex items-center gap-1.5 text-[12px] tabular-nums text-white">
                                 <span>{fmtWhen(m.created_at)}</span>
                                 {isOptimistic && (
                                   <>
@@ -599,7 +597,7 @@ export function StudentMessageSheet({
                         }}
                         rows={2}
                         aria-label="Message"
-                        placeholder="Write a message… ⌘↵ to send"
+                        placeholder="Write a message"
                         inputMode="text"
                         autoCapitalize="sentences"
                         autoCorrect="on"

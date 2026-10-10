@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Isolation transformers are widely used in pharmaceutical cleanrooms to provide a floating earth reference, reduce electromagnetic interference to sensitive instrumentation, and provide an additional level of electrical safety for personnel working with critical equipment.',
   'BS 7671 sets mandatory acceptance criteria for medical IT systems. Reg 710.555.201(a) limits the no-load leakage current of the transformer output winding and enclosure to 0.5 mA, and limits each transformer to a rated output of 0.5–10 kVA. Across the whole medical IT system, with all final circuits connected and without load, the total leakage current (transformer plus all connected final circuits) shall not exceed 10 mA. Reg 710.531.2.2.3 prohibits overload protection in the secondary circuit of the isolating transformer — overload protection must instead be provided at each individual final circuit.',
   'BS 7671 Reg 710.415.1 prohibits the use of RCDs as additional protection on final circuits supplied by a medical IT system. Where a second insulation fault occurs, automatic disconnection must be achieved via overcurrent protective devices in accordance with Reg 411.6.5 (Reg 717.411.6).',
-'BS 7671:2018+A4:2026 redrafted Reg 421.1.7. It is now a requirement to protect final circuits supplying socket-outlets rated up to 32 A with arc fault detection devices (AFDDs) in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation, and care homes. For all other premises — including most pharmaceutical facilities — Reg 421.1.7 recommends AFDDs for single-phase AC final circuits supplying socket-outlets not exceeding 32 A, which should be considered on new work and at periodic inspection.',
+'Reg 421.1.7 was redrafted at A2:2022 and is carried into BS 7671:2018+A4:2026. It is a requirement to protect final circuits supplying socket-outlets rated up to 32 A with arc fault detection devices (AFDDs) in high rise residential buildings (the A4:2026 wording), Houses in Multiple Occupation, purpose-built student accommodation, and care homes. For all other premises, including most pharmaceutical facilities — Reg 421.1.7 recommends AFDDs for single-phase AC final circuits supplying socket-outlets not exceeding 32 A, which should be considered on new work and at periodic inspection.',
 ];
 
 const faqs = [
@@ -721,12 +721,11 @@ const sections = [
             <Zap className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
-                A4:2026 Update: Arc Fault Detection Devices (AFDDs)
+                Reg 421.1.7: Arc Fault Detection Devices (AFDDs)
               </h4>
               <p className="text-white text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 redrafted Reg 421.1.7. AFDDs are now a requirement for final
-                circuits supplying socket-outlets rated up to 32 A in Higher Risk Residential
-                Buildings, Houses in Multiple Occupation, purpose-built student accommodation, and
+                Since A2:2022, Reg 421.1.7 has made AFDDs a requirement for final circuits
+                supplying socket-outlets rated up to 32 A in high rise residential buildings, Houses in Multiple Occupation, purpose-built student accommodation, and
                 care homes. For all other premises — which covers most pharmaceutical facilities —
                 the regulation recommends AFDDs on single-phase AC final circuits supplying
                 socket-outlets not exceeding 32 A. Consider them on new work and at periodic
@@ -756,7 +755,7 @@ export default function PharmaceuticalElectricalPage() {
       title="Pharmaceutical Electrical Installation UK: GMP"
       description="Complete guide to pharmaceutical electrical installation in the UK — GMP requirements, cleanroom wiring (no exposed conduit fittings)."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

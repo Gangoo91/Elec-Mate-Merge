@@ -159,7 +159,7 @@ export function useMyAssignedQuizzes() {
       // counts/totals come from a definer RPC scoped to assigned quizzes.
       supabase.rpc('get_my_quiz_totals' as never, { p_quiz_ids: ids } as never),
       tutorIds.length > 0
-        ? supabase.from('profiles').select('id, full_name').in('id', tutorIds)
+        ? supabase.from('public_profiles').select('id, full_name').in('id', tutorIds)
         : Promise.resolve({ data: [] as Array<{ id: string; full_name: string | null }> }),
     ]);
 

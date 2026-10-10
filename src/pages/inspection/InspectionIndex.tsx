@@ -5,7 +5,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import { NotificationsManager } from '@/components/notifications/NotificationsManager';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { certificateRoute, certificateHref, certificateNewHref } from '@/utils/certificate-href';
-import { withCertificatePrefill } from '@/utils/certificatePrefill';
+import { withCertificatePrefill, readCertificateReturnTo } from '@/utils/certificatePrefill';
 import { useToast } from '@/hooks/use-toast';
 
 const containerVariants = {
@@ -40,6 +40,11 @@ const InspectionIndex = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Gap #3 (ELE-2068): a certificate started from a job (Worker Tools) comes
+  // back to the job's Job done on Back. Read once: the form rewrites the URL.
+  const [returnTo] = useState(() => readCertificateReturnTo(location.search));
+  const backFromForm = () => (returnTo ? navigate(returnTo) : handleNavigate('certificates'));
 
   // Base path for inspection routes
   const basePath = '/electrician/inspection-testing';
@@ -177,7 +182,7 @@ const InspectionIndex = () => {
           <div className="bg-background text-foreground">
             <ErrorBoundary>
               <EICRForm
-                onBack={() => handleNavigate('certificates')}
+                onBack={backFromForm}
                 initialReportId={currentReportId}
               />
             </ErrorBoundary>
@@ -188,7 +193,7 @@ const InspectionIndex = () => {
           <div className="bg-background text-foreground">
             <ErrorBoundary>
               <EICForm
-                onBack={() => handleNavigate('certificates')}
+                onBack={backFromForm}
                 initialReportId={currentReportId}
                 designId={currentDesignId}
               />
@@ -200,7 +205,7 @@ const InspectionIndex = () => {
           <div className="bg-background text-foreground">
             <ErrorBoundary>
               <MinorWorksForm
-                onBack={() => handleNavigate('certificates')}
+                onBack={backFromForm}
                 initialReportId={currentReportId}
               />
             </ErrorBoundary>

@@ -31,7 +31,13 @@ interface WitnessRequest {
   status: 'requested' | 'signed';
   criteria: string[] | null;
   /** ELE-1869: the criteria in plain words, from the learner's qualification. */
-  criteria_detail?: Array<{ code: string; unit_code: string | null; ac_code: string | null; unit_title: string | null; text: string | null }> | null;
+  criteria_detail?: Array<{
+    code: string;
+    unit_code: string | null;
+    ac_code: string | null;
+    unit_title: string | null;
+    text: string | null;
+  }> | null;
   /** ELE-1869: photos and videos of the evidence (public storage URLs). */
   media?: Array<{ url: string; name: string; type: string }> | null;
   evidence: { title?: string; description?: string; criteria?: string[] | null } | null;
@@ -52,7 +58,6 @@ const inputCn =
   'hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none ' +
   'touch-manipulation';
 
-
 export default function WitnessStatementPage() {
   const { token } = useParams<{ token: string }>();
   const [req, setReq] = useState<WitnessRequest | null>(null);
@@ -63,6 +68,11 @@ export default function WitnessStatementPage() {
   const [statement, setStatement] = useState('');
   const [signature, setSignature] = useState('');
   const [confirm, setConfirm] = useState(false);
+  // C&G 5357: an expert witness is occupationally competent and has no conflict of interest.
+  const [competence, setCompetence] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [years, setYears] = useState('');
+  const [noConflict, setNoConflict] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<string | null>(null);
@@ -84,19 +94,26 @@ export default function WitnessStatementPage() {
   const first = req?.learner_name?.split(' ')[0] || 'the apprentice';
   // Plain words first; the unit and code only as a small second line. Falls
   // back to the stored code when the criterion is not in the catalogue.
-  const criteriaList = (
-    req?.criteria_detail?.length
-      ? req.criteria_detail.map((c) => ({
-          key: c.code,
-          text: c.text ? c.text.charAt(0).toUpperCase() + c.text.slice(1) : `Criterion ${c.ac_code ?? c.code}`,
-          unit: [c.unit_title, c.unit_code && c.ac_code ? `Unit ${c.unit_code}, ${c.ac_code}` : null]
-            .filter(Boolean)
-            .join(' · '),
-        }))
-      : (req?.criteria ?? []).map((c) => ({ key: c, text: c, unit: '' }))
-  );
+  const criteriaList = req?.criteria_detail?.length
+    ? req.criteria_detail.map((c) => ({
+        key: c.code,
+        text: c.text
+          ? c.text.charAt(0).toUpperCase() + c.text.slice(1)
+          : `Criterion ${c.ac_code ?? c.code}`,
+        unit: [c.unit_title, c.unit_code && c.ac_code ? `Unit ${c.unit_code}, ${c.ac_code}` : null]
+          .filter(Boolean)
+          .join(' · '),
+      }))
+    : (req?.criteria ?? []).map((c) => ({ key: c, text: c, unit: '' }));
+  const yearsNum = years.trim() === '' ? null : Number.parseInt(years, 10);
   const canSign =
-    name.trim().length > 1 && statement.trim().length > 10 && signature && confirm && !saving;
+    name.trim().length > 1 &&
+    competence.trim().length > 1 &&
+    statement.trim().length > 10 &&
+    signature &&
+    confirm &&
+    noConflict &&
+    !saving;
 
   const submit = async () => {
     if (!token || !canSign) return;
@@ -113,6 +130,11 @@ export default function WitnessStatementPage() {
         p_signature: signature,
         // ELE-1869: "I confirm I observed this" is stored and hashed server-side.
         p_confirmed: confirm,
+        // The witness's own confirmation of competence and no conflict, stored and hashed.
+        p_competence: competence.trim(),
+        p_card_number: cardNumber.trim() || null,
+        p_years_in_trade: yearsNum !== null && Number.isFinite(yearsNum) ? yearsNum : null,
+        p_no_conflict: noConflict,
       } as never
     );
     setSaving(false);
@@ -122,12 +144,18 @@ export default function WitnessStatementPage() {
         already_signed: 'This statement has already been signed.',
         already_withdrawn: 'The apprentice withdrew this request, so there is nothing to sign.',
         expired: 'This link has expired. Ask the apprentice to send a new one.',
-        signature_too_large: 'Your signature is too detailed to save. Clear it and sign again more simply.',
+        signature_too_large:
+          'Your signature is too detailed to save. Clear it and sign again more simply.',
         name_statement_and_signature_required: 'Add your name, what you saw and your signature.',
         not_found: 'This link is not valid. Ask the apprentice to send it again.',
         confirmation_required: 'Tick the box to confirm you saw this work yourself.',
+        no_conflict_required: `Tick the box to confirm you are not related to ${first} and do not gain from their result.`,
+        competence_required: 'Say what makes you competent to judge this work.',
       };
-      setError((res?.error && copy[res.error]) || 'Could not save your statement. Check your connection and try again.');
+      setError(
+        (res?.error && copy[res.error]) ||
+          'Could not save your statement. Check your connection and try again.'
+      );
       return;
     }
     setDone(res.statement_hash ?? '');
@@ -136,9 +164,10 @@ export default function WitnessStatementPage() {
   const signed = !req?.error && (req?.status === 'signed' || done !== null);
   const missing = [
     name.trim().length > 1 ? null : 'your name',
+    competence.trim().length > 1 ? null : 'your qualification or card',
     statement.trim().length > 10 ? null : 'what you saw',
     signature ? null : 'your signature',
-    confirm ? null : 'the tick box',
+    confirm && noConflict ? null : 'the tick boxes',
   ].filter(Boolean);
 
   return (
@@ -164,10 +193,14 @@ export default function WitnessStatementPage() {
             Signed. <span className="text-elec-yellow">Thank you.</span>
           </PublicH1>
           <PublicLead>
-            {first} and their assessor can now read your statement alongside the evidence. You don't need to do
-            anything else.
+            {first} and their assessor can now read your statement alongside the evidence. You don't
+            need to do anything else.
           </PublicLead>
-          {done && <p className="mt-6 break-all font-mono text-[12px] text-white">Reference {done.slice(0, 16)}</p>}
+          {done && (
+            <p className="mt-6 break-all font-mono text-[12px] text-white">
+              Reference {done.slice(0, 16)}
+            </p>
+          )}
         </>
       )}
 
@@ -175,14 +208,18 @@ export default function WitnessStatementPage() {
         <>
           <PublicH1>Confirm what you saw {first} do</PublicH1>
           <PublicLead>
-            {first} has asked you to back up a piece of their apprenticeship evidence. It takes two minutes and you
-            don't need an account.
+            {first} has asked you to back up a piece of their apprenticeship evidence. It takes two
+            minutes and you don't need an account.
           </PublicLead>
 
           <PublicCard className="mt-8 space-y-4">
-            <h2 className="text-[18px] font-bold tracking-[-0.01em] text-white">{req.evidence?.title || 'Work carried out'}</h2>
+            <h2 className="text-[18px] font-bold tracking-[-0.01em] text-white">
+              {req.evidence?.title || 'Work carried out'}
+            </h2>
             {req.evidence?.description && (
-              <p className="whitespace-pre-line text-[15px] leading-relaxed text-white">{req.evidence.description}</p>
+              <p className="whitespace-pre-line text-[15px] leading-relaxed text-white">
+                {req.evidence.description}
+              </p>
             )}
             {(req.media?.length ?? 0) > 0 && (
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -211,15 +248,22 @@ export default function WitnessStatementPage() {
             )}
             {(criteriaList.length ?? 0) > 0 && (
               <div className="border-t border-white/[0.1] pt-4">
-                <h3 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">What you are confirming</h3>
+                <h3 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
+                  What you are confirming
+                </h3>
                 <p className="mt-1 text-[14px] text-white">{first} says you saw them:</p>
                 <ul className="mt-3 space-y-3">
                   {criteriaList.map((c) => (
                     <li key={c.key} className="flex gap-3 text-[15px] leading-snug text-white">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow" aria-hidden />
+                      <span
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
+                        aria-hidden
+                      />
                       <span>
                         {c.text}
-                        {c.unit && <span className="mt-0.5 block text-[13px] text-white">{c.unit}</span>}
+                        {c.unit && (
+                          <span className="mt-0.5 block text-[13px] text-white">{c.unit}</span>
+                        )}
                       </span>
                     </li>
                   ))}
@@ -230,11 +274,21 @@ export default function WitnessStatementPage() {
 
           <PublicCard className="mt-4 space-y-5">
             <div>
-              <Label htmlFor="w-name" className="mb-1 block text-[13px] font-medium text-white">Your full name</Label>
-              <input id="w-name" className={inputCn} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+              <Label htmlFor="w-name" className="mb-1 block text-[13px] font-medium text-white">
+                Your full name
+              </Label>
+              <input
+                id="w-name"
+                className={inputCn}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="name"
+              />
             </div>
             <div>
-              <Label htmlFor="w-role" className="mb-1 block text-[13px] font-medium text-white">Your role</Label>
+              <Label htmlFor="w-role" className="mb-1 block text-[13px] font-medium text-white">
+                Your role
+              </Label>
               <input
                 id="w-role"
                 className={inputCn}
@@ -244,11 +298,70 @@ export default function WitnessStatementPage() {
               />
             </div>
             <div>
-              <Label htmlFor="w-company" className="mb-1 block text-[13px] font-medium text-white">Company</Label>
-              <input id="w-company" className={inputCn} value={company} onChange={(e) => setCompany(e.target.value)} autoComplete="organization" />
+              <Label htmlFor="w-company" className="mb-1 block text-[13px] font-medium text-white">
+                Company
+              </Label>
+              <input
+                id="w-company"
+                className={inputCn}
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                autoComplete="organization"
+              />
             </div>
             <div>
-              <Label htmlFor="w-statement" className="mb-1 block text-[13px] font-medium text-white">
+              <Label
+                htmlFor="w-competence"
+                className="mb-1 block text-[13px] font-medium text-white"
+              >
+                What makes you competent to judge this work?
+              </Label>
+              <input
+                id="w-competence"
+                className={inputCn}
+                value={competence}
+                onChange={(e) => setCompetence(e.target.value)}
+                maxLength={300}
+                placeholder="e.g. JIB / ECS gold card, Approved Electrician"
+              />
+              <p className="mt-1.5 text-[13px] text-white">
+                Your qualification, card or role in the trade, in your own words.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div>
+                <Label htmlFor="w-card" className="mb-1 block text-[13px] font-medium text-white">
+                  Card number (optional)
+                </Label>
+                <input
+                  id="w-card"
+                  className={inputCn}
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value)}
+                  maxLength={40}
+                  autoComplete="off"
+                />
+              </div>
+              <div>
+                <Label htmlFor="w-years" className="mb-1 block text-[13px] font-medium text-white">
+                  Years in the trade (optional)
+                </Label>
+                <input
+                  id="w-years"
+                  className={inputCn}
+                  value={years}
+                  onChange={(e) => setYears(e.target.value.replace(/[^0-9]/g, '').slice(0, 2))}
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                />
+              </div>
+            </div>
+            <div>
+              <Label
+                htmlFor="w-statement"
+                className="mb-1 block text-[13px] font-medium text-white"
+              >
                 What did you see {first} do?
               </Label>
               <textarea
@@ -261,7 +374,12 @@ export default function WitnessStatementPage() {
             </div>
             <div>
               <Label className="mb-2 block text-[13px] font-medium text-white">Signature</Label>
-              <SignatureCapture variant="dark" showActions={false} onCapture={setSignature} height={160} />
+              <SignatureCapture
+                variant="dark"
+                showActions={false}
+                onCapture={setSignature}
+                height={160}
+              />
             </div>
             <label className="flex min-h-11 items-start gap-3 text-[15px] text-white touch-manipulation">
               <input
@@ -272,6 +390,22 @@ export default function WitnessStatementPage() {
               />
               I saw this work myself and this statement is true.
             </label>
+            <div>
+              <label className="flex min-h-11 items-start gap-3 text-[15px] text-white touch-manipulation">
+                <input
+                  type="checkbox"
+                  className="mt-1 h-5 w-5 accent-elec-yellow"
+                  checked={noConflict}
+                  onChange={(e) => setNoConflict(e.target.checked)}
+                />
+                I am not a relative or partner of {first}, and I do not gain anything from their
+                result.
+              </label>
+              <p className="mt-1 pl-8 text-[13px] text-white">
+                If you can't tick this, please don't sign. Tell {first}, so their assessor can ask
+                someone else.
+              </p>
+            </div>
           </PublicCard>
 
           <div className="mt-6 space-y-3">
@@ -283,7 +417,12 @@ export default function WitnessStatementPage() {
                 {error}
               </p>
             )}
-            <button type="button" onClick={submit} disabled={!canSign} className={PUBLIC_PRIMARY_CTA}>
+            <button
+              type="button"
+              onClick={submit}
+              disabled={!canSign}
+              className={PUBLIC_PRIMARY_CTA}
+            >
               {saving ? 'Signing…' : 'Sign statement'}
             </button>
           </div>

@@ -342,7 +342,7 @@ const sections = [
             AFDDs on a construction site — what the standard actually says
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-white">
-            Regulation 421.1.7 was redrafted at A4:2026. It is now a requirement to protect final
+            Regulation 421.1.7 was redrafted at A2:2022 (A4:2026 only reworded its first item). It is a requirement to protect final
             circuits supplying socket-outlets rated not exceeding 32 A with arc fault detection
             devices in Higher Risk Residential Buildings, Houses in Multiple Occupation,
             purpose-built student accommodation and care homes. For all other premises — which
@@ -994,7 +994,7 @@ export default function ConstructionSiteTemporarySupplyPage() {
       title="Construction Site Temporary Supply: 110V Guide"
       description="Construction site temporary electrical supply: 110V CTE tool circuits (55V to earth), BS 7375 site distribution boards, 30mA RCDs and 3-month EICR cycle."
       datePublished="2025-11-12"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Construction Guide"

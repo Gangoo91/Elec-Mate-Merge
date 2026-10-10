@@ -21,7 +21,7 @@ const R1R2Step2 = () => {
   return (
     <div className="space-y-3">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[13px] font-semibold text-white">
           Step 2
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">Perform the test</h3>

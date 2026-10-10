@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 import { AlertTriangle, type LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { CALLOUT_DANGER, PANEL_LABEL_DANGER } from '@/components/ui/panel-recipe';
+import {
+  LEARN_CALLOUT_DANGER,
+  LEARN_LABEL_DANGER,
+  learnChip,
+} from '@/components/apprentice/learn-ui/learnUi';
 import type { ToggleCardDef, SafetyNotice } from '@/types/installation-guides';
 import { cn } from '@/lib/utils';
 
@@ -89,15 +93,14 @@ const InstallationGuidePageShell = ({
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => toggleCard(card.id)}
+                  // Chosen section is white, not solid volt — volt is kept for
+                  // the one action on a screen (design language, 10 Oct).
                   className={cn(
-                    'inline-flex h-11 shrink-0 items-center gap-2 rounded-full px-4 text-[13px]',
-                    'transition-colors touch-manipulation active:scale-[0.98]',
-                    isActive
-                      ? 'bg-elec-yellow font-semibold text-black'
-                      : 'border border-white/[0.16] font-medium text-white hover:border-white/[0.32]'
+                    learnChip(isActive),
+                    'inline-flex items-center gap-2 px-4 text-[13px] active:scale-[0.98]'
                   )}
                 >
-                  <CardIcon className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                  <CardIcon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
                   {card.label}
                 </button>
               );
@@ -109,10 +112,10 @@ const InstallationGuidePageShell = ({
 
         {safetyNotice && (
           <motion.div variants={itemVariants}>
-            <div className={cn(CALLOUT_DANGER, 'space-y-3')}>
+            <div className={cn(LEARN_CALLOUT_DANGER, 'space-y-3')}>
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 flex-shrink-0 text-red-400" aria-hidden />
-                <span className={PANEL_LABEL_DANGER}>{safetyNotice.title}</span>
+                <span className={LEARN_LABEL_DANGER}>{safetyNotice.title}</span>
               </div>
               <ul className="space-y-2">
                 {safetyNotice.points.map((point, idx) => (

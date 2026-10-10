@@ -222,7 +222,7 @@ const sections = [
               <span>
                 <strong>Consumer unit age and condition</strong> — consumer units with rewirable
                 fuses, wooden backs, or no RCD protection should be replaced before adding extension
-                circuits. Under Regulation 411.3.4 of BS 7671, all new consumer units installed in
+                circuits. Under Regulation 421.1.201 of BS 7671, all new consumer units installed in
                 domestic premises must have a non-combustible enclosure.
               </span>
             </li>
@@ -518,7 +518,7 @@ export default function HouseExtensionElectricalGuidePage() {
       title="House Extension Electrical Guide UK: Wiring"
       description="Complete guide to electrical work in a house extension. Circuit planning, consumer unit capacity check, ring main extension vs new circuit."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Extension Guide"

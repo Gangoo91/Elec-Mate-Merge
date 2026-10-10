@@ -33,13 +33,16 @@ const ACTION_BTN =
   '-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
 
 const CHIP =
-  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[12px] font-semibold tabular-nums';
 const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
 const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
 const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
 const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 
 function formatRelative(iso: string | null): string {
   if (!iso) return '—';
@@ -81,16 +84,13 @@ export function SectionQuizzes({
   const [uploadDoc, setUploadDoc] = useState(false);
   const first = studentName.split(' ')[0];
 
-  const visible = useMemo(
-    () => (expanded ? attempts : attempts.slice(0, 8)),
-    [attempts, expanded]
-  );
+  const visible = useMemo(() => (expanded ? attempts : attempts.slice(0, 8)), [attempts, expanded]);
 
   const heading = (
-    <div className="flex items-end justify-between gap-4">
-      <CollegeHeading>Quizzes &amp; assessments</CollegeHeading>
+    <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
+      <CollegeHeading>Quizzes and assessments</CollegeHeading>
       {collegeStudentId && (
-        <div className="flex items-center gap-1 no-print">
+        <div className="-ml-2 flex items-center gap-1 no-print sm:ml-0">
           <button type="button" onClick={() => setCreateQuiz(true)} className={ACTION_BTN}>
             New quiz
           </button>
@@ -125,7 +125,7 @@ export function SectionQuizzes({
         {heading}
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[12.5px] leading-relaxed text-white">
-            No linked apprentice account — connect this learner's app sign-in to see quiz and
+            No linked apprentice account. Connect this learner's app sign-in to see quiz and
             assessment results. You can still send a quiz from here.
           </p>
         </div>
@@ -146,14 +146,19 @@ export function SectionQuizzes({
         <StatCell
           label="Attempts"
           value={String(rollUp.total_attempts)}
-          sub={rollUp.last_attempt_at ? `Last ${formatRelative(rollUp.last_attempt_at)}` : 'None yet'}
+          sub={
+            rollUp.last_attempt_at ? `Last ${formatRelative(rollUp.last_attempt_at)}` : 'None yet'
+          }
         />
         <StatCell
           label="Pass rate"
           value={rollUp.total_attempts > 0 ? `${rollUp.pass_rate_percent}%` : '—'}
           bad={rollUp.total_attempts > 0 && rollUp.pass_rate_percent < 50}
         />
-        <StatCell label="Average score" value={rollUp.avg_percent != null ? `${rollUp.avg_percent}%` : '—'} />
+        <StatCell
+          label="Average score"
+          value={rollUp.avg_percent != null ? `${rollUp.avg_percent}%` : '—'}
+        />
         <StatCell
           label="Streak"
           value={String(rollUp.recent_streak)}
@@ -248,24 +253,36 @@ function AttemptRow({ attempt, onClick }: { attempt: AssessmentEntry; onClick?: 
     <>
       <span className="min-w-0 flex-1">
         <span className="flex flex-wrap items-center gap-1.5">
-          <span className="truncate text-[13.5px] font-semibold leading-tight text-white">{attempt.title}</span>
-          {attempt.kind === 'assessment' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Assessment</span>}
-          {attempt.kind === 'mock_exam' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Mock exam</span>}
+          <span className="min-w-0 break-words text-[14.5px] font-semibold leading-snug text-white">
+            {attempt.title}
+          </span>
+          {attempt.kind === 'assessment' && (
+            <span className={cn(CHIP, CHIP_NEUTRAL)}>Assessment</span>
+          )}
+          {attempt.kind === 'mock_exam' && (
+            <span className={cn(CHIP, CHIP_NEUTRAL)}>Mock exam</span>
+          )}
           {verdict && <span className={cn(CHIP, verdict.chip)}>{verdict.label}</span>}
           {attempt.marking === 'to_mark' && <span className={cn(CHIP, CHIP_VOLT)}>To mark</span>}
           {attempt.marking === 'marked' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Marked</span>}
           {attempt.grade && (
-            <span className="text-[11px] font-semibold tabular-nums text-white">{attempt.grade}</span>
+            <span className="text-[12px] font-semibold tabular-nums text-white">
+              {attempt.grade}
+            </span>
           )}
         </span>
-        <span className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[11px] tabular-nums text-white">
+        <span className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[12px] tabular-nums text-white">
           <span>{formatRelative(attempt.taken_at)}</span>
           <span>{SOURCE_LABEL[attempt.source]}</span>
           {attempt.unit_code && <span className="font-mono">{attempt.unit_code}</span>}
           {attempt.time_seconds != null && <span>{fmtSecs(attempt.time_seconds)}</span>}
           {attempt.source === 'tutor_quiz' && attempt.due_date && (
             <span>
-              Due {new Date(attempt.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+              Due{' '}
+              {new Date(attempt.due_date).toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'short',
+              })}
             </span>
           )}
         </span>
@@ -277,17 +294,17 @@ function AttemptRow({ attempt, onClick }: { attempt: AssessmentEntry; onClick?: 
               {attempt.percentage}%
             </span>
             {attempt.score != null && attempt.total != null && (
-              <span className="mt-0.5 block text-[11px] tabular-nums text-white">
+              <span className="mt-0.5 block text-[12px] tabular-nums text-white">
                 {attempt.score}/{attempt.total}
               </span>
             )}
           </>
         ) : attempt.status ? (
-          <span className="block text-[11px] capitalize text-white">
+          <span className="block text-[12px] capitalize text-white">
             {attempt.status.replace(/_/g, ' ')}
           </span>
         ) : (
-          <span className="block text-[11px] text-white">—</span>
+          <span className="block text-[12px] text-white">—</span>
         )}
       </span>
       {onClick && <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />}
@@ -302,7 +319,10 @@ function AttemptRow({ attempt, onClick }: { attempt: AssessmentEntry; onClick?: 
         <button
           type="button"
           onClick={onClick}
-          className={cn(rowCn, 'transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]')}
+          className={cn(
+            rowCn,
+            'transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]'
+          )}
         >
           {inner}
         </button>
@@ -337,7 +357,7 @@ function StatCell({
       >
         {value}
       </div>
-      {sub && <div className="mt-1 text-[11px] tabular-nums text-white">{sub}</div>}
+      {sub && <div className="mt-1 text-[12px] tabular-nums text-white">{sub}</div>}
     </div>
   );
 }

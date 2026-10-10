@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormSheet } from '@/components/forms/FormSheet';
-import { buttonPrimaryCn, buttonSecondaryCn, inputCn, labelCn } from '@/components/forms/fieldStyles';
-import { chipCn } from '@/components/college/ui/CollegeUi';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
+import { choiceCn } from '@/components/college/teaching/TeachingKit';
 import { useTutorTargets } from '@/hooks/useTutorTargets';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -30,7 +35,15 @@ function londonToday(offsetDays = 0): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(d);
 }
 
-export function SetQuizAgainSheet({ open, onOpenChange, quizId, quizTitle, cohortId, hasNamedLearners, onDone }: Props) {
+export function SetQuizAgainSheet({
+  open,
+  onOpenChange,
+  quizId,
+  quizTitle,
+  cohortId,
+  hasNamedLearners,
+  onDone,
+}: Props) {
   const { toast } = useToast();
   const { cohorts, loading } = useTutorTargets();
   const SAME = '__same__';
@@ -73,7 +86,11 @@ export function SetQuizAgainSheet({ open, onOpenChange, quizId, quizTitle, cohor
       onOpenChange(false);
       onDone?.(newId);
     } catch (e) {
-      toast({ title: 'Could not set it again', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not set it again',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setSaving(false);
     }
@@ -93,7 +110,12 @@ export function SetQuizAgainSheet({ open, onOpenChange, quizId, quizTitle, cohor
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
             Cancel
           </button>
-          <button type="button" onClick={() => void handleSave()} disabled={!canSave} className={buttonPrimaryCn}>
+          <button
+            type="button"
+            onClick={() => void handleSave()}
+            disabled={!canSave}
+            className={buttonPrimaryCn}
+          >
             {saving ? 'Setting…' : 'Set it and notify'}
           </button>
         </div>
@@ -106,12 +128,21 @@ export function SetQuizAgainSheet({ open, onOpenChange, quizId, quizTitle, cohor
         ) : (
           <div className="flex flex-wrap gap-2">
             {hasNamedLearners && !cohortId && (
-              <button type="button" onClick={() => setTarget(SAME)} className={chipCn(target === SAME)}>
+              <button
+                type="button"
+                onClick={() => setTarget(SAME)}
+                className={choiceCn(target === SAME)}
+              >
                 The same learners
               </button>
             )}
             {cohorts.map((c) => (
-              <button key={c.id} type="button" onClick={() => setTarget(c.id)} className={chipCn(target === c.id)}>
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => setTarget(c.id)}
+                className={choiceCn(target === c.id)}
+              >
                 {c.name} · {c.member_count}
               </button>
             ))}
@@ -145,7 +176,9 @@ export function SetQuizAgainSheet({ open, onOpenChange, quizId, quizTitle, cohor
           />
         </div>
         <p className="text-[12.5px] text-white">
-          {dueOk ? 'Learners see it as overdue after this date. Leave it blank for no deadline.' : 'Pick today or a later date.'}
+          {dueOk
+            ? 'Learners see it as overdue after this date. Leave it blank for no deadline.'
+            : 'Pick today or a later date.'}
         </p>
       </section>
     </FormSheet>

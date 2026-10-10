@@ -6,6 +6,7 @@ import {
   INDUSTRIAL_TEMPLATES,
 } from '@/lib/circuit-templates';
 import { cn } from '@/lib/utils';
+import { Section } from './wizardUi';
 
 interface CircuitPresetSelectorProps {
   installationType: 'domestic' | 'commercial' | 'industrial';
@@ -26,63 +27,43 @@ export const CircuitPresetSelector = ({
         : INDUSTRIAL_TEMPLATES;
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-          Start from a template
-        </span>
-        <span className="text-[11px] text-white/50 tabular-nums">
-          {templates.length} available
-        </span>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        {templates.map((template, i) => {
+    <Section title="Start from a template" aside={`${templates.length} available`}>
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
+        {templates.map((template) => {
           const isSelected = selectedId === template.id;
-          const previewNames = template.circuits.slice(0, 3).map((c) => c.name).join(' · ');
-          const extra = template.circuits.length > 3 ? ` +${template.circuits.length - 3} more` : '';
+          const previewNames = template.circuits
+            .slice(0, 3)
+            .map((c) => c.name)
+            .join(', ');
+          const extra =
+            template.circuits.length > 3 ? ` +${template.circuits.length - 3} more` : '';
 
           return (
             <button
               key={template.id}
               type="button"
+              aria-pressed={isSelected}
               onClick={() => {
                 setSelectedId(template.id);
                 onSelectPreset(template);
               }}
               className={cn(
-                'group relative bg-[hsl(0_0%_10%)] border rounded-2xl px-4 py-5 sm:px-5 sm:py-6 flex flex-col text-left touch-manipulation transition-all min-h-[140px]',
-                'hover:bg-[hsl(0_0%_15%)] active:scale-[0.99]',
+                'flex min-h-[44px] flex-col rounded-xl border bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left transition-colors touch-manipulation active:scale-[0.99]',
                 isSelected
-                  ? 'border-elec-yellow/60 bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent'
-                  : 'border-white/[0.10] hover:border-white/20'
+                  ? 'border-elec-yellow'
+                  : 'border-white/[0.12] hover:border-white/[0.25] hover:bg-[hsl(0_0%_13%)]'
               )}
             >
-              <div className="flex items-baseline justify-between gap-2">
-                <span
-                  className={cn(
-                    'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums',
-                    isSelected ? 'text-elec-yellow' : 'text-white/50'
-                  )}
-                >
-                  {String(i + 1).padStart(2, '0')}
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-[15px] font-semibold leading-snug text-white">
+                  {template.name}
                 </span>
-                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/50 tabular-nums">
+                <span className="shrink-0 text-[13px] tabular-nums text-white">
                   {template.circuits.length} circuits
                 </span>
               </div>
-              <div
-                className={cn(
-                  'mt-2 text-[18px] sm:text-[20px] font-semibold tracking-tight leading-[1.15]',
-                  isSelected ? 'text-elec-yellow' : 'text-white'
-                )}
-              >
-                {template.name}
-              </div>
-              <div className="mt-1 text-[12.5px] leading-snug text-white/70">
-                {template.description}
-              </div>
-              <div className="mt-3 text-[11.5px] leading-snug text-white/50">
+              <div className="mt-1 text-[13px] leading-snug text-white">{template.description}</div>
+              <div className="mt-1 text-[12px] leading-snug text-white">
                 {previewNames}
                 {extra}
               </div>
@@ -90,6 +71,6 @@ export const CircuitPresetSelector = ({
           );
         })}
       </div>
-    </div>
+    </Section>
   );
 };

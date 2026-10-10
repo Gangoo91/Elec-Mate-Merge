@@ -40,6 +40,7 @@ interface QuoteInvoiceAnalyticsProps {
 type DateRange = '7d' | '30d' | '90d' | '12m';
 
 import { isQuoteWon as isWon, isQuoteLost as isLost } from '@/utils/quote-status';
+import { decidedCount, winRate as winRateOf } from '@/utils/winRate';
 import { isInvoiceOverdue, getInvoiceOutstanding } from '@/utils/invoice-status';
 
 const hasLeftDraft = (q: Quote) =>
@@ -107,10 +108,25 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
         q.expiryDate && isPast(new Date(q.expiryDate))
     );
 
+    // The one win rate (src/utils/winRate.ts): won of decided (won, declined,
+    // expired). Quotes still waiting don't count either way.
     const winRate =
-      sentQuotes.length > 0 ? Math.round((wonQuotes.length / sentQuotes.length) * 100) : 0;
+      winRateOf({
+        won: wonQuotes.length,
+        lost: lostQuotes.length,
+        expired: expiredQuotes.length,
+      }) ?? 0;
     const viewRate =
       sentQuotes.length > 0 ? Math.round((viewedQuotes.length / sentQuotes.length) * 100) : 0;
+    // ELE-2027 — declines made visible beside the win rate, on the SAME base
+    // (won of decided: won + declined + expired) so the two figures read
+    // together. Expired-unanswered quotes count as decided but not declined.
+    const decided = decidedCount({
+      won: wonQuotes.length,
+      lost: lostQuotes.length,
+      expired: expiredQuotes.length,
+    });
+    const declineRate = decided > 0 ? Math.round((lostQuotes.length / decided) * 100) : 0;
     const avgQuoteValue =
       filteredQuotes.length > 0
         ? filteredQuotes.reduce((s, q) => s + (q.total || 0), 0) / filteredQuotes.length
@@ -164,6 +180,8 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
 
     return {
       winRate,
+      declineRate,
+      declinedCount: lostQuotes.length,
       viewRate,
       avgQuoteValue,
       avgDaysToWin,
@@ -394,6 +412,7 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
         label: 'Win rate',
         value: `${metrics.winRate}%`,
         cls: metrics.winRate >= 50 ? 'text-emerald-400' : 'text-white',
+        sub: metrics.declinedCount > 0 ? `${metrics.declineRate}% declined` : undefined,
       },
       { label: 'Avg quote', value: fmtCompact(metrics.avgQuoteValue), cls: 'text-white' },
       {

@@ -24,27 +24,74 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   usePortfolioAcState,
   aiProvenanceLine,
-  STATE_CHIP,
+  acRowChip,
+  acRowLabel,
+  countersignDecisions,
   STATE_LABEL,
   LEARNER_STATE_LABEL,
   type AcState,
   type AcStateRow,
 } from '@/hooks/portfolio/usePortfolioAcState';
+import { StaffNoteSheet, StaffNotesList } from '@/components/assessment/StaffNotes';
+import { staffNoteKey, useStaffNotes } from '@/hooks/portfolio/useStaffNotes';
 import { AcDecisionSheet } from '@/components/assessment/AcDecisionSheet';
 import { usePortfolio } from '@/hooks/portfolio/usePortfolio';
-import { useWitnessedCriteria, witnessedByLine } from '@/hooks/portfolio/useWitnessedCriteria';
+import {
+  occasionCounter,
+  occasionKey,
+  occasionsCheck,
+  useAcOccasions,
+} from '@/hooks/portfolio/useAcOccasions';
+import { OccasionsGrid } from '@/components/portfolio/OccasionsGrid';
+import {
+  useWitnessedCriteria,
+  witnessCompetenceLine,
+  witnessedByLine,
+} from '@/hooks/portfolio/useWitnessedCriteria';
 import { SubmitEvidenceSheet } from '@/components/apprentice-hub/portfolio2/SubmitEvidenceSheet';
 import { assessorWithQualifications } from '@/lib/assessorQualifications';
+import { supabase } from '@/integrations/supabase/client';
+
+/**
+ * ELE-1882: decisions made at a college the learner has since left, keyed by
+ * decision id, so the new college reads "Assessed at Northgate".
+ */
+function usePreviousCollegeDecisions(learnerId: string) {
+  const [map, setMap] = useState<Map<string, string>>(new Map());
+  useEffect(() => {
+    let active = true;
+    void (
+      supabase.rpc.bind(supabase) as unknown as (
+        f: string,
+        a: Record<string, unknown>
+      ) => Promise<{
+        data: { decision_id: string; college_name: string | null; is_previous: boolean }[] | null;
+      }>
+    )('get_decision_provenance', { p_user_id: learnerId }).then(({ data }) => {
+      if (!active) return;
+      setMap(
+        new Map(
+          (data ?? [])
+            .filter((r) => r.is_previous && r.college_name)
+            .map((r) => [r.decision_id, r.college_name as string])
+        )
+      );
+    });
+    return () => {
+      active = false;
+    };
+  }, [learnerId]);
+  return map;
+}
 
 type Mode = 'assessor' | 'iqa' | 'learner';
 
 const APP_CARD =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x ' +
   'bg-gradient-to-b from-white/[0.08] to-white/[0.04]';
-/** Landing-page card (public pages): rounded at every width, gold edge, lit surface. */
-const PUBLIC_CARD = cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
-const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
+/** Public pages (assessor workspace): rounded at every width, a quiet hairline edge
+ *  (Andrew, 10 Oct: no gold edge on every card), lit surface. */
+const PUBLIC_CARD = cn('rounded-2xl border border-white/[0.12]', CARD_SURFACE);
 const textareaCn =
   'min-h-[110px] w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 ' +
   'text-base text-white caret-elec-yellow placeholder:text-white/25 focus:border-elec-yellow ' +
@@ -52,14 +99,18 @@ const textareaCn =
 
 const key = (r: { unit_code: string; ac_code: string }) => `${r.unit_code}::${r.ac_code}`;
 
-type Filter = 'ready' | 'claimed' | 'submitted' | 'to_confirm' | 'needs' | 'passed' | 'all';
+type Filter =
+  'ready' | 'claimed' | 'submitted' | 'countersign' | 'to_confirm' | 'needs' | 'passed' | 'all';
 
 const FILTER_MATCH: Record<Filter, (st: AcState, r: AcStateRow) => boolean> = {
   // Evidence the learner has put forward that nobody has decided on yet.
-  ready: (st) => st === 'submitted' || st === 'claimed',
+  // A trainee's pass waiting for countersignature is not "ready": it has a decision.
+  ready: (st, r) => (st === 'submitted' && !r.countersign_pending) || st === 'claimed',
   // The learner's own words split "ready" in two, as the portfolio home does.
   claimed: (st) => st === 'claimed',
   submitted: (st) => st === 'submitted',
+  // Batch 2: trainee passes waiting for a qualified assessor's countersignature.
+  countersign: (_st, r) => !!r.countersign_pending,
   // Passed by an assessor, not yet sampled by IQA.
   to_confirm: (st, r) => st === 'passed' && !r.iqa_verdict,
   needs: (st) => st === 'referred' || st === 'not_yet' || st === 'iqa_rejected',
@@ -94,10 +145,25 @@ export function LearnerAssessmentView({
 }) {
   const { toast } = useToast();
   const { user } = useAuth();
-  const { units, totals, loading, refreshing, error, recordDecisions, setIqaVerdict } =
-    usePortfolioAcState(learnerId);
+  const {
+    rows: acRows,
+    units,
+    totals,
+    loading,
+    refreshing,
+    error,
+    recordDecisions,
+    setIqaVerdict,
+    refresh,
+  } = usePortfolioAcState(learnerId);
+  // Separate read: assessed occasions per criterion (C&G 5357 workplace units
+  // need two). Never changes the states or the "passed" figures above.
+  const occasions = useAcOccasions(learnerId, acRows);
+  const occ = occasionsCheck(acRows, occasions.byKey);
+  const [showGrid, setShowGrid] = useState(false);
   // ELE-1869: "Witnessed by …" against each criterion a signed statement backs up.
   const witnessed = useWitnessedCriteria(learnerId);
+  const previousCollege = usePreviousCollegeDecisions(learnerId);
   const [open, setOpen] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>(mode === 'learner' ? 'all' : 'ready');
   const [query, setQuery] = useState('');
@@ -109,6 +175,23 @@ export function LearnerAssessmentView({
   const [iqaTarget, setIqaTarget] = useState<AcStateRow | null>(null);
   const [iqaReason, setIqaReason] = useState('');
   const canDecide = mode === 'assessor' || mode === 'iqa';
+  // Batch 2: staff-only notes (RLS keeps them from the learner), countersigning.
+  const staffNotes = useStaffNotes(learnerId, canDecide);
+  const [noteOpen, setNoteOpen] = useState(false);
+  const [iAmTrainee, setIAmTrainee] = useState(false);
+  const [countersigning, setCountersigning] = useState<string | null>(null);
+  useEffect(() => {
+    if (!canDecide || !user?.id) return;
+    let live = true;
+    void supabase
+      .rpc('_is_trainee_assessor' as never, { p_user: user.id, p_learner: learnerId } as never)
+      .then(({ data }) => {
+        if (live) setIAmTrainee(data === true);
+      });
+    return () => {
+      live = false;
+    };
+  }, [canDecide, user?.id, learnerId]);
   const first = learnerName?.split(' ')[0] ?? 'This learner';
   const cardCn = appSidebar ? APP_CARD : PUBLIC_CARD;
   // One wording everywhere (ELE-1868): the learner reads the portfolio home's words.
@@ -196,6 +279,7 @@ export function LearnerAssessmentView({
       ready: n('ready'),
       claimed: n('claimed'),
       submitted: n('submitted'),
+      countersign: n('countersign'),
       to_confirm: n('to_confirm'),
       needs: n('needs'),
       passed: n('passed'),
@@ -213,6 +297,9 @@ export function LearnerAssessmentView({
         ]
       : [
           { key: 'ready', label: 'Ready to assess' },
+          ...(filterCounts.countersign > 0
+            ? [{ key: 'countersign' as Filter, label: 'To countersign' }]
+            : []),
           { key: 'needs', label: 'Needs more' },
           ...(mode === 'iqa' ? [{ key: 'to_confirm' as Filter, label: 'To confirm' }] : []),
           { key: 'passed', label: 'Passed' },
@@ -258,6 +345,29 @@ export function LearnerAssessmentView({
       rows.forEach((r) => (allOn ? next.delete(key(r)) : next.add(key(r))));
       return next;
     });
+
+  const countersign = async (r: AcStateRow) => {
+    if (!r.decision_id || countersigning) return;
+    setCountersigning(r.decision_id);
+    try {
+      const n = await countersignDecisions([r.decision_id]);
+      toast({
+        title: n ? 'Countersigned' : 'Nothing to countersign',
+        description: n
+          ? `${r.unit_code} AC ${r.ac_code} now counts as passed. ${first} has been told.`
+          : 'A newer decision has replaced it.',
+      });
+      await refresh();
+    } catch (e) {
+      toast({
+        title: 'Not countersigned',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setCountersigning(null);
+    }
+  };
 
   const iqaConfirm = async (r: AcStateRow) => {
     if (!r.decision_id) return;
@@ -341,24 +451,65 @@ export function LearnerAssessmentView({
         </p>
       </div>
 
+      {/* Gap grid: unit by unit, with "n of 2" where two occasions are needed */}
+      <button
+        type="button"
+        aria-expanded={showGrid}
+        onClick={() => setShowGrid((v) => !v)}
+        className="flex h-11 w-full items-center justify-between gap-3 rounded-xl border border-white/[0.14] px-4 text-left text-[13.5px] font-semibold text-white touch-manipulation active:bg-white/[0.06] sm:w-auto"
+      >
+        <span>
+          {showGrid ? 'Hide gap grid' : 'Gap grid'}
+          {occ.needing > 0 && (
+            <span className="font-medium">
+              {' '}
+              · {occ.met} of {occ.needing} at two occasions
+            </span>
+          )}
+        </span>
+      </button>
+      {showGrid && (
+        <OccasionsGrid
+          rows={acRows}
+          occasions={occasions.byKey}
+          audience={mode === 'learner' ? 'learner' : 'staff'}
+          onOpenCriterion={(unit) => {
+            setShowGrid(false);
+            setFilter('all');
+            setOpen(unit);
+          }}
+        />
+      )}
+
       {/* Filter + search */}
       <div className="space-y-3">
-        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-          {filterChips.map((c) => (
-            <button
-              key={c.key}
-              type="button"
-              aria-pressed={filter === c.key}
-              onClick={() => setFilter(c.key)}
-              className={cn(
-                'h-11 shrink-0 whitespace-nowrap rounded-full border px-4 text-[13px] touch-manipulation',
-                filter === c.key ? chipOn : chipOff
-              )}
-            >
-              {c.label}
-              <span className="ml-1.5 font-mono tabular-nums">{filterCounts[c.key]}</span>
-            </button>
-          ))}
+        {/* Quiet text tabs with counts and a yellow underline, as on the
+            College Hub home. A rail that scrolls sideways on a phone. */}
+        <div className="-mx-4 flex overflow-x-auto border-b border-white/[0.08] px-2 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+          {filterChips.map((c) => {
+            const on = filter === c.key;
+            return (
+              <button
+                key={c.key}
+                type="button"
+                aria-pressed={on}
+                onClick={() => setFilter(c.key)}
+                className={cn(
+                  'relative inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap px-3 text-[13.5px] text-white touch-manipulation transition-colors hover:bg-white/[0.04]',
+                  on ? 'font-semibold' : 'font-medium'
+                )}
+              >
+                {c.label}
+                <span className="tabular-nums">{filterCounts[c.key]}</span>
+                {on && (
+                  <span
+                    className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-elec-yellow"
+                    aria-hidden
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
         <input
           type="search"
@@ -393,7 +544,6 @@ export function LearnerAssessmentView({
           <ul className="divide-y divide-white/[0.08]">
             {visibleUnits.map((u) => {
               const isOpen = narrowing || open === u.unit_code || focusUnits.has(u.unit_code);
-              const pct = u.total ? Math.round((100 * u.passed) / u.total) : 0;
               const attention = u.counts.submitted + u.counts.referred + u.counts.not_yet;
               const allOn = u.shown.every((r) => selected.has(key(r)));
               return (
@@ -404,10 +554,15 @@ export function LearnerAssessmentView({
                     onClick={() => setOpen(open === u.unit_code ? null : u.unit_code)}
                     className="flex min-h-[56px] w-full items-center gap-3 px-4 py-3 text-left touch-manipulation sm:px-5"
                   >
-                    <span className="w-12 shrink-0 font-mono text-[13px] font-bold text-white">
+                    {/* The unit code sits in its own column from sm: up and above
+                        the title on a phone, where a fixed column cramped it. */}
+                    <span className="hidden w-16 shrink-0 font-mono text-[13px] font-bold text-white [overflow-wrap:anywhere] sm:block">
                       {u.unit_code}
                     </span>
                     <span className="min-w-0 flex-1">
+                      <span className="block font-mono text-[12px] font-bold text-white sm:hidden">
+                        Unit {u.unit_code}
+                      </span>
                       <span className="line-clamp-2 block text-[14px] font-semibold leading-snug text-white sm:line-clamp-1">
                         {u.unit_title}
                       </span>
@@ -420,9 +575,6 @@ export function LearnerAssessmentView({
                           ? ` · ${attention} with your assessor or needing more`
                           : ''}
                       </span>
-                    </span>
-                    <span className="w-10 shrink-0 text-right font-mono text-[13px] tabular-nums text-white">
-                      {pct}%
                     </span>
                     <ChevronDown
                       className={cn(
@@ -490,10 +642,16 @@ export function LearnerAssessmentView({
                                       className="mt-1 block text-[12.5px] font-medium text-white"
                                     >
                                       {witnessedByLine(w)}
+                                      <span className="block font-normal">
+                                        {witnessCompetenceLine(w)}
+                                      </span>
                                     </span>
                                   ))}
                                   {r.decision_feedback && (
                                     <span className="mt-1 block text-[12.5px] text-white">
+                                      {r.decision_id && previousCollege.get(r.decision_id)
+                                        ? `Assessed at ${previousCollege.get(r.decision_id)} by `
+                                        : ''}
                                       {assessorWithQualifications(
                                         r.assessor_name ?? 'Assessor',
                                         r.assessor_qualifications
@@ -501,6 +659,18 @@ export function LearnerAssessmentView({
                                       , {when(r.decided_at)}: “{r.decision_feedback}”
                                     </span>
                                   )}
+                                  {!r.decision_feedback &&
+                                    r.decision_id &&
+                                    previousCollege.get(r.decision_id) && (
+                                      <span className="mt-1 block text-[12.5px] text-white">
+                                        Assessed at {previousCollege.get(r.decision_id)} by{' '}
+                                        {assessorWithQualifications(
+                                          r.assessor_name ?? 'Assessor',
+                                          r.assessor_qualifications
+                                        )}
+                                        , {when(r.decided_at)}
+                                      </span>
+                                    )}
                                   {r.decision_feedback &&
                                     aiProvenanceLine(
                                       r.decision_feedback_source,
@@ -526,14 +696,40 @@ export function LearnerAssessmentView({
                                       {r.evidence_item_ids.length === 1 ? '' : 's'} of evidence
                                     </span>
                                   )}
+                                  {occasionCounter(
+                                    occasions.byKey.get(occasionKey(r.unit_code, r.ac_code))
+                                  ) && (
+                                    <span className="mt-0.5 block text-[12px] font-semibold text-white">
+                                      {occasionCounter(
+                                        occasions.byKey.get(occasionKey(r.unit_code, r.ac_code))
+                                      )}{' '}
+                                      assessed occasions
+                                    </span>
+                                  )}
+                                  {r.countersigned_at && (
+                                    <span className="mt-0.5 block text-[12px] text-white">
+                                      Countersigned by{' '}
+                                      {r.countersigned_by_name ?? 'a qualified assessor'},{' '}
+                                      {when(r.countersigned_at)}
+                                    </span>
+                                  )}
+                                  {r.countersign_pending && (
+                                    <span className="mt-0.5 block text-[12px] text-white">
+                                      {mode === 'learner'
+                                        ? 'Your assessor is in training. It counts once a qualified assessor countersigns it.'
+                                        : `Trainee pass by ${r.assessor_name ?? 'the assessor'}. It counts once a qualified assessor countersigns it.`}
+                                    </span>
+                                  )}
                                 </span>
                                 <span
                                   className={cn(
-                                    'shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-semibold',
-                                    STATE_CHIP[r.state as AcState]
+                                    'shrink-0 rounded-full border px-2 py-0.5 text-[12px] font-semibold',
+                                    r.countersign_pending &&
+                                      'max-w-[9.5rem] text-center leading-tight',
+                                    acRowChip(r)
                                   )}
                                 >
-                                  {labels[r.state as AcState]}
+                                  {acRowLabel(r, labels)}
                                 </span>
                               </button>
                               {mode === 'learner' && needsMore && (
@@ -584,6 +780,42 @@ export function LearnerAssessmentView({
                                     </button>
                                   </div>
                                 )}
+                              {canDecide &&
+                                r.countersign_pending &&
+                                r.decision_id &&
+                                !ownDecision &&
+                                !iAmTrainee && (
+                                  <div className="px-4 pb-3 sm:px-5">
+                                    <button
+                                      type="button"
+                                      data-testid="countersign-row"
+                                      disabled={countersigning === r.decision_id}
+                                      onClick={() => void countersign(r)}
+                                      className="h-11 w-full rounded-xl border border-white/[0.2] px-4 text-[13.5px] font-semibold text-white touch-manipulation active:bg-white/[0.06] disabled:opacity-50 sm:w-auto"
+                                    >
+                                      {countersigning === r.decision_id
+                                        ? 'Countersigning…'
+                                        : `Countersign ${r.assessor_name?.split(' ')[0] ?? 'the trainee'}'s pass`}
+                                    </button>
+                                  </div>
+                                )}
+                              {canDecide &&
+                                (
+                                  staffNotes.byCriterion.get(
+                                    staffNoteKey(r.unit_code, r.ac_code)
+                                  ) ?? []
+                                ).length > 0 && (
+                                  <div className="px-4 pb-3 sm:px-5">
+                                    <StaffNotesList
+                                      notes={
+                                        staffNotes.byCriterion.get(
+                                          staffNoteKey(r.unit_code, r.ac_code)
+                                        ) ?? []
+                                      }
+                                      limit={2}
+                                    />
+                                  </div>
+                                )}
                             </li>
                           );
                         })}
@@ -620,6 +852,13 @@ export function LearnerAssessmentView({
             </button>
             <button
               type="button"
+              onClick={() => setNoteOpen(true)}
+              className="h-11 rounded-xl border border-white/[0.2] px-4 text-[14px] font-semibold text-white touch-manipulation"
+            >
+              Note
+            </button>
+            <button
+              type="button"
               onClick={openSheet}
               className="h-11 flex-1 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation"
             >
@@ -640,6 +879,32 @@ export function LearnerAssessmentView({
           rows={selectedRows}
           record={recordDecisions}
           onRecorded={() => setSelected(new Set())}
+        />
+      )}
+
+      {/* Staff-only note on the ticked criteria (batch 2) */}
+      {canDecide && (
+        <StaffNoteSheet
+          open={noteOpen}
+          onOpenChange={setNoteOpen}
+          learnerName={learnerName}
+          scopeLabel={
+            selectedRows
+              .slice(0, 6)
+              .map((r) => `${r.unit_code} AC ${r.ac_code}`)
+              .join(', ') + (selectedRows.length > 6 ? ` and ${selectedRows.length - 6} more` : '')
+          }
+          existing={staffNotes.notes.filter((n) =>
+            selectedRows.some((r) =>
+              (n.criteria ?? []).includes(staffNoteKey(r.unit_code, r.ac_code))
+            )
+          )}
+          onAdd={async (body) => {
+            await staffNotes.add({
+              body,
+              criteria: selectedRows.map((r) => staffNoteKey(r.unit_code, r.ac_code)),
+            });
+          }}
         />
       )}
 

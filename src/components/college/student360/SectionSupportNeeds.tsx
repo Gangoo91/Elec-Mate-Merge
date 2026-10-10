@@ -51,7 +51,7 @@ const chip = (on: boolean) =>
   cn(
     'h-11 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation',
     on
-      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+      ? 'border-white bg-white font-semibold text-black'
       : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
   );
 
@@ -106,7 +106,7 @@ export function SectionSupportNeeds({
         pronouns: prn.trim() || null,
         accessibility_notes: notes.trim() || null,
       });
-      if (!res) throw new Error('Save failed — check your permissions.');
+      if (!res) throw new Error('Save failed. Check your permissions.');
       toast({ title: 'Support details saved' });
       setEditing(false);
       onSaved();
@@ -122,7 +122,12 @@ export function SectionSupportNeeds({
   };
 
   const hasAny =
-    sendFlags.length > 0 || eal || !!ehcpRef || !!accessibilityNotes || !!firstLanguage || !!pronouns;
+    sendFlags.length > 0 ||
+    eal ||
+    !!ehcpRef ||
+    !!accessibilityNotes ||
+    !!firstLanguage ||
+    !!pronouns;
 
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
@@ -135,7 +140,12 @@ export function SectionSupportNeeds({
         )}
       </div>
 
-      <div className={cn('-mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x px-4 py-4 sm:px-5', CARD_SURFACE)}>
+      <div
+        className={cn(
+          '-mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x px-4 py-4 sm:px-5',
+          CARD_SURFACE
+        )}
+      >
         {editing ? (
           <div className="space-y-5">
             <div>
@@ -156,15 +166,30 @@ export function SectionSupportNeeds({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
                 <span className={labelCn}>First language</span>
-                <input className={inputCn} value={lang} onChange={(e) => setLang(e.target.value)} placeholder="English" />
+                <input
+                  className={inputCn}
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value)}
+                  placeholder="English"
+                />
               </label>
               <label className="block">
                 <span className={labelCn}>Pronouns</span>
-                <input className={inputCn} value={prn} onChange={(e) => setPrn(e.target.value)} placeholder="e.g. they/them" />
+                <input
+                  className={inputCn}
+                  value={prn}
+                  onChange={(e) => setPrn(e.target.value)}
+                  placeholder="e.g. they/them"
+                />
               </label>
               <label className="block">
                 <span className={labelCn}>EHCP reference</span>
-                <input className={inputCn} value={ehcp} onChange={(e) => setEhcp(e.target.value)} placeholder="EHCP number (if any)" />
+                <input
+                  className={inputCn}
+                  value={ehcp}
+                  onChange={(e) => setEhcp(e.target.value)}
+                  placeholder="EHCP number (if any)"
+                />
               </label>
               <div className="block">
                 <span className={labelCn}>English as an additional language</span>
@@ -215,7 +240,7 @@ export function SectionSupportNeeds({
                   {sendFlags.map((f) => (
                     <span
                       key={f}
-                      className="inline-flex items-center rounded-full border border-white/[0.14] bg-white/[0.06] px-2.5 py-1 text-[11.5px] font-medium text-white"
+                      className="inline-flex items-center rounded-full border border-white/[0.14] bg-white/[0.06] px-2.5 py-1 text-[12px] font-medium text-white"
                     >
                       {f}
                     </span>
@@ -251,8 +276,8 @@ export function SectionSupportNeeds({
           </dl>
         ) : (
           <p className="text-[12.5px] leading-relaxed text-white">
-            No support needs recorded yet. These power tailored lesson plans and ILPs — add them so
-            differentiation is right from day one.
+            No support needs recorded yet. These power tailored lesson plans and ILPs, so add them
+            so differentiation is right from day one.
           </p>
         )}
       </div>

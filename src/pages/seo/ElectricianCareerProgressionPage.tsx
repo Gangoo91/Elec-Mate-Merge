@@ -49,7 +49,7 @@ const keyTakeaways = [
   'Specialist career paths — testing and inspection, EV charging, solar PV, fire alarms, data centres — offer higher day rates and faster progression.',
   'Going self-employed is the most common route to higher earnings, with self-employed electricians typically earning 30-60% more than employed equivalents.',
   'Domestic self-employed electricians must join a competent person scheme (NICEIC, NAPIT, or ELECSA) to self-certify notifiable work under Part P of the Building Regulations — or notify the local authority for each notifiable job.',
-  'A4:2026 updates every electrician must know: AFDD recommended on domestic circuits (Reg 421.1.7), mandatory 30 mA RCD on all domestic AC lighting circuits (Reg 411.3.4), and load curtailment rules for EV chargers (Reg 722.311.201).',
+  'Rules every electrician must know under BS 7671:2018+A4:2026: AFDDs recommended on domestic circuits and required in HMOs and similar premises since A2:2022 (Reg 421.1.7), mandatory 30 mA RCD on all domestic AC lighting circuits since 2018 (Reg 411.3.4), and load curtailment rules for EV chargers (Reg 722.311.201).',
   'Elec-Mate supports every stage: apprentice training hub, 46+ CPD courses, business tools for quoting, invoicing, expenses, and cash flow planning.',
 ];
 
@@ -653,24 +653,26 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-elec-yellow font-semibold text-sm mb-3">
-            Key regulatory updates — BS&nbsp;7671:2018+A4:2026
+            Key requirements — BS&nbsp;7671:2018+A4:2026
           </p>
           <p className="text-white text-sm leading-relaxed mb-2">
-            A4:2026 introduces changes that every qualified electrician must know, particularly
-            those working on domestic installations or EV charging:
+            Requirements in the current edition that every qualified electrician must know,
+            particularly those working on domestic installations or EV charging. Some are older
+            than A4:2026 and are often mistaken for A4 changes:
           </p>
           <ul className="space-y-2 text-white text-sm leading-relaxed list-disc list-inside">
             <li>
-              <strong>AFDD — Reg 421.1.7:</strong> Arc fault detection devices (AFDDs) are now
-              recommended for domestic final circuits supplying socket-outlets. The regulation uses
-              advisory wording; they mitigate fire risk from arc fault currents. AFDDs must comply
+              <strong>AFDD — Reg 421.1.7:</strong> Arc fault detection devices (AFDDs) are
+              recommended for domestic final circuits supplying socket-outlets, and since A2:2022
+              required on those circuits in HMOs, high rise residential buildings, student
+              accommodation and care homes. They mitigate fire risk from arc fault currents. AFDDs must comply
               with BS EN 62606.
             </li>
             <li>
               <strong>RCD on domestic lighting — Reg 411.3.4:</strong> All AC final circuits
               supplying luminaires in domestic (household) premises shall be provided with
               additional protection by an RCD with a rated residual operating current not exceeding
-              30&nbsp;mA. This is mandatory (uses &lsquo;shall&rsquo;) and applies to all domestic
+              30&nbsp;mA. This has been mandatory since BS 7671:2018 (uses &lsquo;shall&rsquo;) and applies to all domestic
               lighting circuits, not just those in bathrooms or outdoors.
             </li>
             <li>
@@ -704,7 +706,7 @@ export default function ElectricianCareerProgressionPage() {
       title="Electrician Career Progression: Apprentice to MD"
       description="Complete guide to electrician career progression in the UK. Every stage from apprentice to business owner with typical salaries, qualifications needed."
       datePublished="2025-06-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

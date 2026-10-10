@@ -18,7 +18,7 @@ export default function BathroomElectricalRegsPage() {
       title="Bathroom Electrical Regulations: BS 7671 Zones"
       description="Complete guide to bathroom electrical regulations under BS 7671 Part 7 Section 701. Bathroom zones (0, 1, 2, outside zones), IP ratings."
       datePublished="2025-04-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -372,15 +372,15 @@ export default function BathroomElectricalRegsPage() {
                   <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-bold text-white mb-2">
-                      A4:2026 Update — Reg 411.3.4: 30mA RCD on All Lighting Circuits (Domestic)
+                      Reg 411.3.4 (since 2018): 30mA RCD on All Lighting Circuits (Domestic)
                     </h4>
                     <p className="text-white text-sm leading-relaxed">
-                      BS 7671:2018+A4:2026 introduces Reg 411.3.4, which requires additional
+                      Reg 411.3.4, in force since BS 7671:2018, requires additional
                       protection by a 30mA RCD for all AC final circuits supplying luminaires in
                       domestic premises. This reinforces and extends the bathroom-specific
                       requirement of Reg 701.411.3.3 — bathroom lighting circuits must comply with
                       both regulations. For EICRs on domestic properties, an unprotected lighting
-                      circuit feeding bathroom luminaires is now a non-compliance under both Part 4
+                      circuit feeding bathroom luminaires is a non-compliance under both Part 4
                       and Part 7.
                     </p>
                   </div>

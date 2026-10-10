@@ -9,8 +9,7 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, AlertTriangle, Quote, Compass } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -343,209 +342,205 @@ const glossary = [
 
 const MistakesAndTipsPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · EPA"
-        title="Mistakes, tips & FAQs"
-        backTo="/apprentice/toolbox/end-point-assessment"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "What to avoid, what to copy, what to do when something goes sideways, and the glossary you'll wish you had earlier."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · EPA"
+      area="End-point assessment"
+      title="Mistakes, tips & FAQs"
+      backTo="/apprentice/toolbox/end-point-assessment"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "What to avoid, what to copy, what to do when something goes sideways, and the glossary you'll wish you had earlier."
+        }
+      </p>
 
-        {/* ── Common mistakes ─────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Common mistakes to avoid"
-            title={`${commonMistakes.length} traps with fixes`}
-            meta="Each one has cost apprentices a grade — or a pass"
-          />
-          <ul className="space-y-2">
-            {commonMistakes.map((item) => (
-              <li
-                key={item.mistake}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-                  CARD_SURFACE
-                )}
-              >
+      {/* ── Common mistakes ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Common mistakes to avoid"
+          title={`${commonMistakes.length} traps with fixes`}
+          meta="Each one has cost apprentices a grade — or a pass"
+        />
+        <ul className="space-y-2">
+          {commonMistakes.map((item) => (
+            <li
+              key={item.mistake}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0 mt-0.5" />
+                <h3 className="text-[14px] font-semibold text-red-300 tracking-tight">
+                  {item.mistake}
+                </h3>
+              </div>
+              <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0 mt-0.5" />
-                  <h3 className="text-[14px] font-semibold text-red-300 tracking-tight">
-                    {item.mistake}
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <p className="text-[14px] text-white leading-relaxed">
+                    <span className="font-semibold text-elec-yellow">Solution: </span>
+                    {item.solution}
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Tips from successful apprentices ───────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Tips from successful apprentices"
+          title={`${tips.length} voices from the other side`}
+          meta="Distinction, Merit, Pass — they all share what worked"
+        />
+        <ul className="space-y-2">
+          {tips.map((tip) => (
+            <li
+              key={tip.quote}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-start gap-2">
+                <Quote className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <p className="text-[14px] text-white italic leading-relaxed">{tip.quote}</p>
+              </div>
+              <div className="flex items-center gap-2 pl-5">
+                <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.05] text-[13px] font-semibold text-elec-yellow">
+                  {tip.grade}
+                </span>
+                <span className="text-[12.5px] text-white">{tip.name}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Day-before checklist ────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Day before"
+          title={`Preparation checklist · ${dayBeforeChecklist.length} items`}
+          meta="Run through this the evening before each component"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-1.5">
+            {dayBeforeChecklist.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
+
+      {/* ── If things go wrong ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="If things go wrong on the day"
+          title={`${thingsGoWrong.length} situations and what to do`}
+          meta="Stay calm — assessors are human, processes exist"
+        />
+        <ul className="space-y-2">
+          {thingsGoWrong.map((item) => (
+            <li
+              key={item.situation}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                {item.situation}
+              </h3>
+              <p className="text-[14px] text-white leading-relaxed mt-1">{item.action}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── FAQs ────────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Frequently asked"
+          title={`${faqs.length} questions, answered`}
+          meta="The ones that keep coming up"
+        />
+        <ul className="space-y-2">
+          {faqs.map((faq) => (
+            <li
+              key={faq.question}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[13.5px] font-semibold text-white tracking-tight">
+                {faq.question}
+              </h3>
+              <p className="text-[14px] text-white leading-relaxed">{faq.answer}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Post-EPA next steps ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="After EPA"
+          title="Your six next steps"
+          meta="From Gold Card to specialisation"
+        />
+        <ol className="space-y-2">
+          {postEpaSteps.map((item) => (
+            <li
+              key={item.step}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12px] font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  {item.step}
+                </span>
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
                   </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
                 </div>
-                <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-                  <div className="flex items-start gap-2">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <p className="text-[12.5px] text-white leading-relaxed">
-                      <span className="font-semibold text-elec-yellow">Solution: </span>
-                      {item.solution}
-                    </p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
 
-        {/* ── Tips from successful apprentices ───────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Tips from successful apprentices"
-            title={`${tips.length} voices from the other side`}
-            meta="Distinction, Merit, Pass — they all share what worked"
-          />
-          <ul className="space-y-2">
-            {tips.map((tip) => (
-              <li
-                key={tip.quote}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-start gap-2">
-                  <Quote className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <p className="text-[13px] text-white italic leading-relaxed">{tip.quote}</p>
-                </div>
-                <div className="flex items-center gap-2 pl-5">
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-                    {tip.grade}
-                  </span>
-                  <span className="text-[11.5px] text-white">{tip.name}</span>
+      {/* ── Glossary ────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Glossary"
+          title="EPA terms worth knowing"
+          meta="Bookmark this — you'll come back to it"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-2.5">
+            {glossary.map((item) => (
+              <li key={item.term} className="flex items-start gap-3">
+                <Compass className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <span className="text-[12.5px] font-semibold text-elec-yellow">{item.term}</span>
+                  <p className="text-[14px] text-white leading-relaxed">{item.definition}</p>
                 </div>
               </li>
             ))}
           </ul>
-        </motion.section>
-
-        {/* ── Day-before checklist ────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Day before"
-            title={`Preparation checklist · ${dayBeforeChecklist.length} items`}
-            meta="Run through this the evening before each component"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-1.5">
-              {dayBeforeChecklist.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── If things go wrong ──────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="If things go wrong on the day"
-            title={`${thingsGoWrong.length} situations and what to do`}
-            meta="Stay calm — assessors are human, processes exist"
-          />
-          <ul className="space-y-2">
-            {thingsGoWrong.map((item) => (
-              <li
-                key={item.situation}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                  {item.situation}
-                </h3>
-                <p className="text-[13px] text-white leading-relaxed mt-1">{item.action}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── FAQs ────────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Frequently asked"
-            title={`${faqs.length} questions, answered`}
-            meta="The ones that keep coming up"
-          />
-          <ul className="space-y-2">
-            {faqs.map((faq) => (
-              <li
-                key={faq.question}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
-              >
-                <h3 className="text-[13.5px] font-semibold text-white tracking-tight">
-                  {faq.question}
-                </h3>
-                <p className="text-[12.5px] text-white leading-relaxed">{faq.answer}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── Post-EPA next steps ─────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="After EPA"
-            title="Your six next steps"
-            meta="From Gold Card to specialisation"
-          />
-          <ol className="space-y-2">
-            {postEpaSteps.map((item) => (
-              <li
-                key={item.step}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                    {item.step}
-                  </span>
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </motion.section>
-
-        {/* ── Glossary ────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Glossary"
-            title="EPA terms worth knowing"
-            meta="Bookmark this — you'll come back to it"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-2.5">
-              {glossary.map((item) => (
-                <li key={item.term} className="flex items-start gap-3">
-                  <Compass className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-0.5">
-                    <span className="text-[12.5px] font-mono font-semibold text-elec-yellow">
-                      {item.term}
-                    </span>
-                    <p className="text-[12.5px] text-white leading-relaxed">{item.definition}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+        </div>
+      </motion.section>
+    </GuidePage>
   );
 };
 

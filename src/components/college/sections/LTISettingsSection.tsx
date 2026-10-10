@@ -34,16 +34,14 @@ import {
   type LTIPlatformType,
 } from '@/hooks/useLTIPlatforms';
 import { cn } from '@/lib/utils';
+import { ChoiceGrid, QuietTabs } from '@/components/college/quality/QualityChoices';
 import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
   COLLEGE_BTN,
   COLLEGE_BTN_PRIMARY,
-  COLLEGE_LIST,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import {
@@ -53,13 +51,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
   Accordion,
   AccordionContent,
@@ -69,9 +61,6 @@ import {
 
 /* ── Hub-language atoms ──────────────────────────────────────────────── */
 
-const CHIP = 'inline-flex h-11 items-center gap-1.5';
-const CHIP_ON = chipCn(true);
-const CHIP_OFF = chipCn(false);
 const FIELD =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
 const LABEL = 'mb-1 block text-[12px] font-medium text-white';
@@ -80,8 +69,8 @@ const NEUTRAL = COLLEGE_BTN;
 const TEXT_ACTION =
   'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
 const CARD =
-  'overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]';
-const LIST_CARD = COLLEGE_LIST;
+  'card-surface -mx-4 overflow-hidden !rounded-none !border-x-0 !border-y !border-white/[0.08] sm:mx-0 sm:!rounded-2xl sm:!border';
+const LIST_CARD = CARD;
 const CARD_PAD = 'px-5 py-5 sm:px-6';
 const CARD_TITLE = 'text-[15px] font-semibold tracking-tight text-white';
 const ROW_STATIC = 'flex items-center gap-3 px-5 py-3.5 sm:px-6';
@@ -91,9 +80,18 @@ const HELP: PageHelpContent = {
   title: 'VLE integration',
   what: 'Connect your VLE (Canvas, Moodle or Blackboard) so learners and staff open Elec-Mate from it with one sign-in, and grades and rosters can flow between the two.',
   steps: [
-    { title: 'Add the platform', body: 'Add platform asks for your VLE\'s details. Or use Install with one URL if your VLE supports dynamic registration.' },
-    { title: 'Give your VLE admin our details', body: 'Tool configuration lists the URLs and keys your VLE needs. Each has a copy button.' },
-    { title: 'Verify and watch launches', body: 'Verify the connection, then Health and launches shows every launch and any that failed, with the reason.' },
+    {
+      title: 'Add the platform',
+      body: "Add platform asks for your VLE's details. Or use Install with one URL if your VLE supports dynamic registration.",
+    },
+    {
+      title: 'Give your VLE admin our details',
+      body: 'Tool configuration lists the URLs and keys your VLE needs. Each has a copy button.',
+    },
+    {
+      title: 'Verify and watch launches',
+      body: 'Verify the connection, then Health and launches shows every launch and any that failed, with the reason.',
+    },
   ],
   notes: [
     { title: 'Setup guides', body: 'Step-by-step guides for each VLE are under Setup guides.' },
@@ -217,9 +215,9 @@ function Field({
       </label>
       {children}
       {error ? (
-        <p className="mt-1 text-[11.5px] text-red-300">{error}</p>
+        <p className="mt-1 text-[12px] text-red-300">{error}</p>
       ) : hint ? (
-        <p className="mt-1 text-[11.5px] leading-snug text-white">{hint}</p>
+        <p className="mt-1 text-[12px] leading-snug text-white">{hint}</p>
       ) : null}
     </div>
   );
@@ -326,7 +324,7 @@ export function LTISettingsSection() {
         title: result.ok ? 'Platform verified' : 'Verification failed',
         description: result.ok
           ? 'All checks passed. Status set to Connected.'
-          : `${result.checks.filter((c) => !c.ok).length} check(s) failed — see details below.`,
+          : `${result.checks.filter((c) => !c.ok).length} check(s) failed. See details below.`,
         variant: result.ok ? 'default' : 'destructive',
       });
     } catch (e) {
@@ -548,70 +546,40 @@ export function LTISettingsSection() {
       <CollegePageHeader
         eyebrow="Settings"
         title="VLE integration"
-        description="Connect Canvas, Moodle or Blackboard over LTI 1.3 so learners open Elec-Mate from your VLE with one sign-in."
+        description={
+          rows.length === 0
+            ? 'Connect Canvas, Moodle or Blackboard over LTI 1.3 so learners open Elec-Mate from your VLE with one sign-in. No VLE connected yet.'
+            : `${connectedCount} of ${rows.length} platform${rows.length === 1 ? '' : 's'} connected${pendingCount > 0 ? `, ${pendingCount} waiting to be checked` : ''}${linkedUsers > 0 ? `, ${linkedUsers} linked account${linkedUsers === 1 ? '' : 's'}` : ''}. ` +
+              (globalStats.total === 0
+                ? 'No launches recorded yet.'
+                : `${globalStats.total} recent launch${globalStats.total === 1 ? '' : 'es'}, ${globalStats.failed} failed.`)
+        }
         help={HELP}
         actions={
           <>
             <button type="button" onClick={() => setTab('dynamic')} className={COLLEGE_BTN}>
               Install with one URL
             </button>
-            <button type="button" onClick={() => setIsAddDialogOpen(true)} className={cn(COLLEGE_BTN_PRIMARY, 'order-first lg:order-none')}>
+            <button
+              type="button"
+              onClick={() => setIsAddDialogOpen(true)}
+              className={cn(COLLEGE_BTN_PRIMARY, 'order-first lg:order-none')}
+            >
               Add platform
             </button>
           </>
         }
       />
 
-      <CollegeStats
-        items={[
-          {
-            label: 'Connected platforms',
-            value: String(connectedCount),
-            sub: [
-              `${rows.length} registered`,
-              pendingCount > 0 ? `${pendingCount} pending` : null,
-              linkedUsers > 0 ? `${linkedUsers} linked account${linkedUsers === 1 ? '' : 's'}` : null,
-            ]
-              .filter(Boolean)
-              .join(' · '),
-            onClick: () => setTab('platforms'),
-          },
-          { label: 'Launches', value: String(globalStats.total), sub: globalStats.total > 0 ? 'In the last 50 recorded' : 'No launches yet' },
-          {
-            label: 'Success rate',
-            value: globalStats.successRate === null ? '—' : `${globalStats.successRate}%`,
-            sub:
-              globalStats.successRate === null
-                ? 'Nothing to measure yet'
-                : globalStats.successRate >= 99
-                  ? 'Healthy'
-                  : globalStats.successRate >= 95
-                    ? 'Worth a look at the failures'
-                    : 'Check the top errors below',
-            good: globalStats.successRate !== null && globalStats.successRate >= 99,
-            warn: globalStats.successRate !== null && globalStats.successRate < 99,
-          },
-          {
-            label: 'Failed',
-            value: String(globalStats.failed),
-            sub: globalStats.failed > 0 ? 'See the launch log' : 'No failures',
-            warn: globalStats.failed > 0,
-          },
-        ]}
-      />
-
-      {/* Chips in place of the pill tabs. */}
-      <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
-        {tabs.map((t) => (
-          <button
-            key={t.value}
-            type="button"
-            onClick={() => setTab(t.value)}
-            className={cn(CHIP, tab === t.value ? CHIP_ON : CHIP_OFF)}
-          >
-            {t.label}
-          </button>
-        ))}
+      {/* Quiet text tabs, as on the home page. */}
+      <motion.div variants={itemVariants}>
+        <QuietTabs<Tab>
+          asTabs
+          label="VLE integration sections"
+          tabs={tabs.map((t) => ({ key: t.value, label: t.label }))}
+          value={tab}
+          onChange={setTab}
+        />
       </motion.div>
 
       {/* ── Platforms ─────────────────────────────────────────────────── */}
@@ -624,13 +592,17 @@ export function LTISettingsSection() {
               <div className={CARD_PAD}>
                 <p className="text-[14px] font-semibold text-white">No VLE connected yet</p>
                 <p className="mt-1 text-[12.5px] leading-snug text-white">
-                  Link Canvas, Moodle or Blackboard over LTI 1.3 for single sign-on, grade sync
-                  and roster import. Add a platform above, or paste one URL into an LMS that
-                  supports dynamic registration.
+                  Link Canvas, Moodle or Blackboard over LTI 1.3 for single sign-on, grade sync and
+                  roster import. Add a platform above, or paste one URL into an LMS that supports
+                  dynamic registration.
                 </p>
               </div>
               <div className="flex border-t border-white/[0.10] px-2 sm:px-3">
-                <button type="button" onClick={() => openSetupGuide('canvas')} className={TEXT_ACTION}>
+                <button
+                  type="button"
+                  onClick={() => openSetupGuide('canvas')}
+                  className={TEXT_ACTION}
+                >
                   Read the Canvas guide
                 </button>
               </div>
@@ -771,7 +743,9 @@ export function LTISettingsSection() {
                               aria-pressed={enabled}
                               className="flex h-11 w-full items-center justify-between gap-3 px-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
                             >
-                              <span className="text-[13px] font-medium text-white">{feat.label}</span>
+                              <span className="text-[13px] font-medium text-white">
+                                {feat.label}
+                              </span>
                               <span
                                 className={cn(
                                   'text-[12px] font-bold',
@@ -787,7 +761,7 @@ export function LTISettingsSection() {
                     </ul>
 
                     {/* Stats */}
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-white/[0.10] px-4 py-3 text-[11.5px] tabular-nums text-white sm:px-5">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-white/[0.10] px-4 py-3 text-[12px] tabular-nums text-white sm:px-5">
                       <span>{platform.stats.launches.toLocaleString()} launches</span>
                       <span>{platform.stats.courses} courses</span>
                       <span>{platform.stats.users} users</span>
@@ -828,7 +802,7 @@ export function LTISettingsSection() {
               {toolUrls.map((item) => (
                 <li key={item.key} className={cn(ROW_STATIC, 'py-2.5')}>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[11.5px] font-medium text-white">{item.label}</div>
+                    <div className="text-[12px] font-medium text-white">{item.label}</div>
                     <input
                       value={item.value}
                       readOnly
@@ -853,7 +827,7 @@ export function LTISettingsSection() {
             <div className={CARD_PAD}>
               <h3 className={CARD_TITLE}>Security settings</h3>
               <p className="mt-1 text-[12.5px] leading-snug text-white">
-                Enforced by the platform — not configurable per college yet.
+                Enforced by the platform, not configurable per college yet.
               </p>
             </div>
             <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
@@ -882,7 +856,7 @@ export function LTISettingsSection() {
                 <li key={setting.label} className={ROW_STATIC}>
                   <div className="min-w-0 flex-1">
                     <div className="text-[13.5px] font-medium text-white">{setting.label}</div>
-                    <div className="mt-0.5 text-[11.5px] leading-snug text-white">{setting.desc}</div>
+                    <div className="mt-0.5 text-[12px] leading-snug text-white">{setting.desc}</div>
                   </div>
                   <span className="shrink-0 text-[12px] font-bold text-white">
                     {setting.on ? 'Enforced' : 'Off'}
@@ -904,7 +878,7 @@ export function LTISettingsSection() {
               <p className="mt-1 text-[12.5px] leading-snug text-white">
                 Modern LMSs (Canvas, Moodle 4+, D2L, Schoology) support the 1EdTech LTI Dynamic
                 Registration flow. Paste the URL below into your LMS’s “Register external tool”
-                field — it handshakes with Elec-Mate automatically, no eight-field form required.
+                field. It handshakes with Elec-Mate automatically, no eight-field form required.
               </p>
             </div>
 
@@ -917,7 +891,7 @@ export function LTISettingsSection() {
               <>
                 <div className={cn(ROW_STATIC, 'border-t border-white/[0.10] py-2.5')}>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[11.5px] font-medium text-white">
+                    <div className="text-[12px] font-medium text-white">
                       Dynamic registration URL
                     </div>
                     <div className="mt-0.5 break-all font-mono text-[12px] text-white">
@@ -962,7 +936,11 @@ export function LTISettingsSection() {
                   <span className="text-[12px] leading-snug text-white">
                     LMS doesn’t support dynamic registration?
                   </span>
-                  <button type="button" onClick={() => setIsAddDialogOpen(true)} className={TEXT_ACTION}>
+                  <button
+                    type="button"
+                    onClick={() => setIsAddDialogOpen(true)}
+                    className={TEXT_ACTION}
+                  >
                     Use the manual form
                   </button>
                 </div>
@@ -988,13 +966,17 @@ export function LTISettingsSection() {
                 key={guide.type}
                 type="button"
                 onClick={() => openSetupGuide(guide.type)}
-                className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[104px] p-4 lg:hover:-translate-y-0.5')}
+                className={cn(
+                  CARD_BASE,
+                  CARD_NEUTRAL,
+                  'min-h-[104px] p-4 lg:hover:-translate-y-0.5'
+                )}
               >
                 <span className="flex items-center justify-between gap-2 text-[16px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
                   {guide.name}
                   <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden />
                 </span>
-                <span className="mt-1 text-[11.5px] leading-snug text-white">{guide.desc}</span>
+                <span className="mt-1 text-[12px] leading-snug text-white">{guide.desc}</span>
               </button>
             ))}
           </div>
@@ -1005,7 +987,10 @@ export function LTISettingsSection() {
             </div>
             <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
               {[
-                { title: 'Register the tool', desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel.' },
+                {
+                  title: 'Register the tool',
+                  desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel.',
+                },
                 { title: 'Copy the config', desc: 'Use the values under Configuration.' },
                 { title: 'Add the platform', desc: 'Enter your LMS details under Platforms.' },
                 { title: 'Test a launch', desc: 'Create a test assignment and run Verify config.' },
@@ -1013,7 +998,9 @@ export function LTISettingsSection() {
                 <li key={item.title} className={cn(ROW_STATIC, 'items-start')}>
                   <StepNumber n={i + 1} />
                   <div className="min-w-0 flex-1">
-                    <div className="text-[14px] font-semibold leading-tight text-white">{item.title}</div>
+                    <div className="text-[14px] font-semibold leading-tight text-white">
+                      {item.title}
+                    </div>
                     <div className="mt-0.5 text-[12px] leading-snug text-white">{item.desc}</div>
                   </div>
                 </li>
@@ -1042,7 +1029,7 @@ export function LTISettingsSection() {
             >
               {healthWord}
             </span>
-            <span className="text-[11.5px] tabular-nums text-white">
+            <span className="text-[12px] tabular-nums text-white">
               {health.total_ms ? `${health.total_ms}ms` : ''}
               {health.version ? ` · v${health.version}` : ''}
             </span>
@@ -1051,9 +1038,11 @@ export function LTISettingsSection() {
           {/* 7-day sparkline. Tap a bar to reveal its figures. */}
           <div className="border-t border-white/[0.10] px-4 py-4 sm:px-5">
             <div className="mb-3 flex items-baseline justify-between gap-3">
-              <span className="text-[11.5px] font-medium text-white">Launches per day, last 7 days</span>
+              <span className="text-[12px] font-medium text-white">
+                Launches per day, last 7 days
+              </span>
               {sparkTapped && (
-                <span className="text-[11px] tabular-nums text-white">
+                <span className="text-[12px] tabular-nums text-white">
                   {sparkTapped.date}: {sparkTapped.total} launches
                   {sparkTapped.failed > 0 ? ` · ${sparkTapped.failed} failed` : ''}
                 </span>
@@ -1091,7 +1080,10 @@ export function LTISettingsSection() {
                       </div>
                     </div>
                     <span
-                      className={cn('text-[10px] tabular-nums text-white', !isTapped && 'opacity-70')}
+                      className={cn(
+                        'text-[12px] tabular-nums text-white',
+                        !isTapped && 'opacity-70'
+                      )}
                     >
                       {d.date.slice(-2)}
                     </span>
@@ -1106,8 +1098,12 @@ export function LTISettingsSection() {
               {globalStats.topErrors.map((e) => (
                 <li key={e.code} className={cn(ROW_STATIC, 'py-2.5')}>
                   <span aria-hidden className="h-6 w-[3px] shrink-0 rounded-full bg-red-400" />
-                  <span className="min-w-0 flex-1 truncate font-mono text-[12px] text-white">{e.code}</span>
-                  <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">{e.count}</span>
+                  <span className="min-w-0 flex-1 truncate font-mono text-[12px] text-white">
+                    {e.code}
+                  </span>
+                  <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                    {e.count}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -1117,10 +1113,11 @@ export function LTISettingsSection() {
 
       {/* ── Recent launches (H8 / ELE-823) ────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <CollegeSectionTitle title="Recent launches" sub={loading ? 'Loading…' : `${launches.length} in the last 50`} />
-        {error && (
-          <p className="text-[12.5px] leading-snug text-red-300">{error}</p>
-        )}
+        <CollegeSectionTitle
+          title="Recent launches"
+          sub={loading ? 'Loading…' : `${launches.length} in the last 50`}
+        />
+        {error && <p className="text-[12.5px] leading-snug text-red-300">{error}</p>}
         <div className={LIST_CARD}>
           {launches.length === 0 ? (
             <div className={CARD_PAD}>
@@ -1134,14 +1131,15 @@ export function LTISettingsSection() {
               {launches.slice(0, 50).map((l) => {
                 const platform = rows.find((p) => p.id === l.platform_id);
                 const errorCode = (l.launch_data as Record<string, unknown> | null)?.error as
-                  | string
-                  | undefined;
+                  string | undefined;
                 const cid = (l.launch_data as Record<string, unknown> | null)?.cid as
-                  | string
-                  | undefined;
+                  string | undefined;
                 const roles =
                   l.roles && l.roles.length > 0
-                    ? l.roles.map((r) => r.split('#').pop() ?? r).slice(0, 2).join(', ')
+                    ? l.roles
+                        .map((r) => r.split('#').pop() ?? r)
+                        .slice(0, 2)
+                        .join(', ')
                     : null;
                 const reason = [
                   l.validated ? 'OK' : 'Failed',
@@ -1168,14 +1166,14 @@ export function LTISettingsSection() {
                       </span>
                       <span
                         className={cn(
-                          'mt-0.5 block truncate font-mono text-[11.5px] leading-tight',
+                          'mt-0.5 block truncate font-mono text-[12px] leading-tight',
                           l.validated ? 'text-white' : 'text-red-300'
                         )}
                       >
                         {reason}
                       </span>
                     </span>
-                    <span className="shrink-0 text-[11.5px] tabular-nums text-white">
+                    <span className="shrink-0 text-[12px] tabular-nums text-white">
                       {new Date(l.created_at).toLocaleString('en-GB', {
                         day: '2-digit',
                         month: 'short',
@@ -1191,8 +1189,8 @@ export function LTISettingsSection() {
         </div>
       </motion.section>
 
-      {/* ── Add / edit platform dialog ────────────────────────────────── */}
-      <ResponsiveDialog
+      {/* ── Add / edit platform sheet (wide on desktop, bottom sheet on phone) ── */}
+      <FormSheet
         open={isAddDialogOpen}
         onOpenChange={(open) => {
           setIsAddDialogOpen(open);
@@ -1201,20 +1199,43 @@ export function LTISettingsSection() {
             setNewPlatform({ ...EMPTY_FORM });
           }
         }}
-      >
-        <ResponsiveDialogContent hideCloseButton className={cn('w-[min(100vw-2rem,640px)]', DIALOG)}>
-          <div className="shrink-0 border-b border-white/[0.10] px-5 py-4 sm:px-6">
-            <ResponsiveDialogTitle className="text-[17px] font-semibold tracking-tight text-white">
-              {editingPlatformId ? 'Edit LTI platform' : 'Add LTI platform'}
-            </ResponsiveDialogTitle>
-            <ResponsiveDialogDescription className="mt-1 text-[12.5px] leading-snug text-white">
-              {editingPlatformId
-                ? 'Update the LMS configuration. Changes take effect on the next launch.'
-                : 'Register an LMS over LTI 1.3. If your LMS supports dynamic registration it only needs one URL — see that chip instead.'}
-            </ResponsiveDialogDescription>
+        width="wide"
+        eyebrow="VLE integration"
+        title={editingPlatformId ? 'Edit LTI platform' : 'Add LTI platform'}
+        description={
+          editingPlatformId
+            ? 'Update the LMS configuration. Changes take effect on the next launch.'
+            : 'Register an LMS over LTI 1.3. If your LMS supports dynamic registration it only needs one URL. See that chip instead.'
+        }
+        footer={
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={() => setIsAddDialogOpen(false)}
+              disabled={isSubmittingAdd}
+              className={NEUTRAL}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleSavePlatform}
+              disabled={isSubmittingAdd || !collegeId || !formValid}
+              className={PRIMARY}
+            >
+              {isSubmittingAdd
+                ? editingPlatformId
+                  ? 'Saving…'
+                  : 'Adding…'
+                : editingPlatformId
+                  ? 'Save changes'
+                  : 'Add platform'}
+            </button>
           </div>
-
-          <div className="flex-1 space-y-6 overflow-y-auto px-5 py-5 sm:px-6">
+        }
+      >
+        <div className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
             {/* Platform identity */}
             <div className="space-y-4">
               <h3 className="text-[15px] font-semibold tracking-tight text-white">
@@ -1223,7 +1244,7 @@ export function LTISettingsSection() {
 
               <Field label="Display name" required>
                 <input
-                  placeholder="Canvas — Production"
+                  placeholder="Canvas production"
                   value={newPlatform.name}
                   onChange={(e) => setNewPlatform({ ...newPlatform, name: e.target.value })}
                   className={FIELD}
@@ -1234,18 +1255,12 @@ export function LTISettingsSection() {
                 <span className={LABEL}>
                   LMS type<span className="ml-1 text-elec-yellow">*</span>
                 </span>
-                <div className="flex flex-wrap gap-2">
-                  {PLATFORM_TYPES.map((t) => (
-                    <button
-                      key={t.value}
-                      type="button"
-                      onClick={() => setNewPlatform({ ...newPlatform, type: t.value })}
-                      className={cn(CHIP, newPlatform.type === t.value ? CHIP_ON : CHIP_OFF)}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
+                <ChoiceGrid<LTIPlatformType>
+                  label="LMS type"
+                  options={PLATFORM_TYPES.map((t) => ({ key: t.value, label: t.label }))}
+                  selected={newPlatform.type as LTIPlatformType}
+                  onToggle={(k) => setNewPlatform({ ...newPlatform, type: k })}
+                />
               </div>
 
               <Field
@@ -1258,10 +1273,7 @@ export function LTISettingsSection() {
                   placeholder="https://canvas.instructure.com"
                   value={newPlatform.issuer}
                   onChange={(e) => setNewPlatform({ ...newPlatform, issuer: e.target.value })}
-                  className={cn(
-                    FIELD,
-                    formErrors.issuer && newPlatform.issuer && 'border-red-400'
-                  )}
+                  className={cn(FIELD, formErrors.issuer && newPlatform.issuer && 'border-red-400')}
                 />
               </Field>
 
@@ -1288,12 +1300,12 @@ export function LTISettingsSection() {
             </div>
 
             {/* LMS endpoints */}
-            <div className="space-y-4 border-t border-white/[0.10] pt-5">
+            <div className="space-y-4 border-t border-white/[0.10] pt-5 lg:border-t-0 lg:pt-0">
               <div className="flex items-baseline justify-between gap-3">
                 <h3 className="text-[15px] font-semibold tracking-tight text-white">
                   LMS endpoints
                 </h3>
-                <span className="text-[11px] text-white">All three are required</span>
+                <span className="text-[12px] text-white">All three are required</span>
               </div>
 
               <Field
@@ -1308,9 +1320,7 @@ export function LTISettingsSection() {
                 <input
                   placeholder="https://canvas.../api/lti/authorize_redirect"
                   value={newPlatform.authLoginUrl}
-                  onChange={(e) =>
-                    setNewPlatform({ ...newPlatform, authLoginUrl: e.target.value })
-                  }
+                  onChange={(e) => setNewPlatform({ ...newPlatform, authLoginUrl: e.target.value })}
                   className={cn(
                     FIELD,
                     'font-mono',
@@ -1331,9 +1341,7 @@ export function LTISettingsSection() {
                 <input
                   placeholder="https://canvas.../login/oauth2/token"
                   value={newPlatform.authTokenUrl}
-                  onChange={(e) =>
-                    setNewPlatform({ ...newPlatform, authTokenUrl: e.target.value })
-                  }
+                  onChange={(e) => setNewPlatform({ ...newPlatform, authTokenUrl: e.target.value })}
                   className={cn(
                     FIELD,
                     'font-mono',
@@ -1360,344 +1368,33 @@ export function LTISettingsSection() {
                 />
               </Field>
             </div>
-
-            {!collegeId && (
-              <p className="text-[12.5px] leading-snug text-red-300">
-                You must belong to a college to register a platform. Ask your Elec-Mate admin to
-                add you to a college first.
-              </p>
-            )}
           </div>
 
-          <ResponsiveDialogFooter className="gap-2 border-t border-white/[0.10] px-5 py-4 sm:px-6">
-            <button
-              type="button"
-              onClick={() => setIsAddDialogOpen(false)}
-              disabled={isSubmittingAdd}
-              className={NEUTRAL}
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSavePlatform}
-              disabled={isSubmittingAdd || !collegeId || !formValid}
-              className={PRIMARY}
-            >
-              {isSubmittingAdd
-                ? editingPlatformId
-                  ? 'Saving…'
-                  : 'Adding…'
-                : editingPlatformId
-                  ? 'Save changes'
-                  : 'Add platform'}
-            </button>
-          </ResponsiveDialogFooter>
-        </ResponsiveDialogContent>
-      </ResponsiveDialog>
+          {!collegeId && (
+            <p className="text-[12.5px] leading-snug text-red-300">
+              You must belong to a college to register a platform. Ask your Elec-Mate admin to add
+              you to a college first.
+            </p>
+          )}
+        </div>
+      </FormSheet>
 
       {/* ── Setup guide dialog ────────────────────────────────────────── */}
-      <ResponsiveDialog open={isSetupGuideOpen} onOpenChange={setIsSetupGuideOpen}>
-        <ResponsiveDialogContent hideCloseButton className={cn('max-w-2xl', DIALOG)}>
-          <div className="shrink-0 border-b border-white/[0.10] px-5 py-4 sm:px-6">
-            <ResponsiveDialogTitle className="text-[17px] font-semibold tracking-tight text-white">
-              {selectedGuide === 'canvas' && 'Canvas setup guide'}
-              {selectedGuide === 'moodle' && 'Moodle setup guide'}
-              {selectedGuide === 'blackboard' && 'Blackboard Learn setup guide'}
-            </ResponsiveDialogTitle>
-            <ResponsiveDialogDescription className="mt-1 text-[12.5px] leading-snug text-white">
-              Follow these steps to connect your LMS to Elec-Mate.
-            </ResponsiveDialogDescription>
-          </div>
-
-          <div className="flex-1 overflow-y-auto px-5 py-2 text-[13px] text-white sm:px-6">
-            {selectedGuide === 'canvas' && (
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="step1">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={1} />
-                      Access Developer Keys
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>1. Log in to Canvas as an admin</p>
-                    <p>
-                      2. Go to <strong>Admin → Developer Keys</strong>
-                    </p>
-                    <p>
-                      3. Click <strong>+ Developer Key → + LTI Key</strong>
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step2">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={2} />
-                      Configure the LTI key
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>Enter the following values:</p>
-                    <ul className="list-disc space-y-1 pl-4">
-                      <li>
-                        <strong>Key Name:</strong> Elec-Mate
-                      </li>
-                      <li>
-                        <strong>Redirect URIs:</strong> {ltiConfig.redirectUris[0]}
-                      </li>
-                      <li>
-                        <strong>Method:</strong> Manual Entry
-                      </li>
-                      <li>
-                        <strong>Target Link URI:</strong> {ltiConfig.toolUrl}
-                      </li>
-                      <li>
-                        <strong>OpenID Connect Initiation URL:</strong> {ltiConfig.oidcInitUrl}
-                      </li>
-                      <li>
-                        <strong>JWK Method:</strong> Public JWK URL
-                      </li>
-                      <li>
-                        <strong>Public JWK URL:</strong> {ltiConfig.jwksUrl}
-                      </li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step3">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={3} />
-                      Enable additional features
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>Under LTI Advantage Services, enable:</p>
-                    <ul className="list-disc space-y-1 pl-4">
-                      <li>Can create and view assignment data in the gradebook</li>
-                      <li>Can view assignment data in the gradebook</li>
-                      <li>Can view submission data for assignments</li>
-                      <li>Can access Names and Roles Provisioning</li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step4">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={4} />
-                      Save and copy the Client ID
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>
-                      1. Click <strong>Save</strong>
-                    </p>
-                    <p>
-                      2. Set the key state to <strong>ON</strong>
-                    </p>
-                    <p>
-                      3. Copy the <strong>Client ID</strong> (shown in the Details column)
-                    </p>
-                    <p>4. Add this platform in Elec-Mate using the Client ID</p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            )}
-
-            {selectedGuide === 'moodle' && (
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="step1">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={1} />
-                      Access External Tools
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>1. Log in to Moodle as an admin</p>
-                    <p>
-                      2. Go to{' '}
-                      <strong>
-                        Site Administration → Plugins → Activity modules → External tool → Manage
-                        tools
-                      </strong>
-                    </p>
-                    <p>
-                      3. Click <strong>configure a tool manually</strong>
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step2">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={2} />
-                      Configure tool settings
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>Enter the following values:</p>
-                    <ul className="list-disc space-y-1 pl-4">
-                      <li>
-                        <strong>Tool name:</strong> Elec-Mate
-                      </li>
-                      <li>
-                        <strong>Tool URL:</strong> {ltiConfig.toolUrl}
-                      </li>
-                      <li>
-                        <strong>LTI version:</strong> LTI 1.3
-                      </li>
-                      <li>
-                        <strong>Public key type:</strong> Keyset URL
-                      </li>
-                      <li>
-                        <strong>Public keyset:</strong> {ltiConfig.jwksUrl}
-                      </li>
-                      <li>
-                        <strong>Initiate login URL:</strong> {ltiConfig.oidcInitUrl}
-                      </li>
-                      <li>
-                        <strong>Redirection URI(s):</strong> {ltiConfig.redirectUris[0]}
-                      </li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step3">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={3} />
-                      Enable services
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>Under Services, set these to “Use this service”:</p>
-                    <ul className="list-disc space-y-1 pl-4">
-                      <li>IMS LTI Assignment and Grade Services</li>
-                      <li>IMS LTI Names and Role Provisioning Services</li>
-                    </ul>
-                    <p className="mt-2">Under Privacy, set:</p>
-                    <ul className="list-disc space-y-1 pl-4">
-                      <li>Share launcher’s name: Always</li>
-                      <li>Share launcher’s email: Always</li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step4">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={4} />
-                      Save and get credentials
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>
-                      1. Click <strong>Save changes</strong>
-                    </p>
-                    <p>
-                      2. Click <strong>View configuration details</strong>
-                    </p>
-                    <p>
-                      3. Copy the <strong>Client ID</strong>
-                    </p>
-                    <p>4. Add this platform in Elec-Mate using the Client ID</p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            )}
-
-            {selectedGuide === 'blackboard' && (
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="step1">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={1} />
-                      Access LTI Tool Providers
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>1. Log in to Blackboard as an admin</p>
-                    <p>
-                      2. Go to <strong>System Admin → Integrations → LTI Tool Providers</strong>
-                    </p>
-                    <p>
-                      3. Click <strong>Register LTI 1.3/Advantage Tool</strong>
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step2">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={2} />
-                      Register the tool
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>Enter the following values:</p>
-                    <ul className="list-disc space-y-1 pl-4">
-                      <li>
-                        <strong>Client ID:</strong> (generated by Blackboard)
-                      </li>
-                      <li>
-                        <strong>Tool Provider Key:</strong> {ltiConfig.toolUrl}
-                      </li>
-                      <li>
-                        <strong>Tool Provider Secret:</strong> (leave blank for LTI 1.3)
-                      </li>
-                      <li>
-                        <strong>Tool Provider Domain:</strong> jtwygbeceundfgnkirof.supabase.co
-                      </li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step3">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={3} />
-                      Configure LTI 1.3 settings
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>In the LTI 1.3 configuration:</p>
-                    <ul className="list-disc space-y-1 pl-4">
-                      <li>
-                        <strong>Login Initiation URL:</strong> {ltiConfig.oidcInitUrl}
-                      </li>
-                      <li>
-                        <strong>Tool Redirect URL:</strong> {ltiConfig.redirectUris[0]}
-                      </li>
-                      <li>
-                        <strong>Tool JWKS URL:</strong> {ltiConfig.jwksUrl}
-                      </li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="step4">
-                  <AccordionTrigger className="min-h-11 text-left text-white">
-                    <span className="flex items-center gap-3">
-                      <StepNumber n={4} />
-                      Complete registration
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-8 text-white">
-                    <p>
-                      1. Enable <strong>Course Memberships Service</strong>
-                    </p>
-                    <p>
-                      2. Enable <strong>Assignment and Grades Service</strong>
-                    </p>
-                    <p>
-                      3. Click <strong>Submit</strong>
-                    </p>
-                    <p>
-                      4. Copy the generated <strong>Application ID</strong> (Client ID)
-                    </p>
-                    <p>5. Add this platform in Elec-Mate</p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            )}
-          </div>
-
-          <ResponsiveDialogFooter className="gap-2 border-t border-white/[0.10] px-5 py-4 sm:px-6">
+      <FormSheet
+        open={isSetupGuideOpen}
+        onOpenChange={setIsSetupGuideOpen}
+        width="wide"
+        eyebrow="VLE integration"
+        title={
+          <>
+            {selectedGuide === 'canvas' && 'Canvas setup guide'}
+            {selectedGuide === 'moodle' && 'Moodle setup guide'}
+            {selectedGuide === 'blackboard' && 'Blackboard Learn setup guide'}
+          </>
+        }
+        description={<>Follow these steps to connect your LMS to Elec-Mate.</>}
+        footer={
+          <div className="flex justify-end gap-2">
             <button type="button" onClick={() => setIsSetupGuideOpen(false)} className={NEUTRAL}>
               Close
             </button>
@@ -1711,78 +1408,307 @@ export function LTISettingsSection() {
             >
               Add platform
             </button>
-          </ResponsiveDialogFooter>
-        </ResponsiveDialogContent>
-      </ResponsiveDialog>
+          </div>
+        }
+      >
+        <div className="flex-1 overflow-y-auto px-5 py-2 text-[13px] text-white sm:px-6">
+          {selectedGuide === 'canvas' && (
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="step1">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={1} />
+                    Access Developer Keys
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>1. Log in to Canvas as an admin</p>
+                  <p>
+                    2. Go to <strong>Admin → Developer Keys</strong>
+                  </p>
+                  <p>
+                    3. Click <strong>+ Developer Key → + LTI Key</strong>
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step2">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={2} />
+                    Configure the LTI key
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>Enter the following values:</p>
+                  <ul className="list-disc space-y-1 pl-4">
+                    <li>
+                      <strong>Key Name:</strong> Elec-Mate
+                    </li>
+                    <li>
+                      <strong>Redirect URIs:</strong> {ltiConfig.redirectUris[0]}
+                    </li>
+                    <li>
+                      <strong>Method:</strong> Manual Entry
+                    </li>
+                    <li>
+                      <strong>Target Link URI:</strong> {ltiConfig.toolUrl}
+                    </li>
+                    <li>
+                      <strong>OpenID Connect Initiation URL:</strong> {ltiConfig.oidcInitUrl}
+                    </li>
+                    <li>
+                      <strong>JWK Method:</strong> Public JWK URL
+                    </li>
+                    <li>
+                      <strong>Public JWK URL:</strong> {ltiConfig.jwksUrl}
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step3">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={3} />
+                    Enable additional features
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>Under LTI Advantage Services, enable:</p>
+                  <ul className="list-disc space-y-1 pl-4">
+                    <li>Can create and view assignment data in the gradebook</li>
+                    <li>Can view assignment data in the gradebook</li>
+                    <li>Can view submission data for assignments</li>
+                    <li>Can access Names and Roles Provisioning</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step4">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={4} />
+                    Save and copy the Client ID
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>
+                    1. Click <strong>Save</strong>
+                  </p>
+                  <p>
+                    2. Set the key state to <strong>ON</strong>
+                  </p>
+                  <p>
+                    3. Copy the <strong>Client ID</strong> (shown in the Details column)
+                  </p>
+                  <p>4. Add this platform in Elec-Mate using the Client ID</p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
+
+          {selectedGuide === 'moodle' && (
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="step1">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={1} />
+                    Access External Tools
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>1. Log in to Moodle as an admin</p>
+                  <p>
+                    2. Go to{' '}
+                    <strong>
+                      Site Administration → Plugins → Activity modules → External tool → Manage
+                      tools
+                    </strong>
+                  </p>
+                  <p>
+                    3. Click <strong>configure a tool manually</strong>
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step2">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={2} />
+                    Configure tool settings
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>Enter the following values:</p>
+                  <ul className="list-disc space-y-1 pl-4">
+                    <li>
+                      <strong>Tool name:</strong> Elec-Mate
+                    </li>
+                    <li>
+                      <strong>Tool URL:</strong> {ltiConfig.toolUrl}
+                    </li>
+                    <li>
+                      <strong>LTI version:</strong> LTI 1.3
+                    </li>
+                    <li>
+                      <strong>Public key type:</strong> Keyset URL
+                    </li>
+                    <li>
+                      <strong>Public keyset:</strong> {ltiConfig.jwksUrl}
+                    </li>
+                    <li>
+                      <strong>Initiate login URL:</strong> {ltiConfig.oidcInitUrl}
+                    </li>
+                    <li>
+                      <strong>Redirection URI(s):</strong> {ltiConfig.redirectUris[0]}
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step3">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={3} />
+                    Enable services
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>Under Services, set these to “Use this service”:</p>
+                  <ul className="list-disc space-y-1 pl-4">
+                    <li>IMS LTI Assignment and Grade Services</li>
+                    <li>IMS LTI Names and Role Provisioning Services</li>
+                  </ul>
+                  <p className="mt-2">Under Privacy, set:</p>
+                  <ul className="list-disc space-y-1 pl-4">
+                    <li>Share launcher’s name: Always</li>
+                    <li>Share launcher’s email: Always</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step4">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={4} />
+                    Save and get credentials
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>
+                    1. Click <strong>Save changes</strong>
+                  </p>
+                  <p>
+                    2. Click <strong>View configuration details</strong>
+                  </p>
+                  <p>
+                    3. Copy the <strong>Client ID</strong>
+                  </p>
+                  <p>4. Add this platform in Elec-Mate using the Client ID</p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
+
+          {selectedGuide === 'blackboard' && (
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="step1">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={1} />
+                    Access LTI Tool Providers
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>1. Log in to Blackboard as an admin</p>
+                  <p>
+                    2. Go to <strong>System Admin → Integrations → LTI Tool Providers</strong>
+                  </p>
+                  <p>
+                    3. Click <strong>Register LTI 1.3/Advantage Tool</strong>
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step2">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={2} />
+                    Register the tool
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>Enter the following values:</p>
+                  <ul className="list-disc space-y-1 pl-4">
+                    <li>
+                      <strong>Client ID:</strong> (generated by Blackboard)
+                    </li>
+                    <li>
+                      <strong>Tool Provider Key:</strong> {ltiConfig.toolUrl}
+                    </li>
+                    <li>
+                      <strong>Tool Provider Secret:</strong> (leave blank for LTI 1.3)
+                    </li>
+                    <li>
+                      <strong>Tool Provider Domain:</strong> jtwygbeceundfgnkirof.supabase.co
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step3">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={3} />
+                    Configure LTI 1.3 settings
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>In the LTI 1.3 configuration:</p>
+                  <ul className="list-disc space-y-1 pl-4">
+                    <li>
+                      <strong>Login Initiation URL:</strong> {ltiConfig.oidcInitUrl}
+                    </li>
+                    <li>
+                      <strong>Tool Redirect URL:</strong> {ltiConfig.redirectUris[0]}
+                    </li>
+                    <li>
+                      <strong>Tool JWKS URL:</strong> {ltiConfig.jwksUrl}
+                    </li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="step4">
+                <AccordionTrigger className="min-h-11 text-left text-white">
+                  <span className="flex items-center gap-3">
+                    <StepNumber n={4} />
+                    Complete registration
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-2 pl-8 text-white">
+                  <p>
+                    1. Enable <strong>Course Memberships Service</strong>
+                  </p>
+                  <p>
+                    2. Enable <strong>Assignment and Grades Service</strong>
+                  </p>
+                  <p>
+                    3. Click <strong>Submit</strong>
+                  </p>
+                  <p>
+                    4. Copy the generated <strong>Application ID</strong> (Client ID)
+                  </p>
+                  <p>5. Add this platform in Elec-Mate</p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
+        </div>
+      </FormSheet>
 
       {/* ── Configure platform dialog — controlled, and actually saved ─── */}
-      <ResponsiveDialog open={isConfigureDialogOpen} onOpenChange={setIsConfigureDialogOpen}>
-        <ResponsiveDialogContent hideCloseButton className={cn('max-w-lg', DIALOG)}>
-          <div className="shrink-0 border-b border-white/[0.10] px-5 py-4 sm:px-6">
-            <ResponsiveDialogTitle className="text-[17px] font-semibold tracking-tight text-white">
-              Configure {selectedPlatform?.name}
-            </ResponsiveDialogTitle>
-            <ResponsiveDialogDescription className="mt-1 text-[12.5px] leading-snug text-white">
-              Update the platform’s details and which LTI Advantage features it uses.
-            </ResponsiveDialogDescription>
-          </div>
-          {selectedPlatform && (
-            <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-6">
-              <Field label="Platform name">
-                <input
-                  value={configForm.name}
-                  onChange={(e) => setConfigForm({ ...configForm, name: e.target.value })}
-                  className={FIELD}
-                />
-              </Field>
-              <Field label="Issuer URL">
-                <input
-                  value={configForm.url}
-                  onChange={(e) => setConfigForm({ ...configForm, url: e.target.value })}
-                  className={cn(FIELD, 'font-mono')}
-                />
-              </Field>
-              <Field label="Client ID">
-                <input
-                  value={configForm.clientId}
-                  onChange={(e) => setConfigForm({ ...configForm, clientId: e.target.value })}
-                  className={cn(FIELD, 'font-mono')}
-                />
-              </Field>
-              <div className="border-t border-white/[0.10] pt-4">
-                <h4 className="text-[15px] font-semibold tracking-tight text-white">Features</h4>
-                <ul className="-mx-2 mt-1 divide-y divide-white/[0.10]">
-                  {(
-                    [
-                      { key: 'deepLinking', label: 'Deep linking' },
-                      { key: 'gradeSync', label: 'Grade sync' },
-                      { key: 'rosterSync', label: 'Roster sync' },
-                    ] as const
-                  ).map((feat) => {
-                    const on = configForm[feat.key];
-                    return (
-                      <li key={feat.key}>
-                        <button
-                          type="button"
-                          aria-pressed={on}
-                          onClick={() => setConfigForm({ ...configForm, [feat.key]: !on })}
-                          className="flex h-11 w-full items-center justify-between gap-3 px-2 text-left transition-colors touch-manipulation hover:bg-white/[0.06]"
-                        >
-                          <span className="text-[13px] font-medium text-white">{feat.label}</span>
-                          <span
-                            className={cn('text-[12px] font-bold', on ? 'text-elec-yellow' : 'text-white')}
-                          >
-                            {on ? 'On' : 'Off'}
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>
-          )}
-          <ResponsiveDialogFooter className="gap-2 border-t border-white/[0.10] px-5 py-4 sm:px-6">
+      <FormSheet
+        open={isConfigureDialogOpen}
+        onOpenChange={setIsConfigureDialogOpen}
+        width="wide"
+        eyebrow="VLE integration"
+        title={<>Configure {selectedPlatform?.name}</>}
+        description={<>Update the platform’s details and which LTI Advantage features it uses.</>}
+        footer={
+          <div className="flex justify-end gap-2">
             <button
               type="button"
               onClick={() => setIsConfigureDialogOpen(false)}
@@ -1799,9 +1725,69 @@ export function LTISettingsSection() {
             >
               {isSavingConfig ? 'Saving…' : 'Save changes'}
             </button>
-          </ResponsiveDialogFooter>
-        </ResponsiveDialogContent>
-      </ResponsiveDialog>
+          </div>
+        }
+      >
+        {selectedPlatform && (
+          <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-6">
+            <Field label="Platform name">
+              <input
+                value={configForm.name}
+                onChange={(e) => setConfigForm({ ...configForm, name: e.target.value })}
+                className={FIELD}
+              />
+            </Field>
+            <Field label="Issuer URL">
+              <input
+                value={configForm.url}
+                onChange={(e) => setConfigForm({ ...configForm, url: e.target.value })}
+                className={cn(FIELD, 'font-mono')}
+              />
+            </Field>
+            <Field label="Client ID">
+              <input
+                value={configForm.clientId}
+                onChange={(e) => setConfigForm({ ...configForm, clientId: e.target.value })}
+                className={cn(FIELD, 'font-mono')}
+              />
+            </Field>
+            <div className="border-t border-white/[0.10] pt-4">
+              <h4 className="text-[15px] font-semibold tracking-tight text-white">Features</h4>
+              <ul className="-mx-2 mt-1 divide-y divide-white/[0.10]">
+                {(
+                  [
+                    { key: 'deepLinking', label: 'Deep linking' },
+                    { key: 'gradeSync', label: 'Grade sync' },
+                    { key: 'rosterSync', label: 'Roster sync' },
+                  ] as const
+                ).map((feat) => {
+                  const on = configForm[feat.key];
+                  return (
+                    <li key={feat.key}>
+                      <button
+                        type="button"
+                        aria-pressed={on}
+                        onClick={() => setConfigForm({ ...configForm, [feat.key]: !on })}
+                        className="flex h-11 w-full items-center justify-between gap-3 px-2 text-left transition-colors touch-manipulation hover:bg-white/[0.06]"
+                      >
+                        <span className="text-[13px] font-medium text-white">{feat.label}</span>
+                        <span
+                          className={cn(
+                            'text-[12px] font-bold',
+                            on ? 'text-elec-yellow' : 'text-white'
+                          )}
+                        >
+                          {on ? 'On' : 'Off'}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        )}
+      </FormSheet>
     </motion.div>
   );
 }

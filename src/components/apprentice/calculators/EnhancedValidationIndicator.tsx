@@ -17,7 +17,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
 
   const Pill = ({ label, ok }: { label: string; ok: boolean }) => (
     <span
-      className={`inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded-md border justify-center ${
+      className={`inline-flex items-center gap-1.5 text-[12px] px-2 py-0.5 rounded-md border justify-center ${
         ok
           ? 'border-white/10 bg-white/[0.03] text-white'
           : 'border-red-500/30 bg-red-500/[0.04] text-red-300'
@@ -37,7 +37,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
           ok={validation.isValid}
         />
         {validation.safetyFactors.safetyMargin > 0 && (
-          <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+          <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
             Safety margin: {validation.safetyFactors.safetyMargin.toFixed(2)}
           </span>
         )}
@@ -46,7 +46,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       {/* Critical Safety Alerts */}
       {validation.criticalAlerts.length > 0 && (
         <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          <span className="text-[12px] font-medium text-red-300">
             Critical safety alert
           </span>
           <ul className="space-y-1.5">
@@ -70,7 +70,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       {/* Errors */}
       {validation.errors.length > 0 && (
         <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          <span className="text-[12px] font-medium text-red-300">
             Calculation errors
           </span>
           <ul className="space-y-1.5">
@@ -90,7 +90,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       {/* Warnings */}
       {validation.warnings.length > 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Safety warnings
           </span>
           <ul className="space-y-1.5">
@@ -119,7 +119,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       {(validation.safetyFactors.temperatureDerating < 1.0 ||
         validation.safetyFactors.groupingFactor < 1.0) && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Applied safety factors
           </span>
           <div className="grid grid-cols-2 gap-2 text-[13px] text-white font-mono">
@@ -140,7 +140,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
 
       {/* Professional Disclaimer */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Professional notice
         </span>
         <p className="text-[13px] text-white leading-relaxed">

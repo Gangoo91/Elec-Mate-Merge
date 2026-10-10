@@ -180,7 +180,11 @@ async function gatherBriefData(
       .select('id', { count: 'exact', head: true })
       .eq('user_id', userId)
       .eq('status', 'sent')
-      .eq('invoice_raised', false),
+      // ELE-2035 — `status` stays 'sent' after an accept or decline, and
+      // invoice_raised is null on older rows, so count only real waits.
+      .eq('acceptance_status', 'pending')
+      .or('invoice_raised.is.null,invoice_raised.eq.false')
+      .is('deleted_at', null),
     // Overdue invoices (24h grace period)
     supabase
       .from('invoices')

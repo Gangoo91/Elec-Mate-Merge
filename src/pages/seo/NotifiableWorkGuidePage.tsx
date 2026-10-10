@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Electricians registered with a competent person scheme (NICEIC, NAPIT, ELECSA, BRE) can self-certify notifiable work without involving building control.',
   'Non-notifiable work includes like-for-like replacements, adding sockets or switches to existing circuits (outside special locations), and repairs.',
   'Failure to notify can result in enforcement action, difficulty selling the property, and invalidated insurance — it is not worth the risk.',
-  'A4:2026 (BS 7671:2018+A4:2026) introduced Reg 421.1.7, which recommends arc fault detection devices (AFDDs) on AC final circuits — electricians should discuss AFDD installation with clients during any consumer unit replacement.',
+  'BS 7671 Reg 421.1.7 requires arc fault detection devices (AFDDs) on socket-outlet final circuits up to 32 A in HMOs and other named higher-risk premises (since A2:2022) and recommends them elsewhere, so discuss AFDDs with clients during any consumer unit replacement.',
 ];
 
 const faqs = [
@@ -260,9 +260,10 @@ const sections = [
                 <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit upgrades
                 </SEOInternalLink>
-                . Since A4:2026, Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC
-                final circuits — electricians should discuss AFDD installation with clients as part
-                of every consumer unit replacement (the wording is recommendatory, not mandatory).
+                . Reg 421.1.7 recommends arc fault detection devices (AFDDs) on socket-outlet final
+                circuits up to 32 A in ordinary homes, and since A2:2022 has required them in HMOs,
+                high rise residential buildings, purpose-built student accommodation and care homes.
+                Discuss AFDDs with clients as part of every consumer unit replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -646,7 +647,7 @@ export default function NotifiableWorkGuidePage() {
       title="Notifiable Electrical Work: Part P Guide UK"
       description="Complete guide to notifiable electrical work under Part P Building Regulations. Covers which work needs notification, competent person schemes."
       datePublished="2025-04-10"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

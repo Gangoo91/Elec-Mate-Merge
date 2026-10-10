@@ -1,30 +1,15 @@
-import { CalendarClock, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
-  Avatar,
-  DestructiveButton,
-  Pill,
-  PrimaryButton,
-  SecondaryButton,
-  type Tone,
-} from '@/components/employer/editorial';
-import { stageTone } from '@/components/employer/vacancies/PipelineStrip';
+  panel,
+  Initials,
+  StatusPill,
+  rowBtn,
+  rowBtnPrimary,
+  rowBtnSecondary,
+} from '@/components/employer/pageParts/PageParts';
+import { stagePillTone } from '@/components/employer/vacancies/PipelineStrip';
 import type { VacancyApplication } from '@/services/vacancyService';
-
-const tierTone: Record<string, Tone> = {
-  basic: 'blue',
-  verified: 'cyan',
-  premium: 'yellow',
-};
-
-function getInitials(name: string) {
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-}
+import { ecsCardPhrase } from '@/data/uk-electrician-constants';
 
 /**
  * Interview bookings were historically stored only as a structured line in
@@ -50,7 +35,11 @@ export function interviewSummary(
   if (app.interview_at) {
     const at = new Date(app.interview_at);
     if (!Number.isNaN(at.getTime())) {
-      const date = at.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      const date = at.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      });
       const time = at.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
       return [`${date}, ${time}`, app.interview_type, app.interview_location]
         .filter(Boolean)
@@ -110,7 +99,12 @@ export function CandidateCard({
   const tier = app.elec_id_profile?.verification_tier;
   const ecs = app.elec_id_profile?.ecs_card_type;
   const interview = app.status === 'Interviewed' ? interviewSummary(app) : null;
-  const tone = stageTone[app.status] ?? 'blue';
+  const facts = [
+    tier ? `${tier.charAt(0).toUpperCase()}${tier.slice(1)} Elec-ID` : null,
+    ecs ? ecsCardPhrase(ecs) : null,
+    app.cv_url ? 'CV attached' : null,
+    `last activity ${lastActivityLabel(app.updated_at)}`,
+  ].filter(Boolean);
 
   const stop = (e: React.MouseEvent, fn?: () => void) => {
     e.stopPropagation();
@@ -123,95 +117,83 @@ export function CandidateCard({
       tabIndex={0}
       onClick={selectionMode ? onToggleSelect : onOpen}
       onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           (selectionMode ? onToggleSelect : onOpen)?.();
         }
       }}
       className={cn(
-        'group bg-white/[0.04] border rounded-2xl overflow-hidden text-left cursor-pointer transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
-        selectionMode && isSelected
-          ? 'border-elec-yellow/50 bg-white/[0.06]'
-          : 'border-white/[0.06] hover:bg-[hsl(0_0%_14%)]'
+        panel,
+        'cursor-pointer overflow-hidden text-left transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+        selectionMode && isSelected ? 'sm:border-elec-yellow' : 'hover:bg-white/[0.04]'
       )}
     >
-      <div className="p-4 sm:p-5">
-        <div className="flex items-start gap-3">
-          <Avatar initials={getInitials(app.applicant_name)} size="md" />
-          <div className="flex-1 min-w-0">
-            <div className="text-[14.5px] font-semibold text-white truncate">
-              {app.applicant_name}
-            </div>
-            <div className="mt-0.5 text-[11.5px] text-white truncate">
-              {vacancyTitle} · Applied {formatShortDate(app.applied_at)}
-            </div>
-          </div>
-          {selectionMode ? (
-            <span
-              aria-hidden
-              className={cn(
-                'h-7 w-7 rounded-full border flex items-center justify-center text-[12px] font-semibold shrink-0',
-                isSelected
-                  ? 'bg-elec-yellow text-black border-elec-yellow'
-                  : 'bg-transparent text-white border-white/[0.2]'
-              )}
-            >
-              {isSelected ? '✓' : ''}
-            </span>
-          ) : (
-            <Pill tone={tone} className="shrink-0">
-              {app.status}
-            </Pill>
-          )}
-        </div>
-
-        <div className="mt-3 flex flex-wrap items-center gap-1.5">
-          {tier && <Pill tone={tierTone[tier] ?? 'blue'}>{tier}</Pill>}
-          {ecs && <Pill tone="blue">{ecs}</Pill>}
-          {app.cv_url && (
-            <Pill tone="cyan" className="inline-flex items-center gap-1">
-              <FileText className="h-3 w-3" aria-hidden />
-              CV
-            </Pill>
-          )}
+      <div className="flex items-center gap-3 px-4 py-3 sm:px-5">
+        <Initials name={app.applicant_name} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[15px] font-semibold leading-snug text-white">
+            {app.applicant_name}
+          </p>
+          <p className="mt-0.5 truncate text-[13px] text-white">
+            {vacancyTitle} · applied {formatShortDate(app.applied_at)}
+          </p>
+          <p className="mt-0.5 truncate text-[12.5px] text-white">{facts.join(' · ')}</p>
           {interview && (
-            <Pill tone="purple" className="inline-flex items-center gap-1">
-              <CalendarClock className="h-3 w-3" aria-hidden />
-              {interview}
-            </Pill>
+            <p className="mt-0.5 truncate text-[12.5px] font-semibold text-white">
+              Interview {interview}
+            </p>
           )}
-          <span className="ml-auto text-[11px] text-white whitespace-nowrap">
-            Last activity {lastActivityLabel(app.updated_at)}
-          </span>
         </div>
+        {selectionMode ? (
+          <span
+            aria-hidden
+            className={cn(
+              'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[12px] font-semibold',
+              isSelected
+                ? 'border-elec-yellow bg-elec-yellow text-black'
+                : 'border-white/[0.3] bg-transparent text-white'
+            )}
+          >
+            {isSelected ? '✓' : ''}
+          </span>
+        ) : (
+          <StatusPill tone={stagePillTone[app.status] ?? 'neutral'}>{app.status}</StatusPill>
+        )}
       </div>
 
       {!selectionMode && (advanceLabel || onReject || onReinstate) && (
-        <div className="border-t border-white/[0.06] px-4 sm:px-5 py-3 flex items-center gap-2">
+        <div className="flex items-center gap-2 border-t border-white/[0.07] px-4 py-3 sm:px-5">
           {onReject && (
-            <DestructiveButton
+            <button
+              type="button"
               onClick={(e) => stop(e, onReject)}
               disabled={actionPending}
+              className={cn(rowBtn, 'border border-red-500/40 text-red-400 hover:bg-red-500/10')}
             >
               Reject
-            </DestructiveButton>
+            </button>
           )}
           <div className="ml-auto flex items-center gap-2">
             {onReinstate && (
-              <SecondaryButton
+              <button
+                type="button"
                 onClick={(e) => stop(e, onReinstate)}
                 disabled={actionPending}
+                className={rowBtnSecondary}
               >
                 Reinstate
-              </SecondaryButton>
+              </button>
             )}
             {advanceLabel && onAdvance && (
-              <PrimaryButton
+              <button
+                type="button"
                 onClick={(e) => stop(e, onAdvance)}
                 disabled={actionPending}
+                className={rowBtnPrimary}
               >
                 {advanceLabel}
-              </PrimaryButton>
+              </button>
             )}
           </div>
         </div>

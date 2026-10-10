@@ -43,8 +43,8 @@ const keyTakeaways = [
   'Non-notifiable work — such as like-for-like replacement of accessories and additions to existing circuits in most rooms — does not require building control notification.',
   'Electricians registered with NICEIC, NAPIT, ELECSA, or another approved competent person scheme can self-certify their work, issuing a certificate directly without involving building control.',
   'Failure to notify can create serious problems when selling a property, as buyers solicitors will request evidence of Building Regulations compliance for all electrical work.',
-  'BS 7671:2018+A4:2026 Reg 411.3.4 now requires RCD protection (≤30 mA) on all domestic AC lighting circuits — every consumer unit replacement must include RCD-protected lighting ways.',
-  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC final circuits in dwellings to mitigate fire risk from arc fault currents.',
+  'BS 7671 Reg 411.3.4 (in force since 2018) requires RCD protection (≤30 mA) on all domestic AC lighting circuits — every consumer unit replacement must include RCD-protected lighting ways.',
+  'BS 7671 Reg 421.1.7 recommends arc fault detection devices (AFDDs) on socket-outlet final circuits up to 32 A in ordinary dwellings, and since A2:2022 requires them in HMOs and other named higher-risk premises.',
 ];
 
 const faqs = [
@@ -236,20 +236,20 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 space-y-3">
           <h3 className="font-bold text-white text-base">
-            BS 7671:2018+A4:2026 — What Changes for Consumer Unit Replacements
+            BS 7671:2018+A4:2026 — What It Means for Consumer Unit Replacements
           </h3>
           <p className="text-white text-sm leading-relaxed">
-            <strong>Reg 411.3.4 — RCD protection on lighting circuits (mandatory).</strong> A4:2026
-            introduces a mandatory requirement that, within domestic (household) premises, all AC
+            <strong>Reg 411.3.4 — RCD protection on lighting circuits (mandatory).</strong> Since
+            BS 7671:2018 there has been a mandatory requirement that, within domestic (household) premises, all AC
             final circuits supplying luminaires shall have additional protection by an RCD with a
             rated residual operating current not exceeding 30 mA. Every consumer unit replacement in
             a domestic dwelling must therefore provide RCD-protected ways for all lighting circuits.
           </p>
           <p className="text-white text-sm leading-relaxed">
-            <strong>Reg 421.1.7 — AFDDs recommended on AC final circuits.</strong> A4:2026 also
-            introduces a recommendation (not a mandate) that arc fault detection devices (AFDDs) be
-            installed on AC final circuits of a fixed installation to mitigate the risk of fire from
-            arc fault currents. Discuss the option with the homeowner when quoting a consumer unit
+            <strong>Reg 421.1.7 — AFDDs.</strong> In an ordinary dwelling, arc fault detection devices
+            (AFDDs) are recommended on socket-outlet final circuits up to 32 A. Since A2:2022 they
+            are required on those circuits in HMOs, high rise residential buildings, purpose-built
+            student accommodation and care homes. Discuss the option with the homeowner when quoting a consumer unit
             replacement, and record the decision on the EIC.
           </p>
           <p className="text-white text-sm leading-relaxed">
@@ -623,7 +623,7 @@ export default function PartPBuildingRegulationsGuidePage() {
       title="Part P: Notifiable Electrical Work Explained"
       description="Complete guide to Part P Building Regulations for electricians: notifiable work, self-certification schemes, and non-compliance consequences."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

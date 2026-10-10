@@ -34,6 +34,7 @@ import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { Helmet } from 'react-helmet';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
+import { QuoteDepositCard } from '@/components/electrician/quote-builder/QuoteDepositCard';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import {
   AlertDialog,
@@ -60,6 +61,8 @@ const QuoteViewPage = () => {
   const navigate = useNavigate();
   const [quote, setQuote] = useState<Quote | null>(null);
   const [loading, setLoading] = useState(true);
+  // ELE-2034 — bumped when the deposit is marked paid, to re-read the quote.
+  const [reloadKey, setReloadKey] = useState(0);
   const [error, setError] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -193,7 +196,7 @@ const QuoteViewPage = () => {
       }
     };
     loadQuote();
-  }, [id]);
+  }, [id, reloadKey]);
 
   // === HANDLERS ===
   const handleDownloadPDF = async () => {
@@ -875,6 +878,9 @@ const QuoteViewPage = () => {
       </header>
 
       <div className="px-4 py-5 pb-10 lg:px-6 space-y-4">
+        {/* ELE-2034 — an unpaid deposit, with the one place to mark it paid. */}
+        <QuoteDepositCard quoteId={quote.id} onPaid={() => setReloadKey((k) => k + 1)} />
+
         {/* === HERO PANEL === */}
         <div
           className={cn(

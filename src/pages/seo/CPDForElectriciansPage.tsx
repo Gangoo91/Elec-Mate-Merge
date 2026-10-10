@@ -167,11 +167,12 @@ const sections = [
           <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is amended
           regularly. Amendment 3 (A3:2024) was issued on 31 July 2024, introducing two new
           definitions and one new regulation covering bidirectional and unidirectional devices.
-          Amendment 4 (A4:2026) was issued on 15 April 2026, adding the new Chapter 82 for
-          Prosumer's Electrical Installations (solar PV, battery storage, V2G), overhauling Section
-          722 for EV charging, and introducing Section 753 for heating cables. Each amendment
-          changes how installations must be designed, installed, and tested. If you are not aware of
-          the changes, you risk non-compliant work — which can fail scheme inspections, invalidate
+          Amendment 4 (A4:2026) was issued on 15 April 2026, adding protective neutral bonding
+          (Regulation 312.2.1.1), Table 52.1 for cables in walls, a new Section 545 for ICT
+          functional earthing, a new Chapter 57 for stationary batteries, a new Section 716 for
+          Power over Ethernet and a new Chapter 81 on energy efficiency. Each amendment changes how
+          installations must be designed, installed, and tested. If you are not aware of the
+          changes, you risk non-compliant work — which can fail scheme inspections, invalidate
           certificates, and create liability issues.
         </p>
         <p>
@@ -316,19 +317,18 @@ const sections = [
         </p>
         <ul>
           <li>
-            <strong>Chapter 82 — Prosumer's Electrical Installations:</strong> A brand-new chapter
-            covering any installation with local energy production or storage — solar PV, battery
-            systems, and vehicle-to-grid (V2G) charging. If you install or inspect these systems,
-            Chapter 82 is essential reading.
+            <strong>Chapter 57 — Stationary secondary batteries:</strong> A new chapter for battery
+            installations whose designed purpose is storage and supply. Battery requirements moved
+            here from Regulation 551.8, and 551.7 was redrafted for bidirectional energy flow.
           </li>
           <li>
-            <strong>Section 722 (EV charging) overhaul:</strong> Regulation 722.411.4.1(a) has been
-            deleted and the Annex to Part 722 has been redrafted to reflect current practice for EV
-            charging installations.
+            <strong>Sections 545 and 716:</strong> new requirements for ICT functional earthing and
+            bonding (545) and for Power over Ethernet (716).
           </li>
           <li>
-            <strong>Section 753 — Heating cables and embedded heating systems:</strong> New
-            regulations for heating cables, relocated and revised from Chapter 53.
+            <strong>Table 52.1, Chapter 81 and Appendix 6:</strong> cables in walls are now in Table
+            52.1; Chapter 81 (energy efficiency) replaces Appendix 17; and on condition reports FI
+            no longer has to be marked unsatisfactory.
           </li>
           <li>
             <strong>A3:2024 context:</strong> A3:2024 (issued 31 July 2024) added two new
@@ -344,13 +344,13 @@ const sections = [
           covers the full regulations including all amendments.
         </p>
         <p>
-          <strong>Chapter 82 — Prosumer's Electrical Installations (A4:2026):</strong> Chapter 82 is
-          a brand-new chapter in A4:2026 covering all prosumer electrical installations — any site
-          with solar panels, battery storage, or vehicle-to-grid (V2G) charging. It provides
-          requirements for design, erection, and verification of low-voltage installations where
-          local production or storage of energy is present. If you install or inspect solar PV,
-          battery systems, or V2G equipment, Chapter 82 is essential CPD and required reading before
-          you certify this work.
+          <strong>Chapter 82 — Prosumer's Electrical Installations (A2:2022):</strong> Chapter 82
+          was introduced as an entirely new chapter at A2:2022 and continues in A4:2026, covering
+          all prosumer electrical installations — any site with solar panels, battery storage, or
+          vehicle-to-grid (V2G) charging. It provides requirements for design, erection, and
+          verification of low-voltage installations where local production or storage of energy is
+          present. If you install or inspect solar PV, battery systems, or V2G equipment, Chapter 82
+          is essential CPD and required reading before you certify this work.
         </p>
         <p>
           <strong>EV Charging Installation:</strong> The UK government's push towards electric
@@ -538,7 +538,7 @@ export default function CPDForElectriciansPage() {
       title="NICEIC & NAPIT CPD: 30 Hours a Year + Records"
       description="NICEIC and NAPIT both require 30 CPD hours a year — about 35 minutes a week. What counts, which courses matter in 2026, and how to record it."
       datePublished="2025-07-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="CPD Guide"

@@ -12,7 +12,7 @@ interface ToolCategoryCardProps {
 
 const ToolCategoryCard = ({ title, description, link, itemCount }: ToolCategoryCardProps) => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 h-full flex flex-col">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 h-full flex flex-col max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <h3 className="text-[16px] font-semibold text-white leading-tight">{title}</h3>
       <p className="text-[14px] text-white leading-relaxed flex-1">{description}</p>
       <div className="flex items-center justify-between pt-2">
@@ -20,7 +20,7 @@ const ToolCategoryCard = ({ title, description, link, itemCount }: ToolCategoryC
         <Button
           asChild
           size="sm"
-          className="h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
         >
           <Link to={link} className="flex items-center gap-2">
             View details

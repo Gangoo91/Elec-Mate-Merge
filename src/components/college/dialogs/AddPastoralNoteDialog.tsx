@@ -5,8 +5,6 @@ import {
   buttonPrimaryCn,
   buttonSecondaryCn,
   chipBase,
-  chipOff,
-  chipOn,
   fieldFullCn,
   grid2Cn,
   inputCn,
@@ -14,6 +12,7 @@ import {
   textareaCn,
 } from '@/components/forms/fieldStyles';
 import { chipCn } from '@/components/college/ui/CollegeUi';
+import { CHOICE_OFF, CHOICE_ON } from '@/components/college/teaching/TeachingKit';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { getMyCollegeId } from '@/lib/myCollege';
@@ -489,7 +488,11 @@ export function AddPastoralNoteDialog({
                   type="button"
                   aria-pressed={visibility === v}
                   onClick={() => setVisibility(v)}
-                  className={cn(chipBase, 'px-3 text-left', visibility === v ? chipOn : chipOff)}
+                  className={cn(
+                    chipBase,
+                    'px-3 text-left',
+                    visibility === v ? CHOICE_ON : CHOICE_OFF
+                  )}
                 >
                   {VIS_LABEL[v]}
                 </button>

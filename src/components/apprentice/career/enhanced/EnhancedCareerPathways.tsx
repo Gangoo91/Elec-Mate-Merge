@@ -124,7 +124,7 @@ const EnhancedCareerPathways = () => {
             variant="ghost"
             size="sm"
             onClick={() => setSelectedPath(null)}
-            className="h-10 text-white hover:text-white hover:bg-white/[0.05] -ml-2 touch-manipulation"
+            className="h-11 text-white hover:text-white hover:bg-white/[0.05] -ml-2 touch-manipulation"
           >
             <ArrowLeft className="h-4 w-4 mr-2" /> Back to career pathways
           </Button>
@@ -230,9 +230,7 @@ const EnhancedCareerPathways = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Career pathways
-        </span>
+        <span className="text-[13px] font-semibold text-white">Career pathways</span>
         <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           UK electrical career pathways
         </h1>

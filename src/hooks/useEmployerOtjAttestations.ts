@@ -33,13 +33,12 @@ export interface PendingOtjAttestation {
 
 export const OTJ_ATTESTATIONS_KEY = ['employer-otj-attestations'] as const;
 
-export function useEmployerOtjAttestations() {
+export function useEmployerOtjAttestations(enabled = true) {
   return useQuery<PendingOtjAttestation[]>({
     queryKey: OTJ_ATTESTATIONS_KEY,
+    enabled,
     queryFn: async () => {
-      // Live RPC (migration 20261006_employer_apprentice_attestation); not yet
-      // in the generated types, hence the cast.
-      const { data, error } = await supabase.rpc('get_employer_pending_otj_attestations' as never);
+      const { data, error } = await supabase.rpc('get_employer_pending_otj_attestations');
       if (error) throw error;
       const rows = (data ?? []) as Array<Record<string, unknown>>;
       return rows.map((r) => ({
@@ -75,11 +74,12 @@ export function useDecideOtjAttestation() {
       decision: OtjDecision;
       comment?: string;
     }) => {
-      const { data, error } = await supabase.rpc('attest_otj_as_employer' as never, {
+      // p_comment defaults to NULL in SQL, so leaving it out sends no comment.
+      const { data, error } = await supabase.rpc('attest_otj_as_employer', {
         p_entry_id: entryId,
         p_decision: decision,
-        p_comment: comment ?? null,
-      } as never);
+        p_comment: comment || undefined,
+      });
       if (error) throw error;
       const result = (data ?? {}) as { success?: boolean; error?: string; status?: string };
       if (!result.success) throw new Error(result.error || 'Could not record the decision');

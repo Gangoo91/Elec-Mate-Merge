@@ -110,7 +110,7 @@ export function reviewMessage(m: Pick<FirmJobMessage, 'client' | 'business_name'
   const hello = who ? `Hi ${who},` : 'Hi,';
   const body =
     m.review.message?.trim() ||
-    `Thanks for choosing ${m.business_name || 'us'}. It was a pleasure doing the work. If you were happy, a quick review really helps a small business like ours. It only takes a minute.`;
+    `Thanks for choosing ${m.business_name || 'us'}. It was a pleasure doing the work. We would be grateful for an honest review: it helps a small business like ours, and only takes a minute.`;
   const links = (m.review.links ?? [])
     .map((l) => (l.url || '').trim().split(/\s+/)[0])
     .filter((u) => /^https?:\/\//i.test(u));

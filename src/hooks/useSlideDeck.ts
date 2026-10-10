@@ -289,15 +289,25 @@ export function useSlideDeck(lessonPlanId: string | null) {
   const updateSlide = useCallback(
     async (index: number, patch: Partial<Slide>) => {
       if (!plan?.slide_deck_json) return;
-      const next = {
-        ...plan.slide_deck_json,
-        slides: plan.slide_deck_json.slides.map((s, i) => (i === index ? { ...s, ...patch } : s)),
-      };
+      const apply = (deck: NonNullable<PlanRow['slide_deck_json']>) => ({
+        ...deck,
+        slides: deck.slides.map((s, i) => (i === index ? { ...s, ...patch } : s)),
+      });
       // Optimistic local update.
-      setPlan((p) => (p ? { ...p, slide_deck_json: next } : p));
+      setPlan((p) => (p?.slide_deck_json ? { ...p, slide_deck_json: apply(p.slide_deck_json) } : p));
+      // Patch the deck as it is NOW in the database, not this screen's copy:
+      // a photo or a regenerated slide saved a moment ago must not be lost.
+      const { data: fresh } = await supabase
+        .from('college_lesson_plans')
+        .select('slide_deck_json')
+        .eq('id', plan.id)
+        .maybeSingle();
+      const base =
+        ((fresh as unknown as { slide_deck_json: PlanRow['slide_deck_json'] } | null)?.slide_deck_json ??
+          plan.slide_deck_json) as NonNullable<PlanRow['slide_deck_json']>;
       const { error: upErr } = await supabase
         .from('college_lesson_plans')
-        .update({ slide_deck_json: next })
+        .update({ slide_deck_json: apply(base) as never })
         .eq('id', plan.id);
       if (upErr) {
         setError(upErr.message);

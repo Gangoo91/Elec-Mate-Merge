@@ -7,15 +7,17 @@
  * a timestamp against Friday midnight, which dropped Friday's lessons in
  * summer time. Everything here works in calendar days.
  *
- * Renders CONTENT ONLY under the CollegeDashboard masthead: KPI row → week
- * navigation → tutor chips → the week. Phones get one day at a time; wider
- * screens get five columns. No horizontal scroll anywhere.
+ * Renders CONTENT ONLY under the CollegeDashboard masthead: header (one
+ * sentence with the week's counts) → week navigation → tutor chips → the
+ * week. Phones get the week as a list of days; wide screens get five columns
+ * by time. The four figure tiles were dropped 8 Oct: they repeated the
+ * sentence and the grid.
  */
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
@@ -23,17 +25,17 @@ import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import type { CollegeLessonPlan } from '@/services/college/collegeLessonPlanService';
 import { itemVariants, LoadingState } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
+import { CollegeCalendarFeedCard } from '@/components/college/calendar/CollegeCalendarFeedCard';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  COLLEGE_LINK,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
-import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
+  TEACH_BTN,
+  TEACH_LIST,
+  TEACH_PANEL,
+  TeachingHeader,
+  TeachTabs,
+  TeachingScreen,
+  plural,
+} from '@/components/college/teaching/TeachingKit';
 import { QuickRegisterSheet } from '@/components/college/teaching/QuickRegisterSheet';
 
 interface TimetableSectionProps {
@@ -190,6 +192,15 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
     !cohortId ? 'No cohort' : (cohorts.find((c) => c.id === cohortId)?.name ?? 'Unknown cohort');
   const getTutorName = (tutorId: string | null) =>
     !tutorId ? 'Tutor TBC' : (staff.find((s) => s.id === tutorId)?.name ?? 'Unknown tutor');
+  /** Two tutors with the same name get their email name after it, so the chips differ. */
+  const tutorChipLabel = (t: { name: string; email: string }) => {
+    const same = tutorsList.filter(
+      (x) => x.name.trim().toLowerCase() === t.name.trim().toLowerCase()
+    );
+    if (same.length < 2) return t.name;
+    const handle = (t.email ?? '').split('@')[0];
+    return handle ? `${t.name} (${handle})` : t.name;
+  };
 
   if (isLoading) return <LoadingState />;
 
@@ -212,7 +223,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
       onClick={() => openRegister(lp)}
       aria-label={`Take the register for ${lp.title}`}
       className={cn(
-        'h-8 shrink-0 rounded-lg border border-white/[0.2] bg-[hsl(0_0%_14%)] px-2.5 text-[11.5px] font-semibold text-white touch-manipulation hover:border-elec-yellow',
+        'h-9 shrink-0 rounded-lg border border-white/[0.2] bg-[hsl(0_0%_14%)] px-2.5 text-[12px] font-semibold text-white touch-manipulation hover:border-white/[0.4]',
         extra
       )}
     >
@@ -319,11 +330,15 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
               </span>
             </h3>
             {dayLessons.length === 0 ? (
-              <p className="rounded-2xl border border-dashed border-white/[0.12] px-4 py-3 text-[13px] text-white">
-                {selectedTutorId ? 'Nothing for this tutor' : 'No lessons'}
+              <p className="text-[13px] text-white">
+                {selectedTutorId
+                  ? selectedTutorId === myStaffId
+                    ? 'Nothing for you'
+                    : 'Nothing for this tutor'
+                  : 'No lessons'}
               </p>
             ) : (
-              <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x">
+              <ul className={TEACH_LIST}>
                 {dayLessons.map((lp) => (
                   <li key={lp.id} className="flex items-center gap-2 pr-3 sm:pr-4">
                     <button
@@ -336,7 +351,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                           {lp.scheduled_start_time?.slice(0, 5) ?? 'TBC'}
                         </span>
                         {lp.duration_minutes ? (
-                          <span className="block text-[11.5px] font-medium">
+                          <span className="block text-[12px] font-medium">
                             {lp.duration_minutes} min
                           </span>
                         ) : null}
@@ -345,7 +360,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                         <span className="line-clamp-2 text-[14.5px] font-semibold leading-snug text-white">
                           {lp.title}
                         </span>
-                        <span className="mt-0.5 block truncate text-[12.5px] text-white">
+                        <span className="mt-0.5 block text-[12.5px] leading-snug text-white">
                           {lessonMeta(lp)}
                         </span>
                       </span>
@@ -354,7 +369,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                       <button
                         type="button"
                         onClick={() => openRegister(lp)}
-                        className={cn(COLLEGE_BTN, 'shrink-0 px-3')}
+                        className={cn(TEACH_BTN, 'shrink-0 px-3')}
                       >
                         Register
                       </button>
@@ -373,7 +388,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
 
   /* ── Desktop: a proper week view by time ──────────────────────────── */
   const weekGrid = (
-    <div className={cn(COLLEGE_CARD, 'hidden overflow-hidden p-0 sm:p-0 lg:block')}>
+    <div className={cn(TEACH_PANEL, 'hidden lg:block')}>
       <div className="grid grid-cols-[64px_repeat(5,minmax(0,1fr))] border-b border-white/[0.08]">
         <div />
         {DAY_NAMES.map((d, i) => {
@@ -400,7 +415,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
 
       {hasUntimed && (
         <div className="grid grid-cols-[64px_repeat(5,minmax(0,1fr))] border-b border-white/[0.08]">
-          <div className="px-2 py-2 text-right text-[11px] font-medium leading-tight text-white">
+          <div className="px-2 py-2 text-right text-[12px] font-medium leading-tight text-white">
             No time
           </div>
           {untimedByDay.map((list, i) => (
@@ -418,7 +433,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                     <span className="line-clamp-2 text-[12.5px] font-semibold leading-snug text-white">
                       {lp.title}
                     </span>
-                    <span className="mt-0.5 block truncate text-[11.5px] text-white">
+                    <span className="mt-0.5 block truncate text-[12px] text-white">
                       {lessonMeta(lp)}
                     </span>
                   </button>
@@ -435,7 +450,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
           {hours.map((h, i) => (
             <span
               key={h}
-              className="absolute right-2 -translate-y-1/2 text-[11.5px] font-medium tabular-nums text-white"
+              className="absolute right-2 -translate-y-1/2 text-[12px] font-medium tabular-nums text-white"
               style={{ top: i * HOUR_PX }}
             >
               {i === 0 ? '' : `${String(h).padStart(2, '0')}:00`}
@@ -492,12 +507,14 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                         type="button"
                         onClick={() => navigate(`/college/lessons/${lp.id}`)}
                         className={cn(
-                          'min-h-0 flex-1 text-left touch-manipulation',
+                          // A button centres its content by default: pin the
+                          // time and title to the top of the block.
+                          'flex min-h-0 flex-1 flex-col items-stretch justify-start text-left touch-manipulation',
                           isToday && lp.cohort_id && height <= 84 && 'pr-[68px]'
                         )}
                         title={lp.title}
                       >
-                        <span className="block text-[11.5px] font-semibold tabular-nums text-white">
+                        <span className="block text-[12px] font-semibold tabular-nums text-white">
                           {lp.scheduled_start_time?.slice(0, 5)}
                           {lp.duration_minutes ? ` · ${lp.duration_minutes} min` : ''}
                         </span>
@@ -505,7 +522,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                           {lp.title}
                         </span>
                         {height > 84 && (
-                          <span className="mt-0.5 block truncate text-[11.5px] text-white">
+                          <span className="mt-0.5 line-clamp-2 text-[12px] leading-snug text-white">
                             {lessonMeta(lp)}
                           </span>
                         )}
@@ -527,25 +544,48 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
     </div>
   );
 
+  const who = selectedTutorId
+    ? selectedTutorId === myStaffId
+      ? 'for you'
+      : `for ${getTutorName(selectedTutorId)}`
+    : 'across the college';
+  const weekWord = isCurrentWeek ? 'this week' : `in the week of ${formatDate(currentWeekStart)}`;
+  const untimedCount = filteredLessons.filter((lp) => !lp.scheduled_start_time).length;
+  const summary =
+    filteredLessons.length === 0
+      ? `No lessons ${who} ${weekWord}. A lesson plan shows here once it has a date.`
+      : `${plural(filteredLessons.length, 'lesson')} ${who} ${weekWord}${
+          isCurrentWeek ? (todayCount > 0 ? `, ${todayCount} today` : ', none today') : ''
+        }. ${
+          tutorsList.length > 0
+            ? `${tutorsTeachingThisWeek} of ${plural(tutorsList.length, 'tutor')} ${tutorsTeachingThisWeek === 1 ? 'is' : 'are'} teaching.`
+            : ''
+        }`.trim();
+
   return (
     <TeachingScreen>
-      <CollegePageHeader
+      <TeachingHeader
         eyebrow="Teaching"
         title="Timetable"
-        description={
-          selectedTutorId === myStaffId && myStaffId
-            ? 'Your week, by time. Switch to Everyone to see the whole college.'
-            : 'The week across cohorts, rooms and tutors.'
-        }
         help={HELP}
+        summary={summary}
+        sub={
+          untimedCount > 0
+            ? `${plural(untimedCount, 'lesson')} this week ${untimedCount === 1 ? 'has' : 'have'} no start time, so ${untimedCount === 1 ? 'it sits' : 'they sit'} at the top of the day.`
+            : undefined
+        }
         actions={
           <>
-            <button type="button" className={COLLEGE_BTN} onClick={() => onNavigate('lessonplans')}>
-              All lesson plans
+            <button
+              type="button"
+              className={cn(TEACH_BTN, 'flex-1 sm:flex-none')}
+              onClick={() => onNavigate('lessonplans')}
+            >
+              Lesson plans
             </button>
             <button
               type="button"
-              className={COLLEGE_BTN_PRIMARY}
+              className={cn(TEACH_BTN, 'flex-1 sm:flex-none')}
               onClick={() => onNavigate('attendance')}
             >
               Registers
@@ -554,74 +594,33 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
         }
       />
 
-      <CollegeStats
-        items={[
-          {
-            label: isCurrentWeek ? 'This week' : 'That week',
-            value: String(filteredLessons.length),
-            sub: selectedTutorId
-              ? `lessons for ${getTutorName(selectedTutorId)}`
-              : 'lessons, all tutors',
-          },
-          {
-            label: 'Today',
-            value: isCurrentWeek ? String(todayCount) : '—',
-            sub: !isCurrentWeek
-              ? 'viewing another week'
-              : todayCount > 0
-                ? 'on the timetable'
-                : 'no classes today',
-          },
-          {
-            label: 'Tutors teaching',
-            value: String(tutorsTeachingThisWeek),
-            sub: tutorsList.length > 0 ? `of ${tutorsList.length} on the team` : 'no tutors yet',
-          },
-          {
-            label: 'No time set',
-            value: String(filteredLessons.filter((lp) => !lp.scheduled_start_time).length),
-            sub: 'add a start time to place them',
-            warn: filteredLessons.some((lp) => !lp.scheduled_start_time),
-          },
-        ]}
-      />
-
       <section className="space-y-4">
-        <CollegeSectionTitle
-          title={range}
-          sub={isCurrentWeek ? 'This week' : undefined}
-          action={
-            <button
-              type="button"
-              className={COLLEGE_LINK}
-              onClick={() => onNavigate('lessonplans')}
-            >
-              All plans
-            </button>
-          }
-        />
+        <CollegeSectionTitle title={range} sub={isCurrentWeek ? 'This week' : undefined} />
 
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between"
-        >
-          <div className="flex items-center gap-2">
+        <motion.div variants={itemVariants} className="flex flex-col gap-3">
+          <div
+            role="group"
+            aria-label="Week"
+            className="inline-flex w-full rounded-xl border border-white/[0.12] p-0.5 sm:w-auto sm:self-start"
+          >
             <button
               type="button"
               onClick={() => navigateWeek(-1)}
-              className={cn(COLLEGE_BTN, 'whitespace-nowrap')}
+              className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-[10px] px-3.5 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.1] sm:flex-none"
               aria-label="Previous week"
             >
-              ← Previous
+              <ChevronLeft className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+              Previous
             </button>
             <button
               type="button"
               onClick={goToCurrentWeek}
               disabled={isCurrentWeek}
               className={cn(
-                COLLEGE_BTN,
-                'whitespace-nowrap',
-                isCurrentWeek && 'border-white bg-white text-black disabled:opacity-100'
+                'inline-flex h-11 flex-1 items-center justify-center whitespace-nowrap rounded-[10px] px-3.5 text-[13px] font-semibold transition-colors touch-manipulation sm:flex-none',
+                isCurrentWeek
+                  ? 'bg-white text-black'
+                  : 'text-white hover:bg-white/[0.06] active:bg-white/[0.1]'
               )}
             >
               This week
@@ -629,48 +628,34 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
             <button
               type="button"
               onClick={() => navigateWeek(1)}
-              className={cn(COLLEGE_BTN, 'ml-auto whitespace-nowrap xl:ml-0')}
+              className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-[10px] px-3.5 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.1] sm:flex-none"
               aria-label="Next week"
             >
-              Next →
+              Next
+              <ChevronRight className="h-4 w-4" strokeWidth={1.75} aria-hidden />
             </button>
           </div>
 
           {(tutorsList.length > 1 || iOwnPlans) && (
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 xl:justify-end">
-              {myStaffId && iOwnPlans && (
-                <button
-                  type="button"
-                  onClick={() => pickTutor(myStaffId)}
-                  className={chipCn(selectedTutorId === myStaffId)}
-                >
-                  Mine
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => pickTutor(null)}
-                className={chipCn(!selectedTutorId)}
-              >
-                Everyone
-              </button>
-              {otherTutors.map((tutor) => (
-                <button
-                  key={tutor.id}
-                  type="button"
-                  onClick={() => pickTutor(tutor.id === selectedTutorId ? null : tutor.id)}
-                  className={chipCn(selectedTutorId === tutor.id)}
-                >
-                  {tutor.name}
-                </button>
-              ))}
-            </div>
+            <TeachTabs
+              label="Whose lessons"
+              value={selectedTutorId ?? 'all'}
+              onChange={(v) => pickTutor(v === 'all' ? null : v)}
+              tabs={[
+                ...(myStaffId && iOwnPlans ? [{ value: myStaffId, label: 'Mine' }] : []),
+                { value: 'all', label: 'Everyone' },
+                ...otherTutors.map((tutor) => ({ value: tutor.id, label: tutorChipLabel(tutor) })),
+              ]}
+            />
           )}
         </motion.div>
 
         {dayList}
         {weekGrid}
       </section>
+
+      {/* The tutor's teaching, reviews and meetings in their own calendar */}
+      <CollegeCalendarFeedCard variant="tutor" />
 
       <QuickRegisterSheet
         open={register.open}

@@ -49,6 +49,14 @@ import {
 } from '@/hooks/useRemoteSignToken';
 import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/useCOSHH';
 import { JobLinkField } from './common/JobLinkField';
+import { FirmRecordBar } from './common/FirmRecordBar';
+import {
+  isFirmScope,
+  useFirmManagerIds,
+  useFirmRecordAccess,
+  useSafetyScope,
+  type FirmRecordFields,
+} from './common/SafetyScope';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
@@ -105,6 +113,8 @@ interface COSHHAssessment {
   assessor_signature: string | null;
   reviewer_signature: string | null;
   reviewer_name: string | null;
+  /** The firm an assessment is shared with (Site Safety in both hubs). */
+  firm: FirmRecordFields;
 }
 
 // ─── Constants ───
@@ -527,7 +537,7 @@ export function COSHHAssessmentBuilder({
     monitoring_details: a.monitoring_details || '',
     risk_rating: a.risk_rating as COSHHAssessment['risk_rating'],
     assessed_by: a.assessed_by,
-    photos: ((a as Record<string, unknown>).photos as string[]) || [],
+    photos: (a as { photos?: string[] | null }).photos || [],
     assessment_date: a.assessment_date,
     review_date: a.review_date,
     job_id: a.job_id ?? null,
@@ -535,6 +545,14 @@ export function COSHHAssessmentBuilder({
     assessor_signature: a.assessor_signature ?? null,
     reviewer_signature: a.reviewer_signature ?? null,
     reviewer_name: a.reviewer_name ?? null,
+    firm: {
+      user_id: a.user_id,
+      employer_id: a.employer_id ?? null,
+      employer_job_id: a.employer_job_id ?? null,
+      firm_countersigned_by: a.firm_countersigned_by ?? null,
+      firm_countersigned_name: a.firm_countersigned_name ?? null,
+      firm_countersigned_at: a.firm_countersigned_at ?? null,
+    },
   }));
 
   const [showWizard, setShowWizard] = useState(!!launch?.startNew);
@@ -561,6 +579,13 @@ export function COSHHAssessmentBuilder({
     viewingAssessment?.id ?? null
   );
   const remoteReviewer = coshhSignatures.find((s) => s.role === 'reviewer' && s.signed_signature);
+  // Employer Hub: a worker's shared assessment is read and countersigned, not changed.
+  const viewingAccess = useFirmRecordAccess(viewingAssessment?.firm);
+  // Same rule for the list's swipe actions (one row at a time, so not a hook call).
+  const safetyScope = useSafetyScope();
+  const { ids: firmManagerIds } = useFirmManagerIds();
+  const canEditRecord = (a: COSHHAssessment) =>
+    !isFirmScope(safetyScope) || !a.firm.user_id || firmManagerIds.has(a.firm.user_id);
   const [searchQuery, setSearchQuery] = useState('');
   const [substanceSearch, setSubstanceSearch] = useState('');
 
@@ -633,6 +658,10 @@ export function COSHHAssessmentBuilder({
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the assessment with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
@@ -835,6 +864,8 @@ export function COSHHAssessmentBuilder({
     setPhotoUrls([]);
     setLinkedJobId(null);
     setLinkedJobTitle(null);
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
     setAssessorSigName('');
     setAssessorSigDataUrl('');
     setReviewerSigName('');
@@ -882,6 +913,8 @@ export function COSHHAssessmentBuilder({
     setRiskRating(assessment.risk_rating);
     setLinkedJobId(assessment.job_id);
     setLinkedJobTitle(jobTitleFor(assessment.job_id));
+    setEmployerJobId(assessment.firm.employer_job_id ?? null);
+    setEmployerJobTitle(null);
     // Clear assessed_by and signatures — fresh draft
     setSdsReference('');
     setPhotoUrls([]);
@@ -959,6 +992,7 @@ export function COSHHAssessmentBuilder({
         reviewer_signature: reviewerSigDataUrl || null,
         reviewer_name: reviewerSigName || null,
         job_id: linkedJobId,
+        ...(employerJobId ? { employer_job_id: employerJobId } : {}),
         assessment_date: now.toISOString().split('T')[0],
         review_date: reviewDate.toISOString().split('T')[0],
       });
@@ -1295,6 +1329,12 @@ export function COSHHAssessmentBuilder({
                     onSelect={(id, title) => {
                       setLinkedJobId(id);
                       setLinkedJobTitle(title);
+                    }}
+                    employerJobId={employerJobId}
+                    employerJobTitle={employerJobTitle}
+                    onSelectEmployerJob={(id, title) => {
+                      setEmployerJobId(id);
+                      setEmployerJobTitle(title);
                     }}
                   />
                 </FormCard>
@@ -1800,13 +1840,17 @@ export function COSHHAssessmentBuilder({
                     textColor: 'text-white',
                     onAction: () => handleDuplicate(assessment),
                   },
-                  {
-                    icon: Trash2,
-                    label: 'Delete',
-                    color: 'bg-red-500',
-                    textColor: 'text-white',
-                    onAction: () => setDeleteTarget(assessment.id),
-                  },
+                  ...(canEditRecord(assessment)
+                    ? [
+                        {
+                          icon: Trash2,
+                          label: 'Delete',
+                          color: 'bg-red-500',
+                          textColor: 'text-white',
+                          onAction: () => setDeleteTarget(assessment.id),
+                        },
+                      ]
+                    : []),
                 ]}
               >
                 <SafetyListCard>
@@ -1865,6 +1909,12 @@ export function COSHHAssessmentBuilder({
               </div>
 
               <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
+                <FirmRecordBar
+                  table="coshh_assessments"
+                  row={{ id: viewingAssessment.id, ...viewingAssessment.firm }}
+                  invalidate={[['coshh-assessments']]}
+                />
+
                 {/* GHS Hazards */}
                 <div>
                   <Eyebrow className="mb-2">GHS hazards</Eyebrow>
@@ -2080,7 +2130,7 @@ export function COSHHAssessmentBuilder({
                         className="h-12 opacity-80"
                       />
                     </div>
-                  ) : (
+                  ) : viewingAccess.canEdit ? (
                     <SecondaryButton
                       fullWidth
                       disabled={signLoading}
@@ -2088,6 +2138,8 @@ export function COSHHAssessmentBuilder({
                     >
                       {signLoading ? 'Preparing link…' : 'Request reviewer sign-off'}
                     </SecondaryButton>
+                  ) : (
+                    <p className="text-[12px] text-white">No reviewer sign-off yet.</p>
                   )}
                 </div>
 

@@ -43,14 +43,14 @@ const keyTakeaways = [
   'Two awarding bodies offer EPA for electrical apprenticeships: City & Guilds (C&G) and EAL (Excellence, Achievement & Learning). Both are recognised and widely accepted by employers.',
   'Grading is either pass or distinction — there is no fail grade at EPA, as you must meet gateway requirements first (which include achieving your Level 3 qualification).',
   'If you do not achieve the grade you hoped for, re-sits are available for individual components. You do not need to retake the whole EPA if you pass some components first time.',
-  'BS 7671:2018+A4:2026 introduced two new requirements that will be tested at EPA: Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits, and Reg 411.3.4 makes RCD protection (≤30 mA) mandatory for domestic lighting circuits. Expect knowledge test questions on both.',
+  'Two BS 7671 requirements are likely EPA topics: Reg 421.1.7 on arc fault detection devices (AFDDs), required in HMOs, care homes and similar premises since A2:2022, and Reg 411.3.4, which has made RCD protection (≤30 mA) mandatory for domestic lighting circuits since 2018. Expect knowledge test questions on both.',
 ];
 
 const faqs = [
   {
     question: 'What is the End-Point Assessment for an electrical apprenticeship?',
     answer:
-      'The End-Point Assessment (EPA) is the final stage of an apprenticeship, carried out by an independent End-Point Assessment Organisation (EPAO). It tests whether you have achieved the knowledge, skills, and behaviours required to be a competent electrician. For the Level 3 Electrical Installation apprenticeship (standard reference: ST0145), the EPA is taken after you have passed the gateway — which includes completing your Level 3 qualification, achieving the AM2 or AM2S practical competency assessment, and your employer confirming you are ready. The EPA is assessed and graded by an independent assessor, not your employer or college.',
+      'The End-Point Assessment (EPA) is the final stage of an apprenticeship, carried out by an independent End-Point Assessment Organisation (EPAO). It tests whether you have achieved the knowledge, skills, and behaviours required to be a competent electrician. For the Level 3 Electrical Installation apprenticeship (standard reference: ST0152), the EPA is taken after you have passed the gateway — which includes completing your Level 3 qualification, achieving the AM2 or AM2S practical competency assessment, and your employer confirming you are ready. The EPA is assessed and graded by an independent assessor, not your employer or college.',
   },
   {
     question: 'When do apprentices take the EPA?',
@@ -140,7 +140,7 @@ const sections = [
           The End-Point Assessment (EPA) is the culmination of your electrical apprenticeship. It is
           the final, independent assessment that confirms you have achieved the knowledge, skills,
           and behaviours set out in the Level 3 Electrical Installation apprenticeship standard
-          (ST0145). Unlike the exams and assignments you complete during your training, the EPA is
+          (ST0152). Unlike the exams and assignments you complete during your training, the EPA is
           carried out by an independent End-Point Assessment Organisation (EPAO) — not your employer
           or college.
         </p>
@@ -286,18 +286,21 @@ const sections = [
           </div>
           <ul className="space-y-3 text-white text-sm leading-relaxed pl-8">
             <li>
-              <strong>Reg 421.1.7 — Arc fault detection devices (AFDDs):</strong> A4:2026 introduced
-              this regulation recommending the installation of AFDDs on AC final circuits of a fixed
-              installation. The purpose is to mitigate the risk of fire due to arc fault currents.
-              Note the wording is recommendatory rather than mandatory — but assessors expect you to
-              know what an AFDD is, why it is recommended, and where it applies.
+              <strong>Reg 421.1.7 — Arc fault detection devices (AFDDs):</strong> BS 7671:2018
+              introduced this regulation recommending AFDDs on AC final circuits of a fixed
+              installation, to mitigate the risk of fire due to arc fault currents. Since A2:2022
+              AFDDs are required on single-phase socket-outlet circuits up to 32 A in high rise
+              residential buildings, HMOs, purpose-built student accommodation and care homes, and
+              recommended elsewhere. Assessors expect you to know what an AFDD is, why it is used,
+              and where it applies.
             </li>
             <li>
-              <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits:</strong> A4:2026
+              <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits:</strong> BS 7671:2018
               made this mandatory. Within domestic (household) premises, AC final circuits supplying
               luminaires shall be provided with additional protection by an RCD with a rated
-              residual operating current not exceeding 30&nbsp;mA. Lighting circuits have
-              historically been exempt — this is a significant change and a likely exam topic.
+              residual operating current not exceeding 30&nbsp;mA. Before the 18th Edition
+              lighting circuits were not covered, so older installations often lack it. A likely
+              exam topic.
             </li>
           </ul>
         </div>
@@ -671,7 +674,7 @@ export default function ApprenticeEndpointAssessmentPage() {
       title="Electrical Apprentice End-Point Assessment Guide"
       description="Complete guide to the Electrical Installation apprenticeship End-Point Assessment (EPA). Knowledge test, practical observation, professional discussion."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EPA Guide"

@@ -27,6 +27,11 @@ import { capturePaymentError, toError, trackMilestone, addBreadcrumb } from '@/l
 import { trackPlanSelected } from '@/lib/analytics-events';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { openExternalUrl } from '@/utils/open-external-url';
+import {
+  billingStore,
+  deviceStore,
+  openStoreSubscriptionManager,
+} from '@/lib/storeSubscriptionManager';
 import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 
 // ─── Plan name display ────────────────────────────────────────────────────────
@@ -98,12 +103,20 @@ const Subscriptions = () => {
   // subscription, so the server refuses anything that gets as far as a call.
   useEffect(() => {
     const adminRole = (profile as { admin_role?: string | null } | null)?.admin_role;
-    if (!adminRole || searchParams.get('preview') !== 'cancel-flow') return;
+    const previewParam = searchParams.get('preview');
+    if (!adminRole || (previewParam !== 'cancel-flow' && previewParam !== 'cancel-flow-store'))
+      return;
     setCancelFlow({
       open: true,
       subscriptionId: 'sub_preview',
       tier: 'electrician',
-      managedBy: 'stripe',
+      // ?preview=cancel-flow-store walks the App Store / Play version.
+      managedBy:
+        previewParam === 'cancel-flow-store'
+          ? deviceStore() === 'play_store'
+            ? 'google'
+            : 'apple'
+          : 'stripe',
       currentAmount: 1999,
       interval: 'month',
       alreadyDiscounted: false,
@@ -251,7 +264,13 @@ const Subscriptions = () => {
   const [matePhoneError, setMatePhoneError] = useState<string | null>(null);
 
   const plans = isNative ? nativePriceData[billing] : stripePriceData[billing];
-  const planDisplayName = getPlanDisplayName(subscriptionTier);
+  // Lifetime owners carry an 'employer' tier (it unlocks the Employer Hub) and
+  // a free-access grant whose reason says lifetime — name the plan for what
+  // they bought, not the tier underneath (Isaac Stafford, 10 Oct).
+  const isLifetime = /lifetime/i.test(
+    (profile as { free_access_reason?: string | null } | null)?.free_access_reason ?? ''
+  );
+  const planDisplayName = isLifetime ? 'Lifetime' : getPlanDisplayName(subscriptionTier);
 
   useEffect(() => {
     trackFeatureUse(user?.id || '', 'viewed_pricing', {});
@@ -298,17 +317,23 @@ const Subscriptions = () => {
   const openCustomerPortal = async () => {
     try {
       setIsPortalLoading(true);
-      if (isNative) {
-        const platform = Capacitor.getPlatform();
-        const url =
-          platform === 'ios'
-            ? 'https://apps.apple.com/account/subscriptions'
-            : 'https://play.google.com/store/account/subscriptions';
-        openExternalUrl(url);
+      const source = profile?.subscription_source;
+      // A store subscriber: the Customer Center (plan changes, refunds,
+      // cancel with the store's retention offer). Only for a store source —
+      // this used to send EVERY phone user to Apple/Google, including people
+      // billed by Stripe, which is how Mathew Bayley cancelled the wrong one.
+      if (isNative && (source === 'app_store' || source === 'play_store')) {
+        await openStoreSubscriptionManager(billingStore(source));
         return;
       }
       const { data, error } = await supabase.functions.invoke('customer-portal');
       if (error) throw new Error(error.message);
+      if (data?.noStripeCustomer && isNative) {
+        // No Stripe customer and no store source on record (638 profiles have
+        // it null): a store subscription is the only thing left.
+        await openStoreSubscriptionManager();
+        return;
+      }
       if (data?.noStripeCustomer) {
         toast({
           title: 'Subscription managed elsewhere',
@@ -322,7 +347,10 @@ const Subscriptions = () => {
         // silently blocked by most popup blockers, which was making the
         // button appear to do nothing. The Stripe portal sets a return_url
         // that brings the user back to /subscriptions when they're done.
-        window.location.href = data.url;
+        // In the app, the Stripe portal opens in the browser: navigating the
+        // app's own web view away would strand the user outside the app.
+        if (isNative) await openExternalUrl(data.url);
+        else window.location.href = data.url;
         return;
       }
       if (data?.directManagement && data?.subscriptionId) {
@@ -470,11 +498,18 @@ const Subscriptions = () => {
       // Founder / free-access grant — there's no billing to cancel. Show
       // a clear message instead of the generic "no active sub" error.
       if (profile?.free_access_granted) {
-        toast({
-          title: "You're on free access",
-          description:
-            "There's no billing to cancel — you've been granted full access. Email founder@elec-mate.com if you want it revoked.",
-        });
+        toast(
+          isLifetime
+            ? {
+                title: "You're on Lifetime",
+                description: 'Paid once, yours for good — there is nothing to renew or cancel.',
+              }
+            : {
+                title: "You're on free access",
+                description:
+                  "There's no billing to cancel — you've been granted full access. Email founder@elec-mate.com if you want it revoked.",
+              }
+        );
         return;
       }
 
@@ -488,22 +523,25 @@ const Subscriptions = () => {
       if (error) throw new Error(error.message);
       if (!data?.ok) throw new Error(data?.error || 'Could not load your billing info');
 
-      const platform = Capacitor.getPlatform();
-      const storeUrl =
-        platform === 'android'
-          ? 'https://play.google.com/store/account/subscriptions'
-          : 'https://apps.apple.com/account/subscriptions';
-
-      // No Stripe subscription and we're on a phone — the store is genuinely
-      // the right place, so send them there as before.
+      // No Stripe subscription and we're on a phone: the store bills them. The
+      // store version of the cancel flow asks why (so store leavers finally
+      // have reasons on record), then hands over to the Customer Center for
+      // the store's offer and the cancelling itself. This used to open store
+      // settings directly, so 2 in 3 leavers left with no reason and no offer.
       if (isNative && !data.subscription_id) {
-        openExternalUrl(storeUrl);
-        toast({
-          title: 'Cancel from your device',
-          description:
-            platform === 'ios'
-              ? "Apple needs you to cancel from Settings → Apple ID → Subscriptions. We've opened it for you."
-              : "Google needs you to cancel from Play Store → Subscriptions. We've opened it for you.",
+        setCancelFlow({
+          open: true,
+          subscriptionId: null,
+          tier: subscriptionTier ?? null,
+          // The store that bills them, not the phone in their hand.
+          managedBy:
+            billingStore(profile?.subscription_source) === 'play_store' ? 'google' : 'apple',
+          currentAmount: null,
+          interval: null,
+          alreadyDiscounted: false,
+          alreadyPaused: false,
+          offerPercentOff: null,
+          offerDurationMonths: null,
         });
         return;
       }
@@ -788,23 +826,35 @@ const Subscriptions = () => {
                     {isApple ? 'Billed through the App Store' : 'Billed through Google Play'}
                   </p>
                   <p className="mt-1.5 text-[14px] text-white/85 leading-relaxed">
-                    {isApple
-                      ? 'Apple handles your payments, so plan changes and cancellations live in your Apple subscriptions — not on this page or the website.'
-                      : 'Google handles your payments, so plan changes and cancellations live in your Play Store subscriptions — not on this page or the website.'}
+                    {isNative
+                      ? // In the app the button below opens the Customer Center,
+                        // so the old "not on this page" was no longer true.
+                        `${isApple ? 'Apple' : 'Google'} handles your payments. Change plan, ask for a refund or cancel from here and we’ll take you through it.`
+                      : isApple
+                        ? 'Apple handles your payments, so plan changes and cancellations live in your Apple subscriptions — not on this page or the website.'
+                        : 'Google handles your payments, so plan changes and cancellations live in your Play Store subscriptions — not on this page or the website.'}
                   </p>
                   <button
                     type="button"
                     onClick={() =>
-                      openExternalUrl(
-                        isApple
-                          ? 'https://apps.apple.com/account/subscriptions'
-                          : 'https://play.google.com/store/account/subscriptions'
-                      )
+                      // In the app: the Customer Center. On the website there
+                      // is no native module, so the store's own page.
+                      isNative
+                        ? void openStoreSubscriptionManager(isApple ? 'app_store' : 'play_store')
+                        : openExternalUrl(
+                            isApple
+                              ? 'https://apps.apple.com/account/subscriptions'
+                              : 'https://play.google.com/store/account/subscriptions'
+                          )
                     }
                     className="mt-4 inline-flex items-center gap-2 h-11 px-5 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
                   >
-                    {isApple ? 'Open Apple subscriptions' : 'Open Play Store subscriptions'}
-                    <ExternalLink className="h-4 w-4" />
+                    {isNative
+                      ? 'Manage subscription'
+                      : isApple
+                        ? 'Open Apple subscriptions'
+                        : 'Open Play Store subscriptions'}
+                    {!isNative && <ExternalLink className="h-4 w-4" />}
                   </button>
                 </div>
               );
@@ -893,14 +943,14 @@ const Subscriptions = () => {
                   nothing to cancel — they'd get a confusing toast. */}
               {!profile?.free_access_granted && (
                 <div className="mt-5 pt-5 border-t border-white/[0.06] flex items-center justify-between gap-4">
-                  <p className="text-[12px] text-white/45 leading-relaxed">
+                  <p className="text-[12px] text-white leading-relaxed">
                     Not feeling it? You can cancel any time — we&apos;ll keep your data safe.
                   </p>
                   <button
                     type="button"
                     onClick={handleStartCancel}
                     disabled={isPreparingCancel}
-                    className="touch-manipulation text-[13px] font-medium text-red-300/85 hover:text-red-300 disabled:opacity-50 whitespace-nowrap"
+                    className="inline-flex h-11 touch-manipulation items-center text-[13px] font-medium text-red-300 hover:text-red-200 disabled:opacity-50 whitespace-nowrap"
                   >
                     {isPreparingCancel ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -912,7 +962,14 @@ const Subscriptions = () => {
               )}
 
               {/* Free-access notice in place of the cancel link */}
-              {profile?.free_access_granted && (
+              {profile?.free_access_granted && isLifetime && (
+                <div className="mt-5 pt-5 border-t border-white/[0.06]">
+                  <p className="text-[12px] text-white leading-relaxed">
+                    Lifetime — paid once, yours for good. Nothing to renew or cancel.
+                  </p>
+                </div>
+              )}
+              {profile?.free_access_granted && !isLifetime && (
                 <div className="mt-5 pt-5 border-t border-white/[0.06]">
                   <p className="text-[12px] text-white/55 leading-relaxed">
                     You&apos;re on free access — no billing to cancel.{' '}
@@ -1145,6 +1202,13 @@ const Subscriptions = () => {
         offerDurationMonths={cancelFlow.offerDurationMonths}
         firstName={firstNameForCopy(profile?.full_name)}
         preview={cancelFlow.subscriptionId === 'sub_preview'}
+        store={
+          cancelFlow.managedBy === 'apple'
+            ? 'app_store'
+            : cancelFlow.managedBy === 'google'
+              ? 'play_store'
+              : null
+        }
         onClose={() =>
           setCancelFlow({
             open: false,

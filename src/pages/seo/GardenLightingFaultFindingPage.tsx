@@ -37,7 +37,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Hard-wired garden lighting circuits in domestic premises must be protected by a 30mA RCD under BS 7671 Regulation 411.3.4 (A4:2026), which requires additional RCD protection for all AC final circuits supplying luminaires in domestic properties. Regulation 411.3.3 separately mandates 30mA RCD protection for socket-outlets rated up to 32A. If your garden lights are on a circuit without RCD protection, this is a C2 (potentially dangerous) finding that must be rectified.',
+  'Hard-wired garden lighting circuits in domestic premises must be protected by a 30mA RCD under BS 7671 Regulation 411.3.4 (in force since 2018), which requires additional RCD protection for all AC final circuits supplying luminaires in domestic properties. Regulation 411.3.3 separately mandates 30mA RCD protection for socket-outlets rated up to 32A. If your garden lights are on a circuit without RCD protection, this is a C2 (potentially dangerous) finding that must be rectified.',
   'Garden lighting cables buried underground must comply with BS 7671 wiring regulations — either armoured cable (SWA) or cables in protective conduit at sufficient depth, with cable protection warning tape above.',
   'IP (Ingress Protection) ratings indicate how well a light fitting is protected against water and dust. Garden luminaires should be rated at minimum IP44 (splash-proof); fittings exposed to heavy rain or immersion require IP65 or higher.',
   'Low-voltage garden lighting systems (typically 12V) use a transformer to step down the mains voltage. Transformer failure is a common and easily replaced fault — most low-voltage garden lighting sets use plug-in or hard-wired transformers costing £20 to £80.',
@@ -194,7 +194,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.4 (A4:2026)</strong> — within domestic premises, requires
+                <strong>Regulation 411.3.4 (since BS 7671:2018)</strong> — within domestic premises, requires
                 additional protection by an RCD with a rated residual operating current (IΔn) not
                 exceeding 30mA for all AC final circuits supplying luminaires. This is the primary
                 regulation requiring 30mA RCD protection on hard-wired garden lighting circuits in
@@ -595,7 +595,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 30mA RCD additional protection on hard-wired luminaire circuits in domestic premises
-                (Regulation 411.3.4, A4:2026) and on socket-outlet circuits rated up to 32A
+                (Regulation 411.3.4, since 2018) and on socket-outlet circuits rated up to 32A
                 (Regulation 411.3.3)
               </span>
             </li>
@@ -623,7 +623,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                AFDD consideration (Regulation 421.1.7, A4:2026) — Regulation 421.1.7 recommends the
+                AFDD consideration (Regulation 421.1.7) — Regulation 421.1.7 recommends the
                 installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed
                 installation to mitigate fire risk from arc fault currents. When installing a new
                 hard-wired outdoor lighting circuit, assess whether an AFDD is appropriate
@@ -673,7 +673,7 @@ export default function GardenLightingFaultFindingPage() {
       title="Garden Lighting Not Working: Fault Finding Guide"
       description="Garden lighting fault finding guide for UK homeowners and electricians. RCD protection requirements, IP ratings, cable damage, transformer faults."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

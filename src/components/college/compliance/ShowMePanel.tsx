@@ -1,44 +1,66 @@
 import { useState, type KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Search, Sparkles } from 'lucide-react';
+import { ChevronRight, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   useEvidenceSearch,
   type SearchEvidenceKind,
   type SearchMatch,
 } from '@/hooks/useEvidenceSearch';
+import { UsesAi } from '@/components/college/ui/UsesAi';
+import { QBTN, QBTN_PRIMARY, QCARD } from '@/components/college/quality/QualityHubKit';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
+import {
+  InspectorRecordAnswer,
+  inspectorQuestions,
+  type InspectorQuestionKey,
+} from '@/components/college/compliance/InspectorRecordAnswer';
+import { useCollegeNation } from '@/hooks/college/useCollegeNation';
 
 /* ==========================================================================
-   ShowMePanel — the "show me" search bar + result list. Inspector-day mode.
+   ShowMePanel: ask an inspection question, see the evidence on record.
 
-   Type "show me struggling learners and our response" → AI interprets →
-   server runs filtered queries → list of matching learners with evidence
-   highlights + deep-links to each learner's full evidence chain.
+   The question goes to ai-evidence-search: a model turns it into a filter
+   (focus, risk, time window), the server runs ordinary queries over the
+   college's own records, and each matching learner comes back with the
+   records that answered it and a link to their evidence. ELE-924 / [G4].
 
-   ELE-924 / [G4].
+   8 Oct 2026: on the College Hub kit. No purple (not in the palette): the
+   landing card surface, chips by border and text only, one solid yellow
+   button, all text white. The copy says plainly what it does, with the
+   "uses AI" marker because the question is read by a model.
+
+   10 Oct 2026 (ELE-1910): the six questions inspectors ask in an electrical
+   department are answered from the record, not by the model
+   (InspectorRecordAnswer, college_inspection_answers): co-planning with
+   employers, off-the-job hours, under-18s, English and maths, progress
+   against the standard, EPA readiness. The free-text search stays for
+   anything else, marked as using AI. Every evidence card in its results now
+   opens the part of the learner's record it came from.
    ========================================================================== */
 
 const PROMPTS = [
   'Show me struggling learners and our response',
-  'How do we evidence British Values',
-  'Anyone behind on OTJ?',
-  'Recent safeguarding activity',
-  'Apprentices ready for EPA',
+  'How do we evidence British values?',
   'Show me the IQA chain on assessor decisions',
 ];
 
-const KIND_TONE: Record<SearchEvidenceKind, string> = {
-  ilp_goal: 'border-amber-300/30 text-amber-200 bg-amber-500/[0.06]',
-  portfolio: 'border-blue-300/30 text-blue-200 bg-blue-500/[0.06]',
-  quiz: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]',
-  observation: 'border-cyan-300/30 text-cyan-200 bg-cyan-500/[0.06]',
-  otj: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]',
-  note: 'border-purple-300/30 text-purple-200 bg-purple-500/[0.06]',
-  message: 'border-white/[0.10] text-white bg-white/[0.03]',
-  epa: 'border-rose-300/30 text-rose-200 bg-rose-500/[0.06]',
-  iqa: 'border-yellow-300/30 text-yellow-200 bg-yellow-500/[0.06]',
+/** Where each kind of evidence lives on the learner's record. */
+const KIND_AREA: Record<SearchEvidenceKind, string> = {
+  ilp_goal: 'ilp',
+  portfolio: 'portfolio',
+  quiz: 'quizzes',
+  observation: 'observations',
+  otj: 'otj',
+  note: 'notes',
+  message: 'notes',
+  epa: 'epa',
+  iqa: 'assess',
 };
+
+/** Evidence kinds are labels, not states: one neutral chip for all. */
+const KIND_CHIP = 'border-white/[0.18] text-white';
 
 const KIND_LABEL: Record<SearchEvidenceKind, string> = {
   ilp_goal: 'ILP',
@@ -53,41 +75,70 @@ const KIND_LABEL: Record<SearchEvidenceKind, string> = {
 };
 
 const RISK_TONE: Record<string, string> = {
-  low: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]',
-  medium: 'border-amber-300/30 text-amber-200 bg-amber-500/[0.06]',
-  high: 'border-orange-300/30 text-orange-200 bg-orange-500/[0.06]',
-  critical: 'border-rose-300/30 text-rose-200 bg-rose-500/[0.06]',
+  low: 'border-emerald-400/60 text-emerald-300',
+  medium: 'border-white/[0.18] text-white',
+  high: 'border-orange-400/60 text-orange-300',
+  critical: 'border-orange-400/60 text-orange-300',
 };
 
 export function ShowMePanel() {
   const { result, loading, error, lastQuery, search, reset } = useEvidenceSearch();
+  const { collegeId } = useCollegeCan();
+  const { terms } = useCollegeNation(collegeId);
   const [draft, setDraft] = useState('');
+  const [recordQ, setRecordQ] = useState<InspectorQuestionKey | null>(null);
 
   const handleSubmit = (q?: string) => {
     const target = (q ?? draft).trim();
     if (!target) return;
+    setRecordQ(null);
     void search(target);
   };
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
-      <div className="px-4 sm:px-5 py-3.5 sm:py-4 border-b border-white/[0.06]">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-3.5 w-3.5 text-purple-300" aria-hidden="true" />
-          <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
-            Inspector "show me" search
-          </span>
-        </div>
-        <h2 className="mt-1.5 text-[15px] sm:text-[18px] font-semibold text-white tracking-tight leading-snug">
-          Ofsted-style question → evidence chain in seconds
+    <div className={cn(QCARD, 'overflow-hidden p-0 sm:p-0')}>
+      <div className="border-b border-white/[0.06] px-4 py-4 sm:px-5">
+        <h2 className="text-[17px] font-semibold leading-snug tracking-tight text-white">
+          Ask an inspection question
         </h2>
-        <p className="mt-1 text-[12px] text-white leading-snug">
-          Hits real learner data, scoped to your college.
+        <p className="mt-1 text-[13px] leading-snug text-white">
+          The six questions inspectors ask in an electrical department, answered from your own
+          records, learner by learner. Tap any line to open the record behind it.
+        </p>
+        {collegeId && (
+          <div className="mt-3 grid grid-cols-1 gap-1.5 sm:grid-cols-2 xl:grid-cols-3">
+            {inspectorQuestions(terms).map((q) => (
+              <button
+                key={q.key}
+                type="button"
+                onClick={() => {
+                  reset();
+                  setRecordQ(q.key);
+                }}
+                aria-pressed={recordQ === q.key}
+                data-testid={`inspector-q-${q.key}`}
+                className={cn(
+                  'inline-flex min-h-[44px] items-center rounded-xl border px-3 py-2 text-left text-[13px] font-medium text-white transition-colors touch-manipulation',
+                  recordQ === q.key
+                    ? 'border-elec-yellow'
+                    : 'border-white/[0.14] hover:border-white/[0.3]'
+                )}
+              >
+                {q.label}
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <h3 className="text-[14px] font-semibold text-white">Or ask your own</h3>
+          <UsesAi />
+        </div>
+        <p className="mt-1 text-[12.5px] leading-snug text-white">
+          A model reads your question and turns it into a filter; the matches are your own records.
         </p>
 
-        {/* Search row — stacks vertically on mobile (full-width input then
-            full-width submit) so the placeholder never truncates. Side-by-
-            side from sm: where there's room. */}
+        {/* Search row: stacked on a phone (field, then a full-width button),
+            side by side from sm: up. */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -97,7 +148,7 @@ export function ShowMePanel() {
         >
           <div className="flex-1 relative">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none"
+              className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
               aria-hidden="true"
             />
             <input
@@ -106,8 +157,7 @@ export function ShowMePanel() {
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === 'Escape') {
-                  // Esc: clear current draft + any prior result so the next
-                  // keystroke starts fresh. Familiar inspector flow.
+                  // Escape clears the draft and any result, to start again.
                   if (draft || result) {
                     e.preventDefault();
                     setDraft('');
@@ -115,36 +165,27 @@ export function ShowMePanel() {
                   }
                 }
               }}
-              placeholder="Ask anything…"
-              aria-label="Inspector evidence search — type a natural-language question"
+              placeholder="Type a question about your learners"
+              aria-label="Ask an inspection question"
               autoComplete="off"
               spellCheck={false}
-              className="w-full h-11 pl-9 pr-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-purple-300/30 touch-manipulation"
+              className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
               disabled={loading}
             />
           </div>
           <button
             type="submit"
             disabled={loading || draft.trim().length < 3}
-            className={cn(
-              'inline-flex items-center justify-center h-11 px-4 rounded-xl text-[13px] font-semibold text-black transition-colors touch-manipulation shrink-0',
-              loading || draft.trim().length < 3
-                ? 'bg-white/[0.05] text-white'
-                : 'bg-purple-300 hover:bg-purple-200'
-            )}
+            className={cn(QBTN_PRIMARY, 'shrink-0')}
           >
-            {loading ? 'Searching…' : 'Show me →'}
+            {loading ? 'Searching…' : 'Show me'}
           </button>
         </form>
 
-        {!result && !loading && (
+        {!result && !loading && !recordQ && (
           <div className="mt-3">
-            <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
-              Try
-            </div>
-            {/* Prompts — 2-up grid on mobile so we use the full width
-                rather than leaving a long ribbon of dead space to the
-                right of each chip; flex-wrap on tablet+. */}
+            <p className="mb-2 text-[13px] font-semibold text-white">Try one of these</p>
+            {/* Example questions: full-width rows on a phone, chips from sm: up. */}
             <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-1.5">
               {PROMPTS.map((p) => (
                 <button
@@ -154,7 +195,7 @@ export function ShowMePanel() {
                     setDraft(p);
                     handleSubmit(p);
                   }}
-                  className="text-left sm:text-center inline-flex items-center min-h-[44px] sm:min-h-[36px] px-3 sm:px-2.5 rounded-xl sm:rounded-full text-[12px] sm:text-[11.5px] font-medium border border-white/[0.10] text-white bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.18] transition-colors touch-manipulation"
+                  className="inline-flex min-h-[44px] items-center rounded-xl border border-white/[0.14] px-3 text-left text-[13px] font-medium text-white transition-colors touch-manipulation hover:border-white/[0.3] sm:rounded-full"
                 >
                   {p}
                 </button>
@@ -165,9 +206,18 @@ export function ShowMePanel() {
       </div>
 
       {error && (
-        <div className="px-4 sm:px-5 py-3 border-b border-rose-300/20 bg-rose-500/[0.06] text-[13px] text-rose-200">
+        <div className="border-b border-white/[0.06] px-4 py-3 text-[13px] text-orange-300 sm:px-5">
           {error}
         </div>
+      )}
+
+      {recordQ && collegeId && !result && (
+        <InspectorRecordAnswer
+          collegeId={collegeId}
+          question={recordQ}
+          terms={terms}
+          onClear={() => setRecordQ(null)}
+        />
       )}
 
       {result && (
@@ -184,7 +234,7 @@ export function ShowMePanel() {
 
       {loading && !result && (
         <div className="px-4 sm:px-5 py-6 text-center text-[12.5px] text-white">
-          Interpreting question + scanning evidence…
+          Reading the question and searching your records…
         </div>
       )}
     </div>
@@ -204,40 +254,30 @@ function ResultsPanel({
 }) {
   return (
     <div>
-      <div className="px-4 sm:px-5 py-3 border-b border-white/[0.06] bg-white/[0.02] flex items-start justify-between gap-3 flex-wrap">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-white/[0.06] px-4 py-3 sm:px-5">
         <div className="min-w-0 flex-1">
-          <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-purple-300">
-            Interpreted as
-          </div>
+          <p className="text-[13px] font-semibold text-white">Read as</p>
           <div className="mt-1 text-[13px] text-white leading-snug">{result.interpretation}</div>
-          <div className="mt-1 text-[11px] text-white">You typed: "{lastQuery}"</div>
+          <div className="mt-1 text-[12px] text-white">You asked: &ldquo;{lastQuery}&rdquo;</div>
           <div className="mt-2 flex items-center flex-wrap gap-1.5">
-            <FilterChip label={`Focus · ${focusShort(result.focus)}`} tone="purple" />
+            <FilterChip label={`Focus: ${focusShort(result.focus)}`} />
             {result.risk_filter !== 'any' && (
-              <FilterChip label={`Risk · ${riskFilterShort(result.risk_filter)}`} tone="amber" />
+              <FilterChip label={`Risk: ${riskFilterShort(result.risk_filter)}`} />
             )}
-            <FilterChip label={`Window · ${recencyShort(result.recency_days)}`} tone="white" />
-            <FilterChip
-              label={`${result.matches.length} of ${result.total_candidates} learners`}
-              tone="white"
-            />
+            <FilterChip label={`Last ${recencyShort(result.recency_days)}`} />
+            <FilterChip label={`${result.matches.length} of ${result.total_candidates} learners`} />
           </div>
         </div>
-        <button
-          type="button"
-          onClick={onReset}
-          disabled={loading}
-          className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
-        >
-          Clear ×
+        <button type="button" onClick={onReset} disabled={loading} className={QBTN}>
+          Clear
         </button>
       </div>
 
       {result.matches.length === 0 ? (
         <div className="px-4 sm:px-5 py-10 text-center">
           <p className="text-[13px] text-white leading-relaxed max-w-md mx-auto">
-            No learners match this question right now. That's not a gap — try widening the window
-            (rephrase as "in the last year") or asking a different angle.
+            No learners match this question right now. Try a longer window (add &ldquo;in the last
+            year&rdquo;) or ask it another way.
           </p>
         </div>
       ) : (
@@ -253,22 +293,9 @@ function ResultsPanel({
   );
 }
 
-type ChipTone = 'purple' | 'amber' | 'white';
-
-const CHIP_TONE: Record<ChipTone, string> = {
-  purple: 'border-purple-300/30 text-purple-200 bg-purple-500/[0.06]',
-  amber: 'border-amber-300/30 text-amber-200 bg-amber-500/[0.06]',
-  white: 'border-white/[0.10] text-white bg-white/[0.03]',
-};
-
-function FilterChip({ label, tone }: { label: string; tone: ChipTone }) {
+function FilterChip({ label }: { label: string }) {
   return (
-    <span
-      className={cn(
-        'inline-flex items-center h-5 px-1.5 rounded-md border text-[10.5px] font-semibold uppercase tracking-[0.16em]',
-        CHIP_TONE[tone]
-      )}
-    >
+    <span className="inline-flex h-6 items-center rounded-full border border-white/[0.18] px-2.5 text-[12px] font-semibold text-white">
       {label}
     </span>
   );
@@ -281,9 +308,9 @@ function focusShort(focus: string): string {
 function riskFilterShort(rf: string): string {
   switch (rf) {
     case 'medium_plus':
-      return 'medium+';
+      return 'medium or higher';
     case 'high_plus':
-      return 'high+';
+      return 'high or critical';
     case 'critical_only':
       return 'critical';
     default:
@@ -294,61 +321,67 @@ function riskFilterShort(rf: string): string {
 function recencyShort(days: number): string {
   if (days <= 31) return '30 days';
   if (days <= 92) return '90 days';
-  if (days <= 200) return '6 months';
+  if (days <= 200) return 'six months';
   if (days <= 400) return '12 months';
   return `${days} days`;
 }
 
 function MatchRow({ match }: { match: SearchMatch }) {
   const navigate = useNavigate();
+  const learnerHref = (area?: string) =>
+    `/college?section=student360&studentId=${encodeURIComponent(match.learner_id)}${area ? `#${area}` : ''}`;
   return (
-    <motion.button
-      type="button"
-      whileTap={{ scale: 0.99 }}
-      onClick={() => navigate(`/college/students/${match.learner_id}/evidence`)}
-      className="w-full flex flex-col items-stretch gap-2 px-4 sm:px-5 py-3.5 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
-    >
-      <div className="flex items-start justify-between gap-3 flex-wrap">
+    <div className="flex w-full flex-col items-stretch gap-2 px-4 py-3.5 sm:px-5">
+      <motion.button
+        type="button"
+        whileTap={{ scale: 0.99 }}
+        onClick={() => navigate(`/college/students/${match.learner_id}/evidence`)}
+        className="-mx-2 flex min-h-[44px] items-start justify-between gap-3 rounded-lg px-2 text-left transition-colors touch-manipulation hover:bg-white/[0.04]"
+      >
         <div className="min-w-0 flex-1 flex items-center flex-wrap gap-2">
           <span className="text-[14px] font-semibold text-white">{match.learner_name}</span>
           {match.cohort_name && (
-            <span className="text-[11px] text-white">· {match.cohort_name}</span>
+            <span className="text-[12px] text-white">· {match.cohort_name}</span>
           )}
           {match.risk_level && (
             <span
               className={cn(
-                'inline-flex items-center h-5 px-1.5 rounded-md border text-[10.5px] font-semibold uppercase tracking-[0.16em]',
-                RISK_TONE[match.risk_level] ?? 'border-white/[0.10] text-white bg-white/[0.03]'
+                'inline-flex h-6 items-center rounded-full border px-2.5 text-[12px] font-semibold',
+                RISK_TONE[match.risk_level] ?? 'border-white/[0.18] text-white'
               )}
             >
-              {match.risk_level}
+              {match.risk_level.charAt(0).toUpperCase() + match.risk_level.slice(1)} risk
             </span>
           )}
         </div>
-        <span className="text-purple-300/80 text-[14px] shrink-0">→</span>
-      </div>
+        <span className="flex shrink-0 items-center gap-1 text-[12px] font-semibold text-elec-yellow">
+          Evidence
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </motion.button>
 
-      {/* Per-item cards — readable hierarchy on mobile instead of one dense
-          wrapping line (ELE-1087). Badge + title + date on top, summary below. */}
+      {/* One card per record (ELE-1087); each opens where it lives (ELE-1910). */}
       <div className="flex flex-col gap-1.5">
         {match.evidence.map((ev, i) => (
-          <div
+          <button
+            type="button"
             key={`${match.learner_id}-${i}`}
-            className="rounded-lg bg-white/[0.02] border border-white/[0.05] px-3 py-2"
+            onClick={() => navigate(learnerHref(KIND_AREA[ev.kind]))}
+            className="rounded-xl border border-white/[0.08] px-3 py-2 text-left transition-colors touch-manipulation hover:border-white/[0.2]"
           >
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold uppercase tracking-[0.16em] shrink-0',
-                  KIND_TONE[ev.kind]
+                  'inline-flex h-6 shrink-0 items-center rounded-full border px-2.5 text-[12px] font-semibold',
+                  KIND_CHIP
                 )}
               >
                 {KIND_LABEL[ev.kind]}
               </span>
-              <span className="min-w-0 flex-1 text-[12.5px] font-medium text-white truncate">
+              <span className="min-w-0 flex-1 text-[13px] font-medium leading-snug text-white sm:truncate">
                 {ev.title}
               </span>
-              <time className="text-[10.5px] text-white/55 tabular-nums shrink-0">
+              <time className="shrink-0 text-[12px] tabular-nums text-white">
                 {new Date(ev.occurred_at).toLocaleDateString('en-GB', {
                   day: 'numeric',
                   month: 'short',
@@ -356,13 +389,13 @@ function MatchRow({ match }: { match: SearchMatch }) {
               </time>
             </div>
             {ev.summary && (
-              <div className="mt-1 text-[11.5px] text-white/65 leading-snug">
+              <div className="mt-1 text-[12.5px] leading-snug text-white">
                 {ev.summary.replace(/_/g, ' ')}
               </div>
             )}
-          </div>
+          </button>
         ))}
       </div>
-    </motion.button>
+    </div>
   );
 }

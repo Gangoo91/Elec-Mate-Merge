@@ -102,16 +102,16 @@ export function LearnerQuickJump() {
                   onClick={() => navigate(`/college?section=student360&studentId=${s.id}`)}
                   className="flex min-h-[56px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
                 >
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      'h-8 w-[3px] shrink-0 rounded-full',
-                      level === 'critical' ? 'bg-red-400' : level === 'high' ? 'bg-orange-400' : 'bg-white/[0.25]'
-                    )}
-                  />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-[14px] font-semibold leading-tight text-white">{s.name}</span>
-                    <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-white">{riskWord(s.risk_level)}</span>
+                    <span
+                      className={cn(
+                        'mt-0.5 block truncate text-[12.5px] leading-tight',
+                        level === 'critical' ? 'font-semibold text-red-300' : level === 'high' ? 'font-semibold text-orange-300' : 'text-white'
+                      )}
+                    >
+                      {riskWord(s.risk_level)}
+                    </span>
                   </span>
                   <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                 </button>

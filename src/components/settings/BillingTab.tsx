@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { motion } from 'framer-motion';
 import { Capacitor } from '@capacitor/core';
-import { RevenueCatUI } from '@revenuecat/purchases-capacitor-ui';
+import { billingStore, openStoreSubscriptionManager } from '@/lib/storeSubscriptionManager';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -309,24 +309,7 @@ const BillingTab = () => {
               <ListRow
                 title="Manage Subscription"
                 subtitle="Cancel, refunds and plan help — in the app"
-                onClick={async () => {
-                  if (isNative) {
-                    try {
-                      await RevenueCatUI.presentCustomerCenter();
-                      return;
-                    } catch (err) {
-                      console.warn(
-                        '[BillingTab] Customer Center unavailable, falling back to store settings:',
-                        err
-                      );
-                    }
-                  }
-                  const url =
-                    Capacitor.getPlatform() === 'android'
-                      ? 'https://play.google.com/store/account/subscriptions'
-                      : 'https://apps.apple.com/account/subscriptions';
-                  openExternalUrl(url);
-                }}
+                onClick={() => void openStoreSubscriptionManager(billingStore(source))}
                 trailing={
                   <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-blue-400">
                     {isNative ? 'In-app' : 'External'}

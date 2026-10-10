@@ -81,7 +81,7 @@ const ResistanceCalculator: React.FC = () => {
       <div className="flex items-center gap-2 mb-2">
         <Calculator className="w-5 h-5 text-elec-yellow" />
         <h2 className="text-xl font-semibold text-foreground">Resistance Calculator (R = ρL/A)</h2>
-        <Badge variant="outline" className="ml-auto border-elec-yellow/30 text-elec-yellow">
+        <Badge variant="outline" className="ml-auto border-white/[0.14] text-elec-yellow">
           Level 2
         </Badge>
       </div>

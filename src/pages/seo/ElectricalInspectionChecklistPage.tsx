@@ -46,8 +46,8 @@ const keyTakeaways = [
   'The consumer unit is the single most important item to inspect thoroughly: condition of enclosure, correct protective devices, labelling, adequate cable connections, signs of overheating, and compliance with current standards.',
   'Earthing and bonding defects are the most safety-critical findings -- missing or inadequate main bonding, deteriorated earth connections, and incorrect earthing arrangements can result in C1 (Danger Present) classifications.',
   'Every circuit and protective device must be correctly labelled and identified -- this is a regulatory requirement under BS 7671 and a common C3 observation on older installations.',
-  'BS 7671:2018+A4:2026 (Regulation 411.3.4) now requires 30mA RCD additional protection for all AC lighting circuits in domestic premises -- check that lighting circuits are RCD-protected when inspecting domestic consumer units.',
-  'BS 7671:2018+A4:2026 (Regulation 421.1.7) recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc faults -- absence of AFDDs on new or rewired domestic circuits is worth noting as a recommendation.',
+  'BS 7671 Regulation 411.3.4 (in force since the 2018 edition) requires 30mA RCD additional protection for all AC lighting circuits in domestic premises -- check that lighting circuits are RCD-protected when inspecting domestic consumer units.',
+  'BS 7671 Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits, and since A2:2022 requires them on socket-outlet circuits up to 32 A in HMOs, high rise residential buildings, student accommodation and care homes -- in an ordinary dwelling, absence is worth noting as a recommendation.',
   'Elec-Mate provides a structured digital inspection checklist that ensures nothing is missed, with AI-assisted observation code classification and automatic schedule of inspections generation.',
 ];
 
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'What are the most common inspection findings?',
     answer:
-      'The most frequently recorded observations during domestic electrical inspections are: lack of RCD protection on socket circuits (C2 -- Potentially Dangerous), absence of 30mA RCD protection on lighting circuits in domestic premises (C2 -- required by Regulation 411.3.4, introduced in BS 7671:2018+A4:2026), missing or inadequate circuit identification and labelling (C3 -- Improvement Recommended), absence of main bonding to incoming services (C1 or C2 depending on the earthing arrangement), deteriorated or damaged cable insulation (C2 or C3 depending on severity), accessories with missing covers, cracked faceplates, or exposed terminals (C2), inadequate cable support and routing (C3), absence of fire stopping where cables pass through compartment walls or floors (C3 or C2), and overloaded socket outlets with adapters and extension leads (C3). The classification depends on the specific circumstances and the inspector must use professional judgement to determine the appropriate code.',
+      'The most frequently recorded observations during domestic electrical inspections are: lack of RCD protection on socket circuits (C2 -- Potentially Dangerous), absence of 30mA RCD protection on lighting circuits in domestic premises (C2 -- required by Regulation 411.3.4, in force since BS 7671:2018), missing or inadequate circuit identification and labelling (C3 -- Improvement Recommended), absence of main bonding to incoming services (C1 or C2 depending on the earthing arrangement), deteriorated or damaged cable insulation (C2 or C3 depending on severity), accessories with missing covers, cracked faceplates, or exposed terminals (C2), inadequate cable support and routing (C3), absence of fire stopping where cables pass through compartment walls or floors (C3 or C2), and overloaded socket outlets with adapters and extension leads (C3). The classification depends on the specific circumstances and the inspector must use professional judgement to determine the appropriate code.',
   },
   {
     question: 'Do I inspect the whole installation or just the new work?',
@@ -304,14 +304,16 @@ const sections = [
           that may require recommendations for upgrade.
         </p>
         <p>
-          Two A4:2026 requirements are particularly relevant at the consumer unit. First, Regulation
-          411.3.4 now mandates 30mA RCD additional protection for AC final circuits supplying
+          Two BS 7671:2018+A4:2026 requirements are particularly relevant at the consumer unit, and
+          neither is new in A4. First, Regulation 411.3.4 (since 2018) mandates 30mA RCD additional protection for AC final circuits supplying
           luminaires in domestic premises -- check that lighting circuits are RCD-protected, not
           just socket circuits. Second, Regulation 421.1.7 recommends the installation of arc fault
           detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc fault
-          currents. Absence of AFDDs on a new or recently rewired domestic installation is worth
-          recording as a recommendation, though the regulation uses advisory rather than mandatory
-          language.
+          currents, and since A2:2022 requires them on socket-outlet circuits up to 32 A in HMOs,
+          high rise residential buildings, purpose-built student accommodation and care homes. In
+          an ordinary dwelling, absence of AFDDs on a new or recently rewired installation is worth
+          recording as a recommendation, because there the regulation uses advisory rather than
+          mandatory language.
         </p>
       </>
     ),
@@ -763,7 +765,7 @@ export default function ElectricalInspectionChecklistPage() {
       title="Electrical Inspection Checklist: What to Check"
       description="Comprehensive electrical inspection checklist for UK electricians. Visual inspection items, consumer unit checks, earthing and bonding, labelling."
       datePublished="2026-01-22"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -1,12 +1,13 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import ActiveToolContent from '@/components/apprentice/toolbox/ActiveToolContent';
 import useSEO from '@/hooks/useSEO';
-import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
-import { itemVariants, type Tone } from '@/components/college/primitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
+import { type Tone } from '@/components/college/primitives';
+import {
+  GuideFacts,
+  GuideHelplines,
+  GuideIndex,
+  GuidePage,
+} from '@/components/apprentice/shared/GuideKit';
 
 interface ToolboxItem {
   id: string;
@@ -181,97 +182,66 @@ export default function ApprenticeToolbox() {
   }
 
   return (
-    <HubSubPage
+    <GuidePage
+      area="Toolbox"
       title="The whole job, demystified"
       backTo="/apprentice"
       description="Essential resources, skills development and support for UK electrical apprentices — eleven topics, from funding to EPA to your rights on site."
     >
-      <motion.div variants={itemVariants}>
-        <HubKpiRow>
-          {QUICK_STATS.map((s, i) => (
-            <HubKpi key={s.label} label={s.label} value={s.value} accent={i === 0} />
-          ))}
-        </HubKpiRow>
-      </motion.div>
+      <GuideFacts items={QUICK_STATS} />
 
-      {/* CATEGORY SECTIONS */}
       {CATEGORIES.map((cat) => {
         const items = TOOLBOX_ITEMS.filter((i) => i.category === cat.id);
         if (items.length === 0) return null;
         return (
-          <motion.section key={cat.id} variants={itemVariants} className="space-y-5 sm:space-y-6">
-            <HubSectionHeading>{cat.title}</HubSectionHeading>
-            <HubToolGrid
-              label=""
-              columns={cat.id === 'wellbeing' ? 'two' : 'three'}
-              cards={items.map((item) => ({
-                id: item.id,
-                eyebrow: item.eyebrow,
-                title: item.title,
-                description: item.description,
-                meta: item.badge,
-                onClick: () => item.link && navigate(item.link),
-              }))}
-            />
-          </motion.section>
+          <GuideIndex
+            key={cat.id}
+            title={cat.title}
+            columns={items.length === 2 ? 2 : 3}
+            items={items.map((item) => ({
+              id: item.id,
+              title: item.title,
+              description: item.description,
+              badge: item.badge,
+              to: item.link,
+            }))}
+          />
         );
       })}
 
-      {/* RELATED HUBS */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <HubSectionHeading>Related hubs</HubSectionHeading>
-        <HubToolGrid
-          label=""
-          columns="two"
-          cards={[
-            {
-              id: 'mental-health',
-              eyebrow: 'Wellbeing',
-              title: 'Mental health support',
-              description: 'Resources, crisis support and wellbeing tools for apprentices.',
-              meta: 'Open hub',
-              onClick: () => navigate('/apprentice/mental-health'),
-            },
-            {
-              id: 'career-pathways',
-              eyebrow: 'Career',
-              title: 'Career pathways',
-              description: 'Career pathways, certifications and professional development.',
-              meta: 'Open hub',
-              onClick: () => navigate('/apprentice/professional-development'),
-            },
-          ]}
-        />
-      </motion.section>
+      <GuideIndex
+        title="Related hubs"
+        columns={2}
+        items={[
+          {
+            id: 'mental-health',
+            title: 'Mental health support',
+            description: 'Resources, crisis support and wellbeing tools for apprentices.',
+            meta: 'Open hub',
+            onClick: () => navigate('/apprentice/mental-health'),
+          },
+          {
+            id: 'career-pathways',
+            title: 'Career pathways',
+            description: 'Career pathways, certifications and professional development.',
+            meta: 'Open hub',
+            onClick: () => navigate('/apprentice/professional-development'),
+          },
+        ]}
+      />
 
-      {/* CRISIS / WELLBEING — one-tap helplines */}
-      <motion.section variants={itemVariants} className="space-y-3 sm:space-y-4">
-        <HubSectionHeading>Need to talk now?</HubSectionHeading>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <a
-            href="tel:116123"
-            className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-11 gap-1 px-4 py-3.5 sm:p-5')}
-          >
-            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-              Samaritans · free, 24/7
-            </span>
-            <span className="text-lg font-semibold tabular-nums tracking-tight text-white">
-              116 123
-            </span>
-          </a>
-          <a
-            href="tel:03456051956"
-            className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-11 gap-1 px-4 py-3.5 sm:p-5')}
-          >
-            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-              Lighthouse · construction industry
-            </span>
-            <span className="text-lg font-semibold tabular-nums tracking-tight text-white">
-              0345 605 1956
-            </span>
-          </a>
-        </div>
-      </motion.section>
-    </HubSubPage>
+      <GuideHelplines
+        title="Need to talk now?"
+        lines={[
+          { name: 'Samaritans', detail: 'Free, 24/7', number: '116 123', tel: '116123' },
+          {
+            name: 'Lighthouse',
+            detail: 'Construction industry',
+            number: '0345 605 1956',
+            tel: '03456051956',
+          },
+        ]}
+      />
+    </GuidePage>
   );
 }

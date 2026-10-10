@@ -7,7 +7,14 @@ import { buttonPrimaryCn, buttonSecondaryCn, inputCn, labelCn, selectTriggerCn }
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { chipCn } from '@/components/college/ui/CollegeUi';
 import { useQualifications } from '@/hooks/useCurriculum';
-import { OTJ_STANDARDS, getOtjStandard } from '@/data/otjStandards';
+import {
+  NATION_TERMS,
+  UK_NATIONS,
+  getProgramme,
+  hoursSummary,
+  programmesFor,
+  type UkNation,
+} from '@/data/ukNationFrameworks';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -19,6 +26,13 @@ import { cn } from '@/lib/utils';
    hours on enrolment (tg_set_otj_required_hours).
 
    Anything here can be changed later in Courses; this is the fast path.
+
+   10 Oct 2026 (ELE-1976): all four UK nations. The college picks where it
+   delivers (colleges.nation); the programme list, its label and the hours
+   model follow that nation (src/data/ukNationFrameworks.ts): an English
+   standard, a Welsh framework, a Scottish Modern Apprenticeship or an NI
+   framework. Structure only; units and criteria still come from the
+   qualification.
    ========================================================================== */
 
 interface Props {
@@ -30,6 +44,16 @@ interface Props {
   /** Qualification ids the college already has a course for. */
   existingQualIds?: string[];
   onAdded?: (n: number) => void;
+}
+
+/** A sensible first guess of the programme from the title, in the college's nation. */
+function guessProgramme(nation: UkNation, title: string, code?: string | null): string {
+  if (nation !== 'england') {
+    const t = title.toLowerCase();
+    const electrical = t.includes('electrotechnical') || t.includes('electrical installation') || t.includes('electrician');
+    return electrical ? (programmesFor(nation)[0]?.code ?? 'none') : 'none';
+  }
+  return guessStandard(title, code);
 }
 
 /** A sensible first guess of the apprenticeship standard from the title. */
@@ -48,10 +72,18 @@ function guessStandard(title: string, code?: string | null): string {
   return 'none';
 }
 
-const STANDARD_OPTIONS = [
-  { value: 'none', label: 'Not an apprenticeship' },
-  ...OTJ_STANDARDS.map((s) => ({ value: s.code, label: `${s.code} ${s.name} (${s.otjHours} h)` })),
-];
+function programmeOptions(nation: UkNation) {
+  return [
+    { value: 'none', label: 'Not an apprenticeship' },
+    ...programmesFor(nation).map((p) => ({
+      value: p.code,
+      label:
+        p.kind === 'standard'
+          ? `${p.code} ${p.title} (${p.offJobHours} h)`
+          : `${p.kind === 'framework' && /^FR/.test(p.code) ? `${p.code} ` : ''}${p.title} (${hoursSummary(p)})`,
+    })),
+  ];
+}
 
 export function CourseCatalogueSheet({ open, onOpenChange, collegeId, awardingBodies, existingQualIds = [], onAdded }: Props) {
   const { toast } = useToast();
@@ -61,14 +93,40 @@ export function CourseCatalogueSheet({ open, onOpenChange, collegeId, awardingBo
   const [body, setBody] = useState<string>('mine');
   const [search, setSearch] = useState('');
   const [saving, setSaving] = useState(false);
+  const [nation, setNation] = useState<UkNation>('england');
+  const [savedNation, setSavedNation] = useState<UkNation | null>(null);
+  const terms = NATION_TERMS[nation];
 
   useEffect(() => {
     if (open) {
       setPicked({});
       setSearch('');
       setBody(awardingBodies?.length ? 'mine' : 'all');
+      void supabase
+        .from('colleges')
+        .select('nation' as never)
+        .eq('id', collegeId)
+        .maybeSingle()
+        .then(({ data }) => {
+          const n = ((data as unknown as { nation: UkNation | null } | null)?.nation ?? null) as UkNation | null;
+          setSavedNation(n);
+          setNation(n ?? 'england');
+        });
     }
-  }, [open, awardingBodies]);
+  }, [open, awardingBodies, collegeId]);
+
+  const changeNation = (n: UkNation) => {
+    setNation(n);
+    // Re-guess every ticked qualification for the new nation's programmes.
+    setPicked((p) =>
+      Object.fromEntries(
+        Object.keys(p).map((id) => {
+          const q = quals.find((x) => x.id === id);
+          return [id, q ? guessProgramme(n, q.title, q.code) : 'none'];
+        })
+      )
+    );
+  };
 
   const bodies = useMemo(() => Array.from(new Set(quals.map((q) => q.awarding_body).filter(Boolean))) as string[], [quals]);
   const mine = (awardingBodies ?? []).map((b) => b.toLowerCase());
@@ -89,7 +147,7 @@ export function CourseCatalogueSheet({ open, onOpenChange, collegeId, awardingBo
     setPicked((p) => {
       const n = { ...p };
       if (n[id]) delete n[id];
-      else n[id] = guessStandard(title, quals.find((q) => q.id === id)?.code);
+      else n[id] = guessProgramme(nation, title, quals.find((q) => q.id === id)?.code);
       return n;
     });
 
@@ -99,21 +157,32 @@ export function CourseCatalogueSheet({ open, onOpenChange, collegeId, awardingBo
     if (saving || pickedIds.length === 0) return;
     setSaving(true);
     try {
+      // Remember the nation for the college (admins only; others keep the choice for this list).
+      if (nation !== (savedNation ?? 'england') || savedNation === null) {
+        const { error: nErr } = await supabase.rpc('set_college_nation' as never, { p_college: collegeId, p_nation: nation } as never);
+        if (!nErr) setSavedNation(nation);
+      }
       const rows = pickedIds.map((id) => {
         const q = quals.find((x) => x.id === id)!;
-        const std = getOtjStandard(picked[id]);
+        const prog = getProgramme(picked[id]);
         return {
           college_id: collegeId,
           name: q.title,
           code: q.code ?? null,
-          level: q.level ?? (std ? `Level ${std.level}` : null),
+          level: q.level ?? prog?.level ?? null,
           awarding_body: q.awarding_body ?? null,
           qualification_id: q.id,
-          otj_required_hours: std ? std.otjHours : null,
+          otj_required_hours: prog?.offJobHours ?? null,
           status: 'Active',
+          nation,
+          programme_kind: prog?.kind ?? null,
+          programme_code: prog?.code ?? null,
+          hours_model: prog?.hoursModel ?? null,
+          on_job_hours_required: prog?.onJobHours ?? null,
+          end_assessment: prog?.endAssessment ?? null,
         };
       });
-      const { error } = await supabase.from('college_courses').insert(rows);
+      const { error } = await supabase.from('college_courses').insert(rows as never);
       if (error) throw error;
       await qc.invalidateQueries({ queryKey: ['college-courses'] });
       toast({ title: `${rows.length} course${rows.length === 1 ? '' : 's'} added` });
@@ -134,7 +203,7 @@ export function CourseCatalogueSheet({ open, onOpenChange, collegeId, awardingBo
       bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
       eyebrow="Courses"
       title="Pick from the catalogue"
-      description="Tick the qualifications you deliver. Each becomes a course with its units and criteria. For an apprenticeship, the off-the-job hours come from the standard."
+      description={`Tick the qualifications you deliver. Each becomes a course with its units and criteria. For an apprenticeship, pick the ${terms.programme}. ${terms.hoursLine}`}
       footer={
         <div className="grid grid-cols-2 gap-2.5">
           <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
@@ -208,13 +277,26 @@ export function CourseCatalogueSheet({ open, onOpenChange, collegeId, awardingBo
       </section>
 
       <section className="space-y-3">
+        <div>
+          <span className={labelCn}>Where you deliver</span>
+          <div className="flex flex-wrap gap-2" data-testid="catalogue-nation">
+            {UK_NATIONS.map((n) => (
+              <button key={n} type="button" onClick={() => changeNation(n)} className={chipCn(nation === n)} aria-pressed={nation === n}>
+                {NATION_TERMS[n].name}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-[12.5px] leading-snug text-white" data-testid="catalogue-nation-line">
+            {terms.name}: {terms.programme} set by {terms.body}; end assessment {terms.endAssessment}. {terms.hoursLine}
+          </p>
+        </div>
         <h3 className="text-[15px] font-semibold tracking-tight text-white">
           {pickedIds.length ? `${pickedIds.length} ticked` : 'Nothing ticked yet'}
         </h3>
         {pickedIds.length === 0 ? (
           <p className="text-[13px] leading-relaxed text-white">
-            Ticked qualifications appear here. For each apprenticeship, check the standard: it sets the off-the-job
-            hours every learner on the course needs.
+            Ticked qualifications appear here. For each apprenticeship, check the {terms.programme}: it sets how
+            training time is counted for every learner on the course.
           </p>
         ) : (
           <ul className="space-y-4">
@@ -224,14 +306,24 @@ export function CourseCatalogueSheet({ open, onOpenChange, collegeId, awardingBo
               return (
                 <li key={id} className="border-t border-white/[0.1] pt-3 first:border-t-0 first:pt-0">
                   <p className="text-[13.5px] font-semibold leading-snug text-white">{q.title}</p>
-                  <span className={cn(labelCn, 'mt-2')}>Apprenticeship standard</span>
+                  <span className={cn(labelCn, 'mt-2')}>{terms.programmePicker}</span>
                   <MobileSelectPicker
                     value={picked[id]}
                     onValueChange={(v) => setPicked((p) => ({ ...p, [id]: v }))}
-                    options={STANDARD_OPTIONS}
-                    title="Apprenticeship standard"
+                    options={programmeOptions(nation)}
+                    title={terms.programmePicker}
                     triggerClassName={selectTriggerCn}
                   />
+                  {(() => {
+                    const prog = getProgramme(picked[id]);
+                    if (!prog) return null;
+                    return (
+                      <p className="mt-1.5 text-[12px] leading-snug text-white">
+                        {hoursSummary(prog)}; end assessment {prog.endAssessment}.
+                        {prog.check ? ` ${prog.check}` : ''}
+                      </p>
+                    );
+                  })()}
                 </li>
               );
             })}

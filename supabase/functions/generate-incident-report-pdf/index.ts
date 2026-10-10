@@ -1,6 +1,8 @@
 // generate-incident-report-pdf (ELE-1945)
 //
 // Body: { incidentId: string, kind?: 'incident' | 'riddor' }
+// incidentId: an employer_incidents row, or (ELE-2031) a firm's Site Safety
+// near miss / accident (read through _firm_incident_rows).
 // Returns: { success, url } — a 1-hour signed URL to a private file.
 //
 // Firm-only: the caller must manage the firm that owns the incident
@@ -58,11 +60,22 @@ serve(async (req) => {
       return json({ success: false, error: 'Unknown report type.' }, 400);
     }
 
-    const { data: incident } = await admin
+    // deno-lint-ignore no-explicit-any
+    let { data: incident } = (await admin
       .from('employer_incidents')
       .select('*')
       .eq('id', incidentId)
-      .maybeSingle();
+      .maybeSingle()) as { data: any };
+    if (!incident) {
+      // ELE-2031: incidents now live in Site Safety (near_miss_reports /
+      // accident_records). One normalised row, in the employer_incidents shape.
+      const { data: rows, error: rowsError } = await admin.rpc('_firm_incident_rows', {
+        p_firm: null,
+        p_id: incidentId,
+      });
+      if (rowsError) throw rowsError;
+      incident = Array.isArray(rows) && rows.length ? rows[0] : null;
+    }
     if (!incident) return json({ success: false, error: 'Incident not found.' }, 404);
 
     // Firm managers only (owner + co-admins). A worker can read their own
@@ -93,8 +106,8 @@ serve(async (req) => {
       .limit(1);
     const branding: Branding = profileRows?.[0] ?? {};
 
-    let reporterName = 'Not recorded';
-    if (incident.reported_by) {
+    let reporterName: string = incident.reporter_name || 'Not recorded';
+    if (!incident.reporter_name && incident.reported_by) {
       if (UUID_RE.test(incident.reported_by)) {
         const { data: emp } = await admin
           .from('employer_employees')

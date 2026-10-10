@@ -57,8 +57,8 @@ const TimeManagementFundamentalsTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Core time management principles
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -91,10 +91,8 @@ const TimeManagementFundamentalsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Common challenges & solutions
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Common challenges & solutions</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {commonChallenges.map((item, index) => (
             <div
@@ -103,7 +101,7 @@ const TimeManagementFundamentalsTab = () => {
             >
               <h4 className="text-[14px] font-semibold text-white">{item.challenge}</h4>
               <p className="text-[14px] text-white leading-relaxed">{item.solution}</p>
-              <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05]">
+              <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.05]">
                 {item.tip}
               </span>
             </div>
@@ -111,8 +109,8 @@ const TimeManagementFundamentalsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Getting started: your first week
         </span>
         <div className="space-y-3">

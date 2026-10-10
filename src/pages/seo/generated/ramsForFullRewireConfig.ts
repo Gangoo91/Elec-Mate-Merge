@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const ramsForFullRewireConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-full-rewire',
@@ -29,7 +29,7 @@ export const ramsForFullRewireConfig: GeneratedGuideConfig = {
     'Asbestos awareness is non-negotiable in any pre-2000 property under the Control of Asbestos Regulations 2012 — artex ceilings, AIB ceiling tiles, textured coatings and old back-boxes can all release fibres when chased or drilled.',
     'Working at height is the dominant hazard — every ceiling rose, loft pull, first-floor pendant and stair landing involves ladders or platforms; the Work at Height Regulations 2005 hierarchy (avoid / prevent / mitigate) must be in the method statement.',
     'Phased isolation in an occupied dwelling needs a written sequence — which circuits go off when, what stays live, how the family is informed, and how emergency lighting / fridge / freezer / medical equipment are protected.',
-    'The completed install must be certified on an A4:2026 EIC — luminaire RCD on every final circuit (Reg 411.3.4 as amended), AFDD risk assessment, SPD assessment, and TN-C-S (PME or PNB) earthing recorded on the model form.',
+    'The completed install must be certified on an A4:2026 EIC — 30 mA RCD on every lighting circuit (Reg 411.3.4, since BS 7671:2018), AFDD provision per Reg 421.1.7, SPD assessment, and TN-C-S (PME or PNB) earthing recorded on the model form.',
     'Schedule of Test Results must be completed for every circuit at handover — continuity, insulation resistance, polarity, Zs, RCD operating times — not done from memory after the customer has moved back in.',
   ],
   sections: [
@@ -110,7 +110,7 @@ export const ramsForFullRewireConfig: GeneratedGuideConfig = {
             'Phase 1 — Set-up and protection: dust sheets, floor protection, exclusion zones, temporary lighting confirmed, welfare provision agreed, edge protection for any roof access.',
             'Phase 2 — First fix strip-out: old circuits identified and locked off circuit-by-circuit, cables stripped back to consumer unit, no dead-leg conductors left energised. Permits to work issued per phase.',
             'Phase 3 — First fix install: new cables, back-boxes, drops to switches and sockets, drilling and notching of joists strictly within IET-permitted zones, fire-stopping at compartment penetrations, temporary capping over live ends.',
-            'Phase 4 — Second fix: accessories fitted, consumer unit installed, AFDD / RCD configuration per A4:2026 design, SPD installed where risk assessment indicates, [luminaire RCD coverage on every final circuit](/guides/bs-7671-a4-2026-luminaire-rcd-protection).',
+            'Phase 4 — Second fix: accessories fitted, consumer unit installed, AFDD / RCD configuration per the design, SPD installed where risk assessment indicates, [luminaire RCD coverage on every lighting circuit](/guides/bs-7671-a4-2026-luminaire-rcd-protection).',
             'Phase 5 — Inspection, testing and commissioning: full Schedule of Test Results per circuit, all results recorded on the A4:2026 EIC model form, RCD and AFDD function tests, final visual inspection.',
             'Phase 6 — Handover: EIC issued to the client, Building Control / NICEIC / NAPIT compliance certificate lodged, user instructions provided, defects period agreed in writing.',
           ],
@@ -135,8 +135,8 @@ export const ramsForFullRewireConfig: GeneratedGuideConfig = {
         {
           type: 'list',
           items: [
-            'Reg 411.3.4 (as amended by A4:2026) — additional protection by 30 mA RCD on every final circuit, including lighting circuits. The new install cannot reuse a non-RCD layout from the old wiring.',
-            'AFDD provision — a risk assessment for arc fault detection must be recorded; AFDDs are required for specific final circuits as listed in A4:2026 (e.g. in HMOs, care homes and similar higher-risk locations) and recommended for others.',
+            'Reg 411.3.4 (in place since BS 7671:2018) — additional protection by 30 mA RCD on AC final circuits supplying luminaires in domestic premises, alongside Reg 411.3.3 for socket-outlets. The new install cannot reuse a non-RCD layout from the old wiring.',
+            'AFDD provision — since A2:2022, Reg 421.1.7 requires AFDDs on single-phase socket-outlet final circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommends them elsewhere. Record the decision.',
             'SPD risk assessment — surge protection device requirements per Section 443, recorded on the model form.',
             'Earthing arrangement — TN-S, TN-C-S (PME), TN-C-S (PNB), TT — clearly identified, with the conductor sizes verified per Section 543. PNB and PME are now explicitly recorded on the A4:2026 EIC.',
             'Reg 132.16 — connection of additions / alterations. If any part of the rewire involves connecting to existing tails or a meter cabinet, the duty in 132.16 to assess the adequacy of those existing parts must be discharged and recorded.',
@@ -294,7 +294,7 @@ export const ramsForFullRewireConfig: GeneratedGuideConfig = {
     {
       question: 'Does the new install have to use the A4:2026 model forms?',
       answer:
-        'Yes. A full rewire completed in 2026 is a new installation and must be certified using the current model form (the A4:2026 EIC). That means luminaire RCD coverage on every final circuit per Reg 411.3.4 as amended, an AFDD risk assessment, an SPD assessment per Section 443, the earthing arrangement recorded with PNB and PME explicitly identified, and a full Schedule of Test Results for every circuit.',
+        'Yes. A full rewire completed in 2026 is a new installation and must be certified using the current model form (the A4:2026 EIC). That means 30 mA RCD coverage on every lighting circuit per Reg 411.3.4, AFDD provision per Reg 421.1.7, an SPD assessment per Section 443, the earthing arrangement recorded with PNB and PME explicitly identified, and a full Schedule of Test Results for every circuit.',
     },
     {
       question: 'Can I reuse a generic electrical RAMS template for every rewire?',
@@ -353,7 +353,7 @@ export const ramsForFullRewireConfig: GeneratedGuideConfig = {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
       description:
-        'What changed in Amendment 4 (2026) — luminaire RCD, AFDD, SPD, TN-C-S (PNB) and the new model forms.',
+        'What changed in Amendment 4 (2026): TN-C-S (PNB), Table 52.1, Chapter 57 batteries and the model form notes.',
       icon: 'BookOpen',
       category: 'Guide',
     },

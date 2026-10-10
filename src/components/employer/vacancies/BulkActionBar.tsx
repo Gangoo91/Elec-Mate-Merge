@@ -1,11 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, XCircle, X, Users } from 'lucide-react';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  PrimaryButton,
-  DestructiveButton,
-  IconButton,
-} from '@/components/employer/editorial';
+import { IconButton } from '@/components/employer/editorial';
+import { rowBtn, rowBtnPrimary } from '@/components/employer/pageParts/PageParts';
 
 interface BulkActionBarProps {
   selectedCount: number;
@@ -33,52 +30,44 @@ export function BulkActionBar({
           className={cn(
             'fixed bottom-20 sm:bottom-4 left-4 right-4 z-50',
             'max-w-lg mx-auto',
-            'bg-[hsl(0_0%_12%)] backdrop-blur-lg',
+            'bg-[hsl(0_0%_12%)]',
             'border border-white/[0.08] rounded-2xl',
             'shadow-2xl shadow-black/40',
             'p-4'
           )}
         >
-          {/* Selected count header */}
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-white/[0.06]">
-                <Users className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <span className="text-sm font-medium text-white">
-                {selectedCount} candidate{selectedCount !== 1 ? 's' : ''} selected
-              </span>
-            </div>
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <span className="text-[15px] font-semibold text-white">
+              {selectedCount} candidate{selectedCount !== 1 ? 's' : ''} selected
+            </span>
             <IconButton
               aria-label="Clear selection"
               onClick={onClearSelection}
               disabled={isProcessing}
-              className="h-8 w-8"
             >
               <X className="h-4 w-4" />
             </IconButton>
           </div>
-
-          {/* Action buttons */}
           <div className="flex gap-2">
-            <DestructiveButton
+            <button
+              type="button"
               onClick={onRejectAll}
               disabled={isProcessing}
-              fullWidth
-              size="lg"
+              className={cn(
+                rowBtn,
+                'flex-1 border border-red-500/40 text-red-400 hover:bg-red-500/10'
+              )}
             >
-              <XCircle className="h-4 w-4 mr-2" />
-              Reject All
-            </DestructiveButton>
-            <PrimaryButton
+              Reject all
+            </button>
+            <button
+              type="button"
               onClick={onShortlistAll}
               disabled={isProcessing}
-              fullWidth
-              size="lg"
+              className={cn(rowBtnPrimary, 'flex-1')}
             >
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Shortlist All
-            </PrimaryButton>
+              Shortlist all
+            </button>
           </div>
         </motion.div>
       )}

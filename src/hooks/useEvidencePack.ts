@@ -7,7 +7,10 @@ import { supabase } from '@/integrations/supabase/client';
    each apprentice, worked out live from the record.
 
    Source: Apprenticeship funding rules 2025/26, paras 309–318 and every
-   "Evidence requirements" box that applies to an employed apprentice. The
+   "Evidence requirements" box that applies to an employed apprentice.
+   ELE-2038: each item now cites the rules of the learner's START year
+   (2026/27 evidence section 344–354; 2024/25 282–291), from the verified
+   paragraph map college_funding_rule_refs; pack.rules names the year. The
    checklist is computed in the database (get_learner_evidence_pack); the
    college can add its own requirements (college_evidence_requirements),
    which appear on every matching learner's pack.
@@ -75,7 +78,9 @@ export const KIND_LABEL: Record<EvidenceKind, string> = {
 };
 
 /** Who needs to have signed each kind, for the signature prompts. */
-export const KIND_SIGNERS: Partial<Record<EvidenceKind, Array<'apprentice' | 'employer' | 'provider'>>> = {
+export const KIND_SIGNERS: Partial<
+  Record<EvidenceKind, Array<'apprentice' | 'employer' | 'provider'>>
+> = {
   apprenticeship_agreement: ['apprentice', 'employer'],
   training_plan: ['apprentice', 'employer', 'provider'],
   eligibility_declaration: ['apprentice'],
@@ -88,15 +93,23 @@ export const KIND_SIGNERS: Partial<Record<EvidenceKind, Array<'apprentice' | 'em
 
 /** What a document of each kind should show, as a hint when filing it. */
 export const KIND_HINT: Partial<Record<EvidenceKind, string>> = {
-  id_residency: 'Say which documents you saw (for example, UK passport). Para 29.8 asks you to record the type.',
-  eligibility_declaration: 'The apprentice confirms they are not on another funded programme and that their details are correct.',
-  employment_contract: 'An extract showing the employer, the job and that it runs past the end-point assessment.',
-  apprenticeship_agreement: 'The complete agreement, signed by the employer and the apprentice (not one person for both).',
-  training_plan: 'Signed and dated by the apprentice, employer and college. Keep every earlier version.',
-  initial_assessment: 'Skills scan, prior-learning check and how content, price and hours were adjusted, agreed with the employer.',
+  id_residency:
+    'Say which documents you saw (for example, UK passport). Para 29.8 asks you to record the type.',
+  eligibility_declaration:
+    'The apprentice confirms they are not on another funded programme and that their details are correct.',
+  employment_contract:
+    'An extract showing the employer, the job and that it runs past the end-point assessment.',
+  apprenticeship_agreement:
+    'The complete agreement, signed by the employer and the apprentice (not one person for both).',
+  training_plan:
+    'Signed and dated by the apprentice, employer and college. Keep every earlier version.',
+  initial_assessment:
+    'Skills scan, prior-learning check and how content, price and hours were adjusted, agreed with the employer.',
   wage_confirmation: 'A copy of the employment terms or a written statement about wages.',
-  contract_for_services: 'Signed by the employer and college, with the statement that the employer pays no contribution.',
-  epa_employment_statement: 'Signed by the employer and college: the apprentice stays employed until the assessment is complete.',
+  contract_for_services:
+    'Signed by the employer and college, with the statement that the employer pays no contribution.',
+  epa_employment_statement:
+    'Signed by the employer and college: the apprentice stays employed until the assessment is complete.',
 };
 
 export interface EvidenceRow {
@@ -124,7 +137,11 @@ export interface PackItem {
   key: string;
   group: ItemGroup;
   title: string;
-  para: string;
+  /** ELE-2038: the paragraph(s) in the learner's start-year rules; null when not verified. */
+  para: string | null;
+  para_verified?: boolean;
+  para_note?: string | null;
+  rules_year?: string | null;
   status: ItemStatus;
   detail: string;
   kind?: EvidenceKind;
@@ -132,13 +149,26 @@ export interface PackItem {
   custom?: boolean;
   field?: boolean;
   employer_level?: boolean;
-  link?: 'reviews' | 'otj' | 'episodes';
+  link?: 'reviews' | 'otj' | 'episodes' | 'training_plan' | 'starting_point' | 'epao';
   due_date?: string | null;
   evidence?: EvidenceRow[];
   months?: Array<{ month: string; minutes: number }>;
 }
 
+/** ELE-2038: which year's funding rules the learner follows (their start year). */
+export interface PackRules {
+  year: string | null;
+  label: string;
+  source_url: string | null;
+  evidence_section: string | null;
+  signatures: string | null;
+  leaver_end_date: string | null;
+  identifiers: string | null;
+  monthly: string | null;
+}
+
 export interface LearnerPack {
+  rules?: PackRules;
   learner: {
     id: string;
     name: string;
@@ -176,7 +206,13 @@ export interface BoardRow {
   name: string;
   cohort: string | null;
   cohort_id: string | null;
-  items: Array<{ key: string; title: string; status: ItemStatus; detail: string; due_date: string | null }> | null;
+  items: Array<{
+    key: string;
+    title: string;
+    status: ItemStatus;
+    detail: string;
+    due_date: string | null;
+  }> | null;
   /** Every item's status for this learner, by item key. */
   statuses: Record<string, ItemStatus> | null;
   /** The items on this learner's pack (custom ones vary by cohort/course). */
@@ -212,7 +248,9 @@ export function useEvidenceBoard(collegeId: string | null | undefined) {
   const load = useCallback(async () => {
     setError(null);
     try {
-      const res = await rpc<{ rows: BoardRow[] }>('get_evidence_pack_board', { p_college: collegeId ?? null });
+      const res = await rpc<{ rows: BoardRow[] }>('get_evidence_pack_board', {
+        p_college: collegeId ?? null,
+      });
       setRows(res?.rows ?? []);
     } catch (e) {
       setError((e as Error).message);
@@ -315,7 +353,10 @@ export async function openEvidenceFile(path: string) {
 }
 
 export async function markEvidenceVerified(id: string) {
-  const { error } = await db.from('college_learner_evidence').update({ verified_at: new Date().toISOString() }).eq('id', id);
+  const { error } = await db
+    .from('college_learner_evidence')
+    .update({ verified_at: new Date().toISOString() })
+    .eq('id', id);
   if (error) throw new Error(error.message);
 }
 
@@ -406,11 +447,13 @@ export const STATUS_LABEL: Record<ItemStatus, string> = {
   not_applicable: 'Not needed',
 };
 
+/** Status chips: border and text only (College Hub, 8 Oct 2026). Green done,
+ *  orange needs action, neutral otherwise. */
 export const STATUS_PILL: Record<ItemStatus, string> = {
-  ok: 'bg-emerald-500 text-black',
-  missing: 'bg-red-500 text-white',
-  attention: 'bg-orange-500 text-black',
-  due: 'bg-white text-black',
+  ok: 'border border-emerald-400/60 text-emerald-300',
+  missing: 'border border-orange-400/70 text-orange-300',
+  attention: 'border border-orange-400/70 text-orange-300',
+  due: 'border border-white/[0.5] text-white',
   not_yet_due: 'border border-white/[0.2] text-white',
   not_applicable: 'border border-white/[0.2] text-white',
 };

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { FormSheet } from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
 import {
   buttonPrimaryCn,
   buttonSecondaryCn,
@@ -16,7 +17,11 @@ import type { CollegeStaff, StaffRole } from '@/contexts/CollegeSupabaseContext'
 import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
 import { useToast } from '@/hooks/use-toast';
 import { SuccessCheckmark } from '@/components/college/primitives';
-import { useCollegeCan, PRIVILEGED_COLLEGE_ROLES, type CollegeStaffRoleKey } from '@/hooks/useCollegeCan';
+import {
+  useCollegeCan,
+  PRIVILEGED_COLLEGE_ROLES,
+  type CollegeStaffRoleKey,
+} from '@/hooks/useCollegeCan';
 import {
   RoleCapabilitySummary,
   StaffDutyToggles,
@@ -87,6 +92,8 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
     iqa_qual: '',
     specialisations: [] as string[],
     status: '',
+    // Batch 2: a trainee's passes wait for a qualified assessor's countersignature.
+    assessor_status: '' as '' | 'qualified' | 'trainee',
   });
 
   useEffect(() => {
@@ -103,6 +110,7 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
         iqa_qual: staff.iqa_qual || '',
         specialisations: staff.specialisations || [],
         status: staff.status || 'Active',
+        assessor_status: staff.assessor_status ?? '',
       });
       setDuties(
         Object.fromEntries(STAFF_DUTIES.map((d) => [d.key, Boolean(staff[d.key])])) as Partial<
@@ -155,16 +163,15 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
     try {
       // Role, status and duties go only when this person may change them;
       // your own row keeps them (the database refuses a self-promotion).
-      const roleChanges =
-        !roleLocked
-          ? {
-              role: formData.role,
-              status: formData.status,
-              ...(canGrant
-                ? Object.fromEntries(STAFF_DUTIES.map((d) => [d.key, Boolean(duties[d.key])]))
-                : {}),
-            }
-          : {};
+      const roleChanges = !roleLocked
+        ? {
+            role: formData.role,
+            status: formData.status,
+            ...(canGrant
+              ? Object.fromEntries(STAFF_DUTIES.map((d) => [d.key, Boolean(duties[d.key])]))
+              : {}),
+          }
+        : {};
       await updateStaff(staff.id, {
         name: formData.name,
         email: formData.email,
@@ -178,6 +185,10 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
         iqa_qual: formData.iqa_qual || null,
         specialisations: formData.specialisations,
         ...roleChanges,
+        // Only staff managers may change it, never on their own row (DB guard).
+        ...(canManage && !isSelf && formData.assessor_status !== (staff.assessor_status ?? '')
+          ? { assessor_status: formData.assessor_status || null }
+          : {}),
       });
 
       setShowSuccess(true);
@@ -211,7 +222,9 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
 
   const departmentOptions = [
     ...DEPARTMENTS,
-    ...(formData.department && !DEPARTMENTS.includes(formData.department) ? [formData.department] : []),
+    ...(formData.department && !DEPARTMENTS.includes(formData.department)
+      ? [formData.department]
+      : []),
   ].map((d) => ({ value: d, label: d }));
 
   return (
@@ -398,6 +411,44 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
                   placeholder="L3 TAQA"
                 />
               </div>
+              {canManage && !isSelf && (
+                <div className="col-span-2">
+                  <span className={labelCn}>As an assessor</span>
+                  <div
+                    role="radiogroup"
+                    aria-label="Assessor status"
+                    className="inline-flex w-full rounded-xl border border-white/[0.12] bg-white/[0.03] p-0.5 sm:w-auto"
+                  >
+                    {(
+                      [
+                        ['qualified', 'Qualified'],
+                        ['trainee', 'Trainee, needs countersigning'],
+                      ] as const
+                    ).map(([v, l]) => {
+                      const on = (formData.assessor_status || 'qualified') === v;
+                      return (
+                        <button
+                          key={v}
+                          type="button"
+                          role="radio"
+                          aria-checked={on}
+                          onClick={() => setFormData((p) => ({ ...p, assessor_status: v }))}
+                          className={cn(
+                            'h-11 flex-1 rounded-[10px] px-4 text-[13.5px] font-semibold touch-manipulation sm:flex-none',
+                            on ? 'bg-white text-black' : 'text-white hover:bg-white/[0.06]'
+                          )}
+                        >
+                          {l}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-1.5 text-[12.5px] leading-snug text-white">
+                    A trainee&rsquo;s passes show as awaiting countersignature and do not count
+                    until a qualified assessor countersigns them.
+                  </p>
+                </div>
+              )}
               <div>
                 <label className={labelCn} htmlFor="es-iqa">
                   IQA qualification

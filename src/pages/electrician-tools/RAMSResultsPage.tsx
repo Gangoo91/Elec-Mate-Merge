@@ -19,9 +19,16 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { exportRAMS } from '@/utils/rams-export';
+import { attachIssuedRamsToPack } from '@/utils/attachIssuedRamsToPack';
 import { safeReturnTo } from '@/utils/safety-launch';
 import { buildBriefingFromRams, RAMS_BRIEFING_SEED_KEY } from '@/utils/rams-briefing';
 import { useRamsBriefings } from '@/hooks/useRamsBriefings';
+import {
+  isFirmScope,
+  safetyHomePath,
+  useFirmRecordAccess,
+  useSafetyScope,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 type Review = { name: string; confirmedAt: string | null };
 const reviewOf = (rams?: RAMSData): Review | undefined =>
@@ -62,19 +69,37 @@ function mergeV2Steps(
   };
 }
 
-const RAMSResultsPage: React.FC = () => {
-  const { jobId } = useParams<{ jobId: string }>();
+interface RAMSResultsPageProps {
+  /**
+   * The generation job, when the page is mounted inside a hub rather than on
+   * its own route (the Employer Hub's Site Safety section).
+   */
+  jobId?: string;
+}
+
+const RAMSResultsPage: React.FC<RAMSResultsPageProps> = ({ jobId: jobIdProp }) => {
+  const params = useParams<{ jobId: string }>();
+  const jobId = jobIdProp ?? params.jobId;
   const navigate = useNavigate();
   const location = useLocation();
+  // Employer Hub (firm scope): the firm's RAMS. Back returns to the hub, and
+  // a manager edits only what the firm made — a worker's RAMS is read-only.
+  const scope = useSafetyScope();
+  const firm = isFirmScope(scope);
+  const home = firm ? safetyHomePath(scope) : SITE_SAFETY;
   // Where Back goes. A RAMS started from a job returns to that job; everything
   // else returns to Site Safety. Carried as route state by the generator.
   const requestedReturn =
     (location.state as { returnTo?: string } | null)?.returnTo ||
     new URLSearchParams(location.search).get('returnTo');
   // In-app paths only — this value can arrive in a URL.
-  const returnTo = safeReturnTo(requestedReturn) ?? SITE_SAFETY;
+  const returnTo = safeReturnTo(requestedReturn) ?? home;
 
   const { job, status, ramsData, methodData, startPolling } = useRAMSJobPolling(jobId ?? null);
+  // Firm records are edited by the firm's owner or co-admins; a worker's RAMS
+  // shared through a firm job is the worker's to change (RLS agrees).
+  const access = useFirmRecordAccess(job as { user_id?: string | null } | null);
+  const readOnly = firm && !access.canEdit;
 
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
@@ -230,6 +255,8 @@ const RAMSResultsPage: React.FC = () => {
   const handleSave = useCallback(
     async (opts?: { silent?: boolean }): Promise<boolean> => {
       if (!jobId || !doc.rams) return false;
+      // Nothing of ours to write: exports still go ahead from the copy shown.
+      if (readOnly) return true;
       const editsAtStart = editCount;
       setIsSaving(true);
       try {
@@ -238,7 +265,7 @@ const RAMSResultsPage: React.FC = () => {
         } = await supabase.auth.getUser();
         if (!user) throw new Error('Not signed in');
 
-        const { error } = await supabase
+        const update = supabase
           .from('rams_generation_jobs')
           // Cast at the boundary only: these are plain JSON documents, but the
           // generated Supabase types model the columns as `Json`, which our
@@ -247,9 +274,17 @@ const RAMSResultsPage: React.FC = () => {
             rams_data: doc.rams as unknown as never,
             method_data: doc.method as unknown as never,
           })
-          .eq('id', jobId)
-          .eq('user_id', user.id);
-        if (error) throw error;
+          .eq('id', jobId);
+        if (firm) {
+          // The firm's RAMS: RLS decides who may write. A blocked update is not
+          // an error to PostgREST, so count the rows to say so honestly.
+          const { data: rows, error } = await update.select('id');
+          if (error) throw error;
+          if (!rows?.length) throw new Error('Only the person who made this RAMS can change it.');
+        } else {
+          const { error } = await update.eq('user_id', user.id);
+          if (error) throw error;
+        }
 
         savedEditCount.current = editsAtStart;
         setSaveFailed(false);
@@ -270,7 +305,7 @@ const RAMSResultsPage: React.FC = () => {
         setIsSaving(false);
       }
     },
-    [jobId, doc, editCount]
+    [jobId, doc, editCount, firm, readOnly]
   );
 
   // Autosave ~1.5s after the last edit.
@@ -333,19 +368,38 @@ const RAMSResultsPage: React.FC = () => {
           kind,
           doc.rams,
           doc.method as MethodStatementData | undefined,
-          { generationJobId: jobId }
+          {
+            generationJobId: jobId,
+            // Employer Hub: file into the firm's register; a worker's RAMS is
+            // downloaded, never filed by the manager.
+            ...(isFirmScope(scope) ? { firmEmployerId: scope.employerId } : {}),
+            ...(readOnly ? { file: false } : {}),
+          }
         );
         if (filed) {
           setFiledVersion(version ?? 1);
           setFiledAtLocal(new Date().toISOString());
           void refetchBriefings();
         }
+        // Employer Hub: the issued RAMS goes into the job's pack for crew
+        // sign-off by itself (ELE-1941). The Electrical Hub is unchanged.
+        let packNote = '';
+        if (filed && kind === 'combined' && jobId && isFirmScope(scope) && !readOnly) {
+          const res = await attachIssuedRamsToPack(jobId, scope.employerId);
+          packNote =
+            res === 'attached'
+              ? ' Added to the job pack for the crew to sign.'
+              : res === 'failed'
+                ? ' It could not be added to the job pack; attach it from RAMS.'
+                : '';
+        }
         toast({
           title: filed ? (version ? `Filed as version ${version}` : 'PDF filed') : 'Downloaded',
           description: filed
-            ? version
-              ? 'This replaces the earlier copy in Site Safety. Earlier versions are kept.'
-              : 'Saved to your Site Safety documents. Brief the team on it before work starts.'
+            ? (version
+                ? 'This replaces the earlier copy in Site Safety. Earlier versions are kept.'
+                : 'Saved to your Site Safety documents. Brief the team on it before work starts.') +
+              packNote
             : fileReason || 'The document downloaded but was not filed.',
         });
       } catch (err) {
@@ -358,7 +412,7 @@ const RAMSResultsPage: React.FC = () => {
         setIsExporting(false);
       }
     },
-    [doc, handleSave, jobId, refetchBriefings]
+    [doc, handleSave, jobId, refetchBriefings, scope, readOnly]
   );
 
   const handleRetryAgent = useCallback(
@@ -415,8 +469,12 @@ const RAMSResultsPage: React.FC = () => {
     } catch {
       /* storage blocked — the wizard simply opens empty */
     }
-    navigate('/electrician/site-safety?tool=team-briefing&from=rams');
-  }, [doc, dirty, handleSave, jobId, currentFiledVersion, navigate]);
+    navigate(
+      isFirmScope(scope)
+        ? '/employer?section=site-safety&tool=team-briefing&from=rams'
+        : '/electrician/site-safety?tool=team-briefing&from=rams'
+    );
+  }, [doc, dirty, handleSave, jobId, currentFiledVersion, navigate, scope]);
 
   const projectName =
     (ramsData as { projectName?: string } | undefined)?.projectName ||
@@ -441,19 +499,35 @@ const RAMSResultsPage: React.FC = () => {
     );
   }
 
-  if (!hasAnything) {
+  // Employer Hub: only the firm's RAMS open here. A person's own RAMS (which
+  // RLS lets them read) belongs to their Electrical Hub, not the firm.
+  const notFirms =
+    isFirmScope(scope) &&
+    !!job &&
+    (job as { employer_id?: string | null }).employer_id !== scope.employerId;
+
+  if (!hasAnything || notFirms) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center">
-        <h1 className="text-[20px] font-semibold text-white">RAMS not found</h1>
-        <p className="max-w-sm text-[13px] leading-relaxed text-white">
-          This job either doesn&rsquo;t exist or belongs to another account.
-        </p>
+        <h1 className="text-[20px] font-semibold text-white">
+          {notFirms ? 'Not filed with the firm' : 'RAMS not found'}
+        </h1>
+        {notFirms && (
+          <p className="max-w-sm text-[13px] leading-relaxed text-white">
+            This RAMS is in your own Site Safety in the Electrical Hub.
+          </p>
+        )}
+        {!notFirms && (
+          <p className="max-w-sm text-[13px] leading-relaxed text-white">
+            This job either doesn&rsquo;t exist or belongs to another account.
+          </p>
+        )}
         <button
           type="button"
           onClick={() => navigate(returnTo)}
           className="inline-flex h-11 items-center gap-2 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
         >
-          {returnTo === SITE_SAFETY ? 'Back to Site Safety' : 'Back to job'}
+          {returnTo === home ? 'Back to Site Safety' : 'Back to job'}
         </button>
       </div>
     );
@@ -470,7 +544,7 @@ const RAMSResultsPage: React.FC = () => {
             className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation"
           >
             <ArrowLeft className="h-4 w-4" />
-            {returnTo === SITE_SAFETY ? 'Back' : 'Back to job'}
+            {returnTo === home ? 'Back' : 'Back to job'}
           </button>
           <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
             RAMS
@@ -527,7 +601,7 @@ const RAMSResultsPage: React.FC = () => {
         <RAMSDocumentTabs
           ramsData={doc.rams}
           methodData={doc.method}
-          editable
+          editable={!readOnly}
           isExporting={isExporting}
           onUpdateRisk={patchRisk}
           onRemoveRisk={removeRisk}
@@ -541,7 +615,8 @@ const RAMSResultsPage: React.FC = () => {
           review={reviewOf(doc.rams) ?? { name: '', confirmedAt: null }}
           onReviewChange={setReview}
           onUpdateDetails={patchDetails}
-          onBriefTeam={handleBriefTeam}
+          // A worker's RAMS (read-only here) is briefed by the worker.
+          onBriefTeam={readOnly ? undefined : handleBriefTeam}
           filedVersion={currentFiledVersion}
           briefings={briefingInfo?.briefings}
         />

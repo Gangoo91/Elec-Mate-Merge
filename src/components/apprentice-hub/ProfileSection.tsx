@@ -29,7 +29,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
-import { ExportPackSheet } from '@/components/portfolio-export/ExportPackSheet';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
 import { usePortfolio } from '@/hooks/portfolio/usePortfolio';
@@ -93,7 +92,6 @@ export function ProfileSection({
   const [showShare, setShowShare] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [showTutorMessages, setShowTutorMessages] = useState(false);
-  const [exportOpen, setExportOpen] = useState(false);
 
   const rawName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
   const fullName = rawName
@@ -127,22 +125,25 @@ export function ProfileSection({
       <header
         className={cn(P_CARD, 'flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between')}
       >
-        <div className="flex min-w-0 items-center gap-4 sm:gap-5">
-          <Avatar className="h-16 w-16 shrink-0 border border-white/[0.08] sm:h-20 sm:w-20">
+        <div className="flex min-w-0 items-start gap-4 sm:items-center sm:gap-5">
+          <Avatar className="h-14 w-14 shrink-0 border border-white/[0.1] sm:h-20 sm:w-20">
             <AvatarImage src={profile?.avatar_url} />
-            <AvatarFallback className="bg-white/[0.06] text-[20px] font-semibold text-elec-yellow">
+            <AvatarFallback className="bg-white/[0.06] text-[18px] font-semibold text-white sm:text-[22px]">
               {initials}
             </AvatarFallback>
           </Avatar>
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <h1 className="truncate text-[24px] font-bold leading-tight tracking-tight text-white sm:text-[30px]">
+          {/* Name and email wrap rather than cut to a stub (10 Oct). */}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-2">
+              <h1 className="min-w-0 break-words text-[24px] font-bold leading-tight tracking-tight text-white sm:text-[30px]">
                 {fullName}
               </h1>
-              <PageHelpButton help={ME_HELP} />
+              <PageHelpButton help={ME_HELP} className="-mr-1 -mt-1 shrink-0" />
             </div>
-            {user?.email && <p className="truncate text-[13px] text-white">{user.email}</p>}
-            <p className="mt-1.5 text-[13.5px] leading-snug text-white">
+            {user?.email && (
+              <p className="mt-0.5 break-all text-[13px] leading-snug text-white">{user.email}</p>
+            )}
+            <p className="mt-2 text-[13.5px] leading-snug text-white">
               {qualLoading ? (
                 'Checking your course…'
               ) : qualificationName ? (
@@ -247,7 +248,7 @@ export function ProfileSection({
               />
               {collegeLearner ? (
                 <MeRow
-                  icon={<MessageSquare className="h-4 w-4" />}
+                  icon={<MessageSquare className="h-[18px] w-[18px]" strokeWidth={1.5} />}
                   title="Message your tutor"
                   sub={
                     collegeLearner.tutor_name
@@ -271,7 +272,7 @@ export function ProfileSection({
             <h2 className="text-[15px] font-semibold tracking-tight text-white">Account</h2>
             <ul className={P_LIST}>
               <MeRow
-                icon={<Settings className="h-4 w-4" />}
+                icon={<Settings className="h-[18px] w-[18px]" strokeWidth={1.5} />}
                 title="Settings"
                 onClick={() => navigate('/settings')}
               />
@@ -293,18 +294,16 @@ export function ProfileSection({
           <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-1">
             <button
               type="button"
-              onClick={() => setExportOpen(true)}
+              onClick={() => navigate('/apprentice/export')}
               className={cn(
                 P_CARD,
                 'group flex w-[calc(100%+2rem)] items-start gap-4 text-left touch-manipulation transition-colors hover:border-white/[0.2] sm:w-full'
               )}
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-elec-yellow text-black">
-                <FolderDown className="h-5 w-5" />
-              </span>
+              <FolderDown className="mt-0.5 h-5 w-5 shrink-0 text-white" strokeWidth={1.5} />
               <span className="min-w-0 flex-1">
                 <span className="block text-[15px] font-semibold text-white">Export my record</span>
-                <span className="mt-0.5 block text-[12.5px] leading-snug text-white">
+                <span className="mt-0.5 block text-[13px] leading-snug text-white">
                   A ZIP with a PDF summary, every file, your declarations, hours and the audit
                   trail.
                 </span>
@@ -319,14 +318,12 @@ export function ProfileSection({
                 'group flex w-[calc(100%+2rem)] items-start gap-4 text-left touch-manipulation transition-colors hover:border-white/[0.2] sm:w-full'
               )}
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/[0.14] text-white">
-                <Link2 className="h-5 w-5" />
-              </span>
+              <Link2 className="mt-0.5 h-5 w-5 shrink-0 text-white" strokeWidth={1.5} />
               <span className="min-w-0 flex-1">
                 <span className="block text-[15px] font-semibold text-white">
                   Share a private link
                 </span>
-                <span className="mt-0.5 block text-[12.5px] leading-snug text-white">
+                <span className="mt-0.5 block text-[13px] leading-snug text-white">
                   {activeShares
                     ? `${activeShares} ${activeShares === 1 ? 'link is' : 'links are'} live. Make another or turn one off.`
                     : 'Someone can view your portfolio without an account. You choose when it stops working.'}
@@ -394,12 +391,6 @@ export function ProfileSection({
       {collegeLearner && (
         <ApprenticeMessageSheet open={showTutorMessages} onOpenChange={setShowTutorMessages} />
       )}
-      <ExportPackSheet
-        open={exportOpen}
-        onOpenChange={setExportOpen}
-        learnerUserId={null}
-        mode="learner"
-      />
     </div>
   );
 }
@@ -424,11 +415,11 @@ function MeRow({
       <button type="button" onClick={onClick} className={cn(P_ROW, 'group')}>
         {icon && <span className="shrink-0 text-white">{icon}</span>}
         <span className="min-w-0 flex-1">
-          <span className="block text-[14px] font-semibold text-white">{title}</span>
+          <span className="block text-[15px] font-semibold text-white">{title}</span>
           {sub && (
             <span
               className={cn(
-                'mt-0.5 block truncate text-[12.5px]',
+                'mt-0.5 block text-[13px] leading-snug',
                 warn ? 'text-orange-300' : 'text-white'
               )}
             >
@@ -437,7 +428,7 @@ function MeRow({
           )}
         </span>
         {count !== undefined && (
-          <span className="flex h-6 min-w-[24px] shrink-0 items-center justify-center rounded-full bg-elec-yellow px-1.5 text-[12px] font-bold tabular-nums text-black">
+          <span className="flex h-6 min-w-[24px] shrink-0 items-center justify-center rounded-full bg-white px-1.5 text-[12px] font-bold tabular-nums text-black">
             {count}
           </span>
         )}

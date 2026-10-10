@@ -15,12 +15,39 @@ import { useAuth } from '@/contexts/AuthContext';
 import { LearnerAssessmentView } from '@/components/assessment/LearnerAssessmentView';
 import { AssessorProfileCard } from '@/components/assessment/AssessorProfileCard';
 import { ROLE_LABEL } from '@/lib/assessorInvite';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import {
   PublicCard,
   PublicEyebrow,
   PublicH1,
   PublicPageShell,
 } from '@/components/public/PublicPageShell';
+
+const HELP: PageHelpContent = {
+  id: 'assessor-workspace',
+  title: 'Assessor workspace',
+  what: 'Every apprentice who has invited you to assess their portfolio, and for each one their evidence against every criterion of their qualification.',
+  steps: [
+    {
+      title: 'Open a learner',
+      body: 'The count on each card is criteria the learner has put forward that have no decision yet.',
+    },
+    {
+      title: 'Decide each criterion',
+      body: 'Open a criterion to see the evidence mapped to it. Pass it, or send it back with what more is needed. The learner sees your feedback.',
+    },
+    {
+      title: 'Keep your profile current',
+      body: 'Your qualifications show next to your name, and each decision you record keeps a copy of them.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Access',
+      body: 'You see only the learners who invited you, for as long as their invite stands. No subscription is needed.',
+    },
+  ],
+};
 
 interface LinkRow {
   id: string;
@@ -53,7 +80,7 @@ export default function AssessorWorkspacePage() {
         const ids = [...new Set(rows.map((r) => r.learner_id))];
         if (ids.length) {
           const { data: profs } = await supabase
-            .from('profiles')
+            .from('public_profiles')
             .select('id, full_name')
             .in('id', ids);
           setNames(
@@ -113,8 +140,10 @@ export default function AssessorWorkspacePage() {
 
       {links !== null && !learnerId && (
         <>
-          {user && <AssessorProfileCard userId={user.id} defaultName={profile?.full_name} />}
-          <PublicEyebrow>Assessor workspace</PublicEyebrow>
+          <div className="flex items-start justify-between gap-4">
+            <PublicEyebrow>Assessor workspace</PublicEyebrow>
+            <PageHelpButton help={HELP} className="-mt-2 shrink-0" />
+          </div>
           <PublicH1>
             {links.length === 0 ? (
               'No learners yet'
@@ -141,26 +170,39 @@ export default function AssessorWorkspacePage() {
                   onClick={() => setParams({ learner: l.learner_id })}
                   className="text-left touch-manipulation transition-transform active:scale-[0.98]"
                 >
-                  <PublicCard className="flex h-full items-center gap-4">
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-elec-yellow text-[18px] font-bold text-black">
+                  {/* Neutral edge: one gold card per screen, not one per learner. */}
+                  <PublicCard className="flex h-full items-center gap-4 border-white/[0.12]">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/[0.1] text-[18px] font-bold text-white">
                       {(names[l.learner_id] ?? 'A').charAt(0)}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[17px] font-bold text-white">
+                      <span className="block break-words text-[17px] font-bold leading-snug text-white">
                         {names[l.learner_id] ?? 'Apprentice'}
                       </span>
                       <span className="block text-[14px] text-white">
                         You are their {ROLE_LABEL[l.role] ?? 'assessor'}
                       </span>
-                      <span className="mt-1 block text-[14px] font-semibold text-elec-yellow">
+                      <span
+                        className={
+                          (ready[l.learner_id] ?? 0) > 0
+                            ? 'mt-1 block text-[14px] font-semibold text-orange-400'
+                            : 'mt-1 block text-[14px] text-white'
+                        }
+                      >
                         {(ready[l.learner_id] ?? 0) > 0
-                          ? `${ready[l.learner_id]} ready for you`
-                          : 'Open'}
+                          ? `${ready[l.learner_id]} waiting for your decision`
+                          : 'Nothing waiting'}
                       </span>
                     </span>
                   </PublicCard>
                 </button>
               ))}
+            </div>
+          )}
+
+          {user && (
+            <div className="mt-10">
+              <AssessorProfileCard userId={user.id} defaultName={profile?.full_name} />
             </div>
           )}
         </>

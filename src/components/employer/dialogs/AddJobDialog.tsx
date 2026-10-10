@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { JobHoursFields } from '@/components/employer/jobs/JobHoursFields';
+import { JobTemplatesSheet } from '@/components/employer/JobTemplatesSheet';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateJob } from '@/hooks/useJobs';
 import { linkRecordToClient } from '@/services/employerClientService';
+import { ClientMatchHint } from '@/components/employer/clients/ClientMatchHint';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
@@ -172,6 +174,9 @@ export function AddJobDialog({
   const [restoredAt, setRestoredAt] = useState<number | null>(null);
   const [clash, setClash] = useState<{ title: string; client: string } | null>(null);
   const [confirmClose, setConfirmClose] = useState(false);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
+  // ELE-2065 §3A #14: an existing client picked from "This looks like an existing client".
+  const [clientChoice, setClientChoice] = useState<{ id: string } | 'new' | null>(null);
   const [showErrors, setShowErrors] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   // What a fresh form starts as. Prefilled defaults are not "input": closing
@@ -278,7 +283,12 @@ export function AddJobDialog({
     ],
     [form, visited, datesBackwards]
   );
-  const firstMissing = !form.title.trim() || !form.client.trim() ? 0 : !form.location.trim() || datesBackwards ? 1 : -1;
+  const firstMissing =
+    !form.title.trim() || !form.client.trim()
+      ? 0
+      : !form.location.trim() || datesBackwards
+        ? 1
+        : -1;
 
   const goTo = (next: number) => {
     if (next === step) return;
@@ -289,6 +299,7 @@ export function AddJobDialog({
   };
 
   const resetAll = () => {
+    setClientChoice(null);
     setForm(fresh);
     setStep(0);
     setVisited(new Set([0]));
@@ -328,7 +339,12 @@ export function AddJobDialog({
       setShowErrors(true);
       goTo(firstMissing);
       toast({
-        title: firstMissing === 0 ? 'Add a job title and client' : datesBackwards ? 'Check the dates' : 'Add the site address',
+        title:
+          firstMissing === 0
+            ? 'Add a job title and client'
+            : datesBackwards
+              ? 'Check the dates'
+              : 'Add the site address',
         description:
           firstMissing === 1 && datesBackwards
             ? 'The end date is before the start date.'
@@ -364,7 +380,10 @@ export function AddJobDialog({
 
       // Auto-link into the CRM so the client record builds itself (non-fatal).
       if (job?.id) {
-        linkRecordToClient('employer_jobs', job.id, form.client.trim()).catch(() => {});
+        linkRecordToClient('employer_jobs', job.id, form.client.trim(), {
+          clientId: clientChoice && clientChoice !== 'new' ? clientChoice.id : null,
+          forceNew: clientChoice === 'new',
+        }).catch(() => {});
       }
 
       toast({ title: 'Job created', description: `${form.title.trim()} is on the board.` });
@@ -412,7 +431,9 @@ export function AddJobDialog({
                   </p>
                 </div>
                 {draftWord && (
-                  <span className="mt-1 shrink-0 text-[11.5px] text-white tabular-nums">{draftWord}</span>
+                  <span className="mt-1 shrink-0 text-[11.5px] text-white tabular-nums">
+                    {draftWord}
+                  </span>
                 )}
               </div>
               <div className="mt-3" data-help="jobs.new-steps">
@@ -426,13 +447,16 @@ export function AddJobDialog({
           </div>
 
           {/* Body */}
-          <div ref={bodyRef} className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-5 py-4">
+          <div
+            ref={bodyRef}
+            className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-5 py-4"
+          >
             <div className="mx-auto w-full max-w-2xl space-y-4">
               {clash && (
                 <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-elec-yellow/40 bg-white/[0.03] p-4 space-y-3">
                   <p className="text-[13.5px] text-white leading-snug">
-                    You have an unsaved draft, <span className="font-semibold">{clash.title}</span> for{' '}
-                    {clash.client}. Starting a job for {prefillClient} will replace it.
+                    You have an unsaved draft, <span className="font-semibold">{clash.title}</span>{' '}
+                    for {clash.client}. Starting a job for {prefillClient} will replace it.
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     <SecondaryButton
@@ -462,7 +486,9 @@ export function AddJobDialog({
                 {guided && (
                   <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-white/[0.12] border-l-[3px] border-l-elec-yellow sm:border-l-[3px] sm:border-l-elec-yellow bg-white/[0.03] px-4 py-3.5">
                     <p className="text-[14px] font-semibold text-white">{COACH[step].title}</p>
-                    <p className="mt-1 text-[13px] leading-relaxed text-white">{COACH[step].body}</p>
+                    <p className="mt-1 text-[13px] leading-relaxed text-white">
+                      {COACH[step].body}
+                    </p>
                   </div>
                 )}
                 {step === 0 && (
@@ -487,6 +513,19 @@ export function AddJobDialog({
                         enterKeyHint="next"
                       />
                     </Field>
+                    <ClientMatchHint
+                      name={form.client}
+                      pickedId={clientChoice && clientChoice !== 'new' ? clientChoice.id : null}
+                      onPick={(m) => {
+                        if (m === 'new' || m === null) {
+                          setClientChoice(m);
+                          return;
+                        }
+                        setClientChoice({ id: m.id });
+                        set('client', m.name);
+                        if (!form.location.trim() && m.address) set('location', m.address);
+                      }}
+                    />
                     <Field label="Status">
                       <div className="grid grid-cols-3 gap-2">
                         {STATUS_OPTIONS.map((o) => (
@@ -509,10 +548,24 @@ export function AddJobDialog({
                     </Field>
                   </FormCard>
                 )}
+                {/* ELE-1961: a saved template is one tap away from New job. */}
+                {step === 0 && !guided && !dirty && (
+                  <button
+                    type="button"
+                    onClick={() => setTemplatesOpen(true)}
+                    className="h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation"
+                  >
+                    Start from a template
+                  </button>
+                )}
 
                 {step === 1 && (
                   <FormCard bleed eyebrow="Site & dates">
-                    <Field label="Site address" required hint="Used for directions and the live map.">
+                    <Field
+                      label="Site address"
+                      required
+                      hint="Used for directions and the live map."
+                    >
                       <Input
                         value={form.location}
                         onChange={(e) => set('location', e.target.value)}
@@ -541,7 +594,9 @@ export function AddJobDialog({
                       </Field>
                     </div>
                     {datesBackwards && (
-                      <p className="text-[12px] text-red-300">The end date is before the start date.</p>
+                      <p className="text-[12px] text-red-300">
+                        The end date is before the start date.
+                      </p>
                     )}
                   </FormCard>
                 )}
@@ -622,12 +677,25 @@ export function AddJobDialog({
                   Next
                 </PrimaryButton>
               ) : (
-                <PrimaryButton fullWidth onClick={() => void handleCreate()} disabled={createJob.isPending}>
+                <PrimaryButton
+                  fullWidth
+                  onClick={() => void handleCreate()}
+                  disabled={createJob.isPending}
+                >
                   {createJob.isPending ? 'Creating…' : guided ? 'Create and book' : 'Create job'}
                 </PrimaryButton>
               )}
             </div>
           </div>
+
+          <JobTemplatesSheet
+            open={templatesOpen}
+            onOpenChange={setTemplatesOpen}
+            onCreated={(job) => {
+              closeNow(false);
+              onCreated?.(job);
+            }}
+          />
 
           <KeepDraftPrompt
             open={confirmClose}

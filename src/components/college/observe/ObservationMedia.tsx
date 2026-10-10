@@ -247,10 +247,10 @@ export function ObservationMedia({
               ) : (
                 <div className="flex aspect-square w-full flex-col items-center justify-center gap-1 p-2 text-center">
                   <FileAudio className="h-6 w-6 text-elec-yellow" aria-hidden />
-                  <span className="line-clamp-2 text-[11px] text-white">{f.name}</span>
+                  <span className="line-clamp-2 text-[12px] text-white">{f.name}</span>
                 </div>
               )}
-              <span className="absolute bottom-1 left-1 rounded bg-black/70 px-1 text-[10.5px] tabular-nums text-white">
+              <span className="absolute bottom-1 left-1 rounded bg-black/70 px-1 text-[12px] tabular-nums text-white">
                 {fmtSize(f.size)}
               </span>
               <button

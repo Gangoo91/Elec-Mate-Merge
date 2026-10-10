@@ -937,8 +937,8 @@ const EnergyCostCalculator = () => {
                       <div
                         className="p-3 rounded-xl border space-y-2"
                         style={{
-                          borderColor: `${config.gradientFrom}15`,
-                          background: `${config.gradientFrom}05`,
+                          borderColor: 'rgba(255, 255, 255, 0.12)',
+                          background: 'rgba(255, 255, 255, 0.04)',
                         }}
                       >
                         <ul className="space-y-2">
@@ -976,8 +976,8 @@ const EnergyCostCalculator = () => {
                       <div
                         className="p-3 rounded-xl border"
                         style={{
-                          borderColor: `${config.gradientFrom}15`,
-                          background: `${config.gradientFrom}05`,
+                          borderColor: 'rgba(255, 255, 255, 0.12)',
+                          background: 'rgba(255, 255, 255, 0.04)',
                         }}
                       >
                         <div className="grid grid-cols-2 gap-3 text-sm">

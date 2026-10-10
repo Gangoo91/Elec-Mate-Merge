@@ -13,6 +13,11 @@ import {
 } from '@/components/forms/fieldStyles';
 import { LeaveOutSheet } from '@/components/college/otj/LeaveOutSheet';
 import {
+  PLANNED_SOURCE_LABEL,
+  useHoursStatementBasis,
+  type HoursStatementBasis,
+} from '@/hooks/useHoursStatementBasis';
+import {
   approveAppLearning,
   undoAppLearningDecision,
   fetchLearnerAppDays,
@@ -33,14 +38,19 @@ import {
    The same figures the learner and employer see (get_otj_summary), the time
    the app recorded while they learned (by area, with one-tap approval), and
    the planned-versus-actual statement the funding rules require when fewer
-   hours were delivered than planned (paras 92–94).
+   hours were delivered than planned (2026/27 paras 96–98; 2025/26 92–94).
+   ELE-2044: that statement compares VERIFIED actual hours with PLANNED
+   hours; app-tracked time is shown beside it, never folded in (ELE-2037).
 
    Replaces a "Logged this week" ring judged against "the 6h weekly minimum"
    (not the rule since August 2025) and a totals card that counted every
    entry whatever its status.
    ========================================================================== */
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 
 const fmtH = (h: number | null | undefined) => {
   const v = Number(h ?? 0);
@@ -68,6 +78,7 @@ export function OtjStaffOverview({ userId, studentName }: { userId: string; stud
   const { data: s, refresh: refreshSummary } = useOtjSummary(userId);
   const { data: breakdown, refresh: refreshBreakdown } = useAppLearningBreakdown(userId, 30);
   const { data: statement, refresh: refreshStatement } = useOtjHoursStatement(userId);
+  const { data: basis, refresh: refreshBasis } = useHoursStatementBasis(userId);
   const [days, setDays] = useState<AppLearningDay[]>([]);
   const [busy, setBusy] = useState<string | null>(null);
   const [showDays, setShowDays] = useState(false);
@@ -189,7 +200,7 @@ export function OtjStaffOverview({ userId, studentName }: { userId: string; stud
             ['App learning this week', fmtH(s?.app_learning_this_week_hours)],
           ].map(([label, value]) => (
             <div key={label} className="rounded-xl border border-white/[0.12] p-3">
-              <p className="text-[11.5px] text-white">{label}</p>
+              <p className="text-[12px] text-white">{label}</p>
               <p className="mt-1 text-[17px] font-semibold tabular-nums text-white">{value}</p>
             </div>
           ))}
@@ -214,8 +225,8 @@ export function OtjStaffOverview({ userId, studentName }: { userId: string; stud
         {(breakdown?.quiz_minutes ?? 0) > 0 && (
           <p className="mt-2 text-[12px] leading-snug text-white">
             Includes {fmtMins(breakdown?.quiz_minutes ?? 0)} of quizzes and mocks, timed per
-            attempt. These reach the hours only when the learner confirms them, then come to you
-            to verify.
+            attempt. These reach the hours only when the learner confirms them, then come to you to
+            verify.
           </p>
         )}
         {areas.length === 0 ? (
@@ -314,6 +325,7 @@ export function OtjStaffOverview({ userId, studentName }: { userId: string; stud
       {/* Planned-versus-actual statement */}
       <StatementCard
         statement={statement}
+        basis={basis}
         summary={s}
         first={first}
         onPrepare={() => setStatementOpen(true)}
@@ -335,8 +347,9 @@ export function OtjStaffOverview({ userId, studentName }: { userId: string; stud
         onOpenChange={setStatementOpen}
         userId={userId}
         summary={s}
+        basis={basis}
         first={first}
-        onPrepared={() => void refreshStatement()}
+        onPrepared={() => void Promise.all([refreshStatement(), refreshBasis()])}
       />
     </div>
   );
@@ -344,11 +357,13 @@ export function OtjStaffOverview({ userId, studentName }: { userId: string; stud
 
 function StatementCard({
   statement,
+  basis,
   summary,
   first,
   onPrepare,
 }: {
   statement: OtjHoursStatement | null;
+  basis: HoursStatementBasis | null;
   summary: OtjSummary | null;
   first: string;
   onPrepare: () => void;
@@ -380,7 +395,11 @@ function StatementCard({
     try {
       await downloadLearnerDocument({ kind: 'otj_statement', statementId: statement.id });
     } catch (e) {
-      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not make the PDF',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setPdfBusy(false);
     }
@@ -394,21 +413,53 @@ function StatementCard({
             Planned versus actual hours statement
           </p>
           <p className="mt-0.5 text-[12px] leading-snug text-white">
-            Needed when fewer hours are delivered than were planned. Signed by {first} and their
-            employer, in the evidence pack within 12 weeks of completion (funding rules 92 to 94).
+            Needed when fewer verified hours are delivered than were planned. Signed by {first} and
+            their employer, in the evidence pack within 12 weeks of completion (funding rules
+            2026/27 paras 96 to 98; 2025/26 paras 92 to 94).
           </p>
         </div>
       </div>
+      {basis && basis.planned_hours != null && (
+        <div className="mt-3 space-y-1 text-[12.5px] text-white" data-testid="hours-basis">
+          <p>
+            <span className="font-semibold">{fmtH(basis.verified_hours)} verified</span> of{' '}
+            {fmtH(basis.planned_hours)} planned (from{' '}
+            {PLANNED_SOURCE_LABEL[basis.planned_source ?? ''] ?? 'the learner record'}).
+          </p>
+          <p data-testid="hours-basis-app">
+            App-tracked learning {fmtH(basis.app_tracked_hours)} is shown separately and is not in
+            the statement.
+          </p>
+          {basis.warn_80 && !basis.ended && (
+            <p className="font-medium text-orange-300" data-testid="hours-basis-warn">
+              {basis.elapsed_pct}% through with {fmtH(basis.verified_hours)} verified against{' '}
+              {fmtH(basis.planned_by_now)} planned by now. If it stays short, a signed statement is
+              due within 12 weeks of the end.
+            </p>
+          )}
+          {basis.ended && basis.statement_needed && basis.statement_due_by && (
+            <p className="font-medium text-orange-300">
+              Statement due by {fmtDate(basis.statement_due_by)} (12 weeks after the end).
+            </p>
+          )}
+          {basis.ended && !basis.statement_needed && (
+            <p>Verified hours meet the plan: no statement needed.</p>
+          )}
+        </div>
+      )}
       {statement ? (
         <div className="mt-3 space-y-2">
           <div className="grid grid-cols-3 gap-2.5">
             {[
               ['Planned', fmtH(statement.planned_hours)],
-              ['Delivered', fmtH(statement.actual_hours)],
+              [
+                statement.actual_hours === statement.verified_hours ? 'Verified' : 'Delivered',
+                fmtH(statement.actual_hours),
+              ],
               ['Minimum', statement.minimum_hours != null ? fmtH(statement.minimum_hours) : '—'],
             ].map(([l, v]) => (
               <div key={l} className="rounded-xl border border-white/[0.12] p-2.5">
-                <p className="text-[11.5px] text-white">{l}</p>
+                <p className="text-[12px] text-white">{l}</p>
                 <p className="text-[15px] font-semibold tabular-nums text-white">{v}</p>
               </div>
             ))}
@@ -452,9 +503,11 @@ function StatementCard({
       ) : (
         <div className="mt-3 flex items-center justify-between gap-3">
           <p className="text-[12.5px] text-white">
-            {summary?.required_hours
-              ? `${fmtH(summary.counted_hours)} delivered so far.`
-              : 'No statement yet.'}
+            {basis?.planned_hours != null
+              ? `${fmtH(basis.verified_hours)} verified so far.`
+              : summary?.required_hours
+                ? `${fmtH(summary.verified_hours)} verified so far.`
+                : 'No statement yet.'}
           </p>
           <button
             type="button"
@@ -474,6 +527,7 @@ function PrepareStatementSheet({
   onOpenChange,
   userId,
   summary,
+  basis,
   first,
   onPrepared,
 }: {
@@ -481,6 +535,7 @@ function PrepareStatementSheet({
   onOpenChange: (o: boolean) => void;
   userId: string;
   summary: OtjSummary | null;
+  basis: HoursStatementBasis | null;
   first: string;
   onPrepared: () => void;
 }) {
@@ -492,13 +547,16 @@ function PrepareStatementSheet({
 
   useEffect(() => {
     if (open) {
-      setPlanned(summary?.required_hours ? String(Math.round(summary.required_hours)) : '');
+      const p = basis?.planned_hours ?? summary?.required_hours;
+      setPlanned(p ? String(Math.round(p)) : '');
       setRpl('0');
       setReason('');
     }
-  }, [open, summary?.required_hours]);
+  }, [open, summary?.required_hours, basis?.planned_hours]);
 
-  const actual = summary?.counted_hours ?? 0;
+  // ELE-2044: the statutory actual is verified hours, not verified + app time.
+  const actual = basis?.verified_hours ?? summary?.verified_hours ?? 0;
+  const appTracked = basis?.app_tracked_hours ?? summary?.app_learning_hours ?? 0;
   const minimum = useMemo(() => {
     const req = summary?.required_hours;
     if (!req) return null;
@@ -539,9 +597,10 @@ function PrepareStatementSheet({
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      eyebrow="Funding rules 92 to 94"
+      width="wide"
+      eyebrow="Funding rules: planned versus actual"
       title="Planned versus actual hours"
-      description={`Uses ${first}'s figures as they stand today. Once prepared it cannot be edited; prepare a new one if anything changes.`}
+      description={`Uses ${first}'s verified hours as they stand today. Once prepared it cannot be edited; prepare a new one if anything changes.`}
       footer={
         <div className="grid grid-cols-2 gap-2.5">
           <button
@@ -566,12 +625,12 @@ function PrepareStatementSheet({
       <div className="space-y-5">
         <div className="grid grid-cols-3 gap-2.5">
           {[
-            ['Delivered', fmtH(actual)],
+            ['Verified (actual)', fmtH(actual)],
             ['Minimum', minimum != null ? fmtH(minimum) : '—'],
             ['Minimum met', minimum != null ? (actual >= minimum ? 'Yes' : 'No') : '—'],
           ].map(([l, v]) => (
             <div key={l} className="rounded-xl border border-white/[0.12] p-3">
-              <p className="text-[11.5px] text-white">{l}</p>
+              <p className="text-[12px] text-white">{l}</p>
               <p className="mt-1 text-[16px] font-semibold tabular-nums text-white">{v}</p>
             </div>
           ))}
@@ -617,6 +676,15 @@ function PrepareStatementSheet({
             className={cn(textareaCn, 'w-full resize-none')}
           />
         </div>
+        <p className="text-[12.5px] leading-relaxed text-white" data-testid="prepare-app-tracked">
+          App-tracked learning ({fmtH(appTracked)}) is not counted as actual hours here. It stays a
+          separate figure until the college decides whether it counts.
+        </p>
+        {plannedNum > 0 && actual >= plannedNum && (
+          <p className="text-[12.5px] font-medium leading-relaxed text-orange-300">
+            Verified hours already meet the planned hours, so no statement is needed.
+          </p>
+        )}
         <p className="text-[12.5px] leading-relaxed text-white">
           The minimum is the standard&apos;s published hours less any evidenced prior learning, and
           never below 187 hours.

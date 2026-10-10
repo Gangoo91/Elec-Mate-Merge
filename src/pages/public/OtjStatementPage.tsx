@@ -174,8 +174,10 @@ export default function OtjStatementPage() {
           <p className="mt-1 whitespace-pre-wrap text-[16px] leading-relaxed text-white">{st.reason}</p>
         </div>
         <p className="mt-5 text-[13px] leading-relaxed text-white">
-          Hours delivered: {fmtH(st.verified_hours)} verified by the college or employer, and {fmtH(st.app_learning_hours)} of
-          learning recorded by Elec-Mate. Prepared by {st.prepared_by_name ?? 'the college'} on {fmtDate(st.prepared_at)}.
+          {st.actual_hours === st.verified_hours
+            ? `Hours delivered are the ${fmtH(st.verified_hours)} verified by the college or employer. Elec-Mate also recorded ${fmtH(st.app_learning_hours)} of learning in the app; that is not counted in this statement.`
+            : `Hours delivered: ${fmtH(st.verified_hours)} verified by the college or employer, and ${fmtH(st.app_learning_hours)} of learning recorded by Elec-Mate.`}{' '}
+          Prepared by {st.prepared_by_name ?? 'the college'} on {fmtDate(st.prepared_at)}.
         </p>
       </PublicCard>
 

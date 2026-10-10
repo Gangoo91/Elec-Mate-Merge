@@ -61,10 +61,8 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
         {/* Score card */}
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
           <div className="flex items-baseline justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Result
-            </span>
-            <span className="text-[12px] text-white font-mono">
+            <span className="text-[13px] font-semibold text-white">Result</span>
+            <span className="text-[12px] text-white">
               {stepsCorrect}/{totalSteps} · {score}%
             </span>
           </div>
@@ -81,9 +79,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
 
         {/* Step-by-step review */}
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Step review
-          </span>
+          <span className="text-[13px] font-semibold text-white">Step review</span>
 
           <ul className="space-y-2">
             {stepResults.map((result, idx) => {
@@ -115,9 +111,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
         {/* Real incident */}
         {scenario.realCase && (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Real incident
-            </span>
+            <span className="text-[13px] font-semibold text-white">Real incident</span>
             <p className="text-[14px] text-white leading-relaxed">{scenario.realCase.summary}</p>
             {scenario.realCase.fineAmount && (
               <p className="text-[12px] text-white">Fine: {scenario.realCase.fineAmount}</p>
@@ -131,9 +125,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
         {/* Key regulation */}
         {scenario.steps[0]?.options.find((o) => o.isCorrect)?.regulation && (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Key regulation
-            </span>
+            <span className="text-[13px] font-semibold text-white">Key regulation</span>
             <p className="text-[14px] text-white leading-relaxed">
               {scenario.steps[0]?.options.find((o) => o.isCorrect)?.regulation}
             </p>
@@ -175,12 +167,12 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
       </Button>
 
       {/* Step progress */}
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Step {currentStepIndex + 1} of {totalSteps}
           </span>
-          <span className="text-[12px] text-white font-mono">
+          <span className="text-[12px] text-white">
             {Math.round(((currentStepIndex + 1) / totalSteps) * 100)}%
           </span>
         </div>
@@ -203,26 +195,20 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
       {/* Briefing (first step only) */}
       {currentStepIndex === 0 && (
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            {scenario.location}
-          </span>
+          <span className="text-[13px] font-semibold text-white">{scenario.location}</span>
           <p className="text-[14px] text-white leading-relaxed">{scenario.briefing}</p>
         </div>
       )}
 
       {/* Current situation */}
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Situation
-        </span>
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Situation</span>
         <p className="text-[14px] text-white leading-relaxed">{step.situation}</p>
       </div>
 
       {/* Question */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Question
-        </span>
+        <span className="text-[13px] font-semibold text-white">Question</span>
         <p className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
           {step.question}
         </p>

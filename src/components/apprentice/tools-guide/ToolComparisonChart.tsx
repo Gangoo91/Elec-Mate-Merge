@@ -25,11 +25,9 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Comparison
-        </span>
+        <span className="text-[13px] font-semibold text-white">Comparison</span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">{title}</h3>
         <p className="text-[14px] text-white leading-relaxed">
           Professional comparison of top {category} tools for UK electricians.
@@ -49,21 +47,17 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
                   <h4 className="text-[14px] font-medium text-white">{tool.brand}</h4>
                   <p className="text-[13px] text-white">{tool.model}</p>
                 </div>
-                {label && (
-                  <span className="text-[10px] uppercase tracking-[0.18em] text-white flex-shrink-0">
-                    {label}
-                  </span>
-                )}
+                {label && <span className="text-[13px] text-white flex-shrink-0">{label}</span>}
               </div>
 
               <div className="space-y-1 text-[13px] text-white">
                 <div className="flex justify-between">
                   <span>Price</span>
-                  <span className="font-mono text-white">{tool.price}</span>
+                  <span className="text-white">{tool.price}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Rating</span>
-                  <span className="font-mono text-white">{tool.rating}/5</span>
+                  <span className="text-white">{tool.rating}/5</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Warranty</span>
@@ -72,9 +66,7 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Key features
-                </span>
+                <span className="text-[13px] font-semibold text-white">Key features</span>
                 <ul className="text-[13px] text-white space-y-0.5">
                   {tool.features.slice(0, 3).map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
@@ -86,10 +78,8 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
               </div>
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Best for
-                </span>
-                <p className="text-[13px] text-white leading-relaxed">{tool.bestFor}</p>
+                <span className="text-[13px] font-semibold text-white">Best for</span>
+                <p className="text-[14px] text-white leading-relaxed">{tool.bestFor}</p>
               </div>
             </div>
           );

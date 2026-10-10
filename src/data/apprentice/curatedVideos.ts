@@ -4405,8 +4405,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['TT system', 'RCD', 'EICR', 'coding'],
     level: 'intermediate',
-    description:
-      'A short site observation on a TT installation with no main RCD protection.',
+    description: 'A short site observation on a TT installation with no main RCD protection.',
   },
   {
     id: '4AAFgT9LKqI',
@@ -4416,8 +4415,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['TT system', 'earthing', 'RCD', 'earth electrode'],
     level: 'intermediate',
-    description:
-      'Common problems found on TT earthing arrangements and why they matter.',
+    description: 'Common problems found on TT earthing arrangements and why they matter.',
   },
   {
     id: 'MLTM-OJE0Lo',
@@ -4438,8 +4436,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['PFC', 'prospective fault current', 'single phase', 'testing'],
     level: 'intermediate',
-    description:
-      'The theory behind prospective fault current testing on single-phase supplies.',
+    description: 'The theory behind prospective fault current testing on single-phase supplies.',
   },
   {
     id: 'Clz8GCAShvI',
@@ -4449,8 +4446,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['rating factors', 'cable sizing', 'Cg', 'Ca', 'design'],
     level: 'intermediate',
-    description:
-      'How multiple correction factors combine when sizing a cable.',
+    description: 'How multiple correction factors combine when sizing a cable.',
   },
   {
     id: 'ZuiqWZCIZzc',
@@ -4471,8 +4467,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['Zs', 'calculation', 'measured vs calculated', 'loop impedance'],
     level: 'intermediate',
-    description:
-      'When a calculated Zs is acceptable, when it is not, and the pitfalls either way.',
+    description: 'When a calculated Zs is acceptable, when it is not, and the pitfalls either way.',
   },
   {
     id: 'e3xA3t6wAmY',
@@ -4504,8 +4499,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['ring final', 'testing', 'continuity', 'faults'],
     level: 'intermediate',
-    description:
-      'Continuing the ring final test and interpreting results that do not balance.',
+    description: 'Continuing the ring final test and interpreting results that do not balance.',
   },
   {
     id: 'YBdu5nOc0Iw',
@@ -4515,8 +4509,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['earthing', 'back box', 'CPC', 'accessories'],
     level: 'beginner',
-    description:
-      'A common site question answered against what the regulations actually require.',
+    description: 'A common site question answered against what the regulations actually require.',
   },
   {
     id: 'iaK2zM7ynFU',
@@ -4526,8 +4519,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['SPD', 'surge protection', 'risk assessment', 'design'],
     level: 'intermediate',
-    description:
-      'Deciding whether surge protection is required, and which type.',
+    description: 'Deciding whether surge protection is required, and which type.',
   },
   {
     id: 'Xepru4HwZD4',
@@ -4537,8 +4529,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['AFDD', 'arc fault', 'protection', 'devices'],
     level: 'intermediate',
-    description:
-      'An arc fault detection device demonstrated on the bench.',
+    description: 'An arc fault detection device demonstrated on the bench.',
   },
   {
     id: 'irU1giDJC_4',
@@ -4548,8 +4539,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['RCD', 'Type AC', 'Type A', 'DC leakage'],
     level: 'advanced',
-    description:
-      'The case against Type AC RCDs in modern installations with electronic loads.',
+    description: 'The case against Type AC RCDs in modern installations with electronic loads.',
   },
   {
     id: 'rW4FmssJvHs',
@@ -4559,8 +4549,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'electrical-theory',
     tags: ['RCD', 'DC leakage', 'Type AC', 'demonstration'],
     level: 'intermediate',
-    description:
-      'A bench demonstration of what DC leakage does to a Type AC RCD.',
+    description: 'A bench demonstration of what DC leakage does to a Type AC RCD.',
   },
   {
     id: 'nZoH2YYqC5I',
@@ -4570,8 +4559,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['volt drop', 'calculation', 'transposition', 'design'],
     level: 'intermediate',
-    description:
-      'Rearranging the volt drop formula to solve for the value you actually need.',
+    description: 'Rearranging the volt drop formula to solve for the value you actually need.',
   },
   {
     id: 'ahrfWRJ4VGg',
@@ -4592,8 +4580,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['cable calculation', 'design', 'webinar', 'Iz'],
     level: 'intermediate',
-    description:
-      'A full run through cable calculation from design current to verified cable size.',
+    description: 'A full run through cable calculation from design current to verified cable size.',
   },
   {
     id: 'Y44YaTeo7mM',
@@ -4603,8 +4590,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['maximum demand', 'diversity', 'design', 'webinar'],
     level: 'intermediate',
-    description:
-      'Applying diversity properly when assessing maximum demand.',
+    description: 'Applying diversity properly when assessing maximum demand.',
   },
   {
     id: 'lygNg0SYuQI',
@@ -4614,8 +4600,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['earthing', 'bonding', 'webinar', 'protective conductors'],
     level: 'intermediate',
-    description:
-      'The first half of a long-form session on earthing and protective bonding.',
+    description: 'The first half of a long-form session on earthing and protective bonding.',
   },
   {
     id: 'YS1KWO0KOkk',
@@ -4625,8 +4610,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['earthing', 'bonding', 'webinar', 'protective conductors'],
     level: 'advanced',
-    description:
-      'The second half, going deeper into bonding arrangements and sizing.',
+    description: 'The second half, going deeper into bonding arrangements and sizing.',
   },
   {
     id: 'C0Hj5K5cbdk',
@@ -4647,8 +4631,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['dead testing', 'results', 'analysis', 'webinar'],
     level: 'advanced',
-    description:
-      'Interpreting dead test results rather than just recording them.',
+    description: 'Interpreting dead test results rather than just recording them.',
   },
   {
     id: 'DBR7Zko2F2s',
@@ -4658,8 +4641,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['live testing', 'results', 'analysis', 'webinar'],
     level: 'advanced',
-    description:
-      'The live test half — what the numbers mean and when to question them.',
+    description: 'The live test half — what the numbers mean and when to question them.',
   },
   {
     id: '6FqK5zYoRrg',
@@ -4669,8 +4651,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'tools-equipment',
     tags: ['thermal imaging', 'thermography', 'survey', 'webinar'],
     level: 'advanced',
-    description:
-      'An introduction to thermal imaging on electrical installations.',
+    description: 'An introduction to thermal imaging on electrical installations.',
   },
   {
     id: 'JJZiefsM-j8',
@@ -4680,8 +4661,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'tools-equipment',
     tags: ['thermal imaging', 'thermography', 'camera setup'],
     level: 'advanced',
-    description:
-      'Getting a thermal camera set up so the image you capture is actually usable.',
+    description: 'Getting a thermal camera set up so the image you capture is actually usable.',
   },
   {
     id: 'GAHy5EIAw4w',
@@ -4691,8 +4671,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'commercial',
     tags: ['BS 7909', 'temporary systems', 'events', 'webinar'],
     level: 'advanced',
-    description:
-      'Temporary electrical systems for events and the standard that governs them.',
+    description: 'Temporary electrical systems for events and the standard that governs them.',
   },
   {
     id: 'BXRtfUYJYRg',
@@ -4713,8 +4692,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['DNC', 'diverted neutral', 'PME', 'earthing'],
     level: 'advanced',
-    description:
-      'What diverted neutral current is, how it arises and why it is dangerous.',
+    description: 'What diverted neutral current is, how it arises and why it is dangerous.',
   },
   {
     id: '1u38ukhGi3o',
@@ -4724,8 +4702,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['cut-out', 'service head', 'phenolic', 'safety'],
     level: 'advanced',
-    description:
-      'Degradation inside service cut-outs, what it looks like and who is responsible.',
+    description: 'Degradation inside service cut-outs, what it looks like and who is responsible.',
   },
 
   /* SparkyNinja — remaining catalogue, added 2026-09-08. Every id verified
@@ -4739,8 +4716,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['arc', 'flash', 'array'],
     level: 'intermediate',
-    description:
-      'A very short clip of a DC arc flash on a PV array.',
+    description: 'A very short clip of a DC arc flash on a PV array.',
   },
   {
     id: 'qTkd46hyG70',
@@ -4750,8 +4726,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['level', 'design', 'verification', '2396', 'mock'],
     level: 'advanced',
-    description:
-      'Section B of the mock exam — the longer design questions, worked and explained.',
+    description: 'Section B of the mock exam — the longer design questions, worked and explained.',
   },
   {
     id: 'M1S2w1D3wJ4',
@@ -4761,8 +4736,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['level', 'design', 'verification', '2396', 'mock'],
     level: 'advanced',
-    description:
-      'Section A of a full Level 4 mock exam, worked through in real time.',
+    description: 'Section A of a full Level 4 mock exam, worked through in real time.',
   },
   {
     id: 'u_F20I8mhd0',
@@ -4772,8 +4746,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['2396', 'level', 'design', 'example', 'question'],
     level: 'advanced',
-    description:
-      'A single exam-style question on maximum volt drop, worked from first principles.',
+    description: 'A single exam-style question on maximum volt drop, worked from first principles.',
   },
   {
     id: 'qZUZmaniEno',
@@ -4783,8 +4756,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['sparkyninja', 'webinar', '7671', 'eawr', 'round'],
     level: 'advanced',
-    description:
-      'Round two, going further into where the standard and the law diverge.',
+    description: 'Round two, going further into where the standard and the law diverge.',
   },
   {
     id: 'a59DuSPSbrA',
@@ -4805,8 +4777,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'career',
     tags: ['working', 'net', 'help', 'apprentices'],
     level: 'intermediate',
-    description:
-      'Working with NET on improving the support available to apprentices.',
+    description: 'Working with NET on improving the support available to apprentices.',
   },
   {
     id: 'Ms9dWADwF2Q',
@@ -4821,14 +4792,14 @@ export const curatedVideos: CuratedVideo[] = [
   },
   {
     id: 'eg2kO082gRA',
-    title: 'EICR coding and discussion on Fire systems to BS5839-1 with John Ward, Dan Jackson and Paul Meenan',
+    title:
+      'EICR coding and discussion on Fire systems to BS5839-1 with John Ward, Dan Jackson and Paul Meenan',
     channel: 'SparkyNinja',
     duration: '3:05:42',
     category: 'testing-inspection',
     tags: ['eicr', 'coding', 'discussion', 'fire', 'systems'],
     level: 'advanced',
-    description:
-      'Coding observations on fire alarm systems to BS 5839-1 and where BS 7671 stops.',
+    description: 'Coding observations on fire alarm systems to BS 5839-1 and where BS 7671 stops.',
   },
   {
     id: 'oj7Y4wXTKHA',
@@ -4882,8 +4853,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['eicr', 'coding', 'industrial', 'installations', 'neil'],
     level: 'advanced',
-    description:
-      'EICR coding on industrial installations, with Neil Bridgeman and Paul Meenan.',
+    description: 'EICR coding on industrial installations, with Neil Bridgeman and Paul Meenan.',
   },
   {
     id: 'HvQPdXyHsrA',
@@ -4926,8 +4896,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['asset', 'management', 'paul', 'meenan', 'sparkyninja'],
     level: 'advanced',
-    description:
-      'Asset management for electrical installations, discussed with Paul Meenan.',
+    description: 'Asset management for electrical installations, discussed with Paul Meenan.',
   },
   {
     id: 'jm9AY_bt4Uk',
@@ -4948,23 +4917,23 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['look', 'future', '7671', 'sparkyninja', 'webinar'],
     level: 'advanced',
-    description:
-      'A look ahead at where BS 7671 is heading and the pressures shaping it.',
+    description: 'A look ahead at where BS 7671 is heading and the pressures shaping it.',
   },
   {
     id: 'JmyXp09rmwQ',
-    title: 'Inspection & testing, a discussion on observations & recommendations PART 2 - A SparkyNinja Webinar',
+    title:
+      'Inspection & testing, a discussion on observations & recommendations PART 2 - A SparkyNinja Webinar',
     channel: 'SparkyNinja',
     duration: '1:45:43',
     category: 'testing-inspection',
     tags: ['inspection', 'testing', 'discussion', 'observations', 'recommendations'],
     level: 'advanced',
-    description:
-      'Part two, continuing into the harder coding judgements and defending them.',
+    description: 'Part two, continuing into the harder coding judgements and defending them.',
   },
   {
     id: 'sjBrO3gNdFI',
-    title: 'Inspection & testing, a discussion on observations & recommendations PART 1 - A SparkyNinja Webinar',
+    title:
+      'Inspection & testing, a discussion on observations & recommendations PART 1 - A SparkyNinja Webinar',
     channel: 'SparkyNinja',
     duration: '1:06:35',
     category: 'testing-inspection',
@@ -4981,8 +4950,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['testing', 'hager', 'rccbs', 'rcds', 'update'],
     level: 'intermediate',
-    description:
-      'An update on testing Hager RCCBs and RCDs, and behaviour worth knowing about.',
+    description: 'An update on testing Hager RCCBs and RCDs, and behaviour worth knowing about.',
   },
   {
     id: 'DDoxf4Yxq2s',
@@ -5003,8 +4971,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'tools-equipment',
     tags: ['look', 'chauvin', 'arnoux', '5273', 'multimeter'],
     level: 'intermediate',
-    description:
-      'A hands-on look at the Chauvin Arnoux C.A 5273 multimeter.',
+    description: 'A hands-on look at the Chauvin Arnoux C.A 5273 multimeter.',
   },
   {
     id: 'FjVsTaRfxHw',
@@ -5014,8 +4981,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['2391', 'inspection', 'testing', 'course', 'outcome'],
     level: 'intermediate',
-    description:
-      'Outcome 4, covering the testing half of the 2391-52.',
+    description: 'Outcome 4, covering the testing half of the 2391-52.',
   },
   {
     id: 'VLKuEWiG60o',
@@ -5036,8 +5002,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['2391', 'inspection', 'testing', 'course', 'outcome'],
     level: 'intermediate',
-    description:
-      'Outcome 2 — the requirements for initial verification and periodic inspection.',
+    description: 'Outcome 2 — the requirements for initial verification and periodic inspection.',
   },
   {
     id: 'xFMwdERjZwM',
@@ -5058,8 +5023,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['2391', 'inspection', 'testing', 'course', 'outcome'],
     level: 'intermediate',
-    description:
-      'Outcome 3 of the 2391-52 syllabus, moving into inspection in practice.',
+    description: 'Outcome 3 of the 2391-52 syllabus, moving into inspection in practice.',
   },
   {
     id: 'o1Rzbad5pJg',
@@ -5107,7 +5071,7 @@ export const curatedVideos: CuratedVideo[] = [
   },
   {
     id: 'KpxXrAnzp2E',
-    title: '18th Edition - Waffling about Arc Fault detection devices (AFDD\'s/AFCI\'s) for forever',
+    title: "18th Edition - Waffling about Arc Fault detection devices (AFDD's/AFCI's) for forever",
     channel: 'SparkyNinja',
     duration: '48:53',
     category: 'bs7671',
@@ -5124,8 +5088,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'corrigendum'],
     level: 'intermediate',
-    description:
-      'A short note on a corrigendum issued to the 18th Edition and what changed.',
+    description: 'A short note on a corrigendum issued to the 18th Edition and what changed.',
   },
   {
     id: 'eqoNRkzqDsI',
@@ -5146,8 +5109,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'special'],
     level: 'beginner',
-    description:
-      'Part 7: special installations and locations, from bathrooms to marinas.',
+    description: 'Part 7: special installations and locations, from bathrooms to marinas.',
   },
   {
     id: '0yscRY2sI7o',
@@ -5168,19 +5130,18 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'exam'],
     level: 'advanced',
-    description:
-      'An exam guide for the 18th Edition, covering technique as much as content.',
+    description: 'An exam guide for the 18th Edition, covering technique as much as content.',
   },
   {
     id: 'ByXmQYEg0q8',
-    title: '18th Edition Training Series - Episode 15 - Part 5, Chapter 54 - Earthing & Protective Conductors',
+    title:
+      '18th Edition Training Series - Episode 15 - Part 5, Chapter 54 - Earthing & Protective Conductors',
     channel: 'SparkyNinja',
     duration: '57:22',
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'chapter'],
     level: 'beginner',
-    description:
-      'Chapter 54: earthing arrangements and protective conductors, including sizing.',
+    description: 'Chapter 54: earthing arrangements and protective conductors, including sizing.',
   },
   {
     id: '3OYIXGrhfFI',
@@ -5190,8 +5151,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['18th', 'edition', 'training', 'series', 'inspection'],
     level: 'beginner',
-    description:
-      'Part 6: inspection and testing, as the regulations set it out.',
+    description: 'Part 6: inspection and testing, as the regulations set it out.',
   },
   {
     id: '3d7rtuPpGsc',
@@ -5206,7 +5166,8 @@ export const curatedVideos: CuratedVideo[] = [
   },
   {
     id: 'PCNreQn7o3s',
-    title: '18th Edition Training Series - Episode 13 - Part 5, Chapter 52 - Sections 526, 527, 528 & 529',
+    title:
+      '18th Edition Training Series - Episode 13 - Part 5, Chapter 52 - Sections 526, 527, 528 & 529',
     channel: 'SparkyNinja',
     duration: '15:50',
     category: 'bs7671',
@@ -5245,8 +5206,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'chapter'],
     level: 'beginner',
-    description:
-      'Chapter 51: the common rules for selection and erection of equipment.',
+    description: 'Chapter 51: the common rules for selection and erection of equipment.',
   },
   {
     id: '0soA_PsvlyA',
@@ -5261,25 +5221,25 @@ export const curatedVideos: CuratedVideo[] = [
   },
   {
     id: 'cB19b9z6qbc',
-    title: '18th Edition Training Series - Episode 14 - Part 5, Chapter 53 - Protection, Isolation, Switching..',
+    title:
+      '18th Edition Training Series - Episode 14 - Part 5, Chapter 53 - Protection, Isolation, Switching..',
     channel: 'SparkyNinja',
     duration: '1:11:57',
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'chapter'],
     level: 'beginner',
-    description:
-      'Chapter 53: protection, isolation, switching, control and monitoring devices.',
+    description: 'Chapter 53: protection, isolation, switching, control and monitoring devices.',
   },
   {
     id: 'IcWWutwLTY4',
-    title: '18th Edition Training Series - Episode 7 - Part 4, Chapter 43 - Protection against Overcurrent',
+    title:
+      '18th Edition Training Series - Episode 7 - Part 4, Chapter 43 - Protection against Overcurrent',
     channel: 'SparkyNinja',
     duration: '1:09:50',
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'chapter'],
     level: 'advanced',
-    description:
-      'Chapter 43: protection against overcurrent, covering overload and fault current.',
+    description: 'Chapter 43: protection against overcurrent, covering overload and fault current.',
   },
   {
     id: 'l9uSA5506rs',
@@ -5294,18 +5254,19 @@ export const curatedVideos: CuratedVideo[] = [
   },
   {
     id: 'nmH28_54RZ8',
-    title: '18th Edition Training Series - Episode 6 - Part 4, Chapter 42 - Protection against Thermal Effects',
+    title:
+      '18th Edition Training Series - Episode 6 - Part 4, Chapter 42 - Protection against Thermal Effects',
     channel: 'SparkyNinja',
     duration: '31:43',
     category: 'bs7671',
     tags: ['18th', 'edition', 'training', 'series', 'chapter'],
     level: 'intermediate',
-    description:
-      'Chapter 42: protection against thermal effects — heat, fire and burns.',
+    description: 'Chapter 42: protection against thermal effects — heat, fire and burns.',
   },
   {
     id: 'kLn0amKvE0k',
-    title: '18th Edition Training Series - Episode 4 - Part 3, Assessment of General Characteristics',
+    title:
+      '18th Edition Training Series - Episode 4 - Part 3, Assessment of General Characteristics',
     channel: 'SparkyNinja',
     duration: '20:47',
     category: 'bs7671',
@@ -5316,7 +5277,8 @@ export const curatedVideos: CuratedVideo[] = [
   },
   {
     id: 'qfb7SqtrMRs',
-    title: '18th Edition Training Series - Episode 5 - Part 4, Chapter 41 - Protection against electric shock',
+    title:
+      '18th Edition Training Series - Episode 5 - Part 4, Chapter 41 - Protection against electric shock',
     channel: 'SparkyNinja',
     duration: '1:30:26',
     category: 'bs7671',
@@ -5349,7 +5311,8 @@ export const curatedVideos: CuratedVideo[] = [
   },
   {
     id: 'XbHMjB1Wj6g',
-    title: '18th Edition Training Series - Episode 2 - Part 1, Scope, Object and Fundamental Principles',
+    title:
+      '18th Edition Training Series - Episode 2 - Part 1, Scope, Object and Fundamental Principles',
     channel: 'SparkyNinja',
     duration: '44:23',
     category: 'bs7671',
@@ -5377,8 +5340,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['2396', 'design', 'verification', 'outcome', 'introduction'],
     level: 'beginner',
-    description:
-      'Outcome 6 plus an introduction to the mock assessment that closes the course.',
+    description: 'Outcome 6 plus an introduction to the mock assessment that closes the course.',
   },
   {
     id: 'kZNLfagrpAY',
@@ -5399,8 +5361,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['18th', 'edition', 'toolbox', 'talk'],
     level: 'intermediate',
-    description:
-      'A toolbox-talk length summary of the 18th Edition for briefing a team.',
+    description: 'A toolbox-talk length summary of the 18th Edition for briefing a team.',
   },
   {
     id: '9uI1GrFPBYw',
@@ -5421,8 +5382,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['2396', 'design', 'verification', 'outcome'],
     level: 'advanced',
-    description:
-      'A short run through Outcome 4 of the design and verification syllabus.',
+    description: 'A short run through Outcome 4 of the design and verification syllabus.',
   },
   {
     id: '6Ub8Ui4sEaA',
@@ -5432,8 +5392,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['2396', 'design', 'verification', 'outcome'],
     level: 'advanced',
-    description:
-      'Outcome 5, covering the next block of the 2396 assessment criteria.',
+    description: 'Outcome 5, covering the next block of the 2396 assessment criteria.',
   },
   {
     id: 'P-vSek5zdF4',
@@ -5443,8 +5402,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'design',
     tags: ['2396', 'solution', 'example'],
     level: 'advanced',
-    description:
-      'A full worked solution to the third design example in the series.',
+    description: 'A full worked solution to the third design example in the series.',
   },
   {
     id: 'ENncIW3w3_w',
@@ -5553,8 +5511,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['2391', 'inspection', 'testing', 'course', 'outcome'],
     level: 'intermediate',
-    description:
-      'Outcome 3 with the focus on inspection itself — what you are looking at and why.',
+    description: 'Outcome 3 with the focus on inspection itself — what you are looking at and why.',
   },
   {
     id: 'NzgyLiEsfwE',
@@ -5564,8 +5521,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'safety',
     tags: ['premature', 'collapsing', 'wiring', 'systems', 'fire'],
     level: 'intermediate',
-    description:
-      'Where the premature collapse requirement came from and the incidents behind it.',
+    description: 'Where the premature collapse requirement came from and the incidents behind it.',
   },
   {
     id: 'KWsWJqd-nrA',
@@ -5575,8 +5531,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'bs7671',
     tags: ['socket', 'outlet', 'protective', 'covers', 'child'],
     level: 'intermediate',
-    description:
-      'Whether socket-outlet covers make a socket safer for children, or the opposite.',
+    description: 'Whether socket-outlet covers make a socket safer for children, or the opposite.',
   },
   {
     id: 'QydYIQeoMKg',
@@ -5608,8 +5563,7 @@ export const curatedVideos: CuratedVideo[] = [
     category: 'testing-inspection',
     tags: ['2392', 'theory', 'exam', 'example'],
     level: 'intermediate',
-    description:
-      'A worked example of a 2392 theory exam question.',
+    description: 'A worked example of a 2392 theory exam question.',
   },
   {
     id: 'a8UTK_M4w44',

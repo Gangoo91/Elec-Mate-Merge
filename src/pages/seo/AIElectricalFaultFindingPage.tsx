@@ -18,7 +18,7 @@ export default function AIElectricalFaultFindingPage() {
       title="AI Electrical Fault Finding: How It Works"
       description="How AI analyses electrical fault symptoms, matches them against known fault patterns, suggests probable causes ranked by likelihood."
       datePublished="2026-01-28"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AI Electrical Fault Finding', href: '/guides/ai-electrical-fault-finding' },
@@ -51,8 +51,8 @@ export default function AIElectricalFaultFindingPage() {
         'Pattern matching identifies correlations that human diagnosticians might miss — for example, that intermittent RCD tripping only occurs during humid weather suggesting moisture ingress.',
         'The AI learns from resolved faults, building an increasingly accurate model of which symptoms typically lead to which root causes in different types of installation.',
         'AI fault finding is a diagnostic aid, not a replacement for physical testing. It suggests where to look and what to test — you still carry out the actual measurements and repairs.',
-        'BS 7671:2018+A4:2026 Reg 411.3.4 requires ≤30 mA RCD additional protection on domestic lighting circuits — an RCD trip on a lighting circuit may be correctly-operating A4 protection, not a fault.',
-        'Reg 421.1.7 (A4:2026) recommends arc fault detection devices (AFDDs) on AC final circuits — an AFDD trip is a distinct symptom pattern, not the same as an MCB or RCD trip.',
+        'BS 7671 Reg 411.3.4 has required ≤30 mA RCD additional protection on domestic lighting circuits since 2018, so an RCD trip on a lighting circuit may be correctly operating protection, not a fault.',
+        'Reg 421.1.7 of BS 7671:2018+A4:2026 covers arc fault detection devices (AFDDs) on AC final circuits — an AFDD trip is a distinct symptom pattern, not the same as an MCB or RCD trip.',
         'Always compare a high measured Zs reading against a temperature-corrected limit, not raw Table 41.4 values — measured conductor impedance is lower at test temperature than at maximum operating temperature (GN3 Reg 3.18 / Appendix A3).',
       ]}
       sections={[
@@ -433,19 +433,21 @@ export default function AIElectricalFaultFindingPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">
-                    A4:2026 — lighting circuit RCD trips
+                    Lighting circuit RCD trips
                   </span>{' '}
-                  — BS 7671:2018+A4:2026 Reg 411.3.4 now requires additional protection by a ≤30 mA
-                  RCD on AC final circuits supplying luminaires in domestic premises. An RCD trip on
-                  a domestic lighting circuit may therefore be correctly-operating A4 protection
-                  responding to a real leakage event, rather than a nuisance trip or wiring fault.
-                  The AI differentiates this from pre-A4 installations where lighting circuits were
-                  not required to be RCD-protected.
+                  — BS 7671 Reg 411.3.4 has required additional protection by a ≤30 mA RCD on AC
+                  final circuits supplying luminaires in domestic premises since the 18th Edition
+                  (2018). An RCD trip on a domestic lighting circuit may therefore be correctly
+                  operating protection responding to a real leakage event, rather than a nuisance
+                  trip or wiring fault. The AI differentiates this from older installations, wired
+                  before 2018, where lighting circuits were not required to be RCD-protected.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">A4:2026 — AFDD trips</span> — Reg
-                  421.1.7 (A4:2026) recommends arc fault detection devices (AFDDs) on AC final
-                  circuits to mitigate fire risk from arc fault currents. An AFDD trip is a distinct
+                  <span className="font-semibold text-white">AFDD trips</span> — Reg 421.1.7
+                  covers arc fault detection devices (AFDDs) on AC final circuits to mitigate fire
+                  risk from arc fault currents. They have been recommended since 2018 and, since
+                  A2:2022, required on socket-outlet circuits up to 32 A in certain higher-risk
+                  residential buildings. An AFDD trip is a distinct
                   symptom from an MCB overcurrent trip or an RCD residual-current trip — the AFDD
                   detects the characteristic signature of a series or parallel arc fault. If a
                   consumer unit has AFDD devices fitted, the AI treats an AFDD operation as a

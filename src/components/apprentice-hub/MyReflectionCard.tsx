@@ -1,6 +1,6 @@
+import { LC_FRAME } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { cn } from '@/lib/utils';
 import { useLoggingReminders } from '@/hooks/useLoggingReminders';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { supabase } from '@/integrations/supabase/client';
@@ -105,16 +105,12 @@ export function MyReflectionCard() {
 
   return (
     <>
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-      >
+      <section className={LC_FRAME}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              Reflection
-            </div>
+            <div className="text-[15px] font-semibold tracking-tight text-white">Reflection</div>
             {!hideReminders && !loading && streak > 0 && (
-              <span className="text-[10.5px] tabular-nums text-white">{streak}-day streak</span>
+              <span className="text-[12px] tabular-nums text-white">{streak}-day streak</span>
             )}
           </div>
 
@@ -124,8 +120,8 @@ export function MyReflectionCard() {
                 ? 'Captured today.'
                 : 'Captured today. Keep the streak alive tomorrow.'
               : !hideReminders && streak > 0
-                ? `${streak} ${streak === 1 ? 'day' : 'days'} in a row. Don't break the chain — capture today's reflection.`
-                : 'Two minutes today. Goes into your portfolio and — if you tick — counts toward your verified hours.'}
+                ? `${streak} ${streak === 1 ? 'day' : 'days'} in a row. Don't break the chain: capture today's reflection.`
+                : 'Two minutes today. Goes into your portfolio and, if you tick, counts toward your verified hours.'}
           </p>
 
           <button
@@ -142,9 +138,7 @@ export function MyReflectionCard() {
           {/* Past reflections */}
           {!loading && rows.length > 0 && (
             <div className="mt-5 -mx-1">
-              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
-                Past reflections
-              </div>
+              <div className="px-1 text-[13px] font-medium text-white">Past reflections</div>
               <ul className="mt-2 divide-y divide-white/[0.05]">
                 {visible.map((r) => (
                   <li key={r.id}>
@@ -154,16 +148,16 @@ export function MyReflectionCard() {
                       className="w-full px-1 py-2.5 flex items-baseline justify-between gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
                     >
                       <div className="min-w-0 flex-1">
-                        <div className="text-[13px] font-medium text-white leading-snug truncate">
+                        <div className="text-[13px] font-medium text-white leading-snug line-clamp-2">
                           {r.title ?? 'Reflection'}
                         </div>
                         {r.description && (
-                          <div className="mt-0.5 text-[11.5px] text-white leading-snug line-clamp-2">
+                          <div className="mt-0.5 text-[12px] text-white leading-snug line-clamp-2">
                             {r.description}
                           </div>
                         )}
                       </div>
-                      <span className="shrink-0 text-[10.5px] text-white tabular-nums whitespace-nowrap">
+                      <span className="shrink-0 text-[12px] text-white tabular-nums whitespace-nowrap">
                         {fmtDate(r.date_completed ?? r.created_at)}
                       </span>
                     </button>
@@ -174,7 +168,7 @@ export function MyReflectionCard() {
                 <button
                   type="button"
                   onClick={() => setShowAll((v) => !v)}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+                  className="mt-2 px-1 text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   {showAll ? 'Show less' : `Show ${Math.min(17, rows.length - 3)} more`}
                 </button>
@@ -212,13 +206,11 @@ function ReflectionViewerSheet({
         {row && (
           <div className="flex h-full flex-col">
             <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06]">
-              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                Reflection
-              </div>
+              <div className="text-[15px] font-semibold tracking-tight text-white">Reflection</div>
               <h2 className="mt-1 text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
                 {row.title ?? 'Reflection'}
               </h2>
-              <p className="mt-1 text-[11.5px] text-white">
+              <p className="mt-1 text-[12px] text-white">
                 {fmtDate(row.date_completed ?? row.created_at)}
                 {row.created_at && (
                   <>

@@ -126,7 +126,7 @@ export function useSubmissionQueue() {
       // Student profiles + the junction rows (RLS: staff who can assess the
       // learner; anyone else falls back to the category below).
       const [{ data: profiles }, { data: links }] = await Promise.all([
-        supabase.from('profiles').select('id, full_name').in('id', studentIds),
+        supabase.from('public_profiles').select('id, full_name').in('id', studentIds),
         subIds.length
           ? supabase
               .from('portfolio_submission_items' as never)

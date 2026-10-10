@@ -16,6 +16,13 @@
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import {
+  chipBase,
+  chipOn,
+  chipOff,
+  textareaCn,
+  buttonPrimaryCn,
+} from '@/components/forms/fieldStyles';
 import { supabase } from '@/integrations/supabase/client';
 
 export type VisionExtractionKind = 'floor-plan' | 'bom' | 'schedule' | 'photo';
@@ -83,9 +90,7 @@ export const DesignVisionUpload = ({
    * 2 (≈ 144 dpi for A4) and JPEG quality 0.85 to keep base64 size sane —
    * floor plans don't need photographic quality.
    */
-  const pdfToImage = async (
-    f: File
-  ): Promise<{ dataUrl: string; totalPages: number }> => {
+  const pdfToImage = async (f: File): Promise<{ dataUrl: string; totalPages: number }> => {
     const pdfjs = await import('pdfjs-dist');
     // Vite-friendly worker URL — `?url` returns the asset URL as a string.
     // (No ts-expect-error: this project's Vite types already cover `?url`,
@@ -132,7 +137,7 @@ export const DesignVisionUpload = ({
         toast.success(
           totalPages === 1
             ? 'PDF converted'
-            : `Page 1 of ${totalPages} converted (multi-page PDF — only page 1 is read for now)`,
+            : `Page 1 of ${totalPages} converted (multi-page PDF, only page 1 is read for now)`,
           { id: loading }
         );
       } catch (err: any) {
@@ -162,7 +167,7 @@ export const DesignVisionUpload = ({
       return;
     }
     if (file.type === 'application/pdf' && !pdfPageImage) {
-      toast.error('PDF still converting — try again in a moment');
+      toast.error('PDF still converting. Try again in a moment');
       return;
     }
     setIsExtracting(true);
@@ -216,25 +221,10 @@ export const DesignVisionUpload = ({
                   setKind(k);
                   setResult(null);
                 }}
-                className={cn(
-                  'rounded-xl border px-3 py-3 text-left touch-manipulation transition-colors min-h-[64px]',
-                  isActive
-                    ? 'border-elec-yellow/60 bg-elec-yellow/[0.06]'
-                    : 'border-white/[0.10] bg-[hsl(0_0%_8%)] hover:bg-white/[0.03]'
-                )}
+                className={cn(chipBase, 'px-2 leading-tight', isActive ? chipOn : chipOff)}
                 aria-pressed={isActive}
               >
-                <div
-                  className={cn(
-                    'text-[12px] font-semibold tabular-nums',
-                    isActive ? 'text-elec-yellow' : 'text-white'
-                  )}
-                >
-                  {KIND_LABELS[k].label}
-                </div>
-                <div className="mt-1 text-[10.5px] leading-tight text-white/80">
-                  {KIND_LABELS[k].hint}
-                </div>
+                {KIND_LABELS[k].label}
               </button>
             );
           })}
@@ -242,7 +232,7 @@ export const DesignVisionUpload = ({
       )}
 
       {/* File picker */}
-      <div className="bg-[hsl(0_0%_8%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5 space-y-3">
+      <div className="space-y-3">
         <input
           ref={fileInputRef}
           type="file"
@@ -254,21 +244,19 @@ export const DesignVisionUpload = ({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="w-full min-h-[80px] rounded-xl border border-dashed border-white/30 hover:border-elec-yellow/60 active:bg-white/[0.04] text-white transition-colors px-4 py-6 touch-manipulation"
+            className="w-full min-h-[96px] rounded-xl border border-dashed border-white/30 hover:border-white/50 active:bg-white/[0.04] text-white transition-colors px-4 py-6 touch-manipulation"
           >
-            <div className="text-[13px] font-semibold">Tap to pick an image or PDF</div>
-            <div className="mt-1 text-[11px] text-white/80">
-              {KIND_LABELS[kind].hint}
-            </div>
+            <div className="text-[15px] font-semibold">Tap to pick an image or PDF</div>
+            <div className="mt-1 text-[13px] text-white">{KIND_LABELS[kind].hint}</div>
           </button>
         ) : (
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-3">
-              <div className="text-[12px] text-white truncate">{file.name}</div>
+              <div className="text-[14px] text-white truncate">{file.name}</div>
               <button
                 type="button"
                 onClick={() => handleFileChange(null)}
-                className="text-[10.5px] uppercase tracking-[0.14em] text-white/85 hover:text-white border border-white/30 rounded-md px-2.5 py-1 min-h-[28px] touch-manipulation"
+                className="h-11 shrink-0 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[14px] font-medium text-white hover:bg-white/[0.08] touch-manipulation"
               >
                 Remove
               </button>
@@ -295,11 +283,9 @@ export const DesignVisionUpload = ({
                   alt="Converted PDF page 1"
                   className="max-h-64 w-full object-contain rounded-lg bg-black/40"
                 />
-                <div className="text-[10.5px] tabular-nums text-white/80">
-                  Converted from PDF · page {pdfPageImage.pageNumber} of{' '}
-                  {pdfPageImage.totalPages}
-                  {pdfPageImage.totalPages > 1 &&
-                    ' · only page 1 is read for this extraction'}
+                <div className="text-[12px] tabular-nums text-white">
+                  Converted from PDF · page {pdfPageImage.pageNumber} of {pdfPageImage.totalPages}
+                  {pdfPageImage.totalPages > 1 && ' · only page 1 is read for this extraction'}
                 </div>
               </div>
             )}
@@ -310,7 +296,7 @@ export const DesignVisionUpload = ({
           value={contextHint}
           onChange={(e) => setContextHint(e.target.value)}
           placeholder="Optional: any context that'll help (e.g. '1980s 3-bed semi, single-storey extension at the rear')"
-          className="w-full min-h-[60px] bg-black/40 border border-white/[0.15] rounded-lg px-3 py-2 text-[12.5px] text-white placeholder:text-white/60 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+          className={textareaCn}
           maxLength={500}
         />
 
@@ -318,12 +304,7 @@ export const DesignVisionUpload = ({
           type="button"
           onClick={handleExtract}
           disabled={!file || isExtracting || isConvertingPdf}
-          className={cn(
-            'w-full min-h-[44px] rounded-xl text-[13px] font-semibold uppercase tracking-[0.14em] tabular-nums transition-colors touch-manipulation',
-            !file || isExtracting || isConvertingPdf
-              ? 'bg-white/[0.04] text-white/40 cursor-not-allowed'
-              : 'bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/85'
-          )}
+          className={cn(buttonPrimaryCn, 'w-full')}
         >
           {isExtracting ? 'Reading…' : isConvertingPdf ? 'Converting PDF…' : 'Extract'}
         </button>
@@ -370,10 +351,8 @@ const ExtractionResultPanel = ({ result }: { result: VisionExtractionResult }) =
   return (
     <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5 space-y-3">
       <div className="flex items-baseline justify-between gap-2 flex-wrap">
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-          Extraction
-        </span>
-        <span className="text-[10.5px] tabular-nums text-white/50">
+        <span className="text-[15px] font-semibold text-white">Extraction</span>
+        <span className="text-[12px] tabular-nums text-white">
           {result.durationMs} ms · {result.model}
         </span>
       </div>
@@ -382,10 +361,10 @@ const ExtractionResultPanel = ({ result }: { result: VisionExtractionResult }) =
       {result.kind === 'schedule' && <ScheduleResult e={result.extraction} />}
       {result.kind === 'photo' && <PhotoResult e={result.extraction} />}
       <details className="group">
-        <summary className="cursor-pointer text-[10.5px] uppercase tracking-[0.14em] text-white/50 hover:text-white/80 select-none touch-manipulation">
+        <summary className="flex min-h-[44px] cursor-pointer items-center text-[13px] font-medium text-white select-none touch-manipulation">
           Raw JSON
         </summary>
-        <pre className="mt-2 text-[10.5px] tabular-nums text-white/70 bg-black/40 rounded-lg p-3 overflow-auto max-h-64">
+        <pre className="mt-2 text-[10.5px] tabular-nums text-white bg-black/40 rounded-lg p-3 overflow-auto max-h-64">
           {JSON.stringify(result.extraction, null, 2)}
         </pre>
       </details>
@@ -397,24 +376,23 @@ const FloorPlanResult = ({ e }: { e: any }) => {
   const rooms = Array.isArray(e?.rooms) ? e.rooms : [];
   return (
     <div className="space-y-2.5">
-      <div className="flex items-baseline gap-3 flex-wrap text-[11px] tabular-nums text-white/60">
+      <div className="flex items-baseline gap-3 flex-wrap text-[11px] tabular-nums text-white">
         {e?.buildingType && <span>{e.buildingType}</span>}
         {e?.floors != null && (
-          <span>· {e.floors} storey{e.floors === 1 ? '' : 's'}</span>
+          <span>
+            · {e.floors} storey{e.floors === 1 ? '' : 's'}
+          </span>
         )}
         {e?.totalAreaM2 != null && <span>· {Number(e.totalAreaM2).toFixed(1)} m²</span>}
-        <span>· {rooms.length} room{rooms.length === 1 ? '' : 's'}</span>
+        <span>
+          · {rooms.length} room{rooms.length === 1 ? '' : 's'}
+        </span>
       </div>
       {e?.cuPosition?.roomName && (
-        <div className="text-[11px] tabular-nums text-elec-yellow/85 border border-elec-yellow/20 bg-elec-yellow/[0.04] rounded-md px-2.5 py-1.5">
-          <span className="font-semibold uppercase tracking-[0.14em] text-[10px] text-elec-yellow/70">
-            CU position
-          </span>{' '}
-          {e.cuPosition.roomName}
-          {e.cuPosition.inferred && (
-            <span className="text-white/55"> · inferred (not on plan)</span>
-          )}
-          {e.cuPosition.note && <span className="text-white/55"> · {e.cuPosition.note}</span>}
+        <div className="text-[12px] tabular-nums text-white border border-white/[0.12] bg-white/[0.05] rounded-lg px-3 py-2">
+          <span className="font-semibold text-white">CU position</span> {e.cuPosition.roomName}
+          {e.cuPosition.inferred && <span className="text-white"> · inferred (not on plan)</span>}
+          {e.cuPosition.note && <span className="text-white"> · {e.cuPosition.note}</span>}
         </div>
       )}
       <div className="space-y-1.5">
@@ -427,29 +405,25 @@ const FloorPlanResult = ({ e }: { e: any }) => {
               <div className="flex items-baseline gap-2">
                 <span className="text-[12.5px] font-semibold text-white truncate">{r.name}</span>
                 {r.cableRunEstimateM != null && (
-                  <span className="text-[10px] tabular-nums text-elec-yellow/80 shrink-0">
+                  <span className="text-[12px] tabular-nums text-white shrink-0">
                     ~{Number(r.cableRunEstimateM).toFixed(0)} m
                   </span>
                 )}
               </div>
-              <div className="text-[10.5px] text-white/55 tabular-nums">
+              <div className="text-[10.5px] text-white tabular-nums">
                 {r.areaM2 != null && <span>{Number(r.areaM2).toFixed(1)} m² · </span>}
                 {r.floor != null && <span>F{r.floor} · </span>}
                 {r.specialLocation && r.specialLocation !== 'none' && (
                   <span className="text-amber-400">{r.specialLocation} · </span>
                 )}
                 {Array.isArray(r.accessories) &&
-                  r.accessories
-                    .map((a: any) => `${a.count}× ${a.kind}`)
-                    .join(' · ')}
+                  r.accessories.map((a: any) => `${a.count}× ${a.kind}`).join(' · ')}
               </div>
             </div>
           </div>
         ))}
       </div>
-      {e?.notes && (
-        <p className="text-[11px] leading-relaxed text-white/55 pt-1">{e.notes}</p>
-      )}
+      {e?.notes && <p className="text-[11px] leading-relaxed text-white pt-1">{e.notes}</p>}
     </div>
   );
 };
@@ -458,14 +432,14 @@ const BomResult = ({ e }: { e: any }) => {
   const items = Array.isArray(e?.items) ? e.items : [];
   return (
     <div className="space-y-1.5">
-      <div className="text-[11px] tabular-nums text-white/60">{items.length} line items</div>
+      <div className="text-[11px] tabular-nums text-white">{items.length} line items</div>
       {items.map((it: any, i: number) => (
         <div
           key={i}
           className="flex items-baseline justify-between gap-3 py-1 border-b border-white/[0.06] last:border-b-0"
         >
           <div className="text-[12px] text-white truncate flex-1">{it.description}</div>
-          <div className="text-[11px] tabular-nums text-white/65 shrink-0">
+          <div className="text-[11px] tabular-nums text-white shrink-0">
             {it.quantity} {it.unit}
           </div>
         </div>
@@ -478,10 +452,12 @@ const ScheduleResult = ({ e }: { e: any }) => {
   const circuits = Array.isArray(e?.circuits) ? e.circuits : [];
   return (
     <div className="space-y-2">
-      <div className="flex items-baseline gap-3 flex-wrap text-[11px] tabular-nums text-white/60">
+      <div className="flex items-baseline gap-3 flex-wrap text-[11px] tabular-nums text-white">
         {e?.boardReference && <span>{e.boardReference}</span>}
         {e?.mainSwitchRating && <span>· {e.mainSwitchRating}A main</span>}
-        <span>· {circuits.length} circuit{circuits.length === 1 ? '' : 's'}</span>
+        <span>
+          · {circuits.length} circuit{circuits.length === 1 ? '' : 's'}
+        </span>
       </div>
       {circuits.map((c: any, i: number) => (
         <div
@@ -490,7 +466,7 @@ const ScheduleResult = ({ e }: { e: any }) => {
         >
           <div className="min-w-0 flex-1">
             <div className="text-[12.5px] font-semibold text-white truncate">{c.name}</div>
-            <div className="text-[10.5px] text-white/55 tabular-nums">
+            <div className="text-[10.5px] text-white tabular-nums">
               {c.cableSize && `${c.cableSize}mm² ${c.cableType ?? ''}`}
               {c.protectionRating && ` · ${c.protectionRating}A ${c.protectionType ?? 'MCB'}`}
             </div>
@@ -505,36 +481,33 @@ const PhotoResult = ({ e }: { e: any }) => {
   const findings = Array.isArray(e?.findings) ? e.findings : [];
   return (
     <div className="space-y-2">
-      <div className="flex items-baseline gap-3 flex-wrap text-[11px] tabular-nums text-white/60">
+      <div className="flex items-baseline gap-3 flex-wrap text-[11px] tabular-nums text-white">
         {e?.equipmentType && <span>{e.equipmentType}</span>}
         {e?.brand && <span>· {e.brand}</span>}
         {e?.estimatedAge && <span>· {e.estimatedAge}</span>}
       </div>
       {findings.map((f: any, i: number) => (
-        <div
-          key={i}
-          className="space-y-0.5 pb-2 border-b border-white/[0.06] last:border-b-0"
-        >
+        <div key={i} className="space-y-0.5 pb-2 border-b border-white/[0.06] last:border-b-0">
           <div className="flex items-baseline justify-between gap-2">
             <span
               className={cn(
-                'text-[10px] uppercase tracking-[0.16em] font-semibold',
+                'text-[12px] font-semibold capitalize',
                 f.kind === 'defect' || f.kind === 'compliance-concern'
                   ? 'text-amber-400'
                   : f.kind === 'positive'
                     ? 'text-emerald-400'
-                    : 'text-white/65'
+                    : 'text-white'
               )}
             >
               {f.kind}
             </span>
             {f.reg && (
-              <span className="text-[10px] tabular-nums text-white/50 border border-white/15 rounded px-1.5 py-0.5">
+              <span className="text-[10px] tabular-nums text-white border border-white/15 rounded px-1.5 py-0.5">
                 BS 7671 {f.reg}
               </span>
             )}
           </div>
-          <p className="text-[12px] text-white/85 leading-snug">{f.detail}</p>
+          <p className="text-[12px] text-white leading-snug">{f.detail}</p>
         </div>
       ))}
     </div>

@@ -18,6 +18,15 @@ import { sendEmail, htmlToPlainText } from '../_shared/mailer.ts';
 import { buildCoveredByEmployerEmail, teamCompany } from '../_shared/email-templates/team.ts';
 
 import { withSentry } from '../_shared/sentry.ts';
+/** Plans a team seat does not replace: Mate (current and legacy), an employer
+ *  plan of their own (current, legacy, founders offer) and the seat item itself. */
+const SEAT_DOES_NOT_REPLACE = new Set([
+  'price_1TRGZo2RKw5t5RAmRl2hc0ru', 'price_1TRGZo2RKw5t5RAmzY50EzaE',
+  'price_1T6DUx2RKw5t5RAmpb177NJV', 'price_1T6DUy2RKw5t5RAmo9HgAukW',
+  'price_1Tm6eF2RKw5t5RAm0nG7ujWw', 'price_1Tm6qA2RKw5t5RAmitPj2yF9',
+  'price_1SlyAT2RKw5t5RAmUmTRGimH', 'price_1SlyB82RKw5t5RAmN447YJUW',
+  'price_1SPK8c2RKw5t5RAmRGJxXfjc', 'price_1TkfWZ2RKw5t5RAmBPSZzc6X',
+]);
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -115,6 +124,7 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
             .maybeSingle();
 
           let cancelledStripe = false;
+          let hasStripeSub = false;
           if (workerProfile?.stripe_customer_id) {
             // Cancel the worker's OWN active subs (their customer — never the
             // employer's) at period end, TAGGED seat_replaced so we can safely
@@ -125,7 +135,12 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
               status: 'active',
               limit: 10,
             });
+            hasStripeSub = workerSubs.data.length > 0;
             for (const ws of workerSubs.data) {
+              // A seat covers the Electrician and Apprentice app. It does NOT
+              // replace Mate (WhatsApp assistant) or an employer plan of their
+              // own, so those are never touched (10 Oct 2026).
+              if (ws.items.data.some((it: { price?: { id?: string } }) => SEAT_DOES_NOT_REPLACE.has(it.price?.id ?? "x"))) continue;
               if (!ws.cancel_at_period_end) {
                 await stripe.subscriptions.update(ws.id, {
                   cancel_at_period_end: true,
@@ -136,7 +151,7 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
             }
           }
 
-          if (!cancelledStripe && workerProfile?.subscribed) {
+          if (!cancelledStripe && !hasStripeSub && workerProfile?.subscribed) {
             // Paying but no cancellable Stripe sub → native (Apple/Google) IAP,
             // which we CANNOT cancel server-side. Email them to self-cancel so
             // they stop double-paying (their access is safe via the seat).

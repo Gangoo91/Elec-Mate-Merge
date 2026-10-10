@@ -566,7 +566,7 @@ const EVSELoadCalculator = () => {
 
                 {/* Diversity — Reg 722.311.201 */}
                 {result.diversityRequiresCurtailment && (
-                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/30">
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
                       <div>
@@ -627,7 +627,7 @@ const EVSELoadCalculator = () => {
 
                 {/* PME/PEN warning */}
                 {result.pmeWarning && (
-                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/30">
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
                       <div>
@@ -670,7 +670,7 @@ const EVSELoadCalculator = () => {
 
                 {/* Low Headroom Warning */}
                 {result.headroom < 10 && (
-                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/30">
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
                       <p className="text-sm text-white">
@@ -746,8 +746,8 @@ const EVSELoadCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">
@@ -792,8 +792,8 @@ const EVSELoadCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2 text-sm text-white">

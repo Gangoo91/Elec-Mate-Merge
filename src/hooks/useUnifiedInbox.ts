@@ -33,7 +33,9 @@ export type InboxKind =
   | 'iqa'
   | 'review'
   | 'checkin'
-  | 'marking';
+  | 'marking'
+  /** ELE-2041: a funding-rules date due or passed (EPA organisation, para 143). */
+  | 'deadline';
 
 export const INBOX_KIND_LABEL: Record<InboxKind, string> = {
   hours: 'Hours',
@@ -45,11 +47,13 @@ export const INBOX_KIND_LABEL: Record<InboxKind, string> = {
   review: 'Review',
   checkin: 'Check-in',
   marking: 'Marking',
+  deadline: 'Funding rules',
 };
 
 /** The order kinds are shown in, by cost of delay. */
 export const INBOX_KIND_ORDER: InboxKind[] = [
   'hours',
+  'deadline',
   'evidence',
   'message',
   'comment',

@@ -8,8 +8,9 @@
  *
  * Rebuilt on the shared hub language. CollegeDashboard draws the masthead,
  * so this is content only: an alert line pointing at the IQA dashboard →
- * four KPIs → sampling → findings (Add finding is the one solid volt
- * control) → standardisation → EQA preparation.
+ * a header sentence carrying sampling, findings and the EQA date (8 Oct
+ * 2026: replaced four KPI tiles) → sampling → findings (Add finding is the
+ * one solid volt control) → standardisation → EQA preparation.
  *
  * The sampling figures are now REAL. This section used to "sample" by
  * multiplying every assessor's grade count by the college's target
@@ -26,6 +27,7 @@ import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { JoinedToggle } from '@/components/college/assessment/AssessmentTabs';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -37,35 +39,55 @@ import {
   type IqaMeeting,
   type EqaChecklistItem,
 } from '@/hooks/college/useIqaWorkflow';
-import { Field, inputClass, textareaClass, containerVariants, itemVariants } from '@/components/college/primitives';
+import {
+  Field,
+  inputClass,
+  textareaClass,
+  containerVariants,
+  itemVariants,
+} from '@/components/college/primitives';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { inputCn } from '@/components/forms/fieldStyles';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
   COLLEGE_LINK,
-  COLLEGE_LIST,
-  COLLEGE_ROW,
   CollegeEmpty,
-  CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
   chipCn,
 } from '@/components/college/ui/CollegeUi';
+import {
+  QBTN as COLLEGE_BTN,
+  QBTN_PRIMARY as COLLEGE_BTN_PRIMARY,
+  QCARD as COLLEGE_CARD,
+  QLIST as COLLEGE_LIST,
+  QROW as COLLEGE_ROW,
+  QualityHeader,
+} from '@/components/college/quality/QualityHubKit';
+import { joinAnd, plural } from '@/components/college/quality/qualityText';
 import { BarList, SegmentBar, StatusPill } from '@/components/college/quality/QualityKit';
 import { uniqueLabels } from '@/components/college/quality/IqaVisuals';
 
 const HELP: PageHelpContent = {
   id: 'college-iqa-workflow',
   title: 'IQA workflow',
-  what: 'A one-page view of internal quality assurance: how much of each assessor\'s work has been sampled, the findings and actions that came out of it, standardisation meetings, and readiness for the next external quality assurance (EQA) visit.',
+  what: "A one-page view of internal quality assurance: how much of each assessor's work has been sampled, the findings and actions that came out of it, standardisation meetings, and readiness for the next external quality assurance (EQA) visit.",
   steps: [
-    { title: 'Check sampling', body: 'Each bar is one assessor: how much of their work has been sampled against the target. Orange means behind. Set plans and give verdicts on the IQA dashboard.' },
-    { title: 'Log findings and close them', body: 'Add a finding for good practice, something to improve, or an action required. Tap it to close it when it is resolved.' },
-    { title: 'Record standardisation', body: 'Log each standardisation meeting with the number who attended and what was agreed.' },
-    { title: 'Get ready for the EQA', body: 'Set the visit date and tick off the evidence checklist as each item is ready.' },
+    {
+      title: 'Check sampling',
+      body: 'Each bar is one assessor: how much of their work has been sampled against the target. Orange means behind. Set plans and give verdicts on the IQA dashboard.',
+    },
+    {
+      title: 'Log findings and close them',
+      body: 'Add a finding for good practice, something to improve, or an action required. Tap it to close it when it is resolved.',
+    },
+    {
+      title: 'Record standardisation',
+      body: 'Log each standardisation meeting with the number who attended and what was agreed.',
+    },
+    {
+      title: 'Get ready for the EQA',
+      body: 'Set the visit date and tick off the evidence checklist as each item is ready.',
+    },
   ],
   legend: [
     { swatch: 'bg-emerald-500', label: 'On target or closed' },
@@ -299,33 +321,67 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
 
   const statusCount = (s: string) => findings.filter((f: IqaFinding) => f.status === s).length;
   const eqaDays = nextEqaVisit
-    ? Math.round((new Date(nextEqaVisit).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86_400_000)
+    ? Math.round(
+        (new Date(nextEqaVisit).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86_400_000
+      )
     : null;
-  const checklistPct = checklist.length > 0 ? Math.round((checkedCount / checklist.length) * 100) : null;
+  const checklistPct =
+    checklist.length > 0 ? Math.round((checkedCount / checklist.length) * 100) : null;
+
+  /* The sentence under the title: sampling, findings and the EQA, in words. */
+  const withPlan = assessorSampling.filter((a) => a.hasPlan);
+  const onTargetCount = withPlan.filter((a) => a.onTarget).length;
+  const summary =
+    assessors.length === 0
+      ? 'No assessors yet. Add staff with the assessor or tutor role to start sampling.'
+      : `${withPlan.length === 0 ? 'No assessor has a sampling plan yet' : `${onTargetCount} of ${plural(withPlan.length, 'assessor')} with a plan sampled to target`}${
+          withoutPlan > 0 ? `, ${withoutPlan} without a plan` : ''
+        }. ${
+          openActions === 0
+            ? findings.length > 0
+              ? 'Every finding is closed.'
+              : 'No findings recorded.'
+            : `${plural(openActions, 'finding')} open${actionRequired > 0 ? `, ${actionRequired} needing action` : ''}.`
+        }`;
+  const summarySub =
+    joinAnd([
+      nextEqaVisit
+        ? eqaDays !== null && eqaDays < 0
+          ? `The EQA visit date (${fmtDate(nextEqaVisit, true)}) has passed; set the next one`
+          : `Next EQA visit ${fmtDate(nextEqaVisit, true)}${eqaDays !== null ? `, in ${plural(eqaDays, 'day')}` : ''}`
+        : 'No EQA visit date set',
+      checklist.length > 0 ? `${checkedCount} of ${checklist.length} evidence items ready` : '',
+      meetings.length === 0 ? 'no standardisation meetings recorded' : '',
+    ]) + '.';
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      <CollegePageHeader
+      <QualityHeader
         eyebrow="Quality and compliance"
         title="IQA workflow"
-        description="Sampling against each assessor's plan, findings and actions, standardisation meetings and getting ready for the next EQA visit."
+        summary={summary}
+        sub={summarySub}
         help={HELP}
         actions={
-          <>
-            <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_BTN}>
-              Open the IQA dashboard
+          <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_BTN}>
+            Open the IQA dashboard
+          </button>
+        }
+        primary={
+          canWrite ? (
+            <button
+              type="button"
+              onClick={() => setShowAddFinding(true)}
+              className={COLLEGE_BTN_PRIMARY}
+            >
+              Add finding
             </button>
-            {canWrite && (
-              <button type="button" onClick={() => setShowAddFinding(true)} className={COLLEGE_BTN_PRIMARY}>
-                Add finding
-              </button>
-            )}
-          </>
+          ) : undefined
         }
       />
 
       {error && (
-        <div className="flex items-center justify-between gap-4 rounded-2xl border border-red-400/40 px-4 py-3">
+        <div className="flex items-center justify-between gap-4 rounded-2xl border border-orange-400/50 px-4 py-3">
           <div className="text-[13px] text-white">
             <span className="font-semibold">Could not load IQA workflow.</span> {error}
           </div>
@@ -348,44 +404,14 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
         </div>
       )}
 
-      <CollegeStats
-        items={[
-          {
-            label: 'Sampled',
-            value: samplingRate === null ? '—' : `${samplingRate}%`,
-            sub:
-              samplingRate === null
-                ? 'No sampling plan yet'
-                : belowTarget > 0
-                  ? `${belowTarget} assessor${belowTarget === 1 ? '' : 's'} below target`
-                  : `${sampledTotal.sampled} of ${sampledTotal.total} decisions`,
-            warn: belowTarget > 0,
-            onClick: () => navigate('/college/iqa'),
-          },
-          {
-            label: 'Open actions',
-            value: String(openActions),
-            sub: actionRequired > 0 ? `${actionRequired} marked action required` : openActions > 0 ? 'Close as they are resolved' : 'Nothing open',
-            warn: actionRequired > 0,
-            onClick: () => document.getElementById('iqa-findings')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
-          },
-          {
-            label: 'Standardisation',
-            value: String(meetings.length),
-            sub: meetings.length > 0 ? 'Meetings on record' : 'No meetings recorded',
-            warn: meetings.length === 0,
-          },
-          {
-            label: 'Next EQA visit',
-            value: nextEqaVisit ? fmtDate(nextEqaVisit) : '—',
-            sub: nextEqaVisit ? `${checkedCount} of ${checklist.length} evidence items ready` : 'Date not set',
-          },
-        ]}
-      />
-
       <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-5">
         {/* Sampling plan */}
-        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-3"
+        >
           <CollegeSectionTitle
             title="Sampling by assessor"
             sub={
@@ -396,7 +422,11 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
                   : `Target ${samplingTargetPercent}% of each assessor's decisions`
             }
             action={
-              <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_LINK}>
+              <button
+                type="button"
+                onClick={() => navigate('/college/iqa')}
+                className={COLLEGE_LINK}
+              >
                 Plans
               </button>
             }
@@ -410,9 +440,12 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
               <BarList
                 max={100}
                 suffix="%"
+                wideLabels
                 rows={assessorSampling.map((a, i, all) => ({
                   label: uniqueLabels(all.map((x) => x.name))[i],
-                  sub: a.hasPlan ? `${a.sampled} of ${a.total} · target ${a.target}%` : 'No sampling plan yet',
+                  sub: a.hasPlan
+                    ? `${a.sampled} of ${a.total} sampled · target ${a.target}% · ${a.onTarget ? 'on target' : 'below target'}`
+                    : 'No sampling plan yet',
                   n: a.percent ?? 0,
                   tone: !a.hasPlan ? 'neutral' : a.onTarget ? 'good' : 'warn',
                   onClick: () => navigate('/college/iqa'),
@@ -423,7 +456,12 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
         </motion.section>
 
         {/* Findings by status */}
-        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-3"
+        >
           <CollegeSectionTitle
             title="Findings by status"
             sub={
@@ -440,9 +478,24 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
             <SegmentBar
               emptyText="No findings yet"
               segments={[
-                { label: 'Open', n: statusCount('Open'), tone: 'warn', onClick: () => setFindingFilter('Open') },
-                { label: 'In progress', n: statusCount('In Progress'), tone: 'info', onClick: () => setFindingFilter('Open') },
-                { label: 'Closed', n: statusCount('Closed'), tone: 'good', onClick: () => setFindingFilter('Closed') },
+                {
+                  label: 'Open',
+                  n: statusCount('Open'),
+                  tone: 'warn',
+                  onClick: () => setFindingFilter('Open'),
+                },
+                {
+                  label: 'In progress',
+                  n: statusCount('In Progress'),
+                  tone: 'info',
+                  onClick: () => setFindingFilter('Open'),
+                },
+                {
+                  label: 'Closed',
+                  n: statusCount('Closed'),
+                  tone: 'good',
+                  onClick: () => setFindingFilter('Closed'),
+                },
               ]}
             />
             <div className="mt-5 border-t border-white/[0.06] pt-4">
@@ -450,9 +503,25 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
               <div className="mt-3">
                 <BarList
                   rows={[
-                    { label: 'Good practice', n: findings.filter((f: IqaFinding) => f.finding_type === 'Good Practice').length, tone: 'good' },
-                    { label: 'For improvement', n: findings.filter((f: IqaFinding) => f.finding_type === 'Area for Improvement').length, tone: 'warn' },
-                    { label: 'Action required', n: findings.filter((f: IqaFinding) => f.finding_type === 'Action Required').length, tone: 'bad' },
+                    {
+                      label: 'Good practice',
+                      n: findings.filter((f: IqaFinding) => f.finding_type === 'Good Practice')
+                        .length,
+                      tone: 'good',
+                    },
+                    {
+                      label: 'For improvement',
+                      n: findings.filter(
+                        (f: IqaFinding) => f.finding_type === 'Area for Improvement'
+                      ).length,
+                      tone: 'warn',
+                    },
+                    {
+                      label: 'Action required',
+                      n: findings.filter((f: IqaFinding) => f.finding_type === 'Action Required')
+                        .length,
+                      tone: 'bad',
+                    },
                   ]}
                 />
               </div>
@@ -462,23 +531,41 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
       </div>
 
       {/* Findings & actions */}
-      <motion.section variants={containerVariants} initial="hidden" animate="visible" className="space-y-3">
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
         <CollegeSectionTitle
           id="iqa-findings"
           title="Findings and actions"
-          sub={canWrite ? 'Tap a finding to close it, or to reopen a closed one' : 'Decisions, actions and standardisation outcomes'}
+          sub={
+            canWrite
+              ? 'Tap a finding to close it, or to reopen a closed one'
+              : 'Decisions, actions and standardisation outcomes'
+          }
         />
-        <motion.div variants={itemVariants} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap gap-2">
-            {(['All', 'Open', 'Closed'] as const).map((pill) => (
-              <button key={pill} type="button" onClick={() => setFindingFilter(pill)} className={chipCn(findingFilter === pill)}>
-                {pill}
-                {pill === 'Open' && openActions > 0 && <span className="ml-1.5 tabular-nums">{openActions}</span>}
-              </button>
-            ))}
-          </div>
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <JoinedToggle
+            ariaLabel="Which findings to show"
+            value={findingFilter}
+            onChange={setFindingFilter}
+            items={(['All', 'Open', 'Closed'] as const).map((pill) => ({
+              key: pill,
+              label: pill,
+              count: pill === 'Open' && openActions > 0 ? openActions : null,
+            }))}
+          />
           {canWrite && (
-            <button type="button" onClick={() => setShowAddFinding(true)} className={cn(COLLEGE_BTN, 'w-full sm:w-auto')}>
+            <button
+              type="button"
+              onClick={() => setShowAddFinding(true)}
+              className={cn(COLLEGE_BTN, 'w-full sm:w-auto')}
+            >
               Add finding
             </button>
           )}
@@ -494,7 +581,10 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
             }
           />
         ) : (
-          <motion.ul variants={itemVariants} className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0')}>
+          <motion.ul
+            variants={itemVariants}
+            className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0')}
+          >
             {filteredFindings.map((finding: IqaFinding) => {
               const closed = finding.status === 'Closed';
               const red = !closed && finding.finding_type === 'Action Required';
@@ -507,17 +597,27 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
                     title={canWrite ? (closed ? 'Reopen' : 'Mark closed') : undefined}
                     className={cn(COLLEGE_ROW, 'h-full disabled:hover:bg-transparent')}
                   >
-                    <span
-                      aria-hidden="true"
-                      className={cn('h-9 w-[3px] shrink-0 rounded-full', closed ? 'bg-emerald-500' : red ? 'bg-red-500' : 'bg-orange-400')}
-                    />
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">{finding.assessor_name}</span>
+                      <span className="line-clamp-2 block text-[14px] font-semibold leading-snug text-white">
+                        {finding.assessor_name}
+                      </span>
                       <span className="mt-0.5 block text-[12.5px] leading-snug text-white line-clamp-2">
-                        {[finding.finding_type, finding.area, finding.description].filter(Boolean).join(' · ')}
+                        {[finding.finding_type, finding.area, finding.description]
+                          .filter(Boolean)
+                          .join(' · ')}
                       </span>
                     </span>
-                    <StatusPill tone={closed ? 'good' : red ? 'bad' : finding.status === 'In Progress' ? 'info' : 'warn'}>
+                    <StatusPill
+                      tone={
+                        closed
+                          ? 'good'
+                          : red
+                            ? 'bad'
+                            : finding.status === 'In Progress'
+                              ? 'info'
+                              : 'warn'
+                      }
+                    >
                       {finding.status}
                     </StatusPill>
                   </button>
@@ -530,13 +630,26 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
 
       <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-5">
         {/* Standardisation meetings */}
-        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-3"
+        >
           <CollegeSectionTitle
             title="Standardisation record"
-            sub={meetings.length > 0 ? `${meetings.length} meeting${meetings.length === 1 ? '' : 's'} on record` : 'Keeps every assessor marking to the same standard'}
+            sub={
+              meetings.length > 0
+                ? `${meetings.length} meeting${meetings.length === 1 ? '' : 's'} on record`
+                : 'Keeps every assessor marking to the same standard'
+            }
             action={
               canWrite ? (
-                <button type="button" onClick={() => setShowAddMeeting(true)} className={COLLEGE_LINK}>
+                <button
+                  type="button"
+                  onClick={() => setShowAddMeeting(true)}
+                  className={COLLEGE_LINK}
+                >
                   Record meeting
                 </button>
               ) : undefined
@@ -548,7 +661,11 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
               body="Agendas, decisions and actions recorded here give an EQA visit a clear paper trail."
               action={
                 canWrite ? (
-                  <button type="button" onClick={() => setShowAddMeeting(true)} className={COLLEGE_BTN}>
+                  <button
+                    type="button"
+                    onClick={() => setShowAddMeeting(true)}
+                    className={COLLEGE_BTN}
+                  >
                     Record meeting
                   </button>
                 ) : undefined
@@ -559,19 +676,28 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
               {meetings.map((meeting: IqaMeeting) => {
                 const when = meeting.scheduled_at ?? meeting.date;
                 return (
-                  <li key={meeting.id} className="flex min-h-[60px] items-center gap-3 px-5 py-3 sm:px-6">
+                  <li
+                    key={meeting.id}
+                    className="flex min-h-[60px] items-center gap-3 px-4 py-3 sm:px-5"
+                  >
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">{meeting.topic}</span>
+                      <span className="line-clamp-2 block text-[14px] font-semibold leading-snug text-white">
+                        {meeting.topic}
+                      </span>
                       <span className="mt-0.5 block text-[12.5px] leading-snug text-white line-clamp-2">
                         {[
-                          meeting.attendees_count != null && meeting.attendees_count > 0 ? `${meeting.attendees_count} attendees` : null,
+                          meeting.attendees_count != null && meeting.attendees_count > 0
+                            ? `${meeting.attendees_count} attendees`
+                            : null,
                           meeting.outcome,
                         ]
                           .filter(Boolean)
                           .join(' · ') || 'No outcome recorded'}
                       </span>
                     </span>
-                    <span className="shrink-0 text-[12.5px] font-semibold tabular-nums text-white">{when ? fmtDate(when) : '—'}</span>
+                    <span className="shrink-0 text-[12.5px] font-semibold tabular-nums text-white">
+                      {when ? fmtDate(when) : '—'}
+                    </span>
                   </li>
                 );
               })}
@@ -580,7 +706,12 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
         </motion.section>
 
         {/* EQA preparation */}
-        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-3"
+        >
           <CollegeSectionTitle
             title="EQA preparation"
             sub="The visit date and the evidence the external quality assurer will ask for"
@@ -597,7 +728,7 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
             }
           />
           <motion.div variants={itemVariants} className={cn(COLLEGE_LIST, 'flex-1')}>
-            <div className="flex items-start justify-between gap-4 px-5 py-4 sm:px-6">
+            <div className="flex items-start justify-between gap-4 px-4 py-4 sm:px-5">
               <div className="min-w-0 flex-1">
                 <div className="text-[12.5px] font-medium text-white">Next EQA visit</div>
                 {editingEQADate ? (
@@ -615,18 +746,32 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
                   </div>
                 )}
                 {!editingEQADate && eqaDays !== null && (
-                  <div className={cn('mt-0.5 text-[12.5px]', eqaDays < 0 ? 'text-orange-400' : 'text-white')}>
-                    {eqaDays < 0 ? `${Math.abs(eqaDays)} days ago` : eqaDays === 0 ? 'Today' : `In ${eqaDays} days`}
+                  <div
+                    className={cn(
+                      'mt-0.5 text-[12.5px]',
+                      eqaDays < 0 ? 'text-orange-300' : 'text-white'
+                    )}
+                  >
+                    {eqaDays < 0
+                      ? `${Math.abs(eqaDays)} days ago`
+                      : eqaDays === 0
+                        ? 'Today'
+                        : `In ${eqaDays} days`}
                   </div>
                 )}
               </div>
               <div className="w-28 shrink-0 text-right">
                 <div className="text-[13px] font-semibold tabular-nums text-white">
-                  {checkedCount}/{checklist.length} ready
+                  {checklist.length === 0
+                    ? 'No checklist yet'
+                    : `${checkedCount} of ${checklist.length} ready`}
                 </div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/[0.08]">
                   <div
-                    className={cn('h-full rounded-full', checklistPct === 100 ? 'bg-emerald-500' : 'bg-elec-yellow')}
+                    className={cn(
+                      'h-full rounded-full',
+                      checklistPct === 100 ? 'bg-emerald-500' : 'bg-elec-yellow'
+                    )}
                     style={{ width: `${checklistPct ?? 0}%` }}
                   />
                 </div>
@@ -634,17 +779,21 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
             </div>
 
             <div>
-              <div className="flex items-center justify-between gap-4 px-5 pt-3 sm:px-6">
+              <div className="flex items-center justify-between gap-4 px-4 pt-3 sm:px-5">
                 <div className="text-[12.5px] font-semibold text-white">Required evidence</div>
                 {checklist.length === 0 && canWrite && (
-                  <button type="button" onClick={() => void handleSeedChecklist()} className={COLLEGE_LINK}>
+                  <button
+                    type="button"
+                    onClick={() => void handleSeedChecklist()}
+                    className={COLLEGE_LINK}
+                  >
                     Seed default checklist
                   </button>
                 )}
               </div>
 
               {checklist.length === 0 ? (
-                <p className="px-5 pb-4 pt-2 text-[13px] leading-snug text-white sm:px-6">
+                <p className="px-4 pb-4 pt-2 text-[13px] leading-snug text-white sm:px-5">
                   No checklist items for this EQA cycle yet.
                   {canWrite ? ' Seed the default checklist to start.' : ''}
                 </p>
@@ -658,7 +807,7 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
                           type="button"
                           onClick={() => void toggleChecklistItem(item.id)}
                           disabled={!canWrite}
-                          className="flex min-h-11 w-full items-center gap-3 px-5 py-2 text-left transition-colors touch-manipulation hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:hover:bg-transparent sm:px-6"
+                          className="flex min-h-11 w-full items-center gap-3 px-4 py-2 text-left transition-colors touch-manipulation hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:hover:bg-transparent sm:px-5"
                         >
                           <span
                             className={cn(
@@ -666,9 +815,15 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
                               done ? 'border-emerald-500 bg-emerald-500' : 'border-white/[0.3]'
                             )}
                           >
-                            {done && <span className="text-[10px] font-bold leading-none text-black">✓</span>}
+                            {done && (
+                              <span className="text-[12px] font-bold leading-none text-black">
+                                ✓
+                              </span>
+                            )}
                           </span>
-                          <span className={cn('text-[13px] text-white', done && 'line-through')}>{item.item_label}</span>
+                          <span className={cn('text-[13px] text-white', done && 'line-through')}>
+                            {item.item_label}
+                          </span>
                         </button>
                       </li>
                     );
@@ -690,7 +845,11 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
         description="Recorded against this college and visible to all college staff."
         footer={
           <div className="flex gap-2">
-            <button type="button" className={cn(COLLEGE_BTN, 'flex-1')} onClick={() => setShowAddFinding(false)}>
+            <button
+              type="button"
+              className={cn(COLLEGE_BTN, 'flex-1')}
+              onClick={() => setShowAddFinding(false)}
+            >
               Cancel
             </button>
             <button
@@ -728,7 +887,9 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
 
             <Field label="Type" required>
               <div className="flex flex-wrap gap-2">
-                {(['Good Practice', 'Area for Improvement', 'Action Required'] as FindingType[]).map((t) => (
+                {(
+                  ['Good Practice', 'Area for Improvement', 'Action Required'] as FindingType[]
+                ).map((t) => (
                   <button
                     key={t}
                     type="button"
@@ -764,7 +925,11 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
         description="Captures topic, attendance and outcome for the audit trail."
         footer={
           <div className="flex gap-2">
-            <button type="button" className={cn(COLLEGE_BTN, 'flex-1')} onClick={() => setShowAddMeeting(false)}>
+            <button
+              type="button"
+              className={cn(COLLEGE_BTN, 'flex-1')}
+              onClick={() => setShowAddMeeting(false)}
+            >
               Cancel
             </button>
             <button

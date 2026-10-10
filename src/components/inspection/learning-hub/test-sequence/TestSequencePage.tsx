@@ -32,7 +32,7 @@ const TestSequencePage = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Test Sequence</h1>
-              <p className="text-[10px] text-white">BS 7671 mandated order</p>
+              <p className="text-[12px] text-white">BS 7671 mandated order</p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ const TestSequencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-yellow-400/20" />
-            <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-3">Dead Tests — Circuit Isolated</span>
+            <span className="text-[12px] font-medium text-white px-3">Dead Tests — Circuit Isolated</span>
             <div className="h-px flex-1 bg-yellow-400/20" />
           </div>
         </motion.div>
@@ -68,11 +68,11 @@ const TestSequencePage = ({ onBack }: Props) => {
                 <div className="flex-1 p-4 space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-sm font-semibold text-white">{t.test}</p>
-                    <span className="text-[10px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg shrink-0">{t.ref}</span>
+                    <span className="text-[12px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg shrink-0">{t.ref}</span>
                   </div>
                   <p className="text-sm text-white leading-relaxed">{t.what}</p>
                   <div className="flex items-start gap-2 pt-1">
-                    <span className="text-[10px] font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded shrink-0 mt-0.5">PASS</span>
+                    <span className="text-[12px] font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded shrink-0 mt-0.5">PASS</span>
                     <p className="text-xs text-white">{t.acceptance}</p>
                   </div>
                   <p className="text-xs text-yellow-400/70 italic">{t.why}</p>
@@ -94,7 +94,7 @@ const TestSequencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-orange-400/20" />
-            <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-3">Live Tests — Circuit Energised</span>
+            <span className="text-[12px] font-medium text-white px-3">Live Tests — Circuit Energised</span>
             <div className="h-px flex-1 bg-orange-400/20" />
           </div>
         </motion.div>
@@ -109,11 +109,11 @@ const TestSequencePage = ({ onBack }: Props) => {
                 <div className="flex-1 p-4 space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-sm font-semibold text-white">{t.test}</p>
-                    <span className="text-[10px] font-bold text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded-lg shrink-0">{t.ref}</span>
+                    <span className="text-[12px] font-bold text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded-lg shrink-0">{t.ref}</span>
                   </div>
                   <p className="text-sm text-white leading-relaxed">{t.what}</p>
                   <div className="flex items-start gap-2 pt-1">
-                    <span className="text-[10px] font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded shrink-0 mt-0.5">PASS</span>
+                    <span className="text-[12px] font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded shrink-0 mt-0.5">PASS</span>
                     <p className="text-xs text-white">{t.acceptance}</p>
                   </div>
                   <p className="text-xs text-yellow-400/70 italic">{t.why}</p>
@@ -127,7 +127,7 @@ const TestSequencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-3 mt-2">
             <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs font-bold text-white uppercase tracking-widest px-3">If Required</span>
+            <span className="text-xs font-bold text-white px-3">If Required</span>
             <div className="h-px flex-1 bg-white/10" />
           </div>
         </motion.div>

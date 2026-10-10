@@ -25,8 +25,17 @@ import {
   P_CARD,
   P_INPUT,
   P_LIST,
+  P_SEG_GROUP,
   StateChip,
+  pSeg,
 } from './ui';
+import { OccasionsGrid } from '@/components/portfolio/OccasionsGrid';
+import {
+  TONE_MARK,
+  occasionKey,
+  occasionTone,
+  type AcOccasionRow,
+} from '@/hooks/portfolio/useAcOccasions';
 import { LEARNER_STATE_LABEL } from '@/hooks/portfolio/usePortfolioAcState';
 import { SubmitEvidenceSheet } from './SubmitEvidenceSheet';
 import {
@@ -35,6 +44,8 @@ import {
   type CriterionWitness,
 } from '@/hooks/portfolio/useWitnessedCriteria';
 import { assessorWithQualifications } from '@/lib/assessorQualifications';
+import { studyKey, useStudyLinks, type CriterionLinks } from '@/hooks/college/useStudyLinks';
+import { StudyPractiseLinks } from './StudyPractiseLinks';
 
 /**
  * ELE-1863: what "Send these for unit X" sends. The learner's own evidence
@@ -141,9 +152,14 @@ export function CoverageView({
   const [filter, setFilter] = useState<Filter>('all');
   const [q, setQ] = useState('');
   const [openUnit, setOpenUnit] = useState<string | null>(null);
+  // List of criteria, or the unit-by-unit gap grid (occasions, C&G p.14).
+  const [layout, setLayout] = useState<'list' | 'grid'>('list');
+  const occ = portfolio.occasions;
   const itemById = useMemo(() => new Map(items.map((i) => [i.id, i])), [items]);
   // ELE-1869: "Witnessed by …" against each criterion a signed statement backs up.
   const witnessed = useWitnessedCriteria(portfolio.learnerId);
+  // ELE-1904: Study (the lesson that teaches it) and Practise on each criterion.
+  const study = useStudyLinks(portfolio.qualificationCode);
   const match = FILTERS.find((f) => f.key === filter)!.match;
   const needle = q.trim().toLowerCase();
 
@@ -219,7 +235,7 @@ export function CoverageView({
               <span className="text-[28px] font-bold leading-none tabular-nums text-white">
                 {headline.passed}
               </span>
-              <span className="mt-1 text-[11.5px] text-white">of {headline.total} passed</span>
+              <span className="mt-1 text-[12.5px] text-white">of {headline.total} passed</span>
             </span>
           </div>
           <ul
@@ -260,146 +276,187 @@ export function CoverageView({
       </section>
 
       <div className="min-w-0 space-y-3">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="relative min-w-0 flex-1 sm:max-w-md">
-            <Search className="pointer-events-none absolute left-1 top-3.5 h-4 w-4 text-white" />
-            <input
-              className={cn(P_INPUT, 'pl-7 pr-9')}
-              placeholder="Search criteria"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              aria-label="Search criteria"
-            />
-            {q && (
-              <button
-                type="button"
-                aria-label="Clear search"
-                onClick={() => setQ('')}
-                className="absolute right-0 top-0 inline-flex h-11 w-11 items-center justify-center text-white touch-manipulation"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
-          </div>
-          <p className="text-[12.5px] text-white sm:ml-auto">
-            {filtering ? (
-              <>
-                {shownCriteria} {shownCriteria === 1 ? 'criterion' : 'criteria'} in {units.length}{' '}
-                {units.length === 1 ? 'unit' : 'units'}.{' '}
-                <button
-                  type="button"
-                  className="h-11 font-semibold text-elec-yellow touch-manipulation"
-                  onClick={() => {
-                    setFilter('all');
-                    setQ('');
-                  }}
-                >
-                  Show all
-                </button>
-              </>
-            ) : (
-              `${ac.units.length} units · tap one to see its criteria`
-            )}
-          </p>
+        <div role="radiogroup" aria-label="Show criteria as" className={P_SEG_GROUP}>
+          {(
+            [
+              ['list', 'Criteria list'],
+              ['grid', 'Gap grid'],
+            ] as const
+          ).map(([k, label]) => (
+            <button
+              key={k}
+              type="button"
+              role="radio"
+              aria-checked={layout === k}
+              onClick={() => setLayout(k)}
+              className={pSeg(layout === k)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
-
-        {units.length === 0 ? (
-          <p className="rounded-3xl border border-dashed border-white/[0.2] p-6 text-[14px] text-white">
-            Nothing matches.
-          </p>
+        {layout === 'grid' ? (
+          <OccasionsGrid
+            rows={ac.rows}
+            occasions={occ.byKey}
+            audience="learner"
+            onOpenCriterion={(unit, acCode) => {
+              setLayout('list');
+              setFilter('all');
+              setQ(`${unit} ac ${acCode}`);
+            }}
+          />
         ) : (
-          <ul className={P_LIST}>
-            {units.map(({ g, rows }) => {
-              const isOpen = openUnit === g.unit_code || filtering;
-              const gaps = g.rows.filter(
-                (r) => r.state === 'not_started' || r.state === 'suggested'
-              );
-              const sendable = portfolio.canReachAssessor ? sendableFor(g.unit_code, items) : [];
-              const pct = g.total ? Math.round((g.passed / g.total) * 100) : 0;
-              return (
-                <li key={g.unit_code}>
+          <>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="relative min-w-0 flex-1 sm:max-w-md">
+                <Search className="pointer-events-none absolute left-1 top-3.5 h-4 w-4 text-white" />
+                <input
+                  className={cn(P_INPUT, 'pl-7 pr-9')}
+                  placeholder="Search criteria"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  aria-label="Search criteria"
+                />
+                {q && (
                   <button
                     type="button"
-                    onClick={() => setOpenUnit(openUnit === g.unit_code ? null : g.unit_code)}
-                    className="flex min-h-[64px] w-full items-center gap-4 px-5 py-4 text-left touch-manipulation hover:bg-white/[0.03] sm:px-6"
-                    aria-expanded={isOpen}
+                    aria-label="Clear search"
+                    onClick={() => setQ('')}
+                    className="absolute right-0 top-0 inline-flex h-11 w-11 items-center justify-center text-white touch-manipulation"
                   >
-                    <div className="min-w-0 flex-1 space-y-2">
-                      <div className="flex items-baseline justify-between gap-3">
-                        <p className="min-w-0 text-[14px] font-semibold leading-snug text-white">
-                          <span className="text-elec-yellow">{g.unit_code}</span> {g.unit_title}
-                        </p>
-                        <span className="shrink-0 text-[13px] tabular-nums text-white">
-                          <span className="font-semibold">{g.passed}</span>/{g.total} passed
-                          <span className="hidden sm:inline"> · {pct}%</span>
-                        </span>
-                      </div>
-                      <UnitBar g={g} />
-                    </div>
-                    <ChevronDown
-                      className={cn(
-                        'h-4 w-4 shrink-0 text-white transition-transform',
-                        isOpen && 'rotate-180'
-                      )}
-                    />
+                    <X className="h-4 w-4" />
                   </button>
-                  {isOpen && (
-                    <div className="space-y-3 px-5 pb-5 sm:px-6">
-                      <ul className="grid gap-2 2xl:grid-cols-2">
-                        {rows.map((r) => (
-                          <CriterionRow
-                            key={`${r.unit_code}-${r.ac_code}`}
-                            r={r}
-                            itemById={itemById}
-                            onOpenItem={onOpenItem}
-                            witnesses={witnessed.get(`${r.unit_code}|${r.ac_code}`)}
-                            planned={
-                              plannedDue?.has(`${r.unit_code}|${r.ac_code}`)
-                                ? (plannedDue.get(`${r.unit_code}|${r.ac_code}`) ?? '')
-                                : undefined
-                            }
-                          />
-                        ))}
-                      </ul>
-                      {(gaps.length > 0 || sendable.length > 0) && (
-                        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                          {sendable.length > 0 && (
-                            <button
-                              type="button"
-                              className={cn(P_BTN_PRIMARY, 'w-full sm:w-auto')}
-                              onClick={() => {
-                                setSendSnapshot(sendable);
-                                setSendUnit(g.unit_code);
-                              }}
-                            >
-                              <Send className="h-4 w-4" />
-                              {sendable.length === 1
-                                ? `Send 1 piece for unit ${g.unit_code}`
-                                : `Send these ${sendable.length} for unit ${g.unit_code}`}
-                            </button>
+                )}
+              </div>
+              <p className="text-[12.5px] text-white sm:ml-auto">
+                {filtering ? (
+                  <>
+                    {shownCriteria} {shownCriteria === 1 ? 'criterion' : 'criteria'} in{' '}
+                    {units.length} {units.length === 1 ? 'unit' : 'units'}.{' '}
+                    <button
+                      type="button"
+                      className="h-11 font-semibold text-elec-yellow touch-manipulation"
+                      onClick={() => {
+                        setFilter('all');
+                        setQ('');
+                      }}
+                    >
+                      Show all
+                    </button>
+                  </>
+                ) : (
+                  `${ac.units.length} units · tap one to see its criteria`
+                )}
+              </p>
+            </div>
+
+            {units.length === 0 ? (
+              <p className="rounded-3xl border border-dashed border-white/[0.2] p-6 text-[14px] text-white">
+                Nothing matches.
+              </p>
+            ) : (
+              <ul className={P_LIST}>
+                {units.map(({ g, rows }) => {
+                  const isOpen = openUnit === g.unit_code || filtering;
+                  const gaps = g.rows.filter(
+                    (r) => r.state === 'not_started' || r.state === 'suggested'
+                  );
+                  const sendable = portfolio.canReachAssessor
+                    ? sendableFor(g.unit_code, items)
+                    : [];
+                  const pct = g.total ? Math.round((g.passed / g.total) * 100) : 0;
+                  return (
+                    <li key={g.unit_code}>
+                      <button
+                        type="button"
+                        onClick={() => setOpenUnit(openUnit === g.unit_code ? null : g.unit_code)}
+                        className="flex min-h-[64px] w-full items-center gap-4 px-4 py-4 text-left touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.06] sm:px-6"
+                        aria-expanded={isOpen}
+                      >
+                        <div className="min-w-0 flex-1 space-y-2">
+                          <div className="flex items-baseline justify-between gap-3">
+                            <p className="min-w-0 text-[14px] font-semibold leading-snug text-white">
+                              <span className="block text-[12.5px] font-medium tabular-nums">
+                                Unit {g.unit_code}
+                              </span>
+                              {g.unit_title}
+                            </p>
+                            <span className="shrink-0 text-[13px] tabular-nums text-white">
+                              <span className="font-semibold">{g.passed}</span>/{g.total} passed
+                              <span className="hidden sm:inline"> · {pct}%</span>
+                            </span>
+                          </div>
+                          <UnitBar g={g} />
+                        </div>
+                        <ChevronDown
+                          className={cn(
+                            'h-4 w-4 shrink-0 text-white transition-transform',
+                            isOpen && 'rotate-180'
                           )}
-                          {gaps.length > 0 && (
-                            <button
-                              type="button"
-                              className={cn(P_BTN, 'w-full sm:w-auto')}
-                              onClick={() =>
-                                onCaptureFor(
-                                  g.unit_code,
-                                  gaps.slice(0, 6).map((r) => `${r.unit_code} AC ${r.ac_code}`)
-                                )
-                              }
-                            >
-                              <Plus className="h-4 w-4" /> Capture for unit {g.unit_code}
-                            </button>
+                        />
+                      </button>
+                      {isOpen && (
+                        <div className="space-y-3 px-5 pb-5 sm:px-6">
+                          <ul className="grid gap-2 2xl:grid-cols-2">
+                            {rows.map((r) => (
+                              <CriterionRow
+                                key={`${r.unit_code}-${r.ac_code}`}
+                                r={r}
+                                itemById={itemById}
+                                onOpenItem={onOpenItem}
+                                witnesses={witnessed.get(`${r.unit_code}|${r.ac_code}`)}
+                                occasion={occ.byKey.get(occasionKey(r.unit_code, r.ac_code))}
+                                links={study.links.get(studyKey(r.unit_code, r.ac_code))}
+                                planned={
+                                  plannedDue?.has(`${r.unit_code}|${r.ac_code}`)
+                                    ? (plannedDue.get(`${r.unit_code}|${r.ac_code}`) ?? '')
+                                    : undefined
+                                }
+                              />
+                            ))}
+                          </ul>
+                          {(gaps.length > 0 || sendable.length > 0) && (
+                            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                              {sendable.length > 0 && (
+                                <button
+                                  type="button"
+                                  className={cn(P_BTN_PRIMARY, 'w-full sm:w-auto')}
+                                  onClick={() => {
+                                    setSendSnapshot(sendable);
+                                    setSendUnit(g.unit_code);
+                                  }}
+                                >
+                                  <Send className="h-4 w-4" />
+                                  {sendable.length === 1
+                                    ? `Send 1 piece for unit ${g.unit_code}`
+                                    : `Send these ${sendable.length} for unit ${g.unit_code}`}
+                                </button>
+                              )}
+                              {gaps.length > 0 && (
+                                <button
+                                  type="button"
+                                  className={cn(P_BTN, 'w-full sm:w-auto')}
+                                  onClick={() =>
+                                    onCaptureFor(
+                                      g.unit_code,
+                                      gaps.slice(0, 6).map((r) => `${r.unit_code} AC ${r.ac_code}`)
+                                    )
+                                  }
+                                >
+                                  <Plus className="h-4 w-4" /> Capture for unit {g.unit_code}
+                                </button>
+                              )}
+                            </div>
                           )}
                         </div>
                       )}
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </>
         )}
       </div>
       <SubmitEvidenceSheet
@@ -423,14 +480,20 @@ function CriterionRow({
   onOpenItem,
   planned,
   witnesses,
+  links,
+  occasion,
 }: {
   r: AcStateRow;
+  /** Separate assessed occasions held vs needed (C&G 5357 performance units need two). */
+  occasion?: AcOccasionRow;
   itemById: Map<string, PortfolioItemView>;
   onOpenItem: (item: PortfolioItemView) => void;
   /** Signed witness statements that name this criterion (ELE-1869). */
   witnesses?: CriterionWitness[];
   /** On the assessment plan: the due date ('' = no date); undefined = not planned. */
   planned?: string;
+  /** ELE-1904: the lesson that teaches it and the practice paper that tests it. */
+  links?: CriterionLinks;
 }) {
   const evidence = (r.evidence_item_ids ?? [])
     .map((id) => itemById.get(id))
@@ -445,7 +508,7 @@ function CriterionRow({
         <span className="text-[12.5px] font-semibold text-elec-yellow">AC {r.ac_code}</span>
         <StateChip state={r.state as AcState} />
         {planned !== undefined && (
-          <span className="inline-flex shrink-0 items-center rounded-full border border-elec-yellow px-2 py-0.5 text-[11px] font-semibold text-white">
+          <span className="inline-flex shrink-0 items-center rounded-full border border-elec-yellow px-2 py-0.5 text-[12px] font-semibold text-white">
             On your plan
             {planned
               ? `, by ${new Date(`${planned}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
@@ -454,6 +517,23 @@ function CriterionRow({
         )}
       </div>
       {r.ac_text && <p className="text-[13px] leading-snug text-white">{r.ac_text}</p>}
+      {occasion && occasion.required > 1 && (
+        <p className="flex items-center gap-2 text-[12.5px] font-medium text-white">
+          <span
+            className={cn(
+              'h-2.5 w-2.5 shrink-0 rounded-[2px]',
+              TONE_MARK[occasionTone(r.state, occasion)]
+            )}
+            aria-hidden
+          />
+          {Math.min(occasion.occasions, occasion.required)} of {occasion.required} assessed
+          occasions
+          {occasion.occasions > 0 && occasion.occasions < occasion.required
+            ? '. One more on a different day.'
+            : ''}
+        </p>
+      )}
+      <StudyPractiseLinks unit={r.unit_code} ac={r.ac_code} links={links} className="pt-0.5" />
       {witnesses?.map((w) => (
         <p key={w.id} className="text-[12.5px] font-medium text-white">
           {witnessedByLine(w)}

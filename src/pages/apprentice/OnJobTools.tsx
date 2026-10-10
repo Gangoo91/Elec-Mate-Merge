@@ -28,17 +28,14 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { itemVariants } from '@/components/college/primitives';
-import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { type HubTool, type HubQuickAction } from '@/components/hub/HubPrimitives';
 import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubQuickStart,
-  HubToolGrid,
-  type HubTool,
-  type HubQuickAction,
-} from '@/components/hub/HubPrimitives';
+  GUIDE_CARD,
+  GuideActions,
+  GuideIndex,
+  GuidePage,
+  type GuideLink,
+} from '@/components/apprentice/shared/GuideKit';
 
 const DAILY_TIPS = [
   {
@@ -70,6 +67,16 @@ const DAILY_TIPS = [
     category: 'Professionalism',
   },
 ];
+
+/** A hub tool card as a guide row: the count rides as a chip beside the title. */
+const toLink = (t: HubTool): GuideLink => ({
+  id: t.id,
+  title: t.title,
+  badge: t.value ? `${t.value} ${t.valueLabel ?? ''}`.trim() : undefined,
+  description: t.description ?? t.meta,
+  meta: t.description ? t.meta : undefined,
+  to: t.to,
+});
 
 export default function OnJobTools() {
   const navigate = useNavigate();
@@ -206,68 +213,38 @@ export default function OnJobTools() {
   ];
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · On-the-job tools"
-        title="Everything you need on site"
-        backTo="/apprentice"
-      />
+    <GuidePage
+      section="Apprentice · On-the-job tools"
+      area="On-the-job tools"
+      title="Everything you need on site"
+      backTo="/apprentice"
+    >
+      <GuideActions items={quickStart} />
 
-      <HubBody>
-        <HubQuickStart label="Start something" items={quickStart} />
+      {/* Tip of the day — the one editorial note on the page. Neutral
+          surface: a translucent volt fill goes muddy brown on this ground. */}
+      <motion.div variants={itemVariants} className={GUIDE_CARD}>
+        <p className="mb-1.5 text-[13px] font-semibold text-elec-yellow">
+          Tip · {todaysTip.category}
+        </p>
+        <p className="max-w-3xl text-[14.5px] leading-relaxed text-white">{todaysTip.tip}</p>
+      </motion.div>
 
-        {/* Tip of the day — the one editorial note on the page, in the same
-            volt accent the hubs use for a live figure. */}
-        <motion.div
-          variants={itemVariants}
-          /* Was a volt-tinted gradient wash. Per card-recipe.ts a translucent
-             volt fill goes muddy brown on this ground — the neutral lit
-             surface with a gold hairline is the house answer. */
-          className={cn(
-            'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
-            CARD_SURFACE
-          )}
-        >
-          <div className="mb-2 flex items-baseline gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              Tip
-            </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              · {todaysTip.category}
-            </span>
-          </div>
-          <p className="max-w-3xl text-[13px] leading-relaxed text-white">{todaysTip.tip}</p>
-        </motion.div>
+      <GuideIndex title="On site" items={onSite.map(toLink)} columns={3} />
 
-        <HubToolGrid label="On site" cards={onSite} columns="four" />
+      <GuideIndex title="Look it up" items={lookItUp.map(toLink)} columns={3} />
 
-        <HubToolGrid label="Look it up" cards={lookItUp} columns="four" />
+      <GuideIndex title="Practise & people" items={practise.map(toLink)} columns={3} />
 
-        <HubToolGrid label="Practise & people" cards={practise} columns="four" />
-
-        {/* The one thing worth saying twice, kept to the end so it is the last
-            thing read rather than a wall between the tools. */}
-        <motion.div
-          variants={itemVariants}
-          className={cn(
-            'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
-            CARD_SURFACE
-          )}
-        >
-          <div className="mb-2 flex items-baseline gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              Safety
-            </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              · Stop and ask
-            </span>
-          </div>
-          <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-            These tools help you prepare properly — they don’t replace training or supervision. When
-            in doubt, stop and ask. No one ever got sacked for checking.
-          </p>
-        </motion.div>
-      </HubBody>
-    </HubPage>
+      {/* The one thing worth saying twice, kept to the end so it is the last
+          thing read rather than a wall between the tools. */}
+      <motion.div variants={itemVariants} className={GUIDE_CARD}>
+        <p className="mb-1.5 text-[13px] font-semibold text-elec-yellow">Safety · Stop and ask</p>
+        <p className="max-w-3xl text-[14.5px] leading-relaxed text-white">
+          These tools help you prepare properly — they don’t replace training or supervision. When
+          in doubt, stop and ask. No one ever got sacked for checking.
+        </p>
+      </motion.div>
+    </GuidePage>
   );
 }

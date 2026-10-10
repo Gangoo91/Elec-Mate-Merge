@@ -41,7 +41,7 @@ const keyTakeaways = [
   'NAPIT membership costs approximately GBP 540-800 per year (plus VAT) depending on the scheme and number of disciplines. This is a legitimate business expense that pays for itself through the ability to self-certify work.',
   'Schemes available include domestic installer, commercial installer, fire detection and alarm, emergency lighting, unvented hot water, and EV charger installation — allowing you to expand your service offering.',
   'NAPIT provides technical support, compliance documentation templates, building control notification services, and professional development resources as part of your membership.',
-  'A4:2026 key change for assessors: Reg 411.3.4 now mandates 30 mA RCD protection on AC lighting circuits in domestic premises, and Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits. Assessors will probe both on any consumer unit or new-circuit job from 2026 onwards.',
+  'Two rules assessors check on BS 7671:2018+A4:2026 work: Reg 411.3.4 mandates 30 mA RCD protection on AC lighting circuits in domestic premises (since 2018), and Reg 421.1.7 requires AFDDs on socket circuits in named higher-risk premises (since A2:2022). Assessors will probe both on any consumer unit or new-circuit job.',
   'When demonstrating Zs compliance during your assessment, apply the GN3 0.80 site correction factor: multiply your measured Zs by 0.80 and confirm the result is within the Table 41.2 limit. A reading that passes raw but fails after applying the 0.80 factor is non-compliant.',
 ];
 
@@ -336,32 +336,33 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
           <h3 className="font-bold text-elec-yellow text-lg mb-3">
-            A4:2026 Updates You Must Know for Your NAPIT Assessment
+            BS 7671:2018+A4:2026 Rules You Must Know for Your NAPIT Assessment
           </h3>
           <p className="text-white mb-3">
             Assessors will probe these rules on any consumer unit replacement or new domestic
-            circuit job from 2026 onwards. Make sure you can explain each one:
+            circuit job. Make sure you can explain each one:
           </p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Reg 421.1.7 — AFDDs on AC final circuits:</strong> BS 7671:2018+A4:2026
-                recommends the installation of arc fault detection devices (AFDDs) to mitigate the
-                risk of fire in AC final circuits. The wording is recommendatory, not mandatory, but
-                assessors will expect you to know the regulation, the purpose (arc-fault ignition
-                risk), and when a designer or client might specify AFDDs.
+                <strong>Reg 421.1.7 — AFDDs on AC final circuits:</strong> since A2:2022, arc fault
+                detection devices (AFDDs) are required on single-phase AC final circuits supplying
+                socket-outlets up to 32 A in high rise residential buildings, HMOs, purpose-built
+                student accommodation and care homes, and recommended elsewhere. Assessors will
+                expect you to know the regulation, the purpose (arc-fault ignition risk), and where
+                AFDDs are required rather than recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Reg 411.3.4 — 30 mA RCD on lighting circuits in domestic premises:</strong>{' '}
-                A4:2026 introduces a mandatory requirement (the regulation uses &apos;shall&apos;)
+                BS 7671 has set a mandatory requirement since 2018 (the regulation uses &apos;shall&apos;)
                 for additional protection by an RCD with a rated residual operating current not
                 exceeding 30 mA on AC final circuits supplying luminaires within domestic
-                (household) premises. This is a significant change: lighting circuits that
-                previously did not require RCD protection in domestic installations now do.
+                (household) premises. Lighting circuits in older domestic installations wired before
+                2019 often lack this protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -717,7 +718,7 @@ export default function NAPITRegistrationPage() {
       title="NAPIT Registration Guide: How to Join & Costs"
       description="Complete guide to NAPIT registration for UK electricians. Application process, on-site assessment, costs, schemes available, benefits."
       datePublished="2024-07-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

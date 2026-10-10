@@ -226,7 +226,7 @@ export function SectionAssessmentPlan({
                       key={`${c.unit_code}-${c.ac_code}`}
                       title={c.ac_text ?? undefined}
                       className={cn(
-                        'inline-flex h-7 items-center gap-1 rounded-full border px-2.5 font-mono text-[11.5px]',
+                        'inline-flex h-7 items-center gap-1 rounded-full border px-2.5 font-mono text-[12px]',
                         c.met_at
                           ? 'border-emerald-400/40 bg-emerald-500/[0.12] text-emerald-300'
                           : 'border-white/[0.14] bg-white/[0.04] text-white'
@@ -299,7 +299,9 @@ export function SectionAssessmentPlan({
                   className="flex min-h-[60px] items-center gap-3 px-5 py-3 sm:px-6"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[14px] font-semibold text-white">{p.activity}</p>
+                    <p className="line-clamp-2 text-[14px] font-semibold text-white">
+                      {p.activity}
+                    </p>
                     <p className="mt-0.5 text-[12px] text-white">
                       {p.close_reason ? CLOSE_REASON_LABEL[p.close_reason] : p.status}
                       {p.closed_at ? ` · ${shortDate(p.closed_at)}` : ''} ·{' '}
@@ -651,14 +653,14 @@ export function AssessmentPlanSheet({
                   className="overflow-hidden rounded-2xl border border-white/[0.08]"
                 >
                   <div className="flex items-center justify-between gap-3 bg-white/[0.04] px-3 py-2">
-                    <p className="min-w-0 truncate text-[13px] font-semibold text-white">
+                    <p className="min-w-0 line-clamp-2 text-[13px] font-semibold text-white">
                       <span className="font-mono text-elec-yellow">{g.unit_code}</span>{' '}
                       {g.unit_title}
                     </p>
                     {openRows.length > 1 && (
                       <button
                         type="button"
-                        className="h-9 shrink-0 px-2 text-[12px] font-semibold text-elec-yellow touch-manipulation"
+                        className="h-11 shrink-0 px-2 text-[12px] font-semibold text-elec-yellow touch-manipulation"
                         onClick={() =>
                           setPicked((prev) => {
                             const next = new Set(prev);
@@ -704,7 +706,7 @@ export function AssessmentPlanSheet({
                                 </span>
                                 <span
                                   className={cn(
-                                    'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold',
+                                    'inline-flex items-center rounded-full border px-2 py-0.5 text-[12px] font-semibold',
                                     STATE_CHIP[r.state]
                                   )}
                                 >
@@ -761,7 +763,7 @@ export function AssessmentPlanSheet({
             {!activity.trim() && ACTIVITY_STARTERS[method] && (
               <button
                 type="button"
-                className="h-9 px-1 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+                className="h-11 px-1 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
                 onClick={() => setActivity(ACTIVITY_STARTERS[method])}
               >
                 Start it for me
@@ -833,7 +835,7 @@ export function AssessmentPlanSheet({
                   <span className="min-w-0 flex-1 leading-snug">{r.ac_text}</span>
                   <button
                     type="button"
-                    className="h-7 shrink-0 px-1 text-[12px] font-semibold text-elec-yellow touch-manipulation"
+                    className="h-11 shrink-0 px-1 text-[12px] font-semibold text-elec-yellow touch-manipulation"
                     onClick={() => toggle(refKey(r))}
                   >
                     Remove

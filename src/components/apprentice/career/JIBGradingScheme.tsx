@@ -242,9 +242,7 @@ const JIBGradingScheme = () => {
     <div className="space-y-6">
       <section aria-labelledby="jib-heading" className="space-y-4">
         <header className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            JIB grading
-          </span>
+          <span className="text-[13px] font-semibold text-white">JIB grading</span>
           <h2
             id="jib-heading"
             className="text-[20px] sm:text-[24px] font-bold text-white leading-tight"
@@ -258,34 +256,26 @@ const JIBGradingScheme = () => {
         </header>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Industry update
-          </span>
+          <span className="text-[13px] font-semibold text-white">Industry update</span>
           <p className="text-[14px] text-white leading-relaxed">
             Skills shortages continue to push rates upward year-on-year. Net Zero targets are
             driving demand for EV charging, heat pump and data centre specialists.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                High demand
-              </span>
+              <span className="text-[13px] font-semibold text-white">High demand</span>
               <p className="text-[13px] text-white">
                 EV charging · Data centres · Heat pumps · Smart buildings
               </p>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Rate premiums
-              </span>
+              <span className="text-[13px] font-semibold text-white">Rate premiums</span>
               <p className="text-[13px] text-white">
                 Specialists earn meaningful premiums over base rates
               </p>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Skills gap
-              </span>
+              <span className="text-[13px] font-semibold text-white">Skills gap</span>
               <p className="text-[13px] text-white">
                 Strong demand for qualified electricians across the UK
               </p>
@@ -295,30 +285,22 @@ const JIBGradingScheme = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Grades
-            </span>
+            <span className="text-[13px] font-semibold text-white">Grades</span>
             <div className="text-[16px] font-semibold text-white">6</div>
             <p className="text-[12px] text-white">Progression pathway</p>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              To Gold Card
-            </span>
+            <span className="text-[13px] font-semibold text-white">To Gold Card</span>
             <div className="text-[16px] font-semibold text-white">4-5 yrs</div>
             <p className="text-[12px] text-white">Typical pathway</p>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              ECS renewal
-            </span>
+            <span className="text-[13px] font-semibold text-white">ECS renewal</span>
             <div className="text-[16px] font-semibold text-white">3-year</div>
             <p className="text-[12px] text-white">Card validity</p>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Coverage
-            </span>
+            <span className="text-[13px] font-semibold text-white">Coverage</span>
             <div className="text-[16px] font-semibold text-white">UK-wide</div>
             <p className="text-[12px] text-white">Employer recognition</p>
           </div>
@@ -332,7 +314,7 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     Estimate your day rate
                   </span>
                   <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
@@ -340,27 +322,25 @@ const JIBGradingScheme = () => {
                     <div className="space-y-1 text-[12px] text-white">
                       <div className="flex justify-between">
                         <span>Regional</span>
-                        <span className="font-mono">£200-280/day</span>
+                        <span className="">£200-280/day</span>
                       </div>
                       <div className="flex justify-between">
                         <span>London</span>
-                        <span className="font-mono">£220-340/day</span>
+                        <span className="">£220-340/day</span>
                       </div>
                       <div className="flex justify-between">
                         <span>+ EV specialist</span>
-                        <span className="font-mono">+£30-50/day</span>
+                        <span className="">+£30-50/day</span>
                       </div>
                       <div className="flex justify-between">
                         <span>+ 2391 testing</span>
-                        <span className="font-mono">+£20-40/day</span>
+                        <span className="">+£20-40/day</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Progression target
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Progression target</span>
                   <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1 text-[13px] text-white">
                     <div>Current: Improver (£180/day)</div>
                     <div>Next: Gold Card (+£40-80/day)</div>
@@ -383,9 +363,7 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Net Zero impact
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Net Zero impact</span>
                   <ul className="text-[13px] text-white space-y-1">
                     <li>Strong growth in green jobs through 2030</li>
                     <li>Heat pump installations scaling up</li>
@@ -397,7 +375,7 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     AI & data infrastructure
                   </span>
                   <ul className="text-[13px] text-white space-y-1">
@@ -411,9 +389,7 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Skills gap
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Skills gap</span>
                   <ul className="text-[13px] text-white space-y-1">
                     <li>Strong demand across the country</li>
                     <li>Aging workforce in many regions</li>
@@ -443,11 +419,11 @@ const JIBGradingScheme = () => {
                           onClick={() => setSelectedGradeIndex(index)}
                           className={`rounded-xl border p-3 flex flex-col items-center justify-center text-center touch-manipulation min-h-[88px] transition-colors ${
                             isSelected
-                              ? 'border-elec-yellow/40 bg-white/[0.05]'
+                              ? 'border-white/[0.08] bg-white/[0.05]'
                               : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                           }`}
                         >
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          <span className="text-[13px] font-semibold text-white">
                             Grade {index + 1}
                           </span>
                           <span className="text-[14px] font-semibold text-white mt-1">
@@ -465,13 +441,11 @@ const JIBGradingScheme = () => {
                         <div className="mt-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
                           <div className="flex items-baseline justify-between gap-2">
                             <h4 className="text-[16px] font-semibold text-white">{grade.grade}</h4>
-                            <span className="text-[12px] text-white font-mono">
-                              {grade.hourlyRate}
-                            </span>
+                            <span className="text-[12px] text-white">{grade.hourlyRate}</span>
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                            <span className="text-[13px] font-semibold text-white">
                               Requirements
                             </span>
                             <ul className="space-y-1.5">
@@ -488,9 +462,7 @@ const JIBGradingScheme = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                              Benefits
-                            </span>
+                            <span className="text-[13px] font-semibold text-white">Benefits</span>
                             <ul className="space-y-1.5">
                               {grade.benefits.map((benefit, idx) => (
                                 <li
@@ -505,9 +477,7 @@ const JIBGradingScheme = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                              Duration
-                            </span>
+                            <span className="text-[13px] font-semibold text-white">Duration</span>
                             <p className="text-[13px] text-white">{grade.duration}</p>
                             {grade.fastTrack && (
                               <p className="text-[13px] text-white">
@@ -517,7 +487,7 @@ const JIBGradingScheme = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                            <span className="text-[13px] font-semibold text-white">
                               Typical responsibilities
                             </span>
                             <ul className="space-y-1.5">
@@ -534,7 +504,7 @@ const JIBGradingScheme = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                            <span className="text-[13px] font-semibold text-white">
                               Recommended CPD
                             </span>
                             <ul className="space-y-1.5">
@@ -562,23 +532,19 @@ const JIBGradingScheme = () => {
                     >
                       <div className="flex items-baseline justify-between gap-2">
                         <div>
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          <span className="text-[13px] font-semibold text-white">
                             Grade {index + 1}
                           </span>
                           <h4 className="text-[16px] font-semibold text-white mt-1">
                             {grade.grade}
                           </h4>
                         </div>
-                        <span className="text-[13px] text-white font-mono">
-                          {grade.hourlyRate}
-                        </span>
+                        <span className="text-[13px] text-white">{grade.hourlyRate}</span>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                            Requirements
-                          </span>
+                          <span className="text-[13px] font-semibold text-white">Requirements</span>
                           <ul className="space-y-1.5">
                             {grade.requirements.map((req, idx) => (
                               <li
@@ -593,9 +559,7 @@ const JIBGradingScheme = () => {
                         </div>
 
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                            Benefits
-                          </span>
+                          <span className="text-[13px] font-semibold text-white">Benefits</span>
                           <ul className="space-y-1.5">
                             {grade.benefits.map((benefit, idx) => (
                               <li
@@ -610,9 +574,7 @@ const JIBGradingScheme = () => {
                         </div>
 
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                            Duration
-                          </span>
+                          <span className="text-[13px] font-semibold text-white">Duration</span>
                           <p className="text-[13px] text-white">{grade.duration}</p>
                           {grade.fastTrack && (
                             <p className="text-[13px] text-white">
@@ -624,7 +586,7 @@ const JIBGradingScheme = () => {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          <span className="text-[13px] font-semibold text-white">
                             Typical responsibilities
                           </span>
                           <ul className="space-y-1.5">
@@ -641,7 +603,7 @@ const JIBGradingScheme = () => {
                         </div>
 
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          <span className="text-[13px] font-semibold text-white">
                             Recommended CPD
                           </span>
                           <ul className="space-y-1.5">
@@ -670,7 +632,7 @@ const JIBGradingScheme = () => {
             </MobileAccordionTrigger>
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2 mb-4">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[13px] font-semibold text-white">
                   Application fees (current)
                 </span>
                 <p className="text-[13px] text-white">
@@ -684,9 +646,7 @@ const JIBGradingScheme = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Core electrical
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Core electrical</span>
                   <div className="flex flex-wrap gap-1.5">
                     {[
                       'Apprentice',
@@ -709,7 +669,7 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     Specialist categories
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -738,9 +698,7 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Application process
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Application process</span>
                   <ul className="text-[13px] text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
@@ -775,9 +733,7 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Day rates by region
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Day rates by region</span>
                   <div className="space-y-2 text-[13px] text-white">
                     <div>
                       <p className="text-white">London & M25</p>
@@ -799,29 +755,29 @@ const JIBGradingScheme = () => {
                 </div>
 
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     Project type premiums
                   </span>
                   <div className="text-[13px] text-white space-y-1">
                     <div className="flex justify-between">
                       <span>Data centres</span>
-                      <span className="font-mono">+20-25%</span>
+                      <span className="">+20-25%</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Nuclear/Power</span>
-                      <span className="font-mono">+25-30%</span>
+                      <span className="">+25-30%</span>
                     </div>
                     <div className="flex justify-between">
                       <span>EV infrastructure</span>
-                      <span className="font-mono">+15-20%</span>
+                      <span className="">+15-20%</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Smart buildings</span>
-                      <span className="font-mono">+10-15%</span>
+                      <span className="">+10-15%</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Domestic/small commercial</span>
-                      <span className="font-mono">Base</span>
+                      <span className="">Base</span>
                     </div>
                   </div>
                   <p className="text-[12px] text-white pt-1 border-t border-white/[0.06]">
@@ -830,7 +786,7 @@ const JIBGradingScheme = () => {
                 </div>
 
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     Allowances & benefits
                   </span>
                   <div className="text-[13px] text-white space-y-1.5">
@@ -862,10 +818,8 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Standard route
-                  </span>
-                  <p className="text-[13px] text-white leading-relaxed">
+                  <span className="text-[13px] font-semibold text-white">Standard route</span>
+                  <p className="text-[14px] text-white leading-relaxed">
                     Apprentice → Improver → Electrician (Gold) → Approved → Technician
                   </p>
                   <p className="text-[12px] text-white">
@@ -873,10 +827,10 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     Supervisor/Manager route
                   </span>
-                  <p className="text-[13px] text-white leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Approved/Technician → Chargehand → Site Supervisor → Manager
                   </p>
                   <p className="text-[12px] text-white">
@@ -884,10 +838,8 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Fast-track / APL
-                  </span>
-                  <p className="text-[13px] text-white leading-relaxed">
+                  <span className="text-[13px] font-semibold text-white">Fast-track / APL</span>
+                  <p className="text-[14px] text-white leading-relaxed">
                     Experienced workers scheme with evidence portfolio.
                   </p>
                   <p className="text-[12px] text-white">
@@ -905,9 +857,7 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    ECS renewal
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">ECS renewal</span>
                   <ul className="text-[13px] text-white space-y-1">
                     <li>Renew every 3 years</li>
                     <li>Current H&S assessment</li>
@@ -918,9 +868,7 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    BS 7671 updates
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">BS 7671 updates</span>
                   <ul className="text-[13px] text-white space-y-1">
                     <li>Current standard: BS 7671:2018 + A4:2026</li>
                     <li>CPD on changes and application</li>
@@ -930,9 +878,7 @@ const JIBGradingScheme = () => {
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Professional CPD
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Professional CPD</span>
                   <ul className="text-[13px] text-white space-y-1">
                     <li>Testing (2391), EV, Solar, Fire/Alarm, BMS</li>
                     <li>Scheme assessments (NICEIC/NAPIT) if contracting</li>

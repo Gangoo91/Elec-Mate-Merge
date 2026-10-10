@@ -317,7 +317,7 @@ const FaultLevelCalculator = () => {
                     className={cn(
                       'h-12 rounded-xl font-medium transition-all touch-manipulation',
                       sourceType === type
-                        ? 'border-orange-500/50 bg-orange-500/20 text-white'
+                        ? 'border-orange-500/50 bg-white/[0.08] text-white'
                         : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
                     )}
                   >
@@ -555,7 +555,7 @@ const FaultLevelCalculator = () => {
                         style={{
                           borderLeftWidth: '3px',
                           borderLeftColor: config.gradientFrom,
-                          background: `${config.gradientFrom}05`,
+                          background: 'rgba(255, 255, 255, 0.04)',
                         }}
                       >
                         <div className="flex items-center justify-between">
@@ -563,7 +563,7 @@ const FaultLevelCalculator = () => {
                           <span
                             className="text-xs font-mono font-bold px-2 py-1 rounded-md"
                             style={{
-                              background: `${config.gradientFrom}20`,
+                              background: 'rgba(255, 255, 255, 0.04)',
                               color: config.gradientFrom,
                             }}
                           >
@@ -676,8 +676,8 @@ const FaultLevelCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">

@@ -87,7 +87,7 @@ const VATComplianceTab = () => {
           color: 'orange',
           icon: <CheckCircle2 className="h-4 w-4" />,
           content:
-            'Maintain VAT invoices with required information, register for Making Tax Digital, keep detailed purchase records, and choose between Standard VAT (20%) or Flat Rate Scheme (12.5% for electrical contractors).',
+            'Maintain VAT invoices with required information, register for Making Tax Digital, keep detailed purchase records, and choose between Standard VAT (20%) or Flat Rate Scheme (9.5% general building or construction, 14.5% labour-only).',
         },
         {
           title: 'Tax Considerations',
@@ -234,7 +234,7 @@ const VATComplianceTab = () => {
           color: 'orange',
           icon: <CheckCircle2 className="h-4 w-4" />,
           content:
-            'Standard VAT: charge 20% on supplies, reclaim VAT on purchases. Flat Rate: charge 20% but pay 12.5% of turnover to HMRC, limited input tax recovery. Different rates apply to domestic energy-saving work (5%).',
+            'Standard VAT: charge 20% on supplies, reclaim VAT on purchases. Flat Rate: charge 20% but pay a fixed percentage of VAT-inclusive turnover to HMRC (9.5% general building or construction, 14.5% labour-only, 16.5% if a limited cost trader), limited input tax recovery. Installing energy-saving materials in homes is zero-rated until 31 March 2027.',
         },
         {
           title: 'Tax Considerations',

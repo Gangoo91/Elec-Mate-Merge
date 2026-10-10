@@ -24,6 +24,7 @@ import {
   type AcState,
   type AcStateRow,
 } from '@/hooks/portfolio/usePortfolioAcState';
+import { useAcOccasions } from '@/hooks/portfolio/useAcOccasions';
 
 export const PORTFOLIO_CHANGED_EVENT = 'elecmate:portfolio-changed';
 export const notifyPortfolioChanged = () => {
@@ -52,6 +53,10 @@ export interface ItemCriterion {
   /** ELE-1926: AI-drafted feedback the assessor confirmed (shown with its provenance). */
   decision_feedback_source: string | null;
   decision_feedback_confirmed_at: string | null;
+  /** A trainee assessor's pass waiting for a qualified assessor's countersignature (batch 2). */
+  countersign_pending?: boolean;
+  countersigned_by_name?: string | null;
+  countersigned_at?: string | null;
 }
 
 export interface EvidenceFile {
@@ -64,6 +69,11 @@ export interface EvidenceFile {
 
 export interface ItemWitness {
   id: string;
+  /** C&G expert witness: their own competence and no-conflict confirmation (10 Oct 2026). */
+  witness_competence?: string | null;
+  witness_card_number?: string | null;
+  witness_years_in_trade?: number | null;
+  witness_no_conflict?: boolean | null;
   token: string;
   status: 'requested' | 'signed' | 'withdrawn' | 'expired';
   witness_email: string | null;
@@ -111,7 +121,11 @@ export interface NextStep {
  */
 export interface ItemObservation {
   id: string;
-  kind: 'observation' | 'professional_discussion';
+  kind: 'observation' | 'professional_discussion' | 'questioning';
+  /** kind = questioning (batch 2): the questions asked and the answers, oral/written, face to face/remote. */
+  questions?: { question: string; answer: string }[];
+  question_mode?: 'oral' | 'written' | null;
+  question_delivery?: 'face_to_face' | 'remote' | null;
   observer_name: string;
   observed_at: string | null;
   observed_time: string | null;
@@ -129,6 +143,19 @@ export interface ItemObservation {
   learner_comment: string | null;
 }
 
+/**
+ * When and roughly where it was captured (portfolio_items.captured_at …).
+ * Place is a town, or a 0.1 degree position, and only when the learner allowed
+ * location for that capture. Null for evidence captured before this existed.
+ */
+export interface CaptureStampView {
+  at: string;
+  source: 'photo' | 'device' | null;
+  place: string | null;
+  lat: number | null;
+  lng: number | null;
+}
+
 export interface PortfolioItemView {
   id: string;
   title: string;
@@ -142,6 +169,9 @@ export interface PortfolioItemView {
   contentHash: string | null;
   contentHashedAt: string | null;
   metadata: Record<string, unknown>;
+  /** ELE-2048: AI drafted words still in this item, and the record of it. */
+  aiAssisted: boolean;
+  aiUse: unknown;
   criteria: ItemCriterion[];
   claimed: ItemCriterion[];
   suggested: ItemCriterion[];
@@ -160,6 +190,15 @@ export interface PortfolioItemView {
   countersigned: boolean;
   /** Recorded by an assessor (ELE-1873); null for the learner's own evidence. */
   observation: ItemObservation | null;
+  /** When and roughly where it was captured; null for older evidence. */
+  capture: CaptureStampView | null;
+  /**
+   * An assessor has passed a criterion on this item (now or before). The
+   * database refuses edits to what it says or shows; changes go in a new version.
+   */
+  assessed: boolean;
+  /** The assessed item this is a new version of. */
+  previousVersionId: string | null;
   state: ItemState;
   next: NextStep;
 }
@@ -181,6 +220,14 @@ interface ItemRow {
   metadata: unknown;
   content_hash: string | null;
   content_hashed_at: string | null;
+  ai_assisted?: boolean | null;
+  ai_use?: unknown;
+  captured_at?: string | null;
+  captured_at_source?: string | null;
+  capture_place?: string | null;
+  capture_lat?: number | string | null;
+  capture_lng?: number | string | null;
+  previous_version_id?: string | null;
 }
 interface CritRow {
   portfolio_item_id: string;
@@ -214,6 +261,21 @@ function filesOf(row: ItemRow): EvidenceFile[] {
   return out;
 }
 
+const num = (v: unknown) => (v === null || v === undefined || v === '' ? null : Number(v));
+function captureOf(row: ItemRow): CaptureStampView | null {
+  if (!row.captured_at) return null;
+  return {
+    at: row.captured_at,
+    source:
+      row.captured_at_source === 'photo' || row.captured_at_source === 'device'
+        ? row.captured_at_source
+        : null,
+    place: row.capture_place ?? null,
+    lat: num(row.capture_lat),
+    lng: num(row.capture_lng),
+  };
+}
+
 const isImage = (f: EvidenceFile) => (f.type ? f.type.startsWith('image') : IMG.test(f.url));
 
 function observationOf(
@@ -225,7 +287,28 @@ function observationOf(
   const str = (v: unknown) => (typeof v === 'string' && v.trim() ? v : null);
   return {
     id: String(o.id ?? ''),
-    kind: o.kind === 'professional_discussion' ? 'professional_discussion' : 'observation',
+    kind:
+      o.kind === 'professional_discussion'
+        ? 'professional_discussion'
+        : o.kind === 'questioning'
+          ? 'questioning'
+          : 'observation',
+    questions: Array.isArray(o.questions)
+      ? (o.questions as { question?: unknown; answer?: unknown }[])
+          .filter((q) => q && typeof q.question === 'string' && q.question.trim())
+          .map((q) => ({
+            question: String(q.question),
+            answer: typeof q.answer === 'string' ? q.answer : '',
+          }))
+      : [],
+    question_mode:
+      o.question_mode === 'written' ? 'written' : o.question_mode === 'oral' ? 'oral' : null,
+    question_delivery:
+      o.question_delivery === 'remote'
+        ? 'remote'
+        : o.question_delivery === 'face_to_face'
+          ? 'face_to_face'
+          : null,
     observer_name: str(o.observer_name) ?? 'Your assessor',
     observed_at: str(o.observed_at),
     observed_time: str(o.observed_time),
@@ -311,6 +394,9 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
   const { user } = useAuth();
   const learnerId = learnerIdArg ?? user?.id ?? null;
   const ac = usePortfolioAcState(learnerId);
+  // Separate read: occasions per criterion. Reloads whenever the criteria
+  // state does (a decision lands live on ac.rows).
+  const occasions = useAcOccasions(learnerId, ac.rows);
 
   const [itemRows, setItemRows] = useState<ItemRow[]>([]);
   const [critRows, setCritRows] = useState<CritRow[]>([]);
@@ -357,7 +443,7 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
       supabase
         .from('portfolio_items')
         .select(
-          'id, title, description, reflection_notes, created_at, status, storage_urls, file_url, metadata, content_hash, content_hashed_at'
+          'id, title, description, reflection_notes, created_at, status, storage_urls, file_url, metadata, content_hash, content_hashed_at, ai_assisted, ai_use, captured_at, captured_at_source, capture_place, capture_lat, capture_lng, previous_version_id'
         )
         .eq('user_id', learnerId)
         .order('created_at', { ascending: false }),
@@ -374,7 +460,7 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
       supabase
         .from('portfolio_witness_statements' as never)
         .select(
-          'id, token, status, portfolio_item_id, witness_email, witness_name, witness_role, witness_company, statement, signed_at, created_at, expires_at, statement_hash, evidence_hash'
+          'id, token, status, portfolio_item_id, witness_email, witness_name, witness_role, witness_company, statement, signed_at, created_at, expires_at, statement_hash, evidence_hash, witness_competence, witness_card_number, witness_years_in_trade, witness_no_conflict'
         )
         .eq('learner_id', learnerId)
         .order('created_at', { ascending: false }),
@@ -520,6 +606,9 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
             decided_at: st?.decided_at ?? null,
             decision_feedback_source: st?.decision_feedback_source ?? null,
             decision_feedback_confirmed_at: st?.decision_feedback_confirmed_at ?? null,
+            countersign_pending: !!st?.countersign_pending,
+            countersigned_by_name: st?.countersigned_by_name ?? null,
+            countersigned_at: st?.countersigned_at ?? null,
           };
         })
         .sort((a, b) =>
@@ -563,6 +652,8 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
         contentHash: row.content_hash,
         contentHashedAt: row.content_hashed_at,
         metadata: meta,
+        aiAssisted: !!row.ai_assisted,
+        aiUse: row.ai_use ?? null,
         criteria,
         claimed,
         suggested,
@@ -574,6 +665,9 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
         witnessPending: witnesses.some((w) => w.status === 'requested'),
         countersigned: countersignedIds.has(row.id),
         observation: observationOf(meta, obsAcks.get(row.id)),
+        capture: captureOf(row),
+        assessed: occasions.assessedItemIds.has(row.id),
+        previousVersionId: row.previous_version_id ?? null,
       };
       return {
         ...base,
@@ -592,6 +686,7 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
     ac.rows.length,
     obsAcks,
     inCollege,
+    occasions.assessedItemIds,
   ]);
 
   /** The headline: passed over total. Claimed and submitted are separate, smaller figures. */
@@ -626,6 +721,8 @@ export function usePortfolio(learnerIdArg?: string | null, opts: { withHours?: b
     canReachAssessor: hasAssessor || inCollege === true,
     assessorLinks,
     hours,
+    /** Occasions per criterion (useAcOccasions), never part of the headline. */
+    occasions,
     refresh: refreshAll,
   };
 }

@@ -172,7 +172,7 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
 
         {/* Result */}
         {result && (
-          <div className="bg-elec-dark/10 border border-elec-yellow/30 rounded-lg p-4">
+          <div className="bg-elec-dark/10 border border-white/[0.14] rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               <Zap className="w-4 h-4 text-elec-yellow" />
               <span className="text-sm font-medium text-elec-yellow">Result</span>

@@ -152,12 +152,10 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
 
   if (loading) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="space-y-4">
         <div className="flex items-center gap-2">
           <Loader2 className="h-4 w-4 text-white animate-spin" />
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Loading qualifications
-          </span>
+          <span className="text-[13.5px] font-medium text-white">Loading courses…</span>
         </div>
         <div className="space-y-2">
           {[1, 2, 3].map((i) => (
@@ -175,35 +173,23 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
     return (
       <div className="space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            Current qualification
-          </span>
-          <p className="text-[12px] text-white leading-relaxed">
+          <p className="text-[13.5px] text-white leading-relaxed">
             {lockedToCode
               ? 'Set by your college — your portfolio is tailored to these requirements.'
               : 'Your portfolio is tailored to these requirements.'}
           </p>
         </div>
 
-        <div
-          className={cn(
-            'relative rounded-2xl border border-elec-yellow/35 overflow-hidden',
-            CARD_SURFACE
-          )}
-        >
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+        <div className={cn('rounded-2xl border border-white/[0.1] overflow-hidden', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-3">
-            {/* One meta line — never fights the title for width */}
-            <div className="flex items-center gap-2 text-[11px] font-mono">
-              <span className="text-white px-1.5 py-0.5 rounded border border-elec-yellow/25 bg-white/[0.05] text-elec-yellow">
-                Level {userSelection.qualification?.level}
-              </span>
-              <span className="text-white truncate">
-                {userSelection.qualification?.awarding_body}
-              </span>
-              <span className="text-white">·</span>
-              <span className="text-white">{userSelection.qualification?.code}</span>
-            </div>
+            {/* One meta line — wraps rather than cutting the awarding body */}
+            <p className="text-[13px] font-medium leading-snug text-white">
+              Level {userSelection.qualification?.level}
+              {userSelection.qualification?.awarding_body
+                ? ` · ${userSelection.qualification.awarding_body}`
+                : ''}
+              {userSelection.qualification?.code ? ` · ${userSelection.qualification.code}` : ''}
+            </p>
 
             {/* Title gets the full width */}
             <h3 className="text-[17px] font-semibold text-white leading-snug tracking-tight">
@@ -213,8 +199,8 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
             {/* Progress as a bar, not a shouting number */}
             <div className="space-y-1.5 pt-1">
               <div className="flex items-baseline justify-between">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-white">Progress</span>
-                <span className="text-[13px] font-mono tabular-nums text-white">{pct}%</span>
+                <span className="text-[13px] font-medium text-white">Progress</span>
+                <span className="text-[14px] font-semibold tabular-nums text-white">{pct}%</span>
               </div>
               <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
                 <div
@@ -225,8 +211,8 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
             </div>
 
             {userSelection.target_completion_date && (
-              <div className="flex items-center gap-2 text-[12px] text-white pt-2 border-t border-white/[0.05] font-mono">
-                <CalendarDays className="h-3 w-3" />
+              <div className="flex items-center gap-2 border-t border-white/[0.06] pt-3 text-[13px] text-white">
+                <CalendarDays className="h-4 w-4" strokeWidth={1.5} />
                 Target:{' '}
                 {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -241,7 +227,7 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
         <div className="flex gap-2">
           <button
             onClick={() => setIsChanging(true)}
-            className="flex-1 h-11 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] touch-manipulation active:scale-[0.97] transition-transform"
+            className="flex-1 h-11 rounded-xl border border-white/[0.14] text-white font-semibold text-[14px] touch-manipulation transition-colors hover:border-white/[0.3] active:bg-white/[0.06]"
           >
             {lockedToCode ? 'View course' : 'Change course'}
           </button>
@@ -266,12 +252,13 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
   }
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+    <div className="space-y-5">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          {lockedToCode ? 'Your college course' : 'Select your qualification'}
-        </span>
-        <p className="text-[12px] text-white leading-relaxed">
+        {/* The sheet's own title already says "Your course". */}
+        {!lockedToCode && (
+          <h3 className="text-[15px] font-semibold text-white">Choose your course</h3>
+        )}
+        <p className="text-[13.5px] text-white leading-relaxed">
           {lockedToCode
             ? `Your college enrolled you on ${lockedToCode} — your course is managed by them. Confirm it below to align your portfolio.`
             : 'Choose your course to get a tailored portfolio experience'}
@@ -281,22 +268,20 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
       {lockedToCode && lockedMatchCount === 0 && (
         <p
           className={cn(
-            'text-[12px] text-white leading-relaxed rounded-2xl border border-elec-yellow/35 p-4',
+            'text-[13.5px] text-white leading-relaxed rounded-2xl border border-orange-400/40 p-4',
             CARD_SURFACE
           )}
         >
-          Your college's course (<span className="font-mono text-white">{lockedToCode}</span>) isn't
-          in the course library yet — ask your tutor, or contact{' '}
+          Your college's course (<span className="font-semibold text-white">{lockedToCode}</span>)
+          isn't in the course library yet — ask your tutor, or contact{' '}
           <span className="text-white">info@elec-mate.com</span>.
         </p>
       )}
 
       {Object.entries(visibleBodies).map(([body, quals]) => (
         <div key={body} className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white px-1">
-            {body}
-          </span>
-          <div className="space-y-2">
+          <h4 className="text-[13.5px] font-semibold text-white">{body}</h4>
+          <div className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-2 sm:divide-y-0 sm:border-0 lg:grid-cols-3">
             {quals.map((qualification) => {
               const stats =
                 Object.values(requirementStats).length > 0
@@ -308,22 +293,22 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
                   key={qualification.id}
                   onClick={() => handleSelectQualification(qualification)}
                   className={cn(
-                    'w-full text-left p-4 rounded-xl min-h-[88px]',
-                    'border border-white/[0.06] bg-white/[0.02]',
-                    'hover:bg-white/[0.04] active:scale-[0.98] transition-all duration-200 touch-manipulation',
-                    'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
-                    selectedQualification?.id === qualification.id && 'ring-2 ring-elec-yellow'
+                    'flex w-full min-h-[64px] items-center px-4 py-3 text-left touch-manipulation transition-colors',
+                    'hover:bg-white/[0.04] active:bg-white/[0.07]',
+                    'sm:h-full sm:rounded-xl sm:border sm:border-white/[0.1] sm:bg-white/[0.02] sm:hover:border-white/[0.25]',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+                    selectedQualification?.id === qualification.id && 'sm:border-white'
                   )}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono flex-shrink-0">
+                  <div className="flex w-full items-start gap-3">
+                    <span className="mt-0.5 flex h-7 min-w-[28px] shrink-0 items-center justify-center rounded-lg border border-white/[0.14] px-1.5 text-[13px] font-semibold tabular-nums text-white">
                       {qualification.level}
                     </span>
                     <div className="flex-1 min-w-0 space-y-1">
-                      <h3 className="text-[14px] font-medium text-white leading-tight line-clamp-2">
+                      <h3 className="text-[14.5px] font-semibold leading-snug text-white">
                         {qualification.title}
                       </h3>
-                      <div className="flex items-center gap-1.5 text-[11px] text-white flex-wrap font-mono">
+                      <div className="flex flex-wrap items-center gap-1.5 text-[13px] text-white">
                         {stats && (
                           <>
                             <span>{stats.acCount} ACs</span>

@@ -32,6 +32,7 @@ import { useSearchParams } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { CalculatorPicker } from '@/components/calculators/shared/CalculatorPicker';
+import { CalculatorSurface } from '@/components/calculators/shared/CalculatorCard';
 import { CALCULATOR_COMPONENTS } from '@/components/calculators/shared/calculatorComponents';
 import { CalcReportProvider } from '@/lib/calculator-report-context';
 import { CalculatorReportAction } from '@/components/calculators/CalculatorReportAction';
@@ -101,13 +102,19 @@ const Calculations = ({
     <HubPage>
       <HubMasthead section={section} title={title} backTo={backTo} />
       <HubBody>
-        <CalculatorPicker value={entry.value} onChange={choose} />
-        <CalcReportProvider calculatorSlug={entry.value}>
-          <div className="mb-3 flex justify-end">
-            <CalculatorReportAction />
-          </div>
-          {body}
-        </CalcReportProvider>
+        {/* One block, tight spacing. HubBody spaces its children 32px apart, so
+            the picker, an (empty until there is a result) report row and the
+            calculator sat ~80px apart — a dead band above every calculator. */}
+        <div className="space-y-3">
+          <CalculatorPicker value={entry.value} onChange={choose} />
+          <CalcReportProvider calculatorSlug={entry.value}>
+            <div className="flex justify-end empty:hidden">
+              <CalculatorReportAction />
+            </div>
+            {/* Edge to edge on a phone, like every other card (HubBody is px-4). */}
+            <CalculatorSurface>{body}</CalculatorSurface>
+          </CalcReportProvider>
+        </div>
         <SavedReports />
       </HubBody>
     </HubPage>
@@ -118,7 +125,7 @@ const Calculations = ({
 const CalculatorSkeleton = () => (
   <div
     className={cn(
-      'min-h-[420px] animate-pulse rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
+      '-mx-4 min-h-[420px] animate-pulse border-y border-white/[0.14] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5',
       CARD_SURFACE
     )}
   >

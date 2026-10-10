@@ -62,7 +62,13 @@ export function briefingRegister(briefing: {
   }
 
   const describe = (s?: BriefingSignOff) =>
-    s ? (s.signed_via === 'in_person' ? 'Marked present' : 'Signed by link') : undefined;
+    s
+      ? s.signed_via === 'in_person'
+        ? 'Marked present'
+        : s.signed_via === 'in_app'
+          ? 'Signed in the app'
+          : 'Signed by link'
+      : undefined;
 
   const matched = new Set<string>();
   const rows: BriefingRegisterRow[] = listed.map((a) => {

@@ -405,7 +405,7 @@ const ZsValuesCalculator = () => {
                 <div className="space-y-4 animate-fade-in">
                   {/* Device chip */}
                   <div className="flex items-center justify-between flex-wrap gap-2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-elec-yellow/40 px-3 py-1 text-xs font-medium text-elec-yellow">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.14] px-3 py-1 text-xs font-medium text-elec-yellow">
                       {result.deviceDescription}
                     </span>
                     <span className="text-xs text-white">
@@ -492,7 +492,7 @@ const ZsValuesCalculator = () => {
 
                       {/* Tabulated check if different from test check */}
                       {result.passesTest === false && result.passesTabulated === true && (
-                        <div className="mt-2 p-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                        <div className="mt-2 p-2 bg-white/[0.04] border border-orange-500/20 rounded-lg">
                           <p className="text-xs text-white">
                             <strong>Note:</strong> Circuit passes the 100% tabulated value (
                             {result.maxZs.toFixed(2)} Ω) but fails the 80% test limit. The 80% rule

@@ -35,6 +35,8 @@ import { LocationAutoFill } from '../common/LocationAutoFill';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { PermitSelector } from '../common/PermitSelector';
 import { JobLinkField } from '../common/JobLinkField';
+import { FirmRecordBar } from '../common/FirmRecordBar';
+import { useFirmRecordAccess } from '../common/SafetyScope';
 import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 import { LoadMoreButton } from '../common/LoadMoreButton';
@@ -105,17 +107,21 @@ interface NewRecordPayload {
   verifier_signature?: string;
   permit_id?: string;
   job_id?: string;
+  /** Firm job (employer_jobs) — shares the isolation with the firm. */
+  employer_job_id?: string;
 }
 
 function NewRecordForm({
   onSubmit,
   isSubmitting,
   initialJobId = null,
+  initialEmployerJobId = null,
   initialSiteAddress = '',
 }: {
   onSubmit: (data: NewRecordPayload) => void;
   isSubmitting: boolean;
   initialJobId?: string | null;
+  initialEmployerJobId?: string | null;
   initialSiteAddress?: string;
 }) {
   const [isolatorName, setIsolatorName] = useState('');
@@ -126,6 +132,10 @@ function NewRecordForm({
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
   const [linkedJobId, setLinkedJobId] = useState<string | null>(initialJobId);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the isolation with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(initialEmployerJobId);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const [showMore, setShowMore] = useState(false);
 
   const validation = useFieldValidation({
@@ -213,6 +223,7 @@ function NewRecordForm({
       ...(verifierSig ? { verifier_signature: verifierSig } : {}),
       ...(selectedPermitId ? { permit_id: selectedPermitId } : {}),
       ...(linkedJobId ? { job_id: linkedJobId } : {}),
+      ...(employerJobId ? { employer_job_id: employerJobId } : {}),
     };
     clearDraft();
     onSubmit(payload);
@@ -287,6 +298,12 @@ function NewRecordForm({
         onSelect={(id, title) => {
           setLinkedJobId(id);
           setLinkedJobTitle(title);
+        }}
+        employerJobId={employerJobId}
+        employerJobTitle={employerJobTitle}
+        onSelectEmployerJob={(id, title) => {
+          setEmployerJobId(id);
+          setEmployerJobTitle(title);
         }}
       />
 
@@ -398,6 +415,8 @@ const itemVariants = {
 
 function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onBack: () => void }) {
   const updateMutation = useUpdateIsolationRecord();
+  // Employer Hub: a worker's shared isolation is read and countersigned, not changed.
+  const access = useFirmRecordAccess(record);
   const allCompleted = record.steps.every((s) => s.completed);
 
   const handleCompleteStep = async (stepNumber: number, data?: StepCompletionData) => {
@@ -486,6 +505,12 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
         animate="visible"
         className="mx-auto max-w-5xl px-4 py-5 space-y-4"
       >
+        <FirmRecordBar
+          table="safe_isolation_records"
+          row={record}
+          invalidate={[['safe-isolation-records']]}
+        />
+
         <div>
           <div className="flex items-baseline justify-between gap-3">
             <p className="text-[15px] font-semibold tracking-tight text-white">
@@ -517,7 +542,7 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
               <IsolationStepCard
                 step={step}
                 stepNumber={step.stepNumber}
-                isActive={step.stepNumber === activeStepNumber}
+                isActive={access.canEdit && step.stepNumber === activeStepNumber}
                 onComplete={(data) => handleCompleteStep(step.stepNumber, data)}
               />
             </motion.div>
@@ -716,6 +741,7 @@ export function SafeIsolationRecord({
             onSubmit={handleCreate}
             isSubmitting={createMutation.isPending}
             initialJobId={launch?.jobId ?? null}
+            initialEmployerJobId={launch?.employerJobId ?? null}
             initialSiteAddress={launch?.siteAddress ?? ''}
           />
         </SheetContent>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
   Check,
@@ -94,6 +94,7 @@ const PublicBooking = () => {
   const renewalId = searchParams.get('rid');
   const visitId = searchParams.get('visit');
   const isQuoteFlow = !!quoteId;
+  const navigate = useNavigate();
 
   const [step, setStep] = useState<Step>('loading');
   const [error, setError] = useState('');
@@ -164,12 +165,37 @@ const PublicBooking = () => {
     }
   }, [electricianId, isQuoteFlow, duration]);
 
+  // Gap §4.3: one booking link per firm. A firm that has switched on online
+  // booking (ELE-2079, /book-visit) gets its old /book/:id link sent on to
+  // the new page, so a link already given out keeps working. Quote starts
+  // (?quote=) and reminder loop-closers (?rid=, ?visit=) stay here, and so
+  // does everyone without the new booking switched on.
+  const plainLink = !quoteId && !renewalId && !visitId;
   useEffect(() => {
-    refreshSlots().then((ok) => {
-      if (ok) setStep('date');
-      else setStep('error');
-    });
-  }, [refreshSlots]);
+    let cancelled = false;
+    (async () => {
+      if (plainLink && electricianId) {
+        try {
+          const { data } = await supabase.rpc('get_booking_key_for_account' as never, {
+            p_account: electricianId,
+          } as never);
+          const key = typeof data === 'string' ? data : null;
+          if (cancelled) return;
+          if (key) {
+            navigate(`/book-visit/${encodeURIComponent(key)}?src=link`, { replace: true });
+            return;
+          }
+        } catch {
+          /* no redirect: the page below still works */
+        }
+      }
+      const ok = await refreshSlots();
+      if (!cancelled) setStep(ok ? 'date' : 'error');
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [refreshSlots, plainLink, electricianId, navigate]);
 
   // ELE-955 — pre-fill from the linked quote. Best-effort: a failure just
   // leaves the fields blank for the client to fill in.

@@ -22,7 +22,7 @@ export default function ElectricalSafetyAuditPage() {
       title="Electrical Safety Audit: Workplace Compliance"
       description="Complete guide to electrical safety audits in UK workplaces. Covers the difference between audits and inspections."
       datePublished="2026-01-20"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Safety', href: '/guides/safety' },
         { label: 'Safety Audit', href: '/guides/electrical-safety-audit' },
@@ -193,7 +193,7 @@ export default function ElectricalSafetyAuditPage() {
                   <li className="flex items-start gap-3">
                     <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-elec-yellow">BS 7671:2018+A2:2022</strong> — While not
+                      <strong className="text-elec-yellow">BS 7671:2018+A4:2026</strong> — While not
                       legislation, it is the national standard for electrical installations.
                       Compliance with{' '}
                       <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}

@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { OTJ_HOURS_FLOOR, OTJ_ST0152_HOURS } from '@/data/otjStandards';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
@@ -36,7 +37,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'An electrical apprenticeship in the UK typically lasts 3 to 4 years and combines on-the-job training with college-based study, leading to Level 2 and Level 3 diplomas plus the AM2 practical assessment.',
-  'You must complete a minimum of 20% off-the-job training throughout your apprenticeship, including college days, online study, and structured workplace learning. Elec-Mate tracks these hours automatically.',
+  `You must complete at least the off-the-job training hours published on your apprenticeship standard (${OTJ_ST0152_HOURS} for Installation and Maintenance Electrician, ST0152, for starts from August 2025; DfE funding rules 2026 to 2027, rules 85 to 86), including college days, online study, and structured workplace learning. Elec-Mate tracks these hours automatically.`,
   'Apprentice pay starts at the National Apprentice Rate (currently around 6.40 pounds per hour in Year 1) and rises each year. Many employers pay above the minimum, especially from Year 2 onwards.',
   'The End Point Assessment (EPA) is the final independent assessment at the end of your apprenticeship. Elec-Mate has an EPA simulator with AI grading so you can practise all three components before the real thing.',
   'After completing your apprenticeship, you can apply for a JIB ECS Gold Card, join a competent person scheme (NICEIC, NAPIT), and begin working as a fully qualified electrician earning 35,000 to 45,000 pounds per year.',
@@ -64,14 +65,14 @@ const faqs = [
       'Yes, there is no upper age limit for electrical apprenticeships in England. While the majority of apprentices start at 16 to 18, an increasing number of career changers enter the trade in their 20s, 30s, and even 40s. The main challenge for mature apprentices is the pay — the apprentice minimum wage applies regardless of age during the first year, though many employers pay above this for mature candidates. After the first year, you are entitled to the National Minimum Wage for your age group. Some mature candidates choose to self-fund a fast-track route through a training provider rather than doing a traditional apprenticeship, but the apprenticeship route is generally considered the best path because it combines hands-on experience with structured learning. Elec-Mate supports apprentices of all ages with the same tools — flashcards, mock exams, EPA simulator, and OJT hour tracker work regardless of your starting point.',
   },
   {
-    question: 'What is the 20% off-the-job training requirement?',
+    question: 'How many off-the-job training hours does an electrical apprentice need?',
     answer:
-      'The 20% off-the-job training requirement means that at least 20% of your paid working hours must be spent on structured learning that is directly relevant to your apprenticeship. This includes college days or block release, online study and e-learning, manufacturer training and trade courses, mentoring and shadowing of experienced colleagues (when structured around specific learning outcomes), and study using platforms like Elec-Mate. Importantly, productive work on site does not count towards off-the-job training unless it is being done specifically as a structured learning activity with clear learning objectives. Your employer and training provider are jointly responsible for ensuring you meet the 20% requirement, and it is a gateway condition for the End Point Assessment. Elec-Mate automatically tracks study hours on the platform and logs them towards your off-the-job training target of 400 hours, making it easy to demonstrate compliance.',
+      `For apprenticeships starting from 1 August 2025 it is a fixed minimum number of hours published on each standard: ${OTJ_ST0152_HOURS} hours for Installation and Maintenance Electrician (ST0152), never below ${OTJ_HOURS_FLOOR} (DfE funding rules 2026 to 2027, rules 85 to 86). Apprenticeships that started earlier keep the old rule, an average of 6 hours a week for a full-time apprentice. The hours must be structured learning in paid working time that is directly relevant to your apprenticeship. This includes college days or block release, online study and e-learning, manufacturer training and trade courses, mentoring and shadowing of experienced colleagues (when structured around specific learning outcomes), and study using platforms like Elec-Mate. Importantly, productive work on site does not count towards off-the-job training unless it is being done specifically as a structured learning activity with clear learning objectives. Your employer and training provider are jointly responsible for ensuring you receive those hours, and your provider must evidence them before the End Point Assessment. Elec-Mate automatically tracks study hours on the platform and logs them towards your off-the-job total, making it easy to demonstrate compliance.`,
   },
   {
     question: 'How much does an electrical apprenticeship cost?',
     answer:
-      'For the apprentice, an electrical apprenticeship in England is free — the training costs are covered by government funding (for apprentices aged 16 to 18) or co-funded by the employer and the government through the apprenticeship levy system (for apprentices aged 19 and over). The employer pays the apprentice a wage throughout the apprenticeship and may also contribute to training costs depending on their levy status. Large employers (those with a payroll above 3 million pounds) pay the apprenticeship levy and draw down funding from their levy account. Smaller employers co-invest 5% of the training cost, with the government covering the remaining 95%. The total training cost for an electrical apprenticeship is typically between 15,000 and 27,000 pounds over the full duration, but this is paid by the employer and government, not by the apprentice. Additional costs for the apprentice may include tools (often a few hundred pounds for a basic kit) and test instruments (the AM2 requires your own calibrated multifunction tester).',
+      'For the apprentice, an electrical apprenticeship in England is free — the training costs are paid from the levy (large employers) or by the government (smaller employers). The employer pays the apprentice a wage throughout the apprenticeship and may also contribute to training costs depending on their levy status. Large employers (those with a payroll above 3 million pounds) pay the apprenticeship levy and draw down funding from their levy account. For starts from 1 August 2026, smaller (non-levy) employers pay nothing for an apprentice aged 16 to 24 at the start and 5% for one aged 25 or over (DfE funding rules 2026 to 2027, rules 213 to 214). The funding band maximum for Installation and Maintenance Electrician (ST0152) is 23,000 pounds, but this is paid by the employer and government, not by the apprentice. Additional costs for the apprentice may include tools (often a few hundred pounds for a basic kit) and test instruments (the AM2 requires your own calibrated multifunction tester).',
   },
 ];
 
@@ -146,7 +147,7 @@ const sections = [
         </p>
         <p>
           The apprenticeship follows the Installation Electrician / Maintenance Electrician standard
-          (ST0215), published by the Institute for Apprenticeships and Technical Education (IfATE).
+          (ST0152), published by the Institute for Apprenticeships and Technical Education (IfATE).
           This standard defines the knowledge, skills, and behaviours you must demonstrate by the
           end of the programme. It covers everything from basic electrical science and health and
           safety to BS 7671 wiring regulations, circuit design, inspection and testing, and fault
@@ -232,8 +233,9 @@ const sections = [
       <>
         <p>
           The typical electrical apprenticeship involves a split between on-the-job learning and
-          off-the-job training. The exact split varies by employer and training provider, but the
-          minimum requirement is 20% off-the-job training throughout the programme.
+          off-the-job training. The exact split varies by employer and training provider, but you must
+          complete at least the off-the-job hours published on your standard ({OTJ_ST0152_HOURS}{' '}
+          for ST0152 starts from August 2025).
         </p>
         <p>
           <strong>On-the-job learning:</strong> This is where you spend the majority of your time.
@@ -254,9 +256,10 @@ const sections = [
         <p>
           <strong>Online study and self-directed learning:</strong> Increasingly, off-the-job
           training includes online platforms like Elec-Mate. Study sessions, practice questions,
-          flashcard revision, and mock exams all count towards your 20% off-the-job hours. This
-          flexibility means you can study on your phone between jobs, on the commute, or in the
-          evenings — fitting learning around your working schedule.
+          flashcard revision and revision for exams count towards your off-the-job hours when
+          they are done in paid working time. Study in the evenings only counts if your employer
+          agrees and compensates you, for example with time off in lieu (DfE funding rules 2026 to
+          2027, rule 84.6).
         </p>
         <p>
           <strong>Portfolio building:</strong> Throughout the apprenticeship, you build a{' '}
@@ -269,8 +272,8 @@ const sections = [
           the End Point Assessment and forms the basis of the professional discussion.
         </p>
         <SEOAppBridge
-          title="Track Your 20% Off-the-Job Hours Automatically"
-          description="Elec-Mate logs every minute of study on the platform towards your OJT hour target of 400 hours. No manual timesheets."
+          title="Track Your Off-the-Job Hours Automatically"
+          description="Elec-Mate logs every minute of study on the platform towards your off-the-job hours target. No manual timesheets."
           icon={Clock}
         />
       </>
@@ -392,7 +395,7 @@ const sections = [
           <SEOInternalLink href="/apprentice-portfolio-guide">
             portfolio of evidence
           </SEOInternalLink>
-          , meeting the 20% off-the-job training hours requirement, and agreement from both your
+          , evidence of the off-the-job training hours for your standard, and agreement from both your
           employer and training provider that you are ready.
         </p>
         <p>
@@ -415,7 +418,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EPA Simulator with AI Grading"
-          description="Elec-Mate's EPA simulator replicates all three components of the End Point Assessment. The AI grades your responses against the ST0215 marking criteria…"
+          description="Elec-Mate's EPA simulator replicates all three components of the End Point Assessment. The AI grades your responses against the ST0152 marking criteria…"
           icon={Target}
         />
       </>
@@ -543,7 +546,7 @@ export default function ElectricalApprenticeshipGuidePage() {
       title="Electrical Apprenticeship UK 2026: Full Guide"
       description="Complete guide to electrical apprenticeships in the UK for 2026. How to find one, what to expect, pay rates, qualifications earned, EPA preparation."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Hub Guide"

@@ -3,10 +3,9 @@
  * not done today's walk-round, then the ones that have. One tap opens the van.
  */
 import { cn } from '@/lib/utils';
+import { panel, PanelTitle } from '@/components/employer/overview/HomeSections';
 import type { Vehicle } from '@/hooks/useFleet';
 import type { FleetCheckRow } from '@/hooks/useFleetWalkround';
-
-const card = 'rounded-2xl border border-white/[0.08] bg-white/[0.04]';
 
 interface Driver {
   id: string;
@@ -58,20 +57,10 @@ export function FleetTodayCard({
         : `${expected.length - notChecked.length} of ${expected.length} checked`;
 
   return (
-    <section className="space-y-2" data-help="fleet.today">
-      <div className="flex items-baseline justify-between gap-3">
-        <h2 className="text-[15px] font-semibold tracking-tight text-white">Today</h2>
-        <span
-          className={cn(
-            'text-[13px] font-semibold',
-            expected.length > 0 && notChecked.length === 0 ? 'text-emerald-400' : 'text-white'
-          )}
-        >
-          {headline}
-        </span>
-      </div>
+    <section data-help="fleet.today">
+      <PanelTitle title="Today" meta={headline} />
 
-      <div className={cn(card, 'divide-y divide-white/[0.08] overflow-hidden')}>
+      <div className={cn(panel, 'divide-y divide-white/[0.07] overflow-hidden')}>
         {problemVans.map(({ v, rows }) => {
           const items = rows.flatMap((r) => r.defect_items ?? []).map((i) => i.label);
           const off = v.status === 'Off Road';
@@ -81,7 +70,9 @@ export function FleetTodayCard({
               onClick={() => onOpen(v)}
               dot={off ? 'bg-red-500' : 'bg-orange-400'}
               title={`${v.registration}${off ? ' · off the road' : ' · problem reported'}`}
-              sub={[items.slice(0, 3).join(', ') || 'See the photos', rows[0]?.driver?.name].filter(Boolean).join(' · ')}
+              sub={[items.slice(0, 3).join(', ') || 'See the photos', rows[0]?.driver?.name]
+                .filter(Boolean)
+                .join(' · ')}
               action="Look"
               actionTone="volt"
             />
@@ -95,7 +86,7 @@ export function FleetTodayCard({
             <Row
               key={`n-${v.id}`}
               onClick={() => onOpen(v)}
-              dot="bg-white/40"
+              dot="bg-elec-yellow"
               title={`${v.registration} · not checked yet`}
               sub={
                 onApp
@@ -122,7 +113,7 @@ export function FleetTodayCard({
           })}
 
         {noDriver.length > 0 && (
-          <div className="px-4 py-3">
+          <div className="px-4 py-3 sm:px-5">
             <p className="text-[13px] text-white">
               {noDriver.length === 1
                 ? `${noDriver[0].registration} has no driver. `
@@ -155,17 +146,17 @@ function Row({
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.03] min-h-[56px]"
+      className="flex w-full items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.04] min-h-[60px] sm:px-5"
     >
       <span aria-hidden className={cn('h-2.5 w-2.5 shrink-0 rounded-full', dot)} />
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[14.5px] font-semibold text-white">{title}</span>
-        <span className="block text-[12.5px] leading-snug text-white line-clamp-2">{sub}</span>
+        <span className="block truncate text-[15px] font-semibold text-white">{title}</span>
+        <span className="mt-0.5 block text-[13px] leading-snug text-white line-clamp-2">{sub}</span>
       </span>
       {action && (
         <span
           className={cn(
-            'shrink-0 rounded-lg px-3 py-2 text-[13px] font-semibold',
+            'shrink-0 rounded-xl px-4 py-2.5 text-[14px] font-semibold',
             actionTone === 'volt' ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >

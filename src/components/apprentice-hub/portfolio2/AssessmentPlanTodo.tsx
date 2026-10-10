@@ -14,7 +14,11 @@ import { useSearchParams } from 'react-router-dom';
 import { Check, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CaptureSeed } from '../UnifiedCaptureSheet';
-import { planAcRef, type AssessmentPlanItem, type useAssessmentPlans } from '@/hooks/portfolio/useAssessmentPlans';
+import {
+  planAcRef,
+  type AssessmentPlanItem,
+  type useAssessmentPlans,
+} from '@/hooks/portfolio/useAssessmentPlans';
 import { P_BTN, P_BTN_PRIMARY, P_CARD } from './ui';
 
 type Plans = ReturnType<typeof useAssessmentPlans>;
@@ -27,7 +31,9 @@ function dueLine(item: AssessmentPlanItem): string {
   const d = new Date(`${item.due_date}T12:00:00Z`);
   const label = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
   const days = Math.round(
-    (new Date(`${item.due_date}T12:00:00Z`).getTime() - new Date(`${todayLondon()}T12:00:00Z`).getTime()) / 86400000
+    (new Date(`${item.due_date}T12:00:00Z`).getTime() -
+      new Date(`${todayLondon()}T12:00:00Z`).getTime()) /
+      86400000
   );
   if (days < 0) return `Was due ${label}`;
   if (days === 0) return 'Due today';
@@ -107,7 +113,10 @@ export function AssessmentPlanTodo({
 
       {focusedClosed && (
         <div className={cn(P_CARD, 'flex items-center gap-3')}>
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-black" aria-hidden>
+          <span
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-black"
+            aria-hidden
+          >
             <Check className="h-4 w-4" />
           </span>
           <p className="min-w-0 text-[14px] text-white">
@@ -140,14 +149,17 @@ export function AssessmentPlanTodo({
                 className={cn(
                   P_CARD,
                   'flex h-full flex-col gap-3 scroll-mt-24',
-                  single && 'lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-x-8 lg:gap-y-3',
+                  single &&
+                    'lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-x-8 lg:gap-y-3',
                   focused && 'sm:border-elec-yellow border-elec-yellow'
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="text-[12.5px] font-semibold text-elec-yellow">{p.method_label}</p>
-                    <p className="mt-1 text-[16px] font-semibold leading-snug text-white">{p.activity}</p>
+                    <p className="mt-1 text-[16px] font-semibold leading-snug text-white">
+                      {p.activity}
+                    </p>
                   </div>
                   <span
                     className={cn(
@@ -159,13 +171,23 @@ export function AssessmentPlanTodo({
                   </span>
                 </div>
 
-                <ul className={cn('space-y-1.5', single && 'lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center')}>
+                <ul
+                  className={cn(
+                    'space-y-1.5',
+                    single && 'lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center'
+                  )}
+                >
                   {p.criteria.map((c) => (
-                    <li key={`${c.unit_code}-${c.ac_code}`} className="flex items-start gap-2 text-[13.5px] leading-snug text-white">
+                    <li
+                      key={`${c.unit_code}-${c.ac_code}`}
+                      className="flex items-start gap-2 text-[13.5px] leading-snug text-white"
+                    >
                       <span
                         className={cn(
                           'mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border',
-                          c.met_at ? 'border-emerald-400 bg-emerald-400 text-black' : 'border-white/[0.3]'
+                          c.met_at
+                            ? 'border-emerald-400 bg-emerald-400 text-black'
+                            : 'border-white/[0.3]'
                         )}
                         aria-label={c.met_at ? 'Done' : 'To do'}
                       >
@@ -175,7 +197,7 @@ export function AssessmentPlanTodo({
                         {c.ac_text ? (
                           <>
                             {c.ac_text.charAt(0).toUpperCase() + c.ac_text.slice(1)}{' '}
-                            <span className="text-[11.5px] font-semibold text-elec-yellow">
+                            <span className="text-[12.5px] font-semibold text-elec-yellow">
                               {c.unit_code} AC {c.ac_code}
                             </span>
                           </>
@@ -191,7 +213,8 @@ export function AssessmentPlanTodo({
 
                 {p.notes && (
                   <p className="border-t border-white/[0.08] pt-2 text-[13px] leading-snug text-white">
-                    <span className="font-semibold">{p.set_by_name ?? 'Your tutor'}:</span> {p.notes}
+                    <span className="font-semibold">{p.set_by_name ?? 'Your tutor'}:</span>{' '}
+                    {p.notes}
                   </p>
                 )}
 

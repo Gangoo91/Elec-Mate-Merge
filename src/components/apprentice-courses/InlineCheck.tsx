@@ -38,7 +38,12 @@ export interface InlineCheckProps {
   question: string;
   options?: string[];
   correctIndex?: number;
-  correctAnswer?: string;
+  /**
+   * Free-text answer, or — as many older pages pass it — the index (number) or
+   * the text of the right option. Older pages that put the index here were
+   * marking every answer wrong, because only `correctIndex` was read.
+   */
+  correctAnswer?: string | number;
   explanation?: string;
 }
 
@@ -46,7 +51,7 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
   id = `inline-check-${Math.random().toString(36).substr(2, 9)}`,
   question,
   options,
-  correctIndex,
+  correctIndex: correctIndexProp,
   correctAnswer,
   explanation,
 }) => {
@@ -61,7 +66,16 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
   const { recordProgress } = useCourseProgress();
 
   const isMultipleChoice = options && Array.isArray(options) && options.length > 0;
-  const isFreeText = !isMultipleChoice && correctAnswer;
+  // One right-answer index whichever way the page supplied it.
+  const correctIndex =
+    typeof correctIndexProp === 'number'
+      ? correctIndexProp
+      : typeof correctAnswer === 'number'
+        ? correctAnswer
+        : isMultipleChoice && typeof correctAnswer === 'string' && options!.includes(correctAnswer)
+          ? options!.indexOf(correctAnswer)
+          : undefined;
+  const isFreeText = !isMultipleChoice && typeof correctAnswer === 'string' && correctAnswer;
   const isCorrect = submitted && selected === correctIndex;
 
   const handleSelect = (idx: number) => {
@@ -105,10 +119,7 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
         <div className="px-4 py-4 sm:px-6 sm:py-5">
           <div className="flex items-center gap-2 mb-3">
             <HelpCircle className="h-3.5 w-3.5 text-elec-yellow" />
-            <span
-              id={`${id}-label`}
-              className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow"
-            >
+            <span id={`${id}-label`} className="text-[13px] font-semibold text-elec-yellow">
               Quick check
             </span>
           </div>
@@ -150,9 +161,7 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
 
           {revealed && (
             <div className="mt-3 rounded-xl border border-emerald-400/45 bg-emerald-400/[0.10] p-4">
-              <div className="mb-1.5 text-[10.5px] font-medium uppercase tracking-[0.18em] text-emerald-400">
-                Answer
-              </div>
+              <div className="mb-1.5 text-[13px] font-semibold text-emerald-400">Answer</div>
               <p className="text-[13.5px] text-white leading-relaxed">{correctAnswer}</p>
               {explanation && (
                 <p className="mt-2 text-[13px] text-white leading-relaxed">{explanation}</p>
@@ -180,10 +189,7 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
       <div className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center gap-2 mb-3">
           <HelpCircle className="h-3.5 w-3.5 text-elec-yellow" />
-          <span
-            id={`${id}-label`}
-            className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow"
-          >
+          <span id={`${id}-label`} className="text-[13px] font-semibold text-elec-yellow">
             Quick check
           </span>
         </div>

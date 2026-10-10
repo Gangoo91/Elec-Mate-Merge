@@ -95,7 +95,8 @@ export function AiAssessorPanel({
         assessor_feedback: d.assessor_feedback,
         strengths_noted: d.strengths_noted,
         areas_for_improvement: d.areas_for_improvement,
-        action_required: d.verdict === 'refer' || d.verdict === 'not_yet' ? d.verdict_rationale : null,
+        action_required:
+          d.verdict === 'refer' || d.verdict === 'not_yet' ? d.verdict_rationale : null,
         checked_at: new Date().toISOString(),
       } as never);
       if (error) throw error;
@@ -203,7 +204,7 @@ export function AiAssessorPanel({
       <div className={cn(shell, 'overflow-hidden')}>
         <div className="flex flex-wrap items-start gap-3 border-b border-white/[0.08] px-5 py-4">
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            <p className="text-[13px] font-semibold text-elec-yellow">
               AI draft · not yet confirmed
             </p>
             <h3 className="mt-1 text-[15px] font-semibold tracking-tight text-white">
@@ -270,8 +271,8 @@ export function AiAssessorPanel({
           </label>
           {hasExistingFeedback && (
             <p className="text-[13px] leading-relaxed text-orange-300">
-              This submission already has feedback. If you record a decision with this draft, it replaces
-              that feedback.
+              This submission already has feedback. If you record a decision with this draft, it
+              replaces that feedback.
             </p>
           )}
           <div className="flex flex-wrap items-center gap-2">

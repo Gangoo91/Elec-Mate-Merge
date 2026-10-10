@@ -10,16 +10,17 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegeHeading,
-  CollegePageHeader,
-  CollegeStats,
-} from '@/components/college/ui/CollegeUi';
-import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
+  TEACH_BTN,
+  TEACH_BTN_PRIMARY,
+  TEACH_LIST,
+  TeachingEmpty as CollegeEmpty,
+  TeachingHeader,
+  TeachingScreen,
+  plural,
+  TeachTabs,
+} from '@/components/college/teaching/TeachingKit';
 import { ResourcePreviewSheet } from '@/components/college/sheets/ResourcePreviewSheet';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { useToast } from '@/hooks/use-toast';
@@ -50,11 +51,22 @@ const HELP: PageHelpContent = {
   title: 'Document library',
   what: 'Every document, slide deck, video and link the college has shared, in one place to search and open.',
   steps: [
-    { title: 'Find it', body: 'Search by title, description or tag, or pick a type to narrow the list.' },
+    {
+      title: 'Find it',
+      body: 'Search by title, description or tag, or pick a type to narrow the list.',
+    },
     { title: 'Open it', body: 'Tap a document to preview it here without leaving the app.' },
-    { title: 'Add more', body: 'Upload goes to Teaching resources, so there is one place to add and tag files.' },
+    {
+      title: 'Add more',
+      body: 'Upload goes to Teaching resources, so there is one place to add and tag files.',
+    },
   ],
-  notes: [{ title: 'Storage', body: 'The college has 5 GB. When it is nearly full the figure turns orange; delete old files to make room.' }],
+  notes: [
+    {
+      title: 'Storage',
+      body: 'The college has 5 GB. When it is nearly full the figure turns orange; delete old files to make room.',
+    },
+  ],
 };
 
 interface DocumentLibrarySectionProps {
@@ -86,13 +98,9 @@ const KIND_ONE: Record<ResourceKind, string> = {
 const STORAGE_QUOTA_BYTES = 5 * 1024 * 1024 * 1024;
 const PAGE = 24;
 
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
-const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
-const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]';
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
-const LIST_CARD = COLLEGE_LIST;
+const LIST_CARD = TEACH_LIST;
 
 function formatFileSize(bytes?: number | null): string {
   if (!bytes) return '—';
@@ -128,7 +136,8 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     return resources.filter((r) => {
-      const haystack = `${r.title} ${r.description ?? ''} ${(r.tags ?? []).join(' ')}`.toLowerCase();
+      const haystack =
+        `${r.title} ${r.description ?? ''} ${(r.tags ?? []).join(' ')}`.toLowerCase();
       const matchesSearch = !q || haystack.includes(q);
       const matchesKind = filterKind === 'all' || r.kind === filterKind;
       return matchesSearch && matchesKind;
@@ -190,32 +199,37 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
 
   return (
     <TeachingScreen>
-      <CollegePageHeader
+      <TeachingHeader
         eyebrow="Resources"
         title="Document library"
-        description="Search and open everything the college has shared."
         help={HELP}
+        summary={
+          loading
+            ? 'Loading the library…'
+            : error
+              ? 'Search and open everything the college has shared.'
+              : resources.length === 0
+                ? 'Nothing has been shared yet. Files and links added in Teaching resources appear here for everyone at the college.'
+                : `${plural(resources.length, 'document')} shared across the college${addedThisMonth > 0 ? `, ${addedThisMonth} added this month` : ''}.`
+        }
+        sub={
+          !loading && !error && resources.length > 0 ? (
+            <span className={cn(storagePercent >= 80 && 'font-semibold text-orange-400')}>
+              {formatFileSize(usedStorage)} of 5 GB storage used
+              {storagePercent >= 80 ? ', nearly full: clear old files' : ''}
+            </span>
+          ) : undefined
+        }
         actions={
-          <button type="button" onClick={goUpload} className={COLLEGE_BTN_PRIMARY}>
-            Upload a document
+          <button
+            type="button"
+            onClick={goUpload}
+            className={cn(TEACH_BTN_PRIMARY, 'w-full sm:w-auto')}
+          >
+            Add a document
           </button>
         }
       />
-
-      {!loading && !error && resources.length > 0 && (
-        <CollegeStats
-          items={[
-            { label: 'Documents', value: String(resources.length), sub: kinds.length > 0 ? `${kinds.length} type${kinds.length === 1 ? '' : 's'}` : 'shared across the college' },
-            {
-              label: 'Storage used',
-              value: formatFileSize(usedStorage),
-              sub: storagePercent >= 80 ? 'nearly full, clear old files' : `${storagePercent}% of 5 GB`,
-              warn: storagePercent >= 80,
-            },
-            { label: 'Added this month', value: String(addedThisMonth), sub: 'new this calendar month' },
-          ]}
-        />
-      )}
 
       <motion.section
         variants={containerVariants}
@@ -226,7 +240,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
         <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
           <CollegeHeading>Library</CollegeHeading>
           {!loading && !error && (
-            <span className="text-[11px] font-semibold tabular-nums text-white">
+            <span className="text-[12px] font-semibold tabular-nums text-white">
               {filtered.length === resources.length
                 ? `${resources.length} item${resources.length === 1 ? '' : 's'}`
                 : `${filtered.length} of ${resources.length}`}
@@ -248,29 +262,20 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
             </motion.div>
 
             {kinds.length > 1 && (
-              <motion.div
-                variants={itemVariants}
-                className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0"
-              >
-                <button
-                  type="button"
-                  onClick={() => setFilterKind('all')}
-                  className={cn(CHIP, filterKind === 'all' ? CHIP_ON : CHIP_OFF)}
-                >
-                  All
-                  <span className="text-[11px] tabular-nums opacity-70">{resources.length}</span>
-                </button>
-                {kinds.map(({ kind, count }) => (
-                  <button
-                    key={kind}
-                    type="button"
-                    onClick={() => setFilterKind(kind)}
-                    className={cn(CHIP, filterKind === kind ? CHIP_ON : CHIP_OFF)}
-                  >
-                    {KIND_LABEL[kind]}
-                    <span className="text-[11px] tabular-nums opacity-70">{count}</span>
-                  </button>
-                ))}
+              <motion.div variants={itemVariants}>
+                <TeachTabs
+                  label="Type"
+                  value={filterKind}
+                  onChange={setFilterKind}
+                  tabs={[
+                    { value: 'all', label: 'All', count: resources.length },
+                    ...kinds.map(({ kind, count }) => ({
+                      value: kind,
+                      label: KIND_LABEL[kind],
+                      count,
+                    })),
+                  ]}
+                />
               </motion.div>
             )}
           </>
@@ -281,7 +286,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
             title="Could not load documents"
             body={error}
             action={
-              <button type="button" className={COLLEGE_BTN} onClick={refresh}>
+              <button type="button" className={TEACH_BTN} onClick={refresh}>
                 Try again
               </button>
             }
@@ -293,7 +298,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
             title="No documents yet"
             body="Upload teaching resources and they appear here for everyone at the college."
             action={
-              <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={goUpload}>
+              <button type="button" className={TEACH_BTN} onClick={goUpload}>
                 Open Teaching resources
               </button>
             }
@@ -302,7 +307,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
           <motion.div variants={itemVariants} className={LIST_CARD}>
             {filtered.length === 0 ? (
               <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
-                Nothing matches — clear the search or pick another type.
+                Nothing matches. Clear the search or pick another type.
               </p>
             ) : (
               <ul className="divide-y divide-white/[0.06]">
@@ -326,7 +331,9 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                             KIND_ONE[resource.kind],
                             resource.uploader_name,
                             fmtDate(resource.created_at),
-                            resource.ac_count ? `${resource.ac_count} AC${resource.ac_count === 1 ? '' : 's'}` : null,
+                            resource.ac_count
+                              ? `${resource.ac_count} AC${resource.ac_count === 1 ? '' : 's'}`
+                              : null,
                           ]
                             .filter(Boolean)
                             .join(' · ')}
@@ -400,9 +407,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
         }}
         title="Delete document?"
         description={
-          deleting
-            ? `"${deleting.title}" will be permanently removed. This cannot be undone.`
-            : ''
+          deleting ? `"${deleting.title}" will be permanently removed. This cannot be undone.` : ''
         }
         confirmText="Delete"
         cancelText="Cancel"

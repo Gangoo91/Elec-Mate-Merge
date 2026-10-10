@@ -732,7 +732,7 @@ const MotorStartingCurrentCalculator = ({ onResult }: CalculatorResultReporter =
 
                 {/* Warnings */}
                 {result.warnings.length > 0 && (
-                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                     <div className="space-y-1">
                       {result.warnings.map((warning, idx) => (
@@ -821,8 +821,8 @@ const MotorStartingCurrentCalculator = ({ onResult }: CalculatorResultReporter =
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <ul className="space-y-2">
@@ -840,7 +840,7 @@ const MotorStartingCurrentCalculator = ({ onResult }: CalculatorResultReporter =
                       {result.recommendations.length > 0 && (
                         <div
                           className="pt-2 border-t"
-                          style={{ borderColor: `${config.gradientFrom}15` }}
+                          style={{ borderColor: 'rgba(255, 255, 255, 0.12)' }}
                         >
                           {/* Heading was "BS 7671 Recommendations" while the list carried
                           a 552.1.2 shall softened to "recommended" and an 11 kW DOL
@@ -865,7 +865,7 @@ const MotorStartingCurrentCalculator = ({ onResult }: CalculatorResultReporter =
                       {result.notes.length > 0 && (
                         <div
                           className="pt-2 border-t"
-                          style={{ borderColor: `${config.gradientFrom}15` }}
+                          style={{ borderColor: 'rgba(255, 255, 255, 0.12)' }}
                         >
                           <p className="text-sm text-white font-medium mb-2">
                             What this calculator does not check
@@ -902,8 +902,8 @@ const MotorStartingCurrentCalculator = ({ onResult }: CalculatorResultReporter =
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <ul className="space-y-2">

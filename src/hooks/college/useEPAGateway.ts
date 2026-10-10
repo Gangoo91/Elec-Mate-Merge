@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
@@ -62,6 +63,14 @@ export interface GatewayChecklistItem {
 }
 
 // Hook for EPA Gateway management
+/** Required off-the-job hours for a learner (auth uid): get_otj_summary, the
+ *  one hours figure, else the ST0152 minimum. */
+async function requiredOtjHours(userId: string): Promise<number> {
+  const { data } = await supabase.rpc('get_otj_summary' as never, { p_user: userId } as never);
+  const req = Number((data as { required_hours?: number | null } | null)?.required_hours ?? 0);
+  return req > 0 ? req : DEFAULT_OTJ_STANDARD.otjHours;
+}
+
 export function useEPAGateway(studentId?: string, qualificationId?: string) {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -122,7 +131,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       portfolioSignedOff: gateway?.portfolio_signed_off || false,
       portfolioSignedOffAt: gateway?.portfolio_signed_off_at,
 
-      ojtHoursRequired: gateway?.ojt_hours_required || 400,
+      ojtHoursRequired: gateway?.ojt_hours_required || DEFAULT_OTJ_STANDARD.otjHours,
       ojtHoursCompleted: gateway?.ojt_hours_completed || 0,
       ojtHoursVerified: gateway?.ojt_hours_verified || false,
       ojtHoursVerifiedAt: gateway?.ojt_hours_verified_at,
@@ -163,7 +172,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
           .eq('user_id', studentId)
           .eq('qualification_id', qualificationId)
           .maybeSingle(),
-        supabase.from('profiles').select('id, full_name').eq('id', studentId).maybeSingle(),
+        supabase.from('public_profiles').select('id, full_name').eq('id', studentId).maybeSingle(),
         supabase.from('qualifications').select('id, title').eq('id', qualificationId).maybeSingle(),
       ]);
     if (error && error.code !== 'PGRST116') throw error;
@@ -195,7 +204,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     // cohort grows (was ~600 queries at 200 learners; now 3).
     const [gatewaysRes, profilesRes, qualsRes] = await Promise.all([
       supabase.from('epa_gateway_checklist').select('*').in('user_id', studentIds),
-      supabase.from('profiles').select('id, full_name').in('id', studentIds),
+      supabase.from('public_profiles').select('id, full_name').in('id', studentIds),
       supabase.from('qualifications').select('id, title').in('id', qualIds),
     ]);
 
@@ -249,7 +258,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       {
         key: 'ojt_hours_verified',
         label: 'OJT Hours Verified',
-        description: `${gateway?.ojt_hours_completed || 0}/${gateway?.ojt_hours_required || 400} hours completed and verified`,
+        description: `${gateway?.ojt_hours_completed || 0}/${gateway?.ojt_hours_required || DEFAULT_OTJ_STANDARD.otjHours} hours completed and verified`,
         completed: gateway?.ojt_hours_verified || false,
         completedDate: gateway?.ojt_hours_verified_at,
         required: true,
@@ -463,9 +472,12 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         .eq('qualification_id', qualificationId)
         .maybeSingle();
 
+      // The learner's own requirement (the standard's minimum, less any prior
+      // learning), never a guess: 400 was here and is far below ST0152's 1,066.
+      const required = existing?.ojt_hours_required || (await requiredOtjHours(studentId));
       const updates = {
         ojt_hours_completed: hours,
-        ojt_hours_verified: hours >= (existing?.ojt_hours_required || 400),
+        ojt_hours_verified: hours >= required,
       };
 
       if (existing) {
@@ -479,7 +491,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         const { error } = await supabase.from('epa_gateway_checklist').insert({
           user_id: studentId,
           qualification_id: qualificationId,
-          ojt_hours_required: 400,
+          ojt_hours_required: required,
           ...updates,
         });
 

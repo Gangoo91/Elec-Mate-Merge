@@ -3,6 +3,7 @@
  * (ELE-1950). Never says "Verified" unless someone verified the item at source.
  */
 import { Pill } from '@/components/employer/editorial';
+import { StatusPill } from '@/components/employer/pageParts/PageParts';
 import {
   verificationLabel,
   verificationShortLabel,
@@ -34,9 +35,9 @@ export function VerificationBadge({
 /** Profile-level flag: an Elec-Mate admin reviewed the profile (not a card check). */
 export function ElecMateApprovalBadge({ className }: { className?: string }) {
   return (
-    <Pill tone="blue" className={className}>
+    <StatusPill tone="neutral" className={className}>
       Approved by Elec-Mate
-    </Pill>
+    </StatusPill>
   );
 }
 

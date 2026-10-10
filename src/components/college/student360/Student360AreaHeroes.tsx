@@ -1,12 +1,28 @@
 import { useMemo, type ReactNode } from 'react';
-import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { itemVariants } from '@/components/college/primitives';
-import { AC_STATE_BAR, VIS_CARD, barCount } from '@/components/college/student360/Student360Visuals';
+import {
+  AC_STATE_BAR,
+  VIS_CARD,
+  barCount,
+} from '@/components/college/student360/Student360Visuals';
 import { STATE_LABEL, STATE_SWATCH, type AcState } from '@/hooks/portfolio/usePortfolioAcState';
 import type { AttendanceRow, GradeRow, PastoralNote } from '@/hooks/useStudent360';
 import type { CollegeObservation } from '@/hooks/useCollegeObservations';
+import { keyLabel } from '@/lib/college/labels';
 
 /* ==========================================================================
    Area page headers for Student 360 (ELE-2015). Each area page opens with the
@@ -107,7 +123,9 @@ export function AreaHero({
         >
           {chart && (
             <div className="min-w-0">
-              {chartTitle && <p className="mb-3 text-[13px] font-semibold text-white">{chartTitle}</p>}
+              {chartTitle && (
+                <p className="mb-3 text-[13px] font-semibold text-white">{chartTitle}</p>
+              )}
               {chart}
             </div>
           )}
@@ -141,7 +159,9 @@ function Bars({ rows }: { rows: Array<{ label: string; n: number; cls: string }>
               transition={{ duration: 0.7, ease: 'easeOut' }}
             />
           </span>
-          <span className="text-right text-[13px] font-semibold tabular-nums text-white">{r.n}</span>
+          <span className="text-right text-[13px] font-semibold tabular-nums text-white">
+            {r.n}
+          </span>
         </li>
       ))}
     </ul>
@@ -180,17 +200,31 @@ export function AttendanceHero({ rows }: { rows: AttendanceRow[] }) {
       out[i].sessions += 1;
       if (['present', 'late'].includes(norm(r.status))) out[i].attended += 1;
     }
-    return out.map((w) => ({ ...w, pct: w.sessions ? Math.round((w.attended / w.sessions) * 100) : null }));
+    return out.map((w) => ({
+      ...w,
+      pct: w.sessions ? Math.round((w.attended / w.sessions) * 100) : null,
+    }));
   }, [rows]);
   const anyWeeks = weeks.some((w) => w.sessions > 0);
 
   return (
     <AreaHero
       figures={[
-        { label: 'Attendance', value: rate === null ? '—' : `${rate}%`, sub: last.length ? `Last ${last.length} sessions` : 'No register yet', warn: rate !== null && rate < 85, good: rate !== null && rate >= 95 },
+        {
+          label: 'Attendance',
+          value: rate === null ? '—' : `${rate}%`,
+          sub: last.length ? `Last ${last.length} sessions` : 'No register yet',
+          warn: rate !== null && rate < 85,
+          good: rate !== null && rate >= 95,
+        },
         { label: 'Present', value: String(present) },
         { label: 'Late', value: String(late), warn: late >= 3 },
-        { label: 'Absent', value: String(absent), sub: streak >= 2 ? `${streak} in a row` : undefined, warn: absent > 0 && streak >= 2 },
+        {
+          label: 'Absent',
+          value: String(absent),
+          sub: streak >= 2 ? `${streak} in a row` : undefined,
+          warn: absent > 0 && streak >= 2,
+        },
       ]}
       chartTitle="Attendance by week, last 12 weeks"
       chart={
@@ -199,15 +233,37 @@ export function AttendanceHero({ rows }: { rows: AttendanceRow[] }) {
             <ResponsiveContainer>
               <BarChart data={weeks} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
                 <CartesianGrid stroke={AXIS} vertical={false} />
-                <XAxis dataKey="label" tick={{ fontSize: 10.5, fill: WHITE }} tickLine={false} axisLine={false} interval={1} />
-                <YAxis domain={[0, 100]} ticks={[0, 50, 85, 100]} tick={{ fontSize: 10.5, fill: WHITE }} tickLine={false} axisLine={false} />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 10.5, fill: WHITE }}
+                  tickLine={false}
+                  axisLine={false}
+                  interval={1}
+                />
+                <YAxis
+                  domain={[0, 100]}
+                  ticks={[0, 50, 85, 100]}
+                  tick={{ fontSize: 10.5, fill: WHITE }}
+                  tickLine={false}
+                  axisLine={false}
+                />
                 <Tooltip
                   {...TOOLTIP}
-                  formatter={(v: number, _n, p) => [v == null ? 'No sessions' : `${v}% (${p.payload.attended} of ${p.payload.sessions})`, 'Attended']}
+                  formatter={(v: number, _n, p) => [
+                    v == null
+                      ? 'No sessions'
+                      : `${v}% (${p.payload.attended} of ${p.payload.sessions})`,
+                    'Attended',
+                  ]}
                 />
                 <Bar dataKey="pct" radius={[5, 5, 0, 0]}>
                   {weeks.map((w) => (
-                    <Cell key={w.from} fill={w.pct === null ? TRACK : w.pct >= 95 ? GREEN : w.pct >= 85 ? VOLT : ORANGE} />
+                    <Cell
+                      key={w.from}
+                      fill={
+                        w.pct === null ? TRACK : w.pct >= 95 ? GREEN : w.pct >= 85 ? VOLT : ORANGE
+                      }
+                    />
                   ))}
                 </Bar>
               </BarChart>
@@ -221,9 +277,18 @@ export function AttendanceHero({ rows }: { rows: AttendanceRow[] }) {
         <div>
           <p className="mb-3 text-[13px] font-semibold text-white">Colour key</p>
           <ul className="space-y-2.5 text-[12.5px] text-white">
-            <li className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />95% or more</li>
-            <li className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-elec-yellow" />85% to 94%</li>
-            <li className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-orange-400" />Under 85%, worth a conversation</li>
+            <li className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+              95% or more
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-elec-yellow" />
+              85% to 94%
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-orange-400" />
+              Under 85%, worth a conversation
+            </li>
           </ul>
         </div>
       }
@@ -233,11 +298,20 @@ export function AttendanceHero({ rows }: { rows: AttendanceRow[] }) {
 
 /* ── Grades ─────────────────────────────────────────────────────────── */
 
-const BAND_RANK: Record<string, number> = { fail: 1, refer: 1, referred: 1, pass: 2, merit: 3, distinction: 4 };
+const BAND_RANK: Record<string, number> = {
+  fail: 1,
+  refer: 1,
+  referred: 1,
+  pass: 2,
+  merit: 3,
+  distinction: 4,
+};
 
 export function GradesHero({ rows }: { rows: GradeRow[] }) {
   const scored = rows.filter((r) => r.score !== null && r.assessed_at);
-  const avg = scored.length ? Math.round(scored.reduce((s, r) => s + (r.score ?? 0), 0) / scored.length) : null;
+  const avg = scored.length
+    ? Math.round(scored.reduce((s, r) => s + (r.score ?? 0), 0) / scored.length)
+    : null;
   const best = scored.length ? Math.max(...scored.map((r) => r.score ?? 0)) : null;
   const ranks = rows.map((r) => BAND_RANK[norm(r.grade)]).filter((n): n is number => !!n);
   const fails = ranks.filter((n) => n === 1).length;
@@ -247,18 +321,33 @@ export function GradesHero({ rows }: { rows: GradeRow[] }) {
       const k = BAND_RANK[norm(r.grade)];
       return b === 'Fail' ? k === 1 : k === BAND_RANK[b.toLowerCase()];
     }).length,
-    cls: b === 'Distinction' ? 'bg-emerald-400' : b === 'Merit' ? 'bg-elec-yellow' : b === 'Pass' ? 'bg-white/60' : 'bg-red-400',
+    cls:
+      b === 'Distinction'
+        ? 'bg-emerald-400'
+        : b === 'Merit'
+          ? 'bg-elec-yellow'
+          : b === 'Pass'
+            ? 'bg-white/60'
+            : 'bg-red-400',
   }));
   const data = scored
     .slice()
     .sort((a, b) => (a.assessed_at ?? '').localeCompare(b.assessed_at ?? ''))
-    .map((r) => ({ label: shortDate(new Date(r.assessed_at!)), score: r.score, name: r.unit_name ?? r.assessment_type ?? 'Result' }));
+    .map((r) => ({
+      label: shortDate(new Date(r.assessed_at!)),
+      score: r.score,
+      name: r.unit_name ?? (keyLabel(r.assessment_type) || 'Result'),
+    }));
 
   return (
     <AreaHero
       figures={[
         { label: 'Results', value: String(rows.length) },
-        { label: 'Average score', value: avg === null ? '—' : `${avg}%`, warn: avg !== null && avg < 50 },
+        {
+          label: 'Average score',
+          value: avg === null ? '—' : `${avg}%`,
+          warn: avg !== null && avg < 50,
+        },
         { label: 'Best score', value: best === null ? '—' : `${best}%` },
         { label: 'Fails or referrals', value: String(fails), warn: fails > 0 },
       ]}
@@ -269,15 +358,37 @@ export function GradesHero({ rows }: { rows: GradeRow[] }) {
             <ResponsiveContainer>
               <LineChart data={data} margin={{ top: 8, right: 12, left: -18, bottom: 0 }}>
                 <CartesianGrid stroke={AXIS} vertical={false} />
-                <XAxis dataKey="label" tick={{ fontSize: 10.5, fill: WHITE }} tickLine={false} axisLine={false} />
-                <YAxis domain={[0, 100]} tick={{ fontSize: 10.5, fill: WHITE }} tickLine={false} axisLine={false} />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 10.5, fill: WHITE }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  domain={[0, 100]}
+                  tick={{ fontSize: 10.5, fill: WHITE }}
+                  tickLine={false}
+                  axisLine={false}
+                />
                 <Tooltip {...TOOLTIP} formatter={(v: number, _n, p) => [`${v}%`, p.payload.name]} />
-                <Line type="monotone" dataKey="score" stroke={VOLT} strokeWidth={2.5} dot={{ r: 4, fill: VOLT, strokeWidth: 0 }} />
+                <Line
+                  type="monotone"
+                  dataKey="score"
+                  stroke={VOLT}
+                  strokeWidth={2.5}
+                  dot={{ r: 4, fill: VOLT, strokeWidth: 0 }}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <ChartEmpty text={data.length === 1 ? 'One scored result so far. A trend appears from the second.' : 'No scored results yet.'} />
+          <ChartEmpty
+            text={
+              data.length === 1
+                ? 'One scored result so far. A trend appears from the second.'
+                : 'No scored results yet.'
+            }
+          />
         )
       }
       side={
@@ -304,7 +415,13 @@ export function ObservationsHero({ rows }: { rows: CollegeObservation[] }) {
     const now = new Date();
     const out = Array.from({ length: 12 }, (_, i) => {
       const d = new Date(now.getFullYear(), now.getMonth() - 11 + i, 1);
-      return { key: `${d.getFullYear()}-${d.getMonth()}`, label: d.toLocaleDateString('en-GB', { month: 'short' }), passed: 0, partial: 0, other: 0 };
+      return {
+        key: `${d.getFullYear()}-${d.getMonth()}`,
+        label: d.toLocaleDateString('en-GB', { month: 'short' }),
+        passed: 0,
+        partial: 0,
+        other: 0,
+      };
     });
     for (const r of rows) {
       const d = new Date(r.observed_at);
@@ -321,9 +438,19 @@ export function ObservationsHero({ rows }: { rows: CollegeObservation[] }) {
     <AreaHero
       figures={[
         { label: 'Observations', value: String(rows.length) },
-        { label: 'Last observed', value: since === null ? '—' : since > 60 ? `${since}d` : agoLabel(since), sub: since !== null && since > 60 ? 'Over two months ago' : undefined, warn: since === null || since > 60 },
+        {
+          label: 'Last observed',
+          value: since === null ? '—' : since > 60 ? `${since}d` : agoLabel(since),
+          sub: since !== null && since > 60 ? 'Over two months ago' : undefined,
+          warn: since === null || since > 60,
+        },
         { label: 'Passed', value: String(passed), good: passed > 0 },
-        { label: 'Criteria evidenced', value: String(acs), sub: followUps ? `${followUps} need a follow-up` : undefined, warn: followUps > 0 },
+        {
+          label: 'Criteria evidenced',
+          value: String(acs),
+          sub: followUps ? `${followUps} need a follow-up` : undefined,
+          warn: followUps > 0,
+        },
       ]}
       chartTitle="Observations by month, last 12 months"
       chart={
@@ -332,12 +459,28 @@ export function ObservationsHero({ rows }: { rows: CollegeObservation[] }) {
             <ResponsiveContainer>
               <BarChart data={months} margin={{ top: 4, right: 8, left: -24, bottom: 0 }}>
                 <CartesianGrid stroke={AXIS} vertical={false} />
-                <XAxis dataKey="label" tick={{ fontSize: 10.5, fill: WHITE }} tickLine={false} axisLine={false} />
-                <YAxis allowDecimals={false} tick={{ fontSize: 10.5, fill: WHITE }} tickLine={false} axisLine={false} />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 10.5, fill: WHITE }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  allowDecimals={false}
+                  tick={{ fontSize: 10.5, fill: WHITE }}
+                  tickLine={false}
+                  axisLine={false}
+                />
                 <Tooltip {...TOOLTIP} />
                 <Bar dataKey="passed" name="Passed" stackId="o" fill={GREEN} />
                 <Bar dataKey="partial" name="Partial" stackId="o" fill={VOLT} />
-                <Bar dataKey="other" name="Referred or not yet" stackId="o" fill={ORANGE} radius={[5, 5, 0, 0]} />
+                <Bar
+                  dataKey="other"
+                  name="Referred or not yet"
+                  stackId="o"
+                  fill={ORANGE}
+                  radius={[5, 5, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -351,9 +494,21 @@ export function ObservationsHero({ rows }: { rows: CollegeObservation[] }) {
           <Bars
             rows={[
               { label: 'Passed', n: passed, cls: 'bg-emerald-400' },
-              { label: 'Partial', n: rows.filter((r) => r.outcome === 'partial').length, cls: 'bg-elec-yellow' },
-              { label: 'Referred', n: rows.filter((r) => r.outcome === 'referred').length, cls: 'bg-orange-400' },
-              { label: 'Not yet', n: rows.filter((r) => r.outcome === 'not_yet').length, cls: 'bg-white/50' },
+              {
+                label: 'Partial',
+                n: rows.filter((r) => r.outcome === 'partial').length,
+                cls: 'bg-elec-yellow',
+              },
+              {
+                label: 'Referred',
+                n: rows.filter((r) => r.outcome === 'referred').length,
+                cls: 'bg-orange-400',
+              },
+              {
+                label: 'Not yet',
+                n: rows.filter((r) => r.outcome === 'not_yet').length,
+                cls: 'bg-white/50',
+              },
             ]}
           />
         </div>
@@ -376,11 +531,24 @@ const KIND_LABEL: Record<string, string> = {
 
 export function NotesHero({ notes }: { notes: PastoralNote[] }) {
   const open = notes.filter((n) => n.action_required && !n.action_completed_at);
-  const overdue = open.filter((n) => n.action_by_date && n.action_by_date < new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' })).length;
+  const overdue = open.filter(
+    (n) =>
+      n.action_by_date &&
+      n.action_by_date < new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' })
+  ).length;
   const oneToOnes = notes.filter((n) => n.kind === 'one_to_one');
   const lastContact = daysAgo(oneToOnes[0]?.created_at ?? null);
   const kinds = Object.keys(KIND_LABEL)
-    .map((k) => ({ label: KIND_LABEL[k], n: notes.filter((n) => n.kind === k).length, cls: k === 'praise' ? 'bg-emerald-400' : k === 'flag' || k === 'concern' || k === 'safeguarding' ? 'bg-orange-400' : 'bg-elec-yellow' }))
+    .map((k) => ({
+      label: KIND_LABEL[k],
+      n: notes.filter((n) => n.kind === k).length,
+      cls:
+        k === 'praise'
+          ? 'bg-emerald-400'
+          : k === 'flag' || k === 'concern' || k === 'safeguarding'
+            ? 'bg-orange-400'
+            : 'bg-elec-yellow',
+    }))
     .filter((k) => k.n > 0);
 
   return (
@@ -388,8 +556,23 @@ export function NotesHero({ notes }: { notes: PastoralNote[] }) {
       figures={[
         { label: 'Notes', value: String(notes.length) },
         { label: '1-2-1s', value: String(oneToOnes.length) },
-        { label: 'Last 1-2-1', value: lastContact === null ? 'None' : lastContact > 42 ? `${lastContact}d` : agoLabel(lastContact), sub: lastContact !== null && lastContact > 42 ? 'Over six weeks ago' : undefined, warn: lastContact === null || lastContact > 42 },
-        { label: 'Open actions', value: String(open.length), sub: overdue ? `${overdue} past their date` : undefined, warn: overdue > 0 },
+        {
+          label: 'Last 1-2-1',
+          value:
+            lastContact === null
+              ? 'None'
+              : lastContact > 42
+                ? `${lastContact}d`
+                : agoLabel(lastContact),
+          sub: lastContact !== null && lastContact > 42 ? 'Over six weeks ago' : undefined,
+          warn: lastContact === null || lastContact > 42,
+        },
+        {
+          label: 'Open actions',
+          value: String(open.length),
+          sub: overdue ? `${overdue} past their date` : undefined,
+          warn: overdue > 0,
+        },
       ]}
       chartTitle="What has been recorded"
       chart={kinds.length ? <Bars rows={kinds} /> : <ChartEmpty text="Nothing recorded yet." />}
@@ -404,7 +587,11 @@ export function NotesHero({ notes }: { notes: PastoralNote[] }) {
  * get_portfolio_ac_state — the same counts the learner reads on their
  * portfolio. "Passed" includes IQA-confirmed criteria.
  */
-export function AcStateHero({ totals }: { totals: Record<AcState, number> & { total: number; passedAll: number } }) {
+export function AcStateHero({
+  totals,
+}: {
+  totals: Record<AcState, number> & { total: number; passedAll: number };
+}) {
   const t = totals;
   const needMore = t.referred + t.not_yet + t.iqa_rejected;
   const pct = t.total ? Math.round((t.passedAll / t.total) * 100) : null;
@@ -413,13 +600,22 @@ export function AcStateHero({ totals }: { totals: Record<AcState, number> & { to
       figures={[
         {
           label: 'Passed',
-          value: pct === null ? '—' : `${pct}%`,
-          sub: `${t.passedAll} of ${t.total} criteria`,
+          value: t.total ? `${t.passedAll} of ${t.total}` : 'None yet',
+          sub: pct === null ? 'No criteria list yet' : `${pct}% of the qualification`,
           good: t.passedAll > 0,
         },
         { label: 'Waiting for you', value: String(t.submitted), sub: 'Submitted for a decision' },
-        { label: 'Needs more', value: String(needMore), sub: 'Sent back to the learner', warn: needMore > 0 },
-        { label: 'Not started', value: String(t.not_started), sub: `${t.claimed} claimed, not yet submitted` },
+        {
+          label: 'Needs more',
+          value: String(needMore),
+          sub: 'Sent back to the learner',
+          warn: needMore > 0,
+        },
+        {
+          label: 'Not started',
+          value: String(t.not_started),
+          sub: `${t.claimed} claimed, not yet submitted`,
+        },
       ]}
       chartTitle="Every criterion, by where it is"
       chart={
@@ -443,7 +639,8 @@ export function AcStateHero({ totals }: { totals: Record<AcState, number> & { to
               {AC_STATE_BAR.map((s) => (
                 <span key={s} className="flex items-center gap-2">
                   <span className={cn('h-2.5 w-2.5 rounded-full', STATE_SWATCH[s])} />
-                  {STATE_LABEL[s]} <span className="font-semibold tabular-nums">{barCount(t, s)}</span>
+                  {STATE_LABEL[s]}{' '}
+                  <span className="font-semibold tabular-nums">{barCount(t, s)}</span>
                 </span>
               ))}
               <span className="flex items-center gap-2">
@@ -484,7 +681,11 @@ export function AssessHero({
   return (
     <AreaHero
       figures={[
-        { label: 'Covered', value: pct === null ? '—' : `${pct}%`, sub: total ? `${done} of ${total} criteria` : 'No criteria list yet' },
+        {
+          label: 'Covered',
+          value: pct === null ? '—' : `${pct}%`,
+          sub: total ? `${done} of ${total} criteria` : 'No criteria list yet',
+        },
         { label: 'Assessed', value: String(assessed) },
         { label: 'IQA confirmed', value: String(confirmed), good: confirmed > 0 },
         { label: 'Not started', value: String(Math.max(0, total - done - inProgress)) },
@@ -515,7 +716,10 @@ export function AssessHero({
               ))}
               <span className="flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-white/[0.12]" />
-                Not started <span className="font-semibold tabular-nums">{Math.max(0, total - done - inProgress)}</span>
+                Not started{' '}
+                <span className="font-semibold tabular-nums">
+                  {Math.max(0, total - done - inProgress)}
+                </span>
               </span>
             </div>
           </div>
@@ -556,7 +760,12 @@ export function PortfolioHero({
         { label: 'Submissions', value: String(submissions), sub: `${signedOff} signed off` },
         { label: 'Waiting on you', value: String(waiting), warn: waiting > 0 },
         { label: 'Evidence items', value: String(items), sub: `${verified} supervisor verified` },
-        { label: 'Requirements open', value: String(openReqs), sub: overdueReqs ? `${overdueReqs} overdue` : `${iqaSampled} IQA sampled`, warn: overdueReqs > 0 },
+        {
+          label: 'Requirements open',
+          value: String(openReqs),
+          sub: overdueReqs ? `${overdueReqs} overdue` : `${iqaSampled} IQA sampled`,
+          warn: overdueReqs > 0,
+        },
       ]}
       chartTitle="Evidence items checked by the supervisor"
       chart={
@@ -582,4 +791,3 @@ export function PortfolioHero({
     />
   );
 }
-

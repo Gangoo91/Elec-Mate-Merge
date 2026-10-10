@@ -289,16 +289,16 @@ const SpecialistOverviewCards = () => {
         <CardContent className="space-y-4 p-0 p-0">
           <p className="text-white">{specialLocations.description}</p>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-4 sm:gap-3">
             {specialLocations.sections.map((section, idx) => (
               <div
                 key={idx}
-                className="p-3 rounded-lg border border-white/[0.10] bg-white/[0.06] space-y-2"
+                className="space-y-1 rounded-xl border border-white/[0.10] bg-white/[0.04] p-3"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="block text-[13px] font-semibold tabular-nums text-elec-yellow">
                   Section {section.section}
                 </span>
-                <p className="text-[12px] text-white leading-relaxed">{section.title}</p>
+                <p className="text-[13.5px] leading-snug text-white">{section.title}</p>
               </div>
             ))}
           </div>
@@ -317,10 +317,10 @@ const SpecialistOverviewCards = () => {
             {whyAdditionalRequirements.map((item, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]"
+                className="p-4 rounded-lg border border-white/[0.14] bg-white/[0.06]"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <item.icon className="h-5 w-5 text-elec-yellow" />
+                  <item.icon className="h-[18px] w-[18px] shrink-0 text-white" strokeWidth={1.5} />
                   <h4 className="font-medium text-white">{item.factor}</h4>
                 </div>
                 <p className="text-sm text-white">{item.description}</p>
@@ -432,7 +432,7 @@ const SpecialistOverviewCards = () => {
         </CardHeader>
         <CardContent className="space-y-4 p-0 p-0">
           {certificationRequirements.map((cert, idx) => (
-            <div key={idx} className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
+            <div key={idx} className="p-4 rounded-lg border border-white/[0.14] bg-white/[0.06]">
               <div className="flex items-center gap-2 mb-3">
                 <cert.icon className="h-6 w-6 text-elec-yellow" />
                 <h4 className="font-medium text-white text-lg">{cert.name}</h4>
@@ -510,7 +510,7 @@ const SpecialistOverviewCards = () => {
         </CardHeader>
         <CardContent className="p-0 p-0">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white/[0.06] p-6 rounded-lg border border-elec-yellow/30 hover:border-elec-yellow/50 transition-colors">
+            <div className="bg-white/[0.06] p-6 rounded-lg border border-white/[0.14] hover:border-elec-yellow/50 transition-colors">
               <Sun className="h-10 w-10 text-elec-yellow mb-3" />
               <h4 className="font-medium text-white text-lg mb-2">Solar PV Systems</h4>
               <p className="text-sm text-white mb-3">

@@ -19,7 +19,7 @@ const tocItems = [
 const keyTakeaways = [
   'MCB, RCBO, RCD and AFDD symbols on distribution board schedules differentiate protection types — important for EICR observations, fault diagnosis and Amendment 4 compliance.',
   'A modern consumer unit symbol shows main switch, individual RCBOs for each circuit (preferred over split-load RCD), SPD at origin, and AFDD where required by BS 7671.',
-  'Type AC, Type A and Type F RCD symbols indicate the residual current waveform the device can detect — Type AC is being phased out for EV and modern equipment per A2:2022 and A4:2026.',
+  'Type AC, Type A and Type F RCD symbols indicate the residual current waveform the device can detect — since A2:2022, Regulation 531.3.3 allows Type AC only for fixed equipment known to have no DC component in its load current, and that still applies under A4:2026.',
   'BS 7671 Section 443 requires a risk assessment for SPD provision on every new installation — Type 2 SPDs are typically installed at the consumer unit origin.',
   'Elec-Mate consumer unit schedules use correct IEC 60617 symbols + show A4:2026 device-type requirements automatically.',
 ];
@@ -43,7 +43,7 @@ const faqs = [
   {
     question: 'Are AFDDs required by symbol convention now?',
     answer:
-      'Amendment 2 (2022) recommended AFDDs in HMOs, care homes, student halls and houses of multiple occupation. Amendment 4 (2026) mandates them in those locations and adds further categories. The AFDD symbol is drawn similarly to an RCBO with an additional arc-detection element — typically a flame or zigzag symbol inside the device outline. Schedule annotation should include "AFDD" alongside the current rating.',
+      'AFDDs were first recommended in BS 7671:2018. Amendment 2 (2022) redrafted Regulation 421.1.7 to require them on single-phase socket-outlet final circuits rated up to 32 A in higher risk residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes, and to recommend them elsewhere. Amendment 4 (2026) only reworded the first category to high rise residential buildings (over 18 m or more than six storeys). The AFDD symbol is drawn similarly to an RCBO with an additional arc-detection element — typically a flame or zigzag symbol inside the device outline. Schedule annotation should include "AFDD" alongside the current rating.',
   },
   {
     question: 'What does the contactor symbol look like?',
@@ -110,11 +110,10 @@ const sections = [
           drawn to IEC 60617 with BS 7671 protection-device cross-references.
         </p>
         <p>
-          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the
-          international IEC 60617 standard for graphical symbols on electrical diagrams. The same
-          symbols appear on{' '}
-          <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
-          distribution board schedules, single-line schematics and installation layout drawings.
+          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the international
+          IEC 60617 standard for graphical symbols on electrical diagrams. The same symbols appear
+          on <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>, distribution
+          board schedules, single-line schematics and installation layout drawings.
         </p>
         <p>
           Looking for symbols in a different category? See the full{' '}
@@ -141,7 +140,7 @@ export default function ElectricalDistributionSymbolsPage() {
       title="Distribution Board Symbols: MCB, RCD, RCBO, SPD"
       description="Consumer unit, distribution board, MCB, MCCB, RCD, RCBO, SPD, meter, contactor, isolator and changeover switch symbols to IEC 60617 for UK electricians."
       datePublished="2026-05-18"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Symbol Reference"

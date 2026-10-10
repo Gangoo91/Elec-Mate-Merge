@@ -36,6 +36,7 @@ import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { AuditTimeline } from '../common/AuditTimeline';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from '../common/CorrectiveActionsPanel';
+import { FirmRecordBar } from '../common/FirmRecordBar';
 import { storageSetJSONSync } from '@/utils/storage';
 import {
   SheetShell,
@@ -179,6 +180,12 @@ export function ObservationDetailSheet({
                 {/* Status accent line — bleeds to the sheet edges */}
                 <div
                   className={cn('-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r', toneAccent[accentTone])}
+                />
+
+                <FirmRecordBar
+                  table="safety_observations"
+                  row={observation}
+                  invalidate={[['safety-observations']]}
                 />
 
                 {/* Full description */}

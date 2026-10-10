@@ -48,7 +48,7 @@ const RunThroughStepsTab = () => {
       case 'Beginner':
         return 'bg-white/[0.06] text-green-400 border-green-500/20';
       case 'Intermediate':
-        return 'bg-white/[0.06] text-elec-yellow border-elec-yellow/20';
+        return 'bg-white/[0.06] text-elec-yellow border-white/[0.14]';
       case 'Advanced':
         return 'bg-white/[0.06] text-red-400 border-red-500/20';
       default:
@@ -199,7 +199,7 @@ const RunThroughStepsTab = () => {
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-3 flex-1">
                   <div className="flex items-start gap-3">
-                    <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 flex-shrink-0">
+                    <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                       {getTestIcon(test.id)}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -316,11 +316,11 @@ const RunThroughStepsTab = () => {
       )}
 
       {/* Best Practices Card */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
+      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/[0.14] overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Lightbulb className="h-5 w-5 text-elec-yellow" />
             </div>
             Testing Best Practices

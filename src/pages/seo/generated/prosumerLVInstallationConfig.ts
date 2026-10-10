@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // On-Site Guide Chapter 12 (Reg 12.1).
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/prosumer-low-voltage-electrical-installation',
@@ -22,7 +22,7 @@ export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
   heroHighlight: 'Electrical Installation',
   heroSuffix: '(BS 7671 Chapter 82)',
   heroSubtitle:
-    'BS 7671:2018+A4:2026 introduced "Prosumer\'s low voltage electrical installation(s)" as a distinct installation type governed by the new Chapter 82 (Part 8 — Functional Requirements). This guide explains what counts as a prosumer installation, why Chapter 82 adds dedicated inspection requirements, and what UK electricians must check on every installation that both consumes and produces electricity.',
+    'BS 7671 treats "Prosumer\'s low voltage electrical installation(s)" as a distinct installation type governed by Chapter 82 (Part 8 — Functional Requirements), introduced at A2:2022 and carried into A4:2026. This guide explains what counts as a prosumer installation, why Chapter 82 adds dedicated inspection requirements, and what UK electricians must check on every installation that both consumes and produces electricity.',
   keyTakeaways: [
     'A "prosumer" installation BOTH consumes energy from the supply AND produces energy that may be exported or used on-site — a combination of traditional "consumer" and "generator" roles.',
     'Typical UK prosumer sources (OSG Reg 12.1): photovoltaic (PV) generators, battery energy storage systems (BESS), small wind turbines, micro-CHP units, and EV vehicle-to-grid (V2G) arrangements where the EV exports back to the grid.',
@@ -62,7 +62,7 @@ export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: "Before A4:2026, prosumer installations were inspected under the general electrical installation rules with some cross-references to Section 712 (Solar PV) and the IET Code of Practice. A4:2026 introduced Chapter 82 because prosumer installations have specific failure modes that don't exist in traditional consumer-only installations:",
+          text: "Before A2:2022, prosumer installations were inspected under the general electrical installation rules with some cross-references to Section 712 (Solar PV) and the IET Code of Practice. A2:2022 introduced Chapter 82, and A4:2026 keeps it, because prosumer installations have specific failure modes that don't exist in traditional consumer-only installations:",
         },
         {
           type: 'list',
@@ -78,7 +78,7 @@ export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Chapter 82 makes prosumer compliance explicit',
-          text: 'Before A4:2026, an inspector could complete an EIC without explicitly addressing prosumer equipment — any non-compliances surfaced as general observations against Sections 4, 5 or 6. Chapter 82 makes prosumer-specific inspection mandatory and clearly identified in the report (Reg 722.826.3.201).',
+          text: 'Before the A4:2026 forms, an inspector could complete an EIC without a dedicated prosumer inspection item — any non-compliances surfaced as general observations against Sections 4, 5 or 6. Chapter 82 makes prosumer-specific inspection mandatory and clearly identified in the report (Reg 722.826.3.201).',
         },
       ],
     },
@@ -245,7 +245,7 @@ export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
       description:
         'How RCD type selection matters across the whole installation, including prosumer circuits.',
       icon: 'ShieldCheck',

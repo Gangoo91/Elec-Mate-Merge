@@ -62,7 +62,11 @@ async function fetchVerdict(otjEntryId: string): Promise<AiVerdict> {
       body: JSON.stringify({ otj_entry_id: otjEntryId }),
     });
     if (!res.ok) throw new Error(`verdict_${res.status}`);
-    const json = (await res.json()) as AiVerdict;
+    const raw = (await res.json()) as Partial<AiVerdict> | null;
+    // A reply without a verdict is "check unavailable", never a crash of the
+    // whole profile (an empty {} took Student 360 down on 10 Oct).
+    if (!raw || typeof raw.verdict !== 'string') throw new Error('verdict_malformed');
+    const json = { ...raw, suggested_ac_refs: raw.suggested_ac_refs ?? [] } as AiVerdict;
     cacheVerdict(otjEntryId, json);
     return json;
   })();
@@ -112,10 +116,13 @@ const SOURCE_KIND_LABEL: Record<SourceKind, string> = {
 
 const ACTIVITY_LABEL: Record<string, string> = OTJ_ACTIVITY_LABEL;
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
 const CHIP =
-  'inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-medium tabular-nums text-white';
+  'inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-medium tabular-nums text-white';
 const NEUTRAL_BTN =
   'h-11 flex-1 rounded-lg border border-white/[0.12] bg-white/[0.06] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] disabled:opacity-50';
 
@@ -347,7 +354,7 @@ function PendingRow({
                   {VERDICT_LABEL[verdict.verdict]}
                 </span>
                 <span className="text-[12px] tabular-nums text-white">
-                  {Math.round(verdict.confidence * 100)}% confident
+                  {Math.round((verdict.confidence ?? 0) * 100)}% confident
                 </span>
               </div>
               {verdict.feedback_for_tutor && (
@@ -355,9 +362,9 @@ function PendingRow({
                   {verdict.feedback_for_tutor}
                 </p>
               )}
-              {verdict.suggested_ac_refs.length > 0 && (
+              {(verdict.suggested_ac_refs?.length ?? 0) > 0 && (
                 <div className="mt-1.5 flex flex-wrap items-center gap-1">
-                  <span className="text-[11px] text-white">Suggested ACs:</span>
+                  <span className="text-[12px] text-white">Suggested ACs:</span>
                   {verdict.suggested_ac_refs.map((ref) => (
                     <span key={ref} className={CHIP}>
                       {ref}
@@ -491,7 +498,7 @@ function RejectedHistory({ rows }: { rows: OtjEntryRow[] }) {
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="truncate text-[14px] font-semibold leading-tight text-white">
+                  <div className="line-clamp-2 text-[14px] font-semibold leading-snug text-white">
                     {r.title}
                   </div>
                   <div className="mt-0.5 text-[12px] tabular-nums leading-tight text-white">

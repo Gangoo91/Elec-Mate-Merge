@@ -113,7 +113,7 @@ const ZsTablesSection = ({ onBack }: Props) => {
 
         {/* Quick reference */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Quick Reference — Common Circuits</p>
+          <p className="text-[12px] font-medium text-white mb-3">Quick Reference — Common Circuits</p>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Lighting (6A Type B)</p>
@@ -140,7 +140,7 @@ const ZsTablesSection = ({ onBack }: Props) => {
 
         {/* Tables */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">MCB Tables — 0.4s Disconnection (Final Circuits)</p>
+          <p className="text-[12px] font-medium text-white mb-3">MCB Tables — 0.4s Disconnection (Final Circuits)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -156,7 +156,7 @@ const ZsTablesSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 88-3 Fuses — 0.4s Disconnection</p>
+          <p className="text-[12px] font-medium text-white mb-3">BS 88-3 Fuses — 0.4s Disconnection</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

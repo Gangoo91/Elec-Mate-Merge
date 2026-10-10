@@ -2,16 +2,7 @@ import { useState, useMemo } from 'react';
 import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
 import { JOB_BOARD_HELP } from '@/components/employer/help/jobs';
 import { Input } from '@/components/ui/input';
-import {
-  RefreshCw,
-  Plus,
-  X,
-  Filter,
-  Archive,
-  LayoutTemplate,
-  Kanban,
-  List,
-} from 'lucide-react';
+import { RefreshCw, Plus, X, Filter, Archive, LayoutTemplate, Kanban, List } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileKanban } from '@/components/employer/MobileKanban';
@@ -50,22 +41,27 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  Avatar,
-  IconButton,
-  EmptyState,
   LoadingBlocks,
-  FilterBar,
   PrimaryButton,
-  SecondaryButton,
   inputClass,
   checkboxClass,
   type Tone,
 } from '@/components/employer/editorial';
+import {
+  frameClass,
+  PanelTitle,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  ToolButton,
+  ToolBadge,
+  StatusPill,
+  Initials,
+  Row,
+  RowList,
+  PlainEmpty,
+  SearchField,
+} from '@/components/employer/pageParts/PageParts';
 
 type ViewMode = 'kanban' | 'list';
 
@@ -86,21 +82,11 @@ const stages: StageDef[] = JOB_STAGES.map((s) => ({
   bar: s.bar,
 }));
 
-const getStageTone = (stageId: string): Tone =>
-  stages.find((s) => s.id === stageId)?.tone ?? 'yellow';
-
 const getInitials = (name: string): string => {
   const parts = name.trim().split(/\s+/);
   if (parts.length === 0) return '—';
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-};
-
-const getValueTone = (value: number): Tone => {
-  if (value >= 10000) return 'emerald';
-  if (value >= 5000) return 'yellow';
-  if (value >= 1000) return 'cyan';
-  return 'amber';
 };
 
 export function JobBoardSection() {
@@ -118,6 +104,7 @@ export function JobBoardSection() {
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
+  const [mobileAddSignal, setMobileAddSignal] = useState(0);
   const [copySheetJob, setCopySheetJob] = useState<(typeof jobs)[number] | null>(null);
 
   const queryClient = useQueryClient();
@@ -186,8 +173,7 @@ export function JobBoardSection() {
     return matchesSearch && matchesCompleted;
   });
 
-  const getJobsForStage = (stageId: string) =>
-    filteredJobs.filter((job) => job.stage === stageId);
+  const getJobsForStage = (stageId: string) => filteredJobs.filter((job) => job.stage === stageId);
 
   const getStageValue = (stageId: string) =>
     getJobsForStage(stageId).reduce((sum, job) => sum + (job.value || 0), 0);
@@ -341,12 +327,8 @@ export function JobBoardSection() {
 
   const totalJobs = jobs.length;
   const pipelineCount = jobs.filter((j) => j.stage === 'Enquiry' || j.stage === 'Quoted').length;
-  const bookedCount = jobs.filter(
-    (j) => j.stage === 'Confirmed' || j.stage === 'Scheduled'
-  ).length;
-  const onSiteCount = jobs.filter(
-    (j) => j.stage === 'In Progress' || j.stage === 'Testing'
-  ).length;
+  const bookedCount = jobs.filter((j) => j.stage === 'Confirmed' || j.stage === 'Scheduled').length;
+  const onSiteCount = jobs.filter((j) => j.stage === 'In Progress' || j.stage === 'Testing').length;
   const onHoldCount = jobs.filter((j) => j.stage === 'On Hold').length;
   const pipelineValue = jobs.reduce((sum, j) => sum + (j.value || 0), 0);
 
@@ -379,159 +361,191 @@ export function JobBoardSection() {
     color: stage.bar,
   }));
 
+  // One live line: where the board stands, and anything stuck.
+  const liveLine = (() => {
+    if (totalJobs === 0) return 'No jobs on the board yet. Add one to start at Enquiry.';
+    const parts = [`${totalJobs} ${totalJobs === 1 ? 'job' : 'jobs'} on the board`];
+    if (showMoney && pipelineValue > 0) parts[0] += `, ${fmtCompact(pipelineValue)} in all`;
+    const tail =
+      onHoldCount > 0
+        ? `${onHoldCount} on hold.`
+        : isMobile
+          ? 'Press and hold a card to move it.'
+          : 'Drag a card to move it; the timeline and diary move with it.';
+    return `${parts.join('')}. ${tail}`;
+  })();
+
+  const startAdd = () => {
+    if (isMobile) {
+      setViewMode('kanban');
+      setMobileAddSignal((n) => n + 1);
+    } else {
+      setViewMode('kanban');
+      setQuickAddStage('Enquiry');
+    }
+  };
+
+  const heroActions = (
+    <HeroActions>
+      <HeroPrimary data-help="jobboard.add" onClick={startAdd} icon={<Plus className="h-4 w-4" />}>
+        Add job
+      </HeroPrimary>
+      <HeroSecondary
+        data-help="jobboard.templates"
+        label="Templates"
+        onClick={() => setShowTemplates(true)}
+        icon={<LayoutTemplate className="h-4 w-4" />}
+      >
+        Templates
+      </HeroSecondary>
+      <HeroSecondary
+        data-help="jobboard.archived"
+        label="Archived jobs"
+        onClick={() => setShowArchived(true)}
+        icon={<Archive className="h-4 w-4" />}
+      >
+        Archived
+      </HeroSecondary>
+      <ToolButton
+        label="Refresh"
+        onClick={handleRefresh}
+        icon={<RefreshCw className="h-4 w-4" />}
+      />
+      <PageHelpButton help={JOB_BOARD_HELP} askContext={{ page: 'jobboard', tab: viewMode }} />
+    </HeroActions>
+  );
+
   if (isLoading) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Operations"
-          title="Job Board"
-          description={isMobile ? 'Every job from enquiry to complete. Press and hold a card to move it; the timeline and diary move with it.' : 'Every job from enquiry to complete. Drag a card to move it; the timeline and diary move with it.'}
-          tone="blue"
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Job board" description="Loading the board." />
         <LoadingBlocks />
       </PageFrame>
     );
   }
 
   return (
-    <PageFrame>
-      <PageHero
-        eyebrow="Operations"
-        title="Job Board"
-        description={isMobile ? 'Every job from enquiry to complete. Press and hold a card to move it; the timeline and diary move with it.' : 'Every job from enquiry to complete. Drag a card to move it; the timeline and diary move with it.'}
-        tone="blue"
-        actions={
-          <div className="flex items-center gap-2 flex-wrap">
-            <SecondaryButton
-              data-help="jobboard.templates"
-              onClick={() => setShowTemplates(true)}
-              aria-label="Templates"
-              className="w-11 px-0 sm:w-auto sm:px-5"
-            >
-              <LayoutTemplate className="h-4 w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Templates</span>
-            </SecondaryButton>
-            <SecondaryButton
-              data-help="jobboard.archived"
-              onClick={() => setShowArchived(true)}
-              aria-label="Archived jobs"
-              className="w-11 px-0 sm:w-auto sm:px-5"
-            >
-              <Archive className="h-4 w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Archived</span>
-            </SecondaryButton>
-            <Popover open={filterOpen} onOpenChange={setFilterOpen}>
-              <PopoverTrigger asChild>
-                <button
-                  aria-label="Filters"
-                  className="h-11 min-w-[44px] px-3.5 sm:px-5 inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] transition-all touch-manipulation text-[13px] font-medium"
-                >
-                  <Filter className="h-4 w-4" />
-                  <span className="hidden sm:inline">Filters</span>
-                  {hideCompleted && <Pill tone="yellow">1</Pill>}
-                </button>
-              </PopoverTrigger>
-              <PopoverContent
-                className="w-60 p-4 bg-[hsl(0_0%_12%)] border-white/[0.06] text-white"
-                align="end"
-              >
-                <div className="space-y-3">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
-                    Filters
-                  </div>
-                  <label
-                    htmlFor="hide-completed"
-                    className="flex items-center gap-2.5 cursor-pointer touch-manipulation"
-                  >
-                    <Checkbox
-                      id="hide-completed"
-                      checked={hideCompleted}
-                      onCheckedChange={(checked) => setHideCompleted(checked as boolean)}
-                      className={checkboxClass}
-                    />
-                    <span className="text-[13px] text-white">Hide completed jobs</span>
-                  </label>
-                </div>
-              </PopoverContent>
-            </Popover>
-            <div className="flex items-center bg-white/[0.04] border border-white/[0.08] rounded-full p-1 h-11">
-              <button
-                onClick={() => setViewMode('kanban')}
-                aria-label="Kanban view"
-                className={cn(
-                  'h-9 w-9 inline-flex items-center justify-center rounded-full transition-colors touch-manipulation',
-                  viewMode === 'kanban'
-                    ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:bg-white/[0.06]'
-                )}
-              >
-                <Kanban className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                aria-label="List view"
-                className={cn(
-                  'h-9 w-9 inline-flex items-center justify-center rounded-full transition-colors touch-manipulation',
-                  viewMode === 'list'
-                    ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:bg-white/[0.06]'
-                )}
-              >
-                <List className="h-4 w-4" />
-              </button>
-            </div>
-            <IconButton onClick={handleRefresh} aria-label="Refresh">
-              <RefreshCw className="h-4 w-4" />
-            </IconButton>
-            <PageHelpButton help={JOB_BOARD_HELP} askContext={{ page: 'jobboard', tab: viewMode }} />
-          </div>
-        }
-      />
+    <PageFrame className={frameClass}>
+      <PageHero title="Job board" description={liveLine} actions={heroActions} />
 
       <HowItWorks help={JOB_BOARD_HELP} askContext={{ page: 'jobboard', tab: viewMode }} />
 
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Enquiry / Quoted', value: pipelineCount, tone: 'amber' },
-          { label: 'Confirmed / Scheduled', value: bookedCount, tone: 'blue' },
-          { label: 'In progress / Testing', value: onSiteCount, tone: 'purple' },
-          { label: 'On hold', value: onHoldCount, tone: 'red' },
+          { label: 'Enquiry and quoted', value: pipelineCount, sub: 'Not won yet' },
+          { label: 'Confirmed and scheduled', value: bookedCount, sub: 'Won, waiting to start' },
+          { label: 'In progress and testing', value: onSiteCount, sub: 'On site now' },
+          {
+            label: 'On hold',
+            value: onHoldCount,
+            tone: onHoldCount > 0 ? 'yellow' : undefined,
+            sub: onHoldCount > 0 ? 'Waiting on something' : 'Nothing stuck',
+          },
         ]}
       />
 
-      <FilterBar
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search jobs…"
-      />
+      <div className="flex items-center gap-2">
+        <SearchField
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Search jobs"
+          className="flex-1 lg:max-w-sm"
+        />
+        <Popover open={filterOpen} onOpenChange={setFilterOpen}>
+          <PopoverTrigger asChild>
+            <ToolButton label="Filters" icon={<Filter className="h-4 w-4" />}>
+              <ToolBadge count={hideCompleted ? 1 : 0} />
+            </ToolButton>
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-64 p-4 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white"
+            align="end"
+          >
+            <div className="space-y-3">
+              <div className="text-[13px] font-semibold text-white">Filters</div>
+              <label
+                htmlFor="hide-completed"
+                className="flex min-h-[44px] items-center gap-2.5 cursor-pointer touch-manipulation"
+              >
+                <Checkbox
+                  id="hide-completed"
+                  checked={hideCompleted}
+                  onCheckedChange={(checked) => setHideCompleted(checked as boolean)}
+                  className={checkboxClass}
+                />
+                <span className="text-[14px] text-white">Hide completed jobs</span>
+              </label>
+            </div>
+          </PopoverContent>
+        </Popover>
+        <div
+          role="tablist"
+          aria-label="View"
+          className="flex h-11 shrink-0 items-center rounded-full border border-white/[0.12] bg-white/[0.04] p-0.5"
+        >
+          {(
+            [
+              { id: 'kanban', label: 'Board', icon: Kanban },
+              { id: 'list', label: 'List', icon: List },
+            ] as const
+          ).map((v) => {
+            const Icon = v.icon;
+            const on = viewMode === v.id;
+            return (
+              <button
+                key={v.id}
+                type="button"
+                role="tab"
+                aria-selected={on}
+                aria-label={`${v.label} view`}
+                onClick={() => setViewMode(v.id)}
+                className={cn(
+                  'inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-[13px] font-semibold touch-manipulation transition-colors',
+                  on ? 'bg-elec-yellow text-black' : 'text-white hover:bg-white/[0.06]'
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                <span className="hidden sm:inline">{v.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {viewMode === 'kanban' ? (
         isMobile ? (
           <PullToRefresh onRefresh={handleRefresh}>
             <div data-help="jobboard.board">
-            <MobileKanban
-              items={mobileKanbanItems}
-              stages={mobileStages}
-              onItemClick={handleJobClick}
-              onStageChange={(itemId, newStage) => handleMoveJob(itemId, newStage)}
-              onArchive={handleArchiveJob}
-              onQuickAdd={handleMobileQuickAdd}
-            />
+              <MobileKanban
+                items={mobileKanbanItems}
+                stages={mobileStages}
+                onItemClick={handleJobClick}
+                onStageChange={(itemId, newStage) => handleMoveJob(itemId, newStage)}
+                onArchive={handleArchiveJob}
+                onQuickAdd={handleMobileQuickAdd}
+                addSignal={mobileAddSignal}
+              />
             </div>
           </PullToRefresh>
         ) : filteredJobs.length === 0 && quickAddStage === null ? (
-          <EmptyState
-            title="No jobs yet"
-            description="Add your first job to start populating the board."
-            action="Add job"
-            onAction={() => setQuickAddStage('Enquiry')}
+          <PlainEmpty
+            text={
+              jobs.length === 0
+                ? 'Your jobs appear here as cards, one column per stage from Enquiry to Complete.'
+                : 'No jobs match this search or filter.'
+            }
+            action={jobs.length === 0 ? 'Add job' : 'Clear search'}
+            onAction={() => {
+              if (jobs.length === 0) setQuickAddStage('Enquiry');
+              else {
+                setSearchQuery('');
+                setHideCompleted(false);
+              }
+            }}
           />
         ) : (
-          <div
-            className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar -mx-1 px-1"
-            data-help="jobboard.board"
-          >
+          <div className="grid grid-cols-2 gap-3 xl:grid-cols-4" data-help="jobboard.board">
             {stages.map((stage) => {
               const stageJobs = getJobsForStage(stage.id);
               const stageValue = getStageValue(stage.id);
@@ -541,237 +555,195 @@ export function JobBoardSection() {
               return (
                 <div
                   key={stage.id}
-                  className="w-[300px] flex-shrink-0"
+                  className={cn(
+                    'min-w-0 overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.08] to-white/[0.04] transition-colors',
+                    isDragTarget && 'border-elec-yellow'
+                  )}
                   onDragOver={(e) => handleDragOver(e, stage.id)}
                   onDrop={() => handleDrop(stage.id)}
                 >
-                  <ListCard
-                    className={cn(
-                      'transition-colors',
-                      isDragTarget && 'ring-1 ring-elec-yellow/30'
+                  <div className="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+                    <span aria-hidden className={cn('h-2 w-2 shrink-0 rounded-full', stage.bar)} />
+                    <h2 className="text-[15px] font-semibold text-white">{stage.label}</h2>
+                    <span className="text-[13px] tabular-nums text-white">{stageJobs.length}</span>
+                    {showMoney && stageValue > 0 && (
+                      <span className="ml-auto text-[13px] tabular-nums text-white">
+                        {fmtCompact(stageValue)}
+                      </span>
                     )}
-                  >
-                    <ListCardHeader
-                      tone={stage.tone}
-                      title={stage.label}
-                      meta={
-                        <div className="flex items-center gap-2">
-                          <Pill tone={stage.tone}>{stageJobs.length}</Pill>
-                          {showMoney && (
-                            <span className="text-[11px] tabular-nums text-white">
-                              {fmtCompact(stageValue)}
-                            </span>
-                          )}
-                        </div>
-                      }
-                    />
-                    <ListBody>
-                      {stageJobs.map((job) => {
-                        const jobLabels = labelsByJob.get(job.id) || [];
-                        const checklistData = checklistSummaries[job.id];
-                        const valueTone = getValueTone(job.value || 0);
+                  </div>
+                  <div className="divide-y divide-white/[0.07]">
+                    {stageJobs.map((job) => {
+                      const jobLabels = labelsByJob.get(job.id) || [];
+                      const checklistData = checklistSummaries[job.id];
 
-                        return (
-                          <JobCardContextMenu
-                            key={job.id}
-                            stages={stages.map((s) => ({
-                              id: s.id,
-                              label: s.label,
-                              color: '',
-                            }))}
-                            currentStage={job.stage}
-                            isTemplate={job.is_template}
-                            onCopy={() => setCopySheetJob(job)}
-                            onArchive={() => handleArchiveJob(job.id)}
-                            onMove={(stageId) => handleMoveJob(job.id, stageId)}
-                            onOpenLabels={() => handleJobClick(job.id)}
-                            onOpenChecklist={() => handleJobClick(job.id)}
-                            onOpenDetails={() => handleJobClick(job.id)}
-                            onMarkAsTemplate={() =>
-                              handleSetTemplate(job.id, !job.is_template)
-                            }
-                          >
-                            <div
-                              draggable
-                              onDragStart={() => handleDragStart(job.id)}
-                              onDragEnd={() => {
-                                // Cancelled drag (Escape / dropped outside a
-                                // column) must not leave a column highlighted.
-                                setDraggedJob(null);
-                                setDragOverStage(null);
-                              }}
-                              className={cn(
-                                'group relative cursor-grab active:cursor-grabbing transition-all',
-                                draggedJob === job.id && 'opacity-50'
-                              )}
-                            >
-                              <ListRow
-                                onClick={() => handleJobClick(job.id)}
-                                lead={
-                                  <Avatar
-                                    initials={getInitials(job.client || job.title)}
-                                  />
-                                }
-                                title={job.title}
-                                subtitle={
-                                  <span className="flex items-center gap-1.5">
-                                    <span className="truncate">{job.client}</span>
-                                    {showMoney && (
-                                      <>
-                                        <span className="text-white">·</span>
-                                        <span className="tabular-nums text-white">
-                                          {fmtCompact(job.value || 0)}
-                                        </span>
-                                      </>
-                                    )}
-                                  </span>
-                                }
-                                trailing={
-                                  <Pill tone={valueTone}>
-                                    {job.progress > 0 && job.progress < 100
-                                      ? `${job.progress}%`
-                                      : stage.label}
-                                  </Pill>
-                                }
-                              />
-                              {(jobLabels.length > 0 ||
-                                (checklistData && checklistData.total > 0)) && (
-                                <div className="px-4 sm:px-5 pb-3 -mt-2 space-y-2">
-                                  {jobLabels.length > 0 && (
-                                    <JobLabelStrips labels={jobLabels} />
-                                  )}
-                                  {checklistData && checklistData.total > 0 && (
-                                    <JobChecklistProgress
-                                      completed={checklistData.completed}
-                                      total={checklistData.total}
-                                    />
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                          </JobCardContextMenu>
-                        );
-                      })}
-
-                      {quickAddStage === stage.id ? (
-                        <div className="px-4 sm:px-5 py-3.5 space-y-2 bg-[hsl(0_0%_10%)]">
-                          <Input
-                            placeholder="Job title…"
-                            value={quickAddTitle}
-                            onChange={(e) => setQuickAddTitle(e.target.value)}
-                            className={inputClass}
-                            autoFocus
-                          />
-                          <Input
-                            placeholder="Client name…"
-                            value={quickAddClient}
-                            onChange={(e) => setQuickAddClient(e.target.value)}
-                            className={inputClass}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') handleQuickAdd(stage.id);
-                              if (e.key === 'Escape') setQuickAddStage(null);
-                            }}
-                          />
-                          <div className="flex gap-2">
-                            <PrimaryButton
-                              onClick={() => handleQuickAdd(stage.id)}
-                              disabled={
-                                !quickAddTitle.trim() ||
-                                !quickAddClient.trim() ||
-                                createJob.isPending
-                              }
-                              fullWidth
-                            >
-                              Add job
-                            </PrimaryButton>
-                            <button
-                              onClick={() => {
-                                setQuickAddStage(null);
-                                setQuickAddTitle('');
-                                setQuickAddClient('');
-                              }}
-                              aria-label="Cancel"
-                              className="h-11 w-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white inline-flex items-center justify-center hover:bg-white/[0.1] transition-colors touch-manipulation"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </div>
-                      ) : (
-                        <button
-                          data-help="jobboard.add"
-                          onClick={() => setQuickAddStage(stage.id)}
-                          className="w-full h-11 px-4 sm:px-5 flex items-center gap-2 text-[12.5px] font-medium text-white hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                      return (
+                        <JobCardContextMenu
+                          key={job.id}
+                          stages={stages.map((s) => ({
+                            id: s.id,
+                            label: s.label,
+                            color: '',
+                          }))}
+                          currentStage={job.stage}
+                          isTemplate={job.is_template}
+                          onCopy={() => setCopySheetJob(job)}
+                          onArchive={() => handleArchiveJob(job.id)}
+                          onMove={(stageId) => handleMoveJob(job.id, stageId)}
+                          onOpenLabels={() => handleJobClick(job.id)}
+                          onOpenChecklist={() => handleJobClick(job.id)}
+                          onOpenDetails={() => handleJobClick(job.id)}
+                          onMarkAsTemplate={() => handleSetTemplate(job.id, !job.is_template)}
                         >
-                          <Plus className="h-4 w-4" />
-                          <span>Add job</span>
-                        </button>
-                      )}
-                    </ListBody>
-                  </ListCard>
+                          <div
+                            draggable
+                            onDragStart={() => handleDragStart(job.id)}
+                            onDragEnd={() => {
+                              // Cancelled drag (Escape / dropped outside a
+                              // column) must not leave a column highlighted.
+                              setDraggedJob(null);
+                              setDragOverStage(null);
+                            }}
+                            className={cn(
+                              'group relative cursor-grab active:cursor-grabbing transition-opacity',
+                              draggedJob === job.id && 'opacity-50'
+                            )}
+                          >
+                            <button
+                              type="button"
+                              onClick={() => handleJobClick(job.id)}
+                              className="block w-full px-4 py-3 text-left touch-manipulation transition-colors hover:bg-white/[0.04]"
+                            >
+                              <p className="text-[14.5px] font-semibold leading-snug text-white line-clamp-2">
+                                {job.title}
+                              </p>
+                              <p className="mt-0.5 flex items-center gap-1.5 text-[13px] text-white">
+                                <span className="truncate">{job.client}</span>
+                                {showMoney && (job.value || 0) > 0 && (
+                                  <span className="shrink-0 tabular-nums">
+                                    · {fmtCompact(job.value || 0)}
+                                  </span>
+                                )}
+                                {job.progress > 0 && job.progress < 100 && (
+                                  <span className="ml-auto shrink-0 tabular-nums">
+                                    {job.progress}%
+                                  </span>
+                                )}
+                              </p>
+                            </button>
+                            {(jobLabels.length > 0 ||
+                              (checklistData && checklistData.total > 0)) && (
+                              <div className="px-4 pb-3 -mt-1 space-y-2">
+                                {jobLabels.length > 0 && <JobLabelStrips labels={jobLabels} />}
+                                {checklistData && checklistData.total > 0 && (
+                                  <JobChecklistProgress
+                                    completed={checklistData.completed}
+                                    total={checklistData.total}
+                                  />
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </JobCardContextMenu>
+                      );
+                    })}
+
+                    {quickAddStage === stage.id ? (
+                      <div className="px-4 py-3 space-y-2 bg-[hsl(0_0%_10%)]">
+                        <Input
+                          placeholder="Job title"
+                          value={quickAddTitle}
+                          onChange={(e) => setQuickAddTitle(e.target.value)}
+                          className={inputClass}
+                          autoFocus
+                        />
+                        <Input
+                          placeholder="Client name"
+                          value={quickAddClient}
+                          onChange={(e) => setQuickAddClient(e.target.value)}
+                          className={inputClass}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleQuickAdd(stage.id);
+                            if (e.key === 'Escape') setQuickAddStage(null);
+                          }}
+                        />
+                        <div className="flex gap-2">
+                          <PrimaryButton
+                            onClick={() => handleQuickAdd(stage.id)}
+                            disabled={
+                              !quickAddTitle.trim() || !quickAddClient.trim() || createJob.isPending
+                            }
+                            fullWidth
+                          >
+                            Add job
+                          </PrimaryButton>
+                          <button
+                            onClick={() => {
+                              setQuickAddStage(null);
+                              setQuickAddTitle('');
+                              setQuickAddClient('');
+                            }}
+                            aria-label="Cancel"
+                            className="h-11 w-11 shrink-0 rounded-full bg-white/[0.06] border border-white/[0.1] text-white inline-flex items-center justify-center hover:bg-white/[0.1] transition-colors touch-manipulation"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setQuickAddStage(stage.id)}
+                        className="w-full h-11 px-4 flex items-center gap-2 text-[13px] font-semibold text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
+                      >
+                        <Plus className="h-4 w-4" />
+                        <span>Add job</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
         )
+      ) : filteredJobs.length === 0 ? (
+        <PlainEmpty
+          text="No jobs match this search or filter."
+          action="Clear search"
+          onAction={() => {
+            setSearchQuery('');
+            setHideCompleted(false);
+          }}
+        />
       ) : (
-        <ListCard>
-          <ListCardHeader
-            tone="blue"
-            title="All jobs"
-            meta={<Pill tone="blue">{filteredJobs.length}</Pill>}
-          />
-          {filteredJobs.length === 0 ? (
-            <div className="px-6 py-10 text-center">
-              <div className="text-base font-medium text-white">No jobs match</div>
-              <p className="mt-2 text-[12.5px] text-white">
-                Try clearing the search or filters.
-              </p>
-            </div>
-          ) : (
-            <ListBody>
-              {filteredJobs.map((job) => {
-                const valueTone = getValueTone(job.value || 0);
-                const stageTone = getStageTone(job.stage);
-                return (
-                  <ListRow
-                    key={job.id}
-                    onClick={() => handleJobClick(job.id)}
-                    lead={<Avatar initials={getInitials(job.client || job.title)} />}
-                    title={job.title}
-                    subtitle={
-                      <span className="flex items-center gap-1.5">
-                        <span className="truncate">{job.client}</span>
-                        {showMoney && (
-                          <>
-                            <span className="text-white">·</span>
-                            <span className="tabular-nums text-white">
-                              £{(job.value || 0).toLocaleString()}
-                            </span>
-                          </>
-                        )}
-                      </span>
-                    }
-                    trailing={
-                      <>
-                        <Pill tone={valueTone}>{job.progress}%</Pill>
-                        <Pill tone={stageTone}>
-                          {stages.find((s) => s.id === job.stage)?.label ?? job.stage}
-                        </Pill>
-                      </>
-                    }
-                  />
-                );
-              })}
-            </ListBody>
-          )}
-        </ListCard>
-      )}
-
-      {totalJobs > 0 && (
-        <div className="text-[11px] text-white text-center tabular-nums">
-          {totalJobs} jobs{showMoney ? ` · ${fmtCompact(pipelineValue)} pipeline` : ''}
-        </div>
+        <section>
+          <PanelTitle title="All jobs" meta={`${filteredJobs.length}`} />
+          <RowList>
+            {filteredJobs.map((job) => {
+              const def = stages.find((s) => s.id === job.stage);
+              return (
+                <Row
+                  key={job.id}
+                  onClick={() => handleJobClick(job.id)}
+                  lead={
+                    <Initials
+                      text={getInitials(job.client || job.title)}
+                      className="hidden sm:flex"
+                    />
+                  }
+                  title={job.title}
+                  detail={[
+                    job.client,
+                    showMoney ? `£${(job.value || 0).toLocaleString()}` : null,
+                    job.progress > 0 ? `${job.progress}%` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                  trailing={<StatusPill dot={def?.bar}>{def?.label ?? job.stage}</StatusPill>}
+                />
+              );
+            })}
+          </RowList>
+        </section>
       )}
 
       <ViewJobSheet job={selectedJob} open={sheetOpen} onOpenChange={setSheetOpen} />

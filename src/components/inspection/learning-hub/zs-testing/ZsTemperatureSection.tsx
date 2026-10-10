@@ -109,7 +109,7 @@ const ZsTemperatureSection = ({ onBack }: Props) => {
 
         {/* Correction factor table */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Correction Factors by Ambient Temperature</p>
+          <p className="text-[12px] font-medium text-white mb-3">Correction Factors by Ambient Temperature</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -136,7 +136,7 @@ const ZsTemperatureSection = ({ onBack }: Props) => {
 
         {/* Worked examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Worked Examples</p>
+          <p className="text-[12px] font-medium text-white mb-3">Worked Examples</p>
         </motion.div>
 
         {workedExamples.map((ex, i) => (

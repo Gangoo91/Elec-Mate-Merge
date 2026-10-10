@@ -74,10 +74,8 @@ const CourseSelectionTips = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Course selection tips
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Course selection tips</span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {tips.map((tip, idx) => (
             <div
@@ -85,16 +83,14 @@ const CourseSelectionTips = () => {
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5"
             >
               <p className="text-[13px] text-white">{tip.title}</p>
-              <p className="text-[12px] text-white leading-relaxed">{tip.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{tip.description}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Course cost guidance
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Course cost guidance</span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {costGuidance.map((item, idx) => (
             <div
@@ -120,10 +116,8 @@ const CourseSelectionTips = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Quality indicators to look for
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Quality indicators to look for</span>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {qualityIndicators.map((indicator, idx) => (
             <li
@@ -137,8 +131,8 @@ const CourseSelectionTips = () => {
         </ul>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Industry insight & market trends
         </span>
 
@@ -171,9 +165,7 @@ const CourseSelectionTips = () => {
                 key={s.title}
                 className="rounded-md border border-white/10 bg-white/[0.03] p-3 space-y-1"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  {s.tag}
-                </span>
+                <span className="text-[13px] font-semibold text-white">{s.tag}</span>
                 <p className="text-[13px] text-white">{s.title}</p>
                 <p className="text-[12px] text-white">{s.note}</p>
               </div>
@@ -204,7 +196,7 @@ const CourseSelectionTips = () => {
             ].map((r) => (
               <div
                 key={r.region}
-                className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
               >
                 <span className="text-white font-medium min-w-[70px]">{r.region}</span>
                 <span>{r.note}</span>

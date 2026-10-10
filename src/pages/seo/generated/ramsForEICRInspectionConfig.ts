@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const ramsForEICRInspectionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-eicr-inspection',
@@ -325,7 +325,7 @@ export const ramsForEICRInspectionConfig: GeneratedGuideConfig = {
     {
       question: 'Where does BS 7671 Amendment 4:2026 affect the RAMS?',
       answer:
-        '[BS 7671:2018+A4:2026](/guides/bs-7671-amendment-4-2026) introduces AFDD requirements, updates to TN-C-S (PNB) terminology and revisions to model-form columns including the EICR. The RAMS should reference the current edition by name, and the inspector should confirm that their MFT firmware, EICR template and test sequence reflect A4:2026 rather than the earlier A2:2022 revision.',
+        '[BS 7671:2018+A4:2026](/guides/bs-7671-amendment-4-2026) adds protective neutral bonding (PNB) to Regulation 312.2.1.1 and redrafts the EICR notes and guidance in Appendix 6, including that FI no longer has to be marked unsatisfactory. The RAMS should reference the current edition by name, and the inspector should confirm that their MFT firmware, EICR template and test sequence reflect A4:2026 rather than the earlier A2:2022 revision.',
     },
   ],
   relatedPages: [

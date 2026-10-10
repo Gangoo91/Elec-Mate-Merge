@@ -68,7 +68,7 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Six steps */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">The Six-Step Safe Isolation Procedure</p>
+          <p className="text-[12px] font-medium text-white mb-3">The Six-Step Safe Isolation Procedure</p>
         </motion.div>
 
         {sixSteps.map((item, i) => (
@@ -90,14 +90,14 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Three-phase 10-point test */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Three-Phase: The 10-Point Prove Dead Test</p>
+          <p className="text-[12px] font-medium text-white mb-3">Three-Phase: The 10-Point Prove Dead Test</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white mb-3">For three-phase supplies, prove dead between ALL combinations of conductors:</p>
             <div className="grid grid-cols-2 gap-1.5">
               {threePhaseTest.map((test, i) => (
                 <div key={i} className="flex items-center gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-2.5">
                   <div className="flex-shrink-0 w-6 h-6 rounded-md bg-gradient-to-b from-white/[0.08] to-white/[0.04] flex items-center justify-center">
-                    <span className="text-[10px] font-bold text-yellow-400">{i + 1}</span>
+                    <span className="text-[12px] font-bold text-yellow-400">{i + 1}</span>
                   </div>
                   <p className="text-sm text-white">{test}</p>
                 </div>
@@ -109,7 +109,7 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes That Kill</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Mistakes That Kill</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

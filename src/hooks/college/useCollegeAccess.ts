@@ -42,6 +42,11 @@ export interface ActingCollege {
   college_code: string;
   expires_at: string;
   started_at: string;
+  /** 'setup' = white-glove (writes allowed, logged); 'view_as' = support, read-only (ELE-1966). */
+  mode?: 'setup' | 'view_as';
+  as_user_id?: string | null;
+  as_name?: string | null;
+  as_role?: string | null;
 }
 
 /** "Thursday 19 November" style, UK. */
@@ -116,6 +121,26 @@ export function useActingControls() {
     [refresh]
   );
 
+  /**
+   * ELE-1966: Elec-Mate support views the hub AS a named staff member, with
+   * the college's consent, read-only (the server refuses every write while
+   * the session is open), for one hour. The reason is written to the
+   * college's own activity log.
+   */
+  const startViewAs = useCallback(
+    async (collegeId: string, userId: string, reason: string) => {
+      const { data, error } = await supabase.rpc(
+        'admin_start_view_as' as never,
+        { p_college: collegeId, p_user: userId, p_reason: reason } as never
+      );
+      if (error) throw error;
+      actingCollegeId = collegeId;
+      await refresh();
+      return data as { college_id: string; college_name: string; expires_at: string; as_name: string };
+    },
+    [refresh]
+  );
+
   const stopActing = useCallback(async () => {
     const { error } = await supabase.rpc('admin_stop_acting' as never);
     if (error) throw error;
@@ -123,5 +148,5 @@ export function useActingControls() {
     await refresh();
   }, [refresh]);
 
-  return { startActing, stopActing };
+  return { startActing, startViewAs, stopActing };
 }

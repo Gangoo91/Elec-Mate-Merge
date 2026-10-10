@@ -1,10 +1,14 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useResolvedPath } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
-import { sectionCompleted } from '@/lib/courseProgressMatch';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
-import { cn } from '@/lib/utils';
+import {
+  CourseRow,
+  orderOf,
+  startedUnder,
+  useIsNext,
+  useListItem,
+} from '@/components/study-centre/course-kit';
 
 interface SectionCardProps {
   to: string;
@@ -75,67 +79,52 @@ export const SectionCard: React.FC<SectionCardProps> = ({
   label = 'Section',
 }) => {
   const { allProgress } = useCourseProgress();
-  const location = useLocation();
+  // Exactly where the link goes. (The hand-rolled version dropped a path
+  // segment on nested routes — /level2/module1 + section1 became
+  // /level2/section1 — so Level 2 progress never showed.)
+  const resolvedPath = useResolvedPath(to).pathname;
 
   const autoCompleted = useMemo(() => {
     if (!allProgress.length) return false;
 
-    const basePath = location.pathname.replace(/\/[^/]*$/, '');
-    const resolvedPath = to.startsWith('../')
-      ? basePath.replace(/\/[^/]*$/, '') + '/' + to.replace('../', '')
-      : to.startsWith('/')
-        ? to
-        : basePath + '/' + to;
-
     // Canonical matcher tolerates every historical key format (ELE-1045).
-    return sectionCompleted(allProgress, resolvedPath);
-  }, [allProgress, to, location.pathname]);
+    // Opened it (a visit row) or did a check in it: either way, started.
+    return startedUnder(allProgress, resolvedPath);
+  }, [allProgress, resolvedPath]);
 
-  const isCompleted = isCompletedProp || autoCompleted;
+  // A completed check or quiz inside it = started. Only the page can say done.
+  const isCompleted = isCompletedProp;
+  const started = autoCompleted && !isCompleted;
+  const eyebrow = `${label} ${sectionNumber}`;
 
+  // Tell the page header (progress bar, Continue button) about this one.
+  useListItem({
+    key: to,
+    to,
+    order: orderOf(sectionNumber),
+    label: eyebrow,
+    title,
+    done: isCompleted,
+    started,
+    tracked: true,
+  });
+  const isNext = useIsNext(to) && !isCompleted;
+
+  // 2026-10-10: a numbered row (course-kit) — ticks when done, "Next up" on
+  // the one the header's button points at. Volt still only where it says
+  // something: the next one, never all six.
   return (
-    <Link
+    <CourseRow
       to={to}
-      className={cn(
-        CARD_BASE,
-        CARD_NEUTRAL,
-        'relative overflow-hidden px-4 py-3.5 sm:p-5 lg:hover:-translate-y-0.5'
-      )}
-    >
-      {/* A 1px volt line, not a volt surface — the same treatment HubKpi uses.
-          A translucent volt FILL goes muddy brown on this ground; a hairline
-          stays yellow because there is nothing behind it to muddy. */}
-      <span
-        aria-hidden
-        className={cn(
-          'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
-          isCompleted ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
-        )}
-      />
-
-      <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-        <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />
-        {label} {sectionNumber}
-      </span>
-
-      <span className="mt-1.5 text-[15px] font-semibold leading-tight tracking-tight text-white">
-        {title}
-      </span>
-
-      {description && (
-        <span className="mt-1.5 line-clamp-2 text-[12.5px] leading-snug text-white">
-          {description}
-        </span>
-      )}
-
-      <span className="mt-3 flex items-center justify-between gap-2 text-[11.5px]">
-        <span className="text-white">{isCompleted ? 'Completed' : 'Not started'}</span>
-        {/* Volt only where there is progress — see the note above. */}
-        <span className={cn('font-semibold', isCompleted ? 'text-elec-yellow' : 'text-white')}>
-          {isCompleted ? 'Review' : 'Start'}
-        </span>
-      </span>
-    </Link>
+      number={String(sectionNumber)}
+      icon={Icon}
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      done={isCompleted}
+      started={started}
+      next={isNext}
+    />
   );
 };
 

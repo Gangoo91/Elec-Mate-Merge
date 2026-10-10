@@ -51,6 +51,32 @@ export interface AcStateRow {
   decision_feedback_confirmed_at?: string | null;
   /** ELE-1870: the assessor's qualifications as they stood when they decided. */
   assessor_qualifications?: string[] | null;
+  /**
+   * Batch 2 (10 Oct): a trainee assessor passed it and a qualified assessor
+   * has not countersigned yet. The server reads it as 'submitted' (it does
+   * not count); the screens say "Passed, awaiting countersignature".
+   */
+  countersign_pending?: boolean;
+  /** Who countersigned a trainee's pass, and when (null when not needed). */
+  countersigned_by_name?: string | null;
+  countersigned_at?: string | null;
+}
+
+/** The words for a trainee pass that is waiting for a qualified assessor. */
+export const COUNTERSIGN_PENDING_LABEL = 'Passed, awaiting countersignature';
+/** Neutral, never green: it does not count yet. */
+export const COUNTERSIGN_PENDING_CHIP =
+  'border-dashed border-emerald-400/60 bg-transparent text-white';
+
+/** The label a row should show: the countersign wait outranks the state's own word. */
+export function acRowLabel(
+  r: Pick<AcStateRow, 'state' | 'countersign_pending'>,
+  labels: Record<AcState, string>
+) {
+  return r.countersign_pending ? COUNTERSIGN_PENDING_LABEL : labels[r.state];
+}
+export function acRowChip(r: Pick<AcStateRow, 'state' | 'countersign_pending'>) {
+  return r.countersign_pending ? COUNTERSIGN_PENDING_CHIP : STATE_CHIP[r.state];
 }
 
 /**
@@ -146,6 +172,89 @@ const rpc = supabase.rpc.bind(supabase) as unknown as Rpc;
 // A fresh channel name per mount: re-using one throws when callbacks are added after subscribe.
 let acChannelSeq = 0;
 
+/*
+ * ELE-1912: Student 360 mounts this hook from four sections at once, and each
+ * asked the server for the same learner's criteria at the same moment (4 ×
+ * 240 KB). Calls for the same learner that overlap now share one request.
+ * Nothing is cached: a call made after the last one finished goes to the
+ * server, so a reload after a decision still reads fresh rows.
+ */
+const inflight = new Map<string, ReturnType<Rpc>>();
+function fetchAcState(learnerId: string): ReturnType<Rpc> {
+  const running = inflight.get(learnerId);
+  if (running) return running;
+  // A Supabase query builder is thenable but has no .finally(): wrap it.
+  const p = Promise.all([
+    rpc('get_portfolio_ac_state', { p_user_id: learnerId }),
+    countersignInfo(learnerId),
+  ])
+    .then(([res, cs]) => {
+      if (res.error || !Array.isArray(res.data) || cs.size === 0) return res;
+      const rows = (res.data as AcStateRow[]).map((r) => {
+        const c = r.decision_id ? cs.get(r.decision_id) : undefined;
+        return c
+          ? {
+              ...r,
+              countersign_pending: !c.countersigned_at,
+              countersigned_by_name: c.countersigned_by_name,
+              countersigned_at: c.countersigned_at,
+            }
+          : r;
+      });
+      return { data: rows, error: null };
+    })
+    .finally(() => {
+      inflight.delete(learnerId);
+    }) as ReturnType<Rpc>;
+  inflight.set(learnerId, p);
+  return p;
+}
+
+/**
+ * Current trainee passes for this learner, keyed by decision id: waiting for
+ * a countersignature, or countersigned (by whom, when). RLS: the learner and
+ * anyone who can assess them. A failure here never hides the criteria.
+ */
+async function countersignInfo(
+  learnerId: string
+): Promise<Map<string, { countersigned_at: string | null; countersigned_by_name: string | null }>> {
+  const { data, error } = await supabase
+    .from('portfolio_assessment_decisions' as never)
+    .select('id, countersigned_at, countersigned_by_name')
+    .eq('learner_id', learnerId)
+    .eq('countersign_required' as never, true as never)
+    .is('superseded_at', null)
+    .limit(1000);
+  const m = new Map<
+    string,
+    { countersigned_at: string | null; countersigned_by_name: string | null }
+  >();
+  if (error) return m;
+  for (const r of (data ?? []) as unknown as {
+    id: string;
+    countersigned_at: string | null;
+    countersigned_by_name: string | null;
+  }[]) {
+    m.set(r.id, {
+      countersigned_at: r.countersigned_at,
+      countersigned_by_name: r.countersigned_by_name,
+    });
+  }
+  return m;
+}
+
+/** Countersign trainee passes (countersign_decisions). Returns how many were signed. */
+export async function countersignDecisions(decisionIds: string[], note?: string): Promise<number> {
+  if (decisionIds.length === 0) return 0;
+  const { data, error } = await rpc('countersign_decisions', {
+    p_decision_ids: decisionIds,
+    p_note: note?.trim() || null,
+  });
+  if (error) throw new Error(error.message);
+  window.dispatchEvent(new Event('elecmate:portfolio-changed'));
+  return Number((data as { countersigned?: number } | null)?.countersigned ?? 0);
+}
+
 export function usePortfolioAcState(learnerId: string | null | undefined) {
   const [rows, setRows] = useState<AcStateRow[]>([]);
   // `loading` is the first load only; later reloads keep the list (and the
@@ -166,7 +275,7 @@ export function usePortfolioAcState(learnerId: string | null | undefined) {
     }
     if (loaded.current) setRefreshing(true);
     else setLoading(true);
-    const { data, error: e } = await rpc('get_portfolio_ac_state', { p_user_id: learnerId });
+    const { data, error: e } = await fetchAcState(learnerId);
     if (mine !== seq.current) return; // a newer request (or learner) has superseded this one
     setLoading(false);
     setRefreshing(false);

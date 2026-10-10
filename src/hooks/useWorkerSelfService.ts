@@ -6,6 +6,13 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { OFFLINE_FIRST, isOfflineError, offlineSnapshot } from '@/lib/workerOfflineCache';
+import { clipWords, holdPhoto, submitWorkerAction, type SubmitResult } from '@/lib/workerOutbox';
+import {
+  workerSafetyRow,
+  type WorkerIncidentKind,
+  type WorkerSafetyPayload,
+} from '@/lib/safetyIncidentRows';
 import { supabase } from '@/integrations/supabase/client';
 import { withElecIdProfilePrivate } from '@/lib/columnPrivacy';
 import { useMyEmployeeRecord, useUpdateOwnLocation } from './useWorkerLocations';
@@ -453,7 +460,9 @@ export const useMyJobs = (filter: 'active' | 'completed' | 'all' = 'active') => 
 
   return useQuery<WorkerJob[]>({
     queryKey: ['my-jobs', employeeId, filter],
-    queryFn: async () => {
+    // ELE-1828: kept on the phone so the job list opens with no signal.
+    ...OFFLINE_FIRST,
+    queryFn: () => offlineSnapshot(`my-jobs:${employeeId}:${filter}`, async () => {
       if (!employeeId) return [];
       const { data, error } = await supabase.rpc(
         'get_my_jobs' as never,
@@ -469,7 +478,7 @@ export const useMyJobs = (filter: 'active' | 'completed' | 'all' = 'active') => 
         address: j.address ?? undefined,
         scheduled_date: j.scheduled_date ?? undefined,
       }));
-    },
+    }),
     enabled: !!employeeId,
     staleTime: 60 * 1000,
   });
@@ -599,7 +608,9 @@ export const useProgressNotes = (jobId?: string) => {
 
   const recentNotesQuery = useQuery<ProgressNote[]>({
     queryKey: ['progress-notes', jobId, employeeId],
-    queryFn: async () => {
+    // ELE-1828: the job's notes still show with no signal.
+    ...OFFLINE_FIRST,
+    queryFn: () => offlineSnapshot(`progress-notes:${jobId}`, async () => {
       if (!jobId || !employeeId) return [];
 
       const { data, error } = await supabase
@@ -622,7 +633,7 @@ export const useProgressNotes = (jobId?: string) => {
         ...n,
         photos: Array.isArray(n.photos) ? n.photos : [],
       }));
-    },
+    }),
     enabled: !!jobId && !!employeeId,
     staleTime: 30 * 1000,
   });
@@ -704,7 +715,38 @@ export const useProgressNotes = (jobId?: string) => {
     onSuccess: () => invalidate(),
   });
 
+  /**
+   * ELE-1828: a progress note through the outbox — works with no signal.
+   * `paths` are photos already uploaded; `heldFiles` are photos kept on the
+   * phone (no signal when taken), uploaded with the note.
+   */
+  const sendNote = async (input: {
+    jobId: string;
+    jobTitle?: string;
+    content: string;
+    paths?: string[];
+    heldFiles?: File[];
+  }): Promise<SubmitResult> => {
+    if (!employeeId) throw new Error('No employee ID');
+    const photos = await Promise.all((input.heldFiles ?? []).map(holdPhoto));
+    const { result } = await submitWorkerAction({
+      kind: 'progress_note',
+      label: `Progress note · ${clipWords(input.content)}`,
+      detail: input.jobTitle ?? null,
+      jobId: input.jobId,
+      photos,
+      payload: {
+        jobId: input.jobId,
+        authorName: employeeName,
+        content: input.content,
+        paths: input.paths ?? [],
+      },
+    });
+    return result;
+  };
+
   return {
+    sendNote,
     recentNotes: recentNotesQuery.data,
     isLoading: recentNotesQuery.isLoading,
     submitNote: submitNoteMutation.mutateAsync,
@@ -747,7 +789,7 @@ const SNAG_SEVERITY: Record<string, string> = {
   moderate: 'Medium',
   critical: 'Critical',
 };
-/** Worker form values → employer_incidents.severity (IncidentsSection). */
+/** Worker form values → employer_incidents.severity (outbox ops queued by older builds). */
 const INCIDENT_SEVERITY: Record<string, string> = {
   minor: 'low',
   moderate: 'medium',
@@ -783,6 +825,9 @@ export const uploadReportPhoto = async (
 
 export interface MyIncidentReport {
   id: string;
+  /** ELE-2031: 'near_miss' / 'accident' = the worker's own Site Safety record;
+   *  'legacy' = an employer_incidents row from an older build. */
+  source: 'legacy' | 'near_miss' | 'accident';
   job_id: string | null;
   incident_type: string;
   severity: string;
@@ -803,14 +848,22 @@ export const useSnagReports = (jobId?: string) => {
   const employeeId = employeeQuery.data?.id;
   const queryClient = useQueryClient();
 
-  // Safety reports this worker raised (near-miss / incident). RLS: "Worker
-  // reads own reported incidents" — reported_by is the roster id as text.
-  // Without this the worker never saw what became of a report.
+  // Safety reports this worker raised on the firm's jobs. Since ELE-2031 they
+  // are the worker's own Site Safety records (near_miss_reports /
+  // accident_records with employer_job_id); older builds wrote
+  // employer_incidents (RLS: "Worker reads own reported incidents"). Both are
+  // read so nothing a worker sent disappears. The office's follow-up (seen,
+  // closed, what was done) is on the firm_* columns of their own row.
   const recentIncidentsQuery = useQuery<MyIncidentReport[]>({
     queryKey: ['my-incident-reports', jobId, employeeId],
     queryFn: async () => {
       if (!employeeId) return [];
-      let query = supabase
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return [];
+
+      let legacyQ = supabase
         .from('employer_incidents')
         .select(
           'id, job_id, incident_type, severity, description, location, status, actions_taken, created_at, closeout_summary, acknowledged_at, photos'
@@ -818,14 +871,93 @@ export const useSnagReports = (jobId?: string) => {
         .eq('reported_by', employeeId)
         .order('created_at', { ascending: false })
         .limit(10);
-      if (jobId) query = query.eq('job_id', jobId);
-      const { data, error } = await query;
-      if (error) {
-        console.error('Error fetching incident reports:', error);
-        return [];
+      if (jobId) legacyQ = legacyQ.eq('job_id', jobId);
+
+      const nmCols =
+        'id, employer_job_id, incident_kind, severity, description, location, created_at, photos, firm_status, firm_closed_at, firm_closeout_summary, firm_acknowledged_at, legacy_employer_incident_id';
+      const acCols =
+        'id, employer_job_id, severity, incident_description, location, created_at, photos, firm_status, firm_closed_at, firm_closeout_summary, firm_acknowledged_at, legacy_employer_incident_id';
+      let nmQ = supabase
+        .from('near_miss_reports')
+        .select(nmCols as '*')
+        .eq('user_id', user.id)
+        .not('employer_job_id', 'is', null)
+        .order('created_at', { ascending: false })
+        .limit(10);
+      let acQ = supabase
+        .from('accident_records')
+        .select(acCols as '*')
+        .eq('user_id', user.id)
+        .not('employer_job_id', 'is', null)
+        .order('created_at', { ascending: false })
+        .limit(10);
+      if (jobId) {
+        nmQ = nmQ.eq('employer_job_id' as never, jobId as never);
+        acQ = acQ.eq('employer_job_id' as never, jobId as never);
       }
-      // closeout_summary / acknowledged_at / photos are newer than the generated types.
-      return (data || []) as unknown as MyIncidentReport[];
+
+      const [legacyRes, nmRes, acRes] = await Promise.all([legacyQ, nmQ, acQ]);
+      if (legacyRes.error) console.error('Error fetching incident reports:', legacyRes.error);
+      if (nmRes.error) console.error('Error fetching near-miss reports:', nmRes.error);
+      if (acRes.error) console.error('Error fetching accident reports:', acRes.error);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const firmStatus = (r: any) =>
+        r.firm_closed_at || r.firm_status === 'closed' ? 'closed' : (r.firm_status ?? 'open');
+      const photoList = (v: unknown) =>
+        Array.isArray(v) ? (v as unknown[]).filter((x): x is string => typeof x === 'string') : [];
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const nm = ((nmRes.data ?? []) as any[]).map(
+        (r): MyIncidentReport => ({
+          id: r.id,
+          source: 'near_miss',
+          job_id: r.employer_job_id,
+          incident_type: r.incident_kind ?? 'near_miss',
+          severity: r.severity,
+          description: r.description,
+          location: r.location,
+          status: firmStatus(r),
+          actions_taken: null,
+          created_at: r.created_at,
+          closeout_summary: r.firm_closeout_summary,
+          acknowledged_at: r.firm_acknowledged_at,
+          photos: photoList(r.photos),
+        })
+      );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const ac = ((acRes.data ?? []) as any[]).map(
+        (r): MyIncidentReport => ({
+          id: r.id,
+          source: 'accident',
+          job_id: r.employer_job_id,
+          incident_type: 'injury',
+          severity: r.severity,
+          description: r.incident_description,
+          location: r.location,
+          status: firmStatus(r),
+          actions_taken: null,
+          created_at: r.created_at,
+          closeout_summary: r.firm_closeout_summary,
+          acknowledged_at: r.firm_acknowledged_at,
+          photos: photoList(r.photos),
+        })
+      );
+      // A copied employer_incidents row (release-held backfill) shows once.
+      const copied = new Set(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        [...((nmRes.data ?? []) as any[]), ...((acRes.data ?? []) as any[])]
+          .map((r) => r.legacy_employer_incident_id)
+          .filter(Boolean)
+      );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const legacy = ((legacyRes.data ?? []) as any[])
+        .filter((r) => !copied.has(r.id))
+        .map((r): MyIncidentReport => ({ ...r, source: 'legacy' }));
+
+      return [...nm, ...ac, ...legacy]
+        .sort((a, b) => (a.created_at < b.created_at ? 1 : -1))
+        .slice(0, 10);
     },
     enabled: !!employeeId,
     staleTime: 2 * 60 * 1000,
@@ -833,7 +965,8 @@ export const useSnagReports = (jobId?: string) => {
 
   const recentSnagsQuery = useQuery<SnagReport[]>({
     queryKey: ['snag-reports', jobId, employeeId],
-    queryFn: async () => {
+    ...OFFLINE_FIRST,
+    queryFn: () => offlineSnapshot(`snag-reports:${jobId ?? 'all'}`, async () => {
       if (!employeeId) return [];
 
       let query = supabase
@@ -852,11 +985,13 @@ export const useSnagReports = (jobId?: string) => {
 
       if (error) {
         console.error('Error fetching snag reports:', error);
+        // No signal: answer from the phone, never cache an empty list for it.
+        if (isOfflineError(error)) throw error;
         return [];
       }
 
       return data || [];
-    },
+    }),
     enabled: !!employeeId,
     staleTime: 2 * 60 * 1000,
   });
@@ -918,50 +1053,35 @@ export const useSnagReports = (jobId?: string) => {
     },
   });
 
-  // Safety reports (near-miss / incident) go to employer_incidents — the safety
-  // counterpart to a quality snag. Same form, different destination.
+  // Safety reports (near-miss / incident) are the worker's own Site Safety
+  // record filed against the job (ELE-2031): near_miss_reports, or
+  // accident_records when somebody was hurt. Same form as a snag, different
+  // destination. (The Reports page sends through the outbox, sendReport.)
   const submitIncidentMutation = useMutation({
-    mutationFn: async ({
-      jobId: jId,
-      severity,
-      description,
-      location,
-      incidentType,
-      photos,
-    }: {
-      jobId: string;
-      severity: string;
-      description: string;
-      location?: string;
-      incidentType: string;
-      /** Storage paths in the visual-uploads bucket (see uploadReportPhoto). */
-      photos?: string[];
-    }) => {
+    mutationFn: async (
+      input: Omit<WorkerSafetyPayload, 'employeeId' | 'reporterName'> & {
+        /** Storage paths in the visual-uploads bucket (see uploadReportPhoto). */
+        photos?: string[];
+      }
+    ) => {
       if (!employeeId) throw new Error('No employee ID');
-      const { data: job, error: jobError } = await supabase
-        .from('employer_jobs')
-        .select('user_id')
-        .eq('id', jId)
-        .single();
-      if (jobError || !job) throw jobError || new Error('Job not found');
-
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+      const { table, row } = workerSafetyRow(
+        { ...input, employeeId, reporterName: employeeQuery.data?.name ?? null },
+        {
+          id: crypto.randomUUID(),
+          userId: user.id,
+          createdAt: new Date().toISOString(),
+          photos: input.photos ?? [],
+        }
+      );
       const { data, error } = await supabase
-        .from('employer_incidents')
-        .insert({
-          employer_id: job.user_id,
-          job_id: jId,
-          title: description.slice(0, 80),
-          description,
-          incident_type: incidentType,
-          // IncidentsSection uses low / medium / high / critical
-          severity: INCIDENT_SEVERITY[severity] ?? 'medium',
-          status: 'open',
-          reported_by: employeeId,
-          location: location || null,
-          photos: photos && photos.length > 0 ? photos : null,
-          // photos (6 Oct) is newer than the generated types.
-        } as never)
-        .select()
+        .from(table as never)
+        .insert(row as never)
+        .select('id')
         .single();
       if (error) throw error;
       return data;
@@ -971,7 +1091,74 @@ export const useSnagReports = (jobId?: string) => {
     },
   });
 
+  /**
+   * ELE-1828: a snag or safety report through the outbox — works with no
+   * signal, photos compressed and held on the phone, lands once.
+   */
+  const sendReport = async (input: {
+    kind: 'snag' | 'incident';
+    jobId: string;
+    jobTitle?: string;
+    severity: string;
+    description: string;
+    location?: string;
+    incidentType?: string;
+    photoFiles?: File[];
+    /** ELE-2031, safety reports: somebody was hurt (→ the accident book). */
+    injury?: {
+      injuredName?: string | null;
+      injuredEmployeeId?: string | null;
+      injuryType?: string | null;
+      bodyPart?: string | null;
+    } | null;
+    /** ELE-2031, an incident where nobody was hurt: what kind it was. */
+    incidentKind?: WorkerIncidentKind;
+  }): Promise<SubmitResult> => {
+    if (!employeeId) throw new Error('No employee ID');
+    const photos = await Promise.all((input.photoFiles ?? []).map(holdPhoto));
+    const noun =
+      input.kind === 'snag' ? 'Snag' : input.incidentType === 'near_miss' ? 'Near-miss' : 'Incident';
+    const safety: Partial<WorkerSafetyPayload> =
+      input.kind === 'incident'
+        ? {
+            target: input.injury ? 'accident' : 'near_miss',
+            jobTitle: input.jobTitle ?? null,
+            reporterName: employeeQuery.data?.name ?? null,
+            workerSeverity: (['minor', 'moderate', 'critical'].includes(input.severity)
+              ? input.severity
+              : 'moderate') as WorkerSafetyPayload['workerSeverity'],
+            incidentKind:
+              input.incidentType === 'near_miss' ? 'near_miss' : (input.incidentKind ?? 'other'),
+            injuredName: input.injury?.injuredName ?? null,
+            injuredEmployeeId: input.injury?.injuredEmployeeId ?? null,
+            injuryType: input.injury?.injuryType ?? null,
+            bodyPart: input.injury?.bodyPart ?? null,
+          }
+        : {};
+    const { result } = await submitWorkerAction({
+      kind: input.kind,
+      label: `${noun} · ${clipWords(input.description)}`,
+      detail: input.jobTitle ?? null,
+      jobId: input.jobId,
+      photos,
+      payload: {
+        jobId: input.jobId,
+        employeeId,
+        severity:
+          input.kind === 'snag'
+            ? (SNAG_SEVERITY[input.severity] ?? 'Medium')
+            : (INCIDENT_SEVERITY[input.severity] ?? 'medium'),
+        description: input.description,
+        location: input.location || null,
+        incidentType: input.incidentType ?? null,
+        ...safety,
+      },
+    });
+    return result;
+  };
+
   return {
+    sendReport,
     recentSnags: recentSnagsQuery.data,
     recentIncidents: recentIncidentsQuery.data,
     isLoading: recentSnagsQuery.isLoading,

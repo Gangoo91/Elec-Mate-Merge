@@ -12,6 +12,10 @@ verify_jwt = false
 [functions.sign-verification-evidence]
 verify_jwt = false
 
+# college-demo-try — "Try it on your phone" QR (ELE-1854); token-checked, visitor has no account yet
+[functions.college-demo-try]
+verify_jwt = false
+
 # MINIMAL DEPLOY: Only 2 functions to fix bundle timeout
 [functions.health-safety-v3]
 verify_jwt = false
@@ -351,6 +355,16 @@ verify_jwt = false
 [functions.calendar-ical-feed]
 verify_jwt = false
 
+# College calendar subscription (8 Oct 2026). Same reason: a calendar app
+# polling webcal:// cannot send a JWT. The 32-byte token in
+# college_calendar_feeds IS the auth; unknown or revoked tokens get a 404.
+[functions.college-calendar-feed]
+verify_jwt = false
+
+# ELE-1884: the College Hub read API. An MIS sends a college API key, not a JWT.
+[functions.college-data-api]
+verify_jwt = false
+
 # Invoice mark-paid token endpoint (ELE-880) — hit from a confirmation page
 # the electrician opens via a link in the payment-reminder email. The
 # random URL-safe token in invoice_action_tokens IS the auth.
@@ -418,6 +432,11 @@ verify_jwt = false
 [functions.employer-office-alert]
 verify_jwt = false
 
+# ELE-1836 — the boss's Sunday email. Sends are service-role only (checked in
+# the function); the unsubscribe link in the email must work with no session.
+[functions.employer-weekly-digest]
+verify_jwt = false
+
 # ELE-2022 Enquiries: called without a user session (email worker with a shared
 # secret, website forms with a public token, notification buttons with a
 # single-use code). Each function checks its own auth; keep the gateway off.
@@ -438,3 +457,11 @@ verify_jwt = true
 
 [functions.website-checkout]
 verify_jwt = true
+
+# ELE-1987: called only by the automations tick with the service-role key; checked in code.
+[functions.employer-automation-send]
+verify_jwt = false
+
+# review-link — the links inside a review request email or text (gap #9); no JWT in an email link
+[functions.review-link]
+verify_jwt = false

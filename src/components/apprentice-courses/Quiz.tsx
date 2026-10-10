@@ -1,14 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import {
-  CheckCircle2,
-  XCircle,
-  RotateCcw,
-  Target,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  Trophy,
-} from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
@@ -173,28 +164,10 @@ export const Quiz: React.FC<QuizProps> = ({
 
     return (
       <div className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_16%)] border border-white/[0.06] p-6 sm:p-8">
-        <div
-          className={cn(
-            'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-80',
-            passed
-              ? 'from-emerald-500/70 via-emerald-400/70 to-green-400/70'
-              : 'from-orange-500/70 via-amber-400/70 to-orange-400/70'
-          )}
-        />
-
         <div className="text-center">
-          <div className="inline-flex items-center gap-2 mb-3">
-            {aced ? (
-              <Trophy className="h-4 w-4 text-elec-yellow" />
-            ) : passed ? (
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-            ) : (
-              <Target className="h-4 w-4 text-orange-400" />
-            )}
-            <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
-              {aced ? 'Aced it' : passed ? 'Quiz complete' : 'Worth another go'}
-            </span>
-          </div>
+          <p className="mb-3 text-[13px] font-semibold text-white">
+            {aced ? 'Full marks' : passed ? 'Quiz complete' : 'Worth another go'}
+          </p>
 
           <div
             className={cn(
@@ -208,20 +181,9 @@ export const Quiz: React.FC<QuizProps> = ({
             {score} out of {questions.length} correct
           </p>
 
-          {aced && (
-            <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-elec-yellow/15 border border-elec-yellow/30">
-              <Sparkles className="h-3 w-3 text-elec-yellow" />
-              <span className="text-[11px] font-semibold text-elec-yellow uppercase tracking-wider">
-                Streak +1
-              </span>
-            </div>
-          )}
-
           {!passed && (
             <div className="mt-5 rounded-xl bg-orange-500/[0.06] border border-orange-500/25 p-4 text-left">
-              <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-orange-300 mb-1">
-                Tip
-              </div>
+              <p className="mb-1 text-[13px] font-semibold text-orange-300">Tip</p>
               <p className="text-[13px] text-white leading-relaxed">
                 70% is the pass mark. Skim the section once more — focus on the bits the
                 explanations covered — then take it again. No limit.
@@ -245,18 +207,11 @@ export const Quiz: React.FC<QuizProps> = ({
 
   return (
     <div className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_16%)] border border-white/[0.06]">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-80" />
-
       {/* Header — title + progress */}
       <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-white/[0.06]">
         <div className="flex items-center justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2 min-w-0">
-            <Target className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
-            <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow truncate">
-              {title}
-            </span>
-          </div>
-          <span className="text-[11.5px] font-medium text-white shrink-0 tabular-nums">
+          <span className="min-w-0 truncate text-[14px] font-semibold text-white">{title}</span>
+          <span className="text-[12.5px] font-medium text-white shrink-0 tabular-nums">
             {currentQuestion + 1} / {questions.length}
           </span>
         </div>
@@ -271,7 +226,7 @@ export const Quiz: React.FC<QuizProps> = ({
                 key={i}
                 className={cn(
                   'flex-1 h-1 rounded-full transition-colors',
-                  isCurrent ? 'bg-elec-yellow' : answered ? 'bg-elec-yellow/40' : 'bg-white/10'
+                  isCurrent ? 'bg-elec-yellow' : answered ? 'bg-white/50' : 'bg-white/10'
                 )}
               />
             );
@@ -305,7 +260,7 @@ export const Quiz: React.FC<QuizProps> = ({
                     : isWrongOpt
                       ? 'bg-red-500/[0.08] border-red-500/40'
                       : selected
-                        ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
+                        ? 'bg-white/[0.06] border-elec-yellow'
                         : 'bg-[hsl(0_0%_12%)] border-white/[0.08] hover:bg-[hsl(0_0%_14%)] hover:border-white/[0.14]'
                 )}
               >
@@ -319,8 +274,8 @@ export const Quiz: React.FC<QuizProps> = ({
                         : isWrongOpt
                           ? 'bg-red-500/20 border-red-500/50 text-red-300'
                           : selected
-                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-                            : 'bg-white/[0.04] border-white/[0.12] text-white/80'
+                            ? 'bg-elec-yellow border-elec-yellow text-black'
+                            : 'bg-white/[0.04] border-white/[0.16] text-white'
                     )}
                   >
                     {isCorrectOpt ? (
@@ -357,7 +312,7 @@ export const Quiz: React.FC<QuizProps> = ({
           >
             <div
               className={cn(
-                'flex items-center gap-2 mb-1.5 text-[10.5px] font-medium uppercase tracking-[0.18em]',
+                'flex items-center gap-2 mb-1.5 text-[13px] font-semibold',
                 isCorrect ? 'text-emerald-300' : 'text-orange-300'
               )}
             >
@@ -382,7 +337,7 @@ export const Quiz: React.FC<QuizProps> = ({
           <button
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
-            className="inline-flex items-center gap-1.5 h-11 px-3 rounded-full text-[12.5px] font-medium text-white touch-manipulation disabled:opacity-40 hover:bg-white/[0.05] transition-colors"
+            className="inline-flex items-center gap-1.5 h-11 px-3 rounded-full text-[12.5px] font-medium text-white touch-manipulation disabled:invisible hover:bg-white/[0.05] transition-colors"
           >
             <ChevronLeft className="h-3.5 w-3.5" />
             Back
@@ -408,7 +363,7 @@ export const Quiz: React.FC<QuizProps> = ({
           )}
 
           {!isAnswered && !showResult && (
-            <span className="text-[11.5px] text-white">
+            <span className="text-[12.5px] text-white">
               {answeredCount} of {questions.length} answered
             </span>
           )}

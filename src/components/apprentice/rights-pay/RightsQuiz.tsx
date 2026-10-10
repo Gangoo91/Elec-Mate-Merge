@@ -171,11 +171,9 @@ const RightsQuiz = () => {
     const score = getScore();
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Quiz results
-        </span>
+        <span className="text-[13px] font-semibold text-white">Quiz results</span>
         <div className="text-center">
-          <div className="text-[36px] font-semibold text-elec-yellow font-mono">
+          <div className="text-[36px] font-semibold text-elec-yellow">
             {score}/{questions.length}
           </div>
           <p className="text-[14px] text-white leading-relaxed mt-2">
@@ -213,7 +211,7 @@ const RightsQuiz = () => {
                         Correct answer: {question.options[question.correct]}
                       </p>
                     )}
-                    <p className="text-[12px] text-white leading-relaxed">{question.explanation}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{question.explanation}</p>
                   </div>
                 </div>
               </div>
@@ -235,11 +233,9 @@ const RightsQuiz = () => {
   const question = questions[currentQuestion];
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Rights assessment quiz
-        </span>
+        <span className="text-[13px] font-semibold text-white">Rights assessment quiz</span>
         <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
           {currentQuestion + 1} of {questions.length}
         </span>
@@ -257,7 +253,7 @@ const RightsQuiz = () => {
               className="w-full text-left justify-start h-auto p-4 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
               onClick={() => handleAnswer(index)}
             >
-              <span className="mr-3 text-white font-mono">{String.fromCharCode(65 + index)}.</span>
+              <span className="mr-3 text-white">{String.fromCharCode(65 + index)}.</span>
               <span className="text-[14px] whitespace-normal">{option}</span>
             </Button>
           ))}

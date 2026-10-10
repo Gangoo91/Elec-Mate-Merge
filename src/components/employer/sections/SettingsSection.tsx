@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { RefreshCw, Loader2, Upload, Image as ImageIcon, Trash2 } from 'lucide-react';
+import { RefreshCw, Loader2, Upload, Image as ImageIcon, ChevronLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   getNotificationEmail,
   setNotificationEmail as saveNotificationEmail,
@@ -28,57 +29,100 @@ import { supabase } from '@/integrations/supabase/client';
 import { StripeConnectCard } from '../StripeConnectCard';
 import { ManagersCard } from '@/components/employer/settings/ManagersCard';
 import { SeatsCard } from '@/components/employer/settings/SeatsCard';
+import { RoleAccessGuide } from '@/components/employer/settings/RoleAccessGuide';
+import { useSearchParams } from 'react-router-dom';
+import type { EmployerRole } from '@/hooks/useEmployerRole';
+import { ROLE_ACCESS } from '@/lib/roleAccess';
 import {
   PageFrame,
   PageHero,
   IconButton,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
   LoadingBlocks,
-  Eyebrow,
-  Divider,
   PrimaryButton,
   SecondaryButton,
-  DestructiveButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
-  checkboxClass,
 } from '@/components/employer/editorial';
+import {
+  PanelHead,
+  Row,
+  RowList,
+  StatusPill,
+  frameClass,
+  panelShellClass,
+} from '@/components/employer/pageParts/PageParts';
 import { useAuth } from '@/contexts/AuthContext';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { SETTINGS_HELP } from '@/components/employer/help/clients';
+// ELE-2067: Bring your data across, Export everything, Plain terms (flagged).
+import { BringDataAcrossPanel } from '@/components/employer/settings/import/BringDataAcrossPanel';
+import { FullExportPanel } from '@/components/employer/settings/import/FullExportPanel';
+import {
+  PlainTermsPanel,
+  usePlainTermsVisibility,
+} from '@/components/employer/settings/import/PlainTerms';
+import { useFirmImportAccess } from '@/components/employer/settings/import/useFirmImportAccess';
+import { MessagingPanel } from '@/components/employer/settings/MessagingPanel';
+import { DevelopersPanel } from '@/components/employer/settings/DevelopersPanel';
 
-/**
- * A settings row with an editable field. On phones the input stacks BELOW the
- * label at full width (fixed-width inputs in ListRow's no-shrink trailing slot
- * crushed the titles and overflowed 375px screens); from sm: up it sits
- * trailing like a standard ListRow.
- */
-function SettingFieldRow({
-  title,
-  subtitle,
+/** A labelled field in a settings panel: label and hint above the control. */
+function FieldCell({
+  label,
+  hint,
   children,
+  className,
 }: {
-  title: string;
-  subtitle?: string;
+  label: string;
+  hint?: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <div className="px-4 sm:px-5 py-3.5 sm:py-4 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3.5">
-      <div className="flex-1 min-w-0">
-        <div className="text-[14px] font-medium text-white">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[11.5px] text-white">{subtitle}</div>}
-      </div>
-      <div className="sm:shrink-0 flex items-center gap-2 w-full sm:w-auto">{children}</div>
+    <div className={cn('min-w-0', className)}>
+      <label className="block text-[13px] font-semibold text-white">{label}</label>
+      {hint && <p className="mt-0.5 text-[12.5px] leading-snug text-white">{hint}</p>}
+      <div className="mt-1.5 flex items-center gap-2">{children}</div>
     </div>
   );
 }
+
+/** A switch row inside a settings panel. */
+function ToggleLine({
+  title,
+  body,
+  control,
+}: {
+  title: string;
+  body: string;
+  control: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-4 px-4 py-3.5 sm:px-5">
+      <div className="min-w-0 flex-1">
+        <p className="text-[15px] font-semibold text-white">{title}</p>
+        <p className="mt-0.5 text-[13px] leading-snug text-white">{body}</p>
+      </div>
+      <div className="shrink-0">{control}</div>
+    </div>
+  );
+}
+
+type SettingsKey =
+  | 'general'
+  | 'managers'
+  | 'access'
+  | 'seats'
+  | 'branding'
+  | 'notifications'
+  | 'payments'
+  | 'qs'
+  | 'bank'
+  | 'messaging'
+  | 'developers'
+  | 'data'
+  | 'export'
+  | 'terms';
 
 export function SettingsSection() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -115,6 +159,13 @@ export function SettingsSection() {
   // Co-admins see the firm's details but only the owner can change them.
   const { user: authUser } = useAuth();
   const { data: isCoAdmin } = useEmployerCoAdmin(authUser?.id);
+  const importAccess = useFirmImportAccess();
+  const plainTerms = usePlainTermsVisibility();
+
+  // Phone: a list of sections, then one section at a time. Desktop: a left
+  // nav beside every panel, highlighting the one in view.
+  const [phoneSection, setPhoneSection] = useState<SettingsKey | null>(null);
+  const [inView, setInView] = useState<SettingsKey>('general');
 
   // QS sign-off gate — "QS approval required before issue" (company_profiles)
   const [qsApprovalRequired, setQsApprovalRequired] = useState(false);
@@ -383,53 +434,188 @@ export function SettingsSection() {
     }
   };
 
+  // ?open=access[&role=office] lands "Why can't I see this?" links (ELE-1831)
+  // on the role guide, with that role opened.
+  const [searchParams] = useSearchParams();
+  const openParam = searchParams.get('open');
+  const roleParam = searchParams.get('role');
+  const focusRole = roleParam && roleParam in ROLE_ACCESS ? (roleParam as EmployerRole) : null;
+  // ?open=data / ?open=export (ELE-2067: the Overview's "Bring your data across").
+  useEffect(() => {
+    if (loadingCompany || (openParam !== 'data' && openParam !== 'export')) return;
+    setPhoneSection(openParam);
+    setInView(openParam);
+    const t = window.setTimeout(
+      () =>
+        document
+          .getElementById(`settings-${openParam}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      150
+    );
+    return () => window.clearTimeout(t);
+  }, [loadingCompany, openParam]);
+
+  // ?open=messaging / ?open=developers (ELE-2070 bell, ELE-2077).
+  useEffect(() => {
+    if (loadingCompany || (openParam !== 'messaging' && openParam !== 'developers')) return;
+    setPhoneSection(openParam);
+    setInView(openParam);
+    const t = window.setTimeout(
+      () =>
+        document
+          .getElementById(`settings-${openParam}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      150
+    );
+    return () => window.clearTimeout(t);
+  }, [loadingCompany, openParam]);
+
+  useEffect(() => {
+    if (loadingCompany || openParam !== 'access') return;
+    setPhoneSection('access');
+    setInView('access');
+    const t = window.setTimeout(
+      () =>
+        document
+          .getElementById(focusRole ? `access-${focusRole}` : 'settings-access')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      150
+    );
+    return () => window.clearTimeout(t);
+  }, [loadingCompany, openParam, focusRole]);
+
+  // Desktop scroll-spy for the left nav (only once the panels are drawn).
+  useEffect(() => {
+    if (loadingCompany || typeof IntersectionObserver === 'undefined') return;
+    const els = Array.from(document.querySelectorAll<HTMLElement>('section[id^="settings-"]'));
+    const io = new IntersectionObserver(
+      (entries) => {
+        const top = entries
+          .filter((e) => e.isIntersecting)
+          .sort((x, y) => x.boundingClientRect.top - y.boundingClientRect.top)[0];
+        if (top) setInView(top.target.id.replace('settings-', '') as SettingsKey);
+      },
+      { rootMargin: '-15% 0px -70% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [loadingCompany, isCoAdmin]);
+
   if (loadingCompany) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Admin"
-          title="Settings"
-          description="Company profile, branding, payments and QS sign-off."
-          tone="yellow"
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Settings" description="Loading your firm's settings." />
         <LoadingBlocks />
       </PageFrame>
     );
   }
 
+  const openSection = (key: SettingsKey) => {
+    setPhoneSection(key);
+    setInView(key);
+    requestAnimationFrame(() =>
+      document
+        .getElementById(`settings-${key}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    );
+  };
+
   // Live "Before you start" lines for the help (ELE-1980). Owner only:
   // managers cannot change these.
-  const scrollToHelp = (key: string) =>
-    document
-      .querySelector(`[data-help="${key}"]`)
-      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   const helpBlockers: HelpBlocker[] = [];
-  if (!isCoAdmin && !companySettings.company_name.trim()) {
+  const missingName = !isCoAdmin && !companySettings.company_name.trim();
+  const missingBank =
+    !isCoAdmin &&
+    (!companySettings.bank_sort_code.trim() || !companySettings.bank_account_number.trim());
+  if (missingName) {
     helpBlockers.push({
       text: 'No company name yet. It goes on every quote, invoice and email.',
       fixLabel: 'Add it',
-      onFix: () => scrollToHelp('settings.general'),
+      onFix: () => openSection('general'),
     });
   }
-  if (
-    !isCoAdmin &&
-    (!companySettings.bank_sort_code.trim() || !companySettings.bank_account_number.trim())
-  ) {
+  if (missingBank) {
     helpBlockers.push({
       text: 'No bank details yet, so invoices go out without payment instructions.',
       fixLabel: 'Add bank details',
-      onFix: () => scrollToHelp('settings.bank'),
+      onFix: () => openSection('bank'),
     });
   }
 
+  const headline = isCoAdmin
+    ? "You can see the firm's settings. Only the account owner can change company details, branding and payments."
+    : missingName && missingBank
+      ? 'Two things to finish: your company name and your bank details.'
+      : missingName
+        ? 'Add your company name. It goes on every quote, invoice and email.'
+        : missingBank
+          ? 'Add your bank details so invoices carry payment instructions.'
+          : 'Company profile, branding, payments and QS sign-off.';
+
+  const bankSet =
+    !!companySettings.bank_sort_code.trim() && !!companySettings.bank_account_number.trim();
+  const sections: { key: SettingsKey; title: string; detail: string; flag?: boolean }[] = [
+    {
+      key: 'general',
+      title: 'Company',
+      detail: companySettings.company_name.trim() || 'Not filled in yet',
+      flag: missingName,
+    },
+    {
+      key: 'managers',
+      title: 'Managers',
+      detail: isCoAdmin ? 'You are a manager' : 'Office and admin access',
+    },
+    {
+      key: 'access',
+      title: 'Who can see what',
+      detail: "Why can't I see this? Each role, explained",
+    },
+    ...(isCoAdmin !== true
+      ? [{ key: 'seats' as const, title: 'Team seats', detail: 'Who holds a seat and the cost' }]
+      : []),
+    { key: 'branding', title: 'Branding', detail: 'Logo and colours on your documents' },
+    {
+      key: 'notifications',
+      title: 'Notifications',
+      detail: notificationEmail.trim() || 'Office email off',
+    },
+    { key: 'payments', title: 'Card payments', detail: 'Pay now link on invoices' },
+    {
+      key: 'qs',
+      title: 'QS sign-off',
+      detail: qsApprovalRequired ? 'Required before issue' : 'Optional',
+    },
+    { key: 'messaging', title: 'Customer messaging', detail: 'Texts, WhatsApp, templates and usage' },
+    { key: 'developers', title: 'Integrations and API', detail: 'Accounting, API keys and webhooks' },
+    {
+      key: 'bank',
+      title: 'Bank details',
+      detail: bankSet ? `Sort code ${companySettings.bank_sort_code}` : 'Not added yet',
+      flag: missingBank,
+    },
+    {
+      key: 'data',
+      title: 'Bring your data across',
+      detail: 'Import from Tradify, Fergus and others',
+    },
+    ...(importAccess.isOwner
+      ? [{ key: 'export' as const, title: 'Export everything', detail: 'Every record and PDF in one zip' }]
+      : []),
+    ...(plainTerms.show
+      ? [{ key: 'terms' as const, title: 'Plain terms', detail: 'No contract, your data goes with you' }]
+      : []),
+  ];
+
+  const sectionClass = (key: SettingsKey) =>
+    cn('scroll-mt-24', phoneSection !== key && 'hidden lg:block');
+
   return (
     <>
-      <PageFrame>
+      <PageFrame className={frameClass}>
         <PageHero
-          eyebrow="Admin"
           title="Settings"
-          description="Company profile, branding, payments and QS sign-off."
-          tone="yellow"
+          description={headline}
           actions={
             <>
               <IconButton onClick={refresh} aria-label="Refresh settings">
@@ -444,336 +630,458 @@ export function SettingsSection() {
           }
         />
 
-        <HowItWorks help={SETTINGS_HELP} blockers={helpBlockers} askContext={{ page: 'settings' }} />
+        <HowItWorks
+          help={SETTINGS_HELP}
+          blockers={helpBlockers}
+          askContext={{ page: 'settings' }}
+        />
 
-        {isCoAdmin && (
-          <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-white/[0.14] bg-white/[0.04] px-4 py-3">
-            <p className="text-[13px] text-white leading-relaxed">
-              You can see the firm's settings. Only the account owner can change company details,
-              branding and payments.
-            </p>
-          </div>
-        )}
-
-        {/* General */}
-        <div data-help="settings.general">
-        <ListCard>
-          <ListCardHeader tone="yellow" title="General" meta={<Pill tone="yellow">Company</Pill>} />
-          <ListBody>
-            <SettingFieldRow title="Company name" subtitle="Shown on quotes, invoices and emails">
-              <Input
-                value={companySettings.company_name}
-                onChange={(e) => updateCompany({ company_name: e.target.value })}
-                placeholder="Your Company Ltd"
-                className={`${inputClass} w-full sm:w-56`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Company number" subtitle="Companies House registration">
-              <Input
-                value={companySettings.company_number}
-                onChange={(e) => updateCompany({ company_number: e.target.value })}
-                placeholder="12345678"
-                className={`${inputClass} w-full sm:w-40`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="VAT number" subtitle="Used on invoices where applicable">
-              <Input
-                value={companySettings.company_vat_number}
-                onChange={(e) => updateCompany({ company_vat_number: e.target.value })}
-                placeholder="GB123456789"
-                className={`${inputClass} w-full sm:w-40`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Phone" subtitle="Primary contact number">
-              <Input
-                value={companySettings.company_phone}
-                onChange={(e) => updateCompany({ company_phone: e.target.value })}
-                placeholder="+44 123 456 7890"
-                className={`${inputClass} w-full sm:w-56`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Email" subtitle="Public contact address">
-              <Input
-                type="email"
-                value={companySettings.company_email}
-                onChange={(e) => updateCompany({ company_email: e.target.value })}
-                placeholder="info@yourcompany.com"
-                className={`${inputClass} w-full sm:w-64`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Website" subtitle="Linked from quote PDFs">
-              <Input
-                value={companySettings.company_website}
-                onChange={(e) => updateCompany({ company_website: e.target.value })}
-                placeholder="https://yourcompany.com"
-                className={`${inputClass} w-full sm:w-64`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Registered address" subtitle="Used on letterhead and invoices">
-              <Input
-                value={companySettings.company_address}
-                onChange={(e) => updateCompany({ company_address: e.target.value })}
-                placeholder="123 Business Park, City, Postcode"
-                className={`${inputClass} w-full sm:w-72`}
-              />
-            </SettingFieldRow>
-          </ListBody>
-        </ListCard>
-        </div>
-
-        {/* Managers (co-admins) — ELE-1986 */}
-        <div data-help="settings.managers">
-          <ManagersCard />
-        </div>
-
-        {/* Team seats — who is on a paid seat and the monthly cost (owner only) */}
-        <SeatsCard />
-
-        {/* Branding */}
-        <div data-help="settings.branding">
-        <ListCard>
-          <ListCardHeader
-            tone="purple"
-            title="Branding"
-            meta={<Pill tone="purple">Identity</Pill>}
-          />
-          <ListBody>
-            <ListRow
-              title="Company logo"
-              subtitle="PNG, JPG or SVG. Max 20MB. Recommended 400x200px"
-              lead={
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="relative h-14 w-20 rounded-lg border border-white/[0.08] bg-white/[0.025] flex items-center justify-center overflow-hidden touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
-                >
-                  {brandingSettings.company_logo_url ? (
-                    <img
-                      src={brandingSettings.company_logo_url}
-                      alt="Company logo"
-                      className="max-w-full max-h-full object-contain p-1.5"
+        <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:items-start lg:gap-8">
+          {/* Phone: the list of sections */}
+          {!phoneSection && (
+            <div className="lg:hidden">
+              <RowList>
+                {sections.map((sec) => (
+                  <div key={sec.key} data-help={`settings.menu.${sec.key}`}>
+                    <Row
+                      wrapDetail
+                      title={sec.title}
+                      detail={sec.detail}
+                      trailing={sec.flag ? <StatusPill tone="volt">To do</StatusPill> : undefined}
+                      onClick={() => openSection(sec.key)}
                     />
-                  ) : (
-                    <ImageIcon className="h-5 w-5 text-white" />
-                  )}
-                  {uploadingLogo && (
-                    <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-                      <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                    </div>
-                  )}
-                </button>
-              }
-              trailing={
-                <>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleLogoUpload}
-                    className="hidden"
-                  />
-                  <SecondaryButton
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={uploadingLogo}
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    {uploadingLogo ? 'Uploading…' : 'Upload'}
-                  </SecondaryButton>
-                </>
-              }
-            />
-            <SettingFieldRow title="Primary colour" subtitle="Buttons, accents and CTAs">
-              <input
-                type="color"
-                value={brandingSettings.brand_primary_color}
-                onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
-                className="h-11 w-11 shrink-0 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
-                style={{ padding: 0 }}
-              />
-              <Input
-                value={brandingSettings.brand_primary_color}
-                onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
-                placeholder="#f59e0b"
-                className={`${inputClass} flex-1 sm:flex-none sm:w-32 font-mono uppercase`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Secondary colour" subtitle="Headers and panel backgrounds">
-              <input
-                type="color"
-                value={brandingSettings.brand_secondary_color}
-                onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
-                className="h-11 w-11 shrink-0 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
-                style={{ padding: 0 }}
-              />
-              <Input
-                value={brandingSettings.brand_secondary_color}
-                onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
-                placeholder="#0f172a"
-                className={`${inputClass} flex-1 sm:flex-none sm:w-32 font-mono uppercase`}
-              />
-            </SettingFieldRow>
-            <ListRow
-              title="Live preview"
-              subtitle="How your brand looks together"
-              trailing={
-                <div className="flex items-center gap-2">
-                  <div
-                    className="h-9 px-3 rounded-md flex items-center text-[12px] font-medium text-white border border-white/10"
-                    style={{ backgroundColor: brandingSettings.brand_secondary_color }}
-                  >
-                    Header
                   </div>
-                  <div
-                    className="h-9 px-4 rounded-md flex items-center text-[12px] font-medium text-white border border-white/10"
-                    style={{ backgroundColor: brandingSettings.brand_primary_color }}
+                ))}
+              </RowList>
+            </div>
+          )}
+
+          {/* Desktop: the left nav */}
+          <nav aria-label="Settings sections" className="sticky top-24 hidden lg:block">
+            <ul className="space-y-0.5">
+              {sections.map((sec) => (
+                <li key={sec.key}>
+                  <button
+                    type="button"
+                    data-help={`settings.menu.${sec.key}`}
+                    onClick={() => openSection(sec.key)}
+                    aria-current={inView === sec.key ? 'true' : undefined}
+                    className={cn(
+                      'flex h-11 w-full items-center justify-between gap-2 rounded-xl px-3.5 text-left text-[14px] font-semibold touch-manipulation transition-colors',
+                      inView === sec.key
+                        ? 'bg-white/[0.08] text-white'
+                        : 'text-white hover:bg-white/[0.04]'
+                    )}
                   >
-                    Button
+                    <span className="truncate">{sec.title}</span>
+                    {sec.flag && <span className="h-2 w-2 shrink-0 rounded-full bg-elec-yellow" />}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className={cn('min-w-0 space-y-6 sm:space-y-8', !phoneSection && 'hidden lg:block')}>
+            {phoneSection && (
+              <button
+                type="button"
+                onClick={() => setPhoneSection(null)}
+                className="-ml-1 flex h-11 items-center gap-1 text-[14px] font-semibold text-elec-yellow touch-manipulation lg:hidden"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden />
+                All settings
+              </button>
+            )}
+
+            {/* General */}
+            <section
+              id="settings-general"
+              data-help="settings.general"
+              className={sectionClass('general')}
+            >
+              <div className={panelShellClass}>
+                <PanelHead
+                  title="Company"
+                  meta={
+                    <span className="text-[13px] text-white">On quotes, invoices and emails</span>
+                  }
+                />
+                <div className="grid gap-x-6 gap-y-5 px-4 py-4 sm:grid-cols-2 sm:px-5 sm:py-5">
+                  <FieldCell label="Company name" hint="Shown on quotes, invoices and emails">
+                    <Input
+                      value={companySettings.company_name}
+                      onChange={(e) => updateCompany({ company_name: e.target.value })}
+                      placeholder="Your Company Ltd"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                  <FieldCell label="Company number" hint="Companies House registration">
+                    <Input
+                      value={companySettings.company_number}
+                      onChange={(e) => updateCompany({ company_number: e.target.value })}
+                      placeholder="12345678"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                  <FieldCell label="VAT number" hint="Used on invoices where applicable">
+                    <Input
+                      value={companySettings.company_vat_number}
+                      onChange={(e) => updateCompany({ company_vat_number: e.target.value })}
+                      placeholder="GB123456789"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                  <FieldCell label="Phone" hint="Primary contact number">
+                    <Input
+                      value={companySettings.company_phone}
+                      onChange={(e) => updateCompany({ company_phone: e.target.value })}
+                      placeholder="+44 123 456 7890"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                  <FieldCell label="Email" hint="Public contact address">
+                    <Input
+                      type="email"
+                      value={companySettings.company_email}
+                      onChange={(e) => updateCompany({ company_email: e.target.value })}
+                      placeholder="info@yourcompany.com"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                  <FieldCell label="Website" hint="Linked from quote PDFs">
+                    <Input
+                      value={companySettings.company_website}
+                      onChange={(e) => updateCompany({ company_website: e.target.value })}
+                      placeholder="https://yourcompany.com"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                  <FieldCell
+                    label="Registered address"
+                    hint="Used on letterhead and invoices"
+                    className="sm:col-span-2"
+                  >
+                    <Input
+                      value={companySettings.company_address}
+                      onChange={(e) => updateCompany({ company_address: e.target.value })}
+                      placeholder="123 Business Park, City, Postcode"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                </div>
+              </div>
+            </section>
+
+            {/* Managers (co-admins) — ELE-1986 */}
+            <section
+              id="settings-managers"
+              data-help="settings.managers"
+              className={sectionClass('managers')}
+            >
+              <ManagersCard />
+            </section>
+
+            {/* Who can see what — ELE-1831 "Why can't I see this?" */}
+            <section id="settings-access" className={sectionClass('access')}>
+              <RoleAccessGuide focusRole={focusRole} />
+            </section>
+
+            {/* Team seats — who is on a paid seat and the monthly cost (owner only) */}
+            <section id="settings-seats" className={sectionClass('seats')}>
+              <SeatsCard />
+            </section>
+
+            {/* Branding */}
+            <section
+              id="settings-branding"
+              data-help="settings.branding"
+              className={sectionClass('branding')}
+            >
+              <div className={panelShellClass}>
+                <PanelHead
+                  title="Branding"
+                  meta={<span className="text-[13px] text-white">On your documents</span>}
+                />
+                <div className="divide-y divide-white/[0.07]">
+                  <div className="flex items-center gap-4 px-4 py-4 sm:px-5">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="relative flex h-16 w-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.03] touch-manipulation transition-colors hover:bg-white/[0.06]"
+                    >
+                      {brandingSettings.company_logo_url ? (
+                        <img
+                          src={brandingSettings.company_logo_url}
+                          alt="Company logo"
+                          className="max-h-full max-w-full object-contain p-1.5"
+                        />
+                      ) : (
+                        <ImageIcon className="h-5 w-5 text-white" />
+                      )}
+                      {uploadingLogo && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/70">
+                          <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                        </div>
+                      )}
+                    </button>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[15px] font-semibold text-white">Company logo</p>
+                      <p className="mt-0.5 text-[13px] text-white">
+                        PNG, JPG or SVG. Max 20MB. Recommended 400x200px
+                      </p>
+                    </div>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="hidden"
+                    />
+                    <SecondaryButton
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploadingLogo || !!isCoAdmin}
+                      className="shrink-0"
+                    >
+                      <Upload className="h-4 w-4 sm:mr-2" />
+                      <span className="hidden sm:inline">
+                        {uploadingLogo ? 'Uploading…' : 'Upload'}
+                      </span>
+                    </SecondaryButton>
+                  </div>
+                  <div className="grid gap-x-6 gap-y-5 px-4 py-4 sm:grid-cols-2 sm:px-5 sm:py-5">
+                    <FieldCell label="Primary colour" hint="Buttons, accents and CTAs">
+                      <input
+                        type="color"
+                        value={brandingSettings.brand_primary_color}
+                        onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
+                        className="h-11 w-11 shrink-0 cursor-pointer appearance-none rounded-lg border border-white/10 bg-transparent touch-manipulation"
+                        style={{ padding: 0 }}
+                      />
+                      <Input
+                        value={brandingSettings.brand_primary_color}
+                        onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
+                        placeholder="#f59e0b"
+                        className={`${inputClass} font-mono uppercase`}
+                      />
+                    </FieldCell>
+                    <FieldCell label="Secondary colour" hint="Headers and panel backgrounds">
+                      <input
+                        type="color"
+                        value={brandingSettings.brand_secondary_color}
+                        onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
+                        className="h-11 w-11 shrink-0 cursor-pointer appearance-none rounded-lg border border-white/10 bg-transparent touch-manipulation"
+                        style={{ padding: 0 }}
+                      />
+                      <Input
+                        value={brandingSettings.brand_secondary_color}
+                        onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
+                        placeholder="#0f172a"
+                        className={`${inputClass} font-mono uppercase`}
+                      />
+                    </FieldCell>
+                  </div>
+                  <div className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                    <div className="flex items-center gap-3">
+                      <span className="text-[13px] font-semibold text-white">Preview</span>
+                      <div
+                        className="flex h-9 items-center rounded-md border border-white/10 px-3 text-[12px] font-medium text-white"
+                        style={{ backgroundColor: brandingSettings.brand_secondary_color }}
+                      >
+                        Header
+                      </div>
+                      <div
+                        className="flex h-9 items-center rounded-md border border-white/10 px-4 text-[12px] font-medium text-white"
+                        style={{ backgroundColor: brandingSettings.brand_primary_color }}
+                      >
+                        Button
+                      </div>
+                    </div>
+                    <PrimaryButton
+                      onClick={handleSaveBranding}
+                      disabled={savingBranding || !!isCoAdmin}
+                    >
+                      {savingBranding ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
+                      {savingBranding ? 'Saving…' : 'Save branding'}
+                    </PrimaryButton>
                   </div>
                 </div>
-              }
-            />
-            <ListRow
-              title="Save branding"
-              subtitle="Apply colour and logo changes"
-              trailing={
-                <PrimaryButton onClick={handleSaveBranding} disabled={savingBranding}>
-                  {savingBranding ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
-                  {savingBranding ? 'Saving…' : 'Save branding'}
-                </PrimaryButton>
-              }
-            />
-          </ListBody>
-        </ListCard>
-        </div>
+              </div>
+            </section>
 
-        {/* Notifications */}
-        <div data-help="settings.notifications">
-        <ListCard>
-          <ListCardHeader
-            tone="blue"
-            title="Notifications"
-            meta={<Pill tone="blue">Alerts</Pill>}
-          />
-          <ListBody>
-            <SettingFieldRow
-              title="Office email"
-              subtitle="Gets an email when an incident or near miss is reported and when a client pays an invoice, plus a weekday morning summary when timesheets, leave or expenses are waiting for approval or a renewal is coming up. Leave it empty to turn these off. Everyone still gets the in-app alerts."
+            {/* Notifications */}
+            <section
+              id="settings-notifications"
+              data-help="settings.notifications"
+              className={sectionClass('notifications')}
             >
-              <Input
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                placeholder="office@yourcompany.com"
-                value={notificationEmail}
-                onChange={(e) => setNotificationEmail(e.target.value)}
-                disabled={!!isCoAdmin}
-                className={`${inputClass} flex-1 sm:flex-none sm:w-64`}
-              />
-              <PrimaryButton
-                onClick={handleSaveNotificationEmail}
-                disabled={savingEmail || !!isCoAdmin}
-              >
-                {savingEmail ? 'Saving…' : 'Save'}
-              </PrimaryButton>
-            </SettingFieldRow>
-          </ListBody>
-        </ListCard>
-        </div>
+              <div className={panelShellClass}>
+                <PanelHead title="Notifications" />
+                <div className="px-4 py-4 sm:px-5 sm:py-5">
+                  <FieldCell
+                    label="Office email"
+                    hint="Gets an email when an incident or near miss is reported and when a client pays an invoice, plus a weekday morning summary when timesheets, leave or expenses are waiting for approval or a renewal is coming up. Leave it empty to turn these off. Everyone still gets the in-app alerts."
+                  >
+                    <Input
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      placeholder="office@yourcompany.com"
+                      value={notificationEmail}
+                      onChange={(e) => setNotificationEmail(e.target.value)}
+                      disabled={!!isCoAdmin}
+                      className={`${inputClass} sm:max-w-md`}
+                    />
+                    <SecondaryButton
+                      onClick={handleSaveNotificationEmail}
+                      disabled={savingEmail || !!isCoAdmin}
+                      className="shrink-0"
+                    >
+                      {savingEmail ? 'Saving…' : 'Save'}
+                    </SecondaryButton>
+                  </FieldCell>
+                </div>
+              </div>
+            </section>
 
-        {/* Payments — Stripe Connect (the one real integration) */}
-        <div data-help="settings.payments">
-          <StripeConnectCard />
-        </div>
-
-        {/* Team — QS sign-off */}
-        <div data-help="settings.qs">
-        <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title="QS sign-off"
-            meta={<Pill tone="yellow">{qsApprovalRequired ? 'Required' : 'Optional'}</Pill>}
-          />
-          <ListBody>
-            <ListRow
-              title="I am my own Qualifying Supervisor"
-              subtitle="Lets you review and countersign your own certificates as the QS. For sole traders and registration-holding owners."
-              trailing={
-                <Switch
-                  checked={ownerIsQs}
-                  onCheckedChange={handleToggleOwnerIsQs}
-                  disabled={ownerQsSaving || !!isCoAdmin}
-                />
-              }
-            />
-            <ListRow
-              title="Require QS approval before issue"
-              subtitle="Team EICR, EIC and Minor Works certificates must be countersigned by a Qualifying Supervisor before the PDF can be issued."
-              trailing={
-                <Switch
-                  checked={qsApprovalRequired}
-                  onCheckedChange={handleToggleQsApproval}
-                  disabled={qsToggleSaving || !!isCoAdmin}
-                />
-              }
-            />
-          </ListBody>
-        </ListCard>
-        </div>
-
-        {/* Billing — payment details */}
-        <div data-help="settings.bank">
-        <ListCard>
-          <ListCardHeader
-            tone="amber"
-            title="Billing & payments"
-            meta={<Pill tone="amber">Bank</Pill>}
-          />
-          <ListBody>
-            <SettingFieldRow
-              title="Account name"
-              subtitle="Appears on invoice payment instructions"
+            {/* Payments — Stripe Connect (the one real integration) */}
+            <section
+              id="settings-payments"
+              data-help="settings.payments"
+              className={sectionClass('payments')}
             >
-              <Input
-                value={companySettings.bank_account_name}
-                onChange={(e) => updateCompany({ bank_account_name: e.target.value })}
-                placeholder="Your Company Ltd"
-                className={`${inputClass} w-full sm:w-64`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Sort code" subtitle="UK bank sort code">
-              <Input
-                value={companySettings.bank_sort_code}
-                onChange={(e) => updateCompany({ bank_sort_code: e.target.value })}
-                placeholder="00-00-00"
-                className={`${inputClass} w-full sm:w-32 font-mono`}
-              />
-            </SettingFieldRow>
-            <SettingFieldRow title="Account number" subtitle="8-digit account number">
-              <Input
-                value={companySettings.bank_account_number}
-                onChange={(e) => updateCompany({ bank_account_number: e.target.value })}
-                placeholder="12345678"
-                className={`${inputClass} w-full sm:w-40 font-mono`}
-              />
-            </SettingFieldRow>
-            <ListRow
-              title="Save payment details"
-              subtitle="Update bank info shown on invoices"
-              trailing={
-                <PrimaryButton onClick={handleSaveCompany} disabled={savingCompany}>
-                  {savingCompany ? 'Saving…' : 'Save'}
-                </PrimaryButton>
-              }
-            />
-          </ListBody>
-        </ListCard>
+              <StripeConnectCard />
+            </section>
+
+            {/* Team — QS sign-off */}
+            <section id="settings-qs" data-help="settings.qs" className={sectionClass('qs')}>
+              <div className={panelShellClass}>
+                <PanelHead
+                  title="QS sign-off"
+                  meta={
+                    <StatusPill tone={qsApprovalRequired ? 'green' : 'neutral'}>
+                      {qsApprovalRequired ? 'Required' : 'Optional'}
+                    </StatusPill>
+                  }
+                />
+                <div className="divide-y divide-white/[0.07]">
+                  <ToggleLine
+                    title="I am my own Qualifying Supervisor"
+                    body="Lets you review and countersign your own certificates as the QS. For sole traders and registration-holding owners."
+                    control={
+                      <Switch
+                        checked={ownerIsQs}
+                        onCheckedChange={handleToggleOwnerIsQs}
+                        disabled={ownerQsSaving || !!isCoAdmin}
+                      />
+                    }
+                  />
+                  <ToggleLine
+                    title="Require QS approval before issue"
+                    body="Team EICR, EIC and Minor Works certificates must be countersigned by a Qualifying Supervisor before the PDF can be issued."
+                    control={
+                      <Switch
+                        checked={qsApprovalRequired}
+                        onCheckedChange={handleToggleQsApproval}
+                        disabled={qsToggleSaving || !!isCoAdmin}
+                      />
+                    }
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* ELE-2070 customer messaging */}
+            <section id="settings-messaging" data-help="settings.messaging" className={sectionClass('messaging')}>
+              <MessagingPanel />
+            </section>
+
+            {/* ELE-2077 integrations, API keys and webhooks */}
+            <section id="settings-developers" data-help="settings.developers" className={sectionClass('developers')}>
+              <DevelopersPanel isOwner={isCoAdmin === false} />
+            </section>
+
+            {/* Billing — payment details */}
+            <section id="settings-bank" data-help="settings.bank" className={sectionClass('bank')}>
+              <div className={panelShellClass}>
+                <PanelHead
+                  title="Bank details"
+                  meta={<span className="text-[13px] text-white">Printed on every invoice</span>}
+                />
+                <div className="grid gap-x-6 gap-y-5 px-4 py-4 sm:grid-cols-3 sm:px-5 sm:py-5">
+                  <FieldCell label="Account name" hint="On invoice payment instructions">
+                    <Input
+                      value={companySettings.bank_account_name}
+                      onChange={(e) => updateCompany({ bank_account_name: e.target.value })}
+                      placeholder="Your Company Ltd"
+                      className={inputClass}
+                    />
+                  </FieldCell>
+                  <FieldCell label="Sort code" hint="UK bank sort code">
+                    <Input
+                      value={companySettings.bank_sort_code}
+                      onChange={(e) => updateCompany({ bank_sort_code: e.target.value })}
+                      placeholder="00-00-00"
+                      className={`${inputClass} font-mono`}
+                    />
+                  </FieldCell>
+                  <FieldCell label="Account number" hint="8-digit account number">
+                    <Input
+                      value={companySettings.bank_account_number}
+                      onChange={(e) => updateCompany({ bank_account_number: e.target.value })}
+                      placeholder="12345678"
+                      className={`${inputClass} font-mono`}
+                    />
+                  </FieldCell>
+                </div>
+                <div className="flex justify-end border-t border-white/[0.07] px-4 py-3 sm:px-5">
+                  <PrimaryButton
+                    onClick={handleSaveCompany}
+                    disabled={savingCompany || !!isCoAdmin}
+                    className="w-full sm:w-auto"
+                  >
+                    {savingCompany ? 'Saving…' : 'Save bank details'}
+                  </PrimaryButton>
+                </div>
+              </div>
+            </section>
+
+            {/* ELE-2067: Bring your data across */}
+            <section id="settings-data" className={sectionClass('data')}>
+              {importAccess.firmId && (
+                <BringDataAcrossPanel
+                  firmId={importAccess.firmId}
+                  isOwner={importAccess.isOwner}
+                  canImport={importAccess.canImport}
+                  contact={{
+                    email: companySettings.company_email || importAccess.email,
+                    phone: companySettings.company_phone,
+                  }}
+                />
+              )}
+            </section>
+
+            {importAccess.isOwner && importAccess.firmId && (
+              <section id="settings-export" className={sectionClass('export')}>
+                <FullExportPanel
+                  firmId={importAccess.firmId}
+                  firmName={companySettings.company_name || 'My firm'}
+                />
+              </section>
+            )}
+
+            {plainTerms.show && (
+              <section id="settings-terms" className={sectionClass('terms')}>
+                <PlainTermsPanel />
+              </section>
+            )}
+          </div>
         </div>
       </PageFrame>
 
       {/* Sticky save bar */}
       {dirty && !isCoAdmin && (
         <div className="fixed bottom-0 inset-x-0 z-40 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl pb-safe">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="text-[13px] font-semibold text-white truncate">Unsaved changes</div>
               <div className="text-[11.5px] text-white truncate">

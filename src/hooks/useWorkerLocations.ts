@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { OFFLINE_FIRST, offlineSnapshot } from '@/lib/workerOfflineCache';
 import { useEffect } from 'react';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import {
@@ -81,8 +82,8 @@ export const useCheckInWorker = () => {
     }: {
       employeeId: string;
       jobId: string;
-      lat: number;
-      lng: number;
+      lat: number | null;
+      lng: number | null;
     }) => checkInWorker(employeeId, jobId, lat, lng),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
@@ -105,7 +106,10 @@ export const useCheckOutWorker = () => {
 export const useMyEmployeeRecord = () => {
   return useQuery({
     queryKey: ['my-employee-record'],
-    queryFn: getMyEmployeeRecord,
+    // ELE-1828: Worker Tools opens with no signal (the roster row gates every page).
+    ...OFFLINE_FIRST,
+    queryFn: () =>
+      offlineSnapshot('my-employee-record', getMyEmployeeRecord, { nullIsSuspect: true }),
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 };

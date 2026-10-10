@@ -765,9 +765,11 @@ const sections = [
                 BS 7671:2018+A4:2026 Reg 421.1.7 — Arc Fault Detection Devices (AFDDs)
               </h4>
               <p className="text-white text-sm leading-relaxed">
-                Amendment A4:2026 introduced Regulation 421.1.7, which recommends the installation
-                of arc fault detection devices (AFDDs) on AC final circuits of a fixed installation
-                to mitigate the risk of fire from arc fault currents. AFDDs detect the electrical
+                Regulation 421.1.7, introduced with BS 7671:2018, recommends the installation of arc
+                fault detection devices (AFDDs) on AC final circuits of a fixed installation to
+                mitigate the risk of fire from arc fault currents. Since A2:2022 they are required
+                on socket-outlet circuits up to 32 A in high rise residential buildings, HMOs,
+                purpose-built student accommodation and care homes. AFDDs detect the electrical
                 signature of series arc faults — the kind caused by damaged cable insulation, loose
                 connections, and conductor degradation — and disconnect the circuit before the fault
                 can ignite surrounding materials.
@@ -779,8 +781,8 @@ const sections = [
                 switchgear and distribution board faults (a personal safety measure). Both are
                 complementary controls — AFDDs reduce the likelihood of a sustained arc fault
                 developing; PPE and safe isolation protect workers if an arc flash event occurs
-                despite those controls. Reg 421.1.7 is recommendatory, not mandatory, but represents
-                recognised good practice under A4:2026.
+                despite those controls. Outside those premises Reg 421.1.7 is recommendatory, not
+                mandatory, but represents recognised good practice.
               </p>
             </div>
           </div>
@@ -807,7 +809,7 @@ export default function ArcFlashProtectionPage() {
       title="Arc Flash Protection: Risk Assessment & PPE"
       description="Arc flash protection for electricians: incident energy (cal/cm²), PPE Category 1–4, boundary distances, UK legal duties, BS 7671 Reg 421.1.7 AFDD guidance."
       datePublished="2025-04-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

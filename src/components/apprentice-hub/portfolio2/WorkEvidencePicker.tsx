@@ -8,7 +8,16 @@
  */
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, Calculator, Camera, ChevronRight, ClipboardList, FileCheck2, Loader2, ScanLine } from 'lucide-react';
+import {
+  AlertTriangle,
+  Calculator,
+  Camera,
+  ChevronRight,
+  ClipboardList,
+  FileCheck2,
+  Loader2,
+  ScanLine,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { useAuth } from '@/contexts/AuthContext';
@@ -19,7 +28,7 @@ import {
   type WorkKind,
   type WorkSource,
 } from '@/lib/portfolio/workEvidence';
-import { P_BTN, P_LIST, P_ROW, pChip } from './ui';
+import { P_BTN, P_LIST, P_ROW, P_SEG_GROUP, pSeg } from './ui';
 
 const TABS: { key: WorkKind; label: string; icon: typeof FileCheck2 }[] = [
   { key: 'certificate', label: 'Certificates', icon: FileCheck2 },
@@ -79,9 +88,12 @@ export function WorkEvidencePicker({
     let live = true;
     listWorkSources(user.id)
       .then((r) => {
-        if (live) setSources({ certificate: r.certs, test_results: r.schedules, calculation: r.calcs });
+        if (live)
+          setSources({ certificate: r.certs, test_results: r.schedules, calculation: r.calcs });
       })
-      .catch(() => live && setLoadError('Could not load your work. Check your signal and try again.'));
+      .catch(
+        () => live && setLoadError('Could not load your work. Check your signal and try again.')
+      );
     return () => {
       live = false;
     };
@@ -120,9 +132,9 @@ export function WorkEvidencePicker({
       title="Use your own work as evidence"
       description="Pick a certificate, a schedule of test results or a calculation you did. We make a readable copy for your assessor and suggest the criteria it could cover. You choose what to claim."
     >
-      <div className="grid gap-6 py-2 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+      <div className="grid grid-cols-1 gap-6 py-2 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
         <div className="min-w-0 space-y-4">
-          <div className="flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Kind of work">
+          <div className={P_SEG_GROUP} role="tablist" aria-label="Kind of work">
             {TABS.map((t) => {
               const n = sources?.[t.key]?.length;
               return (
@@ -131,12 +143,12 @@ export function WorkEvidencePicker({
                   type="button"
                   role="tab"
                   aria-selected={tab === t.key}
-                  className={cn(pChip(tab === t.key), 'h-11 inline-flex items-center gap-1.5')}
+                  className={pSeg(tab === t.key)}
                   onClick={() => setTab(t.key)}
                 >
-                  <t.icon className="h-4 w-4" />
+                  <t.icon className="hidden h-4 w-4 shrink-0 sm:block" strokeWidth={1.5} />
                   {t.label}
-                  {n !== undefined && <span className="font-mono">{n}</span>}
+                  {n !== undefined && <span className="tabular-nums">{n}</span>}
                 </button>
               );
             })}
@@ -181,8 +193,8 @@ export function WorkEvidencePicker({
                 >
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" aria-hidden />
                   <p className="text-[13px] leading-snug text-white">
-                    The full certificate shows the client&apos;s name and address. Evidence files can
-                    be opened by anyone who has the link, including your assessor and anyone you
+                    The full certificate shows the client&apos;s name and address. Evidence files
+                    can be opened by anyone who has the link, including your assessor and anyone you
                     share your portfolio with. Only attach it if the client, or your employer, has
                     said that is fine.
                   </p>
@@ -199,7 +211,9 @@ export function WorkEvidencePicker({
             >
               <ScanLine className="h-5 w-5 shrink-0 text-elec-yellow" aria-hidden />
               <span className="min-w-0 flex-1">
-                <span className="block text-[14px] font-semibold text-white">Photo of a paper schedule</span>
+                <span className="block text-[14px] font-semibold text-white">
+                  Photo of a paper schedule
+                </span>
                 <span className="block text-[12.5px] leading-snug text-white">
                   We read the readings off your photo. You check every value before it is used.
                 </span>
@@ -209,7 +223,10 @@ export function WorkEvidencePicker({
           )}
 
           {error && (
-            <p role="alert" className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-3 text-[13px] text-orange-300">
+            <p
+              role="alert"
+              className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-3 text-[13px] text-orange-300"
+            >
               {error}
             </p>
           )}
@@ -265,12 +282,16 @@ export function WorkEvidencePicker({
                       onClick={() => void choose(src)}
                     >
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14.5px] font-semibold text-white">{src.title}</span>
-                        <span className="block truncate text-[12.5px] text-white">{src.meta || 'No date'}</span>
+                        <span className="block truncate text-[14.5px] font-semibold text-white">
+                          {src.title}
+                        </span>
+                        <span className="block truncate text-[12.5px] text-white">
+                          {src.meta || 'No date'}
+                        </span>
                       </span>
                       <span
                         className={cn(
-                          'shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-semibold',
+                          'shrink-0 rounded-full border px-2 py-0.5 text-[12px] font-semibold',
                           src.status === 'Completed'
                             ? 'border-emerald-400/40 bg-emerald-500/[0.12] text-emerald-300'
                             : 'border-white/[0.2] text-white'
@@ -298,9 +319,18 @@ export function WorkEvidencePicker({
           <h3 className="text-[13px] font-semibold text-white">What happens when you pick one</h3>
           <ol className="space-y-3">
             {[
-              ['A readable copy', 'Certificates and schedules become a one-page PDF summary with every test result. Client names and full addresses are left out. A calculation keeps its own PDF and gets an automatic check against BS 7671 for your assessor.'],
-              ['Suggested criteria', 'We match what the work contains against your course criteria. These are suggestions until you tick them.'],
-              ['You finish it', 'Say what your part was and who supervised you, tick what it really shows, then save. Send it to your assessor when you are ready.'],
+              [
+                'A readable copy',
+                'Certificates and schedules become a one-page PDF summary with every test result. Client names and full addresses are left out. A calculation keeps its own PDF and gets an automatic check against BS 7671 for your assessor.',
+              ],
+              [
+                'Suggested criteria',
+                'We match what the work contains against your course criteria. These are suggestions until you tick them.',
+              ],
+              [
+                'You finish it',
+                'Say what your part was and who supervised you, tick what it really shows, then save. Send it to your assessor when you are ready.',
+              ],
             ].map(([t, b], i) => (
               <li key={t} className="flex gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-elec-yellow/50 font-mono text-[12px] text-elec-yellow">

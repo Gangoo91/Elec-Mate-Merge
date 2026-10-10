@@ -122,7 +122,7 @@ const ComplianceChecklistsPage = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
               <div className="px-4 py-3 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-b border-white/[0.06]">
                 <p className="text-sm font-semibold text-white">{cl.title}</p>
-                <p className="text-[10px] text-yellow-400 mt-0.5">{cl.cert}</p>
+                <p className="text-[12px] text-yellow-400 mt-0.5">{cl.cert}</p>
               </div>
               <div className="p-4 space-y-1.5">
                 {cl.items.map((item, j) => (

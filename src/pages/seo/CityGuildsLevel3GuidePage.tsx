@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'What is City & Guilds 2365 and why is it the standard electrical qualification?',
     answer:
-      "City & Guilds 2365 refers to the qualification number for the City & Guilds Level 2 and Level 3 Diplomas in Electrical Installations (Buildings and Structures). It is the most widely used on-programme qualification for electrical apprentices in England and Wales. City & Guilds (C&G) has been the dominant awarding body for vocational electrical qualifications in the UK for over a century, and the 2365 has been updated to align with the current Level 3 Electrical Installation apprenticeship standard (ST0145). Employers, JIB, and competent person schemes all recognise C&G 2365 as the standard qualification route.",
+      "City & Guilds 2365 refers to the qualification number for the City & Guilds Level 2 and Level 3 Diplomas in Electrical Installations (Buildings and Structures). It is the most widely used on-programme qualification for electrical apprentices in England and Wales. City & Guilds (C&G) has been the dominant awarding body for vocational electrical qualifications in the UK for over a century, and the 2365 has been updated to align with the current Level 3 Electrical Installation apprenticeship standard (ST0152). Employers, JIB, and competent person schemes all recognise C&G 2365 as the standard qualification route.",
   },
   {
     question: 'What is the difference between the Level 2 Certificate and the Level 3 Diploma?',
@@ -135,7 +135,7 @@ const sections = [
           City & Guilds 2365 is the qualification number assigned to the City & Guilds Level 2
           and Level 3 Diplomas in Electrical Installations (Buildings and Structures). It is the
           most widely used on-programme qualification for electrical apprentices in England and
-          Wales and has been updated to align with the current apprenticeship standard (ST0145)
+          Wales and has been updated to align with the current apprenticeship standard (ST0152)
           for Level 3 Electrical Installation.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
@@ -618,7 +618,7 @@ export default function CityGuildsLevel3GuidePage() {
       title="City & Guilds 2365 Level 3 Installation Guide"
       description="Complete guide to City & Guilds 2365 Level 3 Electrical Installation Diploma. Qualification structure, units covered (inspection & testing."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualification Guide"

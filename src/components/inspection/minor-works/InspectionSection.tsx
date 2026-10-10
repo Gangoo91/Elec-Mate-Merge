@@ -86,7 +86,7 @@ const inspectionCategories = {
         text: 'RCD protection where required (special locations)',
         clause: '411.3.3',
       },
-      // A4:2026 — added luminaire RCD protection requirement (411.3.4)
+      // Luminaire RCD protection (411.3.4, a requirement since BS 7671:2018)
       {
         id: 'luminaire_rcd_protection',
         text: 'RCD protection for luminaires in domestic / similar premises',

@@ -76,9 +76,7 @@ const FurtherEducation = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Further education
-        </span>
+        <span className="text-[13px] font-semibold text-white">Further education</span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           Advancing your qualifications
         </h2>
@@ -97,7 +95,7 @@ const FurtherEducation = () => {
           >
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[13px] font-semibold text-white">
                   {option.institution} · {option.level}
                 </span>
                 <h3 className="text-[17px] font-semibold text-white leading-tight">
@@ -111,29 +109,21 @@ const FurtherEducation = () => {
             <div className="space-y-3 mt-auto">
               <div className="space-y-2 text-[13px]">
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Duration
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Duration</span>
                   <p className="text-white mt-0.5">{option.duration}</p>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Entry requirements
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Entry requirements</span>
                   <p className="text-white mt-0.5">{option.entryRequirements}</p>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Progression
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Progression</span>
                   <p className="text-white mt-0.5">{option.progressionOptions}</p>
                 </div>
               </div>
 
               <div className="pt-3 border-t border-white/[0.06] space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Key topics
-                </span>
+                <span className="text-[13px] font-semibold text-white">Key topics</span>
                 <div className="flex flex-wrap gap-1.5">
                   {option.keyTopics.map((topic, idx) => (
                     <span
@@ -147,9 +137,7 @@ const FurtherEducation = () => {
               </div>
 
               <div className="pt-3 border-t border-white/[0.06] space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Example locations
-                </span>
+                <span className="text-[13px] font-semibold text-white">Example locations</span>
                 <p className="text-[12px] text-white">{option.locations.join(', ')}</p>
               </div>
             </div>
@@ -157,10 +145,8 @@ const FurtherEducation = () => {
         ))}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Education funding options
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Education funding options</span>
         <div className="space-y-3">
           <div className="space-y-1">
             <p className="text-[13px] text-white">Advanced Learner Loan</p>

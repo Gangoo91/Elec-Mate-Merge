@@ -22,6 +22,8 @@ import { createClient, type SupabaseClient } from 'https://esm.sh/@supabase/supa
 import { captureException } from '../_shared/sentry.ts';
 import { readEnquiry, type JobKey } from '../_shared/enquiry-reader.ts';
 import { proposeVisits, type ProposedSlot } from '../_shared/visit-planner.ts';
+// Gap #7: bills-<token>@ addresses are supplier bills, not enquiries (own module)
+import { handleBillsEmail, openAiBillReader } from '../_shared/emailed-bills.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -636,8 +638,12 @@ async function notify(
   push = true,
   extraData: Record<string, unknown> = {}
 ) {
-  const link = `/electrician/enquiries?open=${enquiryId}`;
+  const ownerLink = `/electrician/enquiries?open=${enquiryId}`;
+  // A firm's co-admins work in the Employer Hub, where Enquiries is the
+  // firm's front door (ELE-2094); the owner keeps their usual link.
+  const firmLink = `/employer?section=leads&enquiry=${enquiryId}`;
   for (const userId of await recipients(supabase, ownerId)) {
+    const link = userId === ownerId ? ownerLink : firmLink;
     await supabase.from('user_notifications').insert({
       user_id: userId,
       type: 'enquiry',
@@ -708,6 +714,23 @@ serve(async (req: Request) => {
         return json({ error: 'invalid body' }, 400);
       }
     }
+
+    // ── Gap #7: emailed supplier bills ─────────────────────────────────
+    // A bills-<token>@ address that is a firm's bills inbox goes to the bills
+    // path and returns here. Anything else (null) carries on unchanged below.
+    if (fromWorker) {
+      const openAiKey = Deno.env.get('OPENAI_API_KEY');
+      const bills = await handleBillsEmail(p as Parameters<typeof handleBillsEmail>[0], {
+        db: supabase,
+        domains: INBOUND_DOMAINS,
+        read: openAiKey
+          ? openAiBillReader(openAiKey)
+          : () => Promise.reject(new Error('Reading bills is not set up yet')),
+      });
+      if (bills) return json(bills.body, bills.status);
+    }
+    // ── end gap #7 ─────────────────────────────────────────────────────
+
     const isFormPost = !fromWorker;
     const redirect = isFormPost ? url.searchParams.get('redirect') : null;
     // A website visitor always gets a thank-you, whatever happened behind it

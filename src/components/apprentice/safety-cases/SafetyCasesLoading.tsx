@@ -14,7 +14,7 @@ const SafetyCasesLoading = ({ message = 'Loading safety cases...' }: SafetyCases
 
         <CardHeader className="relative">
           <div className="flex items-center justify-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 animate-pulse">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/[0.08] animate-pulse">
               <HardHat className="h-6 w-6 text-elec-yellow" />
             </div>
             <h2 className="text-xl font-semibold text-elec-yellow">Safety Cases</h2>

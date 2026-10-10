@@ -272,6 +272,26 @@ export const videos = {
   wiringMistakeFire: lookup('50bXZPtDpmU', 'A wiring mistake that causes fires'),
   dangerousWork: lookup('EueC1GC3_i0', 'Jobs bad electricians made dangerous'),
   deadlyShortcuts: lookup('wRfN4aygyoU', 'Deadly electrical shortcuts'),
+
+  /* ── Building management systems (BMS course rebuild, 10 Oct 2026) ───── */
+  bmsHeatPump: lookup('G53tTKoakcY', 'How a heat pump works'),
+  bmsStarDelta: lookup('h89TTwlNnpY', 'Star-delta starters explained'),
+  bmsContactors: lookup('NbGlM2zRQBM', 'Single-phase contactors explained'),
+  bmsLatchingRelay: lookup('CjiaPfmk2rE', 'Latching relays'),
+  bmsPowerFactorBill: lookup('NIrKOVZrqnU', 'Power factor, reactive power and the bill'),
+  bmsSafeIsolation: lookup('ZXGqgsbv6oQ', 'Safe isolation — why it matters'),
+  bmsFaultFinding: lookup('feeo1WUGyWQ', 'Fault finding the real-world way'),
+  bmsRelays: lookup('n594CkrP6xE', 'Relays — volt-free contacts and interposing relays'),
+  bmsTemperatureSensors: lookup(
+    'w3Hfj2kMrGo',
+    'Temperature sensors — thermistor, RTD and thermocouple'
+  ),
+  bmsThermistors: lookup('SaQBD0NMT04', 'Thermistors — NTC and PTC'),
+  bmsRtd: lookup('blnnAEmVXp0', 'RTD basics — PT100 and PT1000'),
+  bmsPressureSwitches: lookup('YG81w0HFXNc', 'Pressure switches — filter dP and fan proving'),
+  bmsPlcBasics: lookup('uOtdWHMKhnw', 'Controller basics — inputs, outputs and the scan'),
+  bmsVsd: lookup('yEPe7RDtkgo', 'Variable speed drives on fans and pumps'),
+  bmsTimeDelayRelays: lookup('RwSga-zQy0I', 'Time delay relays — run-on and staggered starts'),
 } as const satisfies Record<string, VideoLibraryEntry>;
 
 export type VideoKey = keyof typeof videos;

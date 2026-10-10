@@ -11,13 +11,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { openExternalUrl } from '@/utils/open-external-url';
 import type { PayrollFileKind, PayrollRun } from '@/services/payrollRun';
 
-export type AccountingProviderId = 'xero' | 'quickbooks' | 'sage' | 'freshbooks';
+export type AccountingProviderId = 'xero' | 'quickbooks' | 'sage' | 'freshbooks' | 'freeagent';
 
 export const PROVIDER_NAME: Record<AccountingProviderId, string> = {
   xero: 'Xero',
   quickbooks: 'QuickBooks',
   sage: 'Sage',
   freshbooks: 'FreshBooks',
+  freeagent: 'FreeAgent',
 };
 
 export type ConnectionState = 'connected' | 'stale' | 'expired' | 'missing' | 'error';

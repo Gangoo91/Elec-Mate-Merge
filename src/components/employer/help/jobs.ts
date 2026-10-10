@@ -366,7 +366,7 @@ export const JOB_PACKS_HELP: PageHelpContent = {
     },
     {
       title: 'Send it and chase',
-      body: 'Send tab, Send to workers. Each person signs on their phone, and you can chase anyone who has not.',
+      body: 'Send tab, Send to workers. Each person signs on their phone. The pack turns Complete by itself when the last person signs.',
     },
   ],
   tasks: [
@@ -398,8 +398,9 @@ export const JOB_PACKS_HELP: PageHelpContent = {
       steps: [
         'Open the pack and tap Send.',
         'Each person shows when they signed, or a Chase button.',
-        'Tap Chase for one person, or Send reminder to all pending.',
+        'Tap Chase for one person, or Chase everyone still to sign. On the list, Chase does the same in one tap.',
       ],
+      after: 'Each person gets one reminder a day at most. We also remind them ourselves a day and three days after the pack goes out.',
       tour: [
         { target: 'jobpacks.list', caption: 'Tap a sent pack to open it.', opens: true },
         { target: 'jobpacks.tabs', text: 'Send', caption: 'Tap Send, then Chase anyone who has not signed.' },
@@ -413,7 +414,15 @@ export const JOB_PACKS_HELP: PageHelpContent = {
     },
     {
       title: 'The tabs',
-      body: 'Draft has not gone out. Sent is with the crew. Signed means everyone has signed it off.',
+      body: 'Draft has not gone out. Sent is with the crew and shows how many have signed. Complete means everyone has signed it off; nobody sets it by hand.',
+    },
+    {
+      title: 'Certificates',
+      body: 'The certificates a pack needs are checked against each person’s Elec-ID on the start date. A red line on the list names who is missing what.',
+    },
+    {
+      title: 'Site safety PDF',
+      body: 'Site safety PDF, at the top or inside a pack, builds the one-page summary a principal contractor asks for from the job’s crew, RAMS, sign-offs and compliance documents.',
     },
   ],
 };

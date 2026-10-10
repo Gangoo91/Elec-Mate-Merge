@@ -11,8 +11,9 @@
  * stopped changing their week for a minute, or straight away on "Send now".
  */
 import { useMemo, useState } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Copy, RefreshCw, Send } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Copy, RefreshCw, Send, MapPin, CalendarCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -21,9 +22,6 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  IconButton,
-  SecondaryButton,
-  PrimaryButton,
   LoadingBlocks,
   EmptyState,
 } from '@/components/employer/editorial';
@@ -38,6 +36,7 @@ import {
   dispatchErrorMessage,
   type DispatchAssignment,
 } from '@/hooks/useDispatchBoard';
+import { useCrewWarning } from '@/hooks/useCrewCompetence';
 import {
   addDaysYmd,
   clashesFor,
@@ -56,9 +55,22 @@ import { DiaryWeekGrid } from '@/components/employer/diary/DiaryWeekGrid';
 import { DayRail, DiaryDayView } from '@/components/employer/diary/DiaryDayView';
 import { DispatchSheet, type DispatchTarget } from '@/components/employer/diary/DispatchSheet';
 import { CopyWeekSheet } from '@/components/employer/diary/CopyWeekSheet';
+// ELE-2072 route order, ELE-2079 online bookings.
+import { DiaryRoutesPanel } from '@/components/employer/diary/DiaryRoutesPanel';
+import { OnlineBookingsPanel } from '@/components/employer/diary/OnlineBookingsPanel';
+import { BookingSettingsSheet } from '@/components/employer/diary/BookingSettingsSheet';
 import { JobBlock } from '@/components/employer/diary/DiaryBlocks';
 import type { DragPayload } from '@/components/employer/diary/dragPayload';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import {
+  frameClass,
+  panel,
+  PanelTitle,
+  HeroActions,
+  HeroPrimary,
+  ToolButton,
+  PlainEmpty,
+} from '@/components/employer/pageParts/PageParts';
 import { DIARY_HELP } from '@/components/employer/help/jobs';
 
 export function DiarySection() {
@@ -69,6 +81,7 @@ export function DiarySection() {
   const [target, setTarget] = useState<DispatchTarget | null>(null);
   const [copyOpen, setCopyOpen] = useState(false);
   const [viewJobId, setViewJobId] = useState<string | null>(null);
+  const [bookingSettingsOpen, setBookingSettingsOpen] = useState(false);
 
   const days = useMemo(() => weekDays(weekStart), [weekStart]);
   const weekEnd = days[6];
@@ -79,11 +92,14 @@ export function DiarySection() {
     error,
     refetch,
     isFetching,
+    firm,
   } = useDispatchBoard(weekStart, weekEnd);
   const { jobsById, peopleById, assignedJobIds } = useDispatchIndex(board);
   const { data: allJobs = [] } = useJobs();
 
   const assign = useDispatchAssign();
+  // ELE-1834: after a booking, warn if the crew doesn't cover the job.
+  const warnCrew = useCrewWarning();
   const move = useDispatchMove();
   const reschedule = useRescheduleJob();
   const publish = usePublishDispatch();
@@ -178,6 +194,7 @@ export function DiarySection() {
       }
       const delta = diffDays(day, p.fromDay);
       if (delta === 0 && employeeId === a.employee_id) return;
+      if (employeeId !== a.employee_id && !(await confirmRtw([employeeId], 'dispatch'))) return;
       await moveBooking(a, employeeId, delta);
       return;
     }
@@ -196,6 +213,8 @@ export function DiarySection() {
         toast.success(`${job.title} moved to ${rangeLabel(start, end)}`);
         return;
       }
+      // ELE-2061: warn or block on anyone without a right-to-work check.
+      if (!(await confirmRtw([employeeId], 'dispatch'))) return;
       await assign.mutateAsync({
         jobId: job.id,
         employeeId,
@@ -211,6 +230,7 @@ export function DiarySection() {
           ? 'They have been sent a push.'
           : 'Not on the app yet, so tell them directly.',
       });
+      void warnCrew(job.id, () => navigate(`/employer?section=jobs&job=${job.id}`));
       warnIfClash(employeeId, start, end, { ignoreJobId: job.id });
     } catch (e) {
       toast.error(dispatchErrorMessage(e));
@@ -250,34 +270,93 @@ export function DiarySection() {
   }
   const helpAsk = { page: 'diary', tab: isDesktop ? 'week' : selectedDay };
 
+  // One live line: what needs sorting this week, else where things stand.
+  const isThisWeek = weekStart === mondayOf(todayYmd());
+  const weekWord = isThisWeek ? 'this week' : 'that week';
+  const liveLine = (() => {
+    if (isLoading) return 'Loading the diary.';
+    if (isError) return "The diary didn't load.";
+    const hours = Math.round(stats.hours);
+    const todo: string[] = [];
+    if (stats.clashes > 0)
+      todo.push(`${stats.clashes} ${stats.clashes === 1 ? 'clash' : 'clashes'} to sort`);
+    if (stats.nobody > 0)
+      todo.push(`${stats.nobody} ${stats.nobody === 1 ? 'job has' : 'jobs have'} nobody on`);
+    if (tray.length > 0) todo.push(`${tray.length} to schedule`);
+    const booked = `${hours}h booked ${weekWord}`;
+    return todo.length
+      ? `${booked}. ${todo.join(', ')}.`
+      : `${booked}. Everyone and every job is covered.`;
+  })();
+
   const hero = (
     <PageHero
-      eyebrow="Operations"
       title="Diary"
-      description={
-        isDesktop
-          ? 'Who is where this week. Drag a job onto a person, or a booking to another day.'
-          : 'Who is where this week. Tap a day, then tap a job or a person to book or move.'
-      }
-      tone="blue"
+      description={liveLine}
       actions={
-        <div className="flex items-center gap-2">
-          <SecondaryButton data-help="diary.copy" onClick={() => setCopyOpen(true)}>
-            <Copy className="h-4 w-4 mr-2" />
-            Copy last week
-          </SecondaryButton>
-          <IconButton onClick={() => refetch()} aria-label="Refresh diary">
-            <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-          </IconButton>
+        <HeroActions>
+          <HeroPrimary
+            data-help="diary.copy"
+            onClick={() => setCopyOpen(true)}
+            icon={<Copy className="h-4 w-4" />}
+          >
+            Copy week
+          </HeroPrimary>
+          <ToolButton
+            label="See the team on the map"
+            onClick={() => navigate('/employer?section=tracking')}
+            icon={<MapPin className="h-4 w-4" />}
+          />
+          <ToolButton
+            label="Online booking"
+            data-help="diary.online-booking"
+            onClick={() => setBookingSettingsOpen(true)}
+            icon={<CalendarCheck className="h-4 w-4" />}
+          />
+          <ToolButton
+            label="Refresh diary"
+            onClick={() => refetch()}
+            icon={<RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />}
+          />
           <PageHelpButton help={DIARY_HELP} blockers={helpBlockers} askContext={helpAsk} />
-        </div>
+        </HeroActions>
       }
     />
   );
 
+  const trayPanel =
+    tray.length > 0 ? (
+      <section>
+        <PanelTitle
+          title="To schedule"
+          meta={
+            isDesktop ? 'Won work with no date. Drag onto a person and day.' : 'Tap to book a day'
+          }
+        />
+        <div className={cn(isDesktop ? 'grid grid-cols-3 gap-2 xl:grid-cols-4' : 'space-y-2')}>
+          {tray.map((j) => (
+            <JobBlock
+              key={j.id}
+              job={j}
+              day={null}
+              draggable={isDesktop}
+              note="No date yet"
+              onClick={() =>
+                setTarget({
+                  kind: 'assign',
+                  jobId: j.id,
+                  day: isDesktop ? undefined : selectedDay,
+                })
+              }
+            />
+          ))}
+        </div>
+      </section>
+    ) : null;
+
   if (isLoading) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
         {hero}
         <LoadingBlocks />
       </PageFrame>
@@ -285,7 +364,7 @@ export function DiarySection() {
   }
 
   return (
-    <PageFrame className="space-y-6 sm:space-y-8 lg:space-y-8">
+    <PageFrame className={frameClass}>
       {hero}
       <HowItWorks help={DIARY_HELP} blockers={helpBlockers} askContext={helpAsk} />
 
@@ -302,48 +381,64 @@ export function DiarySection() {
             <StatStrip
               columns={3}
               stats={[
-                { label: 'Hours booked', value: Math.round(stats.hours), tone: 'blue' },
+                {
+                  label: 'Hours booked',
+                  value: Math.round(stats.hours),
+                  sub: `Across the team ${weekWord}`,
+                },
                 {
                   label: 'Jobs with nobody',
                   value: stats.nobody,
-                  tone: stats.nobody ? 'red' : 'emerald',
+                  tone: stats.nobody ? 'yellow' : undefined,
+                  sub: stats.nobody ? 'Drag a person onto them' : 'Every job has someone',
                 },
-                { label: 'Clashes', value: stats.clashes, tone: stats.clashes ? 'red' : 'emerald' },
+                {
+                  label: 'Clashes',
+                  value: stats.clashes,
+                  tone: stats.clashes ? 'red' : undefined,
+                  sub: stats.clashes ? 'Double-booked or on leave' : 'No double bookings',
+                },
               ]}
             />
           )}
 
           {/* Week navigation */}
           <div className="flex items-center gap-2">
-            <IconButton onClick={() => goWeek(-1)} aria-label="Previous week">
-              <ChevronLeft className="h-4 w-4" />
-            </IconButton>
-            <div className="flex-1 min-w-0 text-center">
-              <div className="text-[15px] font-semibold text-white tabular-nums truncate">
+            <div className="min-w-0 flex-1">
+              <div className="text-[16px] font-semibold tracking-tight text-white tabular-nums truncate">
                 {weekLabel}
               </div>
-              <div className="text-[11.5px] text-white">
-                {weekStart === mondayOf(todayYmd())
+              <div className="text-[13px] text-white">
+                {isThisWeek
                   ? 'This week'
                   : weekStart > mondayOf(todayYmd())
                     ? `${diffDays(weekStart, mondayOf(todayYmd())) / 7} ${diffDays(weekStart, mondayOf(todayYmd())) === 7 ? 'week' : 'weeks'} ahead`
                     : `${diffDays(mondayOf(todayYmd()), weekStart) / 7} ${diffDays(mondayOf(todayYmd()), weekStart) === 7 ? 'week' : 'weeks'} ago`}
               </div>
             </div>
-            <IconButton onClick={() => goWeek(1)} aria-label="Next week">
-              <ChevronRight className="h-4 w-4" />
-            </IconButton>
-            <SecondaryButton
+            <button
+              type="button"
               onClick={goToday}
-              disabled={weekStart === mondayOf(todayYmd()) && selectedDay === todayYmd()}
+              disabled={isThisWeek && selectedDay === todayYmd()}
+              className="h-11 shrink-0 rounded-full border border-white/[0.14] px-4 text-[14px] font-semibold text-white touch-manipulation hover:bg-white/[0.06] disabled:opacity-40"
             >
               Today
-            </SecondaryButton>
+            </button>
+            <ToolButton
+              label="Previous week"
+              onClick={() => goWeek(-1)}
+              icon={<ChevronLeft className="h-4 w-4" />}
+            />
+            <ToolButton
+              label="Next week"
+              onClick={() => goWeek(1)}
+              icon={<ChevronRight className="h-4 w-4" />}
+            />
           </div>
 
           {/* Changes not yet pushed */}
           {board.unsent.changes > 0 && (
-            <div className="-mx-4 sm:mx-0 flex items-center gap-3 border-y sm:border sm:rounded-2xl border-white/[0.10] bg-white/[0.04] px-4 py-3">
+            <div className={cn(panel, 'flex items-center gap-3 px-4 py-3 sm:px-5')}>
               <span aria-hidden className="h-2 w-2 rounded-full bg-orange-400 shrink-0" />
               <p className="flex-1 min-w-0 text-[13px] text-white">
                 {board.unsent.changes} {board.unsent.changes === 1 ? 'change' : 'changes'} for{' '}
@@ -354,35 +449,41 @@ export function DiarySection() {
                   They go as one push each, about a minute after your last change.
                 </span>
               </p>
-              <PrimaryButton
+              <button
+                type="button"
                 data-help="diary.send"
-                size="sm"
                 onClick={sendNow}
                 disabled={publish.isPending}
-                className="shrink-0 h-11"
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[14px] font-semibold text-black touch-manipulation disabled:opacity-50"
               >
-                <Send className="h-4 w-4 mr-1.5" />
+                <Send className="h-4 w-4" />
                 Send now
-              </PrimaryButton>
+              </button>
             </div>
           )}
 
+          <OnlineBookingsPanel firm={firm} board={board} jobsById={jobsById} />
+
           {board.people.length === 0 && board.jobs.length === 0 ? (
-            <EmptyState
-              title="Nothing to plan yet"
-              description="Add your team under People and your jobs under Jobs. They appear here to book in."
+            <PlainEmpty
+              text="Your team and your jobs appear here to book in. Add people under People and jobs under Jobs."
+              action="Open jobs"
+              onAction={() => navigate('/employer?section=jobs')}
             />
           ) : isDesktop ? (
-            <DiaryWeekGrid
-              board={board}
-              days={days}
-              jobsById={jobsById}
-              assignedJobIds={assignedJobIds}
-              onDrop={handleDrop}
-              onOpenBooking={(id) => setTarget({ kind: 'move', assignmentId: id })}
-              onOpenJob={(jobId, day) => setTarget({ kind: 'assign', jobId, day })}
-              onEmptyCell={(employeeId, day) => setTarget({ kind: 'assign', employeeId, day })}
-            />
+            <>
+              {trayPanel}
+              <DiaryWeekGrid
+                board={board}
+                days={days}
+                jobsById={jobsById}
+                assignedJobIds={assignedJobIds}
+                onDrop={handleDrop}
+                onOpenBooking={(id) => setTarget({ kind: 'move', assignmentId: id })}
+                onOpenJob={(jobId, day) => setTarget({ kind: 'assign', jobId, day })}
+                onEmptyCell={(employeeId, day) => setTarget({ kind: 'assign', employeeId, day })}
+              />
+            </>
           ) : (
             <div className="space-y-5">
               <DayRail board={board} days={days} selected={selectedDay} onSelect={setSelectedDay} />
@@ -398,38 +499,19 @@ export function DiarySection() {
             </div>
           )}
 
-          {/* Won work with no date */}
-          {tray.length > 0 && (
-            <section className="space-y-3">
-              <div className="flex items-baseline justify-between gap-3">
-                <h2 className="text-[15px] font-semibold text-white">To schedule</h2>
-                <span className="text-[12px] text-white">
-                  {isDesktop ? 'Drag onto a person and day' : 'Tap to book a day'}
-                </span>
-              </div>
-              <div className={cn(isDesktop ? 'grid grid-cols-4 gap-2' : 'space-y-2')}>
-                {tray.map((j) => (
-                  <JobBlock
-                    key={j.id}
-                    job={j}
-                    day={null}
-                    draggable={isDesktop}
-                    note="No date yet"
-                    onClick={() =>
-                      setTarget({
-                        kind: 'assign',
-                        jobId: j.id,
-                        day: isDesktop ? undefined : selectedDay,
-                      })
-                    }
-                  />
-                ))}
-              </div>
-            </section>
-          )}
+          <DiaryRoutesPanel
+            firm={firm}
+            from={weekStart}
+            to={weekEnd}
+            people={board.people}
+            day={isDesktop ? undefined : selectedDay}
+          />
+
+          {/* Won work with no date: under the day on a phone, above the grid on desktop. */}
+          {!isDesktop && trayPanel}
 
           {!isDesktop && (
-            <p className="text-[12px] text-white text-center">
+            <p className="text-[13px] text-white">
               {fmtDay(selectedDay, { weekday: 'long' })}: red means double-booked or booked on
               leave.
             </p>
@@ -449,6 +531,7 @@ export function DiarySection() {
         }}
       />
       <CopyWeekSheet open={copyOpen} onOpenChange={setCopyOpen} weekStart={weekStart} />
+      <BookingSettingsSheet firm={firm} open={bookingSettingsOpen} onOpenChange={setBookingSettingsOpen} />
       <ViewJobSheet job={viewJob} open={!!viewJob} onOpenChange={(o) => !o && setViewJobId(null)} />
     </PageFrame>
   );

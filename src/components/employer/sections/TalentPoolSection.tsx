@@ -4,7 +4,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 import { getMyInvitations } from '@/services/conversationService';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import FormSheet from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
 import { SparkProfileSheet } from '@/components/employer/SparkProfileSheet';
 import { MessageDialog } from '@/components/employer/talent-pool/MessageDialog';
 import { InviteToApplyDialog } from '@/components/employer/talent-pool/InviteToApplyDialog';
@@ -16,32 +17,31 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
   Avatar,
-  Pill,
-  IconButton,
-  EmptyState,
   LoadingBlocks,
-  Divider,
-  Eyebrow,
-  PrimaryButton,
-  SecondaryButton,
   fieldLabelClass,
-  type Tone,
 } from '@/components/employer/editorial';
 import {
-  SlidersHorizontal,
-  Shield,
-  Check,
-  Award,
-  RefreshCw,
-  MessageSquare,
-  UserPlus,
-  Bookmark,
-  BookmarkCheck,
-} from 'lucide-react';
+  frameClass,
+  twoColClass,
+  colClass,
+  panel,
+  PanelTitle,
+  Row,
+  RowList,
+  rowsClass,
+  StatusPill,
+  PlainEmpty,
+  Segments,
+  SearchField,
+  ToolButton,
+  ToolBadge,
+  HeroActions,
+  rowBtnPrimary,
+  rowBtnSecondary,
+  plural,
+} from '@/components/employer/pageParts/PageParts';
+import { SlidersHorizontal, Bookmark, BookmarkCheck } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from '@/hooks/useTalentPool';
 import { Slider } from '@/components/ui/slider';
@@ -73,12 +73,6 @@ const getInitials = (name: string): string => {
   const parts = name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-};
-
-const tierToneFor = (tier: string | undefined): Tone => {
-  if (tier === 'premium') return 'yellow';
-  if (tier === 'verified') return 'emerald';
-  return 'blue';
 };
 
 export function TalentPoolSection() {
@@ -174,7 +168,6 @@ export function TalentPoolSection() {
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [selectedWorker, setSelectedWorker] = useState<TalentPoolWorker | null>(null);
-  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const [tierFilter, setTierFilter] = useState<TierFilter>('all');
   const [selectedSpecialisms, setSelectedSpecialisms] = useState<string[]>([]);
@@ -212,9 +205,7 @@ export function TalentPoolSection() {
   const remaining = workers.length - visibleWorkers.length;
 
   const handleRefresh = useCallback(async () => {
-    setIsRefreshing(true);
     await refetch();
-    setIsRefreshing(false);
     toast({ title: 'Refreshed', description: 'Talent pool updated.' });
   }, [refetch]);
 
@@ -325,24 +316,58 @@ export function TalentPoolSection() {
       : [];
   const declaredRateCount = workers.filter((w) => w.dayRate != null).length;
 
+  const chip = (on: boolean) =>
+    cn(
+      'h-11 shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[13px] font-semibold touch-manipulation transition-colors',
+      on
+        ? 'border-elec-yellow bg-elec-yellow text-black'
+        : 'border-white/[0.14] bg-white/[0.04] text-white hover:bg-white/[0.08]'
+    );
+
+  const ecsText = (worker: TalentPoolWorker) => {
+    // Stored values are mixed-case colours or role slugs: resolve via the
+    // canonical label map, never leak 'none'
+    if (!worker.ecsCardType || worker.ecsCardType.toLowerCase() === 'none') return null;
+    const label = getEcsCardLabel(worker.ecsCardType);
+    return /^ECS\b/.test(label) ? label : `${label} ECS`;
+  };
+
+  const outcomePill = (profileId: string) => {
+    // Invite outcome: did the invitation convert?
+    const inv = invitationsByProfile.get(profileId);
+    if (!inv) return null;
+    return inv === 'applied' ? (
+      <StatusPill tone="green">Applied</StatusPill>
+    ) : inv === 'viewed' ? (
+      <StatusPill>Invite seen</StatusPill>
+    ) : inv === 'declined' ? (
+      <StatusPill tone="red">Declined</StatusPill>
+    ) : (
+      <StatusPill>Invited</StatusPill>
+    );
+  };
+
+  const shortlisted = workers.filter((w) => savedCandidates.includes(w.profileId));
+  const liveLine =
+    workers.length === 0 && activeFilterCount === 0 && !searchQuery
+      ? 'Nobody has switched on Let firms find me yet.'
+      : activeFilterCount > 0 || searchQuery
+        ? `${plural(workers.length, 'person', 'people')} match your filters, ${shortlistedCount} on your shortlist.`
+        : `${plural(workers.length, 'person', 'people')} available, ${verifiedCount} verified, ${shortlistedCount} on your shortlist.`;
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="Hiring"
-        title="Talent Pool"
-        description="Electricians who have chosen to be found. You see first name, area and credentials. Phone and email stay private; contact them through messages."
-        tone="blue"
+        title="Talent pool"
+        description={liveLine}
         actions={
-          <>
-            <IconButton onClick={handleRefresh} aria-label="Refresh talent pool">
-              <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-            </IconButton>
+          <HeroActions>
             <PageHelpButton
               help={TALENT_POOL_HELP}
               blockers={helpBlockers}
               askContext={{ page: 'talentpool', tab: activeQuickTab }}
             />
-          </>
+          </HeroActions>
         }
       />
 
@@ -352,403 +377,164 @@ export function TalentPoolSection() {
         askContext={{ page: 'talentpool', tab: activeQuickTab }}
       />
 
-      {error && (
-        <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl px-5 py-4">
-          <div className="flex items-center gap-3">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400" />
-            <p className="text-[13px] text-white">{error}</p>
-          </div>
-        </div>
-      )}
+      {error && <PlainEmpty text={error} action="Try again" onAction={handleRefresh} />}
 
       <StatStrip
         columns={4}
         stats={[
-          { label: 'In the pool', value: workers.length, tone: 'blue' },
-          { label: 'Verified', value: verifiedCount, tone: 'emerald' },
-          { label: 'Shortlisted', value: shortlistedCount, tone: 'yellow' },
-          { label: 'Rate declared', value: declaredRateCount, accent: true },
+          { label: 'In the pool', value: workers.length, sub: 'Chose to be found' },
+          { label: 'Verified', value: verifiedCount, sub: 'ECS and a qualification' },
+          {
+            label: 'Shortlisted',
+            value: shortlistedCount,
+            sub: 'Shared with your admins',
+          },
+          { label: 'Rate declared', value: declaredRateCount, sub: 'Say what they charge' },
         ]}
       />
 
-      <div data-help="talentpool.tabs">
-      <FilterBar
-        tabs={skillTabs}
-        activeTab={activeQuickTab}
-        onTabChange={handleQuickTab}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Name, skill or area…"
-        actions={
-          <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
-            <SheetTrigger asChild>
-              <button
-                className="relative h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white inline-flex items-center gap-2 hover:bg-white/[0.1] transition-colors touch-manipulation"
-                aria-label="Open filters"
-              >
-                <SlidersHorizontal className="h-4 w-4" />
-                Filters
-                {activeFilterCount > 0 && (
-                  <span className="ml-1 inline-flex items-center justify-center h-5 min-w-[20px] px-1.5 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums">
-                    {activeFilterCount}
-                  </span>
-                )}
-              </button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="max-h-[85vh] rounded-t-2xl p-0 overflow-hidden">
-              <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
-                <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
-                  <div className="h-1 w-10 rounded-full bg-white/20" />
-                </div>
-                <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
-                  <div className="flex items-end justify-between gap-3">
-                    <div>
-                      <Eyebrow>Hiring</Eyebrow>
-                      <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
-                        Filters
-                      </div>
-                    </div>
-                    {activeFilterCount > 0 && (
-                      <button
-                        onClick={clearFilters}
-                        className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-                      >
-                        Clear all
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
-                  <div className="space-y-3">
-                    <label className={fieldLabelClass}>Elec-ID verification</label>
-                    <div className="flex gap-2 flex-wrap">
-                      {[
-                        { value: 'all', label: 'Any', icon: null },
-                        { value: 'verified', label: 'Verified+', icon: Shield },
-                        { value: 'premium', label: 'Premium', icon: Award },
-                      ].map((opt) => {
-                        const Icon = opt.icon;
-                        const isActive = tierFilter === opt.value;
-                        return (
-                          <button
-                            key={opt.value}
-                            onClick={() => setTierFilter(opt.value as TierFilter)}
-                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-                          >
-                            {Icon && <Icon className="h-4 w-4" />}
-                            {opt.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <p className="text-[11.5px] text-white">
-                      Verified = ECS + qualification. Premium = full credentials.
-                    </p>
-                  </div>
-
-                  <Divider />
-
-                  <div className="space-y-3">
-                    <label className={fieldLabelClass}>Specialisms</label>
-                    <div className="flex flex-wrap gap-2">
-                      {specialisms.map((spec) => {
-                        const isActive = selectedSpecialisms.includes(spec);
-                        return (
-                          <button
-                            key={spec}
-                            onClick={() => toggleSpecialism(spec)}
-                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-                          >
-                            {isActive && <Check className="h-3 w-3" />}
-                            {spec}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <Divider />
-
-                  <div className="space-y-3">
-                    <label className={fieldLabelClass}>Experience (declared on skills)</label>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        { value: 'all', label: 'Any' },
-                        { value: 'entry', label: 'Entry (0-2 yr)' },
-                        { value: 'mid', label: 'Mid (3-7 yr)' },
-                        { value: 'senior', label: 'Senior (8+ yr)' },
-                      ].map((opt) => {
-                        const isActive = experienceFilter === opt.value;
-                        return (
-                          <button
-                            key={opt.value}
-                            onClick={() => setExperienceFilter(opt.value as ExperienceLevel)}
-                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-                          >
-                            {opt.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <Divider />
-
-                  <div className="space-y-3">
-                    <label className={fieldLabelClass}>ECS card type</label>
-                    <div className="flex flex-wrap gap-2">
-                      {ECS_CARD_TYPES.map((card) => {
-                        const isActive = selectedEcsCards.includes(card);
-                        return (
-                          <button
-                            key={card}
-                            onClick={() =>
-                              setSelectedEcsCards((prev) =>
-                                prev.includes(card)
-                                  ? prev.filter((c) => c !== card)
-                                  : [...prev, card]
-                              )
-                            }
-                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-                          >
-                            {isActive && <Check className="h-3 w-3" />}
-                            {card}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <Divider />
-
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className={fieldLabelClass}>Day rate (declared)</label>
-                      <span className="text-[12.5px] font-semibold text-white tabular-nums">
-                        £{rateRange[0]} – £{rateRange[1]}
-                        {rateRange[1] >= 500 ? '+' : ''}
-                      </span>
-                    </div>
-                    <div className="px-2">
-                      <Slider
-                        value={rateRange}
-                        min={150}
-                        max={500}
-                        step={25}
-                        onValueChange={(value) => setRateRange(value as [number, number])}
-                        className="touch-manipulation"
-                      />
-                    </div>
-                    <div className="flex justify-between text-[11px] text-white">
-                      <span>£150</span>
-                      <span>£500+</span>
-                    </div>
-                    <p className="text-[11.5px] text-white">
-                      Filtering by rate only shows candidates who declared one.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2">
-                  {activeFilterCount > 0 && (
-                    <SecondaryButton onClick={clearFilters} fullWidth>
-                      Clear
-                    </SecondaryButton>
-                  )}
-                  <PrimaryButton onClick={() => setFilterSheetOpen(false)} fullWidth size="lg">
-                    Done
-                  </PrimaryButton>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        }
-      />
-      </div>
-
-      <TalentFilterChips
-        tierFilter={tierFilter}
-        selectedSpecialisms={selectedSpecialisms}
-        experienceFilter={experienceFilter}
-        selectedEcsCards={selectedEcsCards}
-        rateRange={rateRange}
-        onRemoveTier={() => setTierFilter('all')}
-        onRemoveSpecialism={(spec) =>
-          setSelectedSpecialisms((prev) => prev.filter((s) => s !== spec))
-        }
-        onRemoveExperience={() => setExperienceFilter('all')}
-        onRemoveEcsCard={(card) => setSelectedEcsCards((prev) => prev.filter((c) => c !== card))}
-        onResetRateRange={() => setRateRange([150, 500])}
-        onOpenFilters={() => setFilterSheetOpen(true)}
-        totalResults={workers.length}
-      />
-
-      {isLoading && <LoadingBlocks />}
-
-      {!isLoading && (
-        <ListCard>
-          <ListCardHeader
-            tone="blue"
-            title="Available talent"
-            meta={<Pill tone="blue">{workers.length}</Pill>}
-          />
-          {workers.length === 0 ? (
-            <div className="px-5 py-10">
-              <EmptyState
-                title={
-                  activeFilterCount === 0 && !searchQuery
-                    ? 'No one in the pool yet'
-                    : 'No candidates match'
-                }
-                description={
-                  activeFilterCount > 0
-                    ? 'Try removing a filter or widening the rate range.'
-                    : searchQuery
-                      ? 'No electricians match your search.'
-                      : 'Electricians only appear here after they switch on "Let firms find me" in their Elec-ID. Check back soon, or post a vacancy so people can apply.'
-                }
-                action={activeFilterCount > 0 ? 'Clear filters' : undefined}
-                onAction={activeFilterCount > 0 ? clearFilters : undefined}
+      <div className={twoColClass}>
+        <div className={colClass}>
+          <div data-help="talentpool.tabs" className="space-y-3">
+            <Segments
+              wrap
+              items={skillTabs}
+              value={activeQuickTab === 'list' ? 'all' : activeQuickTab}
+              onChange={handleQuickTab}
+            />
+            <div className="flex gap-2">
+              <SearchField
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Name, skill or area"
+                className="flex-1"
               />
+              <ToolButton
+                label="Filters"
+                icon={<SlidersHorizontal className="h-4 w-4" />}
+                onClick={() => setFilterSheetOpen(true)}
+              >
+                <ToolBadge count={activeFilterCount} />
+              </ToolButton>
             </div>
-          ) : (
-            <div className="divide-y divide-white/[0.06]" data-help="talentpool.list">
-              {visibleWorkers.map((worker) => {
-                const isSaved = savedCandidates.includes(worker.profileId);
-                const tierTone = tierToneFor(worker.verificationTier);
-                return (
-                  <div key={worker.profileId} className="px-4 sm:px-5 py-4">
-                    <div className="flex items-start gap-3">
-                      <button
-                        onClick={() => handleOpenProfile(worker)}
-                        className="shrink-0 touch-manipulation rounded-lg"
-                        aria-label={`View ${worker.name}`}
-                      >
-                        <Avatar
-                          size="lg"
-                          photo={worker.photoUrl}
-                          initials={getInitials(worker.name)}
-                        />
-                      </button>
+            <TalentFilterChips
+              tierFilter={tierFilter}
+              selectedSpecialisms={selectedSpecialisms}
+              experienceFilter={experienceFilter}
+              selectedEcsCards={selectedEcsCards}
+              rateRange={rateRange}
+              onRemoveTier={() => setTierFilter('all')}
+              onRemoveSpecialism={(spec) =>
+                setSelectedSpecialisms((prev) => prev.filter((x) => x !== spec))
+              }
+              onRemoveExperience={() => setExperienceFilter('all')}
+              onRemoveEcsCard={(card) =>
+                setSelectedEcsCards((prev) => prev.filter((c) => c !== card))
+              }
+              onResetRateRange={() => setRateRange([150, 500])}
+              onOpenFilters={() => setFilterSheetOpen(true)}
+              totalResults={workers.length}
+            />
+          </div>
 
-                      <div className="flex-1 min-w-0">
-                        {/* Name + tier */}
-                        <div className="flex items-start justify-between gap-2">
-                          <button
-                            onClick={() => handleOpenProfile(worker)}
-                            className="text-left min-w-0 touch-manipulation"
-                          >
-                            <p className="font-semibold text-white flex items-center gap-1.5 min-w-0">
-                              {/* Name truncates; pills never clip — the outcome
-                                  pill is the signal this row exists to show */}
-                              <span className="truncate">{worker.name}</span>
-                              {worker.isVerified && (
-                                <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                              )}
-                              {isSaved && (
-                                <Pill tone="amber" className="shrink-0">
-                                  Saved
-                                </Pill>
-                              )}
-                              {(() => {
-                                // Invite outcome — did the invitation convert?
-                                const inv = invitationsByProfile.get(worker.profileId);
-                                if (!inv) return null;
-                                return inv === 'applied' ? (
-                                  <Pill tone="emerald" className="shrink-0">
-                                    Applied
-                                  </Pill>
-                                ) : inv === 'viewed' ? (
-                                  <Pill tone="blue" className="shrink-0">
-                                    Invite viewed
-                                  </Pill>
-                                ) : inv === 'declined' ? (
-                                  <Pill tone="red" className="shrink-0">
-                                    Declined
-                                  </Pill>
-                                ) : (
-                                  <Pill tone="cyan" className="shrink-0">
-                                    Invited
-                                  </Pill>
-                                );
-                              })()}
-                            </p>
-                            <p className="text-[12.5px] text-white truncate">
+          {isLoading ? (
+            <LoadingBlocks />
+          ) : workers.length === 0 ? (
+            <PlainEmpty
+              text={
+                activeFilterCount > 0
+                  ? 'Nobody matches. Remove a filter or widen the rate range.'
+                  : searchQuery
+                    ? 'No electricians match your search.'
+                    : 'Electricians only appear here after they switch on Let firms find me in their Elec-ID. Post a vacancy so people can apply in the meantime.'
+              }
+              action={activeFilterCount > 0 ? 'Clear filters' : undefined}
+              onAction={activeFilterCount > 0 ? clearFilters : undefined}
+            />
+          ) : (
+            <section>
+              <PanelTitle title="Available" meta={`${workers.length}`} />
+              <div className={cn(panel, 'overflow-hidden')} data-help="talentpool.list">
+                <div className={rowsClass}>
+                  {visibleWorkers.map((worker) => {
+                    const isSaved = savedCandidates.includes(worker.profileId);
+                    const facts = [
+                      worker.dayRate != null ? `£${worker.dayRate} a day` : 'Rate on request',
+                      worker.yearsExperience != null ? `${worker.yearsExperience} yrs` : null,
+                      ecsText(worker),
+                      worker.verifiedDocuments.length > 0
+                        ? `${worker.verifiedDocuments.length} checked`
+                        : null,
+                    ].filter(Boolean);
+                    const tier =
+                      worker.verificationTier === 'premium'
+                        ? 'Premium'
+                        : worker.verificationTier === 'verified'
+                          ? 'Verified'
+                          : null;
+                    return (
+                      <div
+                        key={worker.profileId}
+                        className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:px-5"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => handleOpenProfile(worker)}
+                          className="flex min-w-0 flex-1 items-center gap-3 text-left touch-manipulation"
+                          aria-label={`View ${worker.name}`}
+                        >
+                          <Avatar
+                            size="md"
+                            photo={worker.photoUrl}
+                            initials={getInitials(worker.name)}
+                          />
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate text-[15px] font-semibold leading-snug text-white">
+                              {worker.name}
+                            </span>
+                            <span className="mt-0.5 block truncate text-[13px] text-white">
                               {worker.jobTitle || 'Electrician'}
                               {worker.area ? ` · ${worker.area}` : ''}
-                            </p>
-                          </button>
-                          <Pill tone={tierTone}>{worker.verificationTier}</Pill>
-                        </div>
-
-                        {/* Meta row — every value real/declared */}
-                        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px]">
-                          {worker.dayRate != null ? (
-                            <span className="font-semibold text-elec-yellow tabular-nums">
-                              £{worker.dayRate}/day
                             </span>
-                          ) : (
-                            <span className="text-white">Rate on request</span>
-                          )}
-                          {worker.yearsExperience != null && (
-                            <span className="text-white">{worker.yearsExperience} yrs exp</span>
-                          )}
-                          {/* Stored values are mixed-case colours or role slugs —
-                              resolve via the canonical label map, never leak 'none' */}
-                          {worker.ecsCardType && worker.ecsCardType.toLowerCase() !== 'none' && (
-                            <span className="text-white">
-                              {/^ECS\b/.test(getEcsCardLabel(worker.ecsCardType))
-                                ? getEcsCardLabel(worker.ecsCardType)
-                                : `${getEcsCardLabel(worker.ecsCardType)} ECS`}
+                            <span className="mt-0.5 block truncate text-[12.5px] text-white">
+                              {facts.join(' · ')}
+                              {worker.specialisms.length > 0
+                                ? ` · ${worker.specialisms.slice(0, 3).join(', ')}`
+                                : ''}
                             </span>
-                          )}
-                          {worker.verifiedDocuments.length > 0 && (
-                            <span className="text-emerald-400">
-                              {worker.verifiedDocuments.length} verified ✓
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Specialism chips */}
-                        {worker.specialisms.length > 0 && (
-                          <div className="mt-2 flex flex-wrap gap-1.5">
-                            {worker.specialisms.slice(0, 4).map((s) => (
-                              <span
-                                key={s}
-                                className="h-6 px-2.5 inline-flex items-center rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] text-white"
-                              >
-                                {s}
-                              </span>
-                            ))}
-                            {worker.specialisms.length > 4 && (
-                              <span className="h-6 px-2 inline-flex items-center rounded-full text-[11px] text-white">
-                                +{worker.specialisms.length - 4}
-                              </span>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Quick actions */}
-                        <div className="mt-3 flex items-center gap-2">
+                          </span>
+                          <span className="shrink-0">
+                            {outcomePill(worker.profileId) ??
+                              (tier ? <StatusPill tone="green">{tier}</StatusPill> : null)}
+                          </span>
+                        </button>
+                        <div className="flex shrink-0 items-center gap-2 pl-[52px] sm:pl-0">
                           <button
+                            type="button"
                             onClick={() => handleMessage(worker)}
-                            className="h-11 px-4 inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white hover:bg-white/[0.1] transition-colors touch-manipulation"
+                            className={cn(rowBtnSecondary, 'flex-1 sm:flex-none')}
                           >
-                            <MessageSquare className="h-3.5 w-3.5" />
                             Message
                           </button>
                           <button
+                            type="button"
                             onClick={() => handleInvite(worker)}
-                            className="h-11 px-4 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                            className={cn(rowBtnSecondary, 'flex-1 sm:flex-none')}
                           >
-                            <UserPlus className="h-3.5 w-3.5" />
                             Invite
                           </button>
                           <button
+                            type="button"
                             onClick={() => handleSave(worker)}
-                            className={`ml-auto h-11 w-11 inline-flex items-center justify-center rounded-full border touch-manipulation transition-colors ${isSaved ? 'bg-white/[0.06] border-amber-500/30 text-amber-400' : 'bg-white/[0.04] border-white/[0.08] text-white hover:text-white'}`}
-                            aria-label={isSaved ? 'Remove from saved' : 'Save candidate'}
+                            aria-pressed={isSaved}
+                            aria-label={isSaved ? 'Remove from shortlist' : 'Add to shortlist'}
+                            title={isSaved ? 'On your shortlist' : 'Add to shortlist'}
+                            className={cn(
+                              'flex h-11 w-11 shrink-0 items-center justify-center rounded-full border touch-manipulation transition-colors',
+                              isSaved
+                                ? 'border-elec-yellow bg-elec-yellow text-black'
+                                : 'border-white/[0.14] text-white hover:bg-white/[0.06]'
+                            )}
                           >
                             {isSaved ? (
                               <BookmarkCheck className="h-4 w-4" />
@@ -758,29 +544,201 @@ export function TalentPoolSection() {
                           </button>
                         </div>
                       </div>
-                    </div>
+                    );
+                  })}
+                </div>
+                {workers.length > PAGE_SIZE && (
+                  <div className="flex flex-col gap-3 border-t border-white/[0.07] px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                    <p className="text-[13px] tabular-nums text-white" aria-live="polite">
+                      Showing {visibleWorkers.length} of {workers.length}
+                    </p>
+                    {remaining > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
+                        className={cn(rowBtnSecondary, 'w-full sm:w-auto')}
+                      >
+                        Show {Math.min(PAGE_SIZE, remaining)} more
+                      </button>
+                    )}
                   </div>
-                );
-              })}
-            </div>
+                )}
+              </div>
+            </section>
           )}
-          {workers.length > PAGE_SIZE && (
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 sm:px-5 py-4 border-t border-white/[0.06]">
-              <p className="text-[13px] text-white tabular-nums" aria-live="polite">
-                Showing {visibleWorkers.length} of {workers.length}
-              </p>
-              {remaining > 0 && (
-                <SecondaryButton
-                  onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
-                  className="h-11 w-full sm:w-auto touch-manipulation"
+        </div>
+
+        <div className={colClass}>
+          <section>
+            <PanelTitle
+              title="Your shortlist"
+              meta={shortlistedCount > 0 ? `${shortlistedCount}` : undefined}
+            />
+            {shortlisted.length === 0 ? (
+              <PlainEmpty
+                stacked
+                text="Tap the bookmark on anyone to keep them here. Everyone managing the firm sees the same shortlist."
+              />
+            ) : (
+              <RowList>
+                {shortlisted.map((w) => (
+                  <Row
+                    key={w.profileId}
+                    title={w.name}
+                    detail={`${w.jobTitle || 'Electrician'}${w.area ? ` · ${w.area}` : ''}`}
+                    trailing={outcomePill(w.profileId) ?? undefined}
+                    onClick={() => handleOpenProfile(w)}
+                  />
+                ))}
+              </RowList>
+            )}
+          </section>
+
+          <section>
+            <PanelTitle title="How contact works" />
+            <div className={cn(panel, 'px-4 py-3 text-[13px] leading-relaxed text-white sm:px-5')}>
+              Everyone here chose to be found. You see their first name, area and credentials. Their
+              phone and email stay private: message them, or invite them to apply for one of your
+              live vacancies.
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <FormSheet
+        open={filterSheetOpen}
+        onOpenChange={setFilterSheetOpen}
+        width="wide"
+        title="Filters"
+        description="Narrow the pool. Every value is what the person declared or had checked."
+        headerTrailing={
+          activeFilterCount > 0 ? (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="mr-8 h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Clear all
+            </button>
+          ) : undefined
+        }
+        footer={
+          <button
+            type="button"
+            onClick={() => setFilterSheetOpen(false)}
+            className={cn(rowBtnPrimary, 'h-12 w-full text-[15px]')}
+          >
+            Show {plural(workers.length, 'match', 'matches')}
+          </button>
+        }
+      >
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+          <section className="space-y-2">
+            <p className={fieldLabelClass}>Elec-ID verification</p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { value: 'all', label: 'Any' },
+                { value: 'verified', label: 'Verified+' },
+                { value: 'premium', label: 'Premium' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setTierFilter(opt.value as TierFilter)}
+                  className={chip(tierFilter === opt.value)}
                 >
-                  Show {Math.min(PAGE_SIZE, remaining)} more
-                </SecondaryButton>
-              )}
+                  {opt.label}
+                </button>
+              ))}
             </div>
-          )}
-        </ListCard>
-      )}
+            <p className="text-[12.5px] text-white">
+              Verified means an ECS card and a qualification. Premium means full credentials.
+            </p>
+          </section>
+
+          <section className="space-y-2">
+            <p className={fieldLabelClass}>Experience (declared on skills)</p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { value: 'all', label: 'Any' },
+                { value: 'entry', label: 'Entry (0 to 2 yrs)' },
+                { value: 'mid', label: 'Mid (3 to 7 yrs)' },
+                { value: 'senior', label: 'Senior (8+ yrs)' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setExperienceFilter(opt.value as ExperienceLevel)}
+                  className={chip(experienceFilter === opt.value)}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-2">
+            <p className={fieldLabelClass}>Specialisms</p>
+            <div className="flex flex-wrap gap-2">
+              {specialisms.map((spec) => (
+                <button
+                  key={spec}
+                  type="button"
+                  onClick={() => toggleSpecialism(spec)}
+                  aria-pressed={selectedSpecialisms.includes(spec)}
+                  className={chip(selectedSpecialisms.includes(spec))}
+                >
+                  {spec}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-2">
+            <p className={fieldLabelClass}>ECS card type</p>
+            <div className="flex flex-wrap gap-2">
+              {ECS_CARD_TYPES.map((card) => (
+                <button
+                  key={card}
+                  type="button"
+                  aria-pressed={selectedEcsCards.includes(card)}
+                  onClick={() =>
+                    setSelectedEcsCards((prev) =>
+                      prev.includes(card) ? prev.filter((c) => c !== card) : [...prev, card]
+                    )
+                  }
+                  className={chip(selectedEcsCards.includes(card))}
+                >
+                  {card}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-3 lg:col-span-2">
+            <div className="flex items-center justify-between">
+              <p className={fieldLabelClass}>Day rate (declared)</p>
+              <span className="text-[13px] font-semibold tabular-nums text-white">
+                £{rateRange[0]} to £{rateRange[1]}
+                {rateRange[1] >= 500 ? '+' : ''}
+              </span>
+            </div>
+            <div className="px-2 lg:max-w-xl">
+              <Slider
+                value={rateRange}
+                min={150}
+                max={500}
+                step={25}
+                onValueChange={(value) => setRateRange(value as [number, number])}
+                className="touch-manipulation"
+              />
+            </div>
+            <p className="text-[12.5px] text-white">
+              Filtering by rate only shows people who declared one.
+            </p>
+          </section>
+        </div>
+      </FormSheet>
 
       <SparkProfileSheet
         open={profileSheetOpen}

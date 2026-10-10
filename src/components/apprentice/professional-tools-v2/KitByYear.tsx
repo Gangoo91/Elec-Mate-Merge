@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
+import { CARD_BASE, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { itemVariants } from '@/components/college/primitives';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { apprenticeBudgetGuide } from '@/data/professional-tools/suppliersData';
 
 /**
@@ -24,9 +24,9 @@ import { apprenticeBudgetGuide } from '@/data/professional-tools/suppliersData';
  */
 const KitByYear = () => (
   <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-    <HubSectionHeading>What to buy, and when</HubSectionHeading>
+    <CollegeHeading>What to buy, and when</CollegeHeading>
 
-    <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+    <p className="max-w-3xl text-[14px] leading-relaxed text-white">
       You do not buy a full kit on day one, and you should not be asked to. This is the order most
       UK apprentices build one in — start at the year you are in.
     </p>
@@ -35,13 +35,18 @@ const KitByYear = () => (
       {apprenticeBudgetGuide.map((phase, i) => (
         <article
           key={phase.phase}
-          className={cn(CARD_BASE, CARD_NEUTRAL, 'flex flex-col gap-3 p-4 sm:p-5')}
+          className={cn(
+            CARD_BASE,
+            CARD_SURFACE,
+            'border-white/[0.08]',
+            'flex flex-col gap-3 p-4 sm:p-5'
+          )}
         >
           <div className="flex items-baseline justify-between gap-2">
             <h3 className="text-[15px] font-semibold leading-tight tracking-tight text-white">
               {phase.phase}
             </h3>
-            <span className="whitespace-nowrap rounded-md border border-elec-yellow/45 bg-elec-yellow/10 px-2 py-0.5 font-mono text-[12px] tabular-nums text-elec-yellow">
+            <span className="whitespace-nowrap rounded-md border border-white/[0.08] bg-white/[0.06] px-2 py-0.5 text-[12px] tabular-nums text-elec-yellow">
               {phase.budget}
             </span>
           </div>
@@ -60,10 +65,10 @@ const KitByYear = () => (
 
           {/* The advice is the part they cannot get from a price list. */}
           <div className="mt-auto rounded-lg border-y border-r border-l-[3px] border-white/[0.08] border-l-elec-yellow bg-white/[0.03] p-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+            <span className="text-[13px] font-semibold text-elec-yellow">
               {i === 0 ? 'Know your rights' : 'Worth knowing'}
             </span>
-            <p className="mt-1 text-[13px] leading-relaxed text-white">{phase.tip}</p>
+            <p className="mt-1 text-[14px] leading-relaxed text-white">{phase.tip}</p>
           </div>
         </article>
       ))}

@@ -164,12 +164,14 @@ const pathwayStages = [
   {
     stage: 'AM2 / AM2S',
     focus: 'Practical competence assessment',
-    detail: 'Independent practical test of safe isolation, installation, testing and fault finding.',
+    detail:
+      'Independent practical test of safe isolation, installation, testing and fault finding.',
   },
   {
     stage: 'EPA',
     focus: 'End-point assessment',
-    detail: 'Gateway sign-off, AM2(S), and professional discussion against the apprenticeship standard.',
+    detail:
+      'Gateway sign-off, AM2(S), and professional discussion against the apprenticeship standard.',
   },
 ];
 
@@ -180,7 +182,11 @@ const afddRows = [
     status: 'Required',
     tone: 'required' as const,
   },
-  { premises: 'Houses in Multiple Occupation (HMOs)', status: 'Required', tone: 'required' as const },
+  {
+    premises: 'Houses in Multiple Occupation (HMOs)',
+    status: 'Required',
+    tone: 'required' as const,
+  },
   {
     premises: 'Purpose-built student accommodation',
     status: 'Required',
@@ -197,24 +203,27 @@ const afddRows = [
 // Verified A4:2026 changes most relevant to training/CPD
 const a4Changes = [
   {
-    ref: 'Regulation 421.1.7',
-    change:
-      'AFDDs now required on socket-outlet final circuits rated ≤32 A in higher-risk premises; recommended elsewhere.',
+    ref: 'Regulation 312.2.1.1',
+    change: 'Now includes a protective neutral bonding (PNB) figure and requirements.',
   },
   {
-    ref: 'Regulation 411.3.4',
+    ref: 'Regulation 421.1.7(a)',
     change:
-      'Additional protection by 30 mA RCD now required for final circuits supplying luminaires in domestic (household) premises.',
+      'Reworded to "high rise residential buildings". The AFDD requirement itself dates from A2:2022.',
   },
   {
-    ref: 'Part 6 (Chapters 64 & 65)',
-    change:
-      'Inspection and testing fully restructured and renumbered — initial verification (Ch 64) and periodic inspection and testing (Ch 65).',
+    ref: 'Table 52.1',
+    change: 'New table for cables concealed in walls and partitions.',
   },
   {
-    ref: 'Section 722',
+    ref: 'Section 545 / Chapter 57',
     change:
-      'Electric vehicle charging installation requirements maintained as a dedicated special-installation section.',
+      'New Section 545 (functional earthing for ICT) and new Chapter 57 (stationary secondary batteries).',
+  },
+  {
+    ref: 'Regulations 653.1 / 653.2',
+    change:
+      'Condition reports take account of the Appendix 6 notes, include recipient guidance, and FI no longer has to be marked unsatisfactory.',
   },
 ];
 
@@ -234,7 +243,7 @@ export default function TrainingHubPage() {
       { name: 'Home', url: '/' },
       { name: 'Training', url: '/training' },
     ],
-    dateModified: '2026-06-10',
+    dateModified: '2026-10-10',
     author: 'Andrew Moore',
   });
 
@@ -284,11 +293,11 @@ export default function TrainingHubPage() {
               Which electrical training course do I need?
             </h2>
             <p className="text-white leading-relaxed">
-              UK electricians usually progress Level 2 → Level 3 → AM2, then sit end-point assessment
-              (EPA) to qualify. Once working, you keep current with 18th Edition (BS 7671:2018+A4:2026)
-              and can specialise through City &amp; Guilds 2391 inspection and testing. Apprentices
-              also log a fixed number of off-the-job training hours. Use the routes below to jump
-              straight to the stage you are at.
+              UK electricians usually progress Level 2 → Level 3 → AM2, then sit end-point
+              assessment (EPA) to qualify. Once working, you keep current with 18th Edition (BS
+              7671:2018+A4:2026) and can specialise through City &amp; Guilds 2391 inspection and
+              testing. Apprentices also log a fixed number of off-the-job training hours. Use the
+              routes below to jump straight to the stage you are at.
             </p>
           </div>
         </div>
@@ -299,10 +308,9 @@ export default function TrainingHubPage() {
           </h2>
           <p className="text-white leading-relaxed mb-8 max-w-4xl">
             Whether you are starting out or topping up your knowledge, this hub ties together pages
-            like{' '}
-            <SEOInternalLink href="/eighteenth-edition-course">18th Edition</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/am2-exam-preparation">AM2 preparation</SEOInternalLink>
-            , <SEOInternalLink href="/city-guilds2391">2391</SEOInternalLink>, and the{' '}
+            like <SEOInternalLink href="/eighteenth-edition-course">18th Edition</SEOInternalLink>,{' '}
+            <SEOInternalLink href="/am2-exam-preparation">AM2 preparation</SEOInternalLink>,{' '}
+            <SEOInternalLink href="/city-guilds2391">2391</SEOInternalLink>, and the{' '}
             <SEOInternalLink href="/study-centre">Study Centre</SEOInternalLink> so you can find the
             right learning path quickly.
           </p>
@@ -312,16 +320,12 @@ export default function TrainingHubPage() {
           <p className="text-white leading-relaxed mb-6 max-w-4xl">
             A typical Installation and Maintenance Electrician route runs through four stages. Exact
             qualifications depend on whether you study with{' '}
-            <SEOInternalLink href="/city-guilds2391">City &amp; Guilds</SEOInternalLink> or
-            EAL — these are separate awarding organisations, so check which your employer or college
-            uses.
+            <SEOInternalLink href="/city-guilds2391">City &amp; Guilds</SEOInternalLink> or EAL —
+            these are separate awarding organisations, so check which your employer or college uses.
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {pathwayStages.map((s, i) => (
-              <div
-                key={s.stage}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
-              >
+              <div key={s.stage} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-elec-yellow text-sm font-bold">
                     {i + 1}
@@ -352,8 +356,8 @@ export default function TrainingHubPage() {
               </p>
               <p className="text-3xl font-bold text-white mb-1">1,066 hours</p>
               <p className="text-sm text-white leading-relaxed">
-                A fixed minimum set by the Installation and Maintenance Electrician standard (ST0152),
-                logged and evidenced across the apprenticeship.
+                A fixed minimum set by the Installation and Maintenance Electrician standard
+                (ST0152), logged and evidenced across the apprenticeship.
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
@@ -369,7 +373,9 @@ export default function TrainingHubPage() {
           </div>
           <p className="text-white leading-relaxed mt-6">
             Track and evidence these hours in the{' '}
-            <SEOInternalLink href="/apprentice-portfolio-guide">apprentice portfolio</SEOInternalLink>{' '}
+            <SEOInternalLink href="/apprentice-portfolio-guide">
+              apprentice portfolio
+            </SEOInternalLink>{' '}
             so the record is ready for your tutor, assessor and EPA gateway.
           </p>
         </div>
@@ -416,10 +422,10 @@ export default function TrainingHubPage() {
           <h3 className="text-xl font-bold text-white pt-2">Why stay current?</h3>
           <p>
             Regulation 16 of the Electricity at Work Regulations 1989 (EAWR) requires persons to be
-            competent to prevent danger. For qualified electricians, that means structured CPD is not
-            optional — it keeps you working safely and lawfully as regulations evolve. Elec-Mate&apos;s
-            CPD and 18th Edition content is built around that obligation, giving employers and their
-            teams a clear, documented path to ongoing compliance.
+            competent to prevent danger. For qualified electricians, that means structured CPD is
+            not optional — it keeps you working safely and lawfully as regulations evolve.
+            Elec-Mate&apos;s CPD and 18th Edition content is built around that obligation, giving
+            employers and their teams a clear, documented path to ongoing compliance.
           </p>
         </div>
 
@@ -445,9 +451,7 @@ export default function TrainingHubPage() {
                     <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">
                       {row.ref}
                     </td>
-                    <td className="px-4 py-3 align-top text-white leading-relaxed">
-                      {row.change}
-                    </td>
+                    <td className="px-4 py-3 align-top text-white leading-relaxed">{row.change}</td>
                   </tr>
                 ))}
               </tbody>
@@ -471,8 +475,9 @@ export default function TrainingHubPage() {
             Where are AFDDs required? (Regulation 421.1.7)
           </h3>
           <p className="text-white leading-relaxed mb-5">
-            Under Amendment 4, arc fault detection devices on socket-outlet final circuits rated up
-            to 32 A are a requirement in certain higher-risk premises, and recommended in all others.
+            Since Amendment 2 (2022), arc fault detection devices on socket-outlet final circuits
+            rated up to 32 A have been a requirement in certain higher-risk premises, and
+            recommended in all others. Amendment 4 only reworded the first premises type.
           </p>
           <div className="space-y-2">
             {afddRows.map((row) => (

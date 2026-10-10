@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Notifiable work under Part P includes: installing a new circuit, replacing a consumer unit, and all work in kitchens, bathrooms, and outdoors in a dwelling. Non-notifiable work includes minor additions and alterations to existing circuits outside special locations.',
   'Registered electricians belonging to a competent person scheme (NICEIC, NAPIT, ELECSA) can self-certify notifiable work and notify building control on behalf of the client automatically. This avoids the need for a building notice or full plans application.',
   'A building owner or homeowner who uses an unregistered electrician for notifiable work must submit a building notice (or full plans application) to the local authority BEFORE work starts. Failure to notify is a breach of Building Regulations and can create problems when selling the property.',
-  'BS 7671:2018+A4:2026 introduced Regulation 421.1.7, which recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc fault currents. This is a recommendation, not a mandatory requirement, but it is directly relevant to consumer unit replacements and new circuits carried out as Part P-notifiable work.',
+  'BS 7671 Regulation 421.1.7 covers arc fault detection devices (AFDDs). They have been recommended since BS 7671:2018 and, since A2:2022, required on socket-outlet circuits up to 32 A in HMOs and other named higher-risk premises. This is directly relevant to consumer unit replacements and new circuits carried out as Part P-notifiable work.',
 ];
 
 const faqs = [
@@ -557,7 +557,7 @@ export default function WiringRegulationsBuildingRegulationsPage() {
       title="Wiring Regulations vs Building Regulations UK"
       description="How BS 7671:2018+A4:2026 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA)."
       datePublished="2024-06-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -6,6 +7,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from '@/hooks/use-toast';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useCreateJobAssignment, useCheckForClashes } from '@/hooks/useJobAssignments';
+import { useCrewCompetence } from '@/hooks/useCrewCompetence';
+import { checkCrew } from '@/utils/crewCompetence';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { Job } from '@/services/jobService';
 import { JobAssignmentWithDetails } from '@/services/jobAssignmentService';
 import { WorkerCard } from './WorkerCard';
@@ -75,6 +80,18 @@ export function AssignWorkersSheet({
     {}
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // ELE-1834: the crew is checked against the job's required credentials
+  // before assigning; going ahead anyway is logged on the job.
+  const { matrix } = useCrewCompetence();
+  const { user } = useAuth();
+  const required = job.required_credentials ?? [];
+  const [overrideProblems, setOverrideProblems] = useState<string[] | null>(null);
+  const [overridden, setOverridden] = useState<string[] | null>(null);
+  // A different crew is a different decision: never carry a "Send anyway" over.
+  useEffect(() => {
+    setOverridden(null);
+    setOverrideProblems(null);
+  }, [selectedWorkerIds]);
   const [showDetailsSheet, setShowDetailsSheet] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -145,10 +162,39 @@ export function AssignWorkersSheet({
     });
   };
 
+  const gapsFor = useMemo(() => {
+    const out: Record<string, string[]> = {};
+    if (!required.length) return out;
+    for (const e of employees) {
+      const g = checkCrew(matrix, required, [{ employeeId: e.id, name: e.name, role: e.team_role || e.role }], job.start_date).personGaps[e.id];
+      if (g?.length) out[e.id] = g;
+    }
+    return out;
+  }, [employees, matrix, required, job.start_date]);
+
+  // The crew this assignment would leave on the job.
+  const crewAfter = () => {
+    const ids = new Set([...existingAssignments.map((a) => a.employee_id), ...selectedWorkerIds]);
+    return employees
+      .filter((e) => ids.has(e.id))
+      .map((e) => ({ employeeId: e.id, name: e.name, role: e.team_role || e.role }));
+  };
+
+  const handleContinue = () => {
+    const check = checkCrew(matrix, required, crewAfter(), job.start_date);
+    if (check.problems.length && !overridden) {
+      setOverrideProblems(check.problems);
+      return;
+    }
+    setShowDetailsSheet(true);
+  };
+
   const handleAssign = async (details: AssignmentDetails) => {
     if (selectedWorkerIds.length === 0 || !details.startDate) {
       return;
     }
+    // ELE-2061: warn or block (firm setting) on anyone without a right-to-work check.
+    if (!(await confirmRtw(selectedWorkerIds, 'assign'))) return;
 
     setIsSubmitting(true);
 
@@ -170,6 +216,22 @@ export function AssignWorkersSheet({
         });
       }
 
+      if (overridden?.length) {
+        // On the job's record, against whoever chose to send the crew anyway.
+        const who =
+          (user?.user_metadata?.full_name as string | undefined) ||
+          (user?.user_metadata?.name as string | undefined) ||
+          user?.email ||
+          'Office';
+        await supabase.from('employer_job_comments').insert({
+          job_id: job.id,
+          author_name: who,
+          author_user_id: user?.id ?? null,
+          content: `Sent the crew anyway: ${overridden.join('; ')}`,
+          comment_type: 'status_change',
+        } as never);
+      }
+
       toast({
         title: 'Workers assigned',
         description: `${selectedWorkerIds.length} worker(s) have been assigned to ${job.title}`,
@@ -181,6 +243,8 @@ export function AssignWorkersSheet({
         setSelectedWorkerIds([]);
         setClashWarnings({});
         setShowDetailsSheet(false);
+        setOverridden(null);
+        setOverrideProblems(null);
         onOpenChange(false);
       }, 700);
     } catch (error) {
@@ -337,6 +401,7 @@ export function AssignWorkersSheet({
                         isSelected={selectedWorkerIds.includes(employee.id)}
                         onToggle={() => handleWorkerToggle(employee.id)}
                         clashWarnings={clashWarnings[employee.id]}
+                        gaps={gapsFor[employee.id]}
                       />
                     ))
                   )}
@@ -383,11 +448,38 @@ export function AssignWorkersSheet({
                   </button>
                 </div>
 
-                <PrimaryButton onClick={() => setShowDetailsSheet(true)} fullWidth size="lg">
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Continue to assignment
-                  <ChevronRight className="h-4 w-4 ml-2" />
-                </PrimaryButton>
+                {overrideProblems ? (
+                  <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 p-3 space-y-2">
+                    <p className="text-[14px] font-semibold text-white">This crew doesn&rsquo;t cover the job</p>
+                    {overrideProblems.map((p) => (
+                      <p key={p} className="text-[13px] text-white">
+                        {p}
+                      </p>
+                    ))}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <SecondaryButton onClick={() => setOverrideProblems(null)} fullWidth>
+                        Pick someone else
+                      </SecondaryButton>
+                      <PrimaryButton
+                        onClick={() => {
+                          setOverridden(overrideProblems);
+                          setOverrideProblems(null);
+                          setShowDetailsSheet(true);
+                        }}
+                        fullWidth
+                      >
+                        Send anyway
+                      </PrimaryButton>
+                    </div>
+                    <p className="text-[12px] text-white">Sending anyway is noted on the job with your name.</p>
+                  </div>
+                ) : (
+                  <PrimaryButton onClick={handleContinue} fullWidth size="lg">
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Continue to assignment
+                    <ChevronRight className="h-4 w-4 ml-2" />
+                  </PrimaryButton>
+                )}
               </div>
             )}
           </div>

@@ -55,7 +55,7 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">When Supplementary Bonding Is Required</p>
+          <p className="text-[12px] font-medium text-white mb-3">When Supplementary Bonding Is Required</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {whenRequired.map((item, i) => (
@@ -69,7 +69,7 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What to Bond</p>
+          <p className="text-[12px] font-medium text-white mb-3">What to Bond</p>
         </motion.div>
 
         {whatToBond.map((item, i) => (
@@ -82,7 +82,7 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Procedure</p>
+          <p className="text-[12px] font-medium text-white mb-3">Test Procedure</p>
         </motion.div>
 
         {testProcedure.map((step, i) => (
@@ -97,7 +97,7 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Defects</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             {commonDefects.map((item, i) => (
               <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">

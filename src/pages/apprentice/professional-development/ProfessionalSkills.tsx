@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -200,213 +200,205 @@ const ProfessionalSkills = () => {
   };
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Soft skills"
-        title="Professional skills"
-        backTo="/apprentice/professional-development"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "Technical ability gets you qualified — professional skills decide how far you go. Communication, problem solving, customer handling, business sense — the parts the JIB grade can't measure."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Soft skills"
+      area="Professional development"
+      title="Professional skills"
+      backTo="/apprentice/professional-development"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "Technical ability gets you qualified — professional skills decide how far you go. Communication, problem solving, customer handling, business sense — the parts the JIB grade can't measure."
+        }
+      </p>
 
-        {/* Skill Categories */}
-        <div className="flex items-baseline justify-between gap-3 pb-1">
-          <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Skill Categories
-            </span>
-          </div>
+      {/* Skill Categories */}
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[13px] font-semibold text-white">Skill Categories</span>
         </div>
+      </div>
 
-        <div className="space-y-2">
-          {skillCategories.map((category, index) => (
-            <div
-              key={category.title}
-              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+      <div className="space-y-2">
+        {skillCategories.map((category, index) => (
+          <div
+            key={category.title}
+            className={cn('rounded-2xl border border-white/[0.08]', CARD_SURFACE)}
+          >
+            <button
+              onClick={() => toggleExpanded(index)}
+              className="w-full p-4 flex items-center justify-between touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left"
             >
-              <button
-                onClick={() => toggleExpanded(index)}
-                className="w-full p-4 flex items-center justify-between touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left"
-              >
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-white text-sm">{category.title}</h3>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-xs text-white">{category.importance} importance</span>
-                    <span className="text-xs text-white">·</span>
-                    <span className="text-xs text-white">{category.marketValue}</span>
-                  </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-white text-sm">{category.title}</h3>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-xs text-white">{category.importance} importance</span>
+                  <span className="text-xs text-white">·</span>
+                  <span className="text-xs text-white">{category.marketValue}</span>
                 </div>
-                {expandedIndex === index ? (
-                  <ChevronUp className="h-4 w-4 text-white flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
-                )}
-              </button>
-
-              {expandedIndex === index && (
-                <div className="px-4 pb-4 pt-0 space-y-2 animate-fade-in">
-                  {category.skills.map((skill) => (
-                    <div
-                      key={skill}
-                      className="flex items-start gap-2 text-sm text-white p-2 bg-white/5 border border-white/10 rounded-lg"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      {skill}
-                    </div>
-                  ))}
-                </div>
+              </div>
+              {expandedIndex === index ? (
+                <ChevronUp className="h-4 w-4 text-white flex-shrink-0" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
               )}
-            </div>
-          ))}
-        </div>
+            </button>
 
-        {/* Development Activities */}
-        <div className="flex items-baseline justify-between gap-3 pb-1">
-          <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Development Activities
-            </span>
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          {developmentActivities.map((activity) => (
-            <div
-              key={activity.title}
-              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
-            >
-              <div className="p-4 space-y-1">
-                <h3 className="font-semibold text-white text-sm">{activity.title}</h3>
-                <p className="text-white text-sm leading-relaxed">{activity.description}</p>
+            {expandedIndex === index && (
+              <div className="px-4 pb-4 pt-0 space-y-2 animate-fade-in">
+                {category.skills.map((skill) => (
+                  <div
+                    key={skill}
+                    className="flex items-start gap-2 text-sm text-white p-2 bg-white/5 border border-white/10 rounded-lg"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                    {skill}
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Why Professional Skills Matter */}
-        <div className="flex items-baseline justify-between gap-3 pb-1">
-          <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Why Professional Skills Matter
-            </span>
+            )}
           </div>
-        </div>
+        ))}
+      </div>
 
-        <div className="space-y-3">
-          {[
-            {
-              title: 'Higher Earnings',
-              detail:
-                'Electricians with strong professional skills earn 15–30% more than those with technical skills alone. Clients pay premium rates for professionals who communicate well and deliver reliably.',
-            },
-            {
-              title: 'Career Progression',
-              detail:
-                'Management, consultancy, and training roles all require strong professional skills. Technical ability gets you in the door — leadership and communication take you further.',
-            },
-            {
-              title: 'Business Success',
-              detail:
-                'If you want to be self-employed or run your own business, professional skills are not optional. Pricing, marketing, customer service, and financial management are essential.',
-            },
-          ].map((benefit) => (
-            <div
-              key={benefit.title}
-              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
-            >
-              <div className="p-4 space-y-1">
-                <h3 className="font-semibold text-white text-sm">{benefit.title}</h3>
-                <p className="text-white text-sm leading-relaxed">{benefit.detail}</p>
+      {/* Development Activities */}
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[13px] font-semibold text-white">Development Activities</span>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        {developmentActivities.map((activity) => (
+          <div
+            key={activity.title}
+            className={cn('rounded-2xl border border-white/[0.08]', CARD_SURFACE)}
+          >
+            <div className="p-4 space-y-1">
+              <h3 className="font-semibold text-white text-sm">{activity.title}</h3>
+              <p className="text-white text-sm leading-relaxed">{activity.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Why Professional Skills Matter */}
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[13px] font-semibold text-white">
+            Why Professional Skills Matter
+          </span>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        {[
+          {
+            title: 'Higher Earnings',
+            detail:
+              'Electricians with strong professional skills earn 15–30% more than those with technical skills alone. Clients pay premium rates for professionals who communicate well and deliver reliably.',
+          },
+          {
+            title: 'Career Progression',
+            detail:
+              'Management, consultancy, and training roles all require strong professional skills. Technical ability gets you in the door — leadership and communication take you further.',
+          },
+          {
+            title: 'Business Success',
+            detail:
+              'If you want to be self-employed or run your own business, professional skills are not optional. Pricing, marketing, customer service, and financial management are essential.',
+          },
+        ].map((benefit) => (
+          <div
+            key={benefit.title}
+            className={cn('rounded-2xl border border-white/[0.08]', CARD_SURFACE)}
+          >
+            <div className="p-4 space-y-1">
+              <h3 className="font-semibold text-white text-sm">{benefit.title}</h3>
+              <p className="text-white text-sm leading-relaxed">{benefit.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Recommended Resources */}
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[13px] font-semibold text-white">Recommended Resources</span>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        {recommendedResources.map((resource) => (
+          <div
+            key={resource.title}
+            className={cn('rounded-2xl border border-white/[0.08]', CARD_SURFACE)}
+          >
+            <div className="p-4 space-y-1">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-white text-sm">{resource.title}</h3>
+                <span className="text-xs font-medium text-white bg-white/[0.04] border border-white/[0.08] rounded-full px-2 py-0.5 flex-shrink-0">
+                  {resource.type}
+                </span>
               </div>
+              <p className="text-white text-sm leading-relaxed">{resource.description}</p>
             </div>
-          ))}
-        </div>
-
-        {/* Recommended Resources */}
-        <div className="flex items-baseline justify-between gap-3 pb-1">
-          <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Recommended Resources
-            </span>
           </div>
-        </div>
+        ))}
+      </div>
 
-        <div className="space-y-3">
-          {recommendedResources.map((resource) => (
-            <div
-              key={resource.title}
-              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
-            >
-              <div className="p-4 space-y-1">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-white text-sm">{resource.title}</h3>
-                  <span className="text-xs font-medium text-white bg-white/[0.04] border border-white/[0.08] rounded-full px-2 py-0.5 flex-shrink-0">
-                    {resource.type}
-                  </span>
-                </div>
-                <p className="text-white text-sm leading-relaxed">{resource.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Getting Started This Week */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
+        <h2 className="text-base font-semibold text-white">Getting Started This Week</h2>
+      </div>
 
-        {/* Getting Started This Week */}
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-          <h2 className="text-base font-semibold text-white">Getting Started This Week</h2>
+      <div className={cn('rounded-2xl border border-white/[0.08]', CARD_SURFACE)}>
+        <div className="p-4 space-y-3">
+          <p className="text-white text-sm leading-relaxed">
+            Professional skills improve with practice, not just reading. Pick one action from this
+            list and do it this week:
+          </p>
+          <ul className="space-y-2">
+            {[
+              'Write a quote or job description for your current work — practice clear written communication',
+              'Explain a technical concept to a non-electrician — practice simplifying complex ideas',
+              'Ask your supervisor for feedback on one specific skill you want to improve',
+              'Time yourself on a routine task and look for ways to work more efficiently',
+              'Introduce yourself to someone from another trade on site — start building your network',
+            ].map((action) => (
+              <li key={action} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                {action}
+              </li>
+            ))}
+          </ul>
         </div>
+      </div>
 
-        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
-          <div className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              Professional skills improve with practice, not just reading. Pick one action from this
-              list and do it this week:
-            </p>
-            <ul className="space-y-2">
-              {[
-                'Write a quote or job description for your current work — practice clear written communication',
-                'Explain a technical concept to a non-electrician — practice simplifying complex ideas',
-                'Ask your supervisor for feedback on one specific skill you want to improve',
-                'Time yourself on a routine task and look for ways to work more efficiently',
-                'Introduce yourself to someone from another trade on site — start building your network',
-              ].map((action) => (
-                <li key={action} className="flex items-start gap-2 text-sm text-white">
-                  <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  {action}
-                </li>
-              ))}
-            </ul>
-          </div>
+      {/* Development Strategy */}
+      <div className={cn('rounded-2xl border border-white/[0.08]', CARD_SURFACE)}>
+        <div className="p-4 space-y-2">
+          <h3 className="font-semibold text-white text-sm">Development Strategy</h3>
+          <p className="text-white text-sm leading-relaxed">
+            Pick one or two professional skills to focus on each quarter. Set specific, measurable
+            goals — for example, "complete one written quote per week without help" or "lead one
+            toolbox talk per month." Track your progress and ask for feedback from colleagues and
+            clients. Small, consistent improvements add up to significant career growth.
+          </p>
         </div>
+      </div>
 
-        {/* Development Strategy */}
-        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
-          <div className="p-4 space-y-2">
-            <h3 className="font-semibold text-white text-sm">Development Strategy</h3>
-            <p className="text-white text-sm leading-relaxed">
-              Pick one or two professional skills to focus on each quarter. Set specific, measurable
-              goals — for example, "complete one written quote per week without help" or "lead one
-              toolbox talk per month." Track your progress and ask for feedback from colleagues and
-              clients. Small, consistent improvements add up to significant career growth.
-            </p>
-          </div>
+      {/* Footer */}
+      <div className={cn('rounded-2xl border border-white/[0.08]', CARD_SURFACE)}>
+        <div className="p-4">
+          <p className="text-white text-[14px] leading-relaxed">
+            Professional skills guidance based on IET professional standards, ECA industry
+            requirements, and current UK employer expectations for electrical professionals.
+          </p>
         </div>
-
-        {/* Footer */}
-        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
-          <div className="p-4">
-            <p className="text-white text-xs leading-relaxed">
-              Professional skills guidance based on IET professional standards, ECA industry
-              requirements, and current UK employer expectations for electrical professionals.
-            </p>
-          </div>
-        </div>
-      </HubBody>
-    </HubPage>
+      </div>
+    </GuidePage>
   );
 };
 

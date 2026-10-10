@@ -2,6 +2,12 @@ import { useEffect, useRef } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  applySafetyScope,
+  safetyScopeKey,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 export interface FireWatchChecklistItem {
   id: string;
@@ -9,7 +15,7 @@ export interface FireWatchChecklistItem {
   checked: boolean;
 }
 
-export interface FireWatchRecord {
+export interface FireWatchRecord extends FirmRecordFields {
   id: string;
   permit_id: string | null;
   job_id: string | null;
@@ -46,19 +52,21 @@ export function isFollowUpDue(r: FireWatchRecord, now: Date = new Date()): boole
 }
 
 export function useFireWatchRecords() {
+  // Personal: the user's own watches. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['fire-watch-records'],
+    queryKey: ['fire-watch-records', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<FireWatchRecord[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('fire_watch_records')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('fire_watch_records').select('*'),
+        scope,
+        user.id
+      ).order('created_at', { ascending: false });
 
       if (error) throw error;
       return (data ?? []) as unknown as FireWatchRecord[];

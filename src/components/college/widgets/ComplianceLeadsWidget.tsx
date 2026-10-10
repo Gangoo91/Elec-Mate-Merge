@@ -30,7 +30,7 @@ const ROLES: RoleDef[] = [
     key: 'is_dsl',
     label: 'Designated Safeguarding Lead',
     statutory: true,
-    fallbackHelp: 'Statutory — every college needs one.',
+    fallbackHelp: 'Statutory. Every college needs one.',
   },
   {
     key: 'is_deputy_dsl',
@@ -143,7 +143,7 @@ export function ComplianceLeadsWidget() {
       <section className={CARD}>
         <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
           <h3 className="text-[15px] font-semibold tracking-tight text-white">Who to ask</h3>
-          <span className="text-[11px] font-semibold tabular-nums text-white">
+          <span className="text-[12px] font-semibold tabular-nums text-white">
             {totalAssigned} {totalAssigned === 1 ? 'person' : 'people'}
             {rolesUnassigned > 0 && (
               <span className="text-elec-yellow">

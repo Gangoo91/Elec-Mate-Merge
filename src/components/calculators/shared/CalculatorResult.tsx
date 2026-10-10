@@ -74,7 +74,7 @@ export const ResultValue = ({
       {/* Wraps rather than truncates. At 10px with 0.18em tracking in a
           half-width cell, "Capacitor needed" rendered as "CAPACITOR…" — a label
           clipped to one word tells you nothing, and a second line costs 12px. */}
-      <p className="text-[10px] font-medium uppercase leading-tight tracking-[0.18em] text-white">
+      <p className="text-[13px] font-medium leading-snug text-white">
         {label}
       </p>
       <div className="flex items-baseline gap-1.5 min-w-0">
@@ -136,7 +136,7 @@ export const ResultHeadline = ({
   // reference, the worked steps and the collapsible headings that also live in
   // the result pane.
   <div className={cn('border-b border-white/[0.10] pb-4', className)} data-result-copy="headline">
-    <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{label}</p>
+    <p className="text-[13px] font-semibold text-white">{label}</p>
     <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
       <span
         className={cn(
@@ -190,7 +190,7 @@ export const ResultDetails = ({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={className}>
       <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 touch-manipulation">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[14px] font-semibold text-white">
           {title}
         </span>
         <ChevronDown
@@ -218,7 +218,7 @@ interface ResultBadgeProps {
 export const ResultBadge = ({ status, label, className }: ResultBadgeProps) => {
   const statusClasses =
     status === 'pass'
-      ? 'border-elec-yellow/40 bg-transparent text-elec-yellow'
+      ? 'border-white/[0.14] bg-transparent text-elec-yellow'
       : status === 'fail'
         ? 'border-red-400/40 bg-red-500/[0.10] text-red-300'
         : 'border-white/[0.14] bg-white/[0.06] text-white';
@@ -226,7 +226,7 @@ export const ResultBadge = ({ status, label, className }: ResultBadgeProps) => {
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium border',
+        'inline-flex items-center px-2 py-0.5 rounded-md text-[12px] font-medium border',
         statusClasses,
         className
       )}

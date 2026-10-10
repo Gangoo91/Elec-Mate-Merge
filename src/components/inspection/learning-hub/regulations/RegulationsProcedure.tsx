@@ -43,7 +43,7 @@ const RegulationsProcedure = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Regulations</h1>
-              <p className="text-[10px] text-white">BS 7671:2018+A3:2024</p>
+              <p className="text-[12px] text-white">BS 7671:2018+A3:2024</p>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ const RegulationsProcedure = ({ onBack }: Props) => {
 
         {/* Most useful first */}
         <motion.section variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Most Used</p>
+          <p className="text-[12px] font-medium text-white mb-3">Most Used</p>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard title="Common Questions" description="20 plain-English answers" icon={HelpCircle} onClick={() => setView('scenarios')} variant="hero" />
             <BusinessCard title="EICR Coding" description="C1, C2, C3, FI guide" icon={AlertTriangle} onClick={() => setView('eicr')} variant="hero" />
@@ -72,7 +72,7 @@ const RegulationsProcedure = ({ onBack }: Props) => {
         </motion.section>
 
         <motion.section variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Practical Reference</p>
+          <p className="text-[12px] font-medium text-white mb-3">Practical Reference</p>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard title="Special Locations" description="Bathrooms, EV, pools" icon={MapPin} onClick={() => setView('locations')} variant="hero" />
             <BusinessCard title="Inspection Intervals" description="16 premises types" icon={Clock} onClick={() => setView('intervals')} variant="hero" />
@@ -80,7 +80,7 @@ const RegulationsProcedure = ({ onBack }: Props) => {
         </motion.section>
 
         <motion.section variants={itemVariants}>
-          <p className="text-xs font-medium text-white uppercase tracking-wider mb-3">Reference</p>
+          <p className="text-xs font-medium text-white mb-3">Reference</p>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard title="A3:2024 Changes" description="What changed &amp; why" icon={Zap} onClick={() => setView('a3changes')} variant="hero" />
             <BusinessCard title="BS 7671 Structure" description="Parts 1-8 overview" icon={BookOpen} onClick={() => setView('structure')} variant="hero" />

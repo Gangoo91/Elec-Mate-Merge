@@ -40,7 +40,7 @@ const keyTakeaways = [
   'Leeds City Council operates selective licensing in designated areas and has a dedicated private rented sector team that investigates complaints and issues civil penalties of up to £30,000.',
   'Leeds has a large student rental market concentrated around Headingley, Hyde Park, and Woodhouse, with significant numbers of HMOs requiring additional licensing and EICR compliance.',
   'RCD protection on socket-outlet circuits is required under Regulation 411.3.3 of BS 7671. Back-to-back terraces in inner Leeds frequently lack RCD protection, resulting in C2 observations.',
-  'Regulation 411.3.4 (A4:2026) additionally requires 30 mA RCD protection on AC final circuits supplying luminaires in domestic premises. Pre-A4 consumer units in Leeds terraces and HMOs will commonly fail on both 411.3.3 and 411.3.4.',
+  'Regulation 411.3.4, in force since BS 7671:2018, additionally requires 30 mA RCD protection on AC final circuits supplying luminaires in domestic premises. Older consumer units in Leeds terraces and HMOs will commonly fail on both 411.3.3 and 411.3.4.',
   'The Distribution Network Operator for Leeds is Northern Powergrid. Inspectors should be familiar with their earthing provisions and supply arrangements.',
 ];
 
@@ -241,10 +241,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Arc fault detection (A4:2026)</strong> — Regulation 421.1.7 recommends the
-                installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate
-                fire risk from arc fault currents. For older Leeds HMOs where wiring condition is
-                unknown, electricians should raise AFDDs as a recommended upgrade for landlords.
+                <strong>Arc fault detection (Reg 421.1.7)</strong> — since A2:2022, arc fault detection
+                devices (AFDDs) are required on single-phase socket-outlet final circuits up to 32 A
+                in HMOs, and recommended in other premises. For older Leeds HMOs, electricians should
+                raise AFDDs with landlords whenever socket circuits or the consumer unit are replaced.
               </span>
             </li>
           </ul>
@@ -469,7 +469,7 @@ export default function LandlordElectricalSafetyLeedsPage() {
       title="Landlord Electrical Safety Leeds: EICR 2026"
       description="Landlord electrical safety requirements in Leeds. 2020 Regulations, council enforcement, selective licensing, HMO requirements, penalties up to £30,000."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

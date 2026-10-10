@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'How do I code a missing AFDD or a lighting circuit with no RCD under A4:2026?',
     answer:
-      'These are two different requirements with two different strengths, and the difference matters when you code them. Regulation 421.1.7 was redrafted at A4:2026. It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32 A using arc fault detection devices (AFDDs) in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. For all other premises, the regulation recommends AFDDs for single-phase AC final circuits supplying socket-outlets not exceeding 32 A. So the absence of an AFDD is not automatically a C3 — in one of the four named premises types it is the absence of something the standard requires, and you should judge the risk accordingly. Regulation 411.3.4 is introduced by Amendment 2:2022 and is unqualified: within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. On a new installation or rewire that is a hard requirement. On an existing domestic installation where lighting circuits are not RCD protected, the absence is a departure from the current edition; in a low-risk context this is typically coded C3, but aggravating factors (damaged wiring, cables at risk, vulnerable occupants) may justify C2. In every case, describe what you found and cite the regulation.',
+      'These are two different requirements with two different strengths, and the difference matters when you code them. Regulation 421.1.7 was redrafted at A2:2022, and A4:2026 only reworded its first item to high rise residential buildings. It is a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32 A using arc fault detection devices (AFDDs) in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. For all other premises, the regulation recommends AFDDs for single-phase AC final circuits supplying socket-outlets not exceeding 32 A. So the absence of an AFDD is not automatically a C3 — in one of the four named premises types it is the absence of something the standard requires, and you should judge the risk accordingly. Regulation 411.3.4 has been in BS 7671 since the 2018 edition and is unqualified: within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. On a new installation or rewire that is a hard requirement. On an existing domestic installation where lighting circuits are not RCD protected, the absence is a departure from the current edition; in a low-risk context this is typically coded C3, but aggravating factors (damaged wiring, cables at risk, vulnerable occupants) may justify C2. In every case, describe what you found and cite the regulation.',
   },
   {
     question: 'Can I change an observation code after the EICR has been issued?',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What is the most common C2 observation found on domestic EICRs?',
     answer:
-      'The absence of RCD protection on final socket-outlet circuits in dwellings. Regulation 411.3.3 was revised at A4:2026 and now applies to socket-outlets with a rated current not exceeding 32 A: additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided. There is a documented risk assessment exception, but it is not available for a dwelling, and it never applies to socket-outlets liable to be used by persons of capability BA1 or by children (BA2), or to mobile equipment up to 32 A used outdoors. Many older consumer units contain MCBs with no RCD protection on socket circuits, which is a potentially dangerous condition given the risk of shock to occupants using portable appliances. Other commonly encountered C2 observations include earthing and bonding deficiencies where main protective bonding conductors are missing or undersized, damaged or deteriorated cable insulation particularly in older rubber-insulated wiring, and absence of supplementary bonding in bathrooms where it is required.',
+      'The absence of RCD protection on final socket-outlet circuits in dwellings. Regulation 411.3.3 (revised in 2018 to cover socket-outlets rated up to 32 A, and redrafted at A2:2022) requires additional protection by an RCD with a rated residual operating current not exceeding 30 mA for those socket-outlets. There is a documented risk assessment exception, but it never applies to socket-outlets liable to be used by ordinary persons (BA1) or by children (BA2), or to mobile equipment up to 32 A used outdoors, so in practice it is not available in a dwelling. Many older consumer units contain MCBs with no RCD protection on socket circuits, which is a potentially dangerous condition given the risk of shock to occupants using portable appliances. Other commonly encountered C2 observations include earthing and bonding deficiencies where main protective bonding conductors are missing or undersized, damaged or deteriorated cable insulation particularly in older rubber-insulated wiring, and absence of supplementary bonding in bathrooms where it is required.',
   },
 ];
 
@@ -105,7 +105,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-01-15',
-  dateModified: '2026-08-07',
+  dateModified: '2026-10-10',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -503,10 +503,10 @@ export default function BS7671ObservationCodesPage() {
                 <li className="flex items-start gap-3">
                   <Info className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Domestic lighting circuits with no RCD</strong> — Reg 411.3.4, new at
-                    A4:2026, requires 30 mA RCD protection for AC final circuits supplying
-                    luminaires within domestic premises. On an existing installation with no
-                    aggravating factors this is typically C3, not C2.
+                    <strong>Domestic lighting circuits with no RCD</strong> — Reg 411.3.4, in force
+                    since BS 7671:2018, requires 30 mA RCD protection for AC final circuits
+                    supplying luminaires within domestic premises. On an existing installation with
+                    no aggravating factors this is typically C3, not C2.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -530,9 +530,9 @@ export default function BS7671ObservationCodesPage() {
                   <Info className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Older wiring colours not re-identified</strong> — red/black conductors
-                    from the previous standard left unmarked where they meet harmonised
-                    brown/blue. Not dangerous in itself, but Reg 514.3.1 requires cores to be
-                    identifiable, and sleeving removes the ambiguity for whoever works on it next.
+                    from the previous standard left unmarked where they meet harmonised brown/blue.
+                    Not dangerous in itself, but Reg 514.3.1 requires cores to be identifiable, and
+                    sleeving removes the ambiguity for whoever works on it next.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -578,12 +578,12 @@ export default function BS7671ObservationCodesPage() {
               </p>
               <p>
                 Because FI is not a severity rating, it sits in the advisory block of Section K
-                alongside C3 and does not, on its own, make the report Unsatisfactory. That surprises
-                a lot of inspectors, and some scheme providers apply a stricter house rule — check
-                yours. What FI does do is create an obligation to investigate: once the investigation
-                is complete, the issue gets its proper code, and if that turns out to be a C1 or C2
-                the assessment changes. In the private rented sector, an FI also triggers the
-                landlord&rsquo;s 28-day duty to carry out further investigative work.
+                alongside C3 and does not, on its own, make the report Unsatisfactory. That
+                surprises a lot of inspectors, and some scheme providers apply a stricter house rule
+                — check yours. What FI does do is create an obligation to investigate: once the
+                investigation is complete, the issue gets its proper code, and if that turns out to
+                be a C1 or C2 the assessment changes. In the private rented sector, an FI also
+                triggers the landlord&rsquo;s 28-day duty to carry out further investigative work.
               </p>
               <p>
                 FI must always be accompanied by a clear explanation of why further investigation is
@@ -826,9 +826,7 @@ export default function BS7671ObservationCodesPage() {
           </p>
           <div className="space-y-4">
             <div className={CARD_PADDED}>
-              <h3 className="font-bold text-white mb-1">
-                Coding C2 where C3 is the honest answer
-              </h3>
+              <h3 className="font-bold text-white mb-1">Coding C2 where C3 is the honest answer</h3>
               <p className="text-white text-sm leading-relaxed">
                 Some inspectors code everything C2 &ldquo;to be safe&rdquo;. That makes every report
                 Unsatisfactory and devalues the coding system. If a feature was compliant when

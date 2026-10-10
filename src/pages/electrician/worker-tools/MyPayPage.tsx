@@ -244,7 +244,7 @@ export default function MyPayPage() {
           />
         ) : (
           <div className="space-y-3">
-            <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-3">
+            <div className="rounded-xl border border-white/[0.08] border-l-2 border-l-orange-400 bg-white/[0.04] px-4 py-3">
               <p className="text-[14px] font-semibold text-orange-300">
                 Your firm hasn&rsquo;t set a payday
               </p>

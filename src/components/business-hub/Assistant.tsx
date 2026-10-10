@@ -29,6 +29,8 @@ import type {
 } from '@/hooks/useSparkProjects';
 import type { Customer } from '@/hooks/useCustomers';
 import { useCustomers } from '@/hooks/useCustomers';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
+import { formPostUrl } from '@/hooks/useEnquiries';
 import type {
   ChatMessage,
   ProposedAction,
@@ -79,10 +81,10 @@ export function Assistant({
   onUpdate,
   onMarkDone,
   onDelete,
-  onCreateProject,
-  onUpdateProject,
-  onCompleteProject,
-  onDeleteProject,
+  onCreateProject: onCreateProjectProp,
+  onUpdateProject: onUpdateProjectProp,
+  onCompleteProject: onCompleteProjectProp,
+  onDeleteProject: onDeleteProjectProp,
   onCreateCustomer,
   onUpdateCustomer,
   onDeleteCustomer,
@@ -100,6 +102,15 @@ export function Assistant({
     deleteCustomer: hookDeleteCustomer,
   } = useCustomers();
   const createCustomer = onCreateCustomer ?? hookCreateCustomer;
+
+  // Same for projects: Mate on the Electrical Hub home and the Dashboard is
+  // mounted with task callbacks only, so a proposed project failed with
+  // "Projects not available here" (a customer, 10 Oct).
+  const projectsHook = useSparkProjects('active');
+  const onCreateProject = onCreateProjectProp ?? projectsHook.createProject;
+  const onUpdateProject = onUpdateProjectProp ?? projectsHook.updateProject;
+  const onCompleteProject = onCompleteProjectProp ?? projectsHook.completeProject;
+  const onDeleteProject = onDeleteProjectProp ?? projectsHook.deleteProject;
   const amendCustomer = onUpdateCustomer ?? hookUpdateCustomer;
   const removeCustomer = onDeleteCustomer ?? hookDeleteCustomer;
 
@@ -238,6 +249,9 @@ export function Assistant({
     return {
       recentCustomers: Array.from(customerNames).slice(0, 12),
       recentLocations: Array.from(locations).slice(0, 12),
+      // Tells tasks-ai-assistant this build can apply enquiries; older app
+      // builds don't send it and get the enquiry as a task instead.
+      capabilities: ['create-enquiry'],
     };
   }, [currentTasks, currentProjects, currentCustomers]);
 
@@ -707,6 +721,124 @@ export function Assistant({
           // useCustomers.saveCustomer returns void — no id captured, so no undo.
           break;
         }
+        case 'create-enquiry': {
+          // A website enquiry goes through the same pipeline as a form post to
+          // the user's inbox (inbound-enquiry-email): AI summary, urgency,
+          // availability, a drafted reply, the diary check and the alert — a
+          // bare insert gave none of that. Anything else, or if the inbox is
+          // off or the post fails, is added directly (RLS allows 'manual').
+          // Either way it is linked to the customer of the same name — usually
+          // the one Mate created a moment ago in the same reply.
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (!user) throw new Error('Not signed in');
+          const p = action.payload;
+          if (!p.name?.trim()) throw new Error('The enquiry needs a name');
+          // The customer: same email first (two John Smiths stay apart), else
+          // same name — usually the one created a moment ago in this reply.
+          const findCustomer = async (col: 'email' | 'name', value: string) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const { data } = await (supabase as any)
+              .from('customers')
+              .select('id')
+              .ilike(col, value)
+              .order('created_at', { ascending: false })
+              .limit(1)
+              .maybeSingle();
+            return (data as { id: string } | null) ?? null;
+          };
+          const match =
+            (p.email?.trim() ? await findCustomer('email', p.email.trim()) : null) ??
+            (await findCustomer('name', p.name.trim()));
+
+          let enquiryId: string | null = null;
+          let alreadyThere = false;
+          if (!p.source || p.source === 'website') {
+            try {
+              const { data: inbox } = await supabase.rpc('get_my_enquiry_inbox' as never);
+              const ib = inbox as unknown as { form_token?: string; enabled?: boolean } | null;
+              if (ib?.form_token && ib.enabled) {
+                const message = [p.jobType ? `Type of work: ${p.jobType}` : '', p.details?.trim()]
+                  .filter(Boolean)
+                  .join('\n');
+                const res = await fetch(formPostUrl({ form_token: ib.form_token }), {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    name: p.name.trim(),
+                    email: p.email?.trim() || undefined,
+                    phone: p.phone?.trim() || undefined,
+                    address: p.address?.trim() || undefined,
+                    postcode: p.postcode?.trim() || undefined,
+                    message,
+                  }),
+                });
+                const out = (await res.json().catch(() => null)) as {
+                  id?: string;
+                  duplicate?: boolean;
+                } | null;
+                if (res.ok && out?.id) {
+                  enquiryId = out.id;
+                  alreadyThere = !!out.duplicate;
+                }
+              }
+            } catch {
+              // Falls through to the direct insert below.
+            }
+          }
+
+          if (enquiryId) {
+            if (match?.id) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              await (supabase as any)
+                .from('enquiries')
+                .update({ customer_id: match.id })
+                .eq('id', enquiryId)
+                .is('customer_id', null);
+            }
+          } else {
+            const sourceNote =
+              p.source && p.source !== 'other'
+                ? `Came in by ${p.source}, logged via Mate.`
+                : 'Logged via Mate.';
+            const details = [p.details?.trim(), sourceNote].filter(Boolean).join('\n\n');
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const { data: created, error: enqErr } = await (supabase as any)
+              .from('enquiries')
+              .insert({
+                user_id: user.id,
+                source: 'manual',
+                status: 'new',
+                name: p.name.trim(),
+                phone: p.phone?.trim() || null,
+                email: p.email?.trim().toLowerCase() || null,
+                address: p.address?.trim() || null,
+                postcode: p.postcode?.trim().toUpperCase() || null,
+                job_type: p.jobType?.trim() || null,
+                job_description: details || null,
+                raw_text: details || null,
+                customer_id: match?.id ?? null,
+              })
+              .select('id')
+              .single();
+            if (enqErr) throw enqErr;
+            enquiryId = created?.id ?? null;
+          }
+
+          // An enquiry that was already in the inbox isn't Mate's to undo.
+          if (enquiryId && !alreadyThere) {
+            const id = enquiryId;
+            undo = {
+              label: `Enquiry for ${p.name.trim()} added`,
+              run: async () => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                await (supabase as any).from('enquiries').delete().eq('id', id);
+              },
+            };
+          }
+          break;
+        }
         case 'draft-message': {
           // Default Apply behaviour = send via Brevo. Mailto stays as a
           // separate explicit button on the card.
@@ -1021,6 +1153,7 @@ export function Assistant({
         a.type === 'create-snag' ||
         a.type === 'create-project' ||
         a.type === 'create-customer' ||
+        a.type === 'create-enquiry' ||
         a.type === 'draft-message'
       ) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -14,8 +14,8 @@ export function JobContextBar({ what }: { /** e.g. 'photos', 'snags' */ what: st
   return (
     <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-elec-yellow/40 bg-white/[0.025] px-4 py-3 space-y-3">
       <div className="min-w-0">
-        <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-          {what} for one job
+        <p className="text-[12.5px] font-semibold text-elec-yellow">
+          {what.charAt(0).toUpperCase() + what.slice(1)} for one job
         </p>
         <p className="mt-0.5 text-[15px] font-semibold text-white truncate">
           {job?.title ?? 'This job'}

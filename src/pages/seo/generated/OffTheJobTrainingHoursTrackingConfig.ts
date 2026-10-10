@@ -1,15 +1,16 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
+import { OTJ_HOURS_FLOOR, OTJ_RULE_SOURCE, OTJ_ST0152_HOURS } from '@/data/otjStandards';
 
 // Off-The-Job (OTJ) Training Hours Tracking — Apprentice Guide — apprentice / electrician / employer content.
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const OffTheJobTrainingHoursTrackingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/off-the-job-training-hours-tracking',
   title: 'OTJ Training Hours Tracking: Apprentice Guide',
-  description: 'A practical guide to off-the-job (OTJ) training hour tracking for UK electrical apprentices. What counts, what doesn\u2019t, the 20% minimum rule…',
+  description: 'A practical guide to off-the-job (OTJ) training hour tracking for UK electrical apprentices. What counts, what doesn\u2019t, the minimum hours for your standard…',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,
@@ -20,13 +21,13 @@ export const OffTheJobTrainingHoursTrackingConfig: GeneratedGuideConfig = {
   heroHighlight: 'Complete 2026 Guide',
   heroSuffix: '— For UK Electrical Trade',
   heroSubtitle:
-    'A practical guide to off-the-job (OTJ) training hour tracking for UK electrical apprentices. What counts, what doesn\u2019t, the 20% minimum rule, and how to keep evidence that satisfies ESFA audits. This guide is for electrical apprentices logging their off-the-job training hours.',
+    'A practical guide to off-the-job (OTJ) training hour tracking for UK electrical apprentices. What counts, what doesn\u2019t, the minimum hours for your standard, and how to keep evidence your provider can rely on. This guide is for electrical apprentices logging their off-the-job training hours.',
   keyTakeaways: [
-    'OTJ training is a legal requirement of the Apprenticeship Standard — minimum 20% of working hours.',
+    `OTJ training is a statutory part of every apprenticeship. For starts from 1 August 2025 the minimum is the number of hours published on your standard: ${OTJ_ST0152_HOURS} for ST0152 (${OTJ_RULE_SOURCE}).`,
     'What counts: college day, supervised on-site learning of new skills, CPD events, reading technical material, simulation work, online courses.',
     'What does NOT count: regular productive work, repeating known tasks, lunch breaks, travel time to college.',
     'Track every hour with: activity, duration, what was learned, who supervised — typically logged weekly.',
-    'ESFA can audit your OTJ evidence; insufficient evidence means the apprenticeship funding can be clawed back.',
+    'Your provider must evidence the OTJ hours delivered; funds are at risk of recovery from the provider if the policy is not met (DfE funding rules 2026 to 2027, rule 82.4).',
     'Elec-Mate\u2019s apprentice tier includes a built-in OJT logger that auto-categorises activities.',
   ],
   sections: [
@@ -37,7 +38,7 @@ export const OffTheJobTrainingHoursTrackingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Off-the-Job (OTJ) training is the formal learning component of the Apprenticeship Standard — distinct from on-the-job productive work. It exists because an apprenticeship is a training programme, not a cheap labour scheme. The Education and Skills Funding Agency (ESFA) requires a minimum 20% of the apprentice\u2019s contracted hours to be OTJ — typically equivalent to one full day per week, though it can be distributed differently.',
+          text: 'Off-the-Job (OTJ) training is the formal learning component of the Apprenticeship Standard — distinct from on-the-job productive work. It exists because an apprenticeship is a training programme, not a cheap labour scheme. For apprenticeships starting from 1 August 2025 the Department for Education sets the minimum as a fixed number of OTJ hours published on each standard, delivered in paid working hours. With day release that is often about one day a week, though it can be distributed differently.',
         },
       ],
     },
@@ -59,18 +60,18 @@ export const OffTheJobTrainingHoursTrackingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Activities that do NOT count: regular productive work where you are doing the same task you can already do. Repeating routine jobs. Travel time to and from college / site. Lunch breaks and rest periods. Statutory holidays. Sick days. Time spent fixing your own mistakes on existing work. Be honest in your log — overstating OTJ is the single biggest reason apprentices get pulled up at the ESFA audit.',
+          text: 'Activities that do NOT count: regular productive work where you are doing the same task you can already do. Repeating routine jobs. Travel time to and from college / site. Lunch breaks and rest periods. Statutory holidays. Sick days. Time spent fixing your own mistakes on existing work. Be honest in your log — overstating OTJ is the single biggest reason apprentices get pulled up at audit.',
         },
       ],
     },
     {
       id: 'minimum-20-percent',
-      heading: 'The 20% Minimum Rule',
-      tocLabel: 'The 20% Minimum Rule',
+      heading: 'The Minimum Hours Rule',
+      tocLabel: 'The Minimum Hours Rule',
       blocks: [
         {
           type: 'paragraph',
-          text: 'For a 40-hour working week, 20% is 8 hours OTJ per week. Over a 12-month apprenticeship year, ~400-450 hours OTJ. Some apprentices do more (especially in the early college-heavy years). The 20% can be distributed: front-loaded (more in Year 1), spread evenly, or block-released (multiple weeks of college at a time). Confirm your specific arrangement with your training provider.',
+          text: `For starts from 1 August 2025 the minimum is a total for the whole programme, published on the front of each standard: ${OTJ_ST0152_HOURS} hours for Installation and Maintenance Electrician (ST0152). It is reduced only for relevant prior learning and can never go below ${OTJ_HOURS_FLOOR} hours (${OTJ_RULE_SOURCE}). Apprenticeships that started earlier keep the old rule: 20% of normal working hours capped at 30 a week, an average of 6 hours a week. The hours can be front-loaded, spread evenly, or block-released. Confirm your specific arrangement with your training provider.`,
         },
       ],
     },
@@ -92,7 +93,7 @@ export const OffTheJobTrainingHoursTrackingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'The Elec-Mate apprentice tier includes a built-in OTJ hour logger. Auto-categorises activities (college, supervised learning, CPD, reading, simulation). Pre-populates from your calendar. Generates the audit-ready report your tutor and ESFA expect. Tutor dashboard view so your college can see your progress in real time. 7-day free trial — see how much faster OTJ logging is on a phone.',
+          text: 'The Elec-Mate apprentice tier includes a built-in OTJ hour logger. Auto-categorises activities (college, supervised learning, CPD, reading, simulation). Pre-populates from your calendar. Generates the report your tutor and training provider expect. Tutor dashboard view so your college can see your progress in real time. 7-day free trial — see how much faster OTJ logging is on a phone.',
         },
       ],
     },

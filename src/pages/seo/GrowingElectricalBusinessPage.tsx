@@ -45,7 +45,7 @@ const keyTakeaways = [
   'The systems that constrain growth earliest are not technical electrical skills — they are quoting, invoicing, scheduling, and customer management. Electricians who implement professional business systems before they need them scale more smoothly than those who retrofit them during a growth phase.',
   'A gross profit margin of 35–50 per cent on labour and materials is healthy for a small electrical business. Below 30 per cent, you are trading rather than building. Track it monthly.',
   'Moving from sole trader to a limited company makes financial sense when your taxable profit exceeds approximately £30,000–£35,000 per year. Take advice from an accountant who specialises in trades businesses before making the switch.',
-  'Consumer unit upgrades are one of the highest-margin domestic jobs — but BS 7671:2018+A4:2026 has raised the compliance bar. Regulation 411.3.4 now requires 30 mA RCD protection on all AC lighting circuits in domestic premises, and Regulation 421.1.7 (introduced by Amendment A4:2026) recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arcing. Factor these into your specification and pricing.',
+  'Consumer unit upgrades are one of the highest-margin domestic jobs — but the compliance bar under BS 7671:2018+A4:2026 is high. Regulation 411.3.4 requires 30 mA RCD protection on all AC lighting circuits in domestic premises, and Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on socket-outlet circuits, and has required them in HMOs and other named premises since A2:2022. Factor these into your specification and pricing.',
   'The electricians who scale most successfully systemise everything they can and delegate everything they should — holding onto all the technical work and all the admin simultaneously is the most common ceiling that prevents growth.',
 ];
 
@@ -587,7 +587,7 @@ export default function GrowingElectricalBusinessPage() {
       title="How to Grow Your Electrical Business UK"
       description="Complete guide to growing a UK electrical business — from sole trader to small team to established contractor."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

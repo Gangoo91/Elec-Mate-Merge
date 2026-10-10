@@ -26,7 +26,7 @@ export function WorkerHero({
   return (
     <section className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between pt-1">
       <div className="min-w-0">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow truncate">
+        <p className="text-[11px] font-semibold text-elec-yellow truncate">
           {eyebrow}
         </p>
         <h1 className="mt-1.5 text-[28px] sm:text-[36px] font-semibold tracking-tight text-white leading-[1.1]">

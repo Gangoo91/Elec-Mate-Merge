@@ -252,6 +252,34 @@ Deno.serve(async (req) => {
     }
     const l = line as Line;
 
+    // Gap §4.10: one number per account. For a firm, a text from someone who
+    // is already a client (or was texted from the customer inbox in the last
+    // 30 days, or has opted out), belongs in the customer inbox, not the
+    // enquiries inbox, so the customer is answered from one place. A STOP or
+    // START from a client is recorded there as an opt-out / opt-in.
+    // Everything else carries on as an enquiry below.
+    if (kind === 'sms' && callerKnown) {
+      const body = (params.Body ?? '').trim().slice(0, 2000);
+      const { data: isCustomer, error: custErr } = await supabase.rpc('_msg_inbound_is_customer', {
+        p_firm: l.user_id,
+        p_from: from,
+      });
+      if (!custErr && body && isCustomer === true) {
+        const { error: recErr } = await supabase.rpc('_customer_inbound_record', {
+          p_firm: l.user_id,
+          p_channel: 'sms',
+          p_from: from,
+          p_to: to,
+          p_body: body,
+          p_provider: 'twilio',
+          p_provider_message_id: params.MessageSid ?? null,
+        });
+        if (!recErr) return twiml('');
+        console.error('[twilio-inbound] customer inbox record failed', recErr.message);
+        // Fall through: better an enquiry card than a lost text.
+      }
+    }
+
     // The account's inbox (created on first use, same as the app does)
     await supabase
       .from('enquiry_inboxes')

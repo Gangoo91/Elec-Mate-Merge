@@ -658,7 +658,7 @@ const SwimmingPoolGuide = () => {
                     : zone.color === 'orange'
                       ? 'bg-white/[0.06] border-white/[0.10]'
                       : zone.color === 'yellow'
-                        ? 'bg-white/[0.06] border-elec-yellow/30'
+                        ? 'bg-white/[0.06] border-white/[0.14]'
                         : 'bg-white/[0.06] border-white/[0.10]'
                 }`}
               >
@@ -799,7 +799,7 @@ const SwimmingPoolGuide = () => {
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-2">Voltage Limits</h4>
             <p className="text-sm text-white mb-1">
               <strong>AC:</strong> {selvRequirements.voltageLimits.ac}
@@ -813,7 +813,7 @@ const SwimmingPoolGuide = () => {
             {selvRequirements.requirements.map((req, idx) => (
               <div
                 key={idx}
-                className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]"
               >
                 <h4 className="font-medium text-white mb-2">{req.requirement}</h4>
                 <p className="text-sm text-white mb-3">{req.description}</p>
@@ -829,7 +829,7 @@ const SwimmingPoolGuide = () => {
             ))}
           </div>
 
-          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-3">Common SELV Applications</h4>
             <ul className="grid grid-cols-2 gap-2">
               {selvRequirements.applications.map((app, idx) => (
@@ -929,11 +929,11 @@ const SwimmingPoolGuide = () => {
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Tabs defaultValue="pump" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="pump">Pump</TabsTrigger>
-              <TabsTrigger value="filter">Filter</TabsTrigger>
-              <TabsTrigger value="chlorinator">Chlorinator</TabsTrigger>
-              <TabsTrigger value="controller">Controller</TabsTrigger>
+            <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="pump">Pump</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="filter">Filter</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="chlorinator">Chlorinator</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="controller">Controller</TabsTrigger>
             </TabsList>
 
             {poolPumpCircuits.components.map((component, idx) => (
@@ -1011,7 +1011,7 @@ const SwimmingPoolGuide = () => {
             {underwaterLighting.requirements.map((req, idx) => (
               <div
                 key={idx}
-                className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]"
               >
                 <h4 className="font-medium text-white mb-2">{req.requirement}</h4>
                 <p className="text-sm text-white mb-1">{req.description}</p>
@@ -1020,7 +1020,7 @@ const SwimmingPoolGuide = () => {
             ))}
           </div>
 
-          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-3">Installation Steps</h4>
             <ol className="space-y-2">
               {underwaterLighting.installationSteps.map((step, idx) => (
@@ -1033,7 +1033,7 @@ const SwimmingPoolGuide = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
               <h4 className="font-medium text-white mb-3">Maintenance Considerations</h4>
               <ul className="space-y-1">
                 {underwaterLighting.maintenanceConsiderations.map((item, idx) => (
@@ -1201,10 +1201,10 @@ const SwimmingPoolGuide = () => {
         </CardHeader>
         <CardContent className="p-0">
           <Tabs defaultValue="initial" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="initial">Initial Verification</TabsTrigger>
-              <TabsTrigger value="periodic">Periodic Inspection</TabsTrigger>
-              <TabsTrigger value="docs">Documentation</TabsTrigger>
+            <TabsList className="grid h-auto w-full grid-cols-3 gap-1">
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="initial">Initial Verification</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="periodic">Periodic Inspection</TabsTrigger>
+              <TabsTrigger className="min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black" value="docs">Documentation</TabsTrigger>
             </TabsList>
 
             <TabsContent value="initial" className="space-y-3">

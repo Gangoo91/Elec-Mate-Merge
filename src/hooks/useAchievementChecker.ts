@@ -10,7 +10,6 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { ACHIEVEMENT_DEFINITIONS, type AchievementDef } from '@/data/achievementDefinitions';
-import { toast } from 'sonner';
 
 interface UnlockedAchievement {
   id: string;
@@ -77,7 +76,10 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
       const { data, error } = await supabase
         .from('user_achievements' as any)
         .select('achievement_id')
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        // earned = false rows are placeholders an old app build wrote for a
+        // server-only award (20261011003000). They are not awards.
+        .eq('earned', true);
 
       if (error) return; // Table may not exist yet
 
@@ -113,7 +115,7 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
 
     try {
       // Run queries in parallel
-      const [streakRes, quizRes, xpRes, activityRes] = await Promise.all([
+      const [streakRes, quizRes, xpRes, activityRes, portfolioRes, diaryRes] = await Promise.all([
         supabase
           .from('user_study_streaks')
           .select('current_streak, longest_streak, total_cards_reviewed')
@@ -128,6 +130,19 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
         supabase
           .from('learning_activity_log' as any)
           .select('activity_type')
+          .eq('user_id', user.id)
+          // Voided rows (double taps) never count towards an achievement.
+          .is('voided_at', null),
+        // Portfolio and diary from their own tables: most ways of adding
+        // evidence never write a ledger row, so counting the ledger left 24 of
+        // 31 learners with evidence short of Evidence Builder (10 Oct 2026).
+        supabase
+          .from('portfolio_items')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id),
+        supabase
+          .from('site_diary_entries' as any)
+          .select('id', { count: 'exact', head: true })
           .eq('user_id', user.id),
       ]);
 
@@ -169,10 +184,7 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
           .select('flashcard_set_id, mastery_level')
           .eq('user_id', user.id),
         supabase.from('quiz_results').select('category_breakdown').eq('user_id', user.id),
-        supabase
-          .from('epa_mock_sessions')
-          .select('status, predicted_grade')
-          .eq('user_id', user.id),
+        supabase.from('epa_mock_sessions').select('status, predicted_grade').eq('user_id', user.id),
         supabase
           .from('course_progress')
           .select('section_key')
@@ -227,20 +239,32 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
         totalQuizzes: quizData.length,
         bestQuizPercent:
           quizData.length > 0 ? Math.max(...quizData.map((q: any) => q.percentage)) : 0,
-        fastestQuizMinutes:
-          quizData.length > 0 ? Math.min(...quizData.map((q: any) => q.time_spent / 60000)) : null,
+        // quiz_results.time_spent is SECONDS. Dividing by 60,000 (as if it
+        // were milliseconds) made every quiz "under 5 minutes", so Speed Demon
+        // went to everyone who finished one. Only quizzes passed well count.
+        fastestQuizMinutes: (() => {
+          const quick = quizData
+            .filter((q: any) => Number(q.time_spent) > 0 && Number(q.percentage) >= 80)
+            .map((q: any) => Number(q.time_spent) / 60);
+          return quick.length ? Math.min(...quick) : null;
+        })(),
         currentStreak: streakData?.current_streak ?? 0,
         longestStreak: streakData?.longest_streak ?? 0,
         ojtHoursLogged: Math.floor(totalMinutes / 60),
-        portfolioCount: activityCounts['portfolio_evidence'] ?? 0,
-        diaryCount: activityCounts['site_diary_entry'] ?? 0,
+        portfolioCount: Math.max(
+          portfolioRes.count ?? 0,
+          activityCounts['portfolio_evidence'] ?? 0
+        ),
+        diaryCount: Math.max(diaryRes.count ?? 0, activityCounts['site_diary_entry'] ?? 0),
         totalXP: xpData?.total_xp ?? 0,
         level: xpData?.level ?? 1,
         quizCategoryScores,
         flashcardSetMastery,
         epaMocksCompleted: completedEpa.length,
         epaDistinction: completedEpa.some((r) =>
-          String(r.predicted_grade ?? '').toLowerCase().includes('distinction')
+          String(r.predicted_grade ?? '')
+            .toLowerCase()
+            .includes('distinction')
         ),
         sectionsCompleted,
       };
@@ -308,9 +332,8 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
       case 'total_xp':
         return stats.totalXP >= (p.xp as number);
 
-      case 'daily_goal_streak':
-        // Simplified — use current streak as proxy
-        return stats.currentStreak >= (p.days as number);
+      // 'daily_goal_streak' (Goal Getter) is checked by the server now, on real
+      // daily totals; the streak was only ever a stand-in for it.
 
       case 'epa_mock_completed':
         return stats.epaMocksCompleted >= ((p.count as number) ?? 1);
@@ -345,8 +368,6 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
           current: Math.max(stats.currentStreak, stats.longestStreak),
           target: p.days as number,
         };
-      case 'daily_goal_streak':
-        return { current: stats.currentStreak, target: p.days as number };
       case 'ojt_hours':
         return { current: Math.floor(stats.ojtHoursLogged), target: p.hours as number };
       case 'portfolio_count':
@@ -415,29 +436,19 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
               ignoreDuplicates: true,
             });
 
-          // Award bonus XP
+          // Award bonus XP. The server holds the amount for each achievement
+          // and pays it once, only if the achievement row above exists
+          // (award_achievement_xp, 9 Oct 2026). It used to be added straight
+          // to the summary, so it never reached the ledger or the boards.
           if (def.xpBonus > 0) {
-            const { data: xpRow } = await supabase
-              .from('user_xp_summary' as any)
-              .select('total_xp, xp_today, xp_today_date')
-              .eq('user_id', user.id)
-              .maybeSingle();
-
-            if (xpRow) {
-              const row = xpRow as any;
-              const today = new Date().toLocaleDateString('en-CA');
-              const currentXPToday = row.xp_today_date === today ? (row.xp_today ?? 0) : 0;
-
-              await supabase
-                .from('user_xp_summary' as any)
-                .update({
-                  total_xp: (row.total_xp ?? 0) + def.xpBonus,
-                  xp_today: currentXPToday + def.xpBonus,
-                  xp_today_date: today,
-                  updated_at: new Date().toISOString(),
-                } as any)
-                .eq('user_id', user.id);
-            }
+            await supabase.rpc(
+              'award_achievement_xp' as any,
+              {
+                p_achievement_id: def.id,
+              } as any
+            );
+            // Show the award's XP now, not on the next action.
+            window.dispatchEvent(new CustomEvent('elecmate:xp-check'));
           }
 
           newUnlocks.push(def);
@@ -448,14 +459,10 @@ export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCh
       }
     }
 
-    // Show toast for the first new unlock
-    if (newUnlocks.length > 0) {
-      setRecentUnlock(newUnlocks[0]);
-      toast.success(`Achievement Unlocked: ${newUnlocks[0].title}`, {
-        description: `${newUnlocks[0].description} (+${newUnlocks[0].xpBonus} XP)`,
-        duration: 5000,
-      });
-    }
+    // The "Award unlocked" toast comes from XpToastHost, off the ledger row
+    // the XP award writes, so app and server awards look the same and never
+    // show twice.
+    if (newUnlocks.length > 0) setRecentUnlock(newUnlocks[0]);
   }, [user, unlocked, gatherStats]);
 
   // Get all achievements with unlock state

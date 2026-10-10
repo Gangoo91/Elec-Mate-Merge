@@ -65,7 +65,7 @@ const DiagnosticsSection = ({ onBack }: Props) => {
 
         {/* Consumer unit visual inspection */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Consumer Unit Visual Inspection</p>
+          <p className="text-[12px] font-medium text-white mb-3">Consumer Unit Visual Inspection</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white leading-relaxed">Before connecting any test instrument, open the consumer unit and look. Visual inspection finds 80% of faults faster than any instrument. Check for these signs:</p>
             <div className="space-y-2">
@@ -92,7 +92,7 @@ const DiagnosticsSection = ({ onBack }: Props) => {
 
         {/* When to use which instrument */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Which Instrument First?</p>
+          <p className="text-[12px] font-medium text-white mb-3">Which Instrument First?</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm text-white mb-3">Match the symptom to the instrument — the right first test saves time:</p>
             <div className="space-y-1.5">

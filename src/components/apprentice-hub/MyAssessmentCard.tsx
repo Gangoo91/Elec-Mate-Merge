@@ -21,7 +21,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { InviteAssessorSheet } from '@/components/apprentice-hub/portfolio2/InviteAssessorSheet';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
+import { LC_TILE, LC_TOP_LINE } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { LearnerAssessmentView } from '@/components/assessment/LearnerAssessmentView';
 import { ROLE_LABEL } from '@/lib/assessorInvite';
 import { qualificationsLine } from '@/lib/assessorQualifications';
@@ -88,7 +89,7 @@ const inputCn =
   'text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors ' +
   'hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation';
 const primaryCn =
-  'flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black disabled:opacity-40 touch-manipulation';
+  'flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white';
 const secondaryCn =
   'flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-white/[0.25] text-[15px] font-semibold text-white touch-manipulation';
 
@@ -133,6 +134,40 @@ export function MyAssessmentCard() {
   useEffect(() => {
     if (params.get('witness') === '1') setWitnessSheet(true);
   }, [params]);
+  // ?assessor_request=<id> (ELE-2016): someone reading the shared portfolio
+  // asked to be the assessor. Open the invite sheet filled in with them.
+  const [assessorRequest, setAssessorRequest] = useState<{
+    id: string;
+    email: string;
+    name: string;
+    role: 'assessor' | 'iqa' | 'epa_assessor';
+  } | null>(null);
+  useEffect(() => {
+    const id = params.get('assessor_request');
+    if (!id || !user) return;
+    void supabase
+      .from('portfolio_assessor_requests' as never)
+      .select('id, requester_name, requester_email, role, status')
+      .eq('id', id)
+      .maybeSingle()
+      .then(({ data }) => {
+        const r = data as unknown as {
+          id: string;
+          requester_name: string;
+          requester_email: string;
+          role: 'assessor' | 'iqa' | 'epa_assessor';
+          status: string;
+        } | null;
+        if (!r || r.status !== 'open') return;
+        setAssessorRequest({
+          id: r.id,
+          email: r.requester_email,
+          name: r.requester_name,
+          role: r.role,
+        });
+        setAssessorSheet(true);
+      });
+  }, [params, user]);
   useDeepLinkFocus(focusRow, loaded);
 
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://elec-mate.com';
@@ -380,21 +415,20 @@ export function MyAssessmentCard() {
         <button
           type="button"
           onClick={() => setWitnessSheet(true)}
-          className="flex min-h-[64px] flex-col justify-center rounded-2xl bg-elec-yellow px-4 py-3 text-left touch-manipulation"
+          className={cn(LC_TILE, 'min-h-[72px] justify-center')}
         >
-          <span className="text-[15px] font-semibold text-black">Ask a witness to sign</span>
-          <span className="text-[12.5px] text-black">
+          <span className={LC_TOP_LINE} aria-hidden />
+          <span className="text-[15px] font-semibold text-white">Ask a witness to sign</span>
+          <span className="text-[12.5px] text-white">
             Your supervisor confirms what they saw. No account needed.
           </span>
         </button>
         <button
           type="button"
           onClick={() => setAssessorSheet(true)}
-          className={cn(
-            cardCn,
-            'flex min-h-[64px] flex-col justify-center px-4 py-3 text-left touch-manipulation sm:mx-0'
-          )}
+          className={cn(LC_TILE, 'min-h-[72px] justify-center')}
         >
+          <span className={LC_TOP_LINE} aria-hidden />
           <span className="text-[15px] font-semibold text-white">Invite an assessor</span>
           <span className="text-[12.5px] text-white">
             They see your evidence and record decisions. You can remove them.
@@ -403,7 +437,7 @@ export function MyAssessmentCard() {
       </div>
 
       <section className="space-y-3">
-        <HubSectionHeading>Every criterion</HubSectionHeading>
+        <CollegeSectionTitle title="Every criterion" />
         {user && (
           <LearnerAssessmentView
             learnerId={user.id}
@@ -416,7 +450,7 @@ export function MyAssessmentCard() {
 
       {grades.length > 0 && (
         <section className="space-y-3">
-          <HubSectionHeading>Grades from your college</HubSectionHeading>
+          <CollegeSectionTitle title="Grades from your college" />
           <ul className={cn(cardCn, 'divide-y divide-white/[0.08] overflow-hidden')}>
             {grades.map((g) => (
               <li key={g.id} data-focus-id={g.id} className="px-4 py-3 sm:px-5">
@@ -439,7 +473,7 @@ export function MyAssessmentCard() {
                         .join(' · ')}
                     </p>
                   </div>
-                  <span className="shrink-0 text-[14px] font-semibold tabular-nums text-elec-yellow">
+                  <span className="shrink-0 text-[14px] font-semibold tabular-nums text-white">
                     {g.grade ??
                       (g.score != null ? `${g.score}%` : sentence(g.status ?? 'Recorded'))}
                   </span>
@@ -454,22 +488,22 @@ export function MyAssessmentCard() {
       )}
 
       {(liveWitness.length > 0 || links.length > 0) && (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
           {liveWitness.length > 0 && (
             <section className="space-y-3">
-              <HubSectionHeading>Witness statements</HubSectionHeading>
+              <CollegeSectionTitle title="Witness statements" />
               <ul className={cn(cardCn, 'divide-y divide-white/[0.08] overflow-hidden')}>
                 {liveWitness.map((w) => {
                   const expired = w.status === 'requested' && isPast(w.expires_at);
                   const isOpen = openStatement === w.id;
                   return (
                     <li key={w.id} className="px-4 py-3 sm:px-5">
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-[14px] font-semibold text-white">
+                          <p className="line-clamp-2 text-[14px] font-semibold leading-snug text-white">
                             {w.evidence_snapshot?.title ?? 'Evidence'}
                           </p>
-                          <p className="text-[12.5px] text-white">
+                          <p className="text-[12.5px] text-white [overflow-wrap:anywhere]">
                             {w.status === 'signed'
                               ? `Signed by ${w.witness_name} · ${when(w.signed_at)}`
                               : expired
@@ -482,7 +516,7 @@ export function MyAssessmentCard() {
                             type="button"
                             aria-expanded={isOpen}
                             onClick={() => setOpenStatement(isOpen ? null : w.id)}
-                            className="h-11 shrink-0 px-2 text-[12.5px] font-semibold text-emerald-300 touch-manipulation"
+                            className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 self-start rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06] sm:self-auto"
                           >
                             {isOpen ? 'Hide' : 'Read'}
                           </button>
@@ -498,24 +532,25 @@ export function MyAssessmentCard() {
                               if (item) await requestWitness(item.id);
                               else setWitnessSheet(true);
                             }}
-                            className="h-11 shrink-0 px-2 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+                            className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 self-start rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06] sm:self-auto"
                           >
                             Send a new link
                           </button>
                         ) : (
-                          <div className="flex shrink-0 gap-1">
+                          <div className="flex shrink-0 gap-2">
                             <button
                               type="button"
                               aria-label="Share the link again"
                               onClick={() => setReady(witnessReady(w.token))}
-                              className="flex h-11 w-11 items-center justify-center rounded-full touch-manipulation"
+                              className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 self-start rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06] sm:self-auto"
                             >
-                              <Share2 className="h-4 w-4 text-white" />
+                              <Share2 className="h-4 w-4 text-white" strokeWidth={1.5} />
+                              Share again
                             </button>
                             <button
                               type="button"
                               onClick={() => withdraw(w)}
-                              className="h-11 px-2 text-[12.5px] font-semibold text-white touch-manipulation"
+                              className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 self-start rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06] sm:self-auto"
                             >
                               Withdraw
                             </button>
@@ -542,7 +577,7 @@ export function MyAssessmentCard() {
           )}
           {links.length > 0 && (
             <section className="space-y-3">
-              <HubSectionHeading>Your assessors</HubSectionHeading>
+              <CollegeSectionTitle title="Your assessors" />
               <ul className={cn(cardCn, 'divide-y divide-white/[0.08] overflow-hidden')}>
                 {links.map((l) => {
                   const expired = l.status === 'invited' && isPast(l.expires_at);
@@ -550,10 +585,10 @@ export function MyAssessmentCard() {
                     <li
                       key={l.id}
                       data-focus-id={l.id}
-                      className="flex items-center gap-3 px-4 py-3 sm:px-5"
+                      className="flex flex-wrap items-center gap-2 px-4 py-3 sm:flex-nowrap sm:gap-3 sm:px-5"
                     >
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-[14px] font-semibold text-white">
+                      <div className="min-w-0 basis-full sm:basis-auto sm:flex-1">
+                        <p className="text-[14px] font-semibold leading-snug text-white [overflow-wrap:anywhere]">
                           {l.assessor_name ?? l.assessor_email}
                         </p>
                         {l.assessor_user_id &&
@@ -578,9 +613,9 @@ export function MyAssessmentCard() {
                           onClick={() =>
                             setReady(assessorReady(l.token, l.assessor_name ?? l.assessor_email))
                           }
-                          className="flex h-11 w-11 items-center justify-center rounded-full touch-manipulation"
+                          className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.14] touch-manipulation active:bg-white/[0.06]"
                         >
-                          <Copy className="h-4 w-4 text-white" />
+                          <Copy className="h-4 w-4 text-white" strokeWidth={1.5} />
                         </button>
                       )}
                       {expired ? (
@@ -588,7 +623,7 @@ export function MyAssessmentCard() {
                           type="button"
                           disabled={busy}
                           onClick={() => inviteAssessor(l)}
-                          className="h-11 px-2 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+                          className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 self-start rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06] sm:self-auto"
                         >
                           Send a new invite
                         </button>
@@ -596,7 +631,7 @@ export function MyAssessmentCard() {
                         <button
                           type="button"
                           onClick={() => (l.status === 'active' ? setConfirmRevoke(l) : revoke(l))}
-                          className="h-11 px-2 text-[12.5px] font-semibold text-white touch-manipulation"
+                          className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 self-start rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06] sm:self-auto"
                         >
                           Remove
                         </button>
@@ -630,7 +665,7 @@ export function MyAssessmentCard() {
           </button>
         }
       >
-        <div className="grid gap-6 py-2 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-10">
+        <div className="grid grid-cols-1 gap-6 py-2 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-10">
           {evidence.length === 0 ? (
             <p className="text-[14px] text-white">
               Add a piece of evidence first, then ask someone to witness it.
@@ -661,7 +696,9 @@ export function MyAssessmentCard() {
                     )}
                   />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14px] text-white">{e.title}</span>
+                    <span className="block text-[14px] leading-snug text-white line-clamp-2">
+                      {e.title}
+                    </span>
                     <span className="block text-[12px] text-white">
                       {(e.criteria?.length ?? 0) > 0
                         ? `${e.criteria!.length} ${e.criteria!.length === 1 ? 'criterion' : 'criteria'}`
@@ -696,8 +733,20 @@ export function MyAssessmentCard() {
       {/* Assessor invite (shared with the portfolio home) */}
       <InviteAssessorSheet
         open={assessorSheet}
-        onOpenChange={setAssessorSheet}
-        onCreated={() => void load()}
+        onOpenChange={(o) => {
+          setAssessorSheet(o);
+          if (!o) setAssessorRequest(null);
+        }}
+        initial={assessorRequest ?? undefined}
+        onCreated={() => {
+          if (assessorRequest) {
+            void supabase
+              .from('portfolio_assessor_requests' as never)
+              .update({ status: 'invited' } as never)
+              .eq('id', assessorRequest.id);
+          }
+          void load();
+        }}
         onAskWitness={() => setWitnessSheet(true)}
       />
 
@@ -716,7 +765,7 @@ export function MyAssessmentCard() {
         }
       >
         {ready && (
-          <div className="grid gap-6 py-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10">
+          <div className="grid grid-cols-1 gap-6 py-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10">
             <div className="flex items-start gap-2">
               <CheckCircle className="mt-3 h-5 w-5 shrink-0 text-emerald-400" />
               <p className="flex-1 break-all rounded-xl border border-white/[0.12] p-3 font-mono text-[12.5px] text-white">

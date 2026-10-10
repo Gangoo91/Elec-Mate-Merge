@@ -281,7 +281,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         ))}
 
         {/* R1+R2 Method */}
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mt-4">R1+R2 Method (Preferred)</p>
+        <p className="text-[12px] font-medium text-white px-0.5 mt-4">R1+R2 Method (Preferred)</p>
         {renderExpandable('r1r2', 'R1+R2 Step-by-Step Procedure', 'amber', (
           <div className="space-y-3">
             {renderStepCards(r1r2Steps, 'amber')}
@@ -304,7 +304,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         ))}
 
         {/* R2 Method */}
-        <p className="text-xs font-medium text-purple-400 uppercase tracking-wider px-0.5 mt-4">R2 Method (Alternative)</p>
+        <p className="text-xs font-medium text-purple-400 px-0.5 mt-4">R2 Method (Alternative)</p>
         {renderExpandable('r2', 'R2 Step-by-Step Procedure', 'purple', (
           <div className="space-y-3">
             {renderStepCards(r2Steps, 'purple')}
@@ -327,7 +327,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         ))}
 
         {/* Ring Circuit */}
-        <p className="text-xs font-medium text-cyan-400 uppercase tracking-wider px-0.5 mt-4">Ring Circuit Testing</p>
+        <p className="text-xs font-medium text-cyan-400 px-0.5 mt-4">Ring Circuit Testing</p>
         {renderExpandable('ring', 'Ring Circuit Testing Procedure', 'cyan', (
           <div className="space-y-3">
             <p className="text-[12px] font-semibold text-cyan-400 px-1">Step A: End-to-End Continuity</p>

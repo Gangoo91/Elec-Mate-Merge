@@ -21,7 +21,7 @@ export default function ElectricalCertificateSoftwarePage() {
       title="Electrical Certificate Software UK: EICR + More"
       description="Electrical certificate software for UK electricians: 19 certificate types, unlimited from £6.99/month, AI board scanner, voice entry, offline support."
       datePublished="2026-06-10"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {
@@ -273,7 +273,7 @@ export default function ElectricalCertificateSoftwarePage() {
             <>
               <p>
                 Certificate forms follow the BS 7671:2018+A4:2026 Appendix 6 model forms, including
-                the fields for recording SPD and AFDD details added by Amendment 4. Test results are
+                the fields for recording SPD and AFDD details added by Amendment 2:2022. Test results are
                 validated automatically: Zs readings are checked against the maximum permitted
                 values for the specific protective device on that circuit, insulation resistance is
                 checked against minimum acceptable values, and RCD operation times are checked

@@ -15,12 +15,24 @@ import type { StaffRole } from '@/contexts/CollegeSupabaseContext';
 import { useCollegeCan } from '@/hooks/useCollegeCan';
 import { useToast } from '@/hooks/use-toast';
 import { staffWriteMessage } from '@/services/college/collegeStaffService';
-import { RoleCapabilitySummary, StaffRolePicker } from '@/components/college/people/StaffRoleFields';
+import {
+  RoleCapabilitySummary,
+  StaffRolePicker,
+} from '@/components/college/people/StaffRoleFields';
 
 interface AddTutorDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /**
+   * 'support' when opened from Support staff: the sheet is titled for a
+   * staff member and starts on Assessor instead of Tutor.
+   */
+  variant?: 'teaching' | 'support';
+  /** Called after a save, to open the logins sheet from the success screen. */
+  onGiveLogin?: () => void;
 }
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const DEPARTMENTS = [
   'Electrical Installation',
@@ -48,8 +60,24 @@ const SPECIALIZATIONS = [
   'PAT Testing',
 ];
 
-export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
-  const { addStaff } = useCollegeSupabase();
+/*
+ * 8 Oct 2026: says why it will not save (each missing field under itself,
+ * instead of a dead button), is titled for who it is adding, checks the
+ * email is not already on the staff list, and ends on a success screen that
+ * is honest about logins: a staff row added here has none until they are
+ * given one through the roster (Add several with logins).
+ */
+export function AddTutorDialog({
+  open,
+  onOpenChange,
+  variant = 'teaching',
+  onGiveLogin,
+}: AddTutorDialogProps) {
+  const { addStaff, staff } = useCollegeSupabase();
+  const support = variant === 'support';
+  const startRole: StaffRole = support ? ('assessor' as StaffRole) : 'tutor';
+  const [touched, setTouched] = useState(false);
+  const [done, setDone] = useState<string | null>(null);
   // ELE-1898: admin / head of department only from someone who may grant them.
   const { can } = useCollegeCan();
   const { toast } = useToast();
@@ -58,7 +86,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     name: '',
     email: '',
     phone: '',
-    role: 'tutor' as StaffRole,
+    role: startRole,
     department: '',
     max_teaching_hours: '',
     teaching_qual: '',
@@ -66,14 +94,54 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     specialisations: [] as string[],
   });
 
+  const email = formData.email.trim();
+  const errors = {
+    name: !formData.name.trim() ? 'Enter their full name.' : null,
+    email: !email
+      ? 'Enter their work email.'
+      : !EMAIL_RE.test(email)
+        ? 'That does not look like an email address.'
+        : staff.some((m) => (m.email ?? '').trim().toLowerCase() === email.toLowerCase())
+          ? 'Someone with this email is already on the staff list.'
+          : null,
+    department: !formData.department ? 'Pick their department.' : null,
+  };
+  const hasErrors = !!(errors.name || errors.email || errors.department);
+  const err = (k: keyof typeof errors) =>
+    touched && errors[k] ? (
+      <p className="mt-1.5 text-[12.5px] font-medium text-orange-300">{errors[k]}</p>
+    ) : null;
+
+  const reset = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      role: startRole,
+      department: '',
+      max_teaching_hours: '',
+      teaching_qual: '',
+      assessor_qual: '',
+      specialisations: [],
+    });
+    setTouched(false);
+    setDone(null);
+  };
+  const close = (o: boolean) => {
+    if (!o) reset();
+    onOpenChange(o);
+  };
+
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
+    setTouched(true);
+    if (hasErrors) return;
     setIsSubmitting(true);
 
     try {
       await addStaff({
-        name: formData.name,
-        email: formData.email,
+        name: formData.name.trim(),
+        email,
         phone: formData.phone || null,
         role: formData.role,
         department: formData.department || null,
@@ -90,18 +158,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
         photo_url: null,
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        role: 'tutor',
-        department: '',
-        max_teaching_hours: '',
-        teaching_qual: '',
-        assessor_qual: '',
-        specialisations: [],
-      });
-      onOpenChange(false);
+      setDone(formData.name.trim());
     } catch (error) {
       console.error('Failed to add tutor:', error);
       // Was silent: a refused add left the sheet open with no word why.
@@ -128,22 +185,71 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     }));
   };
 
-  const canSubmit = !isSubmitting && !!formData.name && !!formData.email && !!formData.department;
+  const canSubmit = !isSubmitting;
+
+  if (done) {
+    return (
+      <FormSheet
+        open={open}
+        onOpenChange={close}
+        width="wide"
+        eyebrow="Staff"
+        title={`${done} is on the staff list`}
+        description="Their record is saved. They do not have a login yet."
+        footer={
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" onClick={reset} className={buttonSecondaryCn}>
+              Add another
+            </button>
+            <button type="button" onClick={() => close(false)} className={buttonPrimaryCn}>
+              Done
+            </button>
+          </div>
+        }
+      >
+        <div className="rounded-2xl border border-white/[0.08] p-4 sm:p-5">
+          <h3 className="text-[15px] font-semibold text-white">Giving them a login</h3>
+          <p className="mt-2 max-w-3xl text-[13.5px] leading-relaxed text-white">
+            Add several with logins (on the Tutors page) takes one line or fifty. It makes a login
+            for anyone new, or emails a staff join link to someone who already has an Elec-Mate
+            account, and links it to this record. Until then they can be named on cohorts but cannot
+            sign in to the College Hub.
+          </p>
+          {onGiveLogin && (
+            <button
+              type="button"
+              onClick={() => {
+                close(false);
+                onGiveLogin();
+              }}
+              className={`${buttonSecondaryCn} mt-4 w-auto px-5`}
+            >
+              Give them a login now
+            </button>
+          )}
+        </div>
+      </FormSheet>
+    );
+  }
 
   return (
     <FormSheet
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={close}
       width="wide"
       bodyClassName="block"
       eyebrow="Staff"
-      title="Add new tutor"
-      description="Add a new tutor or staff member. Fields marked * are required."
+      title={support ? 'Add a staff member' : 'Add a tutor'}
+      description={
+        support
+          ? 'Assessors, IQA, admin and learner support. Fields marked * are required.'
+          : 'Someone who teaches. Fields marked * are required.'
+      }
       footer={
         <div className="grid grid-cols-2 gap-2.5">
           <button
             type="button"
-            onClick={() => onOpenChange(false)}
+            onClick={() => close(false)}
             disabled={isSubmitting}
             className={buttonSecondaryCn}
           >
@@ -155,7 +261,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
             disabled={!canSubmit}
             className={buttonPrimaryCn}
           >
-            {isSubmitting ? 'Adding…' : 'Add tutor'}
+            {isSubmitting ? 'Adding…' : support ? 'Add staff member' : 'Add tutor'}
           </button>
         </div>
       }
@@ -166,6 +272,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
           e.preventDefault();
           if (canSubmit) handleSubmit(e);
         }}
+        noValidate
         className="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
       >
         <div className="space-y-6">
@@ -181,8 +288,10 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
                 onChange={(e) => handleChange('name', e.target.value)}
                 placeholder="John Smith"
                 required
+                aria-invalid={touched && !!errors.name}
                 className={inputCn}
               />
+              {err('name')}
             </div>
             <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
               <div>
@@ -196,8 +305,10 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
                   onChange={(e) => handleChange('email', e.target.value)}
                   placeholder="john.smith@college.ac.uk"
                   required
+                  aria-invalid={touched && !!errors.email}
                   className={inputCn}
                 />
+                {err('email')}
               </div>
               <div>
                 <label className={labelCn} htmlFor="at-phone">
@@ -233,6 +344,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
                 placeholder="Select department"
                 triggerClassName={selectTriggerCn}
               />
+              {err('department')}
             </div>
           </section>
         </div>

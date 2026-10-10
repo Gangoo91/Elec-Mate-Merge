@@ -2,10 +2,8 @@ import React from 'react';
 
 const AboutCard = () => {
   return (
-    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 animate-fade-in">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        About these safety scenarios
-      </span>
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 animate-fade-in max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+      <span className="text-[13px] font-semibold text-white">About these safety scenarios</span>
 
       <p className="text-[14px] text-white leading-relaxed">
         These interactive case studies are based on real situations encountered by UK electrical

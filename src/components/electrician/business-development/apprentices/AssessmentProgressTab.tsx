@@ -47,7 +47,7 @@ const AssessmentProgressTab = () => {
     },
     {
       phase: 'Progress Gateway Reviews',
-      timing: 'Every 12 weeks',
+      timing: 'At least every 3 months',
       description: 'Structured progress assessments aligned with apprenticeship standards',
       components: [
         'Practical competency demonstrations',

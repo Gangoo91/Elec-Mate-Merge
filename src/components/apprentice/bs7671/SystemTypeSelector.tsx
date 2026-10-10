@@ -67,11 +67,11 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
   };
 
   return (
-    <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative animate-fade-in">
+    <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/[0.14] overflow-hidden relative animate-fade-in">
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <CardHeader className="relative">
         <CardTitle className="text-white flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <Zap className="h-5 w-5 text-elec-yellow" />
           </div>
           System Configuration
@@ -165,7 +165,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
         {selectedSystem && selectedInstallation && (
           <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
             <span className="text-sm text-white">Selected:</span>
-            <Badge className="bg-white/[0.06] text-elec-yellow border border-elec-yellow/30">
+            <Badge className="bg-white/[0.06] text-elec-yellow border border-white/[0.14]">
               {systemTypes.find((s) => s.id === selectedSystem)?.name}
             </Badge>
             <Badge className="bg-white/[0.06] text-green-400 border border-green-500/30">

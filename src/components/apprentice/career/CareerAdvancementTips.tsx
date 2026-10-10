@@ -10,16 +10,11 @@ const CareerAdvancementTips = () => {
   ];
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 animate-fade-in">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        Career advancement tips
-      </span>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 animate-fade-in max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+      <span className="text-[13px] font-semibold text-white">Career advancement tips</span>
       <ul className="space-y-2">
         {tips.map((tip, index) => (
-          <li
-            key={index}
-            className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
-          >
+          <li key={index} className="flex items-start gap-2 text-[14px] text-white leading-relaxed">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>{tip}</span>
           </li>

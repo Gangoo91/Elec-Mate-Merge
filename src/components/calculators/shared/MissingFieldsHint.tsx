@@ -108,7 +108,7 @@ export const MissingFieldsHint = () => {
   const more = missing.length > 3 ? ` and ${missing.length - 3} more` : '';
 
   return (
-    <p className="text-[12px] leading-relaxed text-white" role="status">
+    <p className="text-[13px] leading-relaxed text-white" role="status">
       <span ref={anchor} />
       Empty: {shown}
       {more}.

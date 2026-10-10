@@ -1,4 +1,4 @@
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
 
@@ -22,23 +22,21 @@ interface GuideIntroProps {
  */
 const GuideIntro = ({ eyebrow, title, blurb, listLabel, items }: GuideIntroProps) => (
   <section className="space-y-4 sm:space-y-5">
-    <HubSectionHeading>{title}</HubSectionHeading>
+    <CollegeHeading>{title}</CollegeHeading>
     <p className="text-white text-sm leading-relaxed">{blurb}</p>
 
     <div
       className={cn(
-        '-mx-4 space-y-2.5 border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border sm:p-4',
+        '-mx-4 space-y-2.5 border-y border-white/[0.08] px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border sm:p-4',
         CARD_SURFACE
       )}
     >
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-        {listLabel}
-      </span>
+      <span className="text-[13px] font-semibold text-elec-yellow">{listLabel}</span>
       <ul className="space-y-2">
         {items.map((item) => (
           <li
             key={item}
-            className="flex items-start gap-2.5 text-[12.5px] text-white leading-relaxed"
+            className="flex items-start gap-2.5 text-[14px] text-white leading-relaxed"
           >
             <span className="mt-[7px] h-1 w-1 rounded-full bg-elec-yellow flex-shrink-0" />
             {item}

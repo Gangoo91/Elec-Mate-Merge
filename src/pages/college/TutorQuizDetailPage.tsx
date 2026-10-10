@@ -6,27 +6,46 @@ import { cn } from '@/lib/utils';
 import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_LINK,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  CollegeStats,
-} from '@/components/college/ui/CollegeUi';
+  AiMarker,
+  StatusChip,
+  TEACH_BTN,
+  TEACH_BTN_PRIMARY,
+  TEACH_CARD,
+  TEACH_LIST,
+  TEACH_ROW,
+  TeachingEmpty,
+  TeachingHeader,
+  TopLine,
+  plural,
+} from '@/components/college/teaching/TeachingKit';
 
 const HELP: PageHelpContent = {
   id: 'college-quiz-detail',
   title: 'A quiz',
   what: 'How the group did on one quiz: who has done it, the average and pass rate, which questions and criteria tripped them up, and every attempt.',
   steps: [
-    { title: 'Publish it', body: 'A draft is hidden from learners. Publish it when it is ready; every learner it is for gets a notification that opens the quiz. Unpublish to take it back.' },
-    { title: 'Set it again', body: 'Send a fresh copy with the same questions to a cohort with a new due date, for a retake or next year\'s group. Earlier attempts stay here.' },
-    { title: 'Find the weak spots', body: 'Criteria and questions are ranked by how many got them right. Tap a weak criterion to send a follow-up quiz on it.' },
-    { title: 'Mark and review', body: 'Tap an attempt to see every answer. Written answers get a suggested mark for you to confirm or change. When every written answer is signed off, the learner gets their final result.' },
-    { title: 'Another tutor\'s quiz', body: 'You can see any quiz set at your college. Only the tutor who set it, or a college admin, publishes or marks it.' },
+    {
+      title: 'Publish it',
+      body: 'A draft is hidden from learners. Publish it when it is ready; every learner it is for gets a notification that opens the quiz. Unpublish to take it back.',
+    },
+    {
+      title: 'Set it again',
+      body: "Send a fresh copy with the same questions to a cohort with a new due date, for a retake or next year's group. Earlier attempts stay here.",
+    },
+    {
+      title: 'Find the weak spots',
+      body: 'Criteria and questions are ranked by how many got them right. Tap a weak criterion to send a follow-up quiz on it.',
+    },
+    {
+      title: 'Mark and review',
+      body: 'Tap an attempt to see every answer. Written answers get a suggested mark for you to confirm or change. When every written answer is signed off, the learner gets their final result.',
+    },
+    {
+      title: "Another tutor's quiz",
+      body: 'You can see any quiz set at your college. Only the tutor who set it, or a college admin, publishes or marks it.',
+    },
   ],
   legend: [
     { swatch: 'bg-emerald-400', label: 'Green', body: 'right' },
@@ -47,6 +66,10 @@ import { rowsToCsv, downloadCsv } from '@/lib/csv';
    Per-quiz cohort view: what the quiz is, how the cohort did per question
    and per AC, and every attempt (tap → QuizAttemptReviewSheet). Publish /
    unpublish, regrade pending AI marks, export CSV.
+
+   8 Oct 2026: the four count tiles became the header sentence, rows lost
+   their coloured left bar (Passed / Failed / To mark are chips), and the
+   AI re-mark says what it does with a "Uses AI" marker.
 
    Rebuilt on the shared hub shell. What went: the hero with a 28px title
    and five coloured badges, four tinted count tiles, and a per-question
@@ -125,10 +148,6 @@ const KIND_LABEL: Record<Kind, string> = {
   mock_exam: 'Mock exam',
 };
 
-function plural(n: number, one: string, many = `${one}s`): string {
-  return `${n} ${n === 1 ? one : many}`;
-}
-
 export default function TutorQuizDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
@@ -173,7 +192,7 @@ export default function TutorQuizDetailPage() {
     const [{ data: may }, { data: creator }] = await Promise.all([
       supabase.rpc('_can_manage_tutor_quiz' as never, { p_quiz: id } as never),
       meta.creator_id
-        ? supabase.from('profiles').select('full_name').eq('id', meta.creator_id).maybeSingle()
+        ? supabase.from('public_profiles').select('full_name').eq('id', meta.creator_id).maybeSingle()
         : Promise.resolve({ data: null }),
     ]);
     setCanEdit((may as unknown as boolean | null) !== false);
@@ -206,7 +225,7 @@ export default function TutorQuizDetailPage() {
     const nameById = new Map<string, string>();
     if (studentIds.length > 0) {
       const { data: profs } = await supabase
-        .from('profiles')
+        .from('public_profiles')
         .select('id, full_name')
         .in('id', studentIds);
       for (const p of (profs ?? []) as Array<{ id: string; full_name: string | null }>) {
@@ -295,7 +314,10 @@ export default function TutorQuizDetailPage() {
           if (ans.value === expectedTrue) correct += 1;
           else incorrect += 1;
         } else if (q.question_kind === 'calculation' && ans.kind === 'calculation') {
-          const expected = (q.expected_answer ?? {}) as { numeric_value?: number; tolerance?: number };
+          const expected = (q.expected_answer ?? {}) as {
+            numeric_value?: number;
+            tolerance?: number;
+          };
           if (
             expected.numeric_value != null &&
             ans.numeric != null &&
@@ -355,7 +377,12 @@ export default function TutorQuizDetailPage() {
     const completed = attempts.filter((a) => a.completed_at);
     const inProgress = attempts.filter((a) => !a.completed_at).length;
     const passes = completed.filter((a) => {
-      if (quiz?.pass_mark == null || a.score == null || a.total_points == null || a.total_points === 0)
+      if (
+        quiz?.pass_mark == null ||
+        a.score == null ||
+        a.total_points == null ||
+        a.total_points === 0
+      )
         return false;
       return (a.score / a.total_points) * 100 >= quiz.pass_mark;
     });
@@ -455,7 +482,8 @@ export default function TutorQuizDetailPage() {
         total_points: a.total_points ?? '',
         percentage: pct ?? '',
         passed: passed == null ? '' : passed ? 'yes' : 'no',
-        time_taken_minutes: a.time_taken_seconds != null ? Math.round(a.time_taken_seconds / 60) : '',
+        time_taken_minutes:
+          a.time_taken_seconds != null ? Math.round(a.time_taken_seconds / 60) : '',
         started_at: a.started_at ?? '',
         completed_at: a.completed_at ?? '',
         ai_marks_pending: pendingForAttempt,
@@ -546,7 +574,12 @@ export default function TutorQuizDetailPage() {
   if (loading && !quiz) {
     return (
       <HubPage ground="landing">
-        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" trailing={<PageHelpButton help={HELP} compact />} />
+        <HubMasthead
+          section="College"
+          title="Quiz"
+          backTo="/college/quizzes"
+          trailing={<PageHelpButton help={HELP} compact />}
+        />
         <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
           <LoadingState />
         </HubBody>
@@ -556,9 +589,17 @@ export default function TutorQuizDetailPage() {
   if (!quiz) {
     return (
       <HubPage ground="landing">
-        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" trailing={<PageHelpButton help={HELP} compact />} />
+        <HubMasthead
+          section="College"
+          title="Quiz"
+          backTo="/college/quizzes"
+          trailing={<PageHelpButton help={HELP} compact />}
+        />
         <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-          <CollegeEmpty title="Quiz not found" body="It may have been deleted, or it belongs to a college you are not part of." />
+          <TeachingEmpty
+            title="Quiz not found"
+            body="It may have been deleted, or it belongs to a college you are not part of."
+          />
         </HubBody>
       </HubPage>
     );
@@ -586,28 +627,79 @@ export default function TutorQuizDetailPage() {
 
   return (
     <HubPage ground="landing">
-      <HubMasthead section="College" title={quiz.title} backTo="/college/quizzes" trailing={<PageHelpButton help={HELP} compact />} />
+      <HubMasthead section="College" title={quiz.title} backTo="/college/quizzes" />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-        <CollegePageHeader
-          eyebrow={[kindLabel, quiz.is_published ? 'Published' : 'Draft', canEdit ? null : 'Read only'].filter(Boolean).join(' · ')}
+        <TeachingHeader
+          eyebrow={[
+            kindLabel,
+            quiz.is_published ? 'Published' : 'Draft',
+            canEdit ? null : 'Read only',
+          ]
+            .filter(Boolean)
+            .join(' · ')}
           title={quiz.title}
-          description={
+          help={HELP}
+          summary={
+            stats.total === 0 ? (
+              quiz.is_published ? (
+                'Nobody has started it yet.'
+              ) : (
+                'A draft: learners cannot see it until you publish it.'
+              )
+            ) : (
+              <>
+                {stats.completed} of {plural(stats.total, 'learner')} who started have finished
+                {stats.inProgress > 0 ? `, ${stats.inProgress} still going` : ''}.{' '}
+                {stats.completed > 0 && stats.avg != null && (
+                  <>
+                    Average {stats.avg}%
+                    {stats.passRate != null ? `, ${stats.passRate}% passed` : ''}
+                    {quiz.pass_mark != null
+                      ? stats.avg >= quiz.pass_mark
+                        ? ', above the pass mark.'
+                        : ', below the pass mark.'
+                      : '.'}{' '}
+                  </>
+                )}
+                {stats.pending > 0 && (
+                  <span className="font-semibold text-orange-400">
+                    {plural(stats.pending, 'written answer')} wait{stats.pending === 1 ? 's' : ''}{' '}
+                    for your mark.
+                  </span>
+                )}
+              </>
+            )
+          }
+          sub={
             <>
-              {quiz.description && <span className="block">{quiz.description}</span>}
-              <span className={cn('block tabular-nums', quiz.description && 'mt-1.5 text-[13px]')}>{metaLine}</span>
+              {quiz.description &&
+                quiz.description.trim().replace(/\.$/, '') !== quiz.title.trim() && (
+                  <span className="mb-1 block">{quiz.description}</span>
+                )}
+              <span className="block tabular-nums">{metaLine}</span>
               {!canEdit && (
-                <span className="mt-1.5 block text-[13px]">
-                  Set by {creatorName ?? 'another tutor'}. You can see the results and set it again; they publish and mark it.
+                <span className="mt-1 block">
+                  Set by {creatorName ?? 'another tutor'}. You can see the results and set it again;
+                  they publish and mark it.
                 </span>
               )}
             </>
           }
           actions={
             <>
-              <button type="button" onClick={handleExportCsv} disabled={attempts.length === 0} className={COLLEGE_BTN}>
+              <button
+                type="button"
+                onClick={handleExportCsv}
+                disabled={attempts.length === 0}
+                className={cn(TEACH_BTN, 'flex-1 sm:flex-none')}
+              >
                 Export CSV
               </button>
-              <button type="button" onClick={() => setSetAgainOpen(true)} className={COLLEGE_BTN}>
+              <button
+                type="button"
+                onClick={() => setSetAgainOpen(true)}
+                className={cn(TEACH_BTN, 'flex-1 sm:flex-none')}
+              >
                 Set it again
               </button>
               {canEdit && (
@@ -615,256 +707,246 @@ export default function TutorQuizDetailPage() {
                   type="button"
                   onClick={handleTogglePublish}
                   disabled={busy !== null}
-                  className={quiz.is_published ? COLLEGE_BTN : COLLEGE_BTN_PRIMARY}
+                  className={cn(
+                    quiz.is_published ? TEACH_BTN : TEACH_BTN_PRIMARY,
+                    'w-full sm:w-auto'
+                  )}
                 >
-                  {busy === 'publish' ? 'Working…' : quiz.is_published ? 'Unpublish' : 'Publish to learners'}
+                  {busy === 'publish'
+                    ? 'Working…'
+                    : quiz.is_published
+                      ? 'Unpublish'
+                      : 'Publish to learners'}
                 </button>
               )}
             </>
           }
         />
 
-        <CollegeStats
-          items={[
-            {
-              label: 'Started',
-              value: String(stats.total),
-              sub: stats.total === 0 ? (quiz.is_published ? 'nobody has opened it yet' : 'publish it so learners can start') : `${stats.inProgress} still in progress`,
-            },
-            {
-              label: 'Completed',
-              value: String(stats.completed),
-              sub: stats.completed === 0 ? 'no submissions yet' : stats.passRate == null ? 'no pass mark set' : `${stats.passRate}% passed`,
-              good: stats.completed > 0,
-            },
-            {
-              label: 'Written answers to mark',
-              value: String(stats.pending),
-              sub: stats.pending > 0 ? 'suggested mark waiting for you' : 'nothing waiting',
-              warn: stats.pending > 0,
-            },
-            {
-              label: 'Average score',
-              value: stats.avg == null ? '—' : `${stats.avg}%`,
-              sub:
-                stats.avg == null
-                  ? 'no scored attempts yet'
-                  : quiz.pass_mark != null
-                    ? stats.avg >= quiz.pass_mark
-                      ? 'above the pass mark'
-                      : 'below the pass mark'
-                    : 'across scored attempts',
-              warn: stats.avg != null && quiz.pass_mark != null && stats.avg < quiz.pass_mark,
-              good: stats.avg != null && quiz.pass_mark != null && stats.avg >= quiz.pass_mark,
-            },
-          ]}
-        />
+        <div
+          className={cn(
+            'grid grid-cols-1 items-start gap-8',
+            showQuestionPerformance && 'xl:grid-cols-2'
+          )}
+        >
+          {/* Question performance */}
+          {showQuestionPerformance && (
+            <motion.section
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-3"
+            >
+              <CollegeSectionTitle
+                title="Where the group struggles"
+                sub="Lowest first. Tap a criterion to send a follow-up quiz on it."
+              />
 
-        <div className={cn('grid grid-cols-1 items-start gap-8', showQuestionPerformance && 'xl:grid-cols-2')}>
-        {/* Question performance */}
-        {showQuestionPerformance && (
+              {acStats.length > 0 && (
+                <motion.div
+                  variants={itemVariants}
+                  className={cn(
+                    'grid grid-cols-1 gap-2.5 sm:gap-3',
+                    acStats.length >= 3
+                      ? 'sm:grid-cols-3'
+                      : acStats.length === 2
+                        ? 'sm:grid-cols-2'
+                        : 'sm:grid-cols-1'
+                  )}
+                >
+                  {acStats.slice(0, 3).map((s) => {
+                    const weak = (s.correctness ?? 100) < 50;
+                    return (
+                      <button
+                        key={s.ac_ref}
+                        type="button"
+                        onClick={() =>
+                          window.dispatchEvent(
+                            new CustomEvent('quiz:suggest-from-ac', {
+                              detail: { ac_codes: [s.ac_ref] },
+                            })
+                          )
+                        }
+                        className={cn(TEACH_CARD, 'min-h-[104px] p-4')}
+                        title="Send a follow-up quiz on this criterion"
+                      >
+                        <TopLine />
+                        <span className="text-[14.5px] font-semibold leading-tight tracking-tight text-white">
+                          AC {s.ac_ref}
+                        </span>
+                        <span
+                          className={cn(
+                            'mt-2 text-[26px] font-semibold leading-none tabular-nums tracking-tight',
+                            weak ? 'text-orange-400' : 'text-white'
+                          )}
+                        >
+                          {s.correctness ?? '—'}%
+                        </span>
+                        <span className="mt-1.5 text-[12px] leading-snug text-white">
+                          answered right, across {plural(s.questions, 'question')}
+                        </span>
+                        <span className="flex-grow" />
+                        <span className="mt-2 text-[12.5px] font-semibold text-elec-yellow">
+                          Send a follow-up quiz
+                        </span>
+                      </button>
+                    );
+                  })}
+                </motion.div>
+              )}
+
+              <motion.div variants={itemVariants} className={TEACH_LIST}>
+                <ol className="divide-y divide-white/[0.06]">
+                  {questionStats.map((qs, i) => {
+                    const weak = qs.correctness != null && qs.correctness < 50;
+                    const breakdown = [
+                      `${qs.correct} right`,
+                      qs.partial > 0 ? `${qs.partial} partly` : null,
+                      `${qs.incorrect} wrong`,
+                      qs.pending > 0 ? `${qs.pending} pending` : null,
+                      qs.unanswered > 0 ? `${qs.unanswered} skipped` : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ');
+                    return (
+                      <li
+                        key={qs.question.id}
+                        className="flex items-start gap-3 px-4 py-3.5 sm:px-5"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <div className="text-[12px] leading-tight tabular-nums text-white">
+                            Q{i + 1}
+                            {qs.question.ac_ref ? ` · AC ${qs.question.ac_ref}` : ''}
+                            {` · ${qs.question.question_kind.replace(/_/g, ' ')}`}
+                          </div>
+                          <div className="mt-0.5 truncate text-[14px] font-semibold leading-tight text-white">
+                            {qs.question.question_text}
+                          </div>
+                          {/* Right / partly / wrong — real state, so it keeps
+                            its colour. Pending and skipped are white. */}
+                          <div className="mt-2 flex h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+                            {qs.correct > 0 && (
+                              <div
+                                className="bg-emerald-400"
+                                style={{ width: `${(qs.correct / qs.total) * 100}%` }}
+                              />
+                            )}
+                            {qs.partial > 0 && (
+                              <div
+                                className="bg-elec-yellow"
+                                style={{ width: `${(qs.partial / qs.total) * 100}%` }}
+                              />
+                            )}
+                            {qs.incorrect > 0 && (
+                              <div
+                                className="bg-orange-400"
+                                style={{ width: `${(qs.incorrect / qs.total) * 100}%` }}
+                              />
+                            )}
+                            {qs.pending > 0 && (
+                              <div
+                                className="bg-white/[0.35]"
+                                style={{ width: `${(qs.pending / qs.total) * 100}%` }}
+                              />
+                            )}
+                          </div>
+                          <div className="mt-1.5 text-[12px] leading-tight tabular-nums text-white">
+                            {breakdown}
+                          </div>
+                        </div>
+                        <div className="shrink-0 text-right">
+                          <div
+                            className={cn(
+                              'text-[16px] font-semibold leading-none tabular-nums',
+                              weak ? 'text-orange-400' : 'text-white'
+                            )}
+                          >
+                            {qs.correctness ?? '—'}%
+                          </div>
+                          <div className="mt-1 text-[12px] tabular-nums text-white">
+                            of {qs.total}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </motion.div>
+            </motion.section>
+          )}
+
+          {/* Attempts */}
           <motion.section
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             className="space-y-3"
           >
-            <CollegeSectionTitle title="Where the group struggles" sub="Lowest first. Tap a criterion to send a follow-up quiz on it." />
-
-            {acStats.length > 0 && (
-              <motion.div
-                variants={itemVariants}
-                className={cn(
-                  'grid grid-cols-1 gap-2.5 sm:gap-3',
-                  acStats.length >= 3
-                    ? 'sm:grid-cols-3'
-                    : acStats.length === 2
-                      ? 'sm:grid-cols-2'
-                      : 'sm:grid-cols-1'
-                )}
-              >
-                {acStats.slice(0, 3).map((s) => {
-                  const weak = (s.correctness ?? 100) < 50;
-                  return (
+            <CollegeSectionTitle
+              title="Attempts"
+              sub={
+                stats.pending > 0
+                  ? `${stats.pending} written answer${stats.pending === 1 ? '' : 's'} to mark`
+                  : plural(attempts.length, 'attempt')
+              }
+              action={
+                stats.pending > 0 && canEdit ? (
+                  <span className="flex items-center gap-2">
+                    <AiMarker />
                     <button
-                      key={s.ac_ref}
                       type="button"
-                      onClick={() =>
-                        window.dispatchEvent(
-                          new CustomEvent('quiz:suggest-from-ac', {
-                            detail: { ac_codes: [s.ac_ref] },
-                          })
-                        )
-                      }
-                      className={cn(
-                        'flex h-full min-h-[104px] flex-col rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-4 text-left transition-colors touch-manipulation hover:border-white/[0.2]',
-                        weak && 'border-orange-400/40'
-                      )}
-                      title="Send a follow-up quiz on this AC"
+                      onClick={() => void handleRegradeAll()}
+                      disabled={busy !== null}
+                      className={TEACH_BTN}
                     >
-                      <span className="text-[14.5px] font-semibold leading-tight tracking-tight text-white">
-                        AC {s.ac_ref}
-                      </span>
-                      <span
-                        className={cn(
-                          'mt-2 text-[26px] font-semibold leading-none tabular-nums tracking-tight',
-                          weak ? 'text-orange-400' : 'text-white'
-                        )}
-                      >
-                        {s.correctness ?? '—'}%
-                      </span>
-                      <span className="mt-1.5 text-[11.5px] leading-snug text-white">
-                        across {plural(s.questions, 'question')}
-                      </span>
-                      <span className="flex-grow" />
-                      <span className="mt-2 text-[12px] font-medium text-elec-yellow">
-                        Send a quiz on this AC
-                      </span>
+                      {busy === 'regrade'
+                        ? 'Suggesting marks…'
+                        : // Re-runs the AI scoring on every finished attempt; your
+                          // own marks are kept (they are separate overrides).
+                          'Suggest marks again'}
                     </button>
-                  );
-                })}
-              </motion.div>
-            )}
+                  </span>
+                ) : undefined
+              }
+            />
 
-            <motion.div variants={itemVariants} className={COLLEGE_LIST}>
-              <ol className="divide-y divide-white/[0.06]">
-                {questionStats.map((qs, i) => {
-                  const weak = qs.correctness != null && qs.correctness < 50;
-                  const breakdown = [
-                    `${qs.correct} right`,
-                    qs.partial > 0 ? `${qs.partial} partly` : null,
-                    `${qs.incorrect} wrong`,
-                    qs.pending > 0 ? `${qs.pending} pending` : null,
-                    qs.unanswered > 0 ? `${qs.unanswered} skipped` : null,
-                  ]
-                    .filter(Boolean)
-                    .join(' · ');
-                  return (
-                    <li key={qs.question.id} className="flex items-start gap-3 px-5 py-3.5 sm:px-6">
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'mt-0.5 h-9 w-1 shrink-0 rounded-full',
-                          weak ? 'bg-orange-400' : 'bg-white/[0.14]'
-                        )}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <div className="text-[12px] leading-tight tabular-nums text-white">
-                          Q{i + 1}
-                          {qs.question.ac_ref ? ` · AC ${qs.question.ac_ref}` : ''}
-                          {` · ${qs.question.question_kind.replace(/_/g, ' ')}`}
-                        </div>
-                        <div className="mt-0.5 truncate text-[14px] font-semibold leading-tight text-white">
-                          {qs.question.question_text}
-                        </div>
-                        {/* Right / partly / wrong — real state, so it keeps
-                            its colour. Pending and skipped are white. */}
-                        <div className="mt-2 flex h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
-                          {qs.correct > 0 && (
-                            <div
-                              className="bg-emerald-400"
-                              style={{ width: `${(qs.correct / qs.total) * 100}%` }}
-                            />
-                          )}
-                          {qs.partial > 0 && (
-                            <div
-                              className="bg-elec-yellow"
-                              style={{ width: `${(qs.partial / qs.total) * 100}%` }}
-                            />
-                          )}
-                          {qs.incorrect > 0 && (
-                            <div
-                              className="bg-orange-400"
-                              style={{ width: `${(qs.incorrect / qs.total) * 100}%` }}
-                            />
-                          )}
-                          {qs.pending > 0 && (
-                            <div
-                              className="bg-white/[0.35]"
-                              style={{ width: `${(qs.pending / qs.total) * 100}%` }}
-                            />
-                          )}
-                        </div>
-                        <div className="mt-1.5 text-[12px] leading-tight tabular-nums text-white">
-                          {breakdown}
-                        </div>
-                      </div>
-                      <div className="shrink-0 text-right">
-                        <div
-                          className={cn(
-                            'text-[16px] font-semibold leading-none tabular-nums',
-                            weak ? 'text-orange-400' : 'text-white'
-                          )}
-                        >
-                          {qs.correctness ?? '—'}%
-                        </div>
-                        <div className="mt-1 text-[11px] tabular-nums text-white">
-                          of {qs.total}
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ol>
+            <motion.div variants={itemVariants} className={TEACH_LIST}>
+              {attempts.length === 0 ? (
+                <p className="px-5 py-8 text-[13.5px] text-white sm:px-6">
+                  Nobody has started this {kindLabel.toLowerCase()} yet.
+                  {!quiz.is_published &&
+                    ' Publish it so the learner or cohort can see and take it.'}
+                </p>
+              ) : (
+                <>
+                  <ul className="divide-y divide-white/[0.06]">
+                    {attempts.slice(0, visibleAttempts).map((a) => (
+                      <li key={a.id}>
+                        <AttemptRowButton
+                          a={a}
+                          quiz={quiz}
+                          pendingCount={pendingByAttempt[a.id] ?? 0}
+                          onClick={() => {
+                            setReviewAttemptId(a.id);
+                            setReviewStudentName(a.student_name);
+                          }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                  {attempts.length > visibleAttempts && (
+                    <button
+                      type="button"
+                      onClick={() => setVisibleAttempts((n) => n + 50)}
+                      className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
+                    >
+                      {attempts.length - visibleAttempts} more
+                    </button>
+                  )}
+                </>
+              )}
             </motion.div>
           </motion.section>
-        )}
-
-        {/* Attempts */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <CollegeSectionTitle
-            title="Attempts"
-            sub={stats.pending > 0 ? `${stats.pending} written answer${stats.pending === 1 ? '' : 's'} to mark` : plural(attempts.length, 'attempt')}
-            action={
-              stats.pending > 0 && canEdit ? (
-                <button type="button" onClick={() => void handleRegradeAll()} disabled={busy !== null} className={COLLEGE_LINK}>
-                  {busy === 'regrade' ? 'Suggesting marks…' : `Suggest marks again (${stats.pending})`}
-                </button>
-              ) : undefined
-            }
-          />
-
-          <motion.div variants={itemVariants} className={COLLEGE_LIST}>
-            {attempts.length === 0 ? (
-              <p className="px-5 py-8 text-[13.5px] text-white sm:px-6">
-                Nobody has started this {kindLabel.toLowerCase()} yet.
-                {!quiz.is_published && ' Publish it so the learner or cohort can see and take it.'}
-              </p>
-            ) : (
-              <>
-                <ul className="divide-y divide-white/[0.06]">
-                  {attempts.slice(0, visibleAttempts).map((a) => (
-                    <li key={a.id}>
-                      <AttemptRowButton
-                        a={a}
-                        quiz={quiz}
-                        pendingCount={pendingByAttempt[a.id] ?? 0}
-                        onClick={() => {
-                          setReviewAttemptId(a.id);
-                          setReviewStudentName(a.student_name);
-                        }}
-                      />
-                    </li>
-                  ))}
-                </ul>
-                {attempts.length > visibleAttempts && (
-                  <button
-                    type="button"
-                    onClick={() => setVisibleAttempts((n) => n + 50)}
-                    className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
-                  >
-                    {attempts.length - visibleAttempts} more
-                  </button>
-                )}
-              </>
-            )}
-          </motion.div>
-        </motion.section>
         </div>
       </HubBody>
 
@@ -921,51 +1003,31 @@ function AttemptRowButton({
         : 'Submitted';
 
   const reason = [
-    status,
-    a.completed_at ? `submitted ${formatRelative(a.completed_at)}` : `started ${formatRelative(a.started_at)}`,
+    a.completed_at
+      ? `Submitted ${formatRelative(a.completed_at)}`
+      : `Started ${formatRelative(a.started_at)}`,
     a.time_taken_seconds != null ? `${Math.round(a.time_taken_seconds / 60)} min` : null,
-    pendingCount > 0 ? `${pendingCount} written answer${pendingCount === 1 ? '' : 's'} to mark` : null,
+    pct != null ? `${pct}%` : null,
+    a.score != null && a.total_points != null ? `${a.score} of ${a.total_points} marks` : null,
   ]
     .filter(Boolean)
     .join(' · ');
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
-    >
-      <span
-        aria-hidden="true"
-        className={cn('h-9 w-1 shrink-0 rounded-full', passed === false || urgent ? 'bg-orange-400' : passed ? 'bg-emerald-400' : 'bg-white/[0.14]')}
-      />
+    <button type="button" onClick={onClick} className={TEACH_ROW}>
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+        <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
           {a.student_name}
         </span>
-        <span
-          className={cn(
-            'mt-0.5 block truncate text-[12px] leading-tight',
-            passed === false || urgent ? 'text-orange-400' : 'text-white'
-          )}
-        >
+        <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-white">
           {reason}
         </span>
       </span>
-      <span className="shrink-0 text-right">
-        <span
-          className={cn(
-            'block text-[13px] font-semibold tabular-nums',
-            urgent ? 'text-orange-400' : 'text-white'
-          )}
-        >
-          {pct != null ? `${pct}%` : '—'}
-        </span>
-        {a.score != null && a.total_points != null && (
-          <span className="mt-0.5 block text-[11px] tabular-nums text-white">
-            {a.score}/{a.total_points}
-          </span>
-        )}
+      <span className="flex shrink-0 flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-1.5">
+        {urgent && <StatusChip tone="action">{pendingCount} to mark</StatusChip>}
+        <StatusChip tone={passed ? 'done' : passed === false ? 'action' : 'neutral'}>
+          {status}
+        </StatusChip>
       </span>
       <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
     </button>

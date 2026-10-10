@@ -1047,3 +1047,43 @@ export const getEcsCardLabel = (value: string | null | undefined): string => {
   const normalised = value.toLowerCase();
   return ALL_ECS_CARD_TYPES.find((c) => c.value === normalised)?.label || 'Not set';
 };
+
+/** Tidy a free or stored value for display: underscores to spaces, first letter capital. */
+const tidyRaw = (value: string): string => {
+  const s = value.replace(/_/g, ' ').trim();
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+};
+
+/**
+ * A stored job title or role (e.g. "apprentice_2nd", "electrician") as people read it
+ * ("Apprentice, 2nd year", "Electrician"). Free-typed titles are kept, with a capital.
+ */
+export const jobTitleText = (value: string | null | undefined): string => {
+  if (!value) return '';
+  const v = value.trim();
+  const year = /^apprentice_(1st|2nd|3rd|4th)$/i.exec(v);
+  if (year) return `Apprentice, ${year[1].toLowerCase()} year`;
+  const known = UK_JOB_TITLES.find((t) => t.value === v.toLowerCase());
+  if (known) {
+    // "Approved Electrician" -> "Approved electrician"; acronyms stay as they are
+    return known.label.replace(
+      / ([A-Z])([a-z])/g,
+      (_m, a: string, b: string) => ` ${a.toLowerCase()}${b}`
+    );
+  }
+  return tidyRaw(v);
+};
+
+/** A stored ECS card type ("gold", "cscs_gold", "none") as people read it. */
+export const ecsCardText = (value: string | null | undefined): string => {
+  if (!value) return '';
+  const known = ALL_ECS_CARD_TYPES.find((c) => c.value === value.trim().toLowerCase());
+  return known ? known.label : tidyRaw(value.trim());
+};
+
+/** The card as a phrase: "ECS Gold Card", "Installation Electrician (Gold) ECS card". */
+export const ecsCardPhrase = (value: string | null | undefined): string => {
+  const label = ecsCardText(value);
+  if (!label) return '';
+  return /card/i.test(label) ? label : `${label} ECS card`;
+};

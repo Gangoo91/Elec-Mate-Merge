@@ -14,9 +14,9 @@ import { MyThisWeekCard } from '@/components/apprentice-hub/MyThisWeekCard';
 
 const STARTER_CARDS = [
   { category: 'Focus', prompt: 'What should I focus on this week?' },
-  { category: 'Gaps', prompt: 'What ACs am I behind on?' },
-  { category: 'Revise', prompt: 'Explain my last quiz mistake — what should I revise?' },
-  { category: 'OTJ', prompt: 'Draft a reflection from my last OTJ activity.' },
+  { category: 'Gaps', prompt: 'Which criteria am I behind on?' },
+  { category: 'Revise', prompt: 'Explain my last quiz mistake. What should I revise?' },
+  { category: 'Hours', prompt: 'Draft a reflection from my last off-the-job activity.' },
 ];
 
 export default function CollegeAiPage() {
@@ -47,10 +47,11 @@ export default function CollegeAiPage() {
 
   return (
     <NotebookShell
+      backTo="/apprentice/college-plan"
       eyebrow="College AI"
       title="Your study mentor"
-      description="Ask anything — quiz mistakes, BS 7671 regs, what to focus on. The AI grounds every answer in your real progress, ACs, and EPA data."
-      tone="cyan"
+      description="Ask about a quiz you got wrong, a regulation in BS 7671 or what to work on next. Every answer is based on your own progress, criteria and end-point assessment prep."
+      tone="volt"
       starterCards={STARTER_CARDS}
       conversations={nb.conversations}
       activeId={nb.activeId}

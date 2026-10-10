@@ -141,8 +141,8 @@ export function SectionSiteDiary({
       ) : entries.length === 0 ? (
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[13px] leading-relaxed text-white">
-            {firstName} hasn&apos;t shared any diary entries. Learners choose which days to share —
-            you&apos;ll see the work, what they learned and any question, never how the day felt.
+            {firstName} hasn&apos;t shared any diary entries. Learners choose which days to share.
+            You&apos;ll see the work, what they learned and any question, never how the day felt.
           </p>
         </div>
       ) : (
@@ -235,7 +235,7 @@ function DiaryRow({
           {fmtDate(entry.date)}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="truncate text-[14px] font-semibold text-white">
+          <div className="line-clamp-2 text-[14px] font-semibold text-white">
             {entry.site_name || 'Site'}
           </div>
           {entry.what_i_learned && (

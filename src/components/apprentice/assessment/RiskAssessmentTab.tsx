@@ -110,9 +110,7 @@ const RiskAssessmentTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Risk assessment tools
-        </span>
+        <span className="text-[13px] font-semibold text-white">Risk assessment tools</span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
           HSE guidelines & BS EN ISO 31000 compliant
         </h2>
@@ -155,9 +153,7 @@ const RiskAssessmentTab = () => {
 
         <TabsContent value="process" className="space-y-4 mt-5">
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Risk assessment process
-            </span>
+            <span className="text-[13px] font-semibold text-white">Risk assessment process</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {processSteps.map((step) => (
                 <div
@@ -165,12 +161,12 @@ const RiskAssessmentTab = () => {
                   className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 space-y-2"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-elec-yellow text-black font-semibold text-[12px] flex items-center justify-center font-mono">
+                    <span className="w-6 h-6 rounded-md bg-elec-yellow text-black font-semibold text-[12px] flex items-center justify-center">
                       {step.step}
                     </span>
                     <p className="text-[14px] text-white">{step.title}</p>
                   </div>
-                  <p className="text-[13px] text-white leading-relaxed">{step.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{step.description}</p>
                 </div>
               ))}
             </div>
@@ -178,9 +174,7 @@ const RiskAssessmentTab = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Legal requirements
-              </span>
+              <span className="text-[13px] font-semibold text-white">Legal requirements</span>
               <ul className="space-y-1.5">
                 {legalRequirements.map((req, index) => (
                   <li
@@ -195,9 +189,7 @@ const RiskAssessmentTab = () => {
             </div>
 
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Best practices
-              </span>
+              <span className="text-[13px] font-semibold text-white">Best practices</span>
               <ul className="space-y-1.5">
                 {bestPractices.map((practice, index) => (
                   <li
@@ -217,10 +209,8 @@ const RiskAssessmentTab = () => {
           <HazardIdentificationMatrix onHazardSelected={handleHazardSelected} />
 
           {selectedHazard && (
-            <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                Selected hazard
-              </span>
+            <div className="rounded-xl border border-white/[0.08] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[13px] font-semibold text-elec-yellow">Selected hazard</span>
               <p className="text-[14px] text-white leading-relaxed">{selectedHazard}</p>
             </div>
           )}

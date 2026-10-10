@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Sheet } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
@@ -8,7 +9,7 @@ import { ListRow } from '@/components/college/primitives';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import type { ElecIdProfile } from '@/hooks/useElecIdProfile';
-import { getEcsCardLabel } from '@/data/uk-electrician-constants';
+import { getEcsCardLabel, jobTitleText } from '@/data/uk-electrician-constants';
 
 /* ==========================================================================
    TalentPoolOptIn — ELE-1958. "Let firms find me".
@@ -21,7 +22,45 @@ import { getEcsCardLabel } from '@/data/uk-electrician-constants';
 
    What a firm sees mirrors get_talent_pool() field for field. If that RPC
    changes, change WHAT_FIRMS_SEE here too.
+
+   ELE-1957: "Where you're based" (postcode district or town) and how far they
+   travel. set_my_talent_location() resolves it to a district centre on the
+   server, so firms can match "within 20 miles" without ever seeing a street.
+   A postcode on their business profile is offered as a one-tap fill. The
+   bell prompt deep-links here with ?talent=location.
    ========================================================================== */
+
+// Cast: these RPCs postdate the last types.ts regeneration.
+const rpc = supabase.rpc.bind(supabase) as unknown as (
+  fn: string,
+  args?: Record<string, unknown>
+) => Promise<{ data: unknown; error: { message?: string } | null }>;
+
+interface TalentLocation {
+  error?: string;
+  has_location: boolean;
+  base_outcode: string | null;
+  base_label: string | null;
+  travel_radius_miles: number | null;
+  suggestion: { place: string; label: string } | null;
+}
+
+const RADIUS_OPTIONS = [10, 20, 30, 50, 100];
+
+/** What goes back in the box: the town they typed, or the district ("S10"). */
+const initialBase = (l?: TalentLocation | null) =>
+  !l?.has_location
+    ? ''
+    : l.base_label && !l.base_label.includes('·')
+      ? l.base_label
+      : (l.base_outcode ?? '');
+
+const LOCATION_ERRORS: Record<string, string> = {
+  place_not_found:
+    "We couldn't find that place. Try the first half of your postcode, like S10 or LS6.",
+  bad_radius: 'Pick how far you travel.',
+  not_found: 'Your Elec-ID could not be found. Refresh and try again.',
+};
 
 /** Same rule as public.talent_pool_display_name(): "Jane Smith" → "Jane S.",
  *  bracketed notes and symbols dropped first ("Demo Worker (test)" → "Demo W."). */
@@ -86,13 +125,53 @@ export function TalentPoolOptIn({
   const [sheetOpen, setSheetOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [area, setArea] = useState('');
+  const [base, setBase] = useState('');
+  const [radius, setRadius] = useState<number>(20);
+  const baseInputRef = useRef<HTMLInputElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const listed = Boolean(profile?.available_for_hire) && !isOptedOut;
   const optedInAt = profile?.available_for_hire_opted_in_at ?? null;
 
+  const locationKey = ['talent-location', profile?.id];
+  const { data: location } = useQuery({
+    queryKey: locationKey,
+    enabled: !!profile?.id,
+    queryFn: async (): Promise<TalentLocation> => {
+      const { data, error } = await rpc('my_talent_location', { p_profile_id: profile!.id });
+      if (error) throw new Error(error.message || 'Could not load your location');
+      return data as TalentLocation;
+    },
+  });
+  const hasLocation = !!location?.has_location;
+
   useEffect(() => {
-    if (sheetOpen) setArea(profile?.work_area ?? '');
-  }, [sheetOpen, profile?.work_area]);
+    if (!sheetOpen) return;
+    setArea(profile?.work_area ?? '');
+    setBase(initialBase(location));
+    setRadius(location?.travel_radius_miles ?? 20);
+    // Only when the sheet opens; later refetches must not wipe what they typed.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sheetOpen]);
+
+  // The sheet can open (deep link) before the location has loaded.
+  useEffect(() => {
+    if (!sheetOpen || !location) return;
+    setBase((b) => b || initialBase(location));
+    if (location.travel_radius_miles) setRadius(location.travel_radius_miles);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location?.base_outcode, location?.travel_radius_miles]);
+
+  // Deep link from the bell: /settings?tab=elec-id&talent=location
+  useEffect(() => {
+    if (searchParams.get('talent') !== 'location' || !profile) return;
+    searchParams.delete('talent');
+    setSearchParams(searchParams, { replace: true });
+    setSheetOpen(true);
+    window.setTimeout(() => baseInputRef.current?.focus(), 350);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.id]);
 
   // Exactly what get_talent_pool() would return for this person.
   const { data: preview } = useQuery({
@@ -100,7 +179,11 @@ export function TalentPoolOptIn({
     enabled: sheetOpen && !!profile?.id,
     queryFn: async () => {
       const [employee, skills, quals, docs, history] = await Promise.all([
-        supabase.from('employer_employees').select('name').eq('id', profile!.employee_id).maybeSingle(),
+        supabase
+          .from('employer_employees')
+          .select('name')
+          .eq('id', profile!.employee_id)
+          .maybeSingle(),
         supabase.from('employer_elec_id_skills').select('skill_name').eq('profile_id', profile!.id),
         supabase
           .from('employer_elec_id_qualifications')
@@ -151,7 +234,8 @@ export function TalentPoolOptIn({
       ok
         ? {
             title: "You're out of the talent pool",
-            description: 'Firms can no longer find you, and you have been taken off their shortlists.',
+            description:
+              'Firms can no longer find you, and you have been taken off their shortlists.',
           }
         : {
             title: 'Not saved',
@@ -161,9 +245,39 @@ export function TalentPoolOptIn({
     );
   };
 
+  const saveLocation = async (): Promise<boolean> => {
+    if (!profile) return false;
+    const typed = base.trim();
+    const same =
+      typed.toUpperCase() === initialBase(location).toUpperCase() &&
+      radius === (location?.travel_radius_miles ?? 20);
+    if (same || (!typed && !hasLocation)) return true;
+    const { data, error } = await rpc('set_my_talent_location', {
+      p_profile_id: profile.id,
+      p_place: typed || null,
+      p_radius_miles: radius,
+    });
+    const err = error ? 'save' : (data as { error?: string } | null)?.error;
+    if (err) {
+      toast({
+        title: 'Location not saved',
+        description: LOCATION_ERRORS[err] ?? 'Try again.',
+        variant: 'destructive',
+      });
+      baseInputRef.current?.focus();
+      return false;
+    }
+    queryClient.invalidateQueries({ queryKey: locationKey });
+    return true;
+  };
+
   const handleConfirm = async () => {
     if (!profile) return;
     setSaving(true);
+    if (!(await saveLocation())) {
+      setSaving(false);
+      return;
+    }
     if (isOptedOut) {
       const reEnabled = await setOptOut(false);
       if (!reEnabled) {
@@ -210,8 +324,14 @@ export function TalentPoolOptIn({
 
   const whatFirmsSee: { label: string; value: string | null }[] = [
     { label: 'Name', value: preview?.name ?? null },
-    { label: 'Area', value: area.trim() || null },
-    { label: 'Job title', value: profile?.job_title ?? null },
+    { label: 'Area', value: area.trim() || location?.base_label || null },
+    {
+      label: 'Distance',
+      value: hasLocation
+        ? `How far you are from their job, e.g. "6 miles away", worked out from ${location?.base_outcode}`
+        : null,
+    },
+    { label: 'Job title', value: jobTitleText(profile?.job_title) || null },
     {
       label: 'ECS card',
       value: profile?.ecs_card_type
@@ -235,7 +355,9 @@ export function TalentPoolOptIn({
       label: 'Verification',
       value: [
         TIER_LABEL[profile?.verification_tier ?? 'basic'],
-        preview?.verifiedDocTypes.length ? `verified: ${preview.verifiedDocTypes.join(', ')}` : null,
+        preview?.verifiedDocTypes.length
+          ? `verified: ${preview.verifiedDocTypes.join(', ')}`
+          : null,
       ]
         .filter(Boolean)
         .join(' · '),
@@ -255,7 +377,13 @@ export function TalentPoolOptIn({
   const subtitle = isOptedOut
     ? 'Off · your Elec-ID is disabled'
     : listed
-      ? `On${optedInAt ? ` since ${formatDate(optedInAt)}` : ''}${profile?.work_area ? ` · ${profile.work_area}` : ''}`
+      ? `On${optedInAt ? ` since ${formatDate(optedInAt)}` : ''}${
+          hasLocation
+            ? ` · ${location?.base_label}, travels ${location?.travel_radius_miles ?? 20} miles`
+            : profile?.work_area
+              ? ` · ${profile.work_area}`
+              : ''
+        }`
       : "Off · firms can't see you in the talent pool";
 
   return (
@@ -275,14 +403,36 @@ export function TalentPoolOptIn({
         }
       />
       <div className="px-5 sm:px-6 pb-4 -mt-1">
-        <button
-          type="button"
-          onClick={() => setSheetOpen(true)}
-          disabled={!profile}
-          className="h-11 px-4 rounded-xl border border-white/[0.14] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation disabled:opacity-60"
-        >
-          {listed ? 'What firms see · edit area' : 'See what firms would see'}
-        </button>
+        {listed && location && !hasLocation ? (
+          <div className="space-y-2.5">
+            <p className="text-[13px] leading-snug text-white">
+              <span className="font-semibold text-elec-yellow">Add where you&apos;re based.</span>{' '}
+              Firms look for people within a few miles of the job. Without a location you only show
+              up when your area name matches theirs.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setSheetOpen(true);
+                  window.setTimeout(() => baseInputRef.current?.focus(), 350);
+                }}
+                className="h-11 px-4 rounded-xl bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation"
+              >
+                Add where you&apos;re based
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setSheetOpen(true)}
+            disabled={!profile}
+            className="h-11 px-4 rounded-xl border border-white/[0.14] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation disabled:opacity-60"
+          >
+            {listed ? 'What firms see · edit area' : 'See what firms would see'}
+          </button>
+        )}
       </div>
 
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
@@ -304,7 +454,70 @@ export function TalentPoolOptIn({
 
           <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-6">
             <div>
-              <label htmlFor="talent-area" className="text-[12px] font-medium text-white mb-1 block">
+              <label
+                htmlFor="talent-base"
+                className="text-[12px] font-medium text-white mb-1 block"
+              >
+                Where you&apos;re based
+              </label>
+              <input
+                id="talent-base"
+                ref={baseInputRef}
+                value={base}
+                onChange={(e) => setBase(e.target.value.slice(0, 60))}
+                placeholder="e.g. S10 or Keighley"
+                className={inputCn}
+                autoComplete="off"
+                autoCapitalize="characters"
+              />
+              {location?.suggestion &&
+                base.trim().toUpperCase() !== location.suggestion.place.toUpperCase() && (
+                  <button
+                    type="button"
+                    onClick={() => setBase(location.suggestion!.place)}
+                    className="mt-2 h-11 px-4 rounded-xl border border-white/[0.14] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation"
+                  >
+                    Use {location.suggestion.label} from your business address
+                  </button>
+                )}
+              <p className="mt-1.5 text-[12px] text-white">
+                Only the district is used, never your street. Firms see roughly how far you are from
+                their job, like &quot;6 miles away&quot;.
+              </p>
+
+              <p className="mt-4 text-[12px] font-medium text-white mb-2">
+                How far you&apos;ll travel
+              </p>
+              <div
+                className="flex flex-wrap gap-2"
+                role="radiogroup"
+                aria-label="How far you'll travel"
+              >
+                {RADIUS_OPTIONS.map((r) => (
+                  <button
+                    key={r}
+                    type="button"
+                    role="radio"
+                    aria-checked={radius === r}
+                    onClick={() => setRadius(r)}
+                    className={cn(
+                      'h-11 min-w-[64px] px-3 rounded-xl border text-[13px] font-semibold touch-manipulation',
+                      radius === r
+                        ? 'border-elec-yellow bg-elec-yellow text-black'
+                        : 'border-white/[0.14] bg-white/[0.04] text-white'
+                    )}
+                  >
+                    {r} mi
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="talent-area"
+                className="text-[12px] font-medium text-white mb-1 block"
+              >
                 Area you work in (optional)
               </label>
               <input
@@ -365,10 +578,9 @@ export function TalentPoolOptIn({
                 What happens next
               </h4>
               <p className="text-[13px] text-white">
-                A firm can shortlist you, invite you to apply for a job, or send you a message.
-                You get a notification and can reply in Messages, or ignore it. Switch this off and
-                you disappear from the talent pool and from every firm&apos;s shortlist straight
-                away.
+                A firm can shortlist you, invite you to apply for a job, or send you a message. You
+                get a notification and can reply in Messages, or ignore it. Switch this off and you
+                disappear from the talent pool and from every firm&apos;s shortlist straight away.
               </p>
               {!listed && profile?.profile_visibility === 'private' && (
                 <p className="mt-3 text-[13px] text-white">

@@ -1,10 +1,13 @@
 /**
  * AttendanceSection — registers and the learners slipping below target.
  *
- * College Hub redesign (7 Oct 2026), built from the kit (CollegeUi):
+ * College Hub redesign (7 Oct 2026), restyled 8 Oct to the home's language:
  *
- *   header + "?" → four figures → today's classes (lesson → register)
- *   → below 85% → registers by day (tap a mark to change it)
+ *   header (one sentence with the counts) → today's classes | below 85%
+ *   side by side on a wide screen → registers by day (tap a mark to change it)
+ *
+ * The four figure tiles that sat under the header repeated the sentence and
+ * the lists below it, so they are gone.
  *
  * ELE-1887: "Take a register" opens QuickRegisterSheet with the cohort, date
  * and tutor already chosen; one tap marks everyone else present, each learner
@@ -22,23 +25,31 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { itemVariants } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  COLLEGE_LIST,
-  CollegeEmpty,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
-import { TeachingScreen, WorkRows } from '@/components/college/teaching/TeachingKit';
+  StatusChip,
+  TEACH_BTN,
+  TEACH_BTN_PRIMARY,
+  TEACH_LIST,
+  TEACH_PANEL,
+  TeachingEmpty,
+  TeachingHeader,
+  TeachTabs,
+  TeachToggle,
+  TeachingScreen,
+  WorkRows,
+  plural,
+} from '@/components/college/teaching/TeachingKit';
 import { QuickRegisterSheet } from '@/components/college/teaching/QuickRegisterSheet';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { useToast } from '@/hooks/use-toast';
-import { SESSION_LABEL, SESSION_SHORT, asSession, sessionOfTime } from '@/lib/college/attendanceSession';
+import {
+  SESSION_LABEL,
+  SESSION_SHORT,
+  asSession,
+  sessionOfTime,
+} from '@/lib/college/attendanceSession';
 
 type Status = 'Present' | 'Late' | 'Absent' | 'Authorised';
 const STATUSES: Status[] = ['Present', 'Late', 'Absent', 'Authorised'];
@@ -65,9 +76,18 @@ const HELP: PageHelpContent = {
     },
   ],
   notes: [
-    { title: 'How the rate works', body: 'Present and Late count as attended. Absent and Authorised do not. A learner with no marks has no rate yet.' },
-    { title: 'One mark a session', body: 'A learner has one mark for the morning and one for the afternoon. Taking the same session again updates its marks. Rates count sessions, not days.' },
-    { title: 'Changing a mark', body: 'Open a day under Registers and tap a learner to change their mark or add a note.' },
+    {
+      title: 'How the rate works',
+      body: 'Present and Late count as attended. Absent and Authorised do not. A learner with no marks has no rate yet.',
+    },
+    {
+      title: 'One mark a session',
+      body: 'A learner has one mark for the morning and one for the afternoon. Taking the same session again updates its marks. Rates count sessions, not days.',
+    },
+    {
+      title: 'Changing a mark',
+      body: 'Open a day under Registers and tap a learner to change their mark or add a note.',
+    },
   ],
   legend: [
     { swatch: 'bg-orange-400', label: 'Orange', body: 'absent, or attendance below 85%' },
@@ -81,28 +101,45 @@ const isoDay = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 function longDate(iso: string): string {
-  return new Date(`${iso}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  return new Date(`${iso}T12:00:00`).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
 }
 
-const markCn = (status: string | null) =>
+/** Present is done (green), Absent needs following up (orange), the rest neutral. */
+const markTone = (status: string | null) =>
+  status === 'Present' ? 'done' : status === 'Absent' ? 'action' : 'neutral';
+
+/** The edit row's mark buttons: the chosen one says what it is in colour. */
+const markBtnCn = (status: Status, on: boolean) =>
   cn(
-    'inline-flex h-7 shrink-0 items-center rounded-full border px-2.5 text-[11.5px] font-semibold',
-    status === 'Absent'
-      ? 'border-orange-400 text-orange-400'
-      : status === 'Late'
-        ? 'border-elec-yellow text-elec-yellow'
-        : 'border-white/[0.2] text-white'
+    'inline-flex h-11 min-w-0 items-center justify-center rounded-xl border px-2 text-[12.5px] font-semibold transition-colors touch-manipulation disabled:opacity-50',
+    !on
+      ? 'border-white/[0.14] text-white hover:border-white/[0.3]'
+      : status === 'Present'
+        ? 'border-emerald-400 bg-emerald-500 text-black'
+        : status === 'Absent'
+          ? 'border-orange-400 bg-orange-500 text-black'
+          : 'border-white bg-white text-black'
   );
 
 export function AttendanceSection() {
-  const { attendance, students, cohorts, lessonPlans, updateAttendance, isLoading } = useCollegeSupabase();
+  const { attendance, students, cohorts, lessonPlans, updateAttendance, isLoading } =
+    useCollegeSupabase();
   const { staff: me } = useMyCollegeContext();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCohort, setFilterCohort] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<'today' | 'week' | 'month'>('week');
-  const [register, setRegister] = useState<{ open: boolean; cohortId?: string | null; title?: string | null; lessonId?: string | null }>({ open: false });
+  const [register, setRegister] = useState<{
+    open: boolean;
+    cohortId?: string | null;
+    title?: string | null;
+    lessonId?: string | null;
+  }>({ open: false });
   const [editingRecordId, setEditingRecordId] = useState<string | null>(null);
   const [noteText, setNoteText] = useState('');
   const [savingId, setSavingId] = useState<string | null>(null);
@@ -136,10 +173,14 @@ export function AttendanceSection() {
         done:
           byLesson.has(lp.id) ||
           cohortNoLesson.has(`${lp.cohort_id}|all_day`) ||
-          cohortNoLesson.has(`${lp.cohort_id}|${sessionOfTime(lp.scheduled_start_time) ?? 'all_day'}`),
+          cohortNoLesson.has(
+            `${lp.cohort_id}|${sessionOfTime(lp.scheduled_start_time) ?? 'all_day'}`
+          ),
         time: lp.scheduled_start_time?.slice(0, 5) ?? null,
       }))
-      .sort((a, b) => Number(b.mine) - Number(a.mine) || (a.time ?? '99').localeCompare(b.time ?? '99'));
+      .sort(
+        (a, b) => Number(b.mine) - Number(a.mine) || (a.time ?? '99').localeCompare(b.time ?? '99')
+      );
   }, [lessonPlans, attendance, today, me]);
 
   const periodStart = useMemo(() => {
@@ -164,16 +205,6 @@ export function AttendanceSection() {
     [attendance, studentById, periodStart, filterCohort, q]
   );
 
-  const count = (status: Status) => filteredAttendance.filter((a) => a.status === status).length;
-  const absentCount = count('Absent');
-  const lateCount = count('Late');
-  const authorisedCount = count('Authorised');
-  /** A register is one cohort's session on one day (morning, afternoon, or an older all-day mark). */
-  const registersTaken = useMemo(
-    () => new Set(filteredAttendance.map((a) => `${a.cohort_id}|${a.date}|${asSession(a.session)}`)).size,
-    [filteredAttendance]
-  );
-
   const lowAttendance = useMemo(() => {
     const by = new Map<string, { n: number; att: number }>();
     for (const a of attendance) {
@@ -189,7 +220,10 @@ export function AttendanceSection() {
         const x = by.get(s.id);
         return { student: s, rate: x && x.n > 0 ? Math.round((x.att / x.n) * 100) : null };
       })
-      .filter((x): x is { student: (typeof students)[number]; rate: number } => x.rate !== null && x.rate < LOW_ATTENDANCE)
+      .filter(
+        (x): x is { student: (typeof students)[number]; rate: number } =>
+          x.rate !== null && x.rate < LOW_ATTENDANCE
+      )
       .sort((a, b) => a.rate - b.rate);
   }, [students, attendance]);
 
@@ -207,8 +241,9 @@ export function AttendanceSection() {
         date,
         rows: [...rows].sort(
           (a, b) =>
-            (studentById.get(a.student_id ?? '')?.name ?? '').localeCompare(studentById.get(b.student_id ?? '')?.name ?? '') ||
-            SESSION_ORDER[asSession(a.session)] - SESSION_ORDER[asSession(b.session)]
+            (studentById.get(a.student_id ?? '')?.name ?? '').localeCompare(
+              studentById.get(b.student_id ?? '')?.name ?? ''
+            ) || SESSION_ORDER[asSession(a.session)] - SESSION_ORDER[asSession(b.session)]
         ),
         absent: rows.filter((r) => r.status === 'Absent').length,
       }));
@@ -240,7 +275,11 @@ export function AttendanceSection() {
       await updateAttendance(recordId, { status });
       toast({ title: 'Mark updated', description: `Set to ${status}` });
     } catch (e) {
-      toast({ title: 'Could not update the mark', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not update the mark',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setSavingId(null);
     }
@@ -253,127 +292,170 @@ export function AttendanceSection() {
       toast({ title: 'Note saved' });
       setEditingRecordId(null);
     } catch (e) {
-      toast({ title: 'Could not save the note', description: (e as Error).message, variant: 'destructive' });
+      toast({
+        title: 'Could not save the note',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
     } finally {
       setSavingId(null);
     }
   };
 
-  const periodLabel = dateFilter === 'today' ? 'today' : dateFilter === 'week' ? 'in the last 7 days' : 'in the last month';
-  const openRegister = (cohortId?: string | null, title?: string | null, lessonId?: string | null) =>
-    setRegister({ open: true, cohortId, title, lessonId });
+  const periodLabel =
+    dateFilter === 'today'
+      ? 'today'
+      : dateFilter === 'week'
+        ? 'in the last 7 days'
+        : 'in the last month';
+  const openRegister = (
+    cohortId?: string | null,
+    title?: string | null,
+    lessonId?: string | null
+  ) => setRegister({ open: true, cohortId, title, lessonId });
+
+  const todayDone = todaysClasses.filter((c) => c.done).length;
+  const todayLine =
+    todaysClasses.length === 0
+      ? 'No classes on the timetable today.'
+      : todayDone === todaysClasses.length
+        ? `${plural(todaysClasses.length, 'class', 'classes')} today, every register taken.`
+        : todayDone === 0
+          ? `${plural(todaysClasses.length, 'class', 'classes')} today, ${todaysClasses.length === 1 ? 'register not taken yet' : 'no registers taken yet'}.`
+          : `${plural(todaysClasses.length, 'class', 'classes')} today, ${todayDone} of ${todaysClasses.length} registers taken.`;
+  const summary = (
+    <>
+      {todayLine}{' '}
+      {lowAttendance.length === 0 ? (
+        `Everyone with marks is at ${LOW_ATTENDANCE}% or above.`
+      ) : (
+        <>
+          <span className="font-semibold text-orange-400">
+            {plural(lowAttendance.length, 'learner')} below {LOW_ATTENDANCE}%
+          </span>
+          , the lowest at {lowAttendance[0].rate}%.
+        </>
+      )}
+    </>
+  );
 
   return (
     <TeachingScreen>
-      <CollegePageHeader
+      <TeachingHeader
         eyebrow="Teaching"
         title="Registers"
-        description="Take today's register in two taps, then see who is slipping below 85%."
         help={HELP}
+        summary={summary}
         actions={
-          <button type="button" onClick={() => openRegister(filterCohort === 'all' ? null : filterCohort)} className={COLLEGE_BTN_PRIMARY}>
+          <button
+            type="button"
+            onClick={() => openRegister(filterCohort === 'all' ? null : filterCohort)}
+            className={cn(TEACH_BTN_PRIMARY, 'w-full sm:w-auto')}
+          >
             Take a register
           </button>
         }
       />
 
-      <CollegeStats
-        items={[
-          {
-            label: `Below ${LOW_ATTENDANCE}%`,
-            value: String(lowAttendance.length),
-            sub: lowAttendance.length > 0 ? `lowest ${lowAttendance[0].rate}%` : 'everyone at target',
-            warn: lowAttendance.length > 0,
-          },
-          { label: 'Absent', value: String(absentCount), sub: `unauthorised ${periodLabel}`, warn: absentCount > 0 },
-          {
-            label: 'Late',
-            value: String(lateCount),
-            sub: authorisedCount > 0 ? `${authorisedCount} authorised absence${authorisedCount === 1 ? '' : 's'}` : `late ${periodLabel}`,
-          },
-          { label: 'Registers', value: String(registersTaken), sub: `${filteredAttendance.length} session marks ${periodLabel}` },
-        ]}
-      />
-
-      {/* ── Today: lesson → register ─────────────────────────────────── */}
-      <section className="space-y-4">
-        <CollegeSectionTitle
-          title="Today's classes"
-          sub={
-            todaysClasses.length > 0
-              ? `${todaysClasses.filter((c) => c.done).length} of ${todaysClasses.length} registers done`
-              : undefined
-          }
-        />
-        {todaysClasses.length === 0 ? (
-          <CollegeEmpty
-            title="No lessons on the timetable today"
-            body="You can still take a register for any cohort. Give a lesson plan today's date and it shows here with its register."
-            action={
-              <button type="button" className={COLLEGE_BTN} onClick={() => openRegister(null)}>
-                Take a register
-              </button>
-            }
-          />
-        ) : (
-          <motion.ul variants={itemVariants} className={COLLEGE_LIST}>
-            {todaysClasses.map(({ lesson, mine, done, time }) => (
-              <li key={lesson.id} className="flex min-h-[64px] flex-col gap-3 px-5 py-3 sm:flex-row sm:items-center sm:px-6">
-                <button
-                  type="button"
-                  onClick={() => navigate(`/college/lessons/${lesson.id}`)}
-                  className="flex min-w-0 flex-1 items-center gap-3 text-left touch-manipulation"
-                >
-                  <span className="w-12 shrink-0 text-[13px] font-semibold tabular-nums text-white">{time ?? 'TBC'}</span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14.5px] font-semibold text-white">{lesson.title}</span>
-                    <span className="mt-0.5 block truncate text-[12.5px] text-white">
-                      {cohortName(lesson.cohort_id)}
-                      {mine ? ' · your class' : ''}
-                    </span>
-                  </span>
-                </button>
-                <div className="flex shrink-0 items-center gap-3 pl-[60px] sm:pl-0">
-                  <span className={cn('text-[12.5px] font-semibold', done ? 'text-emerald-400' : 'text-white')}>
-                    {done ? 'Register done' : 'Not taken'}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => openRegister(lesson.cohort_id, lesson.title, lesson.id)}
-                    className={done ? COLLEGE_BTN : COLLEGE_BTN_PRIMARY}
-                  >
-                    {done ? 'Open register' : 'Take register'}
-                  </button>
-                </div>
-              </li>
-            ))}
-          </motion.ul>
-        )}
-      </section>
-
-      {/* ── Below target ─────────────────────────────────────────────── */}
-      {lowAttendance.length > 0 && (
+      <div className="grid grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-6">
+        {/* ── Today: lesson → register ─────────────────────────────────── */}
         <section className="space-y-4">
           <CollegeSectionTitle
-            title={`Below ${LOW_ATTENDANCE}% attendance`}
-            sub={`${lowAttendance.length} learner${lowAttendance.length === 1 ? '' : 's'}, lowest first. Present and Late count as attended.`}
+            title="Today's classes"
+            sub={
+              todaysClasses.length > 0
+                ? `${todaysClasses.filter((c) => c.done).length} of ${todaysClasses.length} registers done`
+                : undefined
+            }
           />
-          <WorkRows
-            rows={lowAttendance.map(({ student, rate }) => ({
-              id: `low-${student.id}`,
-              title: student.name,
-              sub: `${cohortName(student.cohort_id)} · attended ${rate}% of marked sessions`,
-              trailing: <span className={cn('text-[15px] font-bold tabular-nums', rate < VERY_LOW_ATTENDANCE ? 'text-orange-400' : 'text-white')}>{rate}%</span>,
-              warn: rate < VERY_LOW_ATTENDANCE,
-              onClick: () => navigate(`/college?section=student360&studentId=${encodeURIComponent(student.id)}`),
-            }))}
-          />
+          {todaysClasses.length === 0 ? (
+            <TeachingEmpty
+              title="No lessons on the timetable today"
+              body="You can still take a register for any cohort with Take a register. Give a lesson plan today's date and it shows here with its register."
+            />
+          ) : (
+            <motion.ul variants={itemVariants} className={TEACH_LIST}>
+              {todaysClasses.map(({ lesson, mine, done, time }) => (
+                <li
+                  key={lesson.id}
+                  className="flex min-h-[64px] flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:px-5"
+                >
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/college/lessons/${lesson.id}`)}
+                    className="flex min-w-0 flex-1 items-center gap-3 text-left touch-manipulation"
+                  >
+                    <span className="w-12 shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                      {time ?? 'TBC'}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="line-clamp-2 text-[14.5px] font-semibold leading-snug text-white">
+                        {lesson.title}
+                      </span>
+                      <span className="mt-0.5 block text-[12.5px] leading-snug text-white">
+                        {cohortName(lesson.cohort_id)}
+                        {mine ? ' · your class' : ''}
+                      </span>
+                    </span>
+                  </button>
+                  <div className="flex shrink-0 items-center gap-3 pl-[60px] sm:pl-0">
+                    <StatusChip tone={done ? 'done' : 'action'}>
+                      {done ? 'Register taken' : 'Not taken'}
+                    </StatusChip>
+                    <button
+                      type="button"
+                      onClick={() => openRegister(lesson.cohort_id, lesson.title, lesson.id)}
+                      className={TEACH_BTN}
+                    >
+                      {done ? 'Open register' : 'Take register'}
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </motion.ul>
+          )}
         </section>
-      )}
+
+        {/* ── Below target ─────────────────────────────────────────────── */}
+        {lowAttendance.length > 0 ? (
+          <section className="space-y-4">
+            <CollegeSectionTitle
+              title={`Below ${LOW_ATTENDANCE}% attendance`}
+              sub={`${lowAttendance.length} learner${lowAttendance.length === 1 ? '' : 's'}, lowest first. Present and Late count as attended.`}
+            />
+            <WorkRows
+              rows={lowAttendance.map(({ student, rate }) => ({
+                id: `low-${student.id}`,
+                title: student.name,
+                sub: cohortName(student.cohort_id),
+                status: {
+                  label: rate < VERY_LOW_ATTENDANCE ? `${rate}%, well below` : `${rate}%`,
+                  tone: rate < VERY_LOW_ATTENDANCE ? 'action' : 'neutral',
+                },
+                onClick: () =>
+                  navigate(
+                    `/college?section=student360&studentId=${encodeURIComponent(student.id)}`
+                  ),
+              }))}
+            />
+          </section>
+        ) : (
+          <section className="space-y-4">
+            <CollegeSectionTitle title={`Below ${LOW_ATTENDANCE}% attendance`} />
+            <TeachingEmpty
+              title="Nobody is below target"
+              body={`Every learner with marks has attended at least ${LOW_ATTENDANCE}% of their sessions. Present and Late count as attended.`}
+            />
+          </section>
+        )}
+      </div>
 
       {/* ── Registers by day ─────────────────────────────────────────── */}
       <section className="space-y-4">
-        <CollegeSectionTitle title="Registers" sub="Open a day and tap a learner to change their mark or add a note." />
+        <CollegeSectionTitle
+          title="Registers"
+          sub="Open a day and tap a learner to change their mark or add a note."
+        />
 
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:items-center">
           <input
@@ -382,33 +464,30 @@ export function AttendanceSection() {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by learner"
             aria-label="Search learners"
-            className="h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
+            className="h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
           />
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 lg:justify-end">
-            {(
-              [
-                ['today', 'Today'],
-                ['week', 'Last 7 days'],
-                ['month', 'Last month'],
-              ] as const
-            ).map(([value, label]) => (
-              <button key={value} type="button" onClick={() => setDateFilter(value)} className={chipCn(dateFilter === value)}>
-                {label}
-              </button>
-            ))}
-          </div>
+          <TeachToggle
+            label="Period"
+            value={dateFilter}
+            onChange={setDateFilter}
+            className="w-full sm:w-auto lg:justify-self-end [&>button]:flex-1 sm:[&>button]:flex-none"
+            options={[
+              { value: 'today', label: 'Today' },
+              { value: 'week', label: 'Last 7 days' },
+              { value: 'month', label: 'Last month' },
+            ]}
+          />
         </div>
         {activeCohorts.length > 1 && (
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-            <button type="button" onClick={() => setFilterCohort('all')} className={chipCn(filterCohort === 'all')}>
-              All cohorts
-            </button>
-            {activeCohorts.map((cohort) => (
-              <button key={cohort.id} type="button" onClick={() => setFilterCohort(cohort.id)} className={chipCn(filterCohort === cohort.id)}>
-                {cohort.name}
-              </button>
-            ))}
-          </div>
+          <TeachTabs
+            label="Cohort"
+            value={filterCohort}
+            onChange={setFilterCohort}
+            tabs={[
+              { value: 'all', label: 'All cohorts' },
+              ...activeCohorts.map((cohort) => ({ value: cohort.id, label: cohort.name })),
+            ]}
+          />
         )}
 
         {isLoading ? (
@@ -416,19 +495,16 @@ export function AttendanceSection() {
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
           </div>
         ) : days.length === 0 ? (
-          <CollegeEmpty
-            title={attendance.length === 0 ? 'No registers taken yet' : `No registers ${periodLabel}`}
+          <TeachingEmpty
+            title={
+              attendance.length === 0 ? 'No registers taken yet' : `No registers ${periodLabel}`
+            }
             body={
               attendance.length === 0
                 ? 'Take one to start the record. It takes two taps.'
                 : q || filterCohort !== 'all'
                   ? 'Nothing matches these filters. Clear the search or pick All cohorts.'
-                  : 'Try a longer period, or take today\'s register.'
-            }
-            action={
-              <button type="button" className={COLLEGE_BTN} onClick={() => openRegister(filterCohort === 'all' ? null : filterCohort)}>
-                Take a register
-              </button>
+                  : "Try a longer period, or take today's register."
             }
           />
         ) : (
@@ -436,29 +512,50 @@ export function AttendanceSection() {
             {days.map((day, index) => {
               const open = isDayOpen(day.date, index);
               return (
-                <motion.div key={day.date} variants={itemVariants} className={cn(COLLEGE_CARD, 'p-0 sm:p-0')}>
+                <motion.div key={day.date} variants={itemVariants} className={TEACH_PANEL}>
                   <button
                     type="button"
                     onClick={() => toggleDay(day.date, index)}
                     aria-expanded={open}
-                    className="flex min-h-[56px] w-full items-center gap-3 px-5 text-left touch-manipulation hover:bg-white/[0.04] sm:px-6"
+                    className="flex min-h-[56px] w-full items-center gap-3 px-4 text-left touch-manipulation hover:bg-white/[0.04] sm:px-5"
                   >
                     <span className="min-w-0 flex-1 truncate text-[15px] font-semibold text-white">
                       {day.date === today ? 'Today' : longDate(day.date)}
                     </span>
-                    <span className={cn('shrink-0 text-[12.5px] font-semibold tabular-nums', day.absent > 0 ? 'text-orange-400' : 'text-white')}>
-                      {day.absent > 0 ? `${day.absent} absent · ${day.rows.length} marked` : `${day.rows.length} marked`}
+                    <span
+                      className={cn(
+                        'shrink-0 text-[12.5px] font-semibold tabular-nums',
+                        day.absent > 0 ? 'text-orange-400' : 'text-white'
+                      )}
+                    >
+                      {day.absent > 0
+                        ? `${day.absent} absent · ${day.rows.length} marked`
+                        : `${day.rows.length} marked`}
                     </span>
-                    <ChevronDown className={cn('h-4 w-4 shrink-0 text-white transition-transform', open && 'rotate-180')} aria-hidden />
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 shrink-0 text-white transition-transform',
+                        open && 'rotate-180'
+                      )}
+                      aria-hidden
+                    />
                   </button>
 
                   {open && (
                     <ul className="grid grid-cols-1 border-t border-white/[0.06] lg:grid-cols-2">
                       {day.rows.map((record) => {
-                        const student = record.student_id ? studentById.get(record.student_id) : undefined;
+                        const student = record.student_id
+                          ? studentById.get(record.student_id)
+                          : undefined;
                         const editing = editingRecordId === record.id;
                         return (
-                          <li key={record.id} className={cn('border-b border-white/[0.06] lg:odd:border-r', editing && 'lg:col-span-2')}>
+                          <li
+                            key={record.id}
+                            className={cn(
+                              'border-b border-white/[0.06] lg:odd:border-r',
+                              editing && 'lg:col-span-2'
+                            )}
+                          >
                             <button
                               type="button"
                               onClick={() => {
@@ -469,28 +566,41 @@ export function AttendanceSection() {
                                 }
                               }}
                               aria-expanded={editing}
-                              className="flex min-h-[60px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-6"
+                              className="flex min-h-[60px] w-full items-center gap-3 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-5"
                             >
                               <span className="min-w-0 flex-1">
-                                <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
+                                <span className="block text-[14.5px] font-semibold leading-snug text-white">
                                   {student?.name ?? 'Unknown learner'}
                                 </span>
-                                <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">
-                                  {[cohortName(student?.cohort_id), record.notes ? `Note: ${record.notes}` : null].filter(Boolean).join(' · ')}
+                                <span className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-white">
+                                  {[
+                                    cohortName(student?.cohort_id),
+                                    record.notes ? `Note: ${record.notes}` : null,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(' · ')}
                                 </span>
                               </span>
                               <span
-                                className="shrink-0 text-[11.5px] font-semibold tabular-nums text-white"
+                                className="shrink-0 text-[12px] font-semibold tabular-nums text-white"
                                 title={SESSION_LABEL[asSession(record.session)]}
                               >
                                 {SESSION_SHORT[asSession(record.session)]}
                               </span>
-                              <span className={markCn(record.status)}>{record.status ?? 'Not marked'}</span>
-                              <ChevronRight className={cn('h-4 w-4 shrink-0 text-white transition-transform', editing && 'rotate-90')} aria-hidden />
+                              <StatusChip tone={markTone(record.status)}>
+                                {record.status ?? 'Not marked'}
+                              </StatusChip>
+                              <ChevronRight
+                                className={cn(
+                                  'h-4 w-4 shrink-0 text-white transition-transform',
+                                  editing && 'rotate-90'
+                                )}
+                                aria-hidden
+                              />
                             </button>
 
                             {editing && (
-                              <div className="grid grid-cols-1 gap-3 px-5 pb-4 sm:px-6 lg:grid-cols-2">
+                              <div className="grid grid-cols-1 gap-3 px-4 pb-4 sm:px-5 lg:grid-cols-2">
                                 <div className="grid grid-cols-4 gap-2">
                                   {STATUSES.map((s) => (
                                     <button
@@ -498,13 +608,12 @@ export function AttendanceSection() {
                                       type="button"
                                       disabled={savingId === record.id}
                                       onClick={() => saveStatus(record.id, s)}
-                                      aria-label={s}
-                                      className={chipCn(record.status === s) + ' h-11 min-w-0 justify-center px-2'}
+                                      aria-pressed={record.status === s}
+                                      className={markBtnCn(s, record.status === s)}
                                     >
-                                      <span className="sm:hidden" aria-hidden>
-                                        {s === 'Authorised' ? 'Au' : s.charAt(0)}
+                                      <span className="truncate">
+                                        {s === 'Authorised' ? 'Authorised' : s}
                                       </span>
-                                      <span className="hidden sm:inline">{s}</span>
                                     </button>
                                   ))}
                                 </div>
@@ -515,13 +624,13 @@ export function AttendanceSection() {
                                     onChange={(e) => setNoteText(e.target.value)}
                                     placeholder="Add a note"
                                     aria-label="Note"
-                                    className="h-11 min-w-0 flex-1 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none"
+                                    className="h-11 min-w-0 flex-1 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none"
                                   />
                                   <button
                                     type="button"
                                     disabled={savingId === record.id}
                                     onClick={() => saveNote(record.id)}
-                                    className={COLLEGE_BTN}
+                                    className={TEACH_BTN}
                                   >
                                     {savingId === record.id ? 'Saving…' : 'Save note'}
                                   </button>

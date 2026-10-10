@@ -93,11 +93,11 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
 
       {/* Expected Results */}
       {stepData.expectedResults && (
-        <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/[0.14] overflow-hidden relative">
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="pb-3 relative">
             <CardTitle className="text-white flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <CheckCircle className="h-4 w-4 text-elec-yellow" />
               </div>
               Expected Results

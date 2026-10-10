@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { OTJ_ST0152_HOURS } from '@/data/otjStandards';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -83,7 +84,7 @@ const faqs = [
   {
     question: 'What is the EPA gateway and what do I need to pass it?',
     answer:
-      'The EPA gateway is the checkpoint before EPA where your employer and training provider confirm you are ready to undertake the end-point assessment. To pass the gateway, you typically need: completed off-the-job training hours (minimum 20% of your employed hours over the duration of the apprenticeship), a complete OJT evidence portfolio covering all KSBs in the apprenticeship standard, achievement of any mandatory qualifications (for the Level 3 Installation Electrician, this is typically the Level 3 Diploma in Electrotechnical Services — Installation), achievement of Level 2 functional skills in maths and English (if not already held), employer confirmation that you are consistently working at the level required by the apprenticeship standard, and training provider confirmation that all learning has been completed. The gateway meeting is usually a three-way meeting between you, your employer, and your training provider. If any gaps are identified, you will be given a plan to address them before the gateway can be opened.',
+      'The EPA gateway is the checkpoint before EPA where your employer and training provider confirm you are ready to undertake the end-point assessment. To pass the gateway, you typically need: completed off-the-job training hours (at least the minimum published on your apprenticeship standard), a complete OJT evidence portfolio covering all KSBs in the apprenticeship standard, achievement of any mandatory qualifications (for the Level 3 Installation Electrician, this is typically the Level 3 Diploma in Electrotechnical Services — Installation), achievement of Level 2 functional skills in maths and English (if not already held), employer confirmation that you are consistently working at the level required by the apprenticeship standard, and training provider confirmation that all learning has been completed. The gateway meeting is usually a three-way meeting between you, your employer, and your training provider. If any gaps are identified, you will be given a plan to address them before the gateway can be opened.',
   },
 ];
 
@@ -425,9 +426,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Off-the-job training hours</strong> — minimum 20% of your employed hours
-                over the duration of the apprenticeship must have been spent on off-the-job training
-                (college, training provider, structured learning activities).
+                <strong>Off-the-job training hours</strong> — at least the minimum hours published
+                on your apprenticeship standard ({OTJ_ST0152_HOURS} for ST0152 starts from August
+                2025) must have been delivered (college, training provider, structured learning
+                activities; DfE funding rules 2026 to 2027, rules 85 to 86).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -615,7 +617,7 @@ export default function EPASimulatorGuidePage() {
       title="EPA Simulator: End-Point Assessment Tool"
       description="Complete guide to end-point assessment (EPA) for electrical apprentices. EPA components, synoptic project practice, professional discussion preparation."
       datePublished="2025-07-25"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

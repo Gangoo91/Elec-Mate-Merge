@@ -35,6 +35,8 @@ import {
   Undo2,
   Package,
   ClipboardCheck,
+  Route,
+  Receipt,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -55,6 +57,7 @@ import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage'
 import { WT_JOBS_HELP } from '@/components/worker-tools/help/worker-help';
 import { useMyJobs, type WorkerJob } from '@/hooks/useWorkerSelfService';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
+import { OFFLINE_FIRST, offlineSnapshot } from '@/lib/workerOfflineCache';
 import {
   useMyJobDetail,
   useFinishMyPart,
@@ -76,8 +79,13 @@ import { WorkerPhotoPicker, WorkerPhotoStrip } from '@/components/worker-tools/W
 import { DictateButton } from '@/components/worker-tools/DictateButton';
 import { WorkerJobHoursAndPay } from '@/components/worker-tools/WorkerJobHoursAndPay';
 import { LastVisitPanel } from '@/components/worker-tools/LastVisitPanel';
+import { JobDesignPanel } from '@/components/worker-tools/JobDesignPanel';
 import { OnMyWayButton } from '@/components/worker-tools/OnMyWaySheet';
 import { StartCertificateSheet } from '@/components/worker-tools/StartCertificateSheet';
+import { JobChecklistsPanel } from '@/components/worker-tools/JobChecklistsPanel';
+import { CrewOnSitePanel } from '@/components/worker-tools/CrewOnSitePanel';
+import { JobDonePanel, useJobDoneAvailable } from '@/components/worker-tools/JobDoneSheet';
+import { useMySafetySignoffs } from '@/hooks/useMySafetySignoffs';
 
 type JobFilter = 'active' | 'completed' | 'all';
 
@@ -436,6 +444,8 @@ function JobDetail({
   const [finishOpen, setFinishOpen] = useState(false);
   const reopen = useReopenMyPart();
   const [certOpen, setCertOpen] = useState(false);
+  // ELE-2068: "Job done" on site, for crew the firm lets finish jobs.
+  const jobDone = useJobDoneAvailable(jobId);
 
   const backButton = (
     <button
@@ -514,6 +524,9 @@ function JobDetail({
         {until && <p className="mt-0.5 text-[13px] text-white">Until {until}</p>}
       </div>
 
+      {/* The firm's pre-start checks come first: clock-in waits on them (ELE-1826) */}
+      <JobChecklistsPanel jobId={jobId} finished={!!mine.finished_at} />
+
       {/* Address + directions */}
       {(address || canNavigate) && (
         <WorkerPanel className="overflow-hidden">
@@ -572,8 +585,20 @@ function JobDetail({
       {/* Repeat jobs: what the last crew found (ELE-1821) */}
       <LastVisitPanel jobId={jobId} />
 
+      {/* The office's circuit design for this job (ELE-1943) */}
+      <JobDesignPanel jobId={jobId} />
+
+      {/* Job done on site: checks, photos, certificate, signature, extras (ELE-2068) */}
+      <JobDonePanel
+        jobId={jobId}
+        jobTitle={title}
+        clientName={job?.client_name}
+        address={address}
+        phone={detail.contact?.kind === 'client' ? detail.contact.phone : null}
+      />
+
       {/* My part */}
-      {mine.finished_at ? (
+      {jobDone.ctx?.closed && jobDone.ctx.last_completion ? null : mine.finished_at ? (
         <WorkerPanel className="px-4 py-4 sm:px-5">
           <div className="flex items-start gap-3">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-black">
@@ -618,7 +643,17 @@ function JobDetail({
             </button>
           )}
         </WorkerPanel>
-      ) : mine.can_finish ? (
+      ) : mine.can_finish && jobDone.available ? (
+        <SecondaryButton
+          data-help="wt-jobs.finish"
+          fullWidth
+          size="lg"
+          onClick={() => setFinishOpen(true)}
+          className="h-12 rounded-2xl text-[15px]"
+        >
+          I’ve only finished my part
+        </SecondaryButton>
+      ) : mine.can_finish && !jobDone.queued ? (
         <PrimaryButton
           data-help="wt-jobs.finish"
           fullWidth
@@ -637,10 +672,7 @@ function JobDetail({
       {/* On this job */}
       <div>
         <SectionTitle title="On this job" />
-        <div
-          className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6"
-          data-help="wt-jobs.actions"
-        >
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3" data-help="wt-jobs.actions">
           <ActionTile
             icon={Clock}
             label="Clock in"
@@ -670,6 +702,19 @@ function JobDetail({
             label="Materials used"
             hint="Off your van"
             onClick={() => navigate(`${BASE}/equipment?job=${jobId}`)}
+          />
+          {/* Gap #3 / #21: claims start with this job picked, and save with no signal. */}
+          <ActionTile
+            icon={Route}
+            label="Mileage"
+            hint="Driving for this job"
+            onClick={() => navigate(`${BASE}/expenses?job=${jobId}&new=mileage`)}
+          />
+          <ActionTile
+            icon={Receipt}
+            label="Receipt"
+            hint="Something you paid for"
+            onClick={() => navigate(`${BASE}/expenses?job=${jobId}&new=receipt`)}
           />
           <ActionTile
             icon={ClipboardCheck}
@@ -758,30 +803,9 @@ function JobDetail({
         )}
       </div>
 
-      {/* Crew */}
-      {others.length > 0 && (
-        <div>
-          <SectionTitle title="Also on this job" />
-          <WorkerPanel className="divide-y divide-white/[0.07]">
-            {others.map((c, i) => (
-              <div
-                key={`${c.name}-${i}`}
-                className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5"
-              >
-                <div className="min-w-0">
-                  <p className="text-[14.5px] font-semibold text-white">{c.name}</p>
-                  {c.role_on_job && <p className="text-[12.5px] text-white">{c.role_on_job}</p>}
-                </div>
-                {c.finished_at ? (
-                  <SolidBadge tone="green">Done {timeOf(c.finished_at)}</SolidBadge>
-                ) : (
-                  <SolidBadge tone="neutral">On it</SolidBadge>
-                )}
-              </div>
-            ))}
-          </WorkerPanel>
-        </div>
-      )}
+      {/* Crew on site — who else is on this job today and, while they're
+          clocked in, where (ELE-1827) */}
+      <CrewOnSitePanel jobId={jobId} fallbackCrew={others} />
 
       <FinishSheet
         open={finishOpen}
@@ -893,7 +917,9 @@ function useMyPacksForJob(jobId: string) {
   const { data: me } = useMyEmployeeRecord();
   return useQuery({
     queryKey: ['my-job-packs', me?.id, jobId],
-    queryFn: async () => {
+    // ELE-1828: the job page's packs show with no signal.
+    ...OFFLINE_FIRST,
+    queryFn: () => offlineSnapshot(`my-job-packs:${me?.id}:${jobId}`, async () => {
       const { data, error } = await supabase
         .from('employer_job_pack_acknowledgements')
         .select(
@@ -908,7 +934,7 @@ function useMyPacksForJob(jobId: string) {
         title: (a.pack?.title as string) || 'Job pack',
         signedAt: (a.acknowledged_at as string | null) ?? null,
       }));
-    },
+    }),
     enabled: !!me?.id && !!jobId,
     staleTime: 30 * 1000,
   });
@@ -917,8 +943,43 @@ function useMyPacksForJob(jobId: string) {
 function JobPacks({ jobId }: { jobId: string }) {
   const navigate = useNavigate();
   const { data: packs = [] } = useMyPacksForJob(jobId);
-  if (packs.length === 0) return null;
-  const awaiting = packs.filter((p) => !p.signedAt).length;
+  // ELE-1817: the firm's toolbox talks and RAMS for this job sit with its packs.
+  const { data: safety } = useMySafetySignoffs();
+  const rows: Array<{
+    key: string;
+    title: string;
+    kind: string;
+    signedAt: string | null;
+    to: string;
+  }> = [
+    ...packs.map((p) => ({
+      key: `pack-${p.ackId}`,
+      title: p.title,
+      kind: 'Job pack',
+      signedAt: p.signedAt,
+      to: `${BASE}/signoffs?job=${jobId}&signoff=${p.ackId}`,
+    })),
+    ...(safety?.briefings ?? [])
+      .filter((b) => b.employer_job_id === jobId)
+      .map((b) => ({
+        key: `briefing-${b.id}`,
+        title: b.briefing_name || 'Toolbox talk',
+        kind: 'Toolbox talk',
+        signedAt: b.signed_at,
+        to: `${BASE}/signoffs?briefing=${b.id}`,
+      })),
+    ...(safety?.rams ?? [])
+      .filter((r) => r.employer_job_id === jobId)
+      .map((r) => ({
+        key: `rams-${r.id}`,
+        title: r.project_name || 'RAMS',
+        kind: 'RAMS',
+        signedAt: r.signed_at,
+        to: `${BASE}/signoffs?rams=${r.id}`,
+      })),
+  ];
+  if (rows.length === 0) return null;
+  const awaiting = rows.filter((p) => !p.signedAt).length;
   return (
     <div>
       <SectionTitle
@@ -932,8 +993,8 @@ function JobPacks({ jobId }: { jobId: string }) {
         }
       />
       <WorkerPanel className="divide-y divide-white/[0.07]">
-        {packs.map((p) => (
-          <div key={p.ackId} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
+        {rows.map((p) => (
+          <div key={p.key} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
             <FileCheck2
               className={cn(
                 'h-5 w-5 shrink-0',
@@ -943,15 +1004,13 @@ function JobPacks({ jobId }: { jobId: string }) {
             <div className="min-w-0 flex-1">
               <p className="text-[14.5px] font-semibold text-white">{p.title}</p>
               <p className="text-[12.5px] text-white">
+                {p.kind} ·{' '}
                 {p.signedAt
                   ? `Signed ${format(parseISO(p.signedAt), 'd MMM')}`
                   : 'Read and sign before you start'}
               </p>
             </div>
-            <RowAction
-              quiet={!!p.signedAt}
-              onClick={() => navigate(`${BASE}/signoffs?job=${jobId}&signoff=${p.ackId}`)}
-            >
+            <RowAction quiet={!!p.signedAt} onClick={() => navigate(p.to)}>
               {p.signedAt ? 'View' : 'Sign'}
             </RowAction>
           </div>

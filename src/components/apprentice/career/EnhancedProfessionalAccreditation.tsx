@@ -118,15 +118,13 @@ const EnhancedProfessionalAccreditation = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Professional accreditation
-        </span>
+        <span className="text-[13px] font-semibold text-white">Professional accreditation</span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           Professional accreditations
         </h2>
         <p className="text-[14px] text-white leading-relaxed max-w-2xl">
-          Recognised professional accreditations to enhance your standing and open new
-          opportunities — from industry memberships to specialist certifications.
+          Recognised professional accreditations to enhance your standing and open new opportunities
+          — from industry memberships to specialist certifications.
         </p>
       </div>
 
@@ -140,9 +138,7 @@ const EnhancedProfessionalAccreditation = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Why get accredited?
-          </span>
+          <span className="text-[13px] font-semibold text-white">Why get accredited?</span>
           <ul className="space-y-2">
             {[
               {
@@ -164,16 +160,14 @@ const EnhancedProfessionalAccreditation = () => {
             ].map((item) => (
               <li key={item.title} className="space-y-0.5">
                 <p className="text-[13px] text-white">{item.title}</p>
-                <p className="text-[12px] text-white leading-relaxed">{item.body}</p>
+                <p className="text-[14px] text-white leading-relaxed">{item.body}</p>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Getting started
-          </span>
+          <span className="text-[13px] font-semibold text-white">Getting started</span>
           <ul className="space-y-2">
             {[
               {
@@ -195,7 +189,7 @@ const EnhancedProfessionalAccreditation = () => {
             ].map((item) => (
               <li key={item.title} className="space-y-0.5">
                 <p className="text-[13px] text-white">{item.title}</p>
-                <p className="text-[12px] text-white leading-relaxed">{item.body}</p>
+                <p className="text-[14px] text-white leading-relaxed">{item.body}</p>
               </li>
             ))}
           </ul>
@@ -203,9 +197,7 @@ const EnhancedProfessionalAccreditation = () => {
       </div>
 
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Available accreditations
-        </span>
+        <span className="text-[13px] font-semibold text-white">Available accreditations</span>
         <span className="text-[12px] text-white">
           {filteredOptions.length} {filteredOptions.length === 1 ? 'option' : 'options'}
         </span>
@@ -237,15 +229,18 @@ const EnhancedProfessionalAccreditation = () => {
         </div>
       )}
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Professional development resources
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <p className="text-[13px] text-white">Industry bodies</p>
             {[
-              { name: 'Institution of Engineering and Technology (IET)', url: 'https://www.theiet.org' },
+              {
+                name: 'Institution of Engineering and Technology (IET)',
+                url: 'https://www.theiet.org',
+              },
               { name: "Electrical Contractors' Association (ECA)", url: 'https://www.eca.co.uk' },
               { name: 'NICEIC', url: 'https://www.niceic.com' },
             ].map((item) => (

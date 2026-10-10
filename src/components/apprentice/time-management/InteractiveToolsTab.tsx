@@ -87,11 +87,9 @@ const InteractiveToolsTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Task manager
-          </span>
+          <span className="text-[13px] font-semibold text-white">Task manager</span>
           <p className="text-[14px] text-white leading-relaxed">
             Keep track of work and study tasks with priority levels
           </p>
@@ -129,7 +127,12 @@ const InteractiveToolsTab = () => {
               key={task.id}
               className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
             >
-              <button onClick={() => toggleTask(task.id)} className="touch-manipulation">
+              <button
+                type="button"
+                onClick={() => toggleTask(task.id)}
+                aria-label={task.completed ? 'Mark not done' : 'Mark done'}
+                className="-m-3 flex h-11 w-11 shrink-0 items-center justify-center touch-manipulation"
+              >
                 {task.completed ? (
                   <CheckCircle className="h-5 w-5 text-elec-yellow" />
                 ) : (
@@ -163,11 +166,9 @@ const InteractiveToolsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Weekly schedule planner
-          </span>
+          <span className="text-[13px] font-semibold text-white">Weekly schedule planner</span>
           <p className="text-[14px] text-white leading-relaxed">
             Plan your weekly activities including work, college, and personal time
           </p>
@@ -242,7 +243,7 @@ const InteractiveToolsTab = () => {
                     .sort((a, b) => a.time.localeCompare(b.time))
                     .map((entry) => (
                       <div key={entry.id} className="flex items-center gap-3 text-[13px]">
-                        <span className="text-elec-yellow font-mono">{entry.time}</span>
+                        <span className="text-elec-yellow">{entry.time}</span>
                         <span className="text-white">{entry.activity}</span>
                         <span className="text-white">({entry.duration})</span>
                       </div>
@@ -257,11 +258,9 @@ const InteractiveToolsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Daily stress level tracker
-          </span>
+          <span className="text-[13px] font-semibold text-white">Daily stress level tracker</span>
           <p className="text-[14px] text-white leading-relaxed">
             Monitor your daily stress levels and identify patterns
           </p>
@@ -280,7 +279,7 @@ const InteractiveToolsTab = () => {
                 onChange={(e) =>
                   setNewStressEntry({ ...newStressEntry, level: parseInt(e.target.value) })
                 }
-                className="flex-1 touch-manipulation"
+                className="h-11 flex-1 accent-elec-yellow touch-manipulation"
               />
               <span className="text-[13px] text-white">10</span>
               <span className="text-[18px] font-semibold text-elec-yellow">

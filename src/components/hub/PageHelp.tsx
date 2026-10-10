@@ -88,13 +88,13 @@ function BeforeYouStart({ blockers, onDone }: { blockers?: HelpBlocker[]; onDone
   if (!blockers?.length) return null;
   return (
     <div
-      className="rounded-2xl border border-white/[0.1] border-l-4 border-l-orange-400 bg-white/[0.04] p-4"
+      className="rounded-xl border border-white/[0.1] border-l-4 border-l-orange-400 bg-white/[0.04] px-4 py-3"
       data-help-blockers=""
     >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-orange-300">
+      <p className="text-[13px] font-semibold text-orange-300">
         Before you start
       </p>
-      <ul className="mt-2 space-y-2">
+      <ul className="mt-1.5 space-y-2">
         {blockers.map((b, i) => (
           <li
             key={i}
@@ -274,7 +274,7 @@ export function PageHelpSheet({
         </p>
 
         <section>
-          <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+          <h3 className="mb-3 text-[13px] font-semibold text-white">
             How to use it
           </h3>
           <ol
@@ -299,7 +299,7 @@ export function PageHelpSheet({
 
         {help.tasks?.length ? (
           <section>
-            <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+            <h3 className="mb-3 text-[13px] font-semibold text-white">
               Step by step
             </h3>
             <div className="grid gap-3 lg:grid-cols-2">
@@ -377,7 +377,7 @@ export function PageHelpSheet({
 
         {help.source && (
           <div className="flex flex-col gap-1 border-t border-white/[0.08] pt-5 sm:flex-row sm:gap-6">
-            <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+            <span className="shrink-0 text-[13px] font-semibold text-white">
               Source
             </span>
             <p className="max-w-4xl text-[13px] leading-relaxed text-white">{help.source}</p>
@@ -426,45 +426,45 @@ export function HowItWorks({
     setHidden(true);
   };
   return (
-    <section className="relative -mx-4 border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-5 sm:mx-0 sm:rounded-3xl sm:border-x sm:px-6">
-      <div className="flex items-start justify-between gap-3">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-          How it works
-        </p>
+    <section className="relative -mx-4 border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-3 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5">
+      {/* Compact by design (8 Oct): it explains the page without pushing the
+          work below the fold. Step detail and the full guide sit one tap away. */}
+      <div className="flex items-center gap-2">
+        <p className="min-w-0 flex-1 text-[14px] font-semibold text-white">How it works</p>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="h-11 shrink-0 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+        >
+          Full guide
+        </button>
         <button
           type="button"
           onClick={dismiss}
           aria-label="Hide how it works"
-          className="-mr-2 -mt-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-white touch-manipulation hover:bg-white/[0.06]"
+          className="-mr-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white touch-manipulation hover:bg-white/[0.06]"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
       {blockers?.length ? (
-        <div className="mt-2 mb-4">
+        <div className="mt-1 mb-3">
           <BeforeYouStart blockers={blockers} />
         </div>
       ) : null}
-      <ol className="mt-1 grid gap-4 sm:grid-cols-3 sm:gap-6">
+      <ol className="mb-1 grid gap-2.5 sm:grid-cols-3 sm:gap-5">
         {help.steps.slice(0, 3).map((s, i) => (
-          <li key={s.title} className="flex gap-3">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-elec-yellow text-[13px] font-bold text-elec-yellow">
+          <li key={s.title} className="flex gap-2.5">
+            <span className="mt-px flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-elec-yellow text-[12px] font-bold text-elec-yellow">
               {i + 1}
             </span>
             <span className="min-w-0">
-              <span className="block text-[14.5px] font-semibold text-white">{s.title}</span>
-              <span className="mt-0.5 block text-[13px] leading-relaxed text-white">{s.body}</span>
+              <span className="block text-[14px] font-semibold leading-snug text-white">{s.title}</span>
+              <span className="mt-0.5 hidden text-[13px] leading-snug text-white sm:block">{s.body}</span>
             </span>
           </li>
         ))}
       </ol>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="mt-4 h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
-      >
-        Read the full guide
-      </button>
       <PageHelpSheet
         help={help}
         open={open}

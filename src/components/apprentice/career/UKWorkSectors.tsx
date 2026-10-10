@@ -4,9 +4,7 @@ const UKWorkSectors = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Work sectors
-        </span>
+        <span className="text-[13px] font-semibold text-white">Work sectors</span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           UK electrical work sectors
         </h2>
@@ -23,26 +21,20 @@ const UKWorkSectors = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-4"
           >
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[13px] font-semibold capitalize text-white">
                 {sector.growth_outlook}
               </span>
-              <h3 className="text-[17px] font-semibold text-white leading-tight">
-                {sector.name}
-              </h3>
+              <h3 className="text-[17px] font-semibold text-white leading-tight">{sector.name}</h3>
             </div>
 
             <p className="text-[14px] text-white leading-relaxed">{sector.description}</p>
 
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Typical daily rates
-              </span>
+              <span className="text-[13px] font-semibold text-white">Typical daily rates</span>
               <div className="text-[16px] font-semibold text-white">{sector.typical_pay}</div>
               <p className="text-[12px] text-white">
-                {sector.growth_outlook === 'Rapid growth' &&
-                  'Premium rates due to high demand'}
-                {sector.growth_outlook === 'Strong' &&
-                  'Competitive rates with good progression'}
+                {sector.growth_outlook === 'Rapid growth' && 'Premium rates due to high demand'}
+                {sector.growth_outlook === 'Strong' && 'Competitive rates with good progression'}
                 {sector.growth_outlook === 'Growing' && 'Steady rates with growth potential'}
                 {sector.growth_outlook === 'Stable' && 'Consistent rates across the sector'}
                 {sector.growth_outlook === 'Cyclical' && 'Rates vary with market conditions'}
@@ -50,9 +42,7 @@ const UKWorkSectors = () => {
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Essential skills
-              </span>
+              <span className="text-[13px] font-semibold text-white">Essential skills</span>
               <ul className="space-y-1.5">
                 {sector.key_skills.map((skill, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-[13px] text-white">
@@ -64,10 +54,8 @@ const UKWorkSectors = () => {
             </div>
 
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Career opportunities
-              </span>
-              <p className="text-[13px] text-white leading-relaxed">
+              <span className="text-[13px] font-semibold text-white">Career opportunities</span>
+              <p className="text-[14px] text-white leading-relaxed">
                 {sector.name.includes('Renewable')
                   ? 'Emerging field with rapid expansion.'
                   : sector.name.includes('Industrial')
@@ -105,8 +93,8 @@ const UKWorkSectors = () => {
         ))}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Sector analysis & career guidance
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

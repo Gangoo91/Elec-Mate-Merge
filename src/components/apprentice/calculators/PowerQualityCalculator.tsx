@@ -617,8 +617,8 @@ const PowerQualityCalculator = () => {
                       <div
                         className="rounded-xl border p-3 space-y-2"
                         style={{
-                          borderColor: `${config.gradientFrom}15`,
-                          background: `${config.gradientFrom}05`,
+                          borderColor: 'rgba(255, 255, 255, 0.12)',
+                          background: 'rgba(255, 255, 255, 0.04)',
                         }}
                       >
                         {result.harmonicSpectrum.map((harmonic) => (
@@ -730,8 +730,8 @@ const PowerQualityCalculator = () => {
                       <div
                         className="rounded-xl border p-3 space-y-2"
                         style={{
-                          borderColor: `${config.gradientFrom}15`,
-                          background: `${config.gradientFrom}05`,
+                          borderColor: 'rgba(255, 255, 255, 0.12)',
+                          background: 'rgba(255, 255, 255, 0.04)',
                         }}
                       >
                         {result.practicalGuidance.map((tip, i) => (

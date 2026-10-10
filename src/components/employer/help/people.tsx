@@ -12,21 +12,21 @@ export const PEOPLE_HUB_HELP: PageHelpContent = {
   what: 'Everything about your team in one place: who is on it, their cards and tickets, hours, leave, messages, and hiring.',
   steps: [
     {
-      title: 'Start with the alerts',
-      body: 'The alerts at the top are what needs you today: hours to approve, leave to decide, people who never joined, cards running out.',
+      title: 'Start with Needs you',
+      body: 'Needs you lists what is waiting today: cards expired, hours to approve, leave to decide, applications, people who never joined.',
     },
     {
-      title: 'Open a card',
-      body: 'Team, Credentials, Timesheets, Leave and Communications run the day. Talent Pool, Job Vacancies and Apprentice Progress grow the team.',
+      title: 'Open a page',
+      body: 'Your team (Team, Credentials, Timesheets, Leave, Communications, Subcontractors, Contracts) runs the day. Grow the team holds Job vacancies, Talent pool and Apprentice progress.',
     },
     {
-      title: 'Watch the ring',
-      body: 'The Compliance ring is the share of your active team with an ECS card in date. Tap it to open Credentials.',
+      title: 'Watch Cards in date',
+      body: 'Cards in date is the share of your active team with an ECS card in date. Tap it to open Credentials.',
     },
   ],
   notes: [
     {
-      title: 'What each card is for',
+      title: 'What each page is for',
       body: 'Team: add people and chase invites. Credentials: Elec-IDs, ECS checks and renewals. Timesheets: approve hours. Leave: holiday and allowances. Communications: messages with read receipts. Talent Pool, Job Vacancies and Apprentice Progress: hiring and training.',
     },
   ],
@@ -47,7 +47,7 @@ export const TEAM_HELP: PageHelpContent = {
     },
     {
       title: 'Keep details right',
-      body: 'Tap a person to call, message or assign them. Edit Profile changes their role, pay and status.',
+      body: 'Tap a person to call, message or assign them. Edit profile changes their role, pay and status.',
     },
   ],
   tasks: [
@@ -92,20 +92,20 @@ export const TEAM_HELP: PageHelpContent = {
       title: 'Change someone’s details',
       steps: [
         'Tap the person in the list.',
-        'Scroll down and tap Edit Profile.',
+        'Tap Edit profile at the bottom.',
         'Change their role, contact details, pay or status.',
         'Tap Save changes.',
       ],
       who: 'Owner, admins and office managers. Office managers never see pay.',
       tour: [
         { target: 'team.list', caption: 'Tap a person to open them.', opens: true },
-        { target: 'team.edit-profile', caption: 'Tap Edit Profile.' },
+        { target: 'team.edit-profile', caption: 'Tap Edit profile.' },
       ],
     },
     {
       title: 'Remove someone from the team',
       steps: [
-        'Tap the person, then Edit Profile.',
+        'Tap the person, then Edit profile.',
         'Tap the bin button at the bottom.',
         'Tap Remove to confirm.',
       ],
@@ -114,7 +114,7 @@ export const TEAM_HELP: PageHelpContent = {
       who: 'Owner, admins and office managers.',
       tour: [
         { target: 'team.list', caption: 'Tap the person.', opens: true },
-        { target: 'team.edit-profile', caption: 'Tap Edit Profile.', opens: true },
+        { target: 'team.edit-profile', caption: 'Tap Edit profile.', opens: true },
         { target: 'team.remove', caption: 'Tap the bin, then Remove to confirm.' },
       ],
     },
@@ -170,7 +170,7 @@ export const ELECID_HELP: PageHelpContent = {
       title: 'Record that you checked an ECS card',
       steps: [
         'Tap the person in the list.',
-        'Under Verification, tap ECS card.',
+        'Under Checks, tap ECS card.',
         'Pick Document seen or Verified at source, and say how you checked it (for example on the JIB/ECS card checker).',
         'Tap Save. Your name and the date go on the record.',
       ],
@@ -201,7 +201,7 @@ export const ELECID_HELP: PageHelpContent = {
       steps: [
         'Open the Expiring or Expired tab.',
         'Tap the person.',
-        'Under Urgent attention, tap Nudge to renew.',
+        'Under Needs renewing, tap Nudge to renew.',
       ],
       after:
         'They get a high priority message listing what to renew. Anything they have already renewed is left off.',
@@ -505,8 +505,7 @@ export const SUBCONTRACTORS_HELP: PageHelpContent = {
         'Pick the tax month.',
         'Tap Export statements. You get a CSV of every statement in the month.',
       ],
-      after:
-        'This is separate from the PAYE payroll file. Use it for your CIS300 monthly return.',
+      after: 'This is separate from the PAYE payroll file. Use it for your CIS300 monthly return.',
       who: 'The owner and admins.',
       tour: [{ target: 'subcontractors.export', caption: 'Tap Export statements for a CSV.' }],
     },
@@ -538,11 +537,25 @@ export const VACANCIES_HELP: PageHelpContent = {
     },
     {
       title: 'Work the candidates',
-      body: 'The Candidates tab moves each person along: Shortlist, Interview, Make offer, Hire & onboard.',
+      body: 'The Candidates tab moves each person along: Shortlist, Interview, Make offer, Hire.',
+    },
+    {
+      title: 'Invite the talent pool',
+      body: 'When a vacancy goes live, invite the matching electricians who opted in to be found. They apply with their Elec-ID.',
     },
     {
       title: 'Talk to them',
       body: 'Messages holds your conversations with applicants and people from the talent pool.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Who is in the talent pool',
+      body: 'Only electricians who switched on Let firms find me in their Elec-ID. You see their first name and initial, card, area and declared rate. Never their phone or email.',
+    },
+    {
+      title: 'What the numbers mean',
+      body: 'New candidates are applications nobody has looked at yet. In progress is shortlisted, interviewed and offered. Hired counts people hired in the last 30 days. The Talent pool panel shows who you invited and how many applied.',
     },
   ],
   tasks: [
@@ -551,8 +564,8 @@ export const VACANCIES_HELP: PageHelpContent = {
       steps: [
         'Tap Post vacancy.',
         'Fill in Job Basics, Compensation and Requirements, tapping Continue each time.',
-        'Check the Review and tap Publish Job Listing.',
-        'Not ready? Tap Save Draft. It waits in the Draft tab.',
+        'Check the Review and tap Publish vacancy.',
+        'Not ready? Tap Save draft. It waits in the Draft tab.',
       ],
       who: 'Owner, admins and office managers.',
       tour: [{ target: 'vacancies.post', caption: 'Tap Post vacancy to start.' }],
@@ -583,9 +596,11 @@ export const VACANCIES_HELP: PageHelpContent = {
         'Open the Candidates tab.',
         'Tap Shortlist on a new applicant.',
         'Tap Interview… and book the time. They are told the interview is booked.',
-        'After the interview tap Make offer, then Hire & onboard.',
+        'After the interview tap Make offer and enter the pay, start date and role.',
+        'Tap Hire. Add their date of birth if you have it.',
       ],
-      after: 'Hire & onboard adds them to your team. They show in People.',
+      after:
+        'They join your team with that pay and start date, probation is set from your HR settings, and their starter checklist opens: right to work, contract, app invite and first job.',
       who: 'Owner, admins and office managers.',
       tour: [
         {
@@ -599,6 +614,18 @@ export const VACANCIES_HELP: PageHelpContent = {
           caption: 'Each card has the next step: Shortlist, Interview, Make offer, Hire.',
         },
       ],
+    },
+    {
+      title: 'Invite the talent pool',
+      steps: [
+        'Publish a vacancy. The talent pool sheet opens straight away.',
+        'It lists the available electricians who match the role. Everyone is ticked.',
+        'Untick anyone you do not want, add a message if you like, and tap Invite.',
+        'Later, open a live vacancy and tap Invite matching electricians to invite more.',
+      ],
+      after:
+        'They get a notification and apply with their Elec-ID in one tap. Applications land in Candidates.',
+      who: 'Owner, admins and office managers on the Employer plan.',
     },
     {
       title: 'Turn a candidate down',
@@ -618,6 +645,67 @@ export const VACANCIES_HELP: PageHelpContent = {
           caption: 'Messages has every conversation with applicants.',
         },
       ],
+    },
+  ],
+};
+
+export const CONTRACTS_HELP: PageHelpContent = {
+  id: 'employer-contracts',
+  title: 'Contracts',
+  what: 'Employment and subcontractor contracts, sent from the person and signed on their phone. Your customer terms live here too.',
+  steps: [
+    {
+      title: 'Send from the person',
+      body: 'Open someone in Team and tap Send contract, or tap Send a contract here and pick them.',
+    },
+    {
+      title: 'They sign on their phone',
+      body: 'They get an email with a link and, if they use Worker Tools, it waits in Sign-offs. They keep a signed copy.',
+    },
+    {
+      title: 'You countersign',
+      body: 'Once they have signed, open the contract here and tap Sign as employer. It turns Active.',
+    },
+    {
+      title: 'Customer terms',
+      body: 'The Customer terms tab holds the terms that print on every quote and that customers agree to on the accept page.',
+    },
+  ],
+  tasks: [
+    {
+      title: 'Send a contract to someone',
+      steps: [
+        'Tap Send a contract, or open the person in Team and tap Send contract.',
+        'Pick the template: employment, subcontractor or a letter.',
+        'Check the start date and pay, and fill anything else you know.',
+        'Tap Send for signature.',
+      ],
+      after: 'The status shows on their record: waiting, opened, signed or declined.',
+      who: 'Owner and admins. Contracts carry pay, so office managers only see the status.',
+      tour: [{ target: 'contracts.send', caption: 'Tap Send a contract to start.' }],
+    },
+    {
+      title: 'Countersign a signed contract',
+      steps: [
+        'Open the contract from Your contracts.',
+        'Tap Sign as employer, draw your signature and save.',
+      ],
+      after: 'With both signatures it turns Active and the PDF carries both.',
+    },
+    {
+      title: 'Change your customer terms',
+      steps: [
+        'Open the Customer terms tab.',
+        'Tap Edit terms, tick what applies, add your own.',
+        'Tap Save.',
+      ],
+      after: 'Every quote you send from now on prints these terms.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Who sees contracts',
+      body: 'The owner and admins. Office managers see whether a person has signed, never the contract or the pay.',
     },
   ],
 };

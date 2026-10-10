@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { getOtjStandard } from '@/data/otjStandards';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -21,6 +22,12 @@ import {
 // Data
 // -------------------------------------------------------------------
 
+
+/** Annex C minimum off-the-job hours, from the shared list (never hard-coded). */
+const otjHours = (code: string) => {
+  const h = getOtjStandard(code)?.otjHours;
+  return h ? `${h.toLocaleString('en-GB')} hours` : 'See the standard';
+};
 const breadcrumbs = [
   { label: 'Apprentice', href: '/guides/electrical-apprenticeship-guide' },
   { label: 'Apprenticeship Cost', href: '/guides/electrical-apprenticeship-guide' },
@@ -39,9 +46,9 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The government funds 95 to 100% of apprenticeship training costs — most apprentices pay nothing for their qualifications.',
-  'Levy-paying employers (payroll over £3 million) fund apprenticeships through their digital apprenticeship service account. Non-levy employers pay just 5% co-investment.',
-  'The funding band for a Level 3 Installation Electrician apprenticeship is £18,000, meaning the government will contribute up to £17,100 towards training costs.',
+  'Apprentices never pay for their training. For starts from 1 August 2026, a non-levy employer pays nothing for an apprentice aged 16 to 24 and 5% for one aged 25 or over, up to the funding band maximum.',
+  'Levy-paying employers (payroll over £3 million) fund apprenticeships through their digital apprenticeship service account. Non-levy employers pay 0% for apprentices aged 16 to 24 and 5% for those aged 25 or over (DfE funding rules 2026 to 2027, rules 213 to 214).',
+  'The funding band maximum for the Installation and Maintenance Electrician apprenticeship (ST0152) is £23,000. For a 16 to 24-year-old at a non-levy employer the government funds all of it; for a 25+ apprentice it funds 95%, up to £21,850.',
   'Additional costs for apprentices include tools (£300 to £800), PPE (£100 to £200), textbooks (£50 to £150), and exam fees (often included in the training provider fee).',
   'When buying textbooks, make sure you get BS 7671:2018+A4:2026 (Amendment 4, April 2026 — orange cover). The EPA knowledge test is based on the current edition; an older A2 or A3 copy will contain deleted or changed regulation numbers.',
   'Elec-Mate supports apprentices through every stage of training with study courses, portfolio guidance, exam preparation, and AI-powered regulation help.',
@@ -51,7 +58,7 @@ const faqs = [
   {
     question: 'Do apprentices have to pay for their own electrical training?',
     answer:
-      'No. Under the current government apprenticeship funding rules, apprentices do not pay for their training. The cost is met by the employer (if they are a levy payer) or shared between the employer and the government (if they are a non-levy payer, with the employer paying just 5% co-investment). In some cases, the government covers 100% of the training cost — for example, when the apprentice is aged 16 to 18 at the start of the apprenticeship, or when the employer has fewer than 50 employees and the apprentice is under 19. The apprentice should never be asked to contribute towards the cost of their training directly.',
+      'No. Under the current government apprenticeship funding rules, apprentices do not pay for their training. The cost is met by the employer (if they are a levy payer) or by the government (if they are a non-levy payer). For starts from 1 August 2026 the government covers 100% of the training cost, up to the funding band maximum, when the apprentice is aged 16 to 24 at the start; for apprentices aged 25 or over the employer pays 5% and the government 95% (DfE funding rules 2026 to 2027, rules 213 to 214). The apprentice should never be asked to contribute towards the cost of their training directly.',
   },
   {
     question: 'What is the apprenticeship levy and how does it work?',
@@ -59,9 +66,9 @@ const faqs = [
       'The apprenticeship levy is a UK government tax that applies to all employers with an annual payroll of more than £3 million. They pay 0.5% of their payroll into a digital apprenticeship service (DAS) account, offset by a £15,000 annual allowance. The funds in the DAS account can only be used to pay for apprenticeship training. Levy funds expire after 24 months if not used, and up to 25% of unused levy can be transferred to other employers in the supply chain. For example, a main electrical contractor paying levy could transfer funds to a smaller sub-contractor to help them take on apprentices. If you work for a large employer (M&E contractor, facilities management company, housing association), your apprenticeship is almost certainly funded through the levy.',
   },
   {
-    question: 'What does the 5% co-investment mean for non-levy employers?',
+    question: 'What does a non-levy employer pay towards apprenticeship training?',
     answer:
-      'Non-levy employers — those with an annual payroll below £3 million, which includes the vast majority of small and medium electrical contractors — pay 5% of the negotiated training cost. The government pays the remaining 95%. For a Level 3 Installation Electrician apprenticeship with a training cost of £15,000 (within the £18,000 funding band), the employer would pay £750 (5%) and the government would pay £14,250 (95%). This co-investment is paid directly to the training provider, not to the government. Some training providers spread the co-investment across the duration of the apprenticeship (for example, £750 over 48 months is less than £16 per month).',
+      'Non-levy employers — those with an annual payroll below £3 million, which includes the vast majority of small and medium electrical contractors — pay nothing towards training for an apprentice aged 16 to 24 at the start, for starts from 1 August 2026. For an apprentice aged 25 or over they pay 5% of the negotiated cost and the government pays 95% (DfE funding rules 2026 to 2027, rules 213 to 214). For a 25+ Installation and Maintenance Electrician apprentice with a training cost of £20,000 (within the £23,000 funding band), the employer would pay £1,000 (5%) and the government £19,000 (95%). Any price above the funding band maximum is paid in full by the employer (rule 215.1). The 5% is paid directly to the training provider, often spread across the apprenticeship.',
   },
   {
     question: 'What tools and equipment do electrical apprentices need to buy?',
@@ -76,7 +83,7 @@ const faqs = [
   {
     question: 'Are exam fees included in the apprenticeship funding or paid separately?',
     answer:
-      'End-point assessment (EPA) costs are included within the apprenticeship funding band. The training provider and EPA organisation agree the EPA fee, and it is paid from the same funding that covers the training. For the Level 3 Installation Electrician apprenticeship, the EPA includes the AM2 practical assessment, a knowledge test, and a professional discussion. The apprentice should not be asked to pay for the EPA separately. However, if the apprentice fails a component and needs a resit, the resit fee may or may not be covered — this depends on the training provider agreement. Some employers cover resit costs; others deduct them from wages.',
+      'End-point assessment (EPA) costs are included within the apprenticeship funding band. The training provider and EPA organisation agree the EPA fee, and it is paid from the same funding that covers the training. For the Level 3 Installation Electrician apprenticeship, the EPA includes the AM2 practical assessment, a knowledge test, and a professional discussion. The apprentice should not be asked to pay for the EPA separately. However, if the apprentice fails a component and needs a resit, whether the resit fee is covered depends on the training provider agreement. The apprentice should never be charged for their training.',
   },
   {
     question: 'How does Elec-Mate help apprentices during their training?',
@@ -148,11 +155,12 @@ const sections = [
       <>
         <p className="text-sm text-white mb-4">
           Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing).
-          Funding figures reflect current ESFA rules and NLW rates from April 2025.
+          Funding figures reflect the DfE apprenticeship funding rules 2026 to 2027 and minimum wage rates from April 2026.
         </p>
         <p>
           The short answer: almost nothing for the apprentice, and significantly less than most
-          employers expect. The UK government funds 95 to 100% of apprenticeship training costs,
+          employers expect. For a non-levy employer, the government funds 100% of training costs for
+          apprentices aged 16 to 24 and 95% for those aged 25 or over,
           making an{' '}
           <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
             electrical apprenticeship
@@ -160,11 +168,11 @@ const sections = [
           one of the most affordable routes into a skilled trade.
         </p>
         <p>
-          The Level 3 Installation Electrician/Maintenance Electrician apprenticeship has a funding
-          band of £18,000. This means the government will contribute up to £18,000 towards the cost
-          of the training. The actual cost negotiated with the training provider is usually lower —
-          typically £12,000 to £16,000 — and the employer pays either nothing (if they are a levy
-          payer using their DAS account) or just 5% co-investment (if they are a non-levy payer).
+          The Installation and Maintenance Electrician apprenticeship (ST0152) has a funding band
+          maximum of £23,000 (DfE funding rules 2025 to 2026, Annex C). For starts from 1 August
+          2026, a non-levy employer pays nothing up to that maximum for an apprentice aged 16 to 24,
+          and 5% for an apprentice aged 25 or over (DfE funding rules 2026 to 2027, rules 213 to
+          214). A levy payer uses its apprenticeship service account.
         </p>
         <p>
           This guide breaks down every cost associated with an electrical apprenticeship — what the
@@ -221,16 +229,16 @@ const sections = [
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Employer Cost</div>
-                <div className="text-xl font-bold text-white">5% co-investment</div>
+                <div className="text-xl font-bold text-white">0% (16 to 24) or 5% (25+)</div>
               </div>
             </div>
             <p className="text-white text-sm leading-relaxed">
               Small and medium employers — which includes the vast majority of electrical
-              contractors in the UK — do not pay the levy. Instead, they pay a 5% co-investment
-              towards the training cost, with the government covering the remaining 95%. For a
-              £15,000 training cost, the employer pays just £750 over the full duration of the
-              apprenticeship. Some employers with fewer than 50 employees pay 0% when taking on
-              apprentices aged 16 to 18.
+              contractors in the UK — do not pay the levy. For starts from 1 August 2026 they pay
+              nothing for an apprentice aged 16 to 24 at the start, and 5% for one aged 25 or over,
+              with the government covering the remaining 95% (DfE funding rules 2026 to 2027, rules
+              213 to 214). For a £20,000 training cost, a 25+ apprentice costs the employer £1,000
+              over the full duration of the apprenticeship.
             </p>
           </div>
         </div>
@@ -257,31 +265,31 @@ const sections = [
                     Funding Band
                   </th>
                   <th className="p-4 text-sm font-semibold text-white text-right">
-                    Typical Duration
+                    Minimum off-the-job hours
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {[
                   {
-                    name: 'Level 3 Installation Electrician',
-                    band: '£18,000',
-                    duration: '42 — 48 months',
+                    name: 'Level 3 Installation and Maintenance Electrician (ST0152)',
+                    band: '£23,000',
+                    duration: otjHours('ST0152'),
                   },
                   {
-                    name: 'Level 3 Maintenance Electrician',
-                    band: '£18,000',
-                    duration: '42 — 48 months',
+                    name: 'Level 3 Domestic Electrician (ST1017)',
+                    band: '£19,000',
+                    duration: otjHours('ST1017'),
                   },
                   {
-                    name: 'Level 3 Electrical/Electronic Technical Support',
-                    band: '£21,000',
-                    duration: '42 — 48 months',
+                    name: 'Level 3 Electrical, Electronic Product Service and Installation Engineer (ST0150)',
+                    band: '£9,000',
+                    duration: otjHours('ST0150'),
                   },
                   {
-                    name: 'Level 4 Building Services Engineer',
-                    band: '£15,000',
-                    duration: '36 — 48 months',
+                    name: 'Level 4 Electrical Power Protection and Plant Commissioning Engineer (ST0157)',
+                    band: '£27,000',
+                    duration: otjHours('ST0157'),
                   },
                 ].map((row, i) => (
                   <tr key={row.name} className={i < 3 ? 'border-b border-white/5' : ''}>
@@ -296,11 +304,15 @@ const sections = [
             </table>
           </div>
         </div>
+        <p className="text-xs text-white">
+          Source: DfE apprenticeship funding rules 2025 to 2026, Annex C (funding band maximum and
+          minimum off-the-job hours). From 2026 to 2027 these are published on each standard.
+        </p>
         <p>
           The funding band is the maximum, not the fixed price. Good training providers negotiate
-          competitive rates — a Level 3 Installation Electrician apprenticeship might cost £12,000
-          to £16,000 in practice. A non-levy employer paying 5% co-investment on a £14,000 training
-          cost would pay just £700 over 4 years.
+          competitive rates, so the agreed price can be below the band. A non-levy employer pays
+          nothing for a 16 to 24-year-old; for a 25+ apprentice, 5% of a £20,000 training cost is
+          £1,000 over 4 years.
         </p>
       </>
     ),
@@ -318,19 +330,19 @@ const sections = [
         <div className="space-y-4 my-4">
           {[
             {
-              title: '100% funding for small employers with young apprentices',
+              title: '100% funding for 16 to 24-year-olds at non-levy employers',
               description:
-                'Employers with fewer than 50 employees pay no co-investment at all when taking on apprentices aged 16 to 18.',
+                'For starts from 1 August 2026, employers who do not pay the levy pay nothing towards training and assessment, up to the funding band maximum, for apprentices aged 16 to 24 at the start (DfE funding rules 2026 to 2027, rule 214). The old fewer-than-50-employees rule no longer applies.',
             },
             {
-              title: 'Incentive payments for care leavers and other priority groups',
+              title: 'Incentive payments and the £2,000 hiring payment',
               description:
-                'A targeted £1,000 incentive payment is available to employers who hire apprentices who are care leavers. The general £1,000 incentive for all 16 to 18-year-old apprentices was removed by ESFA for new starts from 1 August 2023. Check the current ESFA guidance for the latest eligibility criteria.',
+                'The employer and the provider each receive £1,000 for an apprentice aged 16 to 18 at the start, or 19 to 24 with an EHC plan or care leaver status (rule 125). Non-levy employers also receive a £2,000 hiring payment for an apprentice aged 16 to 24 whose practical period starts from 1 October 2026 and who has not been employed by them for more than 90 days beforehand (rule 133). Care leavers receive a £3,000 bursary themselves (rule 127.2).',
             },
             {
               title: 'Levy transfer from larger employers',
               description:
-                'Levy-paying employers can transfer up to 25% of their annual levy to other employers. This means a main M&E contractor could transfer levy funds to a smaller sub-contractor in its supply chain, fully covering the training cost of an apprentice the smaller firm could not otherwise afford to take on.',
+                'Levy-paying employers can transfer part of their annual levy funds to other employers. This means a main M&E contractor could transfer levy funds to a smaller sub-contractor in its supply chain, fully covering the training cost of an apprentice the smaller firm could not otherwise afford to take on.',
             },
             {
               title: 'Additional learning support',
@@ -604,7 +616,7 @@ const sections = [
         </div>
         <p>
           Over a 4-year apprenticeship, a typical apprentice earns £60,000 to £80,000 in total wages
-          — while also gaining a fully funded Level 3 qualification worth £12,000 to £18,000.
+          — while also gaining a Level 3 qualification funded up to £23,000.
           Compare this to a university graduate who leaves with £40,000 to £50,000 of student debt.
           The financial case for an electrical apprenticeship is compelling.
         </p>
@@ -626,9 +638,9 @@ export default function ElectricalApprenticeshipCostPage() {
   return (
     <GuideTemplate
       title="Electrical Apprenticeship Cost: Fees & Funding"
-      description="How much does an electrical apprenticeship cost in the UK? Levy explained, funding bands, 5% co-investment, tool and PPE costs, apprentice wages by year."
+      description="How much does an electrical apprenticeship cost in the UK? Levy explained, funding bands, 0% for 16 to 24s and 5% for 25+, tools and PPE, apprentice wages."
       datePublished="2025-08-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"
@@ -639,14 +651,14 @@ export default function ElectricalApprenticeshipCostPage() {
           <span className="text-elec-yellow">Fees and Funding UK</span>
         </>
       }
-      heroSubtitle="An electrical apprenticeship costs almost nothing for the apprentice and far less than most employers think. The government funds 95 to 100% of training costs. This guide covers the levy, funding bands, co-investment, additional costs for tools and equipment, and what apprentices earn from year 1 to qualified."
+      heroSubtitle="An electrical apprenticeship costs almost nothing for the apprentice and far less than most employers think. For non-levy employers the government funds 100% of training for 16 to 24-year-olds and 95% for 25+. This guide covers the levy, funding bands, co-investment, additional costs for tools and equipment, and what apprentices earn from year 1 to qualified."
       readingTime={11}
       answerBox={{
         question: 'How much does an electrical apprenticeship cost in the UK?',
         answer:
-          'An apprentice pays nothing for their training. The government funds 95 to 100% of the cost, capped by the funding band — £18,000 for the Level 3 Installation Electrician standard. Levy-paying employers pay from their digital account; non-levy employers pay just 5% co-investment. Apprentices typically spend £1,500 to £4,000 over four years on tools, PPE, travel and textbooks.',
+          'An apprentice pays nothing for their training. For starts from 1 August 2026 a non-levy employer pays 0% for an apprentice aged 16 to 24 and 5% for 25+, capped by the funding band (£23,000 for Installation and Maintenance Electrician, ST0152). Levy-paying employers pay from their apprenticeship service account. Apprentices typically spend £1,500 to £4,000 over four years on tools, PPE, travel and textbooks.',
         detail:
-          'Small employers (fewer than 50 staff) pay 0% when the apprentice is aged 16 to 18 at the start.',
+          'Source: DfE apprenticeship funding rules 2026 to 2027, rules 213 to 215. Above the band maximum, the employer pays the difference.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

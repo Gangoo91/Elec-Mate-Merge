@@ -146,7 +146,7 @@ const TeamCertificatesSection: React.FC = () => {
 
       const [{ data: profiles }, { data: reports, error: reportErr }, { data: reviews }] =
         await Promise.all([
-          supabase.from('profiles').select('id, full_name').in('id', memberIds),
+          supabase.from('public_profiles').select('id, full_name').in('id', memberIds),
           supabase
             .from('reports')
             .select(

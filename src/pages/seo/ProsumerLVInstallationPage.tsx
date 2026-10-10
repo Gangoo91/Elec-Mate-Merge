@@ -12,7 +12,7 @@ import { Battery, FileCheck2, BookOpen, ShieldCheck } from 'lucide-react';
 // -------------------------------------------------------------------
 
 const published = '2026-05-17';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -36,7 +36,7 @@ const tocItems = [
 const answerBox = {
   question: 'What is a prosumer low voltage electrical installation under BS 7671?',
   answer:
-    "A prosumer's low voltage electrical installation (PEI) both consumes energy from the supply and produces energy that may be exported or stored — combining the traditional consumer and generator roles. BS 7671:2018+A4:2026 governs these installations under the new Chapter 82. Typical UK examples are solar PV, battery storage, small wind, micro-CHP and EV vehicle-to-grid.",
+    "A prosumer's low voltage electrical installation (PEI) both consumes energy from the supply and produces energy that may be exported or stored — combining the traditional consumer and generator roles. BS 7671:2018+A4:2026 governs these installations under Chapter 82, introduced at A2:2022. Typical UK examples are solar PV, battery storage, small wind, micro-CHP and EV vehicle-to-grid.",
 };
 
 const keyTakeaways = [
@@ -107,7 +107,7 @@ const relatedPages = [
   },
   {
     href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-    title: 'A4:2026 Luminaire RCD Protection',
+    title: 'Luminaire RCD Protection (Reg 411.3.4)',
     description: 'How RCD type selection matters across the whole installation, including prosumer circuits.',
     icon: ShieldCheck,
     category: 'Guide' as const,
@@ -224,9 +224,9 @@ const sections = [
           The word "prosumer" combines <strong>producer</strong> and <strong>consumer</strong> — an
           installation that does both. Traditionally, BS 7671 treated electrical installations as
           either consumers (drawing power from the grid) or generators (feeding power to the grid).
-          BS 7671:2018+A4:2026 formally recognises that modern UK installations increasingly do both
-          — and need their own treatment under the new Chapter 82 (Part 8 — Functional
-          Requirements).
+          BS 7671 has formally recognised since A2:2022 that modern UK installations increasingly do
+          both — and they get their own treatment under Chapter 82 (Part 8 — Functional
+          Requirements), carried into A4:2026.
         </p>
         <p>
           Regulation 110.1.2(d) explicitly brings prosumer&rsquo;s low voltage electrical
@@ -292,9 +292,9 @@ const sections = [
     content: (
       <>
         <p>
-          Before A4:2026, prosumer installations were inspected under the general electrical
+          Before A2:2022, prosumer installations were inspected under the general electrical
           installation rules with some cross-references to Section 712 (Solar PV) and the IET Code of
-          Practice. A4:2026 introduced Chapter 82 because prosumer installations have specific
+          Practice. A2:2022 introduced Chapter 82, and A4:2026 keeps it, because prosumer installations have specific
           failure modes that do not exist in traditional consumer-only installations:
         </p>
         <div className="space-y-3 my-6">
@@ -572,7 +572,7 @@ export default function ProsumerLVInstallationPage() {
           <span className="text-elec-yellow">Electrical Installation</span> (BS 7671 Chapter 82)
         </>
       }
-      heroSubtitle='BS 7671:2018+A4:2026 introduced "Prosumer&rsquo;s low voltage electrical installation(s)" as a distinct installation type governed by the new Chapter 82 (Part 8 — Functional Requirements). This guide explains what counts as a prosumer installation, why Chapter 82 adds dedicated requirements, and what UK electricians must check on every installation that both consumes and produces electricity.'
+      heroSubtitle='BS 7671 treats "Prosumer&rsquo;s low voltage electrical installation(s)" as a distinct installation type governed by Chapter 82 (Part 8 — Functional Requirements), introduced at A2:2022 and carried into A4:2026, whose EIC adds a prosumer inspection item. This guide explains what counts as a prosumer installation, why Chapter 82 adds dedicated requirements, and what UK electricians must check on every installation that both consumes and produces electricity.'
       readingTime={11}
       answerBox={answerBox}
       keyTakeaways={keyTakeaways}

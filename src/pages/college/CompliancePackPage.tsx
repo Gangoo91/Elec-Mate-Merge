@@ -5,14 +5,10 @@ import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import { cn } from '@/lib/utils';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
-import {
-  COLLEGE_BTN_PRIMARY,
-  COLLEGE_CARD,
-  CollegePageHeader,
-  CollegeSectionTitle,
-} from '@/components/college/ui/CollegeUi';
-import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 import { Donut } from '@/components/college/quality/QualityKit';
+import { QBTN_PRIMARY, QCARD, QualityHeader } from '@/components/college/quality/QualityHubKit';
+import { joinAnd, plural } from '@/components/college/quality/qualityText';
 import {
   useAuditPack,
   type AuditPackData,
@@ -23,7 +19,15 @@ import {
   type IqaVerdict,
   type InterventionMethod,
 } from '@/hooks/useAuditPack';
-import { SCR_LEGEND, SCR_ORDER, SCR_PRINT, SCR_STATUS, scrCounts, scrSegments, type ScrStatus } from '@/components/college/quality/complianceStatus';
+import {
+  SCR_LEGEND,
+  SCR_ORDER,
+  SCR_PRINT,
+  SCR_STATUS,
+  scrCounts,
+  scrSegments,
+  type ScrStatus,
+} from '@/components/college/quality/complianceStatus';
 
 /* ==========================================================================
    CompliancePackPage — /college/compliance/pack
@@ -33,8 +37,14 @@ import { SCR_LEGEND, SCR_ORDER, SCR_PRINT, SCR_STATUS, scrCounts, scrSegments, t
    ========================================================================== */
 
 // One definition of each state, shared with Compliance docs and the hub.
-const STATUS_LABEL = Object.fromEntries(SCR_ORDER.map((k) => [k, SCR_STATUS[k].label])) as Record<ScrStatus, string>;
-const STATUS_DOT = Object.fromEntries(SCR_ORDER.map((k) => [k, SCR_PRINT[k].dot])) as Record<ScrStatus, string>;
+const STATUS_LABEL = Object.fromEntries(SCR_ORDER.map((k) => [k, SCR_STATUS[k].label])) as Record<
+  ScrStatus,
+  string
+>;
+const STATUS_DOT = Object.fromEntries(SCR_ORDER.map((k) => [k, SCR_PRINT[k].dot])) as Record<
+  ScrStatus,
+  string
+>;
 
 function formatDate(iso: string | null | undefined): string {
   if (!iso) return '—';
@@ -84,9 +94,18 @@ export default function CompliancePackPage() {
   }, [auto, data, loading]);
 
   const s = data?.summary;
-  const ackPolicies = data ? data.policies.filter((p) => p.requires_acknowledgement && p.status !== 'archived') : [];
+  const ackPolicies = data
+    ? data.policies.filter((p) => p.requires_acknowledgement && p.status !== 'archived')
+    : [];
   const counts = s
-    ? scrCounts({ valid: s.valid, expiring: s.expiring, expired: s.expired, missing: s.missing, pending_verification: s.pending_verification, total: s.total_scr_rows })
+    ? scrCounts({
+        valid: s.valid,
+        expiring: s.expiring,
+        expired: s.expired,
+        missing: s.missing,
+        pending_verification: s.pending_verification,
+        total: s.total_scr_rows,
+      })
     : null;
   const inDate = counts?.valid ?? 0;
   const pct = counts?.inDatePct ?? 0;
@@ -94,13 +113,35 @@ export default function CompliancePackPage() {
     { id: 'pack-cover', label: 'Cover and summary' },
     { id: 'pack-scr', label: 'Single central record' },
     { id: 'pack-policies', label: 'Institution policies' },
-    ...(ackPolicies.length ? [{ id: 'pack-acks', label: `Sign-off logs (${ackPolicies.length})` }] : []),
+    ...(ackPolicies.length
+      ? [{ id: 'pack-acks', label: `Sign-off logs (${ackPolicies.length})` }]
+      : []),
     { id: 'pack-matrix', label: 'Staff compliance matrix' },
     { id: 'pack-iqa', label: 'IQA verification chain' },
     { id: 'pack-standardisation', label: 'Standardisation record' },
     ...(data?.interventions ? [{ id: 'pack-interventions', label: 'Intervention history' }] : []),
   ];
-  const jump = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Sections are numbered in the order they appear: with no sign-off logs
+  // the matrix is section 3, not 4 (the preview used to skip a number).
+  const shift = ackPolicies.length ? 0 : -1;
+
+  /* Does the pack read as ready? Said in words, from the same figures. */
+  const gaps: string[] = [];
+  if (s) {
+    if (s.expired > 0) gaps.push(plural(s.expired, 'expired staff check'));
+    if (s.missing > 0) gaps.push(plural(s.missing, 'staff check', 'staff checks') + ' not on file');
+    if (s.policies_live === 0) gaps.push('no live policies');
+    if (data && data.iqa_samples.length === 0) gaps.push('no IQA samples');
+    if (data && data.standardisation.length === 0) gaps.push('no standardisation meetings');
+  }
+  const verdict =
+    !data || !s
+      ? 'Your single central record, policies, sign-offs, staff matrix and IQA chain in one document.'
+      : gaps.length === 0
+        ? `Ready to hand over: every staff check is on file and in date${s.expiring > 0 ? `, though ${plural(s.expiring, 'check expires', 'checks expire')} within 60 days` : ''}.`
+        : `Not ready yet: ${joinAnd(gaps)}. An inspector will see these gaps in the pack.`;
+  const jump = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   return (
     <HubPage ground="landing">
@@ -110,17 +151,23 @@ export default function CompliancePackPage() {
       </div>
       <HubBody hidePushPrompt>
         <div className="no-print space-y-8 sm:space-y-10">
-          <CollegePageHeader
+          <QualityHeader
             eyebrow="Compliance"
             title="Audit pack"
-            description={
+            summary={verdict}
+            sub={
               data
-                ? `${data.college?.name ?? 'Your college'}. Built ${formatDateTime(data.generated_at)} from live records. Print it or save it as a PDF.`
-                : 'Your single central record, policies, sign-offs, staff matrix and IQA chain in one document.'
+                ? `${data.college?.name ?? 'Your college'}. Built ${formatDateTime(data.generated_at)} from live records.`
+                : undefined
             }
             help={PACK_HELP}
-            actions={
-              <button type="button" onClick={downloadPdf} disabled={!data || downloading} className={COLLEGE_BTN_PRIMARY}>
+            primary={
+              <button
+                type="button"
+                onClick={downloadPdf}
+                disabled={!data || downloading}
+                className={QBTN_PRIMARY}
+              >
                 <Download className="h-4 w-4" aria-hidden />
                 {downloading ? 'Making the PDF…' : 'Download PDF'}
               </button>
@@ -128,30 +175,39 @@ export default function CompliancePackPage() {
           />
 
           {downloadError && (
-            <div className={cn(COLLEGE_CARD, 'border-red-400/40 text-[13.5px] text-white')}>Could not make the PDF: {downloadError}</div>
+            <div className={cn(QCARD, '!border-orange-400/50 text-[13.5px] text-white')}>
+              Could not make the PDF: {downloadError}
+            </div>
           )}
           {error ? (
-            <div className={cn(COLLEGE_CARD, 'border-red-400/40 text-[13.5px] text-white')}>Could not build the pack: {error}</div>
+            <div className={cn(QCARD, '!border-orange-400/50 text-[13.5px] text-white')}>
+              Could not build the pack: {error}
+            </div>
           ) : loading || !data || !s ? (
-            <div className={cn(COLLEGE_CARD, 'text-[13.5px] text-white')}>Building the audit pack. This can take a moment for larger colleges.</div>
+            <div className={cn(QCARD, 'text-[13.5px] text-white')}>
+              Building the audit pack. This can take a moment for larger colleges.
+            </div>
           ) : (
-            <AreaHero
-              figures={[
-                { label: 'Staff checks in date', value: `${pct}%`, sub: `${inDate} of ${s.total_scr_rows} checks`, good: pct >= 95, warn: pct < 80 },
-                { label: 'Expired', value: String(s.expired), warn: s.expired > 0 },
-                { label: 'Missing', value: String(s.missing), warn: s.missing > 0, sub: 'never put on file' },
-                { label: 'Live policies', value: String(s.policies_live), sub: `${s.policies_draft} draft` },
-              ]}
-              chartTitle="Single central record by status"
-              chart={
-                <Donut
-                  centre={String(s.total_scr_rows)}
-                  centreSub="checks"
-                  segments={counts ? scrSegments(counts) : []}
-                />
-              }
-              side={
+            <section className={QCARD}>
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
                 <div>
+                  <p className="mb-3 text-[13px] font-semibold text-white">
+                    Single central record by state
+                  </p>
+                  <div className="max-w-xl">
+                    <Donut
+                      centre={`${pct}%`}
+                      centreSub="in date"
+                      segments={counts ? scrSegments(counts) : []}
+                    />
+                  </div>
+                  <p className="mt-2 text-[12.5px] text-white">
+                    {inDate} of {s.total_scr_rows} checks in date.{' '}
+                    {plural(s.policies_live, 'live policy', 'live policies')}, {s.policies_draft} in
+                    draft.
+                  </p>
+                </div>
+                <div className="hidden sm:block">
                   <p className="mb-2 text-[13px] font-semibold text-white">In this pack</p>
                   <ol className="space-y-1">
                     {contents.map((c, i) => (
@@ -161,24 +217,45 @@ export default function CompliancePackPage() {
                           onClick={() => jump(c.id)}
                           className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-2 text-left text-[13px] text-white touch-manipulation hover:bg-white/[0.04]"
                         >
-                          <span className="w-5 shrink-0 text-[12px] font-semibold tabular-nums">{i + 1}</span>
+                          <span className="w-5 shrink-0 text-[12px] font-semibold tabular-nums">
+                            {i + 1}
+                          </span>
                           {c.label}
                         </button>
                       </li>
                     ))}
                   </ol>
                 </div>
-              }
-            />
+              </div>
+            </section>
           )}
 
-          {data && <CollegeSectionTitle title="The document" sub="A preview of the record. The PDF carries the same figures, laid out for print. On a phone, swipe the wider tables sideways." />}
+          {data && (
+            <CollegeSectionTitle
+              title="The document"
+              sub="A preview of the record. The PDF carries the same figures, laid out for print."
+            />
+          )}
+          {/* Phones: the preview's wide tables would scroll sideways, so the
+              phone gets the PDF instead (same figures, made for reading). */}
+          {data && (
+            <div className={cn(QCARD, 'sm:hidden')}>
+              <p className="text-[14px] font-semibold text-white">
+                Read the full document as the PDF
+              </p>
+              <p className="mt-1 text-[13px] leading-relaxed text-white">
+                The record has wide tables (every staff check, the staff matrix and the IQA chain).
+                On a phone it reads best as the PDF, which carries the same figures. On a tablet or
+                computer the full preview shows here.
+              </p>
+            </div>
+          )}
         </div>
 
         {data && !error && (
-          <div className="audit-pack -mx-4 space-y-4 text-black sm:mx-0 sm:space-y-6">
+          <div className="audit-pack -mx-4 hidden space-y-4 text-black sm:mx-0 sm:block sm:space-y-6 print:block">
             <div id="pack-cover" className="audit-sheet">
-              <Cover data={data} />
+              <Cover data={data} sections={contents.slice(1).map((c) => c.label)} />
             </div>
             <div id="pack-scr" className="audit-sheet">
               <ScrPage data={data} />
@@ -192,17 +269,17 @@ export default function CompliancePackPage() {
               </div>
             ))}
             <div id="pack-matrix" className="audit-sheet">
-              <StaffMatrixPage data={data} />
+              <StaffMatrixPage data={data} shift={shift} />
             </div>
             <div id="pack-iqa" className="audit-sheet">
-              <IqaChainPage data={data} />
+              <IqaChainPage data={data} shift={shift} />
             </div>
             <div id="pack-standardisation" className="audit-sheet">
-              <StandardisationPage data={data} />
+              <StandardisationPage data={data} shift={shift} />
             </div>
             {data.interventions && (
               <div id="pack-interventions" className="audit-sheet">
-                <InterventionsPage data={data} />
+                <InterventionsPage data={data} shift={shift} />
               </div>
             )}
           </div>
@@ -220,19 +297,31 @@ const PACK_HELP: PageHelpContent = {
   title: 'The audit pack',
   what: 'One document for an inspector, auditor or awarding body: your single central record, live policies, who has signed each policy, the staff compliance matrix, the IQA verification chain with the sampling rate, the standardisation record and the intervention history.',
   steps: [
-    { title: 'Check the summary', body: 'Expired and missing checks show at the top. Fix them in the vault first if you can.' },
-    { title: 'Read the document', body: 'Everything below the summary is the record the PDF is built from.' },
-    { title: 'Download the PDF', body: 'Use the button at the top. The PDF is made fresh from the live record, ready to hand to an inspector or auditor.' },
+    {
+      title: 'Check the summary',
+      body: 'Expired and missing checks show at the top. Fix them in the vault first if you can.',
+    },
+    {
+      title: 'Read the document',
+      body: 'Everything below the summary is the record the PDF is built from.',
+    },
+    {
+      title: 'Download the PDF',
+      body: 'Use the button at the top. The PDF is made fresh from the live record, ready to hand to an inspector or auditor.',
+    },
   ],
   notes: [
-    { title: 'Always live', body: 'The pack is built from your records each time you open it, so it is only as current as the vault.' },
+    {
+      title: 'Always live',
+      body: 'The pack is built from your records each time you open it, so it is only as current as the vault.',
+    },
   ],
   legend: SCR_LEGEND,
 };
 
 /* ──────────────────────────────────────────────────────── */
 
-function Cover({ data }: { data: AuditPackData }) {
+function Cover({ data, sections }: { data: AuditPackData; sections: string[] }) {
   const s = data.summary;
   const inDate = s.valid;
   const totalAck = data.policies
@@ -275,12 +364,14 @@ function Cover({ data }: { data: AuditPackData }) {
               <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
                 Generated by
               </div>
+              {/* The role is their job on the college staff record, never
+                  profiles.role (that read "Electrician" for a tutor). */}
               <div className="mt-1 text-black">
                 {data.officer.name}
                 {data.officer.role && (
-                  <span className="text-gray-600 capitalize">
-                    {' · '}
-                    {data.officer.role.replace(/_/g, ' ')}
+                  <span className="text-gray-600">
+                    {', '}
+                    {data.officer.role.replace(/_/g, ' ').replace(/^\w/, (ch) => ch.toUpperCase())}
                   </span>
                 )}
               </div>
@@ -328,19 +419,17 @@ function Cover({ data }: { data: AuditPackData }) {
             Contents
           </h3>
           <ol className="mt-2 space-y-1 text-[13px] text-gray-800 list-decimal list-inside">
-            <li>Single Central Record</li>
-            <li>Institution policies</li>
-            <li>Per-policy acknowledgement logs</li>
-            <li>Staff compliance matrix</li>
-            <li>IQA verification chain</li>
+            {sections.map((label) => (
+              <li key={label}>{label}</li>
+            ))}
           </ol>
         </div>
 
         <p className="mt-12 text-[10.5px] text-gray-500 leading-relaxed border-t border-gray-200 pt-3">
           This pack is a snapshot generated from the Elec-Mate compliance vault. Every entry is
-          backed by a corresponding row in the system's audit log (compliance_audit_events)
-          capturing who recorded or signed off each item and when. Evidence files are held in
-          secure, RLS-scoped private storage and can be produced on request.
+          backed by a row in the audit log recording who recorded or signed off each item and when.
+          Evidence files are held in private storage that only your college can open, and can be
+          produced on request.
         </p>
       </div>
     </section>
@@ -438,48 +527,48 @@ function ScrPage({ data }: { data: AuditPackData }) {
           {/* One <tbody> per staff member, directly under <table> (a tbody
               inside a tbody is invalid HTML and React warned on it). */}
           {staffOrdered.map(([staffId, rows]) => (
-              <tbody key={staffId} className="border-b border-gray-300 align-top">
-                {rows.map((r, i) => (
-                  <tr key={r.requirement_code} className="border-b border-gray-100">
-                    {i === 0 ? (
-                      <td
-                        rowSpan={rows.length}
-                        className="py-2 pr-3 font-medium text-black border-r border-gray-200 align-top"
-                      >
-                        <div>{r.staff_name}</div>
-                        <div className="mt-0.5 text-[10.5px] text-gray-600 capitalize font-normal">
-                          {r.staff_role.replace(/_/g, ' ')}
-                          {r.department && ` · ${r.department}`}
-                        </div>
-                      </td>
-                    ) : null}
-                    <td className="py-1.5 pr-3">
-                      {r.requirement_label}
-                      <div className="text-[10.5px] text-gray-500 capitalize">{r.category}</div>
+            <tbody key={staffId} className="border-b border-gray-300 align-top">
+              {rows.map((r, i) => (
+                <tr key={r.requirement_code} className="border-b border-gray-100">
+                  {i === 0 ? (
+                    <td
+                      rowSpan={rows.length}
+                      className="py-2 pr-3 font-medium text-black border-r border-gray-200 align-top"
+                    >
+                      <div>{r.staff_name}</div>
+                      <div className="mt-0.5 text-[10.5px] text-gray-600 capitalize font-normal">
+                        {r.staff_role.replace(/_/g, ' ')}
+                        {r.department && ` · ${r.department}`}
+                      </div>
                     </td>
-                    <td className="py-1.5 pr-3">
-                      <span className="inline-flex items-center gap-1.5">
-                        <span
-                          aria-hidden
-                          className={cn(
-                            'inline-block h-2 w-2 rounded-full',
-                            STATUS_DOT[r.computed_status]
-                          )}
-                        />
-                        <span>{STATUS_LABEL[r.computed_status]}</span>
-                      </span>
-                    </td>
-                    <td className="py-1.5 pr-3 tabular-nums">{formatDate(r.expires_at)}</td>
-                    <td className="py-1.5 pr-3 text-gray-700">
-                      {r.reference_no && <span className="font-mono">{r.reference_no}</span>}
-                      {r.reference_no && r.verified_at && ' · '}
-                      {r.verified_at && (
-                        <span className="text-emerald-700">✓ {formatDate(r.verified_at)}</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+                  ) : null}
+                  <td className="py-1.5 pr-3">
+                    {r.requirement_label}
+                    <div className="text-[10.5px] text-gray-500 capitalize">{r.category}</div>
+                  </td>
+                  <td className="py-1.5 pr-3">
+                    <span className="inline-flex items-center gap-1.5">
+                      <span
+                        aria-hidden
+                        className={cn(
+                          'inline-block h-2 w-2 rounded-full',
+                          STATUS_DOT[r.computed_status]
+                        )}
+                      />
+                      <span>{STATUS_LABEL[r.computed_status]}</span>
+                    </span>
+                  </td>
+                  <td className="py-1.5 pr-3 tabular-nums">{formatDate(r.expires_at)}</td>
+                  <td className="py-1.5 pr-3 text-gray-700">
+                    {r.reference_no && <span className="font-mono">{r.reference_no}</span>}
+                    {r.reference_no && r.verified_at && ' · '}
+                    {r.verified_at && (
+                      <span className="text-emerald-700">✓ {formatDate(r.verified_at)}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           ))}
         </table>
       )}
@@ -621,7 +710,7 @@ function AckLogRow({ entry }: { entry: PolicyAckLogEntry }) {
 
 /* ──────────────────────────────────────────────────────── */
 
-function StaffMatrixPage({ data }: { data: AuditPackData }) {
+function StaffMatrixPage({ data, shift = 0 }: { data: AuditPackData; shift?: number }) {
   // Build a wide table: rows=staff, cols=requirement codes
   const codeOrder = Array.from(new Set(data.scr.map((r) => r.requirement_code)));
   const codeLabels = new Map<string, string>();
@@ -644,7 +733,7 @@ function StaffMatrixPage({ data }: { data: AuditPackData }) {
   if (codeOrder.length === 0) {
     return (
       <section className="audit-page p-12 print-page-break">
-        <SectionHeader index={4} title="Staff compliance matrix" />
+        <SectionHeader index={4 + shift} title="Staff compliance matrix" />
         <p className="text-[12.5px] text-gray-700">No SCR-required items mapped yet.</p>
       </section>
     );
@@ -652,7 +741,7 @@ function StaffMatrixPage({ data }: { data: AuditPackData }) {
 
   return (
     <section className="audit-page audit-page-landscape p-12 print-page-break">
-      <SectionHeader index={4} title="Staff compliance matrix" />
+      <SectionHeader index={4 + shift} title="Staff compliance matrix" />
       <p className="text-[11.5px] text-gray-600 mb-4 max-w-prose">
         Cell colours: green = in date; orange = expiring within 60 days; red = expired; dark grey =
         missing (never put on file); light blue = awaiting verification; pale grey = not required.
@@ -738,14 +827,14 @@ const IQA_VERDICT_DOT: Record<IqaVerdict, string> = {
     Exists so Ofsted/EQA can see the assessor → IQA verification loop in
     one print. Empty state explains the gap so it can't read as
     "we haven't done it" when there are simply no samples yet. */
-function IqaChainPage({ data }: { data: AuditPackData }) {
+function IqaChainPage({ data, shift = 0 }: { data: AuditPackData; shift?: number }) {
   const samples = data.iqa_samples;
   const s = data.summary;
 
   if (samples.length === 0) {
     return (
       <section className="audit-page p-12 print-page-break">
-        <SectionHeader index={5} title="IQA verification chain" />
+        <SectionHeader index={5 + shift} title="IQA verification chain" />
         <p className="text-[12.5px] text-gray-700 max-w-prose">
           No IQA samples in scope yet. Once an IQA opens a sampling plan and records verdicts on
           observation or OTJ assessor decisions, every sample appears here with the verdict, IQA
@@ -759,7 +848,7 @@ function IqaChainPage({ data }: { data: AuditPackData }) {
 
   return (
     <section className="audit-page p-12 print-page-break">
-      <SectionHeader index={5} title="IQA verification chain" />
+      <SectionHeader index={5 + shift} title="IQA verification chain" />
       <p className="text-[11.5px] text-gray-600 mb-4 max-w-prose">
         Independent IQA verification of assessor decisions across observations and OTJ submissions.{' '}
         {s.iqa_samples_total} {s.iqa_samples_total === 1 ? 'sample' : 'samples'} in scope —{' '}
@@ -856,14 +945,21 @@ function SamplingRateBlock({ data }: { data: AuditPackData }) {
   if (!r) return null;
   return (
     <div className="mb-6 rounded-md border border-gray-300 p-4">
-      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">Sampling rate · last {r.months} months</div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+        Sampling rate · last {r.months} months
+      </div>
       <p className="mt-1 text-[13px] text-black">
-        <span className="text-[22px] font-bold tabular-nums">{r.rate_pct == null ? 'No decisions' : `${r.rate_pct}%`}</span>{' '}
+        <span className="text-[22px] font-bold tabular-nums">
+          {r.rate_pct == null ? 'No decisions' : `${r.rate_pct}%`}
+        </span>{' '}
         {r.rate_pct != null && (
           <>
-            of assessment decisions sampled by an IQA ({r.decisions_sampled} of {r.decisions_total}). {r.confirmed} confirmed,{' '}
-            {r.returned} returned. {r.assessors_at_target} of {r.assessors_total} assessors at their plan target.
-            {r.open_actions > 0 ? ` ${r.open_actions} returned ${r.open_actions === 1 ? 'decision is' : 'decisions are'} still with the assessor.` : ''}
+            of assessment decisions sampled by an IQA ({r.decisions_sampled} of {r.decisions_total}
+            ). {r.confirmed} confirmed, {r.returned} returned. {r.assessors_at_target} of{' '}
+            {r.assessors_total} assessors at their plan target.
+            {r.open_actions > 0
+              ? ` ${r.open_actions} returned ${r.open_actions === 1 ? 'decision is' : 'decisions are'} still with the assessor.`
+              : ''}
           </>
         )}
       </p>
@@ -890,10 +986,17 @@ function SamplingRateBlock({ data }: { data: AuditPackData }) {
                   </td>
                   <td className="py-1.5 pr-2 tabular-nums">{a.total}</td>
                   <td className="py-1.5 pr-2 tabular-nums">{a.sampled}</td>
-                  <td className={cn('py-1.5 pr-2 font-semibold tabular-nums', met ? 'text-emerald-700' : 'text-red-700')}>
+                  <td
+                    className={cn(
+                      'py-1.5 pr-2 font-semibold tabular-nums',
+                      met ? 'text-emerald-700' : 'text-red-700'
+                    )}
+                  >
                     {a.rate_pct == null ? 'None' : `${a.rate_pct}%`}
                   </td>
-                  <td className="py-1.5 pr-2 tabular-nums">{a.target_pct == null ? 'No plan' : `${Number(a.target_pct)}%`}</td>
+                  <td className="py-1.5 pr-2 tabular-nums">
+                    {a.target_pct == null ? 'No plan' : `${Number(a.target_pct)}%`}
+                  </td>
                   <td className="py-1.5 tabular-nums">{a.returned}</td>
                 </tr>
               );
@@ -907,21 +1010,22 @@ function SamplingRateBlock({ data }: { data: AuditPackData }) {
 
 /** Standardisation record (ELE-1871): every meeting with who came, what was
     agreed and the actions. Full minutes are in the IQA sampling report. */
-function StandardisationPage({ data }: { data: AuditPackData }) {
+function StandardisationPage({ data, shift = 0 }: { data: AuditPackData; shift?: number }) {
   const rows = data.standardisation;
   return (
     <section className="audit-page p-12 print-page-break">
-      <SectionHeader index={6} title="Standardisation record" />
+      <SectionHeader index={6 + shift} title="Standardisation record" />
       {rows.length === 0 ? (
         <p className="max-w-prose text-[12.5px] text-gray-700">
-          No standardisation meetings recorded yet. Record them on the IQA dashboard: who came, what was agreed and the
-          actions. They appear here and in the IQA sampling report.
+          No standardisation meetings recorded yet. Record them on the IQA dashboard: who came, what
+          was agreed and the actions. They appear here and in the IQA sampling report.
         </p>
       ) : (
         <>
           <p className="mb-4 max-w-prose text-[11.5px] text-gray-600">
-            {rows.length} {rows.length === 1 ? 'meeting' : 'meetings'} where assessors and the IQA compared decisions and
-            agreed how criteria are judged. Full minutes are in the IQA sampling report.
+            {rows.length} {rows.length === 1 ? 'meeting' : 'meetings'} where assessors and the IQA
+            compared decisions and agreed how criteria are judged. Full minutes are in the IQA
+            sampling report.
           </p>
           <table className="w-full border-collapse text-[10.5px]">
             <thead>
@@ -939,13 +1043,23 @@ function StandardisationPage({ data }: { data: AuditPackData }) {
                 <tr key={m.id} className="border-b border-gray-200 align-top">
                   <td className="whitespace-nowrap py-2 pr-2 tabular-nums">{formatDate(m.date)}</td>
                   <td className="py-2 pr-2 text-black">{m.topic}</td>
-                  <td className="py-2 pr-2">{m.status === 'completed' ? 'Held' : m.status === 'scheduled' ? 'Planned' : m.status}</td>
+                  <td className="py-2 pr-2">
+                    {m.status === 'completed'
+                      ? 'Held'
+                      : m.status === 'scheduled'
+                        ? m.date && new Date(m.date) < new Date()
+                          ? 'Planned, date passed, not recorded as held'
+                          : 'Planned'
+                        : m.status}
+                  </td>
                   <td className="py-2 pr-2">
                     {m.chair ? `Chair: ${m.chair}. ` : ''}
                     {m.attendees.join(', ') || 'Not recorded'}
                   </td>
                   <td className="py-2 pr-2 leading-snug">{m.decisions || 'Not recorded'}</td>
-                  <td className="py-2 leading-snug">{m.action_items.length ? m.action_items.join('; ') : 'None'}</td>
+                  <td className="py-2 leading-snug">
+                    {m.action_items.length ? m.action_items.join('; ') : 'None'}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -967,23 +1081,27 @@ const METHOD_LABEL: Record<InterventionMethod, string> = {
 /** Intervention history (ELE-1909): contact logged from the risk flags in
     the last year. Shows that contact happened, how and by whom; the note
     itself stays in the learner's record. */
-function InterventionsPage({ data }: { data: AuditPackData }) {
+function InterventionsPage({ data, shift = 0 }: { data: AuditPackData; shift?: number }) {
   const h = data.interventions;
   if (!h) return null;
   return (
     <section className="audit-page p-12 print-page-break">
-      <SectionHeader index={7} title="Intervention history" />
+      <SectionHeader index={7 + shift} title="Intervention history" />
       <p className="mb-4 max-w-prose text-[11.5px] text-gray-600">
         Contact staff logged with learners flagged at risk, last {h.months} months. {h.total}{' '}
-        {h.total === 1 ? 'contact' : 'contacts'} with {h.learners} {h.learners === 1 ? 'learner' : 'learners'}. What was said
-        stays in the learner's record.
+        {h.total === 1 ? 'contact' : 'contacts'} with {h.learners}{' '}
+        {h.learners === 1 ? 'learner' : 'learners'}. What was said stays in the learner's record.
       </p>
       <div className="mb-6 grid grid-cols-5 gap-3">
         <Tally label="Calls" value={h.by_method.call} tone="sky" />
         <Tally label="1-2-1s" value={h.by_method.one_to_one} tone="emerald" />
         <Tally label="Emails" value={h.by_method.email} tone="grey" />
         <Tally label="Referrals" value={h.by_method.referral} tone="amber" />
-        <Tally label="Next steps open" value={h.open_next_steps} tone={h.open_next_steps > 0 ? 'red' : 'grey'} />
+        <Tally
+          label="Next steps open"
+          value={h.open_next_steps}
+          tone={h.open_next_steps > 0 ? 'red' : 'grey'}
+        />
       </div>
       {h.rows.length === 0 ? (
         <p className="text-[12.5px] text-gray-700">No contact logged yet.</p>

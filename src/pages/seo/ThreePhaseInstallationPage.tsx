@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection on every circuit in a three phase board?',
     answer:
-      'BS 7671:2018+A4:2026 requires RCD protection (rated residual current not exceeding 30mA) for socket outlets rated up to 32A and mobile equipment rated up to 32A for outdoor use (Regulation 411.3.3), and for cables concealed in walls at a depth less than 50mm (Regulation 411.3.4). This applies equally to three phase installations. In practice, most three phase distribution boards use RCBOs (combined MCB and RCD) on individual circuits or split the board into RCD-protected and non-RCD-protected sections using separate RCDs. For three phase circuits (such as a three phase motor or three phase oven), a 4-pole RCBO or a 4-pole RCD protecting a group of three phase MCBs is required. Ensure the RCD is rated for the correct number of poles and that it is suitable for the type of load — Type A for general use, Type B for circuits with variable speed drives or inverters.',
+      'BS 7671:2018+A4:2026 requires RCD protection (rated residual current not exceeding 30mA) for socket outlets rated up to 32A and mobile equipment rated up to 32A for outdoor use (Regulation 411.3.3), for AC final circuits supplying luminaires in domestic premises (Regulation 411.3.4), and for cables concealed in walls at a depth less than 50mm. This applies equally to three phase installations. In practice, most three phase distribution boards use RCBOs (combined MCB and RCD) on individual circuits or split the board into RCD-protected and non-RCD-protected sections using separate RCDs. For three phase circuits (such as a three phase motor or three phase oven), a 4-pole RCBO or a 4-pole RCD protecting a group of three phase MCBs is required. Ensure the RCD is rated for the correct number of poles and that it is suitable for the type of load — Type A for general use, Type B for circuits with variable speed drives or inverters.',
   },
   {
     question: 'How do I test a three phase installation for initial verification?',
@@ -623,7 +623,7 @@ export default function ThreePhaseInstallationPage() {
       title="Three Phase Installation Guide: BS 7671 UK"
       description="Complete guide to three phase electrical installations in the UK. Covers when three phase is needed, load balancing, TPN distribution boards."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

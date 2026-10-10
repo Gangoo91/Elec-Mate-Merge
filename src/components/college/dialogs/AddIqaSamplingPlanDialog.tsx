@@ -209,7 +209,7 @@ export function AddIqaSamplingPlanDialog({ open, onOpenChange }: Props) {
       title: 'Copied from last plan',
       description: lastPlan.qualification_code
         ? `Pre-filled with ${lastPlan.qualification_code}`
-        : 'Pre-filled — set new dates',
+        : 'Pre-filled. Set new dates',
     });
   };
 

@@ -523,7 +523,7 @@ const MicroHydroCalculator = () => {
                     'flex items-center gap-2 p-3 rounded-lg border text-sm',
                     result.turbineSuitability.includes('Excellent')
                       ? 'bg-green-500/5 border-green-500/20'
-                      : 'bg-amber-500/5 border-amber-500/20'
+                      : 'bg-white/[0.04] border-amber-500/20'
                   )}
                 >
                   <span className="text-white font-medium">Turbine Match:</span>
@@ -602,7 +602,7 @@ const MicroHydroCalculator = () => {
                     result.paybackPeriod <= 10
                       ? 'bg-green-500/5 border-green-500/20'
                       : result.paybackPeriod <= 15
-                        ? 'bg-amber-500/5 border-amber-500/20'
+                        ? 'bg-white/[0.04] border-amber-500/20'
                         : 'bg-red-500/5 border-red-500/20'
                   )}
                 >
@@ -610,7 +610,7 @@ const MicroHydroCalculator = () => {
                 </div>
 
                 {/* Environmental warning */}
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                <div className="flex items-start gap-2 p-3 rounded-lg bg-white/[0.04] border border-amber-500/30">
                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                   <div className="space-y-1">
                     <p className="text-sm text-white font-medium">Environmental Considerations</p>
@@ -689,8 +689,8 @@ const MicroHydroCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-4"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="space-y-2">
@@ -730,8 +730,8 @@ const MicroHydroCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <ul className="space-y-2">

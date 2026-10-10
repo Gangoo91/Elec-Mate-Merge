@@ -2,6 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
+import { OTJ_HOURS_FLOOR, OTJ_RULE_SOURCE, OTJ_ST0152_HOURS } from '@/data/otjStandards';
 import {
   GraduationCap,
   BookOpen,
@@ -29,7 +30,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-off-job', label: 'What Is Off-the-Job Training?' },
-  { id: 'twenty-percent', label: 'The 20% Requirement' },
+  { id: 'twenty-percent', label: 'The Minimum Hours' },
   { id: 'what-counts', label: 'What Counts' },
   { id: 'what-doesnt-count', label: 'What Does Not Count' },
   { id: 'evidence-requirements', label: 'Evidence Requirements' },
@@ -41,11 +42,11 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Off-the-job training must make up at least 20% of your paid working hours across the full apprenticeship. On a 30-hour week, that equals 6 hours per week dedicated to learning new knowledge, skills, and behaviours.',
+  `For apprenticeships starting from 1 August 2025, the minimum is a fixed number of off-the-job hours published on each apprenticeship standard: ${OTJ_ST0152_HOURS} hours for Installation and Maintenance Electrician (ST0152), and never below ${OTJ_HOURS_FLOOR} hours (${OTJ_RULE_SOURCE}). It is no longer 20% of your working hours.`,
   'Activities that count include college attendance, online study through platforms like Elec-Mate, shadowing experienced electricians on new tasks, manufacturer training events, directed study, and supervised practice of skills you have not yet mastered.',
   'Normal productive work you already know how to do does not count, even if it is relevant to the apprenticeship standard. English and maths functional skills study is also excluded.',
   'You must record evidence of your off-the-job training hours for your training provider and Ofsted. Elec-Mate OJT Tracker logs on-platform study time automatically and lets you add off-platform activities in seconds.',
-  'Employers are legally required to provide the 20% time as a condition of the apprenticeship funding agreement. If your employer is not providing this, raise it with your training provider first.',
+  'Your employer must release you for the off-the-job hours in your training plan, in paid working time, as a condition of the apprenticeship funding. If your employer is not providing this, raise it with your training provider first.',
 ];
 
 const faqs = [
@@ -55,24 +56,24 @@ const faqs = [
       'No. College attendance is the most obvious form of off-the-job training, but it is not the only one. Online study on platforms like Elec-Mate, shadowing experienced electricians on new types of work, manufacturer training days, directed reading, supervised skills practice, toolbox talks that teach new knowledge, and industry visits all count. The test is whether the activity teaches you new knowledge, skills, or behaviours relevant to the apprenticeship standard. Any structured learning activity that meets this test — regardless of where it takes place — qualifies as off-the-job training.',
   },
   {
-    question: 'What happens if I do not meet the 20% requirement?',
+    question: 'What happens if I do not meet the off-the-job hours requirement?',
     answer:
-      'Failing to meet the 20% off-the-job training requirement can prevent you from progressing to the End Point Assessment. The 20% is a gateway condition set by the ESFA. If your training provider cannot confirm you have met it, you cannot sit the EPA. In serious cases, the ESFA may claw back funding from the training provider, which creates a strong incentive for providers to enforce the requirement. Ofsted also checks OTJ records during provider inspections. The simplest solution is to track your hours consistently throughout the apprenticeship using a tool like Elec-Mate OJT Tracker so you always know where you stand.',
+      'Falling short of the off-the-job hours in your training plan can hold up your End Point Assessment, because your provider has to evidence that the minimum for your standard was delivered. Funds are at risk of recovery from the provider if the off-the-job policy is not met (DfE funding rules 2026 to 2027, rule 82.4), which creates a strong incentive for providers to enforce the requirement. Ofsted also checks OTJ records during provider inspections. The simplest solution is to track your hours consistently throughout the apprenticeship using a tool like Elec-Mate OJT Tracker so you always know where you stand.',
   },
   {
-    question: 'Is the 20% calculated weekly or over the full apprenticeship?',
+    question: 'Is the off-the-job minimum calculated weekly or over the full apprenticeship?',
     answer:
-      'The 20% is calculated over the total duration of the apprenticeship, not on a strict weekly basis. This gives you flexibility. Some weeks you might do more than 20% (for example, during a block-release college week), and other weeks you might do less (during a busy project on site). The ESFA expects off-the-job training to be spread reasonably throughout the programme, not crammed into a short period. Your training provider will review your hours at regular progress meetings and flag if you are falling behind the expected trajectory.',
+      'For starts from 1 August 2025 the minimum is a total number of hours for the whole programme, not a weekly figure. This gives you flexibility. Some weeks you might do much more (for example, during a block-release college week), and other weeks you might do less (during a busy project on site). Your provider expects off-the-job training to be spread reasonably throughout the programme, not crammed into a short period. Your training provider will review your hours at regular progress meetings and flag if you are falling behind the expected trajectory.',
   },
   {
     question: 'Can my employer refuse to give me time for off-the-job training?',
     answer:
-      'No. Providing off-the-job training time is a contractual obligation your employer agreed to when they signed the apprenticeship agreement. It is a condition of receiving the apprenticeship funding from the ESFA. If your employer consistently denies you OTJ time — not releasing you for college, requiring you to work through study periods, or expecting you to train only in your own unpaid time — they are in breach of the agreement. Raise it with your training provider first, as they have a responsibility to ensure the employer meets their obligations. Document every instance and keep records.',
+      'No. Providing off-the-job training time is a contractual obligation your employer agreed to when they signed the apprenticeship agreement. It is a condition of the apprenticeship funding from the Department for Education (DfE). If your employer consistently denies you OTJ time — not releasing you for college, requiring you to work through study periods, or expecting you to train only in your own unpaid time — they are in breach of the agreement. Raise it with your training provider first, as they have a responsibility to ensure the employer meets their obligations. Document every instance and keep records.',
   },
   {
     question: 'Does studying on Elec-Mate count as off-the-job training?',
     answer:
-      'Yes. Completing course modules, taking practice quizzes, using the flashcards tool, practising mock exams, using the EPA Simulator, studying with the AM2 Simulator, and working through BS 7671 content on Elec-Mate all qualify as off-the-job training. The platform automatically logs the time you spend on these activities, so your hours are tracked without any manual effort. If your employer agrees that evening or weekend study contributes to your apprenticeship, that time can also be counted — but this must be agreed with your employer in advance.',
+      'Yes. Completing course modules, taking practice quizzes, using the flashcards tool, practising mock exams, using the EPA Simulator, studying with the AM2 Simulator, and working through BS 7671 content on Elec-Mate all qualify as off-the-job training. The platform automatically logs the time you spend on these activities, so your hours are tracked without any manual effort. Off-the-job training should happen in your normal working hours. If, by exception, some takes place in the evening or at a weekend, you must agree to it and be compensated, for example with time off in lieu or extra pay (DfE funding rules 2026 to 2027, rule 84.6).',
   },
   {
     question: 'How do I prove my off-the-job training hours to Ofsted?',
@@ -140,20 +141,20 @@ const sections = [
       <>
         <p>
           Off-the-job training (OTJ or OJT) is structured learning time that is separate from your
-          normal day-to-day work duties. It is a mandatory component of every apprenticeship in
-          England, enforced by the Education and Skills Funding Agency (ESFA) as a condition of the
-          apprenticeship funding your employer receives.
+          normal day-to-day work duties. It is a statutory requirement of every apprenticeship in
+          England and a condition of the apprenticeship funding (DfE funding rules 2026 to 2027,
+          rule 82).
         </p>
         <p>
           The purpose is simple: without a formal requirement for dedicated learning time, there
           would be a real risk that apprentices are used as cheap labour without receiving the
           structured training that distinguishes an apprenticeship from ordinary employment. The
-          ESFA's 20% rule ensures every apprentice gets proper training time built into their paid
-          working week.
+          off-the-job minimum ensures every apprentice gets proper training time built into their
+          paid working week.
         </p>
         <p>
           For electrical apprentices on the Installation Electrician or Maintenance Electrician
-          standard (ST0215), off-the-job training covers a wide range of activities. It is much
+          standard (ST0152), off-the-job training covers a wide range of activities. It is much
           broader than just college attendance. Understanding what counts — and what does not — is
           essential for meeting the requirement without stress and building a strong foundation for
           your{' '}
@@ -164,48 +165,47 @@ const sections = [
   },
   {
     id: 'twenty-percent',
-    heading: 'The 20% Requirement',
+    heading: 'The Minimum Off-the-Job Hours',
     content: (
       <>
         <p>
-          The ESFA requires that at least 20% of an apprentice's paid working hours are spent on
-          off-the-job training. This is calculated over the total duration of the apprenticeship,
-          not on a strict week-by-week basis.
+          For apprenticeships that start on or after 1 August 2025, the minimum volume of
+          off-the-job training is a fixed number of hours published on the front of each
+          apprenticeship standard (DfE funding rules 2026 to 2027, rule 85). Your provider must
+          deliver at least that number to an apprentice with no relevant prior learning (rule 86),
+          and no programme may fall below {OTJ_HOURS_FLOOR} hours (rule 86.2).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>30-hour week:</strong> 20% = 6 hours per week of off-the-job training
+                <strong>Installation and Maintenance Electrician (ST0152):</strong>{' '}
+                {OTJ_ST0152_HOURS} hours across the programme
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>37.5-hour week:</strong> 20% = 7.5 hours per week of off-the-job training
+                <strong>Prior learning:</strong> the minimum is reduced by the hours of relevant
+                prior learning found at your initial assessment
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>40-hour week:</strong> 20% = 8 hours per week of off-the-job training
+                <strong>Started before 1 August 2025:</strong> you stay on the rules you started
+                under: 20% of normal working hours, capped at 30 hours a week, so an average of 6
+                hours a week for a full-time apprentice
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Over a typical 4-year apprenticeship on a 30-hour week (approximately 48 working weeks per
-          year), the total off-the-job training requirement is around 1,152 hours. In practice, most
-          training providers track a documented target of approximately 400 hours because college
-          days are logged centrally by the provider. The 400 hours represent the evidence you
-          personally need to provide for additional OTJ activities.
-        </p>
-        <p>
-          The 20% is an average over the full programme. Some weeks you may exceed it (block-release
-          college weeks), other weeks you may fall short (busy project periods). As long as the
-          overall total reaches 20% by the gateway stage, you are compliant. However, the ESFA
-          expects OTJ training to be spread reasonably — do not leave it all to the final months.
+          The minimum is a total for the whole programme, not a weekly quota. Some weeks you may do
+          much more (block-release college weeks), other weeks less (busy project periods). Your
+          provider records the hours and reviews them with you and your employer at least every 3
+          months, so do not leave it all to the final months.
         </p>
       </>
     ),
@@ -216,9 +216,11 @@ const sections = [
     content: (
       <>
         <p>
-          The ESFA definition is: learning which is undertaken outside of the normal day-to-day
-          working environment and leads towards the achievement of an apprenticeship. It can happen
-          at the employer premises provided it is clearly distinct from normal work duties.
+          The DfE definition is: training received during the apprentice&apos;s normal working hours
+          (the hours they are normally paid for, excluding overtime) for the purpose of achieving
+          the knowledge, skills and behaviours of the apprenticeship (DfE funding rules 2026 to
+          2027, rule 82.1). It can happen at the employer premises provided it is clearly distinct
+          from normal work duties.
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
@@ -294,7 +296,7 @@ const sections = [
       <>
         <p>
           Understanding what is excluded is equally important. The following do not count towards
-          the 20% off-the-job training requirement:
+          the off-the-job training requirement:
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
@@ -324,7 +326,7 @@ const sections = [
               <h3 className="font-bold text-white text-base mb-1">Irrelevant Training</h3>
               <p className="text-white text-sm leading-relaxed">
                 Training not directly relevant to the apprenticeship standard — general company
-                induction, non-technical training, or activities outside the scope of ST0215.
+                induction, non-technical training, or activities outside the scope of ST0152.
               </p>
             </div>
           </div>
@@ -451,7 +453,7 @@ const sections = [
             <GraduationCap className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
-                Evening: 45 Minutes on EPA Simulator
+                Afternoon Study Slot: 45 Minutes on EPA Simulator
               </h3>
               <p className="text-white text-sm leading-relaxed">
                 Completed a full EPA practice scenario on Elec-Mate covering fault finding and
@@ -476,17 +478,16 @@ const sections = [
       <>
         <p>
           Your employer has specific legal obligations regarding off-the-job training. These are
-          conditions of the apprenticeship funding agreement signed with the ESFA — they are not
-          optional.
+          conditions of the apprenticeship funding agreement — they are not optional.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Provide the time:</strong> Your employer must release you for at least 20%
-                of your paid working hours to undertake off-the-job training. This includes college
-                days, study time, and learning activities.
+                <strong>Provide the time:</strong> Your employer must release you, in paid working
+                time, for the off-the-job hours in your training plan. This includes college days,
+                study time, and learning activities.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -521,8 +522,9 @@ const sections = [
         <p>
           If your employer is not meeting these obligations — not releasing you for college, making
           you work through study time, or expecting all training to happen in your own unpaid hours
-          — raise it with your training provider first. If they cannot resolve it, contact the ESFA
-          apprenticeship helpline. Document every instance where OTJ time was denied.
+          — raise it with your training provider first. If they cannot resolve it, contact the
+          apprenticeship service helpdesk on 08000 150 600. Document every instance where OTJ time
+          was denied.
         </p>
         <SEOAppBridge
           title="Track Every OJT Hour Automatically"
@@ -619,7 +621,7 @@ export default function OffJobTrainingGuidePage() {
       title="Off-the-Job Training Hours: Apprentice Guide UK"
       description="What counts as off-the-job training for UK electrical apprentices, how to log evidence."
       datePublished="2025-10-15"
-      dateModified="2026-05-19"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"
@@ -630,7 +632,7 @@ export default function OffJobTrainingGuidePage() {
           <span className="text-elec-yellow">Your Complete Apprentice Guide</span>
         </>
       }
-      heroSubtitle="Every electrical apprentice must spend at least 20% of their paid working hours on off-the-job training. This guide explains what that means, what activities count, how to record evidence, your employer's obligations, and how Elec-Mate's OJT Tracker makes the whole thing effortless."
+      heroSubtitle="Every electrical apprentice must complete a minimum number of off-the-job training hours set for their apprenticeship standard, in paid working time. This guide explains what that means, what activities count, how to record evidence, your employer's obligations, and how Elec-Mate's OJT Tracker makes the whole thing effortless."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

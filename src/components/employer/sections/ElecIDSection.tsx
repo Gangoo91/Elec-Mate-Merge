@@ -1,7 +1,12 @@
 import { useState, useMemo, useEffect, type ReactNode } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useElecIdProfiles, useCreateElecIdProfile } from '@/hooks/useElecId';
@@ -22,7 +27,6 @@ import {
 import {
   VerificationBadge,
   ElecMateApprovalBadge,
-  AddedByThemPill,
 } from '@/components/credentials/VerificationBadge';
 import { VerifyCredentialSheet } from '@/components/credentials/VerifyCredentialSheet';
 import { getActingEmployerId } from '@/lib/actingEmployer';
@@ -38,43 +42,40 @@ import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/Cre
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { ELECID_HELP } from '@/components/employer/help/people';
 import { CompetenceMatrix } from '@/components/employer/CompetenceMatrix';
-import { getQualificationLabel } from '@/data/uk-electrician-constants';
+import {
+  getQualificationLabel,
+  jobTitleText,
+  ecsCardText,
+} from '@/data/uk-electrician-constants';
 import { useCreateCommunication } from '@/hooks/useCommunications';
-import { RefreshCw, QrCode, UserPlus, Loader2, Send } from 'lucide-react';
+import { ChevronRight, Loader2, Send } from 'lucide-react';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
 import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  Eyebrow,
-  Divider,
-  EmptyState,
   LoadingBlocks,
-  IconButton,
   PrimaryButton,
   SecondaryButton,
-  type Tone,
 } from '@/components/employer/editorial';
-
-const getInitials = (name?: string | null): string => {
-  if (!name) return '??';
-  // Letters only, so "Demo Worker (test)" reads DW, not D(.
-  const parts = name
-    .replace(/\([^)]*\)/g, ' ')
-    .trim()
-    .split(/\s+/)
-    .map((p) => p.replace(/[^\p{L}\p{N}]/gu, ''))
-    .filter(Boolean);
-  if (parts.length === 0) return '??';
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-};
+import {
+  frameClass,
+  panel,
+  PanelTitle,
+  Row,
+  RowList,
+  StatusPill,
+  PlainEmpty,
+  Segments,
+  Initials,
+  SearchField,
+  HeroActions,
+  heroBtn,
+  rowBtnPrimary,
+  rowBtnSecondary,
+  plural,
+} from '@/components/employer/pageParts/PageParts';
 
 const getCertStatus = (expiryDate: string | null): string => {
   if (!expiryDate) return 'Active';
@@ -99,7 +100,11 @@ const getEcsStatus = (expiryDate: string | null): string => {
 const formatDate = (value?: string | null): string => {
   if (!value) return '—';
   try {
-    return new Date(value).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    return new Date(value).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   } catch {
     return '—';
   }
@@ -107,63 +112,68 @@ const formatDate = (value?: string | null): string => {
 
 type FilterValue = 'all' | 'checked' | 'unchecked' | 'expiring' | 'expired';
 
-const statusToneMap: Record<string, Tone> = {
-  Active: 'emerald',
-  Valid: 'emerald',
-  Warning: 'orange',
-  Expiring: 'orange',
-  Expired: 'red',
-};
-
-const skillLevelTone: Record<string, Tone> = {
-  beginner: 'cyan',
-  intermediate: 'blue',
-  advanced: 'yellow',
-  expert: 'emerald',
-};
-
-/** A wrapping row for credential items — ListRow truncates to one line, which
- *  hid the verification badge and the "who checked it" sentence on a phone. */
+/** A wrapping row for credential items: the "who checked it" sentence
+ *  must never be cut off on a phone, so the lines wrap instead of truncating. */
 function CredentialRow({
   title,
   lines,
-  badges,
+  trailing,
   onClick,
 }: {
   title: string;
   lines: string[];
-  badges: ReactNode;
+  trailing?: ReactNode;
   onClick?: () => void;
 }) {
   const body = (
     <>
-      <div className="text-[14px] font-medium text-white leading-snug">{title}</div>
-      {lines.map((l, i) => (
-        <div key={i} className="mt-0.5 text-[12px] text-white leading-snug">
-          {l}
-        </div>
-      ))}
-      <div className="mt-2 flex flex-wrap items-center gap-1.5">{badges}</div>
+      <div className="min-w-0 flex-1">
+        <p className="text-[15px] font-semibold leading-snug text-white">{title}</p>
+        {lines.map((l, i) => (
+          <p key={i} className="mt-0.5 text-[13px] leading-snug text-white">
+            {l}
+          </p>
+        ))}
+      </div>
+      {trailing && <div className="flex shrink-0 items-center">{trailing}</div>}
+      {onClick && <ChevronRight aria-hidden className="h-4 w-4 shrink-0 text-white" />}
     </>
   );
+  const base = 'flex w-full items-center gap-3 px-4 py-3 text-left sm:px-5';
   return onClick ? (
     <button
       type="button"
       onClick={onClick}
-      className="block w-full text-left px-4 sm:px-5 py-3.5 touch-manipulation hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors border-b border-white/[0.06] last:border-b-0"
+      className={cn(
+        base,
+        'min-h-[60px] touch-manipulation transition-colors hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60'
+      )}
     >
       {body}
     </button>
   ) : (
-    <div className="px-4 sm:px-5 py-3.5 border-b border-white/[0.06] last:border-b-0">{body}</div>
+    <div className={base}>{body}</div>
   );
 }
+
+const capitalise = (v: string) => v.charAt(0).toUpperCase() + v.slice(1);
 
 export const ElecIDSection = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
-  const { data: profiles, isLoading, refetch } = useElecIdProfiles();
+  const { data: allProfiles, isLoading, refetch } = useElecIdProfiles();
   const { data: employees } = useEmployees();
+  // Every count on this page is against the active roster, the same people
+  // Team counts: archived rows and profiles from outside the roster are left out.
+  const activeRoster = useMemo(
+    () => (employees ?? []).filter((e) => (e.status || 'Active') !== 'Archived'),
+    [employees]
+  );
+  const profiles = useMemo(() => {
+    if (!allProfiles || !employees) return allProfiles;
+    const onRoster = new Set(activeRoster.map((e) => e.id));
+    return allProfiles.filter((p) => onRoster.has(p.employee_id));
+  }, [allProfiles, employees, activeRoster]);
   const setItemVerification = useSetCredentialVerification();
   const setEcsVerification = useSetEcsCardVerification();
   const deleteTeamCredential = useDeleteTeamCredential();
@@ -209,8 +219,19 @@ export const ElecIDSection = () => {
   const employeesWithoutElecId = useMemo(() => {
     if (!employees || !profiles) return [];
     const profileEmployeeIds = new Set(profiles.map((p) => p.employee_id));
-    return employees.filter((emp) => !profileEmployeeIds.has(emp.id));
-  }, [employees, profiles]);
+    return activeRoster.filter((emp) => !profileEmployeeIds.has(emp.id));
+  }, [employees, profiles, activeRoster]);
+
+  // ELE-2086: the matrix lists the whole active roster, Elec-ID or not.
+  const matrixRoster = useMemo(
+    () =>
+      activeRoster.map((e) => ({
+        employeeId: e.id,
+        name: e.name,
+        role: e.team_role || e.role || '',
+      })),
+    [activeRoster]
+  );
 
   const effectiveSelectedProfile = useMemo(() => {
     // Re-resolve from the latest fetch so a recorded check or a new item shows
@@ -249,10 +270,18 @@ export const ElecIDSection = () => {
   // Worker-360's "View" lands here
   const [searchParams, setSearchParams] = useSearchParams();
   const memberParam = searchParams.get('member');
+  // ?view=matrix opens the competence matrix (Overview's overdue-course row).
+  const viewParam = searchParams.get('view');
+  useEffect(() => {
+    if (viewParam === 'matrix') setView('matrix');
+  }, [viewParam]);
   useEffect(() => {
     if (!memberParam || !profiles || profiles.length === 0) return;
     const target = profiles.find((p) => p.employee_id === memberParam);
     if (target) {
+      // A person link (e.g. the course-completed bell) shows the person, even
+      // when the matrix was open.
+      setView('workers');
       setSelectedProfile(target);
       if (isMobile) setSheetOpen(true);
     }
@@ -325,7 +354,8 @@ export const ElecIDSection = () => {
     const now = Date.now();
     return list.filter((p) => {
       if (query) {
-        const haystack = `${p.employee?.name ?? ''} ${p.employee?.role ?? ''} ${p.elec_id_number ?? ''}`.toLowerCase();
+        const haystack =
+          `${p.employee?.name ?? ''} ${p.employee?.role ?? ''} ${p.elec_id_number ?? ''}`.toLowerCase();
         if (!haystack.includes(query)) return false;
       }
       if (filterTab === 'all') return true;
@@ -363,7 +393,7 @@ export const ElecIDSection = () => {
       description:
         level === 'self_declared'
           ? 'It now shows as self-declared.'
-          : 'Saved with your name and today\'s date.',
+          : "Saved with your name and today's date.",
     });
   };
 
@@ -379,7 +409,7 @@ export const ElecIDSection = () => {
     const ecsStatus = getEcsStatus(p.ecs_expiry_date);
     if (p.ecs_expiry_date && (ecsStatus === 'Expired' || ecsStatus === 'Expiring')) {
       lines.push(
-        `• ECS card${p.ecs_card_type ? ` (${p.ecs_card_type})` : ''} — ${
+        `• ECS card${p.ecs_card_type ? ` (${ecsCardText(p.ecs_card_type)})` : ''} — ${
           ecsStatus === 'Expired' ? 'EXPIRED' : `expires ${formatDate(p.ecs_expiry_date)}`
         }`
       );
@@ -443,7 +473,11 @@ export const ElecIDSection = () => {
         description: `${p.employee?.name || 'Worker'} has been asked to renew ${lines.length} credential${lines.length === 1 ? '' : 's'}.`,
       });
     } catch {
-      toast({ title: 'Nudge failed', description: 'Message was not sent.', variant: 'destructive' });
+      toast({
+        title: 'Nudge failed',
+        description: 'Message was not sent.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -456,7 +490,7 @@ export const ElecIDSection = () => {
 
   // Live "Before you start" lines for the help (ELE-1980).
   const helpBlockers: HelpBlocker[] = [];
-  if ((employees?.length ?? 0) === 0) {
+  if (activeRoster.length === 0) {
     helpBlockers.push({
       text: 'No one on the team yet. Add people under Team first, then give them an Elec-ID.',
       fixLabel: 'Open the team',
@@ -470,35 +504,82 @@ export const ElecIDSection = () => {
     });
   }
 
+  const handleCreateAll = async () => {
+    setBulkCreating(true);
+    try {
+      // ECS card type is a real-world credential: never guess it from a job
+      // title. Create profiles empty; the actual card gets recorded per
+      // worker. allSettled so one failure doesn't strand a half-created batch.
+      const results = await Promise.allSettled(
+        employeesWithoutElecId.map((emp) =>
+          createElecIdProfile.mutateAsync({ employee_id: emp.id })
+        )
+      );
+      const failed = results.filter((r) => r.status === 'rejected').length;
+      if (failed > 0) {
+        throw new Error(`${failed} of ${employeesWithoutElecId.length} could not be created`);
+      }
+      toast({
+        title: 'Elec-IDs created',
+        description: `Created ${employeesWithoutElecId.length} profiles. Add each worker's real ECS card details next`,
+      });
+      setCreateElecIdSheetOpen(false);
+    } catch {
+      toast({
+        title: 'Error',
+        description: 'Failed to create some Elec-ID profiles',
+        variant: 'destructive',
+      });
+    } finally {
+      setBulkCreating(false);
+    }
+  };
+
   const heroActions = (
-    <>
-      <PrimaryButton data-help="elecid.add" onClick={() => setCreateElecIdSheetOpen(true)}>
+    <HeroActions stretchFirst>
+      <PrimaryButton
+        data-help="elecid.add"
+        className={heroBtn}
+        onClick={() => setCreateElecIdSheetOpen(true)}
+      >
         Add credential
       </PrimaryButton>
-      <SecondaryButton data-help="elecid.scan" onClick={() => setScanDialogOpen(true)}>
-        <QrCode className="h-4 w-4 mr-2" />
+      <SecondaryButton
+        data-help="elecid.scan"
+        className={heroBtn}
+        onClick={() => setScanDialogOpen(true)}
+      >
         Scan
       </SecondaryButton>
-      <IconButton onClick={() => refetch()} aria-label="Refresh">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
       <PageHelpButton
         help={ELECID_HELP}
         blockers={helpBlockers}
         askContext={{ page: 'credentials', tab: view === 'matrix' ? 'matrix' : filterTab }}
       />
-    </>
+    </HeroActions>
   );
+
+  // One live line: the problem first, else where things stand.
+  const uncheckedCount = totalCount - ecsCheckedCount;
+  const liveParts: string[] = [];
+  if (expiredCount > 0) liveParts.push(`${plural(expiredCount, 'ECS card')} expired`);
+  if (expiring30dCount > 0) liveParts.push(`${expiring30dCount} expiring in 30 days`);
+  if (uncheckedCount > 0) liveParts.push(`${uncheckedCount} not checked`);
+  const teamSize = activeRoster.length;
+  const standing =
+    teamSize === 0
+      ? 'Add your team first'
+      : `${totalCount} of ${plural(teamSize, 'person', 'people')} ${totalCount === 1 ? 'has' : 'have'} an Elec-ID`;
+  const firstLive = liveParts.join(', ');
+  const liveLine =
+    liveParts.length > 0
+      ? `${firstLive.charAt(0).toUpperCase()}${firstLive.slice(1)}. ${standing}.`
+      : `${standing}. Every card is in date and checked.`;
 
   if (isLoading) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="People"
-          title="Credentials"
-          description="Elec-ID digital credentials. Compliance, renewals and share links."
-          tone="emerald"
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="Credentials" description="Loading Elec-IDs." />
         <LoadingBlocks />
       </PageFrame>
     );
@@ -514,7 +595,7 @@ export const ElecIDSection = () => {
       employeeId: effectiveSelectedProfile.employee_id,
       elecIdNumber: effectiveSelectedProfile.elec_id_number,
       name: effectiveSelectedProfile.employee?.name || 'Unknown',
-      role: effectiveSelectedProfile.employee?.role || 'Electrician',
+      role: jobTitleText(effectiveSelectedProfile.employee?.role) || 'Electrician',
       photo: effectiveSelectedProfile.employee?.photo_url,
       bio: effectiveSelectedProfile.bio || '',
       // Real number from work history — every worker showing "0 years" was a
@@ -530,7 +611,7 @@ export const ElecIDSection = () => {
           Math.floor((Date.now() - new Date(earliest).getTime()) / (365.25 * 24 * 3600 * 1000))
         );
       })(),
-      ecsCardType: effectiveSelectedProfile.ecs_card_type || 'Not recorded',
+      ecsCardType: ecsCardText(effectiveSelectedProfile.ecs_card_type) || 'Not recorded',
       ecsCardNumber: effectiveSelectedProfile.ecs_card_number || '',
       ecsExpiry: effectiveSelectedProfile.ecs_expiry_date || '',
       ecsStatus,
@@ -538,10 +619,7 @@ export const ElecIDSection = () => {
         effectiveSelectedProfile.skills?.map((s) => ({
           name: s.skill_name,
           level: (s.skill_level.charAt(0).toUpperCase() + s.skill_level.slice(1)) as
-            | 'Beginner'
-            | 'Intermediate'
-            | 'Advanced'
-            | 'Expert',
+            'Beginner' | 'Intermediate' | 'Advanced' | 'Expert',
           yearsExperience: s.years_experience,
           verified: s.is_verified,
         })) || [],
@@ -549,7 +627,7 @@ export const ElecIDSection = () => {
         effectiveSelectedProfile.work_history?.map((w) => ({
           id: w.id,
           employer: w.employer_name,
-          role: w.job_title,
+          role: jobTitleText(w.job_title),
           location: '',
           startDate: w.start_date,
           endDate: w.end_date,
@@ -606,6 +684,15 @@ export const ElecIDSection = () => {
       effectiveSelectedProfile.ecs_card_number || effectiveSelectedProfile.ecs_card_type
     );
 
+    const ecsPill =
+      ecsStatus === 'Expired' ? (
+        <StatusPill tone="red">Expired</StatusPill>
+      ) : ecsStatus === 'Expiring' ? (
+        <StatusPill tone="volt">Expiring</StatusPill>
+      ) : (
+        <VerificationBadge level={ecsLevel} />
+      );
+
     return (
       <div className="space-y-6">
         <ElecIDCard
@@ -617,45 +704,90 @@ export const ElecIDSection = () => {
           }
         />
 
-        <div className="flex flex-wrap gap-2">
-          <SecondaryButton data-help="elecid.add-training" onClick={() => setAddTrainingDialogOpen(true)}>
-            Add training
-          </SecondaryButton>
-          {/* Skills and work history are the person's own story — the office
-              edits them only on an Elec-ID it created itself */}
-          {firmOwnsProfile && (
-            <>
-              <SecondaryButton onClick={() => setAddSkillDialogOpen(true)}>Add skill</SecondaryButton>
-              <SecondaryButton onClick={() => setAddWorkHistoryDialogOpen(true)}>
-                Add work history
-              </SecondaryButton>
-            </>
-          )}
-          {/* Bridge to the worker's team record — the expiry decisions this
+        <div className="flex gap-2">
+          {/* Bridge to the worker's team record: the expiry decisions this
               page surfaces are acted on there (timesheets, leave, jobs) */}
-          <SecondaryButton
+          <button
+            type="button"
+            className={cn(rowBtnSecondary, 'flex-1 sm:flex-none')}
             onClick={() =>
               navigate(`/employer?section=team&member=${effectiveSelectedProfile.employee_id}`)
             }
           >
             View team record
-          </SecondaryButton>
+          </button>
+          <button
+            type="button"
+            data-help="elecid.add-training"
+            className={cn(rowBtnSecondary, 'flex-1 sm:flex-none')}
+            onClick={() => setAddTrainingDialogOpen(true)}
+          >
+            Add training
+          </button>
         </div>
 
-        <div data-help="elecid.verify">
-        <ListCard>
-          <ListCardHeader tone="emerald" title="Verification" />
-          <ListBody>
+        {(expiredItems.length > 0 || warningItems.length > 0) && (
+          <section>
+            <PanelTitle
+              title="Needs renewing"
+              meta={`${expiredItems.length + warningItems.length}`}
+            />
+            <RowList>
+              {expiredItems.slice(0, 5).map((item, idx) => (
+                <Row
+                  key={`exp-${idx}`}
+                  title={item.training_name}
+                  detail={`Expired ${formatDate(item.expiry_date)}`}
+                  trailing={<StatusPill tone="red">Expired</StatusPill>}
+                />
+              ))}
+              {warningItems.slice(0, 5).map((item, idx) => {
+                const daysLeft = item.expiry_date
+                  ? Math.ceil(
+                      (new Date(item.expiry_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+                    )
+                  : 0;
+                return (
+                  <Row
+                    key={`warn-${idx}`}
+                    title={item.training_name}
+                    detail={`${daysLeft} days left`}
+                    trailing={<StatusPill tone="volt">Expiring</StatusPill>}
+                  />
+                );
+              })}
+              <div className="px-4 py-3 sm:px-5">
+                <button
+                  type="button"
+                  data-help="elecid.nudge"
+                  className={cn(rowBtnPrimary, 'w-full sm:w-auto')}
+                  onClick={handleNudgeRenewals}
+                  disabled={createCommunication.isPending}
+                >
+                  <Send className="h-4 w-4" />
+                  {createCommunication.isPending ? 'Sending…' : 'Nudge to renew'}
+                </button>
+              </div>
+            </RowList>
+          </section>
+        )}
+
+        <section data-help="elecid.verify">
+          <PanelTitle title="Checks" />
+          <RowList>
             <CredentialRow
               title="ECS card"
               lines={
                 hasEcsCard
                   ? [
                       [
-                        effectiveSelectedProfile.ecs_card_type,
+                        ecsCardText(effectiveSelectedProfile.ecs_card_type),
                         effectiveSelectedProfile.ecs_card_number
                           ? `No. ${effectiveSelectedProfile.ecs_card_number}`
                           : null,
+                        effectiveSelectedProfile.ecs_expiry_date
+                          ? `expires ${formatDate(effectiveSelectedProfile.ecs_expiry_date)}`
+                          : 'no expiry on record',
                       ]
                         .filter(Boolean)
                         .join(' · '),
@@ -669,7 +801,7 @@ export const ElecIDSection = () => {
                     ]
                   : ['No ECS card recorded on this Elec-ID']
               }
-              badges={hasEcsCard ? <VerificationBadge level={ecsLevel} /> : null}
+              trailing={hasEcsCard ? ecsPill : undefined}
               onClick={hasEcsCard ? () => setChecking({ kind: 'ecs' }) : undefined}
             />
             <CredentialRow
@@ -679,87 +811,21 @@ export const ElecIDSection = () => {
                   ? ELEC_MATE_APPROVAL_EXPLAINER
                   : 'Not yet reviewed by Elec-Mate. Each item below shows its own check.',
               ]}
-              badges={effectiveSelectedProfile.is_verified ? <ElecMateApprovalBadge /> : null}
+              trailing={
+                effectiveSelectedProfile.is_verified ? <ElecMateApprovalBadge /> : undefined
+              }
             />
-          </ListBody>
-        </ListCard>
-        </div>
+          </RowList>
+        </section>
 
-        <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title="Skills"
-            meta={<Pill tone="yellow">{skills.length}</Pill>}
-          />
-          <ListBody>
-            {skills.length === 0 ? (
-              <div className="px-5 py-8 text-center text-[12.5px] text-white">
-                No skills recorded yet.
-              </div>
-            ) : (
-              skills.map((skill) => (
-                <ListRow
-                  key={skill.id}
-                  title={skill.skill_name}
-                  subtitle={
-                    skill.years_experience > 0
-                      ? `${skill.skill_level.charAt(0).toUpperCase() + skill.skill_level.slice(1)} · ${skill.years_experience} yrs`
-                      : skill.skill_level.charAt(0).toUpperCase() + skill.skill_level.slice(1)
-                  }
-                  trailing={
-                    <>
-                      <Pill tone={skillLevelTone[skill.skill_level.toLowerCase()] ?? 'blue'}>
-                        {skill.skill_level.charAt(0).toUpperCase() + skill.skill_level.slice(1)}
-                      </Pill>
-                      {skill.is_verified && <Pill tone="emerald">Verified</Pill>}
-                    </>
-                  }
-                />
-              ))
-            )}
-          </ListBody>
-        </ListCard>
-
-        <ListCard>
-          <ListCardHeader
-            tone="indigo"
-            title="Work history"
-            meta={<Pill tone="indigo">{workHistory.length}</Pill>}
-          />
-          <ListBody>
-            {workHistory.length === 0 ? (
-              <div className="px-5 py-8 text-center text-[12.5px] text-white">
-                No work history on record.
-              </div>
-            ) : (
-              workHistory.map((job) => (
-                <ListRow
-                  key={job.id}
-                  title={job.job_title}
-                  subtitle={`${job.employer_name} · ${formatDate(job.start_date)} → ${job.is_current ? 'Present' : formatDate(job.end_date)}`}
-                  trailing={
-                    <>
-                      {job.is_current && <Pill tone="yellow">Current</Pill>}
-                      {job.is_verified && <Pill tone="emerald">Verified</Pill>}
-                    </>
-                  }
-                />
-              ))
-            )}
-          </ListBody>
-        </ListCard>
-
-        <ListCard>
-          <ListCardHeader
-            tone="purple"
+        <section>
+          <PanelTitle
             title="Qualifications and training"
-            meta={<Pill tone="purple">{storeItems.length}</Pill>}
+            meta={storeItems.length > 0 ? `${storeItems.length}` : undefined}
           />
-          <ListBody>
+          <RowList>
             {storeItems.length === 0 ? (
-              <div className="px-5 py-8 text-center text-[12.5px] text-white">
-                Nothing on {workerName}&apos;s Elec-ID yet.
-              </div>
+              <PlainEmpty bare text={`Nothing on ${workerName}'s Elec-ID yet.`} />
             ) : (
               storeItems.map((item) => {
                 const held = isHeld({ training_status: item.training_status ?? null });
@@ -772,6 +838,8 @@ export const ElecIDSection = () => {
                     : item.expiry_date
                       ? `expires ${formatDate(item.expiry_date)}`
                       : 'no expiry',
+                  isAddedByThem(item) ? 'added by them' : null,
+                  item.document_url ? 'photo on file' : null,
                 ].filter(Boolean);
                 return (
                   <CredentialRow
@@ -787,89 +855,98 @@ export const ElecIDSection = () => {
                         verification_method: item.verification_method,
                       }),
                     ]}
-                    badges={
-                      <>
+                    trailing={
+                      held && item.expiry_date && status !== 'Active' ? (
+                        <StatusPill tone={status === 'Expired' ? 'red' : 'volt'}>
+                          {status === 'Warning' ? 'Expiring' : status}
+                        </StatusPill>
+                      ) : (
                         <VerificationBadge level={item.verification_level ?? 'self_declared'} />
-                        {isAddedByThem(item) && <AddedByThemPill />}
-                        {item.document_url && <Pill tone="blue">Photo</Pill>}
-                        {held && item.expiry_date && status !== 'Active' && (
-                          <Pill tone={statusToneMap[status] ?? 'orange'}>
-                            {status === 'Warning' ? 'Expiring' : status}
-                          </Pill>
-                        )}
-                      </>
+                      )
                     }
                     onClick={() => setChecking({ kind: 'item', item })}
                   />
                 );
               })
             )}
-          </ListBody>
-          <div className="px-5 py-4 border-t border-white/[0.06] space-y-3">
-            <p className="text-[12px] text-white leading-snug">
-              Tap an item to record how you checked it. {workerName} keeps these on their own
-              Elec-ID, so they move with them.
-            </p>
-            <AddCertificationDialog preselectedEmployeeId={effectiveSelectedProfile.employee_id} />
-          </div>
-        </ListCard>
+            <div className="space-y-3 px-4 py-3 sm:px-5">
+              <p className="text-[13px] leading-snug text-white">
+                Tap an item to record how you checked it. {workerName} keeps these on their own
+                Elec-ID, so they move with them.
+              </p>
+              <AddCertificationDialog
+                preselectedEmployeeId={effectiveSelectedProfile.employee_id}
+              />
+            </div>
+          </RowList>
+        </section>
 
-        {(expiredItems.length > 0 || warningItems.length > 0) && (
-          <ListCard>
-            <ListCardHeader
-              tone="red"
-              title="Urgent attention"
-              meta={<Pill tone="red">{expiredItems.length + warningItems.length}</Pill>}
-            />
-            <ListBody>
-              {expiredItems.slice(0, 5).map((item, idx) => (
-                <ListRow
-                  key={`exp-${idx}`}
-                  title={item.training_name}
-                  subtitle={`${item.workerName ?? 'Unknown'} · expired`}
-                  trailing={<Pill tone="red">Expired</Pill>}
+        <section>
+          <PanelTitle
+            title="Skills"
+            meta={skills.length > 0 ? `${skills.length}` : undefined}
+            // Skills and work history are the person's own story: the office
+            // edits them only on an Elec-ID it created itself
+            action={firmOwnsProfile ? 'Add skill' : undefined}
+            onAction={firmOwnsProfile ? () => setAddSkillDialogOpen(true) : undefined}
+          />
+          {skills.length === 0 ? (
+            <PlainEmpty text="No skills recorded yet." />
+          ) : (
+            <RowList>
+              {skills.map((skill) => (
+                <Row
+                  key={skill.id}
+                  title={skill.skill_name}
+                  detail={
+                    skill.years_experience > 0
+                      ? `${capitalise(skill.skill_level)} · ${skill.years_experience} yrs`
+                      : capitalise(skill.skill_level)
+                  }
+                  trailing={
+                    skill.is_verified ? <StatusPill tone="green">Verified</StatusPill> : undefined
+                  }
                 />
               ))}
-              {warningItems.slice(0, 5).map((item, idx) => {
-                const daysLeft = item.expiry_date
-                  ? Math.ceil((new Date(item.expiry_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-                  : 0;
-                return (
-                  <ListRow
-                    key={`warn-${idx}`}
-                    title={item.training_name}
-                    subtitle={`${item.workerName ?? 'Unknown'} · ${daysLeft} days remaining`}
-                    trailing={<Pill tone="orange">Expiring</Pill>}
-                  />
-                );
-              })}
-            </ListBody>
-            <div className="px-5 py-4 border-t border-white/[0.06]">
-              <SecondaryButton
-                data-help="elecid.nudge"
-                fullWidth
-                onClick={handleNudgeRenewals}
-                disabled={createCommunication.isPending}
-              >
-                <Send className="h-4 w-4 mr-2" />
-                {createCommunication.isPending ? 'Sending…' : 'Nudge to renew'}
-              </SecondaryButton>
-            </div>
-          </ListCard>
-        )}
+            </RowList>
+          )}
+        </section>
+
+        <section>
+          <PanelTitle
+            title="Work history"
+            meta={workHistory.length > 0 ? `${workHistory.length}` : undefined}
+            action={firmOwnsProfile ? 'Add work history' : undefined}
+            onAction={firmOwnsProfile ? () => setAddWorkHistoryDialogOpen(true) : undefined}
+          />
+          {workHistory.length === 0 ? (
+            <PlainEmpty text="No work history on record." />
+          ) : (
+            <RowList>
+              {workHistory.map((job) => (
+                <Row
+                  key={job.id}
+                  title={jobTitleText(job.job_title)}
+                  detail={`${job.employer_name} · ${formatDate(job.start_date)} to ${job.is_current ? 'now' : formatDate(job.end_date)}`}
+                  trailing={
+                    job.is_verified ? (
+                      <StatusPill tone="green">Verified</StatusPill>
+                    ) : job.is_current ? (
+                      <StatusPill>Current</StatusPill>
+                    ) : undefined
+                  }
+                />
+              ))}
+            </RowList>
+          )}
+        </section>
       </div>
     );
   };
 
   return (
-    <PageFrame>
-      <PageHero
-        eyebrow="People"
-        title="Credentials"
-        description="Elec-ID digital credentials. Compliance, renewals and share links."
-        tone="emerald"
-        actions={heroActions}
-      />
+    <PageFrame className={frameClass}>
+      <PageHero title="Credentials" description={liveLine} actions={heroActions} />
 
       <HowItWorks
         help={ELECID_HELP}
@@ -880,154 +957,184 @@ export const ElecIDSection = () => {
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Total', value: totalCount },
-          { label: 'ECS checked', value: ecsCheckedCount, tone: 'emerald' },
-          { label: 'Expiring 30d', value: expiring30dCount, tone: 'orange' },
-          { label: 'Expired', value: expiredCount, tone: 'red' },
+          {
+            label: 'Elec-IDs',
+            value: totalCount,
+            sub:
+              employeesWithoutElecId.length > 0
+                ? `${employeesWithoutElecId.length} without one`
+                : 'Everyone has one',
+          },
+          {
+            label: 'ECS checked',
+            value: ecsCheckedCount,
+            sub: uncheckedCount > 0 ? `${uncheckedCount} self-declared` : 'All checked',
+            onClick: () => {
+              setView('workers');
+              setFilterTab(uncheckedCount > 0 ? 'unchecked' : 'checked');
+            },
+          },
+          {
+            label: 'Expiring in 30 days',
+            value: expiring30dCount,
+            tone: expiring30dCount > 0 ? 'yellow' : undefined,
+            onClick: () => {
+              setView('workers');
+              setFilterTab('expiring');
+            },
+          },
+          {
+            label: 'Expired',
+            value: expiredCount,
+            tone: expiredCount > 0 ? 'red' : undefined,
+            onClick: () => {
+              setView('workers');
+              setFilterTab('expired');
+            },
+          },
         ]}
       />
 
-      {/* Workers ↔ competence matrix — the matrix is the grid principal
+      {/* Workers or the competence matrix: the matrix is the grid principal
           contractors ask for, exportable as a branded PDF or CSV */}
-      <div data-help="elecid.view" className="grid grid-cols-2 gap-2 sm:inline-grid sm:w-auto">
-        {(
-          [
+      <div data-help="elecid.view" className="flex">
+        <Segments
+          items={[
             { value: 'workers', label: 'Workers' },
             { value: 'matrix', label: 'Competence matrix' },
-          ] as const
-        ).map((opt) => (
-          <button
-            key={opt.value}
-            onClick={() => setView(opt.value)}
-            className={`h-11 px-5 rounded-full border text-[13px] font-medium touch-manipulation transition-colors ${
-              view === opt.value
-                ? 'bg-elec-yellow text-black border-elec-yellow'
-                : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08]'
-            }`}
-          >
-            {opt.label}
-          </button>
-        ))}
+          ]}
+          value={view}
+          onChange={(v) => setView(v)}
+        />
       </div>
 
-      {view === 'matrix' && <CompetenceMatrix profiles={profiles ?? []} />}
+      {view === 'matrix' && (
+        <CompetenceMatrix
+          profiles={profiles ?? []}
+          roster={matrixRoster}
+          onCreateElecId={(person) => {
+            setSelectedEmployeeForElecId(person);
+            setCreateElecIdDialogOpen(true);
+          }}
+        />
+      )}
 
       {view === 'workers' && (
-      <>
-      <div data-help="elecid.tabs">
-      <FilterBar
-        tabs={[
-          { value: 'all', label: 'All', count: totalCount },
-          { value: 'checked', label: 'ECS checked', count: ecsCheckedCount },
-          { value: 'unchecked', label: 'ECS not checked', count: totalCount - ecsCheckedCount },
-          { value: 'expiring', label: 'Expiring', count: expiring30dCount },
-          { value: 'expired', label: 'Expired', count: expiredCount },
-        ]}
-        activeTab={filterTab}
-        onTabChange={(v) => setFilterTab(v as FilterValue)}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search name, role or Elec-ID…"
-      />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6">
-        <div className="space-y-4" data-help="elecid.list">
-          <ListCard>
-            <ListCardHeader
-              tone="emerald"
-              title="Credentials"
-              meta={<Pill tone="emerald">{filteredProfiles.length}</Pill>}
-            />
-            <ListBody>
-              {filteredProfiles.length === 0 ? (
-                <div className="px-5 py-10">
-                  <EmptyState
-                    title="No credentials match"
-                    description="Try clearing the search or switching tab."
-                    action="Reset filters"
-                    onAction={() => {
-                      setSearchQuery('');
-                      setFilterTab('all');
-                    }}
-                  />
-                </div>
-              ) : (
-                filteredProfiles.map((profile) => {
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:items-start">
+          <div className="min-w-0 space-y-4" data-help="elecid.list">
+            <div data-help="elecid.tabs" className="space-y-3">
+              <Segments
+                wrap
+                items={[
+                  { value: 'all', label: 'All', count: totalCount },
+                  { value: 'checked', label: 'Checked', count: ecsCheckedCount },
+                  { value: 'unchecked', label: 'Not checked', count: uncheckedCount },
+                  { value: 'expiring', label: 'Expiring', count: expiring30dCount },
+                  { value: 'expired', label: 'Expired', count: expiredCount },
+                ]}
+                value={filterTab}
+                onChange={(v) => setFilterTab(v)}
+              />
+              <SearchField
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Search name, role or Elec-ID"
+              />
+            </div>
+            {filteredProfiles.length === 0 ? (
+              <PlainEmpty
+                text={
+                  totalCount === 0
+                    ? 'Nobody has an Elec-ID yet. Add one for each person on the team.'
+                    : 'No one matches. Clear the search or pick another filter.'
+                }
+                action={totalCount === 0 ? 'Add credential' : 'Show everyone'}
+                onAction={
+                  totalCount === 0
+                    ? () => setCreateElecIdSheetOpen(true)
+                    : () => {
+                        setSearchQuery('');
+                        setFilterTab('all');
+                      }
+                }
+              />
+            ) : (
+              <RowList>
+                {filteredProfiles.map((profile) => {
                   const ecsStatus = getEcsStatus(profile.ecs_expiry_date);
-                  const tone = statusToneMap[ecsStatus] ?? 'emerald';
                   // Never display a card type that was never recorded
                   const cardType = profile.ecs_card_type
-                    ? profile.ecs_card_type.split(' ')[0]
+                    ? ecsCardText(profile.ecs_card_type)
                     : 'No ECS card recorded';
                   const expiresLabel = profile.ecs_expiry_date
                     ? `expires ${formatDate(profile.ecs_expiry_date)}`
                     : 'no expiry on record';
-                  const subtitleParts = [
-                    profile.employee?.role || 'Electrician',
-                    cardType,
-                    expiresLabel,
-                  ];
+                  const hasCard = Boolean(profile.ecs_card_number || profile.ecs_card_type);
+                  const selected = !isMobile && effectiveSelectedProfile?.id === profile.id;
                   return (
-                    <ListRow
+                    <Row
                       key={profile.id}
-                      lead={<Avatar initials={getInitials(profile.employee?.name)} />}
+                      lead={<Initials name={profile.employee?.name || '?'} />}
                       title={profile.employee?.name || 'Unknown'}
-                      subtitle={subtitleParts.join(' · ')}
-                      accent={selectedProfile?.id === profile.id ? 'yellow' : undefined}
+                      detail={`${jobTitleText(profile.employee?.role) || 'Electrician'} · ${cardType} · ${expiresLabel}`}
+                      wrapDetail
+                      className={selected ? 'bg-white/[0.06]' : undefined}
                       trailing={
-                        <>
-                          <Pill tone={tone}>{ecsStatus}</Pill>
-                          {(profile.ecs_card_number || profile.ecs_card_type) && (
-                            <VerificationBadge
-                              short
-                              prefix="ECS"
-                              level={profile.ecs_verification_level ?? 'self_declared'}
-                            />
-                          )}
-                        </>
+                        ecsStatus === 'Expired' ? (
+                          <StatusPill tone="red">Expired</StatusPill>
+                        ) : ecsStatus === 'Expiring' ? (
+                          <StatusPill tone="volt">Expiring</StatusPill>
+                        ) : hasCard ? (
+                          <VerificationBadge
+                            short
+                            prefix="ECS"
+                            level={profile.ecs_verification_level ?? 'self_declared'}
+                          />
+                        ) : undefined
                       }
                       onClick={() => handleProfileSelect(profile)}
                     />
                   );
-                })
-              )}
-            </ListBody>
-          </ListCard>
-        </div>
-
-        {!isMobile && (
-          <div className="min-w-0">
-            {effectiveSelectedProfile ? (
-              renderProfileDetail()
-            ) : (
-              <EmptyState
-                title="Select a credential"
-                description="Pick a worker from the list to view Elec-ID, skills, training and share links."
-              />
+                })}
+              </RowList>
             )}
           </div>
-        )}
-      </div>
-      </>
+
+          {!isMobile && (
+            <div className="min-w-0">
+              {effectiveSelectedProfile ? (
+                renderProfileDetail()
+              ) : (
+                <PlainEmpty text="Pick someone on the left to see their Elec-ID, checks, training and share link." />
+              )}
+            </div>
+          )}
+        </div>
       )}
 
       {isMobile && (
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetContent
             side="bottom"
-            className="h-[85vh] p-0 rounded-t-2xl border-t-0 bg-[hsl(0_0%_10%)]"
+            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
           >
-            <div className="w-12 h-1.5 bg-white/20 rounded-full mx-auto mt-3 mb-2" />
-            <SheetHeader className="px-4 pb-3 border-b border-white/[0.06]">
-              <SheetTitle className="text-lg text-white">Elec-ID profile</SheetTitle>
-              <SheetDescription className="text-[12px] text-white">
-                Skills, training, work history and verification.
-              </SheetDescription>
-            </SheetHeader>
-            <ScrollArea className="h-[calc(85vh-90px)] px-4 py-4">
-              {renderProfileDetail()}
-            </ScrollArea>
+            <div className="flex h-full flex-col">
+              <div
+                className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15"
+                aria-hidden
+              />
+              <SheetHeader className="shrink-0 px-4 pb-3 pt-3 text-left">
+                <SheetTitle className="text-[18px] font-semibold text-white">
+                  {effectiveSelectedProfile?.employee?.name || 'Elec-ID'}
+                </SheetTitle>
+                <SheetDescription className="text-[13px] text-white">
+                  Elec-ID, checks, training and work history.
+                </SheetDescription>
+              </SheetHeader>
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8">
+                {renderProfileDetail()}
+              </div>
+            </div>
           </SheetContent>
         </Sheet>
       )}
@@ -1069,7 +1176,7 @@ export const ElecIDSection = () => {
           personName={workerName}
           itemName={
             checking.kind === 'ecs'
-              ? `ECS card${effectiveSelectedProfile.ecs_card_type ? ` (${effectiveSelectedProfile.ecs_card_type})` : ''}`
+              ? `ECS card${effectiveSelectedProfile.ecs_card_type ? ` (${ecsCardText(effectiveSelectedProfile.ecs_card_type)})` : ''}`
               : getQualificationLabel(checking.item.qualification_name)
           }
           details={
@@ -1122,126 +1229,68 @@ export const ElecIDSection = () => {
             checking.item.added_by_employer_id === actingFirmId
               ? async () => {
                   await deleteTeamCredential.mutateAsync(checking.item.id);
-                  toast({ title: 'Removed', description: 'The item has been taken off their Elec-ID.' });
+                  toast({
+                    title: 'Removed',
+                    description: 'The item has been taken off their Elec-ID.',
+                  });
                 }
               : undefined
           }
         />
       )}
 
-      <Sheet open={createElecIdSheetOpen} onOpenChange={setCreateElecIdSheetOpen}>
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[85vh] bg-[hsl(0_0%_10%)] border-t-0 rounded-t-3xl p-0'
-              : 'bg-[hsl(0_0%_10%)] border-l border-white/[0.06] p-0'
-          }
-        >
-          <div className="px-5 pt-6 pb-4 border-b border-white/[0.06]">
-            <Eyebrow>People</Eyebrow>
-            <SheetHeader className="mt-2">
-              <SheetTitle className="text-xl font-semibold text-white tracking-tight">
-                Add credential
-              </SheetTitle>
-              <SheetDescription className="text-[12px] text-white">
-                Select an employee to issue a new Elec-ID profile for.
-              </SheetDescription>
-            </SheetHeader>
+      <FormSheet
+        open={createElecIdSheetOpen}
+        onOpenChange={setCreateElecIdSheetOpen}
+        width="wide"
+        title="Add credential"
+        description={
+          employeesWithoutElecId.length === 0
+            ? `All ${activeRoster.length} people on the team have an Elec-ID.`
+            : `${plural(employeesWithoutElecId.length, 'person', 'people')} without an Elec-ID. Tap one to set theirs up, or create them all and add each card after.`
+        }
+        footer={
+          employeesWithoutElecId.length > 0 ? (
+            <PrimaryButton
+              fullWidth
+              className="h-12 rounded-xl text-[15px]"
+              disabled={bulkCreating}
+              onClick={handleCreateAll}
+            >
+              {bulkCreating ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating…
+                </>
+              ) : (
+                `Create all ${employeesWithoutElecId.length}`
+              )}
+            </PrimaryButton>
+          ) : undefined
+        }
+      >
+        {employeesWithoutElecId.length === 0 ? (
+          <PlainEmpty text="Everyone has an Elec-ID. Add new people under Team first." />
+        ) : (
+          <div className={cn(panel, 'overflow-hidden')}>
+            <div className="grid grid-cols-1 divide-y divide-white/[0.07] lg:grid-cols-2 lg:divide-y-0 lg:[&>*]:border-b lg:[&>*]:border-white/[0.07] lg:[&>*:nth-child(odd)]:border-r">
+              {employeesWithoutElecId.map((emp) => (
+                <Row
+                  key={emp.id}
+                  lead={<Initials name={emp.name} />}
+                  title={emp.name}
+                  detail={jobTitleText(emp.role) || 'Electrician'}
+                  onClick={() => {
+                    setSelectedEmployeeForElecId({ id: emp.id, name: emp.name });
+                    setCreateElecIdSheetOpen(false);
+                    setCreateElecIdDialogOpen(true);
+                  }}
+                />
+              ))}
+            </div>
           </div>
-
-          <div className="p-5 space-y-5">
-            {employeesWithoutElecId.length === 0 ? (
-              <EmptyState
-                title="All employees have Elec-IDs"
-                description={`All ${employees?.length || 0} employees have Elec-ID profiles in place.`}
-              />
-            ) : (
-              <>
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <Eyebrow>Pending</Eyebrow>
-                    <div className="mt-1 text-[13px] text-white">
-                      {employeesWithoutElecId.length} employee
-                      {employeesWithoutElecId.length !== 1 ? 's' : ''} without Elec-ID
-                    </div>
-                  </div>
-                  <PrimaryButton
-                    disabled={bulkCreating}
-                    onClick={async () => {
-                      setBulkCreating(true);
-                      try {
-                        // ECS card type is a real-world credential — never guess
-                        // it from a job title. Create profiles empty; the actual
-                        // card gets recorded per worker. allSettled so one
-                        // failure doesn't strand a half-created batch silently.
-                        const results = await Promise.allSettled(
-                          employeesWithoutElecId.map((emp) =>
-                            createElecIdProfile.mutateAsync({ employee_id: emp.id })
-                          )
-                        );
-                        const failed = results.filter((r) => r.status === 'rejected').length;
-                        if (failed > 0) {
-                          throw new Error(
-                            `${failed} of ${employeesWithoutElecId.length} could not be created`
-                          );
-                        }
-                        toast({
-                          title: 'Elec-IDs created',
-                          description: `Created ${employeesWithoutElecId.length} profiles. Add each worker's real ECS card details next`,
-                        });
-                        setCreateElecIdSheetOpen(false);
-                      } catch (error) {
-                        toast({
-                          title: 'Error',
-                          description: 'Failed to create some Elec-ID profiles',
-                          variant: 'destructive',
-                        });
-                      } finally {
-                        setBulkCreating(false);
-                      }
-                    }}
-                  >
-                    {bulkCreating ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                        Creating…
-                      </>
-                    ) : (
-                      <>
-                        <UserPlus className="h-4 w-4 mr-2" />
-                        Create all
-                      </>
-                    )}
-                  </PrimaryButton>
-                </div>
-
-                <Divider />
-
-                <ScrollArea className={isMobile ? 'h-[calc(85vh-260px)]' : 'h-[calc(100vh-260px)]'}>
-                  <ListCard>
-                    <ListBody>
-                      {employeesWithoutElecId.map((emp) => (
-                        <ListRow
-                          key={emp.id}
-                          lead={<Avatar initials={getInitials(emp.name)} />}
-                          title={emp.name}
-                          subtitle={emp.role || 'Electrician'}
-                          onClick={() => {
-                            setSelectedEmployeeForElecId({ id: emp.id, name: emp.name });
-                            setCreateElecIdSheetOpen(false);
-                            setCreateElecIdDialogOpen(true);
-                          }}
-                        />
-                      ))}
-                    </ListBody>
-                  </ListCard>
-                </ScrollArea>
-              </>
-            )}
-          </div>
-        </SheetContent>
-      </Sheet>
+        )}
+      </FormSheet>
 
       {selectedEmployeeForElecId && (
         <CreateElecIDForEmployeeDialog

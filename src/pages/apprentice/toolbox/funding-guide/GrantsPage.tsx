@@ -10,8 +10,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, AlertTriangle, Banknote, Award, PiggyBank } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -69,9 +68,9 @@ const ageIncentive = [
 ];
 
 const careLeaverFacts = [
-  '£1,000 paid directly to the apprentice',
+  '£3,000 paid to the apprentice, tax free',
   'Must be aged 16–24 and a care leaver',
-  'Paid by the training provider from government (DfE) funding',
+  'Paid via the training provider from DfE funding in three £1,000 instalments (around day 60, 120 and 300)',
   'Separate from the £1,000 age incentive paid to employers',
   'Can be used for travel, equipment, clothing, or other costs',
 ];
@@ -127,303 +126,298 @@ const employerReceives = [
   { label: 'CITB attendance grants (4 years)', value: '£10,000' },
   { label: 'CITB completion bonus', value: '£3,500' },
   { label: 'Age incentive (if 16–18)', value: '£1,000' },
+  { label: 'Hiring payment (non-levy, 16–24, from 1 Oct 2026)', value: '£2,000' },
   { label: 'NI relief (approx. over 4 years)', value: '£8,000+' },
 ];
 
 const employerPays = [
-  { label: 'Co-investment (5% of £23k)', value: '£1,150' },
+  { label: 'Co-investment (16–24 at a non-levy firm, from 1 Aug 2026; 5% if 25+)', value: '£0' },
   { label: 'Apprentice wages (4 years approx.)', value: '£64,000' },
 ];
 
 const GrantsPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Funding"
-        title="Grants & incentives"
-        backTo="/apprentice/toolbox/apprenticeship-funding"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'Beyond the £23,000 training fund — CITB grants, travel support, age incentives, care leaver bursary, learning support, NI relief, and other industry grants.'
+    <GuidePage
+      section="Apprentice · Funding"
+      area="Apprenticeship funding"
+      title="Grants & incentives"
+      backTo="/apprentice/toolbox/apprenticeship-funding"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          'Beyond the £23,000 training fund — CITB grants, travel support, age incentives, care leaver bursary, learning support, NI relief, and other industry grants.'
+        }
+      </p>
+
+      {/* ── Headline number ─────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <Eyebrow className="text-elec-yellow">Total potential funding</Eyebrow>
+          <p className="text-[36px] sm:text-[42px] font-semibold tabular-nums text-elec-yellow leading-none">
+            £14,500+
+          </p>
+          <p className="text-[14px] text-white leading-relaxed">
+            Available to eligible employers on top of the £23,000 apprenticeship training fund —
+            CITB grants, age incentives, and tax savings combined.
+          </p>
+        </div>
+      </motion.div>
+
+      {/* ── What you can claim (apprentice) ─────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="What you can claim"
+          title="Support aimed at you, not the employer"
+          meta="Most grants on this page go to the employer — these are yours"
+          action={
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.05]">
+              <PiggyBank className="h-4 w-4 text-elec-yellow" />
+            </span>
           }
-        </p>
-
-        {/* ── Headline number ─────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-2">
-            <Eyebrow className="text-elec-yellow/85">Total potential funding</Eyebrow>
-            <p className="text-[36px] sm:text-[42px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
-              £14,500+
-            </p>
-            <p className="text-[13px] text-white leading-relaxed">
-              Available to eligible employers on top of the £23,000 apprenticeship training fund —
-              CITB grants, age incentives, and tax savings combined.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* ── What you can claim (apprentice) ─────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="What you can claim"
-            title="Support aimed at you, not the employer"
-            meta="Most grants on this page go to the employer — these are yours"
-            action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
-                <PiggyBank className="h-4 w-4 text-elec-yellow" />
-              </span>
-            }
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-1.5">
-              {[
-                'Care leaver bursary — £1,000 paid directly to you if you are a care leaver aged 16–24 (see below)',
-                '16 to 19 Bursary Fund — help with travel, kit or meals for under-19s on some study programmes; ask your college',
-                'Additional learning support — adjustments and equipment if you have a disability or learning need (claimed by your provider)',
-                "Travel to college is usually the employer's or CITB's call rather than a grant you claim — ask your employer first",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── CITB grants ─────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="CITB grants"
-            title="£13,500 over 4 years"
-            meta="Construction Industry Training Board attendance + completion"
-            action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
-                <Banknote className="h-4 w-4 text-elec-yellow" />
-              </span>
-            }
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
-              CARD_SURFACE
-            )}
-          >
-            <ul className="space-y-1.5">
-              {citbBreakdown.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
-              <Eyebrow className="text-elec-yellow/85">
-                Quarterly payment schedule (per year)
-              </Eyebrow>
-              <ul className="text-[12.5px] font-mono tabular-nums text-white space-y-0.5">
-                <li>Q1 (weeks 1–13): £625</li>
-                <li>Q2 (weeks 14–26): £625</li>
-                <li>Q3 (weeks 27–39): £625</li>
-                <li>Q4 (weeks 40–52): £625</li>
-                <li className="font-semibold text-elec-yellow pt-1 border-t border-elec-yellow/15">
-                  Annual total: £2,500
-                </li>
-              </ul>
-              <p className="text-[11.5px] text-white leading-relaxed pt-1">
-                Payments made after each 13-week period, subject to attendance requirements and a
-                valid claim.
-              </p>
-            </div>
-            <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-              <Eyebrow>Eligibility</Eyebrow>
-              <ul className="space-y-1.5">
-                {citbEligibility.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-              <Eyebrow>How to claim — step by step</Eyebrow>
-              <ol className="space-y-1.5">
-                {citbClaimSteps.map((step, i) => (
-                  <li
-                    key={step}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <span className="text-elec-yellow font-mono tabular-nums mt-0.5">{i + 1}.</span>
-                    <span>{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-            <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3 space-y-2">
-              <Eyebrow className="text-red-300">Common claim mistakes to avoid</Eyebrow>
-              <ul className="space-y-1.5">
-                {citbMistakes.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── CITB Travel ─────────────────────────────────────────── */}
-        <FundingCard
-          eyebrow="CITB travel & accommodation"
-          title="Up to 80% covered for distant training"
-          meta="50+ miles or block release with overnight stays"
-          items={travelFacts}
         />
-
-        {/* ── Age incentive ──────────────────────────────────────── */}
-        <FundingCard
-          eyebrow="Age incentive"
-          title="£1,000 for under-19s + EHC / care leavers"
-          meta="Two £500 instalments, passed to the employer"
-          items={ageIncentive}
-        />
-
-        {/* ── Care leaver bursary ─────────────────────────────────── */}
-        <FundingCard
-          eyebrow="Care leaver bursary"
-          title="£1,000 paid directly to the apprentice"
-          meta="Separate from the employer age incentive"
-          items={careLeaverFacts}
-        />
-
-        {/* ── Learning support ────────────────────────────────────── */}
-        <FundingCard
-          eyebrow="Additional learning support"
-          title="Up to £150/month for additional needs"
-          meta="Dyslexia, ADHD, autism, physical disabilities, more"
-          items={learningSupportFacts}
-        />
-
-        {/* ── Tax benefits ────────────────────────────────────────── */}
-        <FundingCard
-          eyebrow="Tax benefits for employers"
-          title="NI relief + allowable expenses"
-          meta="Saves £2,000–£3,000/year for under-25 apprentices"
-          items={taxBenefits}
-          icon={PiggyBank}
-        />
-
-        {/* ── Other industry grants ───────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Other industry grants"
-            title="Five lesser-known funding routes"
-            meta="JIB · ECA · local authorities · regional · youth hubs"
-          />
-          <ul className="space-y-2">
-            {otherGrants.map((grant) => (
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-1.5">
+            {[
+              'Care leaver bursary — £3,000 paid to you if you are a care leaver aged 16–24 (see below)',
+              '16 to 19 Bursary Fund — help with travel, kit or meals for under-19s on some study programmes; ask your college',
+              'Additional learning support — adjustments and equipment if you have a disability or learning need (claimed by your provider)',
+              "Travel to college is usually the employer's or CITB's call rather than a grant you claim — ask your employer first",
+            ].map((item) => (
               <li
-                key={grant.title}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
               >
-                <div className="flex items-start gap-2.5">
-                  <Award className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                      {grant.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{grant.description}</p>
-                  </div>
-                </div>
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-        </motion.section>
+        </div>
+      </motion.section>
 
-        {/* ── Full financial summary ──────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Full financial summary"
-            title="4-year Level 3 electrical — the maths"
-            meta="What the employer receives vs what the employer pays"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
-              CARD_SURFACE
-            )}
-          >
-            <div className="space-y-2">
-              <Eyebrow className="text-elec-yellow/85">Employer receives</Eyebrow>
-              <ul className="space-y-1.5">
-                {employerReceives.map((row) => (
-                  <li
-                    key={row.label}
-                    className="flex items-start justify-between gap-3 text-[12.5px] text-white"
-                  >
-                    <span className="min-w-0">{row.label}</span>
-                    <span className="font-mono tabular-nums text-elec-yellow font-semibold flex-shrink-0">
-                      {row.value}
-                    </span>
-                  </li>
-                ))}
-                <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-elec-yellow/15">
-                  <span className="font-semibold">Total value</span>
-                  <span className="font-mono tabular-nums text-elec-yellow font-bold">
-                    £45,500+
+      {/* ── CITB grants ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="CITB grants"
+          title="£13,500 over 4 years"
+          meta="Construction Industry Training Board attendance + completion"
+          action={
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.05]">
+              <Banknote className="h-4 w-4 text-elec-yellow" />
+            </span>
+          }
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4',
+            CARD_SURFACE
+          )}
+        >
+          <ul className="space-y-1.5">
+            {citbBreakdown.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 space-y-1 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <Eyebrow className="text-elec-yellow">Quarterly payment schedule (per year)</Eyebrow>
+            <ul className="text-[12.5px] tabular-nums text-white space-y-0.5">
+              <li>Q1 (weeks 1–13): £625</li>
+              <li>Q2 (weeks 14–26): £625</li>
+              <li>Q3 (weeks 27–39): £625</li>
+              <li>Q4 (weeks 40–52): £625</li>
+              <li className="font-semibold text-elec-yellow pt-1 border-t border-white/[0.08]">
+                Annual total: £2,500
+              </li>
+            </ul>
+            <p className="text-[14px] text-white leading-relaxed pt-1">
+              Payments made after each 13-week period, subject to attendance requirements and a
+              valid claim.
+            </p>
+          </div>
+          <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+            <Eyebrow>Eligibility</Eyebrow>
+            <ul className="space-y-1.5">
+              {citbEligibility.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+            <Eyebrow>How to claim — step by step</Eyebrow>
+            <ol className="space-y-1.5">
+              {citbClaimSteps.map((step, i) => (
+                <li
+                  key={step}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <span className="text-elec-yellow tabular-nums mt-0.5">{i + 1}.</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <Eyebrow className="text-red-300">Common claim mistakes to avoid</Eyebrow>
+            <ul className="space-y-1.5">
+              {citbMistakes.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── CITB Travel ─────────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="CITB travel & accommodation"
+        title="Up to 80% covered for distant training"
+        meta="50+ miles or block release with overnight stays"
+        items={travelFacts}
+      />
+
+      {/* ── Age incentive ──────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Age incentive"
+        title="£1,000 for under-19s + EHC / care leavers"
+        meta="Two £500 instalments, passed to the employer"
+        items={ageIncentive}
+      />
+
+      {/* ── Care leaver bursary ─────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Care leaver bursary"
+        title="£3,000 paid to the apprentice"
+        meta="Separate from the employer age incentive"
+        items={careLeaverFacts}
+      />
+
+      {/* ── Learning support ────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Additional learning support"
+        title="Up to £150/month for additional needs"
+        meta="Dyslexia, ADHD, autism, physical disabilities, more"
+        items={learningSupportFacts}
+      />
+
+      {/* ── Tax benefits ────────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Tax benefits for employers"
+        title="NI relief + allowable expenses"
+        meta="Saves £2,000–£3,000/year for under-25 apprentices"
+        items={taxBenefits}
+        icon={PiggyBank}
+      />
+
+      {/* ── Other industry grants ───────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Other industry grants"
+          title="Five lesser-known funding routes"
+          meta="JIB · ECA · local authorities · regional · youth hubs"
+        />
+        <ul className="space-y-2">
+          {otherGrants.map((grant) => (
+            <li
+              key={grant.title}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-2.5">
+                <Award className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {grant.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{grant.description}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Full financial summary ──────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Full financial summary"
+          title="4-year Level 3 electrical — the maths"
+          meta="What the employer receives vs what the employer pays"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4',
+            CARD_SURFACE
+          )}
+        >
+          <div className="space-y-2">
+            <Eyebrow className="text-elec-yellow">Employer receives</Eyebrow>
+            <ul className="space-y-1.5">
+              {employerReceives.map((row) => (
+                <li
+                  key={row.label}
+                  className="flex items-start justify-between gap-3 text-[12.5px] text-white"
+                >
+                  <span className="min-w-0">{row.label}</span>
+                  <span className="tabular-nums text-elec-yellow font-semibold flex-shrink-0">
+                    {row.value}
                   </span>
                 </li>
-              </ul>
-            </div>
-            <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-              <Eyebrow>Employer pays</Eyebrow>
-              <ul className="space-y-1.5">
-                {employerPays.map((row) => (
-                  <li
-                    key={row.label}
-                    className="flex items-start justify-between gap-3 text-[12.5px] text-white"
-                  >
-                    <span className="min-w-0">{row.label}</span>
-                    <span className="font-mono tabular-nums text-white font-semibold flex-shrink-0">
-                      {row.value}
-                    </span>
-                  </li>
-                ))}
-                <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-white/[0.06]">
-                  <span className="font-semibold">Total cost</span>
-                  <span className="font-mono tabular-nums text-white font-bold">£65,150</span>
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-md border border-elec-yellow/25 bg-white/[0.05] p-3">
-              <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Net result:</span> After grants and
-                tax relief, the true cost of a 4-year apprentice is approximately{' '}
-                <span className="font-mono text-elec-yellow">£20,000</span> — and you gain a fully
-                qualified electrician trained to your standards. Compared to hiring at £35k+ salary
-                plus £5k+ recruitment fees, apprenticeships are significantly better value.
-              </p>
-            </div>
+              ))}
+              <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-white/[0.08]">
+                <span className="font-semibold">Total value</span>
+                <span className="tabular-nums text-elec-yellow font-bold">£47,500+</span>
+              </li>
+            </ul>
           </div>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+          <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+            <Eyebrow>Employer pays</Eyebrow>
+            <ul className="space-y-1.5">
+              {employerPays.map((row) => (
+                <li
+                  key={row.label}
+                  className="flex items-start justify-between gap-3 text-[12.5px] text-white"
+                >
+                  <span className="min-w-0">{row.label}</span>
+                  <span className="tabular-nums text-white font-semibold flex-shrink-0">
+                    {row.value}
+                  </span>
+                </li>
+              ))}
+              <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-white/[0.06]">
+                <span className="font-semibold">Total cost</span>
+                <span className="tabular-nums text-white font-bold">£64,000</span>
+              </li>
+            </ul>
+          </div>
+          <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Net result:</span> Training is paid
+              for, and after grants, incentives and NI relief the wage cost of a 4-year apprentice
+              is approximately <span className="text-elec-yellow">£39,500</span> — and you gain a
+              fully qualified electrician trained to your standards. Compared to hiring at £35k+
+              salary plus £5k+ recruitment fees, apprenticeships are significantly better value.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+    </GuidePage>
   );
 };
 
@@ -449,19 +443,19 @@ function FundingCard({
         title={title}
         meta={meta}
         action={
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.05]">
             <Icon className="h-4 w-4 text-elec-yellow" />
           </span>
         }
       />
-      <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
+      <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
         <ul className="space-y-1.5">
           {items.map((item) => (
             <li
               key={item}
-              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
+              className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
             >
-              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <span>{item}</span>
             </li>
           ))}

@@ -16,11 +16,11 @@ import {
   inputCn,
   textareaCn,
 } from '@/components/forms/fieldStyles';
-import { chipCn } from '@/components/college/ui/CollegeUi';
+import { choiceCn } from '@/components/college/teaching/TeachingKit';
 
 /** The landing-page card surface, edge to edge on a phone. */
 const COLLEGE_CARD =
-  '-mx-4 card-surface rounded-none border-y border-white/[0.08] p-5 sm:mx-0 sm:rounded-2xl sm:border sm:p-6';
+  '-mx-4 card-surface max-sm:!rounded-none max-sm:!border-x-0 border-y border-white/[0.08] p-5 sm:mx-0 sm:rounded-2xl sm:border sm:p-6';
 import { LessonGenerationProgress } from '@/components/college/dialogs/LessonGenerationProgress';
 import { ScheduleLessonDialog } from '@/components/college/dialogs/ScheduleLessonDialog';
 
@@ -538,8 +538,9 @@ export function LessonGeneratorDialog({
                   <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
+                      aria-pressed={selectedCohortId === null}
                       onClick={() => setSelectedCohortId(null)}
-                      className={chipCn(selectedCohortId === null)}
+                      className={choiceCn(selectedCohortId === null)}
                     >
                       No cohort
                     </button>
@@ -547,8 +548,9 @@ export function LessonGeneratorDialog({
                       <button
                         key={c.id}
                         type="button"
+                        aria-pressed={selectedCohortId === c.id}
                         onClick={() => setSelectedCohortId(c.id)}
-                        className={chipCn(selectedCohortId === c.id)}
+                        className={choiceCn(selectedCohortId === c.id)}
                       >
                         {c.name}
                         {c.learner_count > 0 && (
@@ -617,7 +619,7 @@ export function LessonGeneratorDialog({
                           setLength(d);
                         }}
                         className={cn(
-                          chipCn(!customLength && length === d),
+                          choiceCn(!customLength && length === d),
                           'min-w-[72px] tabular-nums'
                         )}
                       >
@@ -628,7 +630,7 @@ export function LessonGeneratorDialog({
                       type="button"
                       aria-pressed={customLength}
                       onClick={() => setCustomLength(true)}
-                      className={chipCn(customLength)}
+                      className={choiceCn(customLength)}
                     >
                       Custom
                     </button>
@@ -669,7 +671,7 @@ export function LessonGeneratorDialog({
                         type="button"
                         aria-pressed={mode === opt.value}
                         onClick={() => setMode(opt.value)}
-                        className={cn(chipCn(mode === opt.value), 'min-w-[88px]')}
+                        className={cn(choiceCn(mode === opt.value), 'min-w-[88px]')}
                       >
                         {opt.label}
                       </button>
@@ -689,7 +691,7 @@ export function LessonGeneratorDialog({
                       type="button"
                       aria-pressed={kit.includes(item)}
                       onClick={() => toggleKit(item)}
-                      className={chipCn(kit.includes(item))}
+                      className={choiceCn(kit.includes(item))}
                     >
                       {kit.includes(item) && (
                         <span aria-hidden className="mr-1">

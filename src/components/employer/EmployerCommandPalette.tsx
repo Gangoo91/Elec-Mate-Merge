@@ -61,11 +61,7 @@ export function EmployerCommandPalette({
 
   return (
     <CommandDialog open={open} onOpenChange={close}>
-      <CommandInput
-        placeholder="Jump to, or ask Mate…"
-        value={search}
-        onValueChange={setSearch}
-      />
+      <CommandInput placeholder="Jump to, or ask Mate…" value={search} onValueChange={setSearch} />
       <CommandList>
         <CommandEmpty>No matches.</CommandEmpty>
 
@@ -120,9 +116,7 @@ export function EmployerCommandPalette({
               value={`${s.title} ${s.eyebrow} ${s.key}`}
               onSelect={() => go(s.key)}
             >
-              <span className="mr-2 w-16 shrink-0 text-[10px] uppercase tracking-wider text-white">
-                {s.eyebrow}
-              </span>
+              <span className="mr-2 w-16 shrink-0 text-[12px] text-white">{s.eyebrow}</span>
               <span className="truncate">{s.title}</span>
             </CommandItem>
           ))}

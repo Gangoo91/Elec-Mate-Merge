@@ -312,7 +312,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           title: g.title,
           summary: `${sourceLabel} · ${g.category ?? 'goal'} · ${g.priority ?? 'medium'} priority${g.target_date ? ` · target ${g.target_date}` : ''}${g.acceptance_criteria ? ` · Done when: ${g.acceptance_criteria.slice(0, 120)}` : ''}`,
           status,
-          href: `/college/students/${collegeStudentId}#ilp`,
+          href: `/college?section=student360&studentId=${collegeStudentId}#ilp`,
           meta: { status: g.status ?? '—', priority: g.priority ?? '—' },
         });
       }
@@ -381,7 +381,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           title: p.title,
           summary: [stateLine, category, p.description?.slice(0, 160)].filter(Boolean).join(' · '),
           status,
-          href: `/college/students/${collegeStudentId}#portfolio`,
+          href: `/college?section=student360&studentId=${collegeStudentId}#portfolio`,
           ac_codes: crit.length
             ? crit.map((c) => c.code)
             : (p.assessment_criteria_met ?? []).map(acLabel),
@@ -430,7 +430,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           title: o.activity_title ?? 'Observation',
           summary: `${humanise(o.outcome ?? 'recorded')}${o.grade ? ` · ${o.grade}` : ''}${o.feedback_strengths ? ` · ${o.feedback_strengths.slice(0, 160)}` : ''}`,
           status,
-          href: `/college/students/${collegeStudentId}#observations`,
+          href: `/college?section=student360&studentId=${collegeStudentId}#observations`,
           ac_codes: (o.acs_evidenced ?? []).map(acLabel),
           meta: { outcome: o.outcome ?? '—', grade: o.grade ?? '—' },
         });
@@ -454,7 +454,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           title: o.title || 'OTJ entry',
           summary: `${hours}h${o.verification_status ? ` · ${o.verification_status}` : ' · pending verification'}${o.verified_at ? ` · verified ${o.verified_at.slice(0, 10)}` : ''}`,
           status,
-          href: `/college/students/${collegeStudentId}#otj`,
+          href: `/college?section=student360&studentId=${collegeStudentId}#otj`,
           ac_codes: o.unit_codes ?? [],
           meta: { hours, status: o.verification_status ?? 'pending' },
         });
@@ -519,7 +519,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           summary:
             n.body.slice(0, 200) + (n.action_required ? ` · ACTION: ${n.action_required}` : ''),
           status,
-          href: `/college/students/${collegeStudentId}`,
+          href: `/college?section=student360&studentId=${collegeStudentId}`,
           meta: { kind: n.kind, action: n.action_required ?? '—' },
         });
       }
@@ -540,7 +540,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
                 : 'Message',
           summary: m.body.slice(0, 200),
           status: 'neutral',
-          href: `/college/students/${collegeStudentId}#messages`,
+          href: `/college?section=student360&studentId=${collegeStudentId}#messages`,
           meta: { sender: m.sender_kind ?? '—' },
         });
       }
@@ -564,7 +564,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           title: `EPA judgement (${e.source ?? 'unknown'})`,
           summary: `Predicted ${e.predicted_grade ?? '—'}${e.notes ? ` · ${e.notes.slice(0, 200)}` : ''}`,
           status,
-          href: `/college/students/${collegeStudentId}#epa`,
+          href: `/college?section=student360&studentId=${collegeStudentId}#epa`,
           meta: { grade: e.predicted_grade ?? '—', source: e.source ?? '—' },
         });
       }

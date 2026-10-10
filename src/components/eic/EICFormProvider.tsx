@@ -1,6 +1,6 @@
 import { formatBoardsForFormData } from '@/utils/boardMigration';
 import { forgetPlanCertificate, readPlanCertificate } from '@/utils/planCertificateHandoff';
-import { readCertificatePrefill } from '@/utils/certificatePrefill';
+import { readCertificatePrefill, readCertificatePrefillCircuits } from '@/utils/certificatePrefill';
 import React, {
   createContext,
   useContext,
@@ -243,7 +243,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     continuationSheetNo: '',
     inspections: {},
     inspectionItems: [],
-    scheduleOfTests: [],
+    // Started from a job (Worker Tools): the job design's circuits, readings blank.
+    scheduleOfTests: readCertificatePrefillCircuits() ?? [],
     distributionBoards: [],
     testMethod: '',
     testVoltage: '',

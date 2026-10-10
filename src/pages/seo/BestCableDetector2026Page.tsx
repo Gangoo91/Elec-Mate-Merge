@@ -568,9 +568,9 @@ const sections = [
                 </li>
                 <li>
                   <strong>Additional RCD protection</strong> — under BS 7671:2018+A4:2026 Reg
-                  411.3.4, AC final circuits supplying luminaires in domestic premises now require
+                  411.3.4, AC final circuits supplying luminaires in domestic premises require
                   additional protection by an RCD with rated residual operating current not
-                  exceeding 30 mA. This A4:2026 extension means most domestic lighting circuits now
+                  exceeding 30 mA. This has applied since BS 7671:2018, so domestic lighting circuits
                   need 30 mA RCD protection regardless of cable routing.
                 </li>
               </ul>
@@ -736,7 +736,7 @@ export default function BestCableDetector2026Page() {
       title="Best Cable Detector 2026: Pipe & Wire Finders UK"
       description="Best cable detectors and cable avoidance tools (CAT scanners) for UK electricians in 2026: Radiodetection C.A.T4+, Leica DD220, Fluke 2042 compared."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

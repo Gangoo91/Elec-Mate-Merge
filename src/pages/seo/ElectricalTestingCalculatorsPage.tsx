@@ -84,19 +84,19 @@ const faqData = [
       'The conduit fill calculator uses the cable factor method from the IET On-Site Guide (OSG) tables. Each cable size has a factor representing its cross-sectional area including insulation. You select the conduit size (which has a maximum capacity factor), enter the number and type of cables, and the calculator checks the total cable factor does not exceed the conduit capacity. For example, a 20mm round conduit has a factor of 460, and 2.5mm twin and earth cables each have a factor of 43. The trunking fill calculator works similarly but uses the percentage fill method — IET guidance limits trunking fill to 45% of the internal cross-sectional area. Elec-Mate covers all standard conduit sizes from 16mm to 50mm and trunking from 50x50mm to 300x100mm.',
   },
   {
-    question: 'Do domestic lighting circuits now need RCD protection under A4:2026?',
+    question: 'Do domestic lighting circuits need RCD protection under BS 7671?',
     answer:
-      'Yes. Regulation 411.3.4, introduced in BS 7671:2018+A4:2026, requires that within domestic (household) premises, additional protection by a 30mA RCD shall be provided for all AC final circuits supplying luminaires. This is a mandatory obligation — the regulation uses "shall". Pre-A4 domestic installations without RCD-protected lighting circuits are therefore non-compliant with current Wiring Regulations and will typically receive a C2 (potentially dangerous) or C3 (improvement recommended) observation on an EICR depending on the age of the installation and the specific circumstances. When testing a domestic board, verify that every lighting circuit is protected by a 30mA RCD and record any unprotected lighting circuits as an observation on the schedule.',
+      'Yes. Regulation 411.3.4, in force since BS 7671:2018 and unchanged in A4:2026, requires that within domestic (household) premises, additional protection by a 30mA RCD shall be provided for all AC final circuits supplying luminaires. This is a mandatory obligation — the regulation uses "shall". Older domestic installations without RCD-protected lighting circuits are therefore non-compliant with current Wiring Regulations and will typically receive a C2 (potentially dangerous) or C3 (improvement recommended) observation on an EICR depending on the age of the installation and the specific circumstances. When testing a domestic board, verify that every lighting circuit is protected by a 30mA RCD and record any unprotected lighting circuits as an observation on the schedule.',
   },
   {
-    question: 'What is an AFDD and does A4:2026 make them mandatory?',
+    question: 'What is an AFDD and is it mandatory under BS 7671?',
     answer:
-      'An AFDD (arc fault detection device) detects arc fault currents on AC final circuits — the kind of electrical arcing caused by damaged insulation, loose connections, or chafed cables that conventional MCBs and RCDs do not detect. Regulation 421.1.7, introduced by Amendment A4:2026, recommends (but does not mandate) the installation of AFDDs in AC final circuits of fixed installations to mitigate the risk of fire from arc fault currents. Because the regulation uses recommendatory language rather than "shall", AFDDs are not a legal requirement under BS 7671 for all installations. However, omitting them where there is a clear fire risk may result in a C3 improvement observation on an EICR, and they are increasingly expected practice on new domestic installations.',
+      'An AFDD (arc fault detection device) detects arc fault currents on AC final circuits — the kind of electrical arcing caused by damaged insulation, loose connections, or chafed cables that conventional MCBs and RCDs do not detect. Regulation 421.1.7, first introduced in BS 7671:2018 as a recommendation, has since A2:2022 required AFDDs on single-phase socket-outlet circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. In all other premises it recommends (but does not mandate) them. However, omitting them where there is a clear fire risk may result in a C3 improvement observation on an EICR, and they are increasingly expected practice on new domestic installations.',
   },
   {
     question: 'Are the calculators compliant with the latest BS 7671 amendments?',
     answer:
-      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 4 where applicable. Key A4:2026 changes relevant to testing include: Reg 551.7.1, which has been redrafted to add new indents (c) and (d) requiring a suitable protective device where energy flow is bidirectional (for example export-capable solar PV or battery storage) and restricting connection of sources to the load side of RCDs; Reg 411.3.4, which now requires 30mA RCD additional protection for domestic lighting circuits; and Reg 421.1.7, which recommends AFDDs on AC final circuits. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments are published, we update all affected calculators within 30 days.',
+      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 4 where applicable. Key requirements relevant to testing include: Reg 551.7.1, redrafted at A4:2026 to add new indents (c) and (d) requiring a suitable protective device where energy flow is bidirectional (for example export-capable solar PV or battery storage) and restricting connection of sources to the load side of RCDs; Reg 411.3.4 (since 2018), which requires 30mA RCD additional protection for domestic lighting circuits; and Reg 421.1.7, which recommends AFDDs on AC final circuits and requires them in HMOs and similar premises (since A2:2022). Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments are published, we update all affected calculators within 30 days.',
   },
 ];
 
@@ -391,10 +391,10 @@ export default function ElectricalTestingCalculatorsPage() {
               explains what a failure at each level typically indicates.
             </p>
             <p>
-              BS 7671:2018+A4:2026 Reg 411.3.4 introduced a new requirement for domestic premises:
-              all AC final circuits supplying luminaires (lighting circuits) shall now have
-              additional protection by a 30mA RCD. This is a mandatory obligation and a common EICR
-              failure point on pre-A4 installations where lighting circuits were historically left
+              BS 7671 Reg 411.3.4, in force since the 2018 edition, requires that in domestic premises
+              all AC final circuits supplying luminaires (lighting circuits) shall have additional
+              protection by a 30mA RCD. This is a mandatory obligation and a common EICR failure
+              point on pre-2019 installations where lighting circuits were historically left
               unprotected. When running our RCD testing calculator, ensure you have verified and
               recorded RCD protection for every lighting circuit in domestic properties — any
               unprotected lighting circuit requires an EICR observation.

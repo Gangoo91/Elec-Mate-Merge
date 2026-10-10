@@ -55,12 +55,12 @@ const InitialVerificationDiagram = ({
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           BS 7671 initial verification requirements
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Regulation 641.1
             </span>
             <p className="text-[14px] text-white leading-relaxed">
@@ -68,7 +68,7 @@ const InitialVerificationDiagram = ({
             </p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Regulation 643.1
             </span>
             <p className="text-[14px] text-white leading-relaxed">
@@ -88,7 +88,7 @@ const InitialVerificationDiagram = ({
               <span className="text-[12px] font-mono text-white flex-shrink-0">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[12px] font-medium text-white">
                 {phase.phase}
               </span>
             </div>
@@ -108,12 +108,12 @@ const InitialVerificationDiagram = ({
       </div>
 
       <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+        <span className="text-[12px] font-medium text-red-300">
           Initial verification critical points
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Before energising
             </span>
             <ul className="space-y-1.5">
@@ -134,7 +134,7 @@ const InitialVerificationDiagram = ({
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Documentation required
             </span>
             <ul className="space-y-1.5">
@@ -159,7 +159,7 @@ const InitialVerificationDiagram = ({
 
       {installationType && (
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             {installationType.charAt(0).toUpperCase() + installationType.slice(1)} installation —
             specific requirements
           </span>

@@ -1,0 +1,33 @@
+{
+  "name": "listInvoices",
+  "label": "List Invoices",
+  "description": "Lists invoices changed since a date (search).",
+  "type": "search",
+  "connection": "elec-mate",
+  "communication": {
+    "url": "/invoices",
+    "method": "GET",
+    "qs": { "since": "{{parameters.since}}", "limit": 500, "offset": "{{(pagination.page - 1) * 500}}" },
+    "response": {
+      "iterate": "{{body.data}}",
+      "output": "{{item}}",
+      "limit": "{{parameters.limit}}"
+    },
+    "pagination": { "condition": "{{body.next_offset != null}}" }
+  },
+  "parameters": [
+    { "name": "since", "type": "date", "label": "Changed since" },
+    { "name": "limit", "type": "uinteger", "label": "Maximum number of results", "default": 100, "required": true }
+  ],
+  "interface": [
+    { "name": "id", "type": "text", "label": "Invoice ID" },
+    { "name": "invoice_number", "type": "text", "label": "Invoice number" },
+    { "name": "client_name", "type": "text", "label": "Client" },
+    { "name": "status", "type": "text", "label": "Status" },
+    { "name": "total", "type": "number", "label": "Total (GBP)" },
+    { "name": "total_paid", "type": "number", "label": "Paid (GBP)" },
+    { "name": "due_date", "type": "date", "label": "Due date" },
+    { "name": "paid_at", "type": "date", "label": "Paid at" },
+    { "name": "job_id", "type": "text", "label": "Job ID" }
+  ]
+}

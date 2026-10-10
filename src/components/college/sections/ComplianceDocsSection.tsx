@@ -8,16 +8,17 @@ import { cn } from '@/lib/utils';
 import { inputCn } from '@/components/forms/fieldStyles';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
+import { JoinedToggle } from '@/components/college/quality/QualityChoices';
+import { Ring, VisHead } from '@/components/college/student360/Student360Visuals';
 import {
-  COLLEGE_BTN,
-  COLLEGE_BTN_PRIMARY,
-  CollegeLinkCard,
-  CollegePageHeader,
-  CollegeSectionTitle,
-  chipCn,
-} from '@/components/college/ui/CollegeUi';
-import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
-import { Ring, VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+  LinkCard,
+  QBTN,
+  QBTN_PRIMARY,
+  QCARD,
+  QualityHeader,
+} from '@/components/college/quality/QualityHubKit';
+import { joinAnd, plural } from '@/components/college/quality/qualityText';
 import { BarList, ChartEmpty, Donut, SegmentBar } from '@/components/college/quality/QualityKit';
 import { daysFromToday, useScrRecords } from '@/components/college/quality/DocsScrRecords';
 import { StaffComplianceList } from './StaffComplianceList';
@@ -39,6 +40,12 @@ import { PolicyTemplatesSheet } from '@/components/college/dialogs/PolicyTemplat
 
    Every figure reads v_single_central_record (the list reads the same view),
    so the chart and the list can never disagree.
+
+   8 Oct 2026: the four figure tiles went into the header sentence; the one
+   primary action opens the person with the most urgent gap (expired before
+   missing), so "fix it" is one tap instead of a scroll to the list.
+   `embedded` drops the page title when /college/compliance shows this
+   under its own header.
    ========================================================================== */
 
 type Tab = 'staff' | 'policies';
@@ -74,7 +81,7 @@ const HELP: PageHelpContent = {
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
-export function ComplianceDocsSection() {
+export function ComplianceDocsSection({ embedded = false }: { embedded?: boolean } = {}) {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<Tab>('staff');
@@ -155,83 +162,120 @@ export function ComplianceDocsSection() {
     };
   }, [policies]);
 
-  const fig = (n: number) => (scrLoading ? '—' : String(n));
   const inDatePct = stats.inDatePct ?? 0;
+
+  /* The person with the most urgent gap: expired first, then missing. */
+  const nextGap = useMemo(() => {
+    const exp = scr.find((r) => r.computed_status === 'expired');
+    const miss = scr.find((r) => r.computed_status === 'missing');
+    return exp ?? miss ?? null;
+  }, [scr]);
+
+  const summary = scrLoading
+    ? 'Reading the single central record…'
+    : stats.total === 0
+      ? 'No staff records yet. Add staff under People and their checks appear here.'
+      : (() => {
+          const gapsBits = [
+            stats.expired > 0 ? `${stats.expired} expired` : '',
+            stats.missing > 0 ? `${stats.missing} missing` : '',
+            stats.expiring > 0 ? `${stats.expiring} expiring within 60 days` : '',
+            stats.pending_verification > 0
+              ? `${stats.pending_verification} awaiting verification`
+              : '',
+          ].filter(Boolean);
+          return gapsBits.length === 0
+            ? `All ${stats.total} staff checks are in date.`
+            : `${stats.valid} of ${stats.total} staff checks in date. ${joinAnd(gapsBits).replace(/^./, (c) => c.toUpperCase())}.`;
+        })();
+  const policyLine = policiesLoading
+    ? null
+    : pol.live === 0
+      ? 'No live policies yet, so staff have nothing to sign.'
+      : `${plural(pol.live, 'live policy', 'live policies')}${pol.target > 0 ? `, ${pol.signed} of ${pol.target} signatures collected` : ''}${pol.reviewDue > 0 ? `, ${pol.reviewDue} due a review within 30 days` : ''}.`;
+
+  const primary =
+    activeTab === 'policies' ? (
+      <button type="button" className={QBTN_PRIMARY} onClick={() => setAddPolicyOpen(true)}>
+        Add policy
+      </button>
+    ) : nextGap ? (
+      <button
+        type="button"
+        className={QBTN_PRIMARY}
+        onClick={() => setOpenStaffId(nextGap.college_staff_id)}
+      >
+        Fix next gap
+      </button>
+    ) : (
+      <button type="button" className={QBTN_PRIMARY} onClick={() => showList('staff')}>
+        Update a record
+      </button>
+    );
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      <CollegePageHeader
-        eyebrow="Quality and compliance"
-        title="Staff records and policies"
-        description="Every statutory check for every member of staff, and the policies they have to read and sign."
-        help={HELP}
-        actions={
-          <>
-            {isVerifier && (
+      {embedded ? (
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="min-w-0">
+            <h2 className="text-[20px] font-bold tracking-tight text-white sm:text-[24px]">
+              Staff records and policies
+            </h2>
+            <p className="mt-1 max-w-3xl text-[14.5px] leading-relaxed text-white">{summary}</p>
+            {policyLine && <p className="mt-0.5 text-[13px] text-white">{policyLine}</p>}
+          </div>
+          <div className="flex flex-wrap gap-2 [&>*]:w-full sm:[&>*]:w-auto">{primary}</div>
+        </div>
+      ) : (
+        <QualityHeader
+          eyebrow="Quality and compliance"
+          title="Staff records and policies"
+          summary={summary}
+          sub={
+            <>
+              {policyLine}
+              {nextGap && activeTab === 'staff' && (
+                <>
+                  {' '}
+                  Fix next gap opens {nextGap.name}: {nextGap.requirement ?? 'a check'} is{' '}
+                  {nextGap.computed_status === 'expired' ? 'expired' : 'missing'}.
+                </>
+              )}
+            </>
+          }
+          help={HELP}
+          actions={
+            isVerifier ? (
               <button
                 type="button"
-                className={COLLEGE_BTN}
+                className={QBTN}
                 onClick={() => navigate('/college/compliance/pack')}
               >
                 Audit pack
               </button>
-            )}
-            <button
-              type="button"
-              className={COLLEGE_BTN_PRIMARY}
-              onClick={() =>
-                activeTab === 'policies' ? setAddPolicyOpen(true) : showList('staff')
-              }
-            >
-              {activeTab === 'policies' ? 'Add policy' : 'Update a record'}
-            </button>
-          </>
-        }
-      />
+            ) : undefined
+          }
+          primary={primary}
+        />
+      )}
 
-      <AreaHero
-        figures={[
-          {
-            label: 'In date',
-            value: fig(stats.valid),
-            sub: stats.total > 0 ? `of ${stats.total} records, ${inDatePct}%` : 'No records yet',
-            good: stats.total > 0 && stats.valid === stats.total,
-          },
-          {
-            label: 'Expiring',
-            value: fig(stats.expiring),
-            sub: stats.expiring > 0 ? 'Within 60 days. Renew now' : 'Nothing due in 60 days',
-            warn: stats.expiring > 0,
-          },
-          {
-            label: 'Expired',
-            value: fig(stats.expired),
-            sub: stats.expired > 0 ? 'Not valid today' : 'None expired',
-            warn: stats.expired > 0,
-          },
-          {
-            label: 'Missing',
-            value: fig(stats.missing),
-            sub: stats.missing > 0 ? 'Not yet on file' : 'Every record on file',
-            warn: stats.missing > 0,
-          },
-        ]}
-        chartTitle="Records by state"
-        chart={
-          scrLoading ? (
-            <ChartEmpty text="Loading records…" />
-          ) : (
-            <div className="max-w-xl">
-              <Donut
-                centre={`${inDatePct}%`}
-                centreSub="in date"
-                emptyText="No staff records yet. Add staff under People."
-                segments={scrSegments(stats, () => showList('staff'))}
-              />
-            </div>
-          )
-        }
-        side={
+      <motion.section variants={itemVariants} initial="hidden" animate="visible" className={QCARD}>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+          <div>
+            <p className="mb-3 text-[13px] font-semibold text-white">Records by state</p>
+            {scrLoading ? (
+              <ChartEmpty text="Loading records…" />
+            ) : (
+              <div className="max-w-xl">
+                <Donut
+                  centre={`${inDatePct}%`}
+                  centreSub="in date"
+                  emptyText="No staff records yet. Add staff under People."
+                  segments={scrSegments(stats, () => showList('staff'))}
+                />
+              </div>
+            )}
+          </div>
           <div>
             <p className="mb-3 text-[13px] font-semibold text-white">
               Expiring in the next 90 days
@@ -260,15 +304,15 @@ export function ComplianceDocsSection() {
                       <span
                         className={cn(
                           'shrink-0 text-right text-[12px] font-semibold tabular-nums',
-                          r.days <= 60 ? 'text-orange-400' : 'text-white'
+                          r.days <= 60 ? 'text-orange-300' : 'text-white'
                         )}
                       >
                         {r.days < 0
-                          ? `${Math.abs(r.days)}d overdue`
+                          ? `${plural(Math.abs(r.days), 'day')} overdue`
                           : r.days === 0
-                            ? 'Today'
-                            : `${r.days}d`}
-                        <span className="block text-[11px] font-normal text-white">
+                            ? 'Expires today'
+                            : `In ${plural(r.days, 'day')}`}
+                        <span className="block text-[12px] font-normal text-white">
                           {fmtDate(r.expires_at as string)}
                         </span>
                       </span>
@@ -281,8 +325,8 @@ export function ComplianceDocsSection() {
               </ul>
             )}
           </div>
-        }
-      />
+        </div>
+      </motion.section>
 
       <motion.div
         variants={containerVariants}
@@ -290,7 +334,7 @@ export function ComplianceDocsSection() {
         animate="visible"
         className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2"
       >
-        <motion.section variants={itemVariants} className={VIS_CARD}>
+        <motion.section variants={itemVariants} className={QCARD}>
           <VisHead
             title="Where the gaps are"
             sub="Expired or missing, by statutory check"
@@ -311,7 +355,7 @@ export function ComplianceDocsSection() {
           </div>
         </motion.section>
 
-        <motion.section variants={itemVariants} className={VIS_CARD}>
+        <motion.section variants={itemVariants} className={QCARD}>
           <VisHead
             title="Policies"
             sub="Live policies and how many staff have signed them"
@@ -321,18 +365,10 @@ export function ComplianceDocsSection() {
             <div className="mt-5 space-y-3">
               <ChartEmpty text="No policies yet. Start from a template or add your own." />
               <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  className={COLLEGE_BTN}
-                  onClick={() => setTemplatesOpen(true)}
-                >
+                <button type="button" className={QBTN} onClick={() => setTemplatesOpen(true)}>
                   Browse templates
                 </button>
-                <button
-                  type="button"
-                  className={COLLEGE_BTN}
-                  onClick={() => setAddPolicyOpen(true)}
-                >
+                <button type="button" className={QBTN} onClick={() => setAddPolicyOpen(true)}>
                   Add a policy
                 </button>
               </div>
@@ -377,7 +413,7 @@ export function ComplianceDocsSection() {
                 <p
                   className={cn(
                     'text-[12.5px] leading-snug',
-                    pol.reviewDue > 0 ? 'text-orange-400' : 'text-white'
+                    pol.reviewDue > 0 ? 'text-orange-300' : 'text-white'
                   )}
                 >
                   {pol.reviewDue > 0
@@ -401,23 +437,15 @@ export function ComplianceDocsSection() {
           }
         />
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap gap-2">
-            {(
-              [
-                { value: 'staff', label: 'Staff records' },
-                { value: 'policies', label: 'Policies' },
-              ] as { value: Tab; label: string }[]
-            ).map((t) => (
-              <button
-                key={t.value}
-                type="button"
-                onClick={() => setActiveTab(t.value)}
-                className={cn(chipCn(activeTab === t.value), 'h-11 px-5')}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+          <JoinedToggle<Tab>
+            label="Staff records or policies"
+            options={[
+              { key: 'staff', label: 'Staff records' },
+              { key: 'policies', label: 'Policies' },
+            ]}
+            value={activeTab}
+            onChange={setActiveTab}
+          />
           <label className="relative block w-full sm:max-w-sm">
             <Search
               className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
@@ -456,24 +484,24 @@ export function ComplianceDocsSection() {
             isVerifier ? 'xl:grid-cols-4' : 'xl:grid-cols-3'
           )}
         >
-          <CollegeLinkCard
+          <LinkCard
             title="Ofsted lens"
             body="A live snapshot of your evidence against what inspectors look at."
             onClick={() => navigate('/college/compliance/ofsted')}
           />
           {isVerifier && (
-            <CollegeLinkCard
+            <LinkCard
               title="Audit pack"
               body="The single central record, policies and sign-off logs, ready to print."
               onClick={() => navigate('/college/compliance/pack')}
             />
           )}
-          <CollegeLinkCard
+          <LinkCard
             title="Policy templates"
             body="Browse starter policies and copy one in as a draft."
             onClick={() => setTemplatesOpen(true)}
           />
-          <CollegeLinkCard
+          <LinkCard
             title="Draft a policy"
             body="Give it a topic and get a draft to review, edit and publish. Uses AI."
             onClick={() => setAiAuthorOpen(true)}

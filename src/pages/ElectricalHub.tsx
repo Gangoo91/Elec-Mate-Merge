@@ -76,7 +76,7 @@ const ElectricalHubInner = () => {
   // Drives "Your firm" and the Worker Tools card (ELE-1998): being on a team —
   // an ACTIVE roster row — is what grants it, not a paid seat. Seats and
   // billing are enforced on the employer's side (ELE-1831).
-  const { onTeam } = useOnTeam();
+  const { onTeam, isLoading: onTeamLoading } = useOnTeam();
   const { tasks, saveTask, updateTask, deleteTask, markDone } = useSparkTasks('all');
 
   const [mateOpen, setMateOpen] = useState(false);
@@ -155,6 +155,10 @@ const ElectricalHubInner = () => {
       // onboarding_completed — the WelcomeModal sets that flag on dismiss,
       // which used to permanently suppress this wizard.
       if (profileData?.hasCompanyProfile) return;
+      // ELE-1998: someone on a firm's team works under that firm's name and
+      // bank details, so the business-name/banking wizard is not theirs to
+      // fill in. Wait until we know, then skip it for them.
+      if (onTeamLoading || onTeam) return;
       const hasAccess = onboardingProfile.subscribed || onboardingProfile.free_access_granted;
       if (!hasAccess) return;
     }
@@ -166,7 +170,7 @@ const ElectricalHubInner = () => {
       setShowSetupWizard(true);
       localStorage.setItem('setup_wizard_shown', 'true');
     }
-  }, [onboardingProfile, profileData?.hasCompanyProfile]);
+  }, [onboardingProfile, profileData?.hasCompanyProfile, onTeam, onTeamLoading]);
 
   // Renewables is in private preview — named accounts only, not a launch. The
   // Heat Pump certificate and Solar Design Suite are still outstanding, so the
@@ -261,7 +265,7 @@ const ElectricalHubInner = () => {
       id: 'projects',
       title: 'Jobs',
       to: '/electrician/projects',
-      description: 'Every job — quotes, certs and invoices in one place.',
+      description: 'Every job, with its quotes, certs and invoices in one place.',
     },
     {
       // No "BS 7671" eyebrow. It was the only card in the group carrying one,
@@ -297,7 +301,7 @@ const ElectricalHubInner = () => {
     {
       id: 'renewables',
       title: 'Renewables',
-      description: 'Solar, battery, EV and heat pump — design to certificate.',
+      description: 'Solar, battery, EV and heat pump, from design to certificate.',
       to: '/electrician/renewables',
     },
   ].filter((c) => c.id !== 'renewables' || canSeeRenewables);
@@ -374,9 +378,16 @@ const ElectricalHubInner = () => {
             onClick={() => navigate('/electrician/inspection-testing')}
           />
           <HubKpi
-            label="Open jobs"
+            // On a team, say whose jobs these are: the firm's jobs are in Your firm above.
+            label={onTeam ? 'Your own jobs' : 'Open jobs'}
             value={String(business.activeProjects)}
-            verdict={business.activeProjects > 0 ? 'On the go right now' : 'Nothing open'}
+            verdict={
+              business.activeProjects > 0
+                ? onTeam
+                  ? 'Projects you run yourself'
+                  : 'On the go right now'
+                : 'Nothing open'
+            }
             onClick={() => navigate('/electrician/projects')}
           />
           <HubKpi

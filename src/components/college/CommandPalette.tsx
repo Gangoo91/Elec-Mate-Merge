@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -11,8 +12,20 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import { Pill, type Tone } from '@/components/college/primitives';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+import { keyLabel } from '@/lib/college/labels';
+
+/** Group headings in sentence case, full white (no spaced capitals). */
+const GROUP_CN =
+  '[&_[cmdk-group-heading]]:normal-case [&_[cmdk-group-heading]]:tracking-normal [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:text-white';
+
+/** The same cmdk layout the dialog uses, for the phone's bottom sheet. */
+const SHEET_COMMAND_CN =
+  'flex h-full flex-col bg-transparent [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]]:pr-12 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-list]]:max-h-none [&_[cmdk-list]]:flex-1 [&_[cmdk-list]]:overscroll-contain [&_[cmdk-list]]:overflow-x-hidden';
 
 interface CommandPaletteProps {
   open: boolean;
@@ -21,9 +34,14 @@ interface CommandPaletteProps {
 }
 
 export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPaletteProps) {
-  const { students, staff, courses, cohorts: _cohorts, grades: assessments } = useCollegeSupabase();
+  const { students, staff, courses, cohorts, grades: assessments } = useCollegeSupabase();
+  // The roll's name is `name`; the palette used to read `full_name`, which
+  // does not exist, so a learner could only be found by email and showed
+  // with no name.
+  const cohortName = useMemo(() => new Map(cohorts.map((c) => [c.id, c.name])), [cohorts]);
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (!open) setSearch('');
@@ -31,7 +49,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
 
   // No "G O"-style chord hints: nothing listens for those keys.
   const navigationItems: { label: string; section: CollegeSection }[] = [
-    { label: 'Overview', section: 'overview' },
+    { label: 'College Hub home', section: 'overview' },
     { label: 'People Hub', section: 'peoplehub' },
     { label: 'Curriculum Hub', section: 'curriculumhub' },
     { label: 'Assessment Hub', section: 'assessmenthub' },
@@ -39,26 +57,61 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
   ];
 
   const sectionItems: { label: string; section: CollegeSection }[] = [
-    { label: 'Students', section: 'students' },
+    { label: 'Learners', section: 'students' },
     { label: 'Tutors', section: 'tutors' },
     { label: 'Cohorts', section: 'cohorts' },
     { label: 'Courses', section: 'courses' },
     { label: 'Grading', section: 'grading' },
     { label: 'Portfolios', section: 'portfolio' },
     { label: 'Attendance', section: 'attendance' },
-    { label: 'ILP Management', section: 'ilpmanagement' },
+    { label: 'Learning plans', section: 'ilpmanagement' },
     { label: 'EPA Tracking', section: 'epatracking' },
     { label: 'Employer Portal', section: 'employerportal' },
     { label: 'LTI Settings', section: 'ltisettings' },
     { label: 'College Settings', section: 'collegesettings' },
   ];
 
-  const quickActions = [
-    { label: 'Record grade', action: 'grading' as CollegeSection },
-    { label: 'Add student', action: 'students' as CollegeSection },
-    { label: 'New lesson plan', action: 'lessonplans' as CollegeSection },
-    { label: 'Take attendance', action: 'attendance' as CollegeSection },
+  // The daily work, as pages (not sections): the same places the Act sheet
+  // and the home page send a tutor.
+  const dailyWork: { label: string; hint: string; to: string }[] = [
+    { label: 'Today', hint: 'Classes, what needs you, flagged learners', to: '/college/today' },
+    { label: 'Inbox', hint: 'Everything waiting on you', to: '/college/inbox' },
+    {
+      label: 'Hours to verify',
+      hint: 'Off-the-job hours learners logged',
+      to: '/college/otj/inbox',
+    },
+    {
+      label: 'Approve app learning',
+      hint: 'Off-the-job time spent in the app',
+      to: '/college/otj',
+    },
+    {
+      label: 'Progress reviews',
+      hint: 'Book, hold and sign the three-way review',
+      to: '/college/reviews',
+    },
+    {
+      label: 'Work queue',
+      hint: 'Grades, plan reviews, gateway, evidence',
+      to: '/college?section=workqueue',
+    },
   ];
+
+  const quickActions = [
+    { label: 'Record a grade', action: 'grading' as CollegeSection },
+    { label: 'Add a learner', action: 'students' as CollegeSection },
+    { label: 'New lesson plan', action: 'lessonplans' as CollegeSection },
+    { label: 'Take a register', action: 'attendance' as CollegeSection },
+  ];
+
+  const go = useCallback(
+    (to: string) => {
+      onOpenChange(false);
+      navigate(to);
+    },
+    [navigate, onOpenChange]
+  );
 
   const filteredStudents = useMemo(() => {
     if (!search || search.length < 2) return [];
@@ -66,12 +119,12 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     return students
       .filter(
         (s) =>
-          (s.full_name || '').toLowerCase().includes(query) ||
+          (s.name || '').toLowerCase().includes(query) ||
           (s.email || '').toLowerCase().includes(query) ||
-          (s.apprenticeship_standard || '').toLowerCase().includes(query)
+          (cohortName.get(s.cohort_id ?? '') || '').toLowerCase().includes(query)
       )
       .slice(0, 5);
-  }, [students, search]);
+  }, [students, search, cohortName]);
 
   const filteredStaff = useMemo(() => {
     if (!search || search.length < 2) return [];
@@ -79,7 +132,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     return staff
       .filter(
         (s) =>
-          (s.full_name || '').toLowerCase().includes(query) ||
+          (s.name || '').toLowerCase().includes(query) ||
           (s.email || '').toLowerCase().includes(query) ||
           (s.role || '').toLowerCase().includes(query)
       )
@@ -168,10 +221,10 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     filteredCourses.length > 0 ||
     filteredAssessments.length > 0;
 
-  return (
-    <CommandDialog open={open} onOpenChange={onOpenChange}>
+  const body = (
+    <>
       <CommandInput
-        placeholder="Search students, staff, courses…"
+        placeholder="Search learners, staff or courses"
         value={search}
         onValueChange={setSearch}
         inputMode="search"
@@ -183,17 +236,19 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
       <CommandList>
         <CommandEmpty>
           <div className="py-8 text-center">
-            <p className="text-[13px] font-medium text-white">No results</p>
-            <p className="mt-1 text-[11.5px] text-white">
-              Try searching for students, staff or courses.
+            <p className="text-[13px] font-medium text-white">
+              {search.trim().length < 2 ? 'Type two letters or more' : 'Nobody or nothing matches'}
+            </p>
+            <p className="mt-1 text-[12px] text-white">
+              Search by a learner’s name or email, a member of staff, or a course.
             </p>
           </div>
         </CommandEmpty>
 
         {filteredStudents.length > 0 && (
-          <CommandGroup heading="Students">
+          <CommandGroup className={GROUP_CN} heading="Learners">
             {filteredStudents.map((student) => {
-              const initials = (student.full_name || '')
+              const initials = (student.name || '')
                 .split(' ')
                 .map((n: string) => n[0])
                 .join('')
@@ -206,17 +261,19 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                   className="flex items-center gap-3"
                 >
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback className="text-xs bg-elec-yellow/10 text-elec-yellow">
+                    <AvatarFallback className="bg-white/[0.1] text-xs font-semibold text-white">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-medium text-white">{student.full_name}</p>
-                    <p className="text-[11px] text-white truncate">
-                      {student.apprenticeship_standard}
+                    <p className="text-[13px] font-medium text-white">{student.name}</p>
+                    <p className="text-[12px] text-white truncate">
+                      {cohortName.get(student.cohort_id ?? '') ?? student.email}
                     </p>
                   </div>
-                  <Pill tone={statusTone(student.status)}>{student.status}</Pill>
+                  {student.status && (
+                    <Pill tone={statusTone(student.status)}>{keyLabel(student.status)}</Pill>
+                  )}
                 </CommandItem>
               );
             })}
@@ -224,9 +281,9 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         )}
 
         {filteredStaff.length > 0 && (
-          <CommandGroup heading="Staff">
+          <CommandGroup className={GROUP_CN} heading="Staff">
             {filteredStaff.map((member) => {
-              const initials = (member.full_name || '')
+              const initials = (member.name || '')
                 .split(' ')
                 .map((n: string) => n[0])
                 .join('')
@@ -239,12 +296,12 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                   className="flex items-center gap-3"
                 >
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback className="text-xs bg-blue-500/10 text-blue-400">
+                    <AvatarFallback className="bg-white/[0.1] text-xs font-semibold text-white">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-medium text-white">{member.full_name}</p>
+                    <p className="text-[13px] font-medium text-white">{member.name}</p>
                   </div>
                   <Pill tone={roleTone(member.role)}>{formatRole(member.role)}</Pill>
                 </CommandItem>
@@ -254,20 +311,16 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         )}
 
         {filteredCourses.length > 0 && (
-          <CommandGroup heading="Courses">
+          <CommandGroup className={GROUP_CN} heading="Courses">
             {filteredCourses.map((course) => (
               <CommandItem
                 key={course.id}
                 onSelect={() => handleSelect('courses')}
                 className="flex items-center gap-3"
               >
-                <span
-                  aria-hidden
-                  className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0"
-                />
                 <div className="flex-1 min-w-0">
                   <p className="text-[13px] font-medium text-white">{course.name}</p>
-                  <p className="text-[11px] text-white tabular-nums">{course.code}</p>
+                  <p className="text-[12px] text-white tabular-nums">{course.code}</p>
                 </div>
               </CommandItem>
             ))}
@@ -275,22 +328,23 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         )}
 
         {filteredAssessments.length > 0 && (
-          <CommandGroup heading="Assessments">
+          <CommandGroup className={GROUP_CN} heading="Assessments">
             {filteredAssessments.map((assessment) => (
               <CommandItem
                 key={assessment.id}
                 onSelect={() => handleSelect('grading')}
                 className="flex items-center gap-3"
               >
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-[13px] font-medium text-white">
                     {assessment.unit_name || 'Assessment'}
                   </p>
-                  <p className="text-[11px] text-white">{assessment.assessment_type}</p>
+                  <p className="text-[12px] text-white">{keyLabel(assessment.assessment_type)}</p>
                 </div>
                 {assessment.status && (
-                  <Pill tone={assessmentStatusTone(assessment.status)}>{assessment.status}</Pill>
+                  <Pill tone={assessmentStatusTone(assessment.status)}>
+                    {keyLabel(assessment.status)}
+                  </Pill>
                 )}
               </CommandItem>
             ))}
@@ -301,48 +355,45 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
 
         {(!search || search.length < 2) && (
           <>
-            <CommandGroup heading="Quick actions">
+            <CommandGroup className={GROUP_CN} heading="Your daily work">
+              {dailyWork.map((d) => (
+                <CommandItem
+                  key={d.to}
+                  value={`${d.label} ${d.hint}`}
+                  onSelect={() => go(d.to)}
+                  className="min-h-11"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[13px] font-medium text-white">{d.label}</p>
+                    <p className="truncate text-[12px] text-white">{d.hint}</p>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+
+            <CommandSeparator />
+
+            <CommandGroup className={GROUP_CN} heading="Quick actions">
               {quickActions.map((action) => (
                 <CommandItem
                   key={action.label}
                   onSelect={() => handleSelect(action.action)}
-                  className="flex items-center gap-3"
+                  className="min-h-11"
                 >
-                  <span
-                    aria-hidden
-                    className="h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0"
-                  />
-                  <span className="text-[13px] text-white flex-1">{action.label}</span>
-                  <span className="text-elec-yellow/70 text-[12px]">→</span>
+                  <span className="text-[13px] text-white">{action.label}</span>
                 </CommandItem>
               ))}
             </CommandGroup>
 
             <CommandSeparator />
 
-            <CommandGroup heading="Navigation">
-              {navigationItems.map((item) => (
+            <CommandGroup className={GROUP_CN} heading="Go to">
+              {[...navigationItems, ...sectionItems.slice(0, 6)].map((item) => (
                 <CommandItem
                   key={item.section}
                   onSelect={() => handleSelect(item.section)}
-                  className="flex items-center gap-3"
+                  className="min-h-11"
                 >
-                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-white/40 shrink-0" />
-                  <span className="text-[13px] text-white">{item.label}</span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-
-            <CommandSeparator />
-
-            <CommandGroup heading="Go to section">
-              {sectionItems.slice(0, 6).map((item) => (
-                <CommandItem
-                  key={item.section}
-                  onSelect={() => handleSelect(item.section)}
-                  className="flex items-center gap-3"
-                >
-                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-white/30 shrink-0" />
                   <span className="text-[13px] text-white">{item.label}</span>
                 </CommandItem>
               ))}
@@ -351,23 +402,52 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         )}
       </CommandList>
 
-      <div className="border-t border-white/[0.06] p-3 flex items-center justify-between text-[11px] text-white">
+      <div className="hidden items-center justify-between border-t border-white/[0.06] p-3 text-[12px] text-white sm:flex">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1.5">
-            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[10px]">↵</kbd>
+            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[12px]">↵</kbd>
             Select
           </span>
           <span className="flex items-center gap-1.5">
-            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[10px]">↑↓</kbd>
+            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[12px]">↑↓</kbd>
             Navigate
           </span>
           <span className="flex items-center gap-1.5">
-            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[10px]">Esc</kbd>
+            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[12px]">Esc</kbd>
             Close
           </span>
         </div>
-        <span className="text-[11px] font-medium text-white">Search</span>
       </div>
+    </>
+  );
+
+  return isMobile ? (
+    // A phone gets a bottom sheet with a 44px close (standard 7), not a
+    // centred dialog.
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="flex h-[88dvh] flex-col overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0 pb-[env(safe-area-inset-bottom)]"
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          (e.currentTarget as HTMLElement | null)
+            ?.querySelector<HTMLInputElement>('[cmdk-input]')
+            ?.focus();
+        }}
+      >
+        <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" aria-hidden />
+        <SheetTitle className="sr-only">Search the College Hub</SheetTitle>
+        <SheetDescription className="sr-only">
+          Find a learner, a member of staff or a course, or jump to a page.
+        </SheetDescription>
+        <div className="min-h-0 flex-1 [&>div]:h-full">
+          <Command className={cn(SHEET_COMMAND_CN)}>{body}</Command>
+        </div>
+      </SheetContent>
+    </Sheet>
+  ) : (
+    <CommandDialog open={open} onOpenChange={onOpenChange}>
+      {body}
     </CommandDialog>
   );
 }

@@ -88,15 +88,19 @@ export function SectionNextBestAction({ id, studentId, studentName, onAction }: 
         <button
           type="button"
           onClick={handleRefresh}
-          className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full flex-row items-center gap-3 px-4 py-4 sm:px-5')}
+          className={cn(
+            CARD_BASE,
+            CARD_NEUTRAL,
+            'w-full flex-row items-center gap-3 px-4 py-4 sm:px-5'
+          )}
         >
           <span className="min-w-0 flex-1">
             <span className="block text-[14px] font-semibold leading-tight text-white group-hover:text-elec-yellow">
               What should you do for {first} today?
             </span>
             <span className="mt-1 block text-[12px] leading-snug text-white">
-              Reads risk, off-the-job, attendance, portfolio, observations and the ILP, then
-              returns the three to five highest-leverage actions.
+              Reads risk, off-the-job, attendance, portfolio, observations and the ILP, then returns
+              the three to five highest-leverage actions.
             </span>
           </span>
           <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
@@ -163,14 +167,20 @@ function StreamingState({ first }: { first: string }) {
           >
             <div className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.12]" />
             <div className="flex-1 space-y-1.5">
-              <div className="h-3 rounded bg-white/[0.08]" style={{ width: `${60 + (i % 3) * 12}%` }} />
-              <div className="h-2 rounded bg-white/[0.05]" style={{ width: `${40 + (i % 3) * 8}%` }} />
+              <div
+                className="h-3 rounded bg-white/[0.08]"
+                style={{ width: `${60 + (i % 3) * 12}%` }}
+              />
+              <div
+                className="h-2 rounded bg-white/[0.05]"
+                style={{ width: `${40 + (i % 3) * 8}%` }}
+              />
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 border-t border-white/[0.10] pt-3 text-[11px] tabular-nums text-white">
+      <div className="mt-4 border-t border-white/[0.10] pt-3 text-[12px] tabular-nums text-white">
         Usually takes 5–10 seconds
       </div>
     </div>
@@ -206,7 +216,12 @@ function DoneState({
   onRefresh: () => void;
 }) {
   return (
-    <div className={cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE)}>
+    <div
+      className={cn(
+        'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+        CARD_SURFACE
+      )}
+    >
       {plan.summary && (
         <div className="border-b border-white/[0.10] px-4 py-3 sm:px-5">
           <p className="text-[12.5px] leading-snug text-white">{plan.summary}</p>
@@ -240,11 +255,12 @@ function DoneState({
                   <span className="min-w-0 flex-1">
                     <span
                       className={cn(
-                        'block text-[11px] font-semibold',
+                        'block text-[12px] font-semibold',
                         urgent ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
-                      {PRIORITY_LABEL[action.priority]} · {KIND_LABEL[action.kind] ?? KIND_LABEL.other}
+                      {PRIORITY_LABEL[action.priority]} ·{' '}
+                      {KIND_LABEL[action.kind] ?? KIND_LABEL.other}
                     </span>
                     <span className="mt-0.5 block text-[14px] font-semibold leading-tight text-white">
                       {action.title}
@@ -253,7 +269,7 @@ function DoneState({
                       {action.why}
                     </span>
                     {action.detail && (
-                      <span className="mt-1 block text-[11.5px] leading-snug text-white">
+                      <span className="mt-1 block text-[12px] leading-snug text-white">
                         {action.detail}
                       </span>
                     )}
@@ -267,9 +283,9 @@ function DoneState({
       </ul>
 
       <div className="flex items-center justify-between gap-3 border-t border-white/[0.10] px-4 py-2 sm:px-5">
-        <span className="text-[11px] tabular-nums text-white">
-          {plan.actions.length} suggestion{plan.actions.length === 1 ? '' : 's'} drafted with AI from the
-          record. Check each one before you act on it.
+        <span className="text-[12px] tabular-nums text-white">
+          {plan.actions.length} suggestion{plan.actions.length === 1 ? '' : 's'} drafted with AI
+          from the record. Check each one before you act on it.
         </span>
         <button type="button" onClick={onRefresh} className={cn(ACTION_BTN, '-my-0')}>
           Refresh

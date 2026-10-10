@@ -1,51 +1,16 @@
-import { useMemo, useState, type ReactNode } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { differenceInDays, formatDistanceToNow, parseISO } from 'date-fns';
-import {
-  BadgeCheck,
-  Briefcase,
-  Palmtree,
-  Clock,
-  ClipboardCheck,
-  GraduationCap,
-  HardHat,
-  Loader2,
-  MessagesSquare,
-  Search,
-  Send,
-  Sparkles,
-  UserPlus,
-  Users,
-} from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { differenceInDays, parseISO } from 'date-fns';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { PageFrame, PageHero, LoadingBlocks } from '@/components/employer/editorial';
 import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  HubGrid,
-  HubCard,
-  StatStrip,
-  AlertRow,
-  HeroNumber,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  PulseDot,
-  ComplianceRing,
-  PrimaryButton,
-  SecondaryButton,
-  LoadingBlocks,
-  Divider,
-  Eyebrow,
-  toneChip,
-  toneWash,
-  type Tone,
-} from '@/components/employer/editorial';
+  frameClass,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  plural,
+} from '@/components/employer/pageParts/PageParts';
 import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
 import { PEOPLE_HUB_HELP } from '@/components/employer/help/people';
 import { cn } from '@/lib/utils';
@@ -59,159 +24,152 @@ import { useElecIdProfiles } from '@/hooks/useElecId';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
 import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
+import { useContractStats } from '@/hooks/useContracts';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useRtwTeamStatus } from '@/hooks/useRightToWork';
+import { useStarters } from '@/hooks/useStarters';
+import { useEmployerHome } from '@/hooks/useEmployerHome';
+import {
+  StatCards,
+  SectionHead,
+  ListPanel,
+  PageTiles,
+  areaCard,
+  type ListItem,
+  type IndexLink,
+} from '@/components/employer/hubs/AreaPage';
+import { matePad, daysFromToday, relDays, ymd } from '@/components/employer/hubs/HubPanels';
 
 interface PeopleHubProps {
   onNavigate: (section: Section) => void;
 }
 
-/* ── Local utilities ────────────────────────────────────────────────── */
+/* ── Who's where today ─────────────────────────────────────────────── */
 
-const getInitials = (name?: string | null) => {
-  if (!name) return '?';
-  const parts = name.trim().split(/\s+/);
-  return (parts[0]?.[0] ?? '?') + (parts[1]?.[0] ?? '');
-};
+/**
+ * site = checked in on site; late = booked with a start time that has passed
+ * and no check-in; travelling / office from the worker's own status; booked =
+ * on a job today, not started yet; leave and off take the quiet edge.
+ */
+type WhereState = 'site' | 'late' | 'travelling' | 'office' | 'booked' | 'leave' | 'off';
 
-const niceTime = (iso: string) =>
-  formatDistanceToNow(parseISO(iso), { addSuffix: true }).replace('about ', '');
-
-/* ── Today's activity feed (synthesised from recent rows) ───────────── */
-
-interface ActivityEvent {
+interface WherePerson {
   id: string;
-  kind: 'clock' | 'application' | 'credential' | 'timesheet' | 'message';
-  actor: string;
-  detail: string;
-  when: string;
-  tone: Tone;
+  name: string;
+  state: WhereState;
+  status: string;
+  detail?: string;
 }
 
-function useTodaysActivity() {
-  return useQuery<ActivityEvent[]>({
-    queryKey: ['people-hub-activity'],
-    queryFn: async () => {
-      const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-      const events: ActivityEvent[] = [];
+const whereEdge: Record<WhereState, string> = {
+  site: 'border-l-elec-yellow',
+  late: 'border-l-red-400',
+  travelling: 'border-l-white',
+  office: 'border-l-white',
+  booked: 'border-l-white',
+  leave: 'border-l-white/25',
+  off: 'border-l-white/25',
+};
 
-      // Each fetch is wrapped — a failure on one table doesn't kill the feed.
-      // PromiseLike, not Promise: supabase query builders are thenables.
-      const safeQuery = async <T,>(fn: () => PromiseLike<{ data: T | null }>) => {
-        try {
-          const { data } = await fn();
-          return data ?? null;
-        } catch {
-          return null;
-        }
-      };
+const whereOrder: WhereState[] = ['late', 'site', 'travelling', 'office', 'booked', 'leave', 'off'];
 
-      const [appsData, profilesData, locationsData] = await Promise.all([
-        safeQuery(() =>
-          supabase
-            .from('employer_vacancy_applications')
-            .select('id, applicant_name, applied_at, vacancy_id')
-            .gte('applied_at', since)
-            .order('applied_at', { ascending: false })
-            .limit(5)
-        ),
-        safeQuery(async () => {
-          // Inner-join + employer scope — profiles are platform-visible for
-          // hiring, so an unscoped query fed OTHER companies' credential
-          // updates into this employer's activity feed
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-          if (!user) return { data: null };
-          return supabase
-            .from('employer_elec_id_profiles')
-            .select('id, updated_at, employee:employer_employees!inner(name, employer_id)')
-            .eq('employee.employer_id', user.id)
-            .gte('updated_at', since)
-            .order('updated_at', { ascending: false })
-            .limit(5);
-        }),
-        safeQuery(() =>
-          supabase
-            .from('employer_worker_locations')
-            .select('id, status, last_updated, employee:employer_employees(name)')
-            .gte('last_updated', since)
-            .order('last_updated', { ascending: false })
-            .limit(5)
-        ),
-      ]);
-
-      for (const a of (appsData ?? []) as Array<{
-        id: string;
-        applicant_name?: string | null;
-        applied_at: string;
-      }>) {
-        events.push({
-          id: `app-${a.id}`,
-          kind: 'application',
-          actor: a.applicant_name ?? 'Candidate',
-          detail: 'Applied for a vacancy',
-          when: a.applied_at,
-          tone: 'blue',
-        });
-      }
-
-      // Real names — the flagship hub feed reading "Team member" everywhere
-      // looked like placeholder data
-      for (const p of (profilesData ?? []) as Array<{
-        id: string;
-        updated_at: string;
-        employee?: { name?: string | null } | null;
-      }>) {
-        events.push({
-          id: `cred-${p.id}`,
-          kind: 'credential',
-          actor: p.employee?.name || 'Team member',
-          detail: 'Credentials updated',
-          when: p.updated_at,
-          tone: 'emerald',
-        });
-      }
-
-      for (const l of (locationsData ?? []) as Array<{
-        id: string;
-        status: string;
-        last_updated: string;
-        employee?: { name?: string | null } | null;
-      }>) {
-        const detail =
-          l.status === 'On Site'
-            ? 'Clocked in on-site'
-            : l.status === 'Off Duty'
-              ? 'Clocked out'
-              : `Status → ${l.status}`;
-        events.push({
-          id: `loc-${l.id}`,
-          kind: 'clock',
-          actor: l.employee?.name || 'Team member',
-          detail,
-          when: l.last_updated,
-          tone: l.status === 'On Site' ? 'emerald' : 'amber',
-        });
-      }
-
-      return events.sort((a, b) => (a.when < b.when ? 1 : -1)).slice(0, 6);
-    },
-    staleTime: 60_000,
-    refetchInterval: 120_000,
+const shortDate = (d: string) =>
+  new Date(`${d.slice(0, 10)}T12:00:00`).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
   });
+
+function WhoIsWhere({
+  people,
+  onOpen,
+  more,
+  onMore,
+}: {
+  people: WherePerson[];
+  onOpen: () => void;
+  more: number;
+  onMore: () => void;
+}) {
+  return (
+    <div className={cn(areaCard, 'overflow-hidden')}>
+      <div className="grid gap-2 p-3 sm:grid-cols-2 sm:p-4 lg:grid-cols-3">
+        {people.map((p) => (
+          <button
+            key={p.id}
+            type="button"
+            onClick={onOpen}
+            className={cn(
+              'flex min-h-[60px] w-full min-w-0 flex-col justify-center rounded-md border-l-[3px] bg-white/[0.07] py-2 pl-3 pr-3 text-left touch-manipulation transition-colors hover:bg-white/[0.11]',
+              whereEdge[p.state]
+            )}
+          >
+            <span className="flex items-baseline justify-between gap-3">
+              <span className="truncate text-[14.5px] font-semibold leading-snug text-white">
+                {p.name}
+              </span>
+              <span
+                className={cn(
+                  'shrink-0 text-[12.5px] font-semibold',
+                  p.state === 'late'
+                    ? 'text-red-400'
+                    : p.state === 'site'
+                      ? 'text-elec-yellow'
+                      : 'text-white'
+                )}
+              >
+                {p.status}
+              </span>
+            </span>
+            {p.detail && (
+              <span className="mt-0.5 block truncate text-[12.5px] leading-snug text-white">
+                {p.detail}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+      {more > 0 && (
+        <div className="border-t border-white/[0.08] px-4 py-3 sm:px-5">
+          <button
+            type="button"
+            onClick={onMore}
+            className="-my-3 h-11 text-[13.5px] font-semibold text-elec-yellow touch-manipulation"
+          >
+            {plural(more, 'more person', 'more people')} in Worker tracking
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function WhereKey() {
+  const item = (cls: string, text: string) => (
+    <span className="flex items-center gap-2 text-[12.5px] text-white">
+      <span className={cn('h-3 w-[3px] rounded-full', cls)} />
+      {text}
+    </span>
+  );
+  return (
+    <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5">
+      {item('bg-elec-yellow', 'On site')}
+      {item('bg-white', 'Booked, travelling or office')}
+      {item('bg-red-400', 'Not checked in')}
+      {item('bg-white/25', 'Off or on leave')}
+    </div>
+  );
 }
 
 /* ── Main component ─────────────────────────────────────────────────── */
 
 export function PeopleHub({ onNavigate }: PeopleHubProps) {
-  const [nudgeDismissed, setNudgeDismissed] = useState(false);
-
-  // Live: a worker changing status / GPS (any change to the team's location
-  // rows) refreshes the on-site snapshot and activity feed instantly — no
-  // manual reload. Team-wide (no filter); RLS scopes events to this company.
+  const navigate = useNavigate();
+  // Live: any change to the team's location rows refreshes who's where.
+  // Team-wide (no filter); RLS scopes events to this company.
   useRealtimeInvalidate(
     'people-hub-worker-locations',
     [{ table: 'employer_worker_locations' }],
-    [['worker-locations'], ['people-hub-activity']]
+    [['worker-locations']]
   );
 
   const { data: employees = [], isLoading: employeesLoading } = useActiveEmployees();
@@ -222,7 +180,18 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const { data: commStats, isLoading: commsLoading } = useCommunicationStats();
   const { data: profiles = [], isLoading: profilesLoading } = useElecIdProfiles();
   const { data: locations = [] } = useWorkerLocations();
-  const { data: activity = [], isLoading: activityLoading } = useTodaysActivity();
+  // ELE-1982: contracts live with People. Money roles only (they carry pay).
+  const { data: contractStats } = useContractStats();
+  const { data: roleInfo } = useEmployerRole();
+  // HR data (right to work) is for the owner and admins.
+  const isHr = roleInfo?.role === 'owner' || roleInfo?.role === 'admin';
+  // ELE-2061: everyone on the books needs a right-to-work check.
+  const { data: rtwAll = [] } = useRtwTeamStatus();
+  const rtwRows = isHr ? rtwAll : [];
+  const rtwNeed = rtwRows.filter((r) => r.status === 'missing' || r.status === 'overdue').length;
+  const rtwDue = rtwRows.filter((r) => r.status === 'due').length;
+  const rtwInScope = rtwRows.filter((r) => r.status !== 'not_required').length;
+  const rtwDone = rtwRows.filter((r) => r.status === 'checked' || r.status === 'due').length;
 
   const activeEmployees = employees.length;
   const credentialCount = profiles.length;
@@ -231,7 +200,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     ? vacancies.filter((v: { status?: string }) => v?.status === 'Open').length
     : 0;
 
-  /* ── Derived insights ────────────────────────────────────────── */
+  /* ── Derived figures ─────────────────────────────────────────── */
 
   const expiringSoonCount = useMemo(() => {
     const now = new Date();
@@ -251,23 +220,25 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   }, [profiles]);
 
   const pendingTimesheetCount = useMemo(
-    // Status is stored Capitalised ('Pending') — compare case-insensitively
-    // so the approval badge actually lights up
+    // Status is stored Capitalised ('Pending'); compare case-insensitively.
     () =>
       timesheets.filter((t) => ['pending', 'submitted'].includes(t.status?.toLowerCase())).length,
     [timesheets]
   );
 
   // ELE-1953 / ELE-1951: leave waiting on a decision, and people who were
-  // invited but never joined, both surface here.
+  // invited but never joined.
   const { data: leaveRequests = [] } = useTeamLeaveRequests();
   const pendingLeaveCount = leaveRequests.filter((l) => l.status === 'pending').length;
-  const offTodayCount = (() => {
-    const d = new Date().toISOString().slice(0, 10);
-    return leaveRequests.filter(
-      (l) => l.status === 'approved' && l.startDate <= d && l.endDate >= d
-    ).length;
-  })();
+  const todayIso = ymd(new Date());
+  const onLeaveToday = useMemo(
+    () =>
+      leaveRequests.filter(
+        (l) => l.status === 'approved' && l.startDate <= todayIso && l.endDate >= todayIso
+      ),
+    [leaveRequests, todayIso]
+  );
+  const offTodayCount = onLeaveToday.length;
   const notJoinedCount = employees.filter((e) => !e.user_id).length;
   // ELE-1830: subbies are roster rows with team_role 'Subcontractor'.
   const subcontractorCount = employees.filter((e) => e.team_role === 'Subcontractor').length;
@@ -281,48 +252,42 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
       .reduce((sum, ts) => sum + (ts.total_hours || 0), 0);
   }, [timesheets]);
 
-  // Same 12h staleness rule as Worker Tracking — a fortnight-old "On Site"
-  // row must not light up the hub's "on-site right now" hero.
+  // Same 12h staleness rule as Worker Tracking: a fortnight-old "On Site"
+  // row must not count as on site now.
   const freshLocations = useMemo(() => {
     const staleCutoff = Date.now() - 12 * 60 * 60 * 1000;
     return locations.filter(
       (l) => l.last_updated && new Date(l.last_updated).getTime() >= staleCutoff
     );
   }, [locations]);
-  const onSiteCount = useMemo(
-    () => freshLocations.filter((l) => l.status === 'On Site').length,
-    [freshLocations]
-  );
-  const travellingCount = useMemo(
-    () => freshLocations.filter((l) => l.status === 'En Route').length,
-    [freshLocations]
-  );
-  const onLeaveCount = useMemo(
-    () => freshLocations.filter((l) => l.status === 'On Leave').length,
-    [freshLocations]
-  );
+  const onSiteCount = freshLocations.filter((l) => l.status === 'On Site').length;
 
-  const complianceScore = useMemo(() => {
-    if (activeEmployees === 0) return 100;
-    const compliantProfiles = profiles.filter((p) => {
+  // Cards in date as a true count ("3 of 4"), clamped: leavers can keep a
+  // profile, so profiles can outnumber the active team.
+  const inDateCards = useMemo(() => {
+    const ok = profiles.filter((p) => {
       if (!p.ecs_expiry_date) return false;
       return differenceInDays(parseISO(p.ecs_expiry_date), new Date()) >= 0;
     }).length;
-    // Clamp — profiles can outnumber active employees (e.g. leavers keep
-    // profiles), which would otherwise read >100%
-    return Math.min(100, Math.round((compliantProfiles / activeEmployees) * 100));
+    return Math.min(activeEmployees, ok);
   }, [profiles, activeEmployees]);
 
-  // Refresh lives in the dashboard header (it invalidates this hub's query
-  // keys). The hero used to carry a second refresh button beside the ring.
-
-  /* ── Navigation ────────────────────────────────────────────── */
+  // The Overview's one round trip (cached): who is booked where today.
+  const { data: home } = useEmployerHome();
+  const { data: starters = [] } = useStarters(null);
+  const peopleToday = useMemo(() => home?.people_today ?? [], [home]);
+  const onSiteHome = peopleToday.filter((p) => p.state === 'clocked_in').length;
+  // One answer to "who is on site": the Overview's, once it has loaded.
+  const onSiteNow = home ? onSiteHome : onSiteCount;
+  const expensesWaiting = home?.approvals.expenses ?? 0;
 
   const { data: apprenticeRows } = useApprenticeProgress();
   const apprenticeCount = apprenticeRows?.length ?? 0;
   const apprenticeReviewsOverdue = apprenticeRows?.filter((r) => r.reviewOverdue).length ?? 0;
   const apprenticeAttestations =
     apprenticeRows?.reduce((n, r) => n + (r.otjPendingAttestationCount ?? 0), 0) ?? 0;
+
+  /* ── Navigation ────────────────────────────────────────────── */
 
   const onOpenEmployees = () => onNavigate('team');
   const onOpenElecID = () => onNavigate('elecid');
@@ -333,143 +298,302 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const onOpenVacancies = () => onNavigate('vacancies');
   const onOpenApprentices = () => onNavigate('apprentices');
   const onOpenSubcontractors = () => onNavigate('subcontractors');
+  const onOpenTracking = () => onNavigate('tracking');
 
-  /* ── Alerts surfaced at top ─────────────────────────────────── */
+  /* ── Who's where: every active person, today's state in words ── */
 
-  type Alert = {
-    id: string;
-    title: string;
-    subtitle: string;
-    tone: Tone;
-    pill: { tone: Tone; label: string };
-    onClick: () => void;
-  };
-
-  const alerts: Alert[] = useMemo(() => {
-    const out: Alert[] = [];
-    if (pendingTimesheetCount > 0) {
-      out.push({
-        id: 'ts',
-        title: 'Timesheets need approval',
-        subtitle: `${pendingTimesheetCount} submission${pendingTimesheetCount === 1 ? '' : 's'} waiting`,
-        tone: 'orange',
-        pill: { tone: 'orange', label: String(pendingTimesheetCount) },
-        onClick: onOpenTimesheets,
-      });
-    }
-    if (pendingLeaveCount > 0) {
-      out.push({
-        id: 'leave',
-        title: 'Leave to decide',
-        subtitle: `${pendingLeaveCount} request${pendingLeaveCount === 1 ? '' : 's'} waiting`,
-        tone: 'orange',
-        pill: { tone: 'orange', label: String(pendingLeaveCount) },
-        onClick: onOpenLeave,
-      });
-    }
-    if (notJoinedCount > 0) {
-      out.push({
-        id: 'invites',
-        title:
-          notJoinedCount === 1
-            ? "1 person hasn't joined"
-            : `${notJoinedCount} people haven't joined`,
-        subtitle: 'Invited but never signed in. Chase them',
-        tone: 'blue',
-        pill: { tone: 'blue', label: String(notJoinedCount) },
-        onClick: () => onNavigate('team'),
-      });
-    }
-    if (expiredCount > 0) {
-      out.push({
-        id: 'expired',
-        title: 'Credentials expired',
-        subtitle: `${expiredCount} on the team. Block onsite access`,
-        tone: 'red',
-        pill: { tone: 'red', label: String(expiredCount) },
-        onClick: onOpenElecID,
-      });
-    } else if (expiringSoonCount > 0) {
-      out.push({
-        id: 'expiring',
-        title: 'Credentials expiring soon',
-        subtitle: `${expiringSoonCount} expire in the next 30 days`,
-        tone: 'amber',
-        pill: { tone: 'amber', label: String(expiringSoonCount) },
-        onClick: onOpenElecID,
-      });
-    }
-    if (newApplicationsCount > 0) {
-      out.push({
-        id: 'apps',
-        title: 'New applications',
-        subtitle: `${newApplicationsCount} candidate${newApplicationsCount === 1 ? '' : 's'} awaiting review`,
-        tone: 'blue',
-        pill: { tone: 'blue', label: String(newApplicationsCount) },
-        onClick: onOpenVacancies,
-      });
-    }
-    if (unreadComms > 0) {
-      out.push({
-        id: 'comms',
-        title: 'Unread messages',
-        subtitle: `${unreadComms} in the team feed`,
-        tone: 'yellow',
-        pill: { tone: 'yellow', label: String(unreadComms) },
-        onClick: onOpenComms,
-      });
-    }
-    return out.slice(0, 4);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    pendingTimesheetCount,
-    pendingLeaveCount,
-    notJoinedCount,
-    expiredCount,
-    expiringSoonCount,
-    newApplicationsCount,
-    unreadComms,
-  ]);
-
-  const everythingClear =
-    !alerts.length &&
-    !pendingLeaveCount &&
-    !pendingTimesheetCount &&
-    !expiredCount &&
-    !expiringSoonCount &&
-    !newApplicationsCount;
-
-  /* ── AI nudge (proactive recommendation) ───────────────────── */
-
-  const aiNudge = useMemo(() => {
-    if (expiringSoonCount > 0 && profiles.length > 0) {
-      const next = profiles.find((p) => {
-        if (!p.ecs_expiry_date) return false;
-        const days = differenceInDays(parseISO(p.ecs_expiry_date), new Date());
-        return days >= 0 && days <= 30;
-      });
-      if (next) {
-        const days = differenceInDays(parseISO(next.ecs_expiry_date!), new Date());
-        const name = next.employee?.name ?? 'A team member';
+  const whereAll: WherePerson[] = useMemo(() => {
+    const homeBy = new Map(peopleToday.map((p) => [p.employee_id, p]));
+    const locBy = new Map(freshLocations.map((l) => [l.employee_id, l]));
+    const leaveBy = new Map(onLeaveToday.map((l) => [l.employeeId, l]));
+    const nowHm = new Date().toTimeString().slice(0, 5);
+    const out: WherePerson[] = employees.map((e) => {
+      const h = homeBy.get(e.id);
+      const loc = locBy.get(e.id);
+      const leave = leaveBy.get(e.id);
+      const job = h?.job_title || loc?.jobs?.title || null;
+      const place = h ? h.postcode || h.location : null;
+      if (h?.state === 'leave' || leave || loc?.status === 'On Leave') {
+        const until = h?.leave_until ?? leave?.endDate ?? null;
         return {
-          title: `${name}'s ECS card expires in ${days} day${days === 1 ? '' : 's'}`,
-          body: 'Send a renewal reminder now and avoid an onsite block.',
-          cta: 'Email reminder',
-          onCta: onOpenElecID,
+          id: e.id,
+          name: e.name,
+          state: 'leave',
+          status: 'On leave',
+          detail: until && until > todayIso ? `Back after ${shortDate(until)}` : 'Today',
         };
       }
-    }
-    if (openVacancies > 0 && newApplicationsCount === 0) {
+      if (h?.state === 'clocked_in' || loc?.status === 'On Site') {
+        const since = h?.clocked_in_at ?? loc?.checked_in_at ?? null;
+        return {
+          id: e.id,
+          name: e.name,
+          state: 'site',
+          status: 'On site',
+          detail: [
+            since ? `Since ${new Date(since).toTimeString().slice(0, 5)}` : 'Checked in',
+            job ? `at ${job}` : null,
+          ]
+            .filter(Boolean)
+            .join(' '),
+        };
+      }
+      if (loc?.status === 'En Route')
+        return {
+          id: e.id,
+          name: e.name,
+          state: 'travelling',
+          status: 'Travelling',
+          detail: job ? `To ${job}` : undefined,
+        };
+      if (loc?.status === 'Office')
+        return { id: e.id, name: e.name, state: 'office', status: 'Office' };
+      if (h?.state === 'booked') {
+        const start = h.start_time ? h.start_time.slice(0, 5) : null;
+        const late = !!start && nowHm > start;
+        return {
+          id: e.id,
+          name: e.name,
+          state: late ? 'late' : 'booked',
+          status: late ? 'Not checked in' : start ? `From ${start}` : 'Booked',
+          detail: [job, place].filter(Boolean).join(', ') || 'Booked on a job today',
+        };
+      }
       return {
-        title: 'Your live vacancies have no fresh applications',
-        body: 'Try reposting to the talent pool to reach available electricians.',
-        cta: 'Open talent pool',
-        onCta: onOpenTalentPool,
+        id: e.id,
+        name: e.name,
+        state: 'off',
+        status: loc?.status === 'Off Duty' ? 'Clocked off' : 'Off',
+        detail: loc?.status === 'Off Duty' ? 'Finished for the day' : 'Not booked today',
       };
+    });
+    return out.sort(
+      (a, b) =>
+        whereOrder.indexOf(a.state) - whereOrder.indexOf(b.state) || a.name.localeCompare(b.name)
+    );
+  }, [employees, peopleToday, freshLocations, onLeaveToday, todayIso]);
+
+  const whereShown = whereAll.slice(0, 12);
+  // Nobody working today (a weekend, say): one plain sentence, not a grid of "Off".
+  const nobodyWorking =
+    whereAll.length > 0 && whereAll.every((p) => p.state === 'off' || p.state === 'leave');
+  const nameList = (names: string[]) =>
+    names.length <= 1
+      ? (names[0] ?? '')
+      : names.length <= 4
+        ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`
+        : `${names.slice(0, 3).join(', ')} and ${names.length - 3} others`;
+  const whereCount = (s: WhereState) => whereAll.filter((p) => p.state === s).length;
+  const whereMeta = [
+    whereCount('site') ? `${whereCount('site')} on site` : null,
+    whereCount('late') ? `${whereCount('late')} not checked in` : null,
+    whereCount('booked') ? `${whereCount('booked')} booked` : null,
+    whereCount('leave') ? `${whereCount('leave')} on leave` : null,
+  ]
+    .filter(Boolean)
+    .join(', ');
+
+  /* ── Needs you, most urgent first ───────────────────────────── */
+
+  const startersSoon = starters.filter((s) => {
+    if (!s.start_date) return false;
+    const d = daysFromToday(s.start_date.slice(0, 10));
+    return d <= 7 && s.items.some((i) => i.key === 'rtw' && i.state !== 'done');
+  });
+
+  const needs: ListItem[] = [];
+  if (expiredCount > 0)
+    needs.push({
+      key: 'expired',
+      title: expiredCount === 1 ? 'A card has expired' : `${expiredCount} cards have expired`,
+      detail: 'Keep them off site until the card is renewed',
+      status: 'Expired',
+      tone: 'red',
+      onOpen: onOpenElecID,
+    });
+  if (rtwNeed > 0)
+    needs.push({
+      key: 'rtw',
+      title:
+        rtwNeed === 1
+          ? '1 person has no right-to-work check'
+          : `${rtwNeed} people have no right-to-work check`,
+      detail: 'Check before they work. Subcontractors engaged from 1 Oct 2026 too',
+      status: 'Check',
+      tone: 'red',
+      onOpen: () => onNavigate('hrrecords'),
+    });
+  if (isHr)
+    for (const s of startersSoon.slice(0, 2)) {
+      const d = daysFromToday(s.start_date!.slice(0, 10));
+      needs.push({
+        key: `starter-${s.roster_id}`,
+        title: s.name,
+        detail: `${d >= 0 ? `Starts ${relDays(s.start_date!.slice(0, 10))}` : `Started ${shortDate(s.start_date!)}`}, right to work not checked`,
+        status: `${s.done} of ${s.total}`,
+        tone: 'red',
+        onOpen: () => navigate(`/employer?section=team&member=${s.roster_id}`),
+      });
     }
-    return null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expiringSoonCount, profiles, openVacancies, newApplicationsCount]);
+  if (apprenticeReviewsOverdue > 0)
+    needs.push({
+      key: 'apprentice-review',
+      title: 'Apprentice review overdue',
+      detail: `${plural(apprenticeReviewsOverdue, 'review')} past the due date`,
+      status: 'Overdue',
+      tone: 'red',
+      onOpen: onOpenApprentices,
+    });
+  if (pendingTimesheetCount > 0)
+    needs.push({
+      key: 'ts',
+      title: 'Timesheets to approve',
+      detail: `${plural(pendingTimesheetCount, 'submission')} waiting`,
+      status: 'Approve',
+      tone: 'yellow',
+      onOpen: onOpenTimesheets,
+    });
+  if (pendingLeaveCount > 0)
+    needs.push({
+      key: 'leave',
+      title: 'Leave to decide',
+      detail: `${plural(pendingLeaveCount, 'request')} waiting`,
+      status: 'Decide',
+      tone: 'yellow',
+      onOpen: onOpenLeave,
+    });
+  if (expensesWaiting > 0)
+    needs.push({
+      key: 'expenses',
+      title: 'Expenses to approve',
+      detail: `${plural(expensesWaiting, 'claim')} waiting`,
+      status: 'Approve',
+      tone: 'yellow',
+      onOpen: () => onNavigate('expenses'),
+    });
+  if (newApplicationsCount > 0)
+    needs.push({
+      key: 'apps',
+      title: 'New applications',
+      detail: `${plural(newApplicationsCount, 'candidate')} to review`,
+      status: `${newApplicationsCount} new`,
+      tone: 'yellow',
+      onOpen: onOpenVacancies,
+    });
+  if (expiringSoonCount > 0)
+    needs.push({
+      key: 'expiring',
+      title: 'Cards running out',
+      detail: `${plural(expiringSoonCount, 'card')} expire in the next 30 days`,
+      status: `${expiringSoonCount} due`,
+      tone: 'yellow',
+      onOpen: onOpenElecID,
+    });
+  if (apprenticeAttestations > 0)
+    needs.push({
+      key: 'attest',
+      title: 'Apprentice hours to attest',
+      detail: `${plural(apprenticeAttestations, 'entry', 'entries')} waiting`,
+      status: 'Attest',
+      tone: 'yellow',
+      onOpen: onOpenApprentices,
+    });
+  if (notJoinedCount > 0)
+    needs.push({
+      key: 'invites',
+      title:
+        notJoinedCount === 1 ? "1 person hasn't joined" : `${notJoinedCount} people haven't joined`,
+      detail: 'Invited but never signed in. Send a reminder',
+      status: 'Chase',
+      tone: 'yellow',
+      // Straight to the Invited tab, where the reminders are sent.
+      onOpen: () => navigate('/employer?section=team&tab=invited'),
+    });
+  if (unreadComms > 0)
+    needs.push({
+      key: 'comms',
+      title: 'Unread messages',
+      detail: `${unreadComms} in the team feed`,
+      status: `${unreadComms} unread`,
+      onOpen: onOpenComms,
+    });
+  if (openVacancies > 0 && newApplicationsCount === 0)
+    needs.push({
+      key: 'talent',
+      title: 'No new applications on your live vacancies',
+      detail: 'Invite available electricians from the talent pool',
+      status: 'Talent pool',
+      onOpen: onOpenTalentPool,
+    });
+
+  /* ── Coming up: the next 14 days ────────────────────────────── */
+
+  const in14 = ymd(new Date(Date.now() + 14 * 86_400_000));
+  const leaveType = (t: string | null | undefined) =>
+    t ? `${t.charAt(0).toUpperCase()}${t.slice(1).replace(/_/g, ' ')}` : 'Leave';
+
+  const comingAll: ListItem[] = [
+    ...leaveRequests
+      .filter((l) => l.status === 'approved' && l.endDate >= todayIso && l.startDate <= in14)
+      .map((l) => ({
+        key: `leave-${l.id}`,
+        date: l.startDate < todayIso ? todayIso : l.startDate,
+        title: l.employeeName,
+        detail: `${leaveType(l.type)}${l.halfDay ? ` (half day, ${l.halfDay})` : ''}${l.endDate !== l.startDate ? ` until ${shortDate(l.endDate)}` : ''}`,
+        status: l.startDate <= todayIso ? 'Off now' : 'Leave',
+        onOpen: onOpenLeave,
+      })),
+    ...starters
+      .filter(
+        (st) =>
+          st.start_date &&
+          st.start_date.slice(0, 10) >= todayIso &&
+          st.start_date.slice(0, 10) <= in14
+      )
+      .map((st) => ({
+        key: `start-${st.roster_id}`,
+        date: st.start_date!.slice(0, 10),
+        title: st.name,
+        detail: `New starter${st.job_title ? `, ${st.job_title}` : ''}`,
+        status: st.done === st.total ? 'Ready' : `${st.done} of ${st.total} done`,
+        tone: st.done === st.total ? undefined : ('yellow' as const),
+        onOpen: () => navigate(`/employer?section=team&member=${st.roster_id}`),
+      })),
+    ...profiles
+      .filter((p) => {
+        if (!p.ecs_expiry_date) return false;
+        const d = p.ecs_expiry_date.slice(0, 10);
+        return d >= todayIso && d <= in14;
+      })
+      .map((p) => {
+        const d = p.ecs_expiry_date!.slice(0, 10);
+        return {
+          key: `ecs-${p.id}`,
+          date: d,
+          title: p.employee?.name ?? 'Team member',
+          detail: `${p.ecs_card_type ? `${p.ecs_card_type} card` : 'ECS card'} expires ${relDays(d)}`,
+          status: 'Card expires',
+          tone: 'yellow' as const,
+          onOpen: () => navigate(`/employer?section=elecid&member=${p.employee_id}`),
+        };
+      }),
+    ...rtwRows
+      .filter((r) => {
+        if (!r.follow_up_due) return false;
+        const d = r.follow_up_due.slice(0, 10);
+        return d >= todayIso && d <= in14;
+      })
+      .map((r) => ({
+        key: `rtw-${r.roster_id}`,
+        date: r.follow_up_due!.slice(0, 10),
+        title: r.name,
+        detail: 'Right-to-work follow-up check',
+        status: 'Follow-up',
+        tone: 'yellow' as const,
+        onOpen: () => onNavigate('hrrecords'),
+      })),
+  ].sort((a, b) => (a.date! < b.date! ? -1 : 1));
+  const comingUp = comingAll.slice(0, 6);
 
   const isLoading =
     employeesLoading ||
@@ -480,15 +604,173 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     commsLoading ||
     profilesLoading;
 
+  /* ── One live line: what needs doing first, else where things stand ── */
+
+  const todo: string[] = [];
+  if (expiredCount > 0) todo.push(`${plural(expiredCount, 'card')} expired`);
+  if (pendingTimesheetCount > 0)
+    todo.push(`${plural(pendingTimesheetCount, 'timesheet')} to approve`);
+  if (pendingLeaveCount > 0) todo.push(`${plural(pendingLeaveCount, 'leave request')} to decide`);
+  if (newApplicationsCount > 0)
+    todo.push(`${plural(newApplicationsCount, 'new application')} to review`);
+  if (notJoinedCount > 0) todo.push(`${notJoinedCount} not joined yet`);
+  const standing =
+    activeEmployees === 0
+      ? 'Nobody on the team yet'
+      : `${plural(activeEmployees, 'person', 'people')} on the team, ${
+          onSiteNow > 0 ? `${onSiteNow} on site now` : 'nobody on site right now'
+        }`;
+  const first = todo.join(', ');
+  const liveLine =
+    todo.length > 0
+      ? `${first.charAt(0).toUpperCase()}${first.slice(1)}. ${standing}.`
+      : `${standing}. Nothing waiting on you.`;
+
+  /* ── Everything in People ──────────────────────────────────── */
+
+  const contractsDetail =
+    roleInfo && !roleInfo.canSeeMoney
+      ? 'Owner and admins send contracts'
+      : !contractStats || contractStats.total === 0
+        ? 'Send a new starter their contract'
+        : contractStats.draft > 0
+          ? `${contractStats.draft} awaiting signature`
+          : 'Signed and on file';
+
+  const n = (v: number, one: string, many = `${one}s`) =>
+    v > 0 ? `${v.toLocaleString('en-GB')} ${v === 1 ? one : many}` : undefined;
+
+  const teamLinks: IndexLink[] = [
+    {
+      title: 'Team',
+      detail:
+        activeEmployees > 0
+          ? notJoinedCount > 0
+            ? `${notJoinedCount} not joined yet`
+            : 'Everyone has joined'
+          : 'Add your first team member',
+      value: n(activeEmployees, 'member'),
+      onClick: onOpenEmployees,
+    },
+    {
+      title: 'Credentials and Elec-IDs',
+      detail:
+        expiredCount > 0
+          ? `${expiredCount} expired`
+          : expiringSoonCount > 0
+            ? `${expiringSoonCount} expiring in 30 days`
+            : credentialCount > 0
+              ? 'All in date'
+              : 'No profiles yet',
+      problem: expiredCount > 0,
+      value: n(credentialCount, 'profile'),
+      onClick: onOpenElecID,
+    },
+    {
+      title: 'Timesheets',
+      detail:
+        pendingTimesheetCount > 0
+          ? `${pendingTimesheetCount} to approve`
+          : 'Hours in the last 7 days',
+      value:
+        pendingTimesheetCount === 0 && totalHoursThisWeek > 0
+          ? `${Math.round(totalHoursThisWeek)}h`
+          : undefined,
+      onClick: onOpenTimesheets,
+    },
+    {
+      title: 'Leave',
+      detail:
+        pendingLeaveCount > 0
+          ? `${pendingLeaveCount} to decide`
+          : offTodayCount > 0
+            ? `${offTodayCount} off today`
+            : 'Nobody off today',
+      value: offTodayCount > 0 && pendingLeaveCount > 0 ? `${offTodayCount} off` : undefined,
+      onClick: onOpenLeave,
+    },
+    {
+      title: 'Worker tracking',
+      detail: onSiteNow > 0 ? 'Checked in on site now' : 'Nobody checked in on site',
+      value: onSiteNow > 0 ? `${onSiteNow} on site` : undefined,
+      onClick: onOpenTracking,
+    },
+    {
+      title: 'Communications',
+      detail: unreadComms > 0 ? 'Unread in the team feed' : 'All caught up',
+      value: unreadComms > 0 ? `${unreadComms} unread` : undefined,
+      onClick: onOpenComms,
+    },
+    {
+      title: 'Subcontractors',
+      detail: subcontractorCount > 0 ? 'On your books' : 'Add a subbie with the Subcontractor type',
+      value: n(subcontractorCount, 'subbie'),
+      onClick: onOpenSubcontractors,
+    },
+    {
+      title: 'Right to work and HR records',
+      detail: !isHr
+        ? 'Owner and admins only'
+        : rtwNeed > 0
+          ? `${rtwNeed} without a check${rtwDue > 0 ? `, ${rtwDue} follow-up due` : ''}`
+          : rtwDue > 0
+            ? `${plural(rtwDue, 'follow-up')} due soon`
+            : rtwRows.length > 0
+              ? 'Everyone checked'
+              : 'Right to work, probation and retention',
+      problem: rtwNeed > 0,
+      value: isHr && rtwInScope > 0 ? `${rtwDone} of ${rtwInScope}` : undefined,
+      onClick: () => onNavigate('hrrecords'),
+    },
+    {
+      title: 'Contracts',
+      detail: contractsDetail,
+      value:
+        contractStats && roleInfo?.canSeeMoney && contractStats.active > 0
+          ? `${contractStats.active} active`
+          : undefined,
+      onClick: () => onNavigate('contracts'),
+    },
+  ];
+
+  const growLinks: IndexLink[] = [
+    {
+      title: 'Job vacancies',
+      detail:
+        newApplicationsCount > 0
+          ? `${newApplicationsCount} new to review`
+          : openVacancies > 0
+            ? 'Open, no new applications'
+            : 'Not hiring right now',
+      value: n(openVacancies, 'open', 'open'),
+      onClick: onOpenVacancies,
+    },
+    {
+      title: 'Talent pool',
+      detail: talentCount > 0 ? `${verifiedCount} verified` : 'Nobody available yet',
+      value: talentCount > 0 ? `${talentCount.toLocaleString('en-GB')} available` : undefined,
+      onClick: onOpenTalentPool,
+    },
+    {
+      title: 'Apprentice progress',
+      detail:
+        apprenticeCount > 0
+          ? apprenticeReviewsOverdue > 0
+            ? `${plural(apprenticeReviewsOverdue, 'review')} overdue`
+            : apprenticeAttestations > 0
+              ? `${apprenticeAttestations} hours entries to attest`
+              : 'All up to date'
+          : 'No apprentices linked yet',
+      problem: apprenticeReviewsOverdue > 0,
+      value: n(apprenticeCount, 'apprentice'),
+      onClick: onOpenApprentices,
+    },
+  ];
+
   if (isLoading) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Your firm"
-          title="People"
-          description="Team, credentials, timesheets, comms, talent and vacancies."
-          tone="blue"
-        />
+      <PageFrame className={frameClass}>
+        <PageHero title="People" description="Loading your team." />
         <LoadingBlocks />
       </PageFrame>
     );
@@ -496,421 +778,188 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
 
   /* ── Render ────────────────────────────────────────────────── */
 
+  const waiting = pendingTimesheetCount + pendingLeaveCount + expensesWaiting;
+  const waitingSub =
+    waiting === 0
+      ? 'Timesheets, leave and expenses'
+      : [
+          pendingTimesheetCount ? plural(pendingTimesheetCount, 'timesheet') : null,
+          pendingLeaveCount ? `${pendingLeaveCount} leave` : null,
+          expensesWaiting ? plural(expensesWaiting, 'expense') : null,
+        ]
+          .filter(Boolean)
+          .join(', ');
+
   return (
-    <PageFrame>
+    <PageFrame className={cn(frameClass, matePad)}>
       <PageHero
-        eyebrow="Your firm"
         title="People"
-        description="Team, credentials, timesheets, comms, talent and vacancies."
-        tone="blue"
+        description={liveLine}
         actions={
-          <>
-            <ComplianceRing
-              score={complianceScore}
-              size={44}
-              label="Compliance"
-              onClick={onOpenElecID}
-            />
+          <HeroActions>
+            <HeroPrimary onClick={onOpenEmployees}>Add team member</HeroPrimary>
+            <HeroSecondary onClick={onOpenVacancies}>Post vacancy</HeroSecondary>
             <PageHelpButton help={PEOPLE_HUB_HELP} askContext={{ page: 'peoplehub' }} />
-          </>
+          </HeroActions>
         }
       />
 
       <HowItWorks help={PEOPLE_HUB_HELP} askContext={{ page: 'peoplehub' }} />
 
-      {/* Alerts ─────────────────────────────────────────────── */}
-      {alerts.length > 0 ? (
-        <div className="space-y-2.5">
-          {alerts.map((a) => (
-            <AlertRow
-              key={a.id}
-              tone={a.tone}
-              title={a.title}
-              subtitle={a.subtitle}
-              trailing={<Pill tone={a.pill.tone}>{a.pill.label}</Pill>}
-              onClick={a.onClick}
-            />
-          ))}
-        </div>
-      ) : everythingClear ? (
-        <AlertRow
-          tone="emerald"
-          title="Everything's up to date"
-          subtitle="No timesheets to approve, no credentials expiring, no unread messages"
-        />
-      ) : null}
-
-      {/* Quick actions ─────────────────────────────────────── */}
-      <div>
-        <Eyebrow className="mb-3">Quick actions</Eyebrow>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-[1.5px] bg-black border border-white/[0.06] rounded-2xl overflow-hidden">
-          <QuickAction
-            label="Invite member"
-            sub="Add to your firm"
-            tone="yellow"
-            icon={<UserPlus className="h-4 w-4" />}
-            onClick={onOpenEmployees}
-          />
-          <QuickAction
-            label="Post vacancy"
-            sub="Hire someone new"
-            tone="cyan"
-            icon={<Briefcase className="h-4 w-4" />}
-            onClick={onOpenVacancies}
-          />
-          <QuickAction
-            label="Approve timesheets"
-            sub={pendingTimesheetCount > 0 ? `${pendingTimesheetCount} pending` : 'All approved'}
-            tone={pendingTimesheetCount > 0 ? 'orange' : 'emerald'}
-            icon={<ClipboardCheck className="h-4 w-4" />}
-            badge={pendingTimesheetCount > 0 ? pendingTimesheetCount : undefined}
-            onClick={onOpenTimesheets}
-          />
-          <QuickAction
-            label="Message team"
-            sub={unreadComms > 0 ? `${unreadComms} unread` : 'Send a broadcast'}
-            tone="purple"
-            icon={<Send className="h-4 w-4" />}
-            onClick={onOpenComms}
-          />
-        </div>
-      </div>
-
-      {/* Stats — with smart empty states ───────────────────── */}
-      <StatStrip
-        columns={4}
+      <StatCards
         stats={[
           {
             label: 'Team',
-            value: activeEmployees > 0 ? activeEmployees : '+ Add team',
-            sub: activeEmployees === 0 ? 'No members yet' : undefined,
-            onClick: onOpenEmployees,
+            value: activeEmployees,
+            sub:
+              activeEmployees === 0
+                ? 'Nobody added yet'
+                : onSiteNow > 0
+                  ? `${onSiteNow} on site now`
+                  : 'Nobody on site now',
+            onOpen: onOpenEmployees,
           },
           {
-            label: 'Credentials',
-            value: credentialCount > 0 ? credentialCount : '+ Upload',
-            sub: credentialCount === 0 ? 'No profiles yet' : undefined,
-            tone: credentialCount > 0 ? 'emerald' : undefined,
-            onClick: onOpenElecID,
+            label: 'Cards in date',
+            // The true count, never a percentage of a small team.
+            value: activeEmployees > 0 ? `${inDateCards} of ${activeEmployees}` : '0',
+            sub:
+              activeEmployees === 0
+                ? 'ECS cards across the team'
+                : expiredCount > 0
+                  ? `${expiredCount} expired`
+                  : expiringSoonCount > 0
+                    ? `${expiringSoonCount} due in 30 days`
+                    : inDateCards < activeEmployees
+                      ? `${activeEmployees - inDateCards} with no card on file`
+                      : 'Everyone in date',
+            progress: activeEmployees > 0 ? inDateCards / activeEmployees : 0,
+            tone: expiredCount > 0 ? 'red' : undefined,
+            onOpen: onOpenElecID,
           },
           {
-            label: 'Open vacancies',
-            value: openVacancies,
-            sub: openVacancies === 0 ? 'Not hiring right now' : undefined,
-            tone: openVacancies > 0 ? 'blue' : undefined,
-            onClick: onOpenVacancies,
+            label: 'Waiting on you',
+            value: waiting,
+            sub: waitingSub,
+            onOpen:
+              pendingTimesheetCount > 0
+                ? onOpenTimesheets
+                : pendingLeaveCount > 0
+                  ? onOpenLeave
+                  : expensesWaiting > 0
+                    ? () => onNavigate('expenses')
+                    : onOpenTimesheets,
           },
-          {
-            label: 'Unread messages',
-            value: unreadComms,
-            sub: unreadComms === 0 ? "You're caught up" : undefined,
-            tone: unreadComms > 0 ? 'amber' : undefined,
-            onClick: onOpenComms,
-          },
+          isHr
+            ? {
+                label: 'Right to work',
+                value: rtwInScope > 0 ? `${rtwDone} of ${rtwInScope}` : '0',
+                sub:
+                  rtwInScope === 0
+                    ? 'Nobody needs a check'
+                    : rtwNeed > 0
+                      ? `${rtwNeed} missing`
+                      : rtwDue > 0
+                        ? `${plural(rtwDue, 'follow-up')} due`
+                        : 'Everyone checked',
+                progress: rtwInScope > 0 ? rtwDone / rtwInScope : 0,
+                tone: rtwNeed > 0 ? 'red' : undefined,
+                onOpen: () => onNavigate('hrrecords'),
+              }
+            : {
+                label: 'Open vacancies',
+                value: openVacancies,
+                sub:
+                  newApplicationsCount > 0
+                    ? `${plural(newApplicationsCount, 'new application')}`
+                    : openVacancies === 0
+                      ? 'Not hiring right now'
+                      : 'No new applications',
+                onOpen: onOpenVacancies,
+              },
         ]}
       />
 
-      {/* Today snapshot + activity feed (split on desktop) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6 sm:gap-8">
-        <HeroNumber
-          eyebrow="Today"
-          live
-          value={activeEmployees > 0 ? `${onSiteCount} of ${activeEmployees}` : '0 of 0'}
-          caption="On-site right now"
-          columns={[
-            { label: 'On-site', value: onSiteCount, tone: 'emerald' },
-            { label: 'Travelling', value: travellingCount, tone: 'blue' },
-            { label: 'On leave', value: onLeaveCount, tone: 'amber' },
-          ]}
-          tone="blue"
-          onClick={() => onNavigate('tracking')}
+      <section>
+        <SectionHead
+          title="Who's where today"
+          meta={
+            // Desktop only: on a phone the heading and action need the row.
+            <span className="hidden sm:inline">
+              {whereMeta || (nobodyWorking ? 'Everyone off today' : '')}
+            </span>
+          }
+          action="Worker tracking"
+          onAction={onOpenTracking}
         />
-
-        <ListCard>
-          <ListCardHeader
-            tone="emerald"
-            title="Activity"
-            meta={
-              <span className="flex items-center gap-1.5">
-                <PulseDot tone="emerald" />
-                <span className="text-[11px] text-white">Live</span>
-              </span>
-            }
-          />
-          {activityLoading ? (
-            <div className="flex items-center justify-center py-10">
-              <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
-            </div>
-          ) : activity.length === 0 ? (
-            <div className="px-5 py-10 text-center">
-              <div className="text-[13px] text-white">Quiet so far today</div>
-              <div className="mt-1 text-[11.5px] text-white">
-                Clock-ins, applications and credential updates will land here.
-              </div>
-            </div>
-          ) : (
-            <ListBody>
-              {activity.map((e) => (
-                <ListRow
-                  key={e.id}
-                  lead={<Avatar initials={getInitials(e.actor)} />}
-                  title={e.actor}
-                  subtitle={e.detail}
-                  trailing={
-                    <span className="text-[11px] text-white tabular-nums">{niceTime(e.when)}</span>
-                  }
-                  accent={e.tone}
-                />
-              ))}
-            </ListBody>
-          )}
-        </ListCard>
-      </div>
-
-      {/* Your team ───────────────────────────────────────── */}
-      <div className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Day-to-day" title="Your team" />
-        <HubGrid columns={2}>
-          <HubCard
-            tone="blue"
-            number="01"
-            eyebrow="Workforce"
-            icon={<Users className="h-4 w-4" />}
-            title="Team"
-            description="Operatives, supervisors and PMs on your books."
-            meta={
-              activeEmployees > 0
-                ? `${activeEmployees} member${activeEmployees === 1 ? '' : 's'} · ${onSiteCount} on shift now`
-                : 'No employees yet'
-            }
-            cta="Open"
-            onClick={onOpenEmployees}
-          />
-          <HubCard
-            tone="emerald"
-            number="02"
-            eyebrow="Compliance"
-            icon={<BadgeCheck className="h-4 w-4" />}
-            title="Credentials & Elec-IDs"
-            description="Cards, qualifications and renewal dates in one place."
-            meta={
-              credentialCount > 0
-                ? `${credentialCount} profile${credentialCount === 1 ? '' : 's'} · ${expiringSoonCount} expiring soon`
-                : 'No profiles yet'
-            }
-            badge={expiredCount > 0 ? <Pill tone="red">{expiredCount} expired</Pill> : undefined}
-            cta="Open"
-            onClick={onOpenElecID}
-          />
-          <HubCard
-            tone="amber"
-            number="03"
-            eyebrow="Hours"
-            icon={<Clock className="h-4 w-4" />}
-            title="Timesheets"
-            description="Approve hours, attendance and weekly submissions."
-            meta={`${Math.round(totalHoursThisWeek)}h this week · ${pendingTimesheetCount} pending approval`}
-            badge={
-              pendingTimesheetCount > 0 ? (
-                <Pill tone="orange">{pendingTimesheetCount}</Pill>
-              ) : undefined
-            }
-            cta="Open"
-            onClick={onOpenTimesheets}
-          />
-          <HubCard
-            tone="cyan"
-            number="04"
-            eyebrow="Time off"
-            icon={<Palmtree className="h-4 w-4" />}
-            title="Leave"
-            description="Holiday requests, who's off, and everyone's allowance."
-            meta={`${offTodayCount} off today · ${pendingLeaveCount} waiting`}
-            badge={
-              pendingLeaveCount > 0 ? <Pill tone="orange">{pendingLeaveCount}</Pill> : undefined
-            }
-            cta="Open"
-            onClick={onOpenLeave}
-          />
-          <HubCard
-            tone="purple"
-            number="05"
-            eyebrow="Messaging"
-            icon={<MessagesSquare className="h-4 w-4" />}
-            title="Communications"
-            description="Internal messages, broadcasts and team alerts."
-            meta={
-              unreadComms > 0
-                ? `${unreadComms} unread · ${commStats?.totalAnnouncements ?? 0} announcement${(commStats?.totalAnnouncements ?? 0) === 1 ? '' : 's'}`
-                : 'All caught up'
-            }
-            badge={unreadComms > 0 ? <Pill tone="yellow">{unreadComms}</Pill> : undefined}
-            cta="Open"
-            onClick={onOpenComms}
-          />
-          <HubCard
-            tone="orange"
-            number="06"
-            eyebrow="Labour only"
-            icon={<HardHat className="h-4 w-4" />}
-            title="Subcontractors"
-            description="Day rates, CIS, insurance and a self-bill statement from approved days."
-            meta={
-              subcontractorCount > 0
-                ? `${subcontractorCount} subcontractor${subcontractorCount === 1 ? '' : 's'} on your books`
-                : 'Add a subbie with the Subcontractor type'
-            }
-            cta="Open"
-            onClick={onOpenSubcontractors}
-          />
-        </HubGrid>
-      </div>
-
-      {/* Hiring & development ─────────────────────────────── */}
-      <div className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Hiring & training" title="Grow the team" />
-        <HubGrid columns={3}>
-          <HubCard
-            tone="blue"
-            number="07"
-            eyebrow="Talent"
-            icon={<Search className="h-4 w-4" />}
-            title="Talent Pool"
-            description="Browse vetted sparkies available for work right now."
-            meta={
-              talentCount > 0
-                ? `${talentCount} in pool · ${verifiedCount} verified`
-                : 'Build your talent pool'
-            }
-            cta="Open"
-            onClick={onOpenTalentPool}
-          />
-          <HubCard
-            tone="cyan"
-            number="08"
-            eyebrow="Vacancies"
-            icon={<Briefcase className="h-4 w-4" />}
-            title="Job Vacancies"
-            description="Post jobs and manage applications across your firm."
-            meta={
-              openVacancies > 0
-                ? `${openVacancies} open · ${newApplicationsCount} new application${newApplicationsCount === 1 ? '' : 's'}`
-                : 'Post your first role'
-            }
-            badge={
-              newApplicationsCount > 0 ? (
-                <Pill tone="cyan">{newApplicationsCount} new</Pill>
-              ) : undefined
-            }
-            cta="Open"
-            onClick={onOpenVacancies}
-          />
-          <HubCard
-            tone="emerald"
-            number="09"
-            eyebrow="Apprentices"
-            icon={<GraduationCap className="h-4 w-4" />}
-            title="Apprentice Progress"
-            description="Live college progress. Off-the-job hours, attendance and EPA."
-            meta={
-              apprenticeCount > 0
-                ? `${apprenticeCount} apprentice${apprenticeCount === 1 ? '' : 's'}${apprenticeReviewsOverdue > 0 ? ` · ${apprenticeReviewsOverdue} review${apprenticeReviewsOverdue === 1 ? '' : 's'} overdue` : ''}${apprenticeAttestations > 0 ? ` · ${apprenticeAttestations} to attest` : ''}`
-                : 'No apprentices linked yet'
-            }
-            badge={
-              apprenticeReviewsOverdue > 0 ? (
-                <Pill tone="red">{apprenticeReviewsOverdue} overdue</Pill>
-              ) : apprenticeAttestations > 0 ? (
-                <Pill tone="emerald">{apprenticeAttestations} to attest</Pill>
-              ) : undefined
-            }
-            cta="Open"
-            onClick={onOpenApprentices}
-          />
-        </HubGrid>
-      </div>
-
-      {/* AI nudge ─────────────────────────────────────────── */}
-      {aiNudge && !nudgeDismissed && (
-        <div className="relative bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] rounded-2xl p-5 sm:p-6">
-          <div className="flex items-start gap-3.5">
-            <div className="shrink-0 mt-0.5">
-              <Sparkles className="h-4.5 w-4.5 text-elec-yellow" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Suggestion
-                </span>
-                <Pill tone="purple">Beta</Pill>
-              </div>
-              <div className="mt-1 text-[15px] font-semibold text-white leading-snug">
-                {aiNudge.title}
-              </div>
-              <div className="mt-1 text-[12.5px] text-white">{aiNudge.body}</div>
-              <div className="mt-4 flex items-center gap-2">
-                <PrimaryButton size="sm" onClick={aiNudge.onCta}>
-                  {aiNudge.cta}
-                </PrimaryButton>
-                <SecondaryButton size="sm" onClick={() => setNudgeDismissed(true)}>
-                  Dismiss
-                </SecondaryButton>
-              </div>
-            </div>
+        {whereAll.length === 0 ? (
+          <div className={areaCard}>
+            <p className="px-4 py-4 text-[14px] leading-relaxed text-white sm:px-5">
+              Nobody on the team yet. Add your first team member and you will see here who is on
+              site, travelling, in the office or off.
+            </p>
           </div>
-        </div>
-      )}
-
-      {/* Footer divider — keeps rhythm balanced before next section */}
-      <Divider />
-    </PageFrame>
-  );
-}
-
-/* ── Local QuickAction tile (badge-aware) ──────────────────────── */
-
-function QuickAction({
-  label,
-  sub,
-  tone,
-  icon,
-  badge,
-  onClick,
-}: {
-  label: string;
-  sub: string;
-  tone: Tone;
-  icon?: ReactNode;
-  badge?: number;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="group relative h-full flex flex-col items-start justify-between bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors px-4 py-4 sm:py-5 text-left touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60"
-    >
-      <div
-        aria-hidden
-        className={cn(
-          'absolute inset-0 pointer-events-none opacity-70 group-hover:opacity-100 transition-opacity',
-          toneWash[tone]
+        ) : nobodyWorking ? (
+          <div className={areaCard}>
+            <p className="px-4 py-4 text-[14px] leading-relaxed text-white sm:px-5">
+              Nobody is booked on a job or checked in today.
+              {whereCount('leave') > 0 &&
+                ` ${nameList(whereAll.filter((p) => p.state === 'leave').map((p) => p.name))} ${whereCount('leave') === 1 ? 'is' : 'are'} on leave.`}
+            </p>
+          </div>
+        ) : (
+          <>
+            <WhoIsWhere
+              people={whereShown}
+              onOpen={onOpenTracking}
+              more={whereAll.length - whereShown.length}
+              onMore={onOpenTracking}
+            />
+            <WhereKey />
+          </>
         )}
-      />
-      <div className="relative flex items-center justify-between w-full">
-        <span
-          className={cn(
-            'h-9 w-9 rounded-xl border flex items-center justify-center shrink-0 transition-transform group-hover:scale-105',
-            toneChip[tone]
-          )}
-        >
-          {icon ?? <span className="h-4 w-4" aria-hidden />}
-        </span>
-        {badge !== undefined && badge > 0 && <Pill tone={tone}>{badge}</Pill>}
+      </section>
+
+      <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch">
+        <section className="flex flex-col">
+          <SectionHead title="Needs you" meta={needs.length > 0 ? `${needs.length}` : undefined} />
+          <ListPanel
+            className="flex-1"
+            items={needs}
+            empty="Nothing needs you. Expired cards, missing right-to-work checks, timesheets, leave and expenses to approve, and people who haven't joined appear here."
+          />
+        </section>
+        <section className="flex flex-col">
+          <SectionHead
+            title="Coming up"
+            meta="Next 14 days"
+            action="Leave"
+            onAction={onOpenLeave}
+          />
+          <ListPanel
+            className="flex-1"
+            items={comingUp}
+            empty="Nobody off, starting or with a card running out in the next two weeks."
+            footer={
+              comingAll.length > comingUp.length ? (
+                <span className="text-[13.5px] text-white">
+                  {plural(comingAll.length - comingUp.length, 'more item')} in the next 14 days
+                </span>
+              ) : undefined
+            }
+          />
+        </section>
       </div>
-      <div className="relative mt-3">
-        <div className="text-[14px] font-semibold text-white">{label}</div>
-        <div className="mt-0.5 text-[11.5px] text-white">{sub}</div>
-      </div>
-    </button>
+
+      <section>
+        <SectionHead title="Everything in People" />
+        <PageTiles
+          groups={[
+            { title: 'Your team', links: teamLinks },
+            { title: 'Grow the team', links: growLinks },
+          ]}
+        />
+      </section>
+    </PageFrame>
   );
 }

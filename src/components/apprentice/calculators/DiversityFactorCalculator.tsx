@@ -286,7 +286,7 @@ const DiversityFactorCalculator = () => {
                 </div>
                 <button
                   onClick={addLoad}
-                  className="h-10 px-3 flex items-center gap-2 rounded-lg bg-amber-400/20 border border-amber-400/30 text-amber-300 text-sm font-medium hover:bg-amber-400/30 transition-colors touch-manipulation"
+                  className="h-11 px-3.5 flex items-center gap-2 rounded-xl border border-white/[0.14] text-white text-sm font-semibold hover:bg-white/[0.08] transition-colors touch-manipulation"
                 >
                   <Plus className="h-4 w-4" />
                   Add Load
@@ -385,7 +385,7 @@ const DiversityFactorCalculator = () => {
                   </ResultsGrid>
 
                   {/* Diversity Factor */}
-                  <div className="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-amber-400/20">
                     <div className="flex justify-between items-center">
                       <span className="text-sm font-medium text-white">
                         Overall Diversity Factor:
@@ -455,7 +455,7 @@ const DiversityFactorCalculator = () => {
                 is sized on diversified demand only, so the assembly check is
                 stated explicitly rather than left implied.
               */}
-                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-orange-500/30">
                     <p className="text-sm text-white">
                       <strong>Reg 536.4.202 — check the assembly rating separately.</strong>{' '}
                       Diversity shall not be used as a means of load curtailment, load control or

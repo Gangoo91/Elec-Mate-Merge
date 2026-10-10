@@ -4,6 +4,9 @@ import { Calculator, RotateCcw, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CalculatorCategory } from './CalculatorConfig';
 
+const DISABLED =
+  'disabled:opacity-100 disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white disabled:border disabled:border-white/[0.12]';
+
 interface CalculatorActionsProps {
   category: CalculatorCategory;
   onCalculate: () => void;
@@ -41,7 +44,7 @@ export const CalculatorActions = ({
             onClick={onReset}
             disabled={isCalculating}
             className={cn(
-              'h-12 sm:h-14 flex-1 rounded-xl border-white/[0.08]',
+              'h-12 sm:h-14 md:h-14 min-w-0 flex-1 rounded-xl border-white/[0.14]',
               'text-white hover:text-white hover:bg-white/[0.04]',
               'touch-manipulation active:scale-[0.98] transition-all'
             )}
@@ -55,9 +58,11 @@ export const CalculatorActions = ({
           onClick={onCalculate}
           disabled={isDisabled || isCalculating}
           className={cn(
-            'h-12 sm:h-14 flex-[2] rounded-xl font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90',
+            'h-auto min-h-12 sm:min-h-14 md:h-auto md:min-h-14 min-w-0 flex-[2] whitespace-normal py-2 leading-tight rounded-xl font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90',
             'touch-manipulation active:scale-[0.98] transition-all',
-            'disabled:opacity-40 disabled:cursor-not-allowed'
+            // Disabled is a neutral surface, not a 40%-opacity volt — that read
+            // as a muddy brown slab on every calculator before you had typed.
+            DISABLED
           )}
         >
           {isCalculating ? (
@@ -67,7 +72,7 @@ export const CalculatorActions = ({
             </>
           ) : (
             <>
-              <Calculator className="h-4 w-4 mr-2" />
+              <Calculator className="h-4 w-4 mr-2 shrink-0" />
               {calculateLabel}
             </>
           )}
@@ -120,9 +125,9 @@ export const CalculateButton = ({
       onClick={onClick}
       disabled={isDisabled || isLoading}
       className={cn(
-        'w-full h-12 sm:h-14 rounded-xl font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90',
+        'w-full h-auto min-h-12 sm:min-h-14 md:h-auto md:min-h-14 whitespace-normal py-2 leading-tight rounded-xl font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90',
         'touch-manipulation active:scale-[0.98] transition-all',
-        'disabled:opacity-40 disabled:cursor-not-allowed',
+        DISABLED,
         className
       )}
     >
@@ -133,7 +138,7 @@ export const CalculateButton = ({
         </>
       ) : (
         <>
-          <Calculator className="h-4 w-4 mr-2" />
+          <Calculator className="h-4 w-4 mr-2 shrink-0" />
           {label}
         </>
       )}
@@ -162,7 +167,7 @@ export const SecondaryButton = ({
       onClick={onClick}
       disabled={isDisabled}
       className={cn(
-        'h-12 rounded-xl border-white/[0.08]',
+        'h-12 md:h-12 rounded-xl border-white/[0.14]',
         'text-white hover:text-white hover:bg-white/[0.04]',
         'touch-manipulation active:scale-[0.98] transition-all',
         className

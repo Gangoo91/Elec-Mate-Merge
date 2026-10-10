@@ -49,7 +49,7 @@ const keyTakeaways = [
   'BRC Global Standards (specifically BRC Food Safety) require that all equipment and structures in food manufacturing areas be hygienic in design and construction, cleanable without contaminating the product, and maintained in a condition that does not create a food safety risk.',
   'Allergen zone segregation may require dedicated electrical systems, separate cable routes, and physical separation of control panels to prevent cross-contamination between allergen and non-allergen production areas.',
   'CompEx qualification is required for electricians carrying out electrical work in ATEX dust-classified zones in flour mills, grain stores, and sugar processing facilities.',
-  'Reg 421.1.7 was redrafted in BS 7671:2018+A4:2026. AFDDs are now required on socket-outlet final circuits (≤32 A) in Higher Risk Residential Buildings, HMOs, student accommodation and care homes; for all other premises — including food factories — they are recommended on single-phase socket-outlet final circuits (≤32 A). Food factory conditions (cable damage from wash-down, pest activity, vibration, frequent maintenance) make arc fault risk a genuine design consideration.',
+  'Reg 421.1.7 was redrafted at A2:2022 and carries into BS 7671:2018+A4:2026. AFDDs are required on socket-outlet final circuits (≤32 A) in Higher Risk Residential Buildings, HMOs, student accommodation and care homes; for all other premises — including food factories — they are recommended on single-phase socket-outlet final circuits (≤32 A). Food factory conditions (cable damage from wash-down, pest activity, vibration, frequent maintenance) make arc fault risk a genuine design consideration.',
   'In high-ambient-temperature zones (near ovens, dryers, tunnel pasteurisers), cable current-carrying capacity must be derated. BS 7671 Reg 523.4 sets how ambient temperature is established, and Reg 523.5 requires that where cables with different maximum operating temperatures are grouped together, the current-carrying capacity of all cables in the group shall be based on the lowest maximum operating temperature of any cable in the group, together with the appropriate group rating factor from Appendix 4 Tables 4C1 to 4C6.',
   'Food factories with large VFD-driven conveyors, refrigeration compressors, and motor-heavy plant generate switching transients that can damage sensitive control equipment. BS 7671 Reg 534.4.1.6 requires that consideration be given to the provision of surge protective devices (SPDs) to protect against switching overvoltages produced by current-using equipment located within the installation — exactly the transients that large motors and variable speed drives generate.',
 ];
@@ -204,15 +204,26 @@ const sections = [
             <div className="bg-white/[0.06] p-3 font-semibold text-white">Food factory use</div>
 
             <div className="bg-white/[0.02] p-3 text-white font-mono">IP65</div>
-            <div className="bg-white/[0.02] p-3 text-white">Dust-tight; low-pressure water jets from any direction</div>
-            <div className="bg-white/[0.02] p-3 text-red-300">Not sufficient for wash-down areas</div>
+            <div className="bg-white/[0.02] p-3 text-white">
+              Dust-tight; low-pressure water jets from any direction
+            </div>
+            <div className="bg-white/[0.02] p-3 text-red-300">
+              Not sufficient for wash-down areas
+            </div>
 
             <div className="bg-white/[0.02] p-3 text-white font-mono">IP66</div>
-            <div className="bg-white/[0.02] p-3 text-white">Dust-tight; powerful water jets from any direction</div>
-            <div className="bg-white/[0.02] p-3 text-red-300">Not sufficient for wash-down areas</div>
+            <div className="bg-white/[0.02] p-3 text-white">
+              Dust-tight; powerful water jets from any direction
+            </div>
+            <div className="bg-white/[0.02] p-3 text-red-300">
+              Not sufficient for wash-down areas
+            </div>
 
             <div className="bg-blue-900/30 p-3 text-white font-mono">IP69K</div>
-            <div className="bg-blue-900/30 p-3 text-white">High-pressure (80 bar), high-temperature (80°C) close-range steam/water jets, all angles</div>
+            <div className="bg-blue-900/30 p-3 text-white">
+              High-pressure (80 bar), high-temperature (80°C) close-range steam/water jets, all
+              angles
+            </div>
             <div className="bg-blue-900/30 p-3 text-blue-200 font-semibold">Required minimum</div>
           </div>
           <p className="text-white text-xs p-3 border-t border-white/10">
@@ -644,25 +655,33 @@ const sections = [
             <div className="bg-white/[0.06] p-3 font-semibold text-white">Regulation</div>
             <div className="bg-white/[0.06] p-3 font-semibold text-white">What it requires</div>
 
-            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">421.1.7</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">
+              421.1.7
+            </div>
             <div className="bg-white/[0.02] p-3 text-white">
               AFDDs on socket-outlet final circuits (≤32 A) — required in specified residential
               building types, recommended for other premises such as food factories
             </div>
 
-            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">523.4 / 523.5</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">
+              523.4 / 523.5
+            </div>
             <div className="bg-white/[0.02] p-3 text-white">
               Cable derating — ambient temperature determination, and lowest-temperature basis for
               mixed-temperature cable groups (Tables 4C1–4C6, Appendix 4)
             </div>
 
-            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">534.4.1.6</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">
+              534.4.1.6
+            </div>
             <div className="bg-white/[0.02] p-3 text-white">
               Consideration of SPDs against switching overvoltages produced by current-using
               equipment within the installation (large motors, VFDs)
             </div>
 
-            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">411.3.3</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">
+              411.3.3
+            </div>
             <div className="bg-white/[0.02] p-3 text-white">
               Additional protection by 30 mA RCD for socket-outlets (≤32 A), subject to the
               documented risk-assessment exception in non-dwellings
@@ -675,8 +694,8 @@ const sections = [
               <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arc fault detection — BS 7671 Reg 421.1.7</strong> — Reg 421.1.7 was
-                redrafted in BS 7671:2018+A4:2026. It is now a <em>requirement</em> to fit arc
-                fault detection devices (AFDDs) on final circuits supplying socket-outlets rated
+                redrafted at A2:2022 (and carries into A4:2026). It is a <em>requirement</em> to fit
+                arc fault detection devices (AFDDs) on final circuits supplying socket-outlets rated
                 not exceeding 32 A in Higher Risk Residential Buildings, Houses in Multiple
                 Occupation, purpose-built student accommodation, and care homes. For all other
                 premises — which includes food factories — the regulation <em>recommends</em> AFDDs
@@ -692,7 +711,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Cable derating in high-temperature zones — BS 7671 Regs 523.4 &amp; 523.5</strong>{' '}
+                <strong>
+                  Cable derating in high-temperature zones — BS 7671 Regs 523.4 &amp; 523.5
+                </strong>{' '}
                 — Areas adjacent to ovens, tunnel pasteurisers, hot-fill lines, and drying plant can
                 sustain ambient temperatures well above the 30&deg;C reference used in standard
                 cable sizing tables. BS 7671 Reg 523.4 requires the ambient temperature to be taken
@@ -715,24 +736,24 @@ const sections = [
                 consideration be given to the provision of SPDs to protect against switching
                 overvoltages produced by current-using equipment located within the installation.
                 Large motors and variable speed drives are exactly the kind of current-using
-                equipment that generates these switching transients, and they can damage PLCs,
-                HMIs, instrumentation, and other sensitive control equipment if SPDs are not
-                provided at appropriate points in the distribution system. SPD requirements should
-                form part of the electrical design scope for any food factory with significant
-                motor or VFD loading.
+                equipment that generates these switching transients, and they can damage PLCs, HMIs,
+                instrumentation, and other sensitive control equipment if SPDs are not provided at
+                appropriate points in the distribution system. SPD requirements should form part of
+                the electrical design scope for any food factory with significant motor or VFD
+                loading.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>RCD additional protection — BS 7671 Reg 411.3.3</strong> — As revised in
-                A4:2026, Reg 411.3.3 applies additional protection by a 30 mA RCD to socket-outlets
-                with a rated current not exceeding 32 A. In wash-down and damp food production
-                areas this protection matters all the more. The regulation retains an exception
-                allowing RCD protection to be omitted — other than in a dwelling — where a
-                documented risk assessment determines it is not necessary, though for
-                general-purpose socket-outlets in a food factory that exception is rarely
-                justified.
+                <strong>RCD additional protection — BS 7671 Reg 411.3.3</strong> — Since 2018
+                (redrafted at A2:2022), Reg 411.3.3 applies additional protection by a 30 mA RCD to
+                socket-outlets with a rated current not exceeding 32 A. In wash-down and damp food
+                production areas this protection matters all the more. The regulation retains an
+                exception allowing RCD protection to be omitted where a documented risk assessment
+                determines it is not necessary — never for sockets liable to be used by ordinary
+                persons or children, or for mobile equipment used outdoors — though for
+                general-purpose socket-outlets in a food factory that exception is rarely justified.
               </span>
             </li>
           </ul>
@@ -806,7 +827,7 @@ export default function FoodProcessingElectricalPage() {
       title="Food Processing Electrical Installation UK"
       description="Complete guide to food processing electrical installation in the UK — IP69K wash-down environments, ATEX dust zones (Zone 20/21/22), hygienic design."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

@@ -46,6 +46,7 @@ import { cn } from '@/lib/utils';
 import { HubMasthead } from '@/components/hub/HubPrimitives';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY, COLLEGE_CARD } from '@/components/college/ui/CollegeUi';
+import { MoveCollegeSheet } from '@/components/apprentice-hub/MoveCollegeSheet';
 
 type Phase = 'checking' | 'joining' | 'success' | 'error' | 'signed_out';
 
@@ -59,20 +60,44 @@ const HELP: PageHelpContent = {
   title: 'Joining your college',
   what: 'Your college sent you this link so your Elec-Mate account is linked to them. Once you join, your tutor can see your progress and you can see your college plan.',
   steps: [
-    { title: 'Sign in or create an account', body: 'Use the email your college has for you if you can; it links you to your place on their roll straight away.' },
-    { title: 'We link you automatically', body: 'The code in this link is kept while you sign up, so you never have to type it.' },
-    { title: 'Open your college plan', body: 'You land on your college plan: your cohort, your tutor, timetable and what is due.' },
+    {
+      title: 'Sign in or create an account',
+      body: 'Use the email your college has for you if you can; it links you to your place on their roll straight away.',
+    },
+    {
+      title: 'We link you automatically',
+      body: 'The code in this link is kept while you sign up, so you never have to type it.',
+    },
+    {
+      title: 'Open your college plan',
+      body: 'You land on your college plan: your cohort, your tutor, timetable and what is due.',
+    },
   ],
   notes: [
-    { title: 'Discount codes', body: 'If your college has a discount with Elec-Mate, this join code carries it: it is applied when you create your account. A separate discount code from your college works too.' },
-    { title: 'Already in another college', body: 'You can only be in one college at a time. Ask your current college to remove you first.' },
+    {
+      title: 'Discount codes',
+      body: 'If your college has a discount with Elec-Mate, this join code carries it: it is applied when you create your account. A separate discount code from your college works too.',
+    },
+    {
+      title: 'Already in another college',
+      body: 'If you have moved, move your record here in one step. Every decision, witness statement and hour comes with you, and your old college stops seeing it.',
+    },
   ],
 };
 
 const WHAT_YOU_GET = [
-  { title: 'Your tutor sees your progress', body: 'Portfolio, off-the-job hours and quizzes reach them without you sending anything.' },
-  { title: 'Your hours count', body: 'Learning you do in the app counts towards your off-the-job hours.' },
-  { title: 'Your college plan in one place', body: 'Cohort, timetable, reviews and what is due next.' },
+  {
+    title: 'Your tutor sees your progress',
+    body: 'Portfolio, off-the-job hours and quizzes reach them without you sending anything.',
+  },
+  {
+    title: 'Your hours count',
+    body: 'Learning you do in the app counts towards your off-the-job hours.',
+  },
+  {
+    title: 'Your college plan in one place',
+    body: 'Cohort, timetable, reviews and what is due next.',
+  },
 ];
 
 export default function CollegeJoinPage() {
@@ -89,6 +114,8 @@ export default function CollegeJoinPage() {
   // whether it carries the college's discount (describe_join_code is public).
   // undefined while checking; null when the code is not a live join code.
   const [info, setInfo] = useState<JoinCodeInfo | null | undefined>(undefined);
+  // ELE-1882: already with another college. Offer the move.
+  const [moveOpen, setMoveOpen] = useState(false);
   useEffect(() => {
     if (phase !== 'signed_out' || !code) return;
     let cancelled = false;
@@ -178,15 +205,16 @@ export default function CollegeJoinPage() {
           transition={{ duration: 0.3 }}
           className="lg:col-start-1 lg:row-start-1"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">Your college</p>
+          <p className="text-[13px] font-semibold text-elec-yellow">Your college</p>
           <h1 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[34px]">
             {phase === 'success' ? 'You are in.' : 'Join your college on Elec-Mate'}
           </h1>
           <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed text-white">
             {code ? (
               <>
-                Join code <span className="font-semibold tabular-nums text-elec-yellow">{code}</span>. One step links your
-                account to your college, your cohort and your tutor.
+                Join code{' '}
+                <span className="font-semibold tabular-nums text-elec-yellow">{code}</span>. One
+                step links your account to your college, your cohort and your tutor.
               </>
             ) : (
               'One step links your account to your college, your cohort and your tutor.'
@@ -199,19 +227,25 @@ export default function CollegeJoinPage() {
           transition={{ duration: 0.3, delay: 0.1 }}
           className="order-last grid gap-3 sm:grid-cols-3 lg:order-none lg:col-start-1 lg:row-start-2 lg:grid-cols-1"
         >
-            {WHAT_YOU_GET.map((w) => (
-              <li key={w.title} className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-3.5">
-                <p className="text-[14px] font-semibold text-white">{w.title}</p>
-                <p className="mt-1 text-[12.5px] leading-snug text-white">{w.body}</p>
-              </li>
-            ))}
+          {WHAT_YOU_GET.map((w) => (
+            <li
+              key={w.title}
+              className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-3.5"
+            >
+              <p className="text-[14px] font-semibold text-white">{w.title}</p>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">{w.body}</p>
+            </li>
+          ))}
         </motion.ul>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.05 }}
-          className={cn(COLLEGE_CARD, 'text-center sm:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center')}
+          className={cn(
+            COLLEGE_CARD,
+            'text-center sm:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center'
+          )}
         >
           {(phase === 'checking' || phase === 'joining') && (
             <>
@@ -232,7 +266,9 @@ export default function CollegeJoinPage() {
                 ✓
               </div>
               <h2 className="mt-4 text-[17px] font-semibold text-white">You're in</h2>
-              <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-white">{successLine}</p>
+              <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-white">
+                {successLine}
+              </p>
               <p className="mt-3 text-[12.5px] text-white">
                 {result?.invite_type === 'staff'
                   ? 'Taking you to College Hub…'
@@ -249,24 +285,31 @@ export default function CollegeJoinPage() {
               >
                 !
               </div>
-              <h2 className="mt-4 text-[17px] font-semibold text-white">Couldn't join</h2>
-              <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">{errorMsg}</p>
+              <h2 className="mt-4 text-[17px] font-semibold text-white">
+                {inOtherCollege ? 'You are with another college' : "Couldn't join"}
+              </h2>
+              <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
+                {inOtherCollege
+                  ? `Your account is linked to ${result?.other_college_name ?? 'another college'}. If you have moved, bring your record here: every decision, witness statement and hour comes with you.`
+                  : errorMsg}
+              </p>
               {inOtherCollege ? (
                 <>
                   <button
                     type="button"
-                    onClick={() => navigate('/apprentice/college-plan', { replace: true })}
+                    onClick={() => setMoveOpen(true)}
                     className={cn('mt-5', PRIMARY_BTN)}
                   >
-                    Go to my college hub
+                    Move my record here
                   </button>
                   <button
                     type="button"
-                    onClick={() => navigate('/dashboard', { replace: true })}
+                    onClick={() => navigate('/apprentice/college-plan', { replace: true })}
                     className={cn('mt-2.5', SECONDARY_BTN)}
                   >
-                    Go to Elec-Mate
+                    Stay with {result?.other_college_name ?? 'my college'}
                   </button>
+                  <MoveCollegeSheet open={moveOpen} onOpenChange={setMoveOpen} initialCode={code} />
                 </>
               ) : (
                 <button
@@ -297,10 +340,14 @@ export default function CollegeJoinPage() {
               </div>
               <h2 className="mt-4 text-[17px] font-semibold text-white">This code does not work</h2>
               <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
-                {code} is not a live join code. It may have been typed wrong, switched off or used up. Check it with
-                your tutor, or ask them to send the link again.
+                {code} is not a live join code. It may have been typed wrong, switched off or used
+                up. Check it with your tutor, or ask them to send the link again.
               </p>
-              <button type="button" onClick={() => navigate('/auth/signin')} className={cn('mt-5', SECONDARY_BTN)}>
+              <button
+                type="button"
+                onClick={() => navigate('/auth/signin')}
+                className={cn('mt-5', SECONDARY_BTN)}
+              >
                 I already have an account
               </button>
             </>
@@ -314,14 +361,16 @@ export default function CollegeJoinPage() {
                 automatically.
               </p>
               {info && (
-                <p className="mt-2 text-[13px] font-semibold leading-relaxed text-elec-yellow">{joinLine(info)}</p>
+                <p className="mt-2 text-[13px] font-semibold leading-relaxed text-elec-yellow">
+                  {joinLine(info)}
+                </p>
               )}
               <p className="mt-2 text-[12.5px] leading-relaxed text-white">
                 {info?.invite_type === 'staff'
                   ? 'This is a staff link. College staff use Elec-Mate free: there is nothing to pay.'
                   : info?.apprentice_offer || info?.electrician_offer
-                  ? 'Your college discount comes with this code: it is applied when you create your account.'
-                  : 'If your college gave you a discount code too, you can enter it when you create your account.'}
+                    ? 'Your college discount comes with this code: it is applied when you create your account.'
+                    : 'If your college gave you a discount code too, you can enter it when you create your account.'}
               </p>
               {/* The one solid volt control on the page. Join links are learner
                   codes in practice — staff accounts are provisioned by admin. */}

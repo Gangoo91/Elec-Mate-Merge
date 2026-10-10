@@ -222,6 +222,49 @@ serve(async (req) => {
           break;
         }
 
+        // M4 (ELE-2079): a payment that lands on an invoice already cancelled
+        // or void (e.g. a released or declined online booking's deposit, paid
+        // on a checkout opened before it was cancelled) is never marked paid.
+        // It is recorded for a refund and the owner is told. Every other
+        // invoice carries on exactly as before. If recording fails, throw so
+        // Stripe retries the event (the record is idempotent on session id).
+        {
+          let currentStatus: string | null = null;
+          const { data: invRow } = await supabase
+            .from('invoices')
+            .select('status')
+            .eq('id', invoiceId)
+            .maybeSingle();
+          if (invRow) {
+            currentStatus = (invRow as { status: string | null }).status;
+          } else {
+            const { data: quoteRow } = await supabase
+              .from('quotes')
+              .select('invoice_status')
+              .eq('id', invoiceId)
+              .maybeSingle();
+            currentStatus = quoteRow
+              ? (quoteRow as { invoice_status: string | null }).invoice_status
+              : null;
+          }
+          if (currentStatus && /^(cancelled|canceled|void|voided)$/i.test(currentStatus.trim())) {
+            const { error: recordError } = await supabase.rpc('record_payment_after_cancel', {
+              p_invoice: invoiceId,
+              p_session: session.id,
+              p_payment_intent: (session.payment_intent as string) ?? null,
+              p_amount: session.amount_total ? session.amount_total / 100 : 0,
+            });
+            if (recordError) {
+              console.error('record_payment_after_cancel failed:', recordError);
+              throw recordError;
+            }
+            console.warn(
+              `Payment on cancelled invoice ${invoiceId} (${currentStatus}) — not marked paid, flagged for refund`
+            );
+            break;
+          }
+        }
+
         // ELE-954 — Look up the invoice in the new `invoices` table first.
         // If it's a deposit invoice (deposit_for_quote = true) we also flip
         // the parent quote from accepted_pending_deposit → accepted, so the

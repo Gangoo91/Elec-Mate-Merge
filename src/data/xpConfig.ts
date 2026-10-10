@@ -92,6 +92,30 @@ export const XP_RULES: Record<ActivityType, XPRule> = {
   },
 };
 
+// ─── How XP is earned (what learners are told) ──────────────────
+/**
+ * The rules as the SERVER applies them (award_xp, _xp_daily_cap,
+ * _xp_on_mock_attempt, log_study_activity — migrations 20261009170000/171000).
+ * Shown on the leaderboard so a competition is played to known rules. If a
+ * server rule changes, change it here in the same commit.
+ */
+export const XP_EARNING_GUIDE: { action: string; xp: string; limit: string }[] = [
+  { action: 'Mock exam', xp: '50 XP + your score (up to 150)', limit: 'Once per paper per day, 10+ questions · up to 600 a day' },
+  { action: 'Lesson quiz', xp: '30 XP + 0.7 × score, +50 for 100%', limit: 'Once per quiz per day · up to 1,000 a day' },
+  { action: 'Course section studied', xp: '25 XP', limit: 'Once per section per day' },
+  { action: 'Flashcards', xp: '5 XP per card', limit: 'Up to 50 cards (250 XP) a day' },
+  { action: 'Training video', xp: '10 XP', limit: 'Once per video · up to 200 a day' },
+  { action: 'Learning path finished', xp: '50 XP', limit: 'Once per path · up to 200 a day' },
+  { action: 'Portfolio evidence', xp: '30 XP', limit: 'Once per piece · up to 300 a day' },
+  { action: 'Site diary entry', xp: '20 XP', limit: 'Once per entry · up to 100 a day' },
+  { action: 'Tutor quiz', xp: '5 to 35 XP by score', limit: 'Once per attempt · up to 300 a day' },
+  { action: 'Your week completed', xp: '100 XP', limit: 'Once a week, when every goal on your plan is done' },
+  { action: 'Award unlocked', xp: '10 to 500 XP', limit: 'Once each · counts to your level and all time, not week or month boards' },
+];
+
+/** Most XP anyone can earn in one day (Europe/London), all activities together except awards. */
+export const XP_DAILY_CAP = 1500;
+
 // ─── Levels ──────────────────────────────────────────────────────
 export interface LevelDefinition {
   level: number;

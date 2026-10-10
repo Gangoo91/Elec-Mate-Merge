@@ -173,9 +173,9 @@ export function PortalShareCard({
             quotes to accept, invoices with Pay now, and a message thread with you. They do not
             need an account.
           </p>
-          <PrimaryButton onClick={create} disabled={busy} fullWidth>
+          <SecondaryButton onClick={create} disabled={busy} className="w-full sm:w-auto">
             {ensure.isPending ? 'Creating…' : 'Create portal link'}
-          </PrimaryButton>
+          </SecondaryButton>
         </div>
       ) : (
         <div className="p-4 sm:p-5 space-y-5">

@@ -11,8 +11,8 @@
  * Now, for the qualification their portfolio is on:
  *   - AM2 practice: their counted am2_mock_sessions (as useAM2Sections),
  *   - portfolio: that qualification's ACs, from get_portfolio_ac_state (the
- *     one criterion state, ELE-1917); student_ac_coverage / ac_signoffs or
- *     the items' AC references only when that returns nothing,
+ *     one criterion state, ELE-1917); the items' AC references only when
+ *     that returns nothing (no college, no assessor),
  *   - sign-offs: their epa_gateway_checklist row.
  * A snapshot is written only when the score or status changes, or once a
  * day — it was written on every page view (three times per home visit).
@@ -23,7 +23,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { AM2_RUNS_LIMIT, buildSections, countsTowardsReady } from '@/hooks/am2/useAM2Sections';
 import {
-  acState,
   buildEpaReadiness,
   epaRouteFor,
   parsePortfolioAcRef,
@@ -55,6 +54,33 @@ const DAY_MS = 86_400_000;
 const snapshotInFlight = new Set<string>();
 
 async function loadCoverage(userId: string, code: string) {
+  // ELE-1917: the one criterion state, the same the learner's portfolio,
+  // Student 360 and their assessor read. The criteria are exactly its rows
+  // (it resolves the qualification itself), so "4 of 340 passed" here is the
+  // same 4 and the same 340 everywhere. Passed (or IQA confirmed) is signed
+  // off; claimed or submitted is evidenced; needs more, not yet and AI
+  // suggestions count as nothing. student_ac_coverage is never read: it
+  // counted claimed work and disagreed with the portfolio.
+  const { data: stateRows, error: stateErr } = await db.rpc('get_portfolio_ac_state', {
+    p_user_id: userId,
+  });
+  const all = (stateErr ? [] : (stateRows ?? [])) as Array<{
+    unit_code: string;
+    unit_title: string | null;
+    ac_code: string;
+    state: string;
+  }>;
+  if (all.length) {
+    const rows: Parameters<typeof portfolioCoverage>[1] = [];
+    for (const r of all) {
+      if (r.state === 'passed' || r.state === 'iqa_confirmed')
+        rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'signed_off' });
+      else if (r.state === 'claimed' || r.state === 'submitted')
+        rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'evidenced' });
+    }
+    return portfolioCoverage(all, rows);
+  }
+
   const { data: acs, error: acErr } = await db
     .from('qualification_requirements')
     .select('unit_code, unit_title, ac_code')
@@ -62,83 +88,6 @@ async function loadCoverage(userId: string, code: string) {
   if (acErr) throw acErr;
   const acRows = (acs ?? []) as Array<{ unit_code: string; unit_title: string; ac_code: string }>;
   if (!acRows.length) return null;
-
-  // ELE-1917: the one criterion state, the same the learner's portfolio and
-  // their assessor read. Passed (or IQA confirmed) is signed off; claimed or
-  // submitted is evidenced; needs more, not yet and AI suggestions count as
-  // nothing. The older stores below are the fallback only when the state
-  // function has nothing for this qualification.
-  const { data: stateRows, error: stateErr } = await db.rpc('get_portfolio_ac_state', {
-    p_user_id: userId,
-  });
-  const forCode = (
-    (stateErr ? [] : (stateRows ?? [])) as Array<{
-      unit_code: string;
-      ac_code: string;
-      state: string;
-      qualification_code: string | null;
-    }>
-  ).filter((r) => !r.qualification_code || r.qualification_code === code);
-  if (forCode.length) {
-    const rows: Parameters<typeof portfolioCoverage>[1] = [];
-    for (const r of forCode) {
-      if (r.state === 'passed' || r.state === 'iqa_confirmed')
-        rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'signed_off' });
-      else if (r.state === 'claimed' || r.state === 'submitted')
-        rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'evidenced' });
-    }
-    return portfolioCoverage(acRows, rows);
-  }
-
-  // A college learner: coverage and sign-offs are kept per AC by the college.
-  const { data: student } = await db
-    .from('college_students')
-    .select('id')
-    .eq('user_id', userId)
-    .maybeSingle();
-  const studentId = (student as { id: string } | null)?.id ?? null;
-  if (studentId) {
-    const [cov, so] = await Promise.all([
-      db
-        .from('student_ac_coverage')
-        .select('unit_code, ac_code, status, evidence_count')
-        .eq('student_id', studentId)
-        .eq('qualification_code', code),
-      db
-        .from('ac_signoffs')
-        .select('unit_code, ac_code, assessor_verdict, iqa_verdict')
-        .eq('student_id', studentId)
-        .eq('qualification_code', code),
-    ]);
-    if (cov.error) throw cov.error;
-    if (so.error) throw so.error;
-    // The same per-AC rule as the tutor's view (acState): a referred or
-    // "not yet" AC counts as nothing, however much evidence it has.
-    const key = (u: string, a: string) => `${u}|${a}`;
-    type Cov = {
-      unit_code: string;
-      ac_code: string;
-      status: string | null;
-      evidence_count: number | null;
-    };
-    type So = {
-      unit_code: string;
-      ac_code: string;
-      assessor_verdict: string | null;
-      iqa_verdict: string | null;
-    };
-    const covMap = new Map(
-      ((cov.data ?? []) as Cov[]).map((c) => [key(c.unit_code, c.ac_code), c])
-    );
-    const soMap = new Map(((so.data ?? []) as So[]).map((c) => [key(c.unit_code, c.ac_code), c]));
-    const rows: Parameters<typeof portfolioCoverage>[1] = [];
-    for (const ac of acRows) {
-      const k = key(ac.unit_code, ac.ac_code);
-      const state = acState(covMap.get(k), soMap.get(k));
-      if (state) rows.push({ unit_code: ac.unit_code, ac_code: ac.ac_code, state });
-    }
-    return portfolioCoverage(acRows, rows);
-  }
 
   // On their own: the AC references on their portfolio items that place in a
   // unit of this qualification. Only items with evidence attached count.

@@ -25,7 +25,7 @@ const keyTakeaways = [
   'Time management is the single biggest cause of failure. Practise every task under timed conditions until you can finish with time to spare. Rushing causes mistakes; preparation creates speed.',
   'Safe isolation is an automatic fail if done incorrectly. The prove-test-prove procedure must be second nature — every single time, no shortcuts. Assessors watch this step closely.',
   'Bring your own complete toolkit and calibrated test instruments. Check everything the day before — flat batteries, blown fuses in test leads, or a missing proving unit will cost you on the day.',
-  'BS 7671:2018+A4:2026 introduces two rules directly relevant to the AM2 consumer unit task: Reg 411.3.4 makes 30 mA RCD protection mandatory on domestic AC final circuits supplying luminaires, and the redrafted Reg 421.1.7 makes arc fault detection devices (AFDDs) to BS EN 62606 a requirement on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes — and a recommendation for the same circuits in all other premises. Both can appear in the Section E online knowledge test.',
+  'Two rules in BS 7671:2018+A4:2026 are directly relevant to the AM2 consumer unit task: Reg 411.3.4 (since 2018) makes 30 mA RCD protection mandatory on domestic AC final circuits supplying luminaires, and Reg 421.1.7 (redrafted at A2:2022) makes arc fault detection devices (AFDDs) to BS EN 62606 a requirement on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes — and a recommendation for the same circuits in all other premises. Both can appear in the Section E online knowledge test.',
   'Insulation resistance test voltages come from Table 64 — 500 V DC, minimum 1 MΩ, for circuits up to and including 500 V. Reg 643.3.3 (redrafted by A4:2026) covers equipment likely to influence the result or be damaged: test at the Table 64 voltage before that equipment is connected, then apply a 250 V DC test between live conductors and the protective conductor once it is connected, again with a minimum of 1 MΩ. RCD acceptance criterion (Reg 643.8): regardless of RCD Type, an AC test at rated residual operating current (IΔn) is used, and a general non-delay RCD must disconnect within 300 ms maximum.',
   'Elec-Mate has an AM2 Simulator that replicates every practical task with timed exercises and AI feedback. Candidates who practise 3 to 4 full mock assessments before the real AM2 report significantly higher confidence and pass rates.',
 ];
@@ -129,7 +129,7 @@ const sections = [
         <p>
           Passing the AM2 is the final practical hurdle in becoming a fully qualified Installation
           Electrician. It is required for the JIB ECS Gold Card and is a gateway requirement for the
-          End Point Assessment (EPA) on the electrical apprenticeship standard (ST0215). Without the
+          End Point Assessment (EPA) on the electrical apprenticeship standard (ST0152). Without the
           AM2, you cannot complete your{' '}
           <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
             electrical apprenticeship
@@ -187,10 +187,10 @@ const sections = [
                   <p className="text-white text-xs leading-relaxed">
                     <strong className="text-white">Reg 411.3.4:</strong> Within domestic (household)
                     premises, additional protection by an RCD with a rated residual operating
-                    current not exceeding 30 mA is now mandatory on AC final circuits supplying
+                    current not exceeding 30 mA has been mandatory since 2018 on AC final circuits supplying
                     luminaires (lighting circuits). Your circuit schedule must show RCD protection
                     on all lighting circuits.{' '}
-                    <strong className="text-white">Reg 421.1.7:</strong> redrafted by A4:2026. Arc
+                    <strong className="text-white">Reg 421.1.7:</strong> redrafted at A2:2022. Arc
                     fault detection devices (AFDDs) to BS EN 62606 are now required on single-phase
                     AC final circuits supplying socket-outlets rated up to 32 A in high rise
                     residential buildings, houses in multiple occupation, purpose-built student
@@ -569,7 +569,7 @@ export default function AM2ExamTipsPage() {
       title="AM2 Exam Tips: 8.5 Hours, 4 Tasks, Common Fails"
       description="The AM2 runs 8.5 hours (AM2S 16.5 over 2.5 days): consumer unit, ring final, lighting, fault finding. Common fails, what to bring and the £885 fee."
       datePublished="2025-06-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Guide"

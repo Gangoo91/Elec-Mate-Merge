@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'What training am I responsible for if I hire an apprentice?',
     answer:
-      'As an employer of an apprentice, you are responsible for: providing a genuine working environment where the apprentice gains practical experience in electrical installation, allowing them paid time off (at least 20% of their working hours, known as "off-the-job training") to attend college or training provider sessions, providing a workplace mentor or supervisor, ensuring they are supervised appropriately for their level of competence (an apprentice must not work unsupervised on live electrical systems), and supporting them through their End-Point Assessment. You also need to sign an apprenticeship agreement and a commitment statement. The apprentice training costs are usually covered by the apprenticeship levy (if your payroll exceeds £3 million) or 95% government-funded (if it does not) — your contribution for a non-levy employer is 5% of the training cost, typically £500 to £800 over the apprenticeship.',
+      'As an employer of an apprentice, you are responsible for: providing a genuine working environment where the apprentice gains practical experience in electrical installation, allowing them paid time for off-the-job training (at least the minimum hours published on their apprenticeship standard) to attend college or training provider sessions, providing a workplace mentor or supervisor, ensuring they are supervised appropriately for their level of competence (an apprentice must not work unsupervised on live electrical systems), and supporting them through their End-Point Assessment. You also need to sign an apprenticeship agreement and a commitment statement. The apprentice training costs are usually covered by the apprenticeship levy (if your payroll exceeds £3 million) or 95% government-funded (if it does not) — your contribution for a non-levy employer is 5% of the training cost, typically £500 to £800 over the apprenticeship.',
   },
   {
     question: 'What are the IR35 rules and do they affect me?',
@@ -377,14 +377,16 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Apprentice</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Salary:</strong> £6.40/hour minimum (apprentice rate 2026/27), rising with age
-              and experience. Typically £12,000 to £18,000 per year.
+              <strong>Salary:</strong> £8.00/hour minimum (apprentice rate from April 2026), rising with
+              age and experience. From about £15,600 a year at the minimum on 37.5 hours.
               <br />
               <strong>Pros:</strong> Lower cost, trainable to your standards, long-term loyalty,
-              government training funding (95% of training costs for non-levy employers).
+              government training funding (all training costs for 16 to 24-year-olds at non-levy
+              employers, 95% for 25+).
               <br />
               <strong>Cons:</strong> Cannot work unsupervised for 3 to 4 years, slows you down
-              initially, requires 20% off-the-job training time, you need patience and teaching
+              initially, requires paid off-the-job training time (a minimum number of hours set for the
+              standard), you need patience and teaching
               ability.
               <br />
               <strong>Best for:</strong> Established businesses with consistent domestic work where
@@ -745,7 +747,7 @@ export default function HiringFirstEmployeePage() {
       title="Hiring Your First Employee as an Electrician"
       description="Complete guide to hiring your first employee as a self-employed electrician. PAYE, pension auto-enrolment, employers liability insurance."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

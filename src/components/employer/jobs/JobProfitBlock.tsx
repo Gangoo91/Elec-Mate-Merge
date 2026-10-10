@@ -172,8 +172,8 @@ export function JobProfitView({
               <>
                 <div className="flex items-end justify-between gap-3">
                   <div>
-                    <p className="text-[11px] font-medium uppercase tracking-wider text-white">
-                      Gross profit · invoiced less costs
+                    <p className="text-[12px] font-medium text-white">
+                      Gross profit, invoiced less costs
                     </p>
                     <p
                       className={cn(

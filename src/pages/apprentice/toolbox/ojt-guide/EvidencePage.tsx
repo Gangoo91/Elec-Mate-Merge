@@ -98,271 +98,254 @@ const photoTips = [
     ],
   },
 ];
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const EvidencePage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · OJT"
-        title="Evidence Collection"
-        backTo="/apprentice/toolbox/off-job-training-guide"
-      />
-      <HubBody>
-        {/* Intro */}
+    <GuidePage
+      section="Apprentice · OJT"
+      area="Off-the-job training"
+      title="Evidence Collection"
+      backTo="/apprentice/toolbox/off-job-training-guide"
+    >
+      {/* Intro */}
+      <div
+        className={cn(
+          '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+          CARD_SURFACE
+        )}
+      >
+        <div className="sm:p-5">
+          <h2 className="text-lg font-semibold text-white mb-2">Evidence Requirements</h2>
+          <p className="text-white text-sm leading-relaxed">
+            Proper documentation of your off-the-job training is essential for apprenticeship
+            completion. You must maintain comprehensive evidence to demonstrate you have completed
+            the fixed training hours required by your standard. Poor evidence is one of the most
+            common reasons apprentices face issues at gateway.
+          </p>
+        </div>
+      </div>
+
+      {/* Example Log Entry */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Example Evidence Log Entry</span>
+          </div>
+        </div>
+
+        <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+          <div className="sm:p-5 space-y-2">
+            <p className="text-white text-sm font-medium">
+              This is what a good log entry looks like:
+            </p>
+            <div className="bg-white/10 rounded-lg p-3 space-y-1.5 text-sm text-white">
+              <div className="flex flex-col sm:flex-row sm:justify-between">
+                <span className="font-medium">Date:</span>
+                <span>15 September 2025</span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:justify-between">
+                <span className="font-medium">Time:</span>
+                <span>09:00 — 16:30 (6.5 hrs)</span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:justify-between">
+                <span className="font-medium">Location:</span>
+                <span>City College Workshop B</span>
+              </div>
+              <div>
+                <span className="font-medium">Activity:</span>
+                <span className="ml-1">
+                  Practical workshop — single-phase consumer unit installation and testing.
+                  Completed wiring to BS 7671 requirements, performed initial verification
+                  (insulation resistance, continuity, polarity). Trainer demonstrated RCD testing
+                  procedure.
+                </span>
+              </div>
+              <div>
+                <span className="font-medium">KSBs covered:</span>
+                <span className="ml-1">K4, K8, S1, S3, S7</span>
+              </div>
+              <div>
+                <span className="font-medium">Trainer signature:</span>
+                <span className="ml-1">J. Smith</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Essential Documentation */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Essential Documentation</span>
+          </div>
+        </div>
+
         <div
           className={cn(
-            '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
             CARD_SURFACE
           )}
         >
           <div className="sm:p-5">
-            <h2 className="text-lg font-semibold text-white mb-2">Evidence Requirements</h2>
-            <p className="text-white text-sm leading-relaxed">
-              Proper documentation of your off-the-job training is essential for apprenticeship
-              completion. You must maintain comprehensive evidence to demonstrate you have completed
-              the fixed training hours required by your standard. Poor evidence is one of the most
-              common reasons apprentices face issues at gateway.
-            </p>
+            <ul className="space-y-2">
+              {essentialDocs.map((doc) => (
+                <li key={doc} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {doc}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Common Mistakes */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-red-300">Common Mistakes to Avoid</span>
           </div>
         </div>
 
-        {/* Example Log Entry */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Example Evidence Log Entry
-              </span>
-            </div>
-          </div>
-
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-            <div className="sm:p-5 space-y-2">
-              <p className="text-white text-sm font-medium">
-                This is what a good log entry looks like:
+        {commonMistakes.map((item) => (
+          <div key={item.mistake} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+            <div className="p-4 sm:p-5 space-y-2">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
+                <h3 className="font-medium text-red-400 text-sm">{item.mistake}</h3>
+              </div>
+              <p className="text-white text-sm ml-7">
+                <span className="text-white">Bad: </span>
+                {item.example}
               </p>
-              <div className="bg-white/10 rounded-lg p-3 space-y-1.5 text-sm text-white">
-                <div className="flex flex-col sm:flex-row sm:justify-between">
-                  <span className="font-medium">Date:</span>
-                  <span>15 September 2025</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between">
-                  <span className="font-medium">Time:</span>
-                  <span>09:00 — 16:30 (6.5 hrs)</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between">
-                  <span className="font-medium">Location:</span>
-                  <span>City College Workshop B</span>
-                </div>
-                <div>
-                  <span className="font-medium">Activity:</span>
-                  <span className="ml-1">
-                    Practical workshop — single-phase consumer unit installation and testing.
-                    Completed wiring to BS 7671 requirements, performed initial verification
-                    (insulation resistance, continuity, polarity). Trainer demonstrated RCD testing
-                    procedure.
-                  </span>
-                </div>
-                <div>
-                  <span className="font-medium">KSBs covered:</span>
-                  <span className="ml-1">K4, K8, S1, S3, S7</span>
-                </div>
-                <div>
-                  <span className="font-medium">Trainer signature:</span>
-                  <span className="ml-1">J. Smith</span>
-                </div>
+              <div className="flex items-start gap-2 ml-7">
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-white text-sm">{item.fix}</p>
               </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* What Auditors Look For */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">What Auditors Look For</span>
+          </div>
         </div>
 
-        {/* Essential Documentation */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Essential Documentation
-              </span>
+        <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+          <div className="sm:p-5 space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <Search className="h-4 w-4 text-amber-400" />
+              <p className="text-white text-sm font-medium">
+                Auditors check your provider, but your evidence matters too
+              </p>
             </div>
+            <ul className="space-y-2">
+              {auditorExpectations.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
+      </div>
 
+      {/* Quality Standards */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Quality Standards</span>
+          </div>
+        </div>
+
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
+          <div className="sm:p-5">
+            <ul className="space-y-2">
+              {qualityStandards.map((std) => (
+                <li key={std} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {std}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Photo Evidence Tips */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Photo Evidence Tips</span>
+          </div>
+        </div>
+
+        {photoTips.map((section) => (
           <div
+            key={section.title}
             className={cn(
-              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
               CARD_SURFACE
             )}
           >
             <div className="sm:p-5">
-              <ul className="space-y-2">
-                {essentialDocs.map((doc) => (
-                  <li key={doc} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {doc}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Common Mistakes */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                Common Mistakes to Avoid
-              </span>
-            </div>
-          </div>
-
-          {commonMistakes.map((item) => (
-            <div
-              key={item.mistake}
-              className="rounded-xl border border-red-500/25 bg-red-500/[0.04]"
-            >
-              <div className="p-4 sm:p-5 space-y-2">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                  <h3 className="font-medium text-red-400 text-sm">{item.mistake}</h3>
-                </div>
-                <p className="text-white text-sm ml-7">
-                  <span className="text-white">Bad: </span>
-                  {item.example}
-                </p>
-                <div className="flex items-start gap-2 ml-7">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                  <p className="text-white text-sm">{item.fix}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* What Auditors Look For */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                What Auditors Look For
-              </span>
-            </div>
-          </div>
-
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-            <div className="sm:p-5 space-y-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Search className="h-4 w-4 text-amber-400" />
-                <p className="text-white text-sm font-medium">
-                  Auditors check your provider, but your evidence matters too
-                </p>
-              </div>
-              <ul className="space-y-2">
-                {auditorExpectations.map((item) => (
+              <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight mb-2">
+                {section.title}
+              </h3>
+              <ul className="space-y-1">
+                {section.items.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
+                    <span className="text-elec-yellow mt-0.5">·</span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* Quality Standards */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Quality Standards
-              </span>
-            </div>
-          </div>
-
-          <div
-            className={cn(
-              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-              CARD_SURFACE
-            )}
-          >
-            <div className="sm:p-5">
-              <ul className="space-y-2">
-                {qualityStandards.map((std) => (
-                  <li key={std} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {std}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* Digital Portfolio */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">
+              Digital Portfolio Best Practices
+            </span>
           </div>
         </div>
 
-        {/* Photo Evidence Tips */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Photo Evidence Tips
-              </span>
-            </div>
-          </div>
-
-          {photoTips.map((section) => (
-            <div
-              key={section.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5">
-                <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight mb-2">
-                  {section.title}
-                </h3>
-                <ul className="space-y-1">
-                  {section.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-white">
-                      <span className="text-elec-yellow/70 mt-0.5">·</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Digital Portfolio */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Digital Portfolio Best Practices
-              </span>
-            </div>
-          </div>
-
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-            <div className="sm:p-5 space-y-3">
-              <p className="text-white text-sm">
-                Modern apprentices benefit from digital evidence management:
-              </p>
-              <ul className="space-y-2">
-                {portfolioBestPractices.map((tip) => (
-                  <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+          <div className="sm:p-5 space-y-3">
+            <p className="text-white text-sm">
+              Modern apprentices benefit from digital evidence management:
+            </p>
+            <ul className="space-y-2">
+              {portfolioBestPractices.map((tip) => (
+                <li key={tip} className="flex items-start gap-2 text-sm text-white">
+                  <span className="text-elec-yellow mt-0.5">·</span>
+                  {tip}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </HubBody>
-    </HubPage>
+      </div>
+    </GuidePage>
   );
 };
 

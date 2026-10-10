@@ -14,8 +14,9 @@
  * weeks, then "Show earlier weeks".
  */
 import { useState } from 'react';
-import { Loader2, RefreshCw, Sparkles } from 'lucide-react';
+import { Loader2, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { HOME_SURFACE } from '@/components/apprentice/ApprenticeHomeUi';
 import { toLocalISODate, todayLocalISO } from '@/lib/localDate';
 import { formatMinutes, type SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import type { DiaryCoachInsight } from '@/hooks/site-diary/useDiaryCoach';
@@ -162,15 +163,13 @@ export function DiaryFeed({
                     onReflect(w);
                   }}
                   disabled={busy}
-                  className="-my-1 inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation disabled:opacity-60"
+                  className="-my-1 inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl border border-white/[0.14] px-3.5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:border-white/[0.3] disabled:opacity-60"
                 >
                   {busy ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : insight ? (
-                    <RefreshCw className="h-4 w-4" />
-                  ) : (
-                    <Sparkles className="h-4 w-4" />
-                  )}
+                    <RefreshCw className="h-4 w-4" strokeWidth={1.5} />
+                  ) : null}
                   {busy ? 'Writing…' : insight ? 'Write again' : 'Reflect on the week'}
                 </button>
               )}
@@ -182,7 +181,7 @@ export function DiaryFeed({
             )}
 
             {(insight || busy) && (
-              <div className="mb-3 space-y-2 rounded-2xl border border-elec-yellow/40 bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4">
+              <div className={cn('mb-3 space-y-2 rounded-2xl border p-4 sm:p-5', HOME_SURFACE)}>
                 {insight ? (
                   <>
                     <p className="text-[12px] font-semibold text-white">Your week, reflected</p>

@@ -1,8 +1,13 @@
+import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
+
+// Since 1 August 2025 the off-the-job minimum is a fixed number of hours
+// printed on each apprenticeship standard (DfE funding rules 85-86), not
+// "20% of working hours". No programme may go below 187 hours.
 const WeeklyStructureCard = () => {
   const weeklyStructure = {
     totalHours: 37.5,
-    offJobRequired: 7.5,
-    percentage: 20,
+    standardHours: DEFAULT_OTJ_STANDARD.otjHours,
+    floorHours: 187,
   };
 
   const sampleWeekSchedules = [
@@ -158,32 +163,29 @@ const WeeklyStructureCard = () => {
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            20% time allocation breakdown
+            Off-the-job hours: set per standard
           </span>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
               <div className="text-2xl font-mono text-white">{weeklyStructure.totalHours}</div>
-              <div className="text-[11px] text-white mt-1">Total hours/week</div>
+              <div className="text-[11px] text-white mt-1">Example hours/week</div>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
               <div className="text-2xl font-mono text-white">
-                {weeklyStructure.offJobRequired}
+                {weeklyStructure.standardHours.toLocaleString('en-GB')}
               </div>
-              <div className="text-[11px] text-white mt-1">Off-the-job hours</div>
+              <div className="text-[11px] text-white mt-1">
+                Minimum for {DEFAULT_OTJ_STANDARD.code}, whole programme
+              </div>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-              <div className="text-2xl font-mono text-white">{weeklyStructure.percentage}%</div>
-              <div className="text-[11px] text-white mt-1">Required minimum</div>
+              <div className="text-2xl font-mono text-white">{weeklyStructure.floorHours}</div>
+              <div className="text-[11px] text-white mt-1">Floor for any programme</div>
             </div>
           </div>
-          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-elec-yellow transition-all duration-500"
-              style={{ width: `${weeklyStructure.percentage}%` }}
-            />
-          </div>
-          <p className="text-[11px] text-white font-mono">
-            This equals approximately 278 hours over a 12-month period
+          <p className="text-[11px] text-white">
+            Since August 2025 the minimum is the fixed number of hours on your apprenticeship
+            standard, not 20% of your working hours. It is done in paid working time.
           </p>
         </div>
 

@@ -64,10 +64,10 @@ export function RejectCandidateDialog({
 
         <ResponsiveFormModalBody className="pb-6">
           <div className="space-y-4">
-            <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-3">
-              <p className="text-[11px] text-white uppercase tracking-[0.14em]">Rejecting</p>
-              <p className="mt-1 text-[15px] font-semibold text-white">{candidateName}</p>
-            </div>
+            <p className="text-[14px] leading-snug text-white">
+              Turn down <span className="font-semibold">{candidateName}</span>. They get the
+              standard update that they were not successful.
+            </p>
 
             <Field
               label="Reason (optional)"

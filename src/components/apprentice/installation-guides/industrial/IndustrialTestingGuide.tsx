@@ -769,19 +769,19 @@ const IndustrialTestingGuide = () => {
 
       <Tabs defaultValue="safety" className="w-full">
         <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-1 h-auto">
-          <TabsTrigger value="safety" className="text-xs px-2 py-2">
+          <TabsTrigger value="safety" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Testing Safety
           </TabsTrigger>
-          <TabsTrigger value="motors" className="text-xs px-2 py-2">
+          <TabsTrigger value="motors" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Motor Testing
           </TabsTrigger>
-          <TabsTrigger value="systems" className="text-xs px-2 py-2">
+          <TabsTrigger value="systems" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             System Testing
           </TabsTrigger>
-          <TabsTrigger value="predictive" className="text-xs px-2 py-2">
+          <TabsTrigger value="predictive" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Predictive Tests
           </TabsTrigger>
-          <TabsTrigger value="documentation" className="text-xs px-2 py-2">
+          <TabsTrigger value="documentation" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Documentation
           </TabsTrigger>
         </TabsList>
@@ -943,7 +943,7 @@ const IndustrialTestingGuide = () => {
                     </div>
                   </div>
 
-                  <div className="mt-4 bg-white/[0.06] p-3 rounded border border-elec-yellow/20">
+                  <div className="mt-4 bg-white/[0.06] p-3 rounded border border-white/[0.14]">
                     <h4 className="text-white font-medium mb-2">Important Notes</h4>
                     <ul className="space-y-1">
                       {test.notes.map((note, i) => (
@@ -1022,7 +1022,7 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Testing Method */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">Testing Procedure</h3>
                 <ol className="space-y-2">
                   {earthFaultLoopImpedance.testingMethod.map((step, i) => (
@@ -1137,7 +1137,7 @@ const IndustrialTestingGuide = () => {
                         sev.colour === 'green'
                           ? 'bg-white/[0.06] border-white/[0.10]'
                           : sev.colour === 'yellow'
-                            ? 'bg-white/[0.06] border-elec-yellow/30'
+                            ? 'bg-white/[0.06] border-white/[0.14]'
                             : sev.colour === 'orange'
                               ? 'bg-white/[0.06] border-white/[0.10]'
                               : 'bg-white/[0.06] border-red-500/30'
@@ -1359,7 +1359,7 @@ const IndustrialTestingGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">Additional Industrial Requirements</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {documentation.eic.industrialAdditions.map((item, i) => (
@@ -1410,7 +1410,7 @@ const IndustrialTestingGuide = () => {
                           : code.colour === 'orange'
                             ? 'bg-white/[0.06] border-white/[0.10]'
                             : code.colour === 'yellow'
-                              ? 'bg-white/[0.06] border-elec-yellow/30'
+                              ? 'bg-white/[0.06] border-white/[0.14]'
                               : 'bg-white/[0.06] border-white/[0.10]'
                       }`}
                     >
@@ -1493,7 +1493,7 @@ const IndustrialTestingGuide = () => {
               ))}
 
               {/* Checklist */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">Final Commissioning Checklist</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {commissioning.checklistItems.map((item, i) => (
@@ -1510,14 +1510,14 @@ const IndustrialTestingGuide = () => {
       </Tabs>
 
       {/* Critical Safety Notice */}
-      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5">
         <CardHeader className="p-0 pb-3">
           <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
             <Shield className="h-6 w-6" />
             Critical Industrial Testing Safety
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-4 p-0">
+        <CardContent className="p-0">
           <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-red-300">Arc Flash Protection:</strong> Industrial testing on

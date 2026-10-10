@@ -51,7 +51,7 @@ const keyTakeaways = [
   'NICEIC assessors review a sample of recent certificates during scheme visits — consistent quality across all certificates is essential, not just the ones you expect them to see.',
   'Digital certificates submitted through the NICEIC portal or produced by approved software like Elec-Mate are fully accepted and often preferred for their legibility and completeness.',
   'Elec-Mate automatically validates required fields and flags missing data before you finalise — reducing the risk of rejection at assessment.',
-  'BS 7671:2018+A4:2026 redrew the Appendix 6 model forms — adding fields for recording SPDs and AFDDs and splitting the schedule of test results into separate circuit-details and test-results pages — so contractors using pre-A4 paper pads or outdated software will have missing fields and an outdated layout.',
+  'Amendment 2 (2022) added fields to the Appendix 6 model forms for recording SPDs and AFDDs and split the schedule of test results into separate circuit-details and test-results pages; Amendment 4 (2026) then redrafted the condition report notes and guidance. Contractors using older paper pads or outdated software will have missing fields and an outdated layout.',
 ];
 
 const faqs = [
@@ -356,8 +356,8 @@ const sections = [
                 every circuit, RCD operating times not recorded, or continuity values missing. Every
                 circuit must have a complete set of test results. Note: BS 7671 Reg 643.8 deems an
                 RCD&apos;s effectiveness verified where it disconnects within the stated time using
-                an alternating-current test at its rated residual operating current (I&#x394;n) — for
-                a general non-delay type, 300 ms maximum. Testing at 5&times; I&#x394;n is an
+                an alternating-current test at its rated residual operating current (I&#x394;n) —
+                for a general non-delay type, 300 ms maximum. Testing at 5&times; I&#x394;n is an
                 optional diagnostic check, not a mandatory verification requirement.
               </span>
             </li>
@@ -448,7 +448,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>A4:2026 redrew the Appendix 6 model forms — use the current version.</strong>{' '}
+                <strong>
+                  A4:2026 redrew the Appendix 6 model forms — use the current version.
+                </strong>{' '}
                 BS 7671:2018+A4:2026 made several changes to the Appendix 6 model forms for
                 certification and reporting. These include the addition of fields for recording the
                 details of surge protective devices (SPDs) and arc fault detection devices (AFDDs);
@@ -600,13 +602,12 @@ const sections = [
               <span>
                 <strong>FI (Further Investigation) must be used sparingly.</strong> Industry
                 guidance (IET Guidance Note 3) treats the FI code as one to use only{' '}
-                <em>exceptionally</em> — where a hazard is
-                suspected but cannot be confirmed without further investigation (for example, a
-                concealed section of wiring that cannot be accessed). Only one classification code
-                may be recorded per observation. An FI code alone does not make the overall
-                assessment Unsatisfactory — that outcome is triggered by C1 or C2 observations.
-                NICEIC assessors scrutinise FI misuse heavily: if FI is used routinely in place of
-                C1, C2, or C3, expect a concern at assessment.
+                <em>exceptionally</em> — where a hazard is suspected but cannot be confirmed without
+                further investigation (for example, a concealed section of wiring that cannot be
+                accessed). Only one classification code may be recorded per observation. An FI code
+                alone does not make the overall assessment Unsatisfactory — that outcome is
+                triggered by C1 or C2 observations. NICEIC assessors scrutinise FI misuse heavily:
+                if FI is used routinely in place of C1, C2, or C3, expect a concern at assessment.
               </span>
             </li>
           </ul>
@@ -666,10 +667,7 @@ const sections = [
               </div>
               <div className="px-4 py-4 text-sm">
                 <span className="font-semibold text-elec-yellow">EICR</span>
-                <span className="text-white">
-                  {' '}
-                  — Electrical Installation Condition Report
-                </span>
+                <span className="text-white"> — Electrical Installation Condition Report</span>
               </div>
             </div>
           </div>
@@ -820,7 +818,7 @@ export default function NICEICCertificateRequirementsPage() {
       title="NICEIC Certificate Requirements 2026: Guide"
       description="Complete guide to NICEIC certificate requirements for UK electricians. What assessors check, common rejection reasons, formatting standards."
       datePublished="2025-04-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Scheme Compliance"

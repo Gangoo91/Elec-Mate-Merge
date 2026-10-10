@@ -67,6 +67,19 @@ export async function sendQuoteEmail(
   if (data?.error) throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
   if (!data?.success) throw new Error(data?.message || 'Unknown error sending quote');
 
+  // ELE-2083: record who sent it (a firm's co-admin is told apart from the
+  // owner). Attribution only, never blocks the send.
+  if (session.user?.id) {
+    void supabase
+      .from('quotes')
+      .update({ sent_by_user_id: session.user.id } as never)
+      .eq('id', quote.id)
+      .then(
+        () => undefined,
+        () => undefined
+      );
+  }
+
   // Sending a quote is the revenue-bearing action in the whole builder.
   if (quote.user_id) {
     void trackUserEvent(quote.user_id, 'feature_use', {

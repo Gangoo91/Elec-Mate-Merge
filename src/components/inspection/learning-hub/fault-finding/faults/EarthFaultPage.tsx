@@ -19,13 +19,13 @@ const EarthFaultPage = ({ onBack }: Props) => (
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
+          <p className="text-[12px] font-medium text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">An earth fault occurs when current leaks from a live conductor to earth through an unintended path — often through damaged insulation to the CPC, metalwork, or the ground itself. This is the most common cause of RCD tripping and the most dangerous fault type because it can energise exposed metalwork that people touch.</p>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <p className="text-[12px] font-medium text-white mb-3">Symptoms</p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['RCD trips — may be immediate (solid fault) or intermittent (moisture/temperature dependent)', 'MCB may also trip if the earth fault current is high enough to exceed the MCB magnetic threshold', 'Low insulation resistance between L-E or N-E (or both)', 'Tingling sensation when touching metalwork (indicates live exposed parts — dangerous)', 'Nuisance tripping that worsens in damp weather or after rain', 'Burning smell at the fault point if sustained arcing is occurring'].map((s, i) => (
@@ -39,7 +39,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
+        <p className="text-[12px] font-medium text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -60,7 +60,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
+        <p className="text-[12px] font-medium text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {[
@@ -85,7 +85,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
 
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
+          <p className="text-[12px] font-medium text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Bathroom RCD Tripping — Water Behind Tiles</p>
           <p className="text-sm text-white">RCD trips every time the shower is used. Works fine the rest of the time.</p>
           <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
@@ -100,7 +100,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
       {/* TT-specific */}
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">TT Systems — Seasonal Earth Faults</p>
+          <p className="text-[12px] font-medium text-white">TT Systems — Seasonal Earth Faults</p>
           <p className="text-sm text-white leading-relaxed">On TT installations, earth electrode resistance varies with soil moisture. During dry spells, electrode resistance can increase significantly — sometimes enough to cause nuisance RCD tripping as the earth fault loop impedance rises above the RCD operating threshold.</p>
           <div className="space-y-1.5">
             <div className="flex items-start gap-2"><div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" /><p className="text-xs text-white">Check earth electrode resistance after dry weather — it may have doubled since last test</p></div>
@@ -113,7 +113,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
       {/* Common mistakes */}
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">Common Mistakes</p>
+          <p className="text-[12px] font-medium text-white mb-2">Common Mistakes</p>
           <div className="space-y-1.5">
             {['Replacing the RCD before checking CPC continuity and connected equipment — the RCD may be working correctly, the fault is elsewhere', 'Assuming an appliance fault without testing — always disconnect loads and test the fixed wiring before blaming equipment', 'Not isolating before testing insulation resistance — testing on a live circuit gives unreliable results and is dangerous', 'Confusing nuisance tripping with a genuine fault — investigate systematically before concluding the RCD is faulty'].map((m, i) => (
               <div key={i} className="flex items-start gap-2"><div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-orange-400 mt-2" /><p className="text-xs text-white">{m}</p></div>
@@ -124,7 +124,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
 
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-1.5">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Regulations</p>
+          <p className="text-[12px] font-medium text-white">Regulations</p>
           {['Reg 411.3.3 — Additional RCD protection (≤30mA) for socket outlets and mobile equipment', 'Reg 643.3 — Insulation resistance testing to detect earth faults', 'Reg 531.2 — RCD type selection for the loads present', 'EICR: Active earth fault on accessible metalwork = C1 (danger present)'].map((r, i) => (
             <div key={i} className="flex items-start gap-2"><div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" /><p className="text-xs text-white">{r}</p></div>
           ))}

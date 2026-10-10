@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isQuoteInvoicedInHub } from '@/utils/quote-status';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -80,7 +81,10 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     // ELE-986 — mirror the Mark as Paid pattern from the invoice side.
     // Don't require in-app acceptance or work_done tag; users often send the
     // PDF manually and just need to roll it into an invoice.
-    return !quote.invoice_raised && quote.acceptance_status !== 'rejected';
+    // ELE-2065: not when the Employer Hub has already invoiced it.
+    return (
+      !quote.invoice_raised && !isQuoteInvoicedInHub(quote) && quote.acceptance_status !== 'rejected'
+    );
   };
 
   const canMarkAccepted = (quote: Quote) => {
@@ -89,7 +93,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     return (
       quote.acceptance_status !== 'accepted' &&
       quote.acceptance_status !== 'rejected' &&
-      !quote.invoice_raised
+      !quote.invoice_raised &&
+      !isQuoteInvoicedInHub(quote)
     );
   };
 
@@ -833,6 +838,7 @@ ${pdfDownloadUrl}`;
         onNoChanges={handleNoChanges}
         onHasChanges={handleHasChanges}
         loading={loadingAction.startsWith('invoice-')}
+        quoteId={quoteForInvoice?.id}
       />
 
       <CertificateGenerationDialog

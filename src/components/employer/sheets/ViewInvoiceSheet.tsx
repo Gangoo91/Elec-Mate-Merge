@@ -27,6 +27,8 @@ import {
 import { useMarkInvoicePaid, useSendInvoice, useGenerateInvoicePdf } from '@/hooks/useFinance';
 import { toast } from 'sonner';
 import type { Invoice } from '@/services/financeService';
+import { useQuoteAttribution } from '@/hooks/useQuoteAttribution';
+import { RetentionControl } from '@/components/employer/getpaid/RetentionControl';
 import {
   SheetShell,
   FormCard,
@@ -56,6 +58,17 @@ import { createStripeConnectAccount } from '@/services/financeService';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { useActingFirmId, useFirmCardPayments } from '@/hooks/useJobProfit';
 
+/**
+ * A line's total. Hub-made lines store `total`; lines made in the Electrical
+ * Hub store `totalPrice`. Falls back to quantity × unit price.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const lineTotal = (item: any): number => {
+  const t = Number(item?.total ?? item?.totalPrice);
+  if (Number.isFinite(t)) return t;
+  return (Number(item?.quantity) || 0) * (Number(item?.unitPrice) || 0);
+};
+
 interface ViewInvoiceSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -79,6 +92,16 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
   const [cardStarting, setCardStarting] = useState(false);
   const { data: firmId } = useActingFirmId();
   const { data: firmCard } = useFirmCardPayments(firmId);
+  // ELE-2083: who raised and who sent it (nothing shown for older invoices).
+  const attribution = useQuoteAttribution(invoice?.id ? [invoice.id] : []).map.get(
+    invoice?.id ?? ''
+  );
+  const byLine = [
+    attribution?.created_by_name ? `Raised by ${attribution.created_by_name}` : null,
+    attribution?.invoice_sent_by_name ? `Sent by ${attribution.invoice_sent_by_name}` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
   if (!invoice) return null;
 
@@ -242,220 +265,235 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
               )
             }
           >
-            {/* Payment status block */}
-            {!isPaid && (
-              <div
-                className={`rounded-2xl p-4 border ${
-                  isOverdue
-                    ? 'bg-red-500/10 border-red-500/25'
-                    : 'bg-white/[0.06] border-amber-400/25'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span
-                    className={`text-sm font-medium ${
-                      isOverdue ? 'text-red-400' : 'text-amber-400'
+            {/* Desktop: money on the left, details and actions on the right. */}
+            <div className="space-y-4 lg:grid lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-start lg:gap-5 lg:space-y-0">
+              <div className="min-w-0 space-y-4">
+                {/* Payment status block */}
+                {!isPaid && (
+                  <div
+                    className={`rounded-2xl p-4 border ${
+                      isOverdue
+                        ? 'bg-red-500/10 border-red-500/25'
+                        : 'bg-white/[0.06] border-amber-400/25'
                     }`}
                   >
-                    {isOverdue
-                      ? `${Math.abs(daysUntilDue)} days overdue`
-                      : daysUntilDue === 0
-                        ? 'Due today'
-                        : `Due in ${daysUntilDue} days`}
-                  </span>
-                  <span className="text-lg font-bold text-white">
-                    £{Number(invoice.amount).toLocaleString()}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            <div data-help="invoices.card">
-            <InvoiceCardPaymentsPanel
-              invoiceId={invoice.id}
-              invoiceNumber={invoice.invoice_number}
-              clientName={invoice.client}
-              amount={Number(invoice.amount) || 0}
-              isPaid={isPaid}
-              isDraft={invoice.status === 'Draft'}
-              storedLink={shownLink}
-              paidDate={invoice.paid_date}
-            />
-            </div>
-
-            <FormCard bleed eyebrow="Details">
-              {invoice.project && (
-                <div>
-                  <Eyebrow>Project</Eyebrow>
-                  <p className="font-medium text-white mt-0.5">{invoice.project}</p>
-                </div>
-              )}
-              {invoice.job_id && (
-                <button
-                  type="button"
-                  onClick={handleViewJob}
-                  className="flex w-full items-center gap-2 min-h-11 rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 text-left touch-manipulation transition-colors hover:bg-white/[0.08]"
-                >
-                  <Briefcase className="h-4 w-4 text-elec-yellow shrink-0" />
-                  <span className="text-[13px] font-medium text-white">View linked job</span>
-                  <ChevronRight className="ml-auto h-4 w-4 text-white shrink-0" />
-                </button>
-              )}
-              <FormGrid cols={2}>
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-white" />
-                  <div>
-                    <Eyebrow>Created</Eyebrow>
-                    <p className="font-medium text-white mt-0.5">
-                      {new Date(invoice.created_at).toLocaleDateString('en-GB')}
-                    </p>
-                  </div>
-                </div>
-                {invoice.due_date && (
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-white" />
-                    <div>
-                      <Eyebrow>Due</Eyebrow>
-                      <p
-                        className={`font-medium mt-0.5 ${
-                          isOverdue ? 'text-red-400' : 'text-white'
+                    <div className="flex items-center justify-between mb-2">
+                      <span
+                        className={`text-sm font-medium ${
+                          isOverdue ? 'text-red-400' : 'text-amber-400'
                         }`}
                       >
-                        {new Date(invoice.due_date).toLocaleDateString('en-GB')}
-                      </p>
+                        {isOverdue
+                          ? `${Math.abs(daysUntilDue)} days overdue`
+                          : daysUntilDue === 0
+                            ? 'Due today'
+                            : daysUntilDue < 0
+                              ? `Due date passed ${Math.abs(daysUntilDue)} days ago`
+                              : `Due in ${daysUntilDue} days`}
+                      </span>
+                      <span className="text-lg font-bold text-white">
+                        £{Number(invoice.amount).toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 )}
-              </FormGrid>
-            </FormCard>
 
-            {lineItems.length > 0 && (
-              <FormCard bleed eyebrow="Line items">
-                <div className="divide-y divide-white/[0.06] -mx-1">
-                  {lineItems.map((item: any, idx: number) => (
-                    <div
-                      key={item.id || idx}
-                      className="flex justify-between items-center px-1 py-3"
+                <div data-help="invoices.card">
+                  <InvoiceCardPaymentsPanel
+                    invoiceId={invoice.id}
+                    invoiceNumber={invoice.invoice_number}
+                    clientName={invoice.client}
+                    amount={Number(invoice.amount) || 0}
+                    isPaid={isPaid}
+                    isDraft={invoice.status === 'Draft'}
+                    storedLink={shownLink}
+                    paidDate={invoice.paid_date}
+                  />
+                </div>
+
+                {lineItems.length > 0 && (
+                  <FormCard bleed eyebrow="Line items">
+                    <div className="divide-y divide-white/[0.06] -mx-1">
+                      {lineItems.map((item: any, idx: number) => (
+                        <div
+                          key={item.id || idx}
+                          className="flex justify-between items-center px-1 py-3"
+                        >
+                          <div className="min-w-0 flex-1">
+                            <p className="font-medium text-[13px] text-white truncate">
+                              {item.description}
+                            </p>
+                            <p className="text-[11.5px] text-white mt-0.5">
+                              {item.quantity} {item.unit} × £{item.unitPrice?.toFixed(2)}
+                            </p>
+                          </div>
+                          <span className="font-bold text-white shrink-0 tabular-nums">
+                            £{lineTotal(item).toFixed(2)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </FormCard>
+                )}
+
+                <div className="rounded-2xl p-4 bg-white/[0.06] border border-elec-yellow/30 space-y-2">
+                  {invoice.subtotal != null && (
+                    <>
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-white">Subtotal</span>
+                        <span className="font-medium text-white tabular-nums">
+                          £{Number(invoice.subtotal).toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-white">
+                          {invoice.reverse_charge
+                            ? 'VAT (reverse charge)'
+                            : invoice.vat_registered === false
+                              ? 'No VAT (not VAT registered)'
+                              : `VAT @ ${Number(invoice.vat_rate ?? 20)}%`}
+                        </span>
+                        <span className="font-medium text-white tabular-nums">
+                          £{(Number(invoice.vat_amount) || 0).toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="h-px w-full bg-white/[0.08] my-2" />
+                    </>
+                  )}
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-medium text-white">Total amount</span>
+                    <span className="text-2xl font-bold text-elec-yellow tabular-nums">
+                      £{Number(invoice.amount).toLocaleString()}
+                    </span>
+                  </div>
+                  {(Number(invoice.cis_amount) || 0) > 0 && (
+                    <>
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-white">
+                          Less CIS ({Number(invoice.cis_rate ?? 20)}% of labour)
+                        </span>
+                        <span className="font-medium text-red-400 tabular-nums">
+                          −£{Number(invoice.cis_amount).toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium text-white">Due after CIS</span>
+                        <span className="text-lg font-semibold text-white tabular-nums">
+                          £{(Number(invoice.amount) - Number(invoice.cis_amount)).toFixed(2)}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  {invoice.reverse_charge && (
+                    <p className="text-[11px] text-white leading-relaxed pt-1">
+                      Reverse charge: customer to account to HMRC for the VAT of £
+                      {(
+                        (Number(invoice.subtotal) || 0) *
+                        (Number(invoice.vat_rate ?? 20) / 100)
+                      ).toFixed(2)}{' '}
+                      ({Number(invoice.vat_rate ?? 20)}%). VAT Act 1994, s.55A.
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="min-w-0 space-y-4">
+                {/* ELE-2065: retention held back on a commercial invoice. */}
+                {invoice.status !== 'Paid' && (
+                  <RetentionControl invoiceId={invoice.id} total={Number(invoice.amount) || 0} />
+                )}
+                <FormCard bleed eyebrow="Details">
+                  {invoice.project && (
+                    <div>
+                      <Eyebrow>Project</Eyebrow>
+                      <p className="font-medium text-white mt-0.5">{invoice.project}</p>
+                    </div>
+                  )}
+                  {invoice.job_id && (
+                    <button
+                      type="button"
+                      onClick={handleViewJob}
+                      className="flex w-full items-center gap-2 min-h-11 rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 text-left touch-manipulation transition-colors hover:bg-white/[0.08]"
                     >
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-[13px] text-white truncate">
-                          {item.description}
-                        </p>
-                        <p className="text-[11.5px] text-white mt-0.5">
-                          {item.quantity} {item.unit} × £{item.unitPrice?.toFixed(2)}
+                      <Briefcase className="h-4 w-4 text-elec-yellow shrink-0" />
+                      <span className="text-[13px] font-medium text-white">View linked job</span>
+                      <ChevronRight className="ml-auto h-4 w-4 text-white shrink-0" />
+                    </button>
+                  )}
+                  <FormGrid cols={2}>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-white" />
+                      <div>
+                        <Eyebrow>Created</Eyebrow>
+                        <p className="font-medium text-white mt-0.5">
+                          {new Date(invoice.created_at).toLocaleDateString('en-GB')}
                         </p>
                       </div>
-                      <span className="font-bold text-white shrink-0 tabular-nums">
-                        £{item.total?.toFixed(2)}
-                      </span>
                     </div>
-                  ))}
-                </div>
-              </FormCard>
-            )}
+                    {invoice.due_date && (
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-white" />
+                        <div>
+                          <Eyebrow>Due</Eyebrow>
+                          <p
+                            className={`font-medium mt-0.5 ${
+                              isOverdue ? 'text-red-400' : 'text-white'
+                            }`}
+                          >
+                            {new Date(invoice.due_date).toLocaleDateString('en-GB')}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </FormGrid>
+                  {byLine && <p className="text-[13px] text-white">{byLine}</p>}
+                </FormCard>
 
-            <div className="rounded-2xl p-4 bg-white/[0.06] border border-elec-yellow/30 space-y-2">
-              {invoice.subtotal != null && (
-                <>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-white">Subtotal</span>
-                    <span className="font-medium text-white tabular-nums">
-                      £{Number(invoice.subtotal).toFixed(2)}
-                    </span>
+                {invoice.notes && (
+                  <FormCard bleed eyebrow="Payment details / notes">
+                    <p className="text-sm text-white whitespace-pre-wrap">{invoice.notes}</p>
+                  </FormCard>
+                )}
+
+                {!isPaid && (
+                  <FormGrid cols={2}>
+                    <SecondaryButton
+                      data-help="invoices.send-email"
+                      onClick={handleSendInvoice}
+                      disabled={sendInvoiceMutation.isPending}
+                      fullWidth
+                    >
+                      {sendInvoiceMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Send className="h-4 w-4 mr-2" />
+                      )}
+                      Send email
+                    </SecondaryButton>
+                    <SecondaryButton onClick={handleCallClient} fullWidth>
+                      <Phone className="h-4 w-4 mr-2" />
+                      Call client
+                    </SecondaryButton>
+                  </FormGrid>
+                )}
+
+                <SecondaryButton onClick={handleEmailClient} fullWidth>
+                  <Mail className="h-4 w-4 mr-2" />
+                  Email client
+                </SecondaryButton>
+
+                <SecondaryButton onClick={() => setShowSignatureRequest(true)} fullWidth>
+                  <Signature className="h-4 w-4 mr-2" />
+                  Request signature
+                </SecondaryButton>
+
+                {isOverdue && (
+                  <div className="flex items-center gap-2 text-xs text-red-400">
+                    <AlertTriangle className="h-3.5 w-3.5" />
+                    <span>This invoice is past its due date.</span>
                   </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-white">
-                      {invoice.reverse_charge
-                        ? 'VAT — reverse charge'
-                        : `VAT @ ${Number(invoice.vat_rate ?? 20)}%`}
-                    </span>
-                    <span className="font-medium text-white tabular-nums">
-                      £{(Number(invoice.vat_amount) || 0).toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="h-px w-full bg-white/[0.08] my-2" />
-                </>
-              )}
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-medium text-white">Total amount</span>
-                <span className="text-2xl font-bold text-elec-yellow tabular-nums">
-                  £{Number(invoice.amount).toLocaleString()}
-                </span>
+                )}
               </div>
-              {(Number(invoice.cis_amount) || 0) > 0 && (
-                <>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-white">
-                      Less CIS ({Number(invoice.cis_rate ?? 20)}% of labour)
-                    </span>
-                    <span className="font-medium text-red-400 tabular-nums">
-                      −£{Number(invoice.cis_amount).toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-white">Due after CIS</span>
-                    <span className="text-lg font-semibold text-white tabular-nums">
-                      £{(Number(invoice.amount) - Number(invoice.cis_amount)).toFixed(2)}
-                    </span>
-                  </div>
-                </>
-              )}
-              {invoice.reverse_charge && (
-                <p className="text-[11px] text-white leading-relaxed pt-1">
-                  Reverse charge: customer to account to HMRC for the VAT of £
-                  {(
-                    (Number(invoice.subtotal) || 0) *
-                    (Number(invoice.vat_rate ?? 20) / 100)
-                  ).toFixed(2)}{' '}
-                  ({Number(invoice.vat_rate ?? 20)}%). VAT Act 1994, s.55A.
-                </p>
-              )}
             </div>
-
-            {invoice.notes && (
-              <FormCard bleed eyebrow="Payment details / notes">
-                <p className="text-sm text-white whitespace-pre-wrap">{invoice.notes}</p>
-              </FormCard>
-            )}
-
-            {!isPaid && (
-              <FormGrid cols={2}>
-                <SecondaryButton
-                  data-help="invoices.send-email"
-                  onClick={handleSendInvoice}
-                  disabled={sendInvoiceMutation.isPending}
-                  fullWidth
-                >
-                  {sendInvoiceMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  ) : (
-                    <Send className="h-4 w-4 mr-2" />
-                  )}
-                  Send email
-                </SecondaryButton>
-                <SecondaryButton onClick={handleCallClient} fullWidth>
-                  <Phone className="h-4 w-4 mr-2" />
-                  Call client
-                </SecondaryButton>
-              </FormGrid>
-            )}
-
-            <SecondaryButton onClick={handleEmailClient} fullWidth>
-              <Mail className="h-4 w-4 mr-2" />
-              Email client
-            </SecondaryButton>
-
-            <SecondaryButton onClick={() => setShowSignatureRequest(true)} fullWidth>
-              <Signature className="h-4 w-4 mr-2" />
-              Request signature
-            </SecondaryButton>
-
-            {isOverdue && (
-              <div className="flex items-center gap-2 text-xs text-red-400">
-                <AlertTriangle className="h-3.5 w-3.5" />
-                <span>This invoice is past its due date.</span>
-              </div>
-            )}
           </SheetShell>
         </SheetContent>
       </Sheet>

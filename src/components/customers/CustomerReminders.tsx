@@ -22,6 +22,23 @@ const isoFromDaysFromNow = (days: number) => {
   return d.toISOString();
 };
 
+/** The due-date marker on each reminder row. */
+const Dot = ({ tone }: { tone: 'amber' | 'yellow' | 'red' | 'green' }) => (
+  <span
+    aria-hidden
+    className={cn(
+      'h-2.5 w-2.5 shrink-0 rounded-full',
+      tone === 'red'
+        ? 'bg-red-500'
+        : tone === 'amber'
+          ? 'bg-amber-400'
+          : tone === 'green'
+            ? 'bg-emerald-400'
+            : 'bg-elec-yellow'
+    )}
+  />
+);
+
 const formatDueLabel = (iso: string): { label: string; tone: 'amber' | 'yellow' | 'red' | 'green' } => {
   const due = new Date(iso);
   const diffMs = due.getTime() - Date.now();

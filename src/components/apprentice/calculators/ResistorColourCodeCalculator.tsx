@@ -128,7 +128,7 @@ const ColorBandSelect = ({
             className={cn(
               'relative p-1.5 rounded-lg border-2 transition-all touch-manipulation min-h-[44px]',
               isSelected
-                ? 'border-amber-400 bg-amber-400/10 scale-105'
+                ? 'border-amber-400 bg-white/[0.04] scale-105'
                 : 'border-white/10 bg-white/5 hover:bg-white/10'
             )}
             title={`${name}${toleranceValue ? ` (${toleranceValue})` : ''}`}
@@ -137,9 +137,9 @@ const ColorBandSelect = ({
               className="w-full aspect-square rounded-md border border-white/20"
               style={{ backgroundColor: bgColor }}
             />
-            <span className="block text-[10px] text-white mt-1 capitalize truncate">{name}</span>
+            <span className="block text-[12px] text-white mt-1 capitalize truncate">{name}</span>
             {showTolerance && toleranceValue && (
-              <span className="block text-[8px] text-white">{toleranceValue}</span>
+              <span className="block text-[12px] text-white">{toleranceValue}</span>
             )}
           </button>
         );
@@ -318,7 +318,7 @@ const ResistorColourCodeCalculator = () => {
                 {/* Right lead */}
                 <div className="w-8 h-1 bg-white/40 rounded-r" />
               </div>
-              <div className="flex justify-center gap-4 mt-2 text-[10px] text-white">
+              <div className="flex justify-center gap-4 mt-2 text-[12px] text-white">
                 <span>1st</span>
                 <span>2nd</span>
                 <span>×</span>
@@ -469,8 +469,8 @@ const ResistorColourCodeCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <p className="text-sm text-white">
@@ -510,8 +510,8 @@ const ResistorColourCodeCalculator = () => {
                     <div
                       className="p-3 rounded-xl border space-y-3"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <div className="grid grid-cols-2 gap-2">

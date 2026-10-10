@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'What is the no-trip loop test and when do I use it?',
     answer:
-      'A conventional earth fault loop impedance test draws a high test current for a few cycles, which will trip a 30 mA RCD. A no-trip (low-current) loop test uses a much smaller test current so the loop impedance of an RCD-protected circuit can be measured without dropping the circuit. Since A4:2026 requires 30 mA RCD protection for socket-outlet circuits up to 32 A (Regulation 411.3.3) and for AC final circuits supplying luminaires in domestic premises (Regulation 411.3.4), almost every final circuit you test in a dwelling will be RCD-protected — so a no-trip loop mode is now essential rather than optional. The trade-off is a longer test time and slightly lower resolution, so use the high-current test where the circuit is not RCD-protected.',
+      'A conventional earth fault loop impedance test draws a high test current for a few cycles, which will trip a 30 mA RCD. A no-trip (low-current) loop test uses a much smaller test current so the loop impedance of an RCD-protected circuit can be measured without dropping the circuit. Because BS 7671 requires 30 mA RCD protection for socket-outlet circuits up to 32 A (Regulation 411.3.3) and for AC final circuits supplying luminaires in domestic premises (Regulation 411.3.4), almost every final circuit you test in a dwelling will be RCD-protected — so a no-trip loop mode is now essential rather than optional. The trade-off is a longer test time and slightly lower resolution, so use the high-current test where the circuit is not RCD-protected.',
   },
   {
     question: 'Can I use an MFT to test RCBOs?',
@@ -91,9 +91,9 @@ const faqs = [
       'BS 7671 Table 64, applied by Regulation 643.3.2, gives three rows. SELV and PELV circuits: test at 250 V DC, minimum 0.5 MΩ. Circuits up to and including 500 V with the exception of those systems: test at 500 V DC, minimum 1.0 MΩ. Circuits above 500 V: test at 1000 V DC, minimum 1.0 MΩ. Standard domestic and commercial mains circuits therefore fall in the middle row — 500 V DC, 1.0 MΩ. In practice, sound new wiring reads in the hundreds of megohms or higher, so a result close to the 1 MΩ floor is a reason to investigate rather than a pass to be recorded and forgotten. Separately, Regulation 643.3.3 requires that where connected equipment could influence the result or be damaged, the Table 64 test is applied before connection and a 250 V DC test of at least 1 MΩ is applied after connection.',
   },
   {
-    question: 'Do domestic lighting circuits now need RCD protection?',
+    question: 'Do domestic lighting circuits need RCD protection?',
     answer:
-      'Yes. BS 7671:2018+A4:2026 introduced Regulation 411.3.4: within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. It is a new requirement at A4:2026, so on an existing installation the classification of an unprotected lighting circuit on an EICR is a matter for the inspector\'s judgement of the actual risk, recorded with reasons — not an automatic code. For buying purposes the practical consequence is simple: expect to RCD-test far more circuits per job, and expect most lighting circuits to need a no-trip loop test.',
+      'Yes. Regulation 411.3.4, in BS 7671 since the 2018 edition: within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. Older installations wired before it applied often lack it, so on an existing installation the classification of an unprotected lighting circuit on an EICR is a matter for the inspector\'s judgement of the actual risk, recorded with reasons — not an automatic code. For buying purposes the practical consequence is simple: expect to RCD-test far more circuits per job, and expect most lighting circuits to need a no-trip loop test.',
   },
   {
     question: 'How often does an MFT need to be calibrated?',
@@ -759,7 +759,7 @@ export default function MFTBuyingGuidePage() {
       title="Multifunction Tester (MFT) Buying Guide 2026"
       description="How to choose a multifunction tester (MFT): the BS 7671 A4:2026 tests it must cover, CAT IV 300 V rating, calibration, and the best MFTs in 2026."
       datePublished="2026-03-27"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

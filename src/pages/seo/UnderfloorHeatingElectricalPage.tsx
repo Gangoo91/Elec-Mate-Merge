@@ -410,9 +410,9 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong>A4:2026 — Lighting circuits in domestic premises (Reg 411.3.4):</strong> If the
+            <strong>Lighting circuits in domestic premises (Reg 411.3.4):</strong> If the
             UFH installation involves replacing or modifying the consumer unit, be aware that
-            Regulation 411.3.4 of BS 7671:2018+A4:2026 now requires all AC final circuits supplying
+            Regulation 411.3.4 of BS 7671 (in force since 2018) requires all AC final circuits supplying
             luminaires in domestic premises to have additional protection by a 30mA RCD. This
             applies to every lighting circuit in the dwelling — not just the bathroom. If the
             consumer unit being worked on does not already have 30mA RCD protection on all lighting
@@ -609,7 +609,7 @@ export default function UnderfloorHeatingElectricalPage() {
       title="Underfloor Heating Wiring: Thermostat, 30mA RCD"
       description="How to wire electric underfloor heating: dedicated radial circuit, 16A or 20A MCB, 30mA RCD, thermostat and floor sensor terminals, 500V insulation test."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

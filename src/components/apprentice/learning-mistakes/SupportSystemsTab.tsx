@@ -118,10 +118,8 @@ const SupportSystemsTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Your support network
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Your support network</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {supportContacts.map((contact, index) => (
             <div
@@ -159,8 +157,8 @@ const SupportSystemsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+      <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-elec-yellow">
           Mental health & wellbeing support
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -204,10 +202,8 @@ const SupportSystemsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Practical support resources
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Practical support resources</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {practicalSupport.map((support, index) => (
             <div
@@ -231,10 +227,8 @@ const SupportSystemsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Remember
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Remember</span>
         <ul className="space-y-2">
           {[
             'Asking for help is a sign of professionalism — it shows you care about doing quality work',
@@ -243,10 +237,7 @@ const SupportSystemsTab = () => {
             'Early intervention prevents bigger problems — speak up about concerns quickly',
             "You're not alone in this journey — thousands of apprentices face similar challenges",
           ].map((point, idx) => (
-            <li
-              key={idx}
-              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-            >
+            <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{point}</span>
             </li>

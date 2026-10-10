@@ -14,11 +14,9 @@ const Section = ({
   description?: string;
   children: React.ReactNode;
 }) => (
-  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {eyebrow}
-      </span>
+      <span className="text-[13px] font-semibold text-white">{eyebrow}</span>
       {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
@@ -32,18 +30,14 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ScenarioBlock = ({ scenario }: { scenario: Scenario }) => (
-  <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+  <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
     <h4 className="text-[14px] text-white">{scenario.situation}</h4>
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        Approach
-      </span>
+      <span className="text-[13px] font-semibold text-white">Approach</span>
       <p className="text-[14px] text-white leading-relaxed">{scenario.approach}</p>
     </div>
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        Example response
-      </span>
+      <span className="text-[13px] font-semibold text-white">Example response</span>
       <p className="text-[14px] text-white italic leading-relaxed">
         &ldquo;{scenario.example}&rdquo;
       </p>
@@ -349,7 +343,7 @@ const DifficultSituationsTab = () => {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <p className="text-[14px] text-white leading-relaxed">
           <span className="text-white">Remember:</span> Difficult situations are learning
           opportunities. Stay professional, focus on solutions, and don&rsquo;t hesitate to ask for
@@ -367,8 +361,8 @@ const DifficultSituationsTab = () => {
         </Section>
       ))}
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-red-300">
           Bullying, harassment and pressure
         </span>
         <p className="text-[14px] text-white leading-relaxed">
@@ -390,12 +384,12 @@ const DifficultSituationsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] text-white">{technique.technique}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{technique.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{technique.description}</p>
               <ul className="space-y-1">
                 {technique.steps.map((step, stepIndex) => (
                   <li
                     key={stepIndex}
-                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{step}</span>
@@ -463,7 +457,7 @@ const DifficultSituationsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
               <p className="text-[14px] text-white">{item.who}</p>
-              <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
               {item.tel && (
                 <a
                   href={`tel:${item.tel}`}
@@ -490,7 +484,7 @@ const DifficultSituationsTab = () => {
             >
               <span className="text-[13px] font-semibold text-white">{item.who}</span>
               <span className="text-[12px] text-white">{item.action}</span>
-              <span className="text-[12px] text-white leading-relaxed">{item.detail}</span>
+              <span className="text-[14px] text-white leading-relaxed">{item.detail}</span>
             </a>
           ))}
         </div>

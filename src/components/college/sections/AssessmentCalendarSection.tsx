@@ -48,7 +48,6 @@ import {
   COLLEGE_LIST,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
   chipCn,
 } from '@/components/college/ui/CollegeUi';
 import { useMyLearners } from '@/components/college/assessment/useMyLearners';
@@ -58,7 +57,8 @@ interface AssessmentCalendarSectionProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
-type AssessmentType = 'Observation' | 'Professional Discussion' | 'Portfolio Review' | 'Gateway Meeting';
+type AssessmentType =
+  'Observation' | 'Professional Discussion' | 'Portfolio Review' | 'Gateway Meeting';
 
 interface ScheduledAssessment {
   id: string;
@@ -96,9 +96,17 @@ const DAY_MS = 86_400_000;
 const pad = (n: number) => String(n).padStart(2, '0');
 const isoDate = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 const longDay = (iso: string) =>
-  new Date(`${iso}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+  new Date(`${iso}T12:00:00`).toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  });
 const shortDay = (iso: string) =>
-  new Date(`${iso}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  new Date(`${iso}T12:00:00`).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
 
 const WEEK_KIND: Record<string, string> = {
   observation_due: 'Observation due',
@@ -111,20 +119,42 @@ const HELP: PageHelpContent = {
   title: 'The assessment calendar',
   what: 'Every assessment date for your learners on one month: observations, professional discussions, portfolio reviews and gateway meetings you book here, plus gateway and EPA dates from the EPA records.',
   steps: [
-    { title: 'Pick a day', body: 'Tap a day on the month to see what is on it. Today is outlined; a dot means something is booked.' },
-    { title: 'Schedule an assessment', body: 'Choose the learner, the type, the date and time, and where it happens. It appears on the calendar straight away.' },
-    { title: 'Open the learner', body: 'Tap any row to open that learner’s record. Gateway and EPA dates open the gateway board.' },
+    {
+      title: 'Pick a day',
+      body: 'Tap a day on the month to see what is on it. Today is outlined; a dot means something is booked.',
+    },
+    {
+      title: 'Schedule an assessment',
+      body: 'Choose the learner, the type, the date and time, and where it happens. It appears on the calendar straight away.',
+    },
+    {
+      title: 'Open the learner',
+      body: 'Tap any row to open that learner’s record. Gateway and EPA dates open the gateway board.',
+    },
   ],
   legend: [
-    { swatch: 'bg-elec-yellow', label: 'Key date', body: 'Gateway meetings, gateway dates and EPA dates. These are the ones that cannot slip.' },
-    { swatch: 'bg-white', label: 'Assessment', body: 'Observations, professional discussions and portfolio reviews.' },
+    {
+      swatch: 'bg-elec-yellow',
+      label: 'Key date',
+      body: 'Gateway meetings, gateway dates and EPA dates. These are the ones that cannot slip.',
+    },
+    {
+      swatch: 'bg-white',
+      label: 'Assessment',
+      body: 'Observations, professional discussions and portfolio reviews.',
+    },
   ],
   notes: [
-    { title: 'My learners', body: 'Shows learners in the cohorts you lead. Switch to Everyone for the whole college.' },
+    {
+      title: 'My learners',
+      body: 'Shows learners in the cohorts you lead. Switch to Whole college for the whole college.',
+    },
   ],
 };
 
-export function AssessmentCalendarSection({ onNavigate: _onNavigate }: AssessmentCalendarSectionProps) {
+export function AssessmentCalendarSection({
+  onNavigate: _onNavigate,
+}: AssessmentCalendarSectionProps) {
   void _onNavigate;
   const { students } = useCollegeSupabase();
   const navigate = useNavigate();
@@ -165,17 +195,15 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
         location: string | null;
         notes: string | null;
       };
-      return ((data ?? []) as Row[]).map(
-        (r): ScheduledAssessment => ({
-          id: r.id,
-          studentId: r.student_id,
-          assessmentType: r.assessment_type as AssessmentType,
-          date: r.scheduled_date,
-          time: (r.scheduled_time ?? '09:00').slice(0, 5),
-          location: r.location ?? '',
-          notes: r.notes ?? '',
-        })
-      );
+      return ((data ?? []) as Row[]).map((r): ScheduledAssessment => ({
+        id: r.id,
+        studentId: r.student_id,
+        assessmentType: r.assessment_type as AssessmentType,
+        date: r.scheduled_date,
+        time: (r.scheduled_time ?? '09:00').slice(0, 5),
+        location: r.location ?? '',
+        notes: r.notes ?? '',
+      }));
     },
   });
 
@@ -186,7 +214,8 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
     [students]
   );
   const inScope = (studentId: string | null) =>
-    scope === 'all' || (!!studentId && my.isMine({ studentId, cohortId: studentById.get(studentId)?.cohort_id }));
+    scope === 'all' ||
+    (!!studentId && my.isMine({ studentId, cohortId: studentById.get(studentId)?.cohort_id }));
 
   const [newAssessment, setNewAssessment] = useState({
     studentId: '',
@@ -236,7 +265,12 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
     return out;
   }, [assessments, epaRecords]);
 
-  const mineCount = allItems.filter((i) => i.date >= todayStr && !!i.studentId && my.isMine({ studentId: i.studentId, cohortId: studentById.get(i.studentId)?.cohort_id })).length;
+  const mineCount = allItems.filter(
+    (i) =>
+      i.date >= todayStr &&
+      !!i.studentId &&
+      my.isMine({ studentId: i.studentId, cohortId: studentById.get(i.studentId)?.cohort_id })
+  ).length;
   const items = useMemo(
     () => allItems.filter((i) => inScope(i.studentId)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -246,14 +280,18 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
   const byDate = useMemo(() => {
     const map: Record<string, CalItem[]> = {};
     for (const a of items) (map[a.date] ??= []).push(a);
-    for (const list of Object.values(map)) list.sort((a, b) => (a.time ?? '').localeCompare(b.time ?? ''));
+    for (const list of Object.values(map))
+      list.sort((a, b) => (a.time ?? '').localeCompare(b.time ?? ''));
     return map;
   }, [items]);
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
   const startOffset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-  const monthName = new Date(currentYear, currentMonth).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  const monthName = new Date(currentYear, currentMonth).toLocaleDateString('en-GB', {
+    month: 'long',
+    year: 'numeric',
+  });
   const monthWord = monthName.split(' ')[0];
   const monthPrefix = `${currentYear}-${pad(currentMonth + 1)}`;
   const getDateStr = (day: number) => `${monthPrefix}-${pad(day)}`;
@@ -288,12 +326,18 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
     return labels.map((l) => ({
       label: l,
       n: thisMonth.filter((a) => a.label === l).length,
-      cls: l === 'Gateway Meeting' || l === 'Gateway date' || l === 'EPA date' ? 'bg-elec-yellow' : 'bg-white',
+      cls:
+        l === 'Gateway Meeting' || l === 'Gateway date' || l === 'EPA date'
+          ? 'bg-elec-yellow'
+          : 'bg-white',
     }));
   }, [thisMonth]);
 
   const openForm = (date?: string) => {
-    setNewAssessment((p) => ({ ...p, date: date ?? (selectedDate >= todayStr ? selectedDate : todayStr) }));
+    setNewAssessment((p) => ({
+      ...p,
+      date: date ?? (selectedDate >= todayStr ? selectedDate : todayStr),
+    }));
     setShowAddForm(true);
   };
 
@@ -315,13 +359,23 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
       toast({ title: 'Could not schedule', description: error.message, variant: 'destructive' });
       return;
     }
-    toast({ title: 'Assessment scheduled', description: `${learnerName(newAssessment.studentId)}, ${shortDay(newAssessment.date)}` });
+    toast({
+      title: 'Assessment scheduled',
+      description: `${learnerName(newAssessment.studentId)}, ${shortDay(newAssessment.date)}`,
+    });
     await queryClient.invalidateQueries({ queryKey: ['scheduled-assessments'] });
     const d = new Date(`${newAssessment.date}T12:00:00`);
     setCurrentYear(d.getFullYear());
     setCurrentMonth(d.getMonth());
     setSelectedDate(newAssessment.date);
-    setNewAssessment({ studentId: '', assessmentType: 'Observation', date: todayStr, time: '09:00', location: '', notes: '' });
+    setNewAssessment({
+      studentId: '',
+      assessmentType: 'Observation',
+      date: todayStr,
+      time: '09:00',
+      location: '',
+      notes: '',
+    });
     setShowAddForm(false);
   };
 
@@ -332,10 +386,18 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
         onClick={() => navigate(a.href)}
         className="flex min-h-[60px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
       >
-        <span aria-hidden="true" className={cn('h-9 w-[3px] shrink-0 rounded-full', a.key_date ? 'bg-elec-yellow' : 'bg-white/[0.3]')} />
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">{learnerName(a.studentId)}</span>
-          <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-white">
+          <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="break-words text-[14.5px] font-semibold leading-tight text-white">
+              {learnerName(a.studentId)}
+            </span>
+            {a.key_date && (
+              <span className="inline-flex h-6 shrink-0 items-center rounded-full border border-white/[0.4] px-2 text-[12px] font-semibold text-white">
+                Key date
+              </span>
+            )}
+          </span>
+          <span className="mt-0.5 line-clamp-2 block text-[12.5px] leading-snug text-white">
             {[a.label, a.detail || null].filter(Boolean).join(' · ')}
           </span>
         </span>
@@ -353,7 +415,17 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
       <CollegePageHeader
         eyebrow="Assessment"
         title="Assessment calendar"
-        description="Observations, discussions, portfolio reviews, gateway and EPA dates for your learners, on one month."
+        description={[
+          'Observations, discussions, portfolio reviews, gateway and EPA dates, on one month.',
+          upcoming.length > 0
+            ? `${upcoming.length} in the next 7 days, first ${learnerName(upcoming[0].studentId)} on ${shortDay(upcoming[0].date)}.`
+            : 'Nothing booked in the next 7 days.',
+          keyThisMonth > 0
+            ? `${keyThisMonth} gateway or EPA ${keyThisMonth === 1 ? 'date' : 'dates'} in ${monthWord}.`
+            : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
         help={HELP}
         actions={
           <>
@@ -365,26 +437,14 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
         }
       />
 
-      <CollegeStats
-        items={[
-          {
-            label: 'Next 7 days',
-            value: String(upcoming.length),
-            sub: upcoming.length > 0 ? `First: ${learnerName(upcoming[0].studentId)}, ${shortDay(upcoming[0].date)}` : 'Nothing booked this week',
-          },
-          { label: `In ${monthWord}`, value: String(thisMonth.length), sub: thisMonth.length ? 'Booked and EPA dates' : 'Nothing in this month' },
-          { label: 'Key dates this month', value: String(keyThisMonth), sub: 'Gateway and EPA' },
-          {
-            label: 'Other dates this week',
-            value: String(otherDates.length),
-            sub: otherDates.length ? 'Observations, IQA, EPA briefs' : 'None this week',
-          },
-        ]}
-      />
-
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         {/* Month */}
-        <motion.section variants={itemVariants} initial="hidden" animate="visible" className={cn(COLLEGE_CARD, 'p-3 sm:p-5')}>
+        <motion.section
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+          className={cn(COLLEGE_CARD, 'p-3 sm:p-5')}
+        >
           <div className="flex items-center justify-between gap-2 px-1">
             <h2 className="text-[17px] font-semibold tracking-tight text-white">{monthName}</h2>
             <div className="flex items-center gap-1">
@@ -416,7 +476,7 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
 
           <div className="mt-2 grid grid-cols-7 gap-1">
             {WEEKDAYS.map((day) => (
-              <div key={day} className="py-1 text-center text-[11px] font-semibold text-white">
+              <div key={day} className="py-1 text-center text-[12px] font-semibold text-white">
                 {day}
               </div>
             ))}
@@ -452,7 +512,11 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
                   <span
                     className={cn(
                       'text-center text-[13px] tabular-nums lg:px-1 lg:text-left',
-                      isSelected ? 'font-bold text-elec-yellow' : isToday ? 'font-bold text-white' : 'font-medium text-white'
+                      isSelected
+                        ? 'font-bold text-elec-yellow'
+                        : isToday
+                          ? 'font-bold text-white'
+                          : 'font-medium text-white'
                     )}
                   >
                     {day}
@@ -461,7 +525,13 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
                     <>
                       <span className="mt-1 flex justify-center gap-0.5 lg:hidden" aria-hidden>
                         {list.slice(0, 3).map((x) => (
-                          <span key={x.key} className={cn('h-1.5 w-1.5 rounded-full', x.key_date ? 'bg-elec-yellow' : 'bg-white')} />
+                          <span
+                            key={x.key}
+                            className={cn(
+                              'h-1.5 w-1.5 rounded-full',
+                              x.key_date ? 'bg-elec-yellow' : 'bg-white'
+                            )}
+                          />
                         ))}
                       </span>
                       <span className="mt-1 hidden space-y-0.5 lg:block" aria-hidden>
@@ -469,14 +539,20 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
                           <span
                             key={x.key}
                             className={cn(
-                              'block truncate rounded-md px-1.5 py-0.5 text-left text-[10.5px] font-semibold',
-                              x.key_date ? 'bg-elec-yellow text-black' : 'bg-white/[0.12] text-white'
+                              'block truncate rounded-md px-1.5 py-0.5 text-left text-[12px] font-semibold',
+                              x.key_date
+                                ? 'bg-elec-yellow text-black'
+                                : 'bg-white/[0.12] text-white'
                             )}
                           >
                             {learnerName(x.studentId).split(' ')[0]}
                           </span>
                         ))}
-                        {list.length > 2 && <span className="block px-1.5 text-left text-[10.5px] text-white">+{list.length - 2} more</span>}
+                        {list.length > 2 && (
+                          <span className="block px-1.5 text-left text-[12px] text-white">
+                            +{list.length - 2} more
+                          </span>
+                        )}
                       </span>
                       {hasKey && <span className="sr-only">Includes a key date</span>}
                     </>
@@ -491,11 +567,19 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
         <div className="min-w-0 space-y-6">
           <section className="space-y-3">
             <CollegeSectionTitle
-              title={selectedDate === todayStr ? `Today, ${shortDay(selectedDate)}` : longDay(selectedDate)}
+              title={
+                selectedDate === todayStr
+                  ? `Today, ${shortDay(selectedDate)}`
+                  : longDay(selectedDate)
+              }
               sub={selectedItems.length ? `${selectedItems.length} on this day` : undefined}
               action={
                 selectedDate >= todayStr ? (
-                  <button type="button" onClick={() => openForm(selectedDate)} className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+                  <button
+                    type="button"
+                    onClick={() => openForm(selectedDate)}
+                    className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  >
                     Book this day
                   </button>
                 ) : undefined
@@ -505,7 +589,9 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
               <div className={cn(COLLEGE_CARD, 'py-5')}>
                 <p className="text-[14px] font-semibold text-white">Nothing on this day</p>
                 <p className="mt-1 text-[13px] text-white">
-                  {selectedDate >= todayStr ? 'Book an observation, discussion or review for this day.' : 'Pick another day on the month.'}
+                  {selectedDate >= todayStr
+                    ? 'Book an observation, discussion or review for this day.'
+                    : 'Pick another day on the month.'}
                 </p>
               </div>
             ) : (
@@ -518,14 +604,19 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
           </section>
 
           <section className="space-y-3">
-            <CollegeSectionTitle title="Next 7 days" sub={scope === 'mine' ? 'Your learners' : 'Everyone at the college'} />
+            <CollegeSectionTitle
+              title="Next 7 days"
+              sub={scope === 'mine' ? 'Your learners' : 'Everyone at the college'}
+            />
             {isLoading ? (
               <div className="h-[120px] animate-pulse rounded-3xl bg-white/[0.04]" />
             ) : upcoming.length === 0 ? (
               <div className={cn(COLLEGE_CARD, 'py-5')}>
                 <p className="text-[14px] font-semibold text-white">Nothing booked this week</p>
                 <p className="mt-1 text-[13px] text-white">
-                  {scope === 'mine' ? 'Nothing for your learners. Switch to Everyone to see the whole college.' : 'Schedule an assessment and it shows here.'}
+                  {scope === 'mine'
+                    ? 'Nothing for your learners. Switch to Whole college to see the whole college.'
+                    : 'Schedule an assessment and it shows here.'}
                 </p>
               </div>
             ) : (
@@ -539,20 +630,29 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
 
           {otherDates.length > 0 && (
             <section className="space-y-3">
-              <CollegeSectionTitle title="Also due this week" sub="Observations, IQA actions and EPA briefs" />
+              <CollegeSectionTitle
+                title="Also due this week"
+                sub="Observations, IQA actions and EPA briefs"
+              />
               <ul className={COLLEGE_LIST}>
                 {otherDates.map((w, i) => (
                   <li key={`${w.date}-${i}`}>
                     <button
                       type="button"
                       onClick={() => navigate(w.href)}
-                      className="flex min-h-[60px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-6"
+                      className="flex min-h-[60px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
                     >
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14.5px] font-semibold text-white">{w.title}</span>
-                        <span className="mt-0.5 block text-[12.5px] text-white">{WEEK_KIND[w.kind] ?? 'Date'}</span>
+                        <span className="line-clamp-2 block text-[14.5px] font-semibold leading-snug text-white">
+                          {w.title}
+                        </span>
+                        <span className="mt-0.5 block text-[12.5px] text-white">
+                          {WEEK_KIND[w.kind] ?? 'Date'}
+                        </span>
                       </span>
-                      <span className="shrink-0 text-[12.5px] font-semibold tabular-nums text-white">{shortDay(w.date)}</span>
+                      <span className="shrink-0 text-[12.5px] font-semibold tabular-nums text-white">
+                        {shortDay(w.date)}
+                      </span>
                       <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                     </button>
                   </li>
@@ -564,19 +664,34 @@ export function AssessmentCalendarSection({ onNavigate: _onNavigate }: Assessmen
       </div>
 
       <section className="space-y-3">
-        <CollegeSectionTitle title={`${monthWord} by type`} sub="What is on the calendar for the month shown" />
-        <div className={cn(COLLEGE_CARD, 'grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]')}>
+        <CollegeSectionTitle
+          title={`${monthWord} by type`}
+          sub="What is on the calendar for the month shown"
+        />
+        <div
+          className={cn(
+            COLLEGE_CARD,
+            'grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]'
+          )}
+        >
           {thisMonth.length === 0 ? (
-            <p className="text-[13.5px] text-white">Nothing on the calendar in {monthWord}. Book an assessment or move to another month.</p>
+            <p className="text-[13.5px] text-white">
+              Nothing on the calendar in {monthWord}. Book an assessment or move to another month.
+            </p>
           ) : (
             <Bars rows={byType} labelWidth="11rem" />
           )}
           <div className="space-y-2 border-t border-white/[0.06] pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
             <p className="text-[13px] font-semibold text-white">Gateway and EPA</p>
             <p className="text-[13px] leading-relaxed text-white">
-              Gateway and EPA dates come from each learner’s EPA record. Change them on the gateway board.
+              Gateway and EPA dates come from each learner’s EPA record. Change them on the gateway
+              board.
             </p>
-            <button type="button" onClick={() => navigate('/college/epa')} className="inline-flex h-11 items-center gap-1 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+            <button
+              type="button"
+              onClick={() => navigate('/college/epa')}
+              className="inline-flex h-11 items-center gap-1 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+            >
               Open the gateway board <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>

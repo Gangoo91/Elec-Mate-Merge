@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const qualHub6103907XConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eal-level-3-electrotechnical-complete-guide',
@@ -28,7 +28,7 @@ export const qualHub6103907XConfig: GeneratedGuideConfig = {
     'Typical duration: 3-4 years.',
     'End-point assessment: AM2 end-point assessment (mandatory).',
     'On completion this leads to: JIB Approved Electrician + ECS Gold Card.',
-    'Funding route: Apprenticeship Standard funding (95-100%).',
+    'Funding route: Apprenticeship Standard funding (100% for 16 to 24s at non-levy employers, 95% for 25+).',
     '7 core units cover 145 specific topic points across the qualification.',
   ],
   sections: [
@@ -93,7 +93,7 @@ export const qualHub6103907XConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Funding route: Apprenticeship Standard funding (95-100%). Exact arrangements vary by your specific employer, college, and personal circumstances — confirm with your training provider before enrolling.',
+          text: 'Funding route: Apprenticeship Standard funding (100% for 16 to 24s at non-levy employers, 95% for 25+). Exact arrangements vary by your specific employer, college, and personal circumstances — confirm with your training provider before enrolling.',
         },
       ],
     },
@@ -131,7 +131,7 @@ export const qualHub6103907XConfig: GeneratedGuideConfig = {
     },
     {
       question: 'How much does EAL Level 3 cost?',
-      answer: 'Cost depends on funding route: Apprenticeship Standard funding (95-100%). Adult learners self-funding typically pay £2,000-6,500 across the duration. Apprentices on the Apprenticeship Standard route typically pay nothing themselves.',
+      answer: 'Cost depends on funding route: Apprenticeship Standard funding (100% for 16 to 24s at non-levy employers, 95% for 25+). Adult learners self-funding typically pay £2,000-6,500 across the duration. Apprentices on the Apprenticeship Standard route typically pay nothing themselves.',
     },
     {
       question: 'What does EAL Level 3 qualify me to do?',

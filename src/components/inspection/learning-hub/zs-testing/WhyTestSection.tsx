@@ -85,7 +85,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* What is Zs */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Is Zs?</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Is Zs?</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -117,7 +117,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Why it matters */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
+          <p className="text-[12px] font-medium text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {hazards.map((hazard, i) => (
@@ -138,7 +138,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* System types */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Zs by Earthing System</p>
+          <p className="text-[12px] font-medium text-white mb-3">Zs by Earthing System</p>
         </motion.div>
 
         {systemTypes.map((sys, i) => (
@@ -207,7 +207,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Examples</p>
+          <p className="text-[12px] font-medium text-white mb-3">Real-World Examples</p>
         </motion.div>
 
         {realWorldExamples.map((example, i) => (

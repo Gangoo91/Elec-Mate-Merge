@@ -126,8 +126,8 @@ function OTJHoursCalculator() {
         {standard.code} · DfE Annex C. The total is a fixed figure set for your apprenticeship
         standard — a target to complete, not a perpetual weekly quota. The weekly figure is only a
         suggested pace (total ÷ working weeks); you can front-load hours. If your apprenticeship
-        started before 1 August 2025 the older 20% rule applies for the whole programme — 6 hours a
-        week on a 30-hour contract, 7.5 hours on a 37.5-hour contract.
+        started before 1 August 2025 the older 20% rule applies for the whole programme — an average
+        of 6 hours a week for a full-time apprentice (hours capped at 30 a week).
       </p>
     </div>
   );
@@ -136,7 +136,7 @@ function OTJHoursCalculator() {
 const howToSteps = [
   {
     name: 'Confirm your start date',
-    text: 'Off-the-job rules follow your apprenticeship start date for the whole programme. If you started on or after 1 August 2025 the fixed-hours rule applies. If you started before that date, the older 20% of paid working hours rule applies throughout — 6 hours a week on a 30-hour contract, 7.5 hours on a 37.5-hour contract.',
+    text: 'Off-the-job rules follow your apprenticeship start date for the whole programme. If you started on or after 1 August 2025 the fixed-hours rule applies. If you started before that date, the older rule applies throughout — 20% of normal working hours capped at 30 a week, an average of 6 hours a week for a full-time apprentice.',
   },
   {
     name: 'Identify your apprenticeship standard',
@@ -185,7 +185,7 @@ const faqs = [
   {
     question: 'How many off-the-job hours does an electrical apprentice need?',
     answer:
-      'For apprenticeships starting from 1 August 2025 it is a fixed total set for each apprenticeship standard by the Department for Education in Annex C of the funding rules. The Installation & Maintenance Electrician standard (ST0152) — the standard most electrical apprentices are on — requires 1,066 hours across the whole apprenticeship. Domestic Electrician (ST1017) requires 626 hours, Electrical/Electronic Product Service & Installation Engineer (ST0150) requires 787 hours, Electrical Power Networks Engineer (ST0475) requires 744 hours, and Electrical Power Protection & Plant Commissioning Engineer (ST0157) requires 1,114 hours. If your apprenticeship started before 1 August 2025, the older rule applies instead: at least 20% of your paid working hours, which is 6 hours a week on a 30-hour contract and 7.5 hours on a 37.5-hour contract. Your college or training provider holds the authoritative figure for your programme.',
+      'For apprenticeships starting from 1 August 2025 it is a fixed total set for each apprenticeship standard by the Department for Education in Annex C of the funding rules. The Installation & Maintenance Electrician standard (ST0152) — the standard most electrical apprentices are on — requires 1,066 hours across the whole apprenticeship. Domestic Electrician (ST1017) requires 626 hours, Electrical/Electronic Product Service & Installation Engineer (ST0150) requires 787 hours, Electrical Power Networks Engineer (ST0475) requires 744 hours, and Electrical Power Protection & Plant Commissioning Engineer (ST0157) requires 1,114 hours. If your apprenticeship started before 1 August 2025, the older rule applies instead: at least 20% of your normal working hours, capped at 30 hours a week, which is an average of 6 hours a week for a full-time apprentice. Your college or training provider holds the authoritative figure for your programme.',
   },
   {
     question: 'Does off-the-job training have to happen at college?',
@@ -395,9 +395,10 @@ const sections = [
             </p>
             <h3 className="mb-1.5 text-base font-bold text-white">The old 20% rule still applies</h3>
             <p className="text-sm leading-relaxed text-white">
-              At least 20% of your paid working hours go on off-the-job training for the whole
-              apprenticeship — 6 hours a week on a 30-hour contract, 7.5 hours on a 37.5-hour
-              contract. Your provider keeps tracking it that way until you reach gateway.
+              At least 20% of your normal working hours, capped at 30 hours a week, go on
+              off-the-job training for the whole apprenticeship — an average of 6 hours a week for a
+              full-time apprentice (2024 to 2025 funding rules, rule 84). Your provider keeps
+              tracking it that way until you reach gateway.
             </p>
           </div>
           <div className="rounded-2xl border border-elec-yellow/40 bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
@@ -475,8 +476,9 @@ const sections = [
           apprenticeship rather than policed week by week.
         </p>
         <p>
-          <strong>What 20% means in practice:</strong> on a 30-hour contract that is 6 hours a week;
-          on a 37.5-hour contract it is 7.5 hours a week. Unlike the current rules, there is no
+          <strong>What 20% means in practice:</strong> working hours are capped at 30 a week for
+          this calculation, so a full-time apprentice on 30, 37.5 or 40 hours needs an average of 6
+          hours a week (2024 to 2025 funding rules, rule 84). Unlike the current rules, there is no
           published programme-total figure for this method — your training provider holds the target
           that applies to your programme, and theirs is the figure to work to.
         </p>
@@ -556,8 +558,8 @@ const sections = [
         </p>
         <p>
           <strong>Step 1 — Confirm your start date.</strong> Off-the-job rules follow your start
-          date for the whole programme. Started before 1 August 2025? Use the older 20% rule (6
-          hours a week on a 30-hour contract, 7.5 hours on a 37.5-hour contract). Started from
+          date for the whole programme. Started before 1 August 2025? Use the older 20% rule (an
+          average of 6 hours a week for a full-time apprentice, hours capped at 30 a week). Started from
           August 2025? Use the fixed-hours method below.
         </p>
         <p>
@@ -759,7 +761,7 @@ export default function OffJobTrainingHoursPage() {
       title="Off-the-Job Training Hours: 1,066 on ST0152"
       description="Off-the-job training hours for electrical apprentices: 1,066 hours on ST0152 under the 2025 fixed-hours rule, what counts, and how to log evidence."
       datePublished="2025-10-15"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"
@@ -775,7 +777,7 @@ export default function OffJobTrainingHoursPage() {
       answerBox={{
         question: 'How many off-the-job training hours does an electrical apprentice need?',
         answer:
-          'It depends on your start date. For apprenticeships starting from 1 August 2025 it is a fixed total set per standard — 1,066 hours for Installation & Maintenance Electrician (ST0152) across the whole apprenticeship, and 626 hours for Domestic Electrician (ST1017). For starts before that date the older rule applies: at least 20% of paid working hours, which is 6 hours a week on a 30-hour contract and 7.5 hours on a 37.5-hour contract.',
+          'It depends on your start date. For apprenticeships starting from 1 August 2025 it is a fixed total set per standard — 1,066 hours for Installation & Maintenance Electrician (ST0152) across the whole apprenticeship, and 626 hours for Domestic Electrician (ST1017). For starts before that date the older rule applies: at least 20% of normal working hours, capped at 30 hours a week, which is an average of 6 hours a week for a full-time apprentice.',
       }}
       embeddedTool={<OTJHoursCalculator />}
       keyTakeaways={keyTakeaways}

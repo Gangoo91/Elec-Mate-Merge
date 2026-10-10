@@ -472,7 +472,7 @@ const TrunkingSizeCalculator = ({ onResult }: CalculatorResultReporter = {}) => 
               fill was returned as an unqualified pass with no mention of grouping at all.
             */}
                 {isTrunking && (
-                  <div className="p-3 rounded-xl border border-orange-500/30 bg-orange-500/10 space-y-2">
+                  <div className="p-3 rounded-xl border border-orange-500/30 bg-white/[0.04] space-y-2">
                     <p className="text-sm text-white">
                       <span className="font-medium">
                         Grouping factor Cg = {result.groupingFactor.toFixed(2)}
@@ -511,7 +511,7 @@ const TrunkingSizeCalculator = ({ onResult }: CalculatorResultReporter = {}) => 
                                     : 'bg-white/5 border-white/10'
                                 )}
                                 style={
-                                  isRecommended ? { borderColor: `${config.gradientFrom}40` } : {}
+                                  isRecommended ? { borderColor: 'rgba(255, 255, 255, 0.12)' } : {}
                                 }
                               >
                                 <div className="flex items-center gap-2">
@@ -578,8 +578,8 @@ const TrunkingSizeCalculator = ({ onResult }: CalculatorResultReporter = {}) => 
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       {/*
@@ -633,8 +633,8 @@ const TrunkingSizeCalculator = ({ onResult }: CalculatorResultReporter = {}) => 
                     <div
                       className="p-3 rounded-xl border space-y-2"
                       style={{
-                        borderColor: `${config.gradientFrom}15`,
-                        background: `${config.gradientFrom}05`,
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        background: 'rgba(255, 255, 255, 0.04)',
                       }}
                     >
                       <p className="text-sm text-white">

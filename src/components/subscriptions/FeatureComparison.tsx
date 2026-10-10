@@ -257,7 +257,7 @@ const SECTIONS: MatrixSection[] = [
     heading: 'College — Apprenticeship compliance',
     rows: [
       row('Individual Learning Plans (ILPs) with milestones', 'college'),
-      row('20% off-the-job hours logging & review', 'college'),
+      row('Off-the-job hours logging & review', 'college'),
       row('EPA gateway tracking & readiness snapshots', 'college'),
       row('EPA simulator per learner', 'college'),
       row('IQA sampling, findings & corrective actions', 'college'),

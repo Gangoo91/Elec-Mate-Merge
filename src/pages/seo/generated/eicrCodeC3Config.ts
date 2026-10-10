@@ -5,12 +5,11 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // C1/C2/C3/FI classification rules and procedures match GN3 Section 3.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const eicrCodeC3Config: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-c3-improvement-recommended',
-  title:
-    'EICR Code C3: Improvement Recommended',
+  title: 'EICR Code C3: Improvement Recommended',
   description:
     'EICR code C3 explained: when "improvement recommended" is the right classification, when it would actually be a C2 in disguise…',
   datePublished: published,
@@ -30,7 +29,7 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
     'C3 shall NOT be used where C1 or C2 evidence exists — the inspector cannot downgrade for convenience or commercial reasons.',
     'Common C3 territory: pre-A4 wiring that pre-dates current requirements but was compliant when installed; "old colours" cables; non-A4 model form artefacts; older but functional consumer units.',
     'A well-written C3 still recommends specific improvement work — vague "could be improved" notes have no remedial value and undermine the report.',
-    'C3 observations don\'t trigger the 28-day PRS Regs remedial window in rented properties — but a landlord may still choose to address them at the next maintenance opportunity.',
+    "C3 observations don't trigger the 28-day PRS Regs remedial window in rented properties — but a landlord may still choose to address them at the next maintenance opportunity.",
   ],
   sections: [
     {
@@ -40,15 +39,13 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'C3 is defined as "Improvement recommended." The classification applies where an observed condition departs from the current edition of BS 7671 in a way that an improvement would address, but the departure does not create danger or potential danger.',
+          text: 'C3 is defined as "Improvement recommended." The classification applies where an observed condition departs from the current edition of BS 7671 in a way that an improvement would address, but the departure does not create danger or potential danger.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'C3 keeps the EICR "satisfactory"',
-          text:
-            'Unlike C1 and C2, a C3 observation does not change the overall report assessment. An EICR with only C3 observations is recorded as "satisfactory" — the responsible person is informed of potential improvements but no urgent action is required.',
+          text: 'Unlike C1 and C2, a C3 observation does not change the overall report assessment. An EICR with only C3 observations is recorded as "satisfactory" — the responsible person is informed of potential improvements but no urgent action is required.',
         },
       ],
     },
@@ -59,20 +56,17 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'BS 7671 / GN3 are unusually explicit about when C3 can be used. The rule reads as an acceptance criterion:',
+          text: 'BS 7671 / GN3 are unusually explicit about when C3 can be used. The rule reads as an acceptance criterion:',
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'Cannot use C3 if evidence supports C1 or C2',
-          text:
-            'C3 ("Improvement recommended") shall be attributed only where C1 ("Danger present") or C2 (potentially dangerous / non-compliant) do not apply. Practitioners shall not use C3 if evidence supports C1 or C2 classifications.',
+          text: 'C3 ("Improvement recommended") shall be attributed only where C1 ("Danger present") or C2 (potentially dangerous / non-compliant) do not apply. Practitioners shall not use C3 if evidence supports C1 or C2 classifications.',
         },
         {
           type: 'paragraph',
-          text:
-            'This is to stop commercial pressure (or politeness) from softening serious findings into reassuring "improvement" recommendations. Every inspector encounters the temptation: "the report looks better with no C2s." The acceptance criterion makes that downgrade professional misconduct.',
+          text: 'This is to stop commercial pressure (or politeness) from softening serious findings into reassuring "improvement" recommendations. Every inspector encounters the temptation: "the report looks better with no C2s." The acceptance criterion makes that downgrade professional misconduct.',
         },
       ],
     },
@@ -83,8 +77,7 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Conditions where C3 is the correct classification — improvement is genuinely recommended but no danger, present or potential, exists:',
+          text: 'Conditions where C3 is the correct classification — improvement is genuinely recommended but no danger, present or potential, exists:',
         },
         {
           type: 'list',
@@ -106,8 +99,7 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'These observations are sometimes mis-classified as C3 but should be C2 because the condition is potentially dangerous, not merely a "departure from current standards":',
+          text: 'These observations are sometimes mis-classified as C3 but should be C2 because the condition is potentially dangerous, not merely a "departure from current standards":',
         },
         {
           type: 'list',
@@ -124,8 +116,7 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'The downgrade temptation',
-          text:
-            'If you find yourself reaching for C3 to "keep the report satisfactory," the chances are high that the evidence supports C2. Re-read the acceptance criterion: C3 shall not be used where evidence supports C1 or C2.',
+          text: 'If you find yourself reaching for C3 to "keep the report satisfactory," the chances are high that the evidence supports C2. Re-read the acceptance criterion: C3 shall not be used where evidence supports C1 or C2.',
         },
       ],
     },
@@ -136,8 +127,7 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'C3 observations don\'t trigger the legal remedial timeline that C1/C2 trigger — so the responsible person can choose to ignore them. A well-written C3 helps them make an informed decision rather than dismissing the recommendation:',
+          text: "C3 observations don't trigger the legal remedial timeline that C1/C2 trigger — so the responsible person can choose to ignore them. A well-written C3 helps them make an informed decision rather than dismissing the recommendation:",
         },
         {
           type: 'list',
@@ -160,7 +150,7 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
         'No. Only C1 ("Danger present") and C2 ("Potentially dangerous") observations make the overall EICR assessment "unsatisfactory". An EICR with only C3 observations remains "satisfactory" overall — the responsible person is informed of recommended improvements but no urgent or remedial action is required.',
     },
     {
-      question: 'Can I assign C3 to a defect that\'s borderline C2?',
+      question: "Can I assign C3 to a defect that's borderline C2?",
       answer:
         'No. BS 7671 / GN3 are explicit: C3 shall not be used where evidence supports C1 or C2. If a defect could reasonably be classified as either C2 or C3 — and the C2 case is supported by evidence — the inspector must use C2. The acceptance criterion exists precisely to prevent commercial-pressure downgrading.',
     },
@@ -172,7 +162,7 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
     {
       question: 'Is "no AFDD" automatically a C3 under A4:2026?',
       answer:
-        'It depends on the location. Amendment 4 (2026) requires AFDDs in some specific circuits (e.g. AFDD-recommended residential consumer-unit configurations under specific risk categories) and prohibits them in others (medical locations group 0 and 2, medical IT systems). Where AFDDs are recommended but not required, absence is typically a C3 in the existing installation context. Where they are required and missing, the classification is C2 because the protection deficiency creates potential danger.',
+        'It depends on the location. Since A2:2022, Regulation 421.1.7 requires AFDDs on single-phase socket-outlet circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommends them elsewhere; Section 710 prohibits them in medical locations of group 0, 1 and 2 and on medical IT systems. Where AFDDs are recommended but not required, absence is typically a C3 in the existing installation context. Where they are required and missing, the classification is C2 because the protection deficiency creates potential danger.',
     },
     {
       question: 'Should pre-2008 plastic consumer units be C2 or C3?',
@@ -194,7 +184,8 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
     {
       href: '/guides/eicr-code-c1-danger-present',
       title: 'EICR Code C1 — Danger Present',
-      description: 'The most serious classification — immediate action before the inspector leaves.',
+      description:
+        'The most serious classification — immediate action before the inspector leaves.',
       icon: 'AlertTriangle',
       category: 'Guide',
     },
@@ -236,5 +227,5 @@ export const eicrCodeC3Config: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Write better C3 observations',
   ctaSubheading:
-    'Elec-Mate\'s digital EICR app auto-suggests the correct regulation cite for each C3 observation and lets you save reusable wording. 7-day free trial.',
+    "Elec-Mate's digital EICR app auto-suggests the correct regulation cite for each C3 observation and lets you save reusable wording. 7-day free trial.",
 };

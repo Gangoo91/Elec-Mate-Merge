@@ -19,13 +19,13 @@ const OpenCircuitPage = ({ onBack }: Props) => (
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
+          <p className="text-[12px] font-medium text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">An open circuit is a break in the conductive path — the circuit is incomplete, so no current can flow. The circuit appears dead even though the MCB is on and the supply is present. Open circuits are frustrating because there is no dramatic symptom — just silence where there should be power.</p>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <p className="text-[12px] font-medium text-white mb-3">Symptoms</p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['No power at one or more accessories — but MCB is ON', 'Partial power loss on a ring circuit — some sockets work, others do not', 'Lights not working despite switch being on and MCB being on', 'Intermittent power — works sometimes, fails other times (loose connection)', 'No voltage at the accessory when tested with a voltage indicator', 'Continuity test shows infinite resistance on one or more conductors'].map((s, i) => (
@@ -39,7 +39,7 @@ const OpenCircuitPage = ({ onBack }: Props) => (
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
+        <p className="text-[12px] font-medium text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -61,7 +61,7 @@ const OpenCircuitPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
+        <p className="text-[12px] font-medium text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {['Confirm the MCB/fuse is ON and intact. Check for tripped RCDs. Check for blown fuses in FCUs.', 'Test for voltage at the dead accessory using a voltage indicator. No voltage confirms open circuit (not a load fault).', 'Isolate the circuit and prove dead for safe testing.', 'Perform continuity test from the board to the dead accessory — L, N and E individually. The conductor showing infinite resistance has the break.', 'If all three conductors show infinite: the break is before the first junction point. If only one: trace that specific conductor.', 'Section the circuit at junction boxes. Test continuity of each section individually. The section showing infinite contains the break.', 'For ring circuits: test end-to-end continuity of each leg. Cross-connect and test at each socket to find the break location.', 'Re-terminate the loose connection or replace the broken cable section. Retest continuity, IR and polarity. Energise and verify.'].map((step, i) => (
@@ -77,7 +77,7 @@ const OpenCircuitPage = ({ onBack }: Props) => (
 
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
+          <p className="text-[12px] font-medium text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Landing Light — Intermittent Open Circuit</p>
           <p className="text-sm text-white">Landing light works sometimes and fails other times. No pattern. Lamp is fine. Switch clicks normally.</p>
           <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">

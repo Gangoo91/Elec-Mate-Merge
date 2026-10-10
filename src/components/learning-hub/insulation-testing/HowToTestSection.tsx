@@ -229,9 +229,9 @@ const HowToTestSection = ({ onBack }: Props) => {
                     <table className="w-full text-[13px]">
                       <thead>
                         <tr className="border-b border-white/[0.08]">
-                          <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Test V</th>
-                          <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Circuits</th>
-                          <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Range</th>
+                          <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Test V</th>
+                          <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Circuits</th>
+                          <th className="px-3 py-2.5 text-left text-[12px] font-medium text-white">Range</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/[0.06]">

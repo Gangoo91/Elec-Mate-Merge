@@ -69,7 +69,7 @@ const BreathingExercise = () => {
         <div className="flex flex-col items-center space-y-4">
           <div className="relative w-32 h-32 flex items-center justify-center">
             <div
-              className="w-24 h-24 rounded-full bg-elec-yellow/20 border-2 border-elec-yellow transition-transform duration-1000 ease-in-out flex items-center justify-center"
+              className="w-24 h-24 rounded-full bg-white/[0.06] border-2 border-elec-yellow transition-transform duration-1000 ease-in-out flex items-center justify-center"
               style={{ transform: `scale(${getCircleScale()})` }}
             >
               <div className="text-center">
@@ -100,7 +100,7 @@ const BreathingExercise = () => {
             <Button
               onClick={pauseExercise}
               variant="outline"
-              className="border-elec-yellow/20 hover:bg-elec-yellow/10 flex items-center gap-2"
+              className="border-elec-yellow/20 hover:bg-white/[0.08] flex items-center gap-2"
             >
               <Pause className="h-4 w-4" />
               Pause
@@ -111,7 +111,7 @@ const BreathingExercise = () => {
             onClick={resetExercise}
             variant="outline"
             size="icon"
-            className="border-elec-yellow/20 hover:bg-elec-yellow/10"
+            className="border-elec-yellow/20 hover:bg-white/[0.08]"
           >
             <RotateCcw className="h-4 w-4" />
           </Button>

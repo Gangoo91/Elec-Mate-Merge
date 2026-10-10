@@ -725,7 +725,7 @@ const BusinessStartup = () => {
                       note: 'Foundation qualification for electrical work',
                     },
                     {
-                      qual: '18th Edition Wiring Regulations (BS 7671:2018+A2:2022)',
+                      qual: '18th Edition Wiring Regulations (BS 7671:2018+A4:2026)',
                       cost: '£250 - £400',
                       note: 'Mandatory for all practising electricians',
                     },

@@ -34,9 +34,7 @@ interface SkillCategory {
 }
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-    {children}
-  </span>
+  <span className="text-[13px] font-semibold text-white">{children}</span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
@@ -48,10 +46,7 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 const Bullets = ({ items }: { items: string[] }) => (
   <ul className="space-y-1.5">
     {items.map((item, idx) => (
-      <li
-        key={idx}
-        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-      >
+      <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
       </li>
@@ -125,8 +120,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Safe isolation procedures',
           description: 'Lock-off, tag-out, and proving dead procedures for all electrical work.',
           competencyLevel: 'Critical',
-          learningPath:
-            'Health and safety course → practical demonstrations → supervised practice',
+          learningPath: 'Health and safety course → practical demonstrations → supervised practice',
           assessmentCriteria: [
             'Demonstrate safe isolation',
             'Use proving units correctly',
@@ -137,8 +131,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Wiring regulations knowledge',
           description: 'Understanding BS 7671:2018+A4:2026 requirements and applications.',
           competencyLevel: 'Essential',
-          learningPath:
-            'BS 7671:2018+A4:2026 course → regulation study → practical application',
+          learningPath: 'BS 7671:2018+A4:2026 course → regulation study → practical application',
           assessmentCriteria: [
             'Quote relevant regulations',
             'Apply cable sizing rules',
@@ -187,8 +180,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Initial verification',
           description: 'Testing new installations before energising.',
           competencyLevel: 'Advanced',
-          learningPath:
-            '2391 Inspection and Testing → practical experience → certification work',
+          learningPath: '2391 Inspection and Testing → practical experience → certification work',
           assessmentCriteria: [
             'Carry out continuity tests',
             'Perform insulation resistance testing',
@@ -199,8 +191,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Periodic inspection',
           description: 'Conducting EICRs on existing installations.',
           competencyLevel: 'Professional',
-          learningPath:
-            '2391-52 qualification → portfolio development → independent practice',
+          learningPath: '2391-52 qualification → portfolio development → independent practice',
           assessmentCriteria: [
             'Identify code C1, C2, and C3 issues',
             'Complete EICR documentation',
@@ -217,8 +208,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Systematic fault diagnosis',
           description: 'Using logical processes to identify electrical faults.',
           competencyLevel: 'Advanced',
-          learningPath:
-            'Fault finding training → real-world experience → mentor guidance',
+          learningPath: 'Fault finding training → real-world experience → mentor guidance',
           assessmentCriteria: [
             'Use diagnostic equipment',
             'Apply systematic approaches',
@@ -249,8 +239,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Motor control',
           description: 'Installing and maintaining motor control systems.',
           competencyLevel: 'Advanced',
-          learningPath:
-            'Motor control training → manufacturer courses → site experience',
+          learningPath: 'Motor control training → manufacturer courses → site experience',
           assessmentCriteria: [
             'Wire motor starters',
             'Programme variable speed drives',
@@ -278,8 +267,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'EV charging installation',
           description: 'Installing electric vehicle charging infrastructure.',
           competencyLevel: 'Emerging',
-          learningPath:
-            'EV charging course → manufacturer certifications → installation practice',
+          learningPath: 'EV charging course → manufacturer certifications → installation practice',
           assessmentCriteria: [
             'Install EV charging units',
             'Understand DC and AC charging',
@@ -310,8 +298,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'IoT and connected devices',
           description: 'Installing and configuring connected building systems.',
           competencyLevel: 'Emerging',
-          learningPath:
-            'IoT fundamentals → network technology → building automation',
+          learningPath: 'IoT fundamentals → network technology → building automation',
           assessmentCriteria: [
             'Configure wireless networks',
             'Install sensor networks',
@@ -331,8 +318,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Communication skills',
           description: 'Effective communication with clients, colleagues, and stakeholders.',
           competencyLevel: 'Essential',
-          learningPath:
-            'Communication courses → practice → feedback and improvement',
+          learningPath: 'Communication courses → practice → feedback and improvement',
           assessmentCriteria: [
             'Communicate technical concepts clearly',
             'Listen actively to client needs',
@@ -343,8 +329,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Project management',
           description: 'Planning, executing, and delivering electrical projects.',
           competencyLevel: 'Advanced',
-          learningPath:
-            'PRINCE2 or APM training → project experience → continuous learning',
+          learningPath: 'PRINCE2 or APM training → project experience → continuous learning',
           assessmentCriteria: [
             'Plan and schedule work',
             'Manage budgets and resources',
@@ -361,8 +346,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Estimating and pricing',
           description: 'Producing accurate quotes and managing pricing.',
           competencyLevel: 'Professional',
-          learningPath:
-            'Estimating training → market analysis → pricing strategy',
+          learningPath: 'Estimating training → market analysis → pricing strategy',
           assessmentCriteria: [
             'Produce detailed estimates',
             'Calculate true costs',
@@ -382,8 +366,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'Battery storage systems',
           description: 'Installing and commissioning battery storage installations.',
           competencyLevel: 'Emerging',
-          learningPath:
-            'Battery safety training → system design courses → practical installations',
+          learningPath: 'Battery safety training → system design courses → practical installations',
           assessmentCriteria: [
             'Install battery systems safely',
             'Commission storage installations',
@@ -403,8 +386,7 @@ const SkillsDevelopmentMatrix = () => {
           skill: 'CPD planning and recording',
           description: 'Maintaining ongoing professional development records.',
           competencyLevel: 'Essential',
-          learningPath:
-            'Professional body guidance → CPD planning → reflective practice',
+          learningPath: 'Professional body guidance → CPD planning → reflective practice',
           assessmentCriteria: [
             'Record CPD activities',
             'Plan development goals',
@@ -418,10 +400,7 @@ const SkillsDevelopmentMatrix = () => {
   const ResourceList = ({ items }: { items: { label: string; description: string }[] }) => (
     <ul className="space-y-1.5">
       {items.map((item, idx) => (
-        <li
-          key={idx}
-          className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-        >
+        <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
           <span>
             <span className="text-white">{item.label}: </span>
@@ -434,7 +413,7 @@ const SkillsDevelopmentMatrix = () => {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <Brain className="h-4 w-4 text-white mt-1 flex-shrink-0" />
         <p className="text-[14px] text-white leading-relaxed">
           Structured skills development supports stronger earning potential and faster career
@@ -561,13 +540,7 @@ const SkillsDevelopmentMatrix = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Eyebrow>High-value skills</Eyebrow>
-                  <Bullets
-                    items={[
-                      'HV switching',
-                      'PLC programming',
-                      'Solar PV design',
-                    ]}
-                  />
+                  <Bullets items={['HV switching', 'PLC programming', 'Solar PV design']} />
                 </div>
                 <div className="space-y-2">
                   <Eyebrow>Growth opportunities</Eyebrow>

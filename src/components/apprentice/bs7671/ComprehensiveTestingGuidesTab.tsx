@@ -39,7 +39,7 @@ const ComprehensiveTestingGuidesTab = () => {
         return {
           bg: 'bg-white/[0.06]',
           text: 'text-elec-yellow',
-          border: 'border-elec-yellow/30',
+          border: 'border-white/[0.14]',
         };
       case 'Advanced':
         return { bg: 'bg-white/[0.06]', text: 'text-red-400', border: 'border-red-500/30' };
@@ -205,11 +205,11 @@ const ComprehensiveTestingGuidesTab = () => {
       </div>
 
       {/* Professional Tips Card */}
-      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
+      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/[0.14] overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Lightbulb className="h-5 w-5 text-elec-yellow" />
             </div>
             Professional Tips

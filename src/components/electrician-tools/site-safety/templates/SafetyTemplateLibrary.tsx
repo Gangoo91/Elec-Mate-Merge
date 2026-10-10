@@ -15,6 +15,7 @@ import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { SafetyModuleShell } from '../common/SafetyModuleShell';
 import { SafetyPageHeader } from '../common/SafetyPageHeader';
+import { isFirmScope, useSafetyScope } from '../common/SafetyScope';
 
 interface SafetyTemplateLibraryProps {
   onBack: () => void;
@@ -73,6 +74,9 @@ function reviewDateWarning(reviewDate: string | null): 'overdue' | 'soon' | null
 }
 
 export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
+  // Employer Hub (firm scope): browse and read only. "My documents" are the
+  // person's own adopted copies, so they never show in the firm's hub.
+  const browseOnly = isFirmScope(useSafetyScope());
   const [tab, setTab] = useState<Tab>('browse');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -81,7 +85,8 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
   const [sharingDocument, setSharingDocument] = useState<UserSafetyDocument | null>(null);
 
   const { data: templates, isLoading } = useSafetyTemplates(selectedCategory ?? undefined);
-  const { data: userDocs, isLoading: userDocsLoading } = useUserSafetyDocuments();
+  const { data: ownDocs, isLoading: userDocsLoading } = useUserSafetyDocuments();
+  const userDocs = browseOnly ? [] : ownDocs;
 
   const filtered = (templates ?? []).filter((t) =>
     searchTerm
@@ -112,6 +117,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
         template={viewingTemplate}
         onBack={() => setViewingTemplate(null)}
         isAdopted={adoptedTemplateIds.has(viewingTemplate.id)}
+        browseOnly={browseOnly}
       />
     );
   }
@@ -135,7 +141,9 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             already carry. The one figure worth acting on — unfinished drafts —
             now sits on the "My documents" tab itself. */}
         {/* Editorial tab switcher — underline style */}
-        <div className="grid grid-cols-2 border-b border-white/[0.08]">
+        <div
+          className={cn('grid grid-cols-2 border-b border-white/[0.08]', browseOnly && 'hidden')}
+        >
           <button
             type="button"
             onClick={() => setTab('browse')}

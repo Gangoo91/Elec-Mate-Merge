@@ -22,6 +22,11 @@ const MAX_TEXT_CHARS = 50_000;
 const MAX_PHOTOS = 4;
 const MAX_PHOTO_BYTES = 4 * 1024 * 1024;
 const PHOTO_TYPES = /^image\/(jpeg|png|webp|heic|heif|gif)$/i;
+// Gap #7: supplier bills (bills-<token>@) also carry their PDFs. Enquiry
+// addresses get exactly the payload they always had.
+const MAX_BILL_DOCS = 5;
+const MAX_BILL_DOC_BYTES = 10 * 1024 * 1024;
+const isBillsAddress = (to: string) => /^bills-[a-z0-9]{12}(\+[^@]*)?@/i.test(to.trim());
 
 function toBase64(buf: ArrayBuffer | Uint8Array | string): string {
   if (typeof buf === 'string') return btoa(buf);
@@ -72,6 +77,25 @@ export default {
           mime_type: a.mimeType,
           data: toBase64(a.content as ArrayBuffer | string),
         })),
+      ...(isBillsAddress(message.to)
+        ? {
+            documents: (parsed.attachments ?? [])
+              .filter(
+                (a) =>
+                  /^application\/pdf$/i.test(a.mimeType ?? '') || /\.pdf$/i.test(a.filename ?? '')
+              )
+              .filter((a) => {
+                const size = typeof a.content === 'string' ? a.content.length : a.content.byteLength;
+                return size > 0 && size <= MAX_BILL_DOC_BYTES;
+              })
+              .slice(0, MAX_BILL_DOCS)
+              .map((a) => ({
+                filename: a.filename ?? null,
+                mime_type: 'application/pdf',
+                data: toBase64(a.content as ArrayBuffer | string),
+              })),
+          }
+        : {}),
     };
 
     const res = await fetch(env.SUPABASE_FUNCTION_URL, {

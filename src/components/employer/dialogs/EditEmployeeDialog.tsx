@@ -1,4 +1,3 @@
-import { supabase } from '@/integrations/supabase/client';
 import { useState, useEffect, useRef, type ChangeEvent, type FormEvent } from 'react';
 import {
   ResponsiveFormModal,
@@ -42,6 +41,10 @@ import { SelectField } from '@/components/forms';
 import { TEAM_ROLES, TEAM_ROLE_HINT, SUPERVISING_ROLES, type TeamRole } from '@/lib/teamRoles';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
 import { useActingFirmId, useSetTeamCostRate, useTeamCostRates } from '@/hooks/useJobProfit';
+import { FireRehireNotice, termsReduced } from '@/components/employer/people/FireRehireNotice';
+import { useMarkLeaver, useRestoreLeaver } from '@/hooks/useHrRecords';
+import { LeavingDateField } from '@/components/employer/people/LeavingDateField';
+import { leavingDateValid, todayIso } from '@/lib/leavingDate';
 
 const JOB_ROLES = [
   'Senior Electrician',
@@ -64,6 +67,23 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
   const { data: roster = [] } = useEmployees();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  // ELE-2075: archiving here (the Archive button or Status) asks for the
+  // real leaving date, which starts the retention periods.
+  const markLeaver = useMarkLeaver();
+  const restoreLeaver = useRestoreLeaver();
+  const [leftOn, setLeftOn] = useState(todayIso());
+  useEffect(() => {
+    setLeftOn(todayIso());
+  }, [employee?.id, open]);
+  const wasArchived = (employee?.status ?? '').toLowerCase() === 'archived';
+  const busy = updateEmployee.isPending || markLeaver.isPending || restoreLeaver.isPending;
+  // ELE-2075: advisory only. A cut to contracted pay asks once before saving.
+  const [termsWarn, setTermsWarn] = useState<string[] | null>(null);
+  const termsAckRef = useRef(false);
+  useEffect(() => {
+    setTermsWarn(null);
+    termsAckRef.current = false;
+  }, [employee?.id, open]);
   const [isUploading, setIsUploading] = useState(false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   // Legacy full photo URLs pass through; new bare paths are signed on demand.
@@ -233,6 +253,39 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
       annualSalary = dayRate * 5 * 52;
     }
 
+    const overtimeMultiplier = Number.isFinite(parseFloat(formData.overtimeMultiplier))
+      ? parseFloat(formData.overtimeMultiplier)
+      : 1.5;
+    const overtimeThreshold = Number.isFinite(parseFloat(formData.overtimeThreshold))
+      ? parseFloat(formData.overtimeThreshold)
+      : 8;
+    if (canSeeMoney && formData.team_role !== 'Subcontractor' && !termsAckRef.current) {
+      const changes = termsReduced(employee, {
+        hourly_rate: hourlyRate,
+        annual_salary: annualSalary,
+        pay_type: formData.payType,
+        overtime_multiplier: overtimeMultiplier,
+        overtime_threshold_hours: overtimeThreshold,
+      });
+      if (changes.length > 0) {
+        setTermsWarn(changes);
+        return;
+      }
+    }
+    termsAckRef.current = false;
+    setTermsWarn(null);
+
+    const archiving = formData.status === 'Archived' && !wasArchived;
+    const restoring = wasArchived && formData.status !== 'Archived';
+    if (archiving && !leavingDateValid(leftOn)) {
+      toast({
+        title: 'Add their last day',
+        description: 'It is needed to archive them, and it cannot be after today.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     try {
       await updateEmployee.mutateAsync({
         id: employee.id,
@@ -243,7 +296,8 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           role: formData.role,
           team_role: formData.team_role,
           supervisor_employee_id: formData.supervisorId || null,
-          status: formData.status,
+          // Archiving goes through hr_mark_leaver below, with the leaving date.
+          status: archiving ? employee.status : formData.status,
           // Office managers never send pay fields (they can't see them).
           ...(canSeeMoney
             ? {
@@ -265,6 +319,12 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           emergency_contact_relationship: formData.emergencyRelationship.trim() || null,
         },
       });
+
+      if (archiving) {
+        await markLeaver.mutateAsync({ rosterId: employee.id, leftOn });
+      } else if (restoring) {
+        await restoreLeaver.mutateAsync(employee.id);
+      }
 
       // ELE-1824: cost to the firm per hour (blank = use the pay rate).
       if (canSeeMoney && firmId) {
@@ -295,8 +355,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     try {
       // Archive = status change. Never a hard delete — that would destroy
       // timesheet/payroll/credential history (DB now RESTRICTs it anyway).
-      await updateEmployee.mutateAsync({ id: employee.id, updates: { status: 'Archived' } });
-      supabase.functions.invoke('manage-employer-seats').catch(() => {});
+      // hr_mark_leaver archives and records the leaving date together; the
+      // hook resyncs the seat count.
+      await markLeaver.mutateAsync({ rosterId: employee.id, leftOn });
       toast({
         title: 'Employee Archived',
         description: `${employee.name} has been archived.`,
@@ -305,8 +366,8 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
       onOpenChange(false);
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to archive employee. Please try again.',
+        title: 'Not archived',
+        description: error instanceof Error ? error.message : 'Please try again.',
         variant: 'destructive',
       });
     }
@@ -463,6 +524,14 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     />
                   </Field>
                 </FormGrid>
+                {formData.status === 'Archived' && !wasArchived && (
+                  <LeavingDateField
+                    id="edit-leaving-date"
+                    value={leftOn}
+                    onChange={setLeftOn}
+                    firstName={formData.name.split(' ')[0] || undefined}
+                  />
+                )}
                 {formData.team_role && TEAM_ROLE_HINT[formData.team_role] && (
                   <p className="text-[12px] text-white">{TEAM_ROLE_HINT[formData.team_role]}</p>
                 )}
@@ -663,7 +732,31 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           </ResponsiveFormModalBody>
 
           <ResponsiveFormModalFooter>
-            {showDeleteConfirm ? (
+            {termsWarn ? (
+              <div className="w-full space-y-2.5">
+                <FireRehireNotice
+                  title={`This ${termsWarn.length === 1 ? 'change' : 'edit'}: ${termsWarn.join(', ')}`}
+                />
+                <div className="flex gap-2 w-full">
+                  <SecondaryButton onClick={() => setTermsWarn(null)} fullWidth>
+                    Go back
+                  </SecondaryButton>
+                  <PrimaryButton
+                    onClick={() => {
+                      termsAckRef.current = true;
+                      const form = document.getElementById(
+                        'edit-employee-form'
+                      ) as HTMLFormElement | null;
+                      form?.requestSubmit();
+                    }}
+                    disabled={updateEmployee.isPending}
+                    fullWidth
+                  >
+                    Save anyway
+                  </PrimaryButton>
+                </div>
+              </div>
+            ) : showDeleteConfirm ? (
               /* Inline confirm — NOT a second modal (stacked modals freeze the page) */
               <div className="w-full space-y-2.5">
                 <p className="text-[12.5px] text-white leading-relaxed">
@@ -671,20 +764,26 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                   your team? This cancels any pending invite and takes back their seat. Their
                   records are kept.
                 </p>
+                <LeavingDateField
+                  id="remove-leaving-date"
+                  value={leftOn}
+                  onChange={setLeftOn}
+                  firstName={employee?.name.split(' ')[0] || undefined}
+                />
                 <div className="flex gap-2 w-full">
                   <SecondaryButton
                     onClick={() => setShowDeleteConfirm(false)}
-                    disabled={updateEmployee.isPending}
+                    disabled={busy}
                     fullWidth
                   >
                     Keep on team
                   </SecondaryButton>
                   <DestructiveButton
                     onClick={handleDelete}
-                    disabled={updateEmployee.isPending}
+                    disabled={busy || !leavingDateValid(leftOn)}
                     fullWidth
                   >
-                    {updateEmployee.isPending ? (
+                    {markLeaver.isPending ? (
                       <>
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                         Removing…
@@ -716,10 +815,10 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     ) as HTMLFormElement | null;
                     form?.requestSubmit();
                   }}
-                  disabled={updateEmployee.isPending}
+                  disabled={busy}
                   fullWidth
                 >
-                  {updateEmployee.isPending ? (
+                  {busy ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                       Saving...

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDemoMode } from '@/lib/demoMode';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -31,6 +32,7 @@ interface Step {
 
 export default function FirstWeekChecklist() {
   const { user, profile } = useAuth();
+  const demo = useDemoMode();
   const [dismissed, setDismissed] = useState(() => storageGetSync(DISMISS_KEY) === '1');
   const [activeDays, setActiveDays] = useState<Set<string>>(new Set());
   const [counts, setCounts] = useState<Record<string, number> | null>(null);
@@ -156,7 +158,7 @@ export default function FirstWeekChecklist() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eligible, user?.id, role, preview]);
 
-  if (!eligible || dismissed || !counts) return null;
+  if (demo || !eligible || dismissed || !counts) return null;
 
   const steps: Step[] =
     role === 'electrician'

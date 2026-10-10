@@ -45,7 +45,7 @@ const SafeIsolationRegulations = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671:2018+A3:2024</p>
+          <p className="text-[12px] font-medium text-white mb-3">BS 7671:2018+A3:2024</p>
         </motion.div>
 
         {coreRegulations.map((reg, i) => (
@@ -65,7 +65,7 @@ const SafeIsolationRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Electricity at Work Regulations 1989</p>
+          <p className="text-[12px] font-medium text-white mb-3">Electricity at Work Regulations 1989</p>
         </motion.div>
 
         {eawRegulations.map((reg, i) => (
@@ -85,7 +85,7 @@ const SafeIsolationRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Other Standards & Guidance</p>
+          <p className="text-[12px] font-medium text-white mb-3">Other Standards & Guidance</p>
         </motion.div>
 
         {otherStandards.map((item, i) => (
@@ -99,7 +99,7 @@ const SafeIsolationRegulations = ({ onBack }: Props) => {
 
         {/* Reg 514.11 warning notices by location */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Reg 514.11 — Warning Notices by Location</p>
+          <p className="text-[12px] font-medium text-white mb-3">Reg 514.11 — Warning Notices by Location</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white mb-3">Warning notices are required at isolation points. The content varies by location type:</p>
             <div className="space-y-1.5">

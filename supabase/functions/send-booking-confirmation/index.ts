@@ -38,6 +38,12 @@ interface Body {
    * job's own customer address, sent as the firm.
    */
   jobId?: string;
+  /**
+   * ELE-2079 — an online booking the firm auto-confirms. Only the database
+   * sends this (create_online_booking, service-role bearer via pg_net): no
+   * office user is signed in, so the message is read by booking id.
+   */
+  onlineBookingId?: string;
   /** Present when the booking moved — switches the email to "was / now". */
   movedFrom?: { startIso: string; endIso: string; allDay: boolean } | null;
   /**
@@ -58,6 +64,13 @@ serve(async (req) => {
 
   try {
     const authHeader = req.headers.get('Authorization') ?? '';
+    // ELE-2079: the database's own call for an auto-confirmed online booking.
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    if (serviceKey && authHeader.replace(/^Bearer\s+/i, '') === serviceKey) {
+      const sysBody = (await req.json().catch(() => ({}))) as Body;
+      if (!sysBody?.onlineBookingId) return json({ error: 'onlineBookingId is required' }, 400);
+      return await sendForOnlineBooking(sysBody);
+    }
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_ANON_KEY')!,
@@ -393,11 +406,30 @@ function crewLine(crew: string[]): string | null {
   return `${list} will be with you.`;
 }
 
+/**
+ * ELE-2079 — confirmation for an online booking the firm auto-confirmed.
+ * Same email, calendar file and evening-before reminder as the office's
+ * "Send email"; sent once (a booking already confirmed by email is skipped).
+ */
+async function sendForOnlineBooking(body: Body): Promise<Response> {
+  const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+  const { data, error } = await admin.rpc('online_booking_confirmation_message', { p_booking: body.onlineBookingId });
+  if (error || !data) return json({ error: 'Booking not found or not confirmed' }, 404);
+  const m = data as FirmJobMessage & { event: { confirmation_sent_at?: string | null } | null };
+  if (m.event?.confirmation_sent_at) return json({ sent: false, already: true });
+  return await sendForFirmJob(null, { jobId: m.job_id, remindDayBefore: body.remindDayBefore ?? true }, null, m);
+}
+
 // deno-lint-ignore no-explicit-any
-async function sendForFirmJob(userClient: any, body: Body, callerEmail: string | null): Promise<Response> {
-  const { data, error } = await userClient.rpc('get_firm_job_message', { p_job: body.jobId });
-  if (error || !data) return json({ error: 'Job not found' }, 404);
-  const m = data as FirmJobMessage;
+async function sendForFirmJob(userClient: any, body: Body, callerEmail: string | null, preloaded?: FirmJobMessage): Promise<Response> {
+  let m: FirmJobMessage;
+  if (preloaded) {
+    m = preloaded;
+  } else {
+    const { data, error } = await userClient.rpc('get_firm_job_message', { p_job: body.jobId });
+    if (error || !data) return json({ error: 'Job not found' }, 404);
+    m = data as FirmJobMessage;
+  }
   if (!m.event) {
     return json(
       { error: 'Put the job in the diary first: give it a date and set it to Confirmed or Scheduled.' },
@@ -496,12 +528,23 @@ async function sendForFirmJob(userClient: any, body: Body, callerEmail: string |
       })
       .eq('id', m.event.id)
       .eq('user_id', m.firm_id);
-    await userClient.rpc('log_customer_contact', {
-      p_job: m.job_id,
-      p_kind: 'confirmation',
-      p_channel: 'email',
-      p_text: body.remindDayBefore ? `Sent to ${to}, with a reminder the evening before` : `Sent to ${to}`,
-    });
+    const logText = body.remindDayBefore ? `Sent to ${to}, with a reminder the evening before` : `Sent to ${to}`;
+    if (userClient) {
+      await userClient.rpc('log_customer_contact', {
+        p_job: m.job_id,
+        p_kind: 'confirmation',
+        p_channel: 'email',
+        p_text: logText,
+      });
+    } else {
+      // No signed-in sender: the same job record log_customer_contact writes.
+      await admin.from('employer_job_comments').insert({
+        job_id: m.job_id,
+        author_name: 'Online booking',
+        content: `Told the customer about the booking by email. ${logText}`,
+        comment_type: 'customer_contact',
+      });
+    }
   } catch (stampErr) {
     console.warn('firm confirmation stamp failed (non-fatal):', stampErr);
   }

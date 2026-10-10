@@ -22,24 +22,24 @@ interface SiteAssessmentCategoryProps {
  * looked exactly like the 15 `advisory` ones. On a safety checklist, which
  * checks actually matter is the entire point, and the data already knew.
  *
- * Critical gets the amber bar and a label; important is quiet; advisory is
+ * Critical gets an orange label (10 Oct: no coloured bars); important is quiet; advisory is
  * quieter still. Nothing is hidden — an apprentice can still work the lot — but
  * the eye lands on the ones that hurt you.
  */
 const RISK: Record<ChecklistItem['riskLevel'], { label: string; bar: string; chip: string }> = {
   critical: {
     label: 'Critical',
-    bar: 'border-l-elec-yellow',
-    chip: 'border-elec-yellow/45 bg-elec-yellow/10 text-elec-yellow',
+    bar: '',
+    chip: 'border-orange-400/60 text-orange-300',
   },
   important: {
     label: 'Important',
-    bar: 'border-l-white/30',
+    bar: '',
     chip: 'border-white/15 bg-white/[0.05] text-white',
   },
   advisory: {
     label: 'Advisory',
-    bar: 'border-l-white/10',
+    bar: '',
     chip: 'border-white/10 bg-white/[0.03] text-white',
   },
 };
@@ -80,16 +80,16 @@ const SiteAssessmentCategory = ({
         <h3 className="text-[14.5px] font-semibold tracking-tight text-white">{category.name}</h3>
         <span
           className={cn(
-            'rounded-md border px-2 py-0.5 font-mono text-[11px] tabular-nums',
+            'rounded-md border px-2 py-0.5 text-[12.5px] tabular-nums',
             done
-              ? 'border-elec-yellow/45 bg-elec-yellow/10 text-elec-yellow'
+              ? 'border-white/[0.08] bg-white/[0.06] text-elec-yellow'
               : 'border-white/12 bg-white/[0.04] text-white'
           )}
         >
           {progress.checked}/{progress.total}
         </span>
         {category.estimatedMinutes > 0 && (
-          <span className="inline-flex items-center gap-1 text-[11.5px] text-white">
+          <span className="inline-flex items-center gap-1 text-[12.5px] text-white">
             <Clock aria-hidden className="h-3 w-3" />
             {category.estimatedMinutes} min
           </span>
@@ -110,7 +110,7 @@ const SiteAssessmentCategory = ({
             <div
               key={item.id}
               className={cn(
-                'rounded-xl border border-y-white/[0.10] border-r-white/[0.10] border-l-[3px]',
+                'rounded-xl border border-white/[0.10]',
                 risk.bar,
                 checked ? 'bg-white/[0.02]' : 'bg-white/[0.05]'
               )}
@@ -130,7 +130,7 @@ const SiteAssessmentCategory = ({
                     className={cn(
                       'mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border transition-colors',
                       checked
-                        ? 'border-elec-yellow bg-elec-yellow'
+                        ? 'border-emerald-400 bg-emerald-400'
                         : 'border-white/35 bg-transparent'
                     )}
                   >
@@ -139,7 +139,7 @@ const SiteAssessmentCategory = ({
                   <span
                     className={cn(
                       'text-[13.5px] leading-snug text-white',
-                      checked && 'line-through opacity-60'
+                      checked && 'line-through decoration-white/60'
                     )}
                   >
                     {item.text}
@@ -152,20 +152,20 @@ const SiteAssessmentCategory = ({
                   aria-expanded={showInfo}
                   aria-label={`Why ${item.text} matters`}
                   className={cn(
-                    'flex h-11 w-9 flex-shrink-0 items-center justify-center rounded-lg transition-colors touch-manipulation',
+                    'flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg transition-colors touch-manipulation',
                     'focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow',
                     showInfo ? 'text-elec-yellow' : 'text-white hover:bg-white/[0.06]'
                   )}
                 >
-                  <Info className="h-4 w-4" />
+                  <Info className="h-4 w-4" strokeWidth={1.5} />
                 </button>
               </div>
 
               {item.riskLevel === 'critical' && !checked && (
-                <div className="px-2.5 pb-2.5">
+                <div className="pb-2.5 pl-[42px] pr-2.5">
                   <span
                     className={cn(
-                      'rounded-md border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em]',
+                      'inline-flex h-6 items-center rounded-full border px-2.5 text-[12px] font-semibold',
                       risk.chip
                     )}
                   >
@@ -176,13 +176,11 @@ const SiteAssessmentCategory = ({
 
               {showInfo && (
                 <div className="space-y-1.5 border-t border-white/[0.08] px-2.5 py-2.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                  <span className="text-[13px] font-semibold text-elec-yellow">
                     Why this matters
                   </span>
-                  <p className="text-[13px] leading-relaxed text-white">{item.whyItMatters}</p>
-                  {item.regulation && (
-                    <p className="font-mono text-[11px] text-white">{item.regulation}</p>
-                  )}
+                  <p className="text-[14px] leading-relaxed text-white">{item.whyItMatters}</p>
+                  {item.regulation && <p className="text-[12.5px] text-white">{item.regulation}</p>}
                 </div>
               )}
 

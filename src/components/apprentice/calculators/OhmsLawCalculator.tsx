@@ -436,7 +436,7 @@ const OhmsLawCalculator = () => {
                 {/* Calculated Values */}
                 <div className="space-y-4 animate-fade-in">
                   <div className="space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    <span className="text-[12px] font-medium text-white">
                       Formula
                     </span>
                     <p className="text-[13px] text-white font-mono">{result.formula}</p>
@@ -619,7 +619,7 @@ const OhmsLawCalculator = () => {
 
                 {/* Quick Formula Reference */}
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[12px] font-medium text-white">
                     Ohm's law
                   </span>
                   <p className="text-[13px] text-white leading-relaxed font-mono">

@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { FormSheet } from '@/components/forms/FormSheet';
-import {
-  buttonPrimaryCn,
-  buttonSecondaryCn,
-  chipBase,
-  chipOff,
-  chipOn,
-} from '@/components/forms/fieldStyles';
+import { CHOICE_OFF, CHOICE_ON } from '@/components/college/teaching/TeachingKit';
+import { buttonPrimaryCn, buttonSecondaryCn, chipBase } from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import type { DeckPreflight, DeckTone, DeckDepth, DeckDifferentiation } from '@/hooks/useSlideDeck';
 
@@ -40,7 +35,7 @@ const TONES: Array<{ value: DeckTone; label: string; help: string }> = [
   { value: 'gen_z', label: 'Gen-Z', help: 'Punchy and contemporary, still rigorous.' },
 ];
 const DEPTHS: Array<{ value: DeckDepth; label: string; help: string }> = [
-  { value: 'overview', label: 'Overview', help: 'Lighter — an introduction or a revision lesson.' },
+  { value: 'overview', label: 'Overview', help: 'Lighter: an introduction or a revision lesson.' },
   { value: 'standard', label: 'Standard', help: 'The default depth.' },
   { value: 'deep_dive', label: 'Deep dive', help: 'Richer content with stretch tasks.' },
 ];
@@ -87,7 +82,7 @@ function ChipRow<T extends string>({
             role="radio"
             aria-checked={value === o.value}
             onClick={() => onChange(o.value)}
-            className={cn(chipBase, 'px-4', value === o.value ? chipOn : chipOff)}
+            className={cn(chipBase, 'px-4', value === o.value ? CHOICE_ON : CHOICE_OFF)}
           >
             {o.label}
           </button>
@@ -156,7 +151,7 @@ export function SlideDeckPreflightDialog({ open, onOpenChange, onConfirm, defaul
                 className={cn(
                   chipBase,
                   'min-w-[64px] px-3 tabular-nums',
-                  slideCount === n ? chipOn : chipOff
+                  slideCount === n ? CHOICE_ON : CHOICE_OFF
                 )}
               >
                 {n}

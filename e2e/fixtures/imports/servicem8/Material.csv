@@ -1,0 +1,4 @@
+uuid,item_number,name,cost,price,unit
+c0de0001-0000-4000-8000-000000000001,FL-DRV-150,LED floodlight driver 150W,38.50,65.00,Each
+c0de0001-0000-4000-8000-000000000002,SWA-6-3C,6mm 3 core SWA (per metre),4.10,7.25,Metre
+c0de0001-0000-4000-8000-000000000003,LAB-STD,Labour (standard rate),0,48.00,Hour

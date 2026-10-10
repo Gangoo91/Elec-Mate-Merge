@@ -233,7 +233,7 @@ const sections = [
               circuit: 'Lighting',
               device: 'RCBO (30mA)',
               cable: '1.0mm² or 1.5mm²',
-              notes: 'LED downlights are standard. Domestic lighting circuits now require 30mA RCD protection (411.3.4).',
+              notes: 'LED downlights are standard. Domestic lighting circuits require 30mA RCD protection (411.3.4, since BS 7671:2018).',
             },
           ].map((row) => (
             <div
@@ -710,7 +710,7 @@ export default function KitchenWiringGuidePage() {
       title="Kitchen Wiring Regulations UK: 5-8 Circuits"
       description="Kitchen wiring regulations UK: 5-8 circuits — cooker 32A or 45A on 6.0mm² or 10.0mm², ring or radial worktop sockets, 30mA RCD on sockets and lighting."
       datePublished="2025-08-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

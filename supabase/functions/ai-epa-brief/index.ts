@@ -19,6 +19,7 @@ import {
   raggedAcLines,
   GROUNDING_RULES,
   type LearnerContext,
+  callerFrom,
 } from '../_shared/learner-context.ts';
 
 const corsHeaders = {
@@ -611,7 +612,7 @@ Deno.serve(async (req) => {
     // Shared learner context — adds quiz attempts, ILP focus, full
     // judgements, KSBs, attendance pattern, risk. Plus RAG'd ACs from the
     // qualification catalogue so revision priorities cite real codes.
-    const richCtx = await loadLearnerContext(sb, body.college_student_id);
+    const richCtx = await loadLearnerContext(sb, body.college_student_id, { asCaller: callerFrom(req) });
     let acsBlock: string[] = [];
     if (richCtx) {
       const seeds = bs7671SeedQueries(richCtx);

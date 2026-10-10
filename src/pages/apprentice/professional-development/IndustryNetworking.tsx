@@ -9,8 +9,7 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -301,271 +300,264 @@ const actionPlan = [
 
 const IndustryNetworking = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Network"
-        title="Industry networking"
-        backTo="/apprentice/professional-development"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "Trade bodies, conferences, and mentor programmes — the rooms where progression actually happens. Most apprentices skip this until late; the ones who don't get the better jobs."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Network"
+      area="Professional development"
+      title="Industry networking"
+      backTo="/apprentice/professional-development"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "Trade bodies, conferences, and mentor programmes — the rooms where progression actually happens. Most apprentices skip this until late; the ones who don't get the better jobs."
+        }
+      </p>
 
-        {/* ── Intro ─────────────────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5">
-            <p className="text-[13.5px] text-white leading-relaxed">
-              Your network is your net worth in this industry. The connections you make as an
-              apprentice can become lifelong professional relationships — opening doors to jobs,
-              partnerships, and opportunities you'd never find on your own.
-            </p>
-          </div>
-        </motion.div>
+      {/* ── Intro ─────────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <p className="text-[14px] text-white leading-relaxed">
+            Your network is your net worth in this industry. The connections you make as an
+            apprentice can become lifelong professional relationships — opening doors to jobs,
+            partnerships, and opportunities you'd never find on your own.
+          </p>
+        </div>
+      </motion.div>
 
-        {/* ── Professional bodies ──────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Professional bodies"
-            title="Six worth knowing"
-            meta="Recommended ones flagged"
-          />
-          <ul className="space-y-2.5">
-            {professionalBodies.map((body) => (
-              <li
-                key={body.name}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-                  CARD_SURFACE
+      {/* ── Professional bodies ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Professional bodies"
+          title="Six worth knowing"
+          meta="Recommended ones flagged"
+        />
+        <ul className="space-y-2.5">
+          {professionalBodies.map((body) => (
+            <li
+              key={body.name}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">{body.name}</h3>
+                {body.recommended && (
+                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.05] text-[13px] font-semibold text-elec-yellow">
+                    Recommended
+                  </span>
                 )}
-              >
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                    {body.name}
-                  </h3>
-                  {body.recommended && (
-                    <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-                      Recommended
-                    </span>
-                  )}
-                </div>
-                <p className="text-[13px] text-white leading-relaxed">{body.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white">
-                  <span>{body.cost}</span>
-                  <span>·</span>
-                  <span>{body.members}</span>
-                </div>
-                <ul className="space-y-1.5">
-                  {body.benefits.map((benefit) => (
-                    <li
-                      key={benefit}
-                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      <span>{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+              </div>
+              <p className="text-[14px] text-white leading-relaxed">{body.description}</p>
+              <div className="flex items-center gap-2 text-[12.5px] tabular-nums text-white">
+                <span>{body.cost}</span>
+                <span>·</span>
+                <span>{body.members}</span>
+              </div>
+              <ul className="space-y-1.5">
+                {body.benefits.map((benefit) => (
+                  <li
+                    key={benefit}
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                    <span>{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Industry events ──────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Industry events"
-            title="Five conferences that matter"
-            meta="Where the deals actually get done"
-          />
-          <ul className="space-y-2">
-            {industryEvents.map((event) => (
-              <li
-                key={event.name}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
-                  CARD_SURFACE
-                )}
-              >
+      {/* ── Industry events ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Industry events"
+          title="Five conferences that matter"
+          meta="Where the deals actually get done"
+        />
+        <ul className="space-y-2">
+          {industryEvents.map((event) => (
+            <li
+              key={event.name}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{event.name}</h3>
+              <p className="text-[14px] text-white leading-relaxed">{event.description}</p>
+              <div className="flex items-center gap-2 text-[12.5px] tabular-nums text-white flex-wrap">
+                <span>{event.frequency}</span>
+                <span>·</span>
+                <span>{event.location}</span>
+                <span>·</span>
+                <span>{event.cost}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Online communities ───────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Online communities"
+          title="Four places to lurk"
+          meta="Read first, post later"
+        />
+        <ul className="space-y-2">
+          {onlineCommunities.map((community) => (
+            <li
+              key={community.name}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                  {event.name}
+                  {community.name}
                 </h3>
-                <p className="text-[13px] text-white leading-relaxed">{event.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white flex-wrap">
-                  <span>{event.frequency}</span>
-                  <span>·</span>
-                  <span>{event.location}</span>
-                  <span>·</span>
-                  <span>{event.cost}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+                <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[13px] font-semibold text-white">
+                  {community.cost}
+                </span>
+              </div>
+              <p className="text-[14px] text-white leading-relaxed">{community.description}</p>
+              <p className="text-[12.5px] text-white">{community.members}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Online communities ───────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Online communities"
-            title="Four places to lurk"
-            meta="Read first, post later"
-          />
-          <ul className="space-y-2">
-            {onlineCommunities.map((community) => (
-              <li
-                key={community.name}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                    {community.name}
-                  </h3>
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10.5px] font-medium uppercase tracking-[0.14em] text-white">
-                    {community.cost}
+      {/* ── LinkedIn ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="LinkedIn strategy"
+          title="Four moves that compound"
+          meta="The platform recruiters actually search"
+        />
+        <ul className="space-y-2">
+          {linkedInTips.map((item) => (
+            <li
+              key={item.tip}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
+              <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Networking tips ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Networking tips that work"
+          title="Five habits to build"
+          meta="None of these cost money — all of them pay off"
+        />
+        <ul className="space-y-2">
+          {networkingTips.map((item) => (
+            <li
+              key={item.tip}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
+              <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Mentorship ───────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Mentorship programmes"
+          title="Four formal routes"
+          meta="A mentor accelerates everything"
+        />
+        <ul className="space-y-2">
+          {mentorshipProgrammes.map((programme) => (
+            <li
+              key={programme.name}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                {programme.name}
+              </h3>
+              <p className="text-[14px] text-white leading-relaxed">{programme.description}</p>
+              <div className="flex items-center gap-2 text-[12.5px] tabular-nums text-white">
+                <span>{programme.duration}</span>
+                <span>·</span>
+                <span>{programme.cost}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Action plan ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Action plan"
+          title="Four steps for this month"
+          meta="Start small, compound from there"
+        />
+        <ol className="space-y-2">
+          {actionPlan.map((item) => (
+            <li
+              key={item.step}
+              className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}
+            >
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-md border border-white/[0.08] bg-white/[0.05] flex items-center justify-center flex-shrink-0">
+                  <span className="text-[13px] font-semibold text-elec-yellow tabular-nums">
+                    {item.step}
                   </span>
                 </div>
-                <p className="text-[13px] text-white leading-relaxed">{community.description}</p>
-                <p className="text-[11.5px] text-white font-mono">{community.members}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── LinkedIn ─────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="LinkedIn strategy"
-            title="Four moves that compound"
-            meta="The platform recruiters actually search"
-          />
-          <ul className="space-y-2">
-            {linkedInTips.map((item) => (
-              <li
-                key={item.tip}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1',
-                  CARD_SURFACE
-                )}
-              >
-                <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
-                <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── Networking tips ──────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Networking tips that work"
-            title="Five habits to build"
-            meta="None of these cost money — all of them pay off"
-          />
-          <ul className="space-y-2">
-            {networkingTips.map((item) => (
-              <li
-                key={item.tip}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1',
-                  CARD_SURFACE
-                )}
-              >
-                <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
-                <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        {/* ── Mentorship ───────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Mentorship programmes"
-            title="Four formal routes"
-            meta="A mentor accelerates everything"
-          />
-          <ul className="space-y-2">
-            {mentorshipProgrammes.map((programme) => (
-              <li
-                key={programme.name}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
-                  CARD_SURFACE
-                )}
-              >
-                <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                  {programme.name}
-                </h3>
-                <p className="text-[13px] text-white leading-relaxed">{programme.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white">
-                  <span>{programme.duration}</span>
-                  <span>·</span>
-                  <span>{programme.cost}</span>
+                <div className="flex-1 min-w-0 space-y-1.5">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
                 </div>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
 
-        {/* ── Action plan ──────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Action plan"
-            title="Four steps for this month"
-            meta="Start small, compound from there"
-          />
-          <ol className="space-y-2">
-            {actionPlan.map((item) => (
-              <li
-                key={item.step}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                    <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
-                      {item.step}
-                    </span>
-                  </div>
-                  <div className="flex-1 min-w-0 space-y-1.5">
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </motion.section>
-
-        {/* ── ROI tip ──────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
-            <Eyebrow className="text-elec-yellow/85">The ROI of networking</Eyebrow>
-            <p className="text-[13.5px] text-white leading-relaxed">
-              Industry surveys consistently show that{' '}
-              <span className="font-mono text-elec-yellow">60–70%</span> of job opportunities are
-              never advertised publicly. They're filled through referrals and personal connections.
-              Even 30 minutes a week on LinkedIn can transform your career opportunities within a
-              year.
-            </p>
-          </div>
-        </motion.section>
-
-        {/* ── Footnote ─────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants}>
-          <p className="text-[11px] text-white leading-relaxed">
-            Professional body information based on current UK membership rates and benefits. Costs
-            and offerings may change — check directly with each organisation for the latest details.
+      {/* ── ROI tip ──────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-1.5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <Eyebrow className="text-elec-yellow">The ROI of networking</Eyebrow>
+          <p className="text-[14px] text-white leading-relaxed">
+            Industry surveys consistently show that <span className="text-elec-yellow">60–70%</span>{' '}
+            of job opportunities are never advertised publicly. They're filled through referrals and
+            personal connections. Even 30 minutes a week on LinkedIn can transform your career
+            opportunities within a year.
           </p>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+        </div>
+      </motion.section>
+
+      {/* ── Footnote ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <p className="text-[14px] text-white leading-relaxed">
+          Professional body information based on current UK membership rates and benefits. Costs and
+          offerings may change — check directly with each organisation for the latest details.
+        </p>
+      </motion.section>
+    </GuidePage>
   );
 };
 

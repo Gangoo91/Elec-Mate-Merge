@@ -91,11 +91,25 @@ export interface RAMSExportResult {
  * Render through PDFMonkey, file it under Site Safety, and hand it to the user.
  * Throws only if the document could not be produced or delivered.
  */
+export interface RAMSExportOptions {
+  generationJobId?: string;
+  /**
+   * Employer Hub: the firm whose RAMS this is. The filed copy is then matched
+   * against the firm's register (employer_id) rather than the person's own.
+   */
+  firmEmployerId?: string;
+  /**
+   * False: deliver the PDF without filing it. A manager reading a worker's
+   * RAMS downloads it; only the worker files their own document.
+   */
+  file?: boolean;
+}
+
 export async function exportRAMS(
   kind: RAMSExportKind,
   rams?: RAMSData,
   method?: MethodStatementData,
-  opts: { generationJobId?: string } = {}
+  opts: RAMSExportOptions = {}
 ): Promise<RAMSExportResult> {
   // Full RAMS → the RAMS V1 PDFMonkey template (generate-combined-rams-pdf),
   // the design electricians know; polished and made live 7 Oct 2026 (source
@@ -179,14 +193,16 @@ async function fileAndDeliver(
   blob: Blob,
   rams: RAMSData | undefined,
   method: MethodStatementData | undefined,
-  opts: { generationJobId?: string }
+  opts: RAMSExportOptions
 ): Promise<RAMSExportResult> {
   const filename = fileNameFor(kind, rams, method);
 
   let filed = false;
   let version: number | undefined;
   let fileReason: string | undefined;
-  if (rams) {
+  if (opts.file === false) {
+    fileReason = 'Downloaded only. The person who made this RAMS files it.';
+  } else if (rams) {
     // Filing must never cost the user their download — a storage or RLS failure
     // is reported, not thrown.
     try {
@@ -195,6 +211,7 @@ async function fileAndDeliver(
       // in Site Safety.
       const saved = await saveRAMSPDFToStorage(blob, rams, method ?? {}, 'issued', {
         generationJobId: opts.generationJobId,
+        firmEmployerId: opts.firmEmployerId,
       });
       filed = saved.success;
       if (saved.reissued) version = saved.version;

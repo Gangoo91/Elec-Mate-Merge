@@ -36,6 +36,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { buildTermsList } from '@/utils/quoteTerms';
 import { toast } from '@/hooks/use-toast';
 import SignaturePad from '@/components/forms/SignaturePad';
+import { QuoteFirmBooking, fetchQuoteBooking, type QuoteBookingInfo } from './QuoteFirmBooking';
+import { QuoteOptionsPicker, readQuoteOptions } from './QuoteOptionsPicker';
 import { diffQuoteItems, formatDeltaCurrency, QuoteDiff } from '@/utils/quote-diff';
 import {
   buildCategoryBreakdowns,
@@ -43,6 +45,11 @@ import {
   getDisplayItems,
 } from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
+import {
+  CLIENT_DECLINE_REASONS,
+  encodeDeclineReason,
+  type DeclineReasonKey,
+} from '@/utils/declineReason';
 
 // Brand defaults match the shared email design system fallbacks.
 const DEFAULT_BRAND = '#0f172a';
@@ -126,6 +133,9 @@ const PublicQuoteView = () => {
   const [accepting, setAccepting] = useState(false);
   const [rejecting, setRejecting] = useState(false);
   const [declineConfirmOpen, setDeclineConfirmOpen] = useState(false);
+  // ELE-2027 — optional; feeds the electrician's win/loss reasons.
+  const [declineReason, setDeclineReason] = useState<DeclineReasonKey | null>(null);
+  const [declineNote, setDeclineNote] = useState('');
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [signatureData, setSignatureData] = useState<string>('');
@@ -329,7 +339,7 @@ const PublicQuoteView = () => {
                   fn: string,
                   args: Record<string, unknown>
                 ) => PromiseLike<{ error: unknown }>
-              )('mark_quote_viewed', { p_quote_id: convertedQuote.id });
+              )('mark_quote_viewed_by_token', { token_param: token });
             } catch {
               // fire-and-forget — never block the client's view of the quote
             }
@@ -359,6 +369,24 @@ const PublicQuoteView = () => {
       setLoading(false);
     }
   };
+
+  // ELE-2065 §3A #6: an Employer Hub firm with online booking books the visit
+  // onto the quote's job from its crew diary; everyone else keeps /book/<id>.
+  const [firmBooking, setFirmBooking] = useState<QuoteBookingInfo | null>(null);
+  const quoteToken = quote?.public_token ?? null;
+  // The type lacks 'accepted_pending_deposit', which the row really holds.
+  const quoteAcceptance = (quote?.acceptance_status ?? null) as string | null;
+  const refreshFirmBooking = () => {
+    if (!quoteToken) return;
+    fetchQuoteBooking(quoteToken)
+      .then(setFirmBooking)
+      .catch(() => setFirmBooking({ mode: 'personal' }));
+  };
+  useEffect(() => {
+    if (!quoteToken || (quoteAcceptance !== 'accepted' && quoteAcceptance !== 'accepted_pending_deposit')) return;
+    refreshFirmBooking();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quoteToken, quoteAcceptance]);
 
   const handleAcceptQuote = async () => {
     if (!quote || !clientName || !clientEmail || !signatureData) {
@@ -441,6 +469,7 @@ const PublicQuoteView = () => {
         rejected_email: clientEmail || null,
         client_ip: clientIP,
         client_user_agent: navigator.userAgent,
+        decline_reason: declineReason ? encodeDeclineReason(declineReason, declineNote) : null,
       });
 
       if (error) throw error;
@@ -546,6 +575,9 @@ const PublicQuoteView = () => {
   const isDepositPaid = !!depositInvoice?.paidAt;
   const bookedSlotStart =
     (quote as { booked_slot_start?: string | Date | null }).booked_slot_start || null;
+  // ELE-2065: the personal calendar link, unless this firm books from its crew
+  // diary (decided once get_quote_booking answers).
+  const personalBooking = firmBooking ? firmBooking.mode !== 'firm' : !quote.public_token;
   // When the electrician has opted to hide their per-category markup from
   // the customer (settings.hideMarkupFromCustomer), bake it into each
   // item's displayed unit/total price so the customer-visible sum still
@@ -908,6 +940,40 @@ const PublicQuoteView = () => {
           </section>
         )}
 
+        {/* ELE-2073: options — only on a quote that carries settings.options. */}
+        {readQuoteOptions(quote.settings).length >= 2 && quote.public_token && (
+          <QuoteOptionsPicker
+            token={quote.public_token}
+            options={readQuoteOptions(quote.settings)}
+            chosenId={
+              typeof (quote.settings as { chosenOptionId?: unknown } | undefined)?.chosenOptionId ===
+              'string'
+                ? String((quote.settings as { chosenOptionId?: string }).chosenOptionId)
+                : null
+            }
+            locked={!isPending}
+            brandHex={brandHex}
+            depositPercent={
+              (quote.settings as { noDeposit?: unknown } | undefined)?.noDeposit === true
+                ? null
+                : Number((quote.settings as { depositPercentage?: unknown } | undefined)?.depositPercentage) > 0
+                  ? Number((quote.settings as { depositPercentage?: unknown }).depositPercentage)
+                  : brand.depositPercentage
+            }
+            depositAmount={
+              (quote.settings as { noDeposit?: unknown } | undefined)?.noDeposit === true
+                ? null
+                : Number((quote.settings as { depositAmount?: unknown } | undefined)?.depositAmount) > 0
+                  ? Number((quote.settings as { depositAmount?: unknown }).depositAmount)
+                  : null
+            }
+            formatCurrency={formatCurrency}
+            onChosen={() => {
+              loadQuote();
+            }}
+          />
+        )}
+
         {/* Quote breakdown */}
         <section className="px-6 sm:px-9 pt-8">
           <div className="border-t border-slate-200 pt-6">
@@ -953,7 +1019,11 @@ const PublicQuoteView = () => {
                             )}
                         </div>
                         <p className="text-[14px] font-semibold text-slate-900 tabular-nums flex-shrink-0">
-                          {formatCurrency(item.totalPrice)}
+                          {formatCurrency(
+                            Number.isFinite(Number(item.totalPrice))
+                              ? Number(item.totalPrice)
+                              : (Number(item.quantity) || 0) * (Number(item.unitPrice) || 0)
+                          )}
                         </p>
                       </div>
                     ))}
@@ -1333,7 +1403,18 @@ const PublicQuoteView = () => {
 
               {/* Slot picker prompt — shown when accepted (no deposit OR
                   deposit paid) and we don't yet have a booked slot. */}
-              {isAccepted && !isPendingDeposit && !bookedSlotStart && (
+              {isAccepted && !isPendingDeposit && firmBooking?.mode === 'firm' && quote.public_token && (
+                <QuoteFirmBooking
+                  token={quote.public_token}
+                  info={firmBooking}
+                  companyName={brand.companyName}
+                  companyPhone={brand.phone}
+                  brandHex={brandHex}
+                  depositPaid={isDepositPaid}
+                  onBooked={refreshFirmBooking}
+                />
+              )}
+              {isAccepted && !isPendingDeposit && !bookedSlotStart && personalBooking && (
                 <div className="rounded-xl border border-slate-200 p-5">
                   <p className="text-[10.5px] font-semibold text-emerald-700 uppercase tracking-[0.12em] flex items-center gap-1.5">
                     <CalendarClock className="h-3.5 w-3.5" />
@@ -1364,7 +1445,7 @@ const PublicQuoteView = () => {
               )}
 
               {/* Booked confirmation — slot is locked in. */}
-              {isAccepted && bookedSlotStart && (
+              {isAccepted && bookedSlotStart && personalBooking && (
                 <div className="rounded-xl border border-slate-200 p-5 text-center">
                   <p className="text-[10.5px] font-semibold text-emerald-700 uppercase tracking-[0.12em] flex items-center justify-center gap-1.5">
                     <CalendarClock className="h-3.5 w-3.5" />
@@ -1396,7 +1477,9 @@ const PublicQuoteView = () => {
             {brand.companyName}
           </p>
           <p className="mt-3 text-[13px] text-slate-400 leading-relaxed">
-            Any questions? Just reply to the email this came from and I'll come back to you.
+            {/* A firm (crew diary booking) is "we"; a sole trader is "I". */}
+            Any questions? Just reply to the email this came from and{' '}
+            {firmBooking?.mode === 'firm' ? 'we’ll' : 'I’ll'} come back to you.
           </p>
         </div>
 
@@ -1464,6 +1547,44 @@ const PublicQuoteView = () => {
               in touch if you change your mind — they can send a fresh quote.
             </AlertDialogDescription>
           </AlertDialogHeader>
+          <div className="space-y-2.5">
+            <p className="text-[13px] font-medium text-white">
+              Mind saying why? <span className="font-normal">(optional)</span>
+            </p>
+            <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Reason for declining">
+              {CLIENT_DECLINE_REASONS.map((r) => {
+                const selected = declineReason === r.key;
+                return (
+                  <button
+                    key={r.key}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    disabled={rejecting}
+                    onClick={() => setDeclineReason(selected ? null : r.key)}
+                    className={cn(
+                      'h-11 px-3.5 rounded-xl border text-[13px] font-medium touch-manipulation transition-colors',
+                      selected
+                        ? 'border-white bg-white text-slate-900'
+                        : 'border-white/25 bg-transparent text-white hover:border-white/50'
+                    )}
+                  >
+                    {r.label}
+                  </button>
+                );
+              })}
+            </div>
+            {declineReason === 'other' && (
+              <Input
+                value={declineNote}
+                onChange={(e) => setDeclineNote(e.target.value.slice(0, 300))}
+                placeholder="A few words, if you like"
+                disabled={rejecting}
+                className="h-11 text-[14px]"
+                aria-label="Reason for declining"
+              />
+            )}
+          </div>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={rejecting}>Keep open</AlertDialogCancel>
             <AlertDialogAction

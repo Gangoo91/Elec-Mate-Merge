@@ -31,7 +31,7 @@ import { certificateHref, certificateTypeLabel } from '@/utils/certificate-href'
 const RESUMABLE_STATUSES = ['draft', 'auto-draft', 'in-progress'];
 
 interface ResumeItem {
-  kind: 'cert' | 'quote' | 'invoice';
+  kind: 'cert' | 'quote' | 'invoice' | 'visit';
   id: string;
   tag: string;
   headline: string;
@@ -44,7 +44,10 @@ export function ResumeCard() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
 
-  const { data: item } = useQuery<ResumeItem | null>({
+  // ELE-1070 — the one row stays the headline; up to two more unfinished
+  // things sit under it as single lines, so a second half-done job is one
+  // tap away too without the card growing back into a panel.
+  const { data } = useQuery<{ best: ResumeItem; more: ResumeItem[] } | null>({
     queryKey: ['dashboard-resume', user?.id],
     enabled: !!user?.id && profile?.role !== 'apprentice',
     staleTime: 60_000,
@@ -58,7 +61,7 @@ export function ResumeCard() {
       // suppress the card entirely when the user's latest activity was
       // COMPLETING something after last touching the candidate — a draft
       // older than your last finished job isn't "where you left off".
-      const [certRes, quoteRes, invoiceRes, doneCertRes] = await Promise.all([
+      const [certRes, quoteRes, invoiceRes, doneCertRes, visitRes] = await Promise.all([
         supabase
           .from('reports')
           .select('id, report_id, report_type, client_name, installation_address, updated_at')
@@ -67,7 +70,7 @@ export function ResumeCard() {
           .is('deleted_at', null)
           .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
-          .limit(1),
+          .limit(3),
         supabase
           .from('quotes')
           .select('id, total, status, updated_at, quote_number, client_data')
@@ -77,7 +80,7 @@ export function ResumeCard() {
           .is('deleted_at', null)
           .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
-          .limit(1),
+          .limit(3),
         supabase
           .from('quotes')
           .select('id, total, updated_at, invoice_number, client_data')
@@ -89,7 +92,7 @@ export function ResumeCard() {
           .is('deleted_at', null)
           .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
-          .limit(1),
+          .limit(3),
         // Latest COMPLETED work. Certs only: issuing a cert is always a
         // user action, whereas quote/invoice status flips can come from the
         // CLIENT (public accept link) or webhooks bumping updated_at — those
@@ -105,97 +108,121 @@ export function ResumeCard() {
           .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
           .limit(1),
+        // Site visits captured on the day and finished later (ELE-1070 asked
+        // for them by name). No soft delete on this table.
+        supabase
+          .from('site_visits')
+          .select('id, property_address, customer_name, updated_at')
+          .eq('user_id', user!.id)
+          .eq('status', 'in_progress')
+          .gte('updated_at', recencyCutoff)
+          .order('updated_at', { ascending: false })
+          .limit(3),
       ]);
 
-      [certRes, quoteRes, invoiceRes, doneCertRes].forEach((r) => {
+      [certRes, quoteRes, invoiceRes, doneCertRes, visitRes].forEach((r) => {
         if (r.error) console.warn('[ResumeCard] query failed:', r.error.message);
       });
 
-      const cert = certRes.data?.[0];
-      const quote = quoteRes.data?.[0];
-      const invoice = invoiceRes.data?.[0];
+      type CertRow = NonNullable<typeof certRes.data>[number];
+      type QuoteRow = NonNullable<typeof quoteRes.data>[number];
+      type InvoiceRow = NonNullable<typeof invoiceRes.data>[number];
+      type VisitRow = NonNullable<typeof visitRes.data>[number];
 
-      const certAddress = cert?.installation_address?.split('\n')[0]?.trim();
-      const certItem: ResumeItem | null = cert
-        ? {
-            kind: 'cert',
-            id: cert.id,
-            tag: `${certificateTypeLabel(cert.report_type)} · In progress`,
-            headline: certAddress || cert.client_name || 'Unnamed job',
-            detail: certAddress && cert.client_name ? cert.client_name : null,
-            updatedAt: cert.updated_at,
-            // The shared route builder. This was a THIRD hand-maintained copy
-            // of the convention, and its list of path-routed types held five
-            // of the twenty-five that exist — so a half-finished EV charging,
-            // solar PV, emergency lighting or fire alarm cert dropped you on
-            // the reports list instead of the document you were editing.
-            path: certificateHref(cert.report_type, cert.report_id),
-          }
-        : null;
+      const toCertItem = (cert: CertRow): ResumeItem => {
+        const certAddress = cert.installation_address?.split('\n')[0]?.trim();
+        return {
+          kind: 'cert',
+          id: cert.id,
+          tag: `${certificateTypeLabel(cert.report_type)} · In progress`,
+          headline: certAddress || cert.client_name || 'Unnamed job',
+          detail: certAddress && cert.client_name ? cert.client_name : null,
+          updatedAt: cert.updated_at,
+          // The shared route builder. This was a THIRD hand-maintained copy
+          // of the convention, and its list of path-routed types held five
+          // of the twenty-five that exist — so a half-finished EV charging,
+          // solar PV, emergency lighting or fire alarm cert dropped you on
+          // the reports list instead of the document you were editing.
+          path: certificateHref(cert.report_type, cert.report_id),
+        };
+      };
+
+      const money = (total: unknown): string | null => {
+        const n = Number(total ?? 0);
+        return n > 0 ? `£${n.toLocaleString('en-GB', { maximumFractionDigits: 0 })}` : null;
+      };
 
       // Headline priority: client name → amount → quote number. A big white
       // "£2,036" beats a grey "Untitled quote" when the name's not in yet.
-      const quoteClient = (quote?.client_data as { name?: string } | null)?.name?.trim();
-      const quoteTotal = Number(quote?.total ?? 0);
-      const quoteAmount =
-        quoteTotal > 0
-          ? `£${quoteTotal.toLocaleString('en-GB', { maximumFractionDigits: 0 })}`
-          : null;
-      const quoteItem: ResumeItem | null = quote
-        ? {
-            kind: 'quote',
-            id: quote.id,
-            tag: 'Draft quote',
-            headline:
-              quoteClient ||
-              quoteAmount ||
-              (quote.quote_number ? `Quote ${quote.quote_number}` : 'Untitled quote'),
-            detail: quoteClient
-              ? quoteAmount
-                ? `${quoteAmount} drafted`
-                : 'No items priced yet'
-              : quote.quote_number
-                ? `Quote ${quote.quote_number}`
-                : 'Draft in progress',
-            updatedAt: quote.updated_at,
-            path: `/electrician/quote-builder/${quote.id}`,
-          }
-        : null;
+      const toQuoteItem = (quote: QuoteRow): ResumeItem => {
+        const client = (quote.client_data as { name?: string } | null)?.name?.trim();
+        const amount = money(quote.total);
+        return {
+          kind: 'quote',
+          id: quote.id,
+          tag: 'Draft quote',
+          headline:
+            client ||
+            amount ||
+            (quote.quote_number ? `Quote ${quote.quote_number}` : 'Untitled quote'),
+          detail: client
+            ? amount
+              ? `${amount} drafted`
+              : 'No items priced yet'
+            : quote.quote_number
+              ? `Quote ${quote.quote_number}`
+              : 'Draft in progress',
+          updatedAt: quote.updated_at,
+          path: `/electrician/quote-builder/${quote.id}`,
+        };
+      };
 
-      const invoiceClient = (invoice?.client_data as { name?: string } | null)?.name?.trim();
-      const invoiceTotal = Number(invoice?.total ?? 0);
-      const invoiceAmount =
-        invoiceTotal > 0
-          ? `£${invoiceTotal.toLocaleString('en-GB', { maximumFractionDigits: 0 })}`
-          : null;
-      const invoiceItem: ResumeItem | null = invoice
-        ? {
-            kind: 'invoice',
-            id: invoice.id,
-            tag: 'Draft invoice',
-            headline:
-              invoiceClient ||
-              invoiceAmount ||
-              (invoice.invoice_number ? `Invoice ${invoice.invoice_number}` : 'Untitled invoice'),
-            detail: invoiceClient
-              ? invoiceAmount
-                ? `${invoiceAmount} drafted`
-                : 'No items yet'
-              : invoice.invoice_number
-                ? `Invoice ${invoice.invoice_number}`
-                : 'Draft in progress',
-            updatedAt: invoice.updated_at,
-            path: `/electrician/invoice-quote-builder/${invoice.id}`,
-          }
-        : null;
+      const toInvoiceItem = (invoice: InvoiceRow): ResumeItem => {
+        const client = (invoice.client_data as { name?: string } | null)?.name?.trim();
+        const amount = money(invoice.total);
+        return {
+          kind: 'invoice',
+          id: invoice.id,
+          tag: 'Draft invoice',
+          headline:
+            client ||
+            amount ||
+            (invoice.invoice_number ? `Invoice ${invoice.invoice_number}` : 'Untitled invoice'),
+          detail: client
+            ? amount
+              ? `${amount} drafted`
+              : 'No items yet'
+            : invoice.invoice_number
+              ? `Invoice ${invoice.invoice_number}`
+              : 'Draft in progress',
+          updatedAt: invoice.updated_at,
+          path: `/electrician/invoice-quote-builder/${invoice.id}`,
+        };
+      };
 
-      // Most recently touched across all three work types.
-      const candidates = [certItem, quoteItem, invoiceItem].filter(
-        (i): i is ResumeItem => i !== null
-      );
+      const toVisitItem = (visit: VisitRow): ResumeItem => {
+        const address = visit.property_address?.split('\n')[0]?.trim();
+        return {
+          kind: 'visit',
+          id: visit.id,
+          tag: 'Site visit · In progress',
+          headline: address || visit.customer_name || 'Site visit',
+          detail: address && visit.customer_name ? visit.customer_name : null,
+          updatedAt: visit.updated_at,
+          path: `/electrician/site-visit/${visit.id}`,
+        };
+      };
+
+      // Most recently touched across every work type.
+      const candidates: ResumeItem[] = [
+        ...(certRes.data ?? []).map(toCertItem),
+        ...(quoteRes.data ?? []).map(toQuoteItem),
+        ...(invoiceRes.data ?? []).map(toInvoiceItem),
+        ...(visitRes.data ?? []).map(toVisitItem),
+      ];
       if (candidates.length === 0) return null;
       candidates.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-      const best = candidates[0];
+      const [best, ...rest] = candidates;
 
       // Completed-since check: if the user has FINISHED something since last
       // touching this draft, it isn't "where they left off" — show nothing
@@ -205,11 +232,12 @@ export function ResumeCard() {
         : 0;
       if (latestCompleted > new Date(best.updatedAt).getTime()) return null;
 
-      return best;
+      return { best, more: rest.slice(0, 2) };
     },
   });
 
-  if (!item) return null;
+  if (!data) return null;
+  const item = data.best;
 
   return (
     <motion.section
@@ -280,6 +308,30 @@ export function ResumeCard() {
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </span>
       </motion.button>
+
+      {data.more.length > 0 && (
+        <motion.ul variants={itemVariants} className="divide-y divide-white/[0.06] px-1">
+          {data.more.map((m) => (
+            <li key={`${m.kind}-${m.id}`}>
+              <button
+                type="button"
+                onClick={() => navigate(m.path)}
+                className="flex min-h-11 w-full items-center gap-3 py-2 text-left touch-manipulation"
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[13px] font-medium text-white">
+                    {m.headline}
+                  </span>
+                  <span className="block truncate text-[11px] text-white">
+                    {m.tag} · edited {compactAge(m.updatedAt)}
+                  </span>
+                </span>
+                <ArrowRight className="h-4 w-4 shrink-0 text-elec-yellow" />
+              </button>
+            </li>
+          ))}
+        </motion.ul>
+      )}
     </motion.section>
   );
 }

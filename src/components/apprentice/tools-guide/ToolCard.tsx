@@ -19,15 +19,9 @@ interface ToolCardProps {
   ukConsideration: string;
 }
 
-const ToolCard = ({
-  title,
-  description,
-  items,
-  apprenticeTip,
-  ukConsideration,
-}: ToolCardProps) => {
+const ToolCard = ({ title, description, items, apprenticeTip, ukConsideration }: ToolCardProps) => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 h-full">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 h-full max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-2">
         <h3 className="text-[18px] font-semibold text-white leading-tight">{title}</h3>
         <p className="text-[14px] text-white leading-relaxed">{description}</p>
@@ -41,19 +35,15 @@ const ToolCard = ({
           >
             <div className="flex items-baseline justify-between gap-3">
               <h4 className="text-[14px] font-medium text-white">{item.name}</h4>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-white flex-shrink-0">
-                {item.priority}
-              </span>
+              <span className="text-[13px] text-white flex-shrink-0">{item.priority}</span>
             </div>
-            <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
-            {item.ukStandard && (
-              <p className="text-[12px] text-white">{item.ukStandard}</p>
-            )}
+            <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
+            {item.ukStandard && <p className="text-[12px] text-white">{item.ukStandard}</p>}
             <div className="flex items-center justify-between pt-2 border-t border-white/[0.06]">
               <span className="text-[14px] font-semibold text-white">{item.priceRange}</span>
               <Button
                 size="sm"
-                className="h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
               >
                 View product
                 <ExternalLink className="w-3 h-3 ml-1" />
@@ -65,16 +55,12 @@ const ToolCard = ({
 
       <div className="space-y-3 pt-2 border-t border-white/[0.06]">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Apprentice tip
-          </span>
-          <p className="text-[13px] text-white leading-relaxed">{apprenticeTip}</p>
+          <span className="text-[13px] font-semibold text-white">Apprentice tip</span>
+          <p className="text-[14px] text-white leading-relaxed">{apprenticeTip}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            UK consideration
-          </span>
-          <p className="text-[13px] text-white leading-relaxed">{ukConsideration}</p>
+          <span className="text-[13px] font-semibold text-white">UK consideration</span>
+          <p className="text-[14px] text-white leading-relaxed">{ukConsideration}</p>
         </div>
       </div>
     </div>

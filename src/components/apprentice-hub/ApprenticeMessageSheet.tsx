@@ -321,6 +321,10 @@ export function ApprenticeMessageSheet({ open, onOpenChange, initialThreadId = n
   };
 
   const tutor = team.find((m) => m.role === 'Tutor') ?? null;
+  // get_my_college_team only lists named assignments. Most learners are
+  // taught through their cohort, whose tutor the college context knows, so
+  // "a tutor will be assigned soon" was false for them.
+  const cohortTutor = learner?.tutor_name ?? null;
   const others = team.filter((m) => m !== tutor);
 
   const headerAction =
@@ -371,18 +375,21 @@ export function ApprenticeMessageSheet({ open, onOpenChange, initialThreadId = n
 
   return (
     <FormSheet
+      width="wide"
       open={open}
       onOpenChange={onOpenChange}
-      eyebrow="Messages · College team"
-      title={tutor ? tutor.name : 'Your college team'}
+      eyebrow="Messages"
+      title={tutor ? tutor.name : (cohortTutor ?? 'Your college team')}
       description={
         others.length > 0
-          ? `Also sees this: ${others.map((m) => `${m.name} · ${m.role}`).join(', ')}`
+          ? `Also sees this: ${others.map((m) => `${m.name} (${m.role})`).join(', ')}`
           : team.length === 0
-            ? 'Messages go to your college — a tutor will be assigned soon.'
+            ? cohortTutor
+              ? `Your cohort tutor at ${learner?.college_name ?? 'your college'}.`
+              : 'Messages go to your college. A tutor will be assigned soon.'
             : undefined
       }
-      headerTrailing={headerAction}
+      headerTrailing={headerAction ? <div className="mr-8">{headerAction}</div> : undefined}
       footer={mode === 'thread' || mode === 'new' ? composer : undefined}
       bodyClassName="space-y-0"
     >
@@ -430,7 +437,7 @@ function ThreadList({
   if (threads.length === 0)
     return (
       <p className="text-[12px] text-white leading-snug">
-        No conversations yet. Start one — your college team sees it instantly.
+        No conversations yet. Start one and your college team sees it straight away.
       </p>
     );
   return (
@@ -447,12 +454,12 @@ function ThreadList({
                 {t.subject ?? 'Conversation'}
               </div>
               {t.unread_count_student > 0 && (
-                <div className="mt-0.5 text-[10px] font-medium text-elec-yellow tabular-nums">
+                <div className="mt-0.5 text-[12px] font-medium text-elec-yellow tabular-nums">
                   {t.unread_count_student} unread
                 </div>
               )}
             </div>
-            <span className="text-[10px] text-white tabular-nums whitespace-nowrap">
+            <span className="text-[12px] text-white tabular-nums whitespace-nowrap">
               {new Date(t.last_message_at).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'short',
@@ -471,7 +478,7 @@ function EmptyThreadState() {
       <MessageCircle className="h-6 w-6 text-white" strokeWidth={1.5} />
       <p className="text-[14px] font-medium text-white">Start the conversation</p>
       <p className="text-[12px] text-white leading-snug">
-        Your college team sees this instantly — replies land right here.
+        Your college team sees this straight away. Replies land right here.
       </p>
     </div>
   );
@@ -501,7 +508,7 @@ function MessageList({ messages }: { messages: Message[] }) {
               <div className="whitespace-pre-wrap break-words">{m.body}</div>
               <div
                 className={cn(
-                  'mt-1 text-[10px] tabular-nums',
+                  'mt-1 text-[12px] tabular-nums',
                   isMe ? 'text-right text-black/70' : 'text-left text-white'
                 )}
               >

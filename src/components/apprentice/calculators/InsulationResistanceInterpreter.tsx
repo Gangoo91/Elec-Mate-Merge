@@ -49,7 +49,7 @@ import {
 
 const STATUS_STYLE: Record<IrVerdict['status'], string> = {
   fail: 'border-red-500/40 bg-red-500/10',
-  investigate: 'border-orange-500/40 bg-orange-500/10',
+  investigate: 'border-orange-500/40 bg-white/[0.04]',
   acceptable: 'border-green-500/30 bg-green-500/10',
   excellent: 'border-green-500/30 bg-green-500/10',
 };
@@ -195,7 +195,7 @@ const InsulationResistanceInterpreter = () => {
           verdict && (
             <div className="space-y-4 animate-fade-in">
               <div className={`rounded-xl border p-4 ${STATUS_STYLE[verdict.status]}`}>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
+                <p className="text-[12px] font-semibold text-white">
                   {verdict.status === 'fail'
                     ? 'Fail'
                     : verdict.status === 'investigate'

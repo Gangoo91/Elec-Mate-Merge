@@ -35,7 +35,7 @@ export function MyAcknowledgementsWidget() {
           </h3>
           <span
             className={cn(
-              'text-[11px] font-semibold tabular-nums',
+              'text-[12px] font-semibold tabular-nums',
               total > 0 ? 'text-elec-yellow' : 'text-white'
             )}
           >

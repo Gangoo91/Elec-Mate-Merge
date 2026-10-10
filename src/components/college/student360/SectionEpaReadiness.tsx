@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { CollegeHeading } from '@/components/college/ui/CollegeUi';
+import { BehaviourVerificationCard } from './BehaviourVerificationCard';
+import { COLLEGE_BTN, CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { useStudentEpa } from '@/hooks/useStudentEpa';
 import { useEpaReadiness, type EpaJudgement, type EpaSource } from '@/hooks/useEpaReadiness';
 import { TutorEpaJudgementSheet } from '@/components/college/sheets/TutorEpaJudgementSheet';
@@ -31,6 +32,9 @@ import { FormSheet } from '@/components/forms/FormSheet';
 import EPAGatewayChecklist from '@/components/college/portfolio/EPAGatewayChecklist';
 import { PORTFOLIO_CHANGED_EVENT } from '@/hooks/portfolio/usePortfolio';
 import { supabase } from '@/integrations/supabase/client';
+import { Am2TaskReadiness } from '@/components/epa/Am2TaskReadiness';
+import { ElectricalEpaPanel } from '@/components/epa/ElectricalEpaPanel';
+import { routeForPlan, usePlanVersion } from '@/hooks/epa/useElectricalEpa';
 
 /* ==========================================================================
    SectionEpaReadiness — EPA readiness for one learner.
@@ -89,6 +93,8 @@ export function SectionEpaReadiness({
   const judge = useEpaReadiness({ collegeStudentId, userId });
   const cohortCtx = useEpaCohortContext({ collegeStudentId });
   const readiness = useLearnerEpaReadinessModel(userId, collegeStudentId);
+  // ELE-2054: the plan version by start date decides which NET task list applies.
+  const { data: planVersion } = usePlanVersion(userId);
   const model = readiness.model;
   const showGrades = model ? model.route.graded : true;
 
@@ -184,25 +190,20 @@ export function SectionEpaReadiness({
   return (
     <section id={id} className="scroll-mt-6 space-y-3">
       {/* Heading + the two actions a tutor actually reaches for. */}
-      <div className="flex items-end justify-between gap-3">
+      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
         <CollegeHeading>EPA readiness</CollegeHeading>
-        <div className="no-print -my-2 -mr-2 flex items-center">
+        <div className="no-print flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => setAiOpen(ai ? 'view' : 'run')}
-            className={cn(TEXT_BTN, 'text-white')}
+            className={COLLEGE_BTN}
           >
-            <span className="inline-flex items-center gap-1.5">
-              {ai ? 'Readiness check' : 'Check readiness'} <UsesAi />
-            </span>
+            {ai ? 'Readiness check' : 'Check readiness'} <UsesAi />
           </button>
           <button
             type="button"
             onClick={() => setTutorSheet({ mode: judge.tutor ? 'edit' : 'create' })}
-            className={cn(
-              TEXT_BTN,
-              'text-white underline decoration-elec-yellow underline-offset-4'
-            )}
+            className={COLLEGE_BTN}
           >
             {judge.tutor ? 'Update verdict' : 'Tutor verdict'}
           </button>
@@ -250,7 +251,9 @@ export function SectionEpaReadiness({
             else if (link === 'hours') toHash('otj');
             else if (link.startsWith('declaration_')) toHash('export-gateway');
             else if (link === 'start_date') pack('facts');
-            else if (link === 'net_checklist') pack('net_readiness_checklist');
+            // ELE-2050: NET's AM2S v1 form is filled and signed in the app; its page links to the upload for other forms.
+            else if (link === 'net_checklist')
+              navigate(`/college/net-checklist/${encodeURIComponent(collegeStudentId ?? '')}`);
             else if (link === 'english_maths') setEmOpen(true);
           }}
           linkLabel={{
@@ -261,13 +264,34 @@ export function SectionEpaReadiness({
             declaration_provider: 'Sign it',
             start_date: 'Set start date',
             english_maths: 'Record it',
-            net_checklist: 'Upload it',
+            net_checklist: 'Open it',
           }}
         />
       )}
 
       {/* AM2 practice and portfolio detail — an estimate, under the gate. */}
       <ReadinessModelCard model={model} loading={readiness.loading} hasAccount={!!userId} />
+
+      {/* ELE-1907: AM2 practice against NET's task list, the same view the learner sees. */}
+      {userId && model && (
+        <Am2TaskReadiness
+          userId={userId}
+          routeKind={routeForPlan(model.route.kind, planVersion)}
+          audience="tutor"
+          name={firstName}
+        />
+      )}
+
+      {/* ELE-2049/2050/2054/2055: on-site practice, NET checklist, plan version, Gold Card. */}
+      {userId && (
+        <ElectricalEpaPanel
+          learnerId={userId}
+          audience="tutor"
+          collegeStudentId={collegeStudentId}
+          name={firstName}
+          plan={planVersion}
+        />
+      )}
 
       {/* What to do next: the effective verdict's actions (tutor, else AI). */}
       {effectiveActions.length > 0 && (
@@ -464,7 +488,7 @@ export function SectionEpaReadiness({
                           <span
                             key={j}
                             title={c.snippet}
-                            className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-semibold tabular-nums text-white"
+                            className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-semibold tabular-nums text-white"
                           >
                             BS 7671 {c.ref}
                           </span>
@@ -598,6 +622,9 @@ export function SectionEpaReadiness({
           />
         </ul>
       </div>
+
+      {/* ELE-2040: the employer's per-behaviour verification for gateway */}
+      <BehaviourVerificationCard collegeStudentId={collegeStudentId} />
 
       {/* Sheets */}
       <FormSheet
@@ -764,14 +791,18 @@ function ReadinessModelCard({
           <div>
             <div className="text-[12px] font-semibold text-white">
               Portfolio ·{' '}
-              {model.portfolio.known ? `${model.portfolio.pct}% of ACs` : 'ACs not known'}
+              {model.portfolio.known
+                ? `${model.portfolio.signedOff} of ${model.portfolio.totalACs} criteria passed`
+                : 'criteria not known'}
             </div>
             {model.portfolio.known ? (
               <>
-                <p className="mt-1.5 text-[12.5px] text-white">
-                  {model.portfolio.signedOff} signed off · {model.portfolio.evidenced} evidenced of{' '}
-                  {model.portfolio.totalACs}
-                </p>
+                {model.portfolio.evidenced > model.portfolio.signedOff && (
+                  <p className="mt-1.5 text-[12.5px] text-white">
+                    {model.portfolio.evidenced - model.portfolio.signedOff} more claimed or with the
+                    assessor
+                  </p>
+                )}
                 {model.portfolio.weakestUnits.length > 0 && (
                   <ul className="mt-1 space-y-1">
                     {model.portfolio.weakestUnits.map((u) => (
@@ -835,7 +866,7 @@ function MockStat({
 }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-[11px] font-medium text-white">{label}</span>
+      <span className="text-[12px] font-medium text-white">{label}</span>
       <span
         className={cn(
           'text-[18px] font-semibold leading-none tabular-nums text-white',
@@ -847,7 +878,7 @@ function MockStat({
       {sub && (
         <span
           className={cn(
-            'text-[11px] font-medium capitalize tabular-nums',
+            'text-[12px] font-medium capitalize tabular-nums',
             subTone === 'bad' ? 'text-red-300' : 'text-white'
           )}
         >
@@ -876,10 +907,10 @@ function ActionRow({
       >
         <span aria-hidden="true" className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          <span className="block line-clamp-2 text-[14px] font-semibold leading-snug text-white">
             {title}
           </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+          <span className="mt-0.5 block line-clamp-2 text-[12px] leading-snug text-white">
             {reason}
           </span>
         </span>
@@ -936,7 +967,7 @@ function VerdictColumn({
       <div className="flex items-center justify-between gap-2">
         <div className={CARD_TITLE}>{SOURCE_LABEL[source]}</div>
         {draft && (
-          <span className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-semibold text-white">
+          <span className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-semibold text-white">
             Inferred
           </span>
         )}

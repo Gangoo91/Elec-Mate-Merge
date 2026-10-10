@@ -19,6 +19,7 @@ import {
   raggedAcLines,
   bs7671FacetLines,
   GROUNDING_RULES,
+  callerFrom,
 } from '../_shared/learner-context.ts';
 
 const corsHeaders = {
@@ -536,7 +537,7 @@ Deno.serve(withSentry('ai-next-best-action', async (req) => {
   // New: shared learner-context loader. Pulls every signal an AI surface
   // could need including tutor_quiz_attempts, KSBs, mocks, judgements,
   // ILP goals, attendance pattern, risk, observations, portfolio, OTJ.
-  const ctx = await loadLearnerContext(sb, body.student_id);
+  const ctx = await loadLearnerContext(sb, body.student_id, { asCaller: callerFrom(req) });
   if (!ctx) {
     return new Response(JSON.stringify({ error: 'student_not_found' }), {
       status: 404,

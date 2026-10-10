@@ -180,7 +180,7 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
             ))}
           </div>
           {filteredSuggestions.length > 6 && (
-            <p className="text-[11px] text-white">
+            <p className="text-[12px] text-white">
               And {filteredSuggestions.length - 6} more suggestions...
             </p>
           )}

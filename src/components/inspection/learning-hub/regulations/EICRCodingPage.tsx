@@ -141,7 +141,7 @@ const EICRCodingPage = ({ onBack }: Props) => {
 
         {/* Overall assessment */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Overall Assessment</p>
+          <p className="text-[12px] font-medium text-white mb-3">Overall Assessment</p>
           <div className="grid grid-cols-2 gap-3">
             {overallAssessment.map((a, i) => (
               <div key={i} className={`rounded-2xl p-4 ${a.colour === 'green' ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/20' : 'bg-red-400/10 border border-red-400/20'}`}>

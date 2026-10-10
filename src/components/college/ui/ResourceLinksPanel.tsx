@@ -63,9 +63,9 @@ export function ResourceLinksPanel({ resourceId }: Props) {
     <div className="space-y-5">
       {/* AI suggestions — shown above AC links when present */}
       {(visibleSuggestions.length > 0 || aiLoading) && (
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] px-4 py-3.5">
+        <div className="card-surface rounded-2xl px-4 py-3.5">
           <div className="flex items-center justify-between gap-3 mb-2">
-            <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+            <div className="text-[13px] font-semibold text-elec-yellow">
               Suggested criteria
               {!aiLoading && visibleSuggestions.length > 0 && (
                 <span className="ml-2 text-white normal-case tracking-normal">
@@ -78,7 +78,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
               <button
                 type="button"
                 onClick={() => acceptAll(refreshLinks)}
-                className="text-[11.5px] font-medium text-elec-yellow hover:text-white transition-colors"
+                className="inline-flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors touch-manipulation"
               >
                 Accept all →
               </button>
@@ -107,10 +107,10 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono tabular-nums text-[11px] text-elec-yellow">
+                        <span className="font-mono tabular-nums text-[12px] text-elec-yellow">
                           {s.qualification_code} · {s.unit_code} · {s.ac_code}
                         </span>
-                        <span className={cn('text-[10.5px] tabular-nums', confClass)}>
+                        <span className={cn('text-[12px] tabular-nums', confClass)}>
                           {confPct}%
                         </span>
                       </div>
@@ -118,7 +118,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                         {s.ac_text}
                       </div>
                       {s.rationale && (
-                        <div className="mt-1 text-[11px] text-white leading-snug">
+                        <div className="mt-1 text-[12.5px] text-white leading-snug">
                           {s.rationale}
                         </div>
                       )}
@@ -127,7 +127,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                       <button
                         type="button"
                         onClick={() => accept(s, refreshLinks)}
-                        className="h-8 px-2.5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[11.5px] font-medium transition-colors touch-manipulation"
+                        className="h-11 px-3.5 rounded-xl border border-white/[0.14] text-white text-[13px] font-semibold transition-colors hover:border-elec-yellow touch-manipulation"
                         aria-label="Accept suggestion"
                       >
                         Accept
@@ -135,7 +135,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                       <button
                         type="button"
                         onClick={() => dismiss(key)}
-                        className="h-8 w-8 rounded-full text-white hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-colors touch-manipulation"
+                        className="h-11 w-11 rounded-full text-white hover:bg-white/[0.06] flex items-center justify-center transition-colors touch-manipulation"
                         aria-label="Dismiss suggestion"
                       >
                         ×
@@ -155,7 +155,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
       {/* AC links */}
       <div>
         <div className="flex items-center justify-between gap-3 mb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+          <div className="text-[13px] font-semibold text-white">
             Assessment criteria · {acLinks.length}
           </div>
           <div className="flex items-center gap-3">
@@ -163,7 +163,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
               type="button"
               onClick={suggest}
               disabled={aiLoading}
-              className="inline-flex h-11 items-center gap-1.5 text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow transition-colors touch-manipulation disabled:opacity-50"
+              className="inline-flex h-11 items-center gap-1.5 text-[13px] font-semibold text-elec-yellow transition-colors touch-manipulation disabled:opacity-50"
             >
               {aiLoading ? (
                 'Suggesting…'
@@ -176,14 +176,14 @@ export function ResourceLinksPanel({ resourceId }: Props) {
             <button
               type="button"
               onClick={() => setAcPickerOpen((v) => !v)}
-              className="inline-flex h-11 items-center text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+              className="inline-flex h-11 items-center text-[13px] font-semibold text-white transition-colors touch-manipulation"
             >
               {acPickerOpen ? 'Close' : '+ Add AC'}
             </button>
           </div>
         </div>
         {aiReason === 'no_college_qualifications' && (
-          <div className="mb-2 text-[11.5px] text-white">
+          <div className="mb-2 text-[12.5px] text-white">
             Add courses in Settings so criteria can be suggested.
           </div>
         )}
@@ -192,7 +192,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
             {acLinks.map((l) => (
               <span
                 key={l.id}
-                className="group inline-flex items-center gap-1.5 text-[11px] font-mono tabular-nums text-elec-yellow bg-elec-yellow/[0.06] border border-elec-yellow/25 rounded-full pl-2.5 pr-1.5 py-0.5"
+                className="group inline-flex h-11 items-center gap-1 rounded-full border border-elec-yellow/40 pl-3 pr-1 font-mono text-[12px] tabular-nums text-white"
               >
                 <span>
                   {l.qualification_code} · {l.unit_code} · {l.ac_code}
@@ -201,7 +201,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                   type="button"
                   onClick={() => removeAcLink(l.id)}
                   aria-label={`Remove ${l.ac_code}`}
-                  className="h-4 w-4 rounded-full text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 flex items-center justify-center"
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-[16px] text-white hover:bg-white/[0.08] touch-manipulation"
                 >
                   ×
                 </button>
@@ -209,7 +209,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
             ))}
           </div>
         ) : (
-          <div className="text-[12px] text-white/50">
+          <div className="text-[12.5px] text-white">
             No ACs linked. Add the criteria this resource supports.
           </div>
         )}
@@ -225,13 +225,13 @@ export function ResourceLinksPanel({ resourceId }: Props) {
       {/* Lesson links */}
       <div>
         <div className="flex items-center justify-between gap-3 mb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+          <div className="text-[13px] font-semibold text-white">
             Lesson plans · {lessonLinks.length}
           </div>
           <button
             type="button"
             onClick={() => setLessonPickerOpen((v) => !v)}
-            className="text-[11.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors"
+            className="inline-flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors touch-manipulation"
           >
             {lessonPickerOpen ? 'Close' : '+ Attach lesson'}
           </button>
@@ -249,7 +249,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                 <button
                   type="button"
                   onClick={() => removeLessonLink(l.id)}
-                  className="text-[11px] text-white hover:text-red-300 transition-colors shrink-0"
+                  className="inline-flex h-11 shrink-0 items-center px-1 text-[13px] font-semibold text-white transition-colors hover:text-red-300 touch-manipulation"
                 >
                   Detach
                 </button>
@@ -257,7 +257,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
             ))}
           </ul>
         ) : (
-          <div className="text-[12px] text-white/50">Not attached to any lesson plan.</div>
+          <div className="text-[12.5px] text-white">Not attached to any lesson plan.</div>
         )}
         {lessonPickerOpen && (
           <LessonPicker
@@ -362,7 +362,7 @@ function AcPicker({
         <select
           value={qual ?? ''}
           onChange={(e) => setQual(e.target.value || null)}
-          className="h-9 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-[12px] text-white focus:outline-none focus:border-elec-yellow/60"
+          className="h-11 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-base text-white focus:outline-none focus:border-elec-yellow"
         >
           <option value="">Select qualification…</option>
           {qualOptions.map((q) => (
@@ -375,7 +375,7 @@ function AcPicker({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search AC code, unit or text…"
-          className="flex-1 min-w-[160px] h-9 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-[12px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
+          className="flex-1 min-w-[160px] h-11 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-base text-white placeholder:text-white focus:outline-none focus:border-elec-yellow"
         />
       </div>
       <div className="max-h-[220px] overflow-y-auto">
@@ -406,7 +406,7 @@ function AcPicker({
                   }
                   className="w-full text-left px-4 py-2.5 hover:bg-white/[0.03] flex items-start gap-3 transition-colors touch-manipulation"
                 >
-                  <span className="shrink-0 font-mono tabular-nums text-[11px] text-elec-yellow mt-0.5">
+                  <span className="shrink-0 font-mono tabular-nums text-[12px] text-elec-yellow mt-0.5">
                     {r.unit_code}:{r.ac_code}
                   </span>
                   <span className="flex-1 text-[12px] text-white leading-snug line-clamp-2">
@@ -475,7 +475,7 @@ function LessonPicker({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search lesson plans…"
-          className="w-full h-9 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-[12px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
+          className="w-full h-11 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-base text-white placeholder:text-white focus:outline-none focus:border-elec-yellow"
         />
       </div>
       <div className="max-h-[240px] overflow-y-auto">
@@ -496,9 +496,7 @@ function LessonPicker({
                   )}
                 >
                   <span className="text-[12.5px] text-white truncate">{r.title}</span>
-                  <span className="shrink-0 text-[10.5px] uppercase tracking-[0.16em] text-white">
-                    {r.status ?? 'Draft'}
-                  </span>
+                  <span className="shrink-0 text-[13px] text-white">{r.status ?? 'Draft'}</span>
                 </button>
               </li>
             ))}

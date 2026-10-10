@@ -4,7 +4,7 @@
  * both at preview and again at execute. The clients here throw if touched.
  */
 import { assert, assertEquals } from 'https://deno.land/std@0.208.0/assert/mod.ts';
-import { executeAction, previewAction, MONEY_ACTIONS, ACTION_NAMES, type ActionCtx } from './mate-actions.ts';
+import { executeAction, previewAction, MONEY_ACTIONS, MANAGER_ACTIONS, ACTION_NAMES, type ActionCtx } from './mate-actions.ts';
 import { signAction } from './mate-token.ts';
 
 const explode = new Proxy({}, { get: () => { throw new Error('client touched'); } });
@@ -30,3 +30,25 @@ Deno.test('mark_expenses_paid is refused at execute for the office even with a v
 Deno.test('every money action is also a known action', () => {
   for (const m of MONEY_ACTIONS) assert(ACTION_NAMES.has(m));
 });
+
+// ELE-2085: sending a RAMS / job pack is for managers; crew are refused before
+// anything is read or written, at preview and again at execute.
+const crewCtx = (role: string): ActionCtx => ({ ...ctx(false), role });
+
+Deno.test('send_pack_to_worker is a known manager action', () => {
+  assert(ACTION_NAMES.has('send_pack_to_worker'));
+  for (const m of MANAGER_ACTIONS) assert(ACTION_NAMES.has(m));
+});
+
+for (const role of ['engineer', 'apprentice', 'supervisor', 'subcontractor', 'team member']) {
+  Deno.test(`send_pack_to_worker is refused at preview for ${role}`, async () => {
+    const out = await previewAction(crewCtx(role), 'send_pack_to_worker', { employee: 'Dan', job: 'Orchard Close' });
+    assertEquals(out.card, undefined);
+    assert(out.note.startsWith('Not offered:'));
+  });
+  Deno.test(`send_pack_to_worker is refused at execute for ${role} even with a valid token`, async () => {
+    const { payload } = await signAction('s', { k: 'confirm', t: 'send_pack_to_worker', a: { mode: 'send', pack_id: 'p', employee_id: 'e' }, u: 'u', f: 'f' });
+    const r = await executeAction(crewCtx(role), payload);
+    assertEquals(r.ok, false);
+  });
+}

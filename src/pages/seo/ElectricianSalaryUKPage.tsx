@@ -344,8 +344,8 @@ const sections = [
           rates carrying out <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
           for landlords, letting agents, and property management companies. Note that BS
           7671:2018+A4:2026 has added new mandatory schedule fields to the EICR — including domestic
-          lighting circuit RCD protection (Reg 411.3.4 requires a 30 mA RCD on AC luminaire circuits
-          in dwellings), AFDD presence (Reg 421.1.7), and SPD — meaning EICR specialists need
+          lighting circuit RCD protection (Reg 411.3.4, in force since 2018, requires a 30 mA RCD on
+          AC luminaire circuits in dwellings), AFDD presence (Reg 421.1.7), and SPD — meaning EICR specialists need
           current knowledge of A4:2026 to certify correctly, which justifies premium rates over
           generalists working from older schedules.
         </p>
@@ -680,7 +680,8 @@ const sections = [
                 <strong>Specialise in high-demand areas:</strong> EV charger installation, solar PV,
                 battery storage, fire alarm systems, and testing and inspection all command premium
                 rates. AFDD (arc fault detection device) fitting for consumer unit upgrades is a
-                growing demand area following the A4:2026 recommendation under Reg 421.1.7 — as
+                growing demand area: Reg 421.1.7 has recommended them since 2018 and required them in
+          HMOs and similar premises since A2:2022, and as
                 installers upgrade panels to BS 7671:2018+A4:2026, clients increasingly ask for
                 AFDDs on AC final circuits. The investment in training (typically £500-£2,000 per
                 qualification) pays for itself within a few jobs.
@@ -793,7 +794,7 @@ export default function ElectricianSalaryUKPage() {
       title="Electrician Salary UK 2026: £32k-£75k Guide"
       description="UK electrician salary 2026: qualified £32-£45k employed, £50-£75k self-employed. JIB rates, day rates, regional pay and take-home explained."
       datePublished="2024-06-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

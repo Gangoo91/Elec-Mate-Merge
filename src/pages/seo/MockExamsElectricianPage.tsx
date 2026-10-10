@@ -42,7 +42,7 @@ const keyTakeaways = [
   'The C&G 2391 (Inspection and Testing) exam tests both theoretical knowledge and practical interpretation of test results, fault diagnosis, and EICR completion — mock exams help you practise the written components before the real thing.',
   'Elec-Mate generates unlimited, AI-powered mock exams tailored to your weak areas, with instant marking, detailed explanations for every answer, and progress tracking across all your attempts.',
   'Effective revision combines mock exams with targeted study — complete a mock, identify the topics you scored lowest on, study those topics, and then complete another mock to confirm improvement.',
-  'BS 7671:2018+A4:2026 introduced several changes that are near-certain exam targets in the current 2382 syllabus cycle: Regulation 421.1.7 recommending arc fault detection devices (AFDDs) on AC final circuits; the revised Regulation 411.3.3 mandating RCD protection for all socket-outlets rated not exceeding 32 A; and the reorganisation of Appendix 3 (which now incorporates the Zs tables formerly in Appendix 14, with old Table 3A deleted) and Appendix 4 (current-carrying capacity).',
+  'Several parts of BS 7671:2018+A4:2026 are near-certain exam targets in the current 2382 syllabus cycle: Regulation 421.1.7 on arc fault detection devices (AFDDs), recommended since 2018 and required in named higher-risk premises since A2:2022; Regulation 411.3.3, revised in 2018 to require RCD protection for socket-outlets rated not exceeding 32 A; Appendix 3, which since 2018 holds the Zs tables formerly in Appendix 14 (Table 3A was deleted at A2:2022); and Appendix 4 (current-carrying capacity).',
   'For 2391 calculations, always apply the 0.8 correction factor to Zs: a measured earth fault loop impedance must satisfy Zs(measured) < 0.8 × tabulated maximum. This accounts for conductor resistance rising at operating temperature and is a core mark-scoring point in written-exam calculations.',
 ];
 
@@ -105,8 +105,8 @@ const sections = [
           The most common reason electricians fail their exams is not lack of knowledge — it is poor
           exam technique, particularly time management. Mock exams under timed conditions are the
           only way to develop the speed you need. If you are preparing for the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink>{' '}
-          or the{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink> or
+          the{' '}
           <SEOInternalLink href="/inspection-testing-course">
             2391 inspection and testing qualification
           </SEOInternalLink>
@@ -199,10 +199,11 @@ const sections = [
           ambient temperature of 35 degrees Celsius — what is the corrected current-carrying
           capacity?"), and regulation lookup questions ("According to Appendix 3 of BS 7671, what is
           the maximum Zs for a 32A Type B MCB in a TN-S system?"). Practise all three types. Note:
-          Regulation 411.3.3 in BS 7671:2018+A4:2026 is itself a prime exam topic — it has been
-          revised in Amendment 4 to mandate RCD protection for all socket-outlets rated not
-          exceeding 32 A (with a narrow exception for non-dwellings subject to documented risk
-          assessment). It does not deal with Zs values.
+          Regulation 411.3.3 in BS 7671:2018+A4:2026 is itself a prime exam topic — revised in 2018
+          and redrafted at Amendment 2, it requires RCD protection for socket-outlets rated not
+          exceeding 32 A (with a narrow exception, subject to a documented risk assessment, that
+          never covers sockets liable to be used by ordinary persons or children). It does not deal
+          with Zs values.
         </p>
         <p>
           Elec-Mate mock exams for the{' '}
@@ -240,8 +241,8 @@ const sections = [
           most circuits, RCD trip times of 300 ms maximum at rated residual operating current (IΔn)
           for general non-delay type — note that Appendix 3 Table 3A has been deleted in BS
           7671:2018+A4:2026 and the single AC test at IΔn within 300 ms is now the sole acceptance
-          criterion per the Reg 643.8 NOTE), interpretation of EICR observation codes (C1, C2, C3, FI), and{' '}
-          <SEOInternalLink href="/how-to-fill-in-eicr">EICR completion</SEOInternalLink>.
+          criterion per the Reg 643.8 NOTE), interpretation of EICR observation codes (C1, C2, C3,
+          FI), and <SEOInternalLink href="/how-to-fill-in-eicr">EICR completion</SEOInternalLink>.
         </p>
         <p>
           <strong>Scenario-based questions.</strong> The 2391 exam often presents a scenario — a
@@ -533,7 +534,7 @@ export default function MockExamsElectricianPage() {
       title="Electrician Exam Revision: 18th Ed, 2391, AM2"
       description="Step-by-step revision strategy for UK electrician exams: how mock exams work, what to revise, study schedules, exam-day technique and common traps."
       datePublished="2025-08-12"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"

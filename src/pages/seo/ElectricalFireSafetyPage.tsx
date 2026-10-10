@@ -216,12 +216,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 Regulation 421.1.7</strong> — the 18th Edition (and Amendment 1)
-                recommends AFDDs for AC final circuits in domestic installations, particularly in
-                bedrooms and sleeping areas. Amendment 2 (2022) extends this recommendation to all
-                final circuits in dwelling units for new installations and rewires. While currently
-                a recommendation (not mandatory for all circuits), many electricians now fit AFDDs
-                as standard on consumer unit upgrades.
+                <strong>BS 7671 Regulation 421.1.7</strong> — the 18th Edition (2018) introduced a
+                recommendation for AFDDs on AC final circuits. Amendment 2 (2022) made them a
+                requirement on single-phase socket-outlet circuits up to 32 A in high rise
+                residential buildings, HMOs, purpose-built student accommodation and care homes, and
+                recommends them on those circuits everywhere else. In an ordinary home they are
+                therefore recommended, and many electricians now fit AFDDs as standard on consumer
+                unit upgrades.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -608,7 +609,7 @@ export default function ElectricalFireSafetyPage() {
       title="Electrical Fire Safety UK: Preventing Fires"
       description="UK electrical fire safety guide — leading causes of electrical fires, arcing faults and AFDDs, overloaded sockets, old wiring risks, smoke detection."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fire Safety"

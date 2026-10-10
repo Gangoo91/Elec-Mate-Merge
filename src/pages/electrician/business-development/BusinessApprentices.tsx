@@ -170,7 +170,7 @@ const BusinessApprentices = () => {
     {
       title: 'Training Time Legal Requirements',
       description:
-        'Minimum 6 hours per week off-the-job training in paid working time (replaced the old 20% rule). Detailed time tracking required. Regular progress reviews every 12 weeks minimum.',
+        'Off-the-job training to the minimum hours published on the standard (1,066 for ST0152), in paid working time. This replaced the old 20% and 6-hours-a-week rules for starts from August 2025. Detailed time tracking required. Progress reviews at least every 3 months.',
     },
     {
       title: 'Health & Safety Framework',

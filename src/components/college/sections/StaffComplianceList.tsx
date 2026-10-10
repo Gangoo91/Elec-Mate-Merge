@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { COLLEGE_CARD, COLLEGE_LINK, COLLEGE_LIST, COLLEGE_ROW, chipCn } from '@/components/college/ui/CollegeUi';
+import { COLLEGE_LINK } from '@/components/college/ui/CollegeUi';
+import { QuietTabs } from '@/components/college/quality/QualityChoices';
+import { QCARD, QLIST, QROW } from '@/components/college/quality/QualityHubKit';
 import { StatusPill, type Tone } from '@/components/college/quality/QualityKit';
 import {
   useStaffComplianceList,
@@ -14,13 +16,24 @@ import {
    StaffComplianceList — staff compliance roll-up.
 
    One row per staff member on the College Hub kit list (7 Oct 2026):
-   name, role and what is wrong, a status pill, chevron. Two groups, Action
+   name, role and what is wrong, a status chip, chevron. Two groups, Action
    needed then All in date (closed while there is anything to action). The
-   pill carries the state: red expired, orange expiring, blue awaiting
-   verification, white missing, green in date.
+   chip carries the worst state in words ("1 expired", "2 missing"): orange
+   needs action, green in date, neutral awaiting verification.
    ========================================================================== */
 
 type RoleFilter = 'all' | 'tutor' | 'assessor' | 'iqa' | 'support' | 'action';
+
+/** Staff roles as people say them (the column holds snake_case codes). */
+const ROLE_LABEL: Record<string, string> = {
+  iqa: 'IQA',
+  eqa: 'EQA',
+  head_of_department: 'Head of department',
+  admin: 'Admin',
+  tutor: 'Tutor',
+  assessor: 'Assessor',
+  support: 'Support',
+};
 
 const STATUS_LABEL: Record<ComputedStatus, string> = {
   expired: 'Expired',
@@ -34,8 +47,9 @@ function statusTone(s: ComputedStatus): Tone {
   if (s === 'expired') return 'bad';
   if (s === 'valid') return 'good';
   if (s === 'expiring') return 'warn';
-  if (s === 'pending_verification') return 'info';
-  return 'neutral';
+  if (s === 'pending_verification') return 'neutral';
+  // Missing needs action as much as expired: an inspector finds both.
+  return 'warn';
 }
 
 function daysUntil(date: string): number {
@@ -145,7 +159,7 @@ export function StaffComplianceList({ search, onOpen }: Props) {
 
   if (rows.length === 0) {
     return (
-      <div className={COLLEGE_CARD}>
+      <div className={QCARD}>
         <div className="text-[15px] font-semibold text-white">No staff yet</div>
         <p className="mt-1 text-[13px] leading-relaxed text-white">
           Add your tutors, assessors and support staff under People, then come back here to track
@@ -160,22 +174,20 @@ export function StaffComplianceList({ search, onOpen }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2">
-        {filterChips.map((c) => (
-          <button
-            key={c.value}
-            type="button"
-            onClick={() => setFilter(c.value)}
-            className={cn(chipCn(c.value === filter), 'h-11 px-4')}
-          >
-            {c.label}
-            <span className="ml-1.5 tabular-nums">{c.count}</span>
-          </button>
-        ))}
-      </div>
+      <QuietTabs<RoleFilter>
+        label="Filter staff"
+        tabs={filterChips.map((c) => ({
+          key: c.value,
+          label: c.label,
+          count: c.count,
+          warn: c.value === 'action',
+        }))}
+        value={filter}
+        onChange={setFilter}
+      />
 
       {filtered.length === 0 ? (
-        <div className={COLLEGE_CARD}>
+        <div className={QCARD}>
           <div className="text-[15px] font-semibold text-white">Nothing matches</div>
           <p className="mt-1 text-[13px] leading-relaxed text-white">
             {search.trim()
@@ -191,7 +203,7 @@ export function StaffComplianceList({ search, onOpen }: Props) {
               <span
                 className={cn(
                   'text-[12px] font-semibold tabular-nums',
-                  grouped.action.length > 0 ? 'text-orange-400' : 'text-white'
+                  grouped.action.length > 0 ? 'text-orange-300' : 'text-white'
                 )}
               >
                 {grouped.action.length === 0
@@ -199,9 +211,9 @@ export function StaffComplianceList({ search, onOpen }: Props) {
                   : `${grouped.action.length} staff`}
               </span>
             </div>
-            <div className={COLLEGE_LIST}>
+            <div className={QLIST}>
               {grouped.action.length === 0 ? (
-                <p className="px-5 py-4 text-[13px] leading-snug text-white sm:px-6">
+                <p className="px-4 py-4 text-[13px] leading-snug text-white sm:px-5">
                   Every required record is in date.
                 </p>
               ) : (
@@ -232,7 +244,7 @@ export function StaffComplianceList({ search, onOpen }: Props) {
                 </button>
               </div>
               {!collapsed && (
-                <div className={COLLEGE_LIST}>
+                <div className={QLIST}>
                   <ul className="divide-y divide-white/[0.06]">
                     {grouped.valid.map((r) => (
                       <StaffRow key={r.college_staff_id} row={r} onOpen={onOpen} />
@@ -244,7 +256,7 @@ export function StaffComplianceList({ search, onOpen }: Props) {
           )}
         </div>
       ) : (
-        <div className={COLLEGE_LIST}>
+        <div className={QLIST}>
           <ul className="divide-y divide-white/[0.06]">
             {filtered.map((r) => (
               <StaffRow key={r.college_staff_id} row={r} onOpen={onOpen} />
@@ -277,24 +289,28 @@ function StaffRow({ row, onOpen }: { row: StaffComplianceRow; onOpen: (id: strin
         row.next_expiry && row.totals.expiring > 0 ? formatNextExpiry(row.next_expiry) : null,
       ].filter(Boolean);
 
-  const roleLabel = row.role.replace(/_/g, ' ');
+  const roleRaw = row.role.toLowerCase();
+  const roleLabel =
+    ROLE_LABEL[roleRaw] ?? roleRaw.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
   const reason = [
-    roleLabel.charAt(0).toUpperCase() + roleLabel.slice(1),
+    roleLabel,
     department || null,
     ...flags,
-    row.totals.total > 0 ? `${inDate}/${row.totals.total} in date` : null,
-    ...segments,
+    row.totals.total > 0 ? `${inDate} of ${row.totals.total} in date` : null,
+    ...segments.slice(status === 'valid' || onboarding ? 0 : 1),
   ]
     .filter(Boolean)
     .join(' · ');
 
+  // The chip says the worst thing in words; the line under the name says the rest.
+  const chipText =
+    status === 'valid'
+      ? STATUS_LABEL.valid
+      : ((segments[0] as string | undefined) ?? STATUS_LABEL[status]);
+
   return (
     <li>
-      <button
-        type="button"
-        onClick={() => onOpen(row.college_staff_id)}
-        className={COLLEGE_ROW}
-      >
+      <button type="button" onClick={() => onOpen(row.college_staff_id)} className={QROW}>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
             {row.name}
@@ -302,9 +318,18 @@ function StaffRow({ row, onOpen }: { row: StaffComplianceRow; onOpen: (id: strin
           <span className="mt-1 block text-[12.5px] leading-snug text-white sm:truncate">
             {reason}
           </span>
+          {/* Phone: the chip sits on its own line so the detail keeps the width. */}
+          <span className="mt-2 block sm:hidden">
+            <StatusPill tone={onboarding ? 'warn' : statusTone(status)}>
+              {onboarding ? 'Awaiting setup' : chipText}
+            </StatusPill>
+          </span>
         </span>
-        <StatusPill tone={onboarding ? 'neutral' : statusTone(status)}>
-          {onboarding ? 'Awaiting setup' : STATUS_LABEL[status]}
+        <StatusPill
+          tone={onboarding ? 'warn' : statusTone(status)}
+          className="hidden sm:inline-flex"
+        >
+          {onboarding ? 'Awaiting setup' : chipText}
         </StatusPill>
         <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
       </button>

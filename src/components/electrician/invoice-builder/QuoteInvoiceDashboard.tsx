@@ -294,6 +294,7 @@ export const QuoteInvoiceDashboard = () => {
           onNoChanges={handleNoChanges}
           onHasChanges={handleHasChanges}
           loading={loadingAction}
+          quoteId={quoteForInvoice?.id}
         />
       )}
     </div>

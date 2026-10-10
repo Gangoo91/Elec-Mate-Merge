@@ -60,6 +60,8 @@ interface OpportunityDetailSheetProps {
   onStartTender?: (estimate?: OpportunityEstimate) => void;
   isSaved: boolean;
   onToggleSave: () => void;
+  /** Notice values and AI estimates are for roles that see firm money. */
+  canSeeMoney?: boolean;
 }
 
 export function OpportunityDetailSheet({
@@ -69,6 +71,7 @@ export function OpportunityDetailSheet({
   onStartTender,
   isSaved,
   onToggleSave,
+  canSeeMoney = true,
 }: OpportunityDetailSheetProps) {
   const [showAIEstimate, setShowAIEstimate] = useState(false);
 
@@ -89,7 +92,9 @@ export function OpportunityDetailSheet({
       try {
         await navigator.share({
           title: opportunity.title,
-          text: `${opportunity.title} - ${formatOpportunityValue(opportunity)}`,
+          text: canSeeMoney
+            ? `${opportunity.title} - ${formatOpportunityValue(opportunity)}`
+            : opportunity.title,
           url: opportunity.source_url || window.location.href,
         });
         return;
@@ -104,10 +109,7 @@ export function OpportunityDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
         <SheetShell
           eyebrow={opportunity.client_name}
           title={opportunity.title}
@@ -125,10 +127,12 @@ export function OpportunityDetailSheet({
           }
           footer={
             <>
-              <SecondaryButton onClick={() => setShowAIEstimate(true)} fullWidth>
-                <Sparkles className="h-4 w-4 mr-2" />
-                AI estimate
-              </SecondaryButton>
+              {canSeeMoney && (
+                <SecondaryButton onClick={() => setShowAIEstimate(true)} fullWidth>
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  AI estimate
+                </SecondaryButton>
+              )}
               <PrimaryButton onClick={() => onStartTender?.()} fullWidth>
                 <Zap className="h-4 w-4 mr-2" />
                 Start tender
@@ -157,15 +161,17 @@ export function OpportunityDetailSheet({
 
           <FormCard eyebrow="Key info">
             <FormGrid cols={2}>
-              <div className="p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
-                <div className="flex items-center gap-2 mb-1">
-                  <PoundSterling className="h-4 w-4 text-white" />
-                  <Eyebrow>Value</Eyebrow>
+              {canSeeMoney && (
+                <div className="p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <PoundSterling className="h-4 w-4 text-white" />
+                    <Eyebrow>Value</Eyebrow>
+                  </div>
+                  <p className="font-semibold text-elec-yellow">
+                    {formatOpportunityValue(opportunity)}
+                  </p>
                 </div>
-                <p className="font-semibold text-elec-yellow">
-                  {formatOpportunityValue(opportunity)}
-                </p>
-              </div>
+              )}
 
               <div className="p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
                 <div className="flex items-center gap-2 mb-1">
@@ -191,13 +197,14 @@ export function OpportunityDetailSheet({
                   <Eyebrow>Location</Eyebrow>
                 </div>
                 <p className="font-medium text-sm text-white">
-                  {opportunity.location_text || opportunity.postcode || 'Location TBC'}
+                  {/* Some sources append "Estimated value …" to the place name (as on the card) */}
+                  {(opportunity.location_text || '').replace(/\s*Estimated value.*$/i, '').trim() ||
+                    opportunity.postcode ||
+                    'Location to be confirmed'}
                 </p>
                 {opportunity.distance_miles !== null &&
                   opportunity.distance_miles !== undefined && (
-                    <p className="text-xs text-white">
-                      {opportunity.distance_miles} miles away
-                    </p>
+                    <p className="text-xs text-white">{opportunity.distance_miles} miles away</p>
                   )}
               </div>
 
@@ -367,9 +374,7 @@ export function OpportunityDetailSheet({
             >
               <div className="flex items-center gap-2 text-white">
                 <ExternalLink className="h-4 w-4" />
-                <span className="text-sm">
-                  View on {opportunity.source.replace('_', ' ')}
-                </span>
+                <span className="text-sm">View on {opportunity.source.replace('_', ' ')}</span>
               </div>
               <button
                 onClick={(e) => {

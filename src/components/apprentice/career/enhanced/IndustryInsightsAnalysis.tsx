@@ -14,9 +14,7 @@ const Section = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-    {children}
-  </span>
+  <span className="text-[13px] font-semibold text-white">{children}</span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
@@ -28,10 +26,7 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 const Bullets = ({ items }: { items: string[] }) => (
   <ul className="space-y-1.5">
     {items.map((item, idx) => (
-      <li
-        key={idx}
-        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
-      >
+      <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
       </li>
@@ -140,11 +135,7 @@ const IndustryInsightsAnalysis = () => {
         'Energy management',
         'Data centre growth',
       ],
-      challenges: [
-        'Long sales cycles',
-        'Tender complexity',
-        '24/7 service demands',
-      ],
+      challenges: ['Long sales cycles', 'Tender complexity', '24/7 service demands'],
       opportunities: [
         'Long-term maintenance contracts',
         'Energy management consultancy',
@@ -161,11 +152,7 @@ const IndustryInsightsAnalysis = () => {
         'Commercial development',
         'Infrastructure projects',
       ],
-      challenges: [
-        'Highly competitive tenders',
-        'Tight margins',
-        'Programme-driven schedules',
-      ],
+      challenges: ['Highly competitive tenders', 'Tight margins', 'Programme-driven schedules'],
       opportunities: [
         'Builder relationships',
         'Off-site construction methods',
@@ -191,8 +178,7 @@ const IndustryInsightsAnalysis = () => {
           skill: 'Energy storage systems',
           demandLevel: 'High',
           description: 'Battery storage installation, commissioning, and maintenance.',
-          learningPath:
-            'Battery safety training → system design courses → practical installations',
+          learningPath: 'Battery safety training → system design courses → practical installations',
         },
         {
           skill: 'Smart grid technology',
@@ -211,8 +197,7 @@ const IndustryInsightsAnalysis = () => {
           skill: 'IoT and sensor networks',
           demandLevel: 'High',
           description: 'Installation and commissioning of connected building systems.',
-          learningPath:
-            'IoT fundamentals → network technology → building automation systems',
+          learningPath: 'IoT fundamentals → network technology → building automation systems',
         },
         {
           skill: 'Cybersecurity for electrical systems',
@@ -234,7 +219,7 @@ const IndustryInsightsAnalysis = () => {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <BarChart3 className="h-4 w-4 text-white mt-1 flex-shrink-0" />
         <p className="text-[14px] text-white leading-relaxed">
           Skills shortages across the industry are creating opportunities for faster career

@@ -889,7 +889,7 @@ const DomesticReferenceGuide = () => {
           {regionalConsiderations.map((region, index) => (
             <div
               key={index}
-              className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20"
+              className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]"
             >
               <h4 className="font-medium text-white mb-3">{region.region}</h4>
 

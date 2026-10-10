@@ -11,7 +11,10 @@ const AchievementUnlockToast = ({ achievements }: AchievementUnlockToastProps) =
 
   return (
     <AnimatePresence>
-      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-2 pointer-events-none">
+      <div
+        role="status"
+        className="pointer-events-none fixed left-1/2 top-[calc(env(safe-area-inset-top)+76px)] z-[200] flex -translate-x-1/2 flex-col gap-2"
+      >
         {achievements.map((a, i) => (
           <motion.div
             key={a.id}
@@ -27,15 +30,19 @@ const AchievementUnlockToast = ({ achievements }: AchievementUnlockToastProps) =
              * house treatment for "this is the good news" and it reads at a
              * glance on a phone in daylight.
              */
-            className="flex items-center gap-3 rounded-xl bg-elec-yellow px-4 py-3 shadow-xl"
+            // Same card as the Study Centre's "Award unlocked" toast, so every
+            // award in the app looks like one family.
+            className="flex w-[340px] max-w-[92vw] items-center gap-3 rounded-2xl border border-elec-yellow bg-[#1c1c1c] px-4 py-3 shadow-2xl"
           >
-            <Trophy className="h-5 w-5 shrink-0 text-black" />
-            <div className="space-y-0.5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-black opacity-70">
-                Achievement unlocked
-              </p>
-              <p className="text-[14px] font-bold text-black">{a.title}</p>
-            </div>
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-elec-yellow">
+              <Trophy className="h-5 w-5 text-black" aria-hidden />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[12.5px] font-semibold text-white">Deck achievement</span>
+              <span className="mt-0.5 block text-[17px] font-bold leading-tight text-white">
+                {a.title}
+              </span>
+            </span>
           </motion.div>
         ))}
       </div>

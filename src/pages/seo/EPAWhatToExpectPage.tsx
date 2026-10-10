@@ -39,7 +39,7 @@ const keyTakeaways = [
   'The End Point Assessment (EPA) is the final independent assessment of your apprenticeship, carried out by an approved EPAO such as City and Guilds or EAL. It confirms you have the knowledge, skills, and behaviours to work as a competent electrician.',
   'The EPA has three components: a knowledge test (multiple-choice and short-answer), a practical assessment (hands-on installation and testing), and a professional discussion with portfolio review (45 to 60 minutes with an assessor).',
   'You are graded Pass, Distinction, or Fail. A Distinction requires exceeding the standard across all three components. A Fail in any single component means you have not achieved the apprenticeship at that attempt, though resits are available.',
-  'You must pass through the gateway before attempting the EPA. Gateway requirements include Level 3 diploma, AM2, 18th Edition, Level 2 functional skills, a portfolio of evidence, 20% off-the-job training hours, and employer and training provider agreement.',
+  'You must pass through the gateway before attempting the EPA. Gateway requirements include Level 3 diploma, AM2, 18th Edition, Level 2 functional skills, a portfolio of evidence, the off-the-job training hours for your standard, and employer and training provider agreement.',
   'Elec-Mate EPA Simulator replicates the professional discussion with AI scoring against real grade descriptors. Voice input lets you practise natural discussion responses. Combined with 2,000+ knowledge test questions and flashcards, it covers every EPA component.',
 ];
 
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Who carries out the End Point Assessment?',
     answer:
-      'The EPA is carried out by an approved End Point Assessment Organisation (EPAO). For the Installation Electrician / Maintenance Electrician standard (ST0215), the approved EPAOs include City and Guilds, EAL (EMTA Awards Limited), and other organisations registered on the ESFA Register of End Point Assessment Organisations. The key requirement is that the EPAO is independent of your training provider and employer — they have no involvement in your training and assess you impartially against the national standard. Your training provider will typically arrange the EPA booking with the EPAO, but the assessment itself is conducted entirely by the EPAO assessor. The assessor is a qualified professional with industry experience and assessor qualifications who follows the published assessment plan for the ST0215 standard.',
+      'The EPA is carried out by an approved End Point Assessment Organisation (EPAO). For the Installation Electrician / Maintenance Electrician standard (ST0152), the approved EPAOs include City and Guilds, EAL (EMTA Awards Limited), and other organisations registered on the ESFA Register of End Point Assessment Organisations. The key requirement is that the EPAO is independent of your training provider and employer — they have no involvement in your training and assess you impartially against the national standard. Your training provider will typically arrange the EPA booking with the EPAO, but the assessment itself is conducted entirely by the EPAO assessor. The assessor is a qualified professional with industry experience and assessor qualifications who follows the published assessment plan for the ST0152 standard.',
   },
   {
     question: 'How long does the EPA take from gateway to completion?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Can I use Elec-Mate to prepare for all three EPA components?',
     answer:
-      'Yes. Elec-Mate covers all three EPA components. For the knowledge test, the platform provides 20,000+ practice questions spanning BS 7671, electrical science, installation design, health and safety, and inspection and testing — all the topics covered in the ST0215 knowledge requirements. Flashcards with spaced repetition help you memorise key facts and regulation references efficiently. For the practical assessment, the AM2 Simulator provides timed exercises covering safe isolation, consumer unit build, ring final circuits, lighting circuits, fault finding, and testing — all skills assessed in the EPA practical component. For the professional discussion, the EPA Simulator replicates the discussion format with AI-generated questions based on portfolio content, voice input for natural responses, and scoring against the real grade descriptors published in the EPA assessment plan. The platform also tracks your portfolio evidence against ST0215 criteria and monitors your 20% off-the-job training hours, ensuring you meet all gateway requirements.',
+      'Yes. Elec-Mate covers all three EPA components. For the knowledge test, the platform provides 20,000+ practice questions spanning BS 7671, electrical science, installation design, health and safety, and inspection and testing — all the topics covered in the ST0152 knowledge requirements. Flashcards with spaced repetition help you memorise key facts and regulation references efficiently. For the practical assessment, the AM2 Simulator provides timed exercises covering safe isolation, consumer unit build, ring final circuits, lighting circuits, fault finding, and testing — all skills assessed in the EPA practical component. For the professional discussion, the EPA Simulator replicates the discussion format with AI-generated questions based on portfolio content, voice input for natural responses, and scoring against the real grade descriptors published in the EPA assessment plan. The platform also tracks your portfolio evidence against ST0152 criteria and monitors your 20% off-the-job training hours, ensuring you meet all gateway requirements.',
   },
   {
     question: 'What is the difference between a Pass and a Distinction at EPA?',
@@ -99,7 +99,7 @@ const relatedPages = [
   {
     href: '/guides/off-the-job-training-hours',
     title: 'Off-the-Job Training Hours',
-    description: 'Understanding and tracking the 20% off-the-job training requirement.',
+    description: 'Understanding and tracking the off-the-job training hours requirement.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -136,7 +136,7 @@ const sections = [
         <p>
           The End Point Assessment (EPA) is the final independent assessment at the end of your
           electrical apprenticeship. It is designed to confirm that you have achieved the full range
-          of knowledge, skills, and behaviours defined in the apprenticeship standard (ST0215 for
+          of knowledge, skills, and behaviours defined in the apprenticeship standard (ST0152 for
           Installation Electrician / Maintenance Electrician).
         </p>
         <p>
@@ -163,10 +163,10 @@ const sections = [
           </SEOInternalLink>
           , meeting the{' '}
           <SEOInternalLink href="/guides/off-the-job-training-hours">
-            20% off-the-job training hours
+            off-the-job training hours
           </SEOInternalLink>{' '}
-          requirement, and agreement from both your employer and training provider that you are
-          ready.
+          requirement for your standard, and agreement from both your employer and training provider
+          that you are ready.
         </p>
       </>
     ),
@@ -245,20 +245,19 @@ const sections = [
       <>
         <p>
           The knowledge test is a written examination covering the full range of theoretical
-          knowledge defined in the ST0215 apprenticeship standard. It is broader than any individual
+          knowledge defined in the ST0152 apprenticeship standard. It is broader than any individual
           qualification exam because it draws on knowledge from across your entire apprenticeship.
         </p>
         <p>
-          <strong>Topics covered include:</strong> BS 7671:2018+A2:2022 (and A4:2026) wiring
-          regulations — including Part 1 scope and fundamental principles, Part 4 protection for
-          safety, Part 5 selection and erection, and Part 7 special installations. Electrical
-          science — Ohm's law, power calculations, impedance, reactance, and power factor.
-          Installation design — cable sizing, circuit protection, discrimination, voltage drop, and
-          maximum demand calculations. Inspection and testing — the correct testing sequence per
-          GN3, acceptable values, instrument use, and documentation. Health and safety legislation —
-          Health and Safety at Work Act 1974, Electricity at Work Regulations 1989, CDM Regulations
-          2015, and COSHH. Fault diagnosis — systematic fault-finding methodology and safe
-          isolation.
+          <strong>Topics covered include:</strong> BS 7671:2018+A4:2026 wiring regulations —
+          including Part 1 scope and fundamental principles, Part 4 protection for safety, Part 5
+          selection and erection, and Part 7 special installations. Electrical science — Ohm's law,
+          power calculations, impedance, reactance, and power factor. Installation design — cable
+          sizing, circuit protection, discrimination, voltage drop, and maximum demand calculations.
+          Inspection and testing — the correct testing sequence per GN3, acceptable values,
+          instrument use, and documentation. Health and safety legislation — Health and Safety at
+          Work Act 1974, Electricity at Work Regulations 1989, CDM Regulations 2015, and COSHH.
+          Fault diagnosis — systematic fault-finding methodology and safe isolation.
         </p>
         <p>
           <strong>Test format:</strong> The knowledge test typically includes a mix of
@@ -277,7 +276,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="2,000+ EPA Knowledge Test Questions"
-          description="Practice questions covering every knowledge topic in the ST0215 standard. Detailed explanations with regulation references."
+          description="Practice questions covering every knowledge topic in the ST0152 standard. Detailed explanations with regulation references."
           icon={Brain}
         />
       </>
@@ -377,7 +376,7 @@ const sections = [
         <p>
           The EPA is graded overall as Distinction, Pass, or Fail. Your grade is determined by your
           performance across all three components, assessed against the criteria published in the
-          EPA assessment plan for the ST0215 standard.
+          EPA assessment plan for the ST0152 standard.
         </p>
         <p>
           <strong>Pass:</strong> You meet the required standard in all three components. Your
@@ -490,7 +489,7 @@ const sections = [
         </p>
         <p>
           <strong>Knowledge test gaps:</strong> Relying on Level 3 revision alone without revising
-          the broader ST0215 knowledge requirements. The EPA knowledge test can cover any topic in
+          the broader ST0152 knowledge requirements. The EPA knowledge test can cover any topic in
           the standard, including areas that may not have been emphasised in your Level 3 course.
           Use Elec-Mate's full question bank to identify and fill gaps.
         </p>
@@ -527,7 +526,7 @@ const sections = [
           professional discussion format. The AI generates questions based on your portfolio
           entries, just as a real assessor would. You respond using voice input for natural,
           conversational practice. The AI scores your responses against the real grade descriptors
-          from the ST0215 assessment plan and provides specific coaching on how to improve the
+          from the ST0152 assessment plan and provides specific coaching on how to improve the
           depth, structure, and quality of your answers. Practise until you can consistently deliver
           distinction-level responses.
         </p>
@@ -581,7 +580,7 @@ export default function EPAWhatToExpectPage() {
       title="EPA What to Expect: End Point Assessment"
       description="Complete guide to the electrical apprenticeship End Point Assessment (EPA). What the three components involve, grading criteria."
       datePublished="2025-10-05"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EPA Guide"

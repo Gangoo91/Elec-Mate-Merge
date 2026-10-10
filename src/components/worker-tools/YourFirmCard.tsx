@@ -103,6 +103,30 @@ export function YourFirmCard({
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.location)}`
     : null;
   const rows = waitingRows(h);
+  // Two columns only when there is a list to put on the right. With nothing
+  // waiting, one column: a lone line beside the job left half the card empty.
+  const split = layout === 'split' && rows.length > 0;
+  // Full width with nothing waiting: the actions sit in the header row on desktop.
+  const actionsUp = layout === 'split' && rows.length === 0;
+  const jobsOn = h.jobs_active ?? 0;
+  const actions = (
+    <>
+      <button
+        type="button"
+        onClick={() => navigate(`${WORKER_TOOLS_BASE}/timesheets`)}
+        className="h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98]"
+      >
+        {onClock ? 'Clock out' : 'Clock in'}
+      </button>
+      <button
+        type="button"
+        onClick={() => navigate(WORKER_TOOLS_BASE)}
+        className="h-11 rounded-xl border border-white/[0.18] bg-white/[0.06] px-5 text-[14px] font-semibold text-white touch-manipulation active:scale-[0.98]"
+      >
+        Worker Tools
+      </button>
+    </>
+  );
   const status = onClock
     ? `On the clock · ${shiftLength(h.open_shift!.clock_in)}${h.open_shift?.job_title ? ` on ${h.open_shift.job_title}` : ''}`
     : `Not clocked in · ${h.week_hours}h this week`;
@@ -117,21 +141,25 @@ export function YourFirmCard({
           CARD_SURFACE
         )}
       >
-        <div className={cn('grid', layout === 'split' && 'lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]')}>
+        <div className={cn('grid', split && 'lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]')}>
           {/* Left: who, where, when */}
           <div className="min-w-0">
-            <div className="px-4 pt-4 pb-3.5 sm:px-5">
-              <p className="truncate text-[17px] font-semibold leading-tight tracking-tight text-white">
-                {h.firm}
-              </p>
-              <p
-                className={cn(
-                  'mt-1 text-[13px] leading-snug',
-                  onClock ? 'font-semibold text-elec-yellow' : 'text-white'
-                )}
-              >
-                {status}
-              </p>
+            <div className="flex items-center gap-4 px-4 pt-4 pb-3.5 sm:px-5">
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[17px] font-semibold leading-tight tracking-tight text-white">
+                  {h.firm}
+                </p>
+                <p
+                  className={cn(
+                    'mt-1 text-[13px] leading-snug',
+                    onClock ? 'font-semibold text-elec-yellow' : 'text-white'
+                  )}
+                >
+                  {status}
+                </p>
+              </div>
+              {/* One column on desktop: the actions sit up here, not in a footer of their own. */}
+              {actionsUp && <div className="hidden shrink-0 gap-2 lg:flex">{actions}</div>}
             </div>
 
             {job ? (
@@ -141,7 +169,7 @@ export function YourFirmCard({
                   onClick={() => navigate(`${WORKER_TOOLS_BASE}/jobs?job=${job.id}`)}
                   className="min-w-0 flex-1 px-4 py-3.5 text-left touch-manipulation sm:px-5"
                 >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+                  <p className="text-[12px] font-semibold text-elec-yellow">
                     {whenLabel(job.starts)}
                   </p>
                   <p className="mt-1 line-clamp-1 text-[15px] font-semibold text-white">{job.title}</p>
@@ -163,8 +191,9 @@ export function YourFirmCard({
               </div>
             ) : (
               <p className="border-t border-white/[0.10] px-4 py-3.5 text-[13px] leading-snug text-white sm:px-5">
-                No job booked in for you yet. When the office puts you on one, it shows here with
-                directions.
+                {jobsOn > 0
+                  ? `You are on ${plural(jobsOn, 'job')} for ${h.firm}, with no date booked in yet. When the office books a day, it shows here with directions.`
+                  : 'No job booked in for you yet. When the office puts you on one, it shows here with directions.'}
               </p>
             )}
           </div>
@@ -173,7 +202,7 @@ export function YourFirmCard({
           <div
             className={cn(
               'min-w-0 border-t border-white/[0.10]',
-              layout === 'split' && 'lg:border-l lg:border-t-0'
+              split && 'lg:border-l lg:border-t-0'
             )}
           >
             {rows.length > 0 ? (
@@ -213,21 +242,13 @@ export function YourFirmCard({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 border-t border-white/[0.10] p-3 sm:flex sm:justify-end sm:px-5">
-          <button
-            type="button"
-            onClick={() => navigate(`${WORKER_TOOLS_BASE}/timesheets`)}
-            className="h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98]"
-          >
-            {onClock ? 'Clock out' : 'Clock in'}
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate(WORKER_TOOLS_BASE)}
-            className="h-11 rounded-xl border border-white/[0.18] bg-white/[0.06] px-5 text-[14px] font-semibold text-white touch-manipulation active:scale-[0.98]"
-          >
-            Worker Tools
-          </button>
+        <div
+          className={cn(
+            'grid grid-cols-2 gap-2 border-t border-white/[0.10] p-3 sm:flex sm:justify-end sm:px-5',
+            actionsUp && 'lg:hidden'
+          )}
+        >
+          {actions}
         </div>
       </div>
     </section>

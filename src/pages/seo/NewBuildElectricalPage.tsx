@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Are AFDDs mandatory in new builds?',
     answer:
-      'AFDDs (Arc Fault Detection Devices) are recommended but not strictly mandatory under BS 7671:2018+A4:2026. Regulation 421.1 recommends AFDDs for circuits in single-occupancy dwellings, locations with sleeping accommodation, locations with risks due to the nature of processed or stored materials, locations with combustible constructional materials (such as timber-framed buildings), and fire-propagating structures. The key word is "recommended" rather than "required" — this makes AFDDs a strong recommendation rather than a mandatory requirement in BS 7671 itself. However, some competent person scheme providers (such as NICEIC) have indicated that they expect AFDDs to be fitted in new build installations, particularly in timber-framed properties, HMOs, and properties with sleeping accommodation above shops. The industry expectation is that AFDDs will become mandatory in a future amendment to BS 7671, so fitting them now in new builds is considered best practice.',
+      'It depends on the type of building. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, AFDDs conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings (over 18 m or more than six storeys), houses in multiple occupation, purpose-built student accommodation and care homes. A new build in one of those categories must have them; that requirement dates from Amendment 2 (2022). For all other premises, including a typical new build house, AFDDs are recommended on the same circuits rather than required. Where used, the AFDD is placed at the origin of the circuit it protects. Many designers fit them in ordinary new builds anyway, particularly timber-framed properties, because the recommendation applies and the fire risk from arcing faults is real.',
   },
   {
     question: 'What smoke and heat detectors are required in a new build?',
@@ -572,7 +572,7 @@ export default function NewBuildElectricalPage() {
       title="New Build Electrical Installation: Requirements"
       description="Complete guide to new build electrical installation requirements in the UK. Building Regulations Parts P, L, B, M, and S, EV charging 2022."
       datePublished="2025-08-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

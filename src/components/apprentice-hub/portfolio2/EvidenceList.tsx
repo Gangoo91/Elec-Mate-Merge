@@ -13,7 +13,16 @@ import { cn } from '@/lib/utils';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import type { ItemState, PortfolioItemView } from '@/hooks/portfolio/usePortfolio';
-import { ITEM_STATE_CHIP, P_INPUT, fmtDate, itemStateLabel, pChip } from './ui';
+import { captureLine } from '@/lib/portfolio/captureStamp';
+import {
+  ITEM_STATE_CHIP,
+  P_INPUT,
+  P_TAB_LINE,
+  P_TAB_RAIL,
+  fmtDate,
+  itemStateLabel,
+  pTab,
+} from './ui';
 
 type Filter = 'all' | 'todo' | ItemState;
 
@@ -33,7 +42,14 @@ function CriteriaBar({ item }: { item: PortfolioItemView }) {
   const total = c.passed + c.submitted + c.needsMore + claimedOnly + c.suggested;
   if (total === 0) return null;
   const seg = (n: number, cls: string, label: string) =>
-    n > 0 ? <span key={label} className={cls} style={{ width: `${(n / total) * 100}%` }} title={`${n} ${label}`} /> : null;
+    n > 0 ? (
+      <span
+        key={label}
+        className={cls}
+        style={{ width: `${(n / total) * 100}%` }}
+        title={`${n} ${label}`}
+      />
+    ) : null;
   return (
     <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]" aria-hidden>
       {seg(c.passed, 'bg-emerald-400', 'passed')}
@@ -57,7 +73,13 @@ function criteriaLine(item: PortfolioItemView): string {
   return parts.length ? parts.join(' · ') : 'No criteria yet';
 }
 
-export function EvidenceCard({ item, onOpen }: { item: PortfolioItemView; onOpen: (i: PortfolioItemView) => void }) {
+export function EvidenceCard({
+  item,
+  onOpen,
+}: {
+  item: PortfolioItemView;
+  onOpen: (i: PortfolioItemView) => void;
+}) {
   const files = item.files.length;
   return (
     <button
@@ -72,49 +94,76 @@ export function EvidenceCard({ item, onOpen }: { item: PortfolioItemView; onOpen
       <div className="flex gap-4 p-4 sm:p-5">
         <div className="relative h-[84px] w-[84px] shrink-0 overflow-hidden rounded-2xl bg-white/[0.06] sm:h-24 sm:w-24">
           {item.thumbnail ? (
-            <EvidenceImage src={item.thumbnail} alt="" className="h-full w-full object-cover" loading="lazy" />
+            <EvidenceImage
+              src={item.thumbnail}
+              alt=""
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
           ) : (
             <div className="flex h-full w-full items-center justify-center">
-              {item.observation ? <Eye className="h-6 w-6 text-white" /> : <FileText className="h-6 w-6 text-white" />}
+              {item.observation ? (
+                <Eye className="h-6 w-6 text-white" />
+              ) : (
+                <FileText className="h-6 w-6 text-white" />
+              )}
             </div>
           )}
           {files > 1 && (
-            <span className="absolute bottom-1.5 right-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-[10.5px] font-semibold tabular-nums text-white">
+            <span className="absolute bottom-1.5 right-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-[12px] font-semibold tabular-nums text-white">
               {files}
             </span>
           )}
         </div>
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex items-start justify-between gap-3">
-            <p className="min-w-0 line-clamp-2 text-[15px] font-semibold leading-snug text-white">{item.title}</p>
-            <span className={cn('hidden shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-semibold sm:inline-flex', ITEM_STATE_CHIP[item.state])}>
+            <p className="min-w-0 line-clamp-2 text-[15px] font-semibold leading-snug text-white">
+              {item.title}
+            </p>
+            <span
+              className={cn(
+                'hidden shrink-0 rounded-full border px-2 py-0.5 text-[12px] font-semibold sm:inline-flex',
+                ITEM_STATE_CHIP[item.state]
+              )}
+            >
               {itemStateLabel(item)}
             </span>
           </div>
-          <span className={cn('inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold sm:hidden', ITEM_STATE_CHIP[item.state])}>
+          <span
+            className={cn(
+              'inline-flex rounded-full border px-2 py-0.5 text-[12px] font-semibold sm:hidden',
+              ITEM_STATE_CHIP[item.state]
+            )}
+          >
             {itemStateLabel(item)}
           </span>
           <p className="text-[12.5px] text-white">
             {fmtDate(item.workDate ?? item.createdAt)}
-            {item.units.length > 0 && ` · Unit ${item.units.slice(0, 3).join(', ')}${item.units.length > 3 ? ' and more' : ''}`}
+            {item.units.length > 0 &&
+              ` · Unit ${item.units.slice(0, 3).join(', ')}${item.units.length > 3 ? ' and more' : ''}`}
           </p>
+          {item.capture && (
+            <p className="text-[12.5px] leading-snug text-white">{captureLine(item.capture)}</p>
+          )}
           <CriteriaBar item={item} />
           <p className="text-[12.5px] leading-snug text-white">{criteriaLine(item)}</p>
           {(item.observation || item.witnessed || item.witnessPending) && (
             <div className="flex flex-wrap gap-1.5">
               {item.observation && (
-                <span className="inline-flex items-center rounded-full border border-sky-400/40 px-2 py-0.5 text-[11px] font-semibold text-sky-200">
-                  {item.observation.kind === 'professional_discussion' ? 'Discussed with' : 'Observed by'}{' '}
+                <span className="inline-flex items-center rounded-full border border-sky-400/40 px-2 py-0.5 text-[12px] font-semibold text-sky-200">
+                  {item.observation.kind === 'professional_discussion'
+                    ? 'Discussed with'
+                    : 'Observed by'}{' '}
                   {item.observation.observer_name}
                 </span>
               )}
               {item.witnessed && (
-                <span className="inline-flex items-center rounded-full border border-emerald-400/40 px-2 py-0.5 text-[11px] font-semibold text-emerald-300">
+                <span className="inline-flex items-center rounded-full border border-emerald-400/40 px-2 py-0.5 text-[12px] font-semibold text-emerald-300">
                   Witnessed
                 </span>
               )}
               {!item.witnessed && item.witnessPending && (
-                <span className="inline-flex items-center rounded-full border border-white/[0.16] px-2 py-0.5 text-[11px] font-semibold text-white">
+                <span className="inline-flex items-center rounded-full border border-white/[0.16] px-2 py-0.5 text-[12px] font-semibold text-white">
                   Witness asked
                 </span>
               )}
@@ -132,7 +181,9 @@ export function EvidenceCard({ item, onOpen }: { item: PortfolioItemView; onOpen
           {item.next.actionable ? 'Next: ' : ''}
           {item.next.label}
         </span>
-        {item.next.actionable && <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />}
+        {item.next.actionable && (
+          <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
+        )}
       </div>
     </button>
   );
@@ -151,7 +202,9 @@ export function EvidenceList({
 
   const units = useMemo(
     () =>
-      [...new Set(items.flatMap((i) => i.units))].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+      [...new Set(items.flatMap((i) => i.units))].sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true })
+      ),
     [items]
   );
 
@@ -188,7 +241,8 @@ export function EvidenceList({
     });
   }, [items, filter, unit, q]);
 
-  const filterCount = (k: Filter) => (k === 'draft' ? (counts.draft ?? 0) + (counts.suggested ?? 0) : counts[k] ?? 0);
+  const filterCount = (k: Filter) =>
+    k === 'draft' ? (counts.draft ?? 0) + (counts.suggested ?? 0) : (counts[k] ?? 0);
   const filtered = filter !== 'all' || unit !== 'all' || q.trim() !== '';
 
   return (
@@ -223,23 +277,21 @@ export function EvidenceList({
           )}
         </div>
         <div
-          className="-mx-4 flex min-w-0 flex-1 gap-2 overflow-x-auto px-4 pb-1 scrollbar-hide sm:mx-0 sm:px-0"
+          className={cn(P_TAB_RAIL, 'min-w-0 flex-1')}
           role="group"
           aria-label="Filter pieces of evidence by state"
         >
-          <span className="hidden shrink-0 self-center text-[12px] font-medium text-white sm:inline">
-            Evidence
-          </span>
           {FILTERS.map((f) => (
             <button
               key={f.key}
               type="button"
-              className={cn(pChip(filter === f.key), 'h-11 whitespace-nowrap')}
+              className={pTab(filter === f.key)}
               onClick={() => setFilter(f.key)}
               aria-pressed={filter === f.key}
             >
               {f.label}
-              <span className="ml-1.5 tabular-nums">{filterCount(f.key)}</span>
+              <span className="tabular-nums">{filterCount(f.key)}</span>
+              {filter === f.key && <span className={P_TAB_LINE} aria-hidden />}
             </button>
           ))}
         </div>
@@ -284,13 +336,24 @@ export function EvidenceList({
   );
 }
 
-function UnitPicker({ units, unit, onChange }: { units: string[]; unit: string; onChange: (u: string) => void }) {
+function UnitPicker({
+  units,
+  unit,
+  onChange,
+}: {
+  units: string[];
+  unit: string;
+  onChange: (u: string) => void;
+}) {
   return (
     <MobileSelectPicker
       value={unit}
       onValueChange={onChange}
       title="Filter by unit"
-      options={[{ value: 'all', label: 'All units' }, ...units.map((u) => ({ value: u, label: `Unit ${u}` }))]}
+      options={[
+        { value: 'all', label: 'All units' },
+        ...units.map((u) => ({ value: u, label: `Unit ${u}` })),
+      ]}
     />
   );
 }

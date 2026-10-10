@@ -367,10 +367,10 @@ const sections = [
                 <strong>Regulatory requirement</strong> — BS 7671 Reg 701.411.3.3 requires
                 additional protection by one or more RCDs having the characteristics specified in
                 Reg 415.1.1 (rated residual operating current not exceeding 30mA) for low-voltage
-                circuits serving a room containing a bath or shower, and for circuits passing through
-                zones 1 and 2 not serving the location. This includes the dedicated shower circuit.
-                Where the shower circuit is the only circuit in that location, a dedicated RCBO
-                protecting the shower circuit alone is the correct approach and avoids nuisance
+                circuits serving a room containing a bath or shower, and for circuits passing
+                through zones 1 and 2 not serving the location. This includes the dedicated shower
+                circuit. Where the shower circuit is the only circuit in that location, a dedicated
+                RCBO protecting the shower circuit alone is the correct approach and avoids nuisance
                 tripping affecting other circuits.
               </span>
             </li>
@@ -794,19 +794,19 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   When installing or replacing a shower in an older property, verify supplementary
-                  protective equipotential bonding under BS 7671 Reg 701.415.2 — the terminals of the
-                  protective conductor of each circuit supplying Class I and Class II equipment must
-                  be connected to accessible extraneous-conductive-parts in the room, including
-                  metallic service and waste pipes, metallic central heating pipework, and accessible
-                  metallic structural parts. This local supplementary bonding may be omitted only
-                  where the location's final circuits meet automatic disconnection, have 30mA RCD
-                  additional protection, and the extraneous-conductive-parts are effectively
-                  connected to the main protective bonding. Note that the A4:2026 AFDD requirement in
-                  Reg 421.1.7 applies to single-phase AC final circuits supplying socket-outlets
-                  rated up to 32A in specified building types (such as high-rise residential
-                  buildings, HMOs, purpose-built student accommodation and care homes) — a dedicated
-                  shower circuit is not a socket-outlet circuit, so 421.1.7 does not mandate an AFDD
-                  on the shower circuit itself.
+                  protective equipotential bonding under BS 7671 Reg 701.415.2 — the terminals of
+                  the protective conductor of each circuit supplying Class I and Class II equipment
+                  must be connected to accessible extraneous-conductive-parts in the room, including
+                  metallic service and waste pipes, metallic central heating pipework, and
+                  accessible metallic structural parts. This local supplementary bonding may be
+                  omitted only where the location's final circuits meet automatic disconnection,
+                  have 30mA RCD additional protection, and the extraneous-conductive-parts are
+                  effectively connected to the main protective bonding. Note that the AFDD
+                  requirement in Reg 421.1.7 (since A2:2022) applies to single-phase AC final
+                  circuits supplying socket-outlets rated up to 32A in specified building types
+                  (such as high-rise residential buildings, HMOs, purpose-built student
+                  accommodation and care homes) — a dedicated shower circuit is not a socket-outlet
+                  circuit, so 421.1.7 does not mandate an AFDD on the shower circuit itself.
                 </p>
               </div>
             </div>

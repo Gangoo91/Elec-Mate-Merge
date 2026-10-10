@@ -92,7 +92,7 @@ export function useSubmissionSignOffChain(submissionId: string | null): SignOffC
     const nameMap = new Map<string, string>();
     if (userIds.size > 0) {
       const { data: profiles } = await supabase
-        .from('profiles')
+        .from('public_profiles')
         .select('id, full_name')
         .in('id', Array.from(userIds));
       for (const p of ((profiles ?? []) as Array<{ id: string; full_name: string | null }>)) {

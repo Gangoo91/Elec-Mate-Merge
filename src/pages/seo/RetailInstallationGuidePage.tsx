@@ -47,8 +47,8 @@ const keyTakeaways = [
   'Fire alarm systems in retail premises must comply with BS 5839-1 and must be integrated with emergency lighting, access control, and any smoke ventilation systems for coordinated operation.',
   'Power distribution for retail must account for high lighting loads, electronic point-of-sale systems, refrigeration (food retail), HVAC, and seasonal variations in demand.',
   'Elec-Mate lets electricians complete EIC and EICR certificates for retail fit-outs on site, generate remedial quotes for defects, and deliver professional PDFs to the client before leaving.',
-  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends arc fault detection devices (AFDDs) for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in retail and other commercial premises. AFDDs are mandatory for high-rise residential buildings, HMOs, and care homes; recommended (not yet mandatory) for all other premises including retail.',
-  'Reg 133.1.3 (A4:2026) requires that any use of AFDDs or SPDs is recorded on the appropriate Part 6 electrical certification — the EIC for a retail fit-out must capture this information explicitly.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends arc fault detection devices (AFDDs) for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in retail and other commercial premises. Since A2:2022 AFDDs have been required in high rise residential buildings, HMOs, purpose-built student accommodation and care homes; for all other premises, including retail, they are recommended.',
+  'Since A2:2022, the Appendix 6 model forms include fields for recording the details of SPDs and AFDDs, so the EIC for a retail fit-out should capture any of these devices explicitly.',
 ];
 
 const faqs = [
@@ -445,8 +445,8 @@ const sections = [
             retail fit-outs should note this distinction: many retail clients and landlords are now
             requesting AFDD protection as best practice, particularly in fit-outs with substantial
             socket-outlet circuits supplying displays and point-of-sale equipment. Where AFDDs are
-            installed, their use must be recorded on the Electrical Installation Certificate in
-            accordance with Reg 133.1.3.
+            installed, record their details in the AFDD fields of the Electrical Installation
+            Certificate (added to the Appendix 6 model forms at A2:2022).
           </p>
         </div>
       </>
@@ -507,11 +507,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Reg 133.1.3 — A4:2026 certification requirement.</strong> Where AFDDs or
-                surge protection devices (SPDs) are installed in a retail fit-out, their use must be
-                explicitly recorded on the Electrical Installation Certificate (EIC) under Part 6 of
-                BS 7671. This is a new A4:2026 obligation: the EIC for a retail installation is not
-                complete without this entry where these devices are present.
+                <strong>Recording AFDDs and SPDs on the EIC.</strong> Where AFDDs or surge
+                protection devices (SPDs) are installed in a retail fit-out, record their details on
+                the Electrical Installation Certificate (EIC). The Appendix 6 model forms have
+                included fields for SPD and AFDD details since A2:2022, so the EIC is not complete
+                without these entries where the devices are present.
               </span>
             </li>
           </ul>
@@ -680,7 +680,7 @@ export default function RetailInstallationGuidePage() {
       title="Retail Electrical Installation: Shop Fit-Out"
       description="Complete guide to retail electrical installation and shop fit-out. Lighting design, emergency lighting (BS 5266), fire alarm integration (BS 5839)."
       datePublished="2025-10-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Retail Guide"

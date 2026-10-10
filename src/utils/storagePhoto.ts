@@ -36,6 +36,41 @@ export function safetyPhotoPath(ref: string | null | undefined): string | null {
 }
 
 const cache = new Map<string, { url: string; until: number }>();
+
+/*
+ * ELE-2031: a safety report sent from Worker Tools stores its photos as paths
+ * in the PRIVATE visual-uploads bucket (`<uid>/issues/…`, `<uid>/incidents/…`)
+ * on the worker's own near-miss / accident record. Signed here so the same
+ * <StoragePhoto> shows them in the Electrical Hub and the Employer Hub
+ * (storage RLS: the owner, or a manager of the firm via can_read_visual_upload).
+ */
+const VISUAL_UPLOAD_PATH =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/(issues|incidents)\//i;
+const visualCache = new Map<string, { url: string; until: number }>();
+
+export function isVisualUploadPath(ref: string | null | undefined): boolean {
+  return !!ref && VISUAL_UPLOAD_PATH.test(ref);
+}
+
+async function signVisualUpload(path: string): Promise<string> {
+  const hit = visualCache.get(path);
+  if (hit && hit.until > Date.now()) return hit.url;
+  try {
+    const { data } = await supabase.storage
+      .from('visual-uploads')
+      .createSignedUrl(path, TTL_SECONDS);
+    if (data?.signedUrl) {
+      visualCache.set(path, {
+        url: data.signedUrl,
+        until: Date.now() + (TTL_SECONDS - 600) * 1000,
+      });
+      return data.signedUrl;
+    }
+  } catch {
+    /* fall through */
+  }
+  return '';
+}
 let pending: Map<string, ((url: string | null) => void)[]> | null = null;
 
 async function flush(batch: Map<string, ((url: string | null) => void)[]>) {
@@ -65,6 +100,7 @@ async function flush(batch: Map<string, ((url: string | null) => void)[]>) {
  */
 export function resolveSafetyPhoto(ref: string | null | undefined): Promise<string> {
   const original = ref ?? '';
+  if (isVisualUploadPath(original)) return signVisualUpload(original);
   const path = safetyPhotoPath(original);
   if (!path) return Promise.resolve(original);
   const hit = cache.get(path);
@@ -86,6 +122,10 @@ export function resolveSafetyPhoto(ref: string | null | undefined): Promise<stri
 
 /** Synchronous cache read, so a re-render does not flash the old URL. */
 export function cachedSafetyPhoto(ref: string | null | undefined): string | null {
+  if (ref && isVisualUploadPath(ref)) {
+    const hit = visualCache.get(ref);
+    return hit && hit.until > Date.now() ? hit.url : null;
+  }
   const path = safetyPhotoPath(ref);
   if (!path) return ref ?? null;
   const hit = cache.get(path);

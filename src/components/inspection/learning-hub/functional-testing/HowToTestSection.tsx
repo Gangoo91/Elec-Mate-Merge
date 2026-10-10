@@ -56,7 +56,7 @@ const HowToTestSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Pre-test */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Before You Start</p>
+          <p className="text-[12px] font-medium text-white mb-3">Before You Start</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {preTestSteps.map((item, i) => (
@@ -71,7 +71,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Test sequence */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Functional Test Sequence</p>
+          <p className="text-[12px] font-medium text-white mb-3">Functional Test Sequence</p>
         </motion.div>
 
         {testSequence.map((item, i) => (
@@ -92,7 +92,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes to Avoid</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Mistakes to Avoid</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

@@ -34,7 +34,7 @@ const CertificateGuideProcedure = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Certificates</h1>
-              <p className="text-[10px] text-white">BS 7671 compliance guide</p>
+              <p className="text-[12px] text-white">BS 7671 compliance guide</p>
             </div>
           </div>
         </div>

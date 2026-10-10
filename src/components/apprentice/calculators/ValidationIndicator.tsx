@@ -17,7 +17,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
 
   const Pill = ({ label, ok }: { label: string; ok: boolean }) => (
     <span
-      className={`inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded-md border ${
+      className={`inline-flex items-center gap-1.5 text-[12px] px-2 py-0.5 rounded-md border ${
         ok
           ? 'border-white/10 bg-white/[0.03] text-white'
           : 'border-red-500/30 bg-red-500/[0.04] text-red-300'
@@ -39,7 +39,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
 
       {/* Validation Status */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           {validation.isValid ? 'Calculation valid' : 'Validation issues detected'}
         </span>
       </div>
@@ -47,7 +47,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
       {/* Errors */}
       {validation.errors.length > 0 && (
         <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          <span className="text-[12px] font-medium text-red-300">
             Errors
           </span>
           <ul className="space-y-1.5">
@@ -67,7 +67,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
       {/* Warnings */}
       {validation.warnings.length > 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[12px] font-medium text-white">
             Warnings
           </span>
           <ul className="space-y-1.5">
@@ -86,7 +86,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
 
       {/* Professional Notice */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Professional notice
         </span>
         <p className="text-[13px] text-white leading-relaxed">

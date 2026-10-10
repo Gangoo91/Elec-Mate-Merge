@@ -6,18 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import {
-  Pill,
-  IconButton,
-  inputClass,
-  checkboxClass,
-} from '@/components/college/primitives';
+import { Pill, IconButton, inputClass, checkboxClass } from '@/components/college/primitives';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import {
   useCollegeMessages,
@@ -159,7 +153,11 @@ export function CollegeChatView({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)]">
+      <SheetContent
+        hideCloseButton
+        side="bottom"
+        className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)]"
+      >
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-white/[0.08]">
           <IconButton onClick={() => onOpenChange(false)} aria-label="Back">
@@ -168,7 +166,7 @@ export function CollegeChatView({
 
           <Avatar className="h-10 w-10">
             <AvatarImage src={conversation.other_participant?.avatar_url || undefined} />
-            <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
+            <AvatarFallback className="bg-white/[0.1] font-semibold text-white">
               {info.name.slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
@@ -182,67 +180,37 @@ export function CollegeChatView({
 
           {/* Student context badge */}
           {conversation.student && (
-            <Pill tone="yellow" className="shrink-0">
-              {conversation.student.first_name} {conversation.student.last_name}
-            </Pill>
+            <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[12px] font-semibold text-white">
+              {conversation.student.name}
+            </span>
           )}
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <IconButton aria-label="More options">
-                <span className="text-[18px] leading-none">⋯</span>
-              </IconButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white">
-              {/* View Profile — for student/tutor conversations the
-                  other party usually has a college_students or
-                  college_staff record. We route to whichever matches:
-                  if it's the linked student, that's Student 360;
-                  otherwise we don't have a staff-profile route so fall
-                  back to closing + opening the People hub. */}
-              <DropdownMenuItem
-                onClick={() => {
-                  if (conversation.student?.id) {
-                    navigate(`/college/students/${conversation.student.id}`);
-                    onOpenChange(false);
-                  } else {
-                    toast({
-                      title: 'No profile to open',
-                      description: "This conversation isn't linked to a learner profile.",
-                    });
-                  }
-                }}
+          {/* One action: open the learner's record. "View profile" and
+              "View student progress" went to the same page, and Archive
+              only said it was not available yet, so both went (8 Oct). */}
+          {conversation.student?.id && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <IconButton aria-label="More options">
+                  <span className="text-[18px] leading-none">⋯</span>
+                </IconButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
               >
-                View profile
-              </DropdownMenuItem>
-              {conversation.student && (
                 <DropdownMenuItem
+                  className="min-h-11"
                   onClick={() => {
-                    navigate(`/college/students/${conversation.student!.id}`);
+                    navigate(`/college?section=student360&studentId=${conversation.student!.id}`);
                     onOpenChange(false);
                   }}
                 >
-                  View student progress
+                  Open learner record
                 </DropdownMenuItem>
-              )}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="text-red-400"
-                onClick={() => {
-                  // Archive isn't yet a server mutation — surface honest
-                  // status rather than silently fail. Wire to a real
-                  // mutation when the backing column exists.
-                  toast({
-                    title: 'Archive not yet available',
-                    description:
-                      'Conversation archiving needs a backend column — coming soon. For now, mute notifications instead.',
-                  });
-                }}
-              >
-                Archive conversation
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
 
         {/* Messages */}
@@ -260,9 +228,7 @@ export function CollegeChatView({
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
                 <p className="text-white">No messages yet</p>
-                <p className="text-xs text-white mt-1">
-                  Send a message to start the conversation
-                </p>
+                <p className="text-xs text-white mt-1">Send a message to start the conversation</p>
               </div>
             </div>
           ) : (
@@ -271,13 +237,17 @@ export function CollegeChatView({
 
               // Progress update message
               if (msg.message_type === 'progress_update') {
-                const metadata = msg.metadata as any;
+                const metadata = msg.metadata as {
+                  title?: string;
+                  details?: string;
+                  score?: number;
+                } | null;
                 return (
                   <div key={msg.id} className="flex justify-center my-4">
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-lg px-4 py-3 max-w-[80%]">
                       <div className="flex items-center gap-2 text-sm font-medium text-white">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                        Progress Update
+                        Progress update
                       </div>
                       <p className="text-sm text-white mt-1">{metadata?.title || msg.content}</p>
                       {metadata?.details && (
@@ -319,14 +289,14 @@ export function CollegeChatView({
                   <div className="max-w-[75%]">
                     {/* Confidential indicator */}
                     {msg.is_confidential && (
-                      <div className="flex items-center gap-1.5 text-[11px] text-amber-400 mb-1">
+                      <div className="flex items-center gap-1.5 text-[12px] text-amber-400 mb-1">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
                         Confidential
                       </div>
                     )}
                     {/* Not visible to student indicator */}
                     {!msg.visible_to_student && currentUserType !== 'student' && (
-                      <div className="flex items-center gap-1.5 text-[11px] text-white mb-1">
+                      <div className="flex items-center gap-1.5 text-[12px] text-white mb-1">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/30" />
                         Hidden from student
                       </div>
@@ -339,11 +309,7 @@ export function CollegeChatView({
                       } ${msg.is_confidential ? 'border-2 border-amber-500/50' : ''}`}
                     >
                       <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
-                      <p
-                        className={`text-[10px] mt-1 ${
-                          isOwn ? 'text-black/60' : 'text-white'
-                        }`}
-                      >
+                      <p className={`text-[12px] mt-1 ${isOwn ? 'text-black/60' : 'text-white'}`}>
                         {new Date(msg.sent_at).toLocaleTimeString([], {
                           hour: '2-digit',
                           minute: '2-digit',
@@ -405,7 +371,7 @@ export function CollegeChatView({
             onClick={handleSend}
             disabled={!message.trim() || isSending}
             aria-label="Send message"
-            className="h-11 w-11 shrink-0 inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 disabled:active:scale-100 transition-all touch-manipulation"
+            className="h-11 w-11 shrink-0 inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:active:scale-100 transition-all touch-manipulation"
           >
             <span className="text-[16px] font-semibold">→</span>
           </button>

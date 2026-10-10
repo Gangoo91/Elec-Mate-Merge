@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -14,29 +15,33 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  EmptyState,
   LoadingBlocks,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
   Field,
   FormCard,
-  SheetShell,
-  Eyebrow,
-  Avatar,
   inputClass,
   textareaClass,
   selectTriggerClass,
   selectContentClass,
-  type Tone,
 } from '@/components/employer/editorial';
-import { Phone, Mail, Plus, UserPlus, Sparkles, Copy, Check, Send, Zap } from 'lucide-react';
+import {
+  PanelTitle,
+  PlainEmpty,
+  Row,
+  RowList,
+  Segments,
+  StatusPill,
+  Initials,
+  colClass,
+  frameClass,
+  heroPrimaryClass,
+  panel,
+  twoColClass,
+  type PillTone,
+} from '@/components/employer/pageParts/PageParts';
+import { Phone, Mail, Plus, UserPlus, Sparkles, Copy, Check, Send } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import {
   useLeads,
@@ -53,32 +58,11 @@ import { copyToClipboard } from '@/utils/clipboard';
 import { toast } from '@/hooks/use-toast';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { LEADS_HELP } from '@/components/employer/help/clients';
+import { decidedCount, winRate as winRateOf } from '@/utils/winRate';
 
 const fmt = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
-const initialsOf = (name: string) =>
-  name
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase() ?? '')
-    .join('') || 'LD';
-
-const stageTone = (s: LeadStage): Tone => {
-  switch (s) {
-    case 'New':
-      return 'blue';
-    case 'Contacted':
-      return 'cyan';
-    case 'Quoted':
-      return 'amber';
-    case 'Won':
-      return 'emerald';
-    case 'Lost':
-      return 'red';
-    default:
-      return 'default';
-  }
-};
+const stageTone = (s: LeadStage): PillTone =>
+  s === 'New' ? 'volt' : s === 'Won' ? 'green' : s === 'Lost' ? 'red' : 'neutral';
 
 const EMPTY_FORM = {
   name: '',
@@ -177,8 +161,10 @@ export function LeadsSection() {
   const openLeads = leads.filter((l) => l.stage !== 'Won' && l.stage !== 'Lost');
   const pipeline = openLeads.reduce((s, l) => s + (Number(l.estimated_value) || 0), 0);
   const wonCount = leads.filter((l) => l.stage === 'Won').length;
-  const decided = leads.filter((l) => l.stage === 'Won' || l.stage === 'Lost').length;
-  const winRate = decided > 0 ? Math.round((wonCount / decided) * 100) : 0;
+  const lostCount = leads.filter((l) => l.stage === 'Lost').length;
+  // The one win rate (src/utils/winRate.ts): won of decided. Leads don't expire.
+  const decided = decidedCount({ won: wonCount, lost: lostCount });
+  const winRate = winRateOf({ won: wonCount, lost: lostCount }) ?? 0;
 
   const filtered = useMemo(
     () => (filter === 'all' ? leads : leads.filter((l) => l.stage === filter)),
@@ -259,17 +245,38 @@ export function LeadsSection() {
         ]
       : [];
 
+  const newLeads = leads
+    .filter((l) => l.stage === 'New')
+    .sort((x, y) => (x.created_at < y.created_at ? -1 : 1));
+  const headline = isLoading
+    ? 'Loading your leads.'
+    : leads.length === 0
+      ? 'No leads yet. Your quote page fills this list on its own.'
+      : newLeads.length > 0
+        ? `${newLeads.length} new lead${newLeads.length === 1 ? '' : 's'} to reply to. The first firm to call usually wins.`
+        : openLeads.length > 0
+          ? `${openLeads.length} open lead${openLeads.length === 1 ? '' : 's'}${pipeline > 0 ? ` worth ${fmt(pipeline)}` : ''}. Nothing new waiting.`
+          : 'Nothing open. Share your quote page to bring more in.';
+
+  const openLead = (l: Lead) => {
+    setSelected(l);
+    setDraftText('');
+    followUp.reset();
+  };
+
   return (
     <>
-      <PageFrame>
+      <PageFrame className={frameClass}>
         <PageHero
-          eyebrow="Sales"
           title="Leads"
-          description="Every enquiry from first contact to won. Before it becomes a client."
-          tone="cyan"
+          description={headline}
           actions={
             <>
-              <PrimaryButton data-help="leads.add" onClick={() => setAddOpen(true)}>
+              <PrimaryButton
+                data-help="leads.add"
+                onClick={() => setAddOpen(true)}
+                className={heroPrimaryClass}
+              >
                 <Plus className="h-4 w-4 mr-1.5" />
                 Add lead
               </PrimaryButton>
@@ -288,170 +295,245 @@ export function LeadsSection() {
           askContext={{ page: 'leads', tab: filter }}
         />
 
-        <StatStrip
-          columns={4}
-          stats={[
-            { label: 'Open leads', value: openLeads.length, tone: 'cyan' },
-            { label: 'Pipeline', value: fmt(pipeline), tone: 'blue', accent: true },
-            { label: 'Won', value: wonCount, tone: 'emerald' },
-            {
-              label: 'Win rate',
-              value: decided > 0 ? `${winRate}%` : '—',
-              tone: decided === 0 ? undefined : winRate >= 50 ? 'emerald' : 'amber',
-            },
-          ]}
-        />
-
-        <div data-help="leads.tabs">
-          <FilterBar
-            tabs={tabs}
-            activeTab={filter}
-            onTabChange={(v) => setFilter(v as 'all' | LeadStage)}
+        {leads.length > 0 && (
+          <StatStrip
+            columns={4}
+            stats={[
+              {
+                label: 'Open leads',
+                value: openLeads.length,
+                sub: newLeads.length > 0 ? `${newLeads.length} new` : 'None new',
+                tone: newLeads.length > 0 ? 'yellow' : undefined,
+                onClick: () => setFilter('New'),
+              },
+              { label: 'Pipeline', value: fmt(pipeline), sub: 'Estimated, open leads' },
+              {
+                label: 'Won',
+                value: wonCount,
+                sub: 'Converted to clients',
+                onClick: () => setFilter('Won'),
+              },
+              {
+                label: 'Win rate',
+                value: decided > 0 ? `${winRate}%` : '—',
+                sub: decided > 0 ? `Of ${decided} decided` : 'None decided yet',
+              },
+            ]}
           />
-        </div>
-
-        {isLoading ? (
-          <LoadingBlocks />
-        ) : leads.length === 0 ? (
-          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5 sm:p-6">
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 shrink-0 rounded-xl bg-white/[0.06] border border-elec-yellow/25 grid place-items-center">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div className="min-w-0">
-                <h3 className="text-[15px] font-semibold text-white">No leads yet</h3>
-                <p className="mt-1 text-[12.5px] text-white leading-relaxed">
-                  Your quote page is the fastest way to fill this pipeline. Share the link or QR
-                  and every enquiry lands here automatically. You can also add leads by hand.
-                </p>
-              </div>
-            </div>
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <PrimaryButton onClick={() => setSearchParams({ section: 'quotepage' })} fullWidth>
-                <Zap className="h-4 w-4 mr-1.5" />
-                Share your quote page
-              </PrimaryButton>
-              <SecondaryButton onClick={() => setAddOpen(true)} fullWidth>
-                <Plus className="h-4 w-4 mr-1.5" />
-                Add a lead
-              </SecondaryButton>
-            </div>
-          </div>
-        ) : filtered.length === 0 ? (
-          <EmptyState title="None in this stage" description="Try another stage." />
-        ) : (
-          <ListCard>
-            <ListCardHeader
-              tone="cyan"
-              title="Pipeline"
-              meta={<Pill tone="default">{filtered.length}</Pill>}
-            />
-            <div data-help="leads.list">
-            <ListBody>
-              {filtered.map((l) => (
-                <ListRow
-                  key={l.id}
-                  onClick={() => {
-                    setSelected(l);
-                    setDraftText('');
-                    followUp.reset();
-                  }}
-                  lead={<Avatar initials={initialsOf(l.name)} />}
-                  title={l.name}
-                  subtitle={[l.contact_name, l.source].filter(Boolean).join(' · ') || 'No details'}
-                  trailing={
-                    <span className="flex items-center gap-2">
-                      {l.estimated_value > 0 && (
-                        <span className="text-[13px] font-semibold text-white tabular-nums">
-                          {fmt(l.estimated_value)}
-                        </span>
-                      )}
-                      <Pill tone={stageTone(l.stage)}>{l.stage}</Pill>
-                    </span>
-                  }
-                />
-              ))}
-            </ListBody>
-            </div>
-          </ListCard>
         )}
+
+        <div className={leads.length > 0 ? twoColClass : undefined}>
+          <section className={colClass}>
+            <div>
+              <PanelTitle
+                title={filter === 'all' ? 'All leads' : filter}
+                meta={leads.length > 0 ? `${filtered.length}` : undefined}
+              />
+              {leads.length > 0 && (
+                <div data-help="leads.tabs" className="mb-3">
+                  <Segments
+                    wrap
+                    items={tabs.map((t) => ({ ...t, value: t.value as 'all' | LeadStage }))}
+                    value={filter}
+                    onChange={(v) => setFilter(v)}
+                  />
+                </div>
+              )}
+              {isLoading ? (
+                <LoadingBlocks />
+              ) : leads.length === 0 ? (
+                <div className={cn(panel, 'px-4 py-4 sm:px-5')}>
+                  <p className="text-[15px] font-semibold text-white">No leads yet</p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-white">
+                    Share your quote page link or QR and every enquiry lands here. You can also add
+                    leads by hand.
+                  </p>
+                  <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                    <PrimaryButton onClick={() => setSearchParams({ section: 'quotepage' })}>
+                      Share your quote page
+                    </PrimaryButton>
+                    <SecondaryButton onClick={() => setAddOpen(true)}>
+                      <Plus className="h-4 w-4 mr-1.5" />
+                      Add a lead
+                    </SecondaryButton>
+                  </div>
+                </div>
+              ) : filtered.length === 0 ? (
+                <PlainEmpty
+                  stacked
+                  text="No leads at this stage."
+                  action="Show all"
+                  onAction={() => setFilter('all')}
+                />
+              ) : (
+                <div data-help="leads.list">
+                  <RowList>
+                    {filtered.map((l) => (
+                      <Row
+                        wrapDetail
+                        key={l.id}
+                        onClick={() => openLead(l)}
+                        lead={<Initials name={l.name} fallback="LD" />}
+                        title={l.name}
+                        detail={
+                          [l.contact_name, l.source].filter(Boolean).join(' · ') || 'No details'
+                        }
+                        trailing={
+                          <>
+                            {l.estimated_value > 0 && (
+                              <span className="hidden text-[14px] font-semibold tabular-nums text-white sm:inline">
+                                {fmt(l.estimated_value)}
+                              </span>
+                            )}
+                            <StatusPill tone={stageTone(l.stage)}>{l.stage}</StatusPill>
+                          </>
+                        }
+                      />
+                    ))}
+                  </RowList>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {leads.length > 0 && (
+            <aside className={colClass}>
+              {/* On a phone the list above already leads with new enquiries. */}
+              <div className="hidden lg:block">
+                <PanelTitle
+                  title="Reply first"
+                  meta={newLeads.length > 0 ? `${newLeads.length}` : undefined}
+                />
+                {newLeads.length === 0 ? (
+                  <PlainEmpty
+                    stacked
+                    text="Nothing new waiting. New enquiries show here, oldest first."
+                  />
+                ) : (
+                  <RowList>
+                    {newLeads.slice(0, 5).map((l) => (
+                      <Row
+                        wrapDetail
+                        key={l.id}
+                        title={l.name}
+                        detail={`Came in ${new Date(l.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}${l.source ? ` · ${l.source}` : ''}`}
+                        chevron={false}
+                        trailing={
+                          <button
+                            type="button"
+                            onClick={() => openLead(l)}
+                            className="h-11 rounded-xl bg-elec-yellow px-4 text-[14px] font-semibold text-black touch-manipulation"
+                          >
+                            Reply
+                          </button>
+                        }
+                      />
+                    ))}
+                  </RowList>
+                )}
+              </div>
+              <div>
+                <PanelTitle title="Get more leads" />
+                <RowList>
+                  <Row
+                    wrapDetail
+                    title="Your quote page"
+                    detail="Share the link or QR. Requests land here."
+                    onClick={() => setSearchParams({ section: 'quotepage' })}
+                  />
+                </RowList>
+              </div>
+            </aside>
+          )}
+        </div>
       </PageFrame>
 
       {/* Add lead */}
-      <Sheet open={addOpen} onOpenChange={setAddOpen}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <SheetShell eyebrow="Sales" title="Add lead">
-            <div className="space-y-4">
-              <FormCard eyebrow="Enquiry">
-                <Field label="Name / company">
-                  <Input
-                    className={inputClass}
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="Who got in touch"
-                  />
-                </Field>
-                <Field label="Contact name">
-                  <Input
-                    className={inputClass}
-                    value={form.contact_name}
-                    onChange={(e) => setForm({ ...form, contact_name: e.target.value })}
-                  />
-                </Field>
-                <Field label="Email">
-                  <Input
-                    className={inputClass}
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  />
-                </Field>
-                <Field label="Phone">
-                  <Input
-                    className={inputClass}
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  />
-                </Field>
-                <Field label="Source">
-                  <Input
-                    className={inputClass}
-                    value={form.source}
-                    onChange={(e) => setForm({ ...form, source: e.target.value })}
-                    placeholder="Referral, website, Checkatrade…"
-                  />
-                </Field>
-                <Field label="Estimated value (£)">
-                  <Input
-                    className={inputClass}
-                    inputMode="numeric"
-                    value={form.estimated_value}
-                    onChange={(e) => setForm({ ...form, estimated_value: e.target.value })}
-                  />
-                </Field>
-                <Field label="Notes">
-                  <Textarea
-                    className={textareaClass}
-                    value={form.notes}
-                    onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  />
-                </Field>
-                <div className="flex gap-2">
-                  <SecondaryButton onClick={() => setAddOpen(false)} fullWidth>
-                    Cancel
-                  </SecondaryButton>
-                  <PrimaryButton onClick={submitAdd} disabled={createLead.isPending} fullWidth>
-                    {createLead.isPending ? 'Adding…' : 'Add lead'}
-                  </PrimaryButton>
-                </div>
-              </FormCard>
+      <FormSheet
+        open={addOpen}
+        onOpenChange={setAddOpen}
+        title="Add lead"
+        description="A phone call, a referral or anything that did not come through your quote page."
+        width="wide"
+        bodyClassName="space-y-5 pt-1"
+        footer={
+          <div className="flex gap-2">
+            <SecondaryButton onClick={() => setAddOpen(false)} className="flex-1 lg:flex-none">
+              Cancel
+            </SecondaryButton>
+            <PrimaryButton onClick={submitAdd} disabled={createLead.isPending} className="flex-1">
+              {createLead.isPending ? 'Adding…' : 'Add lead'}
+            </PrimaryButton>
+          </div>
+        }
+      >
+        <div className="grid gap-5 lg:grid-cols-2 lg:gap-8">
+          <FormCard eyebrow="Who got in touch">
+            <Field label="Name / company">
+              <Input
+                className={inputClass}
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                placeholder="Who got in touch"
+              />
+            </Field>
+            <Field label="Contact name">
+              <Input
+                className={inputClass}
+                value={form.contact_name}
+                onChange={(e) => setForm({ ...form, contact_name: e.target.value })}
+              />
+            </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Email">
+                <Input
+                  className={inputClass}
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </Field>
+              <Field label="Phone">
+                <Input
+                  className={inputClass}
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                />
+              </Field>
             </div>
-          </SheetShell>
-        </SheetContent>
-      </Sheet>
+          </FormCard>
+          <FormCard eyebrow="The job">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Source">
+                <Input
+                  className={inputClass}
+                  value={form.source}
+                  onChange={(e) => setForm({ ...form, source: e.target.value })}
+                  placeholder="Referral, website, Checkatrade…"
+                />
+              </Field>
+              <Field label="Estimated value (£)">
+                <Input
+                  className={inputClass}
+                  inputMode="numeric"
+                  value={form.estimated_value}
+                  onChange={(e) => setForm({ ...form, estimated_value: e.target.value })}
+                />
+              </Field>
+            </div>
+            <Field label="Notes">
+              <Textarea
+                className={textareaClass}
+                value={form.notes}
+                onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              />
+            </Field>
+          </FormCard>
+        </div>
+      </FormSheet>
 
       {/* Lead detail */}
-      <Sheet
+      <FormSheet
         open={!!selected}
         onOpenChange={(o) => {
           if (!o) {
@@ -461,47 +543,129 @@ export function LeadsSection() {
             followUp.reset();
           }
         }}
-      >
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          {selected && (
-            <SheetShell
-              eyebrow="Lead"
-              title={selected.name}
-              description={selected.source || undefined}
-            >
-              <div className="space-y-4">
-                <StatStrip
-                  columns={2}
-                  stats={[
-                    {
-                      label: 'Estimated value',
-                      value: fmt(selected.estimated_value),
-                      accent: true,
-                    },
-                    { label: 'Stage', value: selected.stage, tone: stageTone(selected.stage) },
-                  ]}
-                />
-
-                <div className="grid grid-cols-2 gap-2">
-                  <SecondaryButton
-                    onClick={() => selected.phone && openExternalUrl(`tel:${selected.phone}`)}
-                    disabled={!selected.phone}
-                    fullWidth
+        title={selected?.name ?? 'Lead'}
+        description={
+          selected
+            ? [
+                selected.stage,
+                selected.estimated_value > 0 ? fmt(selected.estimated_value) : null,
+                selected.source,
+              ]
+                .filter(Boolean)
+                .join(' · ')
+            : undefined
+        }
+        width="wide"
+        bodyClassName="pt-1"
+        footer={
+          selected ? (
+            <div data-help="leads.convert">
+              {selected.converted_customer_id || selected.converted_client_id ? (
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-[13px] text-white">
+                    Converted to a client. Quote them now, or find them in Clients.
+                  </p>
+                  <PrimaryButton
+                    onClick={() => {
+                      const params: Record<string, string> = {
+                        section: 'quotes',
+                        new: 'quote',
+                        client: selected.name,
+                        // ELE-2073: straight onto the job templates.
+                        template: 'pick',
+                      };
+                      if (selected.email) params.email = selected.email;
+                      if (selected.phone) params.phone = selected.phone;
+                      setSearchParams(params);
+                    }}
+                    className="w-full sm:w-auto"
                   >
-                    <Phone className="h-4 w-4 mr-1.5" />
-                    Call
-                  </SecondaryButton>
-                  <SecondaryButton
-                    onClick={() => selected.email && openExternalUrl(`mailto:${selected.email}`)}
-                    disabled={!selected.email}
-                    fullWidth
-                  >
-                    <Mail className="h-4 w-4 mr-1.5" />
-                    Email
-                  </SecondaryButton>
+                    Write a quote
+                  </PrimaryButton>
                 </div>
+              ) : (
+                <PrimaryButton
+                  onClick={() => convert(selected)}
+                  disabled={convertLead.isPending}
+                  fullWidth
+                >
+                  <UserPlus className="h-4 w-4 mr-1.5" />
+                  {convertLead.isPending ? 'Converting…' : 'Convert to client'}
+                </PrimaryButton>
+              )}
+            </div>
+          ) : undefined
+        }
+      >
+        {selected && (
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-8">
+            <div className="space-y-5">
+              <div className="grid grid-cols-2 gap-2">
+                <SecondaryButton
+                  onClick={() => selected.phone && openExternalUrl(`tel:${selected.phone}`)}
+                  disabled={!selected.phone}
+                  fullWidth
+                >
+                  <Phone className="h-4 w-4 mr-1.5" />
+                  Call
+                </SecondaryButton>
+                <SecondaryButton
+                  onClick={() => selected.email && openExternalUrl(`mailto:${selected.email}`)}
+                  disabled={!selected.email}
+                  fullWidth
+                >
+                  <Mail className="h-4 w-4 mr-1.5" />
+                  Email
+                </SecondaryButton>
+              </div>
 
-                <div data-help="leads.followup">
+              <div data-help="leads.stage">
+                <FormCard eyebrow="Stage">
+                  <Field label="Move to">
+                    <Select
+                      value={selected.stage}
+                      onValueChange={(v) => setStage(selected, v as LeadStage)}
+                    >
+                      <SelectTrigger className={selectTriggerClass}>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className={selectContentClass}>
+                        {LEAD_STAGES.map((s) => (
+                          <SelectItem key={s} value={s}>
+                            {s}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </FormCard>
+              </div>
+
+              <FormCard eyebrow="Details">
+                <dl className="divide-y divide-white/[0.07] -my-1">
+                  {[
+                    ['Estimated value', selected.estimated_value > 0 ? fmt(selected.estimated_value) : ''],
+                    ['Contact', selected.contact_name],
+                    ['Email', selected.email],
+                    ['Phone', selected.phone],
+                    ['Notes', selected.notes],
+                    ['Added', new Date(selected.created_at).toLocaleDateString('en-GB')],
+                  ]
+                    .filter(([, v]) => !!v)
+                    .map(([k, v]) => (
+                      <div key={k} className="flex gap-4 py-2.5">
+                        <dt className="w-32 shrink-0 text-[13px] text-white">{k}</dt>
+                        <dd className="min-w-0 flex-1 break-words text-[14px] font-medium text-white">
+                          {v}
+                        </dd>
+                      </div>
+                    ))}
+                </dl>
+              </FormCard>
+            </div>
+
+            <div className="space-y-5">
+              <div data-help="leads.followup">
                 <FormCard eyebrow="Follow up with Mate">
                   <div className="grid grid-cols-2 gap-2">
                     <SecondaryButton
@@ -523,11 +687,11 @@ export function LeadsSection() {
                   </div>
 
                   {followUp.loading && !followUp.draft && (
-                    <p className="text-[12.5px] text-white">
+                    <p className="text-[13px] text-white">
                       Mate is drafting your {channel === 'sms' ? 'text' : 'email'}…
                     </p>
                   )}
-                  {followUp.error && <p className="text-[12.5px] text-red-400">{followUp.error}</p>}
+                  {followUp.error && <p className="text-[13px] text-red-400">{followUp.error}</p>}
 
                   {(draftShown || followUp.loading) && (
                     <div className="space-y-2">
@@ -549,127 +713,52 @@ export function LeadsSection() {
                             )}
                             {draftCopied ? 'Copied' : 'Copy'}
                           </SecondaryButton>
-                          <PrimaryButton
+                          <SecondaryButton
                             onClick={() => sendDraft(selected)}
                             disabled={channel === 'sms' ? !selected.phone : !selected.email}
                             fullWidth
                           >
                             <Send className="h-4 w-4 mr-1.5" />
                             Send{channel === 'sms' ? ' text' : ' email'}
-                          </PrimaryButton>
+                          </SecondaryButton>
                         </div>
                       )}
                     </div>
                   )}
                 </FormCard>
-                </div>
+              </div>
 
-                <div data-help="leads.stage">
-                <FormCard eyebrow="Move stage">
-                  <Field label="Stage">
-                    <Select
-                      value={selected.stage}
-                      onValueChange={(v) => setStage(selected, v as LeadStage)}
-                    >
-                      <SelectTrigger className={selectTriggerClass}>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        {LEAD_STAGES.map((s) => (
-                          <SelectItem key={s} value={s}>
-                            {s}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </Field>
-                </FormCard>
-                </div>
-
-                {(selected.contact_name || selected.email || selected.phone || selected.notes) && (
-                  <ListCard>
-                    <ListCardHeader tone="default" title="Details" />
-                    <ListBody>
-                      {selected.contact_name && (
-                        <ListRow title="Contact" subtitle={selected.contact_name} />
-                      )}
-                      {selected.email && <ListRow title="Email" subtitle={selected.email} />}
-                      {selected.phone && <ListRow title="Phone" subtitle={selected.phone} />}
-                      {selected.notes && <ListRow title="Notes" subtitle={selected.notes} />}
-                    </ListBody>
-                  </ListCard>
-                )}
-
-                {/* Convert / manage */}
-                <div data-help="leads.convert">
-                {selected.converted_customer_id || selected.converted_client_id ? (
-                  <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 space-y-3">
-                    <p className="text-[13px] text-white">
-                      Converted to a client. Quote them now, or find them in Clients.
-                    </p>
-                    <PrimaryButton
-                      onClick={() => {
-                        const params: Record<string, string> = {
-                          section: 'quotes',
-                          new: 'quote',
-                          client: selected.name,
-                        };
-                        if (selected.email) params.email = selected.email;
-                        if (selected.phone) params.phone = selected.phone;
-                        setSearchParams(params);
-                      }}
+              {confirmDelete ? (
+                <FormCard eyebrow="Delete lead">
+                  <p className="text-[13px] text-white">This removes the lead. Can't be undone.</p>
+                  <div className="flex gap-2">
+                    <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
+                      Cancel
+                    </SecondaryButton>
+                    <DestructiveButton
+                      onClick={() => remove(selected)}
+                      disabled={deleteLead.isPending}
                       fullWidth
                     >
-                      Write a quote
-                    </PrimaryButton>
+                      {deleteLead.isPending ? 'Deleting…' : 'Delete'}
+                    </DestructiveButton>
                   </div>
-                ) : (
-                  <PrimaryButton
-                    onClick={() => convert(selected)}
-                    disabled={convertLead.isPending}
-                    fullWidth
+                </FormCard>
+              ) : (
+                <div className="flex justify-end">
+                  <SecondaryButton
+                    onClick={() => setConfirmDelete(true)}
+                    size="sm"
+                    className="h-11"
                   >
-                    <UserPlus className="h-4 w-4 mr-1.5" />
-                    {convertLead.isPending ? 'Converting…' : 'Convert to client'}
-                  </PrimaryButton>
-                )}
+                    Delete lead
+                  </SecondaryButton>
                 </div>
-
-                <div className="pt-1">
-                  {confirmDelete ? (
-                    <FormCard eyebrow="Delete lead">
-                      <p className="text-[13px] text-white">
-                        This removes the lead. Can't be undone.
-                      </p>
-                      <div className="flex gap-2">
-                        <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
-                          Cancel
-                        </SecondaryButton>
-                        <DestructiveButton
-                          onClick={() => remove(selected)}
-                          disabled={deleteLead.isPending}
-                          fullWidth
-                        >
-                          {deleteLead.isPending ? 'Deleting…' : 'Delete'}
-                        </DestructiveButton>
-                      </div>
-                    </FormCard>
-                  ) : (
-                    <div className="flex items-center justify-between">
-                      <Eyebrow>
-                        Added {new Date(selected.created_at).toLocaleDateString('en-GB')}
-                      </Eyebrow>
-                      <SecondaryButton onClick={() => setConfirmDelete(true)} size="sm">
-                        Delete
-                      </SecondaryButton>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
+              )}
+            </div>
+          </div>
+        )}
+      </FormSheet>
     </>
   );
 }

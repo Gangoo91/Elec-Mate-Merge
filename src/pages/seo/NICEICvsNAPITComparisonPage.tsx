@@ -90,7 +90,7 @@ const faqs = [
     question:
       'What does BS 7671 18th Edition Amendment 4 (A4:2026) mean for NICEIC and NAPIT assessors?',
     answer:
-      'From April 2026, BS 7671:2018+A4:2026 introduces new requirements that assessors from both schemes will check on domestic installations. Regulation 411.3.4 now requires that AC final circuits supplying luminaires in domestic premises are provided with additional protection by an RCD with a rated residual operating current not exceeding 30 mA — in plain terms, lighting circuits in new domestic work must be RCD-protected. Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. Both NICEIC and NAPIT assessors inspecting installations designed or completed after the April 2026 effective date will verify compliance with the updated standard. Electricians should ensure their consumer unit layouts and installation documentation reflect A4:2026 before any assessment visit.',
+      'Assessors from both schemes check domestic work against BS 7671:2018+A4:2026, and two rules come up often. Regulation 411.3.4, in force since BS 7671:2018, requires that AC final circuits supplying luminaires in domestic premises are provided with additional protection by an RCD with a rated residual operating current not exceeding 30 mA — in plain terms, lighting circuits in new domestic work must be RCD-protected. Regulation 421.1.7, since A2:2022, requires arc fault detection devices (AFDDs) on socket-outlet final circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommends them elsewhere. Both NICEIC and NAPIT assessors will verify compliance with the current standard. Electricians should ensure their consumer unit layouts and installation documentation reflect A4:2026 before any assessment visit.',
   },
 ];
 
@@ -306,15 +306,15 @@ const sections = [
             What assessors check against the 18th Edition A4:2026
           </h4>
           <p className="text-white text-sm leading-relaxed">
-            From April 2026, BS 7671:2018+A4:2026 introduces requirements that both NICEIC and NAPIT
-            assessors will check on new domestic installations. Regulation 411.3.4 now mandates
+            Both NICEIC and NAPIT assessors check new domestic installations against BS 7671:2018+A4:2026.
+            Regulation 411.3.4, in force since 2018, mandates
             additional protection by an RCD with a rated residual operating current not exceeding 30
             mA on AC final circuits supplying luminaires in domestic premises — meaning lighting
-            circuits in new domestic work must be RCD-protected. Regulation 421.1.7 recommends arc
-            fault detection devices (AFDDs) on AC final circuits of fixed installations to mitigate
-            fire risk from arc fault currents. Assessors inspecting installations completed after
-            the April 2026 effective date will verify compliance with both requirements, so consumer
-            unit design and circuit documentation must reflect the updated standard.
+            circuits in new domestic work must be RCD-protected. Regulation 421.1.7, since A2:2022,
+            requires arc fault detection devices (AFDDs) on socket-outlet final circuits up to 32 A in
+            high rise residential buildings, HMOs, purpose-built student accommodation and care
+            homes, and recommends them elsewhere. Assessors will verify compliance with both, so
+            consumer unit design and circuit documentation must reflect the current standard.
           </p>
         </div>
       </>
@@ -598,7 +598,7 @@ export default function NICEICvsNAPITComparisonPage() {
       title="NICEIC vs NAPIT Cost: £400–£600 vs £350–£550"
       description="NICEIC approx £400–£600/yr (Domestic Installer £200–£350), NAPIT £350–£550 for a sole trader. Assessment style, insurer acceptance and Part P compared."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

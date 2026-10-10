@@ -171,9 +171,32 @@ interface PriorJudgement {
 
 const REQUIRED_OTJ_MIN = 37_440; // 624 h × 60
 
+/**
+ * The caller's own client, from the request's Authorization header. Pass it
+ * as `asCaller` so criteria and off-the-job figures match every screen.
+ * Null when there is no header; loadLearnerContext then uses the old sources.
+ */
+export function callerFrom(req: Request): Sb | undefined {
+  const auth = req.headers.get('authorization');
+  const url = Deno.env.get('SUPABASE_URL');
+  const anon = Deno.env.get('SUPABASE_ANON_KEY');
+  if (!auth || !url || !anon) return undefined;
+  return createClient(url, anon, {
+    global: { headers: { Authorization: auth } },
+    auth: { persistSession: false },
+  });
+}
+
 export async function loadLearnerContext(
   sb: Sb,
-  collegeStudentId: string
+  collegeStudentId: string,
+  /**
+   * The caller's own client. When given, criteria counts come from
+   * get_portfolio_ac_state (the one criterion state every screen reads), which
+   * refuses the service role. Without it the old student_ac_coverage tracker
+   * is used, which can say "0 of 340" for a learner with criteria passed.
+   */
+  opts: { asCaller?: Sb } = {}
 ): Promise<LearnerContext | null> {
   const { data: studentRow } = await sb
     .from('college_students')
@@ -337,9 +360,24 @@ export async function loadLearnerContext(
   }
 
   // AC coverage
-  const ac = aggregateAcCoverage(
-    (acRes.data ?? []) as Array<{ unit_code: string; status: string }>
-  );
+  let acRows = (acRes.data ?? []) as Array<{ unit_code: string; status: string }>;
+  if (opts.asCaller && userId) {
+    const rpc = opts.asCaller.rpc.bind(opts.asCaller) as unknown as (
+      fn: string,
+      args: Record<string, unknown>
+    ) => PromiseLike<{ data: unknown; error: { message: string } | null }>;
+    const { data: states, error: stateErr } = await rpc('get_portfolio_ac_state', {
+      p_user_id: userId,
+    });
+    if (stateErr) console.error('[learner-context] get_portfolio_ac_state', stateErr.message);
+    else if (Array.isArray(states) && states.length) {
+      acRows = (states as Array<{ unit_code: string; state: string }>).map((r) => ({
+        unit_code: r.unit_code,
+        status: AC_STATE_TO_COVERAGE[r.state] ?? 'not_started',
+      }));
+    }
+  }
+  const ac = aggregateAcCoverage(acRows);
   if (qualCode && ac.weak_units.length > 0) {
     const { data: titles } = await sb
       .from('qualification_requirements')
@@ -430,6 +468,25 @@ export async function loadLearnerContext(
         : null,
     last_28_minutes: Math.round(last28Minutes),
   };
+  // With the caller's client, the one off-the-job figure every screen shows
+  // (get_otj_summary: counted hours against the learner's real target), not
+  // the fixed 624 h and the raw sum above.
+  if (opts.asCaller && userId) {
+    const rpc = opts.asCaller.rpc.bind(opts.asCaller) as unknown as (
+      fn: string,
+      args: Record<string, unknown>
+    ) => PromiseLike<{ data: unknown; error: { message: string } | null }>;
+    const { data: sum, error: sumErr } = await rpc('get_otj_summary', { p_user: userId });
+    if (sumErr) console.error('[learner-context] get_otj_summary', sumErr.message);
+    else if (sum && typeof sum === 'object') {
+      const o = sum as { counted_hours?: number; required_hours?: number | null };
+      const countedMin = Math.round(Number(o.counted_hours ?? 0) * 60);
+      const requiredMin = o.required_hours ? Math.round(Number(o.required_hours) * 60) : 0;
+      otj.total_minutes = countedMin;
+      otj.required_minutes = requiredMin || REQUIRED_OTJ_MIN;
+      otj.pct = otj.required_minutes > 0 ? Math.min(100, Math.round((countedMin / otj.required_minutes) * 100)) : null;
+    }
+  }
 
   // Inclusion
   const inclusion: LearnerContext['inclusion'] = {
@@ -590,6 +647,19 @@ export async function loadLearnerContext(
 function daysAgo(n: number): string {
   return new Date(Date.now() - n * 86_400_000).toISOString().slice(0, 10);
 }
+
+/** get_portfolio_ac_state states in the coverage buckets the context reports. */
+const AC_STATE_TO_COVERAGE: Record<string, string> = {
+  not_started: 'not_started',
+  suggested: 'not_started',
+  claimed: 'in_progress',
+  referred: 'in_progress',
+  not_yet: 'in_progress',
+  iqa_rejected: 'in_progress',
+  submitted: 'evidenced',
+  passed: 'assessed',
+  iqa_confirmed: 'confirmed',
+};
 
 function aggregateAcCoverage(
   rows: Array<{ unit_code: string; status: string }>
@@ -1300,7 +1370,7 @@ export function contextSummaryLines(ctx: LearnerContext): string[] {
     lines.push('');
     lines.push('## OTJ');
     lines.push(
-      `${Math.round(ctx.otj.total_minutes / 60)}h logged of ${Math.round(ctx.otj.required_minutes / 60)}h required (${ctx.otj.pct ?? 0}%) · ${Math.round(ctx.otj.last_28_minutes / 60)}h in last 28 days`
+      `${(ctx.otj.total_minutes / 60).toFixed(1)}h counted of ${Math.round(ctx.otj.required_minutes / 60)}h required (${ctx.otj.pct ?? 0}%; quote these figures exactly, never round them) · ${(ctx.otj.last_28_minutes / 60).toFixed(1)}h in last 28 days`
     );
   }
 

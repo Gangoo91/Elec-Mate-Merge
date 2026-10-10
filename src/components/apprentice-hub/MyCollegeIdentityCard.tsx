@@ -28,7 +28,7 @@ import { useMyCollegeAccess } from '@/hooks/college/useCollegeAccess';
    <JoinCollegeCard>; this card never advertises.
    ========================================================================== */
 
-const NO_COHORT = 'No cohort yet — your tutor will add you';
+const NO_COHORT = 'No class group yet. Your tutor will add you';
 
 export function MyCollegeIdentityCard({
   variant = 'full',
@@ -68,7 +68,7 @@ export function MyCollegeIdentityCard({
           <span className="block truncate text-[12.5px] font-semibold leading-tight text-white">
             {learner.college_name}
           </span>
-          <span className="block truncate text-[11.5px] leading-tight text-white">
+          <span className="block truncate text-[12px] leading-tight text-white">
             {cohortLine}
             {learner.tutor_name ? ` · Tutor: ${learner.tutor_name}` : ''}
           </span>
@@ -91,7 +91,7 @@ export function MyCollegeIdentityCard({
     >
       <span className="flex items-start justify-between gap-3">
         <span className="min-w-0 flex-1">
-          <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="block text-[12px] font-medium uppercase tracking-[0.18em] text-white">
             Your college
           </span>
           <span className="mt-1 block text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[18px]">

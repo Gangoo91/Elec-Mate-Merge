@@ -120,7 +120,7 @@ const TroubleshootingSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Symptom Quick-Match */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptom Quick-Match</p>
+          <p className="text-[12px] font-medium text-white mb-3">Symptom Quick-Match</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
@@ -162,13 +162,13 @@ const TroubleshootingSection = ({ onBack }: Props) => {
                   <div key={j} className="flex items-stretch gap-2">
                     <div className="flex flex-col items-center shrink-0">
                       <div className="w-7 h-7 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
-                        <span className="text-[10px] font-bold text-yellow-400">{j + 1}</span>
+                        <span className="text-[12px] font-bold text-yellow-400">{j + 1}</span>
                       </div>
                       {j < fc.steps.length - 1 && <div className="w-px flex-1 bg-gradient-to-b from-white/[0.08] to-white/[0.04] my-1" />}
                     </div>
                     <div className="flex-1 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-2.5 mb-1">
                       <p className="text-xs text-white">{step.action}</p>
-                      <p className="text-[10px] text-yellow-400/70 mt-1">{step.result}</p>
+                      <p className="text-[12px] text-yellow-400/70 mt-1">{step.result}</p>
                     </div>
                   </div>
                 ))}

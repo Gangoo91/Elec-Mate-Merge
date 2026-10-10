@@ -1052,7 +1052,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
             variant="outline"
             className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
           >
-            <Link to="../section-4" className="flex items-center gap-2">
+            <Link to="/study-centre/upskilling/energy-efficiency-module-3-section-4" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               <span>Previous: Tools and Software</span>
             </Link>

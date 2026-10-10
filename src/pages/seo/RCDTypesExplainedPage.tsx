@@ -22,7 +22,7 @@ export default function RCDTypesExplainedPage() {
       title="RCD Types Explained: AC, A, B, F"
       description="Complete guide to RCD types for UK electricians. Type AC (sinusoidal AC only), Type A (AC + pulsating DC), Type B (AC + smooth DC for EV chargers)."
       datePublished="2025-06-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'RCD Types Explained', href: '/guides/rcd-types-explained' },
@@ -54,8 +54,8 @@ export default function RCDTypesExplainedPage() {
         'Type AC detects only sinusoidal AC faults and is no longer suitable for most modern circuits. Type A (AC + pulsating DC) is now the standard for domestic and commercial installations under BS 7671 Regulation 531.3.3.',
         'Type B RCDs detect smooth DC faults and are required for EV chargers without built-in DC detection, three-phase VFDs, and some solar PV inverters. Significantly more expensive (£150-£300) than Type A (£25-£50).',
         'Type F RCDs protect against mixed-frequency faults from single-phase VFDs — used in heat pumps, inverter-driven air conditioning, and washing machines with variable-speed motors.',
-        'A4:2026 Regulation 411.3.4 (NEW): 30mA RCD protection is now mandatory for ALL domestic AC lighting circuits — any new or rewired domestic lighting circuit requires an RCBO or 30mA RCD. Unprotected lighting circuits are an EICR defect.',
-        '30mA RCDs provide personal protection against electric shock. Regulation 411.3.3 applies to socket-outlets ≤32A; Regulation 411.3.4 (A4:2026) separately mandates 30mA protection for domestic luminaire circuits. 100mA and 300mA RCDs provide fire protection only.',
+        'Regulation 411.3.4 (in force since BS 7671:2018): 30mA RCD protection is mandatory for ALL domestic AC lighting circuits — any new or rewired domestic lighting circuit requires an RCBO or 30mA RCD. Unprotected lighting circuits are an EICR defect.',
+        '30mA RCDs provide personal protection against electric shock. Regulation 411.3.3 applies to socket-outlets ≤32A; Regulation 411.3.4 (since 2018) separately mandates 30mA protection for domestic luminaire circuits. 100mA and 300mA RCDs provide fire protection only.',
         'Elec-Mate EICR and EIC forms capture RCD type for every circuit. The board scanner reads RCD/RCBO labels from photos. Schedule of tests validates trip times against BS 7671 limits.',
       ]}
       sections={[
@@ -507,7 +507,7 @@ export default function RCDTypesExplainedPage() {
                       dwellings.
                     </li>
                     <li>
-                      <strong className="text-elec-yellow">Reg 411.3.4 (A4:2026 — NEW)</strong> — all
+                      <strong className="text-elec-yellow">Reg 411.3.4 (since 2018)</strong> — all
                       AC final circuits supplying luminaires within domestic (household) premises.
                       No risk-assessment exception; this is a mandatory 'shall' requirement for
                       every domestic lighting circuit.
@@ -540,11 +540,11 @@ export default function RCDTypesExplainedPage() {
                   <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-bold text-white mb-2">
-                      A4:2026 New Requirement — Domestic Lighting Circuits (Reg 411.3.4)
+                      Mandatory Since 2018: Domestic Lighting Circuits (Reg 411.3.4)
                     </h4>
                     <p className="text-white text-sm leading-relaxed">
-                      BS 7671:2018+A4:2026 Regulation 411.3.4 introduces a new mandatory
-                      requirement: within domestic (household) premises, additional protection by an
+                      BS 7671 Regulation 411.3.4 has set a mandatory requirement since the 2018
+                      edition: within domestic (household) premises, additional protection by an
                       RCD with a rated residual operating current not exceeding 30mA <em>shall</em>{' '}
                       be provided for all AC final circuits supplying luminaires. This is distinct
                       from Regulation 411.3.3 (socket-outlets) — there is no risk-assessment

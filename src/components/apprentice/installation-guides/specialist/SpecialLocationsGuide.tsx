@@ -727,7 +727,7 @@ const SpecialLocationsGuide = () => {
         badge: 'border-white/10 text-white',
       },
       yellow: {
-        border: 'border-elec-yellow/30',
+        border: 'border-white/[0.14]',
         bg: 'bg-white/[0.06]',
         text: 'text-elec-yellow',
         badge: 'border-elec-yellow text-elec-yellow',
@@ -853,7 +853,7 @@ const SpecialLocationsGuide = () => {
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-3">
               Why Special Locations Require Additional Requirements
             </h4>
@@ -929,7 +929,7 @@ const SpecialLocationsGuide = () => {
             </span>
             <Link
               to={bathroomQuickRef.linkTo}
-              className="flex items-center gap-2 text-white hover:text-white/85 transition-colors"
+              className="flex items-center gap-2 text-white hover:text-white transition-colors"
             >
               <span className="text-sm font-medium">View Domestic Guide</span>
               <ExternalLink className="h-4 w-4" />
@@ -1076,7 +1076,7 @@ const SpecialLocationsGuide = () => {
             <h4 className="font-medium text-white mb-3">Voltage Requirements</h4>
             <div className="space-y-3">
               {constructionSitesData.voltageRequirements.map((volt, idx) => (
-                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-elec-yellow/30">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.14]">
                   <div className="flex items-center gap-2 mb-2">
                     <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
                       {volt.voltage}
@@ -1529,7 +1529,7 @@ const SpecialLocationsGuide = () => {
             </span>
             <Link
               to={solarPVRef.linkTo}
-              className="flex items-center gap-2 text-white hover:text-white/85 transition-colors"
+              className="flex items-center gap-2 text-white hover:text-white transition-colors"
             >
               <span className="text-sm font-medium">View Solar PV Guide</span>
               <ExternalLink className="h-4 w-4" />
@@ -1608,7 +1608,7 @@ const SpecialLocationsGuide = () => {
             </span>
             <Link
               to={evChargingRef.linkTo}
-              className="flex items-center gap-2 text-white hover:text-white/85 transition-colors"
+              className="flex items-center gap-2 text-white hover:text-white transition-colors"
             >
               <span className="text-sm font-medium">View EV Charging Guide</span>
               <ExternalLink className="h-4 w-4" />
@@ -1701,7 +1701,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Critical Safety Summary */}
-      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5">
         <CardHeader className="p-0 pb-3">
           <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
             <Shield className="h-6 w-6" />

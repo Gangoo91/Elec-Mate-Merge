@@ -9,7 +9,7 @@
 import { applyCableCapacityTripwire } from './cable-capacity-validator.ts';
 import { applyZsTripwire } from './zs-table-validator.ts';
 import { applyCableTypeTripwire } from './cable-type-validator.ts';
-import { applyRingVdTripwire } from './vd-ring-validator.ts';
+import { applyDeterministicSizing } from './deterministic-sizing.ts';
 import { applyVoltageTripwire } from './circuit-voltage-validator.ts';
 import { runCritiquePass } from './critique-pass.ts';
 import { CacheManager } from './cache-manager.ts';
@@ -58,7 +58,15 @@ export class DesignPipeline {
     });
 
     const cacheKey = this.cache.generateKey(normalized);
-    const cached = await this.cache.get(cacheKey);
+    // Cache OFF (10 Oct 2026). A hit returned a stored design untouched —
+    // skipping every tripwire, including the Appendix 4 sizing below — and the
+    // key rounds lengths to 5 m and loads to 100 W and ignores the user, so a
+    // design could come back computed for a different length and carrying
+    // another electrician's circuit names. It served 1 of 63 designs since
+    // May; correctness wins. Re-enable only with an exact, per-user, versioned
+    // key that re-runs the deterministic steps on the hit.
+    const DESIGN_CACHE_ENABLED = false;
+    const cached = DESIGN_CACHE_ENABLED ? await this.cache.get(cacheKey) : null;
 
     if (cached) {
       this.logger.info('Cache HIT', {
@@ -101,7 +109,11 @@ export class DesignPipeline {
     }
 
     // Tripwire 1: UK-specific narrow safety checks (ring final 32A, socket RCD, fire-rated cables)
-    design.circuits = this.safetyChecks.apply(design.circuits);
+    design.circuits = this.safetyChecks.apply(
+      design.circuits,
+      normalized.supply.installationType,
+      normalized.supply.earthing
+    );
 
     // Tripwire 1b: BS 7671 Table 41.3 / 41.4 Zs deterministic lookup.
     // Overrides any Zs row mix-up (e.g. AI quoting 32A's 1.37Ω against a 20A device).
@@ -124,22 +136,67 @@ export class DesignPipeline {
     // values, because correcting a size changes R1+R2, Zs and Vd downstream.
     // Previously this was flag-only and ran last, so a 1.5mm² cable proposed for
     // a 330A circuit stayed in the design and the warning was dropped by the UI.
+    //
+    // 10 Oct 2026 — capacity and voltage drop now come from the verified
+    // Appendix 4 tables (deterministic-sizing.ts), not the local tables in
+    // cable-capacity-validator.ts (which disagreed with Appendix 4) or the
+    // ring tripwire (which divided every ring's Vd by 4 even when the model
+    // had already used the ring formula). Circuits whose cable/method can't
+    // be mapped to a table fall back to the old capacity tripwire.
+    // Zs sizing applies to TN supplies only: on TT, ADS is by the RCD
+    // (Reg 411.5) and Table 41.3 maxima don't govern.
+    const isTN = String(normalized.supply.earthing ?? '')
+      .toUpperCase()
+      .startsWith('TN');
+    const sized = applyDeterministicSizing(design.circuits, this.logger, {
+      ze: isTN ? normalized.supply.ze || 0.35 : undefined,
+      installationType: normalized.supply.installationType,
+      ambientTemp: Number(rawInput?.installationConstraints?.ambientTemp) || undefined,
+      groupingFactor: Number(rawInput?.installationConstraints?.groupingFactor) || undefined,
+    });
+    design.circuits = sized.circuits;
     const capacityResult = applyCableCapacityTripwire(design.circuits, this.logger);
     design.circuits = capacityResult.circuits;
-    if (capacityResult.corrections.length > 0) {
-      (design as any).cableCapacityCorrections = capacityResult.corrections;
+    const sizeCorrections = [
+      ...sized.corrections.filter((x) => x.field === 'cableSize' || x.field === 'rating'),
+      ...capacityResult.corrections,
+    ];
+    if (sizeCorrections.length > 0) {
+      (design as any).cableCapacityCorrections = sizeCorrections;
     }
-    if (capacityResult.uncorrectable.length > 0) {
+    const vdCorrections = sized.corrections.filter((x) => x.field === 'voltageDrop');
+    if (vdCorrections.length > 0) {
+      // Its own key: the results page docks confidence per ringVdCorrections
+      // entry, and a figure now taken from the tables is MORE reliable, not less.
+      (design as any).voltageDropRecalculations = vdCorrections;
+    }
+    design.circuits = design.circuits.map((circuit) => {
+      const { _appendix4Sized: _done, ...rest } = circuit as any;
+      return rest as typeof circuit;
+    });
+    const sizingIssues: object[] = [
+      ...sized.issues,
+      ...capacityResult.uncorrectable.map((u) => ({ kind: 'capacity', ...u })),
+    ];
+    // Every Zs below is Ze + R1+R2, so a mistyped Ze (one design had 30 Ω on
+    // TN-C-S — meant 0.30) fails every circuit with no visible reason. Name
+    // it once. OSG: typical maximum Ze 0.35 Ω TN-C-S, 0.8 Ω TN-S.
+    {
+      const zeIn = Number(normalized.supply.ze);
+      const earthing = String(normalized.supply.earthing ?? '').toUpperCase();
+      const typicalMax = earthing === 'TN-C-S' ? 0.35 : earthing === 'TN-S' ? 0.8 : null;
+      if (typicalMax !== null && zeIn > typicalMax) {
+        sizingIssues.unshift({
+          kind: 'supply-ze',
+          error: `Ze ${zeIn} Ω is above the typical maximum for ${earthing} (${typicalMax} Ω). Every Zs in this design is worked from it.`,
+          recommendation:
+            'Check the measured Ze. If it is right, confirm with the DNO; if it was mistyped, correct it and redesign.',
+        });
+      }
+    }
+    if (sizingIssues.length > 0) {
       // No tabulated size fixes these — the design needs a human decision.
-      (design as any).cableCapacityIssues = capacityResult.uncorrectable;
-    }
-
-    // Tripwire 1d: Ring final voltage-drop. AI sometimes calcs ring as radial —
-    // override with ring formula (parallel paths, worst case at mid-point = Vd/4).
-    const ringVdResult = applyRingVdTripwire(design.circuits, this.logger);
-    design.circuits = ringVdResult.circuits;
-    if (ringVdResult.corrections.length > 0) {
-      (design as any).ringVdCorrections = ringVdResult.corrections;
+      (design as any).cableCapacityIssues = sizingIssues;
     }
 
     // Ensure expected test values present (R1+R2, Zs, IR, RCD)
@@ -169,6 +226,89 @@ export class DesignPipeline {
       };
     });
 
+    // TT: fault protection is by the RCD (Reg 411.5.3), so an RCD-protected
+    // circuit is judged against Table 41.5 (30 mA → 1667 Ω), not the
+    // Table 41.3 overcurrent maxima — which every TT circuit fails (Ze ~21 Ω).
+    const ttNoRcd: typeof design.circuits = [];
+    if (String(normalized.supply.earthing ?? '').toUpperCase() === 'TT') {
+      design.circuits = design.circuits.map((circuit) => {
+        const dev = String((circuit as any).protectionDevice?.type ?? '').toUpperCase();
+        const rcd =
+          dev.startsWith('RCBO') || dev.includes('RCD') || (circuit as any).rcdProtected === true;
+        const zs = (circuit as any).expectedTests?.zs;
+        if (!rcd) {
+          ttNoRcd.push(circuit);
+          return circuit;
+        }
+        if (!zs) return circuit;
+        const max = 1667;
+        const expected = Number(zs.expected);
+        return {
+          ...circuit,
+          calculations: { ...circuit.calculations, maxZs: max },
+          expectedTests: {
+            ...(circuit as any).expectedTests,
+            zs: {
+              ...zs,
+              maxPermitted: max,
+              compliant: expected <= max,
+              marginPercent: Number((((max - expected) / max) * 100).toFixed(1)),
+              regulation: 'BS 7671 Reg 411.5.3, Table 41.5 (30 mA RCD)',
+            },
+          },
+        };
+      });
+    }
+
+    // On TT, fault protection needs an RCD (Reg 411.5): Ze is tens of ohms, so
+    // no overcurrent device disconnects in time. A circuit without one is named.
+    if (ttNoRcd.length) {
+      (design as any).cableCapacityIssues = [
+        ...((design as any).cableCapacityIssues ?? []),
+        ...ttNoRcd.map((circuit) => ({
+          kind: 'zs',
+          circuitNumber: (circuit as any).circuitNumber,
+          circuitName: circuit.name,
+          error:
+            'TT supply: this circuit has no RCD, so fault protection by automatic disconnection is not met.',
+          recommendation: 'Protect it with a 30 mA RCD or RCBO (Reg 411.5).',
+        })),
+      ];
+    }
+
+    // Any circuit still over its maximum Zs after sizing (rings, cables the
+    // tables don't cover) is named in the findings, not left to the card.
+    if (isTN) {
+      const named = new Set(
+        ((design as any).cableCapacityIssues ?? [])
+          .filter((i: any) => i.kind === 'zs')
+          .map((i: any) => i.circuitName)
+      );
+      const zsFails = design.circuits
+        .map((circuit, i) => ({ circuit, i }))
+        .filter(
+          ({ circuit }) =>
+            (circuit as any).expectedTests?.zs?.compliant === false && !named.has(circuit.name)
+        )
+        .map(({ circuit, i }) => {
+          const z = (circuit as any).expectedTests.zs;
+          return {
+            kind: 'zs',
+            circuitNumber: (circuit as any).circuitNumber ?? i + 1,
+            circuitName: circuit.name,
+            error: `Zs ${z.expected}Ω is over the ${z.maxPermitted}Ω maximum for this device.`,
+            recommendation:
+              'Increase the cable or CPC size, use a device with a higher maximum Zs, or add RCD protection where Reg 411.4.204 allows.',
+          };
+        });
+      if (zsFails.length) {
+        (design as any).cableCapacityIssues = [
+          ...((design as any).cableCapacityIssues ?? []),
+          ...zsFails,
+        ];
+      }
+    }
+
     // Phase 7: Multi-pass critique loop. AI reviews the whole design as a system,
     // catches concerns per-circuit checks miss (discrimination, phase imbalance,
     // grouping, A4 considerations). Findings are advisory — they don't mutate
@@ -176,7 +316,12 @@ export class DesignPipeline {
     try {
       const openAiKey = Deno.env.get('OPENAI_API_KEY');
       if (openAiKey) {
-        const critique = await runCritiquePass(design, openAiKey, this.logger);
+        const critique = await runCritiquePass(
+          design,
+          openAiKey,
+          this.logger,
+          normalized.supply.installationType
+        );
         (design as any).criticReview = critique;
       }
     } catch (err) {
@@ -185,7 +330,7 @@ export class DesignPipeline {
       });
     }
 
-    await this.cache.set(cacheKey, design);
+    if (DESIGN_CACHE_ENABLED) await this.cache.set(cacheKey, design);
 
     return {
       ...design,
@@ -326,7 +471,7 @@ export class DesignPipeline {
     return [
       `BS 7671:2018+A4:2026 design`,
       `${supply.voltage}V ${supply.phases}-phase`,
-      `${supply.earthingSystem} earthing`,
+      `${supply.earthing} earthing`,
       `Ze ${supply.ze}Ω`,
       `circuits: ${circuitDescriptions}`,
       'cable sizing, protective device selection, Zs limits, voltage drop, RCD requirements',

@@ -85,10 +85,8 @@ const SchedulePlanningTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Schedule templates
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Schedule templates</span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {scheduleTemplates.map((template) => {
             const active = selectedTemplate === template.id;
@@ -97,7 +95,7 @@ const SchedulePlanningTab = () => {
                 key={template.id}
                 className={`rounded-xl border p-4 transition-all duration-200 cursor-pointer touch-manipulation ${
                   active
-                    ? 'border-elec-yellow/30 bg-white/[0.05]'
+                    ? 'border-white/[0.08] bg-white/[0.05]'
                     : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                 }`}
                 onClick={() => setSelectedTemplate(active ? null : template.id)}
@@ -126,7 +124,7 @@ const SchedulePlanningTab = () => {
 
         {selectedTemplate && (
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[13px] font-semibold text-white">
               {scheduleTemplates.find((t) => t.id === selectedTemplate)?.title} — sample day
             </span>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -137,7 +135,7 @@ const SchedulePlanningTab = () => {
                   key={time}
                   className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
                 >
-                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono whitespace-nowrap">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                     {time}
                   </span>
                   <span className="text-[14px] text-white leading-relaxed">{activity}</span>
@@ -148,10 +146,8 @@ const SchedulePlanningTab = () => {
         )}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Planning routines
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Planning routines</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {planningTools.map((tool, index) => (
             <div
@@ -181,10 +177,8 @@ const SchedulePlanningTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Site-specific planning
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Site-specific planning</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
             <h4 className="text-[14px] font-semibold text-white">Domestic sites</h4>

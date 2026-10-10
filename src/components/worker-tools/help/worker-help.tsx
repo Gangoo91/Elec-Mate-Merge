@@ -297,6 +297,19 @@ export const WT_JOBS_HELP: PageHelpContent = {
         { target: 'wt-jobs.actions', caption: 'Everything for this job: clock in, tasks, notes and issues.' },
       ],
     },
+    {
+      title: 'See who else is on site today',
+      steps: [
+        'Open a job that is on today.',
+        'Read Crew on site: who is on the job and who has clocked in.',
+        'The small map shows the job and anyone clocked in on it.',
+      ],
+      after: 'You only see people on the same job, today, while they are clocked in on it. They see you the same way. Off the clock nobody’s position is shown.',
+      tour: [
+        { target: 'wt-jobs.list', caption: 'Tap the job first.', optional: true },
+        { target: 'wt-jobs.crew', caption: 'Who is on this job today, and where while they are clocked in.', optional: true },
+      ],
+    },
   ],
 };
 

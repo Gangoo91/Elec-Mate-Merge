@@ -25,8 +25,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -388,531 +387,521 @@ export default function Year2() {
   const [expandedChallenge, setExpandedChallenge] = useState<number | null>(null);
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Year 2"
-        title="Regulations & testing"
-        backTo="/apprentice/toolbox/apprenticeship-expectations"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            "Building on your foundations — Year 2 introduces BS 7671 and electrical testing. These two skills underpin everything you'll do as a qualified electrician."
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Year 2"
+      area="Apprenticeship expectations"
+      title="Regulations & testing"
+      backTo="/apprentice/toolbox/apprenticeship-expectations"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          "Building on your foundations — Year 2 introduces BS 7671 and electrical testing. These two skills underpin everything you'll do as a qualified electrician."
+        }
+      </p>
 
-        {/* Year progress strip */}
-        <motion.div variants={itemVariants} className="space-y-2">
-          <div className="flex items-center gap-1.5">
-            <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
-            <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
-            <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
-            <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
-            <span className="text-[11px] uppercase tracking-[0.18em] text-white ml-2">
-              Year 2 of 4
-            </span>
-          </div>
-        </motion.div>
+      {/* Year progress strip */}
+      <motion.div variants={itemVariants} className="space-y-2">
+        <div className="flex items-center gap-1.5">
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
+          <span className="text-[13px] text-white ml-2">Year 2 of 4</span>
+        </div>
+      </motion.div>
 
-        {/* KPI strip */}
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
+      {/* KPI strip */}
+      <motion.div
+        variants={itemVariants}
+        className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
+      >
+        <StatCell label="Duration" value="12 mo" />
+        <StatCell label="Salary" value="£18–22k" mono />
+        <StatCell label="Key learning" value="BS 7671" highlight />
+        <StatCell label="New skill" value="Testing" highlight />
+      </motion.div>
+
+      {/* ── Salary progression ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Salary progression"
+          title="Your value rises with your skills"
+          meta="Year-on-year jumps are normal as you take on more independent work"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4',
+            CARD_SURFACE
+          )}
         >
-          <StatCell label="Duration" value="12 mo" />
-          <StatCell label="Salary" value="£18–22k" mono />
-          <StatCell label="Key learning" value="BS 7671" highlight />
-          <StatCell label="New skill" value="Testing" highlight />
-        </motion.div>
-
-        {/* ── Salary progression ──────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Salary progression"
-            title="Your value rises with your skills"
-            meta="Year-on-year jumps are normal as you take on more independent work"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
-              CARD_SURFACE
-            )}
-          >
-            <div className="grid grid-cols-3 gap-2 sm:gap-3">
-              <StatCell label="Year 1" value="£16,500" mono />
-              <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] p-3 sm:p-4 space-y-0.5">
-                <Eyebrow className="text-[9.5px] text-elec-yellow/85">Year 2</Eyebrow>
-                <p className="text-[14px] sm:text-[15px] font-mono font-semibold tabular-nums text-elec-yellow">
-                  £20,000
-                </p>
-              </div>
-              <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] p-3 sm:p-4 space-y-0.5">
-                <Eyebrow className="text-[9.5px] text-elec-yellow/85">Uplift</Eyebrow>
-                <p className="text-[14px] sm:text-[15px] font-mono font-semibold tabular-nums text-elec-yellow">
-                  +21%
-                </p>
-              </div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            <StatCell label="Year 1" value="£16,500" mono />
+            <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-3 sm:p-4 space-y-0.5">
+              <Eyebrow className="text-[12.5px] text-elec-yellow">Year 2</Eyebrow>
+              <p className="text-[14px] sm:text-[15px] font-semibold tabular-nums text-elec-yellow">
+                £20,000
+              </p>
             </div>
-            <div className="flex items-start gap-2 pt-2 border-t border-white/[0.04]">
-              <TrendingUp className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-              <p className="text-[12.5px] text-white leading-relaxed">
-                Salaries vary by employer, region, and overtime. Your growing skills and
-                productivity justify regular pay increases — ask for them.
+            <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-3 sm:p-4 space-y-0.5">
+              <Eyebrow className="text-[12.5px] text-elec-yellow">Uplift</Eyebrow>
+              <p className="text-[14px] sm:text-[15px] font-semibold tabular-nums text-elec-yellow">
+                +21%
               </p>
             </div>
           </div>
-        </motion.section>
+          <div className="flex items-start gap-2 pt-2 border-t border-white/[0.04]">
+            <TrendingUp className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+            <p className="text-[14px] text-white leading-relaxed">
+              Salaries vary by employer, region, and overtime. Your growing skills and productivity
+              justify regular pay increases — ask for them.
+            </p>
+          </div>
+        </div>
+      </motion.section>
 
-        {/* ── BS 7671 survival guide ──────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="BS 7671 survival guide"
-            title="The eight parts you'll live in"
-            meta="Current edition: BS 7671:2018+A4:2026 — navigation beats memorisation"
-          />
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
-              CARD_SURFACE
-            )}
-          >
-            <ul className="space-y-1.5">
-              {bs7671Parts.map((part) => (
-                <li
-                  key={part.number}
-                  className="flex items-start sm:items-center justify-between gap-3 p-2.5 rounded-md border border-white/[0.06] bg-white/[0.02]"
-                >
-                  <div className="flex items-start sm:items-center gap-3 min-w-0">
-                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                      {part.number}
-                    </span>
-                    <div className="min-w-0">
-                      <span className="block text-[13px] text-white leading-snug">
-                        {part.title}
-                      </span>
-                      <span className="block sm:hidden text-[11px] text-white italic mt-0.5">
-                        {part.key}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="hidden sm:block text-[11px] text-white italic flex-shrink-0">
-                    {part.key}
+      {/* ── BS 7671 survival guide ──────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="BS 7671 survival guide"
+          title="The eight parts you'll live in"
+          meta="Current edition: BS 7671:2018+A4:2026 — navigation beats memorisation"
+        />
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4',
+            CARD_SURFACE
+          )}
+        >
+          <ul className="space-y-1.5">
+            {bs7671Parts.map((part) => (
+              <li
+                key={part.number}
+                className="flex items-start sm:items-center justify-between gap-3 p-2.5 rounded-md border border-white/[0.06] bg-white/[0.02]"
+              >
+                <div className="flex items-start sm:items-center gap-3 min-w-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12px] font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                    {part.number}
                   </span>
+                  <div className="min-w-0">
+                    <span className="block text-[13px] text-white leading-snug">{part.title}</span>
+                    <span className="block sm:hidden text-[12.5px] text-white italic mt-0.5">
+                      {part.key}
+                    </span>
+                  </div>
+                </div>
+                <span className="hidden sm:block text-[12.5px] text-white italic flex-shrink-0">
+                  {part.key}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="pt-3 border-t border-white/[0.04] space-y-2">
+            <Eyebrow className="text-elec-yellow">Top tips</Eyebrow>
+            <ul className="space-y-1.5">
+              {bs7671Tips.map((tip) => (
+                <li
+                  key={tip}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{tip}</span>
                 </li>
               ))}
             </ul>
-            <div className="pt-3 border-t border-white/[0.04] space-y-2">
-              <Eyebrow className="text-elec-yellow/85">Top tips</Eyebrow>
-              <ul className="space-y-1.5">
-                {bs7671Tips.map((tip) => (
-                  <li
-                    key={tip}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{tip}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="pt-3 border-t border-white/[0.04] space-y-2">
-              <Eyebrow className="text-elec-yellow/85">What changed in A4:2026</Eyebrow>
-              <ul className="space-y-1.5">
-                {bs7671A4Changes.map((change) => (
-                  <li
-                    key={change}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <Zap className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{change}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
-        </motion.section>
+          <div className="pt-3 border-t border-white/[0.04] space-y-2">
+            <Eyebrow className="text-elec-yellow">What changed in A4:2026</Eyebrow>
+            <ul className="space-y-1.5">
+              {bs7671A4Changes.map((change) => (
+                <li
+                  key={change}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <Zap className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{change}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.section>
 
-        {/* ── Test equipment guide ────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Test equipment"
-            title="Four instruments to know cold"
-            meta="What each does, how to use it, and the one tip that matters"
-          />
-          <ul className="space-y-2">
-            {testEquipmentGuide.map((item) => (
+      {/* ── Test equipment guide ────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Test equipment"
+          title="Four instruments to know cold"
+          meta="What each does, how to use it, and the one tip that matters"
+        />
+        <ul className="space-y-2">
+          {testEquipmentGuide.map((item) => (
+            <li
+              key={item.equipment}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-center gap-2">
+                <Settings className="h-4 w-4 text-elec-yellow" />
+                <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                  {item.equipment}
+                </h3>
+              </div>
+              <p className="text-[14px] text-white leading-relaxed">{item.purpose}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {item.tests.map((test) => (
+                  <span
+                    key={test}
+                    className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.05] text-[12.5px] font-medium text-elec-yellow"
+                  >
+                    {test}
+                  </span>
+                ))}
+              </div>
+              <div className="flex items-start gap-2 pt-1 border-t border-white/[0.04]">
+                <Lightbulb className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <p className="text-[14px] text-white italic leading-relaxed">{item.tip}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Monthly timeline ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Year 2 timeline"
+          title="What each month looks like"
+          meta="Tap any period for daily reality and what to focus on"
+        />
+        <ul className="space-y-2">
+          {monthlyBreakdown.map((period, index) => {
+            const Icon = period.icon;
+            const isExpanded = expandedMonth === index;
+            return (
               <li
-                key={item.equipment}
+                key={index}
                 className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  'rounded-xl border overflow-hidden transition-colors',
+                  isExpanded
+                    ? 'border-white/[0.08] bg-white/[0.05]'
+                    : 'border-white/[0.12] bg-white/[0.06]'
+                )}
+              >
+                <button
+                  onClick={() => setExpandedMonth(isExpanded ? null : index)}
+                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon
+                      className={cn(
+                        'h-4 w-4 flex-shrink-0 mt-0.5',
+                        isExpanded ? 'text-elec-yellow' : 'text-white'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                        <h3 className="text-[14px] font-semibold text-white leading-snug">
+                          {period.title}
+                        </h3>
+                        <span className="text-[13px] text-white">{period.month}</span>
+                      </div>
+                      <p className="text-[12px] text-white leading-snug">{period.focus}</p>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
+                        isExpanded && 'rotate-180'
+                      )}
+                    />
+                  </div>
+                </button>
+                {isExpanded && (
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-white/[0.08] pt-3 animate-fade-in">
+                    <div className="pl-7 space-y-3">
+                      <p className="text-[14px] text-white italic leading-relaxed">
+                        "{period.dayInLife}"
+                      </p>
+                      <ul className="space-y-1.5">
+                        {period.activities.map((activity, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                            <span>{activity}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Key learning areas ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Key learning areas"
+          title="Where to focus your energy"
+          meta="The four pillars you'll build across Year 2"
+        />
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          {keyLearningAreas.map((area) => {
+            const Icon = area.icon;
+            return (
+              <li
+                key={area.title}
+                className={cn(
+                  'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
                   CARD_SURFACE
                 )}
               >
-                <div className="flex items-center gap-2">
-                  <Settings className="h-4 w-4 text-elec-yellow/85" />
+                <div className="flex items-center gap-2 min-w-0">
+                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                    {item.equipment}
+                    {area.title}
                   </h3>
                 </div>
-                <p className="text-[13px] text-white leading-relaxed">{item.purpose}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {item.tests.map((test) => (
-                    <span
-                      key={test}
-                      className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/25 bg-white/[0.05] text-[11px] font-medium text-elec-yellow"
+                <ul className="space-y-1.5">
+                  {area.topics.map((topic) => (
+                    <li
+                      key={topic}
+                      className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                     >
-                      {test}
-                    </span>
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Development milestones ─────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Development milestones"
+          title="Four checkpoints to hit"
+          meta="If you clear these by year end, you're on track"
+        />
+        <ul className="space-y-2">
+          {developmentMilestones.map((m) => {
+            const Icon = m.icon;
+            return (
+              <li
+                key={m.milestone}
+                className={cn(
+                  'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
+              >
+                <div className="flex items-start gap-3">
+                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                      {m.milestone}
+                    </h3>
+                    <p className="text-[14px] text-white leading-relaxed">{m.description}</p>
+                    <p className="text-[14px] text-white italic leading-relaxed">{m.importance}</p>
+                  </div>
+                </div>
+                <div className="pl-7 space-y-1.5 border-t border-white/[0.04] pt-3">
+                  {m.tips.map((tip) => (
+                    <p
+                      key={tip}
+                      className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3 w-3 text-elec-yellow flex-shrink-0 mt-0.5" />
+                      <span>{tip}</span>
+                    </p>
                   ))}
                 </div>
-                <div className="flex items-start gap-2 pt-1 border-t border-white/[0.04]">
-                  <Lightbulb className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <p className="text-[12.5px] text-white italic leading-relaxed">{item.tip}</p>
-                </div>
               </li>
-            ))}
-          </ul>
-        </motion.section>
+            );
+          })}
+        </ul>
+      </motion.section>
 
-        {/* ── Monthly timeline ─────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Year 2 timeline"
-            title="What each month looks like"
-            meta="Tap any period for daily reality and what to focus on"
-          />
-          <ul className="space-y-2">
-            {monthlyBreakdown.map((period, index) => {
-              const Icon = period.icon;
-              const isExpanded = expandedMonth === index;
-              return (
-                <li
-                  key={index}
-                  className={cn(
-                    'rounded-xl border overflow-hidden transition-colors',
-                    isExpanded
-                      ? 'border-elec-yellow/25 bg-white/[0.05]'
-                      : 'border-white/[0.12] bg-white/[0.06]'
-                  )}
-                >
-                  <button
-                    onClick={() => setExpandedMonth(isExpanded ? null : index)}
-                    className="w-full text-left p-4 sm:p-5 touch-manipulation"
-                  >
-                    <div className="flex items-start gap-3">
-                      <Icon
-                        className={cn(
-                          'h-4 w-4 flex-shrink-0 mt-0.5',
-                          isExpanded ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      />
-                      <div className="flex-1 min-w-0 space-y-1">
-                        <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                          <h3 className="text-[14px] font-semibold text-white leading-snug">
-                            {period.title}
-                          </h3>
-                          <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white">
-                            {period.month}
-                          </span>
-                        </div>
-                        <p className="text-[12px] text-white leading-snug">{period.focus}</p>
-                      </div>
-                      <ChevronDown
-                        className={cn(
-                          'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
-                          isExpanded && 'rotate-180'
-                        )}
-                      />
-                    </div>
-                  </button>
-                  {isExpanded && (
-                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
-                      <div className="pl-7 space-y-3">
-                        <p className="text-[12.5px] text-white italic leading-relaxed">
-                          "{period.dayInLife}"
-                        </p>
-                        <ul className="space-y-1.5">
-                          {period.activities.map((activity, idx) => (
-                            <li
-                              key={idx}
-                              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                            >
-                              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                              <span>{activity}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </motion.section>
+      {/* ── Typical week ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Typical week"
+          title="What your schedule might look like"
+          meta="More installation, more testing, more responsibility"
+        />
+        <ul
+          className={cn(
+            'rounded-2xl border border-white/[0.08] divide-y divide-white/[0.04] overflow-hidden',
+            CARD_SURFACE
+          )}
+        >
+          {weeklyScheduleExample.map(({ day, location, activities }) => (
+            <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
+              <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
+                {day}
+              </span>
+              <span
+                className={cn(
+                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[13px] font-semibold flex-shrink-0 w-14 sm:w-16',
+                  location === 'College'
+                    ? 'border-white/[0.08] bg-white/[0.05] text-elec-yellow'
+                    : 'border-white/[0.10] bg-white/[0.03] text-white'
+                )}
+              >
+                {location}
+              </span>
+              <span className="text-[12.5px] text-white flex-1 min-w-0 leading-snug">
+                {activities}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Key learning areas ──────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Key learning areas"
-            title="Where to focus your energy"
-            meta="The four pillars you'll build across Year 2"
-          />
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-            {keyLearningAreas.map((area) => {
-              const Icon = area.icon;
-              return (
-                <li
-                  key={area.title}
-                  className={cn(
-                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-                    CARD_SURFACE
-                  )}
-                >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {area.title}
-                    </h3>
-                  </div>
-                  <ul className="space-y-1.5">
-                    {area.topics.map((topic) => (
-                      <li
-                        key={topic}
-                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                      >
-                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                        <span>{topic}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              );
-            })}
-          </ul>
-        </motion.section>
-
-        {/* ── Development milestones ─────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Development milestones"
-            title="Four checkpoints to hit"
-            meta="If you clear these by year end, you're on track"
-          />
-          <ul className="space-y-2">
-            {developmentMilestones.map((m) => {
-              const Icon = m.icon;
-              return (
-                <li
-                  key={m.milestone}
-                  className={cn(
-                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-                    CARD_SURFACE
-                  )}
+      {/* ── Challenges ───────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Common challenges"
+          title="Four hurdles every Year 2 hits"
+          meta="Knowing they're coming makes them easier to clear"
+        />
+        <ul className="space-y-2">
+          {commonChallenges.map((item, index) => {
+            const Icon = item.icon;
+            const isExpanded = expandedChallenge === index;
+            return (
+              <li
+                key={item.challenge}
+                className={cn(
+                  'rounded-xl border overflow-hidden transition-colors',
+                  isExpanded
+                    ? 'border-white/[0.08] bg-white/[0.05]'
+                    : 'border-white/[0.12] bg-white/[0.06]'
+                )}
+              >
+                <button
+                  onClick={() => setExpandedChallenge(isExpanded ? null : index)}
+                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
                 >
                   <div className="flex items-start gap-3">
-                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <div className="flex-1 min-w-0 space-y-1.5">
-                      <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                        {m.milestone}
+                    <Icon
+                      className={cn(
+                        'h-4 w-4 flex-shrink-0 mt-0.5',
+                        isExpanded ? 'text-elec-yellow' : 'text-white'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <h3 className="text-[14px] font-semibold text-white leading-snug">
+                        {item.challenge}
                       </h3>
-                      <p className="text-[13px] text-white leading-relaxed">{m.description}</p>
-                      <p className="text-[12px] text-white italic leading-relaxed">
-                        {m.importance}
-                      </p>
+                      <p className="text-[12.5px] text-white leading-snug">{item.description}</p>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
+                        isExpanded && 'rotate-180'
+                      )}
+                    />
+                  </div>
+                </button>
+                {isExpanded && (
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-white/[0.08] pt-3 animate-fade-in">
+                    <div className="pl-7 space-y-2">
+                      <Eyebrow className="text-elec-yellow">Solutions</Eyebrow>
+                      <ul className="space-y-1.5">
+                        {item.solutions.map((solution, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                            <span>{solution}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                  <div className="pl-7 space-y-1.5 border-t border-white/[0.04] pt-3">
-                    {m.tips.map((tip) => (
-                      <p
-                        key={tip}
-                        className="flex items-start gap-2 text-[12px] text-white leading-relaxed"
-                      >
-                        <CheckCircle2 className="h-3 w-3 text-elec-yellow/70 flex-shrink-0 mt-0.5" />
-                        <span>{tip}</span>
-                      </p>
-                    ))}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </motion.section>
-
-        {/* ── Typical week ─────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Typical week"
-            title="What your schedule might look like"
-            meta="More installation, more testing, more responsibility"
-          />
-          <ul
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 divide-y divide-white/[0.04] overflow-hidden',
-              CARD_SURFACE
-            )}
-          >
-            {weeklyScheduleExample.map(({ day, location, activities }) => (
-              <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
-                <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
-                  {day}
-                </span>
-                <span
-                  className={cn(
-                    'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
-                    location === 'College'
-                      ? 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow'
-                      : 'border-white/[0.10] bg-white/[0.03] text-white'
-                  )}
-                >
-                  {location}
-                </span>
-                <span className="text-[12.5px] text-white flex-1 min-w-0 leading-snug">
-                  {activities}
-                </span>
+                )}
               </li>
-            ))}
-          </ul>
-        </motion.section>
+            );
+          })}
+        </ul>
+      </motion.section>
 
-        {/* ── Challenges ───────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Common challenges"
-            title="Four hurdles every Year 2 hits"
-            meta="Knowing they're coming makes them easier to clear"
-          />
-          <ul className="space-y-2">
-            {commonChallenges.map((item, index) => {
-              const Icon = item.icon;
-              const isExpanded = expandedChallenge === index;
-              return (
+      {/* ── Thriving vs struggling ───────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Where you stand"
+          title="Thriving vs struggling in Year 2"
+          meta="The gap usually opens up around the regs and the test results"
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Star className="h-4 w-4 text-elec-yellow" />
+              <Eyebrow className="text-elec-yellow">A thriving Year 2</Eyebrow>
+            </div>
+            <ul className="space-y-1.5">
+              {thrivingSigns.map((item) => (
                 <li
-                  key={item.challenge}
-                  className={cn(
-                    'rounded-xl border overflow-hidden transition-colors',
-                    isExpanded
-                      ? 'border-elec-yellow/25 bg-white/[0.05]'
-                      : 'border-white/[0.12] bg-white/[0.06]'
-                  )}
+                  key={item}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                 >
-                  <button
-                    onClick={() => setExpandedChallenge(isExpanded ? null : index)}
-                    className="w-full text-left p-4 sm:p-5 touch-manipulation"
-                  >
-                    <div className="flex items-start gap-3">
-                      <Icon
-                        className={cn(
-                          'h-4 w-4 flex-shrink-0 mt-0.5',
-                          isExpanded ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      />
-                      <div className="flex-1 min-w-0 space-y-1">
-                        <h3 className="text-[14px] font-semibold text-white leading-snug">
-                          {item.challenge}
-                        </h3>
-                        <p className="text-[12.5px] text-white leading-snug">{item.description}</p>
-                      </div>
-                      <ChevronDown
-                        className={cn(
-                          'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
-                          isExpanded && 'rotate-180'
-                        )}
-                      />
-                    </div>
-                  </button>
-                  {isExpanded && (
-                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
-                      <div className="pl-7 space-y-2">
-                        <Eyebrow className="text-elec-yellow/85">Solutions</Eyebrow>
-                        <ul className="space-y-1.5">
-                          {item.solutions.map((solution, idx) => (
-                            <li
-                              key={idx}
-                              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                            >
-                              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                              <span>{solution}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  )}
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
                 </li>
-              );
-            })}
-          </ul>
-        </motion.section>
-
-        {/* ── Thriving vs struggling ───────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Where you stand"
-            title="Thriving vs struggling in Year 2"
-            meta="The gap usually opens up around the regs and the test results"
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-elec-yellow" />
-                <Eyebrow className="text-elec-yellow/85">A thriving Year 2</Eyebrow>
-              </div>
-              <ul className="space-y-1.5">
-                {thrivingSigns.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Brain className="h-4 w-4 text-white" />
+              <Eyebrow className="text-white">Warning signs</Eyebrow>
             </div>
-            <div className="rounded-xl border border-white/[0.10] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Brain className="h-4 w-4 text-white" />
-                <Eyebrow className="text-white">Warning signs</Eyebrow>
-              </div>
-              <ul className="space-y-1.5">
-                {strugglingSigns.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <span className="text-white font-mono mt-0.5">!</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="space-y-1.5">
+              {strugglingSigns.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <span className="text-white mt-0.5">!</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
-            <p className="text-[12.5px] text-white leading-relaxed">
-              Year 2 is where a quiet struggle becomes an exam fail or a portfolio backlog. If the
-              regs or testing aren&apos;t clicking, say so early — ask your mentor to talk you
-              through a live test, and ask your assessor for a regulation-finding session. Both are
-              normal requests.
-            </p>
-          </div>
-        </motion.section>
+        </div>
+        <div className="rounded-md border border-white/[0.08] bg-white/[0.05] p-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <p className="text-[14px] text-white leading-relaxed">
+            Year 2 is where a quiet struggle becomes an exam fail or a portfolio backlog. If the
+            regs or testing aren&apos;t clicking, say so early — ask your mentor to talk you through
+            a live test, and ask your assessor for a regulation-finding session. Both are normal
+            requests.
+          </p>
+        </div>
+      </motion.section>
 
-        {/* ── Closer ───────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
-            <Eyebrow className="text-elec-yellow/85">End of Year 2</Eyebrow>
-            <p className="text-[13.5px] text-white leading-relaxed">
-              By the end of Year 2 you should be{' '}
-              <span className="font-semibold text-elec-yellow">comfortable navigating BS 7671</span>
-              , able to perform initial verification testing under supervision, and confident
-              installing distribution boards and protective devices. Next stop — Year 3: commercial
-              work, fault-finding, and supervision.
-            </p>
-          </div>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+      {/* ── Closer ───────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-1.5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <Eyebrow className="text-elec-yellow">End of Year 2</Eyebrow>
+          <p className="text-[14px] text-white leading-relaxed">
+            By the end of Year 2 you should be{' '}
+            <span className="font-semibold text-elec-yellow">comfortable navigating BS 7671</span>,
+            able to perform initial verification testing under supervision, and confident installing
+            distribution boards and protective devices. Next stop — Year 3: commercial work,
+            fault-finding, and supervision.
+          </p>
+        </div>
+      </motion.section>
+    </GuidePage>
   );
 }
 
@@ -931,17 +920,14 @@ function StatCell({
 }) {
   return (
     <div
-      className={cn(
-        'rounded-2xl border border-elec-yellow/35 p-3 sm:p-4 space-y-0.5',
-        CARD_SURFACE
-      )}
+      className={cn('rounded-2xl border border-white/[0.08] p-3 sm:p-4 space-y-0.5', CARD_SURFACE)}
     >
-      <Eyebrow className="text-[9.5px]">{label}</Eyebrow>
+      <Eyebrow className="text-[12.5px]">{label}</Eyebrow>
       <p
         className={cn(
           'text-[14px] sm:text-[15px] font-semibold tracking-tight',
           highlight ? 'text-elec-yellow' : 'text-white',
-          mono && 'font-mono tabular-nums'
+          mono && 'tabular-nums'
         )}
       >
         {value}

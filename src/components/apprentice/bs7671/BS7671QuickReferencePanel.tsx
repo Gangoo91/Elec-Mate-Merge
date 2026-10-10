@@ -9,7 +9,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
         <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-[14px] rounded-b-xl bg-white/[0.06]">
           {content.steps.map((step, idx) => (
             <div key={idx} className="flex items-start gap-2.5">
-              <span className="bg-white/5 text-white px-2 py-0.5 rounded text-[11px] font-mono min-w-[24px] text-center flex-shrink-0">
+              <span className="bg-white/5 text-white px-2 py-0.5 rounded text-[12px] font-mono min-w-[24px] text-center flex-shrink-0">
                 {idx + 1}
               </span>
               <span className="text-white leading-relaxed">{step}</span>
@@ -22,7 +22,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
       return (
         <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-[14px] rounded-b-xl bg-white/[0.06]">
           {content.source && (
-            <p className="text-[11px] text-white font-mono mb-2">{content.source}</p>
+            <p className="text-[12px] text-white font-mono mb-2">{content.source}</p>
           )}
           {content.points.map((point, idx) => (
             <div key={idx} className="flex items-start gap-2">
@@ -53,7 +53,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
         <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[13px] rounded-b-xl bg-white/[0.06]">
           {content.groups.map((group, gIdx) => (
             <div key={gIdx} className="space-y-1.5">
-              <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <h4 className="text-[12px] font-medium text-white">
                 {group.heading}
               </h4>
               <div className="space-y-1">
@@ -77,7 +77,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
         <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[13px] rounded-b-xl bg-white/[0.06]">
           {content.sections.map((section, sIdx) => (
             <div key={sIdx} className="space-y-2">
-              <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <h4 className="text-[12px] font-medium text-white">
                 {section.heading}
               </h4>
               <div className="space-y-1.5">

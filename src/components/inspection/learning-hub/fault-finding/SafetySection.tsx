@@ -50,7 +50,7 @@ const SafetySection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Safety Rules for Fault Finding</p>
+          <p className="text-[12px] font-medium text-white mb-3">Safety Rules for Fault Finding</p>
         </motion.div>
 
         {safetyRules.map((r, i) => (
@@ -77,7 +77,7 @@ const SafetySection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">PPE for Fault Finding</p>
+          <p className="text-[12px] font-medium text-white mb-3">PPE for Fault Finding</p>
         </motion.div>
 
         {ppeForFaultFinding.map((item, i) => (

@@ -20,7 +20,7 @@ export default function DisconnectionTimeCalculatorPage() {
       title="Disconnection Time Calculator: Free Zs Pass/Fail"
       description="BS 7671 Table 41.1 max disconnection times: 0.4s for TN final circuits up to 63A, 0.2s for TT, 5s for distribution circuits. Free Zs pass/fail check."
       datePublished="2026-01-20"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Disconnection Time Calculator', href: '/tools/disconnection-time-calculator' },
@@ -59,7 +59,7 @@ export default function DisconnectionTimeCalculatorPage() {
         'TT systems rely on RCDs for disconnection because the earth fault loop impedance through the general mass of earth is too high for overcurrent devices alone.',
         'The Elec-Mate calculator checks Zs against tabulated maximums for your specific protective device type and rating, giving instant pass/fail results on site.',
         'On-site cold Zs measurements must be multiplied by 0.8 (GN3 site factor) before comparing against BS 7671 Table 41.3 values — for example, a Type B 32A MCB has a table maximum of 1.37 ohms but a cold-measurement site limit of 1.10 ohms.',
-        'A4:2026 Regulation 411.3.4 introduces a new requirement: 30 mA RCD protection is now mandatory for AC final circuits supplying luminaires in domestic premises — unprotected domestic lighting circuits are a C2 code on an EICR.',
+        'BS 7671 Regulation 411.3.4 has made 30 mA RCD protection mandatory for AC final circuits supplying luminaires in domestic premises since 2018. It is not a new A4:2026 rule.',
       ]}
       sections={[
         {
@@ -189,20 +189,20 @@ export default function DisconnectionTimeCalculatorPage() {
                 <SEOInternalLink href="/rcd-testing-guide">RCD</SEOInternalLink>.
               </p>
               <p>
-                BS 7671 Regulation 411.3.3 (A4:2026) requires 30&nbsp;mA RCD additional protection
-                for all socket outlets rated up to 32&nbsp;A, regardless of whether the overcurrent
-                device meets the disconnection time on its own. In domestic premises this is an
-                absolute requirement. In non-dwellings, the RCD may be omitted only where a
-                documented risk assessment determines that RCD protection is not necessary —
-                omission without that assessment is a non-compliance on an EICR.
+                BS 7671 Regulation 411.3.3 requires 30&nbsp;mA RCD additional protection for all
+                socket outlets rated up to 32&nbsp;A, regardless of whether the overcurrent device
+                meets the disconnection time on its own. In domestic premises this is an absolute
+                requirement. In non-dwellings, the RCD may be omitted only where a documented risk
+                assessment determines that RCD protection is not necessary — omission without that
+                assessment is a non-compliance on an EICR.
               </p>
               <p>
-                A4:2026 also introduces Regulation 411.3.4, which requires additional protection by
-                a 30&nbsp;mA RCD for AC final circuits supplying luminaires in domestic premises.
-                This is a new requirement — lighting circuits in dwellings that were previously
-                unprotected by an RCD will now be coded C2 on an EICR if no RCD is present. When
-                verifying disconnection times for lighting circuits in domestic properties, also
-                confirm 30&nbsp;mA RCD protection is in place.
+                Regulation 411.3.4, in force since BS 7671:2018, requires additional protection by a
+                30&nbsp;mA RCD for AC final circuits supplying luminaires in domestic premises. It
+                is not a new A4:2026 rule. Older lighting circuits without an RCD do not comply with
+                the current edition, and the inspector codes the absence on an EICR. When verifying
+                disconnection times for lighting circuits in domestic properties, also confirm
+                30&nbsp;mA RCD protection is in place.
               </p>
             </>
           ),
@@ -272,7 +272,8 @@ export default function DisconnectionTimeCalculatorPage() {
                 <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-3">
                     <span>
-                      <strong className="text-elec-yellow">Type B MCB 6A:</strong> Zs max = 7.28 ohms
+                      <strong className="text-elec-yellow">Type B MCB 6A:</strong> Zs max = 7.28
+                      ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">

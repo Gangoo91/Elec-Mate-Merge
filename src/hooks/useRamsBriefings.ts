@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { briefingRegister } from '@/components/electrician-tools/site-safety/briefings/briefingSignOffs';
+import {
+  applySafetyScope,
+  safetyScopeKey,
+  useSafetyScope,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 /**
  * The briefings given on one generated RAMS, and whether each was given on the
@@ -24,8 +29,9 @@ export interface RamsBriefingRow {
 }
 
 export function useRamsBriefings(generationJobId: string | undefined) {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['rams-briefings', generationJobId],
+    queryKey: ['rams-briefings', generationJobId, ...safetyScopeKey(scope)],
     enabled: !!generationJobId,
     queryFn: async (): Promise<{
       filedVersion: number | null;
@@ -33,19 +39,27 @@ export function useRamsBriefings(generationJobId: string | undefined) {
       filedAt: string | null;
       briefings: RamsBriefingRow[];
     }> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return { filedVersion: null, filedAt: null, briefings: [] };
       const cols: string =
         'id, briefing_name, briefing_date, attendees, attendee_signatures, dynamic_fields';
+      // Scoped explicitly, never by RLS alone: the person's own RAMS and
+      // briefings, or in the Employer Hub the firm's (employer_id).
       const [{ data: doc }, { data: rows, error }] = await Promise.all([
-        supabase
-          .from('rams_documents')
-          .select('version, updated_at')
-          .eq('ai_generation_metadata->>generation_job_id', generationJobId as string)
+        applySafetyScope(
+          supabase
+            .from('rams_documents')
+            .select('version, updated_at')
+            .eq('ai_generation_metadata->>generation_job_id', generationJobId as string),
+          scope,
+          user.id
+        )
           .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle(),
-        supabase
-          .from('team_briefings')
-          .select(cols)
+        applySafetyScope(supabase.from('team_briefings').select(cols), scope, user.id)
           .eq('dynamic_fields->>rams_generation_job_id', generationJobId as string)
           .neq('status', 'cancelled')
           .order('briefing_date', { ascending: false }),

@@ -56,7 +56,7 @@ export function AskWitnessSheet({
   const { toast } = useToast();
   const named = (item.metadata?.witness as { name?: string } | undefined)?.name ?? '';
   const existing = useMemo(
-    () => (existingToken ? item.witnesses.find((w) => w.token === existingToken) ?? null : null),
+    () => (existingToken ? (item.witnesses.find((w) => w.token === existingToken) ?? null) : null),
     [existingToken, item.witnesses]
   );
   const [email, setEmail] = useState('');
@@ -179,7 +179,7 @@ export function AskWitnessSheet({
       description={
         token
           ? `Send this to ${named || 'your supervisor'}. They read what you did, write a line and sign. You will see it here when they do.`
-          : 'A supervisor or qualified electrician who watched you do the work. They sign from a link with no account; what they sign is fixed to this evidence as it is now.'
+          : 'A supervisor or qualified electrician who watched you do the work, and who is not a relative or partner. When they sign from the link (no account) they say what makes them competent and confirm they have no conflict of interest. What they sign is fixed to this evidence as it is now.'
       }
       footer={
         token ? (
@@ -204,15 +204,29 @@ export function AskWitnessSheet({
               disabled={!requestId || !requestEmail || mailing}
               onClick={() => requestId && requestEmail && void sendEmail(requestId, requestEmail)}
             >
-              <Mail className="h-4 w-4" /> {mailing ? 'Sending…' : emailedTo ? 'Email again' : 'Email'}
+              <Mail className="h-4 w-4" />{' '}
+              {mailing ? 'Sending…' : emailedTo ? 'Email again' : 'Email'}
             </button>
-            <button type="button" className={cn(P_BTN, 'col-span-2 lg:col-span-1')} onClick={() => void copyNow()}>
+            <button
+              type="button"
+              className={cn(P_BTN, 'col-span-2 lg:col-span-1')}
+              onClick={() => void copyNow()}
+            >
               <Copy className="h-4 w-4" /> Copy link
             </button>
           </div>
         ) : (
-          <button type="button" className={`${P_BTN_PRIMARY} w-full`} disabled={busy} onClick={() => void create()}>
-            {busy ? 'Creating link…' : email.trim() ? 'Create link and email it' : 'Create witness link'}
+          <button
+            type="button"
+            className={`${P_BTN_PRIMARY} w-full`}
+            disabled={busy}
+            onClick={() => void create()}
+          >
+            {busy
+              ? 'Creating link…'
+              : email.trim()
+                ? 'Create link and email it'
+                : 'Create witness link'}
           </button>
         )
       }
@@ -229,10 +243,15 @@ export function AskWitnessSheet({
               {mailing ? `Emailing ${requestEmail}…` : `Tap Email to send it to ${requestEmail}.`}
             </p>
           ) : (
-            <p className="text-[13px] text-white">No email address on this request. Send it by text, WhatsApp or copy the link.</p>
+            <p className="text-[13px] text-white">
+              No email address on this request. Send it by text, WhatsApp or copy the link.
+            </p>
           )}
           <div className="max-w-sm">
-            <label htmlFor="witness-phone-ready" className="mb-1 block text-[12px] font-medium text-white">
+            <label
+              htmlFor="witness-phone-ready"
+              className="mb-1 block text-[12px] font-medium text-white"
+            >
               Their mobile, to text it (optional)
             </label>
             <input
@@ -247,14 +266,18 @@ export function AskWitnessSheet({
             />
           </div>
           <p className="text-[13px] text-white">
-            The link lasts 30 days. You can withdraw it from the evidence at any time before they sign.
+            The link lasts 30 days. You can withdraw it from the evidence at any time before they
+            sign.
           </p>
         </div>
       ) : (
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="space-y-5">
             <div>
-              <label htmlFor="witness-email" className="mb-1 block text-[12px] font-medium text-white">
+              <label
+                htmlFor="witness-email"
+                className="mb-1 block text-[12px] font-medium text-white"
+              >
                 Their email (optional)
               </label>
               <input
@@ -266,10 +289,15 @@ export function AskWitnessSheet({
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="supervisor@company.co.uk"
               />
-              <p className="mt-2 text-[12.5px] text-white">We email them the link from Elec-Mate.</p>
+              <p className="mt-2 text-[12.5px] text-white">
+                We email them the link from Elec-Mate.
+              </p>
             </div>
             <div>
-              <label htmlFor="witness-phone" className="mb-1 block text-[12px] font-medium text-white">
+              <label
+                htmlFor="witness-phone"
+                className="mb-1 block text-[12px] font-medium text-white"
+              >
                 Their mobile (optional)
               </label>
               <input
@@ -312,7 +340,9 @@ export function AskWitnessSheet({
                           <span
                             className={cn(
                               'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border',
-                              on ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.3]'
+                              on
+                                ? 'border-elec-yellow bg-elec-yellow text-black'
+                                : 'border-white/[0.3]'
                             )}
                           >
                             {on && <Check className="h-3.5 w-3.5" />}
@@ -321,8 +351,9 @@ export function AskWitnessSheet({
                             <span className="block text-[13.5px] leading-snug text-white">
                               {c.ac_text ?? `Criterion ${c.ac_code}`}
                             </span>
-                            <span className="mt-0.5 block text-[11.5px] text-white">
-                              {c.unit_title ? `${c.unit_title} · ` : ''}Unit {c.unit_code}, {c.ac_code}
+                            <span className="mt-0.5 block text-[12.5px] text-white">
+                              {c.unit_title ? `${c.unit_title} · ` : ''}Unit {c.unit_code},{' '}
+                              {c.ac_code}
                             </span>
                           </span>
                         </button>

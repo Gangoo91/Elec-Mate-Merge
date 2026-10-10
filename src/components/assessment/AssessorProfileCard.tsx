@@ -116,7 +116,7 @@ export function AssessorProfileCard({
     const quals = qualificationsLine(saved.qualifications);
     const since = saved.qualified_since ? new Date(saved.qualified_since).getFullYear() : null;
     return (
-      <PublicCard className="mb-8 flex items-center gap-4">
+      <PublicCard className="mb-8 flex items-center gap-4 border-white/[0.12]">
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-semibold text-elec-yellow">Your assessor profile</p>
           <p className="truncate text-[16px] font-bold text-white">
@@ -140,7 +140,7 @@ export function AssessorProfileCard({
   }
 
   return (
-    <PublicCard className="mb-8 space-y-5">
+    <PublicCard className="mb-8 space-y-5 border-white/[0.12]">
       <div>
         <p className="text-[13px] font-semibold text-elec-yellow">Your assessor profile</p>
         <p className="mt-1 text-[15px] leading-snug text-white">
@@ -212,7 +212,7 @@ export function AssessorProfileCard({
           type="button"
           onClick={save}
           disabled={saving}
-          className="inline-flex h-11 items-center gap-2 rounded-full bg-elec-yellow px-5 text-[15px] font-semibold text-black touch-manipulation disabled:opacity-60"
+          className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[15px] font-semibold text-black touch-manipulation disabled:opacity-60 sm:w-auto"
         >
           {saving && <Loader2 className="h-4 w-4 animate-spin" />}
           Save profile

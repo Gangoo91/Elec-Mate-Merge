@@ -431,10 +431,10 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong className="text-elec-yellow">A4:2026 change — lighting circuits:</strong>{' '}
-            Regulation 411.3.4 (A4:2026) now requires that all AC final circuits supplying
-            luminaires in domestic premises are protected by a 30&nbsp;mA RCD. This mandatory
-            requirement — added by the 2026 amendment — applies to every lighting circuit in a
+            <strong className="text-elec-yellow">Lighting circuits need RCD protection:</strong>{' '}
+            Regulation 411.3.4 requires that all AC final circuits supplying luminaires in domestic
+            premises are protected by a 30&nbsp;mA RCD. This mandatory requirement, in BS 7671 since
+            the 2018 edition, applies to every lighting circuit in a
             Birmingham domestic rewire, not just socket circuits. Confirm with your electrician that
             lighting RCBOs or a split-load consumer unit arrangement with RCD coverage for lighting
             circuits is included in the quote.
@@ -568,7 +568,7 @@ export default function RewireCostBirminghamPage() {
       title="Rewire Cost Birmingham 2026: Midlands Prices"
       description="House rewire cost in Birmingham 2026: 2-bed £2,800–£4,500, 3-bed £4,000–£6,500, 4-bed £6,000–£9,500. Includes Part P notification + EIC."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

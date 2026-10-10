@@ -231,19 +231,13 @@ const WageInformationTab = () => {
       accent === 'red'
         ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04]'
         : accent === 'yellow'
-          ? 'rounded-xl border border-elec-yellow/20 bg-white/[0.05]'
+          ? 'rounded-xl border border-white/[0.08] bg-white/[0.05]'
           : 'rounded-xl border border-white/[0.06] bg-white/[0.02]';
     const eyebrowClass =
-      accent === 'red'
-        ? 'text-red-300'
-        : accent === 'yellow'
-          ? 'text-elec-yellow/85'
-          : 'text-white';
+      accent === 'red' ? 'text-red-300' : accent === 'yellow' ? 'text-elec-yellow' : 'text-white';
     return (
       <div className={`${containerClass} p-4 sm:p-5 space-y-3`}>
-        <span className={`text-[10px] font-medium uppercase tracking-[0.18em] ${eyebrowClass}`}>
-          {eyebrow}
-        </span>
+        <span className={`text-[13px] font-semibold ${eyebrowClass}`}>{eyebrow}</span>
         {children}
       </div>
     );
@@ -260,27 +254,25 @@ const WageInformationTab = () => {
 
       <Section eyebrow="UK minimum wage rates for apprentices">
         <div className="space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Current rates (from 1 April 2026)
           </span>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
             <span className="text-[14px] text-white">Apprentice rate (Year 1 / Under 19)</span>
-            <span className="font-mono text-elec-yellow text-[13px]">
+            <span className="text-elec-yellow text-[13px]">
               £{currentRates.apprenticeMinimum}/hr
             </span>
           </div>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
             <span className="text-[14px] text-white">After Year 1, aged 21+ (NLW)</span>
-            <span className="font-mono text-elec-yellow text-[13px]">
+            <span className="text-elec-yellow text-[13px]">
               £{currentRates.nationalLivingWage}/hr
             </span>
           </div>
         </div>
 
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            All age-based rates
-          </span>
+          <span className="text-[13px] font-semibold text-white">All age-based rates</span>
           <div className="rounded-lg border border-white/[0.06] overflow-hidden">
             <div className="grid grid-cols-2 gap-0 text-[12px] p-2 bg-white/[0.04] text-white">
               <span>Age group</span>
@@ -292,9 +284,7 @@ const WageInformationTab = () => {
                 className="grid grid-cols-2 gap-0 text-[12px] p-2 border-t border-white/[0.06]"
               >
                 <span className="text-white">{rate.age}</span>
-                <span className="text-center font-mono text-elec-yellow">
-                  £{rate.rate.toFixed(2)}
-                </span>
+                <span className="text-center text-elec-yellow">£{rate.rate.toFixed(2)}</span>
               </div>
             ))}
           </div>
@@ -336,7 +326,7 @@ const WageInformationTab = () => {
                   {region.averageWage}
                 </span>
               </div>
-              <p className="text-[13px] text-white leading-relaxed">{region.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{region.description}</p>
             </div>
           ))}
         </div>
@@ -351,7 +341,7 @@ const WageInformationTab = () => {
             >
               <h4 className="text-[14px] font-semibold text-white">{factor.factor}</h4>
               <p className="text-[14px] text-white leading-relaxed">{factor.impact}</p>
-              <p className="text-[12px] text-white leading-relaxed">{factor.examples}</p>
+              <p className="text-[14px] text-white leading-relaxed">{factor.examples}</p>
             </div>
           ))}
         </div>
@@ -371,15 +361,15 @@ const WageInformationTab = () => {
             >
               <div className="flex justify-between items-start gap-2">
                 <h4 className="text-[14px] font-semibold text-white">{grade.grade}</h4>
-                <span className="text-[12px] font-mono text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05] whitespace-nowrap">
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.05] whitespace-nowrap">
                   {grade.jibRate}/hr
                 </span>
               </div>
-              <p className="text-[13px] text-white leading-relaxed">{grade.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{grade.description}</p>
             </div>
           ))}
         </div>
-        <p className="text-[12px] text-white leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           JIB rates are reviewed annually and typically exceed legal minimums. Not all employers are
           JIB-registered — ask at interview whether they follow JIB grading.
         </p>
@@ -398,11 +388,11 @@ const WageInformationTab = () => {
             >
               <div className="flex justify-between items-start gap-2">
                 <h4 className="text-[14px] font-semibold text-white">{item.type}</h4>
-                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05] whitespace-nowrap">
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.05] whitespace-nowrap">
                   {item.rate}
                 </span>
               </div>
-              <p className="text-[13px] text-white leading-relaxed">{item.when}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.when}</p>
             </div>
           ))}
         </div>
@@ -420,15 +410,13 @@ const WageInformationTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
               <h4 className="text-[14px] font-semibold text-white">{item.item}</h4>
-              <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-            Tax code tips
-          </span>
-          <p className="text-[13px] text-white leading-relaxed">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-3 space-y-1">
+          <span className="text-[13px] font-semibold text-elec-yellow">Tax code tips</span>
+          <p className="text-[14px] text-white leading-relaxed">
             Most apprentices will be on tax code 1257L, meaning you can earn £12,570 before paying
             any income tax. If your tax code looks wrong (e.g. BR which means you pay tax on
             everything), contact HMRC on 0300 200 3300 to get it corrected. Wrong tax codes are
@@ -499,12 +487,12 @@ const WageInformationTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center flex-shrink-0 text-[12px] font-mono text-white">
+                <span className="w-6 h-6 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center flex-shrink-0 text-[12px] text-white">
                   {item.step}
                 </span>
                 <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
               </div>
-              <p className="text-[13px] text-white leading-relaxed ml-8">{item.desc}</p>
+              <p className="text-[14px] text-white leading-relaxed ml-8">{item.desc}</p>
             </div>
           ))}
         </div>

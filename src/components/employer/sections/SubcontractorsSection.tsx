@@ -16,17 +16,25 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
   Avatar,
-  Pill,
-  EmptyState,
+  IconButton,
   LoadingBlocks,
   SecondaryButton,
-  AlertRow,
 } from '@/components/employer/editorial';
+import { panel, PanelTitle } from '@/components/employer/overview/HomeSections';
+import {
+  Initials,
+  PlainEmpty,
+  Row,
+  Tag,
+  colClass,
+  heroBtn,
+  frameClass,
+  rowBtnSecondary,
+  rowsClass,
+  twoColClass,
+} from '@/components/employer/pageParts/PageParts';
+import { cn } from '@/lib/utils';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { SUBCONTRACTORS_HELP } from '@/components/employer/help/people';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
@@ -50,6 +58,14 @@ import {
   SubcontractorEditSheet,
 } from '@/components/employer/subcontractors/SubcontractorSheets';
 import { toast } from '@/hooks/use-toast';
+import { AddEmployeeDialog } from '@/components/employer/dialogs/AddEmployeeDialog';
+import { cisHeroBit, useCisMonth, type CisMonth, type CisSubbie } from '@/hooks/useCis';
+import {
+  CisChecksSheet,
+  CisReturnPanel,
+  CisReturnSheet,
+  HmrcChecksPanel,
+} from '@/components/employer/subcontractors/CisPanels';
 
 const initials = (name: string) =>
   name
@@ -71,6 +87,11 @@ export function SubcontractorsSection() {
   const [issueId, setIssueId] = useState<string | null>(null);
   const [statement, setStatement] = useState<SubcontractorStatement | null>(null);
   const [cisOpen, setCisOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
+  // ELE-2064: the CIS300 helper and HMRC checks (owner/admin only).
+  const cis = useCisMonth(run?.firm, period.start, period.end, money);
+  const [checksFor, setChecksFor] = useState<CisSubbie | null>(null);
+  const [markMonth, setMarkMonth] = useState<CisMonth | null>(null);
 
   const byId = (id: string | null) => (id ? (subs.find((s) => s.roster_id === id) ?? null) : null);
   const open = byId(openId);
@@ -78,8 +99,13 @@ export function SubcontractorsSection() {
   // Live: approvals elsewhere update the days without a reload.
   useRealtimeInvalidate(
     'subcontractor-run',
-    [{ table: 'employer_timesheets' }, { table: 'employer_subcontractor_details' }],
-    [['subcontractor-run']],
+    [
+      { table: 'employer_timesheets' },
+      { table: 'employer_subcontractor_details' },
+      { table: 'employer_cis_returns' },
+      { table: 'employer_cis_checks' },
+    ],
+    [['subcontractor-run'], ['cis-month']],
     true
   );
 
@@ -98,6 +124,23 @@ export function SubcontractorsSection() {
       { replace: true }
     );
   }, [memberParam, isLoading, subs, setSearchParams]);
+
+  // Deep link: ?cis=return (the CIS deadline bells) scrolls to the return panel.
+  const cisParam = searchParams.get('cis');
+  useEffect(() => {
+    if (!cisParam || !cis.data) return;
+    requestAnimationFrame(() =>
+      document.getElementById('cis-return')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    );
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('cis');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [cisParam, cis.data, setSearchParams]);
 
   const totals = useMemo(() => {
     let days = 0;
@@ -134,8 +177,6 @@ export function SubcontractorsSection() {
   };
 
   const blockers: HelpBlocker[] = [];
-  if (!isLoading && subs.length === 0)
-    blockers.push({ text: 'Nobody on your team has the Subcontractor type yet.' });
   if (money && run && !run.cis_settings?.employer_tax_reference && subs.length > 0)
     blockers.push({
       text: 'Your HMRC employer reference is not set, so statements print without it.',
@@ -144,80 +185,117 @@ export function SubcontractorsSection() {
     });
 
   const periodLabel = `${fmtDay(period.start)} to ${fmtDay(period.end)}`;
+  const liveStatements = statements.filter((s) => !s.voided_at);
+
+  // Where this tax month stands, in one line.
+  const heroLine = (() => {
+    if (isLoading) return 'Day rates, CIS, insurance and a self-bill statement from approved days.';
+    if (subs.length === 0)
+      return 'Day rates, CIS, insurance and a self-bill statement from approved days.';
+    const bits: string[] = [];
+    if (totals.awaiting > 0)
+      bits.push(
+        `${totals.awaiting} ${totals.awaiting === 1 ? 'day' : 'days'} waiting for approval`
+      );
+    const cover = coverAlerts.length + noInsurance.length;
+    if (cover > 0) bits.push(`${cover} with insurance to check`);
+    const cisBit = money ? cisHeroBit(cis.data) : null;
+    if (cisBit) bits.push(cisBit);
+    const toVerify = money
+      ? (cis.data?.subcontractors ?? []).filter((x) => x.state === 'reverify' || x.state === 'verify_first').length
+      : 0;
+    if (toVerify > 0) bits.push(`${toVerify} to verify with HMRC`);
+    if (bits.length === 0)
+      return `${fmtDays(totals.days)} approved this tax month. Nothing waiting.`;
+    const s = bits.join(', ');
+    return `${s.charAt(0).toUpperCase()}${s.slice(1)}.`;
+  })();
 
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="People"
         title="Subcontractors"
-        description="Day rates, CIS, insurance and a self-bill statement from the days you approved. No holiday, no PAYE."
+        description={heroLine}
         actions={
-          <>
+          <div className="flex items-center gap-2">
             {money && (
-              <SecondaryButton onClick={() => setCisOpen(true)} className="hidden sm:inline-flex">
-                <Landmark className="h-4 w-4 mr-2" />
-                HMRC references
+              <SecondaryButton
+                onClick={() => setCisOpen(true)}
+                aria-label="HMRC references"
+                className={cn(heroBtn, 'shrink-0 px-4 sm:px-5 border-white/[0.18] font-semibold')}
+              >
+                <Landmark className="mr-2 h-4 w-4" />
+                <span className="sm:hidden">HMRC</span>
+                <span className="hidden sm:inline">HMRC references</span>
               </SecondaryButton>
             )}
             <PageHelpButton help={SUBCONTRACTORS_HELP} blockers={blockers} />
-          </>
+          </div>
         }
       />
       <HowItWorks help={SUBCONTRACTORS_HELP} blockers={blockers} />
 
       {/* Period: the CIS tax month */}
       <div
-        className="flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.04] p-2"
+        className={cn(panel, 'flex items-center gap-2 px-2 py-2 sm:px-3')}
         data-help="subcontractors.period"
       >
-        <button
-          type="button"
+        <IconButton
           onClick={() => setOffset((o) => o - 1)}
-          className="h-11 w-11 shrink-0 rounded-full border border-white/[0.1] bg-white/[0.06] text-white flex items-center justify-center touch-manipulation"
           aria-label="Previous tax month"
+          className="shrink-0"
         >
           <ChevronLeft className="h-5 w-5" />
-        </button>
-        <div className="flex-1 min-w-0 text-center">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">
-            Tax month
-          </p>
-          <p className="text-[14px] font-semibold text-white truncate">{periodLabel}</p>
+        </IconButton>
+        <div className="min-w-0 flex-1 text-center sm:text-left sm:pl-2">
+          <span className="text-[13px] text-white">Tax month </span>
+          <span className="text-[15px] font-semibold text-white">{periodLabel}</span>
         </div>
         {offset !== 0 && (
           <button
             type="button"
             onClick={() => setOffset(0)}
-            className="h-11 shrink-0 rounded-full border border-white/[0.1] bg-white/[0.06] px-3 text-[12.5px] font-medium text-white touch-manipulation"
+            className="h-11 shrink-0 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
           >
             This month
           </button>
         )}
-        <button
-          type="button"
+        <IconButton
           onClick={() => setOffset((o) => Math.min(o + 1, 1))}
           disabled={offset >= 1}
-          className="h-11 w-11 shrink-0 rounded-full border border-white/[0.1] bg-white/[0.06] text-white flex items-center justify-center touch-manipulation disabled:opacity-40"
           aria-label="Next tax month"
+          className="shrink-0"
         >
           <ChevronRight className="h-5 w-5" />
-        </button>
+        </IconButton>
       </div>
 
       {isLoading ? (
         <LoadingBlocks />
       ) : isError ? (
-        <EmptyState
-          title="Couldn't load subcontractors"
-          description="Check your connection and try again."
-          action="Try again"
-          onAction={() => refetch()}
-        />
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text="Subcontractors didn't load. Check your connection and try again."
+            action={
+              <button type="button" onClick={() => refetch()} className={rowBtnSecondary}>
+                Try again
+              </button>
+            }
+          />
+        </div>
       ) : subs.length === 0 ? (
-        <EmptyState
-          title="No subcontractors yet"
-          description="Add a subbie from Team and pick Subcontractor as the type. They get the same jobs, packs and timesheets as your team, with no holiday or PAYE. You pay them by a self-bill statement from the days you approve."
-        />
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text="No subcontractors yet. They get the same jobs, packs and timesheets as your team, with no holiday or PAYE, and you pay them by a self-bill statement from the days you approve."
+            action={
+              <button type="button" onClick={() => setAddOpen(true)} className={rowBtnSecondary}>
+                Add a subcontractor
+              </button>
+            }
+          />
+        </div>
       ) : (
         <>
           <StatStrip
@@ -225,22 +303,23 @@ export function SubcontractorsSection() {
             stats={
               money
                 ? [
-                    { label: 'Days approved', value: totals.days },
+                    { label: 'Days approved', value: totals.days, sub: 'This tax month' },
                     {
                       label: 'Awaiting approval',
                       value: totals.awaiting,
-                      tone: totals.awaiting > 0 ? 'orange' : undefined,
+                      tone: totals.awaiting > 0 ? 'yellow' : undefined,
+                      sub: totals.awaiting > 0 ? 'In Timesheets' : 'Nothing waiting',
                     },
-                    { label: 'CIS to deduct', value: gbp(totals.cis) },
-                    { label: 'Net to pay', value: gbp(totals.net), accent: true },
+                    { label: 'CIS to deduct', value: gbp(totals.cis), sub: 'Labour only' },
+                    { label: 'Net to pay', value: gbp(totals.net), sub: 'After CIS' },
                   ]
                 : [
                     { label: 'Subcontractors', value: subs.length },
-                    { label: 'Days approved', value: totals.days },
+                    { label: 'Days approved', value: totals.days, sub: 'This tax month' },
                     {
                       label: 'Awaiting approval',
                       value: totals.awaiting,
-                      tone: totals.awaiting > 0 ? 'orange' : undefined,
+                      tone: totals.awaiting > 0 ? 'yellow' : undefined,
                     },
                     {
                       label: 'Cover to check',
@@ -251,98 +330,151 @@ export function SubcontractorsSection() {
             }
           />
 
-          {(coverAlerts.length > 0 || noInsurance.length > 0) && (
-            <div className="space-y-2.5">
-              {coverAlerts.map((s) => (
-                <AlertRow
-                  key={`ins-${s.roster_id}`}
-                  tone={expiryState(s.insurance_expiry).tone === 'red' ? 'red' : 'amber'}
-                  title={`${s.name}: insurance ${
-                    expiryState(s.insurance_expiry).tone === 'red' ? 'expired' : 'running out'
-                  }`}
-                  subtitle={`Public liability ${expiryState(s.insurance_expiry).label}. Ask for the new certificate before sending them to a job.`}
-                  onClick={() => setOpenId(s.roster_id)}
+          <div className={twoColClass}>
+            <div className={colClass}>
+              <section data-help="subcontractors.list">
+                <PanelTitle title="Your subcontractors" meta={subs.length} />
+                <div className={cn(panel, rowsClass)}>
+                  {subs.map((s) => (
+                    <SubRow
+                      key={s.roster_id}
+                      s={s}
+                      money={money}
+                      onOpen={() => setOpenId(s.roster_id)}
+                    />
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <PanelTitle
+                  title="Statements"
+                  meta={liveStatements.length > 0 ? liveStatements.length : 'This tax month'}
                 />
-              ))}
-              {noInsurance.length > 0 && (
-                <AlertRow
-                  tone="orange"
-                  title={`${noInsurance.length} without insurance on file`}
-                  subtitle={noInsurance.map((s) => s.name).join(', ')}
-                  onClick={() => setEditId(noInsurance[0].roster_id)}
-                />
-              )}
+                <div className={cn(panel, statements.length > 0 && rowsClass)}>
+                  {statements.length === 0 ? (
+                    <PlainEmpty
+                      bare
+                      text={
+                        money
+                          ? 'None yet. Open a subcontractor and tap Issue statement.'
+                          : 'None yet. The owner or an admin issues them.'
+                      }
+                    />
+                  ) : (
+                    statements.map((st) => (
+                      <Row
+                        key={st.id}
+                        title={`${st.statement_number} · ${st.name ?? ''}`}
+                        detail={`${fmtDays(Number(st.day_count))} · issued ${fmtDay(st.issued_at)}`}
+                        trailing={
+                          st.voided_at ? (
+                            <Tag tone="red">Voided</Tag>
+                          ) : money ? (
+                            <span className="text-[14px] font-semibold text-white tabular-nums">
+                              {gbp(st.net_payable)} net
+                            </span>
+                          ) : (
+                            <Tag tone="done">Issued</Tag>
+                          )
+                        }
+                        onClick={() => setStatement(st)}
+                      />
+                    ))
+                  )}
+                  {money && (
+                    <div className="border-t border-white/[0.07] px-4 py-3 sm:px-5">
+                      <button
+                        type="button"
+                        onClick={exportCsv}
+                        data-help="subcontractors.export"
+                        className={rowBtnSecondary}
+                      >
+                        <Download className="h-4 w-4" />
+                        Export statements (CSV)
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </section>
             </div>
-          )}
 
-          <div data-help="subcontractors.list">
-            <ListCard>
-              <ListCardHeader
-                tone="orange"
-                title="Your subcontractors"
-                meta={<Pill tone="blue">{subs.length}</Pill>}
-              />
-              <ListBody>
-                {subs.map((s) => (
-                  <SubRow key={s.roster_id} s={s} money={money} onOpen={() => setOpenId(s.roster_id)} />
-                ))}
-              </ListBody>
-            </ListCard>
-          </div>
-
-          <ListCard>
-            <ListCardHeader
-              tone="emerald"
-              title="Statements this tax month"
-              meta={<Pill tone="blue">{statements.filter((s) => !s.voided_at).length}</Pill>}
-            />
-            {money && (
-              <div className="px-4 sm:px-5 pt-3 flex flex-wrap gap-2">
-                <SecondaryButton onClick={exportCsv} data-help="subcontractors.export">
-                  <Download className="h-4 w-4 mr-2" />
-                  Export statements (CSV)
-                </SecondaryButton>
-                <SecondaryButton onClick={() => setCisOpen(true)} className="sm:hidden">
-                  <Landmark className="h-4 w-4 mr-2" />
-                  HMRC references
-                </SecondaryButton>
-              </div>
-            )}
-            {statements.length === 0 ? (
-              <p className="px-5 py-5 text-[13px] text-white">
-                {money
-                  ? 'None yet. Open a subcontractor and tap Issue statement.'
-                  : 'None yet. The owner or an admin issues them.'}
-              </p>
-            ) : (
-              <ListBody>
-                {statements.map((st) => (
-                  <ListRow
-                    key={st.id}
-                    title={`${st.statement_number} · ${st.name ?? ''}`}
-                    subtitle={`${fmtDays(Number(st.day_count))} · issued ${fmtDay(st.issued_at)}`}
-                    trailing={
-                      st.voided_at ? (
-                        <Pill tone="red">Voided</Pill>
-                      ) : money ? (
-                        <Pill tone="emerald">{gbp(st.net_payable)} net</Pill>
-                      ) : (
-                        <Pill tone="emerald">Issued</Pill>
-                      )
-                    }
-                    onClick={() => setStatement(st)}
+            <div className={colClass}>
+              {money && (
+                <>
+                  <CisReturnPanel
+                    data={cis.data}
+                    loading={cis.isLoading}
+                    refs={{
+                      employerRef: run?.cis_settings?.employer_tax_reference ?? null,
+                      accountsOfficeRef: run?.cis_settings?.accounts_office_reference ?? null,
+                    }}
+                    onMark={(m) => setMarkMonth(m)}
                   />
-                ))}
-              </ListBody>
-            )}
-          </ListCard>
+                  <HmrcChecksPanel data={cis.data} onOpen={(x) => setChecksFor(x)} />
+                </>
+              )}
+              <section>
+                <PanelTitle
+                  title="Cover to check"
+                  meta={
+                    coverAlerts.length + noInsurance.length > 0
+                      ? coverAlerts.length + (noInsurance.length > 0 ? 1 : 0)
+                      : undefined
+                  }
+                />
+                <div
+                  className={cn(
+                    panel,
+                    (coverAlerts.length > 0 || noInsurance.length > 0) && rowsClass
+                  )}
+                >
+                  {coverAlerts.length === 0 && noInsurance.length === 0 ? (
+                    <PlainEmpty bare text="Everyone's insurance is in date." />
+                  ) : (
+                    <>
+                      {coverAlerts.map((s) => {
+                        const expired = expiryState(s.insurance_expiry).tone === 'red';
+                        return (
+                          <Row
+                            key={`ins-${s.roster_id}`}
+                            title={`${s.name}: insurance ${expired ? 'expired' : 'running out'}`}
+                            detail={`Public liability ${expiryState(s.insurance_expiry).label}`}
+                            meta={
+                              <span className="text-white">
+                                Ask for the new certificate before sending them to a job.
+                              </span>
+                            }
+                            trailing={
+                              <Tag tone={expired ? 'red' : 'yellow'}>
+                                {expired ? 'Expired' : 'Soon'}
+                              </Tag>
+                            }
+                            onClick={() => setOpenId(s.roster_id)}
+                          />
+                        );
+                      })}
+                      {noInsurance.length > 0 && (
+                        <Row
+                          title={`${noInsurance.length} without insurance on file`}
+                          detail={noInsurance.map((s) => s.name).join(', ')}
+                          trailing={<Tag tone="outline">Add it</Tag>}
+                          onClick={() => setEditId(noInsurance[0].roster_id)}
+                        />
+                      )}
+                    </>
+                  )}
+                </div>
+              </section>
 
-          <p className="text-[12.5px] text-white">
-            Subcontractors are left out of the PAYE payroll run and have no holiday allowance.
-            {money
-              ? ' CIS comes off labour and other costs only; materials are paid in full.'
-              : ' Only the owner and admins see rates and amounts.'}
-          </p>
+              <p className="text-[13px] leading-relaxed text-white">
+                Subcontractors are left out of the PAYE payroll run and have no holiday allowance.
+                {money
+                  ? ' CIS comes off labour and other costs only; materials are paid in full.'
+                  : ' Only the owner and admins see rates and amounts.'}
+              </p>
+            </div>
+          </div>
         </>
       )}
 
@@ -362,6 +494,16 @@ export function SubcontractorsSection() {
           setOpenId(null);
           setStatement(st);
         }}
+        onChecks={
+          money
+            ? () => {
+                const x = cis.data?.subcontractors.find((c) => c.roster_id === openId);
+                if (!x) return;
+                setOpenId(null);
+                setChecksFor(x);
+              }
+            : undefined
+        }
       />
       <SubcontractorEditSheet sub={byId(editId)} money={money} onClose={() => setEditId(null)} />
       <IssueStatementSheet
@@ -377,39 +519,89 @@ export function SubcontractorsSection() {
         }}
       />
       <StatementSheet statement={statement} run={run} onClose={() => setStatement(null)} />
-      <CisSettingsSheet open={cisOpen} firm={run?.firm} run={run} onClose={() => setCisOpen(false)} />
+      {money && (
+        <>
+          <CisChecksSheet
+            subbie={
+              checksFor
+                ? (cis.data?.subcontractors.find((x) => x.roster_id === checksFor.roster_id) ??
+                  checksFor)
+                : null
+            }
+            onClose={() => setChecksFor(null)}
+          />
+          <CisReturnSheet firm={run?.firm} month={markMonth} onClose={() => setMarkMonth(null)} />
+        </>
+      )}
+      <CisSettingsSheet
+        open={cisOpen}
+        firm={run?.firm}
+        run={run}
+        onClose={() => setCisOpen(false)}
+      />
+      <AddEmployeeDialog
+        open={addOpen}
+        onOpenChange={setAddOpen}
+        defaults={{ teamRole: 'Subcontractor' }}
+      />
     </PageFrame>
   );
 }
 
-function SubRow({
-  s,
-  money,
-  onOpen,
-}: {
-  s: SubcontractorRow;
-  money: boolean;
-  onOpen: () => void;
-}) {
+function SubRow({ s, money, onOpen }: { s: SubcontractorRow; money: boolean; onOpen: () => void }) {
   const ins = expiryState(s.insurance_expiry);
   const ecs = expiryState(s.ecs_expiry);
+  const noRate = money && !((s.terms?.rate ?? 0) > 0);
+  // One status per row, the most pressing first.
+  const status =
+    ins.tone === 'red' ? (
+      <Tag tone="red">Insurance expired</Tag>
+    ) : noRate ? (
+      <Tag tone="outline">No rate</Tag>
+    ) : s.awaiting_count > 0 ? (
+      <Tag tone="yellow">{s.awaiting_count} waiting</Tag>
+    ) : ins.tone === 'amber' ? (
+      <Tag tone="yellow">Insurance {ins.label}</Tag>
+    ) : ins.tone === 'blue' ? (
+      <Tag tone="outline">No insurance</Tag>
+    ) : (
+      <Tag tone="done">Cover ok</Tag>
+    );
+  const detail = [
+    s.trade || 'Subcontractor',
+    s.elec_id_number,
+    s.ecs_expiry && ecs.tone !== 'emerald' ? `ECS ${ecs.label}` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
   return (
-    <ListRow
-      lead={<Avatar initials={initials(s.name)} photo={s.photo_url} />}
+    <Row
+      lead={
+        s.photo_url ? (
+          <Avatar
+            initials={initials(s.name)}
+            photo={s.photo_url}
+            className="[&>div]:h-10 [&>div]:w-10 [&>div]:rounded-full"
+          />
+        ) : (
+          <Initials name={s.name} />
+        )
+      }
       title={s.name}
-      subtitle={[s.trade || 'Subcontractor', s.elec_id_number].filter(Boolean).join(' · ')}
+      detail={detail}
       trailing={
         <>
-          <Pill tone={s.day_count > 0 ? 'emerald' : 'blue'}>{fmtDays(Number(s.day_count))}</Pill>
-          {s.awaiting_count > 0 && <Pill tone="orange">{s.awaiting_count} waiting</Pill>}
-          <Pill tone={ins.tone}>
-            {ins.tone === 'blue' ? 'No insurance' : `Insurance ${ins.tone === 'emerald' ? 'ok' : ins.label}`}
-          </Pill>
-          {s.ecs_expiry && ecs.tone !== 'emerald' && <Pill tone={ecs.tone}>ECS {ecs.label}</Pill>}
-          {money && s.amounts && (s.terms?.rate ?? 0) > 0 && s.day_count > 0 && (
-            <Pill tone="emerald">{gbp(s.amounts.net_payable)} net</Pill>
-          )}
-          {money && !((s.terms?.rate ?? 0) > 0) && <Pill tone="amber">No rate</Pill>}
+          <span className="hidden text-right sm:block">
+            <span className="block text-[14px] font-semibold text-white tabular-nums">
+              {fmtDays(Number(s.day_count))}
+            </span>
+            {money && s.amounts && (s.terms?.rate ?? 0) > 0 && s.day_count > 0 && (
+              <span className="block text-[12px] text-white tabular-nums">
+                {gbp(s.amounts.net_payable)} net
+              </span>
+            )}
+          </span>
+          {status}
         </>
       }
       onClick={onOpen}

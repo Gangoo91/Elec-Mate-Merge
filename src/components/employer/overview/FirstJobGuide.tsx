@@ -10,6 +10,7 @@
  * booking step; not ready to book → skip and still land on the job.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { addDays, format, getDay } from 'date-fns';
 import { Check, Plus } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
@@ -167,6 +168,8 @@ function BookFirstPerson({
 
   const book = async () => {
     if (!person || !start || backwards) return;
+    // ELE-2061: warn or block on anyone without a right-to-work check.
+    if (!(await confirmRtw([person.id], 'assign'))) return;
     try {
       await assign.mutateAsync({
         jobId: job.id,

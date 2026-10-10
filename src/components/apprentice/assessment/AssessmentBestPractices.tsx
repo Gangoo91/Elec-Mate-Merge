@@ -54,9 +54,7 @@ const AssessmentBestPractices = () => {
             key={index}
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              {practice.title}
-            </span>
+            <span className="text-[13px] font-semibold text-white">{practice.title}</span>
             <ul className="space-y-1.5">
               {practice.items.map((item, itemIndex) => (
                 <li
@@ -72,10 +70,8 @@ const AssessmentBestPractices = () => {
         ))}
       </div>
 
-      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-          Safety warning
-        </span>
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-red-300">Safety warning</span>
         <p className="text-[14px] text-white leading-relaxed">
           When in doubt, stop and ask. If you're unsure about any aspect of the site assessment,
           don't proceed. Contact your supervisor, mentor, or a qualified electrician for guidance.

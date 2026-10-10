@@ -39,7 +39,7 @@ const keyTakeaways = [
   'A consumer unit replacement in Leeds typically costs between £350 and £550 for most domestic properties, which is in line with Yorkshire averages and competitive compared to other major UK cities.',
   'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations (England and Wales). A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
-  'BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for all socket-outlet circuits up to 32 A, for cables concealed in walls at a depth less than 50 mm, and — under A4:2026 Regulation 411.3.4 — for all AC lighting circuits in domestic premises. Individual RCBOs on every circuit are the preferred solution.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for all socket-outlet circuits up to 32 A, for cables concealed in walls at a depth less than 50 mm, and, under Regulation 411.3.4 (in force since 2018), for all AC lighting circuits in domestic premises. Individual RCBOs on every circuit are the preferred solution.',
   'Leeds has a large stock of Victorian back-to-back terraced housing in areas such as Headingley, Hyde Park, and Beeston — many still have original or early consumer units that require replacement.',
 ];
 
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Leeds?',
     answer:
-      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for all socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. A4:2026 also introduces Regulation 411.3.4, which extends this requirement to AC lighting circuits in domestic premises — meaning virtually every circuit in the house now requires RCD protection. Individual RCBOs on every circuit are the preferred solution, providing both overcurrent and residual current protection without nuisance tripping.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for all socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. Regulation 411.3.4, in force since BS 7671:2018, extends this requirement to AC lighting circuits in domestic premises, meaning virtually every circuit in the house requires RCD protection. Individual RCBOs on every circuit are the preferred solution, providing both overcurrent and residual current protection without nuisance tripping.',
   },
   {
     question: 'Why do many Leeds properties need a fuse board upgrade?',
@@ -74,7 +74,7 @@ const faqs = [
     question:
       'Do I need an Arc Fault Detection Device (AFDD) when replacing a consumer unit in Leeds?',
     answer:
-      'A4:2026 introduces Regulation 421.1.7, which recommends the installation of Arc Fault Detection Devices (AFDDs) on AC final circuits to mitigate fire risk caused by arc fault currents. The regulation is advisory rather than mandatory — it uses the word "recommending" rather than "shall". However, Leeds has a large stock of Victorian housing with aged rubber-insulated wiring in areas such as Hyde Park, Harehills, and Beeston, where the risk of arc faults from deteriorated insulation is elevated. Your electrician should assess whether AFDDs are appropriate for the installation and discuss the recommendation with you. Where fitted, AFDDs are typically installed per circuit alongside RCBOs.',
+      'Regulation 421.1.7 of BS 7671 covers Arc Fault Detection Devices (AFDDs) on AC final circuits to mitigate fire risk caused by arc fault currents. Since A2:2022 they are required on socket-outlet circuits up to 32 A in HMOs, care homes, purpose-built student accommodation and high rise residential buildings. In an ordinary house the regulation is advisory: it recommends rather than says "shall". However, Leeds has a large stock of Victorian housing with aged rubber-insulated wiring in areas such as Hyde Park, Harehills, and Beeston, where the risk of arc faults from deteriorated insulation is elevated. Your electrician should assess whether AFDDs are appropriate for the installation and discuss the recommendation with you. Where fitted, AFDDs are typically installed per circuit alongside RCBOs.',
   },
   {
     question: 'How long does a consumer unit replacement take in a Leeds property?',
@@ -267,8 +267,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — BS 7671:2018+A4:2026 requires 30 mA RCD
-                additional protection on socket circuits, concealed cables, and — under A4:2026
-                Regulation 411.3.4 — all AC lighting circuits in domestic premises. Boards without
+                additional protection on socket circuits, concealed cables, and, under Regulation
+                411.3.4 (since 2018), all AC lighting circuits in domestic premises. Boards without
                 RCDs or RCBOs on all circuits present a significant electric shock and fire risk.
               </span>
             </li>
@@ -469,7 +469,7 @@ export default function ConsumerUnitReplacementLeedsPage() {
       title="Consumer Unit Replacement Leeds: Fuse Board"
       description="How much does a consumer unit replacement cost in Leeds in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Leeds Price Guide"

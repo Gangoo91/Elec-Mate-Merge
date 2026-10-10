@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronRight, PenLine } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { LC_CARD, lcChip, type ChipTone } from '@/components/apprentice-hub/college-hub/learnerUi';
+import { useOtjSummary } from '@/hooks/useOtjSummary';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
@@ -26,6 +27,11 @@ interface AiPrefill {
 
    Distinguishes the four source_kind values so the apprentice understands
    why some hours don't yet count toward their ESFA total.
+
+   8 Oct 2026: the headline is now a sentence built from get_otj_summary, the
+   one hours figure the tutor sees (verified plus measured app learning). The
+   three tiles it replaced counted this card's own rows, and "Last 7 days"
+   mixed verified, waiting and returned hours into one number.
    ========================================================================== */
 
 type VerificationStatus = 'pending' | 'verified' | 'rejected' | 'verified_by_employer';
@@ -52,19 +58,20 @@ const STATUS_LABEL: Record<VerificationStatus, string> = {
   verified_by_employer: 'Employer verified',
 };
 
-const STATUS_TONE: Record<VerificationStatus, string> = {
-  pending: 'text-white',
-  verified: 'text-white',
-  rejected: 'text-white',
-  verified_by_employer: 'text-white',
+const STATUS_TONE: Record<VerificationStatus, ChipTone> = {
+  pending: 'neutral',
+  verified: 'done',
+  rejected: 'action',
+  verified_by_employer: 'done',
 };
 
 const ACTIVITY_LABEL: Record<string, string> = OTJ_ACTIVITY_LABEL;
 
 function fmtHours(min: number): string {
+  if (!Number.isFinite(min) || min <= 0) return '0h';
   if (min < 60) return `${Math.round(min)}m`;
   const h = min / 60;
-  return h >= 10 ? `${h.toFixed(0)}h` : `${h.toFixed(1)}h`;
+  return h >= 10 ? `${Math.round(h).toLocaleString('en-GB')}h` : `${h.toFixed(1)}h`;
 }
 
 function fmtRel(iso: string | null): string {
@@ -213,37 +220,36 @@ export function MyOtjSubmitCard() {
   }, [rows]);
 
   const visible = expanded ? rows : rows.slice(0, 4);
+  const shared = useOtjSummary();
+  const refreshShared = shared.refresh;
+  // A new or re-verified entry moves the shared figure too.
+  useEffect(() => {
+    void refreshShared();
+  }, [rows, refreshShared]);
 
   if (loading) return <Skeleton />;
 
+  const counted = shared.data?.counted_hours ?? summary.verifiedMin / 60;
+  const required = shared.data?.required_hours ?? null;
+  const headline = [
+    required
+      ? `${fmtHours(counted * 60)} of your ${fmtHours(required * 60)} counted so far.`
+      : `${fmtHours(counted * 60)} counted so far.`,
+    summary.pendingMin > 0 && `${fmtHours(summary.pendingMin)} waiting on your tutor.`,
+    summary.rejectedMin > 0 && `${fmtHours(summary.rejectedMin)} returned to you to fix.`,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <>
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-      >
-        <div className="px-4 sm:px-5 py-4 sm:py-5">
-          {/* Eyebrow */}
-          <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              Off-the-job training
-            </div>
-            {summary.pendingMin > 0 && (
-              <span className="text-[10.5px] tabular-nums text-white">
-                {fmtHours(summary.pendingMin)} awaiting sign-off
-              </span>
-            )}
-          </div>
-
-          {/* Headline numbers */}
-          <div className="mt-3 grid grid-cols-3 gap-3 sm:gap-5">
-            <Stat value={fmtHours(summary.verifiedMin)} label="Verified" tone="text-white" />
-            <Stat value={fmtHours(summary.pendingMin)} label="Pending" tone="text-white" />
-            <Stat value={fmtHours(summary.last7Min)} label="Last 7 days" tone="text-white" />
-          </div>
-
-          <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
-            Your apprenticeship has a set number of off-the-job training hours to reach by gateway.
-            Submit work activities here, ready for your tutor or supervisor to sign off.
+      <section className={LC_CARD}>
+        <div>
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Off-the-job hours</h3>
+          <p className="mt-1 text-[14px] font-medium leading-snug text-white">{headline}</p>
+          <p className="mt-1.5 text-[12.5px] leading-snug text-white">
+            Log work you did off the tools: training, shadowing, study. Your tutor or supervisor
+            signs it off, then it counts.
           </p>
 
           {/* CTA row — primary submit, secondary AI write-up shortcut. The
@@ -263,16 +269,16 @@ export function MyOtjSubmitCard() {
                 setAiPrefill(null);
                 setOpen(true);
               }}
-              className="h-11 w-full rounded-lg bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
+              className="h-11 w-full rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-opacity touch-manipulation hover:opacity-90 sm:w-auto"
             >
-              Submit work activity
+              Log work activity
             </button>
             <button
               type="button"
               onClick={() => setAiPromptOpen((x) => !x)}
               aria-expanded={aiPromptOpen}
               className={cn(
-                'inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-lg border px-4 text-[13px] font-semibold transition-colors touch-manipulation sm:w-auto',
+                'inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border px-4 text-[13.5px] font-semibold transition-colors touch-manipulation sm:w-auto',
                 /*
                  * ⚠️ Both branches of this ternary used to be the same —
                  * `border-white/[0.06] bg-white/[0.02] text-white`, differing
@@ -282,8 +288,8 @@ export function MyOtjSubmitCard() {
                  * surface was also 2% white, which barely reads as a control.
                  */
                 aiPromptOpen
-                  ? 'border-elec-yellow/40 bg-white/[0.10] text-elec-yellow'
-                  : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10]'
+                  ? 'border-elec-yellow text-elec-yellow'
+                  : 'border-white/[0.14] text-white hover:border-elec-yellow'
               )}
             >
               Write it up for me <UsesAi />
@@ -295,9 +301,7 @@ export function MyOtjSubmitCard() {
               SubmitWorkOtjSheet opens prefilled with it. Always editable. */}
           {aiPromptOpen && (
             <div className="mt-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 space-y-2.5">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                Tell me what you did
-              </div>
+              <div className="text-[13px] font-semibold text-white">Tell me what you did</div>
               <textarea
                 value={aiPromptText}
                 onChange={(e) => setAiPromptText(e.target.value)}
@@ -307,8 +311,9 @@ export function MyOtjSubmitCard() {
                 className={cn(textareaCn, 'w-full resize-none')}
               />
               <div className="flex items-center justify-between gap-2">
-                <p className="text-[10.5px] text-white leading-snug">
-                  This drafts a starter (uses AI). You review, edit, then submit. Nothing is filed on its own.
+                <p className="text-[12px] text-white leading-snug">
+                  This drafts a starter (uses AI). You review, edit, then submit. Nothing is filed
+                  on its own.
                 </p>
                 <button
                   type="button"
@@ -325,7 +330,7 @@ export function MyOtjSubmitCard() {
                         : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                   )}
                 >
-                  <Sparkles className="h-3 w-3" />
+                  <PenLine className="h-4 w-4" strokeWidth={1.5} aria-hidden />
                   {aiPromptLoading ? 'Drafting…' : 'Draft my entry'}
                 </button>
               </div>
@@ -335,9 +340,7 @@ export function MyOtjSubmitCard() {
           {/* Recent submissions */}
           {rows.length > 0 && (
             <div className="mt-5 -mx-1">
-              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
-                Recent
-              </div>
+              <h4 className="px-1 text-[13px] font-semibold text-white">Recent</h4>
               <ul className="mt-2 divide-y divide-white/[0.05]">
                 {visible.map((r) => (
                   <RowItem key={r.id} row={r} />
@@ -347,7 +350,7 @@ export function MyOtjSubmitCard() {
                 <button
                   type="button"
                   onClick={() => setExpanded((x) => !x)}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+                  className="mt-1 inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
                   {expanded ? 'Show less' : `Show ${rows.length - 4} more`}
                 </button>
@@ -375,29 +378,16 @@ export function MyOtjSubmitCard() {
   );
 }
 
-function Stat({ value, label, tone }: { value: string; label: string; tone: string }) {
-  return (
-    <div>
-      <div
-        className={cn('text-[20px] sm:text-[24px] font-semibold tabular-nums leading-none', tone)}
-      >
-        {value}
-      </div>
-      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">{label}</div>
-    </div>
-  );
-}
-
 function RowItem({ row }: { row: OtjRow }) {
   const apprenticeSubmitted = row.source_kind === 'apprentice_submitted';
   return (
     <li className="px-1 py-2.5">
-      <div className="flex items-baseline justify-between gap-3">
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="truncate text-[13px] font-medium text-white leading-snug">
+          <div className="line-clamp-2 text-[13.5px] font-medium leading-snug text-white">
             {row.title}
           </div>
-          <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-[10.5px] text-white">
+          <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-[12px] text-white">
             <span>{ACTIVITY_LABEL[row.activity_type] ?? row.activity_type}</span>
             <span aria-hidden>·</span>
             <span className="tabular-nums">{fmtHours(row.duration_minutes)}</span>
@@ -413,17 +403,12 @@ function RowItem({ row }: { row: OtjRow }) {
             )}
           </div>
           {row.verification_status === 'rejected' && row.verification_rationale && (
-            <div className="mt-1.5 border-l-2 border-white/[0.06] pl-2 text-[11px] text-red-300 leading-snug">
-              {row.verification_rationale}
+            <div className="mt-1 text-[12.5px] leading-snug text-orange-300">
+              Your tutor said: {row.verification_rationale}
             </div>
           )}
         </div>
-        <span
-          className={cn(
-            'shrink-0 text-[10.5px] font-medium tabular-nums tracking-tight uppercase',
-            STATUS_TONE[row.verification_status]
-          )}
-        >
+        <span className={lcChip(STATUS_TONE[row.verification_status])}>
           {STATUS_LABEL[row.verification_status]}
         </span>
       </div>
@@ -433,10 +418,8 @@ function RowItem({ row }: { row: OtjRow }) {
 
 function Skeleton() {
   return (
-    <section
-      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
-    >
-      <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
+    <section className={LC_CARD}>
+      <div className="space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-3 gap-3">
           {[0, 1, 2].map((i) => (

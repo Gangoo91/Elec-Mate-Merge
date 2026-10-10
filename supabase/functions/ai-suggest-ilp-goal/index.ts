@@ -25,6 +25,7 @@ import {
   raggedAcLines,
   bs7671FacetLines,
   GROUNDING_RULES,
+  callerFrom,
 } from '../_shared/learner-context.ts';
 
 const corsHeaders = {
@@ -470,7 +471,7 @@ Deno.serve(async (req) => {
     // the qualification AC catalogue + BS 7671 facets seeded from
     // weak areas. This is the change that makes the AI genuinely
     // grounded in everything the learner has done.
-    const richCtx = await loadLearnerContext(sb, body.college_student_id);
+    const richCtx = await loadLearnerContext(sb, body.college_student_id, { asCaller: callerFrom(req) });
     // Build seeds for RAG: BS 7671 + AC. If we're in 'from_ac' mode, anchor
     // seeds to the specific AC text so the RAG returns siblings of that AC.
     const seedQueries: string[] = richCtx ? bs7671SeedQueries(richCtx) : [];

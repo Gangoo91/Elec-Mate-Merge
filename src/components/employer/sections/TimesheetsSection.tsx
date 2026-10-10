@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
+import { confirmRtw } from '@/components/employer/people/RtwGuard';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import {
@@ -15,20 +16,13 @@ import {
   type HelpBlocker,
 } from '@/components/hub/PageHelp';
 import { PayPeriodSheet } from '@/components/employer/timesheets/PayPeriodSheet';
-import {
-  recordPayrollExport,
-  useFirmPaySettings,
-  useOfficeFirmId,
-} from '@/hooks/useFirmPaySettings';
-import { describePayRule } from '@/utils/payPeriods';
+import { useFirmPaySettings, useOfficeFirmId } from '@/hooks/useFirmPaySettings';
 import { useJobContext } from '@/hooks/useJobContext';
 import { JobContextBar } from '@/components/employer/JobContextBar';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
 import {
   splitDailyOvertime,
-  grossPay,
   labourCost,
   DEFAULT_OVERTIME_TERMS,
   type OvertimeTerms,
@@ -41,15 +35,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import FormSheet from '@/components/forms/FormSheet';
+import { panel, PanelTitle } from '@/components/employer/overview/HomeSections';
+import {
+  HeroActions,
+  Initials,
+  KeyValue,
+  PlainEmpty,
+  Row,
+  Tag,
+  heroBtn,
+  frameClass,
+  rowBtnPrimary,
+  rowBtnSecondary,
+  rowsClass,
+  twoColClass,
+  colClass,
+  filterStack,
+  type TagTone,
+} from '@/components/employer/pageParts/PageParts';
 import { toast } from 'sonner';
 import { ManualTimeEntryDialog } from '@/components/employer/dialogs/ManualTimeEntryDialog';
-import {
-  downloadExportCSV,
-  downloadHoursCSV,
-  type ExportResult,
-} from '@/services/accountingService';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useYoungWorkers } from '@/hooks/usePayLaw';
+import { youngWorkerFlags } from '@/lib/payLaw';
 import {
   format,
   startOfWeek,
@@ -63,7 +72,7 @@ import {
   getDay,
 } from 'date-fns';
 import {
-  Download,
+  Banknote,
   Plus,
   ChevronLeft,
   ChevronRight,
@@ -81,7 +90,6 @@ import {
   Settings2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { AccountingProvider, PayrollEntry } from '@/services/types';
 import {
   useTimesheets,
   useApproveTimesheet,
@@ -99,26 +107,15 @@ import {
   PageHero,
   StatStrip,
   FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  Dot,
   PulseDot,
-  Eyebrow,
-  EmptyState,
   LoadingBlocks,
   IconButton,
-  Divider,
   PrimaryButton,
   SecondaryButton,
-  SheetShell,
   selectTriggerClass,
   selectContentClass,
   checkboxClass,
-  type Tone,
+  fieldLabelClass,
 } from '@/components/employer/editorial';
 
 interface DisplayTimesheet {
@@ -154,39 +151,14 @@ const formatTimeFromISO = (isoString: string | null): string => {
   }
 };
 
-const getInitials = (name: string): string =>
-  name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-
-const statusTone = (status: string): Tone => {
-  if (status === 'Approved') return 'emerald';
-  if (status === 'Pending') return 'amber';
+const tagForStatus = (status: string): TagTone => {
+  if (status === 'Approved') return 'done';
+  if (status === 'Pending') return 'yellow';
   if (status === 'Rejected') return 'red';
-  return 'yellow';
+  return 'neutral';
 };
 
-interface AccountingConnection {
-  provider: AccountingProvider;
-  isConnected: boolean;
-  lastSync: string | null;
-}
-
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-// 'intuit' deliberately absent — it produced a byte-identical file to
-// QuickBooks (same company, same format) and read as two integrations.
-// These are FILES laid out for each package's import screen — not live
-// integrations (that is ELE-1825). The labels say so.
-const ACCOUNTING_PROVIDERS: { id: AccountingProvider; name: string; sub: string }[] = [
-  { id: 'xero', name: 'CSV for Xero', sub: 'Import it in Xero Payroll' },
-  { id: 'sage', name: 'CSV for Sage', sub: 'Import it in Sage Payroll' },
-  { id: 'quickbooks', name: 'CSV for QuickBooks', sub: 'Import it in QuickBooks Payroll' },
-  { id: 'csv', name: 'Plain CSV', sub: 'Opens in Excel, Numbers or Sheets' },
-];
 
 const VALID_TABS = ['week', 'pending', 'approved'];
 
@@ -196,7 +168,7 @@ const TIMESHEETS_HELP: PageHelpContent = {
   what: (
     <>
       Every hour your team logs lands here. You approve it or send it back, then take the approved
-      hours to payroll as a file.
+      hours to the pay run in Accounting.
     </>
   ),
   steps: [
@@ -209,8 +181,8 @@ const TIMESHEETS_HELP: PageHelpContent = {
       body: 'Check the day, the job and the break. Send it back with a reason and the worker can fix it and resubmit.',
     },
     {
-      title: 'Download the payroll file',
-      body: 'Approved hours, overtime and leave for the week, laid out for your payroll software.',
+      title: 'Send it to payroll',
+      body: 'Pay run opens the one payroll file in Accounting: approved hours, overtime, holiday, sick pay and expenses for the pay period, with the minimum wage checked.',
     },
   ],
   notes: [
@@ -220,7 +192,7 @@ const TIMESHEETS_HELP: PageHelpContent = {
     },
     {
       title: 'Who sees pay',
-      body: 'Office managers see hours only. Pay rates and the payroll file with pay are for the owner and admins.',
+      body: 'Office managers see hours only and send an hours-only file. Pay rates and the payroll file with pay are for the owner and admins.',
     },
   ],
   tasks: [
@@ -253,7 +225,12 @@ const TIMESHEETS_HELP: PageHelpContent = {
       ],
       who: 'Owner, admins and office managers.',
       tour: [
-        { target: 'timesheets.tabs', text: 'Pending', caption: 'Open the Pending tab.', opens: true },
+        {
+          target: 'timesheets.tabs',
+          text: 'Pending',
+          caption: 'Open the Pending tab.',
+          opens: true,
+        },
         { target: 'timesheets.list', caption: 'Tap an entry to open it.', opens: true },
         {
           target: 'timesheets.approve',
@@ -272,7 +249,12 @@ const TIMESHEETS_HELP: PageHelpContent = {
         'The worker sees your reason on their Timesheets page, fixes the day and sends it again. It comes back marked Resubmitted.',
       who: 'Owner, admins and office managers.',
       tour: [
-        { target: 'timesheets.tabs', text: 'Pending', caption: 'Open the Pending tab.', opens: true },
+        {
+          target: 'timesheets.tabs',
+          text: 'Pending',
+          caption: 'Open the Pending tab.',
+          opens: true,
+        },
         { target: 'timesheets.list', caption: 'Tap the entry that needs fixing.', opens: true },
         { target: 'timesheets.reject', caption: 'Tap Reject, type why, then tap Send back.' },
       ],
@@ -291,28 +273,16 @@ const TIMESHEETS_HELP: PageHelpContent = {
       ],
     },
     {
-      title: 'Download the payroll file',
+      title: 'Send the hours to payroll',
       steps: [
-        'Approve the week first. Only approved hours go in the file.',
-        'Tap Payroll file (office managers see Hours file).',
-        'Use the arrows to pick the week.',
-        'Tap Save next to your payroll software, or Save hours CSV.',
+        'Approve the period first. Only approved hours go.',
+        'Tap Pay run. It opens Send to payroll in Accounting.',
+        'Pick the pay period and your payroll software, then tap Check and send.',
       ],
       after:
-        'On a phone this opens the share sheet, so you can save it or send it to your bookkeeper. Each person then sees sent to payroll on My pay. For a whole pay period with expenses and mileage, use Accounting.',
+        'There is one payroll file. It checks the minimum wage, adds holiday and sick pay, writes the holiday record and marks every entry as sent, so nothing goes twice. Each person sees sent to payroll on My pay.',
       who: 'Owner and admins get the file with pay. Office managers get hours only.',
-      tour: [
-        { target: 'timesheets.export', caption: 'Tap Payroll file.', opens: true },
-        {
-          target: 'timesheets.export-save',
-          caption: 'Pick the week, then tap Save next to your payroll software.',
-        },
-        {
-          target: 'timesheets.pay-period',
-          caption: 'Owners: set the pay period and payday here once.',
-          optional: true,
-        },
-      ],
+      tour: [{ target: 'timesheets.export', caption: 'Tap Pay run.' }],
     },
     {
       title: 'Add hours for someone',
@@ -328,7 +298,6 @@ const TIMESHEETS_HELP: PageHelpContent = {
 };
 
 export const TimesheetsSection = () => {
-  const isMobile = useIsMobile();
   const navigate = useNavigate();
   // Office managers approve hours but never see pay (can_see_firm_money).
   // Defaults to hidden until the server answers.
@@ -406,7 +375,6 @@ export const TimesheetsSection = () => {
   };
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [isExportOpen, setIsExportOpen] = useState(false);
   const [detailTimesheet, setDetailTimesheet] = useState<DisplayTimesheet | null>(null);
 
   const [currentWeekStart, setCurrentWeekStart] = useState(() =>
@@ -491,6 +459,8 @@ export const TimesheetsSection = () => {
   }, [rawTimesheets, employees, jobs, otherJobs, contextJobId]);
 
   const currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 });
+  // ELE-2063: under-18s (8h a day, 40h a week, 30 min break after 4.5h).
+  const { data: youngWorkers } = useYoungWorkers();
   const weekLabel = `${format(currentWeekStart, 'd MMM')} – ${format(currentWeekEnd, 'd MMM')}`;
 
   const goToPreviousWeek = () => setCurrentWeekStart((prev) => subWeeks(prev, 1));
@@ -723,8 +693,23 @@ export const TimesheetsSection = () => {
       if (canSeeMoney && getHourlyRate(ts.employeeId) === null) list.push('No rate');
       if (list.length > 0) flags.set(ts.id, list);
     });
+    // Working Time Regulations reg 5A / 12(4): under-18 limits, no opt-out.
+    if (youngWorkers && youngWorkers.size > 0) {
+      youngWorkerFlags(
+        allSettled
+          .filter((ts) => ts.status !== 'Rejected')
+          .map((ts) => ({
+            id: ts.id,
+            employeeId: ts.employeeId,
+            date: ts.date,
+            hours: ts.totalHours,
+            breakMins: ts.breakMins,
+          })),
+        youngWorkers
+      ).forEach((f, id) => flags.set(id, [...f, ...(flags.get(id) ?? [])])); // legal limit first
+    }
     return flags;
-  }, [allSettled, getHourlyRate, canSeeMoney, jobs, otherJobs]);
+  }, [allSettled, getHourlyRate, canSeeMoney, jobs, otherJobs, youngWorkers]);
 
   // Past weekdays this week with no entry and no approved leave — the classic
   // "forgot to clock in" hole that otherwise only shows up as a short pay packet.
@@ -800,14 +785,16 @@ export const TimesheetsSection = () => {
   const flaggedPendingCount = pendingSettled.length - cleanPendingIds.length;
 
   const exceptionSummary = useMemo(() => {
-    const counts = { longDays: 0, weekend: 0, noJob: 0, noRate: 0, noBreak: 0 };
+    const counts = { longDays: 0, weekend: 0, noJob: 0, noRate: 0, noBreak: 0, under18: 0 };
+    const under18Keys = new Set<string>();
     const longDayKeys = new Set<string>();
     const weekIds = new Set(settledTimesheets.map((t) => t.id));
     entryFlags.forEach((flags, id) => {
       if (!weekIds.has(id)) return;
       const ts = settledTimesheets.find((t) => t.id === id);
       flags.forEach((f) => {
-        if (f.endsWith('h day') && ts) longDayKeys.add(`${ts.employeeId}|${ts.date}`);
+        if (f.startsWith('Under 18') && ts) under18Keys.add(`${ts.employeeId}|${ts.date}`);
+        else if (f.endsWith('h day') && ts) longDayKeys.add(`${ts.employeeId}|${ts.date}`);
         else if (f === 'Weekend') counts.weekend += 1;
         else if (f === 'No job') counts.noJob += 1;
         else if (f === 'No rate') counts.noRate += 1;
@@ -815,11 +802,13 @@ export const TimesheetsSection = () => {
       });
     });
     counts.longDays = longDayKeys.size;
+    counts.under18 = under18Keys.size;
     const missingDays = [...missingDaysByEmployee.values()].reduce((s, v) => s + v.length, 0);
     return { ...counts, missingDays, silent: silentWorkers.length };
   }, [entryFlags, settledTimesheets, missingDaysByEmployee, silentWorkers]);
 
   const hasExceptions =
+    exceptionSummary.under18 > 0 ||
     exceptionSummary.longDays > 0 ||
     exceptionSummary.weekend > 0 ||
     exceptionSummary.noJob > 0 ||
@@ -830,8 +819,16 @@ export const TimesheetsSection = () => {
 
   // One write for a batch of clean entries — the whole queue, or one
   // person's week. Flagged entries are never in `ids`; they need a look.
-  const approveIds = (ids: string[], flaggedLeft: number, who?: string) => {
+  // ELE-2061: approving hours pays someone; warn or block if they have no
+  // right-to-work check (firm setting).
+  const rtwOk = (ids: string[]) =>
+    confirmRtw(
+      rawTimesheets.filter((t) => ids.includes(t.id)).map((t) => t.employee_id),
+      'approve'
+    );
+  const approveIds = async (ids: string[], flaggedLeft: number, who?: string) => {
     if (ids.length === 0) return;
+    if (!(await rtwOk(ids))) return;
     batchApproveMutation.mutate(
       { ids },
       {
@@ -899,100 +896,6 @@ export const TimesheetsSection = () => {
     [employees, weekTimesheets, getOvertimeTerms, getHourlyRate]
   );
 
-  // Approved leave falling inside the export week, per worker — weekday count,
-  // halves honoured — so leave lands IN the payroll file instead of forcing a
-  // cross-reference against the leave screen.
-  const leaveInPeriod = useCallback(
-    (employeeId: string): { days: number; detail: string } => {
-      const start = format(currentWeekStart, 'yyyy-MM-dd');
-      const end = format(currentWeekEnd, 'yyyy-MM-dd');
-      const byType = new Map<string, number>();
-      approvedLeave
-        .filter((lr) => lr.employeeId === employeeId && lr.startDate <= end && lr.endDate >= start)
-        .forEach((lr) => {
-          if (lr.halfDay) {
-            if (lr.startDate >= start && lr.startDate <= end) {
-              byType.set(lr.type, (byType.get(lr.type) ?? 0) + 0.5);
-            }
-            return;
-          }
-          const overlapStart = lr.startDate > start ? lr.startDate : start;
-          const overlapEnd = lr.endDate < end ? lr.endDate : end;
-          let d = 0;
-          eachDayOfInterval({ start: parseISO(overlapStart), end: parseISO(overlapEnd) }).forEach(
-            (day) => {
-              const dow = getDay(day);
-              if (dow !== 0 && dow !== 6) d += 1;
-            }
-          );
-          if (d > 0) byType.set(lr.type, (byType.get(lr.type) ?? 0) + d);
-        });
-      const days = [...byType.values()].reduce((s, v) => s + v, 0);
-      const detail = [...byType.entries()]
-        .map(([t, v]) => `${v} ${t.replace(/_/g, ' ')}`)
-        .join(', ');
-      return { days, detail };
-    },
-    [approvedLeave, currentWeekStart, currentWeekEnd]
-  );
-
-  const generatePayrollEntries = (): PayrollEntry[] => {
-    const approvedTimesheets = settledTimesheets.filter((ts) => ts.status === 'Approved');
-
-    // Group per employee, then split regular vs overtime per DAY (over 8h/day),
-    // so the export's Overtime Hours column carries real numbers instead of 0.00.
-    const byEmployee = new Map<string, DisplayTimesheet[]>();
-    approvedTimesheets.forEach((ts) => {
-      const list = byEmployee.get(ts.employeeId) ?? [];
-      list.push(ts);
-      byEmployee.set(ts.employeeId, list);
-    });
-
-    // Workers with approved leave but no hours still belong in the payroll run —
-    // a week off must not mean a missing pay line.
-    const allIds = new Set(byEmployee.keys());
-    employees.forEach((e) => {
-      if (leaveInPeriod(e.id).days > 0) allIds.add(e.id);
-    });
-
-    return [...allIds].map((employeeId) => {
-      const entries = byEmployee.get(employeeId) ?? [];
-      const emp = employeesById.get(employeeId);
-      const hourlyRate = getHourlyRate(employeeId) ?? 0;
-      const { multiplier, threshold } = getOvertimeTerms(employeeId);
-      const { regularHours, overtimeHours } = splitDailyOvertime(entries, threshold);
-      const leave = leaveInPeriod(employeeId);
-
-      const jobBreakdown: PayrollEntry['jobBreakdown'] = [];
-      entries.forEach((ts) => {
-        const jobEntry = jobBreakdown.find((j) => j.jobId === ts.jobId);
-        const cost = ts.totalHours * hourlyRate;
-        if (jobEntry) {
-          jobEntry.hours += ts.totalHours;
-          jobEntry.cost += cost;
-        } else {
-          jobBreakdown.push({ jobId: ts.jobId, jobTitle: ts.jobTitle, hours: ts.totalHours, cost });
-        }
-      });
-
-      return {
-        employeeId,
-        employeeName: entries[0]?.employeeName ?? emp?.name ?? 'Unknown',
-        regularHours,
-        overtimeHours,
-        hourlyRate,
-        overtimeMultiplier: multiplier,
-        grossPay: grossPay(regularHours, overtimeHours, hourlyRate, multiplier),
-        payType: emp?.pay_type ?? 'hourly',
-        leaveDays: leave.days,
-        leaveDetail: leave.detail,
-        periodStart: format(currentWeekStart, 'yyyy-MM-dd'),
-        periodEnd: format(currentWeekEnd, 'yyyy-MM-dd'),
-        jobBreakdown,
-      };
-    });
-  };
-
   const handleClockIn = () => {
     if (!selectedEmployeeId) {
       toast.error('Please select an employee before clocking in.');
@@ -1015,7 +918,8 @@ export const TimesheetsSection = () => {
     await clockOut();
   };
 
-  const handleApprove = (id: string) => {
+  const handleApprove = async (id: string) => {
+    if (!(await rtwOk([id]))) return;
     approveTimesheetMutation.mutate(
       { id },
       {
@@ -1061,7 +965,8 @@ export const TimesheetsSection = () => {
     );
   };
 
-  const handleBatchApprove = () => {
+  const handleBatchApprove = async () => {
+    if (!(await rtwOk(selectedTimesheetIds))) return;
     batchApproveMutation.mutate(
       { ids: selectedTimesheetIds },
       {
@@ -1119,97 +1024,6 @@ export const TimesheetsSection = () => {
     setSelectedTimesheetIds(pendingIds);
   };
 
-  const announceExport = (result: ExportResult) => {
-    if (result.cancelled) return;
-    if (result.method === 'share-sheet') {
-      toast.success('File ready', {
-        description: `${result.filename} — choose where to save or send it.`,
-      });
-    } else {
-      toast.success('File saved', { description: `${result.filename} is in your downloads.` });
-    }
-  };
-  const exportFailed = (err: unknown) =>
-    toast.error('Could not save the file', {
-      description: err instanceof Error ? err.message : 'Try again, or export from a computer.',
-    });
-
-  // Log the export so each worker's My pay can say "sent to payroll on…".
-  const logExport = (
-    result: ExportResult,
-    kind: 'hours' | 'xero' | 'sage' | 'quickbooks' | 'csv',
-    entries: PayrollEntry[]
-  ) => {
-    if (result.cancelled || !officeFirmId) return;
-    void recordPayrollExport({
-      firmId: officeFirmId,
-      start: format(currentWeekStart, 'yyyy-MM-dd'),
-      end: format(currentWeekEnd, 'yyyy-MM-dd'),
-      kind,
-      employeeIds: entries.map((e) => e.employeeId),
-    });
-  };
-
-  // Office managers: hours, overtime and leave per person — never pay.
-  const handleHoursExport = () => {
-    const entries = generatePayrollEntries();
-    if (entries.length === 0) {
-      toast.error('No approved hours to export for this week');
-      return;
-    }
-    // Called straight from the tap so the phone's share sheet is allowed.
-    downloadHoursCSV(
-      entries,
-      format(currentWeekStart, 'yyyy-MM-dd'),
-      format(currentWeekEnd, 'yyyy-MM-dd')
-    )
-      .then((r) => {
-        logExport(r, 'hours', entries);
-        announceExport(r);
-      })
-      .catch(exportFailed);
-  };
-
-  const handleExport = (provider: AccountingProvider) => {
-    if (!canSeeMoney) {
-      handleHoursExport();
-      return;
-    }
-    const entries = generatePayrollEntries();
-    if (entries.length === 0) {
-      toast.error('No approved timesheets to export');
-      return;
-    }
-    // Never ship £0.00 pay lines into accounting software — a missing rate
-    // must be fixed on the team record, not laundered through an export.
-    // (Leave-only lines with no hours are fine — payroll prices the leave.)
-    const noRate = entries.filter((e) => e.hourlyRate <= 0 && e.regularHours + e.overtimeHours > 0);
-    if (noRate.length > 0) {
-      toast.error(
-        `${noRate.map((e) => e.employeeName).join(', ')} ${noRate.length === 1 ? 'has' : 'have'} no hourly rate set — add rates in Team before exporting payroll`
-      );
-      return;
-    }
-    downloadExportCSV(
-      provider,
-      entries,
-      format(currentWeekStart, 'yyyy-MM-dd'),
-      format(currentWeekEnd, 'yyyy-MM-dd')
-    )
-      .then((r) => {
-        if (!r.cancelled) setIsExportOpen(false);
-        logExport(
-          r,
-          (['xero', 'sage', 'quickbooks'] as string[]).includes(provider)
-            ? (provider as 'xero' | 'sage' | 'quickbooks')
-            : 'csv',
-          entries
-        );
-        announceExport(r);
-      })
-      .catch(exportFailed);
-  };
-
   const refresh = async () => {
     // refetch never throws — check the result so a failed refresh can't
     // toast success over stale data
@@ -1252,29 +1066,243 @@ export const TimesheetsSection = () => {
     { value: 'leave', label: 'Leave' },
   ];
 
+  // Where things stand, in one line (the Overview's headline, for hours).
+  const isThisWeek =
+    format(currentWeekStart, 'yyyy-MM-dd') ===
+    format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
+  const heroLine = (() => {
+    const parts: string[] = [];
+    const n = pendingSettled.length;
+    if (n > 0) parts.push(`${n} ${n === 1 ? 'timesheet' : 'timesheets'} to approve`);
+    if (exceptionSummary.missingDays > 0)
+      parts.push(
+        `${exceptionSummary.missingDays} missing ${exceptionSummary.missingDays === 1 ? 'day' : 'days'}`
+      );
+    if (liveCount > 0) parts.push(`${liveCount} on the clock now`);
+    if (parts.length > 0) {
+      const s = parts.join(', ');
+      return `${s.charAt(0).toUpperCase()}${s.slice(1)}.`;
+    }
+    if (weekTimesheets.length === 0)
+      return isThisWeek
+        ? 'Nothing logged this week yet. Hours land here as the team clocks in.'
+        : `Nothing logged for ${weekLabel}.`;
+    return `Nothing waiting. ${totalHours.toFixed(1)} hours logged ${isThisWeek ? 'this week' : `for ${weekLabel}`}.`;
+  })();
+
+  const exceptionTags = (
+    <div className="flex flex-wrap gap-2">
+      {exceptionSummary.under18 > 0 && (
+        <Tag tone="red">
+          {exceptionSummary.under18} under-18 day{exceptionSummary.under18 === 1 ? '' : 's'} over
+          the limit
+        </Tag>
+      )}
+      {exceptionSummary.missingDays > 0 && (
+        <Tag tone="outline">
+          {exceptionSummary.missingDays} missing day{exceptionSummary.missingDays === 1 ? '' : 's'}
+        </Tag>
+      )}
+      {exceptionSummary.silent > 0 && (
+        <Tag tone="outline">
+          {exceptionSummary.silent} worker{exceptionSummary.silent === 1 ? '' : 's'} no hours
+        </Tag>
+      )}
+      {exceptionSummary.longDays > 0 && (
+        <Tag tone="outline">
+          {exceptionSummary.longDays} long day{exceptionSummary.longDays === 1 ? '' : 's'} (over{' '}
+          {LONG_DAY_HOURS}h)
+        </Tag>
+      )}
+      {exceptionSummary.weekend > 0 && (
+        <Tag tone="outline">
+          {exceptionSummary.weekend} weekend entr{exceptionSummary.weekend === 1 ? 'y' : 'ies'}
+        </Tag>
+      )}
+      {exceptionSummary.noJob > 0 && <Tag tone="red">{exceptionSummary.noJob} no job</Tag>}
+      {exceptionSummary.noBreak > 0 && (
+        <Tag tone="outline">
+          {exceptionSummary.noBreak} no break over {NO_BREAK_HOURS}h
+        </Tag>
+      )}
+      {exceptionSummary.noRate > 0 && <Tag tone="red">{exceptionSummary.noRate} no rate</Tag>}
+    </div>
+  );
+
+  // Only run the payroll check once the week has any entries — a firm
+  // that doesn't use timesheets must not see "133 workers no hours"
+  const showPayrollCheck =
+    (weekTimesheets.length > 0 || pendingSettled.length > 0) &&
+    (activeTab === 'pending'
+      ? cleanPendingIds.length > 0
+      : hasExceptions || cleanPendingIds.length > 0);
+
+  const payrollCheck = showPayrollCheck ? (
+    <section>
+      <PanelTitle
+        title="Payroll check"
+        meta={`${pendingSettled.length} waiting · ${cleanPendingIds.length} clean`}
+      />
+      <div className={cn(panel, 'px-4 py-4 sm:px-5 space-y-3')}>
+        {hasExceptions && activeTab !== 'pending' && exceptionTags}
+        {silentWorkers.length > 0 && activeTab !== 'pending' && (
+          <p className="text-[13px] text-white">
+            No hours logged: {silentWorkers.map((w) => w.name).join(', ')}
+          </p>
+        )}
+        {cleanPendingIds.length > 0 && (
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center lg:flex-col lg:items-start">
+            <button
+              type="button"
+              data-help="timesheets.approve-clean"
+              onClick={handleApproveClean}
+              disabled={batchApproveMutation.isPending}
+              className={cn(rowBtnPrimary, 'w-full sm:w-auto')}
+            >
+              {batchApproveMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Check className="h-4 w-4" />
+              )}
+              Approve all {cleanPendingIds.length} clean
+            </button>
+            <span className="text-[13px] text-white">
+              {pendingOutsideWeek > 0 ? 'Every week, not just this one. ' : ''}
+              {flaggedPendingCount > 0
+                ? `${flaggedPendingCount} flagged entr${flaggedPendingCount === 1 ? 'y stays' : 'ies stay'} for you to check.`
+                : 'Nothing flagged.'}
+            </span>
+          </div>
+        )}
+      </div>
+    </section>
+  ) : null;
+
+  const clockPanel =
+    activeTab === 'week' ? (
+      <section>
+        <PanelTitle
+          title={isClockedIn ? 'On the clock' : 'Clock someone in'}
+          meta={isClockedIn ? undefined : 'Pick a worker and a job'}
+        />
+        <div className={cn(panel, 'px-4 py-4 sm:px-5')}>
+          {isClockedIn ? (
+            <div className="space-y-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <div className="text-[15px] font-semibold text-white truncate">
+                    {clockState?.jobTitle || 'Unknown job'}
+                  </div>
+                  <div className="mt-0.5 text-[13px] text-white">
+                    {isOnBreak ? 'On a break' : 'Working now'}
+                  </div>
+                </div>
+                <div className="shrink-0 text-right">
+                  <div className="text-[26px] font-semibold leading-none text-white tabular-nums">
+                    {duration}
+                  </div>
+                  <div className="mt-1 text-[12px] text-white">Elapsed</div>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={isOnBreak ? endBreak : startBreak}
+                  className={cn(rowBtnSecondary, 'flex-1')}
+                >
+                  <Coffee className="h-4 w-4" />
+                  {isOnBreak
+                    ? `End break${breakMinutes > 0 ? ` · ${breakMinutes}m` : ''}`
+                    : breakMinutes > 0
+                      ? `Break · ${breakMinutes}m taken`
+                      : 'Break'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleClockOut}
+                  disabled={isClockingOut}
+                  className={cn(rowBtnPrimary, 'flex-1')}
+                >
+                  {isClockingOut ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Square className="h-4 w-4" />
+                  )}
+                  Clock out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end lg:flex-col lg:items-stretch">
+              <Select value={selectedEmployeeId} onValueChange={setSelectedEmployeeId}>
+                <SelectTrigger className={`${selectTriggerClass} flex-1`}>
+                  <SelectValue placeholder="Select worker…" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {employees
+                    .filter((e) => e.status === 'Active' || e.status === 'active')
+                    .map((emp) => (
+                      <SelectItem key={emp.id} value={emp.id}>
+                        {emp.name}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+              <Select value={selectedJobId} onValueChange={setSelectedJobId}>
+                <SelectTrigger className={`${selectTriggerClass} flex-1`}>
+                  <SelectValue placeholder="Select job…" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {activeJobs.map((job) => (
+                    <SelectItem key={job.id} value={job.id}>
+                      {job.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <button
+                type="button"
+                onClick={handleClockIn}
+                className={cn(rowBtnSecondary, 'mt-2 sm:mt-0 lg:mt-2 lg:self-end')}
+              >
+                <Play className="h-4 w-4" />
+                Clock in
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+    ) : null;
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="People"
         title="Timesheets"
-        description="Approve the team's hours and send them to payroll."
-        tone="amber"
+        description={isLoading ? "Approve the team's hours and send them to payroll." : heroLine}
         actions={
-          <div className="flex flex-wrap items-center gap-2">
+          <HeroActions stretchFirst>
             <ManualTimeEntryDialog
               trigger={
-                <PrimaryButton data-help="timesheets.add">
+                <PrimaryButton data-help="timesheets.add" className={heroBtn}>
                   <Plus className="h-4 w-4 mr-1.5" />
                   Add entry
                 </PrimaryButton>
               }
             />
-            <SecondaryButton data-help="timesheets.export" onClick={() => setIsExportOpen(true)}>
-              <Download className="h-4 w-4 mr-1.5" />
-              {canSeeMoney ? 'Payroll file' : 'Hours file'}
+            <SecondaryButton
+              data-help="timesheets.export"
+              onClick={() => navigate('/employer?section=accounting&focus=payrun')}
+              className={cn(heroBtn, 'shrink-0 px-3.5 sm:px-5 border-white/[0.18] font-semibold')}
+            >
+              <Banknote className="mr-1.5 h-4 w-4" />
+              Pay run
             </SecondaryButton>
             {isFirmAdmin && (
-              <IconButton onClick={() => setRulesOpen(true)} aria-label="Timesheet rules">
+              <IconButton
+                onClick={() => setRulesOpen(true)}
+                aria-label="Timesheet rules"
+                className="shrink-0"
+              >
                 <Settings2 className="h-4 w-4" />
               </IconButton>
             )}
@@ -1283,10 +1311,10 @@ export const TimesheetsSection = () => {
               blockers={helpBlockers}
               askContext={{ page: 'timesheets', tab: activeTab }}
             />
-            <IconButton onClick={refresh} aria-label="Refresh timesheets">
+            <IconButton onClick={refresh} aria-label="Refresh timesheets" className="shrink-0">
               <RefreshCw className="h-4 w-4" />
             </IconButton>
-          </div>
+          </HeroActions>
         }
       />
 
@@ -1308,25 +1336,25 @@ export const TimesheetsSection = () => {
               {
                 label: 'Hours this week',
                 value: totalHours.toFixed(1),
-                tone: 'amber',
                 sub: `${approvedHours.toFixed(1)} approved${liveCount > 0 ? ` · ${liveCount} on the clock` : ''}`,
               },
               {
                 label: 'To approve',
                 value: pendingSettled.length,
-                tone: 'orange',
+                tone: pendingSettled.length > 0 ? 'yellow' : undefined,
                 sub:
                   pendingOutsideWeek > 0
                     ? `${pendingCount} this week · ${pendingOutsideWeek} earlier`
-                    : pendingSettled.length === 1
-                      ? '1 entry'
-                      : `${pendingSettled.length} entries`,
+                    : pendingSettled.length === 0
+                      ? 'Nothing waiting'
+                      : pendingSettled.length === 1
+                        ? '1 entry'
+                        : `${pendingSettled.length} entries`,
                 onClick: pendingSettled.length > 0 ? () => changeTab('pending') : undefined,
               },
               {
                 label: 'On leave today',
                 value: onLeaveToday,
-                tone: 'blue',
                 sub: onLeaveToday === 0 ? 'Everyone in' : 'Open leave',
                 onClick: () => navigate('/employer?section=leave'),
               },
@@ -1334,8 +1362,6 @@ export const TimesheetsSection = () => {
                 ? {
                     label: 'Overtime',
                     value: `£${Math.round(overtimeCost).toLocaleString()}`,
-                    tone: 'emerald',
-                    accent: true,
                     sub:
                       workersWithoutRate > 0
                         ? `${overtimeHours.toFixed(1)}h OT · ${workersWithoutRate} no rate set`
@@ -1344,636 +1370,512 @@ export const TimesheetsSection = () => {
                 : {
                     label: 'Overtime',
                     value: `${overtimeHours.toFixed(1)}h`,
-                    tone: 'emerald',
-                    accent: true,
                     sub: "Over each worker's daily threshold",
                   },
             ]}
           />
 
-          {activeTab !== 'pending' && (
-            <ListCard>
-              <ListCardHeader
-                tone="amber"
-                title="Week"
-                meta={<span className="text-[11.5px] text-white tabular-nums">{weekLabel}</span>}
-                action="Today"
-                onAction={goToThisWeek}
-              />
-              <div className="px-3 sm:px-6 py-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
-                <IconButton onClick={goToPreviousWeek} aria-label="Previous week">
-                  <ChevronLeft className="h-4 w-4" />
-                </IconButton>
-                <div className="order-first basis-full sm:order-none sm:basis-auto sm:flex-1 min-w-0">
-                  <div className="grid grid-cols-7 gap-1 sm:gap-2">
-                    {dailyBreakdown.map((data, idx) => {
-                      const isSelected =
-                        selectedDay &&
-                        format(data.day, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
-                      const isTodayDate = isToday(data.day);
-                      const heightPct = Math.min((data.hours / maxDailyHours) * 100, 100);
-
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => setSelectedDay(isSelected ? null : data.day)}
-                          className={cn(
-                            'flex flex-col items-center min-w-0 h-[112px] px-1 py-2 rounded-xl border transition-colors touch-manipulation',
-                            isSelected
-                              ? 'bg-elec-yellow border-elec-yellow text-black'
-                              : isTodayDate
-                                ? 'bg-white/[0.04] border-elec-yellow/40 text-white'
-                                : 'bg-white/[0.02] border-white/[0.06] text-white hover:bg-white/[0.05]'
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              'text-[10px] font-semibold uppercase tracking-[0.14em]',
-                              isSelected ? 'text-black' : 'text-white'
-                            )}
-                          >
-                            {DAYS_OF_WEEK[idx]}
-                          </span>
-                          <span
-                            className={cn(
-                              'mt-0.5 text-[15px] font-semibold tabular-nums',
-                              isSelected ? 'text-black' : 'text-white'
-                            )}
-                          >
-                            {format(data.day, 'd')}
-                          </span>
-                          <div
-                            className={cn(
-                              'mt-1.5 w-7 flex-1 rounded overflow-hidden flex items-end',
-                              isSelected ? 'bg-black/20' : 'bg-white/[0.06]'
-                            )}
-                          >
-                            {data.hours > 0 && (
-                              <div
-                                className={cn('w-full', isSelected ? 'bg-black' : 'bg-elec-yellow')}
-                                style={{ height: `${heightPct}%` }}
-                              />
-                            )}
-                          </div>
-                          <span
-                            className={cn(
-                              'mt-1 text-[10px] font-medium tabular-nums',
-                              isSelected ? 'text-black' : 'text-white'
-                            )}
-                          >
-                            {data.hours.toFixed(1)}h
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <IconButton onClick={goToNextWeek} aria-label="Next week">
-                  <ChevronRight className="h-4 w-4" />
-                </IconButton>
-              </div>
-              <div className="px-5 sm:px-6 pb-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[0.06] pt-3">
-                <div className="flex items-center gap-1.5">
-                  <Dot tone="emerald" />
-                  <span className="text-[11px] text-white">Approved</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Dot tone="amber" />
-                  <span className="text-[11px] text-white">Pending</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Dot tone="red" />
-                  <span className="text-[11px] text-white">Rejected</span>
-                </div>
-                {selectedDay && (
-                  <button
-                    onClick={() => setSelectedDay(null)}
-                    className="ml-auto text-[11.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-                  >
-                    Clear day filter
-                  </button>
-                )}
-              </div>
-            </ListCard>
-          )}
-
-          {activeTab === 'week' && (
-            <ListCard>
-              <ListCardHeader
-                tone={isClockedIn ? 'emerald' : 'amber'}
-                title={isClockedIn ? 'On the clock' : 'Clock in'}
-                meta={
-                  isClockedIn ? (
-                    <Pill tone="emerald">{duration}</Pill>
-                  ) : (
-                    <span className="text-[11.5px] text-white">Select worker and job</span>
-                  )
-                }
-              />
-              <div className="px-5 sm:px-6 py-5">
-                {isClockedIn ? (
-                  <div className="space-y-4">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="min-w-0">
-                        <Eyebrow>Active job</Eyebrow>
-                        <div className="mt-2 text-[15px] font-semibold text-white truncate">
-                          {clockState?.jobTitle || 'Unknown job'}
-                        </div>
-                        <div className="mt-1 text-[12px] text-white">On the clock</div>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <div className="text-[28px] sm:text-[36px] font-semibold text-white tabular-nums leading-none">
-                          {duration}
-                        </div>
-                        <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
-                          Elapsed
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <SecondaryButton
-                        onClick={isOnBreak ? endBreak : startBreak}
-                        fullWidth
-                        className={isOnBreak ? 'border-amber-500/40 text-amber-400' : undefined}
+          <div className={twoColClass}>
+            <div className={colClass}>
+              {activeTab !== 'pending' && (
+                <section>
+                  <PanelTitle
+                    title={isThisWeek ? 'This week' : 'Week'}
+                    meta={weekLabel}
+                    action={isThisWeek ? undefined : 'This week'}
+                    onAction={goToThisWeek}
+                  />
+                  <div className={cn(panel, 'px-3 py-3 sm:px-4')}>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <IconButton
+                        onClick={goToPreviousWeek}
+                        aria-label="Previous week"
+                        className="hidden sm:flex shrink-0"
                       >
-                        <Coffee className="h-4 w-4 mr-2" />
-                        {isOnBreak
-                          ? `End break${breakMinutes > 0 ? ` · ${breakMinutes}m` : ''}`
-                          : breakMinutes > 0
-                            ? `Break · ${breakMinutes}m taken`
-                            : 'Break'}
-                      </SecondaryButton>
-                      <PrimaryButton onClick={handleClockOut} disabled={isClockingOut} fullWidth>
-                        {isClockingOut ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <Square className="h-4 w-4 mr-2" />
-                        )}
-                        Clock out
-                      </PrimaryButton>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col sm:flex-row items-stretch gap-2">
-                    <Select value={selectedEmployeeId} onValueChange={setSelectedEmployeeId}>
-                      <SelectTrigger className={`${selectTriggerClass} flex-1`}>
-                        <SelectValue placeholder="Select worker…" />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        {employees
-                          .filter((e) => e.status === 'Active' || e.status === 'active')
-                          .map((emp) => (
-                            <SelectItem key={emp.id} value={emp.id}>
-                              {emp.name}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </Select>
-                    <Select value={selectedJobId} onValueChange={setSelectedJobId}>
-                      <SelectTrigger className={`${selectTriggerClass} flex-1`}>
-                        <SelectValue placeholder="Select job…" />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        {activeJobs.map((job) => (
-                          <SelectItem key={job.id} value={job.id}>
-                            {job.title}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <PrimaryButton onClick={handleClockIn}>
-                      <Play className="h-4 w-4 mr-2" />
-                      Clock in
-                    </PrimaryButton>
-                  </div>
-                )}
-              </div>
-            </ListCard>
-          )}
+                        <ChevronLeft className="h-4 w-4" />
+                      </IconButton>
+                      <div className="grid min-w-0 flex-1 grid-cols-7 gap-1 sm:gap-2">
+                        {dailyBreakdown.map((data, idx) => {
+                          const isSelected =
+                            selectedDay &&
+                            format(data.day, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
+                          const isTodayDate = isToday(data.day);
+                          const heightPct = Math.min((data.hours / maxDailyHours) * 100, 100);
 
-          {/* Only run the payroll check once the week has any entries — a firm
-              that doesn't use timesheets must not see "133 workers no hours" */}
-          {(weekTimesheets.length > 0 || pendingSettled.length > 0) &&
-            (activeTab === 'pending'
-              ? cleanPendingIds.length > 0
-              : hasExceptions || cleanPendingIds.length > 0) && (
-              <ListCard>
-                <ListCardHeader
-                  tone={hasExceptions ? 'orange' : 'emerald'}
-                  title={
-                    <span className="flex items-center gap-2">
-                      {hasExceptions && <AlertTriangle className="h-4 w-4 text-orange-400" />}
-                      Payroll check
-                    </span>
-                  }
-                  meta={
-                    <span className="text-[11.5px] text-white tabular-nums">
-                      {pendingSettled.length} waiting · {cleanPendingIds.length} clean
-                    </span>
-                  }
-                />
-                <div className="px-5 sm:px-6 py-4 space-y-3">
-                  {hasExceptions && activeTab !== 'pending' && (
-                    <div className="flex flex-wrap gap-2">
-                      {exceptionSummary.missingDays > 0 && (
-                        <Pill tone="orange">
-                          {exceptionSummary.missingDays} missing day
-                          {exceptionSummary.missingDays === 1 ? '' : 's'}
-                        </Pill>
-                      )}
-                      {exceptionSummary.silent > 0 && (
-                        <Pill tone="orange">
-                          {exceptionSummary.silent} worker{exceptionSummary.silent === 1 ? '' : 's'}{' '}
-                          no hours
-                        </Pill>
-                      )}
-                      {exceptionSummary.longDays > 0 && (
-                        <Pill tone="amber">
-                          {exceptionSummary.longDays} long day
-                          {exceptionSummary.longDays === 1 ? '' : 's'} (&gt;{LONG_DAY_HOURS}h)
-                        </Pill>
-                      )}
-                      {exceptionSummary.weekend > 0 && (
-                        <Pill tone="amber">
-                          {exceptionSummary.weekend} weekend entr
-                          {exceptionSummary.weekend === 1 ? 'y' : 'ies'}
-                        </Pill>
-                      )}
-                      {exceptionSummary.noJob > 0 && (
-                        <Pill tone="red">{exceptionSummary.noJob} no job</Pill>
-                      )}
-                      {exceptionSummary.noBreak > 0 && (
-                        <Pill tone="amber">
-                          {exceptionSummary.noBreak} no break over {NO_BREAK_HOURS}h
-                        </Pill>
-                      )}
-                      {exceptionSummary.noRate > 0 && (
-                        <Pill tone="red">{exceptionSummary.noRate} no rate</Pill>
-                      )}
-                    </div>
-                  )}
-                  {silentWorkers.length > 0 && activeTab !== 'pending' && (
-                    <p className="text-[12px] text-white">
-                      No hours logged:{' '}
-                      <span className="text-white">
-                        {silentWorkers.map((w) => w.name).join(', ')}
-                      </span>
-                    </p>
-                  )}
-                  {cleanPendingIds.length > 0 && (
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                      <PrimaryButton
-                        data-help="timesheets.approve-clean"
-                        onClick={handleApproveClean}
-                        disabled={batchApproveMutation.isPending}
-                        className="w-full sm:w-auto"
-                      >
-                        {batchApproveMutation.isPending ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <Check className="h-4 w-4 mr-2" />
-                        )}
-                        Approve all {cleanPendingIds.length} clean
-                      </PrimaryButton>
-                      <span className="text-[12px] text-white">
-                        {pendingOutsideWeek > 0 ? 'Every week, not just this one. ' : ''}
-                        {flaggedPendingCount > 0
-                          ? `${flaggedPendingCount} flagged entr${flaggedPendingCount === 1 ? 'y stays' : 'ies stay'} for you to check.`
-                          : 'Nothing flagged.'}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </ListCard>
-            )}
-
-          <div data-help="timesheets.tabs">
-            <FilterBar
-              tabs={tabs}
-              activeTab={activeTab}
-              onTabChange={changeTab}
-              search={searchQuery}
-              onSearchChange={setSearchQuery}
-              searchPlaceholder="Search worker or job…"
-              actions={
-                <>
-                  <SecondaryButton
-                    className={cn('hidden sm:inline-flex', activeTab === 'pending' && 'sm:hidden')}
-                    onClick={() => setViewMode(viewMode === 'list' ? 'grid' : 'list')}
-                    aria-label={viewMode === 'list' ? 'Switch to week grid' : 'Switch to list'}
-                  >
-                    {viewMode === 'list' ? (
-                      <>
-                        <LayoutGrid className="h-4 w-4 mr-1.5" />
-                        Grid
-                      </>
-                    ) : (
-                      <>
-                        <List className="h-4 w-4 mr-1.5" />
-                        List
-                      </>
-                    )}
-                  </SecondaryButton>
-                  <SecondaryButton onClick={() => setIsFiltersOpen(true)}>Filters</SecondaryButton>
-                  {isSelectMode ? (
-                    <PrimaryButton
-                      onClick={() => {
-                        setIsSelectMode(false);
-                        setSelectedTimesheetIds([]);
-                        setBatchRejectOpen(false);
-                      }}
-                    >
-                      Done
-                    </PrimaryButton>
-                  ) : (
-                    <SecondaryButton
-                      data-help="timesheets.select"
-                      onClick={() => setIsSelectMode(true)}
-                    >
-                      Select
-                    </SecondaryButton>
-                  )}
-                </>
-              }
-            />
-          </div>
-
-          {(filterEmployee !== 'all' || filterStatus !== 'all') && (
-            <div className="flex flex-wrap gap-2">
-              {filterEmployee !== 'all' && (
-                <button
-                  onClick={() => setFilterEmployee('all')}
-                  className="inline-flex items-center gap-1.5 h-11 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] text-white touch-manipulation"
-                >
-                  {employees.find((e) => e.id === filterEmployee)?.name}
-                  <X className="h-3 w-3" />
-                </button>
-              )}
-              {filterStatus !== 'all' && (
-                <button
-                  onClick={() => setFilterStatus('all')}
-                  className="inline-flex items-center gap-1.5 h-11 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] text-white touch-manipulation"
-                >
-                  {filterStatus}
-                  <X className="h-3 w-3" />
-                </button>
-              )}
-            </div>
-          )}
-
-          {isSelectMode && (
-            <div className="sticky bottom-3 z-20 rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_14%)] shadow-[0_8px_24px_rgba(0,0,0,0.45)] p-3 space-y-3">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[13px] font-semibold text-white tabular-nums">
-                  {selectedTimesheetIds.length} selected
-                </span>
-                <button
-                  onClick={selectAllPending}
-                  className="h-11 px-3 text-[12.5px] font-medium text-elec-yellow touch-manipulation"
-                >
-                  Select all waiting
-                </button>
-              </div>
-              {batchRejectOpen && (
-                <textarea
-                  value={batchRejectReason}
-                  onChange={(e) => setBatchRejectReason(e.target.value.slice(0, 500))}
-                  placeholder="Why are these going back? Everyone selected sees this"
-                  rows={2}
-                  autoFocus
-                  className="w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/35 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 resize-none touch-manipulation"
-                />
-              )}
-              <div className="flex gap-2">
-                <SecondaryButton
-                  onClick={handleBatchReject}
-                  fullWidth
-                  disabled={
-                    selectedTimesheetIds.length === 0 ||
-                    batchRejectMutation.isPending ||
-                    batchApproveMutation.isPending
-                  }
-                >
-                  <X className="h-4 w-4 mr-1.5" />
-                  {batchRejectOpen ? 'Send back' : 'Reject'}
-                </SecondaryButton>
-                <PrimaryButton
-                  onClick={handleBatchApprove}
-                  fullWidth
-                  disabled={
-                    selectedTimesheetIds.length === 0 ||
-                    batchApproveMutation.isPending ||
-                    batchRejectMutation.isPending
-                  }
-                >
-                  {batchApproveMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
-                  ) : (
-                    <Check className="h-4 w-4 mr-1.5" />
-                  )}
-                  Approve
-                </PrimaryButton>
-              </div>
-            </div>
-          )}
-
-          {viewMode === 'grid' && activeTab !== 'pending' ? (
-            employeeBreakdown.length === 0 ? (
-              <EmptyState
-                title="No timesheets this week"
-                description="Add a manual entry or have your team clock in to populate this week."
-              />
-            ) : (
-              <ListCard>
-                <ListCardHeader
-                  tone="amber"
-                  title="Week per worker"
-                  meta={<span className="text-[11.5px] text-white tabular-nums">{weekLabel}</span>}
-                />
-                <div className="overflow-x-auto">
-                  <table className="w-full min-w-[820px] border-collapse text-[12px]">
-                    <thead>
-                      <tr className="border-b border-white/[0.06]">
-                        <th className="text-left font-semibold text-white uppercase tracking-[0.12em] text-[10px] px-5 sm:px-6 py-3">
-                          Worker
-                        </th>
-                        {weekDays.map((day, idx) => (
-                          <th
-                            key={idx}
-                            className={cn(
-                              'text-center font-semibold uppercase tracking-[0.12em] text-[10px] px-2 py-3',
-                              isToday(day) ? 'text-elec-yellow' : 'text-white'
-                            )}
-                          >
-                            {DAYS_OF_WEEK[idx]} {format(day, 'd')}
-                          </th>
-                        ))}
-                        <th className="text-right font-semibold text-white uppercase tracking-[0.12em] text-[10px] px-3 py-3">
-                          Total
-                        </th>
-                        <th className="text-right font-semibold text-white uppercase tracking-[0.12em] text-[10px] px-3 py-3">
-                          OT
-                        </th>
-                        {canSeeMoney && (
-                          <th className="text-right font-semibold text-white uppercase tracking-[0.12em] text-[10px] px-5 sm:px-6 py-3">
-                            £
-                          </th>
-                        )}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {employeeBreakdown
-                        .filter(
-                          (emp) =>
-                            (filterEmployee === 'all' || emp.id === filterEmployee) &&
-                            emp.name.toLowerCase().includes(searchQuery.toLowerCase())
-                        )
-                        .map((emp) => (
-                          <tr key={emp.id} className="border-b border-white/[0.04]">
-                            <td className="px-5 sm:px-6 py-2">
-                              <span className="flex items-center gap-2 min-w-[140px]">
-                                <Avatar initials={getInitials(emp.name)} size="sm" />
-                                <span className="flex flex-col">
-                                  <span className="text-[12.5px] font-semibold text-white whitespace-nowrap">
-                                    {emp.name}
-                                  </span>
-                                  {emp.pay_type !== 'hourly' && canSeeMoney && (
-                                    <span className="text-[10px] text-white">
-                                      {emp.pay_type === 'annual' ? 'Salaried' : 'Day rate'}
-                                    </span>
-                                  )}
-                                </span>
+                          return (
+                            <button
+                              key={idx}
+                              onClick={() => setSelectedDay(isSelected ? null : data.day)}
+                              aria-pressed={!!isSelected}
+                              className={cn(
+                                'flex h-[104px] min-w-0 flex-col items-center rounded-xl border px-1 py-2 transition-colors touch-manipulation',
+                                isSelected
+                                  ? 'bg-elec-yellow border-elec-yellow text-black'
+                                  : isTodayDate
+                                    ? 'bg-white/[0.06] border-elec-yellow/60 text-white'
+                                    : 'bg-white/[0.03] border-white/[0.08] text-white hover:bg-white/[0.06]'
+                              )}
+                            >
+                              <span
+                                className={cn(
+                                  'text-[12px] font-semibold',
+                                  isSelected ? 'text-black' : 'text-white'
+                                )}
+                              >
+                                {DAYS_OF_WEEK[idx]}
                               </span>
-                            </td>
-                            {weekDays.map((day, idx) => {
-                              const dayStr = format(day, 'yyyy-MM-dd');
-                              const cellEntries = weekTimesheets.filter(
-                                (ts) =>
-                                  ts.employeeId === emp.id &&
-                                  format(parseISO(ts.date), 'yyyy-MM-dd') === dayStr
-                              );
-                              const settled = cellEntries.filter((e) => !e.isLive);
-                              const hours = settled.reduce((s, e) => s + e.totalHours, 0);
-                              const live = cellEntries.some((e) => e.isLive);
-                              const missing =
-                                missingDaysByEmployee.get(emp.id)?.includes(dayStr) ?? false;
-                              const onLeave = isOnLeave(emp.id, dayStr);
-                              const flagged = settled.some((e) => entryFlags.has(e.id));
-                              const anyPending = settled.some((e) => e.status === 'Pending');
-                              const anyApproved = settled.some((e) => e.status === 'Approved');
+                              <span
+                                className={cn(
+                                  'text-[15px] font-semibold tabular-nums leading-tight',
+                                  isSelected ? 'text-black' : 'text-white'
+                                )}
+                              >
+                                {format(data.day, 'd')}
+                              </span>
+                              <div
+                                className={cn(
+                                  'mt-1 flex w-6 flex-1 items-end overflow-hidden rounded',
+                                  data.hours === 0
+                                    ? 'bg-transparent'
+                                    : isSelected
+                                      ? 'bg-black/20'
+                                      : 'bg-white/[0.08]'
+                                )}
+                              >
+                                {data.hours > 0 && (
+                                  <div
+                                    className={cn(
+                                      'w-full',
+                                      isSelected ? 'bg-black' : 'bg-elec-yellow'
+                                    )}
+                                    style={{ height: `${heightPct}%` }}
+                                  />
+                                )}
+                              </div>
+                              <span
+                                className={cn(
+                                  'mt-1 text-[12px] font-medium tabular-nums',
+                                  isSelected ? 'text-black' : 'text-white'
+                                )}
+                              >
+                                {data.hours > 0 ? `${data.hours.toFixed(1)}h` : '–'}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <IconButton
+                        onClick={goToNextWeek}
+                        aria-label="Next week"
+                        className="hidden sm:flex shrink-0"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </IconButton>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between gap-2 sm:hidden">
+                      <IconButton onClick={goToPreviousWeek} aria-label="Previous week">
+                        <ChevronLeft className="h-4 w-4" />
+                      </IconButton>
+                      {selectedDay ? (
+                        <button
+                          onClick={() => setSelectedDay(null)}
+                          className="h-11 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                        >
+                          Show the whole week
+                        </button>
+                      ) : (
+                        <span className="text-[13px] text-white">Tap a day to see just it</span>
+                      )}
+                      <IconButton onClick={goToNextWeek} aria-label="Next week">
+                        <ChevronRight className="h-4 w-4" />
+                      </IconButton>
+                    </div>
+                    {selectedDay && (
+                      <div className="mt-1 hidden justify-end sm:flex">
+                        <button
+                          onClick={() => setSelectedDay(null)}
+                          className="h-11 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                        >
+                          Show the whole week
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )}
 
-                              return (
-                                <td key={idx} className="px-1 py-2 text-center">
-                                  {cellEntries.length > 0 ? (
-                                    <button
-                                      onClick={() => {
-                                        if (settled.length === 1 && !live) {
-                                          setDetailTimesheet(settled[0]);
-                                        } else {
-                                          setSelectedDay(day);
-                                          setFilterEmployee(emp.id);
-                                          setViewMode('list');
-                                        }
-                                      }}
-                                      className={cn(
-                                        'relative inline-flex h-11 min-w-[52px] items-center justify-center gap-1 rounded-lg px-1.5 tabular-nums font-semibold touch-manipulation transition-colors',
-                                        anyPending
-                                          ? 'bg-white/[0.06] text-amber-300 hover:bg-white/[0.06]'
-                                          : anyApproved
-                                            ? 'bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
-                                            : live
-                                              ? 'bg-emerald-500/10 text-emerald-300'
-                                              : 'bg-red-500/10 text-red-300 hover:bg-red-500/20'
-                                      )}
-                                    >
-                                      {live && <PulseDot tone="emerald" />}
-                                      {hours > 0 ? `${hours.toFixed(1)}` : live ? 'now' : '0.0'}
-                                      {flagged && (
-                                        <AlertTriangle className="h-3 w-3 text-orange-400" />
-                                      )}
-                                    </button>
-                                  ) : onLeave ? (
-                                    <span className="inline-flex h-11 min-w-[52px] items-center justify-center rounded-lg bg-blue-500/10 px-1.5 text-[11px] font-medium text-blue-300">
-                                      Leave
-                                    </span>
-                                  ) : missing ? (
-                                    <span
-                                      className="inline-flex h-11 min-w-[52px] items-center justify-center rounded-lg border border-orange-500/40 px-1.5 text-orange-400"
-                                      title="No entry. Worker may have forgotten to clock in"
-                                    >
-                                      !
-                                    </span>
-                                  ) : (
-                                    <span className="inline-flex h-11 min-w-[52px] items-center justify-center text-white">
-                                      –
-                                    </span>
-                                  )}
-                                </td>
-                              );
-                            })}
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-white">
-                              {emp.totalHours.toFixed(1)}h
-                            </td>
-                            <td className="px-3 py-2 text-right tabular-nums text-emerald-300">
-                              {emp.overtime > 0 ? `${emp.overtime.toFixed(1)}h` : '–'}
-                            </td>
-                            {canSeeMoney && (
-                              <td className="px-5 sm:px-6 py-2 text-right tabular-nums font-semibold text-white">
-                                £{Math.round(emp.cost).toLocaleString()}
-                              </td>
-                            )}
-                          </tr>
-                        ))}
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td className="px-5 sm:px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
-                          Team
-                        </td>
-                        {dailyBreakdown.map((d, idx) => (
-                          <td key={idx} className="px-2 py-3 text-center tabular-nums text-white">
-                            {d.hours > 0 ? d.hours.toFixed(1) : '–'}
-                          </td>
-                        ))}
-                        <td className="px-3 py-3 text-right tabular-nums font-semibold text-white">
-                          {totalHours.toFixed(1)}h
-                        </td>
-                        <td className="px-3 py-3 text-right tabular-nums text-emerald-300">
-                          {overtimeHours > 0 ? `${overtimeHours.toFixed(1)}h` : '–'}
-                        </td>
-                        {canSeeMoney && (
-                          <td className="px-5 sm:px-6 py-3 text-right tabular-nums font-semibold text-white">
-                            £{Math.round(totalLabourCost).toLocaleString()}
-                          </td>
+              {clockPanel && <div className="lg:hidden">{clockPanel}</div>}
+              {payrollCheck && <div className="lg:hidden">{payrollCheck}</div>}
+
+              <div data-help="timesheets.tabs" className={filterStack}>
+                <FilterBar
+                  tabs={tabs}
+                  activeTab={activeTab}
+                  onTabChange={changeTab}
+                  search={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  searchPlaceholder="Worker or job…"
+                  actions={
+                    <>
+                      <SecondaryButton
+                        className={cn(
+                          'hidden sm:inline-flex',
+                          activeTab === 'pending' && 'sm:hidden'
                         )}
-                      </tr>
-                    </tfoot>
-                  </table>
+                        onClick={() => setViewMode(viewMode === 'list' ? 'grid' : 'list')}
+                        aria-label={viewMode === 'list' ? 'Switch to week grid' : 'Switch to list'}
+                      >
+                        {viewMode === 'list' ? (
+                          <>
+                            <LayoutGrid className="h-4 w-4 mr-1.5" />
+                            Grid
+                          </>
+                        ) : (
+                          <>
+                            <List className="h-4 w-4 mr-1.5" />
+                            List
+                          </>
+                        )}
+                      </SecondaryButton>
+                      <SecondaryButton onClick={() => setIsFiltersOpen(true)}>
+                        Filters
+                      </SecondaryButton>
+                      {isSelectMode ? (
+                        <PrimaryButton
+                          onClick={() => {
+                            setIsSelectMode(false);
+                            setSelectedTimesheetIds([]);
+                            setBatchRejectOpen(false);
+                          }}
+                        >
+                          Done
+                        </PrimaryButton>
+                      ) : (
+                        <SecondaryButton
+                          data-help="timesheets.select"
+                          onClick={() => setIsSelectMode(true)}
+                        >
+                          Select
+                        </SecondaryButton>
+                      )}
+                    </>
+                  }
+                />
+              </div>
+
+              {(filterEmployee !== 'all' || filterStatus !== 'all') && (
+                <div className="flex flex-wrap gap-2">
+                  {filterEmployee !== 'all' && (
+                    <button
+                      onClick={() => setFilterEmployee('all')}
+                      className="inline-flex h-11 items-center gap-1.5 rounded-full border border-white/[0.14] bg-white/[0.04] px-3.5 text-[13px] font-medium text-white touch-manipulation"
+                    >
+                      {employees.find((e) => e.id === filterEmployee)?.name}
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  )}
+                  {filterStatus !== 'all' && (
+                    <button
+                      onClick={() => setFilterStatus('all')}
+                      className="inline-flex h-11 items-center gap-1.5 rounded-full border border-white/[0.14] bg-white/[0.04] px-3.5 text-[13px] font-medium text-white touch-manipulation"
+                    >
+                      {filterStatus}
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  )}
                 </div>
-              </ListCard>
-            )
-          ) : (
-            <>
-              {listGroups.length === 0 ? (
-                activeTab === 'pending' ? (
-                  <EmptyState
-                    title="Nothing waiting"
-                    description="Every submitted timesheet has been approved or sent back."
-                    action="See this week"
-                    onAction={() => changeTab('week')}
-                  />
+              )}
+
+              {isSelectMode && (
+                <div className="sticky bottom-3 z-20 space-y-3 rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_14%)] p-3 shadow-[0_8px_24px_rgba(0,0,0,0.45)]">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[14px] font-semibold text-white tabular-nums">
+                      {selectedTimesheetIds.length} selected
+                    </span>
+                    <button
+                      onClick={selectAllPending}
+                      className="h-11 px-3 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                    >
+                      Select all waiting
+                    </button>
+                  </div>
+                  {batchRejectOpen && (
+                    <textarea
+                      value={batchRejectReason}
+                      onChange={(e) => setBatchRejectReason(e.target.value.slice(0, 500))}
+                      placeholder="Why are these going back? Everyone selected sees this"
+                      rows={2}
+                      autoFocus
+                      className="w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/35 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 resize-none touch-manipulation"
+                    />
+                  )}
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleBatchReject}
+                      className={cn(rowBtnSecondary, 'flex-1')}
+                      disabled={
+                        selectedTimesheetIds.length === 0 ||
+                        batchRejectMutation.isPending ||
+                        batchApproveMutation.isPending
+                      }
+                    >
+                      <X className="h-4 w-4" />
+                      {batchRejectOpen ? 'Send back' : 'Reject'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleBatchApprove}
+                      className={cn(rowBtnPrimary, 'flex-1')}
+                      disabled={
+                        selectedTimesheetIds.length === 0 ||
+                        batchApproveMutation.isPending ||
+                        batchRejectMutation.isPending
+                      }
+                    >
+                      {batchApproveMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Check className="h-4 w-4" />
+                      )}
+                      Approve
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {viewMode === 'grid' && activeTab !== 'pending' ? (
+                employeeBreakdown.length === 0 ? (
+                  <div className={panel}>
+                    <PlainEmpty
+                      bare
+                      text="No hours this week yet. Entries show here as the team clocks in, or add one for someone."
+                    />
+                  </div>
                 ) : (
-                  <EmptyState
-                    title="No timesheets this week"
-                    description={
-                      selectedDay
-                        ? `No entries for ${format(selectedDay, 'EEEE, d MMMM')}.`
-                        : 'Add a manual entry or have your team clock in to populate this week.'
-                    }
-                  />
+                  <section>
+                    <PanelTitle title="Week per worker" meta={weekLabel} />
+                    <div className={cn(panel, 'overflow-hidden')}>
+                      <div className="overflow-x-auto">
+                        <table className="w-full min-w-[640px] border-collapse text-[13px]">
+                          <thead>
+                            <tr className="border-b border-white/[0.07]">
+                              <th className="px-4 py-3 text-left text-[12px] font-semibold text-white sm:px-5">
+                                Worker
+                              </th>
+                              {weekDays.map((day, idx) => (
+                                <th
+                                  key={idx}
+                                  className={cn(
+                                    'px-0.5 py-3 text-center text-[12px] font-semibold whitespace-nowrap',
+                                    isToday(day) ? 'text-elec-yellow' : 'text-white'
+                                  )}
+                                >
+                                  {DAYS_OF_WEEK[idx]} {format(day, 'd')}
+                                </th>
+                              ))}
+                              <th className="px-2 py-3 text-right text-[12px] font-semibold text-white">
+                                Total
+                              </th>
+                              <th className="px-2 py-3 text-right text-[12px] font-semibold text-white">
+                                OT
+                              </th>
+                              {canSeeMoney && (
+                                <th className="px-4 py-3 text-right text-[12px] font-semibold text-white sm:px-5">
+                                  Pay
+                                </th>
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-white/[0.05]">
+                            {employeeBreakdown
+                              .filter(
+                                (emp) =>
+                                  (filterEmployee === 'all' || emp.id === filterEmployee) &&
+                                  emp.name.toLowerCase().includes(searchQuery.toLowerCase())
+                              )
+                              .map((emp) => (
+                                <tr key={emp.id}>
+                                  <td className="px-4 py-2 sm:px-5">
+                                    <span className="flex min-w-[120px] flex-col">
+                                      <span className="text-[14px] font-semibold text-white whitespace-nowrap">
+                                        {emp.name}
+                                      </span>
+                                      {emp.pay_type !== 'hourly' && canSeeMoney && (
+                                        <span className="text-[12px] text-white">
+                                          {emp.pay_type === 'annual' ? 'Salaried' : 'Day rate'}
+                                        </span>
+                                      )}
+                                    </span>
+                                  </td>
+                                  {weekDays.map((day, idx) => {
+                                    const dayStr = format(day, 'yyyy-MM-dd');
+                                    const cellEntries = weekTimesheets.filter(
+                                      (ts) =>
+                                        ts.employeeId === emp.id &&
+                                        format(parseISO(ts.date), 'yyyy-MM-dd') === dayStr
+                                    );
+                                    const settled = cellEntries.filter((e) => !e.isLive);
+                                    const hours = settled.reduce((s, e) => s + e.totalHours, 0);
+                                    const live = cellEntries.some((e) => e.isLive);
+                                    const missing =
+                                      missingDaysByEmployee.get(emp.id)?.includes(dayStr) ?? false;
+                                    const onLeave = isOnLeave(emp.id, dayStr);
+                                    const flagged = settled.some((e) => entryFlags.has(e.id));
+                                    const anyPending = settled.some((e) => e.status === 'Pending');
+                                    const anyApproved = settled.some(
+                                      (e) => e.status === 'Approved'
+                                    );
+
+                                    return (
+                                      <td key={idx} className="px-0.5 py-2 text-center">
+                                        {cellEntries.length > 0 ? (
+                                          <button
+                                            onClick={() => {
+                                              if (settled.length === 1 && !live) {
+                                                setDetailTimesheet(settled[0]);
+                                              } else {
+                                                setSelectedDay(day);
+                                                setFilterEmployee(emp.id);
+                                                setViewMode('list');
+                                              }
+                                            }}
+                                            className={cn(
+                                              'relative inline-flex h-11 min-w-[46px] items-center justify-center gap-1 rounded-lg px-1 font-semibold tabular-nums transition-colors touch-manipulation',
+                                              anyPending
+                                                ? 'bg-white/[0.08] text-elec-yellow hover:bg-white/[0.12]'
+                                                : anyApproved
+                                                  ? 'bg-white/[0.06] text-emerald-300 hover:bg-white/[0.1]'
+                                                  : live
+                                                    ? 'bg-white/[0.06] text-emerald-300'
+                                                    : 'bg-white/[0.06] text-red-300 hover:bg-white/[0.1]'
+                                            )}
+                                          >
+                                            {live && <PulseDot tone="emerald" />}
+                                            {hours > 0
+                                              ? `${hours.toFixed(1)}`
+                                              : live
+                                                ? 'now'
+                                                : '0.0'}
+                                            {flagged && (
+                                              <AlertTriangle className="h-3 w-3 text-elec-yellow" />
+                                            )}
+                                          </button>
+                                        ) : onLeave ? (
+                                          <span className="inline-flex h-11 min-w-[46px] items-center justify-center rounded-lg border border-white/[0.14] px-1 text-[12px] font-medium text-white">
+                                            Leave
+                                          </span>
+                                        ) : missing ? (
+                                          <span
+                                            className="inline-flex h-11 min-w-[46px] items-center justify-center rounded-lg border border-elec-yellow/60 px-1 font-semibold text-elec-yellow"
+                                            title="No entry. Worker may have forgotten to clock in"
+                                          >
+                                            !
+                                          </span>
+                                        ) : (
+                                          <span className="inline-flex h-11 min-w-[46px] items-center justify-center text-white">
+                                            –
+                                          </span>
+                                        )}
+                                      </td>
+                                    );
+                                  })}
+                                  <td className="px-2 py-2 text-right font-semibold text-white tabular-nums">
+                                    {emp.totalHours.toFixed(1)}h
+                                  </td>
+                                  <td className="px-2 py-2 text-right text-white tabular-nums">
+                                    {emp.overtime > 0 ? `${emp.overtime.toFixed(1)}h` : '–'}
+                                  </td>
+                                  {canSeeMoney && (
+                                    <td className="px-4 py-2 text-right font-semibold text-white tabular-nums sm:px-5">
+                                      £{Math.round(emp.cost).toLocaleString()}
+                                    </td>
+                                  )}
+                                </tr>
+                              ))}
+                          </tbody>
+                          <tfoot>
+                            <tr className="border-t border-white/[0.1]">
+                              <td className="px-4 py-3 text-[13px] font-semibold text-white sm:px-5">
+                                Team
+                              </td>
+                              {dailyBreakdown.map((d, idx) => (
+                                <td
+                                  key={idx}
+                                  className="px-0.5 py-3 text-center text-white tabular-nums"
+                                >
+                                  {d.hours > 0 ? d.hours.toFixed(1) : '–'}
+                                </td>
+                              ))}
+                              <td className="px-2 py-3 text-right font-semibold text-white tabular-nums">
+                                {totalHours.toFixed(1)}h
+                              </td>
+                              <td className="px-2 py-3 text-right text-white tabular-nums">
+                                {overtimeHours > 0 ? `${overtimeHours.toFixed(1)}h` : '–'}
+                              </td>
+                              {canSeeMoney && (
+                                <td className="px-4 py-3 text-right font-semibold text-white tabular-nums sm:px-5">
+                                  £{Math.round(totalLabourCost).toLocaleString()}
+                                </td>
+                              )}
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </section>
                 )
+              ) : listGroups.length === 0 ? (
+                <div className={panel}>
+                  {searchQuery.trim() || filterEmployee !== 'all' || filterStatus !== 'all' ? (
+                    <PlainEmpty
+                      bare
+                      text={
+                        searchQuery.trim()
+                          ? `Nothing matches “${searchQuery.trim()}”.`
+                          : 'Nothing matches these filters.'
+                      }
+                      action={
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSearchQuery('');
+                            setFilterEmployee('all');
+                            setFilterStatus('all');
+                          }}
+                          className={rowBtnSecondary}
+                        >
+                          Clear
+                        </button>
+                      }
+                    />
+                  ) : activeTab === 'pending' ? (
+                    <PlainEmpty
+                      bare
+                      text="Nothing waiting. Every submitted timesheet has been approved or sent back."
+                      action={
+                        <button
+                          type="button"
+                          onClick={() => changeTab('week')}
+                          className={rowBtnSecondary}
+                        >
+                          See this week
+                        </button>
+                      }
+                    />
+                  ) : (
+                    <PlainEmpty
+                      bare
+                      text={
+                        selectedDay
+                          ? `No entries for ${format(selectedDay, 'EEEE d MMMM')}.`
+                          : 'No hours this week yet. Entries show here as the team clocks in, or add one for someone.'
+                      }
+                    />
+                  )}
+                </div>
               ) : (
-                <div className="space-y-4 sm:space-y-6" data-help="timesheets.list">
+                <div className="space-y-4" data-help="timesheets.list">
                   {listGroups.map((group) => {
                     const emp = employeeBreakdown.find((e) => e.id === group.employeeId);
                     const groupSettled = group.rows.filter((r) => !r.isLive);
@@ -1981,56 +1883,44 @@ export const TimesheetsSection = () => {
                     const groupPending = groupSettled.filter((r) => r.status === 'Pending');
                     const groupClean = groupPending.filter((r) => !entryFlags.has(r.id));
                     const firstName = group.name.split(' ')[0];
+                    const groupDetail =
+                      activeTab === 'pending'
+                        ? `${groupHours.toFixed(1)}h · ${groupPending.length} waiting${
+                            groupPending.length > groupClean.length
+                              ? ` · ${groupPending.length - groupClean.length} flagged`
+                              : ''
+                          }`
+                        : [
+                            `${groupHours.toFixed(1)}h`,
+                            emp ? `${emp.days} ${emp.days === 1 ? 'day' : 'days'}` : null,
+                            emp && emp.overtime > 0 ? `${emp.overtime.toFixed(1)}h OT` : null,
+                            emp && canSeeMoney ? `£${Math.round(emp.cost).toLocaleString()}` : null,
+                            emp && emp.pay_type !== 'hourly' && canSeeMoney
+                              ? emp.pay_type === 'annual'
+                                ? 'Salaried'
+                                : 'Day rate'
+                              : null,
+                          ]
+                            .filter(Boolean)
+                            .join(' · ');
+                    const missingCount =
+                      activeTab !== 'pending'
+                        ? (missingDaysByEmployee.get(group.employeeId)?.length ?? 0)
+                        : 0;
                     return (
-                      <div
-                        key={group.employeeId}
-                        className="-mx-4 sm:mx-0 bg-white/[0.04] border-y sm:border border-white/[0.06] sm:rounded-2xl overflow-hidden"
-                      >
-                        <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-white/[0.06]">
-                          <Avatar initials={getInitials(group.name)} size="sm" />
-                          <div className="min-w-0 flex-1">
-                            <div className="text-[14px] font-semibold text-white truncate">
-                              {group.name}
-                            </div>
-                            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] text-white tabular-nums">
-                              <span>{groupHours.toFixed(1)}h</span>
-                              {activeTab === 'pending' ? (
-                                <span>
-                                  · {groupPending.length} waiting
-                                  {groupPending.length > groupClean.length
-                                    ? ` · ${groupPending.length - groupClean.length} flagged`
-                                    : ''}
-                                </span>
-                              ) : (
-                                emp && (
-                                  <>
-                                    <span>· {emp.days}d</span>
-                                    {emp.overtime > 0 && (
-                                      <span>· {emp.overtime.toFixed(1)}h OT</span>
-                                    )}
-                                    {canSeeMoney && (
-                                      <span className="font-semibold">
-                                        · £{Math.round(emp.cost).toLocaleString()}
-                                      </span>
-                                    )}
-                                  </>
-                                )
-                              )}
-                              {emp && emp.pay_type !== 'hourly' && canSeeMoney && (
-                                <Pill tone="blue">
-                                  {emp.pay_type === 'annual' ? 'Salaried' : 'Day rate'}
-                                </Pill>
-                              )}
-                              {activeTab !== 'pending' &&
-                                missingDaysByEmployee.has(group.employeeId) && (
-                                  <Pill tone="orange">
-                                    {missingDaysByEmployee.get(group.employeeId)!.length} missing
-                                  </Pill>
-                                )}
-                            </div>
-                          </div>
-                        </div>
-                        <ListBody>
+                      <div key={group.employeeId} className={panel}>
+                        <Row
+                          className="border-b border-white/[0.07]"
+                          lead={<Initials name={group.name} />}
+                          title={group.name}
+                          detail={<span className="tabular-nums">{groupDetail}</span>}
+                          trailing={
+                            missingCount > 0 ? (
+                              <Tag tone="outline">{missingCount} missing</Tag>
+                            ) : undefined
+                          }
+                        />
+                        <div className={rowsClass}>
                           {group.rows.map((ts) => {
                             // Base-rate value of this single entry. OT premium is a
                             // per-DAY concept, so it lives on the worker's header £,
@@ -2038,32 +1928,33 @@ export const TimesheetsSection = () => {
                             const rowBaseCost = calculateLabourCost(ts.employeeId, ts.totalHours);
                             const isSelected = selectedTimesheetIds.includes(ts.id);
                             const flags = entryFlags.get(ts.id);
+                            const selectable =
+                              isSelectMode && !ts.isLive && ts.status === 'Pending';
                             return (
-                              <ListRow
+                              <Row
                                 key={ts.id}
-                                accent={ts.isLive ? 'emerald' : statusTone(ts.status)}
                                 lead={
-                                  isSelectMode && !ts.isLive && ts.status === 'Pending' ? (
-                                    <Checkbox
-                                      checked={isSelected}
-                                      onCheckedChange={() => toggleTimesheetSelection(ts.id)}
-                                      className={checkboxClass}
-                                    />
+                                  selectable ? (
+                                    <span onClick={(e) => e.stopPropagation()}>
+                                      <Checkbox
+                                        checked={isSelected}
+                                        onCheckedChange={() => toggleTimesheetSelection(ts.id)}
+                                        className={checkboxClass}
+                                      />
+                                    </span>
                                   ) : undefined
                                 }
                                 title={
-                                  <span className="flex items-center gap-2 text-white">
-                                    <span className="font-semibold tabular-nums">
-                                      {ts.isLive ? 'On the clock' : `${ts.totalHours.toFixed(1)}h`}
-                                    </span>
-                                    <span>·</span>
-                                    <span className="tabular-nums text-[13px] font-normal">
-                                      {format(parseISO(ts.date), 'EEE d MMM')}
+                                  <span className="tabular-nums">
+                                    {ts.isLive ? 'On the clock' : `${ts.totalHours.toFixed(1)}h`}
+                                    <span className="font-normal">
+                                      {' '}
+                                      · {format(parseISO(ts.date), 'EEE d MMM')}
                                     </span>
                                   </span>
                                 }
-                                subtitle={
-                                  <span className="text-white">
+                                detail={
+                                  <>
                                     <span className="tabular-nums">
                                       {ts.isLive
                                         ? `${ts.clockIn}–now`
@@ -2071,35 +1962,32 @@ export const TimesheetsSection = () => {
                                     </span>{' '}
                                     · {ts.jobId ? ts.jobTitle : 'No job'}
                                     {ts.previousRejectionReason && ' · Resubmitted'}
-                                  </span>
+                                  </>
                                 }
                                 trailing={
                                   ts.isLive ? (
-                                    <PulseDot tone="emerald" />
+                                    <Tag tone="green">Live</Tag>
                                   ) : (
                                     <>
-                                      {flags && (
-                                        <Pill tone="orange">
-                                          {flags[0]}
-                                          {flags.length > 1 ? ` +${flags.length - 1}` : ''}
-                                        </Pill>
-                                      )}
                                       {canSeeMoney && (
-                                        <span className="hidden sm:inline text-[12px] tabular-nums text-white">
+                                        <span className="hidden text-[13px] text-white tabular-nums md:inline">
                                           £{Math.round(rowBaseCost).toLocaleString()} base
                                         </span>
                                       )}
-                                      {activeTab !== 'pending' && (
-                                        <Pill
-                                          tone={statusTone(ts.status)}
-                                          className={flags ? 'hidden sm:inline-flex' : undefined}
+                                      {flags ? (
+                                        <Tag
+                                          tone={flags[0].startsWith('Under 18') ? 'red' : 'outline'}
                                         >
-                                          {ts.status}
-                                        </Pill>
-                                      )}
+                                          {flags[0]}
+                                          {flags.length > 1 ? ` +${flags.length - 1}` : ''}
+                                        </Tag>
+                                      ) : activeTab !== 'pending' || ts.status !== 'Pending' ? (
+                                        <Tag tone={tagForStatus(ts.status)}>{ts.status}</Tag>
+                                      ) : null}
                                     </>
                                   )
                                 }
+                                chevron={!isSelectMode}
                                 onClick={
                                   isSelectMode
                                     ? ts.isLive || ts.status !== 'Pending'
@@ -2110,11 +1998,12 @@ export const TimesheetsSection = () => {
                               />
                             );
                           })}
-                        </ListBody>
+                        </div>
                         {!isSelectMode && groupClean.length > 0 && (
-                          <div className="px-4 sm:px-5 py-3 border-t border-white/[0.06]">
-                            <SecondaryButton
-                              fullWidth
+                          <div className="flex justify-end border-t border-white/[0.07] px-4 py-3 sm:px-5">
+                            <button
+                              type="button"
+                              className={cn(rowBtnSecondary, 'w-full sm:w-auto')}
                               onClick={() =>
                                 approveIds(
                                   groupClean.map((r) => r.id),
@@ -2124,11 +2013,11 @@ export const TimesheetsSection = () => {
                               }
                               disabled={batchApproveMutation.isPending}
                             >
-                              <Check className="h-4 w-4 mr-2" />
+                              <Check className="h-4 w-4" />
                               Approve {firstName}&apos;s {groupClean.length}{' '}
                               {groupClean.length === groupPending.length ? '' : 'clean '}
                               entr{groupClean.length === 1 ? 'y' : 'ies'}
-                            </SecondaryButton>
+                            </button>
                           </div>
                         )}
                       </div>
@@ -2136,240 +2025,92 @@ export const TimesheetsSection = () => {
                   })}
                 </div>
               )}
-            </>
-          )}
+            </div>
 
-          {activeTab !== 'pending' && (
-            <>
-              <Divider label="Week summary" />
-
-              <StatStrip
-                columns={4}
-                stats={[
-                  { label: 'Entries', value: weekTimesheets.length },
-                  { label: 'Workers', value: employeeBreakdown.length, tone: 'amber' },
-                  canSeeMoney
-                    ? {
-                        label: 'Labour spend',
-                        value: `£${Math.round(totalLabourCost).toLocaleString()}`,
-                        tone: 'amber',
-                        accent: true,
-                      }
-                    : {
-                        label: 'Hours',
-                        value: totalHours.toFixed(1),
-                        tone: 'amber',
-                        accent: true,
-                      },
-                  canSeeMoney
-                    ? {
-                        label: 'Approved spend',
-                        value: `£${Math.round(approvedLabourCost).toLocaleString()}`,
-                        tone: 'emerald',
-                      }
-                    : {
-                        label: 'Approved hours',
-                        value: approvedHours.toFixed(1),
-                        tone: 'emerald',
-                      },
-                ]}
-              />
-            </>
-          )}
+            <div className={colClass}>
+              {clockPanel && <div className="hidden lg:block">{clockPanel}</div>}
+              {payrollCheck && <div className="hidden lg:block">{payrollCheck}</div>}
+              {activeTab !== 'pending' && (
+                // The desktop-only panels above are display:none on a phone but
+                // still take the column's margin, which doubled the gap.
+                <section className="max-lg:!mt-0">
+                  <PanelTitle title="Week totals" meta={weekLabel} />
+                  <div className={cn(panel, rowsClass)}>
+                    <KeyValue label="Entries" value={weekTimesheets.length} />
+                    <KeyValue label="Workers" value={employeeBreakdown.length} />
+                    {canSeeMoney ? (
+                      <>
+                        <KeyValue
+                          label="Labour spend"
+                          value={`£${Math.round(totalLabourCost).toLocaleString()}`}
+                        />
+                        <KeyValue
+                          label="Approved spend"
+                          value={`£${Math.round(approvedLabourCost).toLocaleString()}`}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <KeyValue label="Hours" value={totalHours.toFixed(1)} />
+                        <KeyValue label="Approved hours" value={approvedHours.toFixed(1)} />
+                      </>
+                    )}
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
         </>
       )}
 
       {/* Filters sheet */}
-      <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] overflow-y-auto'
-              : 'w-full sm:max-w-xl lg:max-w-2xl p-0 bg-[hsl(0_0%_10%)] border-l border-white/[0.06]'
-          }
-        >
-          <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
-            <SheetTitle className="text-white text-[15px] font-semibold">Filters</SheetTitle>
-          </SheetHeader>
-          <div className="p-5 space-y-5">
-            <div>
-              <Eyebrow>Worker</Eyebrow>
-              <div className="mt-2">
-                <Select value={filterEmployee} onValueChange={setFilterEmployee}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="All workers" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="all">All workers</SelectItem>
-                    {employees.map((emp) => (
-                      <SelectItem key={emp.id} value={emp.id}>
-                        {emp.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div>
-              <Eyebrow>Status</Eyebrow>
-              <div className="mt-2">
-                <Select value={filterStatus} onValueChange={setFilterStatus}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="All statuses" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="all">All statuses</SelectItem>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                    <SelectItem value="Approved">Approved</SelectItem>
-                    <SelectItem value="Rejected">Rejected</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <PrimaryButton onClick={() => setIsFiltersOpen(false)} fullWidth>
-              Apply
-            </PrimaryButton>
-          </div>
-        </SheetContent>
-      </Sheet>
-
-      {/* Export sheet — a FILE for the payroll package, not a live link */}
-      <Sheet open={isExportOpen} onOpenChange={setIsExportOpen}>
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden border-t border-white/[0.06]'
-              : 'w-full sm:max-w-xl lg:max-w-2xl p-0 border-l border-white/[0.06]'
-          }
-        >
-          <SheetShell
-            eyebrow={`Approved hours · ${weekLabel}`}
-            title={canSeeMoney ? 'Payroll file' : 'Hours file'}
-            description={
-              canSeeMoney
-                ? 'A CSV laid out for your payroll software. Save it, then import it there. It is a file, not a live link.'
-                : 'Hours, overtime and leave for each person. No pay rates: the owner adds pay in payroll.'
-            }
-          >
-            <div className="flex items-center gap-2">
-              <IconButton onClick={goToPreviousWeek} aria-label="Previous week">
-                <ChevronLeft className="h-4 w-4" />
-              </IconButton>
-              <div className="flex-1 text-center text-[14px] font-semibold text-white tabular-nums">
-                {weekLabel}
-              </div>
-              <IconButton onClick={goToNextWeek} aria-label="Next week">
-                <ChevronRight className="h-4 w-4" />
-              </IconButton>
-            </div>
-            {/* Compact on purpose: the save buttons must sit above the fold */}
-            <div className="grid grid-cols-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] divide-x divide-white/[0.08]">
-              {[
-                { label: 'Approved', value: `${approvedHours.toFixed(1)}h` },
-                canSeeMoney
-                  ? { label: 'Spend', value: `£${Math.round(approvedLabourCost).toLocaleString()}` }
-                  : { label: 'Overtime', value: `${overtimeHours.toFixed(1)}h` },
-                {
-                  label: 'Leave',
-                  value: `${employees.reduce((sum, e) => sum + leaveInPeriod(e.id).days, 0).toFixed(1)}d`,
-                },
-              ].map((c) => (
-                <div key={c.label} className="px-3 py-3 text-center">
-                  <div className="text-[18px] font-semibold text-white tabular-nums">{c.value}</div>
-                  <div className="mt-0.5 text-[11px] text-white">{c.label}</div>
-                </div>
+      <FormSheet
+        open={isFiltersOpen}
+        onOpenChange={setIsFiltersOpen}
+        title="Filter timesheets"
+        description="Narrow the list to one worker or one status."
+        width="lg"
+        bodyClassName="grid gap-5 sm:grid-cols-2"
+        footer={
+          <PrimaryButton onClick={() => setIsFiltersOpen(false)} fullWidth size="lg">
+            Apply
+          </PrimaryButton>
+        }
+      >
+        <div>
+          <label className={fieldLabelClass}>Worker</label>
+          <Select value={filterEmployee} onValueChange={setFilterEmployee}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All workers" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All workers</SelectItem>
+              {employees.map((emp) => (
+                <SelectItem key={emp.id} value={emp.id}>
+                  {emp.name}
+                </SelectItem>
               ))}
-            </div>
-            {pendingCount > 0 && (
-              <div className="flex items-start gap-2.5 rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-3">
-                <AlertTriangle className="h-4 w-4 text-orange-300 mt-0.5 shrink-0" />
-                <span className="text-[12.5px] text-white">
-                  {pendingCount} entr{pendingCount === 1 ? 'y is' : 'ies are'} still waiting this
-                  week and won&apos;t be in the file. Only approved hours go to payroll.
-                </span>
-              </div>
-            )}
-            {/* ELE-1825: the whole pay period, with expenses and mileage, and
-                nothing sent twice, lives in Finance → Accounting. */}
-            <button
-              type="button"
-              onClick={() => {
-                setIsExportOpen(false);
-                navigate('/employer?section=accounting');
-              }}
-              className="flex min-h-11 w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-left touch-manipulation"
-            >
-              <span className="text-[12.5px] leading-snug text-white">
-                Month end? Send the whole pay period
-                {canSeeMoney ? ', with expenses and mileage,' : ''} from Accounting. It marks
-                everything as sent so nothing goes twice.
-              </span>
-              <ChevronRight className="h-4 w-4 shrink-0 text-elec-yellow" />
-            </button>
-
-            <div data-help="timesheets.export-save">
-              {canSeeMoney ? (
-                <ListCard>
-                  <ListBody>
-                    {ACCOUNTING_PROVIDERS.map((provider) => (
-                      <ListRow
-                        key={provider.id}
-                        title={provider.name}
-                        subtitle={provider.sub}
-                        trailing={
-                          <button
-                            onClick={() => handleExport(provider.id)}
-                            className="h-11 px-4 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                            aria-label={`Save ${provider.name}`}
-                          >
-                            <Download className="h-4 w-4" />
-                            Save
-                          </button>
-                        }
-                      />
-                    ))}
-                  </ListBody>
-                </ListCard>
-              ) : (
-                <PrimaryButton fullWidth size="lg" onClick={handleHoursExport}>
-                  <Download className="h-4 w-4 mr-2" />
-                  Save hours CSV
-                </PrimaryButton>
-              )}
-            </div>
-            <p className="text-[12px] text-white">
-              On a phone this opens the share sheet: save to Files, or send it straight to your
-              bookkeeper. Each person then sees &ldquo;sent to payroll&rdquo; on their My pay.
-            </p>
-            {isFirmAdmin && (
-              <button
-                type="button"
-                data-help="timesheets.pay-period"
-                onClick={() => setPayPeriodOpen(true)}
-                className="flex min-h-[56px] w-full items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-left touch-manipulation"
-              >
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[13.5px] font-semibold text-white">
-                    Pay period and payday
-                  </span>
-                  <span className="block text-[12px] text-white">
-                    {describePayRule(firmPaySettings) ??
-                      'Not set yet. Workers see “no payday set”.'}
-                  </span>
-                </span>
-                <span className="text-[12.5px] font-semibold text-elec-yellow">
-                  {firmPaySettings?.pay_frequency ? 'Change' : 'Set'}
-                </span>
-              </button>
-            )}
-          </SheetShell>
-        </SheetContent>
-      </Sheet>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <label className={fieldLabelClass}>Status</label>
+          <Select value={filterStatus} onValueChange={setFilterStatus}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All statuses" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All statuses</SelectItem>
+              <SelectItem value="Pending">Pending</SelectItem>
+              <SelectItem value="Approved">Approved</SelectItem>
+              <SelectItem value="Rejected">Rejected</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </FormSheet>
 
       {/* Approve / reject detail sheet */}
-      <Sheet
+      <FormSheet
         open={!!detailTimesheet}
         onOpenChange={(open) => {
           if (!open) {
@@ -2378,108 +2119,139 @@ export const TimesheetsSection = () => {
             setRejectReason('');
           }
         }}
+        title={detailTimesheet?.employeeName ?? 'Timesheet'}
+        description={
+          detailTimesheet ? format(parseISO(detailTimesheet.date), 'EEEE d MMMM yyyy') : undefined
+        }
+        headerTrailing={
+          detailTimesheet ? (
+            <Tag tone={detailTimesheet.isLive ? 'green' : tagForStatus(detailTimesheet.status)}>
+              {detailTimesheet.isLive ? 'Live' : detailTimesheet.status}
+            </Tag>
+          ) : undefined
+        }
+        width="wide"
+        bodyClassName="grid gap-5 [&>*]:min-w-0 lg:grid-cols-2 lg:gap-8 lg:items-start"
+        footer={
+          detailTimesheet && !detailTimesheet.isLive && detailTimesheet.status === 'Pending' ? (
+            <div className="flex gap-2">
+              <SecondaryButton
+                data-help="timesheets.reject"
+                onClick={() => handleReject(detailTimesheet.id)}
+                fullWidth
+                size="lg"
+                disabled={
+                  rejectTimesheetMutation.isPending ||
+                  approveTimesheetMutation.isPending ||
+                  (rejectArmed && rejectReason.trim().length < 3)
+                }
+              >
+                <X className="h-4 w-4 mr-2" />
+                {rejectArmed ? 'Send back' : 'Reject'}
+              </SecondaryButton>
+              <PrimaryButton
+                data-help="timesheets.approve"
+                onClick={() => handleApprove(detailTimesheet.id)}
+                fullWidth
+                size="lg"
+                disabled={approveTimesheetMutation.isPending || rejectTimesheetMutation.isPending}
+              >
+                {approveTimesheetMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Check className="h-4 w-4 mr-2" />
+                )}
+                Approve
+              </PrimaryButton>
+            </div>
+          ) : undefined
+        }
       >
-        <SheetContent
-          side={isMobile ? 'bottom' : 'right'}
-          className={
-            isMobile
-              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden border-t border-white/[0.06]'
-              : 'w-full sm:max-w-xl lg:max-w-2xl p-0 border-l border-white/[0.06]'
-          }
-        >
-          {detailTimesheet && (
-            <SheetShell
-              eyebrow={format(parseISO(detailTimesheet.date), 'EEEE d MMMM yyyy')}
-              title={
-                <span className="flex items-center gap-2.5">
-                  <Avatar initials={getInitials(detailTimesheet.employeeName)} size="sm" />
-                  <span className="truncate">{detailTimesheet.employeeName}</span>
-                </span>
-              }
-              footer={
-                !detailTimesheet.isLive && detailTimesheet.status === 'Pending' ? (
-                  <>
-                    <SecondaryButton
-                      data-help="timesheets.reject"
-                      onClick={() => handleReject(detailTimesheet.id)}
-                      fullWidth
-                      disabled={
-                        rejectTimesheetMutation.isPending ||
-                        approveTimesheetMutation.isPending ||
-                        (rejectArmed && rejectReason.trim().length < 3)
-                      }
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      {rejectArmed ? 'Send back' : 'Reject'}
-                    </SecondaryButton>
-                    <PrimaryButton
-                      data-help="timesheets.approve"
-                      onClick={() => handleApprove(detailTimesheet.id)}
-                      fullWidth
-                      disabled={
-                        approveTimesheetMutation.isPending || rejectTimesheetMutation.isPending
-                      }
-                    >
-                      {approveTimesheetMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <Check className="h-4 w-4 mr-2" />
-                      )}
-                      Approve
-                    </PrimaryButton>
-                  </>
-                ) : undefined
-              }
-            >
-              <div className="flex items-end justify-between gap-3">
-                <div>
-                  <div className="text-[40px] font-semibold leading-none text-white tabular-nums">
-                    {detailTimesheet.totalHours.toFixed(1)}
-                    <span className="text-[18px] font-medium">h</span>
-                  </div>
-                  {canSeeMoney && (
-                    <div className="mt-2 text-[13px] text-white tabular-nums">
-                      £
-                      {Math.round(
-                        calculateLabourCost(detailTimesheet.employeeId, detailTimesheet.totalHours)
-                      ).toLocaleString()}{' '}
-                      at base rate
-                    </div>
-                  )}
+        {detailTimesheet && (
+          <>
+            <div className="space-y-4">
+              <div>
+                <div className="text-[40px] font-semibold leading-none text-white tabular-nums">
+                  {detailTimesheet.totalHours.toFixed(1)}
+                  <span className="text-[18px] font-medium">h</span>
                 </div>
-                <Pill tone={statusTone(detailTimesheet.status)}>{detailTimesheet.status}</Pill>
+                {canSeeMoney && (
+                  <div className="mt-2 text-[13px] text-white tabular-nums">
+                    £
+                    {Math.round(
+                      calculateLabourCost(detailTimesheet.employeeId, detailTimesheet.totalHours)
+                    ).toLocaleString()}{' '}
+                    at base rate
+                  </div>
+                )}
               </div>
 
               {entryFlags.has(detailTimesheet.id) && (
-                <div className="flex items-start gap-2.5 rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-3">
-                  <AlertTriangle className="h-4 w-4 text-orange-300 mt-0.5 shrink-0" />
-                  <span className="text-[12.5px] text-white">
+                <div className="flex items-start gap-2.5 rounded-2xl border border-white/[0.12] bg-white/[0.04] px-4 py-3">
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow" />
+                  <span className="text-[13px] text-white">
                     Worth a look: {entryFlags.get(detailTimesheet.id)!.join(' · ')}
                   </span>
                 </div>
               )}
+              {entryFlags.get(detailTimesheet.id)?.some((f) => f.startsWith('Under 18')) && (
+                <p className="rounded-2xl border border-red-500/50 bg-white/[0.04] px-4 py-3 text-[13px] leading-snug text-white">
+                  <span className="font-semibold text-red-300">Under-18 working time. </span>
+                  The law allows 8 hours a day and 40 a week, with a 30 minute break after 4.5
+                  hours, and there is no opt-out. Approving still pays the hours. Talk to them and
+                  their supervisor about it.
+                </p>
+              )}
 
               {detailTimesheet.previousRejectionReason && (
                 <div className="rounded-2xl border border-white/[0.1] bg-white/[0.04] px-4 py-3">
-                  <p className="text-[12px] font-medium text-white">
+                  <p className="text-[13px] font-medium text-white">
                     Resubmitted
                     {detailTimesheet.resubmittedAt
                       ? ` ${format(parseISO(detailTimesheet.resubmittedAt), 'EEE d MMM, HH:mm')}`
                       : ''}{' '}
                     after:
                   </p>
-                  <p className="mt-1 text-[13.5px] text-white leading-snug break-words">
+                  <p className="mt-1 break-words text-[14px] leading-snug text-white">
                     “{detailTimesheet.previousRejectionReason}”
                   </p>
                 </div>
               )}
 
-              <ListCard>
-                <ListBody>
-                  <ListRow
+              {detailTimesheet.isLive && (
+                <div className="flex items-center gap-2.5 rounded-2xl border border-white/[0.12] bg-white/[0.04] px-4 py-3.5">
+                  <PulseDot tone="emerald" />
+                  <span className="text-[13px] font-medium text-white">
+                    Still on the clock. Approve once they&apos;ve clocked out.
+                  </span>
+                </div>
+              )}
+
+              {rejectArmed && (
+                <div className="space-y-1.5">
+                  <label className="block text-[13px] font-medium text-white">
+                    Why? {detailTimesheet.employeeName.split(' ')[0]} sees this and can fix it
+                  </label>
+                  <textarea
+                    value={rejectReason}
+                    onChange={(e) => setRejectReason(e.target.value.slice(0, 500))}
+                    placeholder="e.g. Clocked out 2h after leaving site. Please correct and resubmit"
+                    autoFocus
+                    rows={3}
+                    className="w-full resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/35 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Details on the right so the wide sheet never leaves an empty column. */}
+            <div className="space-y-4">
+              <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04]">
+                <div className={rowsClass}>
+                  <Row
                     title="Job"
                     trailing={
-                      <span className="text-[13px] text-white truncate max-w-[180px]">
+                      <span className="max-w-[200px] truncate text-[14px] text-white">
                         {detailTimesheet.jobId ? detailTimesheet.jobTitle : 'No job'}
                       </span>
                     }
@@ -2493,27 +2265,27 @@ export const TimesheetsSection = () => {
                         : undefined
                     }
                   />
-                  <ListRow
+                  <Row
                     title="Clocked"
                     trailing={
-                      <span className="tabular-nums text-[13px] text-white">
+                      <span className="text-[14px] text-white tabular-nums">
                         {detailTimesheet.clockIn} – {detailTimesheet.clockOut}
                       </span>
                     }
                   />
-                  <ListRow
+                  <Row
                     title="Break"
                     trailing={
-                      <span className="text-[13px] text-white tabular-nums">
+                      <span className="text-[14px] text-white tabular-nums">
                         {detailTimesheet.breakMins} mins
                       </span>
                     }
                   />
                   {canSeeMoney && (
-                    <ListRow
+                    <Row
                       title="Hourly rate"
                       trailing={
-                        <span className="text-[13px] text-white tabular-nums">
+                        <span className="text-[14px] text-white tabular-nums">
                           {(() => {
                             const rate = getHourlyRate(detailTimesheet.employeeId);
                             if (rate === null) return 'No rate set';
@@ -2529,41 +2301,20 @@ export const TimesheetsSection = () => {
                     />
                   )}
                   {detailTimesheet.notes && (
-                    <ListRow title="Notes" subtitle={detailTimesheet.notes} />
+                    <div className="px-4 py-3 sm:px-5">
+                      <div className="text-[15px] font-semibold text-white">Notes</div>
+                      <p className="mt-0.5 whitespace-pre-wrap text-[13px] text-white">
+                        {detailTimesheet.notes}
+                      </p>
+                    </div>
                   )}
-                </ListBody>
-              </ListCard>
-
+                </div>
+              </div>
               <ClockLocationCard ts={detailTimesheet} />
-
-              {detailTimesheet.isLive && (
-                <div className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] px-4 py-3.5">
-                  <PulseDot tone="emerald" />
-                  <span className="text-[13px] text-white font-medium">
-                    Still on the clock. Approve once they&apos;ve clocked out.
-                  </span>
-                </div>
-              )}
-
-              {rejectArmed && (
-                <div className="space-y-1.5">
-                  <label className="text-[12px] font-medium text-white block">
-                    Why? {detailTimesheet.employeeName.split(' ')[0]} sees this and can fix it
-                  </label>
-                  <textarea
-                    value={rejectReason}
-                    onChange={(e) => setRejectReason(e.target.value.slice(0, 500))}
-                    placeholder="e.g. Clocked out 2h after leaving site. Please correct and resubmit"
-                    autoFocus
-                    rows={3}
-                    className="w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/35 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 resize-none touch-manipulation"
-                  />
-                </div>
-              )}
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
+            </div>
+          </>
+        )}
+      </FormSheet>
       {isFirmAdmin && <TimesheetRulesSheet open={rulesOpen} onOpenChange={setRulesOpen} />}
       {isFirmAdmin && <PayPeriodSheet open={payPeriodOpen} onOpenChange={setPayPeriodOpen} />}
     </PageFrame>

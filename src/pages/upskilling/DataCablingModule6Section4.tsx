@@ -91,7 +91,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'TIA-606-D (administration) and BS EN 50174-1 §6 (administration section) are the two standards. They are broadly aligned — both define a hierarchical identifier scheme (TR / link / outlet identifier formats), records to be maintained, and as-built documentation requirements. BS 7671 §444.410(a) makes BS EN 50174-1 mandatory in UK buildings, so on a UK install the EN is the regulatory pointer.',
+      'TIA-606-D (administration) and BS EN 50174-1 §6 (administration section) are the two standards. They are broadly aligned — both define a hierarchical identifier scheme (TR / link / outlet identifier formats), records to be maintained, and as-built documentation requirements. BS 7671 §444.4.10(a) makes BS EN 50174-1 mandatory in UK buildings, so on a UK install the EN is the regulatory pointer.',
   },
   {
     id: 2,
@@ -132,7 +132,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS EN 50174-1 §6 is the administration section — identifier hierarchy, records, change control, labelling discipline. It is the EN equivalent of TIA-606-D. Because §444.410(a) makes BS EN 50174-1 mandatory in UK buildings, a UK contractor must demonstrate compliance with the EN administration discipline; TIA-606-D remains valid international cross-reference.',
+      'BS EN 50174-1 §6 is the administration section — identifier hierarchy, records, change control, labelling discipline. It is the EN equivalent of TIA-606-D. Because §444.4.10(a) makes BS EN 50174-1 mandatory in UK buildings, a UK contractor must demonstrate compliance with the EN administration discipline; TIA-606-D remains valid international cross-reference.',
   },
   {
     id: 5,
@@ -256,11 +256,11 @@ const faqs = [
         BS 7671 Part 6 governs the EIC, Minor Works certificate and EICR — those are regulatorily
         mandatory on any UK electrical installation. They cover the §716 / §545 / §444 / §544.1.2 /
         §521.10.202 dimensions. The cabling handover pack (TIA-606-D / BS EN 50174-1 §6) is
-        regulatorily mandatory under BS 7671 §444.410(a) — which makes BS EN 50174-1 a {`"`}shall be
+        regulatorily mandatory under BS 7671 §444.4.10(a) — which makes BS EN 50174-1 a {`"`}shall be
         applied{`"`} document — but specifically it is §6 of BS EN 50174-1 (the administration
         section) that defines the handover discipline. So technically: the EIC is required by BS
         7671 Part 6; the cabling pack is required by BS EN 50174-1 §6, which is itself required by
-        BS 7671 §444.410(a). Two paths to the same answer: both are mandatory.
+        BS 7671 §444.4.10(a). Two paths to the same answer: both are mandatory.
       </>
     ),
   },
@@ -284,10 +284,10 @@ const faqs = [
     answer: (
       <>
         Both, separately. BS 7671 Part 6 requires certification documentation (EIC, Minor Works,
-        EICR) for the electrical-safety dimensions of any UK installation. BS 7671 §444.410(a) makes
+        EICR) for the electrical-safety dimensions of any UK installation. BS 7671 §444.4.10(a) makes
         BS EN 50174-1 mandatory inside UK buildings — and BS EN 50174-1 §6 contains the
         administration / labelling / records discipline. So documentation is required by BS 7671
-        through TWO separate routes: directly (Part 6 certification) and indirectly (§444.410 + BS
+        through TWO separate routes: directly (Part 6 certification) and indirectly (§444.4.10 + BS
         EN 50174-1 §6). On a §716 PoE install, the contractor produces both packs — an EIC (or
         several certificates if there are multiple sub-installations) AND the cabling handover pack
         with as-builts / test results / identifier register / warranty registration. Skipping either
@@ -340,7 +340,7 @@ const DataCablingModule6Section4 = () => {
 
         <TLDR
           points={[
-            'TIA-606-D (2021) and BS EN 50174-1 §6 specify the administration / labelling / records discipline. Both define a hierarchical identifier scheme (Building → Floor → TR → Panel → Port), require maintained as-built drawings, link test records, and an administration register. BS 7671 §444.410(a) makes BS EN 50174-1 mandatory in UK buildings.',
+            'TIA-606-D (2021) and BS EN 50174-1 §6 specify the administration / labelling / records discipline. Both define a hierarchical identifier scheme (Building → Floor → TR → Panel → Port), require maintained as-built drawings, link test records, and an administration register. BS 7671 §444.4.10(a) makes BS EN 50174-1 mandatory in UK buildings.',
             'The identifier hierarchy is the spine: every link, every port, every outlet carries a unique hierarchical identifier visible at both ends. Without it, finding which patch panel port serves which desk on day 365 is a continuity-tester exercise repeated for every move/add/change.',
             'The handover pack converts "installed cable plant" into "maintainable system": as-built drawings + 100 % link test results + identifier register + manufacturer warranty registration evidence + change-control log + indexed cross-reference. Six items, all required.',
             'BS 7671 Part 6 certification (EIC / Minor Works / EICR) and the cabling administration pack are PARALLEL, complementary records. From 15 April 2026, with §716 PoE and §545 ICT functional earthing in play, both packs are produced on a typical structured-cabling install. They reference each other but do not replace each other.',
@@ -379,14 +379,14 @@ const DataCablingModule6Section4 = () => {
             <li>
               <strong>BS EN 50174-1 §6.</strong> The administration section of the EN
               install-practice standard. Broadly aligned with TIA-606-D; named verbatim in BS 7671
-              §444.410(a) as a {`"`}shall be applied{`"`} document inside UK buildings.
+              §444.4.10(a) as a {`"`}shall be applied{`"`} document inside UK buildings.
             </li>
           </ul>
           <p>
             The two are aligned but not identical. TIA-606-D is the standalone administration
             standard at the international level; BS EN 50174-1 §6 is the administration sub-clause
             of the EN install-practice standard. On a UK install, BS EN 50174-1 §6 is the
-            regulatorily mandatory pointer (via BS 7671 §444.410(a)); TIA-606-D remains valid
+            regulatorily mandatory pointer (via BS 7671 §444.4.10(a)); TIA-606-D remains valid
             international cross-reference and is what the inspector at a global tenant{`'`}s UK
             office will commonly ask for by name.
           </p>
@@ -398,7 +398,7 @@ const DataCablingModule6Section4 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 · §444.410 (Inside buildings — verbatim, repeated)"
+          source="BS 7671:2018+A4:2026 · §444.4.10 (Inside buildings — verbatim, repeated)"
           clause={
             <>
               Within a building, the requirements and recommendations of the following standards
@@ -409,7 +409,7 @@ const DataCablingModule6Section4 = () => {
               Telecommunications bonding networks for buildings and other structures.
             </>
           }
-          meaning="§444.410(a) names BS EN 50174-1 verbatim — and §6 of that document is the administration discipline. So BS 7671 reaches into the cabling administration via this single clause: the identifier hierarchy, the labelling rules, the as-built drawings, the records, the change control are all regulatorily mandatory on a UK install from 15 April 2026 because BS EN 50174-1 §6 is mandatory through §444.410(a). Skipping documentation is not just bad practice — it is non-compliance with BS 7671."
+          meaning="§444.4.10(a) names BS EN 50174-1 verbatim — and §6 of that document is the administration discipline. So BS 7671 reaches into the cabling administration via this single clause: the identifier hierarchy, the labelling rules, the as-built drawings, the records, the change control are all regulatorily mandatory on a UK install from 15 April 2026 because BS EN 50174-1 §6 is mandatory through §444.4.10(a). Skipping documentation is not just bad practice — it is non-compliance with BS 7671."
           cite="Verified verbatim from bs7671_regulations.full_text · A4:2026 edition · BS 7671:2018+A4:2026, published 15 April 2026"
         />
 
@@ -1094,7 +1094,7 @@ const DataCablingModule6Section4 = () => {
         />
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 · §444.410 (repeated for emphasis — verbatim)"
+          source="BS 7671:2018+A4:2026 · §444.4.10 (repeated for emphasis — verbatim)"
           clause={
             <>
               Within a building, the requirements and recommendations of the following standards
@@ -1105,7 +1105,7 @@ const DataCablingModule6Section4 = () => {
               Telecommunications bonding networks for buildings and other structures.
             </>
           }
-          meaning="§444.410(a) is repeated here because BS EN 50174-1 §6 is the administration section that defines the handover pack discipline. The clause makes that discipline regulatorily mandatory inside UK buildings from 15 April 2026 — the handover pack is not optional, not best-practice, not a tender extra. It is the BS 7671 §444.410-mandated artefact that lets the system stay maintainable. Without it, the install is non-compliant with BS 7671 itself."
+          meaning="§444.4.10(a) is repeated here because BS EN 50174-1 §6 is the administration section that defines the handover pack discipline. The clause makes that discipline regulatorily mandatory inside UK buildings from 15 April 2026 — the handover pack is not optional, not best-practice, not a tender extra. It is the BS 7671 §444.4.10-mandated artefact that lets the system stay maintainable. Without it, the install is non-compliant with BS 7671 itself."
           cite="Verified verbatim from bs7671_regulations.full_text · A4:2026 edition · BS 7671:2018+A4:2026, published 15 April 2026"
         />
 
@@ -1222,7 +1222,7 @@ const DataCablingModule6Section4 = () => {
               '§444.6.2 + Annex A444 Tables A444.1 / A444.2',
             ],
           ]}
-          notes="The two packs are parallel deliverables. From 15 April 2026, BS 7671 §444.410(a) makes BS EN 50174-1 (and therefore §6 administration discipline) mandatory in UK buildings. The BS 7671 Part 6 pack is mandatory under BS 7671 directly. Both packs are required on any UK install; both are retained for the life of the installation; both are referenced in subsequent change control."
+          notes="The two packs are parallel deliverables. From 15 April 2026, BS 7671 §444.4.10(a) makes BS EN 50174-1 (and therefore §6 administration discipline) mandatory in UK buildings. The BS 7671 Part 6 pack is mandatory under BS 7671 directly. Both packs are required on any UK install; both are retained for the life of the installation; both are referenced in subsequent change control."
         />
 
         <InlineCheck
@@ -1347,7 +1347,7 @@ const DataCablingModule6Section4 = () => {
         <KeyTakeaways
           title="Worth remembering"
           points={[
-            'TIA-606-D (2021) and BS EN 50174-1 §6 are the two governing standards for cabling administration. BS 7671 §444.410(a) makes BS EN 50174-1 mandatory in UK buildings — and §6 of that document is the administration section.',
+            'TIA-606-D (2021) and BS EN 50174-1 §6 are the two governing standards for cabling administration. BS 7671 §444.4.10(a) makes BS EN 50174-1 mandatory in UK buildings — and §6 of that document is the administration section.',
             'The identifier hierarchy (Building → Floor → TR → Panel → Port) is the spine. Every link, every port, every outlet carries the same hierarchical identifier at both ends. The administration register is keyed on it.',
             'The handover pack has six components: as-built drawings, link test results (100 %), identifier register, manufacturer warranty registration, change-control log, indexed cross-reference. All required.',
             'BS 7671 Part 6 certification (EIC / Minor Works / EICR) and the cabling administration pack are PARALLEL, complementary records — both mandatory from 15 April 2026 on any §716 PoE / §545 functional earthing install. They reference each other at common points (main bonding location, MFET, PoE design current, EMC segregation).',

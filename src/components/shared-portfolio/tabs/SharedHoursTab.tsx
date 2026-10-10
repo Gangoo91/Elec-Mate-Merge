@@ -58,8 +58,8 @@ export default function SharedHoursTab({ otjHours }: SharedHoursTabProps) {
       {/* Info note */}
       <div className="bg-blue-500/10 rounded-xl border border-blue-500/20 p-4">
         <p className="text-xs text-blue-400">
-          Off-the-job training must make up at least 20% of the apprentice's contracted working hours
-          over the duration of the programme. This includes college attendance, online learning,
+          Off-the-job training must reach at least the minimum hours published on the apprentice's
+          standard (for starts from August 2025; never below 187 hours), in paid working time. This includes college attendance, online learning,
           mentoring, and portfolio work.
         </p>
       </div>

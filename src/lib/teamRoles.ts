@@ -57,3 +57,34 @@ export const SUPERVISING_ROLES: TeamRole[] = [
   'Apprentice Co-ordinator',
   'QS',
 ];
+
+/**
+ * ELE-1831: the six roles a firm reads (owner, office, supervisor/QS, engineer,
+ * apprentice, subcontractor). Owner and office are managers (employer_admins);
+ * everyone on the roster maps from their team role. Mirrors
+ * public.employer_access_role(), which RLS uses.
+ */
+export type AccessRole = 'supervisor' | 'engineer' | 'apprentice' | 'subcontractor';
+
+export const accessRoleOf = (teamRole: unknown): AccessRole => {
+  switch (toTeamRole(teamRole)) {
+    case 'QS':
+    case 'Supervisor':
+    case 'Project Manager':
+    case 'Apprentice Co-ordinator':
+      return 'supervisor';
+    case 'Apprentice':
+      return 'apprentice';
+    case 'Subcontractor':
+      return 'subcontractor';
+    default:
+      return 'engineer';
+  }
+};
+
+export const ACCESS_ROLE_LABEL: Record<AccessRole, string> = {
+  supervisor: 'Supervisor / QS',
+  engineer: 'Engineer',
+  apprentice: 'Apprentice',
+  subcontractor: 'Subcontractor',
+};

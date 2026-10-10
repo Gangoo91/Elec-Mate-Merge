@@ -473,7 +473,15 @@ serve(async (req) => {
     const requestBody = await req.json();
     console.log('[BRIEFING-AI] Request body:', JSON.stringify(requestBody, null, 2));
 
-    const { briefingType, briefingContext, hazards } = requestBody;
+    const { briefingType, briefingContext } = requestBody;
+    const hazards = requestBody.hazards ?? {};
+    // ELE-1942: site photos (signed https URLs, at most 5) so hazards that can
+    // be seen in them are named. Optional; older apps never send it.
+    const photoUrls: string[] = Array.isArray(requestBody.photoUrls)
+      ? (requestBody.photoUrls as unknown[])
+          .filter((u): u is string => typeof u === 'string' && /^https:\/\//.test(u))
+          .slice(0, 5)
+      : [];
 
     if (!briefingContext || !briefingContext.briefingTitle) {
       console.error('[BRIEFING-AI] Missing required fields:', {
@@ -539,6 +547,53 @@ Generate comprehensive, detailed, and highly relevant content for this specific 
 Be specific, actionable, and adapt your response to match the briefing type's focus areas.
 ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - adjust content accordingly.' : ''}`;
 
+    const toolDefinition = getToolDefinitionForType(briefingType) as {
+      function: { parameters: { properties: Record<string, unknown> } };
+    };
+    if (photoUrls.length > 0) {
+      toolDefinition.function.parameters.properties.photoHazards = {
+        type: 'array',
+        items: { type: 'string' },
+        description:
+          'Hazards visible in the attached site photos, each a short sentence: what is seen and the control. Empty if none are visible.',
+      };
+    }
+    // Fetch the photos here and hand them over inline: the model does not have
+    // to reach our storage, and one unreadable photo is dropped, not fatal.
+    const inlinePhotos: string[] = [];
+    for (const url of photoUrls) {
+      try {
+        const res = await fetch(url, { headers: { 'User-Agent': 'Elec-Mate briefing drafter' } });
+        const type = res.headers.get('content-type') ?? '';
+        if (!res.ok || !/^image\/(png|jpe?g|webp|gif)/i.test(type)) continue;
+        const bytes = new Uint8Array(await res.arrayBuffer());
+        if (bytes.byteLength > 6_000_000) continue;
+        let bin = '';
+        for (let i = 0; i < bytes.length; i += 0x8000) {
+          bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+        }
+        inlinePhotos.push(`data:${type.split(';')[0]};base64,${btoa(bin)}`);
+      } catch (e) {
+        console.warn('[BRIEFING-AI] photo skipped:', (e as Error).message);
+      }
+    }
+    if (photoUrls.length > 0 && inlinePhotos.length === 0) {
+      delete toolDefinition.function.parameters.properties.photoHazards;
+    }
+    if (inlinePhotos.length > 0) {
+      userPrompt += `
+
+**Site photos:** ${inlinePhotos.length} photo${inlinePhotos.length === 1 ? '' : 's'} of the site are attached. Look at them and name every hazard you can actually see (for example exposed conductors, trailing leads, work at height, missing guarding, clutter, water near equipment). Put each one in photoHazards as a short sentence saying what is seen and the control. Only name what is visible; do not guess. If no hazard can be seen, return photoHazards as an empty array, never a sentence saying so.`;
+    }
+
+    const userContent =
+      inlinePhotos.length > 0
+        ? [
+            { type: 'text', text: userPrompt },
+            ...inlinePhotos.map((url) => ({ type: 'image_url', image_url: { url, detail: 'low' } })),
+          ]
+        : userPrompt;
+
     console.log('[BRIEFING-AI] Calling OpenAI GPT-5-Mini for type:', briefingType);
     console.log('[BRIEFING-AI] User prompt preview:', userPrompt.substring(0, 200) + '...');
 
@@ -553,9 +608,9 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
         model: 'gpt-5.4-mini-2026-03-17',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt },
+          { role: 'user', content: userContent },
         ],
-        tools: [getToolDefinitionForType(briefingType)],
+        tools: [toolDefinition],
         tool_choice: {
           type: 'function',
           function: { name: 'generate_briefing_content' },

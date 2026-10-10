@@ -1,7 +1,7 @@
 /**
  * Accounting OAuth Callback
  * Handles OAuth callback and exchanges code for tokens
- * Supports Xero, Sage, QuickBooks, and FreshBooks
+ * Supports Xero, Sage, QuickBooks, FreshBooks and FreeAgent
  */
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
@@ -11,6 +11,7 @@ import { encryptToken } from '../_shared/encryption.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { resolveXeroSalesAccountCode } from '../_shared/xero-accounts.ts';
+import { exchangeFreeAgentCode, getFreeAgentCompany } from '../_shared/freeagent.ts';
 
 // Provider credentials
 const XERO_CLIENT_ID = Deno.env.get('XERO_CLIENT_ID');
@@ -33,7 +34,7 @@ const QUICKBOOKS_BASE_URL =
     ? 'https://quickbooks.api.intuit.com'
     : 'https://sandbox-quickbooks.api.intuit.com';
 
-type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
+type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks' | 'freeagent';
 
 interface TokenResponse {
   access_token: string;
@@ -206,6 +207,18 @@ serve(async (req: Request) => {
           RetryPresets.STANDARD
         );
         break;
+
+      case 'freeagent': {
+        // ELE-2077
+        const redirectUri = `${SUPABASE_URL}/functions/v1/accounting-oauth-callback`;
+        tokenData = await withRetry(
+          () =>
+            withTimeout(exchangeFreeAgentCode(code, redirectUri), Timeouts.STANDARD, 'FreeAgent token exchange'),
+          RetryPresets.STANDARD
+        );
+        tenantInfo = await getFreeAgentCompany(tokenData.access_token);
+        break;
+      }
 
       default:
         throw new ValidationError(`Provider "${provider}" not supported`);

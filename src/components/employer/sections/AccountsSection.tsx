@@ -1,22 +1,22 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowDownLeft, ArrowUpRight, RefreshCw } from 'lucide-react';
+import { PageHero, LoadingBlocks } from '@/components/employer/editorial';
 import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  EmptyState,
-  LoadingBlocks,
-  FilterBar,
-  Divider,
-  IconButton,
-  SecondaryButton,
-} from '@/components/employer/editorial';
+  PageColumn,
+  TwoColumn,
+  FigureStrip,
+  FilterRow,
+  Segments,
+  HeroActions,
+  HeroPrimary,
+  RefreshIcon,
+  Rows,
+  Row,
+  PlainEmpty,
+  panel,
+  PanelTitle,
+} from '@/components/employer/pageParts/PageParts';
+import { cn } from '@/lib/utils';
 import { getLedger } from '@/services/employerAccountsService';
 import { useFinanceSummary } from '@/hooks/useFinanceModel';
 import {
@@ -94,246 +94,387 @@ export const AccountsSection = () => {
 
   const canExport = !!pnl && !loadError && !exporting && !hidden;
 
+  const fetching = pnlQuery.isFetching || ledgerQuery.isFetching;
+
+  // Live status line: where this period stands, in one sentence.
+  const statusLine =
+    hidden || !pnl || loadError
+      ? 'Profit and loss and a ledger of money in and out, the same figures as Reports and Job financials.'
+      : `${period.label}: ${formatGBPCompact(pnl.invoiced)} invoiced, ${formatGBPCompact(pnl.totalCosts)} costs, ${
+          pnl.grossProfit < 0
+            ? `${formatGBPCompact(Math.abs(pnl.grossProfit))} loss`
+            : `${formatGBPCompact(pnl.grossProfit)} gross profit`
+        }.`;
+
+  const exportPanel = !hidden && (
+    <section data-help="accounts.export">
+      <PanelTitle title="Export" meta={period.label} />
+      <div className={cn(panel, 'overflow-hidden')}>
+        <Rows>
+          <ExportRow
+            title="Accounts PDF"
+            detail="P&L, cash and ledger for your accountant"
+            label={exporting ? 'Preparing…' : 'PDF'}
+            disabled={!canExport}
+            onClick={() => runExport('pdf')}
+          />
+          <ExportRow
+            title="Profit and loss"
+            detail="For Xero, Sage or QuickBooks"
+            label="CSV"
+            disabled={!canExport}
+            onClick={() => runExport('pnl-csv')}
+          />
+          <ExportRow
+            title="Ledger"
+            detail={`${ledger.length} entr${ledger.length === 1 ? 'y' : 'ies'}`}
+            label="CSV"
+            disabled={!canExport || ledger.length === 0}
+            onClick={() => runExport('ledger-csv')}
+          />
+        </Rows>
+      </div>
+    </section>
+  );
+
   return (
-    <PageFrame>
+    <PageColumn>
       <PageHero
-        eyebrow="Money"
         title="Accounts"
-        description="Profit and loss and a ledger of money in and out. The same figures as Reports and Job financials."
-        tone="emerald"
+        description={statusLine}
         actions={
-          <>
-          <IconButton onClick={refresh} aria-label="Refresh accounts">
-            <RefreshCw
-              className={pnlQuery.isFetching || ledgerQuery.isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'}
-            />
-          </IconButton>
-          <PageHelpButton help={ACCOUNTS_HELP} askContext={{ page: 'accounts', tab }} />
-          </>
+          <HeroActions>
+            {!hidden && (
+              <HeroPrimary onClick={() => runExport('pdf')} disabled={!canExport}>
+                {exporting ? 'Preparing…' : 'Download PDF'}
+              </HeroPrimary>
+            )}
+            <RefreshIcon onClick={refresh} spinning={fetching} />
+            <PageHelpButton help={ACCOUNTS_HELP} askContext={{ page: 'accounts', tab }} />
+          </HeroActions>
         }
       />
 
       <HowItWorks help={ACCOUNTS_HELP} askContext={{ page: 'accounts', tab }} />
 
-      <div data-help="accounts.periods">
-      <FilterBar
-        tabs={FINANCE_PERIODS}
-        activeTab={periodKey}
-        onTabChange={(v) => setPeriodKey(v as FinancePeriodKey)}
-      />
-      </div>
-
-      <div className="mt-4" data-help="accounts.views">
-        <FilterBar
-          tabs={[
-            { value: 'summary', label: 'Profit & loss' },
-            { value: 'ledger', label: 'Ledger', count: ledger.length },
-          ]}
-          activeTab={tab}
-          onTabChange={(v) => setTab(v as 'summary' | 'ledger')}
-        />
-      </div>
-
-      {!hidden && (
-        <div className="mt-4 grid grid-cols-3 gap-2" data-help="accounts.export">
-          <SecondaryButton
-            onClick={() => runExport('pnl-csv')}
-            disabled={!canExport}
-            className="h-11 px-2 text-[12.5px]"
-          >
-            P&amp;L CSV
-          </SecondaryButton>
-          <SecondaryButton
-            onClick={() => runExport('ledger-csv')}
-            disabled={!canExport || ledger.length === 0}
-            className="h-11 px-2 text-[12.5px]"
-          >
-            Ledger CSV
-          </SecondaryButton>
-          <SecondaryButton
-            onClick={() => runExport('pdf')}
-            disabled={!canExport}
-            className="h-11 px-2 text-[12.5px]"
-          >
-            {exporting ? 'Preparing…' : 'PDF'}
-          </SecondaryButton>
+      <FilterRow>
+        <div data-help="accounts.periods" className="min-w-0">
+          <Segments
+            items={FINANCE_PERIODS as { value: FinancePeriodKey; label: string }[]}
+            value={periodKey}
+            onChange={setPeriodKey}
+          />
         </div>
-      )}
+        <div data-help="accounts.views" className="min-w-0">
+          <Segments
+            items={[
+              { value: 'summary' as const, label: 'Profit & loss' },
+              { value: 'ledger' as const, label: 'Ledger', count: ledger.length },
+            ]}
+            value={tab}
+            onChange={setTab}
+          />
+        </div>
+      </FilterRow>
 
       {hidden ? (
-        <EmptyState
-          className="mt-5"
-          title="Accounts are for the owner and admins"
-          description="Your role can see invoices and what's outstanding (Quotes & Invoices), but not costs, labour or profit. Ask the owner to make you an admin if you need the books."
-        />
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text="Accounts are for the owner and admins. Your role can see invoices and what is owed in Quotes & invoices, but not costs, labour or profit. Ask the owner to make you an admin if you need the books."
+          />
+        </div>
       ) : loadError ? (
-        <EmptyState
-          className="mt-5"
-          title="Couldn't load your accounts"
-          description={`The figures didn't load, so nothing is shown rather than £0.00. ${
-            loadError instanceof Error ? loadError.message : ''
-          }`}
-          action="Try again"
-          onAction={refresh}
-        />
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text={`Your accounts didn't load, so nothing is shown rather than £0.00. ${
+              loadError instanceof Error ? loadError.message : ''
+            }`}
+            action="Try again"
+            onAction={refresh}
+          />
+        </div>
       ) : tab === 'summary' ? (
         pnlQuery.isLoading || !pnl ? (
-          <LoadingBlocks className="mt-5" />
+          <LoadingBlocks />
         ) : (
-          <div className="mt-5 space-y-5">
-            <StatStrip
-              columns={4}
-              stats={[
-                { label: FINANCE_LABELS.invoiced, value: formatGBPCompact(pnl.invoiced), tone: 'blue' },
-                { label: FINANCE_LABELS.costs, value: formatGBPCompact(pnl.totalCosts), tone: 'orange' },
+          <>
+            <FigureStrip
+              figures={[
                 {
-                  label: `${FINANCE_LABELS.grossProfit} · invoiced less costs`,
-                  value: formatGBPCompact(pnl.grossProfit),
-                  tone: pnl.grossProfit >= 0 ? 'emerald' : 'red',
-                  accent: true,
+                  label: FINANCE_LABELS.invoiced,
+                  value: formatGBPCompact(pnl.invoiced),
+                  sub: `${pnl.invoiceCount} invoice${pnl.invoiceCount === 1 ? '' : 's'}`,
                 },
-                { label: FINANCE_LABELS.margin, value: formatMargin(pnl.marginPct), tone: 'emerald' },
+                {
+                  label: FINANCE_LABELS.costs,
+                  value: formatGBPCompact(pnl.totalCosts),
+                  sub: 'Materials, expenses, labour',
+                },
+                {
+                  label: FINANCE_LABELS.grossProfit,
+                  value: formatGBPCompact(pnl.grossProfit),
+                  sub: 'Invoiced less costs',
+                  tone: pnl.grossProfit < 0 ? 'red' : undefined,
+                },
+                {
+                  label: FINANCE_LABELS.margin,
+                  value: formatMargin(pnl.marginPct),
+                  sub: pnl.marginPct === null ? 'Nothing invoiced yet' : 'Of invoiced',
+                },
               ]}
             />
 
-            <ListCard>
-              <ListCardHeader title="Profit & loss" meta={period.label} />
-              <ListBody>
-                <ListRow
-                  title="Invoiced"
-                  subtitle={`${pnl.invoiceCount} invoice${pnl.invoiceCount === 1 ? '' : 's'} sent, overdue or paid · drafts excluded`}
-                  trailing={formatGBP(pnl.invoiced)}
-                />
-                <Divider label="Costs" />
-                <ListRow title="Materials" subtitle="Purchase orders, at order date" trailing={formatGBP(pnl.materials)} />
-                {pnl.supplierInvoices !== 0 && (
-                  <ListRow
-                    title="Supplier invoices"
-                    subtitle="Bills not matched to a purchase order"
-                    trailing={formatGBP(pnl.supplierInvoices)}
-                  />
-                )}
-                <ListRow title="Expenses" subtitle="Approved and paid claims" trailing={formatGBP(pnl.expenses)} />
-                <ListRow
-                  title="Labour"
-                  subtitle="Gross pay from approved timesheets, overtime included"
-                  trailing={formatGBP(pnl.labour)}
-                />
-                {pnl.otherCosts !== 0 && (
-                  <ListRow
-                    title="Other job costs"
-                    subtitle="Equipment, overheads and other costs logged on jobs"
-                    trailing={formatGBP(pnl.otherCosts)}
-                  />
-                )}
-                <ListRow title="Total costs" trailing={formatGBP(pnl.totalCosts)} />
-                <Divider />
-                <ListRow
-                  title="Gross profit"
-                  subtitle={pnl.marginPct === null ? 'Invoiced less costs · no margin until something is invoiced' : `Invoiced less costs · ${formatMargin(pnl.marginPct)} margin`}
-                  trailing={
-                    <Pill tone={pnl.grossProfit >= 0 ? 'emerald' : 'red'}>{formatGBP(pnl.grossProfit)}</Pill>
-                  }
-                />
-              </ListBody>
-            </ListCard>
-
-            <ListCard>
-              <ListCardHeader title="Cash" meta="Money received and owed" />
-              <ListBody>
-                <ListRow
-                  title={FINANCE_LABELS.paidIn}
-                  subtitle={`${pnl.paidCount} invoice${pnl.paidCount === 1 ? '' : 's'} paid in ${period.label.toLowerCase()}`}
-                  trailing={formatGBP(pnl.paidIn)}
-                />
-                <ListRow
-                  title={`${FINANCE_LABELS.outstanding} today`}
-                  subtitle={`${pnl.outstandingCount} sent or overdue invoice${pnl.outstandingCount === 1 ? '' : 's'} not yet paid`}
-                  trailing={formatGBP(pnl.outstanding)}
-                />
-                <ListRow
-                  title="Of which overdue"
-                  subtitle={`${pnl.overdueCount} past their due date`}
-                  trailing={
-                    <span className={pnl.overdue > 0 ? 'text-red-400' : 'text-white'}>
-                      {formatGBP(pnl.overdue)}
-                    </span>
-                  }
-                />
-                {pnl.draftCount > 0 && (
-                  <ListRow
-                    title="Draft invoices"
-                    subtitle="Not sent, so not counted anywhere above"
-                    trailing={formatGBP(pnl.draftValue)}
-                  />
-                )}
-              </ListBody>
-            </ListCard>
-
-            <p className="text-xs text-white px-1 leading-relaxed">
-              Gross profit is invoiced less costs. The same figure Reports and Job financials show
-              for this period. Cash in counts invoices on the day they were paid. Labour is gross pay
-              before PAYE, National Insurance and pension; Elec-Mate is not a payroll or accounting
-              package. Use the exports to feed Xero, Sage or QuickBooks.
-            </p>
-          </div>
+            <TwoColumn
+              main={
+                <section>
+                  <PanelTitle title="Profit and loss" meta={period.label} />
+                  <div className={cn(panel, 'overflow-hidden')}>
+                    <Rows>
+                      <Line
+                        title="Invoiced"
+                        detail={`${pnl.invoiceCount} invoice${pnl.invoiceCount === 1 ? '' : 's'} sent, overdue or paid. Drafts excluded.`}
+                        amount={formatGBP(pnl.invoiced)}
+                      />
+                      <SubHead>Costs</SubHead>
+                      <Line
+                        title="Materials"
+                        detail="Purchase orders, at order date"
+                        amount={formatGBP(pnl.materials)}
+                      />
+                      {pnl.supplierInvoices !== 0 && (
+                        <Line
+                          title="Supplier invoices"
+                          detail="Bills not matched to a purchase order"
+                          amount={formatGBP(pnl.supplierInvoices)}
+                        />
+                      )}
+                      <Line
+                        title="Expenses"
+                        detail="Approved and paid claims"
+                        amount={formatGBP(pnl.expenses)}
+                      />
+                      <Line
+                        title="Labour"
+                        detail="Gross pay from approved timesheets, overtime included"
+                        amount={formatGBP(pnl.labour)}
+                      />
+                      {pnl.otherCosts !== 0 && (
+                        <Line
+                          title="Other job costs"
+                          detail="Equipment, overheads and other costs logged on jobs"
+                          amount={formatGBP(pnl.otherCosts)}
+                        />
+                      )}
+                      <Line title="Total costs" amount={formatGBP(pnl.totalCosts)} strong />
+                      <Line
+                        title="Gross profit"
+                        detail={
+                          pnl.marginPct === null
+                            ? 'Invoiced less costs. No margin until something is invoiced.'
+                            : `Invoiced less costs, ${formatMargin(pnl.marginPct)} margin`
+                        }
+                        amount={formatGBP(pnl.grossProfit)}
+                        strong
+                        red={pnl.grossProfit < 0}
+                      />
+                    </Rows>
+                  </div>
+                </section>
+              }
+              side={
+                <>
+                  <section>
+                    <PanelTitle title="Cash" meta="Received and owed" />
+                    <div className={cn(panel, 'overflow-hidden')}>
+                      <Rows>
+                        <Line
+                          title={FINANCE_LABELS.paidIn}
+                          detail={`${pnl.paidCount} invoice${pnl.paidCount === 1 ? '' : 's'} paid in ${period.label.toLowerCase()}`}
+                          amount={formatGBP(pnl.paidIn)}
+                        />
+                        <Line
+                          title={`${FINANCE_LABELS.outstanding} today`}
+                          detail={`${pnl.outstandingCount} sent or overdue, not yet paid`}
+                          amount={formatGBP(pnl.outstanding)}
+                        />
+                        <Line
+                          title="Of which overdue"
+                          detail={`${pnl.overdueCount} past their due date`}
+                          amount={formatGBP(pnl.overdue)}
+                          red={pnl.overdue > 0}
+                        />
+                        {pnl.draftCount > 0 && (
+                          <Line
+                            title="Draft invoices"
+                            detail="Not sent, so not counted above"
+                            amount={formatGBP(pnl.draftValue)}
+                          />
+                        )}
+                      </Rows>
+                    </div>
+                  </section>
+                  {exportPanel}
+                  <p className="text-[13px] leading-relaxed text-white">
+                    Gross profit is invoiced less costs, the same figure Reports and Job financials
+                    show for this period. Cash in counts invoices on the day they were paid. Labour
+                    is gross pay before PAYE, National Insurance and pension. Elec-Mate is not a
+                    payroll or accounting package, so use the exports to feed Xero, Sage or
+                    QuickBooks.
+                  </p>
+                </>
+              }
+            />
+          </>
         )
       ) : ledgerQuery.isLoading || !ledgerQuery.data ? (
-        <LoadingBlocks className="mt-5" />
-      ) : ledger.length === 0 ? (
-        <EmptyState
-          className="mt-5"
-          title="Nothing in this period"
-          description="Paid invoices, purchase orders, expense claims, approved timesheets and job costs appear here as they happen."
-        />
+        <LoadingBlocks />
       ) : (
-        <div className="mt-5 space-y-5">
-          <StatStrip
-            columns={3}
-            stats={[
-              { label: 'Money in · paid invoices', value: formatGBPCompact(totals.moneyIn), tone: 'emerald' },
-              { label: 'Money out · costs', value: formatGBPCompact(totals.moneyOut), tone: 'orange' },
-              {
-                label: 'Net cash',
-                value: formatGBPCompact(totals.net),
-                tone: totals.net >= 0 ? 'green' : 'red',
-              },
-            ]}
-          />
-
-          <ListCard>
-            <ListCardHeader title="Ledger" meta={`${ledger.length} entries · ${period.label}`} />
-            <ListBody>
-              {ledger.map((e) => (
-                <ListRow
-                  key={`${e.direction}-${e.category}-${e.source_id}`}
-                  lead={
-                    e.direction === 'in' ? (
-                      <ArrowDownLeft className="h-4 w-4 text-emerald-400" />
-                    ) : (
-                      <ArrowUpRight className="h-4 w-4 text-orange-400" />
-                    )
-                  }
-                  title={[e.reference || e.category, e.counterparty].filter(Boolean).join(' — ')}
-                  subtitle={`${e.category} · ${new Date(`${e.entry_date}T12:00:00`).toLocaleDateString('en-GB')}`}
-                  trailing={
-                    <span className={e.direction === 'in' ? 'text-emerald-400' : 'text-orange-400'}>
-                      {e.direction === 'in' ? '+' : '−'}
-                      {formatGBP(e.amount)}
-                    </span>
-                  }
+        <>
+          {ledger.length > 0 && (
+            <FigureStrip
+              figures={[
+                {
+                  label: 'Money in',
+                  value: formatGBPCompact(totals.moneyIn),
+                  sub: 'Paid invoices',
+                },
+                { label: 'Money out', value: formatGBPCompact(totals.moneyOut), sub: 'Costs' },
+                {
+                  label: 'Net cash',
+                  value: formatGBPCompact(totals.net),
+                  sub: period.label,
+                  tone: totals.net < 0 ? 'red' : undefined,
+                },
+              ]}
+            />
+          )}
+          <TwoColumn
+            main={
+              <section>
+                <PanelTitle
+                  title="Ledger"
+                  meta={`${ledger.length} entr${ledger.length === 1 ? 'y' : 'ies'} · ${period.label}`}
                 />
-              ))}
-            </ListBody>
-          </ListCard>
-          <p className="text-xs text-white px-1 leading-relaxed">
-            Money out is every cost in the P&amp;L for this period, so it always matches total costs.
-            Labour shows one line per person.
-          </p>
-        </div>
+                <div className={cn(panel, 'overflow-hidden')}>
+                  {ledger.length === 0 ? (
+                    <PlainEmpty
+                      bare
+                      text="Nothing in this period. Paid invoices, purchase orders, expense claims, approved timesheets and job costs show here as they happen."
+                    />
+                  ) : (
+                    <Rows>
+                      {ledger.map((e) => (
+                        <Row
+                          key={`${e.direction}-${e.category}-${e.source_id}`}
+                          title={[e.reference || e.category, e.counterparty]
+                            .filter(Boolean)
+                            .join(' · ')}
+                          detail={`${e.direction === 'in' ? 'In' : 'Out'} · ${e.category} · ${new Date(`${e.entry_date}T12:00:00`).toLocaleDateString('en-GB')}`}
+                          amount={
+                            <span
+                              className={e.direction === 'in' ? 'text-emerald-400' : 'text-white'}
+                            >
+                              {e.direction === 'in' ? '+' : '−'}
+                              {formatGBP(e.amount)}
+                            </span>
+                          }
+                        />
+                      ))}
+                    </Rows>
+                  )}
+                </div>
+              </section>
+            }
+            side={
+              <>
+                {exportPanel}
+                <p className="text-[13px] leading-relaxed text-white">
+                  Money out is every cost in the P&amp;L for this period, so it always matches total
+                  costs. Labour shows one line per person.
+                </p>
+              </>
+            }
+          />
+        </>
       )}
-    </PageFrame>
+    </PageColumn>
   );
 };
+
+/** One line of a statement: label and note on the left, amount on the right. */
+function Line({
+  title,
+  detail,
+  amount,
+  strong,
+  red,
+}: {
+  title: string;
+  detail?: string;
+  amount: string;
+  strong?: boolean;
+  red?: boolean;
+}) {
+  return (
+    <div className="flex min-h-[56px] items-center gap-3 px-4 py-3 sm:px-5">
+      <div className="min-w-0 flex-1">
+        <div className={cn('text-[15px] text-white', strong ? 'font-semibold' : 'font-medium')}>
+          {title}
+        </div>
+        {detail && <div className="mt-0.5 text-[13px] text-white">{detail}</div>}
+      </div>
+      <span
+        className={cn(
+          'shrink-0 tabular-nums text-[15px]',
+          strong ? 'font-semibold' : 'font-medium',
+          red ? 'text-red-400' : 'text-white'
+        )}
+      >
+        {amount}
+      </span>
+    </div>
+  );
+}
+
+function SubHead({ children }: { children: string }) {
+  return (
+    <div className="bg-white/[0.03] px-4 py-2 text-[13px] font-semibold text-white sm:px-5">
+      {children}
+    </div>
+  );
+}
+
+function ExportRow({
+  title,
+  detail,
+  label,
+  disabled,
+  onClick,
+}: {
+  title: string;
+  detail: string;
+  label: string;
+  disabled?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <div className="flex min-h-[64px] items-center gap-3 px-4 py-2.5 sm:px-5">
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-[15px] font-semibold text-white">{title}</div>
+        <div className="mt-0.5 truncate text-[13px] text-white">{detail}</div>
+      </div>
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        className="inline-flex h-11 min-w-[72px] shrink-0 items-center justify-center rounded-full border border-white/[0.14] bg-white/[0.04] px-4 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.08] disabled:opacity-40"
+      >
+        {label}
+      </button>
+    </div>
+  );
+}
 
 export default AccountsSection;

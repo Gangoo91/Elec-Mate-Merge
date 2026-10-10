@@ -23,7 +23,7 @@ export default function StaffCostCalculatorPage() {
       title="Staff Cost Calculator for Electricians"
       description="Calculate the true cost of employing an electrician, apprentice, or office staff. Employer NI, pension auto-enrolment, holiday pay, sick pay."
       datePublished="2025-09-01"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Staff Cost Calculator', href: PAGE_PATH },
@@ -295,19 +295,20 @@ export default function StaffCostCalculatorPage() {
               </p>
               <p>
                 <strong className="text-elec-yellow">Wages:</strong> Apprentice minimum wage rates
-                for 2025/26 are £6.40 per hour for apprentices in their first year or under 19, and
-                the age-appropriate National Minimum Wage thereafter. A first-year apprentice
-                working 37.5 hours per week costs approximately £12,480 per year. A third-year
-                apprentice aged 21 or over costs approximately £21,840 (at the National Living Wage
-                rate of £11.44 per hour).
+                from 1 April 2026 are £8.00 per hour for apprentices in their first year or under
+                19, and the age-appropriate National Minimum Wage thereafter. A first-year apprentice
+                working 37.5 hours per week costs approximately £15,600 per year. A third-year
+                apprentice aged 21 or over costs approximately £24,785 (at the National Living Wage
+                rate of £12.71 per hour).
               </p>
               <p>
                 <strong className="text-elec-yellow">Training costs:</strong> The apprenticeship
                 training itself may be funded through the Apprenticeship Levy (if applicable) or
-                government co-funding. For non-levy employers, the government pays 95% of training
-                costs with most approved training providers. Your contribution is 5% of the training
-                cost, which is typically £600 to £900 over the full apprenticeship. You may also be
-                eligible for a £1,000 incentive payment for hiring an apprentice.
+                government funding. For starts from 1 August 2026, a non-levy employer pays nothing
+                for an apprentice aged 16 to 24 at the start, and 5% for one aged 25 or over, up to
+                the funding band maximum (DfE funding rules 2026 to 2027, rules 213 to 214). You may also be eligible for a £1,000 incentive
+                payment (16 to 18-year-olds) and a £2,000 hiring payment (16 to 24-year-olds whose
+                practical period starts from 1 October 2026).
               </p>
               <p>
                 <strong className="text-elec-yellow">Productivity:</strong> An apprentice is not
@@ -318,9 +319,10 @@ export default function StaffCostCalculatorPage() {
               </p>
               <p>
                 <strong className="text-elec-yellow">Off-the-job training:</strong> Apprentices must
-                spend 20% of their paid working hours on off-the-job training (college, online
-                learning, or workplace training that is not productive work). This is paid time, so
-                you are paying for 5 days but getting approximately 4 days of productive work.
+                receive at least the off-the-job hours published on their standard (college, online
+                learning, or workplace training that is not productive work; DfE funding rules 2026 to 2027, rules 85 to 86). This is
+                paid time: with typical day release you are paying for 5 days but getting
+                approximately 4 days of productive work.
               </p>
               <p>
                 Despite these costs, a well-managed apprenticeship typically delivers a positive

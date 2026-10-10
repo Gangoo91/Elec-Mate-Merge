@@ -5,7 +5,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { cn } from '@/lib/utils';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,16 +28,8 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  EmptyState,
   LoadingBlocks,
   IconButton,
-  Divider,
   PrimaryButton,
   SecondaryButton,
   FormCard,
@@ -65,7 +58,23 @@ import { VehicleToolsSheet } from '@/components/employer/fleet/VehicleToolsSheet
 import { VehicleDocumentsSheet } from '@/components/employer/fleet/VehicleDocumentsSheet';
 import { DailyCheckSheet } from '@/components/employer/fleet/DailyCheckSheet';
 import { ServiceHistorySheet } from '@/components/employer/fleet/ServiceHistorySheet';
-import { RefreshCw, Loader2, AlertTriangle } from 'lucide-react';
+import { RefreshCw, Loader2, AlertTriangle, Search } from 'lucide-react';
+import {
+  PanelTitle,
+  PlainEmpty,
+  Row,
+  RowList,
+  Segments,
+  StatusPill,
+  asideFirstClass,
+  colClass,
+  frameClass,
+  heroPrimaryClass,
+  panel,
+  searchInputClass,
+  twoColClass,
+  type PillTone,
+} from '@/components/employer/pageParts/PageParts';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { FLEET_HELP } from '@/components/employer/help/fleet';
 import { useFleetToday } from '@/hooks/useFleetWalkround';
@@ -82,27 +91,12 @@ const filterTabs: { value: FilterValue; label: string }[] = [
   { value: 'off_road', label: 'Off road' },
 ];
 
-const statusToTone = (status: VehicleStatus): Tone => {
-  switch (status) {
-    case 'Active':
-      return 'emerald';
-    case 'Available':
-      return 'blue';
-    case 'Maintenance':
-      return 'amber';
-    case 'Off Road':
-      return 'red';
-    default:
-      return 'yellow';
-  }
-};
-
 /** Stored values are Title Case ('Off Road'); show sentence case. */
 const statusLabel = (status: VehicleStatus): string =>
   status === 'Off Road' ? 'Off road' : status;
 
 const formatDate = (dateStr?: string) => {
-  if (!dateStr) return '—';
+  if (!dateStr) return 'No date recorded';
   return new Date(dateStr).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -292,7 +286,9 @@ export function FleetSection() {
   const handleUpdateVehicle = async (id: string, updates: UpdateVehicleInput) => {
     // Back on the road from Edit vehicle: clear why it came off.
     const clearOffRoad =
-      updates.status && updates.status !== 'Off Road' ? { off_road_reason: null, off_road_at: null } : {};
+      updates.status && updates.status !== 'Off Road'
+        ? { off_road_reason: null, off_road_at: null }
+        : {};
     await updateVehicle.mutateAsync({ id, ...updates, ...clearOffRoad });
   };
 
@@ -322,7 +318,10 @@ export function FleetSection() {
 
   // The open van always renders its live row (status changes after Mark fixed).
   const liveSelected = useMemo(
-    () => (selectedVehicle ? (vehicles ?? []).find((v) => v.id === selectedVehicle.id) ?? selectedVehicle : null),
+    () =>
+      selectedVehicle
+        ? ((vehicles ?? []).find((v) => v.id === selectedVehicle.id) ?? selectedVehicle)
+        : null,
     [selectedVehicle, vehicles]
   );
   const selectedProblems = useMemo(
@@ -336,10 +335,11 @@ export function FleetSection() {
 
   if (error) {
     return (
-      <PageFrame>
-        <EmptyState
-          title="Couldn't load fleet"
-          description="Something went wrong loading your vehicles. Tap retry to try again."
+      <PageFrame className={frameClass}>
+        <PageHero title="Fleet" description="Couldn't load your vehicles." />
+        <PlainEmpty
+          stacked
+          text="Something went wrong loading your vehicles. Tap retry to try again."
           action="Retry"
           onAction={() => refetch()}
         />
@@ -359,7 +359,11 @@ export function FleetSection() {
 
   const heroActions = (
     <>
-      <PrimaryButton data-help="fleet.add" onClick={() => setShowNewVehicle(true)}>
+      <PrimaryButton
+        data-help="fleet.add"
+        onClick={() => setShowNewVehicle(true)}
+        className={heroPrimaryClass}
+      >
         Add vehicle
       </PrimaryButton>
       <SecondaryButton data-help="fleet.fuel" onClick={() => setShowNewFuel(true)}>
@@ -376,15 +380,47 @@ export function FleetSection() {
     </>
   );
 
+  const fleetCount = stats?.total ?? vehicles?.length ?? 0;
+  const notCheckedCount = expectedToday.length - doneToday;
+  const headlineParts = [
+    problemCount > 0 ? `${problemCount} van${problemCount === 1 ? '' : 's'} with a problem` : null,
+    expectedToday.length > 0
+      ? notCheckedCount > 0
+        ? `${notCheckedCount} not checked today`
+        : 'every van checked today'
+      : null,
+    datesDue > 0 ? `${datesDue} with a date due in 30 days` : null,
+  ].filter(Boolean) as string[];
+  const headline = isLoading
+    ? 'Loading your vans.'
+    : fleetCount === 0
+      ? 'No vehicles yet. Add your first van and who drives it.'
+      : headlineParts.length === 0
+        ? 'All on the road and in date.'
+        : headlineParts.join(', ').replace(/^./, (c) => c.toUpperCase()) + '.';
+
+  /** One status per row, the most urgent one. */
+  const rowStatus = (v: Vehicle): { label: string; tone: PillTone } => {
+    if (openDefects.some((r) => r.vehicle_id === v.id)) return { label: 'Problem', tone: 'red' };
+    if (v.mot_expiry && expiryTone(v.mot_expiry) === 'red')
+      return { label: 'MOT expired', tone: 'red' };
+    if (v.status === 'Off Road') return { label: 'Off road', tone: 'red' };
+    if (v.mot_expiry && expiryTone(v.mot_expiry) === 'orange')
+      return { label: 'MOT due', tone: 'volt' };
+    if (checkedToday.has(v.id)) return { label: 'Checked', tone: 'green' };
+    return { label: statusLabel(v.status), tone: 'neutral' };
+  };
+
+  const dueTone = (d?: string): PillTone =>
+    expiryTone(d) === 'red' ? 'red' : expiryTone(d) === 'orange' ? 'volt' : 'green';
+  const dueLabel = (d: string | undefined, overdue = 'Expired') =>
+    expiryTone(d) === 'red' ? overdue : expiryTone(d) === 'orange' ? 'Due soon' : 'OK';
+
+  const hasVehicles = !isLoading && !!vehicles && vehicles.length > 0;
+
   const content = (
-    <PageFrame>
-      <PageHero
-        eyebrow="Operations"
-        title="Fleet"
-        description="Vans, who drives them, the daily walk-round and what is due."
-        tone="blue"
-        actions={heroActions}
-      />
+    <PageFrame className={frameClass}>
+      <PageHero title="Fleet" description={headline} actions={heroActions} />
 
       <HowItWorks
         help={FLEET_HELP}
@@ -392,198 +428,231 @@ export function FleetSection() {
         askContext={{ page: 'fleet', tab: filter }}
       />
 
-      <StatStrip
-        columns={4}
-        stats={[
-          {
-            label: 'Checked today',
-            value: isLoading ? '—' : expectedToday.length ? `${doneToday}/${expectedToday.length}` : '0',
-            tone: expectedToday.length > 0 && doneToday === expectedToday.length ? 'emerald' : 'blue',
-          },
-          {
-            label: 'Problems',
-            value: isLoading ? '—' : problemCount,
-            tone: problemCount > 0 ? 'red' : 'emerald',
-          },
-          { label: 'Due in 30 days', value: isLoading ? '—' : datesDue, tone: 'orange' },
-          { label: 'Fleet', value: isLoading ? '—' : (stats?.total ?? vehicles?.length ?? 0) },
-        ]}
-      />
-
-      {!isLoading && vehicles && vehicles.length > 0 && (
-        <FleetTodayCard
-          vehicles={vehicles}
-          drivers={employees}
-          checkedToday={checkedToday}
-          openDefects={openDefects}
-          onOpen={openDetail}
+      {hasVehicles && (
+        <StatStrip
+          columns={4}
+          stats={[
+            {
+              label: 'Checked today',
+              value: expectedToday.length ? `${doneToday}/${expectedToday.length}` : '0',
+              sub:
+                expectedToday.length === 0
+                  ? 'No drivers assigned'
+                  : notCheckedCount > 0
+                    ? `${notCheckedCount} to go`
+                    : 'All done',
+              tone:
+                expectedToday.length > 0 && doneToday === expectedToday.length
+                  ? 'emerald'
+                  : undefined,
+            },
+            {
+              label: 'Problems',
+              value: problemCount,
+              sub: problemCount > 0 ? 'Reported by drivers' : 'None open',
+              tone: problemCount > 0 ? 'red' : undefined,
+            },
+            {
+              label: 'Due in 30 days',
+              value: datesDue,
+              sub: 'MOT, tax, insurance, service',
+              tone: datesDue > 0 ? 'yellow' : undefined,
+            },
+            { label: 'Fleet', value: fleetCount, sub: 'Vehicles' },
+          ]}
         />
       )}
 
-      <FilterBar
-        tabs={filterTabs}
-        activeTab={filter}
-        onTabChange={(v) => setFilter(v as FilterValue)}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search registration, driver, make…"
-      />
-
-      {isLoading ? (
-        <LoadingBlocks />
-      ) : filteredVehicles.length === 0 ? (
-        <EmptyState
-          title={vehicles && vehicles.length > 0 ? 'No vehicles match' : 'No vehicles yet'}
-          description={
-            vehicles && vehicles.length > 0
-              ? 'Try a different filter or clear the search.'
-              : 'Add your first vehicle to start tracking MOT, services and tools.'
-          }
-          action={vehicles && vehicles.length > 0 ? 'Clear filters' : 'Add vehicle'}
-          onAction={() => {
-            if (vehicles && vehicles.length > 0) {
-              setFilter('all');
-              setSearchQuery('');
-            } else {
-              setShowNewVehicle(true);
-            }
-          }}
-        />
-      ) : (
-        <ListCard>
-          <ListCardHeader
-            tone="blue"
-            title="Vehicles"
-            meta={<Pill tone="blue">{filteredVehicles.length}</Pill>}
-          />
-          <div data-help="fleet.list">
-          <ListBody>
-            {filteredVehicles.map((v) => {
-              const motLabel = v.mot_expiry ? `MOT ${formatShortDate(v.mot_expiry)}` : 'MOT —';
-              const subtitle = [
-                v.assigned_to || 'Unassigned',
-                v.job?.title ? `On: ${v.job.title}` : null,
-                `${v.mileage.toLocaleString()} mi`,
-                motLabel,
-              ]
-                .filter(Boolean)
-                .join(' · ');
-              const makeModel = [v.make, v.model].filter(Boolean).join(' ') || 'Vehicle';
-              return (
-                <ListRow
-                  key={v.id}
-                  title={`${v.registration} — ${makeModel}`}
-                  subtitle={subtitle}
-                  trailing={
-                    <>
-                      {openDefects.some((r) => r.vehicle_id === v.id) && (
-                        <Pill tone="red">Problem</Pill>
-                      )}
-                      {checkedToday.has(v.id) && <Pill tone="emerald">Checked today</Pill>}
-                      {v.mot_expiry && (
-                        <Pill tone={expiryTone(v.mot_expiry)}>
-                          {expiryTone(v.mot_expiry) === 'red' ? 'MOT expired' : 'MOT'}
-                        </Pill>
-                      )}
-                      <Pill tone={statusToTone(v.status)}>{statusLabel(v.status)}</Pill>
-                    </>
-                  }
-                  onClick={() => openDetail(v)}
-                />
-              );
-            })}
-          </ListBody>
-          </div>
-        </ListCard>
-      )}
-
-      {!isLoading && fuelLogs && fuelLogs.length > 0 && (
-        <ListCard>
-          <ListCardHeader
-            tone="amber"
-            title="Recent fuel logs"
-            meta={<Pill tone="amber">{fuelLogs.length}</Pill>}
-          />
-          <ListBody>
-            {fuelLogs.slice(0, 6).map((log) => (
-              <ListRow
-                key={log.id}
-                title={log.vehicle?.registration || 'Unknown vehicle'}
-                subtitle={[
-                  log.location || 'No location',
-                  log.litres ? `${log.litres} L` : null,
-                  log.mileage ? `${log.mileage.toLocaleString()} mi` : null,
-                  formatDate(log.date),
-                ]
-                  .filter(Boolean)
-                  .join(' · ')}
-                trailing={
-                  canSeeMoney && log.cost ? (
-                    <span className="text-[13px] font-semibold text-white tabular-nums">
-                      £{log.cost.toFixed(2)}
-                    </span>
-                  ) : undefined
+      <div className={hasVehicles ? twoColClass : undefined}>
+        <section className={colClass}>
+          <div>
+            <PanelTitle
+              title="Vehicles"
+              meta={hasVehicles ? `${filteredVehicles.length}` : undefined}
+            />
+            {hasVehicles && (
+              <div className="mb-3 flex flex-col gap-3 xl:flex-row xl:items-center">
+                <Segments wrap items={filterTabs} value={filter} onChange={(v) => setFilter(v)} />
+                <div className="relative xl:ml-auto xl:w-72">
+                  <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                  <input
+                    className={searchInputClass}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search registration, driver, make"
+                  />
+                </div>
+              </div>
+            )}
+            {isLoading ? (
+              <LoadingBlocks />
+            ) : filteredVehicles.length === 0 ? (
+              <PlainEmpty
+                stacked
+                text={
+                  vehicles && vehicles.length > 0
+                    ? 'No vehicle matches that filter or search.'
+                    : "Your vans show here with their driver, MOT and today's check."
                 }
+                action={vehicles && vehicles.length > 0 ? 'Clear filters' : 'Add vehicle'}
+                onAction={() => {
+                  if (vehicles && vehicles.length > 0) {
+                    setFilter('all');
+                    setSearchQuery('');
+                  } else {
+                    setShowNewVehicle(true);
+                  }
+                }}
               />
-            ))}
-          </ListBody>
-        </ListCard>
-      )}
+            ) : (
+              <div data-help="fleet.list">
+                <RowList>
+                  {filteredVehicles.map((v) => {
+                    const motLabel = v.mot_expiry
+                      ? `MOT ${formatShortDate(v.mot_expiry)}`
+                      : 'MOT not set';
+                    const detail = [
+                      v.assigned_to || 'Unassigned',
+                      v.job?.title ? `On: ${v.job.title}` : null,
+                      `${v.mileage.toLocaleString()} mi`,
+                      motLabel,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ');
+                    const makeModel = [v.make, v.model].filter(Boolean).join(' ') || 'Vehicle';
+                    const st = rowStatus(v);
+                    return (
+                      <Row
+                        wrapDetail
+                        key={v.id}
+                        title={`${v.registration} · ${makeModel}`}
+                        detail={detail}
+                        trailing={<StatusPill tone={st.tone}>{st.label}</StatusPill>}
+                        onClick={() => openDetail(v)}
+                      />
+                    );
+                  })}
+                </RowList>
+              </div>
+            )}
+          </div>
+        </section>
 
-      <Sheet open={showNewVehicle} onOpenChange={setShowNewVehicle}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.06]"
-        >
-          <SheetHeader className="p-5 border-b border-white/[0.06]">
-            <SheetTitle className="text-white text-[15px] font-semibold">Add vehicle</SheetTitle>
-          </SheetHeader>
-          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5">
-            <div className="space-y-2" data-help="fleet.add-reg">
-              <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                Registration *
-              </Label>
-              <Input
-                placeholder="AB12 CDE"
-                value={registration}
-                onChange={(e) => setRegistration(e.target.value.toUpperCase())}
-                className={inputClass}
-              />
+        {hasVehicles && (
+          <aside className={cn(colClass, asideFirstClass)}>
+            <FleetTodayCard
+              vehicles={vehicles!}
+              drivers={employees}
+              checkedToday={checkedToday}
+              openDefects={openDefects}
+              onOpen={openDetail}
+            />
+
+            {fuelLogs && fuelLogs.length > 0 && (
+              <div>
+                <PanelTitle title="Recent fuel" meta={`${fuelLogs.length}`} />
+                <RowList>
+                  {fuelLogs.slice(0, 6).map((log) => (
+                    <Row
+                      wrapDetail
+                      key={log.id}
+                      title={log.vehicle?.registration || 'Unknown vehicle'}
+                      detail={[
+                        formatDate(log.date),
+                        log.litres ? `${log.litres} L` : null,
+                        log.mileage ? `${log.mileage.toLocaleString()} mi` : null,
+                        log.location,
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
+                      trailing={
+                        canSeeMoney && log.cost ? (
+                          <span className="text-[14px] font-semibold tabular-nums text-white">
+                            £{log.cost.toFixed(2)}
+                          </span>
+                        ) : undefined
+                      }
+                    />
+                  ))}
+                </RowList>
+              </div>
+            )}
+          </aside>
+        )}
+      </div>
+
+      <FormSheet
+        open={showNewVehicle}
+        onOpenChange={setShowNewVehicle}
+        title="Add vehicle"
+        description="The registration is all you need. The driver sees it in Worker Tools under My van."
+        width="wide"
+        bodyClassName="space-y-5 pt-1"
+        footer={
+          <div className="flex gap-2">
+            <SecondaryButton
+              onClick={() => setShowNewVehicle(false)}
+              className="flex-1 lg:flex-none"
+            >
+              Cancel
+            </SecondaryButton>
+            <PrimaryButton
+              data-help="fleet.add-save"
+              onClick={handleCreateVehicle}
+              disabled={!registration || createVehicle.isPending}
+              className="flex-1"
+            >
+              {createVehicle.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                'Add vehicle'
+              )}
+            </PrimaryButton>
+          </div>
+        }
+      >
+        <div className="grid gap-5 lg:grid-cols-2 lg:gap-8">
+          <FormCard eyebrow="The van">
+            <div data-help="fleet.add-reg">
+              <Field label="Registration" required>
+                <Input
+                  placeholder="AB12 CDE"
+                  value={registration}
+                  onChange={(e) => setRegistration(e.target.value.toUpperCase())}
+                  className={inputClass}
+                />
+              </Field>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Make</Label>
+              <Field label="Make">
                 <Input
                   placeholder="Ford"
                   value={make}
                   onChange={(e) => setMake(e.target.value)}
                   className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Model</Label>
+              </Field>
+              <Field label="Model">
                 <Input
                   placeholder="Transit"
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
                   className={inputClass}
                 />
-              </div>
+              </Field>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Colour</Label>
-                <Input
-                  placeholder="White"
-                  value={colour}
-                  onChange={(e) => setColour(e.target.value)}
-                  className={inputClass}
-                />
-              </div>
-              <div className="space-y-2" data-help="fleet.add-driver">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                  Driver
-                </Label>
+            <Field label="Colour">
+              <Input
+                placeholder="White"
+                value={colour}
+                onChange={(e) => setColour(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
+          <FormCard eyebrow="Driver and dates">
+            <div data-help="fleet.add-driver">
+              <Field label="Driver">
                 {/* Roster picker, not free text — links the vehicle to the
                     actual employee via driver_id */}
                 <Select
@@ -613,66 +682,55 @@ export function FleetSection() {
                       ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                  MOT expiry
-                </Label>
+              <Field label="MOT expiry">
                 <Input
                   type="date"
                   value={motExpiry}
                   onChange={(e) => setMotExpiry(e.target.value)}
                   className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                  Tax expiry
-                </Label>
+              </Field>
+              <Field label="Tax expiry">
                 <Input
                   type="date"
                   value={taxExpiry}
                   onChange={(e) => setTaxExpiry(e.target.value)}
                   className={inputClass}
                 />
-              </div>
+              </Field>
             </div>
-          </div>
-          <div className="p-5 border-t border-white/[0.06] flex gap-3">
-            <SecondaryButton onClick={() => setShowNewVehicle(false)} fullWidth>
+          </FormCard>
+        </div>
+      </FormSheet>
+
+      <FormSheet
+        open={showNewFuel}
+        onOpenChange={setShowNewFuel}
+        title="Log fuel"
+        width="wide"
+        bodyClassName="space-y-5 pt-1"
+        footer={
+          <div className="flex gap-2">
+            <SecondaryButton onClick={() => setShowNewFuel(false)} className="flex-1 lg:flex-none">
               Cancel
             </SecondaryButton>
             <PrimaryButton
-              data-help="fleet.add-save"
-              onClick={handleCreateVehicle}
-              disabled={!registration || createVehicle.isPending}
-              fullWidth
+              data-help="fleet.fuel-save"
+              onClick={handleCreateFuelLog}
+              disabled={!fuelVehicleId || !fuelDate || createFuelLog.isPending}
+              className="flex-1"
             >
-              {createVehicle.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                'Add vehicle'
-              )}
+              {createFuelLog.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Log fuel'}
             </PrimaryButton>
           </div>
-        </SheetContent>
-      </Sheet>
-
-      <Sheet open={showNewFuel} onOpenChange={setShowNewFuel}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.06]"
-        >
-          <SheetHeader className="p-5 border-b border-white/[0.06]">
-            <SheetTitle className="text-white text-[15px] font-semibold">Log fuel</SheetTitle>
-          </SheetHeader>
-          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5">
-            <div className="space-y-2">
-              <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                Vehicle *
-              </Label>
+        }
+      >
+        <div className="grid gap-5 lg:grid-cols-2 lg:gap-8">
+          <FormCard eyebrow="Which van, when">
+            <Field label="Vehicle" required>
               <Select value={fuelVehicleId} onValueChange={setFuelVehicleId}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="Select vehicle…" />
@@ -680,24 +738,32 @@ export function FleetSection() {
                 <SelectContent className={selectContentClass}>
                   {vehicles?.map((v) => (
                     <SelectItem key={v.id} value={v.id}>
-                      {v.registration} — {v.make} {v.model}
+                      {v.registration} · {v.make} {v.model}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Date *</Label>
+            </Field>
+            <Field label="Date" required>
               <Input
                 type="date"
                 value={fuelDate}
                 onChange={(e) => setFuelDate(e.target.value)}
                 className={inputClass}
               />
-            </div>
+            </Field>
+            <Field label="Location">
+              <Input
+                placeholder="BP Garage, High Street"
+                value={fuelLocation}
+                onChange={(e) => setFuelLocation(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
+          <FormCard eyebrow="The fill">
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Litres</Label>
+              <Field label="Litres">
                 <Input
                   type="number"
                   step="0.01"
@@ -706,27 +772,21 @@ export function FleetSection() {
                   onChange={(e) => setLitres(e.target.value)}
                   className={inputClass}
                 />
-              </div>
+              </Field>
               {canSeeMoney && (
-              <div className="space-y-2">
-                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                  Cost (£)
-                </Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  placeholder="75.00"
-                  value={cost}
-                  onChange={(e) => setCost(e.target.value)}
-                  className={inputClass}
-                />
-              </div>
+                <Field label="Cost (£)">
+                  <Input
+                    type="number"
+                    step="0.01"
+                    placeholder="75.00"
+                    value={cost}
+                    onChange={(e) => setCost(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
               )}
             </div>
-            <div className="space-y-2">
-              <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                Current mileage
-              </Label>
+            <Field label="Current mileage">
               <Input
                 type="number"
                 placeholder="45000"
@@ -734,260 +794,222 @@ export function FleetSection() {
                 onChange={(e) => setFuelMileage(e.target.value)}
                 className={inputClass}
               />
+            </Field>
+          </FormCard>
+        </div>
+      </FormSheet>
+
+      <FormSheet
+        open={showDetail}
+        onOpenChange={setShowDetail}
+        title={liveSelected?.registration ?? 'Vehicle'}
+        description={
+          liveSelected
+            ? [
+                [liveSelected.make, liveSelected.model].filter(Boolean).join(' ') || 'Vehicle',
+                liveSelected.assigned_to || 'Unassigned',
+                liveSelected.colour,
+                statusLabel(liveSelected.status),
+              ]
+                .filter(Boolean)
+                .join(' · ')
+            : undefined
+        }
+        width="wide"
+        bodyClassName="pt-1"
+        footer={
+          liveSelected ? (
+            <div className="flex gap-2" data-help="fleet.quick">
+              <SecondaryButton
+                onClick={() => {
+                  setFuelVehicleId(liveSelected.id);
+                  setShowDetail(false);
+                  setShowNewFuel(true);
+                }}
+                className="flex-1 lg:flex-none"
+              >
+                Log fuel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={() => {
+                  setShowDetail(false);
+                  handleEditVehicle(liveSelected);
+                }}
+                className="flex-1"
+              >
+                Edit vehicle
+              </PrimaryButton>
             </div>
-            <div className="space-y-2">
-              <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Location</Label>
-              <Input
-                placeholder="BP Garage, High Street"
-                value={fuelLocation}
-                onChange={(e) => setFuelLocation(e.target.value)}
-                className={inputClass}
+          ) : undefined
+        }
+      >
+        {liveSelected && (
+          <div className="grid gap-5 lg:grid-cols-2 lg:gap-8">
+            <div className="space-y-5">
+              {/* ELE-1984: today's walk-round and anything the driver reported. */}
+              <div className={cn(panel, 'px-4 py-3.5 sm:px-5')}>
+                {selectedToday ? (
+                  <p className="text-[14px] text-white">
+                    <span className="font-semibold">
+                      Checked today at {selectedToday.check_time?.slice(0, 5)}
+                    </span>{' '}
+                    by {selectedToday.driver?.name ?? 'the office'}
+                    {selectedToday.mileage
+                      ? ` · ${selectedToday.mileage.toLocaleString('en-GB')} miles`
+                      : ''}
+                    {selectedToday.defects_found
+                      ? selectedToday.resolved_at
+                        ? ' · problem since fixed'
+                        : ' · problems found'
+                      : ' · all OK'}
+                  </p>
+                ) : liveSelected.status === 'Off Road' ? (
+                  <p className="text-[14px] text-white">
+                    <span className="font-semibold">Off the road.</span> No check expected.
+                  </p>
+                ) : liveSelected.driver_id ? (
+                  <p className="text-[14px] text-white">
+                    <span className="font-semibold">Not checked today.</span>{' '}
+                    {selectedDriver?.user_id
+                      ? `${selectedDriver.name} does it from My van in Worker Tools.`
+                      : `${selectedDriver?.name ?? liveSelected.assigned_to ?? 'The driver'} is not on the app yet. Invite them from Team so they can check it on their phone.`}
+                  </p>
+                ) : (
+                  <p className="text-[14px] text-white">
+                    <span className="font-semibold">No driver.</span> Assign one in Edit vehicle and
+                    they can do the daily check on their phone.
+                  </p>
+                )}
+              </div>
+
+              <VehicleProblems
+                rows={selectedProblems}
+                vehicleOffRoad={liveSelected.status === 'Off Road'}
+                offRoadReason={liveSelected.off_road_reason}
               />
+
+              <div>
+                <PanelTitle title="Schedule" />
+                <RowList>
+                  <Row
+                    wrapDetail
+                    title="Mileage"
+                    detail={`${liveSelected.mileage.toLocaleString()} mi · tracker ${liveSelected.tracker_fitted ? 'fitted' : 'not fitted'}`}
+                  />
+                  <Row
+                    wrapDetail
+                    title="MOT expiry"
+                    detail={formatDate(liveSelected.mot_expiry)}
+                    trailing={
+                      <StatusPill
+                        tone={
+                          liveSelected.mot_expiry ? dueTone(liveSelected.mot_expiry) : 'neutral'
+                        }
+                      >
+                        {liveSelected.mot_expiry ? dueLabel(liveSelected.mot_expiry) : 'Not set'}
+                      </StatusPill>
+                    }
+                  />
+                  <Row
+                    wrapDetail
+                    title="Tax expiry"
+                    detail={formatDate(liveSelected.tax_expiry)}
+                    trailing={
+                      <StatusPill
+                        tone={
+                          liveSelected.tax_expiry ? dueTone(liveSelected.tax_expiry) : 'neutral'
+                        }
+                      >
+                        {liveSelected.tax_expiry ? dueLabel(liveSelected.tax_expiry) : 'Not set'}
+                      </StatusPill>
+                    }
+                  />
+                  <Row
+                    wrapDetail
+                    title="Insurance expiry"
+                    detail={formatDate(liveSelected.insurance_expiry)}
+                    trailing={
+                      <StatusPill
+                        tone={
+                          liveSelected.insurance_expiry
+                            ? dueTone(liveSelected.insurance_expiry)
+                            : 'neutral'
+                        }
+                      >
+                        {liveSelected.insurance_expiry
+                          ? dueLabel(liveSelected.insurance_expiry)
+                          : 'Not set'}
+                      </StatusPill>
+                    }
+                  />
+                  <Row
+                    wrapDetail
+                    title="Last service"
+                    detail={formatDate(liveSelected.last_service)}
+                  />
+                  <Row
+                    wrapDetail
+                    title="Next service"
+                    detail={formatDate(liveSelected.next_service)}
+                    trailing={
+                      liveSelected.next_service ? (
+                        <StatusPill tone={dueTone(liveSelected.next_service)}>
+                          {dueLabel(liveSelected.next_service, 'Overdue')}
+                        </StatusPill>
+                      ) : undefined
+                    }
+                  />
+                </RowList>
+              </div>
             </div>
-          </div>
-          <div className="p-5 border-t border-white/[0.06] flex gap-3">
-            <SecondaryButton onClick={() => setShowNewFuel(false)} fullWidth>
-              Cancel
-            </SecondaryButton>
-            <PrimaryButton
-              data-help="fleet.fuel-save"
-              onClick={handleCreateFuelLog}
-              disabled={!fuelVehicleId || !fuelDate || createFuelLog.isPending}
-              fullWidth
-            >
-              {createFuelLog.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Log fuel'}
-            </PrimaryButton>
-          </div>
-        </SheetContent>
-      </Sheet>
 
-      <Sheet open={showDetail} onOpenChange={setShowDetail}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.06]"
-        >
-          {liveSelected && (
-            <>
-              <SheetHeader className="p-5 border-b border-white/[0.06]">
-                <SheetTitle className="text-white text-[15px] font-semibold flex items-center gap-3">
-                  <span>{liveSelected.registration}</span>
-                  <Pill tone={statusToTone(liveSelected.status)}>{statusLabel(liveSelected.status)}</Pill>
-                </SheetTitle>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5">
-                <div className="mx-auto w-full max-w-2xl lg:max-w-[88rem] space-y-5">
-                <div>
-                  <div className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
-                    {[liveSelected.make, liveSelected.model].filter(Boolean).join(' ') ||
-                      'Vehicle'}
-                  </div>
-                  <div className="mt-2 text-[13px] text-white">
-                    {liveSelected.assigned_to || 'Unassigned'}
-                    {liveSelected.colour && ` · ${liveSelected.colour}`}
-                  </div>
-                </div>
+            <div className="space-y-5">
+              <div data-help="fleet.records">
+                <PanelTitle title="Records" />
+                <RowList>
+                  <Row
+                    wrapDetail
+                    title="Daily check"
+                    detail="Do the walk-round, or see past checks"
+                    onClick={() => {
+                      setShowDetail(false);
+                      setShowCheckSheet(true);
+                    }}
+                  />
+                  <Row
+                    wrapDetail
+                    title="Service history"
+                    detail="View and add service records"
+                    onClick={() => {
+                      setShowDetail(false);
+                      setShowServiceSheet(true);
+                    }}
+                  />
+                  <Row
+                    wrapDetail
+                    title="Tools assigned"
+                    detail="Inventory carried in this vehicle"
+                    onClick={() => {
+                      setShowDetail(false);
+                      setShowToolsSheet(true);
+                    }}
+                  />
+                  <Row
+                    wrapDetail
+                    title="Documents"
+                    detail="V5C, insurance certificate, MOT pass"
+                    onClick={() => {
+                      setShowDetail(false);
+                      setShowDocumentsSheet(true);
+                    }}
+                  />
+                </RowList>
+              </div>
 
-                {/* ELE-1984: today's walk-round and anything the driver reported. */}
-                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4">
-                  {selectedToday ? (
-                    <p className="text-[14px] text-white">
-                      <span className="font-semibold">
-                        Checked today at {selectedToday.check_time?.slice(0, 5)}
-                      </span>{' '}
-                      by {selectedToday.driver?.name ?? 'the office'}
-                      {selectedToday.mileage
-                        ? ` · ${selectedToday.mileage.toLocaleString('en-GB')} miles`
-                        : ''}
-                      {selectedToday.defects_found
-                        ? selectedToday.resolved_at
-                          ? ' · problem since fixed'
-                          : ' · problems found'
-                        : ' · all OK'}
-                    </p>
-                  ) : liveSelected.status === 'Off Road' ? (
-                    <p className="text-[14px] text-white">
-                      <span className="font-semibold">Off the road.</span> No check expected.
-                    </p>
-                  ) : liveSelected.driver_id ? (
-                    <p className="text-[14px] text-white">
-                      <span className="font-semibold">Not checked today.</span>{' '}
-                      {selectedDriver?.user_id
-                        ? `${selectedDriver.name} does it from My van in Worker Tools.`
-                        : `${selectedDriver?.name ?? liveSelected.assigned_to ?? 'The driver'} is not on the app yet. Invite them from Team so they can check it on their phone.`}
-                    </p>
-                  ) : (
-                    <p className="text-[14px] text-white">
-                      <span className="font-semibold">No driver.</span> Assign one in Edit vehicle
-                      and they can do the daily check on their phone.
-                    </p>
-                  )}
-                </div>
-
-                <VehicleProblems
-                  rows={selectedProblems}
-                  vehicleOffRoad={liveSelected.status === 'Off Road'}
-                  offRoadReason={liveSelected.off_road_reason}
-                />
-
-                <StatStrip
-                  columns={2}
-                  stats={[
-                    { label: 'Mileage', value: liveSelected.mileage.toLocaleString() },
-                    {
-                      label: 'Tracker',
-                      value: liveSelected.tracker_fitted ? 'Fitted' : 'None',
-                      tone: liveSelected.tracker_fitted ? 'emerald' : 'amber',
-                    },
-                  ]}
-                />
-
-                <ListCard>
-                  <ListCardHeader tone="orange" title="Schedule" />
-                  <ListBody>
-                    <ListRow
-                      title="MOT expiry"
-                      subtitle={formatDate(liveSelected.mot_expiry)}
-                      trailing={
-                        liveSelected.mot_expiry ? (
-                          <Pill tone={expiryTone(liveSelected.mot_expiry)}>
-                            {expiryTone(liveSelected.mot_expiry) === 'red'
-                              ? 'Expired'
-                              : expiryTone(liveSelected.mot_expiry) === 'orange'
-                                ? 'Due soon'
-                                : 'OK'}
-                          </Pill>
-                        ) : (
-                          <Pill tone="yellow">Not set</Pill>
-                        )
-                      }
-                    />
-                    <ListRow
-                      title="Tax expiry"
-                      subtitle={formatDate(liveSelected.tax_expiry)}
-                      trailing={
-                        liveSelected.tax_expiry ? (
-                          <Pill tone={expiryTone(liveSelected.tax_expiry)}>
-                            {expiryTone(liveSelected.tax_expiry) === 'red'
-                              ? 'Expired'
-                              : expiryTone(liveSelected.tax_expiry) === 'orange'
-                                ? 'Due soon'
-                                : 'OK'}
-                          </Pill>
-                        ) : (
-                          <Pill tone="yellow">Not set</Pill>
-                        )
-                      }
-                    />
-                    <ListRow
-                      title="Insurance expiry"
-                      subtitle={formatDate(liveSelected.insurance_expiry)}
-                      trailing={
-                        liveSelected.insurance_expiry ? (
-                          <Pill tone={expiryTone(liveSelected.insurance_expiry)}>
-                            {expiryTone(liveSelected.insurance_expiry) === 'red'
-                              ? 'Expired'
-                              : expiryTone(liveSelected.insurance_expiry) === 'orange'
-                                ? 'Due soon'
-                                : 'OK'}
-                          </Pill>
-                        ) : (
-                          <Pill tone="yellow">Not set</Pill>
-                        )
-                      }
-                    />
-                    <ListRow
-                      title="Last service"
-                      subtitle={formatDate(liveSelected.last_service)}
-                    />
-                    <ListRow
-                      title="Next service"
-                      subtitle={formatDate(liveSelected.next_service)}
-                      trailing={
-                        liveSelected.next_service ? (
-                          <Pill tone={expiryTone(liveSelected.next_service)}>
-                            {expiryTone(liveSelected.next_service) === 'red'
-                              ? 'Overdue'
-                              : expiryTone(liveSelected.next_service) === 'orange'
-                                ? 'Due soon'
-                                : 'OK'}
-                          </Pill>
-                        ) : undefined
-                      }
-                    />
-                  </ListBody>
-                </ListCard>
-
-                <ListCard>
-                  <ListCardHeader tone="purple" title="Records" />
-                  <div data-help="fleet.records">
-                  <ListBody>
-                    <ListRow
-                      title="Daily check"
-                      subtitle="Do the walk-round, or see past checks"
-                      onClick={() => {
-                        setShowDetail(false);
-                        setShowCheckSheet(true);
-                      }}
-                    />
-                    <ListRow
-                      title="Service history"
-                      subtitle="View and add service records"
-                      onClick={() => {
-                        setShowDetail(false);
-                        setShowServiceSheet(true);
-                      }}
-                    />
-                    <ListRow
-                      title="Tools assigned"
-                      subtitle="Inventory carried in this vehicle"
-                      onClick={() => {
-                        setShowDetail(false);
-                        setShowToolsSheet(true);
-                      }}
-                    />
-                    <ListRow
-                      title="Documents"
-                      subtitle="V5C, insurance certificate, MOT pass"
-                      onClick={() => {
-                        setShowDetail(false);
-                        setShowDocumentsSheet(true);
-                      }}
-                    />
-                  </ListBody>
-                  </div>
-                </ListCard>
-
-                <ListCard>
-                  <ListCardHeader tone="amber" title="Quick actions" />
-                  <div data-help="fleet.quick">
-                  <ListBody>
-                    <ListRow
-                      title="Log fuel"
-                      subtitle="Record litres, cost and mileage"
-                      onClick={() => {
-                        setFuelVehicleId(liveSelected.id);
-                        setShowDetail(false);
-                        setShowNewFuel(true);
-                      }}
-                    />
-                    <ListRow
-                      title="Edit vehicle"
-                      subtitle="Update details, assignment, status"
-                      onClick={() => {
-                        setShowDetail(false);
-                        handleEditVehicle(liveSelected);
-                      }}
-                    />
-                  </ListBody>
-                  </div>
-                </ListCard>
-
-                <Divider />
-
+              <div className="flex justify-end">
                 <SecondaryButton
                   onClick={() => handleDelete(liveSelected.id)}
                   disabled={deleteVehicle.isPending}
-                  fullWidth
                 >
                   {deleteVehicle.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -998,12 +1020,11 @@ export function FleetSection() {
                     </>
                   )}
                 </SecondaryButton>
-                </div>
               </div>
-            </>
-          )}
-        </SheetContent>
-      </Sheet>
+            </div>
+          </div>
+        )}
+      </FormSheet>
 
       <EditVehicleSheet
         vehicle={editVehicle}
@@ -1057,8 +1078,8 @@ export function FleetSection() {
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Remove this vehicle?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">
-              Its fuel logs, daily checks, service records and documents will be removed too.
-              This cannot be undone.
+              Its fuel logs, daily checks, service records and documents will be removed too. This
+              cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -1075,11 +1096,5 @@ export function FleetSection() {
     </PageFrame>
   );
 
-  return isMobile ? (
-    <PullToRefresh onRefresh={handleRefresh} className="h-full">
-      {content}
-    </PullToRefresh>
-  ) : (
-    content
-  );
+  return isMobile ? <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh> : content;
 }

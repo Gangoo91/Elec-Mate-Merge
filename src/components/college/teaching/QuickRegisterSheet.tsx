@@ -58,22 +58,53 @@ import {
 
 type Status = 'Present' | 'Late' | 'Absent' | 'Authorised';
 
-const STATUSES: Array<{ value: Status; label: string; short: string; on: string }> = [
+/* Every option says its word, on a phone too (8 Oct: "P L A Au" needed a
+   legend nobody had). One joined control per learner; the chosen word fills
+   with its own colour so a glance down the cards shows who is done (10 Oct).
+   Yellow is kept for the sheet's one action. */
+const STATUSES: Array<{ value: Status; label: string; on: string; edge: string; text: string }> = [
   {
     value: 'Present',
     label: 'Present',
-    short: 'P',
-    on: 'border-emerald-400 bg-emerald-400 text-black',
+    on: 'bg-emerald-400 text-black',
+    edge: 'border-emerald-400/50',
+    text: 'text-emerald-300',
   },
-  { value: 'Late', label: 'Late', short: 'L', on: 'border-elec-yellow bg-elec-yellow text-black' },
+  {
+    value: 'Late',
+    label: 'Late',
+    on: 'bg-amber-300 text-black',
+    edge: 'border-amber-300/50',
+    text: 'text-amber-200',
+  },
   {
     value: 'Absent',
     label: 'Absent',
-    short: 'A',
-    on: 'border-orange-400 bg-orange-400 text-black',
+    on: 'bg-orange-400 text-black',
+    edge: 'border-orange-400/50',
+    text: 'text-orange-300',
   },
-  { value: 'Authorised', label: 'Authorised', short: 'Au', on: 'border-white bg-white text-black' },
+  {
+    value: 'Authorised',
+    label: 'Authorised',
+    on: 'bg-white text-black',
+    edge: 'border-white/40',
+    text: 'text-white',
+  },
 ];
+const STATUS_OF = Object.fromEntries(STATUSES.map((s) => [s.value, s])) as Record<
+  Status,
+  (typeof STATUSES)[number]
+>;
+
+const initialsOf = (name: string) =>
+  name
+    .replace(/\(.*?\)/g, '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('');
 
 interface Row {
   student_id: string;
@@ -290,7 +321,12 @@ export function QuickRegisterSheet({
       if (token !== loadSeq.current) return;
       setUid(sessionRes?.session?.user?.id ?? null);
       const inactive = new Set(['withdrawn', 'completed', 'archived']);
-      let students: Array<{ id: string; name: string | null; status: string | null; date_of_birth?: string | null }> = [];
+      let students: Array<{
+        id: string;
+        name: string | null;
+        status: string | null;
+        date_of_birth?: string | null;
+      }> = [];
       let marksData: Array<{
         id: string;
         student_id: string | null;
@@ -520,6 +556,21 @@ export function QuickRegisterSheet({
   /** After "Change class" the sheet is a plain cohort register, not the lesson's. */
   const showLesson = !lessonPlanId || !!activeLesson;
 
+  // On a phone the class chips scroll sideways: bring the chosen one into
+  // view, or the title names a class whose chip is off screen.
+  const chipRowRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open || !cohortId) return;
+    const t = window.setTimeout(() => {
+      const row = chipRowRef.current;
+      const chip = row?.querySelector<HTMLElement>(`[data-cohort="${cohortId}"]`);
+      if (row && chip && row.scrollWidth > row.clientWidth) {
+        row.scrollTo({ left: Math.max(0, chip.offsetLeft - 16), behavior: 'smooth' });
+      }
+    }, 80);
+    return () => window.clearTimeout(t);
+  }, [open, cohortId]);
+
   return (
     <>
       <FormSheet
@@ -625,12 +676,20 @@ export function QuickRegisterSheet({
               </p>
             ) : (
               activeCohorts.length > 1 && (
-                <div className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+                <div
+                  ref={chipRowRef}
+                  role="radiogroup"
+                  aria-label="Class"
+                  className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0"
+                >
                   {activeCohorts.map((c) => (
                     <button
                       key={c.id}
                       type="button"
-                      className={chipCn(c.id === cohortId)}
+                      role="radio"
+                      aria-checked={c.id === cohortId}
+                      data-cohort={c.id}
+                      className={cn(chipCn(c.id === cohortId), 'whitespace-nowrap')}
                       onClick={() => setCohortId(c.id)}
                     >
                       {c.name}
@@ -639,60 +698,96 @@ export function QuickRegisterSheet({
                 </div>
               )
             )}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <div role="radiogroup" aria-label="Session" className="flex gap-2">
+            <div className="flex items-center gap-x-4 gap-y-3 sm:flex-wrap sm:gap-x-5">
+              {/* Morning / afternoon as one joined control. */}
+              <div
+                role="radiogroup"
+                aria-label="Session"
+                className="inline-flex rounded-xl border border-white/[0.12] bg-white/[0.03] p-0.5"
+              >
                 {REGISTER_SESSIONS.map((s) => (
                   <button
                     key={s.value}
                     type="button"
                     role="radio"
                     aria-checked={session === s.value}
-                    className={chipCn(session === s.value)}
+                    className={cn(
+                      'h-11 rounded-[10px] px-3.5 text-[13.5px] font-semibold transition-colors touch-manipulation sm:px-4',
+                      session === s.value
+                        ? 'bg-white text-black'
+                        : 'text-white hover:bg-white/[0.06]'
+                    )}
                     onClick={() => setSession(s.value)}
                   >
                     {s.label}
                   </button>
                 ))}
               </div>
-              <label className="flex items-center gap-2 text-[12.5px] font-medium text-white">
-                Date
+              <label className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-white">
+                <span className="max-sm:sr-only">Date</span>
                 <input
                   type="date"
                   value={date}
                   onChange={(e) => e.target.value && setDate(e.target.value)}
-                  className="h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[14px] text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none"
+                  className="h-11 min-w-0 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none max-sm:w-[9.5rem]"
                 />
               </label>
-              <p className="text-[12.5px] text-white tabular-nums">
-                <span className="font-semibold">{counts.Present}</span> present ·{' '}
-                <span className="font-semibold">{counts.Late}</span> late ·{' '}
-                <span className={cn('font-semibold', counts.Absent > 0 && 'text-orange-400')}>
-                  {counts.Absent}
-                </span>{' '}
-                absent · <span className="font-semibold">{counts.Authorised}</span> authorised
-                {counts.none > 0 && (
-                  <>
-                    {' '}
-                    · <span className="font-semibold">{counts.none}</span> not marked
-                  </>
-                )}
-              </p>
             </div>
+            {/* The tally: how far through, then each mark in its colour. */}
+            {rows.length > 0 && (
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <p className="text-[14px] font-semibold tabular-nums text-white">
+                    {counts.none === 0
+                      ? `All ${rows.length} marked`
+                      : `${rows.length - counts.none} of ${rows.length} marked`}
+                  </p>
+                  <p className="flex flex-wrap gap-x-4 gap-y-1 text-[13px] tabular-nums text-white">
+                    {STATUSES.map((st) => (
+                      <span key={st.value} className="inline-flex items-center gap-1.5">
+                        <span
+                          aria-hidden
+                          className={cn('h-2 w-2 rounded-full', st.on.split(' ')[0])}
+                        />
+                        <span className="font-semibold">{counts[st.value]}</span>{' '}
+                        {st.label.toLowerCase()}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+                <div
+                  className="flex h-1.5 overflow-hidden rounded-full bg-white/[0.08]"
+                  aria-hidden
+                >
+                  {STATUSES.map((st) =>
+                    counts[st.value] > 0 ? (
+                      <span
+                        key={st.value}
+                        className={cn('h-full transition-[width]', st.on.split(' ')[0])}
+                        style={{ width: `${(counts[st.value] / rows.length) * 100}%` }}
+                      />
+                    ) : null
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         }
         footer={
-          <div className="flex w-full items-center gap-2">
-            <button
-              type="button"
-              onClick={undoLast}
-              disabled={!lastUndo}
-              className={cn(COLLEGE_BTN, 'min-w-0 flex-1 justify-start truncate')}
-              aria-label={lastUndo ? `Undo: ${lastUndo.label}` : 'Nothing to undo'}
-            >
-              <span className="truncate">
-                {lastUndo ? `Undo: ${lastUndo.label}` : 'Nothing to undo'}
-              </span>
-            </button>
+          <div className="flex w-full items-center gap-3">
+            <div className="min-w-0 flex-1">
+              {lastUndo && (
+                <button
+                  type="button"
+                  onClick={undoLast}
+                  className="flex h-11 max-w-full items-center gap-1.5 rounded-xl px-2 text-[13.5px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
+                  aria-label={`Undo: ${lastUndo.label}`}
+                >
+                  <span className="shrink-0 text-elec-yellow">Undo</span>
+                  <span className="truncate font-medium">{lastUndo.label}</span>
+                </button>
+              )}
+            </div>
             {counts.none > 0 ? (
               <button
                 type="button"
@@ -779,45 +874,61 @@ export function QuickRegisterSheet({
           </p>
         )}
         {!loading && rows.length > 0 && (
-          <ul className="grid grid-cols-1 gap-x-8 lg:grid-cols-2">
-            {rows.map((r) => (
-              <li
-                key={r.student_id}
-                className="flex items-start gap-3 border-b border-white/[0.06] py-2.5"
-              >
-                <span className="min-w-0 flex-1">
-                  <span className="flex min-w-0 items-center gap-2">
-                    <span className="truncate text-[14.5px] font-semibold text-white">{r.name}</span>
-                    <Under18Badge dob={r.dob} />
-                  </span>
-                  <span className="flex flex-wrap items-center gap-x-2">
+          <ul className="grid grid-cols-1 gap-2.5 md:grid-cols-2 2xl:grid-cols-3">
+            {rows.map((r) => {
+              const st = r.status ? STATUS_OF[r.status] : null;
+              return (
+                <li
+                  key={r.student_id}
+                  className={cn(
+                    'rounded-2xl border bg-white/[0.03] p-3.5 transition-colors',
+                    st ? st.edge : 'border-white/[0.08]'
+                  )}
+                >
+                  <div className="flex items-start gap-3">
                     <span
+                      aria-hidden
                       className={cn(
-                        'text-[12px] text-white',
-                        r.status === 'Absent' && 'text-orange-400'
+                        'flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold',
+                        st ? st.on : 'bg-white/[0.08] text-white'
                       )}
                     >
-                      {r.status ?? 'Not marked'}
-                      {r.other_cohort && r.status
-                        ? ` (with ${cohorts.find((c) => c.id === r.other_cohort)?.name ?? 'another class'})`
-                        : ''}
-                      {waitingHere.has(r.student_id) && (
-                        <span className="text-elec-yellow">
-                          {' '}
-                          · {outbox.online ? 'Saving…' : 'Saved, will sync'}
+                      {initialsOf(r.name)}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="flex min-w-0 items-center gap-2">
+                        <span className="truncate text-[15px] font-semibold text-white">
+                          {r.name}
                         </span>
-                      )}
+                        <Under18Badge dob={r.dob} />
+                      </span>
+                      <span className="flex flex-wrap items-center gap-x-2">
+                        <span
+                          className={cn('text-[12.5px] font-medium', st ? st.text : 'text-white')}
+                        >
+                          {r.status ?? 'Not marked'}
+                          {r.other_cohort && r.status
+                            ? ` (with ${cohorts.find((c) => c.id === r.other_cohort)?.name ?? 'another class'})`
+                            : ''}
+                          {waitingHere.has(r.student_id) && (
+                            <span className="text-elec-yellow">
+                              {' '}
+                              · {outbox.online ? 'Saving…' : 'Saved, will sync'}
+                            </span>
+                          )}
+                        </span>
+                      </span>
                     </span>
                     {r.status && (
                       <button
                         type="button"
                         onClick={() => setNoteFor(noteFor === r.student_id ? null : r.student_id)}
-                        className="-my-2 h-9 px-1 text-[12px] font-semibold text-elec-yellow touch-manipulation"
+                        className="-my-1 h-11 shrink-0 px-1 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
                       >
                         {r.notes ? 'Edit note' : 'Add note'}
                       </button>
                     )}
-                  </span>
+                  </div>
                   {noteFor === r.student_id && r.status ? (
                     <input
                       type="text"
@@ -833,34 +944,41 @@ export function QuickRegisterSheet({
                       onBlur={() => saveNote(r)}
                       placeholder="e.g. arrived 10 minutes late"
                       aria-label={`Note for ${r.name}`}
-                      className="mt-1 h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[14px] text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none"
+                      className="mt-2 h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none"
                     />
                   ) : r.notes ? (
-                    <span className="block truncate text-[12px] text-white">Note: {r.notes}</span>
+                    <span className="mt-1 block truncate text-[12.5px] text-white">
+                      Note: {r.notes}
+                    </span>
                   ) : null}
-                </span>
-                <span className="grid shrink-0 grid-cols-4 gap-1.5">
-                  {STATUSES.map((s) => (
-                    <button
-                      key={s.value}
-                      type="button"
-                      onClick={() => mark(r, s.value)}
-                      aria-pressed={r.status === s.value}
-                      aria-label={`${r.name}: ${s.label}`}
-                      className={cn(
-                        'h-11 min-w-[44px] rounded-xl border px-2 text-[12.5px] font-semibold transition-colors touch-manipulation sm:min-w-[72px]',
-                        r.status === s.value
-                          ? s.on
-                          : 'border-white/[0.12] text-white hover:border-white/[0.3]'
-                      )}
-                    >
-                      <span className="sm:hidden">{s.short}</span>
-                      <span className="hidden sm:inline">{s.label}</span>
-                    </button>
-                  ))}
-                </span>
-              </li>
-            ))}
+                  {/* One joined control: four words, the chosen one filled. */}
+                  <div
+                    role="group"
+                    aria-label={`${r.name}'s mark`}
+                    className="mt-3 grid grid-cols-4 overflow-hidden rounded-xl border border-white/[0.12]"
+                  >
+                    {STATUSES.map((s, i) => (
+                      <button
+                        key={s.value}
+                        type="button"
+                        onClick={() => mark(r, s.value)}
+                        aria-pressed={r.status === s.value}
+                        aria-label={`${r.name}: ${s.label}`}
+                        className={cn(
+                          'h-11 min-w-0 px-1 text-[12.5px] font-semibold transition-colors touch-manipulation',
+                          i > 0 && 'border-l border-white/[0.12]',
+                          r.status === s.value
+                            ? s.on
+                            : 'text-white hover:bg-white/[0.06] active:bg-white/[0.1]'
+                        )}
+                      >
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
       </FormSheet>

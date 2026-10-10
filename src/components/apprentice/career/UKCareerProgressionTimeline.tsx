@@ -4,15 +4,13 @@ const UKCareerProgressionTimeline = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Career timeline
-        </span>
+        <span className="text-[13px] font-semibold text-white">Career timeline</span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           UK electrical career progression
         </h2>
         <p className="text-[14px] text-white leading-relaxed max-w-2xl">
-          Progression path for UK electricians following the JIB grading scheme with regional
-          salary data.
+          Progression path for UK electricians following the JIB grading scheme with regional salary
+          data.
         </p>
       </div>
 
@@ -24,7 +22,7 @@ const UKCareerProgressionTimeline = () => {
           >
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[13px] font-semibold text-white">
                   {level.jib_grade} · {level.typical_experience}
                 </span>
                 <h3 className="text-[18px] font-semibold text-white leading-tight">
@@ -45,34 +43,34 @@ const UKCareerProgressionTimeline = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[13px] font-semibold text-white">
                   Regional salaries (annual)
                 </span>
                 <div className="space-y-1 text-[13px] text-white">
                   <div className="flex justify-between">
                     <span>London</span>
-                    <span className="text-white font-mono">{level.salary_ranges.london}</span>
+                    <span className="text-white">{level.salary_ranges.london}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>South East</span>
-                    <span className="text-white font-mono">{level.salary_ranges.south_east}</span>
+                    <span className="text-white">{level.salary_ranges.south_east}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Midlands</span>
-                    <span className="text-white font-mono">{level.salary_ranges.midlands}</span>
+                    <span className="text-white">{level.salary_ranges.midlands}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>North</span>
-                    <span className="text-white font-mono">{level.salary_ranges.north}</span>
+                    <span className="text-white">{level.salary_ranges.north}</span>
                   </div>
                 </div>
-                <p className="text-[11px] text-white pt-1 border-t border-white/[0.06]">
+                <p className="text-[12.5px] text-white pt-1 border-t border-white/[0.06]">
                   Rates vary by experience and specialisation.
                 </p>
               </div>
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[13px] font-semibold text-white">
                   Essential qualifications
                 </span>
                 <div className="space-y-2">
@@ -86,7 +84,7 @@ const UKCareerProgressionTimeline = () => {
                         <div className="text-white">{qual.name}</div>
                       </div>
                       {qual.code && (
-                        <span className="text-[11px] text-white px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                        <span className="text-[12.5px] text-white px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                           {qual.code}
                         </span>
                       )}
@@ -102,23 +100,18 @@ const UKCareerProgressionTimeline = () => {
 
               {(level.prerequisites || level.day_rates || level.cpd) && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Requirements & CPD
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">Requirements & CPD</span>
                   {level.prerequisites && level.prerequisites.length > 0 && (
                     <div className="space-y-1">
                       <p className="text-[12px] text-white">Prerequisites</p>
                       <ul className="space-y-1.5">
                         {level.prerequisites.map((p, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-[13px] text-white"
-                          >
+                          <li key={i} className="flex items-start gap-2 text-[13px] text-white">
                             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                             <span>
                               {p.name}
                               {p.code && (
-                                <span className="ml-1 text-[11px] text-white px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                                <span className="ml-1 text-[12.5px] text-white px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                                   {p.code}
                                 </span>
                               )}
@@ -150,10 +143,7 @@ const UKCareerProgressionTimeline = () => {
                       {level.cpd.requirements && (
                         <ul className="space-y-1.5">
                           {level.cpd.requirements.map((r, i) => (
-                            <li
-                              key={i}
-                              className="flex items-start gap-2 text-[13px] text-white"
-                            >
+                            <li key={i} className="flex items-start gap-2 text-[13px] text-white">
                               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                               <span>{r}</span>
                             </li>
@@ -166,9 +156,7 @@ const UKCareerProgressionTimeline = () => {
               )}
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Work opportunities
-                </span>
+                <span className="text-[13px] font-semibold text-white">Work opportunities</span>
                 <div>
                   <p className="text-[12px] text-white mb-1.5">Key sectors</p>
                   <div className="flex flex-wrap gap-1.5">
@@ -184,7 +172,7 @@ const UKCareerProgressionTimeline = () => {
                 </div>
                 <div>
                   <p className="text-[12px] text-white mb-1">Career prospects</p>
-                  <p className="text-[13px] text-white leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {level.title.includes('Apprentice')
                       ? 'Foundation level with structured learning pathway.'
                       : level.title.includes('Improver')
@@ -200,7 +188,7 @@ const UKCareerProgressionTimeline = () => {
 
               {(level.branches || level.portfolio_evidence || level.regional_notes) && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                  <span className="text-[13px] font-semibold text-white">
                     Progress options & evidence
                   </span>
                   {level.branches && level.branches.length > 0 && (
@@ -223,10 +211,7 @@ const UKCareerProgressionTimeline = () => {
                       <p className="text-[12px] text-white">Portfolio evidence</p>
                       <ul className="space-y-1.5">
                         {level.portfolio_evidence.map((e, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-[13px] text-white"
-                          >
+                          <li key={i} className="flex items-start gap-2 text-[13px] text-white">
                             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                             <span>{e}</span>
                           </li>
@@ -241,15 +226,10 @@ const UKCareerProgressionTimeline = () => {
               )}
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2 lg:col-span-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Next steps to progress
-                </span>
+                <span className="text-[13px] font-semibold text-white">Next steps to progress</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {level.next_steps.slice(0, 6).map((step, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-[13px] text-white"
-                    >
+                    <div key={idx} className="flex items-start gap-2 text-[13px] text-white">
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{step}</span>
                     </div>
@@ -266,10 +246,8 @@ const UKCareerProgressionTimeline = () => {
         ))}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Career notes
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Career notes</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <p className="text-[12px] text-white">Progression timeline</p>

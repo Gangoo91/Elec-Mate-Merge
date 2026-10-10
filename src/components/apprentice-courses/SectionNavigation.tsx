@@ -22,7 +22,7 @@ export function SectionNavigation({
       >
         <ArrowLeft className="h-4 w-4 text-white shrink-0" />
         <div className="min-w-0">
-          <div className="text-[10.5px] uppercase tracking-[0.18em] text-white">Previous</div>
+          <div className="text-[12px] text-white">Previous</div>
           <div className="mt-0.5 text-[14px] font-semibold text-white truncate">{backLabel}</div>
         </div>
       </Link>
@@ -33,7 +33,7 @@ export function SectionNavigation({
           className="flex items-center justify-end gap-3 rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow px-5 py-4 text-right touch-manipulation active:scale-[0.99]"
         >
           <div className="min-w-0">
-            <div className="text-[10.5px] uppercase tracking-[0.18em] text-black/70">Next</div>
+            <div className="text-[12px] text-black/70">Next</div>
             <div className="mt-0.5 text-[14px] font-semibold text-black truncate">{nextLabel}</div>
           </div>
           <ArrowRight className="h-4 w-4 text-black shrink-0" />

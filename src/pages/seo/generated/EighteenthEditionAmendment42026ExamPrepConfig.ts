@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-19';
+const modified = '2026-10-10';
 
 export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig = {
   pagePath: '/guides/18th-edition-amendment-4-2026-exam-prep',
@@ -24,7 +24,7 @@ export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig
   keyTakeaways: [
     'The 18th Edition Amendment 4:2026 exam (typically C&G 2382-23) is an open-book multiple-choice exam, BS 7671 in front of you.',
     'Most exam questions come from Chapters 4, 5, 6 and 7 — plus Sections 411, 442, 443, 537 and Appendix 4.',
-    'A4:2026 key changes: expanded AFDD scope (HMOs, care homes, residential high-rise), updated SPD risk methodology, new TN-C-S / PNB earthing classification, schedule of tests new columns.',
+    'A4:2026 key changes: protective neutral bonding (PNB) in 312.2.1.1, Table 52.1 for cables in walls, new Section 545 and Chapter 57, and a reworded 421.1.7(a). The AFDD requirement itself dates from A2:2022.',
     'Pass mark is typically 60%, time pressure is 90-120 minutes for 60 questions.',
     'Tab BS 7671 in advance — Chapter 41 / 43 / Section 537 / Appendix 4 are the most-referenced.',
     'Practice 100+ mock questions before the real exam.',
@@ -37,7 +37,7 @@ export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig
       blocks: [
         {
           type: 'paragraph',
-          text: 'Amendment 4:2026 was published 15 April 2026 and introduces: significantly expanded AFDD requirements (now recommended in HMOs, care homes, certain residential high-rise), updated SPD risk methodology in Chapter 443 (Calculated Risk Level replacing AQ classification), new TN-C-S (PNB) earthing classification in Chapter 312, EV charging Section 722 reorganisation (RDC-DD, PME exception updates), new Schedule of Inspections + Schedule of Test Results columns, and cable reaction-to-fire classification (Cca-s1b,d1,a1 etc) under Chapter 422.',
+          text: 'Amendment 4:2026 was published 15 April 2026 and introduces: protective neutral bonding (PNB) in Regulation 312.2.1.1, a reworded Regulation 421.1.7(a) covering high rise residential buildings (the AFDD requirement itself dates from A2:2022), Table 52.1 for cables in walls, a new Section 545 for ICT functional earthing, a new Chapter 57 for stationary batteries, and a major revision of Section 710.',
         },
       ],
     },
@@ -70,7 +70,7 @@ export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig
       blocks: [
         {
           type: 'paragraph',
-          text: 'Section 411 (Automatic Disconnection of Supply — by far the most-tested). Memorise the maximum Zs values for the common protective devices (BS 88-3, BS EN 60898 Type B, Type C, RCBOs). Section 415 (Additional Protection — RCDs, supplementary equipotential bonding). Section 421 (AFDD Reg 421.1.7.101 — A4:2026 expanded scope is high-priority). Section 422 (cable reaction to fire — A4:2026 introduces Cca classification).',
+          text: 'Section 411 (Automatic Disconnection of Supply — by far the most-tested). Memorise the maximum Zs values for the common protective devices (BS 88-3, BS EN 60898 Type B, Type C, RCBOs). Section 415 (Additional Protection — RCDs, supplementary equipotential bonding). Section 421 (AFDDs, Reg 421.1.7: required in named premises since A2:2022, item (a) reworded at A4:2026). Section 422 (cable reaction to fire — A4:2026 introduces Cca classification).',
         },
       ],
     },
@@ -142,7 +142,7 @@ export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'AFDD Changes Under A4:2026',
+      title: 'AFDDs in A4:2026 (Reg 421.1.7)',
       description: 'Related guide for qualified electricians taking or re-taking the 18th Edition (C&G 2382-23) exam.',
       icon: 'ShieldCheck',
       category: 'Guide',

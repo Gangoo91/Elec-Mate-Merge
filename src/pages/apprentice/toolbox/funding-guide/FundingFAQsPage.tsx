@@ -9,8 +9,7 @@
 import { motion } from 'framer-motion';
 import { Compass, HelpCircle } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { NMW_RATES } from '@/data/nmwRates';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -19,7 +18,7 @@ const faqs = [
   {
     question: 'Who pays for my apprenticeship training?',
     answer:
-      'Your training is funded by the government and/or your employer — never by you. Large employers pay through the Apprenticeship Levy. Smaller employers pay 5% (government covers 95%). In some cases, levy transfer means 100% is covered. You should never be asked to contribute.',
+      'Your training is funded by the government and/or your employer — never by you. Large employers pay through the Apprenticeship Levy. For starts from 1 August 2026, smaller (non-levy) employers pay nothing for apprentices aged 16 to 24; for apprentices aged 25 or over they pay 5% and the government covers 95%. A levy transfer can cover the rest. You should never be asked to contribute.',
   },
   {
     question: 'What does the funding actually cover?',
@@ -39,7 +38,7 @@ const faqs = [
   {
     question: 'What if I am over 25?',
     answer:
-      'You can do an apprenticeship at any age. Funding works the same way — co-investment (95% / 5%) applies regardless. The £1,000 employer and provider incentive only applies to 16–18 year olds (or 19–24 with an EHC plan or who have been in care). Full funding for under-25s at smaller employers has been announced — check the current DfE funding rules.',
+      'You can do an apprenticeship at any age. Age changes who pays. For starts from 1 August 2026, a non-levy employer pays nothing for an apprentice aged 16 to 24 at the start, and 5% (government 95%) for 25 or over. The £1,000 employer and provider incentive only applies to 16–18 year olds (or 19–24 with an EHC plan or who have been in care).',
   },
   {
     question: 'Can I be asked to pay for my training?',
@@ -64,7 +63,7 @@ const faqs = [
   {
     question: 'Are there any hidden costs?',
     answer:
-      'There should be no hidden costs for the apprentice. All training, assessment, and qualification fees are covered. Your employer pays wages and may need to pay 5% co-investment (max £1,150 for Level 3). Some employers cover travel — check your contract.',
+      'There should be no hidden costs for the apprentice. All training, assessment, and qualification fees are covered. Your employer pays wages, and only pays towards training if you are 25 or over at the start (5%, up to £1,150 on a £23,000 band). Some employers cover travel — check your contract.',
   },
   {
     question: 'What is the Growth & Skills Levy?',
@@ -126,7 +125,7 @@ const glossary = [
   {
     term: 'Co-Investment',
     definition:
-      'The cost-sharing model for non-levy employers: government pays 95%, employer pays 5% of training costs.',
+      'The cost-sharing model for non-levy employers. For starts from 1 August 2026: apprentices aged 16 to 24 are fully funded; for 25 or over the government pays 95% and the employer 5%.',
   },
   {
     term: 'CITB',
@@ -245,76 +244,72 @@ const glossary = [
   {
     term: 'Progress Review',
     definition:
-      'Regular meetings (minimum every 12 weeks) between you, employer, and training provider to review development.',
+      'Regular meetings (at least every 3 months) between you, employer, and training provider to review development.',
   },
 ];
 
 const FundingFAQsPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Funding"
-        title="FAQs & glossary"
-        backTo="/apprentice/toolbox/apprenticeship-funding"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {'The questions that keep coming up, plus 25 funding terms worth knowing.'}
-        </p>
+    <GuidePage
+      section="Apprentice · Funding"
+      area="Apprenticeship funding"
+      title="FAQs & glossary"
+      backTo="/apprentice/toolbox/apprenticeship-funding"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {'The questions that keep coming up, plus 25 funding terms worth knowing.'}
+      </p>
 
-        {/* ── FAQs ────────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Frequently asked"
-            title={`${faqs.length} questions, answered`}
-            meta="Funding rules, levy, CITB grants, redundancy, resits"
-          />
-          <ul className="space-y-2">
-            {faqs.map((faq) => (
-              <li
-                key={faq.question}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="flex items-start gap-2">
-                  <HelpCircle className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <h3 className="text-[13.5px] font-semibold text-white tracking-tight">
-                    {faq.question}
-                  </h3>
+      {/* ── FAQs ────────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Frequently asked"
+          title={`${faqs.length} questions, answered`}
+          meta="Funding rules, levy, CITB grants, redundancy, resits"
+        />
+        <ul className="space-y-2">
+          {faqs.map((faq) => (
+            <li
+              key={faq.question}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-1.5',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex items-start gap-2">
+                <HelpCircle className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <h3 className="text-[13.5px] font-semibold text-white tracking-tight">
+                  {faq.question}
+                </h3>
+              </div>
+              <p className="text-[14px] text-white leading-relaxed pl-5">{faq.answer}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Glossary ────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Glossary"
+          title={`${glossary.length} funding terms`}
+          meta="Bookmark this — apprenticeship admin uses these every day"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-2.5">
+            {glossary.map((item) => (
+              <li key={item.term} className="flex items-start gap-3">
+                <Compass className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <span className="text-[12.5px] font-semibold text-elec-yellow">{item.term}</span>
+                  <p className="text-[14px] text-white leading-relaxed">{item.definition}</p>
                 </div>
-                <p className="text-[12.5px] text-white leading-relaxed pl-5">{faq.answer}</p>
               </li>
             ))}
           </ul>
-        </motion.section>
-
-        {/* ── Glossary ────────────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Glossary"
-            title={`${glossary.length} funding terms`}
-            meta="Bookmark this — apprenticeship admin uses these every day"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-2.5">
-              {glossary.map((item) => (
-                <li key={item.term} className="flex items-start gap-3">
-                  <Compass className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <div className="space-y-0.5">
-                    <span className="text-[12.5px] font-mono font-semibold text-elec-yellow">
-                      {item.term}
-                    </span>
-                    <p className="text-[12.5px] text-white leading-relaxed">{item.definition}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+        </div>
+      </motion.section>
+    </GuidePage>
   );
 };
 

@@ -31,8 +31,8 @@ export function VideoCard({
   return (
     <div
       className={`group relative rounded-xl overflow-hidden bg-white/[0.02] border border-white/[0.06] transition-colors active:bg-white/[0.05] ${
-        compact ? 'flex-shrink-0 w-[240px] sm:w-auto' : ''
-      }`}
+ compact ? 'flex-shrink-0 w-[240px] sm:w-auto' : ''
+ }`}
     >
       <button
         onClick={onTap}
@@ -53,7 +53,7 @@ export function VideoCard({
           </div>
         </div>
 
-        <div className="absolute bottom-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-black/75 text-white text-[11px] font-mono backdrop-blur-sm">
+        <div className="absolute bottom-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-black/75 text-white text-[12px] font-mono backdrop-blur-sm">
           <Clock className="h-3 w-3" />
           {video.duration}
         </div>
@@ -69,8 +69,8 @@ export function VideoCard({
       >
         <Bookmark
           className={`h-4 w-4 ${
-            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
-          }`}
+ isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
+ }`}
         />
       </button>
 
@@ -80,10 +80,10 @@ export function VideoCard({
         >
           {video.title}
         </h4>
-        <div className="flex items-baseline gap-2 text-[11px] text-white">
+        <div className="flex items-baseline gap-2 text-[12px] text-white">
           <span>{video.channel}</span>
           <span className="text-white">·</span>
-          <span className="uppercase tracking-[0.18em] text-[10px]">{video.level}</span>
+          <span className="capitalize text-[12.5px]">{video.level}</span>
         </div>
       </button>
     </div>

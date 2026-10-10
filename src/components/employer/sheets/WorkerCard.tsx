@@ -12,6 +12,8 @@ interface WorkerCardProps {
   onToggle: () => void;
   clashWarnings?: JobAssignmentWithDetails[];
   isCheckingClash?: boolean;
+  /** ELE-1834: what this person lacks against the job's requirements. */
+  gaps?: string[];
 }
 
 export function WorkerCard({
@@ -19,6 +21,7 @@ export function WorkerCard({
   isSelected,
   onToggle,
   clashWarnings = [],
+  gaps = [],
 }: WorkerCardProps) {
   const hasClash = clashWarnings.length > 0;
   // Legacy full photo URLs pass through; new bare paths are signed on demand.
@@ -96,6 +99,9 @@ export function WorkerCard({
             <Briefcase className="h-3.5 w-3.5" />
             {employee.role}
           </p>
+          {gaps.length > 0 && (
+            <p className="mt-0.5 truncate text-[12.5px] font-medium text-orange-300">{gaps.join(' · ')}</p>
+          )}
 
           {employee.certifications_count > 0 && (
             <div className="flex items-center gap-1 mt-1.5">

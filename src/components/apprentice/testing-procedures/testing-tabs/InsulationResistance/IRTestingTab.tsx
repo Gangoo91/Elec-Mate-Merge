@@ -1,4 +1,4 @@
-import { CALLOUT, PANEL } from '@/components/ui/panel-recipe';
+import { LEARN_CALLOUT, LEARN_CARD } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 import CommonIssuesCard from '../../CommonIssuesCard';
 import { irIssues } from '../../commonIssues';
@@ -23,7 +23,7 @@ const IRTestingTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className={cn(PANEL, "space-y-4")}>
+      <div className={cn(LEARN_CARD, "space-y-4")}>
         <div className="space-y-1">
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Insulation resistance (IR) testing
@@ -49,8 +49,8 @@ const IRTestingTab = () => {
         <InsulationResistanceDiagram />
       </div>
 
-      <div className={cn(PANEL, "space-y-3")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className={cn(LEARN_CARD, "space-y-3")}>
+        <span className="text-[13px] font-semibold text-white">
           Test voltages and minimum values — BS 7671 Table 64
         </span>
         <div className="overflow-x-auto">
@@ -81,8 +81,8 @@ const IRTestingTab = () => {
         </p>
       </div>
 
-      <div className={cn(CALLOUT, "space-y-1")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+      <div className={cn(LEARN_CALLOUT, "space-y-1")}>
+        <span className="text-[13px] font-semibold text-elec-yellow">
           Meeting the minimum is not the same as being healthy
         </span>
         <p className="text-[14px] text-white leading-relaxed">

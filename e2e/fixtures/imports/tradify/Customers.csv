@@ -1,0 +1,8 @@
+Customer Name,Contact Name,Phone Number,Mobile Number,Fax Number,Email Address,Physical Address Street,Physical Address City,Physical Address Region,Physical Address Postal Code,Physical Address Country,Postal Address Street,Postal Address City,Postal Address Region,Post Address Postal Code,Pricing Levels,Archived,Note[General]
+Harbour View Lettings Ltd,Priya Shah,0161 496 0102,07700 900101,,accounts@harbourview-lettings.example.com,"Unit 4, Quay Point",Salford,Greater Manchester,M50 3XZ,United Kingdom,,,,,Standard,No,"Landlord, 14 properties. Wants EICRs every 5 years."
+Tom Brennan,,,07700 900102,,tom.brennan@example.com,27 Ashworth Road,Stockport,Cheshire,SK4 2LJ,United Kingdom,,,,,Standard,No,
+Kettle & Crumb Cafe,Jo Lake,0161 496 0177,,,hello@kettleandcrumb.example.com,3 Market Street,Altrincham,Cheshire,WA14 1QF,United Kingdom,,,,,Standard,No,Shop fit-out 2025
+Sarah Okafor,,,07700 900104,,s.okafor@example.com,9 Linden Close,Sale,Cheshire,M33 6GH,United Kingdom,,,,,Standard,No,
+Northgate Primary School,Mr D Hughes,0161 496 0190,,,office@northgate-primary.example.sch.uk,Northgate Lane,Bolton,Greater Manchester,BL1 8PQ,United Kingdom,,,,,Commercial,No,Term-time access only
+A Buyer,,07700 900000,,,buyer@example.com,14 Example Road,Manchester,,M20 1AA,United Kingdom,,,,,Standard,No,"Already a customer in Elec-Mate: should match, not duplicate"
+Tom Brennan,,,07700 900102,,tom.brennan@example.com,27 Ashworth Road,Stockport,Cheshire,SK4 2LJ,United Kingdom,,,,,Standard,No,Duplicate row in the export

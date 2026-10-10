@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Are AFDDs mandatory in new build homes?',
     answer:
-      'AFDDs (Arc Fault Detection Devices) are not strictly mandatory under BS 7671:2018+A4:2026, but they are strongly recommended. Regulation 421.1.7 recommends that AFDDs conforming to BS EN 62606 be considered for final circuits supplying socket-outlets with a rated current not exceeding 32 A in single-occupancy dwellings (houses, flats, and similar). The recommendation applies to all single-phase final circuits that supply socket-outlets in sleeping accommodation and is particularly relevant for new builds where the cost of fitting AFDDs at the time of installation is significantly lower than retrofitting them later. Some developers and housing associations now specify AFDDs as a standard requirement in their specifications, particularly for affordable housing and social housing. The IET Guidance Note 1 (Selection and Erection) discusses AFDD selection in detail. Amendment 2 strengthened the recommendation, and it is widely expected that a future amendment will make AFDDs mandatory for certain circuits.',
+      'It depends on the building. Under BS 7671:2018+A4:2026, Regulation 421.1.7 requires AFDDs conforming to BS EN 62606 on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings (over 18 m or more than six storeys), houses in multiple occupation, purpose-built student accommodation and care homes; that requirement dates from A2:2022. For all other premises, including a typical new build house or flat, AFDDs are recommended on those circuits rather than required. For new builds the cost of fitting AFDDs at installation is much lower than retrofitting them later. Some developers and housing associations now specify AFDDs as a standard requirement in their specifications, particularly for affordable housing and social housing. The IET Guidance Note 1 (Selection and Erection) discusses AFDD selection in detail.',
   },
   {
     question: 'What SPD requirements apply to new build installations?',
@@ -315,9 +315,9 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 introduced two significant protective device requirements that are
-          particularly relevant to new build installations: Arc Fault Detection Devices (AFDDs) and
-          Surge Protective Devices (SPDs).
+          BS 7671:2018+A4:2026 carries two significant protective device requirements, neither of
+          them new in A4, that are particularly relevant to new build installations: Arc Fault
+          Detection Devices (AFDDs) and Surge Protective Devices (SPDs).
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -633,7 +633,7 @@ export default function NewBuildStandardsPage() {
       title="New Build Electrical Standards: Building Regs"
       description="Complete guide to new build electrical standards in the UK. Approved Document P, EV charging (Part S), smoke and heat detection."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="New Build Guide"

@@ -162,16 +162,23 @@ export const CalculatorSelect = ({
       <Select value={value} onValueChange={onChange} disabled={disabled}>
         <SelectTrigger
           id={selectId}
-          className={cn(FIELD, error && 'border-b-red-500/60', className)}
+          className={cn(
+            FIELD,
+            // A chosen option is never cut to a stub ("Method C - Clipped dir…"):
+            // it wraps to a second line and the field grows with it.
+            'h-auto min-h-11 py-2 [&>span]:line-clamp-2 [&>span]:whitespace-normal [&>span]:leading-snug',
+            error && 'border-b-red-500/60',
+            className
+          )}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-card/95 backdrop-blur-xl border-white/10 rounded-xl shadow-xl shadow-black/20 p-1">
+        <SelectContent className="max-w-[calc(100vw-2rem)] bg-card/95 backdrop-blur-xl border-white/10 rounded-xl shadow-xl shadow-black/20 p-1">
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
-              className="text-white focus:bg-white/10 focus:text-white rounded-lg transition-colors duration-150 cursor-pointer"
+              className="min-h-11 whitespace-normal text-white focus:bg-white/10 focus:text-white rounded-lg transition-colors duration-150 cursor-pointer touch-manipulation"
             >
               {option.label}
             </SelectItem>

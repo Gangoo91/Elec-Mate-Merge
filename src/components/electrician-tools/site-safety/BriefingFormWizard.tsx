@@ -34,6 +34,10 @@ import {
 } from './briefings';
 import { TemplateSelector } from './briefing-templates/TemplateSelector';
 import { SafetyDocField } from './common/SafetyDocField';
+import { JobLinkField } from './common/JobLinkField';
+import { BriefingCrewSendSheet } from './briefings/BriefingCrewSendSheet';
+import { isFirmScope, stampSafetyInsert, useSafetyScope } from './common/SafetyScope';
+import { useEmployees } from '@/hooks/useEmployees';
 import SafetyDocShell, {
   computeSafetyDocProgress,
   type SafetyDocStepConfig,
@@ -65,6 +69,8 @@ const briefingSchema = z.object({
         role: z.string().optional(),
         signature: z.string().optional(),
         timestamp: z.string().optional(),
+        /** employer_employees.id when added from the firm's roster (Employer Hub). */
+        employee_id: z.string().optional(),
       })
     )
     .optional(),
@@ -110,6 +116,67 @@ interface BriefingFormWizardProps {
   onSuccess: () => void;
 }
 
+type Attendee = NonNullable<BriefingFormData['attendees']>[number];
+
+/**
+ * Employer Hub only: the firm's active roster as tap-to-add chips. Rendered
+ * only in firm scope, so the Electrical Hub never subscribes to the roster.
+ * Each person carries their `employee_id`, which is what lets them read the
+ * briefing they are named on.
+ */
+const FirmRosterQuickAdd = ({
+  attendees,
+  onAdd,
+}: {
+  attendees: Attendee[];
+  onAdd: (entry: Attendee) => void;
+}) => {
+  const { data: employees = [], isLoading } = useEmployees();
+  const active = employees.filter((e) => (e.status || '').toLowerCase() === 'active');
+  const isAdded = (id: string, name: string) =>
+    attendees.some(
+      (a) => a.employee_id === id || a.name.trim().toLowerCase() === name.trim().toLowerCase()
+    );
+
+  if (isLoading) return null;
+
+  return (
+    <div className="space-y-2">
+      <p className="text-[12px] font-medium text-white">Add from your team</p>
+      {active.length === 0 ? (
+        <p className="text-[11px] text-white">No active people on your team yet.</p>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {active.map((emp) => {
+            const added = isAdded(emp.id, emp.name);
+            return (
+              <button
+                key={emp.id}
+                type="button"
+                disabled={added}
+                aria-pressed={added}
+                onClick={() =>
+                  onAdd({ name: emp.name, role: emp.role || undefined, employee_id: emp.id })
+                }
+                className={cn(
+                  'h-11 touch-manipulation rounded-full border px-4 text-[13px] transition-colors',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
+                  added
+                    ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
+                )}
+              >
+                {added ? <Check className="mr-1.5 inline h-3.5 w-3.5" /> : null}
+                {emp.name}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const STEP_TITLES = ['Type & Site', 'Briefing Content', 'Hazards', 'Photos', 'Attendees'];
 
 /** Enforced in `handlePhotoUpload`, not just displayed. */
@@ -147,6 +214,13 @@ export const BriefingFormWizard = ({
   onSuccess,
 }: BriefingFormWizardProps) => {
   const { toast } = useToast();
+  // Employer Hub: the firm's briefing, its roster and its jobs.
+  const scope = useSafetyScope();
+  const firmScope = isFirmScope(scope);
+  const [employerJobId, setEmployerJobId] = useState<string | null>(
+    prefillString(initialData, 'employer_job_id') ?? null
+  );
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const [step, setStep] = useState(0);
   const [aiGenerating, setAiGenerating] = useState(false);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
@@ -157,6 +231,10 @@ export const BriefingFormWizard = ({
   const [savedBriefingId, setSavedBriefingId] = useState<string | null>(initialData?.id || null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
   const [saving, setSaving] = useState(false);
+  /** ELE-1942: the content was drafted by the AI (kept on the row). */
+  const [aiUsed, setAiUsed] = useState<boolean>(initialData?.ai_generated === true);
+  /** Firm scope: after saving, offer to send it to the crew (ELE-1944). */
+  const [showCrewSend, setShowCrewSend] = useState(false);
 
   /**
    * `team_briefings` has no `site_address` column, so the site address the form
@@ -231,11 +309,35 @@ export const BriefingFormWizard = ({
     err instanceof Error && err.message ? err.message : fallback;
 
   // AI Content Generation
+  /**
+   * Short-lived links to the briefing's photos for the AI to look at (ELE-1942).
+   * New uploads are bare paths in the private bucket; older entries are full
+   * URLs and pass through.
+   */
+  const photoLinksForAI = async (): Promise<string[]> => {
+    const refs = (formData.photos || [])
+      .map((p) => p.url)
+      .filter(Boolean)
+      .slice(0, 5);
+    const out: string[] = [];
+    for (const ref of refs) {
+      if (/^https:\/\//.test(ref)) {
+        out.push(ref);
+        continue;
+      }
+      const { data } = await supabase.storage.from('briefing-photos').createSignedUrl(ref, 600);
+      if (data?.signedUrl) out.push(data.signedUrl);
+    }
+    return out;
+  };
+
   const handleGenerateAI = async () => {
     setAiGenerating(true);
     try {
+      const photoUrls = await photoLinksForAI();
       const { data, error } = await supabase.functions.invoke('generate-briefing-content', {
         body: {
+          photoUrls,
           briefingType: formData.briefingType,
           briefingContext: {
             briefingTitle: formData.briefingTitle,
@@ -262,11 +364,28 @@ export const BriefingFormWizard = ({
         (typeof content?.briefingDescription === 'string' ? content.briefingDescription : '') ||
         formData.briefingContent;
 
-      setValue('briefingContent', briefingContent);
+      // Hazards the AI could see in the site photos, said as a list.
+      const seen = Array.isArray(content?.photoHazards)
+        ? (content.photoHazards as unknown[]).filter(
+            (h): h is string =>
+              typeof h === 'string' &&
+              h.trim().length > 0 &&
+              // "No hazard is visible…" is the model saying there is nothing, not a hazard.
+              !/^\s*no\b/i.test(h)
+          )
+        : [];
+      const withPhotos = seen.length
+        ? `${briefingContent}\n\nSeen in the site photos:\n${seen.map((h) => `• ${h}`).join('\n')}`
+        : briefingContent;
+
+      setValue('briefingContent', withPhotos, { shouldValidate: true });
+      setAiUsed(true);
 
       toast({
-        title: 'AI Content Generated',
-        description: 'Review and edit the AI-generated content.',
+        title: photoUrls.length ? 'Drafted from your details and photos' : 'Content drafted',
+        description: seen.length
+          ? `${seen.length} hazard${seen.length === 1 ? '' : 's'} named from the photos. Check it reads right.`
+          : 'Check it reads right for the people on site.',
       });
     } catch (error: unknown) {
       console.error('AI generation error:', error);
@@ -424,6 +543,84 @@ export const BriefingFormWizard = ({
     setNewAttendeeName('');
   };
 
+  /** Firm roster: add one person, unless they are already on the register. */
+  const addRosterAttendee = (entry: Attendee) => {
+    const current = formData.attendees || [];
+    const name = entry.name.trim().toLowerCase();
+    if (
+      current.some(
+        (a) =>
+          (entry.employee_id && a.employee_id === entry.employee_id) ||
+          a.name.trim().toLowerCase() === name
+      )
+    )
+      return;
+    setValue('attendees', [...current, entry]);
+  };
+
+  /*
+   * ELE-1942: a firm briefing filed against a job starts with the job's crew on
+   * the register, and the site filled in from the job. Only for a new briefing
+   * with nobody on the register yet; an edit is never changed underneath.
+   */
+  useEffect(() => {
+    if (!firmScope || !employerJobId || initialData?.id) return;
+    let cancelled = false;
+    (async () => {
+      const [{ data: job }, { data: crew }] = await Promise.all([
+        supabase
+          .from('employer_jobs')
+          .select('title, location')
+          .eq('id', employerJobId)
+          .maybeSingle(),
+        supabase
+          .from('employer_job_assignments')
+          .select('status, end_date, employee:employer_employees(id, name, role, status)')
+          .eq('job_id', employerJobId),
+      ]);
+      if (cancelled) return;
+      const j = job as { title?: string | null; location?: string | null } | null;
+      if (j?.title && !employerJobTitle) setEmployerJobTitle(j.title);
+      if (j?.location && !methods.getValues('siteName')) setValue('siteName', j.location);
+      const today = new Date().toISOString().slice(0, 10);
+      const people = (
+        (crew ?? []) as unknown as Array<{
+          status: string | null;
+          end_date: string | null;
+          employee: { id: string; name: string; role: string | null; status: string | null } | null;
+        }>
+      )
+        .filter(
+          (a) =>
+            a.employee &&
+            (a.employee.status || '').toLowerCase() === 'active' &&
+            !['completed', 'cancelled', 'removed', 'ended'].includes(
+              (a.status || '').toLowerCase()
+            ) &&
+            (!a.end_date || a.end_date >= today)
+        )
+        .map((a) => a.employee!);
+      const current = methods.getValues('attendees') || [];
+      const missing = people.filter(
+        (e) =>
+          !current.some(
+            (a) =>
+              a.employee_id === e.id || a.name.trim().toLowerCase() === e.name.trim().toLowerCase()
+          )
+      );
+      if (missing.length) {
+        setValue('attendees', [
+          ...current,
+          ...missing.map((e) => ({ name: e.name, role: e.role || undefined, employee_id: e.id })),
+        ]);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firmScope, employerJobId]);
+
   const removeAttendee = (index: number) => {
     setValue(
       'attendees',
@@ -505,6 +702,7 @@ export const BriefingFormWizard = ({
         identified_hazards: formData.hazards,
         briefing_description: formData.briefingContent,
         photos: formData.photos,
+        ai_generated: aiUsed,
         created_by_name: profile?.full_name || user.email,
         /*
          * Save Draft used to write `status: 'draft'`. The live table has
@@ -529,15 +727,26 @@ export const BriefingFormWizard = ({
       let error;
       let briefingId = initialData?.id || savedBriefingId;
       if (briefingId) {
+        // Firm scope also saves the firm job; personal edits are unchanged.
+        const updatePayload = firmScope
+          ? ({ ...briefingData, employer_job_id: employerJobId } as never)
+          : briefingData;
         const { error: updateError } = await supabase
           .from('team_briefings')
-          .update(briefingData)
+          .update(updatePayload)
           .eq('id', briefingId);
         error = updateError;
       } else {
         const { data: insertedData, error: insertError } = await supabase
           .from('team_briefings')
-          .insert([briefingData])
+          .insert([
+            stampSafetyInsert(
+              firmScope && employerJobId
+                ? { ...briefingData, employer_job_id: employerJobId }
+                : briefingData,
+              scope
+            ) as never,
+          ])
           .select('id')
           .single();
         error = insertError;
@@ -565,6 +774,13 @@ export const BriefingFormWizard = ({
        */
       if (asDraft) {
         // Stay put. `closeWizard` refreshes the list on the way out.
+      } else if (
+        briefingId &&
+        firmScope &&
+        (employerJobId || (formData.attendees || []).length > 0)
+      ) {
+        // Employer Hub: send it to the crew in the app, email or text.
+        setShowCrewSend(true);
       } else if (briefingId && (formData.attendees || []).length > 0) {
         setShowPostSaveShare(true);
       } else {
@@ -681,6 +897,22 @@ export const BriefingFormWizard = ({
               onChange={(e) => setValue('siteAddress', e.target.value)}
               hint="Optional"
             />
+
+            {/* Employer Hub only: file the briefing against a firm job, so its
+                crew can read it. team_briefings has no personal job column. */}
+            {firmScope && (
+              <JobLinkField
+                jobId={null}
+                jobTitle={null}
+                onSelect={() => {}}
+                employerJobId={employerJobId}
+                employerJobTitle={employerJobTitle}
+                onSelectEmployerJob={(id, title) => {
+                  setEmployerJobId(id);
+                  setEmployerJobTitle(title);
+                }}
+              />
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <SafetyDocField
@@ -932,6 +1164,20 @@ export const BriefingFormWizard = ({
               </div>
             )}
 
+            {/* ELE-1942: the photos feed the AI draft, so hazards in them are named. */}
+            {photoCount > 0 && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleGenerateAI}
+                disabled={aiGenerating || !formData.briefingType || !formData.briefingTitle}
+                className="h-11 w-full touch-manipulation border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white disabled:opacity-50"
+              >
+                {aiGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                {aiGenerating ? 'Looking at the photos…' : 'Redraft the content from these photos'}
+              </Button>
+            )}
+
             {/* Empty state */}
             {photoCount === 0 && !uploadingPhotos && (
               <div className="text-center py-4">
@@ -1023,6 +1269,10 @@ export const BriefingFormWizard = ({
                 Separate multiple names with commas to add them all at once.
               </p>
             </div>
+
+            {firmScope && (
+              <FirmRosterQuickAdd attendees={formData.attendees || []} onAdd={addRosterAttendee} />
+            )}
 
             {/* Attendee register — a signing sheet, not a stack of cards.
                 Each person was a bordered pill with the row number in its own
@@ -1281,6 +1531,20 @@ export const BriefingFormWizard = ({
             />
           )}
         </AnimatePresence>
+
+        {showCrewSend && savedBriefingId && (
+          <BriefingCrewSendSheet
+            open={showCrewSend}
+            onOpenChange={(o) => {
+              if (!o) {
+                setShowCrewSend(false);
+                onSuccess();
+              }
+            }}
+            briefingId={savedBriefingId}
+            briefingName={formData.briefingTitle}
+          />
+        )}
 
         {/* Post-save share sheet — shown after saving with attendees */}
         <AnimatePresence>

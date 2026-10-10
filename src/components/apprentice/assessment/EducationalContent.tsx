@@ -99,18 +99,14 @@ const EducationalContent = () => {
         <TabsContent value="regulations" className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                BS 7671 requirements
-              </span>
+              <span className="text-[13px] font-semibold text-white">BS 7671 requirements</span>
               <ul className="space-y-1.5">
                 {regulations.bs7671.map((item, index) => (
                   <li
                     key={index}
                     className="flex items-baseline gap-2 text-[14px] text-white leading-relaxed"
                   >
-                    <span className="text-[11px] font-mono text-white min-w-[36px]">
-                      {item.section}
-                    </span>
+                    <span className="text-[12.5px] text-white min-w-[36px]">{item.section}</span>
                     <span>{item.title}</span>
                   </li>
                 ))}
@@ -118,7 +114,7 @@ const EducationalContent = () => {
             </div>
 
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              <span className="text-[13px] font-semibold text-white">
                 Health & safety regulations
               </span>
               <ul className="space-y-1.5">
@@ -138,9 +134,7 @@ const EducationalContent = () => {
 
         <TabsContent value="hazards" className="space-y-3">
           <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-              High risk hazards
-            </span>
+            <span className="text-[13px] font-semibold text-red-300">High risk hazards</span>
             <ul className="space-y-1.5">
               {highRiskHazards.map((item, index) => (
                 <li
@@ -155,9 +149,7 @@ const EducationalContent = () => {
           </div>
 
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Medium risk hazards
-            </span>
+            <span className="text-[13px] font-semibold text-white">Medium risk hazards</span>
             <ul className="space-y-1.5">
               {mediumRiskHazards.map((item, index) => (
                 <li
@@ -175,9 +167,7 @@ const EducationalContent = () => {
         <TabsContent value="ppe" className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Essential PPE
-              </span>
+              <span className="text-[13px] font-semibold text-white">Essential PPE</span>
               <ul className="space-y-2">
                 {essentialPPE.map((item, index) => (
                   <li key={index} className="text-[14px] leading-relaxed">
@@ -189,9 +179,7 @@ const EducationalContent = () => {
             </div>
 
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                PPE inspection
-              </span>
+              <span className="text-[13px] font-semibold text-white">PPE inspection</span>
               <ul className="space-y-1.5">
                 {ppeInspectionTips.map((item, index) => (
                   <li
@@ -209,9 +197,7 @@ const EducationalContent = () => {
 
         <TabsContent value="tips" className="space-y-3">
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Assessment best practices
-            </span>
+            <span className="text-[13px] font-semibold text-white">Assessment best practices</span>
             <ul className="space-y-1.5">
               {assessmentTips.map((item, index) => (
                 <li
@@ -226,9 +212,7 @@ const EducationalContent = () => {
           </div>
 
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Documentation tips
-            </span>
+            <span className="text-[13px] font-semibold text-white">Documentation tips</span>
             <ul className="space-y-1.5">
               {documentationTips.map((item, index) => (
                 <li

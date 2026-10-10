@@ -18,6 +18,7 @@ import {
   type GateLink,
   type GateState,
 } from '@/hooks/epa/useGatewayReadiness';
+import { gateSignature } from '@/lib/epa/signatureAge';
 
 const STATE_WORD: Record<GateState, string> = { green: 'Met', amber: 'In hand', red: 'Missing' };
 
@@ -66,6 +67,9 @@ export function GatewayGateCard({
 }) {
   const { data, loading, error, reload } = useGatewayReadiness(learnerId);
   const who = audience === 'learner' ? 'you' : firstName || 'this learner';
+  /** The declaration this viewer signs themselves, so "Sign again" is true. */
+  const signsHere = (link: GateLink) =>
+    audience === 'learner' ? link === 'declaration_learner' : link === 'declaration_provider';
 
   if (!learnerId) return null;
   if (loading && !data)
@@ -114,9 +118,7 @@ export function GatewayGateCard({
       <div className="flex items-start gap-3">
         <StateDot state={data.gateway_passed ? 'green' : data.overall} />
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-            Gateway readiness
-          </p>
+          <p className="text-[13px] font-medium text-white">Gateway readiness</p>
           <h3
             id="gateway-gate-title"
             className="mt-1 text-[17px] font-semibold leading-snug text-white"
@@ -130,33 +132,55 @@ export function GatewayGateCard({
         </div>
       </div>
       <ul className="mt-4 divide-y divide-white/[0.06]">
-        {data.items.map((i) => (
-          <li key={i.key} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-            <StateDot state={i.state} />
-            <div className="min-w-0 flex-1">
-              <p className="text-[14px] font-semibold text-white">
-                {i.label}
-                <span className="sr-only">: {STATE_WORD[i.state]}</span>
-              </p>
-              <p className="mt-0.5 text-[12.5px] leading-snug text-white">{i.sentence}</p>
-              {i.state !== 'green' && linkNote?.[i.link] && (
-                <p className="mt-0.5 text-[12.5px] font-medium leading-snug text-white">
-                  {linkNote[i.link]}
+        {data.items.map((i) => {
+          // NET: a signature over 6 months old (amber) or within 30 days of it
+          // (still green) is flagged orange, with the way to sign again.
+          const sig = gateSignature(i.figures);
+          const sigFlag = !!sig && (sig.expired || sig.expiring);
+          const open = i.state !== 'green' || sigFlag;
+          return (
+            <li
+              key={i.key}
+              className="flex flex-wrap items-start gap-x-3 gap-y-2 py-3 first:pt-0 last:pb-0 sm:flex-nowrap"
+            >
+              <StateDot state={i.state} />
+              <div className="min-w-0 grow basis-[calc(100%-2.25rem)] sm:basis-0">
+                <p className="text-[14px] font-semibold text-white">
+                  {i.label}
+                  <span className="sr-only">: {STATE_WORD[i.state]}</span>
                 </p>
+                <p
+                  className={cn(
+                    'mt-0.5 text-[12.5px] leading-snug',
+                    sigFlag ? 'font-medium text-orange-300' : 'text-white'
+                  )}
+                  data-signature-age={
+                    sig ? (sig.expired ? 'expired' : sig.expiring ? 'expiring' : 'ok') : undefined
+                  }
+                >
+                  {i.sentence}
+                </p>
+                {open && linkNote?.[i.link] && (
+                  <p className="mt-0.5 text-[12.5px] font-medium leading-snug text-white">
+                    {linkNote[i.link]}
+                  </p>
+                )}
+              </div>
+              {open && linkLabel?.[i.link] !== null && (
+                <button
+                  type="button"
+                  onClick={() => onLink(i.link, i)}
+                  // On a phone the action drops under the words (lined up with
+                  // them) so the requirement keeps the full width.
+                  className="ml-9 inline-flex h-11 shrink-0 items-center gap-1 rounded-xl border border-white/[0.14] px-3 text-[13px] font-semibold text-white touch-manipulation hover:border-white/[0.3] active:bg-white/[0.06] sm:-my-1 sm:ml-0"
+                >
+                  {sigFlag && signsHere(i.link) ? 'Sign again' : (linkLabel?.[i.link] ?? 'Show me')}
+                  <ChevronRight className="h-4 w-4" />
+                </button>
               )}
-            </div>
-            {i.state !== 'green' && linkLabel?.[i.link] !== null && (
-              <button
-                type="button"
-                onClick={() => onLink(i.link, i)}
-                className="-my-2 inline-flex h-11 shrink-0 items-center gap-1 px-1 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
-              >
-                {linkLabel?.[i.link] ?? 'Show me'}
-                <ChevronRight className="h-3.5 w-3.5" />
-              </button>
-            )}
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

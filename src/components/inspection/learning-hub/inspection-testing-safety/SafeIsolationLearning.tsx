@@ -352,7 +352,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
       />
 
       {/* Progress Summary */}
-      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+      <Card className="border-white/[0.14] bg-white/[0.06]">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>

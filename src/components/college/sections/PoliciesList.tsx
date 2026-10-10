@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { COLLEGE_BTN_PRIMARY, COLLEGE_CARD, COLLEGE_LIST, COLLEGE_ROW, chipCn } from '@/components/college/ui/CollegeUi';
+import { chipCn } from '@/components/college/ui/CollegeUi';
+import { QBTN, QCARD, QCHIP_ROW, QLIST, QROW } from '@/components/college/quality/QualityHubKit';
 import { StatusPill, type Tone } from '@/components/college/quality/QualityKit';
 import { useCollegePolicies, type PolicyRow, type PolicyStatus } from '@/hooks/useCollegePolicies';
 
@@ -10,8 +11,9 @@ import { useCollegePolicies, type PolicyRow, type PolicyStatus } from '@/hooks/u
 
    College Hub kit list (7 Oct 2026): title, category / code / version /
    review / acknowledgements, a status pill, chevron, plus a thin bar for
-   how many staff have signed a live policy. Review overdue is red; a draft
-   or a review due within 30 days is orange; live is green.
+   how many staff have signed a live policy. Review overdue, a draft, a
+   review due within 30 days or signatures still missing are orange; a live
+   policy everyone has signed is green.
    ========================================================================== */
 
 interface Props {
@@ -39,9 +41,9 @@ function daysUntil(date: string): number {
 function reviewText(iso: string | null): string {
   if (!iso) return 'no review date';
   const days = daysUntil(iso);
-  if (days < 0) return `review ${Math.abs(days)}d overdue`;
+  if (days < 0) return `review ${Math.abs(days)} ${Math.abs(days) === 1 ? 'day' : 'days'} overdue`;
   if (days === 0) return 'review due today';
-  if (days <= 30) return `review in ${days}d`;
+  if (days <= 30) return `review in ${days} ${days === 1 ? 'day' : 'days'}`;
   return `review ${new Date(iso).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -103,14 +105,19 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
 
   if (policies.length === 0) {
     return (
-      <div className={cn(COLLEGE_CARD, 'flex flex-col items-start gap-3 sm:items-center sm:py-10 sm:text-center')}>
+      <div
+        className={cn(
+          QCARD,
+          'flex flex-col items-start gap-3 sm:items-center sm:py-10 sm:text-center'
+        )}
+      >
         <div className="text-[15px] font-semibold text-white">No policies yet</div>
         <p className="max-w-xl text-[13.5px] leading-relaxed text-white">
           Add your safeguarding, Prevent, equality and other college policies, or start from a
-          template under Also here. Version history and acknowledgement logs are kept
-          automatically.
+          template (Policy templates, below). Publish one and every member of staff is asked to read
+          and sign it; who has signed, and who has not, is logged for you.
         </p>
-        <button type="button" onClick={onAdd} className={COLLEGE_BTN_PRIMARY}>
+        <button type="button" onClick={onAdd} className={QBTN}>
           Add the first policy
         </button>
       </div>
@@ -128,7 +135,7 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2">
+      <div className={QCHIP_ROW}>
         {filterChips.map((c) => (
           <button
             key={c.value}
@@ -142,9 +149,9 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
         ))}
       </div>
 
-      <div className={COLLEGE_LIST}>
+      <div className={QLIST}>
         {filtered.length === 0 ? (
-          <p className="px-5 py-4 text-[13px] leading-snug text-white sm:px-6">
+          <p className="px-4 py-4 text-[13px] leading-snug text-white sm:px-5">
             {search.trim() ? `No policies match “${search}”.` : 'No policies in this filter.'}
           </p>
         ) : (
@@ -167,16 +174,25 @@ function PolicyRowItem({ policy, onOpen }: { policy: PolicyRow; onOpen: (id: str
   const due = !retired && isReviewDue(policy.review_due_at);
   const isDraft = policy.status === 'draft';
 
+  // A live policy that needs signing reads as its signatures: "12 of 30
+  // signed" (orange) until everyone has, then "All signed" (green).
+  const needsSigning =
+    policy.requires_acknowledgement && policy.status === 'live' && policy.ack_target > 0;
+  const allSigned = needsSigning && policy.ack_count >= policy.ack_target;
   const statusWord = overdue
     ? 'Review overdue'
     : isDraft
-      ? 'Draft'
+      ? 'Draft, not published'
       : due
         ? 'Review due'
-        : STATUS_LABEL[policy.status];
+        : needsSigning
+          ? allSigned
+            ? 'All signed'
+            : `${policy.ack_count} of ${policy.ack_target} signed`
+          : STATUS_LABEL[policy.status];
   const statusTone: Tone = overdue
     ? 'bad'
-    : isDraft || due
+    : isDraft || due || (needsSigning && !allSigned)
       ? 'warn'
       : policy.status === 'live'
         ? 'good'
@@ -188,7 +204,7 @@ function PolicyRowItem({ policy, onOpen }: { policy: PolicyRow; onOpen: (id: str
 
   const ackText =
     policy.requires_acknowledgement && policy.status === 'live'
-      ? `${policy.ack_count}/${policy.ack_target} acknowledged`
+      ? `${policy.ack_count} of ${policy.ack_target} staff signed`
       : null;
   const owner =
     policy.owner_role && policy.owner_role.trim() !== ''
@@ -208,11 +224,7 @@ function PolicyRowItem({ policy, onOpen }: { policy: PolicyRow; onOpen: (id: str
 
   return (
     <li>
-      <button
-        type="button"
-        onClick={() => onOpen(policy.id)}
-        className={COLLEGE_ROW}
-      >
+      <button type="button" onClick={() => onOpen(policy.id)} className={QROW}>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
             {policy.title}
@@ -223,7 +235,10 @@ function PolicyRowItem({ policy, onOpen }: { policy: PolicyRow; onOpen: (id: str
           {ackPct !== null && (
             <span className="mt-2 block h-1.5 w-full max-w-[220px] overflow-hidden rounded-full bg-white/[0.08]">
               <span
-                className={cn('block h-full rounded-full', ackPct >= 100 ? 'bg-emerald-500' : ackPct >= 80 ? 'bg-elec-yellow' : 'bg-orange-400')}
+                className={cn(
+                  'block h-full rounded-full',
+                  ackPct >= 100 ? 'bg-emerald-500' : 'bg-orange-400'
+                )}
                 style={{ width: `${ackPct}%` }}
               />
             </span>

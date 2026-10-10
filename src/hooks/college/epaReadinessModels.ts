@@ -22,7 +22,6 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { AM2_RUNS_LIMIT, buildSections, countsTowardsReady } from '@/hooks/am2/useAM2Sections';
 import {
-  acState,
   buildEpaReadiness,
   portfolioCoverage,
   type EpaReadinessModel,
@@ -70,23 +69,6 @@ async function fetchAll<T>(
   return { rows, error: null };
 }
 
-type CoverageRow = {
-  student_id: string;
-  qualification_code: string;
-  unit_code: string;
-  ac_code: string;
-  status: string | null;
-  evidence_count: number | null;
-};
-type SignoffRow = {
-  student_id: string;
-  qualification_code: string;
-  unit_code: string;
-  ac_code: string;
-  assessor_verdict: string | null;
-  iqa_verdict: string | null;
-};
-
 /** Readiness models for many learners — the same inputs the learner's own
  *  screen uses: AM2 practice, portfolio coverage on their qualification, and
  *  the gateway row. A handful of queries for the whole cohort. */
@@ -102,7 +84,6 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
   const gateways = new Map<string, GatewayRow>();
   if (ids.length === 0) return { models, gateways, error: null };
 
-  const studentIds = [...uniq.values()].map((t) => t.studentId).filter((x): x is string => !!x);
   // The code each learner is ENROLLED on decides the route; the AC rows and
   // coverage are keyed on its requirement code (603/3895/8 → 601/7345/2). The
   // cohort page passed raw course codes, so a mapped course found no ACs.
@@ -126,10 +107,6 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
   }
   const requirementOf = (code: string | null | undefined) =>
     code ? (reqFor.get(code) ?? code) : null;
-  const codes = Array.from(
-    new Set(enrolled.map((c) => requirementOf(c)).filter((x): x is string => !!x))
-  );
-
   // 100 learners a call (about a second each; the function allows 500 but a
   // full 500 nears the 8s statement timeout), in parallel.
   const gateQuery = Promise.all(
@@ -143,7 +120,14 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
     )
   ).then((parts) => Object.assign({}, ...parts) as Record<string, GateLike>);
 
-  const [am2Res, gwRes, reqRes, covRes, soRes, gates] = await Promise.all([
+  // ELE-1912: the criteria for every learner in one call (see below), started
+  // now so it runs alongside the gate, AM2 and checklist reads, not after them.
+  // (A query builder only sends when it is awaited: Promise.resolve sends it now.)
+  const manyQuery = ids.length
+    ? Promise.resolve(db.rpc('get_portfolio_ac_state_many', { p_user_ids: ids }))
+    : Promise.resolve({ data: {} as unknown, error: null });
+
+  const [am2Res, gwRes, gates] = await Promise.all([
     fetchAll<Am2Row>((a, b) =>
       db
         .from('am2_mock_sessions')
@@ -162,44 +146,6 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
       )
       .in('user_id', ids)
       .order('updated_at', { ascending: false }),
-    codes.length
-      ? fetchAll<{
-          qualification_code: string;
-          unit_code: string;
-          unit_title: string | null;
-          ac_code: string;
-        }>((a, b) =>
-          db
-            .from('qualification_requirements')
-            .select('qualification_code, unit_code, unit_title, ac_code')
-            .in('qualification_code', codes)
-            .range(a, b)
-        )
-      : Promise.resolve({ rows: [], error: null }),
-    studentIds.length
-      ? fetchAll<CoverageRow>((a, b) =>
-          db
-            .from('student_ac_coverage')
-            .select('student_id, qualification_code, unit_code, ac_code, status, evidence_count')
-            .in('student_id', studentIds)
-            // ELE-1912: only rows acState() can count. A not-started AC with no
-            // evidence reads as null either way, and those were 94% of the
-            // cohort's rows — eleven 1,000-row pages fetched one after another.
-            .or('status.neq.not_started,evidence_count.gt.0')
-            .range(a, b)
-        )
-      : Promise.resolve({ rows: [], error: null }),
-    studentIds.length
-      ? fetchAll<SignoffRow>((a, b) =>
-          db
-            .from('ac_signoffs')
-            .select(
-              'student_id, qualification_code, unit_code, ac_code, assessor_verdict, iqa_verdict'
-            )
-            .in('student_id', studentIds)
-            .range(a, b)
-        )
-      : Promise.resolve({ rows: [], error: null }),
     gateQuery,
   ]);
 
@@ -213,31 +159,44 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
   for (const g of (gwRes.data ?? []) as GatewayRow[]) {
     if (!gateways.has(g.user_id)) gateways.set(g.user_id, g);
   }
-  const acsByCode = new Map<string, typeof reqRes.rows>();
-  for (const r of reqRes.rows) {
-    const arr = acsByCode.get(r.qualification_code) ?? [];
-    arr.push(r);
-    acsByCode.set(r.qualification_code, arr);
-  }
-  const k = (st: string, q: string, u: string, a: string) => `${st}|${q}|${u}:${a}`;
-  const cov = new Map(
-    covRes.rows.map((c) => [k(c.student_id, c.qualification_code, c.unit_code, c.ac_code), c])
-  );
-  const so = new Map(
-    soRes.rows.map((c) => [k(c.student_id, c.qualification_code, c.unit_code, c.ac_code), c])
-  );
-
   // ELE-1917: the one criterion state per learner (get_portfolio_ac_state), so
   // the portfolio part here agrees with the gate line above it and with what
   // the learner reads. Six at a time; a learner it cannot read (no account,
-  // no qualification) falls back to the college's coverage rows below.
+  // no qualification) has no portfolio figure rather than a stand-in.
   const acStateByUser = new Map<
     string,
-    Array<{ unit_code: string; ac_code: string; state: string; qualification_code: string | null }>
+    Array<{
+      unit_code: string;
+      unit_title: string | null;
+      ac_code: string;
+      state: string;
+      qualification_code: string | null;
+    }>
   >();
   {
     const users = [...uniq.keys()];
-    for (let i = 0; i < users.length; i += 6) {
+    // ELE-1912: one call for every learner (get_portfolio_ac_state_many runs
+    // get_portfolio_ac_state for each, same permission check, compact rows)
+    // instead of one 280 KB call per learner in waves of six. If it is not
+    // there (an older database), fall back to the per-learner loop below.
+    const many = await manyQuery;
+    if (!many.error && many.data && typeof many.data === 'object') {
+      type Compact = { q: string | null; u: Record<string, string | null>; r: [string, string, string][] };
+      for (const [uid, c] of Object.entries(many.data as Record<string, Compact>)) {
+        if (!c?.r?.length) continue;
+        acStateByUser.set(
+          uid,
+          c.r.map(([unit_code, ac_code, state]) => ({
+            unit_code,
+            unit_title: c.u?.[unit_code] ?? null,
+            ac_code,
+            state,
+            qualification_code: c.q,
+          }))
+        );
+      }
+    }
+    for (let i = 0; many.error && i < users.length; i += 6) {
       await Promise.all(
         users.slice(i, i + 6).map(async (uid) => {
           const { data, error } = await db.rpc('get_portfolio_ac_state', { p_user_id: uid });
@@ -251,12 +210,13 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
     const counted = (rowsByUser.get(userId) ?? []).filter(countsTowardsReady);
     const enrolledCode = t.qualificationCode ?? null;
     const code = requirementOf(enrolledCode);
-    const acs = code ? (acsByCode.get(code) ?? []) : [];
     let portfolio: PortfolioCoverage | null = null;
-    const stateRows = (acStateByUser.get(userId) ?? []).filter(
-      (r) => !code || !r.qualification_code || r.qualification_code === code
-    );
-    if (code && acs.length && stateRows.length) {
+    // The criteria are exactly the rows get_portfolio_ac_state returns (it
+    // resolves the learner's qualification itself), so the total and the
+    // passed count match Student 360 and the gate's criteria line. Nothing
+    // from it means not known: student_ac_coverage is never a stand-in.
+    const stateRows = acStateByUser.get(userId) ?? [];
+    if (stateRows.length) {
       const rows: Array<{ unit_code: string; ac_code: string; state: 'evidenced' | 'signed_off' }> =
         [];
       for (const r of stateRows) {
@@ -265,16 +225,7 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
         else if (r.state === 'claimed' || r.state === 'submitted')
           rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'evidenced' });
       }
-      portfolio = portfolioCoverage(acs, rows);
-    } else if (code && t.studentId && acs.length) {
-      const rows: Array<{ unit_code: string; ac_code: string; state: 'evidenced' | 'signed_off' }> =
-        [];
-      for (const ac of acs) {
-        const key = k(t.studentId, code, ac.unit_code, ac.ac_code);
-        const state = acState(cov.get(key), so.get(key));
-        if (state) rows.push({ unit_code: ac.unit_code, ac_code: ac.ac_code, state });
-      }
-      portfolio = portfolioCoverage(acs, rows);
+      portfolio = portfolioCoverage(stateRows, rows);
     }
     models.set(
       userId,
@@ -291,8 +242,7 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
   return {
     models,
     gateways,
-    error:
-      am2Res.error ?? gwRes.error?.message ?? reqRes.error ?? covRes.error ?? soRes.error ?? null,
+    error: am2Res.error ?? gwRes.error?.message ?? null,
   };
 }
 

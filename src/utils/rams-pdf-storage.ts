@@ -12,7 +12,7 @@ export async function saveRAMSPDFToStorage(
   ramsData: RAMSData,
   methodData: Partial<MethodStatementData>,
   status: string = 'draft',
-  opts: { generationJobId?: string } = {}
+  opts: { generationJobId?: string; firmEmployerId?: string } = {}
 ): Promise<{
   success: boolean;
   error?: string;
@@ -55,10 +55,15 @@ export async function saveRAMSPDFToStorage(
     };
     let existingDoc: ExistingDoc | null = null;
     if (opts.generationJobId) {
-      const { data } = await supabase
+      // Employer Hub: the firm's copy, whoever in the firm filed it.
+      const base = supabase
         .from('rams_documents')
-        .select('id, version, pdf_url, status, updated_at, ai_generation_metadata')
-        .eq('user_id', user.id)
+        .select('id, version, pdf_url, status, updated_at, ai_generation_metadata');
+      const { data } = await (
+        opts.firmEmployerId
+          ? base.eq('employer_id' as never, opts.firmEmployerId as never)
+          : base.eq('user_id', user.id)
+      )
         .eq('ai_generation_metadata->>generation_job_id', opts.generationJobId)
         .order('created_at', { ascending: false })
         .limit(1)

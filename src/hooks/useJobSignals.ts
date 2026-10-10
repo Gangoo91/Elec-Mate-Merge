@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
+import { fetchFirmIncidents } from '@/hooks/useIncidents';
 
 /* ==========================================================================
    useJobSignals — cross-section signals surfaced ON the job they relate to,
    so the hub feels like one connected system, not 40 tabs. Per job:
-     • open incidents (employer_incidents.job_id, unresolved)
+     • open incidents (Site Safety near misses / accidents and employer_incidents, unresolved)
      • overdue invoices (employer_invoices.job_id, past due & unpaid)
      • assigned workers with a cert expiring within 30 days
    All employer-scoped by RLS. Small tables → fetch + aggregate client-side
@@ -45,7 +46,11 @@ export function useJobSignals() {
       const cutoff = new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10);
 
       const [incidentsRes, invoicesRes, certsRes] = await Promise.all([
-        supabase.from('employer_incidents').select('job_id, status'),
+        // ELE-2031: Site Safety near misses / accidents on the job, plus any
+        // employer_incidents rows. Managers only; anyone else sees no badge.
+        fetchFirmIncidents()
+          .then((rows) => ({ data: rows.map((r) => ({ job_id: r.job_id, status: r.status })) }))
+          .catch(() => ({ data: [] as { job_id: string | null | undefined; status: string }[] })),
         supabase.rpc('employer_invoices_unified').select('job_id, status, due_date, amount, paid_date'),
         // ELE-1950: the team's Elec-ID store (employer_certifications is LEGACY)
         fetchTeamHeldCredentialRows().then((r) => ({

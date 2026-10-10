@@ -168,9 +168,11 @@ export function DiaryWeeklySummary({
                         : 'nothing logged — add it'
               }`}
               className={cn(
-                'flex h-14 flex-col items-center justify-center gap-1 rounded-xl border text-[12px] font-semibold touch-manipulation',
+                'flex h-14 flex-col items-center justify-center gap-1 rounded-xl border text-[13px] font-semibold touch-manipulation active:bg-white/[0.08]',
+                // Logged takes its colour from the check, not a solid yellow
+                // block (10 Oct: no solid yellow on every row).
                 isLogged
-                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                  ? 'border-emerald-400/60 bg-white/[0.06] text-white'
                   : mark
                     ? 'border-white/[0.35] bg-white/[0.08] text-white'
                     : isToday
@@ -182,9 +184,9 @@ export function DiaryWeeklySummary({
               )}
             >
               {d.label}
-              <span className="flex h-3.5 items-center text-[10.5px] font-semibold leading-none">
+              <span className="flex h-3.5 items-center text-[12px] font-medium leading-none">
                 {isLogged ? (
-                  <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden />
+                  <Check className="h-4 w-4 text-emerald-400" strokeWidth={2.5} aria-hidden />
                 ) : mark ? (
                   dayMarkShort(mark)
                 ) : isToday ? (
@@ -239,7 +241,7 @@ export function DiaryWeeklySummary({
                   setPicked(null);
                   onLogDay(d === todayKey ? null : d);
                 }}
-                className="h-11 rounded-xl bg-elec-yellow px-4 text-[13.5px] font-bold text-black touch-manipulation"
+                className="h-11 rounded-xl border border-white bg-white px-4 text-[13.5px] font-semibold text-black touch-manipulation"
               >
                 {picked === todayKey ? 'Log today' : 'Log this day'}
               </button>

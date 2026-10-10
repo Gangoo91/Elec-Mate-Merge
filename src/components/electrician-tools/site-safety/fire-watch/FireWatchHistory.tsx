@@ -20,6 +20,8 @@ import {
   type Tone,
 } from '@/components/college/primitives';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
+import { FirmRecordBar } from '../common/FirmRecordBar';
+import { useFirmRecordAccess } from '../common/SafetyScope';
 
 interface FireWatchHistoryProps {
   records: FireWatchRecord[];
@@ -107,6 +109,8 @@ function RecordRow({
   const [expanded, setExpanded] = useState(record.status === 'awaiting_follow_up');
   const [showShare, setShowShare] = useState(false);
   const [showFollowUp, setShowFollowUp] = useState(false);
+  // Employer Hub: a worker's shared watch is read and countersigned, not changed.
+  const access = useFirmRecordAccess(record);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = record.job_id
@@ -156,6 +160,12 @@ function RecordRow({
             className="overflow-hidden"
           >
             <div className="px-5 sm:px-6 pb-5 pt-1 space-y-3">
+              <FirmRecordBar
+                table="fire_watch_records"
+                row={record}
+                invalidate={[['fire-watch-records']]}
+              />
+
               {/* The outstanding two-hour check is the one thing on this record
                   that still needs doing, so it sits above the history rather
                   than below it. */}
@@ -168,9 +178,11 @@ function RecordRow({
                           record.follow_up_due_at ? formatTimeGB(record.follow_up_due_at) : '—'
                         }.`}
                   </p>
-                  <SecondaryButton fullWidth onClick={() => setShowFollowUp(true)}>
-                    {followUpDue ? 'Do the two-hour check' : 'Record it early'}
-                  </SecondaryButton>
+                  {access.canEdit && (
+                    <SecondaryButton fullWidth onClick={() => setShowFollowUp(true)}>
+                      {followUpDue ? 'Do the two-hour check' : 'Record it early'}
+                    </SecondaryButton>
+                  )}
                 </div>
               )}
 
@@ -260,12 +272,40 @@ function RecordRow({
 
       {/* Mounted outside the collapse so collapsing the row cannot unmount a
           half-filled sign-off. */}
-      <FollowUpCheckSheet
-        record={record}
-        open={showFollowUp}
-        onClose={() => setShowFollowUp(false)}
-      />
+      {access.canEdit && (
+        <FollowUpCheckSheet
+          record={record}
+          open={showFollowUp}
+          onClose={() => setShowFollowUp(false)}
+        />
+      )}
     </div>
+  );
+}
+
+/**
+ * One outstanding check. Employer Hub: a worker's shared watch is listed so the
+ * firm can see it, but only the worker can sign the check off.
+ */
+function FollowUpDueRow({ record: r, onOpen }: { record: FireWatchRecord; onOpen: () => void }) {
+  const access = useFirmRecordAccess(r);
+  const due = isFollowUpDue(r);
+  return (
+    <SafetyListRow
+      onClick={access.canEdit ? onOpen : undefined}
+      accent={due ? 'red' : 'amber'}
+      title={r.location || `Watch started ${formatTimeGB(r.start_time)}`}
+      subtitle={
+        due
+          ? 'Due now — re-inspect the area, voids and the far side of any partition'
+          : `Due at ${r.follow_up_due_at ? formatTimeGB(r.follow_up_due_at) : '—'}`
+      }
+      trailing={
+        <span className={cn('text-[12px] font-semibold', due ? 'text-red-400' : 'text-amber-400')}>
+          {access.canEdit ? (due ? 'Do it now' : 'Record') : 'Worker to check'}
+        </span>
+      }
+    />
   );
 }
 
@@ -287,32 +327,9 @@ export function FollowUpsDue({ records }: { records: FireWatchRecord[] }) {
         Two-hour check{pending.length !== 1 ? 's' : ''} outstanding · {pending.length}
       </h2>
       <SafetyListCard>
-        {pending.map((r) => {
-          const due = isFollowUpDue(r);
-          return (
-            <SafetyListRow
-              key={r.id}
-              onClick={() => setOpenId(r.id)}
-              accent={due ? 'red' : 'amber'}
-              title={r.location || `Watch started ${formatTimeGB(r.start_time)}`}
-              subtitle={
-                due
-                  ? 'Due now — re-inspect the area, voids and the far side of any partition'
-                  : `Due at ${r.follow_up_due_at ? formatTimeGB(r.follow_up_due_at) : '—'}`
-              }
-              trailing={
-                <span
-                  className={cn(
-                    'text-[12px] font-semibold',
-                    due ? 'text-red-400' : 'text-amber-400'
-                  )}
-                >
-                  {due ? 'Do it now' : 'Record'}
-                </span>
-              }
-            />
-          );
-        })}
+        {pending.map((r) => (
+          <FollowUpDueRow key={r.id} record={r} onOpen={() => setOpenId(r.id)} />
+        ))}
       </SafetyListCard>
       {openRecord && (
         <FollowUpCheckSheet

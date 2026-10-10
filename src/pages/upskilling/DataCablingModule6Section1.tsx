@@ -32,7 +32,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'TIA-568, ISO/IEC 11801 and BS EN 50173 are the three parallel families of generic-cabling standards. They evolved together, cross-reference each other, and use a shared six-zone topology and channel model. Differences are mostly terminology (Category vs Class, ER/TR vs CD/BD/FD) and small numerical tolerances. The UK is BS EN 50173 territory (BS 7671 §444.410 names BS EN 50174-1, 50174-2 and BS EN 50310 verbatim) but a project specifying compliance with TIA + ISO + EN is asking for a system whose Class EA / Cat 6A install certifies under any of them.',
+      'TIA-568, ISO/IEC 11801 and BS EN 50173 are the three parallel families of generic-cabling standards. They evolved together, cross-reference each other, and use a shared six-zone topology and channel model. Differences are mostly terminology (Category vs Class, ER/TR vs CD/BD/FD) and small numerical tolerances. The UK is BS EN 50173 territory (BS 7671 §444.4.10 names BS EN 50174-1, 50174-2 and BS EN 50310 verbatim) but a project specifying compliance with TIA + ISO + EN is asking for a system whose Class EA / Cat 6A install certifies under any of them.',
   },
   {
     id: 'datacabling-m6s1-tia-568-parts',
@@ -51,7 +51,7 @@ const inlineChecks = [
   {
     id: 'datacabling-m6s1-uk-primary-standard',
     question:
-      'Which standard does BS 7671:2018+A4:2026 §444.410 verbatim require to be applied for control, signalling and communication circuits inside buildings?',
+      'Which standard does BS 7671:2018+A4:2026 §444.4.10 verbatim require to be applied for control, signalling and communication circuits inside buildings?',
     options: [
       'ANSI/TIA-568.0-E generic cabling and TIA-942-C data-centre infrastructure.',
       'The ISO/IEC 11801 international generic-cabling series and nothing else.',
@@ -60,7 +60,7 @@ const inlineChecks = [
     ],
     correctIndex: 2,
     explanation:
-      '§444.410 names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 as the three standards whose requirements and recommendations "shall be applied" for control / signalling / communication circuits inside buildings. The wording is "shall" — these are not optional in the UK from 15 April 2026. TIA-568 and ISO/IEC 11801 remain useful international references, but the UK regulatory pointer is to the EN series.',
+      '§444.4.10 names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 as the three standards whose requirements and recommendations "shall be applied" for control / signalling / communication circuits inside buildings. The wording is "shall" — these are not optional in the UK from 15 April 2026. TIA-568 and ISO/IEC 11801 remain useful international references, but the UK regulatory pointer is to the EN series.',
   },
   {
     id: 'datacabling-m6s1-tia-606-vs-607',
@@ -91,7 +91,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Three parallel families, broadly aligned. The UK is a BS EN 50173 jurisdiction in regulatory terms (§444.410 names the EN documents verbatim). On a multi-region project, specifying compliance with all three is normal — a Class EA / Cat 6A install built to BS EN 50174-2 will satisfy TIA-568.2-E and ISO/IEC 11801-2 simultaneously.',
+      'Three parallel families, broadly aligned. The UK is a BS EN 50173 jurisdiction in regulatory terms (§444.4.10 names the EN documents verbatim). On a multi-region project, specifying compliance with all three is normal — a Class EA / Cat 6A install built to BS EN 50174-2 will satisfy TIA-568.2-E and ISO/IEC 11801-2 simultaneously.',
   },
   {
     id: 2,
@@ -128,12 +128,12 @@ const quizQuestions = [
     options: [
       '§528.1 — proximity of wiring systems to other electrical and non-electrical services.',
       '§716.1 — scope of the new power-over-data (PoE) installation requirements.',
-      '§444.410 — the "shall be applied" pointer to BS EN 50174-1, 50174-2 and 50310.',
+      '§444.4.10 — the "shall be applied" pointer to BS EN 50174-1, 50174-2 and 50310.',
       '§545.1.1 — ICT functional earthing and bonding network arrangements.',
     ],
     correctAnswer: 2,
     explanation:
-      '§444.410 is the verbatim cite: "Within a building, the requirements and recommendations of the following standards shall be applied for control, signalling and communication circuits: (a) BS EN 50174-1; (b) BS EN 50174-2; (c) BS EN 50310." It lifts those EN documents from "good practice" to "shall be applied" status for any control / signalling / communication circuit inside a UK building. From 15 April 2026, ignoring them is non-compliance with BS 7671.',
+      '§444.4.10 is the verbatim cite: "Within a building, the requirements and recommendations of the following standards shall be applied for control, signalling and communication circuits: (a) BS EN 50174-1; (b) BS EN 50174-2; (c) BS EN 50310." It lifts those EN documents from "good practice" to "shall be applied" status for any control / signalling / communication circuit inside a UK building. From 15 April 2026, ignoring them is non-compliance with BS 7671.',
   },
   {
     id: 5,
@@ -232,7 +232,7 @@ const faqs = [
         harmonised standard, transposed in the UK as a BS EN. Each gets cited by the relevant
         national legislation and procurement framework. They co-exist because each serves a
         different jurisdictional purpose, and they are kept aligned through liaison committees. BS
-        7671:2018+A4:2026 §444.410 names the EN documents because BS 7671 is a UK standard; a
+        7671:2018+A4:2026 §444.4.10 names the EN documents because BS 7671 is a UK standard; a
         Canadian or US wiring code would point to TIA. Same shape; different names; different legal
         pedigree.
       </>
@@ -284,13 +284,13 @@ const faqs = [
     question: 'Does BS 7671 require BS EN 50173, or just BS EN 50174 and BS EN 50310?',
     answer: (
       <>
-        §444.410 names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 explicitly — those three are the{' '}
-        {`"`}shall be applied{`"`} documents. BS EN 50173 is not named in §444.410, but it is the
+        §444.4.10 names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 explicitly — those three are the{' '}
+        {`"`}shall be applied{`"`} documents. BS EN 50173 is not named in §444.4.10, but it is the
         performance standard that defines the Classes the install must achieve, and it is the
         document referenced from §716.1 ({`"`}balanced, information technology cables and
         accessories primarily designed for data transmission, as specified in BS EN 50173-1{`"`})
         and §716.2(a) as a normative reference. So in practice — yes, BS EN 50173-1 is regulatorily
-        relevant through §716, even though §444.410 stops short of naming it.
+        relevant through §716, even though §444.4.10 stops short of naming it.
       </>
     ),
   },
@@ -318,7 +318,7 @@ const DataCablingModule6Section1 = () => {
 
   useSEO(
     'TIA/EIA 568 and ISO/IEC 11801 Overview | Data Cabling Module 6.1 | Elec-Mate',
-    'The three parallel generic-cabling standards families — ANSI/TIA-568 (.0-E, .1-E, .2-E, .3-E), ISO/IEC 11801 (-1 through -6), and BS EN 50173 — plus TIA-569-E (pathways/spaces), TIA-606-D (administration), TIA-607-E (bonding), TIA-942-C (data centres), and ANSI/TIA-1152-A (test parameters). How they align, where BS 7671:2018+A4:2026 §444.410 fits, and why the UK is a BS EN 50173 / 50174 / 50310 jurisdiction from 15 April 2026.'
+    'The three parallel generic-cabling standards families — ANSI/TIA-568 (.0-E, .1-E, .2-E, .3-E), ISO/IEC 11801 (-1 through -6), and BS EN 50173 — plus TIA-569-E (pathways/spaces), TIA-606-D (administration), TIA-607-E (bonding), TIA-942-C (data centres), and ANSI/TIA-1152-A (test parameters). How they align, where BS 7671:2018+A4:2026 §444.4.10 fits, and why the UK is a BS EN 50173 / 50174 / 50310 jurisdiction from 15 April 2026.'
   );
 
   return (
@@ -333,14 +333,14 @@ const DataCablingModule6Section1 = () => {
           The three parallel generic-cabling standards families — ANSI/TIA-568 series, ISO/IEC 11801
           series, and BS EN 50173 series — plus the supporting TIA documents (-569-E pathways,
           -606-D administration, -607-E bonding, -942-C data centres, -1152-A test parameters). How
-          they align, where they diverge, and why BS 7671:2018+A4:2026 §444.410 makes the UK a BS EN
+          they align, where they diverge, and why BS 7671:2018+A4:2026 §444.4.10 makes the UK a BS EN
           50173 / 50174 / 50310 jurisdiction from 15 April 2026.
         </p>
 
         <TLDR
           points={[
             'Three parallel generic-cabling families exist: ANSI/TIA-568 (North America), ISO/IEC 11801 (international), BS EN 50173 (Europe / UK harmonised). They share the same six-zone topology and the same channel model — differences are mostly terminology and small numerical tolerances.',
-            'BS 7671:2018+A4:2026 §444.410 names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 as the standards that "shall be applied" for control / signalling / communication circuits inside UK buildings — making the EN series regulatorily mandatory from 15 April 2026.',
+            'BS 7671:2018+A4:2026 §444.4.10 names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 as the standards that "shall be applied" for control / signalling / communication circuits inside UK buildings — making the EN series regulatorily mandatory from 15 April 2026.',
             'TIA-568 is on Revision E (TIA-568.0-E generic, .1-E commercial, .2-E balanced TP, .3-E optical fibre). Older drawings citing 568-D, 568-C or 568-B are obsolete reference material. The supporting TIA family covers spaces (-569-E + Addendum 1, 2022), administration (-606-D), bonding (-607-E), data centres (-942-C) and test instruments (-1152-A).',
             'ISO/IEC 11801 is multi-part: -1 general, -2 offices, -3 industrial, -4 residential, -5 data centres, -6 distributed buildings. BS EN 50173 mirrors this part-for-part. The 90 m permanent link / 100 m channel rule is identical across all three families.',
           ]}
@@ -351,7 +351,7 @@ const DataCablingModule6Section1 = () => {
             'Name the three parallel generic-cabling families (ANSI/TIA-568, ISO/IEC 11801, BS EN 50173) and explain that they are aligned, not competing',
             'List the four current parts of the ANSI/TIA-568 Revision-E series (.0-E generic, .1-E commercial, .2-E balanced TP, .3-E optical fibre) and identify which part answers which question',
             'List the multi-part structure of ISO/IEC 11801 / BS EN 50173 (-1 through -6) and pick the right part for offices, industrial, residential, data centres and distributed buildings',
-            'Quote BS 7671:2018+A4:2026 §444.410 verbatim and explain why it makes BS EN 50174-1, BS EN 50174-2 and BS EN 50310 mandatory inside UK buildings from 15 April 2026',
+            'Quote BS 7671:2018+A4:2026 §444.4.10 verbatim and explain why it makes BS EN 50174-1, BS EN 50174-2 and BS EN 50310 mandatory inside UK buildings from 15 April 2026',
             'Identify the supporting TIA standards: ANSI/TIA-569-E + Addendum 1 (2022) for pathways and spaces (18-27 °C / 8-60 % RH for a TR); -606-D (2021) for administration; -607-E (2024) for bonding & earthing; -942-C (2024) for data centres; -1152-A (2016) for test instruments',
             'Distinguish "permanent link" (≤ 90 m, contractor-installed, solid conductor) from "channel" (≤ 100 m, includes cords, what the active equipment sees) — and confirm the model is identical across the three families',
             'Place BS 6701 (UK customer-premises telecoms wiring) in the landscape alongside the EN cabling-performance / installation / bonding documents',
@@ -388,11 +388,11 @@ const DataCablingModule6Section1 = () => {
               <strong>BS EN 50173 (European / UK harmonised).</strong> CENELEC harmonised standard,
               transposed in the UK as BS EN. Mirrors ISO/IEC 11801 part-for-part: -1 general, -2
               offices, -3 industrial, -4 residential, -5 data centres, -6 distributed buildings.
-              THIS is the document the UK regulatory layer (BS 7671 §716 and §444.410) reaches for.
+              THIS is the document the UK regulatory layer (BS 7671 §716 and §444.4.10) reaches for.
             </li>
           </ul>
           <p>
-            The UK status is unambiguous. BS 7671:2018+A4:2026 §444.410 verbatim names BS EN
+            The UK status is unambiguous. BS 7671:2018+A4:2026 §444.4.10 verbatim names BS EN
             50174-1, BS EN 50174-2 and BS EN 50310 as the standards that {`"`}shall be applied
             {`"`} for control / signalling / communication circuits inside buildings — making those
             three EN documents regulatorily mandatory. §716.2(a) names BS EN 50173-1 normatively.
@@ -402,7 +402,7 @@ const DataCablingModule6Section1 = () => {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 · §444.410 (Inside buildings — verbatim)"
+          source="BS 7671:2018+A4:2026 · §444.4.10 (Inside buildings — verbatim)"
           clause={
             <>
               Within a building, the requirements and recommendations of the following standards
@@ -521,7 +521,7 @@ const DataCablingModule6Section1 = () => {
             viewBox="0 0 900 720"
             className="w-full h-auto"
             role="img"
-            aria-label="A three-column cross-reference map of the parallel generic-cabling standards families. The left column shows the ANSI/TIA series — TIA-568.0-E generic, TIA-568.1-E commercial, TIA-568.2-E balanced twisted-pair, TIA-568.3-E optical fibre, TIA-942-C data centres, TIA-606-D administration, TIA-607-E bonding. The centre column shows the ISO/IEC 11801 multi-part series — 11801-1 general, 11801-2 offices, 11801-5 data centres, plus ISO/IEC 14763-2 installation planning. The right column shows the BS EN 50173 multi-part series — 50173-1 general, 50173-2 offices, 50173-5 data centres, BS EN 50174-1 and -2 installation, BS EN 50310 bonding. Horizontal dashed connector lines join broadly equivalent documents across the three columns. A bottom panel notes that BS 7671 444.410 names the EN documents as mandatory for UK installs."
+            aria-label="A three-column cross-reference map of the parallel generic-cabling standards families. The left column shows the ANSI/TIA series — TIA-568.0-E generic, TIA-568.1-E commercial, TIA-568.2-E balanced twisted-pair, TIA-568.3-E optical fibre, TIA-942-C data centres, TIA-606-D administration, TIA-607-E bonding. The centre column shows the ISO/IEC 11801 multi-part series — 11801-1 general, 11801-2 offices, 11801-5 data centres, plus ISO/IEC 14763-2 installation planning. The right column shows the BS EN 50173 multi-part series — 50173-1 general, 50173-2 offices, 50173-5 data centres, BS EN 50174-1 and -2 installation, BS EN 50310 bonding. Horizontal dashed connector lines join broadly equivalent documents across the three columns. A bottom panel notes that BS 7671 444.4.10 names the EN documents as mandatory for UK installs."
           >
             {/* Column header band */}
             <rect
@@ -1166,7 +1166,7 @@ const DataCablingModule6Section1 = () => {
               fontSize="10"
               fontFamily="system-ui"
             >
-              Install practice (★ §444.410)
+              Install practice (★ §444.4.10)
             </text>
 
             <line
@@ -1400,7 +1400,7 @@ const DataCablingModule6Section1 = () => {
               fontSize="10"
               fontFamily="system-ui"
             >
-              ICT bonding (★ §444.410)
+              ICT bonding (★ §444.4.10)
             </text>
 
             <line
@@ -1513,7 +1513,7 @@ const DataCablingModule6Section1 = () => {
               strokeWidth="1.8"
             />
             <text x="494" y="632" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-              ★ Mandatory inside UK buildings — BS 7671 §444.410
+              ★ Mandatory inside UK buildings — BS 7671 §444.4.10
             </text>
 
             <text x="494" y="654" fill="#9CA3AF" fontSize="10" fontFamily="system-ui">
@@ -1624,7 +1624,7 @@ const DataCablingModule6Section1 = () => {
               (engaging/separating) with electrical load.
             </>
           }
-          meaning="§716.2(a) elevates BS EN 50173-1 from 'reference' to 'normative reference' inside BS 7671 itself. Combined with §444.410, this means every PoE / ELV DC over balanced cabling job in the UK from 15 April 2026 is regulated by BS 7671 against the BS EN 50173 / 50174 / 50310 standards. There is no daylight between BS 7671 and the EN cabling standards on this — ignoring one is ignoring the other."
+          meaning="§716.2(a) elevates BS EN 50173-1 from 'reference' to 'normative reference' inside BS 7671 itself. Combined with §444.4.10, this means every PoE / ELV DC over balanced cabling job in the UK from 15 April 2026 is regulated by BS 7671 against the BS EN 50173 / 50174 / 50310 standards. There is no daylight between BS 7671 and the EN cabling standards on this — ignoring one is ignoring the other."
           cite="Verified verbatim from bs7671_regulations.full_text · A4:2026 edition · BS 7671:2018+A4:2026, published 15 April 2026"
         />
 
@@ -1696,7 +1696,7 @@ const DataCablingModule6Section1 = () => {
               'BS 7671:2018+A4:2026',
             ],
           ]}
-          notes="The UK regulatory layer (BS 7671:2018+A4:2026 §444.410, §716.2) names BS EN 50174-1, BS EN 50174-2, BS EN 50310 and BS EN 50173-1 specifically. TIA documents in the leftmost column remain valid international reference for multi-region projects but are not the UK regulatory pointer. The 90 m permanent link / 100 m channel rule is identical across all three families."
+          notes="The UK regulatory layer (BS 7671:2018+A4:2026 §444.4.10, §716.2) names BS EN 50174-1, BS EN 50174-2, BS EN 50310 and BS EN 50173-1 specifically. TIA documents in the leftmost column remain valid international reference for multi-region projects but are not the UK regulatory pointer. The 90 m permanent link / 100 m channel rule is identical across all three families."
         />
 
         <InlineCheck
@@ -1760,11 +1760,11 @@ const DataCablingModule6Section1 = () => {
             <li>
               <strong>Layer 2 — Installation practice.</strong> How is it installed? BS EN 50174
               series (-1 specification &amp; QA, -2 inside buildings, -3 outside buildings).
-              Mandatory under BS 7671 §444.410.
+              Mandatory under BS 7671 §444.4.10.
             </li>
             <li>
               <strong>Layer 3 — Bonding and earthing.</strong> How is it bonded for ICT? BS EN
-              50310. Mandatory under BS 7671 §444.410 and coupled to BS 7671 §545 (functional
+              50310. Mandatory under BS 7671 §444.4.10 and coupled to BS 7671 §545 (functional
               earthing) and §444 (EMC / segregation).
             </li>
             <li>
@@ -1832,7 +1832,7 @@ const DataCablingModule6Section1 = () => {
               targets at the relevant frequency. Add the wider TIA family where they apply:
               TIA-569-E + Addendum 1 (2022) for the TR (which is also BS EN 50174-2 §6); TIA-606-D
               (2021) for administration (also BS EN 50174-1 §6); TIA-607-E (2024) for bonding (also
-              BS EN 50310 — and BS 7671 §444.410 makes that EN document mandatory in any case).
+              BS EN 50310 — and BS 7671 §444.4.10 makes that EN document mandatory in any case).
             </>
           }
           whyItMatters={
@@ -1853,7 +1853,7 @@ const DataCablingModule6Section1 = () => {
           title="Worth remembering"
           points={[
             'Three parallel families: ANSI/TIA-568 (North America), ISO/IEC 11801 (international), BS EN 50173 (Europe / UK harmonised). Same six-zone topology, same channel model, broadly aligned Classes/Categories.',
-            'BS 7671:2018+A4:2026 §444.410 (verbatim) names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 as standards that "shall be applied" inside UK buildings — making them regulatorily mandatory from 15 April 2026.',
+            'BS 7671:2018+A4:2026 §444.4.10 (verbatim) names BS EN 50174-1, BS EN 50174-2 and BS EN 50310 as standards that "shall be applied" inside UK buildings — making them regulatorily mandatory from 15 April 2026.',
             'TIA-568 is on Revision E: .0-E generic (2020), .1-E commercial, .2-E balanced TP (2024), .3-E optical fibre. Older B/C/D revisions are obsolete reference material.',
             'ISO/IEC 11801 and BS EN 50173 are multi-part: -1 general, -2 offices, -3 industrial, -4 residential, -5 data centres, -6 distributed buildings. Pick parts -1 + the application-specific part for any given job.',
             'TR environmental envelope: 18-27 °C / 8-60 % RH non-condensing per TIA-569-E + Addendum 1 (2022) — NOT the older 18-24 °C / 40-55 % figures.',

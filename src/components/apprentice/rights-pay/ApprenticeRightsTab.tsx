@@ -19,7 +19,7 @@ const ApprenticeRightsTab = () => {
       items: [
         'A fixed number of off-the-job training hours set by your apprenticeship standard (1,066 hours for an Installation & Maintenance Electrician, ST0152) for starts from 1 August 2025 — delivered in paid working time. Starts before that date stay on the older 20% / 6-hours-a-week rule',
         'Access to structured learning programme aligned to your specific apprenticeship standard',
-        'Regular progress reviews every 12 weeks with documented feedback and development planning',
+        'Regular progress reviews at least every 3 months with documented feedback and development planning',
         'Qualified mentor or supervisor support throughout your apprenticeship journey',
         'All training costs covered by employer (tuition fees, materials, assessments, EPA)',
         'Time off for college/training centre attendance without loss of pay',
@@ -235,10 +235,8 @@ const ApprenticeRightsTab = () => {
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-          Know your rights
-        </span>
+      <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-elec-yellow">Know your rights</span>
         <p className="text-[14px] text-white leading-relaxed">
           These rights are protected by law. Understanding them helps ensure you receive fair
           treatment throughout your apprenticeship.
@@ -251,18 +249,14 @@ const ApprenticeRightsTab = () => {
             key={index}
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              {section.category}
-            </span>
+            <span className="text-[13px] font-semibold text-white">{section.category}</span>
             {renderBulletList(section.items)}
           </div>
         ))}
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-          Electrical safety rights
-        </span>
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-red-300">Electrical safety rights</span>
         <p className="text-[14px] text-white leading-relaxed">
           As an electrical apprentice, you have specific safety rights beyond general employment
           law. The Electricity at Work Regulations 1989 place strict duties on your employer:
@@ -270,8 +264,8 @@ const ApprenticeRightsTab = () => {
         {renderBulletList(electricalSafetyRights)}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Contract, agreement & employment law
         </span>
         <div className="space-y-3">
@@ -287,8 +281,8 @@ const ApprenticeRightsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Discrimination & harassment protection
         </span>
         <p className="text-[14px] text-white leading-relaxed">
@@ -308,9 +302,7 @@ const ApprenticeRightsTab = () => {
           ))}
         </div>
         <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-            Important
-          </span>
+          <span className="text-[13px] font-semibold text-red-300">Important</span>
           <p className="text-[14px] text-white leading-relaxed">
             Banter is not an excuse. If comments make you uncomfortable, they can constitute
             harassment regardless of intent. You do not need to prove the person meant to offend —
@@ -320,8 +312,8 @@ const ApprenticeRightsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-red-300">
           Common rights violations & what to do
         </span>
         <ul className="space-y-3">
@@ -331,15 +323,11 @@ const ApprenticeRightsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
             >
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Issue
-                </span>
+                <span className="text-[13px] font-semibold text-white">Issue</span>
                 <p className="text-[14px] text-white leading-relaxed">{violation.issue}</p>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                  Action
-                </span>
+                <span className="text-[13px] font-semibold text-elec-yellow">Action</span>
                 <p className="text-[14px] text-white leading-relaxed">{violation.action}</p>
               </div>
             </li>
@@ -347,10 +335,8 @@ const ApprenticeRightsTab = () => {
         </ul>
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-          Remember
-        </span>
+      <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-elec-yellow">Remember</span>
         <p className="text-[14px] text-white leading-relaxed">
           Your apprenticeship should be a positive learning experience. If you're experiencing
           problems, don't suffer in silence — help is available and using it shows strength, not

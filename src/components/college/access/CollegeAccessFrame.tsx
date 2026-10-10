@@ -47,18 +47,49 @@ const ENDED_HELP: PageHelpContent = {
 const MAIL = 'founder@elec-mate.com';
 
 export function CollegeAccessFrame({ children }: { children: ReactNode }) {
-  const { profile } = useAuth();
+  const { profile, user } = useAuth();
   const isPlatformAdmin = !!(profile as { admin_role?: string | null } | null)?.admin_role;
   const { data: acting } = useActingCollege();
   const { data: access } = useMyCollegeAccess();
 
+  const viewingAs = acting?.mode === 'view_as' && !!acting.as_user_id;
   const actingProfile = useMemo(
     () =>
       acting && profile
-        ? ({ ...profile, college_id: acting.college_id, college_role: 'admin' } as typeof profile)
+        ? viewingAs
+          ? // ELE-1966: the hub as this named staff member (read-only on the server).
+            ({
+              ...profile,
+              id: acting.as_user_id,
+              full_name: acting.as_name ?? profile.full_name,
+              college_id: acting.college_id,
+              college_role: acting.as_role ?? 'tutor',
+            } as typeof profile)
+          : ({ ...profile, college_id: acting.college_id, college_role: 'admin' } as typeof profile)
         : null,
-    [acting, profile]
+    [acting, profile, viewingAs]
   );
+  const viewAsUser = useMemo(
+    () =>
+      viewingAs && user
+        ? ({ ...user, id: acting!.as_user_id as string } as typeof user)
+        : undefined,
+    [viewingAs, user, acting]
+  );
+
+  if (acting && actingProfile && viewingAs) {
+    return (
+      <AuthOverrideProvider profile={actingProfile} user={viewAsUser}>
+        <ViewAsBar
+          name={acting.as_name ?? 'this staff member'}
+          role={acting.as_role ?? null}
+          college={acting.college_name}
+          until={acting.expires_at}
+        />
+        {children}
+      </AuthOverrideProvider>
+    );
+  }
 
   if (acting && actingProfile) {
     return (
@@ -126,6 +157,69 @@ function ActingBar({ name, until }: { name: string; until: string }) {
           className={cn(COLLEGE_BTN, 'h-11')}
         >
           {busy ? 'Stopping…' : 'Stop acting'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** ELE-1966: support is viewing as a named staff member. Read-only, logged. */
+function ViewAsBar({
+  name,
+  role,
+  college,
+  until,
+}: {
+  name: string;
+  role: string | null;
+  college: string;
+  until: string;
+}) {
+  const { stopActing } = useActingControls();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false);
+  const stop = async () => {
+    setBusy(true);
+    try {
+      await stopActing();
+      navigate('/admin/colleges');
+    } catch (e) {
+      toast({
+        title: 'Could not stop',
+        description: e instanceof Error ? e.message : String(e),
+        variant: 'destructive',
+      });
+    } finally {
+      setBusy(false);
+    }
+  };
+  const time = new Date(until).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  return (
+    <div
+      role="status"
+      data-testid="view-as-bar"
+      className="sticky top-0 z-40 mb-3 border-b border-white/[0.14] bg-elec-dark"
+    >
+      <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-4 py-2 sm:px-8">
+        <p className="text-[13px] leading-snug text-white">
+          <span className="mr-2 inline-flex items-center rounded-full border border-elec-yellow px-2 py-0.5 text-[12px] font-semibold text-elec-yellow">
+            Read only
+          </span>
+          <span className="font-semibold">
+            Viewing {college} as {name}
+            {role ? ` (${role.replace(/_/g, ' ')})` : ''}.
+          </span>{' '}
+          Nothing can be changed. {college} allowed this, and it is in their activity log. Ends at{' '}
+          {time}.
+        </p>
+        <button
+          type="button"
+          onClick={() => void stop()}
+          disabled={busy}
+          className={cn(COLLEGE_BTN, 'h-11')}
+        >
+          {busy ? 'Stopping…' : 'Stop viewing'}
         </button>
       </div>
     </div>

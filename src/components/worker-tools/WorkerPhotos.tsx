@@ -17,6 +17,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { uploadReportPhoto } from '@/hooks/useWorkerSelfService';
 import { compressImageForUpload } from '@/utils/imageUploadUtils';
 import { useStorageUrls } from '@/utils/storageUrls';
+import { isOfflineError } from '@/lib/workerOfflineCache';
 
 interface PickedPhoto {
   key: string;
@@ -28,6 +29,8 @@ interface PickedPhoto {
   failed: boolean;
   /** Uploaded in this session — removing it also deletes the file. */
   fresh: boolean;
+  /** ELE-1828: no signal — compressed and kept on the phone, sent with the note. */
+  held?: boolean;
 }
 
 export function WorkerPhotoPicker({
@@ -38,11 +41,17 @@ export function WorkerPhotoPicker({
   max = 6,
   label = 'Add photos',
   disabled,
+  onHeldChange,
 }: {
   jobId: string;
   initialPaths?: string[];
   onChange: (paths: string[]) => void;
   onBusyChange?: (busy: boolean) => void;
+  /**
+   * ELE-1828: when given, a photo that can't upload (no signal) is kept on the
+   * phone instead of failing, and handed here so the outbox sends it later.
+   */
+  onHeldChange?: (files: File[]) => void;
   max?: number;
   label?: string;
   disabled?: boolean;
@@ -63,9 +72,13 @@ export function WorkerPhotoPicker({
   const { urls: savedUrls } = useStorageUrls('visual-uploads', savedPaths);
 
   const busy = items.some((i) => i.uploading);
+  const heldFilesRef = useRef(new Map<string, File>());
   useEffect(() => {
     onChange(items.filter((i) => i.path && !i.failed).map((i) => i.path as string));
     onBusyChange?.(busy);
+    onHeldChange?.(
+      items.filter((i) => i.held).map((i) => heldFilesRef.current.get(i.key)).filter(Boolean) as File[]
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
@@ -79,18 +92,33 @@ export function WorkerPhotoPicker({
     []
   );
 
+  const hold = (key: string, small: File) => {
+    heldFilesRef.current.set(key, small);
+    setItems((prev) =>
+      prev.map((i) => (i.key === key ? { ...i, uploading: false, failed: false, held: true } : i))
+    );
+  };
+
   const upload = async (key: string, file: File) => {
+    const small = await compressImageForUpload(file).catch(() => file);
+    if (onHeldChange && typeof navigator !== 'undefined' && navigator.onLine === false) {
+      hold(key, small);
+      return;
+    }
     try {
-      const small = await compressImageForUpload(file).catch(() => file);
       const path = await uploadReportPhoto(jobId, small, 'notes');
       setItems((prev) =>
         prev.map((i) => (i.key === key ? { ...i, path, uploading: false, failed: false } : i))
       );
     } catch (e) {
+      const msg = (e as Error)?.message || '';
+      if (onHeldChange && isOfflineError(e)) {
+        hold(key, small);
+        return;
+      }
       setItems((prev) =>
         prev.map((i) => (i.key === key ? { ...i, uploading: false, failed: true } : i))
       );
-      const msg = (e as Error)?.message || '';
       toast.error(
         /fetch|network/i.test(msg)
           ? 'Photo didn’t upload. No signal. Tap it to try again.'
@@ -134,6 +162,7 @@ export function WorkerPhotoPicker({
     setItems((prev) => prev.filter((i) => i.key !== key));
     if (item?.preview) URL.revokeObjectURL(item.preview);
     filesRef.current.delete(key);
+    heldFilesRef.current.delete(key);
     // A photo uploaded in this session and never saved anywhere — tidy it up.
     if (item?.fresh && item.path) {
       supabase.storage.from('visual-uploads').remove([item.path]).catch(() => undefined);
@@ -154,6 +183,11 @@ export function WorkerPhotoPicker({
                 className="relative aspect-square overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.04]"
               >
                 {src && <img src={src} alt="" className="h-full w-full object-cover" />}
+                {i.held && (
+                  <span className="absolute inset-x-1 bottom-1 rounded-lg bg-black/75 px-1.5 py-1 text-center text-[11px] font-semibold leading-tight text-white">
+                    On this phone
+                  </span>
+                )}
                 {i.uploading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/55">
                     <Loader2 className="h-6 w-6 animate-spin text-white" />

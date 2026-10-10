@@ -88,7 +88,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Knowledge Quiz</h1>
-              <p className="text-[10px] text-white">2391-style questions</p>
+              <p className="text-[12px] text-white">2391-style questions</p>
             </div>
           </div>
         </div>
@@ -112,15 +112,15 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
           <div className="grid grid-cols-3 gap-3">
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-center">
               <p className="text-lg font-black text-yellow-400">460</p>
-              <p className="text-[10px] text-white">Questions</p>
+              <p className="text-[12px] text-white">Questions</p>
             </div>
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-center">
               <p className="text-lg font-black text-white">10</p>
-              <p className="text-[10px] text-white">Topics</p>
+              <p className="text-[12px] text-white">Topics</p>
             </div>
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-center">
               <p className="text-lg font-black text-white">70%</p>
-              <p className="text-[10px] text-white">Pass Mark</p>
+              <p className="text-[12px] text-white">Pass Mark</p>
             </div>
           </div>
         </motion.div>

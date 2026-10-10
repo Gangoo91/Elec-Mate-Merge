@@ -24,7 +24,7 @@ const StepNavigation = ({
           onClick={handlePrevious}
           variant="outline"
           disabled={currentStep === 1}
-          className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white/70 touch-manipulation"
+          className="h-11 md:h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white touch-manipulation"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Previous
@@ -33,7 +33,7 @@ const StepNavigation = ({
         <Button
           onClick={handleNext}
           disabled={currentStep === totalSteps}
-          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
+          className="h-11 md:h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white"
         >
           Next
           <ArrowRight className="h-4 w-4 ml-2" />

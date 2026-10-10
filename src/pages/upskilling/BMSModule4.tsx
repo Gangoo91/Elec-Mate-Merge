@@ -6,41 +6,46 @@ import useSEO from '@/hooks/useSEO';
 const sections = [
   {
     id: 1,
-    title: 'Integration with DALI, 1–10V and smart lighting',
+    title: 'Lighting control',
     icon: Lightbulb,
-    description: 'Lighting protocols, addressing and integration methods.',
+    description:
+      'How lighting is switched and dimmed in commercial buildings, how a DALI bus is wired and organised, and what the lighting system can tell the BMS.',
   },
   {
     id: 2,
-    title: 'Daylight harvesting and PIR logic',
+    title: 'Daylight and presence detection',
     icon: Sun,
-    description: 'Automated lighting control using daylight sensors and occupancy.',
+    description:
+      'The presence and daylight sensors that decide how lighting behaves, and how to fit and set them up so they answer correctly.',
   },
   {
     id: 3,
-    title: 'Access control basics and door relays',
+    title: 'Access control interfaces',
     icon: Lock,
-    description: 'Security integration, door release relays and credentials.',
+    description:
+      'What the BMS sees of the doors, how it gets that information, and why it is kept well away from releasing them.',
   },
   {
     id: 4,
-    title: 'Shading, blinds and façade automation',
+    title: 'Blinds and shading',
     icon: Blinds,
-    description: 'Automated shading and façade systems for solar gain control.',
+    description:
+      'Why buildings move their blinds, how the motors are wired and interlocked, how the BMS talks to them, and what keeps them safe in the wind.',
   },
   {
     id: 5,
-    title: 'Combined energy saving scenarios (HVAC + lighting)',
+    title: 'Metering and sub-metering',
     icon: Zap,
-    description: 'Integrated optimisation across HVAC, lighting and shading.',
+    description:
+      'Why a building is split into metered end uses, what the regulations ask for, and how the meters you fit get their readings into the BMS accurately.',
   },
 ];
 
 export default function BMSModule4() {
   useSEO({
-    title: 'Module 4: Lighting, Access & Environmental Control | BMS Course | Elec-Mate',
+    title: 'Module 4: Lighting, access, blinds and metering | BMS course | Elec-Mate',
     description:
-      'Integrated lighting, access control, shading and combined energy saving strategies for modern BMS deployments.',
+      'Lighting control and DALI, daylight and presence detection, access and shading interfaces, and sub-metering.',
   });
 
   return (
@@ -48,15 +53,15 @@ export default function BMSModule4() {
       backTo="../bms-course"
       backLabel="Building management systems"
       moduleNumber={4}
-      title="Lighting, access and environmental control"
-      description="Integrated lighting, security and environmental subsystems within the BMS."
+      title="Lighting, access, blinds and metering"
+      description="Lighting control and DALI, daylight and presence detection, access and shading interfaces, and the metering Approved Document L expects."
       tone="yellow"
       sectionsCount={sections.length}
-      duration="55 mins"
+      duration="2 hrs 30 mins"
       prevModuleHref="../bms-module-3"
-      prevModuleLabel="HVAC integration and scheduling logic"
+      prevModuleLabel="Controlling heating, ventilation and air conditioning"
       nextModuleHref="../bms-module-5"
-      nextModuleLabel="Communication protocols: BACnet, Modbus, KNX"
+      nextModuleLabel="Networks and protocols"
     >
       {sections.map((section, index) => (
         <SectionCard

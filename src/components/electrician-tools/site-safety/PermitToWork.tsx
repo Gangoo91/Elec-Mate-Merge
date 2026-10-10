@@ -65,6 +65,8 @@ import { LoadMoreButton } from './common/LoadMoreButton';
 import { ReadinessGate } from './common/ReadinessGate';
 import { CloseOutSheet } from './common/CloseOutSheet';
 import { JobLinkField } from './common/JobLinkField';
+import { FirmRecordBar } from './common/FirmRecordBar';
+import { useFirmRecordAccess, type FirmRecordFields } from './common/SafetyScope';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 import { EditableList } from './common/EditableList';
@@ -117,6 +119,8 @@ interface Permit {
   created_at: string;
   closed_at?: string;
   closed_by?: string;
+  /** The firm a permit is shared with (Site Safety in both hubs). */
+  firm: FirmRecordFields;
 }
 
 // ─── Constants ───
@@ -443,6 +447,14 @@ export function PermitToWork({
     created_at: p.created_at,
     closed_at: p.closed_at || undefined,
     closed_by: p.closed_by || undefined,
+    firm: {
+      user_id: p.user_id,
+      employer_id: p.employer_id ?? null,
+      employer_job_id: p.employer_job_id ?? null,
+      firm_countersigned_by: p.firm_countersigned_by ?? null,
+      firm_countersigned_name: p.firm_countersigned_name ?? null,
+      firm_countersigned_at: p.firm_countersigned_at ?? null,
+    },
   }));
 
   // View state
@@ -498,6 +510,10 @@ export function PermitToWork({
   const [linkedRamsTitle, setLinkedRamsTitle] = useState<string | null>(null);
   const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  // Firm job (employer_jobs): set in the Employer Hub, or by a worker sharing
+  // the permit with their firm.
+  const [employerJobId, setEmployerJobId] = useState<string | null>(launch?.employerJobId ?? null);
+  const [employerJobTitle, setEmployerJobTitle] = useState<string | null>(null);
   const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
@@ -511,6 +527,8 @@ export function PermitToWork({
   const [closeOutName, setCloseOutName] = useState('');
 
   const { data: revisions = [] } = usePermitRevisions(viewingPermit?.id ?? null);
+  // Employer Hub: a worker's shared permit is read and countersigned, not changed.
+  const viewingAccess = useFirmRecordAccess(viewingPermit?.firm);
 
   const relatedFireWatches = useMemo(
     () =>
@@ -635,6 +653,8 @@ export function PermitToWork({
     setLinkedRamsTitle(null);
     setLinkedJobId(null);
     setLinkedJobTitle(null);
+    setEmployerJobId(null);
+    setEmployerJobTitle(null);
     setReceiverRemote(false);
   };
 
@@ -679,6 +699,8 @@ export function PermitToWork({
     setLinkedRamsTitle(permit.linked_rams_title);
     setLinkedJobId(permit.job_id);
     setLinkedJobTitle(jobTitleFor(permit.job_id));
+    setEmployerJobId(permit.firm.employer_job_id ?? null);
+    setEmployerJobTitle(null);
     setStepDir('fwd');
     setWizardStep(1);
     setViewingPermit(null);
@@ -712,6 +734,8 @@ export function PermitToWork({
     setLinkedRamsTitle(permit.linked_rams_title);
     setLinkedJobId(permit.job_id);
     setLinkedJobTitle(jobTitleFor(permit.job_id));
+    setEmployerJobId(permit.firm.employer_job_id ?? null);
+    setEmployerJobTitle(null);
     setReceiverRemote(false); // amendments are re-signed in person
     setStepDir('fwd');
     setWizardStep(1);
@@ -812,6 +836,7 @@ export function PermitToWork({
         linked_rams_id: linkedRamsId,
         linked_rams_title: linkedRamsTitle,
         job_id: linkedJobId,
+        ...(employerJobId ? { employer_job_id: employerJobId } : {}),
         acceptance_status: receiverRemote ? 'awaiting_receiver' : 'accepted',
       });
       clearDraft();
@@ -849,6 +874,7 @@ export function PermitToWork({
           linked_rams_id: linkedRamsId,
           linked_rams_title: linkedRamsTitle,
           job_id: linkedJobId,
+          employer_job_id: employerJobId,
         },
       });
       setShowWizard(false);
@@ -1107,6 +1133,12 @@ export function PermitToWork({
               onSelect={(id, title) => {
                 setLinkedJobId(id);
                 setLinkedJobTitle(title);
+              }}
+              employerJobId={employerJobId}
+              employerJobTitle={employerJobTitle}
+              onSelectEmployerJob={(id, title) => {
+                setEmployerJobId(id);
+                setEmployerJobTitle(title);
               }}
             />
           </div>
@@ -1684,24 +1716,31 @@ export function PermitToWork({
                   )}
 
                   {/* Awaiting remote receiver acceptance */}
-                  {viewingPermit.acceptance_status === 'awaiting_receiver' && (
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-amber-500/30 space-y-2.5">
-                      <p className="text-[12px] text-white">
-                        Awaiting receiver acceptance — the receiver hasn't signed yet. Work
-                        shouldn't start until they accept.
-                      </p>
-                      <SecondaryButton
-                        fullWidth
-                        disabled={linkLoading}
-                        onClick={() => openSignLink(viewingPermit.id)}
-                      >
-                        {linkLoading ? 'Preparing…' : 'Send signing link'}
-                      </SecondaryButton>
-                    </div>
-                  )}
+                  {viewingPermit.acceptance_status === 'awaiting_receiver' &&
+                    viewingAccess.canEdit && (
+                      <div className="p-3 rounded-xl bg-white/[0.03] border border-amber-500/30 space-y-2.5">
+                        <p className="text-[12px] text-white">
+                          Awaiting receiver acceptance — the receiver hasn't signed yet. Work
+                          shouldn't start until they accept.
+                        </p>
+                        <SecondaryButton
+                          fullWidth
+                          disabled={linkLoading}
+                          onClick={() => openSignLink(viewingPermit.id)}
+                        >
+                          {linkLoading ? 'Preparing…' : 'Send signing link'}
+                        </SecondaryButton>
+                      </div>
+                    )}
+
+                  <FirmRecordBar
+                    table="permits_to_work"
+                    row={{ id: viewingPermit.id, ...viewingPermit.firm }}
+                    invalidate={[['permits-to-work']]}
+                  />
 
                   {/* Lifecycle actions */}
-                  {isLive && (
+                  {isLive && viewingAccess.canEdit && (
                     <div className="space-y-2">
                       <div className="flex gap-2">
                         <SecondaryButton fullWidth onClick={() => startAmend(viewingPermit)}>
@@ -1922,6 +1961,7 @@ export function PermitToWork({
                     />
                   )}
                   {viewingPermit.status === 'active' &&
+                    viewingAccess.canEdit &&
                     viewingPermit.approval_status === 'not_required' && (
                       <SecondaryButton
                         fullWidth
@@ -1936,7 +1976,7 @@ export function PermitToWork({
                         Request supervisor approval
                       </SecondaryButton>
                     )}
-                  {viewingPermit.approval_status === 'pending' && (
+                  {viewingPermit.approval_status === 'pending' && viewingAccess.canEdit && (
                     <SecondaryButton fullWidth onClick={() => setShowApprovalSheet(true)}>
                       Review and approve
                     </SecondaryButton>

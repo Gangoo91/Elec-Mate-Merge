@@ -5,6 +5,16 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { captureException } from '../_shared/sentry.ts';
 
+/** Evidence a college must keep for a learner on its roll (funding rules 345-348). */
+const COLLEGE_EVIDENCE_BUCKETS = new Set([
+  'portfolio-evidence',
+  'college-learner-evidence',
+  'evidence-files',
+  'portfolio-exports',
+  'signature-captures',
+  'test-sheets',
+]);
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -58,6 +68,20 @@ Deno.serve(async (req: Request): Promise<Response> => {
       };
 
       try {
+        // A learner on a college roll: the college must keep their evidence
+        // (apprenticeship funding rules 2026/27 paras 345-348; UK GDPR 17(3)(b)).
+        // Their own account data still goes; evidence files and college records
+        // stay, and the login is anonymised and locked rather than deleted.
+        const { data: keepCollege, error: keepError } = await supabaseAdmin.rpc(
+          'gdpr_user_has_college_record',
+          { p_user_id: userId }
+        );
+        if (keepError) {
+          throw new Error(`college record check failed: ${keepError.message}`);
+        }
+        const keep = keepCollege === true;
+        summary.collegeRecordKept = keep;
+
         // --- 1. Storage objects (real S3 deletion via the storage API) ---
         const { data: objects, error: listError } = await supabaseAdmin.rpc(
           'gdpr_list_user_storage',
@@ -69,6 +93,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
         const byBucket = new Map<string, string[]>();
         for (const obj of (objects ?? []) as StorageObject[]) {
+          if (keep && COLLEGE_EVIDENCE_BUCKETS.has(obj.bucket_id)) continue;
           const list = byBucket.get(obj.bucket_id) ?? [];
           list.push(obj.object_name);
           byBucket.set(obj.bucket_id, list);
@@ -97,15 +122,35 @@ Deno.serve(async (req: Request): Promise<Response> => {
           }
 
           // --- 3. Delete the auth user (cascades profiles and remaining data) ---
-          const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(userId);
-          if (deleteError) {
-            throw new Error(`auth deletion failed: ${deleteError.message}`);
+          // For a college learner: anonymise and lock it instead, so the
+          // college's records keep their link and nothing cascades away.
+          if (keep) {
+            const { error: anonError } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+              email: `deleted-${userId}@deleted.elec-mate.invalid`,
+              phone: '',
+              user_metadata: {},
+              ban_duration: '876000h',
+            });
+            if (anonError) {
+              throw new Error(`auth anonymise failed: ${anonError.message}`);
+            }
+            // Done: don't pick this account up again tomorrow. The audit row
+            // below records that the deletion request was carried out.
+            await supabaseAdmin
+              .from('profiles')
+              .update({ deletion_requested_at: null })
+              .eq('id', userId);
+          } else {
+            const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(userId);
+            if (deleteError) {
+              throw new Error(`auth deletion failed: ${deleteError.message}`);
+            }
           }
 
           // --- 4. Audit record with no personal data (user_id must be null: user is gone) ---
           await supabaseAdmin.from('security_audit_log').insert({
             user_id: null,
-            action: 'gdpr_account_purged',
+            action: keep ? 'gdpr_account_anonymised_college_record_kept' : 'gdpr_account_purged',
             table_name: 'profiles',
             record_id: userId,
             metadata: {

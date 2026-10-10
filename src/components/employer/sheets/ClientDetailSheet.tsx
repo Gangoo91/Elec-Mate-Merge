@@ -1,11 +1,10 @@
 import { useState, type ReactNode } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { toast } from '@/hooks/use-toast';
 import {
-  SheetShell,
   StatStrip,
   ListCard,
   ListCardHeader,
@@ -55,11 +54,14 @@ import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
 import { PortalShareCard } from '@/components/employer/client-portal/PortalShareCard';
-import { CustomerThreadCard } from '@/components/employer/client-portal/CustomerThreadCard';
+// ELE-2070: one thread for portal, texts, WhatsApp and email (replaces CustomerThreadCard here).
+import { CustomerConversationCard } from '@/components/employer/inbox/CustomerConversationCard';
 
 const fmt = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 const fmtDate = (d: string | null) =>
-  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+  d
+    ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '—';
 
 const statusTone = (s: string): Tone => {
   const v = s.toLowerCase();
@@ -198,7 +200,11 @@ export function ClientDetailSheet({
   const submitLog = async () => {
     if (!actText.trim()) return;
     try {
-      await logActivity.mutateAsync({ client_id: client.id, type: actType, summary: actText.trim() });
+      await logActivity.mutateAsync({
+        client_id: client.id,
+        type: actType,
+        summary: actText.trim(),
+      });
       setActText('');
     } catch {
       toast({ title: 'Could not save', description: 'Please try again.', variant: 'destructive' });
@@ -216,7 +222,11 @@ export function ClientDetailSheet({
       setTaskTitle('');
       setTaskDue('');
     } catch {
-      toast({ title: 'Could not add follow-up', description: 'Please try again.', variant: 'destructive' });
+      toast({
+        title: 'Could not add follow-up',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -230,7 +240,11 @@ export function ClientDetailSheet({
       setReviewText('');
       setReviewRating(5);
     } catch {
-      toast({ title: 'Could not save review', description: 'Please try again.', variant: 'destructive' });
+      toast({
+        title: 'Could not save review',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -283,501 +297,506 @@ export function ClientDetailSheet({
 
   return (
     <>
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <SheetShell
-          eyebrow="Client"
-          title={client.name}
-          description={client.company_name || undefined}
-        >
-          <div className="space-y-4">
-            {/* Lifetime value / outstanding / pipeline — real numbers */}
-            <StatStrip
-              columns={3}
-              stats={[
-                { label: 'Lifetime paid', value: fmt(client.total_paid), accent: true },
-                {
-                  label: 'Outstanding',
-                  value: fmt(client.outstanding),
-                  tone: client.outstanding > 0 ? 'amber' : 'emerald',
-                },
-                { label: 'Open quotes', value: fmt(client.open_quote_value), tone: 'cyan' },
-              ]}
-            />
+      <FormSheet
+        open={open}
+        onOpenChange={onOpenChange}
+        title={client.name}
+        description={client.company_name || undefined}
+        width="wide"
+        bodyClassName="pt-1"
+        footer={
+          <div className="flex gap-2">
+            <SecondaryButton onClick={() => setShowJob(true)} className="flex-1 lg:flex-none">
+              <Briefcase className="h-4 w-4 mr-1.5" />
+              New job
+            </SecondaryButton>
+            <PrimaryButton
+              data-help="clients.new-quote"
+              onClick={() => setShowQuote(true)}
+              className="flex-1"
+            >
+              <FileText className="h-4 w-4 mr-1.5" />
+              New quote
+            </PrimaryButton>
+          </div>
+        }
+      >
+        <div className="space-y-5">
+          {/* Lifetime value / outstanding / pipeline — real numbers */}
+          <StatStrip
+            columns={3}
+            stats={[
+              { label: 'Lifetime paid', value: fmt(client.total_paid) },
+              {
+                label: 'Outstanding',
+                value: fmt(client.outstanding),
+                tone: client.outstanding > 0 ? 'yellow' : undefined,
+              },
+              { label: 'Open quotes', value: fmt(client.open_quote_value) },
+            ]}
+          />
 
-            {/* Quick actions — reach + create, pre-filled where possible */}
-            <div className="grid grid-cols-2 gap-2" data-help="clients.actions">
-              <SecondaryButton
-                onClick={() => client.phone && openExternalUrl(`tel:${client.phone}`)}
-                disabled={!client.phone}
-                fullWidth
-              >
-                <Phone className="h-4 w-4 mr-1.5" />
-                Call
-              </SecondaryButton>
-              <SecondaryButton
-                onClick={() => client.email && openExternalUrl(`mailto:${client.email}`)}
-                disabled={!client.email}
-                fullWidth
-              >
-                <Mail className="h-4 w-4 mr-1.5" />
-                Email
-              </SecondaryButton>
-              <SecondaryButton
-                data-help="clients.new-quote"
-                onClick={() => setShowQuote(true)}
-                fullWidth
-              >
-                <FileText className="h-4 w-4 mr-1.5" />
-                New quote
-              </SecondaryButton>
-              <SecondaryButton onClick={() => setShowJob(true)} fullWidth>
-                <Briefcase className="h-4 w-4 mr-1.5" />
-                New job
-              </SecondaryButton>
-            </div>
+          {/* Quick actions — reach + create, pre-filled where possible */}
+          <div className="grid grid-cols-2 gap-2 lg:max-w-md" data-help="clients.actions">
+            <SecondaryButton
+              onClick={() => client.phone && openExternalUrl(`tel:${client.phone}`)}
+              disabled={!client.phone}
+              fullWidth
+            >
+              <Phone className="h-4 w-4 mr-1.5" />
+              Call
+            </SecondaryButton>
+            <SecondaryButton
+              onClick={() => client.email && openExternalUrl(`mailto:${client.email}`)}
+              disabled={!client.email}
+              fullWidth
+            >
+              <Mail className="h-4 w-4 mr-1.5" />
+              Email
+            </SecondaryButton>
+          </div>
 
-            {/* ELE-1996: the client's portal and the message thread with them.
+          {/* ELE-1996: the client's portal and the message thread with them.
                 Side by side on desktop, stacked on a phone. */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-              <div data-help="clients.portal">
-                <PortalShareCard
-                  customerId={client.id}
-                  customerName={client.name}
-                  customerEmail={client.email}
-                  customerPhone={client.phone}
-                />
-              </div>
-              <CustomerThreadCard
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+            <div data-help="clients.portal">
+              <PortalShareCard
                 customerId={client.id}
                 customerName={client.name}
-                autoFocus={focus === 'messages'}
+                customerEmail={client.email}
+                customerPhone={client.phone}
               />
             </div>
+            <CustomerConversationCard
+              customerId={client.id}
+              customerName={client.name}
+              autoFocus={focus === 'messages'}
+            />
+          </div>
 
-            <CustomerContactLogCard customerId={client.id} />
+          <CustomerContactLogCard customerId={client.id} />
 
-            {/* Contact card / edit */}
-            {editing ? (
-              <FormCard eyebrow="Edit client">
-                <Field label="Client name" required>
-                  <Input
-                    className={inputClass}
-                    value={draft.name}
-                    onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-                  />
-                </Field>
-                <Field label="Company">
-                  <Input
-                    className={inputClass}
-                    value={draft.company_name}
-                    onChange={(e) => setDraft({ ...draft, company_name: e.target.value })}
-                    placeholder="Optional"
-                  />
-                </Field>
-                <Field label="Email">
-                  <Input
-                    className={inputClass}
-                    type="email"
-                    value={draft.email}
-                    onChange={(e) => setDraft({ ...draft, email: e.target.value })}
-                  />
-                </Field>
-                <Field label="Phone">
-                  <Input
-                    className={inputClass}
-                    value={draft.phone}
-                    onChange={(e) => setDraft({ ...draft, phone: e.target.value })}
-                  />
-                </Field>
-                <Field label="Address">
-                  <Textarea
-                    className={textareaClass}
-                    value={draft.address}
-                    onChange={(e) => setDraft({ ...draft, address: e.target.value })}
-                  />
-                </Field>
-                <Field label="Notes">
-                  <Textarea
-                    className={textareaClass}
-                    value={draft.notes}
-                    onChange={(e) => setDraft({ ...draft, notes: e.target.value })}
-                  />
-                </Field>
-                <div className="flex gap-2">
-                  <SecondaryButton onClick={() => setEditing(false)} fullWidth>
-                    Cancel
-                  </SecondaryButton>
-                  <PrimaryButton onClick={saveEdit} disabled={updateClient.isPending} fullWidth>
-                    {updateClient.isPending ? 'Saving…' : 'Save'}
-                  </PrimaryButton>
-                </div>
-              </FormCard>
-            ) : (
+          {/* Contact card / edit */}
+          {editing ? (
+            <FormCard eyebrow="Edit client">
+              <Field label="Client name" required>
+                <Input
+                  className={inputClass}
+                  value={draft.name}
+                  onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+                />
+              </Field>
+              <Field label="Company">
+                <Input
+                  className={inputClass}
+                  value={draft.company_name}
+                  onChange={(e) => setDraft({ ...draft, company_name: e.target.value })}
+                  placeholder="Optional"
+                />
+              </Field>
+              <Field label="Email">
+                <Input
+                  className={inputClass}
+                  type="email"
+                  value={draft.email}
+                  onChange={(e) => setDraft({ ...draft, email: e.target.value })}
+                />
+              </Field>
+              <Field label="Phone">
+                <Input
+                  className={inputClass}
+                  value={draft.phone}
+                  onChange={(e) => setDraft({ ...draft, phone: e.target.value })}
+                />
+              </Field>
+              <Field label="Address">
+                <Textarea
+                  className={textareaClass}
+                  value={draft.address}
+                  onChange={(e) => setDraft({ ...draft, address: e.target.value })}
+                />
+              </Field>
+              <Field label="Notes">
+                <Textarea
+                  className={textareaClass}
+                  value={draft.notes}
+                  onChange={(e) => setDraft({ ...draft, notes: e.target.value })}
+                />
+              </Field>
+              <div className="flex gap-2">
+                <SecondaryButton onClick={() => setEditing(false)} fullWidth>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton onClick={saveEdit} disabled={updateClient.isPending} fullWidth>
+                  {updateClient.isPending ? 'Saving…' : 'Save'}
+                </PrimaryButton>
+              </div>
+            </FormCard>
+          ) : (
+            <ListCard>
+              <ListCardHeader title="Contact" action="Edit" onAction={startEdit} />
+              <ListBody>
+                {client.email || client.phone || client.address || client.notes ? (
+                  <>
+                    {client.company_name && (
+                      <ListRow title="Company" subtitle={client.company_name} />
+                    )}
+                    {client.email && <ListRow title="Email" subtitle={client.email} />}
+                    {client.phone && <ListRow title="Phone" subtitle={client.phone} />}
+                    {client.address && <ListRow title="Address" subtitle={client.address} />}
+                    {client.notes && <ListRow title="Notes" subtitle={client.notes} />}
+                  </>
+                ) : (
+                  <div className="p-5">
+                    <EmptyState title="No contact details yet" />
+                  </div>
+                )}
+              </ListBody>
+            </ListCard>
+          )}
+
+          {/* Linked records — the hub */}
+          {isLoading ? (
+            <LoadingBlocks />
+          ) : (
+            <>
               <ListCard>
                 <ListCardHeader
-                  title="Contact"
-                  action="Edit"
-                  onAction={startEdit}
+                  tone="yellow"
+                  title="Quotes"
+                  meta={<CountPill>{linked?.quotes.length ?? 0}</CountPill>}
+                  action="View all"
+                  onAction={() => onNavigate('quotes')}
                 />
                 <ListBody>
-                  {client.email || client.phone || client.address || client.notes ? (
-                    <>
-                      {client.company_name && (
-                        <ListRow title="Company" subtitle={client.company_name} />
-                      )}
-                      {client.email && <ListRow title="Email" subtitle={client.email} />}
-                      {client.phone && <ListRow title="Phone" subtitle={client.phone} />}
-                      {client.address && <ListRow title="Address" subtitle={client.address} />}
-                      {client.notes && <ListRow title="Notes" subtitle={client.notes} />}
-                    </>
+                  {linked?.quotes.length ? (
+                    linked.quotes.slice(0, 6).map((q) => (
+                      <ListRow
+                        key={q.id}
+                        onClick={() => openQuote(q.id)}
+                        title={q.quote_number || q.job_title || 'Quote'}
+                        subtitle={fmtDate(q.created_at)}
+                        trailing={
+                          <span className="flex items-center gap-2">
+                            <span className="text-[13px] font-semibold text-white tabular-nums">
+                              {fmt(q.value)}
+                            </span>
+                            <Pill tone={statusTone(q.status)}>{q.status}</Pill>
+                          </span>
+                        }
+                      />
+                    ))
                   ) : (
                     <div className="p-5">
-                      <EmptyState title="No contact details yet" />
+                      <EmptyState title="No quotes yet" />
                     </div>
                   )}
                 </ListBody>
               </ListCard>
-            )}
 
-            {/* Linked records — the hub */}
-            {isLoading ? (
-              <LoadingBlocks />
-            ) : (
-              <>
-                <ListCard>
-                  <ListCardHeader
-                    tone="yellow"
-                    title="Quotes"
-                    meta={<CountPill>{linked?.quotes.length ?? 0}</CountPill>}
-                    action="View all"
-                    onAction={() => onNavigate('quotes')}
-                  />
-                  <ListBody>
-                    {linked?.quotes.length ? (
-                      linked.quotes.slice(0, 6).map((q) => (
+              <ListCard>
+                <ListCardHeader
+                  tone="emerald"
+                  title="Invoices"
+                  meta={<CountPill>{linked?.invoices.length ?? 0}</CountPill>}
+                  action="View all"
+                  onAction={() => onNavigate('quotes')}
+                />
+                <ListBody>
+                  {linked?.invoices.length ? (
+                    linked.invoices.slice(0, 6).map((inv) => {
+                      // Only a sent, unpaid invoice can be overdue; a draft owes nothing yet.
+                      const over = !['Paid', 'Draft', 'Void', 'Cancelled'].includes(inv.status)
+                        ? daysOverdue({ due_date: inv.due_date })
+                        : 0;
+                      return (
                         <ListRow
-                          key={q.id}
-                          onClick={() => openQuote(q.id)}
-                          title={q.quote_number || q.job_title || 'Quote'}
-                          subtitle={fmtDate(q.created_at)}
+                          key={inv.id}
+                          onClick={() => openInvoice(inv.id)}
+                          title={inv.invoice_number || 'Invoice'}
+                          subtitle={
+                            over > 0
+                              ? `${over} day${over === 1 ? '' : 's'} overdue`
+                              : inv.due_date
+                                ? `Due ${fmtDate(inv.due_date)}`
+                                : fmtDate(inv.created_at)
+                          }
                           trailing={
                             <span className="flex items-center gap-2">
                               <span className="text-[13px] font-semibold text-white tabular-nums">
-                                {fmt(q.value)}
+                                {fmt(inv.amount)}
                               </span>
-                              <Pill tone={statusTone(q.status)}>{q.status}</Pill>
-                            </span>
-                          }
-                        />
-                      ))
-                    ) : (
-                      <div className="p-5">
-                        <EmptyState title="No quotes yet" />
-                      </div>
-                    )}
-                  </ListBody>
-                </ListCard>
-
-                <ListCard>
-                  <ListCardHeader
-                    tone="emerald"
-                    title="Invoices"
-                    meta={<CountPill>{linked?.invoices.length ?? 0}</CountPill>}
-                    action="View all"
-                    onAction={() => onNavigate('quotes')}
-                  />
-                  <ListBody>
-                    {linked?.invoices.length ? (
-                      linked.invoices.slice(0, 6).map((inv) => {
-                        const over =
-                          inv.status !== 'Paid' ? daysOverdue({ due_date: inv.due_date }) : 0;
-                        return (
-                          <ListRow
-                            key={inv.id}
-                            onClick={() => openInvoice(inv.id)}
-                            title={inv.invoice_number || 'Invoice'}
-                            subtitle={
-                              over > 0
-                                ? `${over} day${over === 1 ? '' : 's'} overdue`
-                                : inv.due_date
-                                  ? `Due ${fmtDate(inv.due_date)}`
-                                  : fmtDate(inv.created_at)
-                            }
-                            trailing={
-                              <span className="flex items-center gap-2">
-                                <span className="text-[13px] font-semibold text-white tabular-nums">
-                                  {fmt(inv.amount)}
-                                </span>
-                                <Pill tone={over > 0 ? 'red' : statusTone(inv.status)}>
-                                  {over > 0 ? 'Overdue' : inv.status}
-                                </Pill>
-                              </span>
-                            }
-                          />
-                        );
-                      })
-                    ) : (
-                      <div className="p-5">
-                        <EmptyState title="No invoices yet" />
-                      </div>
-                    )}
-                  </ListBody>
-                </ListCard>
-
-                <ListCard>
-                  <ListCardHeader
-                    tone="cyan"
-                    title="Jobs"
-                    meta={<CountPill>{linked?.jobs.length ?? 0}</CountPill>}
-                    action="View all"
-                    onAction={() => onNavigate('jobs')}
-                  />
-                  <ListBody>
-                    {linked?.jobs.length ? (
-                      linked.jobs.slice(0, 6).map((j) => (
-                        <ListRow
-                          key={j.id}
-                          onClick={() => openJob(j.id)}
-                          title={j.title}
-                          subtitle={j.start_date ? fmtDate(j.start_date) : undefined}
-                          trailing={
-                            <span className="flex items-center gap-2">
-                              {canSeeMoney && j.value != null && (
-                                <span className="text-[13px] font-semibold text-white tabular-nums">
-                                  {fmt(j.value)}
-                                </span>
-                              )}
-                              <Pill tone={statusTone(j.status)}>{j.status}</Pill>
-                            </span>
-                          }
-                        />
-                      ))
-                    ) : (
-                      <div className="p-5">
-                        <EmptyState title="No jobs yet" />
-                      </div>
-                    )}
-                  </ListBody>
-                </ListCard>
-              </>
-            )}
-
-            {/* Certificates and properties — from the shared customer record */}
-            {docsLoading ? (
-              <LoadingBlocks />
-            ) : (
-              <>
-                <ListCard>
-                  <ListCardHeader
-                    tone="emerald"
-                    title="Certificates"
-                    meta={<CountPill>{certificates.length}</CountPill>}
-                  />
-                  <ListBody>
-                    {certificates.length ? (
-                      certificates.slice(0, showAllCerts ? undefined : 6).map((c) => {
-                        const due = certDue(c);
-                        const overdue = !!due && due < todayStr;
-                        const done = c.status === 'completed';
-                        return (
-                          <ListRow
-                            key={c.id}
-                            onClick={
-                              docs?.isOwner && c.report_id ? () => openCertificate(c) : undefined
-                            }
-                            title={c.certificate_number || certificateTypeLabel(c.report_type)}
-                            subtitle={[
-                              certificateTypeLabel(c.report_type),
-                              fmtDate(c.inspection_date || c.created_at),
-                              due ? `${overdue ? 'Overdue' : 'Due'} ${fmtDate(due)}` : null,
-                            ]
-                              .filter(Boolean)
-                              .join(' · ')}
-                            trailing={
-                              <Pill tone={overdue ? 'red' : done ? 'emerald' : 'amber'}>
-                                {overdue ? 'Overdue' : done ? 'Issued' : 'In progress'}
+                              <Pill tone={over > 0 ? 'red' : statusTone(inv.status)}>
+                                {over > 0 ? 'Overdue' : inv.status}
                               </Pill>
-                            }
-                          />
-                        );
-                      })
-                    ) : (
-                      <div className="p-5">
-                        <EmptyState title="No certificates yet" />
-                      </div>
-                    )}
-                    {certificates.length > 6 && (
-                      <ListRow
-                        onClick={() => setShowAllCerts((v) => !v)}
-                        title={
-                          showAllCerts ? 'Show fewer' : `Show all ${certificates.length} certificates`
-                        }
-                      />
-                    )}
-                  </ListBody>
-                </ListCard>
-
-                {properties.length > 0 && (
-                  <ListCard>
-                    <ListCardHeader
-                      title="Properties"
-                      meta={<CountPill>{properties.length}</CountPill>}
-                    />
-                    <ListBody>
-                      {properties.map((p) => (
-                        <ListRow
-                          key={p.id}
-                          title={p.address || p.postcode || 'Property'}
-                          subtitle={
-                            [p.property_type, p.is_primary ? 'Main address' : null]
-                              .filter(Boolean)
-                              .join(' · ') || undefined
+                            </span>
                           }
                         />
-                      ))}
-                    </ListBody>
-                  </ListCard>
-                )}
+                      );
+                    })
+                  ) : (
+                    <div className="p-5">
+                      <EmptyState title="No invoices yet" />
+                    </div>
+                  )}
+                </ListBody>
+              </ListCard>
 
-                {docs?.isOwner && (
-                  <SecondaryButton
-                    onClick={() => {
-                      onOpenChange(false);
-                      navigate(`/customers/${client.id}`);
-                    }}
-                    fullWidth
-                  >
-                    Open full record in Customers
-                  </SecondaryButton>
-                )}
-              </>
-            )}
-
-            {/* Follow-ups */}
-            <ListCard>
-              <ListCardHeader
-                tone="amber"
-                title="Follow-ups"
-                meta={<CountPill>{tasks.filter((t) => !t.done).length}</CountPill>}
-              />
-              <div className="p-3 border-b border-white/[0.06] flex flex-col gap-2">
-                <Input
-                  className={inputClass}
-                  value={taskTitle}
-                  onChange={(e) => setTaskTitle(e.target.value)}
-                  placeholder="Add a follow-up…"
-                  onKeyDown={(e) => e.key === 'Enter' && submitTask()}
+              <ListCard>
+                <ListCardHeader
+                  tone="cyan"
+                  title="Jobs"
+                  meta={<CountPill>{linked?.jobs.length ?? 0}</CountPill>}
+                  action="View all"
+                  onAction={() => onNavigate('jobs')}
                 />
-                <div className="flex gap-2">
-                  <Input
-                    className={inputClass}
-                    type="date"
-                    value={taskDue}
-                    onChange={(e) => setTaskDue(e.target.value)}
-                  />
-                  <SecondaryButton
-                    onClick={submitTask}
-                    disabled={!taskTitle.trim() || addTask.isPending}
-                    className="shrink-0"
-                  >
-                    Add
-                  </SecondaryButton>
-                </div>
-              </div>
-              <ListBody>
-                {tasks.length === 0 ? (
-                  <div className="p-5">
-                    <EmptyState title="No follow-ups" />
-                  </div>
-                ) : (
-                  tasks.map((t) => {
-                    const overdue = !t.done && !!t.due_date && t.due_date < todayStr;
-                    return (
+                <ListBody>
+                  {linked?.jobs.length ? (
+                    linked.jobs.slice(0, 6).map((j) => (
                       <ListRow
-                        key={t.id}
-                        onClick={() => toggleTask.mutate({ id: t.id, done: !t.done })}
-                        lead={
-                          <span
-                            className={cn(
-                              'h-5 w-5 rounded-md border grid place-items-center text-[11px] font-bold',
-                              t.done
-                                ? 'bg-emerald-500/80 border-emerald-500 text-black'
-                                : 'border-white/25 text-transparent'
+                        key={j.id}
+                        onClick={() => openJob(j.id)}
+                        title={j.title}
+                        subtitle={j.start_date ? fmtDate(j.start_date) : undefined}
+                        trailing={
+                          <span className="flex items-center gap-2">
+                            {canSeeMoney && j.value != null && (
+                              <span className="text-[13px] font-semibold text-white tabular-nums">
+                                {fmt(j.value)}
+                              </span>
                             )}
-                          >
-                            ✓
+                            <Pill tone={statusTone(j.status)}>{j.status}</Pill>
                           </span>
                         }
-                        title={t.done ? `✓ ${t.title}` : t.title}
+                      />
+                    ))
+                  ) : (
+                    <div className="p-5">
+                      <EmptyState title="No jobs yet" />
+                    </div>
+                  )}
+                </ListBody>
+              </ListCard>
+            </>
+          )}
+
+          {/* Certificates and properties — from the shared customer record */}
+          {docsLoading ? (
+            <LoadingBlocks />
+          ) : (
+            <>
+              <ListCard>
+                <ListCardHeader
+                  tone="emerald"
+                  title="Certificates"
+                  meta={<CountPill>{certificates.length}</CountPill>}
+                />
+                <ListBody>
+                  {certificates.length ? (
+                    certificates.slice(0, showAllCerts ? undefined : 6).map((c) => {
+                      const due = certDue(c);
+                      const overdue = !!due && due < todayStr;
+                      const done = c.status === 'completed';
+                      return (
+                        <ListRow
+                          key={c.id}
+                          onClick={
+                            docs?.isOwner && c.report_id ? () => openCertificate(c) : undefined
+                          }
+                          title={c.certificate_number || certificateTypeLabel(c.report_type)}
+                          subtitle={[
+                            certificateTypeLabel(c.report_type),
+                            fmtDate(c.inspection_date || c.created_at),
+                            due ? `${overdue ? 'Overdue' : 'Due'} ${fmtDate(due)}` : null,
+                          ]
+                            .filter(Boolean)
+                            .join(' · ')}
+                          trailing={
+                            <Pill tone={overdue ? 'red' : done ? 'emerald' : 'amber'}>
+                              {overdue ? 'Overdue' : done ? 'Issued' : 'In progress'}
+                            </Pill>
+                          }
+                        />
+                      );
+                    })
+                  ) : (
+                    <div className="p-5">
+                      <EmptyState title="No certificates yet" />
+                    </div>
+                  )}
+                  {certificates.length > 6 && (
+                    <ListRow
+                      onClick={() => setShowAllCerts((v) => !v)}
+                      title={
+                        showAllCerts ? 'Show fewer' : `Show all ${certificates.length} certificates`
+                      }
+                    />
+                  )}
+                </ListBody>
+              </ListCard>
+
+              {properties.length > 0 && (
+                <ListCard>
+                  <ListCardHeader
+                    title="Properties"
+                    meta={<CountPill>{properties.length}</CountPill>}
+                  />
+                  <ListBody>
+                    {properties.map((p) => (
+                      <ListRow
+                        key={p.id}
+                        title={p.address || p.postcode || 'Property'}
                         subtitle={
-                          t.due_date
-                            ? overdue
-                              ? `Overdue · ${fmtDate(t.due_date)}`
-                              : `Due ${fmtDate(t.due_date)}`
-                            : undefined
-                        }
-                        trailing={
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              deleteTask.mutate(t.id);
-                            }}
-                            className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white hover:text-red-400 touch-manipulation"
-                          >
-                            Remove
-                          </button>
+                          [p.property_type, p.is_primary ? 'Main address' : null]
+                            .filter(Boolean)
+                            .join(' · ') || undefined
                         }
                       />
-                    );
-                  })
-                )}
-              </ListBody>
-            </ListCard>
+                    ))}
+                  </ListBody>
+                </ListCard>
+              )}
 
-            {/* Activity timeline */}
-            <ListCard>
-              <ListCardHeader tone="cyan" title="Activity" />
-              <div className="p-3 border-b border-white/[0.06] space-y-2">
-                <div className="flex gap-1.5">
-                  {(['note', 'call', 'email', 'meeting'] as ActivityType[]).map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => setActType(t)}
-                      className={cn(
-                        'px-3 h-11 rounded-lg text-[12px] capitalize touch-manipulation transition-colors',
-                        actType === t
-                          ? 'bg-elec-yellow text-black font-medium'
-                          : 'bg-white/[0.05] text-white hover:text-white/85'
-                      )}
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  <Input
-                    className={inputClass}
-                    value={actText}
-                    onChange={(e) => setActText(e.target.value)}
-                    placeholder={`Log a ${actType}…`}
-                    onKeyDown={(e) => e.key === 'Enter' && submitLog()}
-                  />
-                  <SecondaryButton
-                    onClick={submitLog}
-                    disabled={!actText.trim() || logActivity.isPending}
-                  >
-                    Log
-                  </SecondaryButton>
-                </div>
+              {docs?.isOwner && (
+                <SecondaryButton
+                  onClick={() => {
+                    onOpenChange(false);
+                    navigate(`/customers/${client.id}`);
+                  }}
+                  fullWidth
+                >
+                  Open full record in Customers
+                </SecondaryButton>
+              )}
+            </>
+          )}
+
+          {/* Follow-ups */}
+          <ListCard>
+            <ListCardHeader
+              tone="amber"
+              title="Follow-ups"
+              meta={<CountPill>{tasks.filter((t) => !t.done).length}</CountPill>}
+            />
+            <div className="p-3 border-b border-white/[0.06] flex flex-col gap-2">
+              <Input
+                className={inputClass}
+                value={taskTitle}
+                onChange={(e) => setTaskTitle(e.target.value)}
+                placeholder="Add a follow-up…"
+                onKeyDown={(e) => e.key === 'Enter' && submitTask()}
+              />
+              <div className="flex gap-2">
+                <Input
+                  className={inputClass}
+                  type="date"
+                  value={taskDue}
+                  onChange={(e) => setTaskDue(e.target.value)}
+                />
+                <SecondaryButton
+                  onClick={submitTask}
+                  disabled={!taskTitle.trim() || addTask.isPending}
+                  className="shrink-0"
+                >
+                  Add
+                </SecondaryButton>
               </div>
-              <ListBody>
-                {timeline.length === 0 ? (
-                  <div className="p-5">
-                    <EmptyState title="No activity yet" />
-                  </div>
-                ) : (
-                  timeline.slice(0, 25).map((e, i) => (
+            </div>
+            <ListBody>
+              {tasks.length === 0 ? (
+                <div className="p-5">
+                  <EmptyState title="No follow-ups" />
+                </div>
+              ) : (
+                tasks.map((t) => {
+                  const overdue = !t.done && !!t.due_date && t.due_date < todayStr;
+                  return (
+                    <ListRow
+                      key={t.id}
+                      onClick={() => toggleTask.mutate({ id: t.id, done: !t.done })}
+                      lead={
+                        <span
+                          className={cn(
+                            'h-5 w-5 rounded-md border grid place-items-center text-[11px] font-bold',
+                            t.done
+                              ? 'bg-emerald-500/80 border-emerald-500 text-black'
+                              : 'border-white/25 text-transparent'
+                          )}
+                        >
+                          ✓
+                        </span>
+                      }
+                      title={t.done ? `✓ ${t.title}` : t.title}
+                      subtitle={
+                        t.due_date
+                          ? overdue
+                            ? `Overdue · ${fmtDate(t.due_date)}`
+                            : `Due ${fmtDate(t.due_date)}`
+                          : undefined
+                      }
+                      trailing={
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteTask.mutate(t.id);
+                          }}
+                          className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white hover:text-red-400 touch-manipulation"
+                        >
+                          Remove
+                        </button>
+                      }
+                    />
+                  );
+                })
+              )}
+            </ListBody>
+          </ListCard>
+
+          {/* Activity timeline */}
+          <ListCard>
+            <ListCardHeader tone="cyan" title="Activity" />
+            <div className="p-3 border-b border-white/[0.06] space-y-2">
+              <div className="flex gap-1.5">
+                {(['note', 'call', 'email', 'meeting'] as ActivityType[]).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setActType(t)}
+                    className={cn(
+                      'px-3 h-11 rounded-lg text-[12px] capitalize touch-manipulation transition-colors',
+                      actType === t
+                        ? 'bg-elec-yellow text-black font-medium'
+                        : 'bg-white/[0.05] text-white hover:text-white/85'
+                    )}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  className={inputClass}
+                  value={actText}
+                  onChange={(e) => setActText(e.target.value)}
+                  placeholder={`Log a ${actType}…`}
+                  onKeyDown={(e) => e.key === 'Enter' && submitLog()}
+                />
+                <SecondaryButton
+                  onClick={submitLog}
+                  disabled={!actText.trim() || logActivity.isPending}
+                >
+                  Log
+                </SecondaryButton>
+              </div>
+            </div>
+            <ListBody>
+              {timeline.length === 0 ? (
+                <div className="p-5">
+                  <EmptyState title="No activity yet" />
+                </div>
+              ) : (
+                timeline
+                  .slice(0, 25)
+                  .map((e, i) => (
                     <ListRow
                       key={`${e.kind}-${i}`}
                       title={e.text}
@@ -785,125 +804,124 @@ export function ClientDetailSheet({
                       trailing={<CountPill>{e.kind}</CountPill>}
                     />
                   ))
-                )}
-              </ListBody>
-            </ListCard>
+              )}
+            </ListBody>
+          </ListCard>
 
-            {/* Reviews */}
-            <ListCard>
-              <ListCardHeader
-                tone="yellow"
-                title="Reviews"
-                meta={<CountPill>{reviews.length}</CountPill>}
-              />
-              <div className="p-3 border-b border-white/[0.06] space-y-2">
-                <div className="flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <button
-                      key={n}
-                      onClick={() => setReviewRating(n)}
-                      className="h-11 w-8 grid place-items-center text-[20px] leading-none touch-manipulation"
-                      aria-label={`${n} star${n === 1 ? '' : 's'}`}
-                    >
-                      <span className={n <= reviewRating ? 'text-elec-yellow' : 'text-white'}>
-                        ★
-                      </span>
-                    </button>
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  <Input
-                    className={inputClass}
-                    value={reviewText}
-                    onChange={(e) => setReviewText(e.target.value)}
-                    placeholder="What did they say?"
-                    onKeyDown={(e) => e.key === 'Enter' && submitReview()}
-                  />
-                  <SecondaryButton onClick={submitReview} disabled={addReview.isPending}>
-                    Save
-                  </SecondaryButton>
-                </div>
-                <SecondaryButton onClick={requestReview} disabled={!client.email} fullWidth>
-                  Request a review by email
+          {/* Reviews */}
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title="Reviews"
+              meta={<CountPill>{reviews.length}</CountPill>}
+            />
+            <div className="p-3 border-b border-white/[0.06] space-y-2">
+              <div className="flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <button
+                    key={n}
+                    onClick={() => setReviewRating(n)}
+                    className="h-11 w-8 grid place-items-center text-[20px] leading-none touch-manipulation"
+                    aria-label={`${n} star${n === 1 ? '' : 's'}`}
+                  >
+                    <span className={n <= reviewRating ? 'text-elec-yellow' : 'text-white'}>★</span>
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  className={inputClass}
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="What did they say?"
+                  onKeyDown={(e) => e.key === 'Enter' && submitReview()}
+                />
+                <SecondaryButton onClick={submitReview} disabled={addReview.isPending}>
+                  Save
                 </SecondaryButton>
               </div>
-              <ListBody>
-                {reviews.length === 0 ? (
-                  <div className="p-5">
-                    <EmptyState title="No reviews yet" />
-                  </div>
-                ) : (
-                  reviews.map((r) => (
-                    <ListRow
-                      key={r.id}
-                      title={'★'.repeat(r.rating || 0) + '☆'.repeat(5 - (r.rating || 0))}
-                      subtitle={r.text || fmtDate(r.created_at)}
-                      trailing={
-                        <button
-                          onClick={() => deleteReview.mutate(r.id)}
-                          className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white hover:text-red-400 touch-manipulation"
-                        >
-                          Remove
-                        </button>
-                      }
-                    />
-                  ))
-                )}
-              </ListBody>
-            </ListCard>
-
-            {/* Manage */}
-            <div className="pt-2">
-              {confirmDelete ? (
-                historyCount > 0 ? (
-                  <FormCard eyebrow="Delete client">
-                    <p className="text-[13px] text-white">
-                      This client has {historyCount} record{historyCount === 1 ? '' : 's'} on file
-                      (quotes, invoices, jobs or certificates), so it can't be deleted. Keeping the
-                      client keeps that history together for the whole firm.
-                    </p>
-                    <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
-                      OK
-                    </SecondaryButton>
-                  </FormCard>
-                ) : (
-                  <FormCard eyebrow="Delete client">
-                    <p className="text-[13px] text-white">
-                      This removes the client and their notes, follow-ups and reviews. It can't be
-                      undone.
-                    </p>
-                    <div className="flex gap-2">
-                      <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
-                        Cancel
-                      </SecondaryButton>
-                      <DestructiveButton
-                        onClick={handleDelete}
-                        disabled={deleteClient.isPending}
-                        fullWidth
-                      >
-                        {deleteClient.isPending ? 'Deleting…' : 'Delete'}
-                      </DestructiveButton>
-                    </div>
-                  </FormCard>
-                )
-              ) : (
-                <div className="flex items-center justify-between">
-                  <Eyebrow>Added {fmtDate(client.created_at)}</Eyebrow>
-                  <div className="flex gap-2">
-                    <SecondaryButton onClick={startEdit} aria-label="Edit client">
-                      <Pencil className="h-4 w-4" />
-                    </SecondaryButton>
-                    <SecondaryButton onClick={() => setConfirmDelete(true)} aria-label="Delete client">
-                      <Trash2 className="h-4 w-4" />
-                    </SecondaryButton>
-                  </div>
-                </div>
-              )}
+              <SecondaryButton onClick={requestReview} disabled={!client.email} fullWidth>
+                Request a review by email
+              </SecondaryButton>
             </div>
+            <ListBody>
+              {reviews.length === 0 ? (
+                <div className="p-5">
+                  <EmptyState title="No reviews yet" />
+                </div>
+              ) : (
+                reviews.map((r) => (
+                  <ListRow
+                    key={r.id}
+                    title={'★'.repeat(r.rating || 0) + '☆'.repeat(5 - (r.rating || 0))}
+                    subtitle={r.text || fmtDate(r.created_at)}
+                    trailing={
+                      <button
+                        onClick={() => deleteReview.mutate(r.id)}
+                        className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white hover:text-red-400 touch-manipulation"
+                      >
+                        Remove
+                      </button>
+                    }
+                  />
+                ))
+              )}
+            </ListBody>
+          </ListCard>
+
+          {/* Manage */}
+          <div className="pt-2">
+            {confirmDelete ? (
+              historyCount > 0 ? (
+                <FormCard eyebrow="Delete client">
+                  <p className="text-[13px] text-white">
+                    This client has {historyCount} record{historyCount === 1 ? '' : 's'} on file
+                    (quotes, invoices, jobs or certificates), so it can't be deleted. Keeping the
+                    client keeps that history together for the whole firm.
+                  </p>
+                  <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
+                    OK
+                  </SecondaryButton>
+                </FormCard>
+              ) : (
+                <FormCard eyebrow="Delete client">
+                  <p className="text-[13px] text-white">
+                    This removes the client and their notes, follow-ups and reviews. It can't be
+                    undone.
+                  </p>
+                  <div className="flex gap-2">
+                    <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
+                      Cancel
+                    </SecondaryButton>
+                    <DestructiveButton
+                      onClick={handleDelete}
+                      disabled={deleteClient.isPending}
+                      fullWidth
+                    >
+                      {deleteClient.isPending ? 'Deleting…' : 'Delete'}
+                    </DestructiveButton>
+                  </div>
+                </FormCard>
+              )
+            ) : (
+              <div className="flex items-center justify-between">
+                <Eyebrow>Added {fmtDate(client.created_at)}</Eyebrow>
+                <div className="flex gap-2">
+                  <SecondaryButton onClick={startEdit} aria-label="Edit client">
+                    <Pencil className="h-4 w-4" />
+                  </SecondaryButton>
+                  <SecondaryButton
+                    onClick={() => setConfirmDelete(true)}
+                    aria-label="Delete client"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </SecondaryButton>
+                </div>
+              </div>
+            )}
           </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        </div>
+      </FormSheet>
 
       <CreateQuoteDialog
         open={showQuote}

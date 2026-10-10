@@ -1,4 +1,4 @@
-import { CALLOUT_INSET, CHIP_ACCENT, PANEL } from '@/components/ui/panel-recipe';
+import { LEARN_CALLOUT, LEARN_CARD, learnTag } from '@/components/apprentice/learn-ui/learnUi';
 import { cn } from '@/lib/utils';
 /**
  * Where each test sits in the BS 7671 sequence.
@@ -44,17 +44,15 @@ const Row = ({ step, index }: { step: Step; index: number }) => (
     <span className="text-[14px] leading-relaxed text-white">
       {step.name}
       {step.note && <span className="text-white"> — {step.note}</span>}
-      {step.covered && <span className={CHIP_ACCENT}>on this page</span>}
+      {step.covered && <span className={cn(learnTag('accent'), 'ml-2')}>On this page</span>}
     </span>
   </li>
 );
 
 const TestSequenceCard = () => (
-  <div className={cn(PANEL, 'space-y-4')}>
+  <div className={cn(LEARN_CARD, 'space-y-4')}>
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        The order is not optional
-      </span>
+      <span className="text-[13px] font-semibold text-white">The order is not optional</span>
       <p className="text-[14px] leading-relaxed text-white">
         Regulation 643.1 requires the tests below to be carried out in this order, and to be
         finished before the installation is energised. Each one depends on the last having passed.
@@ -62,7 +60,7 @@ const TestSequenceCard = () => (
     </div>
 
     <div className="space-y-2">
-      <p className="text-[12px] font-medium uppercase tracking-[0.18em] text-white">Dead tests</p>
+      <p className="text-[13px] font-semibold text-white">Dead tests</p>
       <ul className="space-y-2">
         {DEAD.map((step, i) => (
           <Row key={step.reg} step={step} index={i + 1} />
@@ -71,9 +69,7 @@ const TestSequenceCard = () => (
     </div>
 
     <div className="space-y-2 border-t border-white/[0.08] pt-4">
-      <p className="text-[12px] font-medium uppercase tracking-[0.18em] text-white">
-        Then energise
-      </p>
+      <p className="text-[13px] font-semibold text-white">Then energise</p>
       <ul className="space-y-2">
         {LIVE.map((step, i) => (
           <Row key={step.reg} step={step} index={DEAD.length + i + 1} />
@@ -85,10 +81,8 @@ const TestSequenceCard = () => (
       </p>
     </div>
 
-    <div className={cn(CALLOUT_INSET, 'space-y-1')}>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-        If you find a fault
-      </span>
+    <div className={cn(LEARN_CALLOUT, 'space-y-1')}>
+      <span className="text-[13px] font-semibold text-elec-yellow">If you find a fault</span>
       <p className="text-[14px] leading-relaxed text-white">
         A fault found by any test can invalidate the tests already done. Under Regulation 643.1,
         once you have put it right you repeat that test and the earlier tests the fault could have

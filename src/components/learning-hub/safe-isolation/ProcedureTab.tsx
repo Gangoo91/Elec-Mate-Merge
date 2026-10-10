@@ -96,7 +96,7 @@ const ProcedureTab = ({ onBack }: { onBack: () => void }) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Safe Isolation Procedure</h1>
-              <p className="text-[10px] text-white">Regs 131.2 · 132.8 · 132.10 · 463.3</p>
+              <p className="text-[12px] text-white">Regs 131.2 · 132.8 · 132.10 · 463.3</p>
             </div>
           </div>
         </div>
@@ -106,8 +106,8 @@ const ProcedureTab = ({ onBack }: { onBack: () => void }) => {
         {/* Preparation */}
         <section className="space-y-3">
           <div className="px-0.5">
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Preparation</h2>
-            <p className="text-[11px] text-white mt-0.5">Before you touch any isolation device</p>
+            <h2 className="text-[12px] font-medium text-white">Preparation</h2>
+            <p className="text-[12px] text-white mt-0.5">Before you touch any isolation device</p>
           </div>
           {renderSteps(preparationSteps, 'bg-amber-500/50', 'text-amber-400')}
         </section>
@@ -115,8 +115,8 @@ const ProcedureTab = ({ onBack }: { onBack: () => void }) => {
         {/* Execution */}
         <section className="space-y-3">
           <div className="px-0.5">
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Execution</h2>
-            <p className="text-[11px] text-white mt-0.5">Three-step test: prove — test — reprove</p>
+            <h2 className="text-[12px] font-medium text-white">Execution</h2>
+            <p className="text-[12px] text-white mt-0.5">Three-step test: prove — test — reprove</p>
           </div>
           {renderSteps(executionSteps, 'bg-red-500/50', 'text-red-400')}
         </section>

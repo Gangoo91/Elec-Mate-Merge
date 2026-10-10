@@ -1,30 +1,35 @@
 /**
- * Report or edit a safety incident from the office (ELE-1945).
- * One form for both: create starts blank, edit starts from the record.
+ * Log or edit a safety report from the office (ELE-1945, ELE-2031).
+ *
+ * A new report is filed in Site Safety under the firm: an injury in the
+ * accident book, anything else in the near-miss register. Editing is for
+ * reports the office made (and older employer_incidents rows); a worker's own
+ * report is never edited here.
  */
 import { useEffect, useRef, useState } from 'react';
 import { Camera, X } from 'lucide-react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
-  SheetShell,
   Field,
-  FormGrid,
   PrimaryButton,
   SecondaryButton,
   inputClass,
   textareaClass,
   checkboxClass,
 } from '@/components/employer/editorial';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { useToast } from '@/hooks/use-toast';
-import { useStorageUrls } from '@/utils/storageUrls';
 import { cn } from '@/lib/utils';
 import type { Employee } from '@/services/employeeService';
 import type { Job } from '@/services/jobService';
 import {
+  BODY_PARTS,
+  INJURY_SEVERITY_LABEL,
+  INJURY_TYPES,
   uploadIncidentPhoto,
   useCreateIncident,
   useUpdateIncident,
@@ -33,9 +38,10 @@ import {
   type SeverityLevel,
 } from '@/hooks/useIncidents';
 
-const TYPES: { value: IncidentType; label: string }[] = [
-  { value: 'near_miss', label: 'Near miss' },
-  { value: 'injury', label: 'Injury' },
+const TYPES: { value: IncidentType; label: string; description?: string }[] = [
+  { value: 'near_miss', label: 'Near miss', description: 'Nobody hurt, but it could have been' },
+  { value: 'injury', label: 'Injury', description: 'Someone was hurt. Goes in the accident book' },
+  { value: 'dangerous_occurrence', label: 'Dangerous occurrence', description: 'A listed RIDDOR event' },
   { value: 'unsafe_practice', label: 'Unsafe practice' },
   { value: 'faulty_equipment', label: 'Faulty equipment' },
   { value: 'property_damage', label: 'Property damage' },
@@ -44,12 +50,13 @@ const TYPES: { value: IncidentType; label: string }[] = [
   { value: 'other', label: 'Other' },
 ];
 
-const SEVERITIES: { value: SeverityLevel; label: string }[] = [
-  { value: 'low', label: 'Low' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'high', label: 'High' },
-  { value: 'critical', label: 'Critical' },
-];
+const SEVERITIES: SeverityLevel[] = ['low', 'medium', 'high', 'critical'];
+const SEVERITY_LABEL: Record<SeverityLevel, string> = {
+  low: 'Low',
+  medium: 'Medium',
+  high: 'High',
+  critical: 'Critical',
+};
 
 const MAX_PHOTOS = 6;
 
@@ -74,6 +81,8 @@ interface FormState {
   supervisor_name: string;
   injured_employee_id: string;
   injured_person: string;
+  injury_type: string;
+  body_part: string;
   injuries_sustained: string;
   first_aid_given: boolean;
   hospital_visit: boolean;
@@ -95,6 +104,8 @@ const blank = (): FormState => ({
   supervisor_name: '',
   injured_employee_id: '',
   injured_person: '',
+  injury_type: '',
+  body_part: '',
   injuries_sustained: '',
   first_aid_given: false,
   hospital_visit: false,
@@ -116,7 +127,18 @@ const fromIncident = (i: Incident): FormState => ({
   supervisor_name: i.supervisor_name ?? '',
   injured_employee_id: i.injured_employee_id ?? '',
   injured_person: i.injured_person ?? '',
-  injuries_sustained: i.injuries_sustained ?? '',
+  injury_type: i.injury_type ?? '',
+  body_part: i.body_part ?? '',
+  // An accident book row reads back as "Burn to hand fingers. <description>";
+  // the form edits only the description after the first full stop.
+  injuries_sustained:
+    i.source === 'accident'
+      ? (() => {
+          const t = i.injuries_sustained ?? '';
+          const at = t.indexOf('. ');
+          return at === -1 ? '' : t.slice(at + 2);
+        })()
+      : (i.injuries_sustained ?? ''),
   first_aid_given: !!i.first_aid_given,
   hospital_visit: !!i.hospital_visit,
   days_off: i.days_off != null ? String(i.days_off) : '',
@@ -155,8 +177,6 @@ export function IncidentFormSheet({
   const fileRef = useRef<HTMLInputElement>(null);
 
   // "Someone else" (not on the roster) is a UI choice, set once per opening.
-  // Deriving it from the form on every keystroke hid the "Their name" field
-  // the moment it was cleared.
   const [pickOther, setPickOther] = useState(false);
   useEffect(() => {
     if (!open) return;
@@ -167,10 +187,17 @@ export function IncidentFormSheet({
 
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) =>
     setForm((f) => ({ ...f, [k]: v }));
-  const { urls: photoUrls } = useStorageUrls('visual-uploads', form.photos);
+
+  const legacy = editing?.source === 'legacy';
+  // A Site Safety record stays in its book: an injury cannot become a near
+  // miss (or the other way round) by editing.
+  const typeOptions =
+    editing && !legacy
+      ? TYPES.filter((t) => (editing.source === 'accident') === (t.value === 'injury'))
+      : TYPES;
 
   // Archived people drop off the picker, except the one already named on this
-  // report — otherwise editing it would quietly unlink them.
+  // report, otherwise editing it would quietly unlink them.
   const roster = employees.filter(
     (e) => e.status !== 'Archived' || e.id === form.injured_employee_id
   );
@@ -188,13 +215,13 @@ export function IncidentFormSheet({
       .filter((j) => j.status !== 'Completed' && j.status !== 'Cancelled')
       .map((j) => ({ value: j.id, label: j.title, description: j.location || undefined })),
   ];
-  // Keep the current job pickable on edit even if it has since closed.
   if (form.job_id && !jobOptions.some((o) => o.value === form.job_id)) {
     const j = jobs.find((x) => x.id === form.job_id);
     if (j) jobOptions.push({ value: j.id, label: j.title, description: j.location || undefined });
   }
 
   const injury = form.incident_type === 'injury';
+  const accidentBook = injury && !legacy;
 
   const addPhotos = async (files: FileList | null) => {
     if (!files?.length) return;
@@ -217,7 +244,17 @@ export function IncidentFormSheet({
     }
   };
 
-  const valid = form.title.trim() && form.description.trim() && form.location.trim();
+  const missing = (() => {
+    if (legacy && !form.title.trim()) return 'Add a short title.';
+    if (!form.description.trim()) return 'Say what happened.';
+    if (!form.location.trim()) return 'Say where it happened.';
+    if (accidentBook) {
+      if (!(form.injured_employee_id || form.injured_person.trim())) return 'Say who was hurt.';
+      if (!form.injury_type) return 'Pick the injury.';
+      if (!form.body_part) return 'Pick where on the body.';
+    }
+    return null;
+  })();
   const saving = create.isPending || update.isPending;
 
   const submit = async () => {
@@ -227,7 +264,7 @@ export function IncidentFormSheet({
     const payload = {
       incident_type: form.incident_type,
       severity: form.severity,
-      title: form.title.trim(),
+      ...(legacy ? { title: form.title.trim() } : {}),
       description: form.description.trim(),
       location: form.location.trim(),
       job_id: form.job_id || null,
@@ -241,6 +278,8 @@ export function IncidentFormSheet({
         ? {
             injured_employee_id: injured?.id ?? null,
             injured_person: injured?.name ?? form.injured_person.trim(),
+            injury_type: form.injury_type || null,
+            body_part: form.body_part || null,
             injuries_sustained: form.injuries_sustained.trim(),
             first_aid_given: form.first_aid_given,
             hospital_visit: form.hospital_visit,
@@ -255,63 +294,74 @@ export function IncidentFormSheet({
     onSaved?.(saved);
   };
 
+  const sevLabel = (s: SeverityLevel) => (injury ? INJURY_SEVERITY_LABEL[s] : SEVERITY_LABEL[s]);
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]"
-      >
-        <SheetShell
-          eyebrow="Safety"
-          title={editing ? 'Edit report' : 'Report an incident'}
-          description={
-            editing
-              ? undefined
-              : 'Log it now while it is fresh. You can add the investigation after.'
-          }
-          footer={
-            <>
-              <SecondaryButton fullWidth onClick={() => onOpenChange(false)}>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton fullWidth onClick={submit} disabled={!valid || saving || uploading}>
-                {saving ? 'Saving…' : editing ? 'Save changes' : 'Log report'}
-              </PrimaryButton>
-            </>
-          }
-        >
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Safety"
+      title={editing ? 'Edit report' : 'Report an incident'}
+      description={
+        editing
+          ? undefined
+          : 'Log it while it is fresh. It is filed in the firm’s Site Safety records, and you can add the investigation after.'
+      }
+      width="wide"
+      footer={
+        <div className="space-y-2">
+          {missing && <p className="text-center text-[12.5px] text-white">{missing}</p>}
+          <div className="flex gap-2">
+            <SecondaryButton fullWidth onClick={() => onOpenChange(false)}>
+              Cancel
+            </SecondaryButton>
+            <PrimaryButton fullWidth onClick={submit} disabled={!!missing || saving || uploading}>
+              {saving ? 'Saving…' : editing ? 'Save changes' : 'Log report'}
+            </PrimaryButton>
+          </div>
+        </div>
+      }
+    >
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
+        {/* Left: what happened */}
+        <div className="space-y-5">
           <Field label="What kind" required>
-            <MobileSelectPicker
-              value={form.incident_type}
-              onValueChange={(v) => set('incident_type', v as IncidentType)}
-              options={TYPES}
-              title="What kind of incident"
-            />
+            <div data-help="incidents.form-type">
+              <MobileSelectPicker
+                value={form.incident_type}
+                onValueChange={(v) => set('incident_type', v as IncidentType)}
+                options={typeOptions}
+                title="What kind of report"
+              />
+            </div>
           </Field>
 
-          <Field label="How serious" required>
+          <Field label={injury ? 'How bad' : 'How serious'} required>
             <div className="grid grid-cols-4 gap-2">
               {SEVERITIES.map((s) => (
                 <button
-                  key={s.value}
+                  key={s}
                   type="button"
-                  className={chipCn(form.severity === s.value)}
-                  onClick={() => set('severity', s.value)}
+                  aria-pressed={form.severity === s}
+                  className={chipCn(form.severity === s)}
+                  onClick={() => set('severity', s)}
                 >
-                  {s.label}
+                  {sevLabel(s)}
                 </button>
               ))}
             </div>
           </Field>
 
-          <Field label="Short title" required>
-            <Input
-              value={form.title}
-              onChange={(e) => set('title', e.target.value)}
-              placeholder="e.g. Cut hand on bench saw"
-              className={inputClass}
-            />
-          </Field>
+          {legacy && (
+            <Field label="Short title" required>
+              <Input
+                value={form.title}
+                onChange={(e) => set('title', e.target.value)}
+                placeholder="e.g. Cut hand on bench saw"
+                className={inputClass}
+              />
+            </Field>
+          )}
 
           <Field label="What happened" required>
             <Textarea
@@ -323,7 +373,7 @@ export function IncidentFormSheet({
             />
           </Field>
 
-          <FormGrid cols={2}>
+          <div className="grid gap-5 sm:grid-cols-2">
             <Field label="Where" required>
               <Input
                 value={form.location}
@@ -343,7 +393,7 @@ export function IncidentFormSheet({
                 className={inputClass}
               />
             </Field>
-          </FormGrid>
+          </div>
 
           <Field label="Job">
             <MobileSelectPicker
@@ -355,17 +405,13 @@ export function IncidentFormSheet({
           </Field>
 
           <Field label="Photos" hint="The hazard, the scene, the equipment. Up to 6.">
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 lg:grid-cols-4">
               {form.photos.map((p) => (
                 <div
                   key={p}
                   className="relative aspect-square overflow-hidden rounded-lg border border-white/[0.1]"
                 >
-                  {photoUrls[p] ? (
-                    <img src={photoUrls[p]} alt="" className="h-full w-full object-cover" />
-                  ) : (
-                    <div className="h-full w-full bg-white/[0.06] animate-pulse" />
-                  )}
+                  <StoragePhoto src={p} alt="" className="h-full w-full object-cover" />
                   <button
                     type="button"
                     aria-label="Remove photo"
@@ -375,9 +421,9 @@ export function IncidentFormSheet({
                         form.photos.filter((x) => x !== p)
                       )
                     }
-                    className="absolute right-0 top-0 h-11 w-11 flex items-start justify-end p-1 touch-manipulation"
+                    className="absolute right-0 top-0 flex h-11 w-11 items-start justify-end p-1 touch-manipulation"
                   >
-                    <span className="h-6 w-6 rounded-full bg-black/80 flex items-center justify-center">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-black/80">
                       <X className="h-3.5 w-3.5 text-white" />
                     </span>
                   </button>
@@ -388,7 +434,7 @@ export function IncidentFormSheet({
                   type="button"
                   onClick={() => fileRef.current?.click()}
                   disabled={uploading}
-                  className="aspect-square rounded-lg border border-dashed border-white/30 flex flex-col items-center justify-center gap-1 text-white touch-manipulation"
+                  className="flex aspect-square flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-white/30 text-white touch-manipulation"
                 >
                   <Camera className="h-5 w-5" />
                   <span className="text-[11px]">{uploading ? 'Adding…' : 'Add'}</span>
@@ -404,11 +450,14 @@ export function IncidentFormSheet({
               onChange={(e) => addPhotos(e.target.files)}
             />
           </Field>
+        </div>
 
+        {/* Right: who was hurt, and what was done on the day */}
+        <div className="space-y-5">
           {injury && (
-            <div className="space-y-4 border-t border-white/[0.1] pt-4">
-              <h3 className="text-sm font-semibold text-white">Who was hurt</h3>
-              <Field label="Injured person">
+            <div className="space-y-5">
+              <h3 className="text-[15px] font-semibold text-white">Who was hurt</h3>
+              <Field label="Injured person" required={accidentBook}>
                 <MobileSelectPicker
                   value={pickOther ? '__other' : form.injured_employee_id}
                   onValueChange={(v) => {
@@ -434,6 +483,28 @@ export function IncidentFormSheet({
                   />
                 </Field>
               )}
+              {!legacy && (
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <Field label="Injury" required>
+                    <MobileSelectPicker
+                      value={form.injury_type}
+                      onValueChange={(v) => set('injury_type', v)}
+                      options={INJURY_TYPES}
+                      placeholder="Choose the injury"
+                      title="Injury"
+                    />
+                  </Field>
+                  <Field label="Where on the body" required>
+                    <MobileSelectPicker
+                      value={form.body_part}
+                      onValueChange={(v) => set('body_part', v)}
+                      options={BODY_PARTS}
+                      placeholder="Choose where"
+                      title="Where on the body"
+                    />
+                  </Field>
+                </div>
+              )}
               <Field label="Injuries" hint="The RIDDOR report uses this.">
                 <Textarea
                   value={form.injuries_sustained}
@@ -443,8 +514,8 @@ export function IncidentFormSheet({
                   className={textareaClass}
                 />
               </Field>
-              <FormGrid cols={2}>
-                <label className="flex items-center gap-3 min-h-[44px] touch-manipulation cursor-pointer">
+              <div className="grid gap-2 sm:grid-cols-2">
+                <label className="flex min-h-[44px] cursor-pointer items-center gap-3 touch-manipulation">
                   <Checkbox
                     checked={form.first_aid_given}
                     onCheckedChange={(c) => set('first_aid_given', c === true)}
@@ -452,7 +523,7 @@ export function IncidentFormSheet({
                   />
                   <span className="text-sm text-white">First aid given</span>
                 </label>
-                <label className="flex items-center gap-3 min-h-[44px] touch-manipulation cursor-pointer">
+                <label className="flex min-h-[44px] cursor-pointer items-center gap-3 touch-manipulation">
                   <Checkbox
                     checked={form.hospital_visit}
                     onCheckedChange={(c) => set('hospital_visit', c === true)}
@@ -460,7 +531,7 @@ export function IncidentFormSheet({
                   />
                   <span className="text-sm text-white">Went to hospital</span>
                 </label>
-              </FormGrid>
+              </div>
               <Field
                 label="Days off work"
                 hint="Over 7 days in a row, not counting the day itself, makes it reportable."
@@ -478,8 +549,8 @@ export function IncidentFormSheet({
             </div>
           )}
 
-          <div className="space-y-4 border-t border-white/[0.1] pt-4">
-            <Field label="Immediate action on the day">
+          <div className={cn('space-y-5', injury && 'border-t border-white/[0.1] pt-5')}>
+            <Field label={injury && !legacy ? 'First aid and action on the day' : 'Action on the day'}>
               <Textarea
                 value={form.immediate_action_taken}
                 onChange={(e) => set('immediate_action_taken', e.target.value)}
@@ -496,7 +567,7 @@ export function IncidentFormSheet({
                 className={inputClass}
               />
             </Field>
-            <label className="flex items-center gap-3 min-h-[44px] touch-manipulation cursor-pointer">
+            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 touch-manipulation">
               <Checkbox
                 checked={form.supervisor_notified}
                 onCheckedChange={(c) => set('supervisor_notified', c === true)}
@@ -514,8 +585,8 @@ export function IncidentFormSheet({
               </Field>
             )}
           </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        </div>
+      </div>
+    </FormSheet>
   );
 }

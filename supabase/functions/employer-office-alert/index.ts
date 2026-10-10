@@ -88,17 +88,24 @@ interface Built {
 type Admin = any;
 
 async function buildIncident(admin: Admin, employerId: string, incidentId: string): Promise<Built | null> {
-  const { data: inc } = await admin
+  // deno-lint-ignore no-explicit-any
+  let { data: inc } = (await admin
     .from('employer_incidents')
     .select(
       'id, employer_id, title, description, incident_type, severity, reported_by, reported_at, created_at, location, job_id, riddor_reportable, injured_person, injuries_sustained, hospital_visit'
     )
     .eq('id', incidentId)
-    .maybeSingle();
+    .maybeSingle()) as { data: any };
+  if (!inc && incidentId) {
+    // ELE-2031: a worker's Site Safety near miss / accident filed against a
+    // firm job. Same shape, from the one normalised reader.
+    const { data: rows } = await admin.rpc('_firm_incident_rows', { p_firm: employerId, p_id: incidentId });
+    inc = Array.isArray(rows) && rows.length ? rows[0] : null;
+  }
   if (!inc || inc.employer_id !== employerId) return null;
 
-  let reporter = '';
-  if (inc.reported_by && /^[0-9a-f-]{36}$/i.test(inc.reported_by)) {
+  let reporter: string = inc.reporter_name ?? '';
+  if (!reporter && inc.reported_by && /^[0-9a-f-]{36}$/i.test(inc.reported_by)) {
     const { data: e } = await admin
       .from('employer_employees')
       .select('name')

@@ -319,19 +319,42 @@ serve(async (req) => {
     // accent_color, so it should drive the document's dominant colour. All
     // #000000 is the broken legacy default (ELE-1077), not a deliberate choice,
     // so treat it as unset and fall back to primary_color / the blue default.
-    const isUsableColor = (c?: string | null) => !!c && c !== '#000000';
+    //
+    // ELE-2025 — the templates set text and header fills in the brand colour on
+    // white paper, so a white or near-white brand colour (about 20 accounts:
+    // #ffffff, #fffffd, #ffff00, lime…) made headings, totals and table headers
+    // invisible. A colour must reach 1.8:1 against white to be used; amber
+    // #f59e0b (2.1:1) still passes. Too-light colours fall through to the next.
+    const contrastOnWhite = (c: string): number => {
+      const m = /^#?([0-9a-f]{6})$/i.exec(c.trim());
+      if (!m) return 21;
+      const ch = (i: number) => {
+        const v = parseInt(m[1].slice(i, i + 2), 16) / 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      };
+      const lum = 0.2126 * ch(0) + 0.7152 * ch(2) + 0.0722 * ch(4);
+      return 1.05 / (lum + 0.05);
+    };
+    const readableOnWhite = (c?: string | null) => !!c && contrastOnWhite(c) >= 1.8;
+    const isUsableColor = (c?: string | null) => !!c && c !== '#000000' && readableOnWhite(c);
+    // Only when the user picked a too-light brand colour do we reach for their
+    // secondary (black allowed there: a yellow/white + black brand stays theirs).
+    // Everyone else resolves exactly as before.
+    const pickedTooLight = [freshCompanyProfile?.accent_color, freshCompanyProfile?.primary_color].some(
+      (c) => !!c && c !== '#000000' && !readableOnWhite(c)
+    );
+    const lightBrandFallback =
+      pickedTooLight && readableOnWhite(freshCompanyProfile?.secondary_color)
+        ? freshCompanyProfile?.secondary_color
+        : '';
     const brandPrimary =
       (isUsableColor(freshCompanyProfile?.accent_color) && freshCompanyProfile?.accent_color) ||
-      (isUsableColor(freshCompanyProfile?.primary_color) &&
-      !(
-        freshCompanyProfile?.primary_color === '#000000' &&
-        freshCompanyProfile?.secondary_color === '#000000'
-      )
-        ? freshCompanyProfile?.primary_color
-        : '') ||
+      (isUsableColor(freshCompanyProfile?.primary_color) && freshCompanyProfile?.primary_color) ||
+      lightBrandFallback ||
       '#1e40af';
     const brandAccent =
       (isUsableColor(freshCompanyProfile?.accent_color) && freshCompanyProfile?.accent_color) ||
+      lightBrandFallback ||
       '#F59E0B';
 
     // ELE-956 — for v2+ quotes, compute the variation diff (added /
@@ -1028,13 +1051,26 @@ serve(async (req) => {
       // CIS deduction (labour only, ex-VAT) + reverse-charge notional VAT.
       // Mirrors src/utils/quote-calculations.ts so the PDF matches the screen.
       const round2cis = (n: number) => Math.round(n * 100) / 100;
-      const invLabourItemAdjusted = adjustedRawItems
+      // L14: labour is counted by the same rule as the SQL _doc_cis_amount
+      // (what the invoice sheet, cash forecast and chasing use): category
+      // 'labour'; or no category and type 'labour' (ELE-2064: Employer Hub
+      // lines); or neither, priced by the hour or day. Only category 'labour'
+      // lines take the labour category adjustment, as in the SQL. Electrical
+      // Hub lines always carry a category, so their CIS is unchanged.
+      const invIsUntaggedLabour = (i: any) =>
+        !i.raw?.category &&
+        (i.raw?.type === 'labour' ||
+          (!i.raw?.type && (i.raw?.unit === 'hour' || i.raw?.unit === 'day')));
+      const invLabourTagged = adjustedRawItems
         .filter((i: any) => i.category === 'labour')
+        .reduce((s: number, i: any) => s + (i.totalPrice || 0), 0);
+      const invLabourUntagged = adjustedRawItems
+        .filter((i: any) => i.category !== 'labour' && invIsUntaggedLabour(i))
         .reduce((s: number, i: any) => s + (i.totalPrice || 0), 0);
       const invLabourCatPct = invHideMarkupFromCustomer
         ? 0
         : settings.categoryAdjustments?.labour || 0;
-      const invLabourFinal = invLabourItemAdjusted * (1 + invLabourCatPct / 100);
+      const invLabourFinal = invLabourTagged * (1 + invLabourCatPct / 100) + invLabourUntagged;
       const invLabourNet =
         itemsSubtotal > 0 ? invNetAfterDiscount * (invLabourFinal / itemsSubtotal) : 0;
       const invCisEnabled = !!settings.cisEnabled;
@@ -1389,6 +1425,26 @@ serve(async (req) => {
         };
       }
     } else {
+      // ELE-1982 — a job can add to or replace the firm's customer terms.
+      // Only a quote whose job has its own terms changes; everything else
+      // prints the firm's terms exactly as before.
+      let quoteTermsSource: string | null = freshCompanyProfile?.quote_terms || null;
+      if (freshQuote?.id) {
+        try {
+          const supabaseUrl = Deno.env.get('SUPABASE_URL');
+          const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+          if (supabaseUrl && serviceKey) {
+            const sb = createClient(supabaseUrl, serviceKey);
+            const { data: eff } = await sb.rpc('quote_terms_for_pdf', {
+              p_quote_id: freshQuote.id,
+            });
+            if (eff?.job_terms && typeof eff.terms === 'string') quoteTermsSource = eff.terms;
+          }
+        } catch (termsErr) {
+          console.warn('[PDF-MONKEY] job terms lookup failed, using firm terms', termsErr);
+        }
+      }
+
       // Get items from quote - handle both camelCase and snake_case
       const quoteItems = freshQuote?.items || [];
       const jobDetails = freshQuote?.jobDetails || freshQuote?.job_details || {};
@@ -1773,9 +1829,9 @@ serve(async (req) => {
           showMaterialsBreakdown: quoteSettings.showMaterialsBreakdown !== false,
         },
         // Build terms list from stored settings (handles JSON format with selected + custom terms)
-        terms: buildTermsList(freshCompanyProfile?.quote_terms || null),
+        terms: buildTermsList(quoteTermsSource),
         // Also pass raw for backwards compatibility
-        customTerms: freshCompanyProfile?.quote_terms || null,
+        customTerms: quoteTermsSource,
         // Professional credentials
         credentials: {
           registrationScheme: freshCompanyProfile?.registration_scheme || null,

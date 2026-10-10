@@ -14,30 +14,25 @@ export function CalibrationDriftCard() {
   if (loading || !hasEnoughData || outliers.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-amber-400/30 bg-amber-500/[0.06] px-4 py-3.5 space-y-2.5">
+    <div className="card-surface space-y-3 rounded-2xl border-orange-400/40 p-4">
       <div className="flex items-center justify-between gap-2">
-        <div className="text-[11px] font-semibold tracking-[0.06em] uppercase text-amber-200/90">
-          Standardisation watch
-        </div>
-        <span className="text-[10px] tabular-nums text-white/45">
+        <h3 className="text-[15px] font-semibold text-white">Standardisation watch</h3>
+        <span className="text-[12px] tabular-nums text-white">
           {closedSessionCount} closed session{closedSessionCount === 1 ? '' : 's'}
         </span>
       </div>
-      <p className="text-[11.5px] text-white/55 leading-snug">
-        These assessors drift from the agreed standard across calibration sessions — prioritise
-        them for standardisation and IQA sampling.
+      <p className="text-[13px] leading-snug text-white">
+        These assessors drift from the agreed standard across calibration sessions. Put them first
+        for standardisation and IQA sampling.
       </p>
-      <ul className="space-y-1.5">
+      <ul className="divide-y divide-white/[0.06]">
         {outliers.map((a) => (
-          <li
-            key={a.assessorId}
-            className="flex items-center justify-between gap-3 rounded-lg bg-black/20 px-3 py-2"
-          >
+          <li key={a.assessorId} className="flex items-center justify-between gap-3 py-2.5">
             <div className="min-w-0">
-              <div className="text-[12.5px] font-semibold text-white truncate">
+              <div className="truncate text-[13px] font-semibold text-white">
                 {a.assessorName ?? 'Unknown assessor'}
               </div>
-              <div className="text-[10.5px] text-white/50 tabular-nums">
+              <div className="text-[12px] tabular-nums text-white">
                 {a.consensusAlignmentPct}% consensus
                 {a.referenceAccuracyPct != null && ` · ${a.referenceAccuracyPct}% vs reference`}
                 {` · ${a.sessions} sessions`}
@@ -45,15 +40,15 @@ export function CalibrationDriftCard() {
             </div>
             <span
               className={cn(
-                'shrink-0 inline-flex items-center h-5 px-1.5 rounded-md text-[9.5px] font-semibold uppercase tracking-[0.05em]',
-                a.driftLabel === 'lenient' && 'bg-amber-500/15 border border-amber-400/40 text-amber-200',
-                a.driftLabel === 'harsh' && 'bg-sky-500/15 border border-sky-400/40 text-sky-200',
-                a.driftLabel === 'aligned' && 'bg-white/[0.05] border border-white/10 text-white/50'
+                'inline-flex h-6 shrink-0 items-center rounded-full border px-2 text-[12px] font-semibold text-white',
+                a.driftLabel === 'lenient' && 'border-orange-400/60',
+                a.driftLabel === 'harsh' && 'border-sky-400/60',
+                a.driftLabel === 'aligned' && 'border-white/[0.16]'
               )}
             >
               {a.driftLabel === 'aligned'
-                ? 'off-consensus'
-                : `${a.driftLabel} +${Math.abs(a.avgSignedDrift).toFixed(1)}`}
+                ? 'Off consensus'
+                : `${a.driftLabel === 'lenient' ? 'Lenient' : 'Harsh'} +${Math.abs(a.avgSignedDrift).toFixed(1)}`}
             </span>
           </li>
         ))}

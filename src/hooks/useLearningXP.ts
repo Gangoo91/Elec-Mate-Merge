@@ -1,10 +1,13 @@
 /**
  * useLearningXP
  *
- * Core XP hook — single source of truth for all learning XP.
- * Reads user_xp_summary, provides logActivity() to insert to
- * learning_activity_log and update totals, resets xp_today on
- * date change.
+ * Core XP hook. Since 9 Oct 2026 the SERVER owns XP (migrations
+ * 20261009170000/171000): learning_activity_log is the ledger, the server
+ * decides every amount (award_xp), each item awards once per period, daily
+ * caps apply, and users cannot write XP. This hook only:
+ *   - reads live totals from get_my_xp (today/week/month in Europe/London),
+ *   - reports what happened via award_xp (the server prices it),
+ *   - (streaks are the server's too: my_streak, from the same ledger).
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -16,9 +19,7 @@ import {
   getLevelForXP,
   getXPToNextLevel,
   getLevelProgress,
-  calculateXP,
   calculateDuration,
-  XP_RULES,
 } from '@/data/xpConfig';
 
 export interface LogActivityParams {
@@ -50,6 +51,9 @@ interface XPSummary {
   xpToNextLevel: number;
   xpProgress: number;
   xpToday: number;
+  /** This calendar week (from Monday) and month, Europe/London — what the boards rank. */
+  xpWeek: number;
+  xpMonth: number;
   dailyGoal: number;
   dailyGoalMet: boolean;
 }
@@ -61,9 +65,18 @@ const DEFAULT_SUMMARY: XPSummary = {
   xpToNextLevel: 250,
   xpProgress: 0,
   xpToday: 0,
+  xpWeek: 0,
+  xpMonth: 0,
   dailyGoal: 100,
   dailyGoalMet: false,
 };
+
+/** What the server said about one award, for toasts and tests. */
+export interface AwardResult {
+  xp: number;
+  awarded: boolean;
+  reason?: 'awarded' | 'already_awarded' | 'daily_cap' | 'duplicate' | string;
+}
 
 export function useLearningXP() {
   const { user } = useAuth();
@@ -71,6 +84,9 @@ export function useLearningXP() {
   const [loading, setLoading] = useState(true);
 
   // ─── Fetch summary ──────────────────────────────────────────
+  // Live from the ledger. The stored summary is maintained by a trigger, but
+  // get_my_xp also gives today/week/month on the London calendar, so a
+  // "today" from yesterday can never show.
   const fetchSummary = useCallback(async (force = false) => {
     if (!user) {
       setSummary(DEFAULT_SUMMARY);
@@ -83,54 +99,35 @@ export function useLearningXP() {
       // hook at once — they share one read; after a write it always refetches.
       const { data, error } = await sharedFetch(
         `xp_summary:${user.id}`,
-        async () =>
-          await supabase
-            .from('user_xp_summary' as any)
-            .select('*')
-            .eq('user_id', user.id)
-            .maybeSingle(),
+        async () => await supabase.rpc('get_my_xp' as any),
         { force }
       );
+      if (error || !data) return;
 
-      if (error) {
-        // Table may not exist yet — fail silently
-        setLoading(false);
-        return;
-      }
+      const row = data as {
+        total_xp?: number;
+        xp_today?: number;
+        xp_week?: number;
+        xp_month?: number;
+        daily_goal?: number;
+      };
+      const totalXP = Number(row.total_xp ?? 0);
+      const xpToday = Number(row.xp_today ?? 0);
+      const dailyGoal = Number(row.daily_goal ?? 100);
+      const levelDef = getLevelForXP(totalXP);
 
-      if (data) {
-        const row = data as any;
-        const today = new Date().toLocaleDateString('en-CA');
-        let xpToday = row.xp_today ?? 0;
-
-        // Reset xp_today if date has changed
-        if (row.xp_today_date !== today) {
-          xpToday = 0;
-          await supabase
-            .from('user_xp_summary' as any)
-            .update({
-              xp_today: 0,
-              xp_today_date: today,
-              updated_at: new Date().toISOString(),
-            } as any)
-            .eq('user_id', user.id);
-        }
-
-        const totalXP = row.total_xp ?? 0;
-        const levelDef = getLevelForXP(totalXP);
-        const dailyGoal = row.daily_goal ?? 100;
-
-        setSummary({
-          totalXP,
-          level: levelDef.level,
-          levelTitle: levelDef.title,
-          xpToNextLevel: getXPToNextLevel(totalXP),
-          xpProgress: getLevelProgress(totalXP),
-          xpToday,
-          dailyGoal,
-          dailyGoalMet: xpToday >= dailyGoal,
-        });
-      }
+      setSummary({
+        totalXP,
+        level: levelDef.level,
+        levelTitle: levelDef.title,
+        xpToNextLevel: getXPToNextLevel(totalXP),
+        xpProgress: getLevelProgress(totalXP),
+        xpToday,
+        xpWeek: Number(row.xp_week ?? 0),
+        xpMonth: Number(row.xp_month ?? 0),
+        dailyGoal,
+        dailyGoalMet: xpToday >= dailyGoal,
+      });
     } catch {
       // Fail silently
     } finally {
@@ -143,15 +140,12 @@ export function useLearningXP() {
   }, [fetchSummary]);
 
   // ─── Log activity ──────────────────────────────────────────
+  // Reports what happened; the server decides what it is worth, whether this
+  // item has already earned today, and the daily caps. The minutes still
+  // feed off-the-job time exactly as before.
   const logActivity = useCallback(
-    async (params: LogActivityParams) => {
-      if (!user) return;
-
-      const xpEarned = calculateXP(params.activityType, {
-        cardsReviewed: params.cardsReviewed,
-        scorePercent: params.scorePercent,
-        cardsMastered: params.cardsMastered,
-      });
+    async (params: LogActivityParams): Promise<AwardResult | null> => {
+      if (!user) return null;
 
       const durationMinutes = calculateDuration(params.activityType, {
         cardsReviewed: params.cardsReviewed,
@@ -159,110 +153,36 @@ export function useLearningXP() {
         actualMinutes: params.actualMinutes,
       });
 
+      let award: AwardResult | null = null;
       try {
-        // 1. Insert activity log entry (unless a trusted server path already did)
+        // 1. Award (unless a trusted server path already wrote the row,
+        //    e.g. log_study_activity for course sections)
         if (!params.skipLogRow) {
-          await supabase.from('learning_activity_log' as any).insert({
-            user_id: user.id,
-            activity_type: params.activityType,
-            source_id: params.sourceId ?? null,
-            source_title: params.sourceTitle ?? null,
-            xp_earned: xpEarned,
-            duration_minutes: durationMinutes,
-            metadata: params.metadata ?? {},
-            counted_as_ojt: false,
+          const { data, error } = await supabase.rpc('award_xp' as any, {
+            p_activity_type: params.activityType,
+            p_source_id: params.sourceId ?? null,
+            p_source_title: params.sourceTitle ?? null,
+            p_score: params.scorePercent ?? null,
+            p_cards: params.cardsReviewed ?? null,
+            p_duration_minutes: durationMinutes,
+            p_metadata: params.metadata ?? {},
           } as any);
+          if (error) console.warn('[xp] award failed', error.message);
+          else award = data as AwardResult;
         }
 
-        // 2. Upsert XP summary
-        const today = new Date().toLocaleDateString('en-CA');
-        const { data: existing } = await supabase
-          .from('user_xp_summary' as any)
-          .select('*')
-          .eq('user_id', user.id)
-          .maybeSingle();
+        // 2. Study streak: kept by the server from the ledger (since 10 Oct
+        //    2026) — any activity row is a study day; nothing to write here.
 
-        if (existing) {
-          const row = existing as any;
-          const currentXPToday = row.xp_today_date === today ? (row.xp_today ?? 0) : 0;
-          const newTotalXP = (row.total_xp ?? 0) + xpEarned;
-          const newXPToday = currentXPToday + xpEarned;
-          const newLevel = getLevelForXP(newTotalXP).level;
-
-          await supabase
-            .from('user_xp_summary' as any)
-            .update({
-              total_xp: newTotalXP,
-              level: newLevel,
-              xp_today: newXPToday,
-              xp_today_date: today,
-              updated_at: new Date().toISOString(),
-            } as any)
-            .eq('user_id', user.id);
-        } else {
-          const newLevel = getLevelForXP(xpEarned).level;
-          await supabase.from('user_xp_summary' as any).insert({
-            user_id: user.id,
-            total_xp: xpEarned,
-            level: newLevel,
-            xp_today: xpEarned,
-            xp_today_date: today,
-            daily_goal: 100,
-          } as any);
-        }
-
-        // 3. Update study streak — ANY activity counts as a study day
-        try {
-          const { data: streakRow } = await supabase
-            .from('user_study_streaks' as any)
-            .select('*')
-            .eq('user_id', user.id)
-            .maybeSingle();
-
-          const todayStr = new Date().toLocaleDateString('en-CA');
-          const yesterdayStr = new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
-
-          if (streakRow) {
-            const row = streakRow as any;
-            const lastDate = row.last_study_date;
-            if (lastDate !== todayStr) {
-              // New day — extend streak or reset
-              const newStreak = lastDate === yesterdayStr ? (row.current_streak || 0) + 1 : 1;
-              const longestStreak = Math.max(newStreak, row.longest_streak || 0);
-              await supabase
-                .from('user_study_streaks' as any)
-                .update({
-                  current_streak: newStreak,
-                  longest_streak: longestStreak,
-                  last_study_date: todayStr,
-                  total_sessions: (row.total_sessions || 0) + 1,
-                  updated_at: new Date().toISOString(),
-                } as any)
-                .eq('user_id', user.id);
-            }
-          } else {
-            // First ever activity — create streak
-            await supabase.from('user_study_streaks' as any).insert({
-              user_id: user.id,
-              current_streak: 1,
-              longest_streak: 1,
-              last_study_date: todayStr,
-              total_sessions: 1,
-              total_cards_reviewed: 0,
-            } as any);
-          }
-        } catch {
-          // Streak update is non-critical
-        }
-
-        // 4. Trigger achievement check (global event — any listener can pick this up)
+        // 3. Trigger achievement check (global event — any listener can pick this up)
         window.dispatchEvent(new CustomEvent('elecmate:activity-logged'));
 
-        // 5. Refresh local state
+        // 4. Refresh local state from the server's figures
         await fetchSummary(true);
       } catch (err) {
         console.error('Error logging XP activity:', err);
       }
+      return award;
     },
     [user, fetchSummary]
   );
@@ -273,27 +193,9 @@ export function useLearningXP() {
       if (!user) return;
 
       try {
-        const { data: existing } = await supabase
-          .from('user_xp_summary' as any)
-          .select('user_id')
-          .eq('user_id', user.id)
-          .maybeSingle();
-
-        if (existing) {
-          await supabase
-            .from('user_xp_summary' as any)
-            .update({ daily_goal: goal, updated_at: new Date().toISOString() } as any)
-            .eq('user_id', user.id);
-        } else {
-          await supabase.from('user_xp_summary' as any).insert({
-            user_id: user.id,
-            total_xp: 0,
-            level: 1,
-            xp_today: 0,
-            xp_today_date: new Date().toLocaleDateString('en-CA'),
-            daily_goal: goal,
-          } as any);
-        }
+        // The one XP setting a user may change (50/100/200/300).
+        const { error } = await supabase.rpc('set_xp_daily_goal' as any, { p_goal: goal } as any);
+        if (error) throw error;
 
         setSummary((prev) => ({
           ...prev,

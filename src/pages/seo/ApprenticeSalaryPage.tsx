@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Does the 18th Edition exam now cover the A4:2026 changes?',
     answer:
-      'Yes. The City & Guilds 2382 (18th Edition) qualification now covers BS 7671:2018+A4:2026, the current edition of the wiring regulations. Apprentices sitting the exam from 2025 onwards should be familiar with the key A4:2026 changes. Two of the most significant are: first, Regulation 421.1.7, which recommends the installation of arc fault detection devices (AFDDs) on AC final circuits of fixed installations to mitigate the risk of fire from arc faults; and second, Regulation 411.3.4, which requires that AC final circuits supplying luminaires (lighting circuits) in domestic premises must have additional protection by an RCD with a rated residual operating current not exceeding 30 mA. Both regulations appear in examination questions and in the Elec-Mate 18th Edition question bank. Understanding these changes also reflects directly on your value to employers — an electrician who can specify or verify AFDD and RCD protection correctly commands greater respect and, in time, higher rates.',
+      'Yes. The City & Guilds 2382 (18th Edition) qualification now covers BS 7671:2018+A4:2026, the current edition of the wiring regulations. Apprentices sitting the exam from 2025 onwards should be familiar with the key A4:2026 changes. Two rules that are often examined, though both predate A4, are: first, Regulation 421.1.7 on arc fault detection devices (AFDDs), recommended on AC final circuits since 2018 and required in HMOs, care homes and similar premises since A2:2022; and second, Regulation 411.3.4 (since 2018), which requires that AC final circuits supplying luminaires (lighting circuits) in domestic premises must have additional protection by an RCD with a rated residual operating current not exceeding 30 mA. Both regulations appear in examination questions and in the Elec-Mate 18th Edition question bank. Understanding these rules also reflects directly on your value to employers — an electrician who can specify or verify AFDD and RCD protection correctly commands greater respect and, in time, higher rates.',
   },
   {
     question: 'What financial support is available for electrical apprentices?',
@@ -126,7 +126,7 @@ const relatedPages = [
   {
     href: '/guides/off-the-job-training-hours',
     title: 'Off-the-Job Training Hours',
-    description: 'Understanding the 20% off-the-job training requirement and how to track it.',
+    description: 'Understanding the off-the-job training hours requirement and how to track it.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -413,9 +413,9 @@ const sections = [
           full apprenticeship. In return, they must pay your wages on college days, give you time to
           study, and support your{' '}
           <SEOInternalLink href="/guides/off-the-job-training-hours">
-            20% off-the-job training
+            off-the-job training
           </SEOInternalLink>{' '}
-          requirement.
+          requirement (a minimum number of hours set for your standard).
         </p>
         <p>
           If your employer asks you to work on your college day, to make up the hours at another
@@ -529,7 +529,7 @@ const sections = [
           <SEOInternalLink href="/guides/off-the-job-training-hours">
             off-the-job training tracker
           </SEOInternalLink>{' '}
-          ensures you stay compliant with the 20% off-the-job training requirement, preventing any
+          ensures you stay on track for the off-the-job hours your standard requires, preventing any
           delays to your apprenticeship completion caused by insufficient training evidence.
         </p>
         <p>
@@ -554,7 +554,7 @@ export default function ApprenticeSalaryPage() {
       title="Apprentice Electrician Pay: JIB £8.16–£14.03/hr"
       description="JIB apprentice rates from 5 Jan 2026: Stage 1 £8.16, Stage 2 £10.60, Stage 3 £13.05, Stage 4 £14.03/hr (London £9.14–£15.72). Minimum wage £8.00/hr."
       datePublished="2025-09-10"
-      dateModified="2026-08-06"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

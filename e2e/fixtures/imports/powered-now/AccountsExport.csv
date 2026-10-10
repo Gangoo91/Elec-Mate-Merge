@@ -1,0 +1,7 @@
+Type,Number,Contact,Date,Due Date,Description,Net,VAT,Gross,Paid,Status
+Invoice,INV-0118,Denise Carter,12/07/2026,26/07/2026,Shower circuit and isolator,275.00,55.00,330.00,330.00,4
+Invoice,INV-0119,Freeman Holiday Lets,02/08/2026,16/08/2026,"PAT testing, 3 cottages",150.00,30.00,180.00,0.00,1
+Invoice,INV-0120,Ian Whitlock,28/08/2026,11/09/2026,"Smoke and heat alarms, LD2",410.00,82.00,492.00,200.00,5
+Quote,QUO-0077,Freeman Holiday Lets,15/09/2026,15/10/2026,EV charger at the barn,900.00,180.00,1080.00,0.00,2
+Quote,QUO-0078,Ian Whitlock,01/10/2026,31/10/2026,Loft lighting and sockets,320.00,64.00,384.00,0.00,1
+Supplier Invoice,SUP-5521,IOW Electrical Wholesale,03/08/2026,02/09/2026,Cable and accessories,212.40,42.48,254.88,254.88,4

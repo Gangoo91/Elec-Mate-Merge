@@ -90,12 +90,16 @@ export const chipBase =
   'h-11 rounded-xl border text-sm transition-all touch-manipulation active:scale-[0.98]';
 export const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
 export const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
+/** The chosen chip in the College Hub and apprentice screens: white, not
+ *  yellow (yellow is kept for the one action on a screen). `chipOn` stays
+ *  yellow for the certificate forms. */
+export const chipOnQuiet = 'bg-white border-white text-black font-semibold';
 
 /** Solid volt primary (sheet footers, form submits). Disabled goes NEUTRAL —
  *  a faded volt over near-black reads as muddy brown, which is why this is
  *  not `disabled:opacity-*`. Same recipe as the cert footer's Continue. */
 export const buttonPrimaryCn =
-  'h-12 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] outline-none focus:outline-none focus-visible:outline-none';
+  'h-12 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed touch-manipulation active:scale-[0.99] outline-none focus:outline-none focus-visible:outline-none';
 
 /** Neutral secondary (Back / Cancel) — the cert footer's neutral button. */
 export const buttonSecondaryCn =

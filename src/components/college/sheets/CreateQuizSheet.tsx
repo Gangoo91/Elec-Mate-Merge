@@ -1,22 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { FormSheet } from '@/components/forms/FormSheet';
+import { CHOICE_OFF, CHOICE_ON } from '@/components/college/teaching/TeachingKit';
 import {
   buttonPrimaryCn,
   buttonSecondaryCn,
   checkRowCn,
   chipBase,
-  chipOff,
-  chipOn,
   inputCn,
   labelCn,
   selectTriggerCn,
 } from '@/components/forms/fieldStyles';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { chipCn } from '@/components/college/ui/CollegeUi';
+import { choiceCn } from '@/components/college/teaching/TeachingKit';
+import { AiMarker } from '@/components/college/teaching/TeachingKit';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuthorQuiz, type AuthorQuizQuestion, type AuthorQuizInput } from '@/hooks/useAuthorQuiz';
+import {
+  useAuthorQuiz,
+  type AuthorQuizQuestion,
+  type AuthorQuizInput,
+} from '@/hooks/useAuthorQuiz';
 import { useTutorTargets } from '@/hooks/useTutorTargets';
 
 /* ==========================================================================
@@ -68,11 +72,11 @@ export function CreateQuizSheet({
 
   // Targeting — default to the prop-provided learner if any; else "cohort"
   type TargetMode = 'learner' | 'cohort';
-  const [targetMode, setTargetMode] = useState<TargetMode>(
-    collegeStudentId ? 'learner' : 'cohort'
-  );
+  const [targetMode, setTargetMode] = useState<TargetMode>(collegeStudentId ? 'learner' : 'cohort');
   const [selectedCohortId, setSelectedCohortId] = useState<string | null>(cohortId ?? null);
-  const [selectedLessonPlanId, setSelectedLessonPlanId] = useState<string | null>(lessonPlanId ?? null);
+  const [selectedLessonPlanId, setSelectedLessonPlanId] = useState<string | null>(
+    lessonPlanId ?? null
+  );
 
   // Form state
   const [topic, setTopic] = useState('');
@@ -117,9 +121,8 @@ export function CreateQuizSheet({
     ) {
       autoStartedRef.current = true;
       void ai.author({
-        college_student_id:
-          targetMode === 'learner' ? collegeStudentId ?? undefined : undefined,
-        cohort_id: targetMode === 'cohort' ? selectedCohortId ?? undefined : undefined,
+        college_student_id: targetMode === 'learner' ? (collegeStudentId ?? undefined) : undefined,
+        cohort_id: targetMode === 'cohort' ? (selectedCohortId ?? undefined) : undefined,
         ac_codes: initialAcCodes,
         difficulty: 'medium',
         count: 5,
@@ -137,9 +140,8 @@ export function CreateQuizSheet({
       .map((s) => s.trim())
       .filter(Boolean);
     const input: AuthorQuizInput = {
-      college_student_id:
-        targetMode === 'learner' ? collegeStudentId ?? undefined : undefined,
-      cohort_id: targetMode === 'cohort' ? selectedCohortId ?? undefined : undefined,
+      college_student_id: targetMode === 'learner' ? (collegeStudentId ?? undefined) : undefined,
+      cohort_id: targetMode === 'cohort' ? (selectedCohortId ?? undefined) : undefined,
       ac_codes: acList.length > 0 ? acList : undefined,
       topic: !acList.length && topic.trim() ? topic.trim() : undefined,
       difficulty,
@@ -189,12 +191,14 @@ export function CreateQuizSheet({
     }
   };
 
+  // Says what the sheet does: an AI model drafts the questions, the tutor
+  // checks and publishes them (8 Oct 2026; was "Create quiz free-form").
   const targetLabel =
     collegeStudentId && studentName
-      ? `for ${studentName.split(' ')[0]}`
+      ? ` for ${studentName.split(' ')[0]}`
       : cohortId
-        ? 'for cohort'
-        : 'free-form';
+        ? ' for a cohort'
+        : '';
 
   const footer =
     ai.status === 'done' && ai.result ? (
@@ -228,7 +232,7 @@ export function CreateQuizSheet({
           Cancel
         </button>
         <button type="button" onClick={handleGenerate} className={buttonPrimaryCn}>
-          {ai.status === 'error' ? 'Retry' : 'Generate'}
+          {ai.status === 'error' ? 'Try again' : 'Draft the questions'}
         </button>
       </div>
     );
@@ -238,12 +242,17 @@ export function CreateQuizSheet({
       open={open}
       onOpenChange={onOpenChange}
       width="wide"
-      eyebrow="Quiz authoring"
-      title={`Create quiz ${targetLabel}`}
+      eyebrow="New quiz"
+      title={
+        <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span>{`Draft a quiz${targetLabel}`}</span>
+          <AiMarker />
+        </span>
+      }
       description={
         ai.status === 'done' && ai.result
           ? 'Saved as a draft learners cannot see. Review every question, then publish. If you regenerate or close, this one stays in Quizzes as an unpublished draft.'
-          : "Questions drawn from BS 7671 and the qualification's ACs, each with its citation. It is saved as a draft; nothing reaches learners until you review it and publish."
+          : "An AI model drafts the questions from BS 7671 and the qualification's criteria, each with its citation. It is saved as a draft; nothing reaches learners until you check it and publish."
       }
       bodyClassName={
         ai.status === 'idle'
@@ -254,20 +263,32 @@ export function CreateQuizSheet({
     >
       {ai.status === 'idle' && (
         <ConfigForm
-          topic={topic} setTopic={setTopic}
-          acCodes={acCodes} setAcCodes={setAcCodes}
-          count={count} setCount={setCount}
-          difficulty={difficulty} setDifficulty={setDifficulty}
-          title={title} setTitle={setTitle}
-          timeLimit={timeLimit} setTimeLimit={setTimeLimit}
-          passMark={passMark} setPassMark={setPassMark}
-          isHomework={isHomework} setIsHomework={setIsHomework}
-          dueDate={dueDate} setDueDate={setDueDate}
-          targetMode={targetMode} setTargetMode={setTargetMode}
+          topic={topic}
+          setTopic={setTopic}
+          acCodes={acCodes}
+          setAcCodes={setAcCodes}
+          count={count}
+          setCount={setCount}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          title={title}
+          setTitle={setTitle}
+          timeLimit={timeLimit}
+          setTimeLimit={setTimeLimit}
+          passMark={passMark}
+          setPassMark={setPassMark}
+          isHomework={isHomework}
+          setIsHomework={setIsHomework}
+          dueDate={dueDate}
+          setDueDate={setDueDate}
+          targetMode={targetMode}
+          setTargetMode={setTargetMode}
           cohorts={cohorts}
-          selectedCohortId={selectedCohortId} setSelectedCohortId={setSelectedCohortId}
+          selectedCohortId={selectedCohortId}
+          setSelectedCohortId={setSelectedCohortId}
           lessonPlans={lessonPlans}
-          selectedLessonPlanId={selectedLessonPlanId} setSelectedLessonPlanId={setSelectedLessonPlanId}
+          selectedLessonPlanId={selectedLessonPlanId}
+          setSelectedLessonPlanId={setSelectedLessonPlanId}
           learnerName={collegeStudentId ? studentName : null}
         />
       )}
@@ -286,31 +307,52 @@ const COUNTS = [3, 5, 8, 10, 12, 15];
 const NO_LESSON = '__none__';
 
 function ConfigForm({
-  topic, setTopic,
-  acCodes, setAcCodes,
-  count, setCount,
-  difficulty, setDifficulty,
-  title, setTitle,
-  timeLimit, setTimeLimit,
-  passMark, setPassMark,
-  isHomework, setIsHomework,
-  dueDate, setDueDate,
-  targetMode, setTargetMode,
+  topic,
+  setTopic,
+  acCodes,
+  setAcCodes,
+  count,
+  setCount,
+  difficulty,
+  setDifficulty,
+  title,
+  setTitle,
+  timeLimit,
+  setTimeLimit,
+  passMark,
+  setPassMark,
+  isHomework,
+  setIsHomework,
+  dueDate,
+  setDueDate,
+  targetMode,
+  setTargetMode,
   cohorts,
-  selectedCohortId, setSelectedCohortId,
+  selectedCohortId,
+  setSelectedCohortId,
   lessonPlans,
-  selectedLessonPlanId, setSelectedLessonPlanId,
+  selectedLessonPlanId,
+  setSelectedLessonPlanId,
   learnerName,
 }: {
-  topic: string; setTopic: (s: string) => void;
-  acCodes: string; setAcCodes: (s: string) => void;
-  count: number; setCount: (n: number) => void;
-  difficulty: 'easy' | 'medium' | 'hard'; setDifficulty: (d: 'easy' | 'medium' | 'hard') => void;
-  title: string; setTitle: (s: string) => void;
-  timeLimit: number; setTimeLimit: (n: number) => void;
-  passMark: number; setPassMark: (n: number) => void;
-  isHomework: boolean; setIsHomework: (b: boolean) => void;
-  dueDate: string; setDueDate: (s: string) => void;
+  topic: string;
+  setTopic: (s: string) => void;
+  acCodes: string;
+  setAcCodes: (s: string) => void;
+  count: number;
+  setCount: (n: number) => void;
+  difficulty: 'easy' | 'medium' | 'hard';
+  setDifficulty: (d: 'easy' | 'medium' | 'hard') => void;
+  title: string;
+  setTitle: (s: string) => void;
+  timeLimit: number;
+  setTimeLimit: (n: number) => void;
+  passMark: number;
+  setPassMark: (n: number) => void;
+  isHomework: boolean;
+  setIsHomework: (b: boolean) => void;
+  dueDate: string;
+  setDueDate: (s: string) => void;
   targetMode: 'learner' | 'cohort';
   setTargetMode: (m: 'learner' | 'cohort') => void;
   cohorts: Array<{ id: string; name: string; course_name: string | null; member_count: number }>;
@@ -357,13 +399,18 @@ function ConfigForm({
                     className={cn(
                       'rounded-xl border px-3.5 py-3 text-left transition-colors touch-manipulation',
                       disabled && 'cursor-not-allowed opacity-40',
-                      on ? chipOn : chipOff
+                      on ? CHOICE_ON : CHOICE_OFF
                     )}
                   >
                     <span className="block text-[13.5px] font-semibold">
                       {mode === 'learner' ? (learnerName ?? 'Single learner') : 'Whole cohort'}
                     </span>
-                    <span className={cn('mt-0.5 block text-[12px] font-normal leading-snug', on ? 'text-black' : 'text-white')}>
+                    <span
+                      className={cn(
+                        'mt-0.5 block text-[12px] font-normal leading-snug',
+                        on ? 'text-black' : 'text-white'
+                      )}
+                    >
                       {mode === 'learner'
                         ? learnerName
                           ? `Only ${learnerName.split(' ')[0]} sees it.`
@@ -390,7 +437,7 @@ function ConfigForm({
                       key={c.id}
                       type="button"
                       aria-pressed={selectedCohortId === c.id}
-                      className={cn(chipCn(selectedCohortId === c.id), 'h-11')}
+                      className={cn(choiceCn(selectedCohortId === c.id), 'h-11')}
                       onClick={() => setSelectedCohortId(c.id)}
                     >
                       {c.name} ({c.member_count})
@@ -498,7 +545,7 @@ function ConfigForm({
                     type="button"
                     aria-pressed={count === n}
                     onClick={() => setCount(n)}
-                    className={cn(chipBase, count === n ? chipOn : chipOff, 'tabular-nums')}
+                    className={cn(chipBase, count === n ? CHOICE_ON : CHOICE_OFF, 'tabular-nums')}
                   >
                     {n}
                   </button>
@@ -514,7 +561,7 @@ function ConfigForm({
                     type="button"
                     aria-pressed={difficulty === d.value}
                     onClick={() => setDifficulty(d.value)}
-                    className={cn(chipBase, difficulty === d.value ? chipOn : chipOff)}
+                    className={cn(chipBase, difficulty === d.value ? CHOICE_ON : CHOICE_OFF)}
                   >
                     {d.label}
                   </button>
@@ -590,9 +637,17 @@ function ConfigForm({
         <dl className="divide-y divide-white/[0.08]">
           <SummaryRow label="Goes to" value={targetSummary} />
           <SummaryRow label="Questions" value={`${count} · ${difficulty}`} />
-          <SummaryRow label="Time and pass" value={timeLimit > 0 ? `${timeLimit} min · ${passMark}% to pass` : `${passMark}% to pass`} />
+          <SummaryRow
+            label="Time and pass"
+            value={
+              timeLimit > 0 ? `${timeLimit} min · ${passMark}% to pass` : `${passMark}% to pass`
+            }
+          />
           <SummaryRow label="Lesson" value={lessonTitle ?? 'None'} />
-          <SummaryRow label="Homework" value={isHomework ? (dueDate ? `Due ${dueDate}` : 'Yes, no due date') : 'No'} />
+          <SummaryRow
+            label="Homework"
+            value={isHomework ? (dueDate ? `Due ${dueDate}` : 'Yes, no due date') : 'No'}
+          />
         </dl>
         <p>
           The AI pulls from BS 7671 and the qualification ACs. Every question comes back with its
@@ -644,9 +699,11 @@ function LoadingState({ count }: { count: number }) {
 
 function ErrorState({ message }: { message: string | null }) {
   return (
-    <div className="border-l-2 border-orange-300 pl-4">
-      <h3 className="text-[15px] font-semibold text-orange-300">Could not write the quiz</h3>
-      <p className="mt-1 text-[13px] leading-relaxed text-white">{message ?? 'Try again in a moment.'}</p>
+    <div className="card-surface rounded-2xl border-orange-400/40 p-4">
+      <h3 className="text-[15px] font-semibold text-white">Could not write the quiz</h3>
+      <p className="mt-1 text-[13px] leading-relaxed text-white">
+        {message ?? 'Try again in a moment.'}
+      </p>
     </div>
   );
 }
@@ -655,12 +712,18 @@ function ErrorState({ message }: { message: string | null }) {
    Preview state — review each question
    ──────────────────────────────────────────────────────── */
 
-function PreviewState({ result }: { result: NonNullable<ReturnType<typeof useAuthorQuiz>['result']> }) {
+function PreviewState({
+  result,
+}: {
+  result: NonNullable<ReturnType<typeof useAuthorQuiz>['result']>;
+}) {
   return (
     <div className="space-y-5">
       <div className="border-b border-white/[0.08] pb-4">
         <p className="text-[12px] font-medium text-emerald-300">Quiz drafted</p>
-        <h3 className="mt-1 text-[18px] font-semibold leading-tight text-white">{result.quiz.title}</h3>
+        <h3 className="mt-1 text-[18px] font-semibold leading-tight text-white">
+          {result.quiz.title}
+        </h3>
         {result.quiz.description && (
           <p className="mt-1 text-[13px] leading-relaxed text-white">{result.quiz.description}</p>
         )}
@@ -713,11 +776,18 @@ function QuestionCard({ index, q }: { index: number; q: AuthorQuizQuestion }) {
                 correct ? 'border-emerald-400/40' : 'border-white/[0.08]'
               )}
             >
-              <span className={cn('w-4 shrink-0 font-semibold tabular-nums', correct && 'text-emerald-300')}>
+              <span
+                className={cn(
+                  'w-4 shrink-0 font-semibold tabular-nums',
+                  correct && 'text-emerald-300'
+                )}
+              >
                 {String.fromCharCode(65 + j)}
               </span>
               <span className="min-w-0 flex-1">{opt}</span>
-              {correct && <span className="shrink-0 text-[12px] font-medium text-emerald-300">Correct</span>}
+              {correct && (
+                <span className="shrink-0 text-[12px] font-medium text-emerald-300">Correct</span>
+              )}
             </li>
           );
         })}

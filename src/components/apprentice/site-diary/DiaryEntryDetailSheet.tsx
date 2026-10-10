@@ -58,6 +58,7 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { MOOD_EMOJI, moodLabel } from '@/lib/site-diary/mood';
 import { shareAttestLink } from '@/lib/site-diary/attest';
+import { rejectedClaimsText, setItemCriteria } from '@/lib/portfolio/claimCriteria';
 
 type OtjStatus = 'pending' | 'verified' | 'rejected' | 'verified_by_employer';
 
@@ -472,23 +473,27 @@ export function DiaryEntryDetailSheet({
       // ELE-1864: typed criteria. Ticked = learner claims (also typed by the
       // trigger from the strings); AI matches left unticked stay suggestions.
       const aiLeft = acs.filter((a) => !a.selected && a.aiConfidence);
-      if (aiLeft.length) {
-        // Suggestions only: the claims are typed by the trigger from the
-        // strings above, so a failure here loses hints, never claims.
-        const { error: sugErr } = await supabase.rpc(
-          'set_portfolio_item_criteria' as never,
-          {
-            p_item_id: newId,
-            p_claimed: chosen.map((a) => ({ unit_code: a.unitCode, ac_code: a.acCode })),
-            p_suggested: aiLeft.map((a) => ({
-              unit_code: a.unitCode,
-              ac_code: a.acCode,
-              confidence: a.aiConfidence,
-              reason: 'Matched from this diary day',
-            })),
-          } as never
+      let criteriaWarning: string | null = null;
+      let refused = 0;
+      if (aiLeft.length || chosen.length) {
+        // The claims are also typed by the trigger from the strings above, so
+        // a failure here loses hints, never claims. A claim refused as not in
+        // the learner's qualification is told to them.
+        const crit = await setItemCriteria(
+          newId,
+          chosen.map((a) => ({ unit_code: a.unitCode, ac_code: a.acCode })),
+          aiLeft.length
+            ? aiLeft.map((a) => ({
+                unit_code: a.unitCode,
+                ac_code: a.acCode,
+                confidence: a.aiConfidence,
+                reason: 'Matched from this diary day',
+              }))
+            : null
         );
-        if (sugErr) console.warn('[site-diary] criteria suggestions not saved', sugErr.message);
+        refused = crit.rejected.length;
+        if (refused) criteriaWarning = rejectedClaimsText(crit.rejected, crit.qualification);
+        if (crit.error) console.warn('[site-diary] criteria not saved', crit.error);
       }
       const { error: linkErr } = await supabase
         .from('site_diary_entries')
@@ -508,10 +513,12 @@ export function DiaryEntryDetailSheet({
       onChanged?.();
       toast.success('Added to your portfolio as a draft', {
         description:
-          chosen.length > 0
-            ? `${chosen.length} ${chosen.length === 1 ? 'criterion' : 'criteria'} claimed. Finish and submit it from your portfolio.`
+          chosen.length - refused > 0
+            ? `${chosen.length - refused} ${chosen.length - refused === 1 ? 'criterion' : 'criteria'} claimed. Finish and submit it from your portfolio.`
             : 'Finish and submit it from your portfolio.',
       });
+      if (criteriaWarning)
+        toast.error('Some criteria not claimed', { description: criteriaWarning });
     } catch (err) {
       console.error('[DiaryEntry] Portfolio create error:', err);
       toast.error('Couldn’t add it to your portfolio — try again');

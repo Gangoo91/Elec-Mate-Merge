@@ -398,8 +398,8 @@ const sections = [
             <div className={defRowCn}>
               <dt className={defTermCn}>Kirchhoff&rsquo;s Current Law (KCL)</dt>
               <dd className="text-white">
-                The total current entering a junction equals the total current leaving it. No current
-                is lost at a junction — it is a statement of the conservation of charge.
+                The total current entering a junction equals the total current leaving it. No
+                current is lost at a junction — it is a statement of the conservation of charge.
               </dd>
             </div>
             <div className={defRowCn}>
@@ -481,8 +481,8 @@ const sections = [
             <div className={defRowCn}>
               <dt className={defTermCn}>Two resistors in parallel</dt>
               <dd className="text-white">
-                Rt = (R1 × R2) ÷ (R1 + R2). Example: 6 Ω and 12 Ω in parallel = (6 × 12) ÷ (6 + 12) =
-                72 ÷ 18 = 4 Ω.
+                Rt = (R1 × R2) ÷ (R1 + R2). Example: 6 Ω and 12 Ω in parallel = (6 × 12) ÷ (6 + 12)
+                = 72 ÷ 18 = 4 Ω.
               </dd>
             </div>
           </dl>
@@ -565,7 +565,8 @@ const sections = [
               <dt className={defTermCn}>Peak value</dt>
               <dd className="text-white">
                 The maximum voltage reached during a cycle. For a 230 V RMS supply, Vpeak = 230 × √2
-                ≈ 325 V. This is why cable insulation is rated well above the nominal supply voltage.
+                ≈ 325 V. This is why cable insulation is rated well above the nominal supply
+                voltage.
               </dd>
             </div>
             <div className={defRowCn}>
@@ -599,21 +600,24 @@ const sections = [
               <dt className={defTermCn}>Reg 411.3.4 — 30 mA RCD on domestic luminaire circuits</dt>
               <dd className="text-white">
                 Within domestic (household) premises, additional protection by an RCD with a rated
-                residual operating current not exceeding 30 mA <strong>shall</strong> be provided for
-                AC final circuits supplying luminaires. This is a &ldquo;shall&rdquo; requirement,
-                not guidance. It has been in BS 7671 since the 18th Edition was published in 2018.
+                residual operating current not exceeding 30 mA <strong>shall</strong> be provided
+                for AC final circuits supplying luminaires. This is a &ldquo;shall&rdquo;
+                requirement, not guidance. It has been in BS 7671 since the 18th Edition was
+                published in 2018.
               </dd>
             </div>
             <div className={defRowCn}>
               <dt className={defTermCn}>Reg 421.1.7 — arc fault detection devices (AFDDs)</dt>
               <dd className="text-white">
-                Redrafted at Amendment 4. AFDDs conforming to BS EN 62606 <strong>shall</strong> be
-                provided for single-phase AC final circuits supplying socket-outlets rated up to 32 A
-                in high rise residential buildings (HRRBs), houses in multiple occupation,
-                purpose-built student accommodation, and care homes. For all other premises, AFDDs
-                are <strong>recommended</strong> on the same circuits. Where used, an AFDD is placed
-                at the origin of the circuit it protects. Do not describe AFDDs as simply
-                &ldquo;recommended&rdquo; in an exam answer — say where each wording applies.
+                First recommended in 2018, redrafted at Amendment 2 (2022) to make them a
+                requirement in named premises; Amendment 4 only reworded item (a). AFDDs conforming
+                to BS EN 62606 <strong>shall</strong> be provided for single-phase AC final circuits
+                supplying socket-outlets rated up to 32 A in high rise residential buildings
+                (HRRBs), houses in multiple occupation, purpose-built student accommodation, and
+                care homes. For all other premises, AFDDs are <strong>recommended</strong> on the
+                same circuits. Where used, an AFDD is placed at the origin of the circuit it
+                protects. Do not describe AFDDs as simply &ldquo;recommended&rdquo; in an exam
+                answer — say where each wording applies.
               </dd>
             </div>
           </dl>
@@ -636,10 +640,10 @@ const sections = [
             <div className={defRowCn}>
               <dt className={defTermCn}>Screwdrivers</dt>
               <dd className="text-white">
-                Flathead for slotted screws, Pozidriv (PZ2 is the most common) for cross-head screws.
-                Insulated screwdrivers are rated to 1000 V and are used wherever there is a risk of
-                contact with live parts. Never use a damaged or wrongly sized screwdriver — it slips,
-                and that causes injury and damage.
+                Flathead for slotted screws, Pozidriv (PZ2 is the most common) for cross-head
+                screws. Insulated screwdrivers are rated to 1000 V and are used wherever there is a
+                risk of contact with live parts. Never use a damaged or wrongly sized screwdriver —
+                it slips, and that causes injury and damage.
               </dd>
             </div>
             <div className={defRowCn}>
@@ -654,16 +658,17 @@ const sections = [
               <dt className={defTermCn}>Pliers</dt>
               <dd className="text-white">
                 Combination pliers for gripping and cutting, long-nose for confined spaces and
-                shaping conductors. Use insulated-handle pliers wherever live parts could be present.
+                shaping conductors. Use insulated-handle pliers wherever live parts could be
+                present.
               </dd>
             </div>
             <div className={defRowCn}>
               <dt className={defTermCn}>Voltage indicator</dt>
               <dd className="text-white">
-                A two-pole voltage indicator is what you use to prove a circuit is dead. HSE Guidance
-                Note GS38 covers the selection and safe use of test equipment, leads and probes, and
-                BS 7671 and GN3 both direct you to it. A non-contact tester alone is never sufficient
-                confirmation that a circuit is dead.
+                A two-pole voltage indicator is what you use to prove a circuit is dead. HSE
+                Guidance Note GS38 covers the selection and safe use of test equipment, leads and
+                probes, and BS 7671 and GN3 both direct you to it. A non-contact tester alone is
+                never sufficient confirmation that a circuit is dead.
               </dd>
             </div>
             <div className={defRowCn}>
@@ -700,21 +705,21 @@ const sections = [
               <tr className={trCn}>
                 <td className={tdCn}>Health and Safety at Work etc. Act 1974 (HSWA)</td>
                 <td className={tdCn}>
-                  The primary UK health and safety legislation. Employers must provide a safe working
-                  environment, safe equipment, and adequate training. Employees must take reasonable
-                  care for their own safety and that of others, and co-operate with their employer on
-                  health and safety matters.
+                  The primary UK health and safety legislation. Employers must provide a safe
+                  working environment, safe equipment, and adequate training. Employees must take
+                  reasonable care for their own safety and that of others, and co-operate with their
+                  employer on health and safety matters.
                 </td>
               </tr>
               <tr className={trCn}>
                 <td className={tdCn}>Electricity at Work Regulations 1989 (EAWR)</td>
                 <td className={tdCn}>
                   Specific to electrical systems. Regulation 14 (Work on or near live conductors) is
-                  the one you will be asked about: work on or near a live conductor is only permitted
-                  where it is unreasonable for it to be dead, it is reasonable to work on or near it
-                  live, and suitable precautions are taken. Regulation 16 requires persons to be
-                  competent to prevent danger and injury. HSE publication HSR25 is the guidance on
-                  these Regulations.
+                  the one you will be asked about: work on or near a live conductor is only
+                  permitted where it is unreasonable for it to be dead, it is reasonable to work on
+                  or near it live, and suitable precautions are taken. Regulation 16 requires
+                  persons to be competent to prevent danger and injury. HSE publication HSR25 is the
+                  guidance on these Regulations.
                 </td>
               </tr>
               <tr className={trCn}>
@@ -728,10 +733,10 @@ const sections = [
               <tr className={trCn}>
                 <td className={tdCn}>PPE at Work Regulations 1992</td>
                 <td className={tdCn}>
-                  Employers must provide suitable PPE free of charge; employees must use it correctly
-                  and report defects. Typical electrical PPE: safety footwear, hi-vis, hard hat on
-                  construction sites, safety glasses, insulated gloves, and hearing protection with
-                  power tools.
+                  Employers must provide suitable PPE free of charge; employees must use it
+                  correctly and report defects. Typical electrical PPE: safety footwear, hi-vis,
+                  hard hat on construction sites, safety glasses, insulated gloves, and hearing
+                  protection with power tools.
                 </td>
               </tr>
               <tr className={trCn}>
@@ -759,10 +764,10 @@ const sections = [
         </p>
         <p>
           Guidance Note 3 requires an installation to be made dead and safely isolated wherever a
-          test does not need it live, and refers you to HSE Guidance Note GS38 for the test equipment
-          itself. The IET On-Site Guide sets out the practical steps and proof-of-dead procedure in
-          Appendix M, Safe working practices. A non-contact tester is never your primary
-          confirmation — always use a two-pole voltage indicator.
+          test does not need it live, and refers you to HSE Guidance Note GS38 for the test
+          equipment itself. The IET On-Site Guide sets out the practical steps and proof-of-dead
+          procedure in Appendix M, Safe working practices. A non-contact tester is never your
+          primary confirmation — always use a two-pole voltage indicator.
         </p>
       </>
     ),
@@ -783,17 +788,17 @@ const sections = [
             <div className={defRowCn}>
               <dt className={defTermCn}>1. Visual inspection</dt>
               <dd className="text-white">
-                Always the first step. Check for damaged cables, cracked plugs, signs of overheating,
-                the wrong fuse rating, and evidence of misuse. Most faults are found here, before any
-                instrument comes out of the bag.
+                Always the first step. Check for damaged cables, cracked plugs, signs of
+                overheating, the wrong fuse rating, and evidence of misuse. Most faults are found
+                here, before any instrument comes out of the bag.
               </dd>
             </div>
             <div className={defRowCn}>
               <dt className={defTermCn}>2. Earth continuity test</dt>
               <dd className="text-white">
                 Confirms the protective conductor in a Class I appliance is connected and has a low
-                resistance — typically taken as 0.1 Ω plus the resistance of the supply lead. Carried
-                out with a PAT tester or a low-resistance ohmmeter.
+                resistance — typically taken as 0.1 Ω plus the resistance of the supply lead.
+                Carried out with a PAT tester or a low-resistance ohmmeter.
               </dd>
             </div>
             <div className={defRowCn}>
@@ -815,8 +820,8 @@ const sections = [
         </div>
         <p>
           These acceptance values are not set by BS 7671 — Part 6 of BS 7671 covers the verification
-          of installations, not in-service equipment. In-service inspection and testing is covered by
-          the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment,
+          of installations, not in-service equipment. In-service inspection and testing is covered
+          by the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment,
           which is also the syllabus behind the City &amp; Guilds 2377 award. Most apprentices take
           2377 later in their training or shortly after qualifying.
         </p>
@@ -830,8 +835,8 @@ const sections = [
       <>
         <p>
           Elec-Mate is built by electricians, for electricians and apprentices. The Study Centre
-          holds the tools designed to get you through Year 1 theory and build the practical knowledge
-          you need for your end-point assessment.
+          holds the tools designed to get you through Year 1 theory and build the practical
+          knowledge you need for your end-point assessment.
         </p>
         <div className={cardCn}>
           <dl className={defListCn}>
@@ -880,7 +885,7 @@ export default function ApprenticeFirstYearRevisionPage() {
       title="Electrical Apprentice Year 1 Revision Guide"
       description="Complete Year 1 electrical apprentice revision guide. Ohm's Law, electrical units (V, A, Ω, W), basic circuit theory, series and parallel circuits."
       datePublished="2026-03-27"
-      dateModified="2026-08-07"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Study Guide"

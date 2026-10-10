@@ -1,18 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Briefcase, X, Save, FileText, Cloud, Check } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useIsMobile } from '@/hooks/use-mobile';
+import FormSheet from '@/components/forms/FormSheet';
 import {
-  ResponsiveFormModal,
-  ResponsiveFormModalContent,
-  ResponsiveFormModalHeader,
-  ResponsiveFormModalTitle,
-  ResponsiveFormModalBody,
-  ResponsiveFormModalFooter,
-} from '@/components/ui/responsive-form-modal';
-import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
+  PanelTitle,
+  Segments,
+  rowBtnPrimary,
+  rowBtnSecondary,
+} from '@/components/employer/pageParts/PageParts';
 import {
   vacancySchema,
   vacancyFormSteps,
@@ -29,18 +26,7 @@ import { saveVacancyAsTemplate } from '@/services/vacancyService';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
-import {
-  storageSetSync,
-  storageRemoveSync,
-  storageGetJSONSync,
-} from '@/utils/storage';
-import {
-  Eyebrow,
-  PrimaryButton,
-  SecondaryButton,
-  IconButton,
-  TextAction,
-} from '@/components/employer/editorial';
+import { storageSetSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
 
 const DRAFT_STORAGE_KEY = 'vacancy-form-draft';
 
@@ -49,7 +35,9 @@ interface VacancyFormWizardProps {
   onOpenChange: (open: boolean) => void;
   editData?: Partial<VacancyFormData> & { id?: string };
   duplicateData?: Partial<VacancyFormData>;
-  onSuccess?: () => void;
+  /** Called after a save. A brand-new published vacancy is passed so the
+   *  page can offer to invite the talent pool straight away (ELE-1957). */
+  onSuccess?: (published?: { id: string; title: string; location: string; status: string }) => void;
 }
 
 export function VacancyFormWizard({
@@ -165,18 +153,27 @@ export function VacancyFormWizard({
   // Handle form submission
   const onSubmit = async (data: VacancyFormData) => {
     try {
+      let published: { id: string; title: string; location: string; status: string } | undefined;
       if (isEditing && editData?.id) {
         await updateVacancy.mutateAsync({ id: editData.id, updates: data });
         haptic.success();
         toast({ title: 'Vacancy updated', description: 'Your job vacancy has been updated.' });
       } else {
-        await createVacancy.mutateAsync({ formData: data });
+        const created = await createVacancy.mutateAsync({ formData: data });
         haptic.success();
-        toast({ title: 'Vacancy published', description: 'Your job vacancy is now live!' });
+        toast({ title: 'Vacancy published', description: 'Your job vacancy is now live.' });
         clearDraft();
+        if (created?.id) {
+          published = {
+            id: created.id,
+            title: created.title,
+            location: created.location,
+            status: created.status,
+          };
+        }
       }
       onOpenChange(false);
-      onSuccess?.();
+      onSuccess?.(published);
       reset(defaultVacancyValues);
       setCurrentStep(0);
     } catch (error) {
@@ -316,178 +313,92 @@ export function VacancyFormWizard({
   const isLastStep = currentStep === vacancyFormSteps.length - 1;
   const currentStepData = vacancyFormSteps[currentStep];
 
+  const savedLine = isEditing
+    ? ''
+    : isSavingDraft
+      ? ' Saving…'
+      : lastSaved
+        ? ` Saved ${formatDistanceToNow(lastSaved, { addSuffix: true })}.`
+        : '';
+
   return (
-    <ResponsiveFormModal open={open} onOpenChange={handleClose}>
-      <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-2xl')}>
-        <FormProvider {...methods}>
-          {/* Header */}
-          <ResponsiveFormModalHeader className="border-b border-white/[0.06]">
-            <div className="flex items-center justify-between">
-              <ResponsiveFormModalTitle>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-white/[0.06]">
-                    <Briefcase className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <Eyebrow>{isEditing ? 'Edit vacancy' : 'Post vacancy'}</Eyebrow>
-                    <span className="text-lg font-semibold text-white block mt-0.5">
-                      {isEditing ? 'Edit Vacancy' : 'Post Job Vacancy'}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <p className="text-[11px] text-white font-normal">
-                        {currentStepData.title} - {currentStepData.description}
-                      </p>
-                      {/* Draft save indicator */}
-                      {!isEditing && (
-                        <span
-                          className={cn(
-                            'flex items-center gap-1 text-[11px] transition-all duration-300',
-                            isSavingDraft
-                              ? 'text-elec-yellow animate-pulse'
-                              : lastSaved
-                                ? 'text-white'
-                                : 'text-transparent'
-                          )}
-                        >
-                          {isSavingDraft ? (
-                            <>
-                              <Cloud className="h-3 w-3" />
-                              <span>Saving...</span>
-                            </>
-                          ) : lastSaved ? (
-                            <>
-                              <Check className="h-3 w-3 text-emerald-400" />
-                              <span>
-                                Saved {formatDistanceToNow(lastSaved, { addSuffix: true })}
-                              </span>
-                            </>
-                          ) : null}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </ResponsiveFormModalTitle>
-
-              {/* Desktop actions */}
-              {!isMobile && (
-                <div className="flex items-center gap-2">
-                  <TextAction onClick={() => setShowTemplates(!showTemplates)}>
-                    <FileText className="h-4 w-4 mr-1 inline" />
-                    Templates
-                  </TextAction>
-                  <IconButton aria-label="Close" onClick={handleClose}>
-                    <X className="h-4 w-4" />
-                  </IconButton>
-                </div>
-              )}
-            </div>
-
-            {/* Step indicator */}
-            <div className="mt-4">
-              <IOSStepIndicator steps={vacancyFormSteps.length} currentStep={currentStep} />
-            </div>
-
-            {/* Step labels - desktop only */}
-            {!isMobile && (
-              <div className="flex justify-between mt-2 px-1">
-                {vacancyFormSteps.map((step, index) => (
-                  <button
-                    key={step.id}
-                    onClick={() => handleStepClick(index)}
-                    className={cn(
-                      'text-[11px] transition-colors touch-manipulation',
-                      index === currentStep
-                        ? 'text-elec-yellow font-medium'
-                        : index < currentStep
-                          ? 'text-elec-yellow/70 hover:text-elec-yellow'
-                          : 'text-white'
-                    )}
-                  >
-                    {step.title}
-                  </button>
-                ))}
-              </div>
+    <FormSheet
+      open={open}
+      onOpenChange={(o) => !o && handleClose()}
+      width="wide"
+      title={isEditing ? 'Edit vacancy' : 'Post a vacancy'}
+      description={`Step ${currentStep + 1} of ${vacancyFormSteps.length}: ${currentStepData.description}.${savedLine}`}
+      headerTrailing={
+        <button
+          type="button"
+          onClick={() => setShowTemplates(!showTemplates)}
+          className="mr-8 h-11 rounded-full border border-white/[0.14] px-4 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
+        >
+          {showTemplates ? 'Back to form' : 'Templates'}
+        </button>
+      }
+      subheader={
+        <div className="flex py-3">
+          <Segments
+            items={vacancyFormSteps.map((step, i) => ({ value: String(i), label: step.title }))}
+            value={String(currentStep)}
+            onChange={(v) => handleStepClick(Number(v))}
+          />
+        </div>
+      }
+      bodyClassName="space-y-5 pt-5"
+      footer={
+        isLastStep && !showTemplates ? (
+          <button
+            type="button"
+            onClick={handlePrevious}
+            className={cn(rowBtnSecondary, 'h-12 w-full')}
+          >
+            Back
+          </button>
+        ) : showTemplates ? undefined : (
+          <div className="flex gap-2">
+            {currentStep > 0 && (
+              <button
+                type="button"
+                onClick={handlePrevious}
+                className={cn(rowBtnSecondary, 'h-12 flex-1')}
+              >
+                Back
+              </button>
             )}
-          </ResponsiveFormModalHeader>
-
-          {/* Template selector overlay */}
-          {showTemplates && (
-            <div className="absolute inset-0 z-50 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm overflow-auto">
-              <div className="p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-white">Load Template</h3>
-                  <IconButton aria-label="Close" onClick={() => setShowTemplates(false)}>
-                    <X className="h-4 w-4" />
-                  </IconButton>
-                </div>
-                <TemplateSelector onSelect={handleTemplateSelect} />
-              </div>
-            </div>
-          )}
-
-          {/* Body */}
-          <ResponsiveFormModalBody className="py-6">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {renderStepContent()}
-            </form>
-          </ResponsiveFormModalBody>
-
-          {/* Footer */}
-          <ResponsiveFormModalFooter>
-            <div className="flex flex-col sm:flex-row gap-3 w-full">
-              {/* Mobile template button */}
-              {isMobile && currentStep === 0 && (
-                <SecondaryButton
-                  type="button"
-                  onClick={() => setShowTemplates(true)}
-                  fullWidth
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Load Template
-                </SecondaryButton>
-              )}
-
-              <div className="flex gap-3 flex-1">
-                {/* Back button */}
-                {currentStep > 0 && (
-                  <SecondaryButton
-                    type="button"
-                    onClick={handlePrevious}
-                    fullWidth
-                  >
-                    Back
-                  </SecondaryButton>
-                )}
-
-                {/* Save draft button */}
-                {!isLastStep && !isEditing && (
-                  <SecondaryButton
-                    type="button"
-                    onClick={handleSaveDraft}
-                    className="inline-flex"
-                  >
-                    <Save className="h-4 w-4 mr-2" />
-                    Save Draft
-                  </SecondaryButton>
-                )}
-
-                {/* Next/Submit button */}
-                {!isLastStep ? (
-                  <PrimaryButton
-                    type="button"
-                    onClick={handleNext}
-                    fullWidth
-                    size="lg"
-                  >
-                    Continue
-                  </PrimaryButton>
-                ) : null}
-              </div>
-            </div>
-          </ResponsiveFormModalFooter>
-        </FormProvider>
-      </ResponsiveFormModalContent>
-    </ResponsiveFormModal>
+            {!isEditing && (
+              <button
+                type="button"
+                onClick={handleSaveDraft}
+                className={cn(rowBtnSecondary, 'h-12 flex-1')}
+              >
+                Save draft
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleNext}
+              className={cn(rowBtnPrimary, 'h-12 flex-[2]')}
+            >
+              Continue
+            </button>
+          </div>
+        )
+      }
+    >
+      <FormProvider {...methods}>
+        {showTemplates ? (
+          <section>
+            <PanelTitle title="Start from a template" />
+            <TemplateSelector onSelect={handleTemplateSelect} />
+          </section>
+        ) : (
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {renderStepContent()}
+          </form>
+        )}
+      </FormProvider>
+    </FormSheet>
   );
 }

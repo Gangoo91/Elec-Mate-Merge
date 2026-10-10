@@ -65,7 +65,7 @@ const HowToTestSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* PPE & Equipment */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Equipment</p>
+          <p className="text-[12px] font-medium text-white mb-3">Test Equipment</p>
           <div className="space-y-2">
             {equipment.map((item, i) => (
               <div key={i} className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
@@ -108,7 +108,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Where to test */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Where to Test</p>
+          <p className="text-[12px] font-medium text-white mb-3">Where to Test</p>
         </motion.div>
 
         {whereToTest.map((item, i) => (
@@ -147,7 +147,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes to Avoid</p>
+          <p className="text-[12px] font-medium text-white mb-3">Common Mistakes to Avoid</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>

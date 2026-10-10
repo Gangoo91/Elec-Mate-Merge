@@ -18,6 +18,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { notifyPortfolioChanged } from '@/hooks/portfolio/usePortfolio';
+import type { CaptureSource } from '@/lib/portfolio/capturePresets';
+import type { CaptureStamp } from '@/lib/portfolio/captureStamp';
 
 export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   {
@@ -110,7 +112,6 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   },
 ];
 
-
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export const mapDbToEntry = (
@@ -148,15 +149,15 @@ export const mapDbToEntry = (
   };
 
   const evidenceFiles: PortfolioFile[] = (row.storage_urls || []).map((file: any, idx: number) => ({
-        id: file.id || `file_${idx}`,
-        name: file.name || 'Unknown',
-        type: file.type || 'unknown',
-        size: file.size || 0,
-        url: file.url,
-        uploadDate: file.uploadDate || row.created_at,
-        sha256: file.sha256 || undefined,
-        evidenceType: file.evidenceType || undefined,
-      }));
+    id: file.id || `file_${idx}`,
+    name: file.name || 'Unknown',
+    type: file.type || 'unknown',
+    size: file.size || 0,
+    url: file.url,
+    uploadDate: file.uploadDate || row.created_at,
+    sha256: file.sha256 || undefined,
+    evidenceType: file.evidenceType || undefined,
+  }));
 
   return {
     id: row.id,
@@ -229,7 +230,8 @@ export const mapEntryToDb = (entry: Omit<PortfolioEntry, 'id' | 'dateCreated'>, 
     supervisor_feedback: entry.supervisorFeedback,
     // 1 to 5, or not rated. The capture sheet sends 0 for "not rated", which the
     // portfolio_items_self_assessment_check constraint rejects, failing the save.
-    self_assessment: entry.selfAssessment >= 1 && entry.selfAssessment <= 5 ? entry.selfAssessment : null,
+    self_assessment:
+      entry.selfAssessment >= 1 && entry.selfAssessment <= 5 ? entry.selfAssessment : null,
     status: entry.status,
     time_spent: entry.timeSpent,
     awarding_body_standards: entry.awardingBodyStandards,
@@ -240,30 +242,111 @@ export const mapEntryToDb = (entry: Omit<PortfolioEntry, 'id' | 'dateCreated'>, 
   };
 };
 
+export interface CreateItemOptions {
+  /** Made on the phone so a retry finds the same row (ELE-1894). Defaults to a new uuid. */
+  id?: string;
+  /** Where it was captured from (ELE-1916). */
+  source?: CaptureSource | null;
+  /** Overrides date_completed (a reflection or diary entry is dated the day it describes). */
+  dateCompleted?: string | null;
+  /**
+   * When (photo EXIF, else the phone's time) and, only with the learner's
+   * permission, roughly where it was captured. Written once, on insert.
+   */
+  capture?: CaptureStamp | null;
+}
+
+/** ok with the id (existed: an earlier attempt had already landed), or the error. */
+export interface CreateItemResult {
+  ok: boolean;
+  id?: string;
+  existed?: boolean;
+  error?: string;
+  /** False when the server refused it (constraint, permission); true for lost signal. */
+  retryable?: boolean;
+}
+
+/**
+ * THE create path for portfolio evidence (ELE-1916). Every capture surface
+ * (the capture sheet, the outbox, reflections) ends here, so category, status,
+ * criteria format and source cannot drift apart again.
+ *
+ *  - Status on create is draft or ready (stored 'completed'); anything else,
+ *    such as an assessor's 'reviewed', is written as draft.
+ *  - Idempotent on `id`: a retry after a dropped connection finds the row and
+ *    re-applies the learner's own fields (last write wins), never a second row.
+ *
+ * Never throws and never toasts; the caller decides what to tell the learner.
+ */
+export async function createPortfolioItem(
+  userId: string,
+  entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>,
+  opts: CreateItemOptions = {}
+): Promise<CreateItemResult> {
+  const id = opts.id ?? crypto.randomUUID();
+  const status = entryData.status === 'completed' ? 'completed' : 'draft';
+  const row: Record<string, unknown> = {
+    ...mapEntryToDb({ ...entryData, status }, userId),
+    id,
+    source: opts.source ?? null,
+  };
+  if (opts.dateCompleted !== undefined) row.date_completed = opts.dateCompleted;
+  if (opts.capture) {
+    row.captured_at = opts.capture.capturedAt;
+    row.captured_at_source = opts.capture.source;
+    row.capture_place = opts.capture.place;
+    // Coarse by construction (0.1 degree); the column type rounds again.
+    row.capture_lat = opts.capture.lat;
+    row.capture_lng = opts.capture.lng;
+  }
+  const { error } = await supabase.from('portfolio_items').insert(row as never);
+  if (!error) {
+    notifyPortfolioChanged();
+    return { ok: true, id, existed: false };
+  }
+  if (error.code === '23505') {
+    // Already there (an earlier attempt landed but its reply was lost).
+    // The learner's own fields: last write wins.
+    const learnerFields = {
+      title: row.title,
+      description: row.description,
+      reflection_notes: row.reflection_notes,
+      skills_demonstrated: row.skills_demonstrated,
+      assessment_criteria_met: row.assessment_criteria_met,
+      metadata: row.metadata,
+      storage_urls: row.storage_urls,
+      evidence_count: row.evidence_count,
+      source: row.source,
+    };
+    const { error: upErr } = await supabase
+      .from('portfolio_items')
+      .update(learnerFields as never)
+      .eq('id', id)
+      .eq('user_id', userId);
+    if (upErr) return { ok: false, error: upErr.message, retryable: false };
+    notifyPortfolioChanged();
+    return { ok: true, id, existed: true };
+  }
+  // A network failure has no Postgres code; a constraint or RLS failure does.
+  const retryable = !error.code || /fetch|network|timeout/i.test(error.message ?? '');
+  return { ok: false, error: error.message, retryable };
+}
 
 /** Insert one entry. Returns the new id, or null (and a toast) on failure. */
 export async function addPortfolioEntry(
   userId: string,
-  entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>
+  entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>,
+  opts: CreateItemOptions = {}
 ): Promise<string | null> {
-  try {
-    const { data, error } = await supabase
-      .from('portfolio_items')
-      .insert(mapEntryToDb(entryData, userId) as never)
-      .select('id')
-      .single();
-    if (error) throw error;
-    notifyPortfolioChanged();
-    return (data as { id: string }).id;
-  } catch (error) {
-    console.error('Error adding entry:', error);
-    toast({
-      title: 'Error saving portfolio',
-      description: 'Failed to save your portfolio entry. Please try again.',
-      variant: 'destructive',
-    });
-    return null;
-  }
+  const res = await createPortfolioItem(userId, entryData, opts);
+  if (res.ok && res.id) return res.id;
+  console.error('Error adding entry:', res.error);
+  toast({
+    title: 'Error saving portfolio',
+    description: 'Failed to save your portfolio entry. Please try again.',
+    variant: 'destructive',
+  });
+  return null;
 }
 
 /** Update one entry the learner owns. Returns true when saved. */
@@ -273,7 +356,7 @@ export async function updatePortfolioEntry(
   updates: Partial<PortfolioEntry>
 ): Promise<boolean> {
   try {
-      const updateData: any = {};
+    const updateData: any = {};
 
     if (updates.title !== undefined) updateData.title = updates.title;
     if (updates.description !== undefined) updateData.description = updates.description;
@@ -338,7 +421,12 @@ export async function loadPortfolioEntry(
   entryId: string
 ): Promise<PortfolioEntry | null> {
   const [{ data: row }, { data: categoryRows }, { data: ver }] = await Promise.all([
-    supabase.from('portfolio_items').select('*').eq('id', entryId).eq('user_id', userId).maybeSingle(),
+    supabase
+      .from('portfolio_items')
+      .select('*')
+      .eq('id', entryId)
+      .eq('user_id', userId)
+      .maybeSingle(),
     supabase.from('qualification_categories').select('id, name'),
     supabase
       .from('supervisor_verifications')
@@ -352,7 +440,9 @@ export async function loadPortfolioEntry(
       .filter((c) => !!c.name)
       .map((c) => [c.id, c.name as string])
   );
-  const signed = new Set<string>(((ver ?? []) as Array<{ portfolio_item_id: string }>).map((v) => v.portfolio_item_id));
+  const signed = new Set<string>(
+    ((ver ?? []) as Array<{ portfolio_item_id: string }>).map((v) => v.portfolio_item_id)
+  );
   return mapDbToEntry(row, signed, names);
 }
 
@@ -363,7 +453,7 @@ export function usePortfolioWrites() {
   const uid = user?.id ?? null;
 
   const addEntry = useCallback(
-    async (entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>) => {
+    async (entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>, opts?: CreateItemOptions) => {
       if (!uid) {
         toast({
           title: 'Not authenticated',
@@ -372,7 +462,7 @@ export function usePortfolioWrites() {
         });
         return null;
       }
-      const id = await addPortfolioEntry(uid, entryData);
+      const id = await addPortfolioEntry(uid, entryData, opts);
       if (id) {
         toast({
           title: 'Portfolio entry added',

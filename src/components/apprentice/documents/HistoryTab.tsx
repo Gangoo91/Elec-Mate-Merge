@@ -68,15 +68,14 @@ const HistoryTab = () => {
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
       return downloadDate >= oneWeekAgo;
     }).length,
-    certificates: documentHistory.filter((doc) =>
-      ['EIC', 'EICR', 'MEIWC'].includes(doc.type)
-    ).length,
+    certificates: documentHistory.filter((doc) => ['EIC', 'EICR', 'MEIWC'].includes(doc.type))
+      .length,
     schedules: documentHistory.filter((doc) => doc.type === 'Schedule').length,
   };
 
   const summaryCard = (label: string, value: number) => (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center space-y-1">
-      <div className="text-2xl font-mono text-white">{value}</div>
+      <div className="text-2xl text-white">{value}</div>
       <div className="text-[12px] text-white">{label}</div>
     </div>
   );
@@ -90,10 +89,8 @@ const HistoryTab = () => {
         {summaryCard('Schedules', stats.schedules)}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Download history
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Download history</span>
         <div className="space-y-3">
           {documentHistory.map((item) => (
             <div
@@ -107,12 +104,10 @@ const HistoryTab = () => {
                     <h4 className="text-[14px] font-semibold text-white leading-snug">
                       {item.name}
                     </h4>
-                    <span className="text-[10px] uppercase tracking-[0.18em] text-white">
-                      {item.type}
-                    </span>
+                    <span className="text-[13px] text-white">{item.type}</span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[12px] text-white font-mono">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[12px] text-white">
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
@@ -134,7 +129,7 @@ const HistoryTab = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                    className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                   >
                     <Eye className="h-3 w-3 mr-1" />
                     View
@@ -142,7 +137,7 @@ const HistoryTab = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                    className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                   >
                     <Download className="h-3 w-3 mr-1" />
                     Re-download
@@ -154,10 +149,8 @@ const HistoryTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Storage & retention
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Storage & retention</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <h4 className="text-[14px] font-semibold text-white">Retention policy</h4>

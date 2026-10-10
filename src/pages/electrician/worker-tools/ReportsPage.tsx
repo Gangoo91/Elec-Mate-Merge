@@ -3,8 +3,9 @@
  *
  * Routed page (replaces the old SnagReportSheet bottom sheet). Lets a worker
  * raise a report on a job — a quality snag, a near-miss or a safety incident.
- * Snags land in the snag log; near-miss / incident route to the employer's
- * Incidents log (RIDDOR / H&S).
+ * Snags land in the snag log. A near-miss or incident is the worker's own Site
+ * Safety record filed against the job (ELE-2031): the near-miss register, or
+ * the accident book when somebody was hurt. The office sees it in Incidents.
  *
  * Data layer carried over unchanged from SnagReportSheet: useMyJobs('active'),
  * useSnagReports(selectedJobId), both submit paths (submitSnag vs
@@ -38,10 +39,15 @@ import {
   useMyIncidentActions,
   useMyJobs,
   useSnagReports,
-  uploadReportPhoto,
 } from '@/hooks/useWorkerSelfService';
+import { OutboxWaitingList } from '@/components/worker-tools/WorkerOutbox';
+import { useWorkerOutbox } from '@/hooks/useWorkerOutbox';
+import { queuedToast } from '@/components/worker-tools/outboxToast';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
+import { useAuthUser } from '@/contexts/AuthContext';
+import { BODY_PARTS, INJURY_TYPES } from '@/hooks/useIncidents';
+import type { WorkerIncidentKind } from '@/lib/safetyIncidentRows';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import {
   Eyebrow,
@@ -85,6 +91,30 @@ const severityOption = (sev?: string | null) => {
 
 const RESOLVED_STATUSES = ['resolved', 'closed', 'done', 'fixed'];
 
+/** An incident where nobody was hurt: what kind it was. */
+const NO_INJURY_KINDS: { value: WorkerIncidentKind; label: string }[] = [
+  { value: 'property_damage', label: 'Damage to property' },
+  { value: 'faulty_equipment', label: 'Faulty equipment' },
+  { value: 'unsafe_practice', label: 'Unsafe practice' },
+  { value: 'other', label: 'Something else' },
+];
+
+/** How a safety report reads in the worker's history. */
+const safetyKindLabel = (type?: string | null) =>
+  type === 'near_miss'
+    ? 'Near-miss'
+    : type === 'injury'
+      ? 'Injury'
+      : (NO_INJURY_KINDS.find((k) => k.value === type)?.label ?? 'Incident');
+
+const chipCn = (on: boolean) =>
+  cn(
+    'min-h-[44px] rounded-xl border px-3 text-[13px] touch-manipulation transition-colors',
+    on
+      ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+      : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
+  );
+
 type HistoryFilter = 'all' | 'open' | 'resolved';
 
 /** Compact relative timestamp — "just now", "2h ago", "3d ago", else date. */
@@ -119,6 +149,14 @@ export default function ReportsPage() {
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
   // "This job" shows every report on the job; "Mine" only what I raised.
   const [scope, setScope] = useState<'job' | 'mine'>('job');
+  // Incident only (ELE-2031): was anybody hurt, and the accident book details.
+  const [hurt, setHurt] = useState<'' | 'yes' | 'no'>('');
+  const [injuredWho, setInjuredWho] = useState<'me' | 'other'>('me');
+  const [injuredName, setInjuredName] = useState('');
+  const [injuryType, setInjuryType] = useState('');
+  const [bodyPart, setBodyPart] = useState('');
+  const [incidentKind, setIncidentKind] = useState<WorkerIncidentKind | ''>('');
+  const authUser = useAuthUser();
   const myActions = useMyIncidentActions();
   const openActions = (myActions.data ?? []).filter((a) => !a.done_at);
 
@@ -127,12 +165,15 @@ export default function ReportsPage() {
     recentSnags,
     recentIncidents,
     isLoading: recentLoading,
-    submitSnag,
+    sendReport,
     isSubmitting,
-    submitIncident,
     isSubmittingIncident,
   } = useSnagReports(selectedJobId);
   const submitting = isSubmitting || isSubmittingIncident || uploadingPhotos;
+  const { pending: outboxPending } = useWorkerOutbox();
+  const snagWaitingHere = outboxPending.some(
+    (o) => (o.kind === 'snag' || o.kind === 'incident') && o.jobId === selectedJobId
+  );
 
   // ?incident=<id> deep link (bell / push: report seen, closed, on your team).
   // The notification also sends ?job=, which picks the job above; once that
@@ -159,6 +200,14 @@ export default function ReportsPage() {
     [
       { table: 'job_issues', filter: `reported_by=eq.${employeeId}` },
       { table: 'employer_incidents', filter: `reported_by=eq.${employeeId}` },
+      // ELE-2031: the worker's own Site Safety records (the office's follow-up
+      // lands on these rows).
+      ...(authUser?.id
+        ? [
+            { table: 'near_miss_reports', filter: `user_id=eq.${authUser.id}` },
+            { table: 'accident_records', filter: `user_id=eq.${authUser.id}` },
+          ]
+        : []),
     ],
     [['snag-reports'], ['my-incident-reports'], ['my-incident-actions']],
     Boolean(employeeId)
@@ -209,16 +258,38 @@ export default function ReportsPage() {
     setLocation('');
     setHistoryFilter('all');
     setPhotoFiles([]);
+    setHurt('');
+    setInjuredWho('me');
+    setInjuredName('');
+    setInjuryType('');
+    setBodyPart('');
+    setIncidentKind('');
   };
 
   // Inline validation — surfaced under the submit button, not just on press.
+  const isIncident = reportType === 'incident';
+  const injuryHint = !isIncident
+    ? null
+    : !hurt
+      ? 'Say whether anyone was hurt'
+      : hurt === 'yes' && injuredWho === 'other' && !injuredName.trim()
+        ? 'Say who was hurt'
+        : hurt === 'yes' && !injuryType
+          ? 'Pick the injury'
+          : hurt === 'yes' && !bodyPart
+            ? 'Pick where they were hurt'
+            : hurt === 'no' && !incidentKind
+              ? 'Say what kind of incident it was'
+              : null;
   const validationHint = !selectedJobId
     ? 'Choose a job to report against'
     : !severity
       ? 'Pick a severity'
-      : !description.trim()
-        ? 'Describe what happened'
-        : null;
+      : injuryHint
+        ? injuryHint
+        : !description.trim()
+          ? 'Describe what happened'
+          : null;
   const canSubmit = !validationHint;
 
   const handleSubmit = async () => {
@@ -234,43 +305,52 @@ export default function ReportsPage() {
       toast.error('Please describe what happened');
       return;
     }
+    if (injuryHint) {
+      toast.error(injuryHint);
+      return;
+    }
 
     const label = activeType?.label ?? 'Report';
     try {
-      let photos: string[] = [];
-      if (photoFiles.length > 0) {
-        setUploadingPhotos(true);
-        try {
-          photos = await Promise.all(photoFiles.map((f) => uploadReportPhoto(selectedJobId, f)));
-        } finally {
-          setUploadingPhotos(false);
-        }
-      }
-      if (isSafety) {
-        await submitIncident({
+      // ELE-1828: through the outbox — photos compressed and held on the
+      // phone, sent with the report when there is signal, never twice.
+      setUploadingPhotos(true);
+      let result: 'sent' | 'queued';
+      try {
+        result = await sendReport({
+          kind: isSafety ? 'incident' : 'snag',
           jobId: selectedJobId,
+          jobTitle: (jobs ?? []).find((j) => j.id === selectedJobId)?.title,
           severity,
           description: description.trim(),
           location: location.trim() || undefined,
-          incidentType: reportType,
-          photos,
+          incidentType: isSafety ? reportType : undefined,
+          photoFiles,
+          injury:
+            isIncident && hurt === 'yes'
+              ? {
+                  injuredName: injuredWho === 'me' ? (employee?.name ?? null) : injuredName.trim(),
+                  injuredEmployeeId: injuredWho === 'me' ? (employee?.id ?? null) : null,
+                  injuryType,
+                  bodyPart,
+                }
+              : null,
+          incidentKind: isIncident && hurt === 'no' && incidentKind ? incidentKind : undefined,
         });
-      } else {
-        await submitSnag({
-          jobId: selectedJobId,
-          severity,
-          description: description.trim(),
-          location: location.trim() || undefined,
-          photos,
-        });
+      } finally {
+        setUploadingPhotos(false);
       }
       setJustSubmitted(true);
       window.setTimeout(() => setJustSubmitted(false), 1400);
-      toast.success(`${label} submitted`, {
-        description: isSafety
-          ? 'The office has been told. You will hear when they have seen it and when it is closed.'
-          : 'It is on the snag list. You will see here when it is put right.',
-      });
+      if (result === 'sent') {
+        toast.success(`${label} submitted`, {
+          description: isSafety
+            ? 'The office has been told. You will hear when they have seen it and when it is closed.'
+            : 'It is on the snag list. You will see here when it is put right.',
+        });
+      } else {
+        queuedToast(`${label} saved`);
+      }
       resetForm();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : `Failed to submit ${label.toLowerCase()}`);
@@ -451,6 +531,127 @@ export default function ReportsPage() {
               </div>
             </Field>
 
+            {/* Incident: was anybody hurt (ELE-2031). An injury goes in the
+                accident book; anything else in the near-miss register. */}
+            {isIncident && (
+              <div className="space-y-4" data-help="wt-reports.hurt">
+                <Field label="Was anyone hurt?" required>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(
+                      [
+                        { value: 'yes', label: 'Yes, someone was hurt' },
+                        { value: 'no', label: 'No, nobody was hurt' },
+                      ] as const
+                    ).map((o) => (
+                      <button
+                        key={o.value}
+                        type="button"
+                        aria-pressed={hurt === o.value}
+                        onClick={() => setHurt(o.value)}
+                        className={chipCn(hurt === o.value)}
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                </Field>
+
+                {hurt === 'yes' && (
+                  <>
+                    <Field label="Who was hurt" required>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          aria-pressed={injuredWho === 'me'}
+                          onClick={() => setInjuredWho('me')}
+                          className={chipCn(injuredWho === 'me')}
+                        >
+                          Me
+                        </button>
+                        <button
+                          type="button"
+                          aria-pressed={injuredWho === 'other'}
+                          onClick={() => setInjuredWho('other')}
+                          className={chipCn(injuredWho === 'other')}
+                        >
+                          Someone else
+                        </button>
+                      </div>
+                      {injuredWho === 'other' && (
+                        <input
+                          value={injuredName}
+                          onChange={(e) => setInjuredName(e.target.value)}
+                          placeholder="Their name"
+                          aria-label="Name of the person hurt"
+                          className={cn(inputClass, 'mt-2')}
+                        />
+                      )}
+                    </Field>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <Field label="Injury" required>
+                        <Select value={injuryType} onValueChange={setInjuryType}>
+                          <SelectTrigger className={selectTriggerClass} aria-label="Injury">
+                            <SelectValue placeholder="Choose the injury" />
+                          </SelectTrigger>
+                          <SelectContent className={selectContentClass}>
+                            {INJURY_TYPES.map((t) => (
+                              <SelectItem
+                                key={t.value}
+                                value={t.value}
+                                className="text-white focus:bg-white/10 focus:text-white"
+                              >
+                                {t.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                      <Field label="Where on the body" required>
+                        <Select value={bodyPart} onValueChange={setBodyPart}>
+                          <SelectTrigger className={selectTriggerClass} aria-label="Where on the body">
+                            <SelectValue placeholder="Choose where" />
+                          </SelectTrigger>
+                          <SelectContent className={selectContentClass}>
+                            {BODY_PARTS.map((b) => (
+                              <SelectItem
+                                key={b.value}
+                                value={b.value}
+                                className="text-white focus:bg-white/10 focus:text-white"
+                              >
+                                {b.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                    </div>
+                    <p className="text-[12.5px] leading-snug text-white">
+                      This goes in the accident book. If someone needs treatment, get first aid
+                      first and call 999 if it is serious.
+                    </p>
+                  </>
+                )}
+
+                {hurt === 'no' && (
+                  <Field label="What kind of incident" required>
+                    <div className="grid grid-cols-2 gap-2">
+                      {NO_INJURY_KINDS.map((k) => (
+                        <button
+                          key={k.value}
+                          type="button"
+                          aria-pressed={incidentKind === k.value}
+                          onClick={() => setIncidentKind(k.value)}
+                          className={chipCn(incidentKind === k.value)}
+                        >
+                          {k.label}
+                        </button>
+                      ))}
+                    </div>
+                  </Field>
+                )}
+              </div>
+            )}
+
             {/* Description */}
             <Field
               label={isSafety ? 'What happened' : 'Describe the issue'}
@@ -572,6 +773,8 @@ export default function ReportsPage() {
         }
         secondary={
           <div className="space-y-4">
+            {/* ELE-1828: reports still on the phone, waiting for signal */}
+            <OutboxWaitingList kinds={['snag', 'incident']} jobId={selectedJobId || null} />
             {/* ── History on this job ──────────────────────────── */}
             {selectedJobId ? (
               <div className="space-y-3">
@@ -579,7 +782,7 @@ export default function ReportsPage() {
 
                 {recentLoading ? (
                   <LoadingState className="py-10" />
-                ) : (recentSnags?.length ?? 0) === 0 ? (
+                ) : (recentSnags?.length ?? 0) === 0 && snagWaitingHere ? null : (recentSnags?.length ?? 0) === 0 ? (
                   <EmptyState
                     title="No reports yet on this job"
                     description="Anything you raise here will show up for your team."
@@ -782,7 +985,7 @@ export default function ReportsPage() {
                             subtitle={
                               <span className="block">
                                 <span className="tabular-nums">
-                                  {inc.incident_type === 'near_miss' ? 'Near-miss' : 'Incident'} ·{' '}
+                                  {safetyKindLabel(inc.incident_type)} ·{' '}
                                   {relativeTime(inc.created_at)}
                                 </span>
                                 {closed && (inc.closeout_summary || inc.actions_taken) && (

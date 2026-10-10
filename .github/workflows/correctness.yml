@@ -45,6 +45,12 @@ jobs:
       - name: Question quality
         run: npm run check:question-quality:ci
 
+      # ELE-1628 — a ratchet, not a clean-tree check: fails only when an area
+      # gains translucent volt fills (they render brown) or grey text. After a
+      # clean-up, lock the lower count in with `--update`.
+      - name: Card styling ratchet
+        run: npm run check:card-styling
+
       # Green from the start, so enforced. Guards the 65 calculator -> client
       # PDF reports: coverage, ungrounded standards (a report cited a BS 7671
       # regulation that does not exist), duplicate titles, and headline

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CertNextSteps } from '@/components/employer/jobs/CertNextSteps';
-import { RefreshCw, Briefcase, Link2, Search, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { RefreshCw, Link2, Search, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
@@ -17,10 +17,8 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
   EmptyState,
   LoadingBlocks,
-  IconButton,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
@@ -36,6 +34,20 @@ import {
 import { summariseCertTests, type CertTestSummary } from '@/utils/certTestSummary';
 import { QsStatusBadge, ReturnReasonList } from '@/components/employer/qs/returnReasons';
 import { formatUKDate } from '@/utils/collegeHelpers';
+import { useFirmPartP, PART_P_LABEL, type FirmPartPRow } from '@/hooks/useFirmPartP';
+import { CertPartPPanel, partPLine, partPTone } from '@/components/employer/jobs/CertPartPPanel';
+import {
+  frameClass,
+  panel,
+  PanelTitle,
+  HeroActions,
+  HeroPrimary,
+  ToolButton,
+  PlainEmpty,
+  Segments,
+  SearchField,
+  StatusPill,
+} from '@/components/employer/pageParts/PageParts';
 
 /* ==========================================================================
    Testing (ELE-1973)
@@ -75,7 +87,8 @@ const cardCn =
 function calibrationLine(cert: JobCertificate): { text: string; overdue: boolean } | null {
   if (!cert.kit) return null;
   const due = cert.kit.next_calibration;
-  if (!due) return { text: `${cert.kit.name} in the kit register. No calibration date.`, overdue: false };
+  if (!due)
+    return { text: `${cert.kit.name} in the kit register. No calibration date.`, overdue: false };
   const overdue = new Date(due).getTime() < Date.now();
   return {
     text: `${cert.kit.name} in the kit register. Calibration ${overdue ? 'was due' : 'due'} ${formatUKDate(due)}.`,
@@ -101,19 +114,34 @@ function SummaryLine({ s }: { s: CertTestSummary }) {
           className={cn(
             'rounded-xl border px-3 py-2.5',
             t.label === 'Out of limit' && s.failed > 0
-              ? 'border-red-500/50 bg-red-500/10'
+              ? 'border-red-500/50 bg-white/[0.03]'
               : 'border-white/[0.1] bg-white/[0.03]'
           )}
         >
-          <p className="text-[18px] font-semibold tabular-nums text-white leading-none">{t.value}</p>
-          <p className="mt-1.5 text-[11px] font-medium text-white">{t.label}</p>
+          <p
+            className={cn(
+              'text-[18px] font-semibold tabular-nums leading-none',
+              t.label === 'Out of limit' && s.failed > 0 ? 'text-red-400' : 'text-white'
+            )}
+          >
+            {t.value}
+          </p>
+          <p className="mt-1.5 text-[12px] font-medium text-white">{t.label}</p>
         </div>
       ))}
     </div>
   );
 }
 
-function CertCard({ row, onOpen }: { row: Row; onOpen: () => void }) {
+function CertCard({
+  row,
+  onOpen,
+  partP,
+}: {
+  row: Row;
+  onOpen: () => void;
+  partP?: FirmPartPRow;
+}) {
   const { cert, summary } = row;
   const failing = summary.checks.filter((c) => c.status === 'fail');
   const qs = cert.qs?.status ?? 'none';
@@ -122,17 +150,19 @@ function CertCard({ row, onOpen }: { row: Row; onOpen: () => void }) {
       type="button"
       onClick={onOpen}
       className={cn(
-        cardCn,
-        'w-full text-left p-4 space-y-3 touch-manipulation transition-colors hover:border-white/[0.3] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+        panel,
+        'w-full text-left px-4 py-4 sm:px-5 space-y-3 touch-manipulation transition-colors hover:border-white/[0.3] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
         row.attention && 'border-red-500/40'
       )}
     >
       <div className="flex flex-wrap items-center gap-2">
-        <span className="shrink-0 rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
+        <span className="shrink-0 rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[12px] font-semibold text-white">
           {TYPE_LABEL[cert.report_type] || cert.report_type}
         </span>
         {cert.certificate_number && (
-          <span className="min-w-0 truncate font-mono text-[11.5px] text-white">{cert.certificate_number}</span>
+          <span className="min-w-0 truncate font-mono text-[11.5px] text-white">
+            {cert.certificate_number}
+          </span>
         )}
         <span className="ml-auto flex items-center gap-1.5">
           <QsStatusBadge status={qs} />
@@ -142,7 +172,9 @@ function CertCard({ row, onOpen }: { row: Row; onOpen: () => void }) {
         <p className="text-[15px] font-semibold tracking-tight text-white truncate">
           {cert.client_name || cert.job_client || 'No client name'}
         </p>
-        <p className="text-[12.5px] text-white truncate">{cert.installation_address || 'No address'}</p>
+        <p className="text-[13px] text-white truncate">
+          {cert.installation_address || 'No address'}
+        </p>
       </div>
       <SummaryLine s={summary} />
       {failing.length > 0 && (
@@ -156,13 +188,21 @@ function CertCard({ row, onOpen }: { row: Row; onOpen: () => void }) {
             </li>
           ))}
           {failing.length > 3 && (
-            <li className="text-[12.5px] text-white">And {failing.length - 3} more out of limit.</li>
+            <li className="text-[12.5px] text-white">
+              And {failing.length - 3} more out of limit.
+            </li>
           )}
         </ul>
       )}
       {qs === 'returned' && <ReturnReasonList codes={cert.qs?.return_reasons} />}
+      {partP && partP.state !== 'not_yet' && (
+        <div className="flex items-center justify-between gap-2">
+          <span className="min-w-0 text-[12.5px] text-white">{partPLine(partP)}</span>
+          <StatusPill tone={partPTone(partP.state)}>{PART_P_LABEL[partP.state]}</StatusPill>
+        </div>
+      )}
       <div className="flex items-center justify-between gap-2 border-t border-white/[0.08] pt-3">
-        <span className="min-w-0 truncate text-[12px] text-white">
+        <span className="min-w-0 truncate text-[13px] text-white">
           {cert.owner_name} · {CERT_STATUS[cert.status] ?? cert.status}
           {cert.inspection_date ? ` · ${formatUKDate(cert.inspection_date)}` : ''}
         </span>
@@ -179,6 +219,12 @@ export function TestingWorkflowSection() {
   const queryClient = useQueryClient();
   const { jobId, job } = useJobContext();
   const { data: certs = [], isLoading, isError, refetch, isFetching } = useJobCertificates(jobId);
+  // ELE-2084: Part P status of each certificate, for the office.
+  const { data: partPRows = [] } = useFirmPartP(jobId);
+  const partPById = useMemo(
+    () => new Map(partPRows.map((p) => [p.report_uuid, p])),
+    [partPRows]
+  );
   const [filter, setFilter] = useState<Filter>('all');
   const [search, setSearch] = useState('');
   const [openId, setOpenId] = useState<string | null>(null);
@@ -199,7 +245,9 @@ export function TestingWorkflowSection() {
       certs.map((cert) => {
         const summary = summariseCertTests(cert.report_type, cert.data);
         const attention =
-          summary.failed > 0 || cert.qs?.status === 'returned' || (summary.circuits > 0 && summary.incomplete > 0);
+          summary.failed > 0 ||
+          cert.qs?.status === 'returned' ||
+          (summary.circuits > 0 && summary.incomplete > 0);
         return { cert, summary, attention };
       }),
     [certs]
@@ -219,7 +267,9 @@ export function TestingWorkflowSection() {
       tested,
       failed,
       attention: rows.filter((r) => r.attention).length,
-      waiting: rows.filter((r) => r.cert.qs?.status === 'pending' || (!r.cert.qs && r.cert.status !== 'completed')).length,
+      waiting: rows.filter(
+        (r) => r.cert.qs?.status === 'pending' || (!r.cert.qs && r.cert.status !== 'completed')
+      ).length,
       approved: rows.filter((r) => r.cert.qs?.status === 'approved').length,
     };
   }, [rows]);
@@ -228,11 +278,20 @@ export function TestingWorkflowSection() {
     const q = search.trim().toLowerCase();
     return rows.filter((r) => {
       if (filter === 'attention' && !r.attention) return false;
-      if (filter === 'waiting' && !(r.cert.qs?.status === 'pending' || (!r.cert.qs && r.cert.status !== 'completed')))
+      if (
+        filter === 'waiting' &&
+        !(r.cert.qs?.status === 'pending' || (!r.cert.qs && r.cert.status !== 'completed'))
+      )
         return false;
       if (filter === 'approved' && r.cert.qs?.status !== 'approved') return false;
       if (!q) return true;
-      return [r.cert.client_name, r.cert.installation_address, r.cert.certificate_number, r.cert.owner_name, r.cert.job_title]
+      return [
+        r.cert.client_name,
+        r.cert.installation_address,
+        r.cert.certificate_number,
+        r.cert.owner_name,
+        r.cert.job_title,
+      ]
         .filter(Boolean)
         .some((v) => String(v).toLowerCase().includes(q));
     });
@@ -243,7 +302,11 @@ export function TestingWorkflowSection() {
     if (jobId) return [{ jobId, title: job?.title ?? 'This job', rows: filtered }];
     const map = new Map<string, { jobId: string; title: string; rows: Row[] }>();
     for (const r of filtered) {
-      const g = map.get(r.cert.job_id) ?? { jobId: r.cert.job_id, title: r.cert.job_title || 'Job', rows: [] };
+      const g = map.get(r.cert.job_id) ?? {
+        jobId: r.cert.job_id,
+        title: r.cert.job_title || 'Job',
+        rows: [],
+      };
       g.rows.push(r);
       map.set(r.cert.job_id, g);
     }
@@ -268,34 +331,74 @@ export function TestingWorkflowSection() {
     queryClient.invalidateQueries({ queryKey: ['linkable-certificates'] });
   };
 
+  const liveLine = (() => {
+    if (isLoading) return 'Loading certificates.';
+    if (isError) return "Couldn't load the certificates.";
+    if (certs.length === 0)
+      return jobId
+        ? 'No certificates on this job yet. Link the one your electrician made for it.'
+        : 'No certificates linked to a job yet.';
+    const todo: string[] = [];
+    if (totals.failed > 0)
+      todo.push(`${totals.failed} ${totals.failed === 1 ? 'circuit' : 'circuits'} out of limit`);
+    const returned = rows.filter((r) => r.cert.qs?.status === 'returned').length;
+    if (returned > 0) todo.push(`${returned} returned by the QS`);
+    const incomplete = rows.filter(
+      (r) => r.summary.circuits > 0 && r.summary.incomplete > 0
+    ).length;
+    if (incomplete > 0) todo.push(`${incomplete} with readings still to fill in`);
+    if (totals.waiting > 0) todo.push(`${totals.waiting} waiting`);
+    const head = `${certs.length} ${certs.length === 1 ? 'certificate' : 'certificates'}${jobId ? ' on this job' : ' across your jobs'}`;
+    return todo.length
+      ? `${head}. ${todo.join(', ')}.`
+      : `${head}. Every reading inside its limit.`;
+  })();
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="Jobs"
         title="Testing"
-        description="The certificates on each job, with every reading checked against the certificate's own BS 7671 limits."
+        description={liveLine}
         actions={
-          <>
-            <PrimaryButton data-help="testing.link" onClick={() => setLinkOpen(true)}>
-              <Link2 className="h-4 w-4 mr-2" />
+          <HeroActions>
+            <HeroPrimary
+              data-help="testing.link"
+              onClick={() => setLinkOpen(true)}
+              icon={<Link2 className="h-4 w-4" />}
+            >
               Link a certificate
-            </PrimaryButton>
-            <IconButton onClick={refresh} aria-label="Refresh">
-              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-            </IconButton>
-            <PageHelpButton help={TESTING_HELP} blockers={helpBlockers} askContext={{ page: 'testing', tab: filter }} />
-          </>
+            </HeroPrimary>
+            <ToolButton
+              label="Refresh"
+              onClick={refresh}
+              icon={<RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />}
+            />
+            <PageHelpButton
+              help={TESTING_HELP}
+              blockers={helpBlockers}
+              askContext={{ page: 'testing', tab: filter }}
+            />
+          </HeroActions>
         }
       />
 
-      <HowItWorks help={TESTING_HELP} blockers={helpBlockers} askContext={{ page: 'testing', tab: filter }} />
+      <HowItWorks
+        help={TESTING_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'testing', tab: filter }}
+      />
 
       <JobContextBar what="Certificates" />
 
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Certificates', value: certs.length, sub: jobId ? 'On this job' : 'Across your jobs', onClick: () => setFilter('all') },
+          {
+            label: 'Certificates',
+            value: certs.length,
+            sub: jobId ? 'On this job' : 'Across your jobs',
+            onClick: () => setFilter('all'),
+          },
           {
             label: 'Circuits tested',
             value: totals.circuits ? `${totals.tested}/${totals.circuits}` : 0,
@@ -304,76 +407,87 @@ export function TestingWorkflowSection() {
           {
             label: 'Out of limit',
             value: totals.failed,
+            tone: totals.failed ? 'red' : undefined,
             sub: totals.failed ? 'Circuits failing a check' : 'Nothing failing',
             onClick: () => setFilter('attention'),
           },
           {
             label: 'Waiting',
             value: totals.waiting,
+            tone: totals.waiting ? 'yellow' : undefined,
             sub: 'Not finished or with the QS',
             onClick: () => setFilter('waiting'),
           },
         ]}
       />
 
-      <div className="space-y-5">
+      <div className="space-y-6 sm:space-y-8">
         {isError && (
-          <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-4 space-y-3">
-            <p className="text-sm text-white">Couldn&apos;t load the certificates. Check your connection and try again.</p>
-            <SecondaryButton onClick={() => refetch()}>Try again</SecondaryButton>
-          </div>
+          <PlainEmpty
+            text="Couldn't load the certificates. Check your connection and try again."
+            action="Try again"
+            onAction={() => refetch()}
+          />
         )}
 
-        <div data-help="testing.tabs">
-          <FilterBar
-            tabs={[
-              { value: 'all', label: 'All', count: rows.length },
-              { value: 'attention', label: 'Needs attention', count: totals.attention },
-              { value: 'waiting', label: 'Waiting', count: totals.waiting },
-              { value: 'approved', label: 'QS approved', count: totals.approved },
+        <div
+          data-help="testing.tabs"
+          className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
+        >
+          <Segments
+            items={[
+              { value: 'all' as Filter, label: 'All', count: rows.length },
+              { value: 'attention' as Filter, label: 'Needs attention', count: totals.attention },
+              { value: 'waiting' as Filter, label: 'Waiting', count: totals.waiting },
+              { value: 'approved' as Filter, label: 'QS approved', count: totals.approved },
             ]}
-            activeTab={filter}
-            onTabChange={(v) => setFilter(v as Filter)}
-            search={search}
-            onSearchChange={setSearch}
-            searchPlaceholder="Search client, address, certificate, job"
+            value={filter}
+            onChange={setFilter}
+          />
+          <SearchField
+            value={search}
+            onChange={setSearch}
+            placeholder="Search job, client or certificate"
+            className="lg:w-80"
           />
         </div>
 
         {isLoading ? (
           <LoadingBlocks />
         ) : isError ? null : rows.length === 0 ? (
-          <EmptyState
-            title={jobId ? 'No certificates on this job yet' : 'No certificates on any job yet'}
-            description="Your electricians test on the certificate in the Electrical Hub as normal. Link the certificate to its job here and its results show up, checked against BS 7671."
+          <PlainEmpty
+            text="Certificates your electricians make in the Electrical Hub appear here once linked to their job, with every reading checked against BS 7671."
             action="Link a certificate"
             onAction={() => setLinkOpen(true)}
           />
         ) : filtered.length === 0 ? (
-          <EmptyState
-            title="Nothing matches"
-            description={search.trim() ? 'Try another client, address or certificate number.' : 'No certificates in this view.'}
+          <PlainEmpty
+            text={
+              search.trim()
+                ? 'Nothing matches that client, address or certificate number.'
+                : 'No certificates in this view.'
+            }
           />
         ) : (
-          <div className="space-y-8" data-help="testing.list">
+          <div className="space-y-6 sm:space-y-8" data-help="testing.list">
             {groups.map((g) => (
               <section key={g.jobId} className="space-y-3">
                 {!jobId && (
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="min-w-0 truncate text-[15px] font-semibold tracking-tight text-white">{g.title}</h2>
-                    <button
-                      type="button"
-                      onClick={() => navigate(`/employer?section=jobs&job=${g.jobId}`)}
-                      className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
-                    >
-                      <Briefcase className="h-3.5 w-3.5" />
-                      Open job
-                    </button>
-                  </div>
+                  <PanelTitle
+                    title={g.title}
+                    meta={`${g.rows.length} ${g.rows.length === 1 ? 'certificate' : 'certificates'}`}
+                    action="Open job"
+                    onAction={() => navigate(`/employer?section=jobs&job=${g.jobId}`)}
+                  />
                 )}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
                   {g.rows.map((r) => (
-                    <CertCard key={r.cert.report_uuid} row={r} onOpen={() => setOpenId(r.cert.report_uuid)} />
+                    <CertCard
+                      key={r.cert.report_uuid}
+                      row={r}
+                      partP={partPById.get(r.cert.report_uuid)}
+                      onOpen={() => setOpenId(r.cert.report_uuid)}
+                    />
                   ))}
                 </div>
               </section>
@@ -382,7 +496,11 @@ export function TestingWorkflowSection() {
         )}
       </div>
 
-      <CertDetailSheet row={openRow} onClose={() => setOpenId(null)} />
+      <CertDetailSheet
+        row={openRow}
+        partP={openRow ? partPById.get(openRow.cert.report_uuid) : undefined}
+        onClose={() => setOpenId(null)}
+      />
       <LinkCertificateSheet open={linkOpen} onOpenChange={setLinkOpen} presetJobId={jobId} />
     </PageFrame>
   );
@@ -390,7 +508,15 @@ export function TestingWorkflowSection() {
 
 /* ── Certificate detail ───────────────────────────────────────────────── */
 
-function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => void }) {
+function CertDetailSheet({
+  row,
+  partP,
+  onClose,
+}: {
+  row: Row | null;
+  partP?: FirmPartPRow;
+  onClose: () => void;
+}) {
   const navigate = useNavigate();
   const unlink = useUnlinkCertificate();
   const [pdfOpen, setPdfOpen] = useState(false);
@@ -408,7 +534,8 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
 
   const ordered = s
     ? [...s.checks].sort((a, b) => {
-        const rank = (c: typeof a) => (c.status === 'fail' ? 0 : c.missing.length ? 1 : c.status === 'warning' ? 2 : 3);
+        const rank = (c: typeof a) =>
+          c.status === 'fail' ? 0 : c.missing.length ? 1 : c.status === 'warning' ? 2 : 3;
         return rank(a) - rank(b);
       })
     : [];
@@ -420,7 +547,11 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
       open={!!row}
       onOpenChange={(o) => !o && close()}
       width="wide"
-      eyebrow={cert ? `${TYPE_LABEL[cert.report_type] || cert.report_type}${cert.certificate_number ? ` ${cert.certificate_number}` : ''}` : undefined}
+      eyebrow={
+        cert
+          ? `${TYPE_LABEL[cert.report_type] || cert.report_type}${cert.certificate_number ? ` ${cert.certificate_number}` : ''}`
+          : undefined
+      }
       title={cert?.client_name || cert?.job_client || 'Certificate'}
       description={cert?.installation_address || undefined}
     >
@@ -451,7 +582,9 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
                     key={c.key}
                     className={cn(
                       'rounded-xl border p-3 space-y-2',
-                      c.status === 'fail' ? 'border-red-500/50 bg-red-500/[0.08]' : 'border-white/[0.1] bg-white/[0.03]'
+                      c.status === 'fail'
+                        ? 'border-red-500/50 bg-red-500/[0.08]'
+                        : 'border-white/[0.1] bg-white/[0.03]'
                     )}
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -470,10 +603,18 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
                           aria-hidden
                           className={cn(
                             'h-1.5 w-1.5 rounded-full',
-                            c.status === 'fail' ? 'bg-red-400' : c.missing.length ? 'bg-amber-400' : 'bg-emerald-400'
+                            c.status === 'fail'
+                              ? 'bg-red-400'
+                              : c.missing.length
+                                ? 'bg-amber-400'
+                                : 'bg-emerald-400'
                           )}
                         />
-                        {c.status === 'fail' ? 'Out of limit' : c.missing.length ? 'Incomplete' : 'Within limits'}
+                        {c.status === 'fail'
+                          ? 'Out of limit'
+                          : c.missing.length
+                            ? 'Incomplete'
+                            : 'Within limits'}
                       </span>
                     </div>
                     {c.readings.length > 0 && (
@@ -491,7 +632,9 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
                       </p>
                     ))}
                     {c.missing.length > 0 && (
-                      <p className="text-[12.5px] text-white">Not recorded: {c.missing.join(', ')}.</p>
+                      <p className="text-[12.5px] text-white">
+                        Not recorded: {c.missing.join(', ')}.
+                      </p>
                     )}
                   </li>
                 ))}
@@ -506,7 +649,8 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
               <QsStatusBadge status={cert.qs?.status ?? 'none'} />
               {cert.qs?.reviewer_name && cert.qs.status !== 'pending' && (
                 <p className="text-[13px] text-white">
-                  {cert.qs.status === 'approved' ? 'Approved' : 'Returned'} by {cert.qs.reviewer_name}
+                  {cert.qs.status === 'approved' ? 'Approved' : 'Returned'} by{' '}
+                  {cert.qs.reviewer_name}
                   {cert.qs.reviewed_at ? ` on ${formatUKDate(cert.qs.reviewed_at)}` : ''}.
                 </p>
               )}
@@ -529,6 +673,8 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
               )}
             </div>
 
+            {partP && <CertPartPPanel row={partP} className={cn(cardCn, 'p-4')} />}
+
             <div className={cn(cardCn, 'p-4 space-y-2')}>
               <h3 className="text-[15px] font-semibold text-white">Instrument</h3>
               {s.instrument ? (
@@ -548,7 +694,9 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
               ) : s.instrument?.serial ? (
                 <p className="text-[13px] text-white">That serial is not in your kit register.</p>
               ) : null}
-              {s.earthing && <p className="text-[13px] text-white">Earthing: {s.earthing.toUpperCase()}</p>}
+              {s.earthing && (
+                <p className="text-[13px] text-white">Earthing: {s.earthing.toUpperCase()}</p>
+              )}
             </div>
 
             <div className={cn(cardCn, 'p-4 space-y-3')}>
@@ -572,7 +720,10 @@ function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => voi
                     onClick={async () => {
                       try {
                         await unlink.mutateAsync({ reportUuid: cert.report_uuid });
-                        toast({ title: 'Removed from the job', description: 'The certificate itself is unchanged.' });
+                        toast({
+                          title: 'Removed from the job',
+                          description: 'The certificate itself is unchanged.',
+                        });
                         close();
                       } catch (e) {
                         toast({
@@ -619,7 +770,11 @@ function LinkCertificateSheet({
     () =>
       jobs
         .filter((j) => !j.archived_at && !j.is_template)
-        .map((j) => ({ value: j.id, label: j.title || 'Untitled job', description: [j.client, j.location].filter(Boolean).join(' · ') })),
+        .map((j) => ({
+          value: j.id,
+          label: j.title || 'Untitled job',
+          description: [j.client, j.location].filter(Boolean).join(' · '),
+        })),
     [jobs]
   );
 
@@ -653,7 +808,10 @@ function LinkCertificateSheet({
           <div className="space-y-1.5">
             <label className="text-[12px] font-medium text-white block">Search</label>
             <div className="relative">
-              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
+              <Search
+                className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                aria-hidden
+              />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -670,7 +828,10 @@ function LinkCertificateSheet({
 
         <div className="space-y-2" data-help="testing.link-list">
           {!jobId ? (
-            <EmptyState title="Choose a job first" description="Then pick the certificate for it." />
+            <EmptyState
+              title="Choose a job first"
+              description="Then pick the certificate for it."
+            />
           ) : isLoading ? (
             <LoadingBlocks />
           ) : options.length === 0 ? (
@@ -687,7 +848,7 @@ function LinkCertificateSheet({
               <div key={o.report_uuid} className={cn(cardCn, 'flex items-center gap-3 p-3.5')}>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
+                    <span className="rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[12px] font-semibold text-white">
                       {TYPE_LABEL[o.report_type] || o.report_type}
                     </span>
                     {o.score > 0 && (
@@ -696,8 +857,12 @@ function LinkCertificateSheet({
                       </span>
                     )}
                   </div>
-                  <p className="mt-1.5 truncate text-[14px] font-semibold text-white">{o.client_name || 'No client name'}</p>
-                  <p className="truncate text-[12.5px] text-white">{o.installation_address || 'No address'}</p>
+                  <p className="mt-1.5 truncate text-[14px] font-semibold text-white">
+                    {o.client_name || 'No client name'}
+                  </p>
+                  <p className="truncate text-[12.5px] text-white">
+                    {o.installation_address || 'No address'}
+                  </p>
                   <p className="truncate text-[12px] text-white">
                     {o.owner_name} · {CERT_STATUS[o.status] ?? o.status}
                     {o.certificate_number ? ` · ${o.certificate_number}` : ''}
@@ -709,7 +874,10 @@ function LinkCertificateSheet({
                   onClick={async () => {
                     try {
                       await link.mutateAsync({ reportUuid: o.report_uuid, jobId: jobId! });
-                      toast({ title: 'Certificate linked', description: 'Its results now show on the job.' });
+                      toast({
+                        title: 'Certificate linked',
+                        description: 'Its results now show on the job.',
+                      });
                       onOpenChange(false);
                     } catch (e) {
                       toast({

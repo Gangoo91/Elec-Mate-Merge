@@ -438,15 +438,18 @@ function Composer({
   }, [units, unitSearch]);
   const pastPlans = useMemo(() => {
     const q = dupSearch.trim().toLowerCase();
-    return [...lessonPlans]
-      .filter((l) => l.content)
-      .filter((l) => (q ? l.title.toLowerCase().includes(q) : true))
-      .sort((a, b) =>
-        (b.scheduled_date ?? b.created_at ?? '').localeCompare(
-          a.scheduled_date ?? a.created_at ?? ''
+    return (
+      [...lessonPlans]
+        // The list read carries has_content, not the body itself (ELE-1912).
+        .filter((l) => l.has_content ?? !!l.content)
+        .filter((l) => (q ? l.title.toLowerCase().includes(q) : true))
+        .sort((a, b) =>
+          (b.scheduled_date ?? b.created_at ?? '').localeCompare(
+            a.scheduled_date ?? a.created_at ?? ''
+          )
         )
-      )
-      .slice(0, 60);
+        .slice(0, 60)
+    );
   }, [lessonPlans, dupSearch]);
 
   const cohortName = cohorts.find((c) => c.id === cohortId)?.name ?? null;
@@ -479,7 +482,7 @@ function Composer({
             />
             <span
               className={cn(
-                'mt-1.5 block truncate text-[12px] text-white',
+                'mt-1.5 block text-[12px] leading-snug text-white',
                 i === stepIndex && 'font-semibold'
               )}
             >
@@ -995,9 +998,7 @@ function CriteriaPicker({
                 >
                   <div className="flex items-start gap-3 px-4 py-3 sm:px-5">
                     <div className="min-w-0 flex-1">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
-                        Outcome {lo.lo_number}
-                      </p>
+                      <p className="text-[13px] font-semibold text-white">Outcome {lo.lo_number}</p>
                       <p className="mt-0.5 text-[14px] font-semibold leading-snug text-white">
                         {lo.lo_text.replace(/^./, (c) => c.toUpperCase())}
                       </p>
@@ -1071,9 +1072,7 @@ function CriteriaPicker({
 
       {/* Right: the lesson being built */}
       <aside className="-mx-4 card-surface border-y border-white/[0.08] p-4 sm:mx-0 sm:rounded-2xl sm:border sm:p-5 lg:sticky lg:top-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
-          Your lesson
-        </p>
+        <p className="text-[13px] font-semibold text-white">Your lesson</p>
         <p className="mt-1 text-[20px] font-bold leading-tight text-white">
           {picked.length === 0
             ? 'Nothing picked yet'

@@ -1,10 +1,25 @@
 import { openPrintRegister } from '@/utils/printRegister';
 import { toast } from '@/hooks/use-toast';
 import { useMemo, useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import FormSheet from '@/components/forms/FormSheet';
+import { panel, PanelTitle } from '@/components/employer/overview/HomeSections';
+import {
+  HeroActions,
+  Initials,
+  KeyValue,
+  PlainEmpty,
+  Row,
+  Tag,
+  colClass,
+  filterStack,
+  heroBtn,
+  frameClass,
+  rowBtnSecondary,
+  rowsClass,
+  twoColClass,
+} from '@/components/employer/pageParts/PageParts';
+import { cn } from '@/lib/utils';
 import {
   Select,
   SelectContent,
@@ -17,25 +32,16 @@ import {
   PageHero,
   StatStrip,
   FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  EmptyState,
   LoadingBlocks,
   IconButton,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
   Field,
-  FormCard,
   FormGrid,
   inputClass,
   selectTriggerClass,
   selectContentClass,
-  fieldLabelClass,
   type Tone,
 } from '@/components/employer/editorial';
 import {
@@ -49,7 +55,7 @@ import {
 } from '@/hooks/useTrainingRecords';
 import { verificationLabel } from '@/services/credentialsService';
 import { useEmployees } from '@/hooks/useEmployees';
-import { RefreshCw, Loader2, CheckCircle2, Trash2 } from 'lucide-react';
+import { RefreshCw, Loader2, CheckCircle2, Trash2, Plus, Printer } from 'lucide-react';
 
 const trainingTypes: TrainingType[] = [
   'Induction',
@@ -59,14 +65,6 @@ const trainingTypes: TrainingType[] = [
   'Certification',
   'Refresher',
 ];
-
-function getInitials(name?: string | null) {
-  if (!name) return 'GN';
-  const parts = name.trim().split(/\s+/);
-  const first = parts[0]?.[0] ?? '';
-  const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
-  return (first + last).toUpperCase() || 'GN';
-}
 
 function formatDate(value?: string | null) {
   if (!value) return '—';
@@ -97,8 +95,7 @@ function getLifecycle(record: TrainingRecord): {
     const expiry = new Date(record.expiry_date);
     if (!Number.isNaN(expiry.getTime())) {
       if (expiry < today) return { status: 'expired', tone: 'red', label: 'Expired' };
-      if (expiry <= thirty)
-        return { status: 'expiring', tone: 'orange', label: 'Expiring' };
+      if (expiry <= thirty) return { status: 'expiring', tone: 'orange', label: 'Expiring' };
     }
   }
 
@@ -212,358 +209,433 @@ export function TrainingRecordsSection() {
 
   if (error) {
     return (
-      <PageFrame>
-        <EmptyState
-          title="Couldn't load training records"
-          description="There was a problem fetching your training matrix. Try again in a moment."
-          action="Retry"
-          onAction={() => refetch()}
+      <PageFrame className={frameClass}>
+        <PageHero
+          title="Training records"
+          description="CPD log and certification expiry tracking."
         />
+        <div className={panel}>
+          <PlainEmpty
+            bare
+            text="Training records didn't load. Check your connection and try again."
+            action={
+              <button type="button" onClick={() => refetch()} className={rowBtnSecondary}>
+                Retry
+              </button>
+            }
+          />
+        </div>
       </PageFrame>
     );
   }
 
   const totalRecords = stats?.total ?? trainingRecords?.length ?? 0;
+  const expiringCount = stats?.expiringsSoon ?? 0;
+  const expiredCount = stats?.expired ?? 0;
+
+  // Where training stands, in one line.
+  const heroLine = (() => {
+    if (isLoading) return 'CPD log and certification expiry tracking.';
+    if (totalRecords === 0)
+      return 'No training logged yet. Log a course to track CPD and when tickets expire.';
+    const bits: string[] = [];
+    if (expiringCount > 0) bits.push(`${expiringCount} expiring in the next 30 days`);
+    if (expiredCount > 0) bits.push(`${expiredCount} expired`);
+    if (bits.length === 0)
+      return `Nothing expiring in the next 30 days. ${totalRecords} ${totalRecords === 1 ? 'record' : 'records'} on file.`;
+    const s = bits.join(', ');
+    return `${s.charAt(0).toUpperCase()}${s.slice(1)}.`;
+  })();
+
+  // Expired first, then soonest to expire: what to book next.
+  const comingUp = enriched
+    .filter((e) => e.lifecycle.status === 'expired' || e.lifecycle.status === 'expiring')
+    .sort((a, b) => (a.record.expiry_date ?? '').localeCompare(b.record.expiry_date ?? ''))
+    .slice(0, 6);
+
+  const tagFor = (l: ReturnType<typeof getLifecycle>) =>
+    l.label === 'Expired' || l.label === 'Failed' ? (
+      <Tag tone="red">{l.label}</Tag>
+    ) : l.label === 'Expiring' ? (
+      <Tag tone="yellow">{l.label}</Tag>
+    ) : l.label === 'Valid' ? (
+      <Tag tone="done">{l.label}</Tag>
+    ) : (
+      <Tag tone="outline">{l.label}</Tag>
+    );
+
+  const exportMatrix = async () => {
+    const ok = await openPrintRegister({
+      title: 'Training Matrix',
+      subtitle: 'Training, certifications and expiry register',
+      columns: ['Team member', 'Training', 'Provider', 'Completed', 'Expires', 'Status'],
+      rows: (trainingRecords || []).map((r) => [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (r as any).employee?.name || 'Unassigned',
+        r.training_name,
+        r.provider,
+        r.completed_date,
+        r.expiry_date,
+        r.status,
+      ]),
+    });
+    if (!ok) toast({ title: 'Pop-up blocked', variant: 'destructive' });
+  };
+
+  const boxed = 'overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04]';
 
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="HR & Safety"
-        title="Training Records"
-        description="CPD log and certification expiry tracking."
-        tone="emerald"
+        title="Training records"
+        description={heroLine}
         actions={
-          <>
-            <PrimaryButton onClick={() => setShowNewTraining(true)}>Log training</PrimaryButton>
+          <HeroActions stretchFirst>
+            <PrimaryButton onClick={() => setShowNewTraining(true)} className={heroBtn}>
+              <Plus className="h-4 w-4 mr-1.5" />
+              Log training
+            </PrimaryButton>
             <SecondaryButton
-              onClick={async () => {
-                const ok = await openPrintRegister({
-                  title: 'Training Matrix',
-                  subtitle: 'Training, certifications and expiry register',
-                  columns: ['Team member', 'Training', 'Provider', 'Completed', 'Expires', 'Status'],
-                  rows: (trainingRecords || []).map((r) => [
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    (r as any).employee?.name || 'Unassigned',
-                    r.training_name,
-                    r.provider,
-                    r.completed_date,
-                    r.expiry_date,
-                    r.status,
-                  ]),
-                });
-                if (!ok) toast({ title: 'Pop-up blocked', variant: 'destructive' });
-              }}
+              onClick={exportMatrix}
+              aria-label="Export matrix"
+              className={cn(
+                heroBtn,
+                'w-11 shrink-0 px-0 sm:w-auto sm:px-5 border-white/[0.18] font-semibold'
+              )}
             >
-              Export matrix
+              <Printer className="h-4 w-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">Export matrix</span>
             </SecondaryButton>
-            <IconButton onClick={() => refetch()} aria-label="Refresh">
+            <IconButton onClick={() => refetch()} aria-label="Refresh" className="shrink-0">
               <RefreshCw className="h-4 w-4" />
             </IconButton>
-          </>
+          </HeroActions>
         }
       />
 
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Records', value: totalRecords, tone: 'emerald' },
-          { label: 'Expiring 30d', value: stats?.expiringsSoon ?? 0, tone: 'orange' },
-          { label: 'Expired', value: stats?.expired ?? 0, tone: 'red' },
-          { label: 'CPD courses YTD', value: cpdCoursesYtd, accent: true },
+          { label: 'Records', value: totalRecords, sub: 'On file' },
+          {
+            label: 'Expiring in 30 days',
+            value: expiringCount,
+            tone: expiringCount > 0 ? 'yellow' : undefined,
+            sub: expiringCount > 0 ? 'Book the refresher' : 'Nothing due',
+            onClick: expiringCount > 0 ? () => setFilter('expiring') : undefined,
+          },
+          {
+            label: 'Expired',
+            value: expiredCount,
+            tone: expiredCount > 0 ? 'red' : undefined,
+            sub: expiredCount > 0 ? 'Out of date now' : 'None',
+            onClick: expiredCount > 0 ? () => setFilter('expired') : undefined,
+          },
+          { label: 'CPD courses this year', value: cpdCoursesYtd, sub: 'Completed' },
         ]}
       />
 
-      <FilterBar
-        tabs={[
-          { value: 'all', label: 'All', count: tabCounts.all },
-          { value: 'valid', label: 'Valid', count: tabCounts.valid },
-          { value: 'expiring', label: 'Expiring', count: tabCounts.expiring },
-          { value: 'expired', label: 'Expired', count: tabCounts.expired },
-        ]}
-        activeTab={filter}
-        onTabChange={(v) => setFilter(v as 'all' | LifecycleStatus)}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search course, employee or provider…"
-      />
-
-      {isLoading ? (
-        <LoadingBlocks />
-      ) : filteredRecords.length === 0 ? (
-        <EmptyState
-          title="No training records"
-          description={
-            searchQuery || filter !== 'all'
-              ? 'No records match the current filter. Try clearing search or switching tabs.'
-              : 'Log your first training entry to start tracking CPD and certification expiry.'
-          }
-          action="Log training"
-          onAction={() => setShowNewTraining(true)}
-        />
-      ) : (
-        <ListCard>
-          <ListCardHeader
-            tone="emerald"
-            title="Training"
-            meta={<Pill tone="emerald">{filteredRecords.length}</Pill>}
-          />
-          <ListBody>
-            {filteredRecords.map(({ record, lifecycle }) => {
-              const employeeName = record.employee?.name ?? 'General';
-              const completed = record.completed_date
-                ? `completed ${formatDate(record.completed_date)}`
-                : record.start_date
-                  ? `started ${formatDate(record.start_date)}`
-                  : 'not started';
-              const expires = record.expiry_date
-                ? `expires ${formatDate(record.expiry_date)}`
-                : 'no expiry';
-              return (
-                <ListRow
-                  key={record.id}
-                  lead={<Avatar initials={getInitials(employeeName)} />}
-                  title={record.training_name}
-                  subtitle={`${employeeName} · ${completed} · ${expires}`}
-                  trailing={<Pill tone={lifecycle.tone}>{lifecycle.label}</Pill>}
-                  onClick={() => setActiveRecord(record)}
-                />
-              );
-            })}
-          </ListBody>
-        </ListCard>
-      )}
-
-      {/* New training sheet */}
-      <Sheet open={showNewTraining} onOpenChange={setShowNewTraining}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
-        >
-          <div className="flex flex-col h-full">
-            <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
-              <SheetTitle className="text-white text-[15px] font-semibold">
-                Log training
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
-              <FormCard eyebrow="Course">
-                <Field label="Training name" required>
-                  <Input
-                    placeholder="e.g. 18th Edition, Working at Heights…"
-                    value={trainingName}
-                    onChange={(e) => setTrainingName(e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-
-                <Field label="Training type">
-                  <Select
-                    value={trainingType}
-                    onValueChange={(v) => setTrainingType(v as TrainingType)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {trainingTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-
-                <Field label="Provider">
-                  <Input
-                    placeholder="Training provider…"
-                    value={provider}
-                    onChange={(e) => setProvider(e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-              </FormCard>
-
-              <FormCard eyebrow="Assignee & dates">
-                <Field label="Employee">
-                  <Select
-                    value={selectedEmployee || 'all'}
-                    onValueChange={(v) => setSelectedEmployee(v === 'all' ? '' : v)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Select employee…" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value="all">All employees / general</SelectItem>
-                      {employees?.map((emp) => (
-                        <SelectItem key={emp.id} value={emp.id}>
-                          {emp.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-
-                <FormGrid cols={2}>
-                  <Field label="Start date">
-                    <Input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      className={inputClass}
-                    />
-                  </Field>
-                  <Field label="Completed date (if already done)">
-                    <Input
-                      type="date"
-                      value={completedDate}
-                      onChange={(e) => setCompletedDate(e.target.value)}
-                      className={inputClass}
-                    />
-                  </Field>
-                </FormGrid>
-                <Field label="Expiry date">
-                  <Input
-                    type="date"
-                    value={expiryDate}
-                    onChange={(e) => setExpiryDate(e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-              </FormCard>
-            </div>
-
-            <div className="px-5 py-4 border-t border-white/[0.06] flex gap-3">
-              <SecondaryButton onClick={() => setShowNewTraining(false)} fullWidth>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleCreateTraining}
-                disabled={!trainingName || createTraining.isPending}
-                fullWidth
-              >
-                {createTraining.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  'Log training'
-                )}
-              </PrimaryButton>
-            </div>
+      <div className={twoColClass}>
+        <div className={colClass}>
+          <div className={filterStack}>
+            <FilterBar
+              tabs={[
+                { value: 'all', label: 'All', count: tabCounts.all },
+                { value: 'valid', label: 'Valid', count: tabCounts.valid },
+                { value: 'expiring', label: 'Expiring', count: tabCounts.expiring },
+                { value: 'expired', label: 'Expired', count: tabCounts.expired },
+              ]}
+              activeTab={filter}
+              onTabChange={(v) => setFilter(v as 'all' | LifecycleStatus)}
+              search={searchQuery}
+              onSearchChange={setSearchQuery}
+              searchPlaceholder="Search course, person or provider…"
+            />
           </div>
-        </SheetContent>
-      </Sheet>
 
-      {/* Detail sheet */}
-      <Sheet open={!!activeRecord} onOpenChange={(open) => !open && setActiveRecord(null)}>
-        <SheetContent
-          side="bottom"
-          className="h-[80vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
-        >
-          {activeRecord && (
-            <div className="flex flex-col h-full">
-              <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
-                <SheetTitle className="text-white text-[15px] font-semibold">
-                  {activeRecord.training_name}
-                </SheetTitle>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5">
-                <StatStrip
-                  columns={2}
-                  stats={[
-                    {
-                      label: 'Status',
-                      value: getLifecycle(activeRecord).label,
-                      tone: getLifecycle(activeRecord).tone,
-                    },
-                    {
-                      label: 'Type',
-                      value: activeRecord.training_type ?? '—',
-                      accent: true,
-                    },
-                  ]}
-                />
-
-                <ListCard>
-                  <ListCardHeader tone="emerald" title="Details" />
-                  <ListBody>
-                    <ListRow
-                      title="Employee"
-                      subtitle={activeRecord.employee?.name ?? 'General / all'}
+          {isLoading ? (
+            <LoadingBlocks />
+          ) : filteredRecords.length === 0 ? (
+            <div className={panel}>
+              <PlainEmpty
+                bare
+                text={
+                  searchQuery || filter !== 'all'
+                    ? 'Nothing matches. Clear the search or pick another tab.'
+                    : 'Courses, tickets and CPD you log show here, with when each one expires.'
+                }
+                action={
+                  searchQuery || filter !== 'all' ? undefined : (
+                    <button
+                      type="button"
+                      onClick={() => setShowNewTraining(true)}
+                      className={rowBtnSecondary}
+                    >
+                      Log training
+                    </button>
+                  )
+                }
+              />
+            </div>
+          ) : (
+            <section>
+              <PanelTitle title="Training" meta={filteredRecords.length} />
+              <div className={cn(panel, rowsClass)}>
+                {filteredRecords.map(({ record, lifecycle }) => {
+                  const employeeName = record.employee?.name ?? 'General';
+                  const completed = record.completed_date
+                    ? `completed ${formatDate(record.completed_date)}`
+                    : record.start_date
+                      ? `started ${formatDate(record.start_date)}`
+                      : 'not started';
+                  const expires = record.expiry_date
+                    ? `expires ${formatDate(record.expiry_date)}`
+                    : 'no expiry';
+                  return (
+                    <Row
+                      key={record.id}
+                      lead={<Initials name={employeeName} />}
+                      title={record.training_name}
+                      detail={`${employeeName} · ${completed} · ${expires}`}
+                      trailing={tagFor(lifecycle)}
+                      onClick={() => setActiveRecord(record)}
                     />
-                    <ListRow
-                      title="Provider"
-                      subtitle={activeRecord.provider ?? '—'}
-                    />
-                    <ListRow
-                      title="Start date"
-                      subtitle={formatDate(activeRecord.start_date)}
-                    />
-                    <ListRow
-                      title="Completed"
-                      subtitle={formatDate(activeRecord.completed_date)}
-                    />
-                    <ListRow
-                      title="Expires"
-                      subtitle={formatDate(activeRecord.expiry_date)}
-                    />
-                    {activeRecord.certificate_number && (
-                      <ListRow
-                        title="Certificate no."
-                        subtitle={activeRecord.certificate_number}
-                      />
-                    )}
-                    {activeRecord.notes && (
-                      <ListRow title="Notes" subtitle={activeRecord.notes} />
-                    )}
-                    <ListRow
-                      title="Checked"
-                      subtitle={verificationLabel(activeRecord.verification_level)}
-                    />
-                  </ListBody>
-                </ListCard>
+                  );
+                })}
               </div>
+            </section>
+          )}
+        </div>
 
-              {/* Training lives on the person's Elec-ID (ELE-1950): the office can
-                  change only what it recorded; the rest is the worker's own */}
-              {activeRecord.recorded_by_firm === false ? (
-                <div className="px-5 py-4 border-t border-white/[0.06] text-[12.5px] text-white">
-                  Added by {activeRecord.employee?.name ?? 'the worker'} on their own Elec-ID. They
-                  keep it up to date; record how you checked it from Elec-ID.
-                </div>
+        <div className={colClass}>
+          <section>
+            <PanelTitle title="Coming up" meta="Expired and due in 30 days" />
+            <div className={cn(panel, comingUp.length > 0 && rowsClass)}>
+              {comingUp.length === 0 ? (
+                <PlainEmpty bare text="Nothing expires in the next 30 days." />
               ) : (
-              <div className="px-5 py-4 border-t border-white/[0.06] flex gap-3">
-                <DestructiveButton
-                  onClick={() => handleDelete(activeRecord.id)}
-                  disabled={deleteTraining.isPending}
-                >
-                  {deleteTraining.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Trash2 className="h-4 w-4" />
-                  )}
-                </DestructiveButton>
-                {activeRecord.status !== 'Completed' && (
-                  <PrimaryButton
-                    onClick={() => handleMarkComplete(activeRecord)}
-                    disabled={updateStatus.isPending}
-                    fullWidth
-                  >
-                    {updateStatus.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <>
-                        <CheckCircle2 className="h-4 w-4 mr-2" />
-                        Mark complete
-                      </>
-                    )}
-                  </PrimaryButton>
-                )}
-              </div>
+                comingUp.map(({ record, lifecycle }) => (
+                  <Row
+                    key={`up-${record.id}`}
+                    title={record.training_name}
+                    detail={`${record.employee?.name ?? 'General'} · ${formatDate(record.expiry_date)}`}
+                    trailing={tagFor(lifecycle)}
+                    onClick={() => setActiveRecord(record)}
+                  />
+                ))
               )}
             </div>
-          )}
-        </SheetContent>
-      </Sheet>
+          </section>
+        </div>
+      </div>
+
+      {/* New training sheet */}
+      <FormSheet
+        open={showNewTraining}
+        onOpenChange={setShowNewTraining}
+        title="Log training"
+        description="A course, ticket or CPD for one person or the whole firm. Add a completed date for training already done."
+        width="wide"
+        bodyClassName="grid gap-6 [&>*]:min-w-0 lg:grid-cols-2 lg:gap-8 lg:items-start"
+        footer={
+          <div className="flex gap-2">
+            <SecondaryButton onClick={() => setShowNewTraining(false)} fullWidth size="lg">
+              Cancel
+            </SecondaryButton>
+            <PrimaryButton
+              onClick={handleCreateTraining}
+              disabled={!trainingName || createTraining.isPending}
+              fullWidth
+              size="lg"
+            >
+              {createTraining.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                'Log training'
+              )}
+            </PrimaryButton>
+          </div>
+        }
+      >
+        <div className="space-y-4">
+          <h3 className="text-[15px] font-semibold text-white">Course</h3>
+          <Field label="Training name" required>
+            <Input
+              placeholder="e.g. 18th Edition, Working at Heights…"
+              value={trainingName}
+              onChange={(e) => setTrainingName(e.target.value)}
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Training type">
+            <Select value={trainingType} onValueChange={(v) => setTrainingType(v as TrainingType)}>
+              <SelectTrigger className={selectTriggerClass}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className={selectContentClass}>
+                {trainingTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+          <Field label="Provider">
+            <Input
+              placeholder="Training provider…"
+              value={provider}
+              onChange={(e) => setProvider(e.target.value)}
+              className={inputClass}
+            />
+          </Field>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-[15px] font-semibold text-white">Who and when</h3>
+          <Field label="Employee">
+            <Select
+              value={selectedEmployee || 'all'}
+              onValueChange={(v) => setSelectedEmployee(v === 'all' ? '' : v)}
+            >
+              <SelectTrigger className={selectTriggerClass}>
+                <SelectValue placeholder="Select employee…" />
+              </SelectTrigger>
+              <SelectContent className={selectContentClass}>
+                <SelectItem value="all">All employees / general</SelectItem>
+                {employees?.map((emp) => (
+                  <SelectItem key={emp.id} value={emp.id}>
+                    {emp.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+          <FormGrid cols={2}>
+            <Field label="Start date">
+              <Input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Completed date (if already done)">
+              <Input
+                type="date"
+                value={completedDate}
+                onChange={(e) => setCompletedDate(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+          </FormGrid>
+          <Field label="Expiry date">
+            <Input
+              type="date"
+              value={expiryDate}
+              onChange={(e) => setExpiryDate(e.target.value)}
+              className={inputClass}
+            />
+          </Field>
+        </div>
+      </FormSheet>
+
+      {/* Detail sheet */}
+      <FormSheet
+        open={!!activeRecord}
+        onOpenChange={(open) => !open && setActiveRecord(null)}
+        title={activeRecord?.training_name ?? 'Training'}
+        description={
+          activeRecord
+            ? `${activeRecord.training_type ?? 'Training'} · ${activeRecord.employee?.name ?? 'General / all'}`
+            : undefined
+        }
+        headerTrailing={activeRecord ? tagFor(getLifecycle(activeRecord)) : undefined}
+        width="wide"
+        bodyClassName="grid gap-6 [&>*]:min-w-0 lg:grid-cols-2 lg:gap-8 lg:items-start"
+        footer={
+          activeRecord && activeRecord.recorded_by_firm !== false ? (
+            <div className="flex gap-2">
+              <DestructiveButton
+                onClick={() => handleDelete(activeRecord.id)}
+                disabled={deleteTraining.isPending}
+                size="lg"
+                aria-label="Delete record"
+              >
+                {deleteTraining.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Trash2 className="h-4 w-4" />
+                )}
+              </DestructiveButton>
+              {activeRecord.status !== 'Completed' && (
+                <PrimaryButton
+                  onClick={() => handleMarkComplete(activeRecord)}
+                  disabled={updateStatus.isPending}
+                  fullWidth
+                  size="lg"
+                >
+                  {updateStatus.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <>
+                      <CheckCircle2 className="h-4 w-4 mr-2" />
+                      Mark complete
+                    </>
+                  )}
+                </PrimaryButton>
+              )}
+            </div>
+          ) : undefined
+        }
+      >
+        {activeRecord && (
+          <>
+            <div className={boxed}>
+              <div className={rowsClass}>
+                <KeyValue label="Employee" value={activeRecord.employee?.name ?? 'General / all'} />
+                <KeyValue label="Provider" value={activeRecord.provider ?? '—'} />
+                <KeyValue label="Start date" value={formatDate(activeRecord.start_date)} />
+                <KeyValue label="Completed" value={formatDate(activeRecord.completed_date)} />
+                <KeyValue
+                  label="Expires"
+                  value={formatDate(activeRecord.expiry_date)}
+                  tone={getLifecycle(activeRecord).status === 'expired' ? 'red' : undefined}
+                />
+                {activeRecord.certificate_number && (
+                  <KeyValue label="Certificate no." value={activeRecord.certificate_number} />
+                )}
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className={boxed}>
+                <div className={rowsClass}>
+                  <KeyValue
+                    label="Checked"
+                    value={verificationLabel(activeRecord.verification_level)}
+                  />
+                  {activeRecord.notes && (
+                    <div className="px-4 py-3 sm:px-5">
+                      <div className="text-[14px] text-white">Notes</div>
+                      <p className="mt-0.5 whitespace-pre-wrap text-[14px] text-white">
+                        {activeRecord.notes}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* Training lives on the person's Elec-ID (ELE-1950): the office can
+                  change only what it recorded; the rest is the worker's own */}
+              {activeRecord.recorded_by_firm === false && (
+                <p className="rounded-2xl border border-white/[0.1] bg-white/[0.04] px-4 py-3 text-[13px] text-white">
+                  Added by {activeRecord.employee?.name ?? 'the worker'} on their own Elec-ID. They
+                  keep it up to date; record how you checked it from Elec-ID.
+                </p>
+              )}
+            </div>
+          </>
+        )}
+      </FormSheet>
     </PageFrame>
   );
 }

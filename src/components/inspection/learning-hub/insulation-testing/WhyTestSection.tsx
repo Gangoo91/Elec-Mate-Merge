@@ -109,7 +109,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Hazards */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What IR Testing Prevents</p>
+          <p className="text-[12px] font-medium text-white mb-3">What IR Testing Prevents</p>
         </motion.div>
 
         {hazards.map((hazard, i) => (
@@ -130,7 +130,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Causes of low IR */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Causes Low Insulation Resistance</p>
+          <p className="text-[12px] font-medium text-white mb-3">What Causes Low Insulation Resistance</p>
         </motion.div>
 
         {causes.map((item, i) => (
@@ -144,7 +144,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Examples</p>
+          <p className="text-[12px] font-medium text-white mb-3">Real-World Examples</p>
         </motion.div>
 
         {realWorldExamples.map((example, i) => (

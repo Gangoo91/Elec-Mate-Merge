@@ -1256,7 +1256,7 @@ const CommercialTestingGuide = () => {
             {emergencyLightingTesting.testTypes.map((test, index) => (
               <div
                 key={index}
-                className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Clock className="h-4 w-4 text-elec-yellow" />
@@ -1279,14 +1279,14 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Central Battery System */}
-          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-3">
               {emergencyLightingTesting.centralBatterySystem.title}
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-elec-yellow/30">
+                  <tr className="border-b border-white/[0.14]">
                     <th className="text-left py-2 text-elec-yellow">Test</th>
                     <th className="text-left py-2 text-elec-yellow">Expected</th>
                     <th className="text-left py-2 text-elec-yellow">Tolerance</th>
@@ -1294,7 +1294,7 @@ const CommercialTestingGuide = () => {
                 </thead>
                 <tbody>
                   {emergencyLightingTesting.centralBatterySystem.tests.map((test, idx) => (
-                    <tr key={idx} className="border-b border-elec-yellow/20">
+                    <tr key={idx} className="border-b border-white/[0.14]">
                       <td className="py-2 text-white text-xs">{test.test}</td>
                       <td className="py-2 text-elec-yellow text-xs">{test.expected}</td>
                       <td className="py-2 text-white text-xs">{test.tolerance}</td>
@@ -1304,7 +1304,7 @@ const CommercialTestingGuide = () => {
               </table>
             </div>
 
-            <div className="mt-3 pt-3 border-t border-elec-yellow/20">
+            <div className="mt-3 pt-3 border-t border-white/[0.14]">
               <h5 className="text-sm font-medium text-elec-yellow mb-2">Additional Checks:</h5>
               <ul className="space-y-1">
                 {emergencyLightingTesting.centralBatterySystem.additionalChecks.map(
@@ -1320,7 +1320,7 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Documentation */}
-          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
             <h4 className="font-medium text-white mb-3">Documentation Required</h4>
             <ul className="space-y-2">
               {emergencyLightingTesting.documentationRequired.map((item, idx) => (

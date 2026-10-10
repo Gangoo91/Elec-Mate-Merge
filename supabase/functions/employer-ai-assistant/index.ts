@@ -57,7 +57,11 @@ ESTIMATING & PLANNING — when asked to plan, quote, price or "set up" a job, or
 
 CONFIRM & UNDO — anything YOU suggest or offer ("I can raise that for you") waits for a clear yes before you write it. For anything financial or hard to reverse (raising an invoice, posting a public vacancy) or any large batch, briefly propose it and wait for a "yes" before doing it — UNLESS the user already clearly told you to. Quick low-risk setup (adding a supplier, a price-book line) just do. Every action is logged. If the user says "undo", "remove it" or corrects you, call delete_record with the id you got when you created it — and confirm what you removed.
 
-OFFICE JOBS YOU CAN DO (confirmed actions): approve_timesheets, send_back_timesheet, decide_leave, decide_expense, mark_expenses_paid (owner or admin only), chase_team_invite, book_person_on_job, send_team_message and chase_signature. These never run straight away: calling one puts a confirmation card on the user's screen with the exact changes, and only their Confirm (or a yes to the card) does it. So: when the page or the question fits, offer the action in one line ("Dan has 3 clean entries. Want me to approve them?"); when they say yes or ask for it directly, call the tool; then tell them to check the card and tap Confirm. NEVER say a confirmed action is done until you see "[Done: ...]" in the conversation. Get ids from get_pending_approvals, get_page_record or the open records. Sending back a timesheet, declining leave and rejecting an expense need the user's own reason: ask, never invent one. Never put a flagged timesheet in include_flagged_ids unless the user named that entry. If a tool says "Not offered", explain why in plain words.
+OFFICE QUESTIONS (read-only, get_office_brief): kind 'today' for "what needs me", "what's on today" or a morning rundown; kind 'diary' with from/to dates for "who's on today", "who's free Thursday", "where is Dan next week" (max 14 days); kind 'unpaid' with days for "what's unpaid over 30 days" (owner and admins only: if it comes back hidden, say invoice amounts are for the owner and admins and stop); kind 'recurring' for "when is the next PAT round at the school" or "what renewals are due" (person = a word from the job or client); kind 'apprentice_hours' for "has Jake logged his hours this month" (apprentice hours ALWAYS means off-the-job training hours from this tool, never timesheets). Answer from the result in plain sentences with names and dates, and say where to fix things in the hub.
+
+OFFICE JOBS YOU CAN DO (confirmed actions): approve_timesheets, send_back_timesheet, decide_leave, decide_expense, mark_expenses_paid (owner or admin only), chase_team_invite, book_person_on_job, reschedule_job (move a job's dates; the crew's bookings move with it and they get the diary update. Pass the job as the words the user used, e.g. "Orchard Close consumer unit"; never ask for an id, the action finds the job and asks only if more than one matches), send_team_message, chase_signature and send_pack_to_worker (send an existing RAMS or job pack to one named worker to sign, e.g. "send Dan the RAMS for Orchard Close": pass the worker and the job as the user's words; managers only). These never run straight away: calling one puts a confirmation card on the user's screen with the exact changes, and only their Confirm (or a yes to the card) does it. So: when the page or the question fits, offer the action in one line ("Dan has 3 clean entries. Want me to approve them?"); when they say yes or ask for it directly, call the tool; then tell them to check the card and tap Confirm. NEVER say a confirmed action is done until you see "[Done: ...]" in the conversation. Get ids from get_pending_approvals, get_page_record or the open records. Sending back a timesheet, declining leave and rejecting an expense need the user's own reason: ask, never invent one. Never put a flagged timesheet in include_flagged_ids unless the user named that entry. If a tool says "Not offered", explain why in plain words.
+
+WHO AND WHEN (read-only, suggest_slots): for "who can do the EICR at Orchard Close this week?", "when can someone fit the Mill Lane job in?" or "who's free for a consumer unit change Thursday", call suggest_slots with the job's words (and the work and place when there is no job), and from/to for the window ("this week" = today to Friday). It returns the best three person and day options with the reason (credentials held, rough drive time, what is already booked) and who was ruled out and why. It never suggests anyone on leave or without a required credential: say so if asked. Name the options in order with their reasons, then offer to book one with book_person_on_job (from = the option's day, start_time and hours as given), which goes through the usual card and Confirm. The drive times are straight-line estimates: call them "about".
 
 SAFETY — you can READ the firm's safety position (read-only; Site Safety owns the records and you never change them): get_safety_overview for the whole picture, list_safety_incidents for open reports and RIDDOR deadlines ("any incidents this week" = since_days 7), who_has_not_signed for job packs and RAMS sign-off by job or site ("who hasn't signed the RAMS for Orchard Close"), list_overdue_safety_actions, and list_expiring_tickets. Call them whenever safety, RIDDOR, sign-offs, RAMS, briefings or tickets come up, and before advising that someone can go to site. Lead with anything that has a legal clock: an unreported RIDDOR incident and its HSE deadline comes first. Name people and dates from the tool result; never guess who has or hasn't signed. Point to where it is fixed in the hub (Incidents, Job Packs, RAMS, Credentials).
 
@@ -464,6 +468,44 @@ const TOOLS = [
       },
     },
   },
+  {
+    type: 'function',
+    function: {
+      name: 'get_office_brief',
+      description:
+        "Read-only. The office picture, scoped to the firm and the user's role. kind: today (jobs today and any with nobody booked, approvals waiting, apprentice hours waiting, kit due), diary (who is booked where and who is free each day from..to), unpaid (invoices unpaid more than `days` days; owner/admin only), recurring (repeat visits and certificate renewals due within `days`), apprentice_hours (each apprentice's off-the-job hours this month).",
+      parameters: {
+        type: 'object',
+        properties: {
+          kind: { type: 'string', enum: ['today', 'diary', 'unpaid', 'recurring', 'apprentice_hours'] },
+          from: { type: 'string', description: 'YYYY-MM-DD, diary only. Default today.' },
+          to: { type: 'string', description: 'YYYY-MM-DD, diary only. Default = from. Max 14 days on.' },
+          person: { type: 'string', description: 'Optional name (diary, apprentice_hours) or a word from the job/client (recurring).' },
+          days: { type: 'number', description: 'unpaid: older than this many days (default 30). recurring: due within (default 120).' },
+        },
+        required: ['kind'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'suggest_slots',
+      description:
+        "Read-only. ELE-2072 smarter scheduling: the best three options (person + day, morning or afternoon) for a job, each with a plain reason, respecting approved and requested leave, existing diary bookings, the credentials the job needs (Inspection & Testing for an EICR, EV Charging for a charger), crew size and rough travel time. Also lists who was ruled out and why. Pass job = the words the user used for the job; when no job matches, the work ('EICR') and place ('Orchard Close, Sheffield') are used instead.",
+      parameters: {
+        type: 'object',
+        properties: {
+          job: { type: 'string', description: 'Words for the job, e.g. "EICR at Orchard Close".' },
+          work: { type: 'string', description: 'The kind of work when there is no job yet, e.g. "EICR", "EV charger install".' },
+          place: { type: 'string', description: 'Address or postcode when there is no job yet.' },
+          from: { type: 'string', description: 'YYYY-MM-DD, default today.' },
+          to: { type: 'string', description: 'YYYY-MM-DD, default 6 days after from. Max 3 weeks.' },
+          hours: { type: 'number', description: 'Hours the visit needs, when there is no job (default a full day).' },
+        },
+      },
+    },
+  },
   ...ACTION_TOOLS,
 ];
 
@@ -549,7 +591,8 @@ async function getSnapshot(admin: any, uid: string, showMoney = true): Promise<s
         // deno-lint-ignore no-explicit-any
         .then((rows: any[]) => rows.map((r) => ({ status: String(r.acceptance_status === 'accepted' ? 'accepted' : r.acceptance_status === 'rejected' ? 'rejected' : r.status ?? 'draft') }))),
       safe(admin.from('employer_vacancies').select('id, title, status').eq('employer_id', uid)),
-      safe(admin.from('employer_incidents').select('severity, status').eq('employer_id', uid)),
+      // ELE-2031: the firm's Site Safety near misses / accidents and any employer_incidents rows.
+      safe(admin.rpc('_firm_incident_rows', { p_firm: uid })),
       safe(admin.from('employer_job_tasks').select('status, due_date').eq('employer_id', uid)),
       safe(admin.from('employer_material_orders').select('total, status').eq('employer_id', uid)),
       employeeIds.length
@@ -649,7 +692,7 @@ function formatSafety(tool: string, b: SafetyBrief): string {
     const r = b.rams;
     const rams = r.awaiting_signoff
       ? `RAMS${scope} awaiting sign-off: ${r.awaiting_signoff}.\n` +
-        r.items.map((x) => `- ${x.project ?? 'Untitled'}${x.location ? `, ${x.location}` : ''} (${x.status}${x.date ? `, ${x.date}` : ''})`).join('\n')
+        r.items.map((x) => `- ${x.project ? String(x.project).replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase()) : 'Untitled'}${x.location ? `, ${x.location}` : ''} (${x.status}${x.date ? `, ${x.date}` : ''})`).join('\n')
       : `RAMS${scope}: none awaiting sign-off.`;
     return `${head}\n${rams}`;
   };
@@ -696,6 +739,53 @@ const likeEscape = (v: string) => v.replace(/[%_\\]/g, (c) => '\\' + c);
 // Execute one tool call and return a short result string for the model.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // uid = the FIRM (the owner's id, also for a manager); actorId = who is typing.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function formatOfficeBrief(kind: string, d: any): string {
+  const day = (s: string) =>
+    new Date(`${String(s).slice(0, 10)}T12:00:00Z`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+  if (!d) return 'Nothing came back.';
+  if (kind === 'today') {
+    const unc = (d.jobs_uncrewed ?? []) as { title: string }[];
+    return [
+      Number(d.jobs_today) === 0
+        ? `Today (${day(d.date)}): no jobs booked.`
+        : `Today (${day(d.date)}): ${d.jobs_today} job(s) on. ${unc.length ? `Nobody booked on: ${unc.map((j) => j.title).join('; ')}.` : 'Every one has someone booked.'}`,
+      `Waiting for you: ${d.timesheets_waiting} timesheet(s), ${d.expenses_waiting} expense(s), ${d.leave_waiting} leave request(s), ${d.otj_waiting} apprentice training entr${d.otj_waiting === 1 ? 'y' : 'ies'}.`,
+      (d.kit_due ?? []).length
+        ? `Kit due in 14 days: ${(d.kit_due as { name: string; what: string; due: string }[]).map((k) => `${k.name} ${k.what} ${day(k.due)}`).join('; ')}.`
+        : 'No kit due in the next 14 days.',
+    ].join('\n');
+  }
+  if (kind === 'diary') {
+    return (d as { day: string; booked: { person: string; job: string }[]; free: string[]; on_leave: string[] }[])
+      .map((x) =>
+        `${day(x.day)}: ${x.booked.length ? x.booked.map((b) => `${b.person} on ${b.job}`).join('; ') : 'nobody booked'}. Free: ${x.free.length ? x.free.join(', ') : 'nobody'}${x.on_leave.length ? `. On leave: ${x.on_leave.join(', ')}` : ''}.`
+      )
+      .join('\n') || 'No days in that range.';
+  }
+  if (kind === 'unpaid') {
+    if (d.hidden) return `HIDDEN: ${d.reason}`;
+    const inv = (d.invoices ?? []) as { number: string; client: string; outstanding: number; days_old: number; days_overdue: number }[];
+    if (!inv.length) return 'No invoices unpaid that long.';
+    const total = inv.reduce((t, i) => t + Number(i.outstanding || 0), 0);
+    return [`${inv.length} invoice(s), £${total.toFixed(2)} outstanding:`, ...inv.map((i) => `• ${i.number} ${i.client}: £${Number(i.outstanding).toFixed(2)}, raised ${i.days_old} days ago${i.days_overdue ? `, ${i.days_overdue} days overdue` : ''}`)].join('\n');
+  }
+  if (kind === 'recurring') {
+    const v = (d.visits ?? []) as { title: string; client: string; next_due_date: string; crew: string[] }[];
+    const r = (d.renewals ?? []) as { report_type: string; client_name: string; installation_address: string; expiry_date: string; employer_job_id: string | null }[];
+    return [
+      v.length ? `Repeat visits:\n${v.map((x) => `• ${x.title} for ${x.client}, next ${day(x.next_due_date)}${x.crew?.length ? ` (${x.crew.join(', ')})` : ''}`).join('\n')}` : 'No repeat visits due in that window.',
+      r.length ? `Certificate renewals:\n${r.map((x) => `• ${String(x.report_type || 'Certificate').toUpperCase()} ${x.client_name || ''}${x.installation_address ? `, ${x.installation_address}` : ''}: due ${day(x.expiry_date)}${x.employer_job_id ? ' (booked)' : ''}`).join('\n')}` : 'No certificate renewals in that window.',
+    ].join('\n');
+  }
+  if (kind === 'apprentice_hours') {
+    const a = (d ?? []) as { name: string; logged_hours: number; confirmed_hours: number; waiting: number; joined: boolean }[];
+    if (!a.length) return 'No apprentices on the team (or none match that name).';
+    return a.map((x) => `• ${x.name}: ${x.logged_hours}h logged this month, ${x.confirmed_hours}h confirmed by you, ${x.waiting} entr${x.waiting === 1 ? 'y' : 'ies'} waiting for you${x.joined ? '' : ' (not joined the app yet)'}`).join('\n');
+  }
+  return JSON.stringify(d).slice(0, 2000);
+}
+
 async function runTool(admin: any, uid: string, actorId: string, openAiKey: string, authHeader: string, name: string, argsJson: string, canSeeMoney = false): Promise<string> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let args: Record<string, any>;
@@ -845,6 +935,7 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
         acceptance_status: 'pending',
         expiry_date: validUntil.toISOString(),
         invoice_raised: false,
+        created_by_user_id: actorId, // ELE-2083: the person typing, not the firm
       }, 'quote');
       if (error) return `Failed to create quote: ${error.message}`;
       const { data: q } = await admin.from('quotes').select('quote_number').eq('id', id).maybeSingle();
@@ -873,6 +964,7 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
         invoice_date: new Date().toISOString(),
         invoice_due_date: args.due_date ? new Date(args.due_date).toISOString() : new Date(Date.now() + 30 * 864e5).toISOString(),
         invoice_notes: args.notes ?? null,
+        created_by_user_id: actorId, // ELE-2083: the person typing, not the firm
       }, 'invoice');
       if (error) return `Failed to create invoice: ${error.message}`;
       const { data: inv } = await admin.from('quotes').select('invoice_number').eq('id', id).maybeSingle();
@@ -1099,6 +1191,29 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
       });
       if (error) return "Couldn't read the safety records: " + error.message;
       return formatSafety(name, data as SafetyBrief);
+    } else if (name === 'get_office_brief') {
+      // As the CALLER: get_mate_office_brief guards scope and hides money from office.
+      const caller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      const ymdArg = (v: unknown) => (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null);
+      const kind = String(args.kind ?? 'today');
+      const { data, error } = await caller.rpc('get_mate_office_brief', {
+        p_firm: uid,
+        p_kind: kind,
+        p_from: ymdArg(args.from),
+        p_to: ymdArg(args.to),
+        p_person: typeof args.person === 'string' ? args.person : null,
+        p_days: Number.isFinite(Number(args.days)) ? Math.round(Number(args.days)) : null,
+      });
+      if (error) return "Couldn't read that: " + error.message;
+      return formatOfficeBrief(kind, data);
+    } else if (name === 'suggest_slots') {
+      // As the CALLER: suggest_job_slots / suggest_slots_for_work check the firm.
+      const caller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      return await suggestSlots(admin, caller, uid, args);
     } else if (name === 'get_pending_approvals' || name === 'get_page_record') {
       // As the CALLER: row-level security decides what they see, as in the hub.
       const caller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
@@ -1119,6 +1234,128 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
   } catch (e) {
     return 'Tool error: ' + (e instanceof Error ? e.message : 'unknown');
   }
+}
+
+/* ── ELE-2072: who and when ─────────────────────────────────────────────── */
+
+const SLOT_STOP = new Set(['the', 'at', 'in', 'on', 'for', 'a', 'an', 'to', 'of', 'job', 'jobs', 'this', 'week', 'who', 'can', 'do', 'next']);
+
+/** Credentials the work needs, the same starting point as the job sheet (utils/crewCompetence suggestRequirements). */
+function requirementsForWork(text: string): string[] {
+  const t = text.toLowerCase();
+  const keys = new Set<string>(['18th']);
+  if (/\beicr\b|\beic\b|periodic|inspection|testing|landlord|re-?test/.test(t)) keys.add('2391');
+  if (/\bev\b|charg|zappi|wallbox|ohme|pod point/.test(t)) { keys.add('ev'); keys.add('2391'); }
+  if (/solar|\bpv\b|battery|bess|inverter/.test(t)) keys.add('solar');
+  if (/\bpat\b|portable appliance/.test(t)) keys.add('pat');
+  if (/commercial|site|principal|factory|warehouse|school|hospital/.test(t)) keys.add('ecs');
+  if (/cherry picker|mewp|scissor lift|high level|warehouse lighting/.test(t)) keys.add('ipaf');
+  if (/consumer unit|\bcu\b|rewire|board change/.test(t)) keys.add('2391');
+  return [...keys];
+}
+
+interface SlotOption {
+  day: string;
+  half: string;
+  start_time: string;
+  hours: number;
+  days: number;
+  reason: string;
+  people: Array<{ employee_id: string; name: string; role: string | null }>;
+}
+interface SlotResult {
+  options?: SlotOption[];
+  excluded?: Array<{ name: string; why: string }>;
+  required_labels?: string[];
+  job?: { id: string; title: string; has_location: boolean };
+}
+
+// deno-lint-ignore no-explicit-any
+async function suggestSlots(admin: any, caller: any, uid: string, args: Record<string, unknown>): Promise<string> {
+  const ymd = (v: unknown) => (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null);
+  const from = ymd(args.from);
+  const to = ymd(args.to);
+  const words = String(args.job ?? '').trim();
+  const days = from && to ? Math.min(21, Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 86_400_000) + 1)) : 7;
+
+  // The job the user means: the best word match on title, place and client.
+  let job: { id: string; title: string } | null = null;
+  let placeFromJob: string | null = null;
+  const tokens = words.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length >= 2 && !SLOT_STOP.has(w));
+  if (tokens.length) {
+    const { data: jobs } = await admin
+      .from('employer_jobs')
+      .select('id, title, location, client')
+      .eq('user_id', uid)
+      .is('archived_at', null)
+      .neq('status', 'Cancelled')
+      .neq('board_stage', 'Complete')
+      .order('updated_at', { ascending: false })
+      .limit(300);
+    const scored = ((jobs ?? []) as Array<{ id: string; title: string; location: string | null; client: string | null }>)
+      .map((j) => {
+        const hay = `${j.title} ${j.location ?? ''} ${j.client ?? ''}`.toLowerCase();
+        return { j, score: tokens.filter((t) => hay.includes(t)).length };
+      })
+      .filter((x) => x.score > 0)
+      .sort((a, b) => b.score - a.score);
+    const top = scored[0];
+    const unique = !!top && (scored.length === 1 || scored[1].score < top.score);
+    if (top && top.score === tokens.length && unique) {
+      job = { id: top.j.id, title: top.j.title };
+    } else if (top && top.score === tokens.length) {
+      return `More than one job matches "${words}": ${scored.filter((x) => x.score === top.score).slice(0, 4).map((x) => x.j.title).join('; ')}. Ask which one.`;
+    } else if (top && unique && top.j.location) {
+      // "the EICR at Orchard Close" with no EICR job there: the place is that
+      // job's address, the work is what was asked for.
+      placeFromJob = top.j.location;
+    }
+  }
+
+  let res: SlotResult;
+  let heading: string;
+  if (job) {
+    const { data, error } = await caller.rpc('suggest_job_slots', { p_job: job.id, p_from: from, p_days: days, p_limit: 3 });
+    if (error) return "Couldn't work out the options: " + error.message;
+    res = data as SlotResult;
+    heading = `For "${job.title}"`;
+  } else {
+    const work = String(args.work ?? words).trim();
+    const place = String(args.place ?? '').trim() || placeFromJob || '';
+    if (!work) return 'Say which job, or the kind of work and where.';
+    const geo = place ? await geocodeJob(place) : null;
+    const { data, error } = await caller.rpc('suggest_slots_for_work', {
+      p_firm: uid,
+      p_required: requirementsForWork(work),
+      p_lat: geo?.lat ?? null,
+      p_lng: geo?.lng ?? null,
+      p_hours: Number.isFinite(Number(args.hours)) && Number(args.hours) > 0 ? Number(args.hours) : null,
+      p_from: from,
+      p_to: to,
+      p_limit: 3,
+    });
+    if (error) return "Couldn't work out the options: " + error.message;
+    res = data as SlotResult;
+    heading = `No job matched, so for ${work}${place ? ` at ${place}` : ''}${geo ? '' : place ? ' (place not found, so no travel times)' : ''}`;
+  }
+
+  const needs = res.required_labels?.length ? `needs ${res.required_labels.join(', ')}` : 'no credentials set on the job';
+  const opts = res.options ?? [];
+  const lines = opts.map((o, i) => {
+    const who = o.people.map((p) => p.name).join(' and ');
+    const when = o.days > 1 ? `${o.day}, ${o.days} days` : `${o.day} ${o.half === 'am' ? 'morning' : o.half === 'pm' ? 'afternoon' : 'all day'}`;
+    return `${i + 1}. ${who}, ${when} (start ${o.start_time}, ${o.hours}h). ${o.reason}. [employee: ${o.people[0]?.name}, from: ${o.day}, start_time: ${o.start_time}, hours: ${o.hours}]`;
+  });
+  const out = (res.excluded ?? []).map((e) => `${e.name} (${e.why})`);
+  return [
+    `${heading} (${needs}):`,
+    lines.length ? lines.join('\n') : 'Nobody qualified is free in that window.',
+    out.length ? `Ruled out: ${out.join('; ')}.` : '',
+    job && res.job && !res.job.has_location ? 'The job has no map location, so travel times are missing.' : '',
+    job ? `To book one, use book_person_on_job with job "${job.title}".` : 'There is no job yet: offer to create it first, then book.',
+  ]
+    .filter(Boolean)
+    .join('\n');
 }
 
 Deno.serve(withSentry('employer-ai-assistant', async (req) => {

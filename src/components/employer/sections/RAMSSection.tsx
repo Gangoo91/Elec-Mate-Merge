@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, type ReactNode } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { copyToClipboard } from '@/utils/clipboard';
+import { supabase } from '@/integrations/supabase/client';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,15 +29,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import {
-  RefreshCw,
-  Plus,
-  MapPin,
-  Calendar,
-  Download,
-  Copy,
-  Sparkles,
-} from 'lucide-react';
+import { Plus, MapPin, Calendar, Download, Copy } from 'lucide-react';
 import {
   useRAMSDocuments,
   useRAMSDocumentStats,
@@ -47,6 +41,35 @@ import {
   type RAMSStatus,
 } from '@/hooks/useRAMSDocuments';
 import { useJobs } from '@/hooks/useJobs';
+import { FirmRecordBar } from '@/components/electrician-tools/site-safety/common/FirmRecordBar';
+import {
+  useFirmRecordAccess,
+  useSafetyScope,
+  isFirmScope,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
+import { useRecentGeneratedRams } from '@/hooks/useRecentGeneratedRams';
+import { useFirmPackSafetyDocs } from '@/hooks/useFirmSafetyDocs';
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { MoveToFirmPanel } from '@/components/employer/rams/MoveToFirmPanel';
+import { FirmJobPicker } from '@/components/employer/smart-docs/FirmJobPicker';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { RAMS_REGISTER_HELP } from '@/components/employer/help/safetyDocs';
+import {
+  frameClass,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  TwoColumn,
+  FigureStrip,
+  Segments,
+  SearchField,
+  RowList,
+  Row,
+  StatusPill,
+  PlainEmpty,
+  plural,
+  type PillTone,
+} from '@/components/employer/pageParts/PageParts';
 import { format, formatDistanceToNow } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
@@ -54,14 +77,11 @@ import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
   ListCard,
   ListCardHeader,
   ListBody,
   ListRow,
   Pill,
-  IconButton,
-  EmptyState,
   LoadingBlocks,
   PrimaryButton,
   SecondaryButton,
@@ -97,6 +117,43 @@ const statusLabelFor = (status: RAMSStatus): string => {
   return STATUS_OPTIONS.find((s) => s.value === status)?.label ?? status;
 };
 
+/** The register's filters: a RAMS's status, or where it came from. */
+type RegisterFilter = 'all' | 'approve' | 'notissued' | 'approved' | 'draft';
+type RegisterStatus = RegisterFilter | 'other' | 'pack';
+
+interface RegisterEntry {
+  key: string;
+  kind: 'doc' | 'ai' | 'pack';
+  title: string;
+  jobId: string | null;
+  at: string;
+  status: RegisterStatus;
+  search: string;
+  detail: string;
+  pill: ReactNode;
+  open: () => void;
+}
+
+const statusKindFor = (status: RAMSStatus): RegisterStatus =>
+  status === 'submitted' || (status as string) === 'generated'
+    ? 'approve'
+    : status === 'approved'
+      ? 'approved'
+      : status === 'draft'
+        ? 'draft'
+        : 'other';
+
+const pillToneFor = (status: RAMSStatus): PillTone =>
+  status === 'approved'
+    ? 'green'
+    : status === 'rejected'
+      ? 'red'
+      : status === 'submitted' || (status as string) === 'generated'
+        ? 'volt'
+        : 'neutral';
+
+const ago = (iso: string) => formatDistanceToNow(new Date(iso), { addSuffix: true });
+
 export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const { toast } = useToast();
   const { data: ramsDocuments = [], isLoading, error, refetch } = useRAMSDocuments();
@@ -112,8 +169,24 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const [showDetailSheet, setShowDetailSheet] = useState(false);
   const [selectedRAMS, setSelectedRAMS] = useState<RAMSDocument | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<RegisterFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
+  const scope = useSafetyScope();
+  const firmId = isFirmScope(scope) ? scope.employerId : null;
+  const jobFilter = params.get('job');
+  const pickJobFilter = (id: string | null) => {
+    const next = new URLSearchParams(params);
+    if (id) next.set('job', id);
+    else next.delete('job');
+    setParams(next, { replace: true });
+  };
+  // AI runs for the firm not yet issued, and RAMS attached to the firm's packs:
+  // both belong on the one register (ELE-1940).
+  const { data: aiRuns = [] } = useRecentGeneratedRams(60);
+  const { data: packDocs = [] } = useFirmPackSafetyDocs(firmId);
+  const { exportPDF, exportingId } = useSafetyPDFExport();
 
   const [formData, setFormData] = useState({
     project_name: '',
@@ -140,42 +213,104 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   // Awaiting approval = submitted + AI 'generated' — the same definition the
   // Safety hub landing and Safety & HR overview use, so the figures never drift.
   const submittedCount = ramsDocuments.filter(
-    (d) => d.status === 'submitted' || (d.status as string) === 'generated',
+    (d) => d.status === 'submitted' || (d.status as string) === 'generated'
   ).length;
-  const totalCount = stats?.total ?? ramsDocuments.length;
   const draftCount = ramsDocuments.filter((d) => d.status === 'draft').length;
-  const activeCount = ramsDocuments.filter(
-    (d) => d.status === 'approved' || d.status === 'submitted',
-  ).length;
 
   const approved30dCount = useMemo(() => {
     const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
     return ramsDocuments.filter(
-      (d) => d.status === 'approved' && new Date(d.updated_at).getTime() >= cutoff,
+      (d) => d.status === 'approved' && new Date(d.updated_at).getTime() >= cutoff
     ).length;
   }, [ramsDocuments]);
 
-  const filteredDocuments = ramsDocuments.filter((doc) => {
-    const linkedJobTitle = doc.employer_job_id
-      ? jobTitleById.get(doc.employer_job_id)
-      : undefined;
-    const matchesSearch =
-      searchQuery === '' ||
-      doc.project_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.assessor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (linkedJobTitle ?? '').toLowerCase().includes(searchQuery.toLowerCase());
+  const notIssuedRuns = useMemo(
+    () =>
+      aiRuns.filter((r) => !r.issuedVersion && (r.status === 'complete' || r.status === 'partial')),
+    [aiRuns]
+  );
 
-    if (!matchesSearch) return false;
+  /** Every RAMS the firm has, whatever made it, newest first. */
+  const register = useMemo((): RegisterEntry[] => {
+    const docs: RegisterEntry[] = ramsDocuments.map((doc) => {
+      const status = doc.status as RAMSStatus;
+      const job = doc.employer_job_id ? jobTitleById.get(doc.employer_job_id) : undefined;
+      const madeBy = doc.ai_generation_metadata?.generation_job_id ? 'AI, issued' : 'Written';
+      return {
+        key: `doc-${doc.id}`,
+        kind: 'doc',
+        title: doc.project_name,
+        jobId: doc.employer_job_id ?? null,
+        at: doc.updated_at,
+        status: statusKindFor(status),
+        search: [doc.project_name, doc.location, doc.assessor, job].join(' '),
+        detail: [job ?? 'No job', madeBy, `v${doc.version ?? 1}`, ago(doc.updated_at)].join(' · '),
+        pill: <StatusPill tone={pillToneFor(status)}>{statusLabelFor(status)}</StatusPill>,
+        open: () => openRAMSDetail(doc),
+      };
+    });
+    const runs: RegisterEntry[] = notIssuedRuns.map((r) => ({
+      key: `ai-${r.id}`,
+      kind: 'ai',
+      title: r.title,
+      jobId: r.employerJobId,
+      at: r.createdAt,
+      status: 'notissued',
+      search: [r.title, r.employerJobId ? jobTitleById.get(r.employerJobId) : ''].join(' '),
+      detail: [
+        r.employerJobId ? (jobTitleById.get(r.employerJobId) ?? 'A firm job') : 'No job',
+        'AI drafted',
+        ago(r.createdAt),
+      ].join(' · '),
+      pill: <StatusPill tone="volt">Not issued</StatusPill>,
+      open: () => navigate(`/employer?section=site-safety&tool=rams-result&id=${r.id}`),
+    }));
+    const packs: RegisterEntry[] = packDocs.map((d) => ({
+      key: `pack-${d.id}`,
+      kind: 'pack',
+      title: d.title,
+      jobId: d.jobId,
+      at: d.createdAt ?? '',
+      status: 'pack',
+      search: [d.title, d.packTitle, d.jobId ? jobTitleById.get(d.jobId) : ''].join(' '),
+      detail: [
+        d.jobId ? (jobTitleById.get(d.jobId) ?? 'A firm job') : 'No job',
+        `In pack ${d.packTitle ?? ''}`.trim(),
+        d.createdAt ? ago(d.createdAt) : null,
+      ]
+        .filter(Boolean)
+        .join(' · '),
+      pill: d.fileUrl ? <StatusPill tone="green">PDF</StatusPill> : <StatusPill>No PDF</StatusPill>,
+      open: () => {
+        if (d.fileUrl) window.open(d.fileUrl, '_blank', 'noopener,noreferrer');
+        else setParams({ section: 'jobpacks', ...(d.jobId ? { job: d.jobId } : {}) });
+      },
+    }));
+    return [...docs, ...runs, ...packs].sort((x, y) => (y.at || '').localeCompare(x.at || ''));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ramsDocuments, notIssuedRuns, packDocs, jobTitleById]);
 
-    if (filterStatus === 'all') return true;
-    if (filterStatus === 'active') {
-      return doc.status === 'approved' || doc.status === 'submitted';
-    }
-    if (filterStatus === 'draft') return doc.status === 'draft';
-    if (filterStatus === 'approved') return doc.status === 'approved';
-    return doc.status === filterStatus;
-  });
+  const shownEntries = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return register.filter((e) => {
+      if (jobFilter && e.jobId !== jobFilter) return false;
+      if (q && !e.search.toLowerCase().includes(q)) return false;
+      if (filterStatus === 'all') return true;
+      return e.status === filterStatus;
+    });
+  }, [register, jobFilter, searchQuery, filterStatus]);
+
+  // Opened from Smart Docs (?rams=<id>): open that RAMS once the list is in.
+  const deepRams = params.get('rams');
+  useEffect(() => {
+    if (!deepRams || !ramsDocuments.length) return;
+    const doc = ramsDocuments.find((d) => d.id === deepRams);
+    if (doc) openRAMSDetail(doc);
+    const next = new URLSearchParams(params);
+    next.delete('rams');
+    setParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deepRams, ramsDocuments.length]);
 
   const handleCreateRAMS = async () => {
     await createRAMS.mutateAsync({
@@ -210,6 +345,10 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
     await updateStatus.mutateAsync({ id, status });
   };
 
+  // A worker's RAMS filed against a firm job is read and countersigned here,
+  // never changed (RLS enforces it; the buttons say so first).
+  const selectedAccess = useFirmRecordAccess(selectedRAMS);
+
   const openRAMSDetail = (doc: RAMSDocument) => {
     setSelectedRAMS(doc);
     setShowDetailSheet(true);
@@ -234,7 +373,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
   if (isLoading) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
         <LoadingBlocks />
       </PageFrame>
     );
@@ -242,99 +381,131 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
   if (error) {
     return (
-      <PageFrame>
+      <PageFrame className={frameClass}>
         <ErrorState message="Failed to load RAMS documents" onRetry={refetch} />
       </PageFrame>
     );
   }
 
-  const filterTabs = [
-    { value: 'all', label: 'All', count: totalCount },
-    { value: 'active', label: 'Active', count: activeCount },
-    { value: 'draft', label: 'Draft', count: draftCount },
-    { value: 'approved', label: 'Approved', count: approvedCount },
-  ];
+  const statusLine =
+    register.length === 0
+      ? 'Nothing on the register yet. Generate the safety documents for a job, or write one.'
+      : [
+          plural(register.length, 'RAMS', 'RAMS') + ' on the register',
+          submittedCount ? `${submittedCount} to approve` : null,
+          notIssuedRuns.length ? `${notIssuedRuns.length} AI drafted, not issued` : null,
+        ]
+          .filter(Boolean)
+          .join(', ') + '.';
 
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="HR & Safety"
         title="RAMS"
-        description="Risk assessments and method statements — write yourself or generate with AI."
-        tone="orange"
+        description={statusLine}
         actions={
-          <>
-            <PrimaryButton onClick={() => setShowCreateSheet(true)}>New RAMS</PrimaryButton>
-            <SecondaryButton onClick={() => onNavigate?.('airams')}>
-              <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-              Generate AI
-            </SecondaryButton>
-            <IconButton onClick={() => refetch()} aria-label="Refresh">
-              <RefreshCw className="h-4 w-4" />
-            </IconButton>
-          </>
+          <HeroActions>
+            <HeroPrimary
+              onClick={() =>
+                jobFilter
+                  ? setParams({ section: 'airams', job: jobFilter })
+                  : onNavigate?.('airams')
+              }
+            >
+              Generate RAMS
+            </HeroPrimary>
+            <HeroSecondary
+              onClick={() => {
+                resetForm();
+                if (jobFilter) setFormData((prev) => ({ ...prev, employer_job_id: jobFilter }));
+                setShowCreateSheet(true);
+              }}
+            >
+              Write one
+            </HeroSecondary>
+            <PageHelpButton help={RAMS_REGISTER_HELP} askContext={{ page: 'rams' }} />
+          </HeroActions>
         }
       />
+      <HowItWorks help={RAMS_REGISTER_HELP} askContext={{ page: 'rams' }} />
 
-      <StatStrip
-        columns={4}
-        stats={[
-          { label: 'Active RAMS', value: activeCount, tone: 'orange' },
-          { label: 'Awaiting approval', value: submittedCount, tone: 'amber' },
-          { label: 'Approved 30d', value: approved30dCount, tone: 'emerald' },
-          { label: 'Drafts', value: draftCount, tone: 'blue' },
+      <FigureStrip
+        figures={[
+          { label: 'On the register', value: register.length, sub: 'Written, AI and job packs' },
+          {
+            label: 'To approve',
+            value: submittedCount,
+            sub: 'Submitted or AI generated',
+            tone: submittedCount ? 'volt' : undefined,
+            onOpen: submittedCount ? () => setFilterStatus('approve') : undefined,
+          },
+          {
+            label: 'Not issued',
+            value: notIssuedRuns.length,
+            sub: 'AI runs to check and issue',
+            tone: notIssuedRuns.length ? 'volt' : undefined,
+            onOpen: notIssuedRuns.length ? () => setFilterStatus('notissued') : undefined,
+          },
+          {
+            label: 'Approved',
+            value: approved30dCount,
+            sub: 'In the last 30 days',
+            tone: approved30dCount ? 'green' : undefined,
+          },
         ]}
       />
 
-      <FilterBar
-        tabs={filterTabs}
-        activeTab={filterStatus}
-        onTabChange={setFilterStatus}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search RAMS…"
-      />
-
-      {filteredDocuments.length === 0 ? (
-        <EmptyState
-          title="No RAMS documents found"
-          description="Create your first risk assessment from scratch or generate one with AI."
-          action="Create RAMS"
-          onAction={() => setShowCreateSheet(true)}
-        />
-      ) : (
-        <ListCard>
-          <ListCardHeader
-            tone="orange"
-            title="RAMS"
-            meta={<Pill tone="orange">{filteredDocuments.length}</Pill>}
-          />
-          <ListBody>
-            {filteredDocuments.map((doc) => {
-              const status = doc.status as RAMSStatus;
-              const tone = statusToneFor(status);
-              const timeAgo = formatDistanceToNow(new Date(doc.updated_at), {
-                addSuffix: true,
-              });
-              const jobTitle = doc.employer_job_id
-                ? jobTitleById.get(doc.employer_job_id)
-                : undefined;
-              const subtitleParts = [jobTitle, doc.location, doc.assessor, timeAgo].filter(
-                Boolean,
-              );
-              return (
-                <ListRow
-                  key={doc.id}
-                  title={doc.project_name}
-                  subtitle={subtitleParts.join(' · ')}
-                  trailing={<Pill tone={tone}>{statusLabelFor(status)}</Pill>}
-                  onClick={() => openRAMSDetail(doc)}
+      <TwoColumn
+        main={
+          <section data-help="rams.register">
+            <div className="mb-3 space-y-3">
+              <Segments
+                items={[
+                  { value: 'all', label: 'All', count: register.length },
+                  { value: 'approve', label: 'To approve', count: submittedCount },
+                  { value: 'notissued', label: 'Not issued', count: notIssuedRuns.length },
+                  { value: 'approved', label: 'Approved', count: approvedCount },
+                  { value: 'draft', label: 'Drafts', count: draftCount },
+                ]}
+                value={filterStatus}
+                onChange={setFilterStatus}
+              />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <FirmJobPicker value={jobFilter} onChange={pickJobFilter} allowNone="All jobs" />
+                <SearchField
+                  value={searchQuery}
+                  onChange={setSearchQuery}
+                  placeholder="Search RAMS"
                 />
-              );
-            })}
-          </ListBody>
-        </ListCard>
-      )}
+              </div>
+            </div>
+            {shownEntries.length === 0 ? (
+              <PlainEmpty
+                text={
+                  register.length === 0
+                    ? 'No RAMS yet. Generate the safety documents for a job, or write one yourself.'
+                    : 'Nothing matches. Clear the job, status or search.'
+                }
+                action={register.length === 0 ? 'Write one' : undefined}
+                onAction={register.length === 0 ? () => setShowCreateSheet(true) : undefined}
+              />
+            ) : (
+              <RowList>
+                {shownEntries.map((e) => (
+                  <Row
+                    key={e.key}
+                    title={e.title}
+                    detail={e.detail}
+                    status={e.pill}
+                    onClick={e.open}
+                  />
+                ))}
+              </RowList>
+            )}
+          </section>
+        }
+        side={isFirmScope(scope) ? <MoveToFirmPanel employerId={scope.employerId} /> : undefined}
+      />
 
       <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
         <SheetContent
@@ -379,9 +550,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                   <Input
                     type="date"
                     value={formData.date}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, date: e.target.value }))
-                    }
+                    onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
                     className={inputClass}
                   />
                 </Field>
@@ -417,9 +586,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <Field label="Assessor" required>
                   <Input
                     value={formData.assessor}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, assessor: e.target.value }))
-                    }
+                    onChange={(e) => setFormData((prev) => ({ ...prev, assessor: e.target.value }))}
                     placeholder="Your name"
                     className={inputClass}
                   />
@@ -427,9 +594,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <Field label="Job scale">
                   <Select
                     value={formData.job_scale}
-                    onValueChange={(v) =>
-                      setFormData((prev) => ({ ...prev, job_scale: v }))
-                    }
+                    onValueChange={(v) => setFormData((prev) => ({ ...prev, job_scale: v }))}
                   >
                     <SelectTrigger className={selectTriggerClass}>
                       <SelectValue placeholder="Select scale" />
@@ -475,9 +640,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                     onChange={(e) => setActivityInput(e.target.value)}
                     placeholder="Add activity"
                     className={inputClass}
-                    onKeyPress={(e) =>
-                      e.key === 'Enter' && (e.preventDefault(), addActivity())
-                    }
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addActivity())}
                   />
                   <SecondaryButton onClick={addActivity}>
                     <Plus className="h-4 w-4" />
@@ -613,16 +776,10 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                       </div>
                     )}
                     {selectedRAMS.contractor && (
-                      <ListRow
-                        title="Contractor"
-                        subtitle={selectedRAMS.contractor}
-                      />
+                      <ListRow title="Contractor" subtitle={selectedRAMS.contractor} />
                     )}
                     {selectedRAMS.supervisor && (
-                      <ListRow
-                        title="Supervisor"
-                        subtitle={selectedRAMS.supervisor}
-                      />
+                      <ListRow title="Supervisor" subtitle={selectedRAMS.supervisor} />
                     )}
                     {selectedRAMS.job_scale && (
                       <ListRow
@@ -678,9 +835,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                         );
                       })}
                       {selectedRAMS.risks.length > 5 && (
-                        <ListRow
-                          title={`+ ${selectedRAMS.risks.length - 5} more hazards`}
-                        />
+                        <ListRow title={`+ ${selectedRAMS.risks.length - 5} more hazards`} />
                       )}
                     </ListBody>
                   </ListCard>
@@ -701,43 +856,57 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                   </ListCard>
                 )}
 
-                <ListCard>
-                  <ListCardHeader title="Update status" />
-                  <div className="px-5 sm:px-6 py-4 flex flex-wrap gap-2">
-                    {STATUS_OPTIONS.filter(
-                      (s) => s.value !== selectedRAMS.status,
-                    ).map((option) => (
-                      <SecondaryButton
-                        key={option.value}
-                        onClick={() =>
-                          handleStatusChange(selectedRAMS.id, option.value)
-                        }
-                        disabled={updateStatus.isPending}
-                      >
-                        Mark {option.label}
-                      </SecondaryButton>
-                    ))}
-                  </div>
-                </ListCard>
+                <FirmRecordBar
+                  table="rams_documents"
+                  row={selectedRAMS}
+                  invalidate={[['ramsDocuments']]}
+                />
+
+                {selectedAccess.canEdit && (
+                  <ListCard>
+                    <ListCardHeader title="Update status" />
+                    <div className="px-5 sm:px-6 py-4 flex flex-wrap gap-2">
+                      {STATUS_OPTIONS.filter((s) => s.value !== selectedRAMS.status).map(
+                        (option) => (
+                          <SecondaryButton
+                            key={option.value}
+                            onClick={() => handleStatusChange(selectedRAMS.id, option.value)}
+                            disabled={updateStatus.isPending}
+                          >
+                            Mark {option.label}
+                          </SecondaryButton>
+                        )
+                      )}
+                    </div>
+                  </ListCard>
+                )}
 
                 <div className="flex gap-2 pt-2">
-                  {selectedRAMS.pdf_url && (
-                    <a
-                      href={selectedRAMS.pdf_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
-                    >
-                      <Download className="h-4 w-4" />
-                      Download PDF
-                    </a>
-                  )}
+                  {/* A PDF for every RAMS (ELE-1940): the issued copy when there
+                      is one, otherwise rendered from what is on the register. */}
+                  <SecondaryButton
+                    fullWidth
+                    disabled={exportingId === selectedRAMS.id}
+                    onClick={() =>
+                      void exportPDF('rams', selectedRAMS.id, undefined, selectedRAMS.project_name)
+                    }
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    {exportingId === selectedRAMS.id
+                      ? 'Building PDF…'
+                      : selectedRAMS.pdf_url
+                        ? 'Download PDF'
+                        : 'Make the PDF'}
+                  </SecondaryButton>
                   {selectedRAMS.pdf_url && (
                     <SecondaryButton
                       fullWidth
                       onClick={async () => {
                         // Share the document itself, not the dashboard URL.
-                        const ok = await copyToClipboard(selectedRAMS.pdf_url!);
+                        const url = supabase.storage
+                          .from('rams-pdfs')
+                          .getPublicUrl(selectedRAMS.pdf_url!).data.publicUrl;
+                        const ok = await copyToClipboard(url);
                         toast(
                           ok
                             ? {
@@ -756,12 +925,14 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                       Copy PDF link
                     </SecondaryButton>
                   )}
-                  <DestructiveButton
-                    onClick={() => setConfirmDelete(true)}
-                    disabled={deleteRAMS.isPending}
-                  >
-                    Delete
-                  </DestructiveButton>
+                  {selectedAccess.canEdit && (
+                    <DestructiveButton
+                      onClick={() => setConfirmDelete(true)}
+                      disabled={deleteRAMS.isPending}
+                    >
+                      Delete
+                    </DestructiveButton>
+                  )}
                 </div>
 
                 <PrimaryButton fullWidth onClick={() => setShowDetailSheet(false)}>

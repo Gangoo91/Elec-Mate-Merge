@@ -1,11 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  applySafetyScope,
+  firmWriteErrorMessage,
+  isFirmScope,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
 export type ObservationStatus = 'open' | 'in_progress' | 'closed';
 export type ObservationSeverity = 'low' | 'medium' | 'high';
 
-export interface SafetyObservation {
+export interface SafetyObservation extends FirmRecordFields {
   id: string;
   user_id: string;
   observation_type: 'positive' | 'improvement_needed';
@@ -40,19 +49,21 @@ export const OBSERVATION_CATEGORIES = [
 ];
 
 export function useSafetyObservations() {
+  // Personal: the user's own observations. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['safety-observations'],
+    queryKey: ['safety-observations', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<SafetyObservation[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('safety_observations')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('safety_observations').select('*'),
+        scope,
+        user.id
+      ).order('created_at', { ascending: false });
 
       if (error) throw error;
       return (data ?? []) as unknown as SafetyObservation[];
@@ -64,6 +75,7 @@ export function useSafetyObservations() {
 export function useCreateObservation() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (observation: {
@@ -77,6 +89,8 @@ export function useCreateObservation() {
       observer_signature?: string;
       observer_name?: string;
       job_id?: string | null;
+      /** Firm job (employer_jobs) — shares the observation with the firm. */
+      employer_job_id?: string | null;
     }) => {
       const {
         data: { user },
@@ -85,19 +99,29 @@ export function useCreateObservation() {
 
       const { data, error } = await supabase
         .from('safety_observations')
-        .insert({
-          user_id: user.id,
-          observation_type: observation.observation_type,
-          person_observed: observation.person_observed,
-          category: observation.category,
-          description: observation.description,
-          location: observation.location,
-          severity: observation.severity ?? null,
-          photos: observation.photos ?? [],
-          observer_signature: observation.observer_signature ?? null,
-          observer_name: observation.observer_name ?? null,
-          job_id: observation.job_id ?? null,
-        })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(
+          stampSafetyInsert(
+            {
+              user_id: user.id,
+              observation_type: observation.observation_type,
+              person_observed: observation.person_observed,
+              category: observation.category,
+              description: observation.description,
+              location: observation.location,
+              severity: observation.severity ?? null,
+              photos: observation.photos ?? [],
+              observer_signature: observation.observer_signature ?? null,
+              observer_name: observation.observer_name ?? null,
+              job_id: observation.job_id ?? null,
+              ...(observation.employer_job_id
+                ? { employer_job_id: observation.employer_job_id }
+                : {}),
+            },
+            scope
+          ) as never
+        )
         .select()
         .single();
 
@@ -124,6 +148,7 @@ export function useCreateObservation() {
 export function useUpdateObservation() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async ({
@@ -139,7 +164,7 @@ export function useUpdateObservation() {
     }) => {
       const { data, error } = await supabase
         .from('safety_observations')
-        .update(updates as Record<string, unknown>)
+        .update(updates as never)
         .eq('id', id)
         .select()
         .single();
@@ -151,10 +176,13 @@ export function useUpdateObservation() {
       queryClient.invalidateQueries({ queryKey: ['safety-observations'] });
       toast({ title: 'Observation Updated', description: 'Status has been updated.' });
     },
-    onError: () => {
+    onError: (error) => {
       toast({
         title: 'Error',
-        description: 'Could not update observation.',
+        // Personal scope keeps its message; firm scope says why a write was blocked.
+        description: isFirmScope(scope)
+          ? firmWriteErrorMessage(scope, error)
+          : 'Could not update observation.',
         variant: 'destructive',
       });
     },

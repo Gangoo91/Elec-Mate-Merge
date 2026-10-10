@@ -277,7 +277,7 @@ const sections = [
                 stone or brick walls (no cavity), high ceilings, and original internal features.
                 Rewiring requires careful planning to avoid damage to plasterwork and cornicing.
                 Surface-mounted trunking in mini-trunking is the standard approach where walls
-                cannot be chased. Reg 421.1.7 (A4:2026) recommends arc fault detection devices
+                cannot be chased. Reg 421.1.7 recommends arc fault detection devices
                 (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents — solid
                 masonry buildings with concealed or surface wiring are exactly the higher-risk
                 scenario the regulation is designed for. Always survey period properties in person
@@ -370,7 +370,7 @@ const sections = [
               Post-war council and private housing in areas such as Woodhouse and Hensingham has
               1960s–1980s wiring that is reaching the end of its service life. Single-RCD or no-RCD
               consumer units, limited socket provision, and outdated wiring insulation make periodic
-              inspection findings and consumer unit replacements common. Reg 411.3.4 now requires
+              inspection findings and consumer unit replacements common. Reg 411.3.4 (since 2018) requires
               RCD additional protection (≤30 mA) on all AC final circuits supplying luminaires in
               domestic premises — a key upgrade driver in these properties. Replacement consumer
               units should also include a Reg 443.4 consequence-based SPD assessment; overhead-line
@@ -552,7 +552,7 @@ export default function ElectricianWhitehavenPage() {
       title="Whitehaven Electricians 2026: EICR + Nuclear"
       description="Whitehaven electricians for EICR, EV charging + Sellafield-area work. BS 7671:2018+A4:2026 compliant, Electricity North West certified. Book today."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Whitehaven"

@@ -60,11 +60,7 @@ const ToolSelectionTab = () => {
       rating: 5,
       warranty: '3 years',
       features: ['True RMS', 'Temperature', 'Frequency', 'Min/Max recording'],
-      pros: [
-        'Industry standard reliability',
-        'Excellent build quality',
-        'Comprehensive functions',
-      ],
+      pros: ['Industry standard reliability', 'Excellent build quality', 'Comprehensive functions'],
       cons: ['Higher price point', 'Complex for beginners'],
       bestFor: 'Professional electricians requiring maximum accuracy and reliability',
     },
@@ -130,21 +126,17 @@ const ToolSelectionTab = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Quality tool selection
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Quality tool selection</span>
         <p className="text-[14px] text-white leading-relaxed">
-          Quality tool selection is crucial for your professional development. This guide helps
-          you make informed decisions and avoid costly mistakes.
+          Quality tool selection is crucial for your professional development. This guide helps you
+          make informed decisions and avoid costly mistakes.
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Quality assessment guide
-          </span>
+          <span className="text-[13px] font-semibold text-white">Quality assessment guide</span>
           <p className="text-[13px] text-white">
             Learn to identify quality tools and avoid poor purchases
           </p>
@@ -158,9 +150,7 @@ const ToolSelectionTab = () => {
               <h3 className="text-[14px] font-semibold text-white">{indicator.category}</h3>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Look for
-                </span>
+                <span className="text-[13px] font-semibold text-white">Look for</span>
                 <ul className="space-y-1.5">
                   {indicator.factors.map((factor, idx) => (
                     <li
@@ -175,9 +165,7 @@ const ToolSelectionTab = () => {
               </div>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                  Red flags
-                </span>
+                <span className="text-[13px] font-semibold text-red-300">Red flags</span>
                 <ul className="space-y-1.5">
                   {indicator.redFlags.map((flag, idx) => (
                     <li
@@ -201,11 +189,9 @@ const ToolSelectionTab = () => {
         category="test equipment"
       />
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Smart purchasing process
-          </span>
+          <span className="text-[13px] font-semibold text-white">Smart purchasing process</span>
           <p className="text-[13px] text-white">
             Follow this structured approach to make better tool purchases
           </p>
@@ -218,7 +204,7 @@ const ToolSelectionTab = () => {
             >
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{stage.stage}</h3>
-                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {stage.duration}
                 </span>
               </div>
@@ -238,10 +224,8 @@ const ToolSelectionTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Investment tip
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Investment tip</span>
         <p className="text-[14px] text-white leading-relaxed">
           Buy quality tools once rather than cheap tools multiple times. A good tool will last your
           entire career and maintain its resale value.

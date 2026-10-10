@@ -74,11 +74,9 @@ const BudgetPlanningCalculator = () => {
   const budget = calculateBudget();
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Budget planner
-        </span>
+        <span className="text-[13px] font-semibold text-white">Budget planner</span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
           Budget planning calculator
         </h3>
@@ -121,30 +119,24 @@ const BudgetPlanningCalculator = () => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Total budget
-              </span>
+              <span className="text-[13px] font-semibold text-white">Total budget</span>
               <p className="text-[18px] font-semibold text-white">£{budget.totalBudget}</p>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Essential tools
-              </span>
+              <span className="text-[13px] font-semibold text-white">Essential tools</span>
               <p className="text-[18px] font-semibold text-white">£{budget.essentialCosts}</p>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Remaining
-              </span>
-              <p className="text-[18px] font-semibold text-elec-yellow">£{budget.remainingBudget}</p>
+              <span className="text-[13px] font-semibold text-white">Remaining</span>
+              <p className="text-[18px] font-semibold text-elec-yellow">
+                £{budget.remainingBudget}
+              </p>
             </div>
           </div>
 
           {!budget.canAffordEssentials && (
             <div className="rounded-lg border border-red-500/30 bg-red-500/[0.04] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                Budget alert
-              </span>
+              <span className="text-[13px] font-semibold text-red-300">Budget alert</span>
               <p className="text-[14px] text-white leading-relaxed">
                 Your current budget may not cover all essential tools. Consider extending your
                 timeframe or increasing monthly allocation.
@@ -154,9 +146,7 @@ const BudgetPlanningCalculator = () => {
 
           {budget.canAffordQuality && (
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Excellent planning
-              </span>
+              <span className="text-[13px] font-semibold text-white">Excellent planning</span>
               <p className="text-[14px] text-white leading-relaxed">
                 Your budget allows for quality essential tools plus some recommended items.
               </p>
@@ -166,9 +156,7 @@ const BudgetPlanningCalculator = () => {
       )}
 
       <div className="space-y-3 pt-2 border-t border-white/[0.06]">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Tool category breakdown
-        </span>
+        <span className="text-[13px] font-semibold text-white">Tool category breakdown</span>
         <div className="space-y-2">
           {toolCategories.map((category, index) => (
             <div
@@ -176,7 +164,7 @@ const BudgetPlanningCalculator = () => {
               className="flex items-baseline justify-between gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
             >
               <div className="space-y-1">
-                <div className="flex items-baseline gap-3 text-[10px] uppercase tracking-[0.18em] text-white">
+                <div className="flex items-baseline gap-3 text-[13px] text-white">
                   <span className="text-[14px] text-white normal-case tracking-normal font-medium">
                     {category.name}
                   </span>
@@ -184,7 +172,7 @@ const BudgetPlanningCalculator = () => {
                 </div>
                 <p className="text-[12px] text-white">{category.timeframe}</p>
               </div>
-              <p className="text-[13px] text-white font-mono">
+              <p className="text-[13px] text-white">
                 £{category.minCost} - £{category.maxCost}
               </p>
             </div>

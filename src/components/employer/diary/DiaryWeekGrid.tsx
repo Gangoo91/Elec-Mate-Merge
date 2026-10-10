@@ -82,12 +82,10 @@ export function DiaryWeekGrid({
       <div className="min-w-[980px]">
         {/* Day headings */}
         <div className="grid border-b border-white/[0.06] bg-[hsl(0_0%_10%)]" style={cols}>
-          <div className="px-4 py-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Team
-          </div>
+          <div className="px-4 py-3 text-[12px] font-semibold text-white">Team</div>
           {days.map((d) => (
             <div key={d} className="border-l border-white/[0.06] px-2 py-2.5 text-center">
-              <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+              <div className="text-[12px] font-semibold text-white">
                 {fmtDay(d, { weekday: 'short' })}
               </div>
               <div
@@ -136,7 +134,11 @@ export function DiaryWeekGrid({
           const week = days.map((d) => personDay(board, p.id, d));
           const weekHours = week.reduce((s, pd) => s + pd.hours, 0);
           return (
-            <div key={p.id} className="grid border-b border-white/[0.06] last:border-b-0" style={cols}>
+            <div
+              key={p.id}
+              className="grid border-b border-white/[0.06] last:border-b-0"
+              style={cols}
+            >
               <div className="px-4 py-3 flex items-start gap-3 min-w-0">
                 <Avatar initials={initialsOf(p.name, p.initials)} photo={p.photo_url} size="sm" />
                 <div className="min-w-0">
@@ -195,12 +197,11 @@ export function DiaryWeekGrid({
                       <Plus className="h-3.5 w-3.5" />
                     </button>
                     {(pd.hours > 0 || pd.leave) && (
-                      <div className="pt-0.5" title={pd.clash ? clashLabel(pd.clash, pd) : undefined}>
-                        <CapacityBar
-                          hours={pd.hours}
-                          max={WORKING_DAY_HOURS}
-                          danger={!!pd.clash}
-                        />
+                      <div
+                        className="pt-0.5"
+                        title={pd.clash ? clashLabel(pd.clash, pd) : undefined}
+                      >
+                        <CapacityBar hours={pd.hours} max={WORKING_DAY_HOURS} danger={!!pd.clash} />
                         {pd.clash && (
                           <div className="mt-0.5 text-[10.5px] font-medium text-red-300 truncate">
                             {clashLabel(pd.clash, pd)}

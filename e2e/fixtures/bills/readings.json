@@ -1,0 +1,134 @@
+{
+  "01-pennine-invoice.pdf": {
+    "kind": "bill",
+    "supplier": "Pennine Electrical Wholesale Ltd",
+    "supplier_vat_number": "GB 118 6630 41",
+    "date": "2026-10-08",
+    "invoice_number": "PEW-40817",
+    "order_ref": "PO-T7001",
+    "lines": [
+      {
+        "code": "TE25G100",
+        "description": "2.5mm Twin & Earth cable grey 100m",
+        "quantity": 2,
+        "unit_price": 68.4,
+        "net": 136.8,
+        "vat_rate": 20
+      },
+      {
+        "code": "RCBO32B30",
+        "description": "RCBO 32A B curve 30mA type A",
+        "quantity": 6,
+        "unit_price": 21.95,
+        "net": 131.7,
+        "vat_rate": 20
+      },
+      {
+        "code": "WAGO221413",
+        "description": "Wago 221-413 lever connector (box 50)",
+        "quantity": 1,
+        "unit_price": 16.8,
+        "net": 16.8,
+        "vat_rate": 20
+      }
+    ],
+    "net": 285.3,
+    "vat": 57.06,
+    "gross": 342.36,
+    "currency": "GBP",
+    "category": "materials",
+    "confidence": 0.95,
+    "notes": null
+  },
+  "02-pennine-price-rise.pdf": {
+    "kind": "bill",
+    "supplier": "Pennine Electrical Wholesale Ltd",
+    "supplier_vat_number": "GB118663041",
+    "date": "2026-10-09",
+    "invoice_number": "PEW-40902",
+    "order_ref": "PO-T7002",
+    "lines": [
+      {
+        "code": "TE25G100",
+        "description": "2.5mm Twin & Earth cable grey 100m",
+        "quantity": 1,
+        "unit_price": 74.2,
+        "net": 74.2,
+        "vat_rate": 20
+      },
+      {
+        "code": "GL20SWA",
+        "description": "SWA gland kit 20mm (pack 10)",
+        "quantity": 1,
+        "unit_price": 29.5,
+        "net": 29.5,
+        "vat_rate": 20
+      }
+    ],
+    "net": 103.7,
+    "vat": 20.74,
+    "gross": 124.44,
+    "currency": "GBP",
+    "category": "materials",
+    "confidence": 0.94,
+    "notes": null
+  },
+  "03-counter-invoice-photo.jpg": {
+    "kind": "bill",
+    "supplier": "Calder Trade Counter",
+    "supplier_vat_number": "GB 640 1185 92",
+    "date": "07/10/2026",
+    "invoice_number": "CTC-11873",
+    "order_ref": "Orchard Close",
+    "lines": [
+      {
+        "code": "MT-20-3",
+        "description": "20mm conduit 3m length",
+        "quantity": 10,
+        "unit_price": 2.1,
+        "net": 21,
+        "vat_rate": 20
+      },
+      {
+        "code": "MB47-1G",
+        "description": "Metal box 47mm 1 gang",
+        "quantity": 8,
+        "unit_price": 1.35,
+        "net": 10.8,
+        "vat_rate": 20
+      }
+    ],
+    "net": 31.8,
+    "vat": 6.36,
+    "gross": 38.16,
+    "currency": "GBP",
+    "category": "materials",
+    "confidence": 0.82,
+    "notes": "Photo slightly angled"
+  },
+  "04-email-body-bill.html": {
+    "kind": "bill",
+    "supplier": "Ribble Valley Electrical Supplies Ltd",
+    "supplier_vat_number": "GB 377 8120 66",
+    "date": "2026-10-06",
+    "invoice_number": "RVE-2290114",
+    "order_ref": "PO-T7003",
+    "lines": [
+      {
+        "code": "FA15-100",
+        "description": "Fire alarm cable 1.5mm 100m red",
+        "quantity": 1,
+        "unit_price": 54,
+        "net": 54,
+        "vat_rate": 20
+      }
+    ],
+    "net": 54,
+    "vat": 10.8,
+    "gross": 64.8,
+    "currency": "GBP",
+    "category": "materials",
+    "confidence": 0.9,
+    "notes": null
+  }
+}

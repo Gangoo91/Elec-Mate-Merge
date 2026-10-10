@@ -24,7 +24,11 @@ const WorkLifeBalanceTab = () => {
         'Stay hydrated throughout long working days',
         'Get adequate sleep (7-8 hours) for concentration',
       ],
-      tips: ['Use fitness apps for quick workouts', 'Meal prep on weekends', 'Track sleep patterns'],
+      tips: [
+        'Use fitness apps for quick workouts',
+        'Meal prep on weekends',
+        'Track sleep patterns',
+      ],
     },
     {
       title: 'Social connections',
@@ -65,10 +69,8 @@ const WorkLifeBalanceTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Work-life balance strategies
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Work-life balance strategies</span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {balanceStrategies.map((strategy, index) => (
             <div
@@ -84,9 +86,7 @@ const WorkLifeBalanceTab = () => {
                 </p>
               </div>
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Key strategies
-                </span>
+                <span className="text-[13px] font-semibold text-white">Key strategies</span>
                 <ul className="space-y-1.5">
                   {strategy.strategies.map((item, itemIndex) => (
                     <li
@@ -100,9 +100,7 @@ const WorkLifeBalanceTab = () => {
                 </ul>
               </div>
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                  Quick tips
-                </span>
+                <span className="text-[13px] font-semibold text-elec-yellow">Quick tips</span>
                 <div className="flex flex-wrap gap-1.5">
                   {strategy.tips.map((tip, tipIndex) => (
                     <span
@@ -119,10 +117,8 @@ const WorkLifeBalanceTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Warning signs & solutions
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Warning signs & solutions</span>
         <div className="space-y-3">
           {warningSignsAndSolutions.map((item, index) => (
             <div
@@ -130,21 +126,15 @@ const WorkLifeBalanceTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 grid grid-cols-1 md:grid-cols-3 gap-4"
             >
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Warning sign
-                </span>
+                <span className="text-[13px] font-semibold text-white">Warning sign</span>
                 <p className="text-[14px] text-white leading-relaxed">{item.warning}</p>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Solution
-                </span>
+                <span className="text-[13px] font-semibold text-white">Solution</span>
                 <p className="text-[14px] text-white leading-relaxed">{item.solution}</p>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                  Take action now
-                </span>
+                <span className="text-[13px] font-semibold text-elec-yellow">Take action now</span>
                 <p className="text-[14px] text-white leading-relaxed">{item.immediateAction}</p>
               </div>
             </div>
@@ -152,10 +142,8 @@ const WorkLifeBalanceTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Weekly balance check-in
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Weekly balance check-in</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
             <h4 className="text-[14px] font-semibold text-white">This week I will...</h4>
@@ -185,7 +173,7 @@ const WorkLifeBalanceTab = () => {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                   <div
                     key={num}
-                    className="w-6 h-6 border border-white/15 rounded text-[11px] flex items-center justify-center text-white"
+                    className="w-6 h-6 border border-white/15 rounded text-[12.5px] flex items-center justify-center text-white"
                   >
                     {num}
                   </div>
@@ -198,7 +186,7 @@ const WorkLifeBalanceTab = () => {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                   <div
                     key={num}
-                    className="w-6 h-6 border border-white/15 rounded text-[11px] flex items-center justify-center text-white"
+                    className="w-6 h-6 border border-white/15 rounded text-[12.5px] flex items-center justify-center text-white"
                   >
                     {num}
                   </div>

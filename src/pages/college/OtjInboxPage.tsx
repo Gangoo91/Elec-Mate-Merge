@@ -14,10 +14,8 @@ import {
   COLLEGE_CARD,
   CollegeEmpty,
   CollegePageHeader,
-  CollegeStats,
 } from '@/components/college/ui/CollegeUi';
 import {
-  Bars,
   BulkBar,
   KeyHint,
   QueueGroup,
@@ -26,11 +24,12 @@ import {
   daysSince,
   useQueueKeys,
   useSelection,
-  waitingLabel,
 } from '@/components/college/assessment/AssessmentKit';
+import { AGE_BAND_LABEL, FigureLine, bandRows } from '@/components/college/QueueFigures';
 import { textareaCn } from '@/components/forms/fieldStyles';
 import { useTutorOtjInbox, type InboxRow } from '@/hooks/useTutorOtjInbox';
 import { CollegeScopeTabs } from '@/components/college/scope/CollegeScopeSwitch';
+import { QuietTabs } from '@/components/college/otj/hoursUi';
 import { SpagCheckButton } from '@/components/college/widgets/SpagCheckButton';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { openEvidence } from '@/lib/evidenceUrl';
@@ -110,23 +109,47 @@ const HELP: PageHelpContent = {
   title: 'Hours to verify',
   what: 'Off-the-job hours your apprentices have logged and sent to you. Verified hours count on their record and in the funding evidence; returned ones go back to the learner with your note.',
   steps: [
-    { title: 'Start at the top', body: 'The oldest entry comes first. Anything over a week is orange: unverified hours start to cost the learner.' },
-    { title: 'Read and decide', body: 'Open an entry to see what they did, their photos and a suggested check. Verify it, or Return it with a note saying what to add.' },
-    { title: 'Clear several at once', body: 'Tick the entries you are happy with and Verify them together, or Return them all with one shared note.' },
-    { title: 'Use the keyboard', body: 'On a computer: j and k move, Enter opens, Shift+V verifies, r returns, x ticks, Esc clears.' },
+    {
+      title: 'Start at the top',
+      body: 'The oldest entry comes first. Anything over a week is orange: unverified hours start to cost the learner.',
+    },
+    {
+      title: 'Read and decide',
+      body: 'Open an entry to see what they did, their photos and a suggested check. Verify it, or Return it with a note saying what to add.',
+    },
+    {
+      title: 'Clear several at once',
+      body: 'Tick the entries you are happy with and Verify them together, or Return them all with one shared note.',
+    },
+    {
+      title: 'Use the keyboard',
+      body: 'On a computer: j and k move, Enter opens, Shift+V verifies, r returns, x ticks, Esc clears.',
+    },
   ],
   legend: [
-    { swatch: 'bg-orange-500', label: 'Waiting a week or more', body: 'Verify before it turns a week old.' },
-    { swatch: 'bg-elec-yellow', label: 'Ask first', body: 'The suggested check thinks the entry needs more detail.' },
+    {
+      swatch: 'bg-orange-500',
+      label: 'Waiting too long',
+      body: 'A week or more, the same rule as the inbox. Verify before it turns a week old.',
+    },
+    {
+      swatch: 'bg-elec-yellow',
+      label: 'Ask first',
+      body: 'The suggested check thinks the entry needs more detail.',
+    },
   ],
   notes: [
-    { title: 'Mine, My cohorts or Whole college', body: 'The switch in the bar at the top sets this for the whole College Hub. Mine is the apprentices assigned to you, My cohorts is everyone in the cohorts you teach. With nobody of yours, you see everyone.' },
-    { title: 'The suggested check', body: 'It reads the entry and says whether it looks complete. It never verifies anything for you.' },
+    {
+      title: 'Mine, My cohorts or Whole college',
+      body: 'The switch in the bar at the top sets this for the whole College Hub. Mine is the apprentices assigned to you, My cohorts is everyone in the cohorts you teach. With nobody of yours, you see everyone.',
+    },
+    {
+      title: 'The suggested check',
+      body: 'It reads the entry and says whether it looks complete. It never verifies anything for you.',
+    },
   ],
   source: 'Apprenticeship funding rules 2025/26: off-the-job training evidence.',
 };
-
-const ageBand = (d: number | null) => (d === null || d <= 0 ? 0 : d <= 3 ? 1 : d < 7 ? 2 : 3);
 
 export default function OtjInboxPage() {
   useSEO({
@@ -157,10 +180,15 @@ export default function OtjInboxPage() {
   const focusId = useMemo(() => new URLSearchParams(window.location.search).get('entry'), []);
   const filteredRows = useMemo(() => {
     const q = search.trim().toLowerCase();
-    let base = cohortFilter === 'all' ? inbox.rows : inbox.rows.filter((r) => r.cohort_name === cohortFilter);
+    let base =
+      cohortFilter === 'all'
+        ? inbox.rows
+        : inbox.rows.filter((r) => r.cohort_name === cohortFilter);
     if (q)
       base = base.filter((r) =>
-        [r.student_name, r.title, r.cohort_name, r.description].some((v) => (v ?? '').toLowerCase().includes(q))
+        [r.student_name, r.title, r.cohort_name, r.description].some((v) =>
+          (v ?? '').toLowerCase().includes(q)
+        )
       );
     if (!focusId) return base;
     const hit = base.find((r) => r.id === focusId);
@@ -234,7 +262,10 @@ export default function OtjInboxPage() {
       const { ok, failed } = await inbox.bulkVerify(ids);
       sel.clear();
       toast({
-        title: failed > 0 ? `Verified ${ok}, ${failed} failed` : `Verified ${ok} ${ok === 1 ? 'entry' : 'entries'}`,
+        title:
+          failed > 0
+            ? `Verified ${ok}, ${failed} failed`
+            : `Verified ${ok} ${ok === 1 ? 'entry' : 'entries'}`,
         variant: failed > 0 ? 'destructive' : undefined,
       });
     } finally {
@@ -252,7 +283,10 @@ export default function OtjInboxPage() {
       setBulkRationale('');
       setBulkReturning(false);
       toast({
-        title: failed > 0 ? `Returned ${ok}, ${failed} failed` : `Returned ${ok} ${ok === 1 ? 'entry' : 'entries'}`,
+        title:
+          failed > 0
+            ? `Returned ${ok}, ${failed} failed`
+            : `Returned ${ok} ${ok === 1 ? 'entry' : 'entries'}`,
         variant: failed > 0 ? 'destructive' : undefined,
       });
     } finally {
@@ -261,37 +295,34 @@ export default function OtjInboxPage() {
   };
 
   const totalMinutes = filteredRows.reduce((acc, r) => acc + (r.duration_minutes ?? 0), 0);
-  const learnerCount = useMemo(() => new Set(filteredRows.map((r) => r.student_id)).size, [filteredRows]);
-  const ages = filteredRows.map((r) => daysSince(r.created_at));
-  const oldestDays = ages.reduce<number | null>((m, d) => (d === null ? m : m === null ? d : Math.max(m, d)), null);
-  const overWeek = ages.filter((d) => d !== null && d >= 7).length;
+  const learnerCount = useMemo(
+    () => new Set(filteredRows.map((r) => r.student_id)).size,
+    [filteredRows]
+  );
+  const overWeek = filteredRows.filter((r) => (daysSince(r.created_at) ?? 0) >= 7).length;
   const ready = !(inbox.loading && inbox.rows.length === 0);
 
-  const bands = [0, 0, 0, 0];
-  for (const d of ages) bands[ageBand(d)] += 1;
-  const byLearner = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const r of filteredRows) {
-      const n = r.student_name ?? 'Apprentice';
-      m.set(n, (m.get(n) ?? 0) + (r.duration_minutes ?? 0));
-    }
-    return Array.from(m.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5);
-  }, [filteredRows]);
-
-  const urgentRows = filteredRows.filter((r) => (daysSince(r.created_at) ?? 0) >= 7);
-  const otherRows = filteredRows.filter((r) => (daysSince(r.created_at) ?? 0) < 7);
+  // Age bands (showcase pass, 10 Oct): how long an entry has waited is said
+  // once per group, oldest group first, instead of in orange on every row.
+  const bands = bandRows(filteredRows, (r) => daysSince(r.created_at));
+  const oldest = filteredRows.reduce((m, r) => Math.max(m, daysSince(r.created_at) ?? 0), 0);
   const openRow = filteredRows.find((r) => r.id === openId) ?? null;
+  // The rest of this learner's entries in the queue: often verified together.
+  const sameLearner = openRow
+    ? filteredRows.filter((r) => r.student_id === openRow.student_id && r.id !== openRow.id)
+    : [];
 
   const renderRow = (row: InboxRow) => {
-    const age = daysSince(row.created_at);
-    const urgent = age !== null && age >= 7;
     const open = openId === row.id;
     return (
       <li key={row.id} data-qkey={row.id} data-focus-id={row.id}>
         <SwipeRow
-          right={{ label: 'Verify', icon: <Check className="h-5 w-5" aria-hidden />, tone: 'go', onAction: () => void verifyOne(row.id) }}
+          right={{
+            label: 'Verify',
+            icon: <Check className="h-5 w-5" aria-hidden />,
+            tone: 'go',
+            onAction: () => void verifyOne(row.id),
+          }}
           left={{
             label: 'Return',
             icon: <Undo2 className="h-5 w-5" aria-hidden />,
@@ -301,25 +332,25 @@ export default function OtjInboxPage() {
             },
           }}
         >
-        <QueueRow
-          name={row.student_name ?? 'Apprentice'}
-          kind={ACTIVITY_LABEL[row.activity_type] ?? 'Hours'}
-          title={`${fmtHours(row.duration_minutes)} · ${row.title}`}
-          body={row.activity_date ? `Done ${fmtRel(row.activity_date)}` : undefined}
-          meta={
-            <>
-              <b className="font-semibold">{waitingLabel(age)}</b>
-              {row.cohort_name ? ` · ${row.cohort_name}` : ''}
-            </>
-          }
-          urgent={urgent}
-          action={open ? (isDesktop ? 'Open' : 'Close') : 'Check'}
-          onOpen={() => setOpenId(open && !isDesktop ? null : row.id)}
-          selectable
-          selected={sel.has(row.id)}
-          onToggle={() => sel.toggle(row.id)}
-          focused={kb.focus === row.id || (isDesktop && open)}
-        />
+          <QueueRow
+            name={row.student_name ?? 'Apprentice'}
+            title={`${fmtHours(row.duration_minutes)} · ${row.title}`}
+            meta={[
+              ACTIVITY_LABEL[row.activity_type] ?? 'Hours',
+              row.activity_date ? `done ${fmtRel(row.activity_date)}` : null,
+              cohortFilter === 'all' && cohorts.length > 1
+                ? (row.cohort_name ?? '').replace(/\s*\(.*\)$/, '') || null
+                : null,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+            action={open && !isDesktop ? 'Close' : 'Verify'}
+            onOpen={() => setOpenId(open && !isDesktop ? null : row.id)}
+            selectable
+            selected={sel.has(row.id)}
+            onToggle={() => sel.toggle(row.id)}
+            focused={kb.focus === row.id || (isDesktop && open)}
+          />
         </SwipeRow>
         {!isDesktop && open && (
           <div className="border-t border-white/[0.06] bg-white/[0.02] px-4 pb-5 pt-4">
@@ -332,7 +363,12 @@ export default function OtjInboxPage() {
                 await inbox.reject(row.id, rationale);
               }}
               onOpenStudent={
-                row.college_student_row_id ? () => navigate(`/college/students/${row.college_student_row_id}#otj`) : null
+                row.college_student_row_id
+                  ? () =>
+                      navigate(
+                        `/college?section=student360&studentId=${row.college_student_row_id}#otj`
+                      )
+                  : null
               }
             />
           </div>
@@ -355,22 +391,48 @@ export default function OtjInboxPage() {
                 : `${filteredRows.length} ${filteredRows.length === 1 ? 'entry' : 'entries'} to verify`
           }
           description={
-            !ready
-              ? 'Hours your apprentices have logged and sent to you.'
-              : filteredRows.length === 0
-                ? 'When an apprentice logs off-the-job hours, they land here for you to verify.'
-                : `${fmtHours(totalMinutes)} claimed by ${learnerCount} ${learnerCount === 1 ? 'learner' : 'learners'}${overWeek ? `, ${overWeek} waiting over a week` : ''}. Oldest first.`
+            !ready ? (
+              'Hours your apprentices have logged and sent to you.'
+            ) : filteredRows.length === 0 ? (
+              'When an apprentice logs off-the-job hours, they land here for you to verify.'
+            ) : (
+              <FigureLine
+                items={[
+                  { n: fmtHours(totalMinutes), label: 'claimed' },
+                  { n: learnerCount, label: learnerCount === 1 ? 'learner' : 'learners' },
+                  overWeek
+                    ? { n: overWeek, label: 'over a week', tone: 'warn' }
+                    : { n: null, label: 'Nothing over a week', tone: 'good' },
+                  oldest > 1
+                    ? { n: `${oldest} days`, label: 'the oldest' }
+                    : { n: null, label: '' },
+                ]}
+              />
+            )
           }
           help={HELP}
           actions={
-            <CollegeScopeTabs />
+            <>
+              <CollegeScopeTabs />
+              <button
+                type="button"
+                onClick={() => navigate('/college/otj')}
+                className={COLLEGE_BTN}
+              >
+                App learning
+              </button>
+            </>
           }
         />
 
         {inbox.error && (
           <div className="flex items-center justify-between gap-3 rounded-2xl border border-orange-500/40 px-4 py-3">
             <p className="text-[13.5px] text-white">Couldn’t load the hours: {inbox.error}</p>
-            <button type="button" onClick={() => void inbox.refresh()} className="h-11 px-3 text-[13px] font-semibold text-elec-yellow">
+            <button
+              type="button"
+              onClick={() => void inbox.refresh()}
+              className="h-11 px-3 text-[13px] font-semibold text-elec-yellow"
+            >
               Try again
             </button>
           </div>
@@ -378,63 +440,19 @@ export default function OtjInboxPage() {
 
         {inbox.scope === 'mine' && inbox.fellBackToCollege && (
           <p className="text-[13px] leading-relaxed text-white">
-            Showing every learner at the college: nobody is assigned to you yet. Assign learners to yourself (People, then
-            Learners) to narrow this to your own.
+            Showing every learner at the college: nobody is assigned to you yet. Assign learners to
+            yourself (People, then Learners) to narrow this to your own.
           </p>
-        )}
-
-        <CollegeStats
-          items={[
-            { label: 'Entries', value: ready ? String(filteredRows.length) : '—', sub: inbox.effectiveScope === 'mine' ? 'From your learners' : 'Across the college' },
-            { label: 'Hours claimed', value: ready ? fmtHours(totalMinutes) : '—', sub: 'Count once verified' },
-            { label: 'Learners', value: ready ? String(learnerCount) : '—', sub: 'With hours waiting' },
-            {
-              label: 'Oldest waiting',
-              value: ready && oldestDays !== null ? `${oldestDays}d` : '—',
-              sub: oldestDays !== null && oldestDays >= 7 ? 'Verify today' : 'Within a week',
-              warn: oldestDays !== null && oldestDays >= 7,
-            },
-          ]}
-        />
-
-        {ready && filteredRows.length > 0 && (
-          <section className={cn(COLLEGE_CARD, 'grid gap-6 lg:grid-cols-2')}>
-            <div className="min-w-0">
-              <p className="mb-3 text-[13px] font-semibold text-white">How long entries have waited</p>
-              <Bars
-                rows={[
-                  { label: 'Today', n: bands[0], cls: 'bg-emerald-500' },
-                  { label: '1 to 3 days', n: bands[1], cls: 'bg-white' },
-                  { label: '4 to 6 days', n: bands[2], cls: 'bg-elec-yellow' },
-                  { label: 'A week or more', n: bands[3], cls: 'bg-orange-500' },
-                ]}
-              />
-            </div>
-            <div className="min-w-0">
-              <p className="mb-3 text-[13px] font-semibold text-white">Most hours waiting, by learner</p>
-              <ul className="space-y-1">
-                {byLearner.map(([name, min]) => {
-                  const max = Math.max(1, byLearner[0]?.[1] ?? 1);
-                  return (
-                    <li key={name} className="grid min-h-[36px] grid-cols-[minmax(0,8.5rem)_1fr_3.5rem] items-center gap-3 px-1">
-                      <span className="truncate text-[12.5px] text-white">{name}</span>
-                      <span className="h-2.5 overflow-hidden rounded-full bg-white/[0.08]">
-                        <span className="block h-full rounded-full bg-white" style={{ width: `${(min / max) * 100}%` }} />
-                      </span>
-                      <span className="text-right text-[13px] font-semibold tabular-nums text-white">{fmtHours(min)}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </section>
         )}
 
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] 2xl:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           <section className="min-w-0 space-y-4">
             <div className="flex flex-wrap items-end gap-3">
               <div className="relative min-w-[200px] flex-1">
-                <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
+                <Search
+                  className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                  aria-hidden="true"
+                />
                 <input
                   type="search"
                   value={search}
@@ -444,22 +462,19 @@ export default function OtjInboxPage() {
                   className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                 />
               </div>
-              {cohorts.length > 1 && (
-                <select
-                  value={cohortFilter}
-                  onChange={(e) => setCohortFilter(e.target.value)}
-                  aria-label="Filter by cohort"
-                  className="h-11 max-w-[220px] rounded-xl border border-white/[0.14] bg-transparent px-3 text-[13px] font-semibold text-white [color-scheme:dark] touch-manipulation"
-                >
-                  <option value="all">All cohorts</option>
-                  {cohorts.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              )}
             </div>
+
+            {cohorts.length > 1 && (
+              <QuietTabs
+                label="Filter by cohort"
+                value={cohortFilter}
+                onChange={setCohortFilter}
+                tabs={[
+                  { key: 'all', label: 'All cohorts' },
+                  ...cohorts.map((c) => ({ key: c, label: c })),
+                ]}
+              />
+            )}
 
             <div className="flex flex-wrap items-center justify-between gap-3">
               {filteredRows.length > 0 ? (
@@ -510,16 +525,16 @@ export default function OtjInboxPage() {
               />
             ) : (
               <>
-                {urgentRows.length > 0 && (
-                  <QueueGroup title="Waiting a week or more" urgent count={urgentRows.length}>
-                    {urgentRows.map(renderRow)}
+                {bands.map((g) => (
+                  <QueueGroup
+                    key={g.band}
+                    title={AGE_BAND_LABEL[g.band]}
+                    urgent={g.band !== 'recent'}
+                    count={g.rows.length}
+                  >
+                    {g.rows.map(renderRow)}
                   </QueueGroup>
-                )}
-                {otherRows.length > 0 && (
-                  <QueueGroup title={urgentRows.length ? 'Everything else' : 'To verify'} count={otherRows.length}>
-                    {otherRows.map(renderRow)}
-                  </QueueGroup>
-                )}
+                ))}
               </>
             )}
           </section>
@@ -527,27 +542,71 @@ export default function OtjInboxPage() {
           {isDesktop && (
             <aside className="min-w-0 lg:sticky lg:top-16">
               {openRow ? (
-                <div className={cn(COLLEGE_CARD, 'max-h-[calc(100vh-6rem)] overflow-y-auto')}>
-                  <SubmissionDetail
-                    key={openRow.id}
-                    row={openRow}
-                    startReturning={returnFor === openRow.id}
-                    onReturningShown={() => setReturnFor(null)}
-                    onVerify={() => verifyOne(openRow.id)}
-                    onReject={async (rationale) => {
-                      await inbox.reject(openRow.id, rationale);
-                    }}
-                    onOpenStudent={
-                      openRow.college_student_row_id
-                        ? () => navigate(`/college/students/${openRow.college_student_row_id}#otj`)
-                        : null
-                    }
-                    showLearner
-                  />
+                <div className="space-y-4">
+                  <div className={cn(COLLEGE_CARD, 'max-h-[calc(100dvh-6rem)] overflow-y-auto')}>
+                    <SubmissionDetail
+                      key={openRow.id}
+                      row={openRow}
+                      startReturning={returnFor === openRow.id}
+                      onReturningShown={() => setReturnFor(null)}
+                      onVerify={() => verifyOne(openRow.id)}
+                      onReject={async (rationale) => {
+                        await inbox.reject(openRow.id, rationale);
+                      }}
+                      onOpenStudent={
+                        openRow.college_student_row_id
+                          ? () =>
+                              navigate(
+                                `/college?section=student360&studentId=${openRow.college_student_row_id}#otj`
+                              )
+                          : null
+                      }
+                      showLearner
+                    />
+                  </div>
+                  {sameLearner.length > 0 && (
+                    <div className={cn(COLLEGE_CARD, 'p-0 sm:p-0')}>
+                      <div className="flex items-baseline justify-between gap-3 px-5 pb-2 pt-4">
+                        <p className="text-[14px] font-semibold text-white">
+                          Also from {(openRow.student_name ?? 'this learner').split(/\s+/)[0]}
+                        </p>
+                        <p className="text-[13px] tabular-nums text-white">
+                          {sameLearner.length} more,{' '}
+                          {fmtHours(sameLearner.reduce((t, r) => t + (r.duration_minutes ?? 0), 0))}
+                        </p>
+                      </div>
+                      <ul className="divide-y divide-white/[0.06] border-t border-white/[0.06]">
+                        {sameLearner.slice(0, 4).map((r) => (
+                          <li key={r.id}>
+                            <button
+                              type="button"
+                              onClick={() => setOpenId(r.id)}
+                              className="flex min-h-[52px] w-full items-center gap-3 px-5 py-2.5 text-left touch-manipulation transition-colors hover:bg-white/[0.04]"
+                            >
+                              <span className="w-11 shrink-0 text-[14px] font-semibold tabular-nums text-white">
+                                {fmtHours(r.duration_minutes)}
+                              </span>
+                              <span className="min-w-0 flex-1 truncate text-[13.5px] text-white">
+                                {r.title}
+                              </span>
+                              <span className="shrink-0 text-[12.5px] text-white">
+                                {r.activity_date ? fmtRel(r.activity_date) : ''}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               ) : (
                 ready &&
-                filteredRows.length > 0 && <CollegeEmpty title="Pick an entry" body="It opens here to read, verify or return." />
+                filteredRows.length > 0 && (
+                  <CollegeEmpty
+                    title="Pick an entry"
+                    body="It opens here to read, verify or return."
+                  />
+                )
               )}
             </aside>
           )}
@@ -584,10 +643,20 @@ export default function OtjInboxPage() {
           </div>
         ) : (
           <>
-            <button type="button" onClick={() => setBulkReturning(true)} disabled={bulkActing} className={COLLEGE_BTN}>
+            <button
+              type="button"
+              onClick={() => setBulkReturning(true)}
+              disabled={bulkActing}
+              className={COLLEGE_BTN}
+            >
               Return
             </button>
-            <button type="button" onClick={() => void handleBulkVerify()} disabled={bulkActing} className={COLLEGE_BTN_PRIMARY}>
+            <button
+              type="button"
+              onClick={() => void handleBulkVerify()}
+              disabled={bulkActing}
+              className={COLLEGE_BTN_PRIMARY}
+            >
               {bulkActing ? 'Verifying…' : `Verify ${sel.count}`}
             </button>
           </>
@@ -691,25 +760,35 @@ function SubmissionDetail({
       {showLearner && (
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+            <p className="text-[14px] font-semibold text-white">
               {row.student_name ?? 'Apprentice'}
             </p>
-            <h2 className="mt-1 text-[20px] font-bold leading-snug tracking-tight text-white">{row.title}</h2>
+            <h2 className="mt-1 text-[20px] font-bold leading-snug tracking-tight text-white">
+              {row.title}
+            </h2>
           </div>
           {onOpenStudent && (
-            <button type="button" onClick={onOpenStudent} className="h-11 shrink-0 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+            <button
+              type="button"
+              onClick={onOpenStudent}
+              className="h-11 shrink-0 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+            >
               Learner record
             </button>
           )}
         </div>
       )}
-      {!showLearner && <p className="text-[15px] font-semibold leading-snug text-white">{row.title}</p>}
+      {!showLearner && (
+        <p className="text-[15px] font-semibold leading-snug text-white">{row.title}</p>
+      )}
 
       <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {facts.map(([k, v]) => (
           <div key={k} className="min-w-0">
             <dt className="text-[12px] text-white">{k}</dt>
-            <dd className="mt-0.5 truncate text-[14px] font-semibold text-white">{v}</dd>
+            <dd className="mt-0.5 break-words text-[14px] font-semibold leading-snug text-white">
+              {v}
+            </dd>
           </div>
         ))}
       </dl>
@@ -724,8 +803,28 @@ function SubmissionDetail({
         </p>
       )}
 
+      {/* ELE-2052: sent despite the funding-rules check, with the learner's note. */}
+      {!!row.quality_check?.flags?.length && (
+        <div
+          className="space-y-1 rounded-xl border border-orange-500/30 px-3 py-2.5"
+          data-testid="otj-inbox-quality"
+        >
+          <p className="text-[12.5px] font-semibold text-orange-300">
+            Sent after the check flagged:{' '}
+            {row.quality_check.flags.map((f) => `${f.title} (para ${f.para})`).join('; ')}
+          </p>
+          {row.quality_check.learner_note && (
+            <p className="text-[13px] text-white">
+              Learner&apos;s note: {row.quality_check.learner_note}
+            </p>
+          )}
+        </div>
+      )}
+
       {row.description && (
-        <p className="whitespace-pre-wrap text-[13.5px] leading-relaxed text-white">{row.description}</p>
+        <p className="whitespace-pre-wrap text-[13.5px] leading-relaxed text-white">
+          {row.description}
+        </p>
       )}
 
       {row.description && row.description.length >= 30 && (
@@ -742,7 +841,10 @@ function SubmissionDetail({
       {row.unit_codes && row.unit_codes.length > 0 && (
         <div className="flex flex-wrap items-center gap-1.5">
           {row.unit_codes.map((u) => (
-            <span key={u} className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[11px] font-medium tabular-nums text-white">
+            <span
+              key={u}
+              className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-medium tabular-nums text-white"
+            >
               {u}
             </span>
           ))}
@@ -758,7 +860,11 @@ function SubmissionDetail({
               onClick={() => void openEvidence(url)}
               className="block h-20 w-20 overflow-hidden rounded-xl border border-white/[0.12] transition-colors touch-manipulation hover:border-white/[0.3]"
             >
-              <EvidenceImage src={url} alt={`Evidence ${i + 1}`} className="h-full w-full object-cover" />
+              <EvidenceImage
+                src={url}
+                alt={`Evidence ${i + 1}`}
+                className="h-full w-full object-cover"
+              />
             </button>
           ))}
         </div>
@@ -767,20 +873,33 @@ function SubmissionDetail({
       <div className="rounded-2xl border border-white/[0.12] bg-white/[0.03] px-4 py-3">
         {verdictLoading ? (
           <p className="text-[12.5px] font-medium text-white">Checking the entry…</p>
-        ) : verdictError || !verdict ? (
-          <p className="text-[12.5px] font-medium text-white">No suggested check for this one. Read it and decide.</p>
+        ) : verdictError || !verdict || !(verdict.verdict in VERDICT_LABEL) ? (
+          <p className="text-[12.5px] font-medium text-white">
+            No suggested check for this one. Read it and decide.
+          </p>
         ) : (
           <>
             <div className="flex items-baseline justify-between gap-3">
-              <span className={cn('text-[13px] font-semibold', VERDICT_TEXT[verdict.verdict])}>{VERDICT_LABEL[verdict.verdict]}</span>
-              <span className="text-[11.5px] tabular-nums text-white">{Math.round(verdict.confidence * 100)}% sure</span>
+              <span className={cn('text-[13px] font-semibold', VERDICT_TEXT[verdict.verdict])}>
+                {VERDICT_LABEL[verdict.verdict]}
+              </span>
+              <span className="text-[12px] tabular-nums text-white">
+                {Math.round(verdict.confidence * 100)}% sure
+              </span>
             </div>
-            {verdict.feedback_for_tutor && <p className="mt-1 text-[12.5px] leading-snug text-white">{verdict.feedback_for_tutor}</p>}
-            {verdict.suggested_ac_refs.length > 0 && (
+            {verdict.feedback_for_tutor && (
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                {verdict.feedback_for_tutor}
+              </p>
+            )}
+            {(verdict.suggested_ac_refs?.length ?? 0) > 0 && (
               <div className="mt-2 flex flex-wrap items-center gap-1">
-                <span className="text-[11.5px] font-medium text-white">Criteria it may cover:</span>
-                {verdict.suggested_ac_refs.map((ref) => (
-                  <span key={ref} className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[11px] font-medium tabular-nums text-white">
+                <span className="text-[12px] font-medium text-white">Criteria it may cover:</span>
+                {(verdict.suggested_ac_refs ?? []).map((ref) => (
+                  <span
+                    key={ref}
+                    className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-medium tabular-nums text-white"
+                  >
                     {ref}
                   </span>
                 ))}
@@ -792,10 +911,20 @@ function SubmissionDetail({
 
       {!rejectingMode ? (
         <div className="grid grid-cols-2 gap-2">
-          <button type="button" onClick={() => setRejectingMode(true)} disabled={acting !== null} className={COLLEGE_BTN}>
+          <button
+            type="button"
+            onClick={() => setRejectingMode(true)}
+            disabled={acting !== null}
+            className={COLLEGE_BTN}
+          >
             Return
           </button>
-          <button type="button" onClick={() => void handleVerify()} disabled={acting !== null} className={COLLEGE_BTN_PRIMARY}>
+          <button
+            type="button"
+            onClick={() => void handleVerify()}
+            disabled={acting !== null}
+            className={COLLEGE_BTN_PRIMARY}
+          >
             {acting === 'verify' ? 'Verifying…' : 'Verify hours'}
           </button>
         </div>
@@ -838,7 +967,11 @@ function SubmissionDetail({
       )}
 
       {!showLearner && onOpenStudent && (
-        <button type="button" onClick={onOpenStudent} className="h-11 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+        <button
+          type="button"
+          onClick={onOpenStudent}
+          className="h-11 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+        >
           Open the learner record
         </button>
       )}

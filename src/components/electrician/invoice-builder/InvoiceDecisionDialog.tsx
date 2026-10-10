@@ -5,8 +5,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MobileButton } from '@/components/ui/mobile-button';
-import { FileText, Edit } from 'lucide-react';
+import { FileText, Edit, Loader2 } from 'lucide-react';
+import { DepositChoicePanel } from './DepositChoicePanel';
+import {
+  getDepositOffer,
+  getPendingDeposit,
+  type DepositOffer,
+  type PendingDeposit,
+} from '@/services/quoteDepositInvoice';
+import { PendingDepositPanel } from './PendingDepositPanel';
 
 interface InvoiceDecisionDialogProps {
   open: boolean;
@@ -14,6 +24,12 @@ interface InvoiceDecisionDialogProps {
   onNoChanges: () => void;
   onHasChanges: () => void;
   loading?: boolean;
+  /**
+   * ELE-2034 — the quote being converted. When it was accepted without a
+   * deposit and one is due, the dialog asks "take the deposit first?" before
+   * the usual two options.
+   */
+  quoteId?: string | null;
 }
 
 export const InvoiceDecisionDialog = ({
@@ -22,7 +38,99 @@ export const InvoiceDecisionDialog = ({
   onNoChanges,
   onHasChanges,
   loading = false,
+  quoteId = null,
 }: InvoiceDecisionDialogProps) => {
+  const navigate = useNavigate();
+  const [offer, setOffer] = useState<DepositOffer | null>(null);
+  // A deposit already raised and not paid yet (ELE-2034).
+  const [pending, setPending] = useState<PendingDeposit | null>(null);
+  // Which quote the deposit check has finished for. Until it has, the two
+  // usual options are held back, or they flash up and are then replaced.
+  const [checkedFor, setCheckedFor] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open || !quoteId) {
+      setOffer(null);
+      setPending(null);
+      setCheckedFor(null);
+      return;
+    }
+    let live = true;
+    Promise.all([
+      getDepositOffer(quoteId).catch(() => null),
+      getPendingDeposit(quoteId).catch(() => null),
+    ])
+      .then(([o, p]) => {
+        if (!live) return;
+        setOffer(o);
+        setPending(p);
+      })
+      .finally(() => live && setCheckedFor(quoteId));
+    return () => {
+      live = false;
+    };
+  }, [open, quoteId]);
+
+  if (open && quoteId && checkedFor !== quoteId) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogTitle className="sr-only">Create Invoice</DialogTitle>
+          <DialogDescription className="sr-only">Checking the quote</DialogDescription>
+          <div className="flex h-32 items-center justify-center">
+            <Loader2 className="h-6 w-6 animate-spin text-white" />
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  if (pending && quoteId) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogTitle className="sr-only">The deposit isn't paid yet</DialogTitle>
+          <DialogDescription className="sr-only">
+            Mark the deposit paid so it comes off the invoice, or invoice the full amount.
+          </DialogDescription>
+          <PendingDepositPanel
+            quoteId={quoteId}
+            pending={pending}
+            // The builder loads the quote fresh, so the now-paid deposit is
+            // credited there; this caller's in-memory copy would miss it.
+            onMarkedPaid={() => {
+              onOpenChange(false);
+              navigate(`/electrician/invoice-quote-builder/${quoteId}`);
+            }}
+            onFullAmount={() => setPending(null)}
+          />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  if (offer && quoteId) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogTitle className="sr-only">Take the deposit first?</DialogTitle>
+          <DialogDescription className="sr-only">
+            Raise a deposit invoice now, or invoice the full amount.
+          </DialogDescription>
+          <DepositChoicePanel
+            quoteId={quoteId}
+            offer={offer}
+            onFullAmount={() => setOffer(null)}
+            onDone={() => {
+              onOpenChange(false);
+              navigate(`/electrician/quotes/view/${quoteId}`);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">

@@ -11,7 +11,7 @@ import {
   MaterialEstimate,
 } from '@/utils/circuit-calculations';
 import { cn } from '@/lib/utils';
-import { Eyebrow } from '@/components/college/primitives';
+import { StepHeader, Section, ItemCard, Fact, Hint } from './wizardUi';
 
 interface PreCalculationStepProps {
   circuits: CircuitInput[];
@@ -60,122 +60,63 @@ export const PreCalculationStep = ({
   const readinessScore =
     maxPossibleFields > 0 ? Math.round((fieldsProvided / maxPossibleFields) * 100) : 0;
 
-  // Overall status label
+  // Overall status
   let overallStatusLabel = 'Pass';
-  let overallStatusClass = 'text-emerald-400';
+  let overallTone: 'good' | 'warn' | 'bad' = 'good';
   if (totalErrors > 0) {
     overallStatusLabel = 'Fail';
-    overallStatusClass = 'text-red-400';
+    overallTone = 'bad';
   } else if (totalWarnings > 0) {
     overallStatusLabel = 'Warning';
-    overallStatusClass = 'text-amber-400';
+    overallTone = 'warn';
   }
 
   return (
-    <div className="space-y-8 sm:space-y-10">
-      {/* Section header — editorial */}
-      <div className="space-y-2">
-        <Eyebrow>05 · VALIDATE</Eyebrow>
-        <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.1] text-white">
-          Pre-flight check.
-        </h2>
-        <p className="text-[14px] leading-relaxed text-white/85 max-w-2xl">
-          We've sanity-checked the inputs. Resolve anything below before the designer runs — issues
-          here usually mean a derate or earthing rethink.
-        </p>
-      </div>
+    <div className="space-y-8">
+      <StepHeader
+        title="Pre-flight check"
+        description="We've sanity-checked the inputs. Resolve anything below before the designer runs. Issues here usually mean a derate or an earthing rethink."
+      />
 
-      {/* Headline summary strip — gridline pattern */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Status
-          </div>
-          <div
-            className={cn(
-              'mt-1 text-[13px] font-semibold uppercase tracking-[0.18em]',
-              overallStatusClass
-            )}
-          >
-            {overallStatusLabel}
-          </div>
-        </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Readiness
-          </div>
-          <div className="mt-1 text-[13px] font-semibold text-elec-yellow tabular-nums">
-            {readinessScore}%
-          </div>
-        </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Errors
-          </div>
-          <div
-            className={cn(
-              'mt-1 text-[13px] font-semibold tabular-nums',
-              totalErrors > 0 ? 'text-red-400' : 'text-white'
-            )}
-          >
-            {totalErrors}
-          </div>
-        </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Warnings
-          </div>
-          <div
-            className={cn(
-              'mt-1 text-[13px] font-semibold tabular-nums',
-              totalWarnings > 0 ? 'text-amber-400' : 'text-white'
-            )}
-          >
-            {totalWarnings}
-          </div>
-        </div>
+      {/* Headline figures */}
+      <div className="grid grid-cols-4 gap-3 border-y border-white/[0.10] py-4">
+        <Fact label="Status" value={overallStatusLabel} tone={overallTone} />
+        <Fact label="Readiness" value={`${readinessScore}%`} />
+        <Fact label="Errors" value={totalErrors} tone={totalErrors > 0 ? 'bad' : undefined} />
+        <Fact
+          label="Warnings"
+          value={totalWarnings}
+          tone={totalWarnings > 0 ? 'warn' : undefined}
+        />
       </div>
 
       {/* Readiness detail */}
-      <div className="space-y-3">
-        <div className="flex items-baseline justify-between gap-3">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-            Designer readiness
-          </span>
-          <span className="text-[11px] text-white/50 tabular-nums">
-            {fieldsProvided}/{maxPossibleFields} fields
-          </span>
-        </div>
-        <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5 space-y-3">
+      <Section title="Designer readiness" aside={`${fieldsProvided}/${maxPossibleFields} fields`}>
+        <div className="space-y-2">
           <div className="flex items-baseline justify-between">
-            <span className="text-[12.5px] text-white/70">Details provided</span>
-            <span className="text-[20px] font-semibold text-elec-yellow tabular-nums">
+            <span className="text-[13px] text-white">Details provided</span>
+            <span className="text-[15px] font-semibold tabular-nums text-white">
               {readinessScore}%
             </span>
           </div>
           <Progress value={readinessScore} className="h-1.5" />
-          <p className="text-[12px] leading-relaxed text-white/65">
-            {readinessScore >= 80 && 'Excellent — the designer has the context it needs.'}
+          <Hint>
+            {readinessScore >= 80 && 'Excellent. The designer has the context it needs.'}
             {readinessScore >= 50 &&
               readinessScore < 80 &&
-              'Good — most context provided, the designer will infer the rest.'}
+              'Good. Most context provided, the designer will infer the rest.'}
             {readinessScore < 50 &&
-              'Limited context — the designer will infer install method, protection and other details.'}
-          </p>
+              'Limited context. The designer will infer install method, protection and other details.'}
+          </Hint>
         </div>
-      </div>
+      </Section>
 
       {/* Per-circuit validation cards */}
-      <div className="space-y-3">
-        <div className="flex items-baseline justify-between gap-3">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-            Per-circuit checks
-          </span>
-          <span className="text-[11px] text-white/50 tabular-nums">
-            {circuits.length} circuit{circuits.length !== 1 ? 's' : ''}
-          </span>
-        </div>
-        <div className="space-y-3 sm:space-y-4">
+      <Section
+        title="Per-circuit checks"
+        aside={`${circuits.length} circuit${circuits.length !== 1 ? 's' : ''}`}
+      >
+        <div className="space-y-3">
           {validations.map(({ circuit, validation }, index) => {
             const hasErrors = validation.errors.length > 0;
             const hasWarnings = validation.warnings.length > 0;
@@ -186,153 +127,103 @@ export const PreCalculationStep = ({
                 ? 'text-amber-400'
                 : 'text-emerald-400';
             const borderClass = hasErrors
-              ? 'border-red-500/40'
+              ? 'border-red-500/40 sm:border-red-500/40'
               : hasWarnings
-                ? 'border-amber-500/40'
-                : 'border-white/[0.10]';
+                ? 'border-amber-500/40 sm:border-amber-500/40'
+                : '';
 
             return (
-              <div
-                key={circuit.id}
-                className={cn(
-                  'bg-[hsl(0_0%_10%)] border rounded-2xl p-4 sm:p-5 transition-all',
-                  borderClass
-                )}
-              >
+              <ItemCard key={circuit.id} className={borderClass}>
                 {/* Circuit header */}
-                <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/50">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <span
-                        className={cn(
-                          'text-[11px] uppercase tracking-[0.18em] font-semibold',
-                          statusClass
-                        )}
-                      >
-                        {statusLabel}
-                      </span>
-                    </div>
-                    <div className="mt-1.5 text-[16px] sm:text-[17px] font-semibold tracking-tight leading-[1.2] text-white truncate">
-                      {circuit.name || 'Unnamed circuit'}
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2 shrink-0 justify-end">
-                    {circuit.calculatedIb && (
-                      <span className="text-[11px] uppercase tracking-[0.14em] tabular-nums text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/[0.06] rounded-full px-2.5 py-0.5">
-                        {circuit.calculatedIb.toFixed(1)} A
-                      </span>
-                    )}
-                    {circuit.suggestedMCB && (
-                      <span className="text-[11px] uppercase tracking-[0.14em] tabular-nums text-white border border-white/15 bg-white/[0.04] rounded-full px-2.5 py-0.5">
-                        {circuit.suggestedMCB} A MCB
-                      </span>
-                    )}
+                    <h4 className="truncate text-[15px] font-semibold text-white">
+                      {index + 1}. {circuit.name || 'Unnamed circuit'}
+                    </h4>
+                    <p className="mt-0.5 text-[13px] text-white">
+                      <span className={cn('font-semibold', statusClass)}>{statusLabel}</span>
+                      {circuit.calculatedIb && (
+                        <span className="tabular-nums"> · {circuit.calculatedIb.toFixed(1)} A</span>
+                      )}
+                      {circuit.suggestedMCB && (
+                        <span className="tabular-nums"> · {circuit.suggestedMCB} A MCB</span>
+                      )}
+                    </p>
                   </div>
                 </div>
 
                 {/* Errors & warnings */}
                 {(hasErrors || hasWarnings) && (
-                  <div className="space-y-2 mb-3">
+                  <ul className="mt-3 space-y-2">
                     {validation.errors.map((error, i) => (
-                      <div key={`error-${i}`} className="flex items-start gap-2.5 text-[12.5px]">
-                        <span className="text-[10px] uppercase tracking-[0.18em] font-semibold text-red-400 shrink-0 mt-0.5 w-12">
-                          Fail
-                        </span>
-                        <span className="text-white/85 leading-relaxed flex-1">{error}</span>
-                      </div>
+                      <li key={`error-${i}`} className="flex items-start gap-2.5 text-[13px]">
+                        <span className="w-14 shrink-0 font-semibold text-red-400">Fail</span>
+                        <span className="flex-1 leading-relaxed text-white">{error}</span>
+                      </li>
                     ))}
                     {validation.warnings.map((warning, i) => (
-                      <div key={`warning-${i}`} className="flex items-start gap-2.5 text-[12.5px]">
-                        <span className="text-[10px] uppercase tracking-[0.18em] font-semibold text-amber-400 shrink-0 mt-0.5 w-12">
-                          Warn
-                        </span>
-                        <span className="text-white/85 leading-relaxed flex-1">{warning}</span>
-                      </div>
+                      <li key={`warning-${i}`} className="flex items-start gap-2.5 text-[13px]">
+                        <span className="w-14 shrink-0 font-semibold text-amber-400">Warning</span>
+                        <span className="flex-1 leading-relaxed text-white">{warning}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
 
                 {/* Material estimate */}
                 {circuit.calculatedIb && circuit.cableLength && materialEstimates[index] && (
-                  <div className="pt-3 border-t border-white/[0.08]">
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                      Estimate
+                  <div className="mt-3 space-y-1.5 border-t border-white/[0.08] pt-3 text-[13px]">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="truncate text-white">
+                        Cable {materialEstimates[index].cableSize}mm² ×{' '}
+                        {materialEstimates[index].cableLength}m
+                      </span>
+                      <span className="shrink-0 tabular-nums text-white">
+                        £{materialEstimates[index].estimatedCableCost}
+                      </span>
                     </div>
-                    <div className="space-y-1.5">
-                      <div className="flex items-baseline justify-between gap-3 text-[12.5px]">
-                        <span className="text-white/70 truncate">
-                          Cable {materialEstimates[index].cableSize}mm² ×{' '}
-                          {materialEstimates[index].cableLength}m
-                        </span>
-                        <span className="font-medium text-white tabular-nums shrink-0">
-                          £{materialEstimates[index].estimatedCableCost}
-                        </span>
-                      </div>
-                      <div className="flex items-baseline justify-between gap-3 text-[12.5px]">
-                        <span className="text-white/70 truncate">
-                          Protection {materialEstimates[index].protectionDevice}
-                        </span>
-                        <span className="font-medium text-white tabular-nums shrink-0">
-                          £{materialEstimates[index].estimatedDeviceCost}
-                        </span>
-                      </div>
-                      <div className="flex items-baseline justify-between gap-3 pt-2 border-t border-white/[0.06] text-[12.5px]">
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                          Circuit total
-                        </span>
-                        <span className="font-semibold text-elec-yellow tabular-nums shrink-0">
-                          £{materialEstimates[index].totalEstimate}
-                        </span>
-                      </div>
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="truncate text-white">
+                        Protection {materialEstimates[index].protectionDevice}
+                      </span>
+                      <span className="shrink-0 tabular-nums text-white">
+                        £{materialEstimates[index].estimatedDeviceCost}
+                      </span>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-3 font-semibold">
+                      <span className="text-white">Circuit total</span>
+                      <span className="shrink-0 tabular-nums text-white">
+                        £{materialEstimates[index].totalEstimate}
+                      </span>
                     </div>
                   </div>
                 )}
-              </div>
+              </ItemCard>
             );
           })}
         </div>
-      </div>
+      </Section>
 
       {/* Total cost estimate */}
       {totalMaterialCost > 0 && (
-        <div className="space-y-3">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-            Materials total
-          </span>
-          <div className="grid grid-cols-2 gap-px bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
-            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-                Estimated materials
-              </div>
-              <div className="mt-1 text-[13px] font-semibold text-white">
-                Pre-flight estimate only
-              </div>
-            </div>
-            <div className="bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-6 sm:py-4">
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
-                Total
-              </div>
-              <div className="mt-1 text-[18px] sm:text-[20px] font-semibold text-elec-yellow tabular-nums">
-                £{totalMaterialCost.toFixed(2)}
-              </div>
-            </div>
+        <Section title="Materials total">
+          <div className="flex items-baseline justify-between gap-3 border-y border-white/[0.10] py-4">
+            <span className="text-[14px] text-white">Estimated materials, pre-flight only</span>
+            <span className="text-[20px] font-semibold tabular-nums text-white">
+              £{totalMaterialCost.toFixed(2)}
+            </span>
           </div>
-          <p className="text-[12px] leading-relaxed text-white/60">
+          <Hint>
             Excludes labour, accessories and VAT. The designer will produce a detailed materials
             list.
-          </p>
-        </div>
+          </Hint>
+        </Section>
       )}
 
       {/* Footer note */}
-      <div className="bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-2xl p-4 sm:p-5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-1.5">
-          Note
-        </div>
-        <p className="text-[12.5px] leading-relaxed text-white/75">
+      <div className="rounded-xl border border-white/[0.12] bg-white/[0.05] px-4 py-3">
+        <div className="text-[13px] font-semibold text-white">Note</div>
+        <p className="mt-1 text-[13px] leading-relaxed text-white">
           The designer performs full BS 7671 compliant calculations including voltage drop, fault
           current and derating factors. The figures above are pre-flight estimates only.
         </p>

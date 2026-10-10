@@ -2,8 +2,16 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { Json } from '@/integrations/supabase/types';
+import {
+  applySafetyScope,
+  firmWriteErrorMessage,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
-export interface InspectionRecord {
+export interface InspectionRecord extends FirmRecordFields {
   id: string;
   user_id: string;
   template_id: string;
@@ -41,22 +49,26 @@ export type CreateInspectionRecordInput = Omit<
   photos?: string[];
   inspector_signature?: string;
   inspector_signature_name?: string;
+  /** Firm job (employer_jobs) — shares the record with the firm. */
+  employer_job_id?: string | null;
 };
 
 export function useInspectionRecords() {
+  // Personal: the user's own records. Employer Hub: the firm's (employer_id).
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['inspection-records'],
+    queryKey: ['inspection-records', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<InspectionRecord[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('inspection_records')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('date', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('inspection_records').select('*'),
+        scope,
+        user.id
+      ).order('date', { ascending: false });
 
       if (error) throw error;
       return data as InspectionRecord[];
@@ -67,6 +79,7 @@ export function useInspectionRecords() {
 export function useCreateInspectionRecord() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (input: CreateInspectionRecordInput): Promise<InspectionRecord> => {
@@ -77,7 +90,9 @@ export function useCreateInspectionRecord() {
 
       const { data, error } = await supabase
         .from('inspection_records')
-        .insert({ ...input, user_id: user.id })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(stampSafetyInsert({ ...input, user_id: user.id }, scope) as never)
         .select('*')
         .single();
 
@@ -98,7 +113,11 @@ export function useCreateInspectionRecord() {
       });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -111,18 +130,16 @@ export interface InspectionComparison {
 }
 
 export function useInspectionComparison(templateId: string, location?: string | null) {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['inspection-comparison', templateId, location],
+    queryKey: ['inspection-comparison', templateId, location, ...safetyScopeKey(scope)],
     queryFn: async (): Promise<InspectionComparison | null> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      let query = supabase
-        .from('inspection_records')
-        .select('*')
-        .eq('user_id', user.id)
+      let query = applySafetyScope(supabase.from('inspection_records').select('*'), scope, user.id)
         .eq('template_id', templateId)
         .order('date', { ascending: false })
         .limit(2);
@@ -143,13 +160,9 @@ export function useInspectionComparison(templateId: string, location?: string | 
       const currentPassRate =
         current.total_items > 0 ? current.pass_count / current.total_items : 0;
       const previousPassRate =
-        previous && previous.total_items > 0
-          ? previous.pass_count / previous.total_items
-          : 0;
+        previous && previous.total_items > 0 ? previous.pass_count / previous.total_items : 0;
 
-      const passRateChange = previous
-        ? Math.round((currentPassRate - previousPassRate) * 100)
-        : 0;
+      const passRateChange = previous ? Math.round((currentPassRate - previousPassRate) * 100) : 0;
 
       let trend: InspectionComparison['trend'] = 'first';
       if (previous) {
@@ -167,6 +180,7 @@ export function useInspectionComparison(templateId: string, location?: string | 
 export function useDeleteInspectionRecord() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
@@ -179,7 +193,11 @@ export function useDeleteInspectionRecord() {
       toast({ title: 'Record deleted', description: 'Inspection record has been removed.' });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }

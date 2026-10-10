@@ -43,7 +43,7 @@ const keyTakeaways = [
   'S-type (time-delayed) RCDs have different limits to general type RCDs and are used in series to provide discrimination. They must not operate in less than 130ms at rated current to allow a downstream standard RCD to trip first.',
   'The test must be performed with the instrument connected between the line terminal (downstream of the RCD) and the main earth terminal. Never connect to the neutral — the instrument must drive current through the RCD sensing coil.',
   'All RCDs must be tested at 0 degrees (positive half-cycle) and 180 degrees (negative half-cycle) phase angles. Prove the test instrument on a proving unit before and after use — an unproved instrument invalidates all results.',
-  'A4:2026 Reg 411.3.4 — new requirement: within domestic (household) premises, additional protection by a 30mA RCD shall be provided for all AC final circuits supplying luminaires. Existing lighting circuits without RCD protection now require a C2 or C3 code on an EICR.',
+  'Reg 411.3.4, in force since BS 7671:2018: within domestic (household) premises, additional protection by a 30mA RCD shall be provided for all AC final circuits supplying luminaires. Existing lighting circuits without RCD protection typically attract a C2 or C3 code on an EICR.',
 ];
 
 const faqs = [
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Does BS 7671 A4:2026 require RCD protection on lighting circuits?',
     answer:
-      'Yes. BS 7671:2018+A4:2026 Regulation 411.3.4 introduces a new requirement: within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30mA shall be provided for all AC final circuits supplying luminaires. This applies to both new installations and, via EICR assessment, to existing domestic lighting circuits that have not been updated. An existing domestic lighting circuit without 30mA RCD protection will typically attract a C2 (potentially dangerous) or at minimum a C3 (improvement recommended) code on a periodic inspection report. This requirement applies only to domestic (household) premises — it does not extend to commercial premises in the wording of Reg 411.3.4 itself.',
+      'Yes, and it is not new in A4:2026. Regulation 411.3.4 has applied since BS 7671:2018: within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30mA shall be provided for all AC final circuits supplying luminaires. This applies to both new installations and, via EICR assessment, to existing domestic lighting circuits that have not been updated. An existing domestic lighting circuit without 30mA RCD protection will typically attract a C2 (potentially dangerous) or at minimum a C3 (improvement recommended) code on a periodic inspection report. This requirement applies only to domestic (household) premises — it does not extend to commercial premises in the wording of Reg 411.3.4 itself.',
   },
   {
     question: 'What causes RCD nuisance tripping?',
@@ -180,13 +180,13 @@ const sections = [
             <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>
-                A4:2026 — Reg 411.3.4: 30mA RCD now mandatory for all domestic lighting circuits
+                Reg 411.3.4: 30mA RCD mandatory for all domestic lighting circuits (since 2018)
               </strong>
-              : BS 7671:2018+A4:2026 introduced Regulation 411.3.4, which requires that, within
+              : Regulation 411.3.4, part of BS 7671 since the 2018 edition, requires that, within
               domestic (household) premises, additional protection by a 30mA RCD shall be provided
-              for all AC final circuits supplying luminaires. This is new in A4:2026. For EICRs,
-              existing domestic lighting circuits that are not RCD-protected now require a C2 or C3
-              observation code — this is one of the most actionable A4:2026 changes for periodic
+              for all AC final circuits supplying luminaires. It is not an A4:2026 change. For EICRs,
+              existing domestic lighting circuits that are not RCD-protected typically attract a C2
+              or C3 observation code, which makes it one of the most actionable checks in periodic
               inspection work. Note: Reg 411.3.4 is explicitly scoped to domestic (household)
               premises — it does not, in its own wording, extend to commercial or industrial
               premises. Commercial inspectors should apply the general additional protection rules
@@ -199,12 +199,11 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span className="text-white">
-              <strong>A4:2026 — Reg 421.1.7: AFDDs recommended for AC final circuits</strong>:
-              Alongside Reg 411.3.4, BS 7671:2018+A4:2026 introduced Regulation 421.1.7,
-              recommending the installation of arc fault detection devices (AFDDs) in AC final
-              circuits of a fixed installation to mitigate the risk of fire due to arc fault
-              currents. Unlike Reg 411.3.4 (which uses "shall" and is mandatory), Reg 421.1.7 uses
-              recommendatory language. AFDDs are board-level devices installed alongside or in place
+              <strong>Reg 421.1.7: AFDDs on socket-outlet final circuits</strong>: Regulation 421.1.7
+              first recommended arc fault detection devices (AFDDs) in BS 7671:2018. Since A2:2022 it
+              requires them on single-phase socket-outlet final circuits up to 32 A in high rise
+              residential buildings, HMOs, purpose-built student accommodation and care homes, and
+              recommends them elsewhere, to mitigate the risk of fire due to arc fault currents. AFDDs are board-level devices installed alongside or in place
               of MCBs or RCBOs. On an EICR for a new or rewired domestic installation, the absence
               of AFDDs where Reg 421.1.7 would apply may attract an observation code.
             </span>
@@ -666,7 +665,7 @@ export default function RCDTestingGuidePage() {
       title="RCD Testing Guide UK: BS 7671 Procedures"
       description="Complete guide to RCD testing for UK electricians. Half-rated test, rated trip time (300ms for 30mA type), 5x current test, A4:2026 updates."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"
@@ -676,7 +675,7 @@ export default function RCDTestingGuidePage() {
           RCD Testing Guide: <span className="text-elec-yellow">RCD Test Procedures to BS 7671</span>
         </>
       }
-      heroSubtitle="The complete UK electrician's guide to RCD testing to BS 7671:2018+A4:2026 — half-rated current test, rated current trip time (300ms maximum for 30mA general type, Reg 643.8), 5 times current test, ramp test, correct instrument connection, recording results, and diagnosing nuisance tripping. Updated for A4:2026 including Reg 411.3.4 (30mA RCD on domestic lighting circuits)."
+      heroSubtitle="The complete UK electrician's guide to RCD testing to BS 7671:2018+A4:2026 — half-rated current test, rated current trip time (300ms maximum for 30mA general type, Reg 643.8), 5 times current test, ramp test, correct instrument connection, recording results, and diagnosing nuisance tripping. Updated for A4:2026, with Reg 411.3.4 (30mA RCD on domestic lighting circuits, in force since 2018)."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

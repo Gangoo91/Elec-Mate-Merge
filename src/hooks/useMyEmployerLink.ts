@@ -27,7 +27,7 @@ export function useMyEmployerLink(enabled = true) {
   return useQuery<MyEmployerLink | null>({
     queryKey: ['my-employer-link'],
     queryFn: async () => {
-      const { data, error } = await supabase.rpc('get_my_employer_link' as never);
+      const { data, error } = await supabase.rpc('get_my_employer_link');
       if (error) throw error;
       if (!data) return null;
       const r = data as Record<string, unknown>;

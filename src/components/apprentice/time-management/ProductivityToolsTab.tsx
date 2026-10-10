@@ -74,11 +74,7 @@ const ProductivityToolsTab = () => {
     {
       title: 'Time blocking',
       description: 'Assign specific time slots to different activities',
-      benefits: [
-        'Reduces decision fatigue',
-        'Ensures important tasks get time',
-        'Creates routine',
-      ],
+      benefits: ['Reduces decision fatigue', 'Ensures important tasks get time', 'Creates routine'],
       howTo: [
         'List all regular activities (work, college, study, personal)',
         'Estimate time needed for each',
@@ -102,11 +98,9 @@ const ProductivityToolsTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Recommended mobile apps
-          </span>
+          <span className="text-[13px] font-semibold text-white">Recommended mobile apps</span>
           <p className="text-[14px] text-white leading-relaxed">
             Apps specifically useful for apprentices managing work and study
           </p>
@@ -128,14 +122,12 @@ const ProductivityToolsTab = () => {
               </div>
               <p className="text-[14px] text-white leading-relaxed">{app.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Key features
-                </span>
+                <span className="text-[13px] font-semibold text-white">Key features</span>
                 <ul className="space-y-1">
                   {app.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{feature}</span>
@@ -148,11 +140,9 @@ const ProductivityToolsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Web-based tools
-          </span>
+          <span className="text-[13px] font-semibold text-white">Web-based tools</span>
           <p className="text-[14px] text-white leading-relaxed">
             Browser-based tools for planning and organisation
           </p>
@@ -171,14 +161,12 @@ const ProductivityToolsTab = () => {
               </div>
               <p className="text-[14px] text-white leading-relaxed">{tool.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Features
-                </span>
+                <span className="text-[13px] font-semibold text-white">Features</span>
                 <ul className="space-y-1">
                   {tool.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{feature}</span>
@@ -200,9 +188,9 @@ const ProductivityToolsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          <span className="text-[13px] font-semibold text-white">
             Proven productivity techniques
           </span>
           <p className="text-[14px] text-white leading-relaxed">
@@ -225,9 +213,7 @@ const ProductivityToolsTab = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                    Benefits
-                  </span>
+                  <span className="text-[13px] font-semibold text-elec-yellow">Benefits</span>
                   <ul className="space-y-1">
                     {technique.benefits.map((benefit, idx) => (
                       <li
@@ -241,9 +227,7 @@ const ProductivityToolsTab = () => {
                   </ul>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    How to implement
-                  </span>
+                  <span className="text-[13px] font-semibold text-white">How to implement</span>
                   <ol className="space-y-1">
                     {technique.howTo.map((step, idx) => (
                       <li

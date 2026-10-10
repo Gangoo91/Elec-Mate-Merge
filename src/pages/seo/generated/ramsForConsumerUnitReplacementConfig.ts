@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-consumer-unit-replacement',
@@ -27,7 +27,7 @@ export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
     'A consumer unit replacement RAMS must address hazards that are specific to working at the origin of the installation — proximity to the DNO service head, total customer power-off, dust and debris, and bonding continuity disturbed mid-job.',
     'Under the Electricity at Work Regulations 1989, Regulation 14, live working is prohibited unless three tests are met. A consumer unit change is planned work — there is no justification for working live on the meter tails or the new board.',
     'You shall not cut the distributor\'s cut-out seal without prior authorisation. Notify the DNO (or supplier where the meter is sealed) and use their isolation service or temporary seal procedure — record the authority in the RAMS.',
-    'Every consumer unit replacement under BS 7671:2018+A4:2026 is also a compliance opportunity: Reg 421.1.201 (non-combustible enclosure for domestic CUs), Reg 411.3.4 (RCD protection for lighting circuits where AFDD is not provided), and the A4:2026 AFDD recommendations for socket-outlets up to 32 A.',
+    'Every consumer unit replacement under BS 7671:2018+A4:2026 is also a compliance opportunity: Reg 421.1.201 (non-combustible enclosure for domestic CUs), Reg 411.3.4 (30 mA RCD protection for domestic lighting circuits, in place since BS 7671:2018), and Reg 421.1.7 AFDDs for socket-outlet circuits up to 32 A (required in HMOs and other named premises since A2:2022, recommended elsewhere).',
     'The job ends with an Electrical Installation Certificate (EIC) — not a Minor Works Certificate. A CU replacement is an alteration to the distribution circuit and requires full initial verification under BS 7671 Part 6.',
     'CDM 2015 applies to most domestic CU changes the moment a second worker is on site, or any time the work is non-domestic. The principal contractor / contractor duties are not optional.',
   ],
@@ -197,8 +197,8 @@ export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
           type: 'list',
           items: [
             'Reg 421.1.201 — consumer units and similar switchgear assemblies in domestic premises shall have their enclosure manufactured from non-combustible material (typically steel). This means the old plastic CU comes out and a steel-enclosed board goes in. See our [EICR plastic consumer unit in HMO guide](/guides/eicr-plastic-consumer-unit-hmo) for the wider context.',
-            'Reg 411.3.4 — additional protection by an RCD not exceeding 30 mA shall be provided for lighting circuits in domestic (household) premises. The A4:2026 wording aligns with the new AFDD recommendations. See [A4:2026 luminaire RCD protection](/guides/bs-7671-a4-2026-luminaire-rcd-protection) for the full text and acceptance criteria.',
-            'AFDD recommendations under A4:2026 — arc fault detection devices are now recommended for final circuits supplying socket-outlets rated up to 32 A in higher-risk premises (HMOs, care homes, student accommodation, premises with combustible construction). See [A4:2026 AFDD changes](/guides/bs-7671-a4-2026-afdd-changes) for the precise scope.',
+            'Reg 411.3.4 — additional protection by an RCD not exceeding 30 mA shall be provided for lighting circuits in domestic (household) premises. This has applied since BS 7671:2018. See [luminaire RCD protection (Reg 411.3.4)](/guides/bs-7671-a4-2026-luminaire-rcd-protection) for the full text and acceptance criteria.',
+            'AFDDs under Reg 421.1.7 — since A2:2022, arc fault detection devices are required on single-phase final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommended elsewhere. See [AFDD rules (Reg 421.1.7)](/guides/bs-7671-a4-2026-afdd-changes) for the precise scope.',
             'Reg 526.1 — every connection between conductors and equipment shall provide durable electrical continuity and adequate mechanical strength and protection. At the new board this means torqued-to-spec terminations on every line, neutral and earth, and a recorded torque value on the EIC.',
             'Surge Protection Device (SPD) — Section 443 requirements continue under A4:2026; an SPD shall normally be installed in domestic premises unless the risk assessment justifies omission and the customer accepts the omission in writing.',
           ],
@@ -346,17 +346,17 @@ export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-      title: 'A4:2026 Luminaire RCD Protection (Reg 411.3.4)',
+      title: 'Luminaire RCD Protection (Reg 411.3.4)',
       description:
-        '30 mA RCD additional protection for lighting circuits in domestic premises under A4:2026 — when it applies and the AFDD interaction.',
+        '30 mA RCD additional protection for lighting circuits in domestic premises, required since BS 7671:2018, and when it applies.',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
-      title: 'A4:2026 AFDD Changes',
+      title: 'AFDD Rules (Reg 421.1.7)',
       description:
-        'What A4:2026 changed for arc fault detection devices — scope of recommendation, premises types, and CU specification impact.',
+        'Where arc fault detection devices are required or recommended, the premises types, and the CU specification impact.',
       icon: 'AlertTriangle',
       category: 'Guide',
     },

@@ -102,7 +102,7 @@ export function DiaryCalendarView({
 
       <div className="grid grid-cols-7 gap-1">
         {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-          <div key={i} className="py-1 text-center text-[11px] font-semibold text-white">
+          <div key={i} className="py-1 text-center text-[12px] font-semibold text-white">
             {d}
           </div>
         ))}
@@ -150,7 +150,7 @@ export function DiaryCalendarView({
                 future && 'text-[12px] font-normal',
                 !markable && 'cursor-default',
                 selected || picked === date
-                  ? 'bg-elec-yellow font-bold text-black'
+                  ? 'bg-white font-bold text-black'
                   : isToday
                     ? 'border border-elec-yellow font-semibold text-white'
                     : 'text-white hover:bg-white/[0.06]'
@@ -161,7 +161,9 @@ export function DiaryCalendarView({
                 <span
                   className={cn(
                     'mt-1 leading-none',
-                    compact ? 'h-1.5 w-1.5 rounded-full' : 'text-[10px] font-semibold',
+                    compact
+                      ? 'h-1.5 w-1.5 rounded-full'
+                      : 'text-[12px] font-semibold tracking-tight',
                     compact && (selected ? 'bg-black' : 'bg-elec-yellow')
                   )}
                 >
@@ -181,7 +183,7 @@ export function DiaryCalendarView({
                 compact ? (
                   <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white" />
                 ) : (
-                  <span className="mt-1 text-[9.5px] font-medium leading-none">
+                  <span className="mt-1 text-[12px] font-medium leading-none tracking-tight">
                     {dayMarkShort(mark)}
                   </span>
                 )
@@ -211,7 +213,7 @@ export function DiaryCalendarView({
                   setPicked(null);
                   onEmptyDayTap?.(d);
                 }}
-                className="h-11 rounded-xl bg-elec-yellow px-4 text-[13.5px] font-bold text-black touch-manipulation"
+                className="h-11 rounded-xl border border-white bg-white px-4 text-[13.5px] font-semibold text-black touch-manipulation"
               >
                 {picked === today ? 'Log today' : 'Log this day'}
               </button>

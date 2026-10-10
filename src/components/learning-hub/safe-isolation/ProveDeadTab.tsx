@@ -24,7 +24,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
           </Button>
           <div>
             <h1 className="text-base font-semibold text-white">Prove Dead Method</h1>
-            <p className="text-[10px] text-white">GS38 · Reg 714.537 · EAW Reg 14</p>
+            <p className="text-[12px] text-white">GS38 · Reg 714.537 · EAW Reg 14</p>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
               <div className={`absolute inset-x-0 top-0 h-[2px] ${step.accent}`} />
               <p className={`text-lg font-bold ${step.titleCol}`}>{step.num}</p>
               <p className={`text-[12px] font-bold ${step.titleCol} mt-1`}>{step.title}</p>
-              <p className="text-[11px] text-white mt-1.5 leading-relaxed">{step.desc}</p>
+              <p className="text-[12px] text-white mt-1.5 leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -59,8 +59,8 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
       {/* Single-phase */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div className="px-0.5">
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Single-Phase Testing Order</h2>
-          <p className="text-[11px] text-white mt-0.5">Always test earth connections first</p>
+          <h2 className="text-[12px] font-medium text-white">Single-Phase Testing Order</h2>
+          <p className="text-[12px] text-white mt-0.5">Always test earth connections first</p>
         </div>
         <div className="space-y-2">
           {[
@@ -76,7 +76,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
                   <span className="font-mono font-bold text-white text-[15px]">{item.test}</span>
                   <p className="text-[12px] text-white mt-0.5">{item.label}</p>
                 </div>
-                <span className="text-[11px] text-white font-medium shrink-0">= 0V</span>
+                <span className="text-[12px] text-white font-medium shrink-0">= 0V</span>
               </div>
             </div>
           ))}
@@ -86,8 +86,8 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
       {/* 3-Phase Matrix */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div className="px-0.5">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider">3-Phase Test Matrix</h2>
-          <p className="text-[11px] text-white mt-0.5">10 tests required between all conductors</p>
+          <h2 className="text-xs font-medium text-white">3-Phase Test Matrix</h2>
+          <p className="text-[12px] text-white mt-0.5">10 tests required between all conductors</p>
         </div>
         <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] p-4 overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 opacity-40" />
@@ -106,7 +106,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
                   <tr key={rowLabel}>
                     <td className="p-2 text-white font-bold">{rowLabel}</td>
                     {conductors.map((colLabel, colIdx) => {
-                      if (colIdx === rowIdx) return <td key={colLabel} className="p-2 text-center text-white/30">&mdash;</td>;
+                      if (colIdx === rowIdx) return <td key={colLabel} className="p-2 text-center text-white">&mdash;</td>;
                       if (colIdx > rowIdx) return <td key={colLabel} className="p-2" />;
                       if (isRequired(rowIdx, colIdx)) return (
                         <td key={colLabel} className="p-2 text-center">
@@ -161,7 +161,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/60 rounded-l-2xl" />
             <p className="text-[13px] font-bold text-red-400">{item.title}</p>
             <p className="text-[12px] text-white mt-1 leading-relaxed">{item.detail}</p>
-            {item.reg && <p className="text-[10px] text-white mt-1.5 font-medium">Reg {item.reg}</p>}
+            {item.reg && <p className="text-[12px] text-white mt-1.5 font-medium">Reg {item.reg}</p>}
           </div>
         ))}
       </motion.section>

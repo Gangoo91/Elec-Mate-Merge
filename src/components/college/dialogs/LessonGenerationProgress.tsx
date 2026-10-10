@@ -5,7 +5,7 @@ import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY } from '@/components/college/ui/Colleg
 
 /** The landing-page card surface, edge to edge on a phone (same as the list and start sheet). */
 const COLLEGE_CARD =
-  '-mx-4 card-surface rounded-none border-y border-white/[0.08] p-5 sm:mx-0 sm:rounded-2xl sm:border sm:p-6';
+  '-mx-4 card-surface max-sm:!rounded-none max-sm:!border-x-0 border-y border-white/[0.08] p-5 sm:mx-0 sm:rounded-2xl sm:border sm:p-6';
 import type { GeneratedActivity, GeneratedLessonPlan } from '@/hooks/useCurriculum';
 import {
   friendlyGenerationError,
@@ -469,7 +469,7 @@ function Sources({
                           {r.topic ?? 'Untitled section'}
                         </span>
                         {showCited && isCited && (
-                          <span className="shrink-0 rounded-full border border-white/[0.2] px-2 py-0.5 text-[11px] font-semibold text-white">
+                          <span className="shrink-0 rounded-full border border-white/[0.2] px-2 py-0.5 text-[12px] font-semibold text-white">
                             Cited
                           </span>
                         )}
@@ -537,7 +537,7 @@ function Objectives({ plan }: { plan: Partial<GeneratedLessonPlan> | null }) {
             <div className="min-w-0 flex-1">
               <p className="text-[13.5px] leading-relaxed text-white">{o.text}</p>
               {Array.isArray(o.ac_codes) && o.ac_codes.length > 0 && (
-                <p className="mt-0.5 font-mono text-[11.5px] tabular-nums text-white">
+                <p className="mt-0.5 font-mono text-[12px] tabular-nums text-white">
                   AC{' '}
                   {o.ac_codes
                     .filter(Boolean)
@@ -769,7 +769,7 @@ function Outcome({
           <summary className="inline-flex h-11 cursor-pointer items-center text-[12.5px] font-semibold text-white touch-manipulation">
             Technical detail
           </summary>
-          <p className="break-words font-mono text-[11.5px] text-white">{s.error}</p>
+          <p className="break-words font-mono text-[12px] text-white">{s.error}</p>
         </details>
         <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
           <button type="button" onClick={onRetry} className={COLLEGE_BTN_PRIMARY}>

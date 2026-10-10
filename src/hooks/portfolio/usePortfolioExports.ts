@@ -31,10 +31,12 @@ export interface PortfolioExport {
   error: string | null;
   created_at: string;
   completed_at: string | null;
+  /** Evidence pack made with "Leave out photos of people and site addresses". */
+  leave_out_photos_and_sites?: boolean | null;
 }
 
 const COLS =
-  'id, learner_id, kind, status, progress, requested_by_name, requested_role, zip_path, pdf_path, zip_bytes, pdf_pages, file_count, counts, error, created_at, completed_at';
+  'id, learner_id, kind, status, progress, requested_by_name, requested_role, zip_path, pdf_path, zip_bytes, pdf_pages, file_count, counts, error, created_at, completed_at, leave_out_photos_and_sites';
 
 /** A build older than this without finishing is treated as failed in the UI. */
 const STALE_MS = 10 * 60_000;
@@ -49,7 +51,8 @@ async function callFn<T>(body: Record<string, unknown>): Promise<T> {
     let msg = error.message;
     try {
       const ctx = (error as { context?: Response }).context;
-      if (ctx && typeof ctx.json === 'function') msg = ((await ctx.json()) as { error?: string }).error ?? msg;
+      if (ctx && typeof ctx.json === 'function')
+        msg = ((await ctx.json()) as { error?: string }).error ?? msg;
     } catch {
       /* keep the generic message */
     }
@@ -103,7 +106,11 @@ export function usePortfolioExports(
     else {
       setError(null);
       const rows = (data ?? []) as unknown as PortfolioExport[];
-      setExports(ownGatewayOnly ? rows.filter((e) => e.kind !== 'gateway_pack' || e.requested_role === 'learner') : rows);
+      setExports(
+        ownGatewayOnly
+          ? rows.filter((e) => e.kind !== 'gateway_pack' || e.requested_role === 'learner')
+          : rows
+      );
     }
     setLoading(false);
   }, [target, kinds, ownGatewayOnly]);
@@ -125,13 +132,15 @@ export function usePortfolioExports(
   }, [enabled, building, exports, load]);
 
   const start = useCallback(
-    async (kind: ExportKind) => {
+    async (kind: ExportKind, opts: { leaveOutPhotos?: boolean } = {}) => {
       setStarting(kind);
       try {
         const res = await callFn<{ id: string }>({
           action: 'create',
           kind,
           ...(learnerId ? { learnerId } : {}),
+          // Evidence pack only: leave every photo and the site addresses out of the PDF and ZIP.
+          ...(kind === 'evidence_pack' && opts.leaveOutPhotos ? { leaveOutPhotos: true } : {}),
         });
         await load();
         return res.id;
@@ -149,7 +158,17 @@ export function usePortfolioExports(
     await saveOrShareFile(res.url, name);
   }, []);
 
-  return { exports, loading, error, starting, building, start, download, reload: load, learnerUserId: target };
+  return {
+    exports,
+    loading,
+    error,
+    starting,
+    building,
+    start,
+    download,
+    reload: load,
+    learnerUserId: target,
+  };
 }
 
 // ── Gateway declarations ────────────────────────────────────────────────────
@@ -169,14 +188,25 @@ export interface SignedDeclaration {
 }
 
 export interface GatewayDeclarations {
-  standard: { route: string; code: string | null; title: string | null; assessment: string | null } | null;
+  standard: {
+    route: string;
+    code: string | null;
+    title: string | null;
+    assessment: string | null;
+  } | null;
   /** The wording version a new signature signs (epa_gateway_declarations.statement_version). */
   statement_version?: number;
   /** Where the employer confirmation wording is quoted from (ST0152 / ST1017 EPA plan), if any. */
   wording_source?: { title: string; url: string } | null;
   statements: Record<DeclarationKind, string>;
   signed: SignedDeclaration[];
-  employer_pending: { id: string; token: string | null; created_at: string; expires_at: string; requested_by_name: string | null } | null;
+  employer_pending: {
+    id: string;
+    token: string | null;
+    created_at: string;
+    expires_at: string;
+    requested_by_name: string | null;
+  } | null;
   snapshot: {
     learner_name?: string;
     employer_name?: string;

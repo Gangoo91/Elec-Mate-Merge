@@ -317,8 +317,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Escape route lighting</strong> — minimum 1 lux across the full width of escape
-                routes (corridors, stairways). Maintained or non-maintained fittings are both
+                <strong>Escape route lighting</strong> — minimum 1 lux across the full width of
+                escape routes (corridors, stairways). Maintained or non-maintained fittings are both
                 acceptable; maintained is more common in restaurants as it doubles as decorative
                 lighting.
               </span>
@@ -594,8 +594,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AFDDs (Reg 421.1.7)</strong> — BS 7671:2018+A4:2026 Reg 421.1.7, introduced
-                by Amendment 4, recommends the installation of arc fault detection devices (AFDDs)
-                on AC final circuits of a fixed installation to mitigate fire risk from arc fault
+                in 2018, recommends the installation of arc fault detection devices (AFDDs) on AC
+                final circuits of a fixed installation to mitigate fire risk from arc fault
                 currents. Commercial catering kitchens — high fire-risk environments with concealed
                 wiring subject to mechanical wear, vermin, and moisture — are a prime candidate for
                 AFDD protection. While the regulation uses recommendatory wording, specifiers and
@@ -670,7 +670,7 @@ export default function RestaurantElectricalCostPage() {
       title="Restaurant Electrical Cost UK 2025/2026"
       description="Restaurant electrical installation costs UK 2025/2026. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1."
       datePublished="2025-01-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Cost Guide"

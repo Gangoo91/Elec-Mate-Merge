@@ -2,9 +2,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow } from '@/components/hub/HubPrimitives';
-import { HubSubPage } from '@/components/hub/HubSubPage';
+import { LC_TILE } from '@/components/apprentice-hub/college-hub/learnerUi';
+import { GuideFacts, GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { itemVariants } from '@/components/college/primitives';
 import {
   TOOLS_GUIDE_BASE,
@@ -47,18 +46,15 @@ const ToolChapterPage = ({ slug, children }: ToolChapterPageProps) => {
   const stats = CHAPTER_STATS[slug];
 
   return (
-    <HubSubPage title={chapter.label} backTo={TOOLS_GUIDE_BASE} description={chapter.blurb}>
+    <GuidePage
+      area="Tool guide"
+      title={chapter.label}
+      backTo={TOOLS_GUIDE_BASE}
+      description={chapter.blurb}
+    >
       {/* Counted from the arrays this page renders — a chapter cannot advertise
           a total it does not go on to show. */}
-      {stats && (
-        <motion.div variants={itemVariants}>
-          <HubKpiRow>
-            {stats.map((s) => (
-              <HubKpi key={s.label} label={s.label} value={s.value} accent={s.accent} />
-            ))}
-          </HubKpiRow>
-        </motion.div>
-      )}
+      {stats && <GuideFacts items={stats.map((s) => ({ label: s.label, value: s.value }))} />}
 
       <motion.div variants={itemVariants} className="space-y-4 sm:space-y-5">
         {children}
@@ -72,11 +68,9 @@ const ToolChapterPage = ({ slug, children }: ToolChapterPageProps) => {
         {prev ? (
           <Link
             to={chapterHref(prev.slug)}
-            className={cn(CARD_BASE, CARD_NEUTRAL, 'group px-4 py-3.5 sm:p-5')}
+            className={cn(LC_TILE, 'min-h-[72px] px-4 py-3.5 sm:p-5')}
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-              Previous · {prev.number}
-            </span>
+            <span className="text-[13px] font-semibold text-white">Previous · {prev.number}</span>
             <span className="mt-1.5 flex items-center gap-1.5 text-[15px] font-semibold tracking-tight text-white">
               <ArrowRight aria-hidden className="h-4 w-4 rotate-180 text-elec-yellow" />
               {prev.label}
@@ -89,15 +83,9 @@ const ToolChapterPage = ({ slug, children }: ToolChapterPageProps) => {
         {next && (
           <Link
             to={chapterHref(next.slug)}
-            className={cn(
-              CARD_BASE,
-              CARD_NEUTRAL,
-              'group px-4 py-3.5 text-right sm:p-5 sm:col-start-2'
-            )}
+            className={cn(LC_TILE, 'min-h-[72px] px-4 py-3.5 text-right sm:col-start-2 sm:p-5')}
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-              Next · {next.number}
-            </span>
+            <span className="text-[13px] font-semibold text-white">Next · {next.number}</span>
             <span className="mt-1.5 flex items-center justify-end gap-1.5 text-[15px] font-semibold tracking-tight text-white">
               {next.label}
               <ArrowRight aria-hidden className="h-4 w-4 text-elec-yellow" />
@@ -105,7 +93,7 @@ const ToolChapterPage = ({ slug, children }: ToolChapterPageProps) => {
           </Link>
         )}
       </motion.nav>
-    </HubSubPage>
+    </GuidePage>
   );
 };
 

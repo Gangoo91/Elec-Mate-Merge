@@ -10,9 +10,9 @@ import { captureException } from '../_shared/sentry.ts';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
-type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
+type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks' | 'freeagent';
 
-const VALID_PROVIDERS: AccountingProvider[] = ['xero', 'sage', 'quickbooks', 'freshbooks'];
+const VALID_PROVIDERS: AccountingProvider[] = ['xero', 'sage', 'quickbooks', 'freshbooks', 'freeagent'];
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {

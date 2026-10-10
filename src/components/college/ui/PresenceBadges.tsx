@@ -39,7 +39,7 @@ export function PresenceBadges({
 
   const shown = others.slice(0, max);
   const overflow = others.length - shown.length;
-  const size = compact ? 'h-5 w-5 text-[8.5px]' : 'h-6 w-6 text-[10px]';
+  const size = compact ? 'h-5 w-5 text-[8.5px]' : 'h-6 w-6 text-[12px]';
 
   return (
     <div
@@ -77,7 +77,7 @@ export function PresenceBadges({
       <span
         className={cn(
           'font-semibold text-amber-200 uppercase tracking-[0.06em]',
-          compact ? 'text-[9.5px]' : 'text-[10.5px]'
+          compact ? 'text-[12px]' : 'text-[12px]'
         )}
       >
         {others.length === 1

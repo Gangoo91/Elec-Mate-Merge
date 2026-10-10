@@ -1,15 +1,11 @@
 /**
- * The four numbers that say how study is going (ELE-1655).
+ * "Your progress" on the flashcards page (10 Oct 2026 redesign).
  *
- * Rebuilt on the shared card surface as a divided stat strip — the same
- * treatment the rest of the app gives a row of figures — instead of a grey
- * panel with `text-white` labels. Labels are the standard eyebrow, values
- * are `statValueCn`, and the whole thing reaches the edges of a phone.
+ * The streak and cards due are already at the top of the page, so this is the
+ * long view: how many cards you've reviewed, how many decks you've fully
+ * mastered, and how much of everything you know. One panel, plain labels,
+ * one bar.
  */
-import { cn } from '@/lib/utils';
-import { eyebrowCn, statValueCn } from '@/components/shared/surfaceStyles';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-
 interface WeeklyProgressCardProps {
   totalCardsReviewed: number;
   currentStreak: number;
@@ -20,39 +16,44 @@ interface WeeklyProgressCardProps {
 
 const WeeklyProgressCard = ({
   totalCardsReviewed,
-  currentStreak,
   masteredSetsCount,
   totalSets,
   overallProgress,
-}: WeeklyProgressCardProps) => {
-  const metrics = [
-    { label: 'Reviewed', value: totalCardsReviewed.toLocaleString() },
-    { label: 'Streak', value: String(currentStreak) },
-    { label: 'Mastered', value: `${masteredSetsCount}/${totalSets}` },
-    { label: 'Overall', value: `${overallProgress}%` },
-  ];
-
-  return (
-    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
-      <div className="grid grid-cols-4 divide-x divide-white/[0.14]">
-        {metrics.map((m) => (
-          <div key={m.label} className="px-3 py-3.5 sm:px-4">
-            <span className={cn(eyebrowCn, 'block leading-tight')}>{m.label}</span>
-            <p className={cn(statValueCn, 'text-white')}>{m.value}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="px-4 pb-4">
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.10]">
+}: WeeklyProgressCardProps) => (
+  <section className="space-y-3" aria-labelledby="fc-progress">
+    <h2 id="fc-progress" className="text-[18px] font-bold tracking-tight text-white sm:text-[20px]">
+      Your progress
+    </h2>
+    <div className="rounded-2xl border border-white/[0.1] bg-white/[0.03] p-5">
+      <dl className="grid grid-cols-2 gap-4">
+        <div>
+          <dt className="text-[12.5px] font-medium text-white">Cards reviewed</dt>
+          <dd className="mt-1 text-[24px] font-bold tabular-nums text-white">
+            {totalCardsReviewed.toLocaleString()}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-[12.5px] font-medium text-white">Decks mastered</dt>
+          <dd className="mt-1 text-[24px] font-bold tabular-nums text-white">
+            {masteredSetsCount}
+            <span className="ml-1 text-[14px] font-medium">of {totalSets}</span>
+          </dd>
+        </div>
+      </dl>
+      <div className="mt-5">
+        <p className="flex items-baseline justify-between text-[13px] font-medium text-white">
+          <span>Everything mastered so far</span>
+          <span className="font-semibold tabular-nums">{overallProgress}%</span>
+        </p>
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.1]">
           <div
-            className="h-full rounded-full bg-elec-yellow transition-[width] duration-500"
-            style={{ width: `${overallProgress}%` }}
+            className="h-full rounded-full bg-emerald-400 transition-[width] duration-500"
+            style={{ width: `${Math.max(overallProgress, overallProgress > 0 ? 2 : 0)}%` }}
           />
         </div>
       </div>
     </div>
-  );
-};
+  </section>
+);
 
 export default WeeklyProgressCard;

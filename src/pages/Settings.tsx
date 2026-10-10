@@ -37,6 +37,8 @@ import {
   type HubTool,
 } from '@/components/hub/HubPrimitives';
 import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY } from '@/components/ui/card-recipe';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { ROLE_ACCESS } from '@/lib/roleAccess';
 
 // Tabs load on demand. Statically importing all eight pulled the Elec-ID
 // suite, the twelve business sheets and the security section into the
@@ -49,6 +51,7 @@ const PreferencesTab = lazy(() => import('@/components/settings/PreferencesTab')
 const PrivacyTab = lazy(() => import('@/components/settings/PrivacyTab'));
 const BillingTab = lazy(() => import('@/components/settings/BillingTab'));
 const ReferralsTab = lazy(() => import('@/components/settings/ReferralsTab'));
+const FirmAccessTab = lazy(() => import('@/components/settings/FirmAccessTab'));
 import SettingsReadiness, { useBusinessReadiness } from '@/components/settings/SettingsReadiness';
 import SettingsSearch from '@/components/settings/SettingsSearch';
 
@@ -60,14 +63,60 @@ interface SettingsTab {
 }
 
 const SETTINGS_TABS: SettingsTab[] = [
-  { id: 'account', label: 'Account', description: 'Profile, sign-in and security', component: AccountTab },
-  { id: 'elec-id', label: 'Elec-ID', description: 'Your digital identity card', component: ElecIdTab },
-  { id: 'business', label: 'Business', description: 'Company, rates, instruments and branding', component: BusinessTab },
-  { id: 'billing', label: 'Billing', description: 'Subscription and payments', component: BillingTab },
-  { id: 'notifications', label: 'Notifications', description: 'Push alerts, categories and quiet hours', component: NotificationsTab },
-  { id: 'preferences', label: 'App', description: 'Dashboard hubs and certificate defaults', component: PreferencesTab },
-  { id: 'privacy', label: 'Privacy', description: 'Data controls and analytics', component: PrivacyTab },
-  { id: 'referrals', label: 'Refer a Mate', description: 'A free month for you and your mate', component: ReferralsTab },
+  {
+    id: 'account',
+    label: 'Account',
+    description: 'Profile, sign-in and security',
+    component: AccountTab,
+  },
+  {
+    id: 'elec-id',
+    label: 'Elec-ID',
+    description: 'Your digital identity card',
+    component: ElecIdTab,
+  },
+  {
+    id: 'business',
+    label: 'Business',
+    description: 'Company, rates, instruments and branding',
+    component: BusinessTab,
+  },
+  {
+    id: 'billing',
+    label: 'Billing',
+    description: 'Subscription and payments',
+    component: BillingTab,
+  },
+  {
+    id: 'notifications',
+    label: 'Notifications',
+    description: 'Push alerts, categories and quiet hours',
+    component: NotificationsTab,
+  },
+  {
+    id: 'preferences',
+    label: 'App',
+    description: 'Dashboard hubs and certificate defaults',
+    component: PreferencesTab,
+  },
+  {
+    id: 'privacy',
+    label: 'Privacy',
+    description: 'Data controls and analytics',
+    component: PrivacyTab,
+  },
+  {
+    id: 'referrals',
+    label: 'Refer a Mate',
+    description: 'A free month for you and your mate',
+    component: ReferralsTab,
+  },
+  {
+    id: 'access',
+    label: 'Your firm access',
+    description: "Why can't I see this? What your role in the firm can and can't see",
+    component: FirmAccessTab,
+  },
 ];
 
 const TIER_NAMES: Record<string, string> = {
@@ -115,8 +164,8 @@ const SettingsPage = () => {
   }, [searchParams, setSearchParams, queryClient]);
 
   const rawTab = searchParams.get('tab');
-  const tabId = rawTab ? TAB_ALIASES[rawTab] ?? rawTab : null;
-  const activeTab = tabId ? SETTINGS_TABS.find((t) => t.id === tabId) ?? null : null;
+  const tabId = rawTab ? (TAB_ALIASES[rawTab] ?? rawTab) : null;
+  const activeTab = tabId ? (SETTINGS_TABS.find((t) => t.id === tabId) ?? null) : null;
 
   const openTab = (id: string) => setSearchParams({ tab: id }, { replace: false });
   const backToOverview = () => {
@@ -131,12 +180,13 @@ const SettingsPage = () => {
   };
 
   const isBusinessRole = profile?.role === 'electrician' || profile?.role === 'employer';
+  const { data: employerRole } = useEmployerRole();
   const readiness = useBusinessReadiness(isBusinessRole);
   const { isActivated: elecIdActive, isLoading: elecIdLoading } = useElecIdProfile();
 
   const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Your account';
   // Tier ids are storage values ('electrician_yearly', 'employer'); show a name.
-  const tierLabel = isSubscribed ? TIER_NAMES[subscriptionTier ?? ''] ?? 'Pro' : 'Free';
+  const tierLabel = isSubscribed ? (TIER_NAMES[subscriptionTier ?? ''] ?? 'Pro') : 'Free';
 
   const profileCards = useMemo<HubTool[]>(() => {
     const warn = readiness.outstanding.find((i) => i.warn);
@@ -146,7 +196,12 @@ const SettingsPage = () => {
         ? 'Fully set up'
         : `${readiness.doneCount} of ${readiness.total} set up`;
     return [
-      { id: 'account', title: 'Account', description: 'Profile, sign-in and security', onClick: () => openTab('account') },
+      {
+        id: 'account',
+        title: 'Account',
+        description: 'Profile, sign-in and security',
+        onClick: () => openTab('account'),
+      },
       {
         id: 'elec-id',
         title: 'Elec-ID',
@@ -172,13 +227,57 @@ const SettingsPage = () => {
       },
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [readiness.loading, readiness.doneCount, readiness.total, readiness.outstanding, isBusinessRole, isSubscribed, tierLabel, elecIdActive, elecIdLoading]);
+  }, [
+    readiness.loading,
+    readiness.doneCount,
+    readiness.total,
+    readiness.outstanding,
+    isBusinessRole,
+    isSubscribed,
+    tierLabel,
+    elecIdActive,
+    elecIdLoading,
+  ]);
 
+  // ELE-1831: anyone in a firm (other than a sole trader) gets "Why can't I see this?".
+  const firmRole = employerRole?.role ?? null;
+  const showFirmAccess = !!firmRole && (firmRole !== 'owner' || profile?.role === 'employer');
   const appCards: HubTool[] = [
-    { id: 'notifications', title: 'Notifications', description: 'Push alerts, categories and quiet hours', onClick: () => openTab('notifications') },
-    { id: 'preferences', title: 'App', description: 'Dashboard hubs and certificate defaults', onClick: () => openTab('preferences') },
-    { id: 'privacy', title: 'Privacy', description: 'Data controls and analytics', onClick: () => openTab('privacy') },
-    { id: 'referrals', title: 'Refer a Mate', description: 'A free month for you and your mate', onClick: () => openTab('referrals') },
+    ...(showFirmAccess
+      ? [
+          {
+            id: 'access',
+            title: 'Your firm access',
+            description: "Why can't I see this? What your role can see",
+            meta: ROLE_ACCESS[firmRole!].label,
+            onClick: () => openTab('access'),
+          },
+        ]
+      : []),
+    {
+      id: 'notifications',
+      title: 'Notifications',
+      description: 'Push alerts, categories and quiet hours',
+      onClick: () => openTab('notifications'),
+    },
+    {
+      id: 'preferences',
+      title: 'App',
+      description: 'Dashboard hubs and certificate defaults',
+      onClick: () => openTab('preferences'),
+    },
+    {
+      id: 'privacy',
+      title: 'Privacy',
+      description: 'Data controls and analytics',
+      onClick: () => openTab('privacy'),
+    },
+    {
+      id: 'referrals',
+      title: 'Refer a Mate',
+      description: 'A free month for you and your mate',
+      onClick: () => openTab('referrals'),
+    },
   ];
 
   /* ── Sub-page ─────────────────────────────────────────────────────── */
@@ -193,7 +292,9 @@ const SettingsPage = () => {
           </p>
           {activeTab.id === 'business' && isBusinessRole && (
             <SettingsReadiness
-              onOpenBusiness={(sheet) => setSearchParams({ tab: 'business', sheet }, { replace: true })}
+              onOpenBusiness={(sheet) =>
+                setSearchParams({ tab: 'business', sheet }, { replace: true })
+              }
             />
           )}
           <motion.div

@@ -29,10 +29,8 @@ import {
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
-import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
+import { TeachTabs, TeachingScreen } from '@/components/college/teaching/TeachingKit';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useStudentIlp } from '@/hooks/useStudentIlp';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
@@ -42,37 +40,55 @@ interface AIILPGeneratorSectionProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
-type Risk = 'critical' | 'high' | 'medium' | 'low';
-const RISK_RANK: Record<Risk, number> = { critical: 40, high: 25, medium: 10, low: 0 };
+type Risk = 'critical' | 'high' | 'medium' | 'low' | 'none';
+const RISK_RANK: Record<Risk, number> = { critical: 40, high: 25, medium: 10, low: 0, none: 0 };
 const RISK_LABEL: Record<Risk, string> = {
   critical: 'Critical risk',
   high: 'High risk',
   medium: 'Medium risk',
   low: 'Low risk',
+  none: 'No risk score',
 };
 
+/** A learner with no risk score is "No risk score", never quietly "Low". */
 const riskOf = (level: string | null | undefined): Risk => {
   const l = (level ?? '').toLowerCase();
-  return l === 'critical' || l === 'high' || l === 'medium' ? l : 'low';
+  return l === 'critical' || l === 'high' || l === 'medium' || l === 'low' ? l : 'none';
 };
+
+/** Status chip: border and text only. */
+const STATUS_CHIP =
+  'inline-flex h-6 shrink-0 items-center whitespace-nowrap rounded-full border px-2.5 text-[12px] font-semibold';
 
 interface PickedStudent {
   id: string;
   name: string;
 }
 
-
 const HELP: PageHelpContent = {
   id: 'college-ilp-drafts',
   title: 'Draft learning plans',
   what: 'Drafts an individual learning plan for a learner from what their record already holds: attendance, criteria coverage, observations, off-the-job hours, end-point judgements and any earlier plan. It is written by AI; you review and edit it before anything is saved.',
   steps: [
-    { title: 'Start at the top', body: 'Learners with no plan come first, then overdue reviews, then by risk.' },
-    { title: 'Draft and review', body: 'Tap a learner. The draft streams in; change any goal or strategy before you save.' },
-    { title: 'Save to their plan', body: 'Saving writes the plan and goals to the learner\'s record, where you review it with them.' },
+    {
+      title: 'Start at the top',
+      body: 'Learners with no plan come first, then overdue reviews, then by risk.',
+    },
+    {
+      title: 'Draft and review',
+      body: 'Tap a learner. The draft streams in; change any goal or strategy before you save.',
+    },
+    {
+      title: 'Save to their plan',
+      body: "Saving writes the plan and goals to the learner's record, where you review it with them.",
+    },
   ],
   legend: [
-    { swatch: 'bg-orange-400', label: 'Orange', body: 'high or critical risk, no plan, or review overdue' },
+    {
+      swatch: 'bg-orange-400',
+      label: 'Orange',
+      body: 'high or critical risk, no plan, or review overdue',
+    },
   ],
 };
 
@@ -88,8 +104,11 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
     () =>
       students.map((s) => {
         const sessions = attendance.filter((a) => a.student_id === s.id);
-        const present = sessions.filter((a) => a.status === 'Present' || a.status === 'Late').length;
-        const attendanceRate = sessions.length > 0 ? Math.round((present / sessions.length) * 100) : null;
+        const present = sessions.filter(
+          (a) => a.status === 'Present' || a.status === 'Late'
+        ).length;
+        const attendanceRate =
+          sessions.length > 0 ? Math.round((present / sessions.length) * 100) : null;
 
         const studentIlps = ilps.filter((i) => i.student_id === s.id);
         const latestIlp = studentIlps[0] ?? null;
@@ -113,7 +132,11 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
   const filtered = useMemo(
     () =>
       summaries
-        .filter((s) => (!q || s.name.toLowerCase().includes(q)) && (filterRisk === 'all' || s.risk === filterRisk))
+        .filter(
+          (s) =>
+            (!q || s.name.toLowerCase().includes(q)) &&
+            (filterRisk === 'all' || s.risk === filterRisk)
+        )
         // Priorities to the top: no ILP, then overdue review, then risk.
         .sort((a, b) => {
           const score = (s: typeof a) =>
@@ -134,59 +157,68 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
 
   const top = filtered[0];
 
+  // Say plainly that AI writes the draft, then the counts the old tiles held.
+  const summary = [
+    'AI drafts a learner\u2019s individual learning plan from their record. You check and edit it before anything is saved.',
+    isLoading
+      ? ''
+      : stats.noIlp > 0
+        ? `${stats.noIlp} ${stats.noIlp === 1 ? 'learner has' : 'learners have'} no plan yet.`
+        : 'Every learner has a plan.',
+    !isLoading && stats.overdue > 0
+      ? `${stats.overdue} ${stats.overdue === 1 ? 'plan is' : 'plans are'} past review.`
+      : '',
+    !isLoading && stats.highRisk > 0 ? `${stats.highRisk} at high or critical risk.` : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <TeachingScreen>
       <CollegePageHeader
         eyebrow="Learning plans"
         title="Draft learning plans"
-        description="Draft a learner's individual learning plan from their record. You review it before anything is saved."
+        description={summary}
         help={HELP}
         actions={
           top ? (
-            <button type="button" onClick={() => setPicked({ id: top.id, name: top.name })} className={COLLEGE_BTN_PRIMARY}>
+            <button
+              type="button"
+              onClick={() => setPicked({ id: top.id, name: top.name })}
+              className={cn(COLLEGE_BTN_PRIMARY, 'w-full sm:w-auto')}
+            >
               Draft a plan for {top.name.split(' ')[0]}
             </button>
           ) : undefined
         }
       />
 
-      <CollegeStats
-        items={[
-          { label: 'No plan yet', value: String(stats.noIlp), sub: stats.noIlp > 0 ? 'draft these first' : 'every learner has a plan', warn: stats.noIlp > 0 },
-          { label: 'Review overdue', value: String(stats.overdue), sub: stats.overdue > 0 ? 'a fresh draft gets you back on track' : 'reviews on schedule', warn: stats.overdue > 0 },
-          {
-            label: 'High or critical risk',
-            value: String(stats.highRisk),
-            sub: stats.critical > 0 ? `${stats.critical} critical` : stats.highRisk > 0 ? 'plans need support strategies' : 'nobody flagged high',
-            warn: stats.highRisk > 0,
-            onClick: () => setFilterRisk(stats.critical > 0 ? 'critical' : 'high'),
-          },
-          { label: 'On the roll', value: String(stats.total), sub: 'learners' },
-        ]}
-      />
-
       <section className="space-y-4">
-        <CollegeSectionTitle title="Learners" sub="No plan first, then overdue reviews, then by risk. Tap one to draft." />
+        <CollegeSectionTitle
+          title="Learners"
+          sub="No plan first, then overdue reviews, then by risk. Tap one to draft."
+        />
 
-        <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:items-center">
+        <div className="space-y-3">
           <input
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by learner"
             aria-label="Search learners"
-            className="h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
+            className="h-11 w-full lg:max-w-md rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
           />
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 lg:justify-end">
-            <button type="button" onClick={() => setFilterRisk('all')} className={chipCn(filterRisk === 'all')}>
-              All · {stats.total}
-            </button>
-            {(['critical', 'high', 'medium', 'low'] as const).map((r) => (
-              <button key={r} type="button" onClick={() => setFilterRisk(r)} className={chipCn(filterRisk === r)}>
-                {RISK_LABEL[r]} · {stats.countOf(r)}
-              </button>
-            ))}
-          </div>
+          <TeachTabs
+            label="Risk"
+            value={filterRisk}
+            onChange={setFilterRisk}
+            tabs={[
+              { value: 'all' as const, label: 'All', count: stats.total },
+              ...(['critical', 'high', 'medium', 'low', 'none'] as const)
+                .filter((r) => r !== 'none' || stats.countOf('none') > 0)
+                .map((r) => ({ value: r, label: RISK_LABEL[r], count: stats.countOf(r) })),
+            ]}
+          />
         </div>
 
         {isLoading ? (
@@ -195,17 +227,23 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
           </div>
         ) : filtered.length === 0 ? (
           <CollegeEmpty
-            title={summaries.length === 0 ? 'No learners on the roll yet' : 'Nothing matches these filters'}
-            body={summaries.length === 0 ? 'Add learners under People to draft their plans.' : 'Clear the search or pick All.'}
+            title={
+              summaries.length === 0
+                ? 'No learners on the roll yet'
+                : 'Nothing matches these filters'
+            }
+            body={
+              summaries.length === 0
+                ? 'Add learners under People to draft their plans.'
+                : 'Clear the search or pick All.'
+            }
           />
         ) : (
-          <motion.ul variants={itemVariants} className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0')}>
+          <motion.ul
+            variants={itemVariants}
+            className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0')}
+          >
             {filtered.map((s) => {
-              const flags = [
-                s.hasNoIlp ? 'No plan' : null,
-                s.reviewOverdue ? 'Review overdue' : null,
-                s.attendanceRate !== null ? `attendance ${s.attendanceRate}%` : 'no attendance marks',
-              ].filter(Boolean);
               const problem = s.risk === 'critical' || s.risk === 'high';
               return (
                 <li key={s.id} className="lg:border-b lg:border-white/[0.06] lg:odd:border-r">
@@ -214,19 +252,38 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
                     onClick={() => setPicked({ id: s.id, name: s.name })}
                     className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
                   >
-                    <span
-                      aria-hidden="true"
-                      className={cn('h-9 w-1 shrink-0 rounded-full', problem || s.hasNoIlp || s.reviewOverdue ? 'bg-orange-400' : 'bg-white/[0.14]')}
-                    />
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">{s.name}</span>
-                      <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">{flags.join(' · ')}</span>
-                    </span>
-                    {s.risk !== 'low' && (
-                      <span className={cn('shrink-0 text-[12.5px] font-semibold', problem ? 'text-orange-400' : 'text-white')}>
-                        {RISK_LABEL[s.risk]}
+                      <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+                        <span className="truncate text-[14.5px] font-semibold leading-tight text-white">
+                          {s.name}
+                        </span>
+                        {s.hasNoIlp && (
+                          <span className={cn(STATUS_CHIP, 'border-orange-400/60 text-orange-300')}>
+                            No plan
+                          </span>
+                        )}
+                        {s.reviewOverdue && (
+                          <span className={cn(STATUS_CHIP, 'border-orange-400/60 text-orange-300')}>
+                            Review overdue
+                          </span>
+                        )}
                       </span>
-                    )}
+                      <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">
+                        {s.attendanceRate !== null
+                          ? `Attendance ${s.attendanceRate}%`
+                          : 'No attendance marks yet'}
+                      </span>
+                    </span>
+                    <span
+                      className={cn(
+                        STATUS_CHIP,
+                        problem
+                          ? 'border-orange-400/60 text-orange-300'
+                          : 'border-white/[0.16] text-white'
+                      )}
+                    >
+                      {RISK_LABEL[s.risk]}
+                    </span>
                     <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                   </button>
                 </li>
@@ -236,7 +293,13 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
         )}
       </section>
 
-      {picked && <PickedSheet studentId={picked.id} studentName={picked.name} onClose={() => setPicked(null)} />}
+      {picked && (
+        <PickedSheet
+          studentId={picked.id}
+          studentName={picked.name}
+          onClose={() => setPicked(null)}
+        />
+      )}
     </TeachingScreen>
   );
 }

@@ -168,7 +168,8 @@ const ComplianceDashboard = ({
           <Stat label="Next review" value="A5 — 2029" subtitle="Provisional cycle" />
         </dl>
         <p className="mt-3 pt-3 border-t border-white/[0.06] text-[11.5px] leading-relaxed text-white/85">
-          A4:2026 introduces mandatory AFDD on socket circuits in HMOs + care premises, restricts
+          A4:2026 rewords the AFDD premises list (required on socket circuits in high rise
+          residential buildings, HMOs, student accommodation and care homes since A2:2022), restricts
           TN-C-S (PNB) on EV/PV new-builds, and updates Schedule of Tests headers — refresh CPD
           should cover all three.
         </p>

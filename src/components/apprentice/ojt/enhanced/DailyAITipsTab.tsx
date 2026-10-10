@@ -44,9 +44,7 @@ const DailyAITipsTab = () => {
   if (isEmpty) {
     return (
       <div className="px-4 sm:px-6 py-10 sm:py-14 text-center max-w-md mx-auto space-y-3">
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
-          Daily focus
-        </div>
+        <div className="text-[13px] font-semibold text-elec-yellow">Daily focus</div>
         <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
           Your tips kick in once you start practising.
         </h2>
@@ -77,7 +75,7 @@ const DailyAITipsTab = () => {
       {/* Editorial header — today's date + a one-line summary of why these
           specific tips have surfaced today. */}
       <div className="space-y-2">
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
+        <div className="text-[13px] font-semibold text-elec-yellow">
           {today} · Personalised for you
         </div>
         <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight max-w-xl">
@@ -112,7 +110,7 @@ const DailyAITipsTab = () => {
       </div>
 
       {/* Footnote — reminds them this is real data, not generic content */}
-      <p className="text-[10.5px] text-white leading-relaxed max-w-xl">
+      <p className="text-[12.5px] text-white leading-relaxed max-w-xl">
         Tips refresh as your training record updates. AM2 scores, portfolio uploads, OTJ logs and
         college attendance all feed this view.
       </p>
@@ -150,7 +148,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
       className={cn(
         'rounded-2xl border overflow-hidden',
         isPriority
-          ? 'border-elec-yellow/35 bg-gradient-to-br from-elec-yellow/[0.06] to-elec-yellow/[0.01]'
+          ? 'border-elec-yellow/40 bg-gradient-to-b from-white/[0.07] to-white/[0.025]'
           : 'border-white/[0.12] bg-white/[0.06]'
       )}
     >
@@ -158,15 +156,13 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
         {/* Eyebrow row */}
         <div className="flex items-baseline justify-between gap-2 flex-wrap">
           <div className="flex items-baseline gap-2">
-            <span className="text-[10px] font-mono tabular-nums text-elec-yellow/70">
+            <span className="text-[12.5px] tabular-nums text-elec-yellow">
               {String(index + 1).padStart(2, '0')}
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-              {tip.eyebrow}
-            </span>
+            <span className="text-[13px] font-semibold text-elec-yellow">{tip.eyebrow}</span>
           </div>
           {isPriority && (
-            <span className="inline-flex items-center gap-1 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-elec-yellow/85 bg-white/[0.05] border border-elec-yellow/30 px-2 py-0.5 rounded-full">
+            <span className="inline-flex items-center gap-1 text-[13px] font-semibold text-elec-yellow bg-white/[0.05] border border-white/[0.08] px-2 py-0.5 rounded-full">
               <Sparkles className="h-2.5 w-2.5" />
               Top priority
             </span>
@@ -186,7 +182,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
           <button
             type="button"
             onClick={() => onRegClick(tip.regNumber!)}
-            className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-elec-yellow underline decoration-elec-yellow/30 decoration-[1.5px] underline-offset-[3px] hover:decoration-elec-yellow/80 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow underline decoration-elec-yellow/30 decoration-[1.5px] underline-offset-[3px] hover:decoration-elec-yellow/80 transition-colors touch-manipulation"
           >
             <BookOpen className="h-3 w-3" />
             Reg {tip.regNumber}
@@ -199,7 +195,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
             type="button"
             onClick={onAction}
             className={cn(
-              'inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-semibold touch-manipulation transition-colors',
+              'inline-flex items-center gap-1.5 h-11 px-3.5 rounded-lg text-[12px] font-semibold touch-manipulation transition-colors',
               isPriority
                 ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                 : 'bg-white/[0.06] text-white hover:bg-white/[0.10] border border-white/[0.08]'
@@ -212,7 +208,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
             <button
               type="button"
               onClick={onAskDave}
-              className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-medium text-white hover:text-white bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] touch-manipulation transition-colors"
+              className="inline-flex items-center gap-1.5 h-11 px-3.5 rounded-lg text-[12px] font-medium text-white hover:text-white bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] touch-manipulation transition-colors"
             >
               Ask Dave
             </button>

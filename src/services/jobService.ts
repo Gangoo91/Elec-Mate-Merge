@@ -67,6 +67,8 @@ export interface Job {
   recurring_contract_id?: string | null;
   /** ELE-1821: the previous visit, for the crew's Last visit card. */
   previous_visit_job_id?: string | null;
+  /** ELE-1834: credentials the crew must hold between them (competence matrix keys). */
+  required_credentials?: string[] | null;
   /** ELE-1824: kind of job, for margin by type and hours history. */
   job_type?: string | null;
 }

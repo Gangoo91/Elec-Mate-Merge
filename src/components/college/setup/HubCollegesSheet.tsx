@@ -19,6 +19,7 @@ import {
   loadConsole,
   type ConsoleData,
 } from '@/components/college/setup/HubCollegeAccess';
+import { CollegeAccessRequestsAdmin, CollegeBillingAdmin } from '@/components/college/setup/CollegeBillingAdmin';
 
 /* ==========================================================================
    HubCollegesSheet — Admin → Colleges → Hub colleges (ELE-1855, ELE-1899).
@@ -312,6 +313,9 @@ export function HubCollegesSheet({
       </section>
 
       <div className="space-y-8">
+        {/* ELE-1924 / ELE-1922 */}
+        <CollegeAccessRequestsAdmin />
+        <CollegeBillingAdmin />
         {consoleData && <EndingSoonList data={consoleData} />}
         {consoleData && <MonthlyAccessList data={consoleData} />}
         <section className="space-y-4">

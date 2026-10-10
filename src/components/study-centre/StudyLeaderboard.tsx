@@ -63,7 +63,7 @@ export function StudyLeaderboard() {
         // RPC might not exist yet — fall back to simple query
         console.warn('Leaderboard RPC not available, using fallback query');
         const { data: fallbackData } = await supabase
-          .from('profiles')
+          .from('public_profiles')
           .select('id, full_name, avatar_url, leaderboard_visible')
           .eq('leaderboard_visible', true)
           .not('full_name', 'is', null)

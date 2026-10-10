@@ -49,7 +49,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
         <Button
           onClick={calculateCableSize}
-          className="w-full sm:flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
+          className="w-full sm:flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white"
           disabled={hasErrors}
         >
           <Calculator className="h-4 w-4 mr-2" />
@@ -67,7 +67,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Project Information */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Project information
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -123,7 +123,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Load Requirements */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Load requirements
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -141,7 +141,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               className={`${inputClass} ${errors.current ? 'border-red-500' : ''}`}
             />
             {errors.current && (
-              <div className="text-[11px] text-red-300 mt-1 flex items-center gap-1">
+              <div className="text-[12px] text-red-300 mt-1 flex items-center gap-1">
                 <AlertTriangle className="h-3 w-3" />
                 {errors.current}
               </div>
@@ -243,7 +243,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Circuit Details */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Circuit details
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -261,7 +261,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               className={`${inputClass} ${errors.length ? 'border-red-500' : ''}`}
             />
             {errors.length && (
-              <div className="text-[11px] text-red-300 mt-1 flex items-center gap-1">
+              <div className="text-[12px] text-red-300 mt-1 flex items-center gap-1">
                 <AlertTriangle className="h-3 w-3" />
                 {errors.length}
               </div>
@@ -309,7 +309,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Installation Environment */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Installation environment
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -380,7 +380,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Cable Preferences */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Cable preferences
         </span>
         <div>
@@ -417,7 +417,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Protection */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Protection
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -503,7 +503,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
       {/* Error Summary */}
       {hasErrors && (
         <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+          <span className="text-[12px] font-medium text-red-300">
             Please fix the following errors
           </span>
           <div className="space-y-1">

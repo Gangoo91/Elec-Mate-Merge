@@ -102,6 +102,10 @@ export function AIQuoteSheet({
   const [labour, setLabour] = useState<AIQuoteLabour[]>([]);
   const [materials, setMaterials] = useState<AIQuoteMaterial[]>([]);
   const [scope, setScope] = useState('');
+  // ELE-2060: CIS is only deducted when the customer is a contractor under
+  // CIS (never a homeowner) and the firm is not gross. The firm default is a
+  // starting point; the person drafting decides per quote.
+  const [cisChoice, setCisChoice] = useState<boolean | null>(null);
   const runSeq = useRef(0);
 
   const job = jobs.find((j) => j.id === jobId) ?? null;
@@ -113,6 +117,7 @@ export function AIQuoteSheet({
     setResult(null);
     setError(null);
     setNotes('');
+    setCisChoice(null);
     if (initialJobId) {
       setMode('job');
       setJobId(initialJobId);
@@ -190,6 +195,7 @@ export function AIQuoteSheet({
 
   const firm = result?.context.firm;
   const vatRate = firm ? firmVatRate(firm) : 20;
+  const deductCis = cisChoice ?? !!firm?.cisEnabled;
   const totals = calcEmployerTotals(
     [
       ...labour.map((l) => ({ total: round2(l.hours * l.rate), type: 'labour' })),
@@ -198,7 +204,7 @@ export function AIQuoteSheet({
     {
       vatRate,
       reverseCharge: !!firm?.reverseCharge,
-      cisEnabled: !!firm?.cisEnabled,
+      cisEnabled: deductCis,
       cisRate: 20,
     }
   );
@@ -265,7 +271,7 @@ export function AIQuoteSheet({
       notes: null,
       vat_rate: vatRate,
       reverse_charge: firm.reverseCharge,
-      cis_enabled: firm.cisEnabled,
+      cis_enabled: deductCis,
       cis_rate: 20,
       subtotal: totals.subtotal,
       vat_amount: totals.vatAmount,
@@ -284,8 +290,8 @@ export function AIQuoteSheet({
         vatRate,
         vatRegistered: vatRate > 0,
         reverseCharge: firm.reverseCharge,
-        cisEnabled: firm.cisEnabled,
-        ...(firm.cisEnabled ? { cisRate: 20 } : {}),
+        cisEnabled: deductCis,
+        ...(deductCis ? { cisRate: 20 } : {}),
       },
     });
   };
@@ -651,8 +657,31 @@ export function AIQuoteSheet({
                   </div>
                 )}
               </dl>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={deductCis}
+                onClick={() => setCisChoice(!deductCis)}
+                className="flex min-h-11 w-full touch-manipulation items-center justify-between gap-3 rounded-lg border border-white/[0.1] bg-white/[0.03] px-3 py-2 text-left"
+              >
+                <span className="min-w-0">
+                  <span className="block text-[13px] font-medium text-white">Deduct CIS at 20%</span>
+                  <span className="block text-[12px] text-white">
+                    Only when your customer is a contractor under CIS. Never for a homeowner, and
+                    not if you have gross payment status.
+                  </span>
+                </span>
+                <span
+                  className={cn(
+                    'shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold',
+                    deductCis ? 'bg-elec-yellow text-black' : 'border border-white/20 text-white'
+                  )}
+                >
+                  {deductCis ? 'On' : 'Off'}
+                </span>
+              </button>
               <p className="text-[12px] text-white">
-                VAT and CIS follow your firm settings. Change them in the quote builder.
+                VAT follows your firm settings. Change it in the quote builder.
               </p>
             </section>
 

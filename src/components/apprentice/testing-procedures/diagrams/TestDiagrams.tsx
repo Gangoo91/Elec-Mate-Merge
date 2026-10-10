@@ -64,10 +64,10 @@ export const R1R2Diagram = () => (
 
       {/* Temporary link between line and cpc */}
       <path d="M108 80 H88 V160 H108" className={ACCENT} fill="none" strokeWidth={2.5} />
-      <text x={44} y={124} textAnchor="middle" className="fill-elec-yellow text-[11px] font-medium">
+      <text x={44} y={124} textAnchor="middle" className="fill-elec-yellow text-[12px] font-medium">
         temporary
       </text>
-      <text x={44} y={137} textAnchor="middle" className="fill-elec-yellow text-[11px] font-medium">
+      <text x={44} y={137} textAnchor="middle" className="fill-elec-yellow text-[12px] font-medium">
         link
       </text>
 
@@ -79,7 +79,7 @@ export const R1R2Diagram = () => (
       <text x={210} y={70} className="fill-white text-[12px] font-medium">
         line — R₁
       </text>
-      <text x={210} y={112} className="fill-white/70 text-[11px]">
+      <text x={210} y={112} className="fill-white/70 text-[12px]">
         neutral — not measured
       </text>
       <text x={210} y={180} className="fill-white text-[12px] font-medium">
@@ -95,7 +95,7 @@ export const R1R2Diagram = () => (
       <text x={387} y={196} textAnchor="middle" className="fill-white text-[12px] font-semibold">
         reads R₁ + R₂
       </text>
-      <text x={330} y={210} textAnchor="middle" className="fill-white/70 text-[11px]">
+      <text x={330} y={210} textAnchor="middle" className="fill-white/70 text-[12px]">
         at each point on the circuit
       </text>
     </svg>
@@ -117,7 +117,7 @@ export const WanderLeadDiagram = () => (
 
       {/* Wander lead */}
       <path d="M120 95 C 190 95, 190 60, 250 60" className={ACCENT} fill="none" strokeWidth={2.5} />
-      <text x={185} y={44} textAnchor="middle" className="fill-elec-yellow text-[11px] font-medium">
+      <text x={185} y={44} textAnchor="middle" className="fill-elec-yellow text-[12px] font-medium">
         wander lead
       </text>
 
@@ -127,7 +127,7 @@ export const WanderLeadDiagram = () => (
       <text x={386} y={142} textAnchor="middle" className="fill-white text-[12px] font-medium">
         earth terminal
       </text>
-      <text x={386} y={158} textAnchor="middle" className="fill-white/70 text-[11px]">
+      <text x={386} y={158} textAnchor="middle" className="fill-white/70 text-[12px]">
         at each point
       </text>
     </svg>
@@ -159,10 +159,10 @@ export const RingFinalDiagram = () => (
       <path d="M126 96 L152 150" className={ACCENT} fill="none" strokeWidth={2.5} />
       <path d="M126 150 L152 96" className={ACCENT} fill="none" strokeWidth={2.5} />
       {/* Sits directly under the crossing; any lower and it crowds the meter. */}
-      <text x={139} y={174} textAnchor="middle" className="fill-elec-yellow text-[11px] font-medium">
+      <text x={139} y={174} textAnchor="middle" className="fill-elec-yellow text-[12px] font-medium">
         cross-
       </text>
-      <text x={139} y={187} textAnchor="middle" className="fill-elec-yellow text-[11px] font-medium">
+      <text x={139} y={187} textAnchor="middle" className="fill-elec-yellow text-[12px] font-medium">
         connected
       </text>
 
@@ -192,7 +192,7 @@ export const RingFinalDiagram = () => (
           strokeWidth={1.5}
         />
       ))}
-      <text x={240} y={82} textAnchor="middle" className="fill-white text-[11px] font-medium">
+      <text x={240} y={82} textAnchor="middle" className="fill-white text-[12px] font-medium">
         socket-outlets on the ring
       </text>
 
@@ -234,31 +234,31 @@ export const InsulationResistanceDiagram = () => (
       <line x1={130} y1={115} x2={130} y2={170} className={FAINT} strokeWidth={2} strokeDasharray="4 4" />
       <line x1={122} y1={134} x2={138} y2={150} className="stroke-red-400" strokeWidth={2} />
       <line x1={138} y1={134} x2={122} y2={150} className="stroke-red-400" strokeWidth={2} />
-      <text x={130} y={200} textAnchor="middle" className="fill-white text-[11px] font-medium">
+      <text x={130} y={200} textAnchor="middle" className="fill-white text-[12px] font-medium">
         N–E link
       </text>
-      <text x={130} y={214} textAnchor="middle" className="fill-white text-[11px] font-medium">
+      <text x={130} y={214} textAnchor="middle" className="fill-white text-[12px] font-medium">
         removed
       </text>
 
       {/* Test 1: L–N */}
       <path d="M225 60 V115" className={ACCENT} fill="none" strokeWidth={2} />
       <circle cx={225} cy={87} r={13} className={`${ACCENT} fill-black/60`} strokeWidth={1.5} />
-      <text x={225} y={91} textAnchor="middle" className="fill-elec-yellow text-[9px] font-semibold">MΩ</text>
-      <text x={225} y={44} textAnchor="middle" className="fill-white text-[11px] font-medium">L–N</text>
+      <text x={225} y={91} textAnchor="middle" className="fill-elec-yellow text-[12px] font-semibold">MΩ</text>
+      <text x={225} y={44} textAnchor="middle" className="fill-white text-[12px] font-medium">L–N</text>
 
       {/* Test 2: L–E. The meter deliberately sits above the N conductor rather
           than on it — centred on the crossing it reads as a tap into neutral. */}
       <path d="M300 60 V170" className={ACCENT} fill="none" strokeWidth={2} />
       <circle cx={300} cy={88} r={13} className={`${ACCENT} fill-black/60`} strokeWidth={1.5} />
-      <text x={300} y={92} textAnchor="middle" className="fill-elec-yellow text-[9px] font-semibold">MΩ</text>
-      <text x={300} y={44} textAnchor="middle" className="fill-white text-[11px] font-medium">L–E</text>
+      <text x={300} y={92} textAnchor="middle" className="fill-elec-yellow text-[12px] font-semibold">MΩ</text>
+      <text x={300} y={44} textAnchor="middle" className="fill-white text-[12px] font-medium">L–E</text>
 
       {/* Test 3: N–E */}
       <path d="M370 115 V170" className={ACCENT} fill="none" strokeWidth={2} />
       <circle cx={370} cy={142} r={13} className={`${ACCENT} fill-black/60`} strokeWidth={1.5} />
-      <text x={370} y={146} textAnchor="middle" className="fill-elec-yellow text-[9px] font-semibold">MΩ</text>
-      <text x={370} y={200} textAnchor="middle" className="fill-white text-[11px] font-medium">N–E</text>
+      <text x={370} y={146} textAnchor="middle" className="fill-elec-yellow text-[12px] font-semibold">MΩ</text>
+      <text x={370} y={200} textAnchor="middle" className="fill-white text-[12px] font-medium">N–E</text>
     </svg>
   </Figure>
 );
@@ -280,7 +280,7 @@ export const ZsLoopDiagram = () => (
       />
       {/* Labelled below the loop, not beside it — centred on the coil they sat
           on top of the left-hand conductor. */}
-      <text x={54} y={206} textAnchor="middle" className="fill-white text-[11px] font-medium">
+      <text x={54} y={206} textAnchor="middle" className="fill-white text-[12px] font-medium">
         supply transformer
       </text>
 
@@ -290,19 +290,19 @@ export const ZsLoopDiagram = () => (
 
       {/* Origin of the installation */}
       <line x1={186} y1={40} x2={186} y2={200} className={FAINT} strokeWidth={1.5} strokeDasharray="5 5" />
-      <text x={186} y={32} textAnchor="middle" className="fill-white text-[11px] font-medium">
+      <text x={186} y={32} textAnchor="middle" className="fill-white text-[12px] font-medium">
         origin
       </text>
 
       <text x={115} y={78} textAnchor="middle" className="fill-white text-[12px] font-semibold">Ze</text>
-      <text x={115} y={94} textAnchor="middle" className="fill-white/70 text-[10px]">external</text>
+      <text x={115} y={94} textAnchor="middle" className="fill-white/70 text-[12px]">external</text>
       <text x={275} y={78} textAnchor="middle" className="fill-white text-[12px] font-semibold">R₁</text>
       <text x={275} y={176} textAnchor="middle" className="fill-white text-[12px] font-semibold">R₂</text>
 
       {/* Fault point */}
       <circle cx={360} cy={120} r={16} className="stroke-red-400 fill-black/50" strokeWidth={2} />
       <text x={360} y={125} textAnchor="middle" className="fill-red-300 text-[12px] font-semibold">F</text>
-      <text x={392} y={124} className="fill-white text-[11px] font-medium">fault</text>
+      <text x={392} y={124} className="fill-white text-[12px] font-medium">fault</text>
 
       <text x={220} y={224} textAnchor="middle" className="fill-elec-yellow text-[14px] font-semibold">
         Zs = Ze + (R₁ + R₂)
@@ -325,13 +325,13 @@ export const PolarityDiagram = () => (
       <circle cx={192} cy={62} r={3.5} className="fill-elec-yellow" />
       <line x1={192} y1={62} x2={300} y2={62} className={ACCENT} strokeWidth={2.5} />
       <text x={16} y={66} textAnchor="middle" className="fill-white text-[13px] font-semibold">L</text>
-      <text x={168} y={32} textAnchor="middle" className="fill-elec-yellow text-[11px] font-medium">
+      <text x={168} y={32} textAnchor="middle" className="fill-elec-yellow text-[12px] font-medium">
         in the line
       </text>
 
       <line x1={30} y1={104} x2={300} y2={104} className={FAINT} strokeWidth={2} />
       <text x={16} y={108} textAnchor="middle" className="fill-white text-[13px] font-semibold">N</text>
-      <text x={165} y={122} textAnchor="middle" className="fill-white/70 text-[11px]">
+      <text x={165} y={122} textAnchor="middle" className="fill-white/70 text-[12px]">
         neutral runs unbroken
       </text>
 
@@ -359,7 +359,7 @@ export const PolarityDiagram = () => (
       <text x={62} y={248} className="fill-white text-[12px] font-medium">
         neutral
       </text>
-      <text x={190} y={264} textAnchor="middle" className="fill-white/70 text-[11px]">
+      <text x={190} y={264} textAnchor="middle" className="fill-white/70 text-[12px]">
         screw shell
       </text>
     </svg>

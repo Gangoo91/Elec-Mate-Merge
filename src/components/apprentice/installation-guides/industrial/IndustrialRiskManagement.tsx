@@ -645,19 +645,19 @@ const IndustrialRiskManagement = () => {
 
       <Tabs defaultValue="atex" className="w-full">
         <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-1 h-auto">
-          <TabsTrigger value="atex" className="text-xs px-2 py-2">
+          <TabsTrigger value="atex" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             ATEX/DSEAR
           </TabsTrigger>
-          <TabsTrigger value="zones" className="text-xs px-2 py-2">
+          <TabsTrigger value="zones" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Zone Classification
           </TabsTrigger>
-          <TabsTrigger value="permits" className="text-xs px-2 py-2">
+          <TabsTrigger value="permits" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Permits & Isolation
           </TabsTrigger>
-          <TabsTrigger value="arcflash" className="text-xs px-2 py-2">
+          <TabsTrigger value="arcflash" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Arc Flash
           </TabsTrigger>
-          <TabsTrigger value="special" className="text-xs px-2 py-2">
+          <TabsTrigger value="special" className="px-2 py-2 min-h-11 whitespace-normal text-[13px] text-white touch-manipulation data-[state=active]:bg-white data-[state=active]:text-black">
             Height & Confined
           </TabsTrigger>
         </TabsList>
@@ -792,7 +792,7 @@ const IndustrialRiskManagement = () => {
               </div>
 
               {/* Marking Example */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">Understanding ATEX Markings</h3>
                 <div className="bg-white/[0.06] p-3 rounded mb-3">
                   <code className="text-elec-yellow text-lg font-mono">
@@ -830,7 +830,7 @@ const IndustrialRiskManagement = () => {
                       ? 'bg-white/[0.06] border-red-500/30'
                       : zone.colour === 'orange'
                         ? 'bg-white/[0.06] border-white/[0.10]'
-                        : 'bg-white/[0.06] border-elec-yellow/30'
+                        : 'bg-white/[0.06] border-white/[0.14]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -897,7 +897,7 @@ const IndustrialRiskManagement = () => {
                       ? 'bg-white/[0.06] border-red-500/30'
                       : zone.colour === 'orange'
                         ? 'bg-white/[0.06] border-white/[0.10]'
-                        : 'bg-white/[0.06] border-elec-yellow/30'
+                        : 'bg-white/[0.06] border-white/[0.14]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -1106,7 +1106,7 @@ const IndustrialRiskManagement = () => {
               ))}
 
               {/* Voltage Indicator Requirements */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">
                   Voltage Indicator Requirements (GS38)
                 </h3>
@@ -1125,7 +1125,7 @@ const IndustrialRiskManagement = () => {
 
         {/* Arc Flash Tab */}
         <TabsContent value="arcflash" className="space-y-4">
-          <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+          <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5">
             <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
                 <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Arc Flash Hazards & Protection</CardTitle>
@@ -1205,7 +1205,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Critical Warning */}
-          <Card className="border-red-500/50 bg-white/[0.06]">
+          <Card className="border-red-500/50 bg-white/[0.06] p-4 sm:p-5">
             <CardHeader className="p-0 pb-3">
               <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <AlertOctagon className="h-6 w-6" />
@@ -1385,7 +1385,7 @@ const IndustrialRiskManagement = () => {
               </div>
 
               {/* Requirements */}
-              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.14]">
                 <h3 className="font-bold text-white mb-3">Entry Requirements</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {confinedSpaces.requirements.map((req, i) => (
@@ -1400,7 +1400,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Emergency Procedures Warning */}
-          <Card className="border-red-500/50 bg-white/[0.06]">
+          <Card className="border-red-500/50 bg-white/[0.06] p-4 sm:p-5">
             <CardHeader className="p-0 pb-3">
               <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <Users className="h-6 w-6" />
@@ -1431,7 +1431,7 @@ const IndustrialRiskManagement = () => {
       </Tabs>
 
       {/* General Safety Notice */}
-      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5">
         <CardHeader className="p-0 pb-3">
           <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
             <Shield className="h-6 w-6" />

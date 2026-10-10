@@ -5,25 +5,25 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Regulation 411.3.4 wording and acceptance criteria match the canonical text.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const a4LuminaireRCDProtectionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
   title:
-    'BS 7671 A4:2026 Luminaire RCD (Reg 411.3.4)',
+    'Reg 411.3.4 Luminaire RCD: A 2018 Rule, Not New in A4',
   description:
-    'Amendment 4 introduced Regulation 411.3.4: AC final circuits supplying luminaires in domestic premises require additional 30 mA RCD protection.',
+    'Regulation 411.3.4 has required 30 mA RCD protection on AC luminaire circuits in dwellings since BS 7671:2018. It is unchanged in A4:2026. Scope and EICR coding.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,
-  badge: 'A4:2026 Change',
+  badge: 'BS 7671:2018+A4:2026',
   badgeIcon: 'ShieldCheck',
-  breadcrumbLabel: 'A4 Luminaire RCD Protection',
-  heroPrefix: 'BS 7671 A4:2026',
+  breadcrumbLabel: 'Luminaire RCD Protection',
+  heroPrefix: 'BS 7671 Reg 411.3.4',
   heroHighlight: 'Luminaire RCD',
-  heroSuffix: 'Protection (411.3.4)',
+  heroSuffix: 'Protection (Since 2018)',
   heroSubtitle:
-    'Amendment 4 (January 2026) added Regulation 411.3.4 to BS 7671:2018: AC final circuits supplying luminaires in domestic premises must have additional protection by a 30 mA RCD. This guide explains the scope, the inspection evidence required, the EICR item 5.12 entry, and how to remediate non-compliant installations.',
+    'Regulation 411.3.4 came in with BS 7671:2018 itself, not with Amendment 4, and it carries into BS 7671:2018+A4:2026 unchanged: AC final circuits supplying luminaires in domestic premises must have additional protection by a 30 mA RCD. This guide explains the scope, the inspection evidence required, the EICR item 5.12 entry, and how to remediate non-compliant installations.',
   keyTakeaways: [
     'Regulation 411.3.4 mandates additional RCD protection (≤ 30 mA residual operating current) on AC final circuits supplying luminaires in domestic premises.',
     'The requirement is limited to domestic (household) premises — non-domestic and commercial premises are not in scope of this specific regulation.',
@@ -35,13 +35,13 @@ export const a4LuminaireRCDProtectionConfig: GeneratedGuideConfig = {
   sections: [
     {
       id: 'what-changed',
-      heading: 'What Amendment 4 Added',
+      heading: 'What the Regulation Requires (Since 2018)',
       tocLabel: 'What changed',
       blocks: [
         {
           type: 'paragraph',
           text:
-            'BS 7671:2018+A4:2026, published 15 April 2026, introduced Regulation 411.3.4. The regulation is a direct mandatory requirement using "shall" — there is no discretionary language. The text applies wherever the conditions are met.',
+            'Regulation 411.3.4 is often described as new in A4:2026, but the printed book lists it among the changes in the original BS 7671:2018 (issued 1 July 2018). A4:2026, published 15 April 2026, carries it forward. The regulation is a direct mandatory requirement using "shall" — there is no discretionary language. The text applies wherever the conditions are met.',
         },
         {
           type: 'callout',
@@ -53,7 +53,7 @@ export const a4LuminaireRCDProtectionConfig: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Before A4:2026, RCD additional protection was mandatory for socket-outlet circuits (Regulation 411.3.3) and for cables concealed in walls without earthed metallic covering (Regulation 522.6.202). Luminaire final circuits were not specifically covered by an RCD mandate — A4 closed that gap.',
+            'Before BS 7671:2018, RCD additional protection was mandatory for socket-outlet circuits (Regulation 411.3.3) and for cables concealed in walls without earthed metallic covering (Regulation 522.6.202). Luminaire final circuits were not specifically covered by an RCD mandate. The 18th Edition closed that gap.',
         },
       ],
     },

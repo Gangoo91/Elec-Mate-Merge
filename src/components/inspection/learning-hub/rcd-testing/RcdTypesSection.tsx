@@ -53,7 +53,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Types */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">RCD Types — What They Detect</p>
+          <p className="text-[12px] font-medium text-white mb-3">RCD Types — What They Detect</p>
         </motion.div>
 
         {rcdTypes.map((rcd, i) => (
@@ -93,7 +93,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
 
         {/* Sensitivity ratings */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Sensitivity Ratings</p>
+          <p className="text-[12px] font-medium text-white mb-3">Sensitivity Ratings</p>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -120,7 +120,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
 
         {/* Time characteristics */}
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Time Characteristics</p>
+          <p className="text-[12px] font-medium text-white mb-3">Time Characteristics</p>
         </motion.div>
 
         {timeCharacteristics.map((tc, i) => (

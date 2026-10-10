@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The AM2 is the practical End Point Assessment for electrical apprentices completing the Installation Electrician/Maintenance Electrician apprenticeship standard (ST0215). It is administered by EMTA (Engineering and Manufacturing Training Association) at EMTA-approved assessment centres.',
+  'The AM2 is the practical End Point Assessment for electrical apprentices completing the Installation Electrician/Maintenance Electrician apprenticeship standard (ST0152). It is administered by EMTA (Engineering and Manufacturing Training Association) at EMTA-approved assessment centres.',
   'The AM2 covers five practical tasks: installation to a wiring diagram, inspection and testing, commissioning, fault diagnosis, and environmental considerations. Candidates must complete all tasks within strict time limits.',
   'The overall AM2 pass rate is approximately 70–75% on first attempt. The most common reasons for failure are poor time management, inadequate testing sequence knowledge, and loose or missing terminations.',
   'Booking the AM2 requires the candidate to hold a completed NVQ portfolio demonstrating on-the-job competence, and the employer or training provider to confirm the candidate is ready for End Point Assessment.',
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'What is the difference between the AM2 and AM2S?',
     answer:
-      'The AM2 is the original practical assessment for apprentices completing the Level 3 NVQ Diploma in Electrotechnical Technology. The AM2S (AM2 for Standards) is the practical assessment specifically designed for apprentices completing the Installation Electrician/Maintenance Electrician apprenticeship standard (ST0215), introduced following the trailblazer apprenticeship reforms. AM2S includes additional containment work — steel and PVC conduit installation — that is not required in the original AM2. The AM2S takes approximately 16.5 hours over 2.5 days; the original AM2 takes approximately 8.5 hours. Most new apprentices starting from 2017 onwards will be completing AM2S rather than AM2. Check with your college or employer which version you are registered for.',
+      'The AM2 is the original practical assessment for apprentices completing the Level 3 NVQ Diploma in Electrotechnical Technology. The AM2S (AM2 for Standards) is the practical assessment specifically designed for apprentices completing the Installation Electrician/Maintenance Electrician apprenticeship standard (ST0152), introduced following the trailblazer apprenticeship reforms. AM2S includes additional containment work — steel and PVC conduit installation — that is not required in the original AM2. The AM2S takes approximately 16.5 hours over 2.5 days; the original AM2 takes approximately 8.5 hours. Most new apprentices starting from 2017 onwards will be completing AM2S rather than AM2. Check with your college or employer which version you are registered for.',
   },
   {
     question: 'Who administers the AM2 and where can I take it?',
@@ -141,7 +141,7 @@ const sections = [
         <p>
           The AM2 (Achievement Measure 2) is the practical End Point Assessment for electrical
           apprentices in England completing the Installation Electrician/Maintenance Electrician
-          apprenticeship standard (ST0215). It is the final hurdle before an apprentice achieves
+          apprenticeship standard (ST0152). It is the final hurdle before an apprentice achieves
           their full electrical qualification and can apply for a JIB ECS Gold Card (Electrician
           level).
         </p>
@@ -459,7 +459,7 @@ export default function AM2AssessmentPrepPage() {
       title="AM2 Assessment Preparation Guide: EMTA Practical"
       description="Complete preparation guide for the AM2 practical assessment for electrical apprentices. What the AM2 covers, how to book, pass rate."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

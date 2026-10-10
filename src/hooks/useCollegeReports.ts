@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { getActingCollegeId } from '@/hooks/college/useCollegeAccess';
+import { fetchGatesMany, gateSummary, gateWords, type Gates } from '@/hooks/college/useGatesMany';
 
 /* ==========================================================================
    useCollegeReports — data fetchers for every CSV report in the
@@ -41,16 +42,25 @@ export interface CohortProgressRow {
   cohort_name: string | null;
   student_name: string;
   status: string;
-  progress_percent: number;
   risk_level: string | null;
-  ac_total: number;
-  ac_signed_off: number;
-  ac_signed_off_pct: number;
+  /** Criteria on the learner's qualification; null when they have not joined. */
+  ac_total: number | null;
+  /** Passed or IQA confirmed. */
+  ac_passed: number | null;
+  ac_passed_pct: number | null;
+  ac_submitted: number | null;
+  ac_needs_more: number | null;
 }
 
 export interface EpaReadinessRow {
   cohort_name: string | null;
   student_name: string;
+  /** From get_gateway_readiness: "Ready for gateway", "3 of 9 gateway lines met". */
+  gateway: string;
+  /** For the breakdown chart: Ready for gateway, Lines still open, ... */
+  gateway_state: string;
+  /** From the gate's criteria line (get_portfolio_ac_state): "4 of 340". */
+  criteria_passed: string | null;
   epa_status: string | null;
   gateway_date: string | null;
   weeks_to_gateway: number | null;
@@ -103,7 +113,9 @@ async function callerCollegeId(): Promise<string | null> {
     .eq('id', userId)
     .maybeSingle();
   // White-glove: a platform admin acting for a college reads THAT college.
-  return getActingCollegeId() ?? (profile as { college_id?: string | null } | null)?.college_id ?? null;
+  return (
+    getActingCollegeId() ?? (profile as { college_id?: string | null } | null)?.college_id ?? null
+  );
 }
 
 /** Off-the-job hours per learner over a date window. */
@@ -279,7 +291,7 @@ export async function fetchCohortProgressReport(
 
   let studentQ = supabase
     .from('college_students')
-    .select('id, name, status, progress_percent, risk_level, cohort_id')
+    .select('id, name, status, risk_level, cohort_id')
     .eq('college_id', collegeId);
   if (filters.cohortId) studentQ = studentQ.eq('cohort_id', filters.cohortId);
   const { data: students } = await studentQ;
@@ -295,32 +307,44 @@ export async function fetchCohortProgressReport(
     .in('id', cohortIds);
   const cohortMap = new Map((cohorts ?? []).map((c: any) => [c.id, c.name as string]));
 
-  // AC coverage rollup per student via student_ac_coverage view/table
-  const { data: cov } = await supabase
-    .from('student_ac_coverage')
-    .select('student_id, status')
-    .in('student_id', studentIds);
-
-  type CovBucket = { total: number; signed: number };
-  const covMap = new Map<string, CovBucket>();
-  for (const c of (cov ?? []) as Array<{ student_id: string; status: string }>) {
-    const b = covMap.get(c.student_id) ?? { total: 0, signed: 0 };
-    b.total += 1;
-    if (c.status === 'signed_off' || c.status === 'assessed') b.signed += 1;
-    covMap.set(c.student_id, b);
-  }
+  // Criteria state per learner from get_portfolio_ac_state, the same count as
+  // the portfolio and Student 360 (8 Oct 2026). This read student_ac_coverage,
+  // which counts claimed work and stops at 1,000 rows, plus the typed-in
+  // progress_percent.
+  const { data: overview } = await (
+    supabase.rpc as unknown as (
+      fn: string,
+      args: Record<string, unknown>
+    ) => Promise<{ data: unknown; error: { message: string } | null }>
+  )('college_portfolio_overview', { p_college_id: collegeId });
+  type Counts = {
+    total: number;
+    passed: number;
+    iqa_confirmed: number;
+    submitted: number;
+    referred: number;
+    iqa_rejected: number;
+  };
+  const critMap = new Map<string, Counts | null>();
+  for (const l of (
+    overview as { learners?: Array<{ student_id: string; criteria: Counts | null }> } | null
+  )?.learners ?? [])
+    critMap.set(l.student_id, l.criteria);
 
   return ((students ?? []) as Array<any>).map((s) => {
-    const b = covMap.get(s.id) ?? { total: 0, signed: 0 };
+    const c = critMap.get(s.id) ?? null;
+    const passed = c ? c.passed + c.iqa_confirmed : null;
     return {
       cohort_name: cohortMap.get(s.cohort_id) ?? null,
       student_name: s.name,
       status: s.status,
-      progress_percent: s.progress_percent ?? 0,
       risk_level: s.risk_level,
-      ac_total: b.total,
-      ac_signed_off: b.signed,
-      ac_signed_off_pct: b.total > 0 ? Math.round((b.signed / b.total) * 100) : 0,
+      ac_total: c ? c.total : null,
+      ac_passed: passed,
+      ac_passed_pct:
+        c && c.total > 0 && passed !== null ? Math.round((passed / c.total) * 100) : null,
+      ac_submitted: c ? c.submitted : null,
+      ac_needs_more: c ? c.referred + c.iqa_rejected : null,
     };
   });
 }
@@ -343,7 +367,12 @@ export async function fetchEpaReadinessReport(filters: ReportFilters): Promise<E
   // nothing — every EPA readiness export came back empty.
   const rowIds = (students as Array<{ id: string }>).map((s) => s.id);
 
-  const [{ data: epaRows }, { data: cohorts }, { data: fsRows }] = await Promise.all([
+  // The real gate per learner (8 Oct 2026). The EPA record's status is the
+  // stage someone set; the gateway column is what the record shows.
+  const gateUserIds = (students as Array<{ user_id: string | null }>)
+    .map((s) => s.user_id)
+    .filter((u): u is string => !!u);
+  const [{ data: epaRows }, { data: cohorts }, { data: fsRows }, gates] = await Promise.all([
     supabase
       .from('college_epa')
       .select('student_id, status, gateway_date, result')
@@ -368,6 +397,7 @@ export async function fetchEpaReadinessReport(filters: ReportFilters): Promise<E
         'student_id',
         (students as Array<{ id: string }>).map((s) => s.id)
       ),
+    fetchGatesMany(gateUserIds).catch(() => ({}) as Gates),
   ]);
 
   const epaByStudent = new Map((epaRows ?? []).map((e: any) => [e.student_id, e]));
@@ -396,9 +426,21 @@ export async function fetchEpaReadinessReport(filters: ReportFilters): Promise<E
             (7 * 86_400_000)
         )
       : null;
+    const gate = s.user_id ? gateSummary(gates[s.user_id]) : null;
     return {
       cohort_name: cohortMap.get(s.cohort_id) ?? null,
       student_name: s.name,
+      gateway: s.user_id ? gateWords(gate) : 'No app account',
+      gateway_state: !s.user_id
+        ? 'No app account'
+        : !gate
+          ? 'Gateway not checked'
+          : gate.passed
+            ? 'Gateway passed'
+            : gate.allMet
+              ? 'Ready for gateway'
+              : 'Lines still open',
+      criteria_passed: gate?.criteria ? `${gate.criteria.passed} of ${gate.criteria.total}` : null,
       epa_status: epa?.status ?? null,
       gateway_date: epa?.gateway_date ?? null,
       weeks_to_gateway: weeksToGateway,
@@ -426,7 +468,10 @@ export async function fetchEpaPassRateReport(filters: ReportFilters): Promise<Ep
   // college row id, so the pass-rate roll-up counted zero completions.
   const rowIds = (students as Array<{ id: string }>).map((s) => s.id);
 
-  const [{ data: epaRows }, { data: cohorts }] = await Promise.all([
+  const passUserIds = (students as Array<{ user_id: string | null }>)
+    .map((s) => s.user_id)
+    .filter((u): u is string => !!u);
+  const [{ data: epaRows }, { data: cohorts }, gates] = await Promise.all([
     rowIds.length > 0
       ? supabase.from('college_epa').select('student_id, status, result').in('student_id', rowIds)
       : Promise.resolve({ data: [] as any[], error: null }),
@@ -443,6 +488,7 @@ export async function fetchEpaPassRateReport(filters: ReportFilters): Promise<Ep
           )
         )
       ),
+    fetchGatesMany(passUserIds).catch(() => ({}) as Gates),
   ]);
 
   const epaByStudent = new Map(
@@ -475,12 +521,19 @@ export async function fetchEpaPassRateReport(filters: ReportFilters): Promise<Ep
     return fresh;
   };
 
-  for (const s of students as Array<{ id: string; cohort_id: string | null }>) {
+  for (const s of students as Array<{
+    id: string;
+    user_id: string | null;
+    cohort_id: string | null;
+  }>) {
     const b = getBucket(s.cohort_id);
     b.total_apprentices += 1;
     const epa = epaByStudent.get(s.id) ?? null;
-    if (epa?.status === 'Gateway Ready') b.gateway_ready += 1;
-    if (epa?.status === 'In Progress' || epa?.status === 'Pre-Gateway') b.in_progress += 1;
+    // Gateway ready: every line of the real gate met (not the typed stage).
+    // In progress: on the gate with lines still open.
+    const gate = s.user_id ? gateSummary(gates[s.user_id]) : null;
+    if (gate && !gate.passed && gate.allMet) b.gateway_ready += 1;
+    if (gate && !gate.passed && !gate.allMet && epa?.status !== 'Complete') b.in_progress += 1;
     if (epa?.status === 'Complete') {
       b.completed += 1;
       const r = (epa.result ?? '').toLowerCase();
@@ -584,21 +637,25 @@ export async function fetchQuizResultsReport(filters: ReportFilters): Promise<Qu
     id: string;
     quiz_id: string;
     student_id: string;
-    submitted_at: string;
+    completed_at: string;
     score: number | null;
     total_points: number | null;
   };
+  // tutor_quiz_attempts has no submitted_at: an attempt is handed in when
+  // completed_at is set. Selecting submitted_at made this report fail every
+  // time (8 Oct 2026). Unfinished attempts are left out.
   const attempts: AttemptRow[] = [];
   const PAGE = 1000;
   for (let from = 0; ; from += PAGE) {
     let aQ = supabase
       .from('tutor_quiz_attempts')
-      .select('id, quiz_id, student_id, submitted_at, score, total_points')
-      .in('student_id', userIds);
-    if (filters.startDate) aQ = aQ.gte('submitted_at', filters.startDate);
-    if (filters.endDate) aQ = aQ.lte('submitted_at', filters.endDate);
+      .select('id, quiz_id, student_id, completed_at, score, total_points')
+      .in('student_id', userIds)
+      .not('completed_at', 'is', null);
+    if (filters.startDate) aQ = aQ.gte('completed_at', filters.startDate);
+    if (filters.endDate) aQ = aQ.lte('completed_at', `${filters.endDate}T23:59:59.999`);
     const { data, error } = await aQ
-      .order('submitted_at', { ascending: false })
+      .order('completed_at', { ascending: false })
       .order('id', { ascending: true }) // unique tiebreaker — stable paging
       .range(from, from + PAGE - 1);
     if (error) throw error;
@@ -627,7 +684,7 @@ export async function fetchQuizResultsReport(filters: ReportFilters): Promise<Qu
     return {
       student_name: studentMap.get(a.student_id) ?? '—',
       quiz_title: q?.title ?? '—',
-      submitted_at: a.submitted_at,
+      submitted_at: a.completed_at,
       score: a.score,
       total_points: a.total_points,
       pct,

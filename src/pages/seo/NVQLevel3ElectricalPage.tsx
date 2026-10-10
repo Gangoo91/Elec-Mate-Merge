@@ -176,8 +176,8 @@ const sections = [
                 <strong>BS 7671:2018+A4:2026 knowledge required</strong> — while there is no written
                 exam, candidates are expected to demonstrate working knowledge of BS 7671 (the IET
                 Wiring Regulations, 18th Edition) during observations and assessor questioning. The
-                current edition is BS 7671:2018+A4:2026. Under the redrafted Regulation 421.1.7,
-                arc fault detection devices (AFDDs) conforming to BS EN 62606 must now be provided
+                current edition is BS 7671:2018+A4:2026. Since A2:2022, Regulation 421.1.7 has required
+                arc fault detection devices (AFDDs) conforming to BS EN 62606 to be provided
                 for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high
                 rise residential buildings, houses in multiple occupation, purpose-built student
                 accommodation and care homes; for all other premises AFDDs are recommended. NVQ
@@ -752,7 +752,7 @@ export default function NVQLevel3ElectricalPage() {
       title="NVQ Level 3 Electrical Installation UK: Guide"
       description="Complete guide to the NVQ Level 3 Electrotechnical Installation qualification. What it is, how it differs from City and Guilds 2365, who needs it."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualification Guide"

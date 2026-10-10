@@ -10,8 +10,8 @@ export interface WorkerLocation {
   id: string;
   employee_id: string;
   job_id: string | null;
-  lat: number;
-  lng: number;
+  lat: number | null;
+  lng: number | null;
   accuracy: number | null;
   status: WorkerStatus;
   checked_in_at: string | null;
@@ -111,8 +111,9 @@ export const updateWorkerLocation = async (
 export const checkInWorker = async (
   employeeId: string,
   jobId: string,
-  lat: number,
-  lng: number
+  // null = location unknown (ELE-1956): never substitute the office user's GPS
+  lat: number | null,
+  lng: number | null
 ): Promise<WorkerLocation> => {
   return updateWorkerLocation(employeeId, lat, lng, 'On Site', jobId);
 };

@@ -79,10 +79,8 @@ const FavouritesTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Quick access
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Quick access</span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {quickAccessDocuments.map((doc, index) => (
             <div
@@ -94,10 +92,10 @@ const FavouritesTab = () => {
                 <h4 className="text-[14px] font-medium text-white">{doc.name}</h4>
               </div>
               <p className="text-[13px] text-white">{doc.category}</p>
-              <p className="text-[11px] text-white font-mono">Last used {doc.lastUsed}</p>
+              <p className="text-[12.5px] text-white">Last used {doc.lastUsed}</p>
               <Button
                 size="sm"
-                className="mt-2 w-full h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                className="mt-2 w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
               >
                 <Download className="h-3 w-3 mr-1" />
                 Download
@@ -107,23 +105,21 @@ const FavouritesTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Favourites summary
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Favourites summary</span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
-            <div className="text-2xl font-mono text-white">{favouriteDocuments.length}</div>
+            <div className="text-2xl text-white">{favouriteDocuments.length}</div>
             <div className="text-[12px] text-white">Favourite documents</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
-            <div className="text-2xl font-mono text-white">
+            <div className="text-2xl text-white">
               {new Set(favouriteDocuments.map((d) => d.category)).size}
             </div>
             <div className="text-[12px] text-white">Document categories</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
-            <div className="text-2xl font-mono text-white">24</div>
+            <div className="text-2xl text-white">24</div>
             <div className="text-[12px] text-white">Downloads this month</div>
           </div>
         </div>
@@ -156,7 +152,7 @@ const FavouritesTab = () => {
                 </div>
               </div>
 
-              <div className="text-[12px] text-white font-mono space-y-0.5">
+              <div className="text-[12px] text-white space-y-0.5">
                 <p>
                   {document.type} · {document.size}
                 </p>
@@ -168,14 +164,14 @@ const FavouritesTab = () => {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="flex-1 h-10 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="flex-1 h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                 >
                   <Eye className="h-3 w-3 mr-1" />
                   View
                 </Button>
                 <Button
                   size="sm"
-                  className="flex-1 h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                  className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
                   onClick={() => handleDownload(document)}
                 >
                   <Download className="h-3 w-3 mr-1" />

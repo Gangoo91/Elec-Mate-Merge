@@ -179,263 +179,245 @@ const portfolioCards = [
   },
   {
     title: 'Progress Monitoring',
-    desc: 'Review your portfolio coverage at every progress review (minimum 12-weekly). Identify gaps early and plan targeted OJT activities to fill them before gateway.',
+    desc: 'Review your portfolio coverage at every progress review (at least every 3 months). Identify gaps early and plan targeted OJT activities to fill them before gateway.',
   },
 ];
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { GuidePage } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const AssessmentPage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · OJT"
-        title="Assessment & EPA"
-        backTo="/apprentice/toolbox/off-job-training-guide"
-      />
-      <HubBody>
-        {/* OJT & EPA Connection */}
-        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
-          <div className="sm:p-5">
-            <h2 className="text-white font-semibold text-sm mb-2">OJT & EPA connection</h2>
-            <p className="text-white text-sm leading-relaxed">
-              Your off-the-job training directly prepares you for the End Point Assessment (EPA).
-              For an Installation & Maintenance Electrician (ST0152) the EPA is the integrated AM2S,
-              run by NET — a single assessment of around 18.5 hours over roughly 2.5 days. Every
-              learning activity should contribute towards the knowledge, skills, and behaviours
-              required by your standard. The AM2S determines your grade — Pass, Merit, or
-              Distinction.
-            </p>
-          </div>
-        </div>
-
-        {/* AM2S Section Breakdown */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                AM2S sections
-              </span>
-            </div>
-          </div>
-
-          <p className="text-white text-sm">
-            The AM2S is one integrated assessment, not several separate exams. It has five sections.
-            There is no separate "professional discussion". Grading is Pass, Merit or Distinction —
-            but a fail in any single section fails the whole AM2S.
+    <GuidePage
+      section="Apprentice · OJT"
+      area="Off-the-job training"
+      title="Assessment & EPA"
+      backTo="/apprentice/toolbox/off-job-training-guide"
+    >
+      {/* OJT & EPA Connection */}
+      <div className="sm:rounded-xl sm:border sm:border-white/[0.08] sm:bg-white/[0.05]">
+        <div className="sm:p-5">
+          <h2 className="text-white font-semibold text-sm mb-2">OJT & EPA connection</h2>
+          <p className="text-white text-sm leading-relaxed">
+            Your off-the-job training directly prepares you for the End Point Assessment (EPA). For
+            an Installation & Maintenance Electrician (ST0152) the EPA is the integrated AM2S, run
+            by NET — a single assessment of around 18.5 hours over roughly 2.5 days. Every learning
+            activity should contribute towards the knowledge, skills, and behaviours required by
+            your standard. The AM2S determines your grade — Pass, Merit, or Distinction.
           </p>
+        </div>
+      </div>
 
-          {epaSections.map((sec) => (
-            <div
-              key={sec.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 space-y-2">
-                <h3 className="font-medium text-sm text-white">{sec.title}</h3>
-                <div className="text-xs text-white">Duration: {sec.duration}</div>
-                <p className="text-white text-sm">{sec.desc}</p>
-                <div className="bg-white/5 rounded p-2 mt-1">
-                  <p className="text-white text-xs">
-                    <span className="text-elec-yellow font-medium">How OJT prepares you: </span>
-                    {sec.ojtLink}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+      {/* AM2S Section Breakdown */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">AM2S sections</span>
+          </div>
         </div>
 
-        {/* Gateway Requirements */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Gateway Requirements
-              </span>
-            </div>
-          </div>
+        <p className="text-white text-sm">
+          The AM2S is one integrated assessment, not several separate exams. It has five sections.
+          There is no separate "professional discussion". Grading is Pass, Merit or Distinction —
+          but a fail in any single section fails the whole AM2S.
+        </p>
 
+        {epaSections.map((sec) => (
           <div
+            key={sec.title}
             className={cn(
-              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
               CARD_SURFACE
             )}
           >
-            <div className="sm:p-5 space-y-3">
-              <p className="text-white text-sm">
-                Before you can sit your EPA, you must pass through "gateway" — a formal check that
-                you are ready:
-              </p>
-              <ul className="space-y-2">
-                {gatewayRequirements.map((req) => (
-                  <li key={req} className="flex items-start gap-2 text-sm text-white">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                    {req}
+            <div className="sm:p-5 py-4 space-y-2">
+              <h3 className="font-medium text-sm text-white">{sec.title}</h3>
+              <div className="text-xs text-white">Duration: {sec.duration}</div>
+              <p className="text-white text-sm">{sec.desc}</p>
+              <div className="bg-white/5 rounded p-2 mt-1">
+                <p className="text-white text-xs">
+                  <span className="text-elec-yellow font-medium">How OJT prepares you: </span>
+                  {sec.ojtLink}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Gateway Requirements */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Gateway Requirements</span>
+          </div>
+        </div>
+
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
+          <div className="sm:p-5 space-y-3">
+            <p className="text-white text-sm">
+              Before you can sit your EPA, you must pass through "gateway" — a formal check that you
+              are ready:
+            </p>
+            <ul className="space-y-2">
+              {gatewayRequirements.map((req) => (
+                <li key={req} className="flex items-start gap-2 text-sm text-white">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  {req}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Common Referral Reasons */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-red-300">
+              Common Reasons for EPA Referral
+            </span>
+          </div>
+        </div>
+
+        <p className="text-white text-sm">
+          These are the pitfalls that most commonly cause apprentices to fail. Avoid them:
+        </p>
+
+        {referralReasons.map((item) => (
+          <div key={item.reason} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+            <div className="p-4 sm:p-5 space-y-2">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
+                <h3 className="font-medium text-red-400 text-sm">{item.reason}</h3>
+              </div>
+              <p className="text-white text-sm ml-7">{item.detail}</p>
+              <div className="flex items-start gap-2 ml-7">
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-white text-sm">
+                  <span className="text-elec-yellow font-medium">Prevention: </span>
+                  {item.prevention}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Timeline to EPA */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Timeline to EPA</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 mb-1">
+          <Clock className="h-3.5 w-3.5 text-elec-yellow" />
+          <p className="text-white text-sm font-medium">Key milestones and preparation</p>
+        </div>
+
+        {timeline.map((phase) => (
+          <div
+            key={phase.phase}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4 space-y-2">
+              <h3 className="font-medium text-sm text-white">{phase.phase}</h3>
+              <ul className="space-y-1">
+                {phase.actions.map((action) => (
+                  <li key={action} className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-elec-yellow mt-0.5">•</span>
+                    {action}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Knowledge Alignment */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Knowledge Alignment</span>
+          </div>
         </div>
 
-        {/* Common Referral Reasons */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                Common Reasons for EPA Referral
-              </span>
+        {knowledgeCards.map((card) => (
+          <div
+            key={card.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4">
+              <h3 className="font-medium text-sm text-white">{card.title}</h3>
+              <p className="text-white text-sm mt-1">{card.desc}</p>
             </div>
           </div>
+        ))}
+      </div>
 
-          <p className="text-white text-sm">
-            These are the pitfalls that most commonly cause apprentices to fail. Avoid them:
-          </p>
-
-          {referralReasons.map((item) => (
-            <div
-              key={item.reason}
-              className="rounded-xl border border-red-500/25 bg-red-500/[0.04]"
-            >
-              <div className="p-4 sm:p-5 space-y-2">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                  <h3 className="font-medium text-red-400 text-sm">{item.reason}</h3>
-                </div>
-                <p className="text-white text-sm ml-7">{item.detail}</p>
-                <div className="flex items-start gap-2 ml-7">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                  <p className="text-white text-sm">
-                    <span className="text-elec-yellow font-medium">Prevention: </span>
-                    {item.prevention}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+      {/* Skills Development */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Skills Development</span>
+          </div>
         </div>
 
-        {/* Timeline to EPA */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Timeline to EPA
-              </span>
+        {skillsCards.map((card) => (
+          <div
+            key={card.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4">
+              <h3 className="font-medium text-sm text-white">{card.title}</h3>
+              <p className="text-white text-sm mt-1">{card.desc}</p>
             </div>
           </div>
+        ))}
+      </div>
 
-          <div className="flex items-center gap-2 mb-1">
-            <Clock className="h-3.5 w-3.5 text-elec-yellow/85" />
-            <p className="text-white text-sm font-medium">Key milestones and preparation</p>
+      {/* Portfolio Strategy */}
+      <div className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[13px] font-semibold text-white">Portfolio Strategy</span>
           </div>
-
-          {timeline.map((phase) => (
-            <div
-              key={phase.phase}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4 space-y-2">
-                <h3 className="font-medium text-sm text-white">{phase.phase}</h3>
-                <ul className="space-y-1">
-                  {phase.actions.map((action) => (
-                    <li key={action} className="flex items-start gap-2 text-sm text-white">
-                      <span className="text-elec-yellow/70 mt-0.5">•</span>
-                      {action}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
         </div>
 
-        {/* Knowledge Alignment */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Knowledge Alignment
-              </span>
+        {portfolioCards.map((card) => (
+          <div
+            key={card.title}
+            className={cn(
+              '-mx-4 rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
+            <div className="sm:p-5 py-4">
+              <h3 className="font-medium text-white text-sm">{card.title}</h3>
+              <p className="text-white text-sm mt-1">{card.desc}</p>
             </div>
           </div>
-
-          {knowledgeCards.map((card) => (
-            <div
-              key={card.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4">
-                <h3 className="font-medium text-sm text-white">{card.title}</h3>
-                <p className="text-white text-sm mt-1">{card.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Skills Development */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Skills Development
-              </span>
-            </div>
-          </div>
-
-          {skillsCards.map((card) => (
-            <div
-              key={card.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4">
-                <h3 className="font-medium text-sm text-white">{card.title}</h3>
-                <p className="text-white text-sm mt-1">{card.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Portfolio Strategy */}
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between gap-3 pb-1">
-            <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Portfolio Strategy
-              </span>
-            </div>
-          </div>
-
-          {portfolioCards.map((card) => (
-            <div
-              key={card.title}
-              className={cn(
-                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
-                CARD_SURFACE
-              )}
-            >
-              <div className="sm:p-5 py-4">
-                <h3 className="font-medium text-white text-sm">{card.title}</h3>
-                <p className="text-white text-sm mt-1">{card.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </HubBody>
-    </HubPage>
+        ))}
+      </div>
+    </GuidePage>
   );
 };
 

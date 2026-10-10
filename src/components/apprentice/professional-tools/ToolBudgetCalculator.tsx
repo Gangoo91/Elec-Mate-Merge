@@ -56,11 +56,9 @@ const ToolBudgetCalculator = () => {
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Tool budget calculator
-        </span>
+        <span className="text-[13px] font-semibold text-white">Tool budget calculator</span>
         <p className="text-[13px] text-white">
           Plan your tool investments and see how your budget allocates
         </p>
@@ -126,16 +124,12 @@ const ToolBudgetCalculator = () => {
         {totalBudget > 0 && (
           <div className="space-y-4 pt-3 border-t border-white/[0.06]">
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Total budget
-              </span>
-              <span className="text-2xl font-mono text-white">£{totalBudget.toFixed(0)}</span>
+              <span className="text-[13px] font-semibold text-white">Total budget</span>
+              <span className="text-2xl text-white">£{totalBudget.toFixed(0)}</span>
             </div>
 
             <div className="space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Recommended allocation
-              </span>
+              <span className="text-[13px] font-semibold text-white">Recommended allocation</span>
               {Object.entries(breakdown).map(([tool, amount]) => (
                 <div
                   key={tool}
@@ -143,7 +137,7 @@ const ToolBudgetCalculator = () => {
                 >
                   <div className="flex justify-between text-[14px]">
                     <span className="text-white">{tool}</span>
-                    <span className="text-white font-mono">£{amount.toFixed(0)}</span>
+                    <span className="text-white">£{amount.toFixed(0)}</span>
                   </div>
                   <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                     <div

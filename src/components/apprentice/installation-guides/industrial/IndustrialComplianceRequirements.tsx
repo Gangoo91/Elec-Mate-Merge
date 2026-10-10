@@ -25,7 +25,7 @@ const IndustrialComplianceRequirements = () => {
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Compliance
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">

@@ -76,8 +76,8 @@ const OnTheJobToolsBox = ({ tools }: OnTheJobToolsBoxProps) => {
           iconGlow: 'shadow-yellow-500/30',
           bg: 'bg-white/[0.06]',
           bgStrong: 'bg-white/[0.08]',
-          border: 'border-elec-yellow/20 hover:border-elec-yellow/50',
-          card: 'from-elec-yellow/[0.07] via-transparent to-transparent',
+          border: 'border-white/[0.08] hover:border-elec-yellow/50',
+          card: 'from-white/[0.06] via-transparent to-transparent',
           badge: 'bg-white/[0.08] text-yellow-300 ring-1 ring-elec-yellow/30',
         };
     }
@@ -137,13 +137,13 @@ const OnTheJobToolsBox = ({ tools }: OnTheJobToolsBoxProps) => {
                       </h3>
                       <ChevronRight className="h-4 w-4 text-white group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
                     </div>
-                    <p className="text-[13px] text-white leading-relaxed line-clamp-2">
+                    <p className="text-[14px] text-white leading-relaxed line-clamp-2">
                       {tool.description}
                     </p>
                     {tool.badge && (
                       <span
                         className={cn(
-                          'inline-flex items-center mt-2.5 px-2.5 py-0.5 text-[11px] font-semibold rounded-full tracking-wide uppercase',
+                          'inline-flex items-center mt-2.5 px-2.5 py-0.5 text-[13px] font-semibold rounded-full',
                           colors.badge
                         )}
                       >

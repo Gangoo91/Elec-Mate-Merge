@@ -110,7 +110,7 @@ export function VideoQuizSheet({
                       }`}
                     />
                   ))}
-                  <span className="text-[11px] text-white tabular-nums ml-1">
+                  <span className="text-[12px] text-white tabular-nums ml-1">
                     {index + 1}/{total}
                   </span>
                 </div>
@@ -203,7 +203,7 @@ export function VideoQuizSheet({
                     })}
                   </div>
                   {answered && (
-                    <div className="mt-4 rounded-xl border border-elec-yellow/25 bg-white/[0.05] px-4 py-3">
+                    <div className="mt-4 rounded-xl border border-white/[0.14] bg-white/[0.05] px-4 py-3">
                       <p className="text-[12.5px] leading-relaxed text-white">
                         {question.explanation}
                       </p>

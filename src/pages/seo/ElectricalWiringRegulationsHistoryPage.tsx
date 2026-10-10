@@ -50,28 +50,28 @@ const editionTimeline = [
 
 const a4Changes = [
   {
-    reg: 'Reg 411.3.4',
-    title: 'RCD protection for domestic lighting',
+    reg: 'Reg 312.2.1.1',
+    title: 'Protective neutral bonding (PNB)',
     detail:
-      'A new regulation requiring 30 mA RCD additional protection for AC final circuits supplying luminaires within domestic (household) premises. The most impactful practical change for domestic electricians.',
+      'Regulation 312.2.1.1 now includes a protective neutral bonding (PNB) figure and requirements.',
   },
   {
-    reg: 'Reg 421.1.7',
-    title: 'AFDDs recommended in higher-risk premises',
+    reg: 'Table 52.1',
+    title: 'Cables in walls and partitions',
     detail:
-      'Redrafted so that AFDDs are now a requirement (not just a recommendation) for socket-outlet final circuits rated up to 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. AFDDs remain recommended for single-phase socket-outlet circuits up to 32 A in all other premises.',
+      'The requirements for cables in a wall or partition are now included in Table 52.1.',
   },
   {
-    reg: 'Reg 531.3.4.201',
-    title: 'Adjustable RCDs need a key or tool',
+    reg: 'Section 545',
+    title: 'Functional earthing for ICT equipment',
     detail:
-      'Where an RCD may be operated by an ordinary person, its rated residual operating current and time delay must not be adjustable without a deliberate act using a key or tool, and any change must give a visible indication of the new setting.',
+      'A new Section 545 gives requirements for functional earthing and functional equipotential bonding for information and communication technology (ICT) equipment and systems.',
   },
   {
-    reg: 'Chapter 82',
-    title: 'Prosumer electrical installations (PEIs)',
+    reg: 'Chapter 57',
+    title: 'Stationary secondary batteries',
     detail:
-      'An entirely new chapter covering low-voltage installations that both consume and produce energy locally — for example homes with solar PV, battery storage or EV export — designated Prosumer’s Electrical Installations.',
+      'A new Chapter 57 covers stationary secondary battery installations whose designed purpose is storage and supply of electrical installations.',
   },
 ];
 
@@ -94,7 +94,7 @@ const keyTakeaways = [
   'The IEE (Institution of Electrical Engineers) became the IET (Institution of Engineering and Technology) in 2006 following a merger, but the wiring regulations continued under the IET name.',
   'BS 7671 was first designated in 1992 (the 16th Edition), aligning the wiring regulations with the British Standards system and European harmonisation.',
   'The current standard is BS 7671:2018+A4:2026 — the 18th Edition with Amendment 4, issued on 15 April 2026. It may be implemented immediately; BS 7671:2018+A3:2024 will be withdrawn on 15 October 2026.',
-  'Amendment 4 (A4:2026) introduces mandatory 30 mA RCD additional protection for domestic lighting circuits (Reg 411.3.4), adjustable-RCD controls (Reg 531.3.4.201), and a new Chapter 82 for prosumer electrical installations.',
+  'Amendment 4 (A4:2026) adds protective neutral bonding (Reg 312.2.1.1), Table 52.1 for cables in walls, a new Section 545 for ICT functional earthing and a new Chapter 57 for batteries. RCDs on domestic lighting (Reg 411.3.4) date from 2018, not A4.',
   'Elec-Mate is built to the current BS 7671:2018+A4:2026, with all Zs limits, regulation references, and compliance checks reflecting Amendment 4.',
 ];
 
@@ -127,7 +127,7 @@ const faqs = [
   {
     question: 'What did Amendment 4 (A4:2026) change?',
     answer:
-      'Amendment 4 (BS 7671:2018+A4:2026) was issued on 15 April 2026 and may be implemented immediately. BS 7671:2018+A3:2024 will be withdrawn on 15 October 2026. Key changes include: Regulation 411.3.4, which now requires mandatory 30 mA RCD additional protection for AC final circuits supplying luminaires (lighting circuits) in domestic premises — the most impactful practical change for domestic electricians; Regulation 531.3.4.201, which requires that any adjustable RCD accessible to ordinary persons must require a key or tool to change its rated residual operating current, and must display a visible indicator of the new setting; and a new Chapter 82 covering prosumer electrical installations (premises with local energy generation or storage). There is also ongoing discussion about when the 19th Edition will be published. Elec-Mate is updated to BS 7671:2018+A4:2026.',
+      'Amendment 4 (BS 7671:2018+A4:2026) was issued on 15 April 2026 and may be implemented immediately. BS 7671:2018+A2:2022 and A3:2024 are withdrawn on 15 October 2026. Key changes include adding protective neutral bonding (Regulation 312.2.1.1), Table 52.1 for cables in walls, a new Section 545 for ICT functional earthing, a new Chapter 57 for stationary batteries, a new Section 716 for Power over Ethernet, a major revision of Section 710 (medical locations) and a new Chapter 81 on energy efficiency. Regulation 421.1.7(a) now reads "high rise residential buildings", and on condition reports FI no longer has to be marked unsatisfactory. There is also ongoing discussion about when the 19th Edition will be published. Elec-Mate is updated to BS 7671:2018+A4:2026.',
   },
   {
     question: 'How does Elec-Mate stay up to date with regulation changes?',
@@ -434,7 +434,7 @@ const sections = [
             {
               title: 'Key changes in the original 18th Edition (2018)',
               description:
-                'On publication in 2018, Regulation 421.1.7 (Chapter 42) recommended the installation of AFDDs (Arc Fault Detection Devices) to mitigate fire risk in AC final circuits — recommendatory rather than mandatory, a common point of confusion. Amendment 4 has since strengthened this (see Amendment 4 below). Energy efficiency guidance was introduced in Appendix 17; under Amendment 4 this has been deleted and replaced by a new Chapter 81 on the functional aspects of energy efficiency.',
+                'On publication in 2018, Regulation 421.1.7 (Chapter 42) recommended the installation of AFDDs (Arc Fault Detection Devices) to mitigate fire risk in AC final circuits — recommendatory rather than mandatory, a common point of confusion. Amendment 2 (2022) then made AFDDs a requirement in four named premises types. Energy efficiency guidance was introduced in Appendix 17; under Amendment 4 this has been deleted and replaced by a new Chapter 81 on the functional aspects of energy efficiency.',
             },
             {
               title: 'Amendment 1 (A1:2020)',
@@ -444,17 +444,17 @@ const sections = [
             {
               title: 'Amendment 2 (A2:2022)',
               description:
-                'More substantial changes. Updated requirements for RCD protection, cable installation methods, and special locations.',
+                'More substantial changes. Regulation 421.1.7 was redrafted to require AFDDs on socket-outlet circuits up to 32 A in higher risk residential buildings, HMOs, purpose-built student accommodation and care homes, alongside updated requirements for cable installation methods and special locations.',
             },
             {
               title: 'Amendment 3 (A3:2024)',
               description:
-                'Issued 31 July 2024. Updated Chapter 72 (Regulation 722.826.3.201) with requirements for bidirectional and unidirectional protective and switching devices in EV charging installations — driven by the growth of solar PV, battery storage, and EV chargers that can feed energy back into the installation.',
+                'Issued 31 July 2024. Added Regulation 530.3.201 and two definitions for bidirectional and unidirectional protective devices, driven by the growth of solar PV, battery storage and EV chargers that can feed energy back into the installation.',
             },
             {
               title: 'Amendment 4 (A4:2026)',
               description:
-                'Issued 15 April 2026. The most significant practical change for domestic work: Regulation 411.3.4 now requires mandatory 30 mA RCD additional protection for AC final circuits supplying luminaires in domestic premises. Regulation 531.3.4.201 requires adjustable RCDs accessible to ordinary persons to use a key or tool for any change to the rated residual operating current, with a visible indicator of the new setting. A new Chapter 82 covers prosumer electrical installations (premises with local generation or storage). BS 7671:2018+A3:2024 will be withdrawn on 15 October 2026.',
+                'Issued 15 April 2026. Main changes: adding protective neutral bonding (Regulation 312.2.1.1), Table 52.1 for cables in walls, a new Section 545 for ICT functional earthing, a new Chapter 57 for stationary batteries, a new Section 716 for Power over Ethernet, a major revision of Section 710 (medical locations) and a new Chapter 81 on energy efficiency. Regulation 421.1.7(a) now reads high rise residential buildings, and Appendix 6 no longer requires FI to be marked unsatisfactory. A2:2022 and A3:2024 are withdrawn on 15 October 2026.',
             },
           ].map((item) => (
             <div
@@ -634,8 +634,9 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 4 to BS 7671:2018 was issued on 15 April 2026, bringing mandatory 30 mA RCD
-          protection for domestic lighting circuits and new prosumer installation requirements. The
+          Amendment 4 to BS 7671:2018 was issued on 15 April 2026, bringing protective neutral
+          bonding, a new Chapter 57 for stationary batteries and a new Chapter 81 on energy
+          efficiency. The
           19th Edition is anticipated within the next few years. Key areas likely to be addressed
           include:
         </p>
@@ -696,7 +697,7 @@ export default function ElectricalWiringRegulationsHistoryPage() {
       title="History of UK Wiring Regulations: IEE to IET"
       description="History of UK wiring regulations from the first IEE rules (1882) through every edition to BS 7671:2018+A4:2026. Major changes, drivers, milestones."
       datePublished="2025-10-01"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation History"

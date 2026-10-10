@@ -22,6 +22,8 @@ interface CreateTenderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initialData?: Partial<CreateTenderData> & { fromOpportunity?: boolean };
+  /** Roles that can't see firm money (can_see_firm_money) don't enter or see the value. */
+  hideValue?: boolean;
 }
 
 const CATEGORIES = [
@@ -47,7 +49,12 @@ const emptyFormData: CreateTenderData = {
   notes: '',
 };
 
-export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTenderDialogProps) {
+export function CreateTenderDialog({
+  open,
+  onOpenChange,
+  initialData,
+  hideValue = false,
+}: CreateTenderDialogProps) {
   const createTender = useCreateTender();
 
   const [formData, setFormData] = useState<CreateTenderData>(emptyFormData);
@@ -158,19 +165,21 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                 className={inputClass}
               />
             </Field>
-            <FormGrid cols={2}>
-              <Field label="Estimated value (£)">
-                <Input
-                  type="number"
-                            inputMode="decimal"
-                  min="0"
-                  step="1000"
-                  placeholder="0"
-                  value={formData.value || ''}
-                  onChange={(e) => updateField('value', parseFloat(e.target.value) || 0)}
-                  className={inputClass}
-                />
-              </Field>
+            <FormGrid cols={hideValue ? 1 : 2}>
+              {!hideValue && (
+                <Field label="Estimated value (£)">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    step="1000"
+                    placeholder="0"
+                    value={formData.value || ''}
+                    onChange={(e) => updateField('value', parseFloat(e.target.value) || 0)}
+                    className={inputClass}
+                  />
+                </Field>
+              )}
               <Field label="Submission deadline">
                 <Input
                   type="date"
@@ -182,11 +191,11 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
             </FormGrid>
             <Field label="Category">
               <SelectField
-        value={formData.category}
-        onValueChange={(value) => updateField('category', value)}
-        placeholder="Select category"
-        options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
-      />
+                value={formData.category}
+                onValueChange={(value) => updateField('category', value)}
+                placeholder="Select category"
+                options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
+              />
             </Field>
             <Field label="Description">
               <Textarea

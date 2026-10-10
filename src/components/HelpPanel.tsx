@@ -1145,7 +1145,7 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
             {/* Footer */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4">
               <p className="text-xs text-white leading-relaxed">
-                All tools and features are designed to comply with BS 7671:2018+A2:2022 requirements. For complex scenarios, use the AI Regulation Search or consult the full regulations.
+                All tools and features are designed to comply with BS 7671:2018+A4:2026 requirements. For complex scenarios, use the AI Regulation Search or consult the full regulations.
               </p>
             </div>
             </div>

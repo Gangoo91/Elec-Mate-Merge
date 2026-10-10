@@ -19,7 +19,7 @@ const KeyRegulationsGrid = () => {
         '620 - Certification requirements',
         '630 - Periodic inspection intervals',
       ],
-      color: 'border-elec-yellow/30 bg-elec-yellow/5',
+      color: 'border-white/[0.14] bg-white/[0.06]',
       priority: 'high',
       icon: Zap,
       usage: '95%',

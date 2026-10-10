@@ -1,6 +1,8 @@
 import { CircuitInput } from '@/types/installation-design';
 import { SMART_DEFAULTS, DEFAULT_CABLE_LENGTHS } from '@/lib/circuit-templates';
 import { cn } from '@/lib/utils';
+import { chipBase, chipOff } from '@/components/forms/fieldStyles';
+import { Section } from './wizardUi';
 
 interface QuickAddButtonsProps {
   installationType: 'domestic' | 'commercial' | 'industrial';
@@ -57,33 +59,19 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
   };
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-          Quick add
-        </span>
-        <span className="text-[11px] text-white/50 tabular-nums">
-          {presets.length} options
-        </span>
-      </div>
-      <div className="flex flex-wrap gap-2 sm:gap-2.5">
+    <Section title="Quick add">
+      <div className="flex flex-wrap gap-2">
         {presets.map((preset) => (
           <button
             key={preset.type}
             type="button"
             onClick={() => handleQuickAdd(preset)}
-            className={cn(
-              'bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-xl px-4 h-11',
-              'text-[13px] font-medium text-white',
-              'hover:border-white/20 hover:bg-[hsl(0_0%_15%)]',
-              'active:scale-[0.99] transition-colors',
-              'touch-manipulation'
-            )}
+            className={cn(chipBase, chipOff, 'px-4')}
           >
             + {preset.label}
           </button>
         ))}
       </div>
-    </div>
+    </Section>
   );
 };

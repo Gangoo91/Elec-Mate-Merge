@@ -168,7 +168,7 @@ export function CommentThread({
           : role === 'head_of_department'
             ? 'bg-purple-500/10 text-purple-400'
             : role === 'student'
-              ? 'bg-elec-yellow/10 text-elec-yellow'
+              ? 'bg-white/[0.1] text-white'
               : 'bg-white/[0.06] text-white';
 
   const formatRole = (role: string) => {
@@ -240,7 +240,7 @@ export function CommentThread({
           placeholder="Search users…"
           value={mentionSearch}
           onChange={(e) => setMentionSearch(e.target.value)}
-          className={cn(inputClass, 'mb-2 h-10')}
+          className={cn(inputClass, 'mb-2 h-11')}
         />
         <div className="max-h-[200px] overflow-y-auto space-y-0.5">
           {mentionableUsers.slice(0, 10).map((user) => (
@@ -250,13 +250,13 @@ export function CommentThread({
               className="w-full flex items-center gap-2.5 px-2 py-2 text-[13px] hover:bg-white/[0.04] rounded-lg text-left transition-colors touch-manipulation"
             >
               <Avatar className="h-7 w-7 shrink-0">
-                <AvatarFallback className={cn('text-[10px]', roleAvatarClass(user.role))}>
+                <AvatarFallback className={cn('text-[12px]', roleAvatarClass(user.role))}>
                   {user.initials}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <div className="text-white truncate">{user.name}</div>
-                <div className="text-[11px] text-white">{formatRole(user.role)}</div>
+                <div className="text-[12px] text-white">{formatRole(user.role)}</div>
               </div>
             </button>
           ))}
@@ -273,7 +273,7 @@ export function CommentThread({
         <div className={cn('flex gap-3', comment.isResolved ? 'opacity-60' : '')}>
           <Avatar className="h-8 w-8 shrink-0">
             <AvatarFallback
-              className={cn('text-[11px] font-semibold', roleAvatarClass(comment.authorRole))}
+              className={cn('text-[12px] font-semibold', roleAvatarClass(comment.authorRole))}
             >
               {comment.authorInitials}
             </AvatarFallback>
@@ -284,15 +284,13 @@ export function CommentThread({
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-medium text-[13px] text-white">{comment.authorName}</span>
                 <Pill tone={roleTone(comment.authorRole)}>{formatRole(comment.authorRole)}</Pill>
-                <span className="text-[11px] text-white tabular-nums">
+                <span className="text-[12px] text-white tabular-nums">
                   {formatDate(comment.createdAt)}
                 </span>
               </div>
 
               <div className="flex items-center gap-1.5">
-                {comment.requiresAction && !comment.isResolved && (
-                  <Pill tone="amber">Action</Pill>
-                )}
+                {comment.requiresAction && !comment.isResolved && <Pill tone="amber">Action</Pill>}
                 {comment.isResolved && <Pill tone="green">Resolved</Pill>}
                 {!readOnly && (
                   <DropdownMenu>
@@ -327,7 +325,7 @@ export function CommentThread({
             </p>
 
             {comment.isResolved && comment.resolvedByName && (
-              <p className="mt-1.5 text-[11px] text-white tabular-nums">
+              <p className="mt-1.5 text-[12px] text-white tabular-nums">
                 Resolved by {comment.resolvedByName} on{' '}
                 {new Date(comment.resolvedAt!).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -373,9 +371,7 @@ export function CommentThread({
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-          Comments · {comments.length}
-        </div>
+        <div className="text-[13px] font-medium text-white">Comments · {comments.length}</div>
         {actionCount > 0 && <Pill tone="amber">{actionCount} need action</Pill>}
       </div>
 
@@ -383,7 +379,7 @@ export function CommentThread({
         <div className="flex gap-3">
           <Avatar className="h-8 w-8 shrink-0">
             <AvatarFallback
-              className={cn('text-[11px] font-semibold', roleAvatarClass(currentUserRole))}
+              className={cn('text-[12px] font-semibold', roleAvatarClass(currentUserRole))}
             >
               {currentUserInitials}
             </AvatarFallback>

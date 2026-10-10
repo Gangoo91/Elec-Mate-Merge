@@ -47,15 +47,16 @@ export const WT_EXPENSES_HELP: PageHelpContent = {
       title: 'Claim a receipt',
       steps: [
         'Tap Claim a receipt.',
-        'Type the amount, including VAT, as on the receipt.',
-        'Pick What kind of spend, the date on the receipt and the job.',
-        'Tap Take photo, or Photo or PDF to pick a file.',
-        'Tap Send.',
+        'Tap Take a photo or choose a file, and pick the job if it was for one.',
+        'Tap Save it. The receipt is read for you and shows under Receipts and bills.',
+        'Tap it there, check the figures and the kind of spend, then tap Post.',
       ],
+      after:
+        'Nothing goes to the office until you tap Post. Lost the receipt? Tap Log mileage, switch it to Receipt and type it in.',
       tour: [
         { target: 'wt-expenses.receipt', caption: 'Tap Claim a receipt.', opens: true },
-        { target: 'wt-expenses.photo', caption: 'Take a photo of the receipt, or pick a photo or PDF.' },
-        { target: 'wt-expenses.send', caption: 'Add the amount and kind of spend, then tap Send.' },
+        { target: 'wt-expenses.snap-file', caption: 'Take a photo of the receipt, or pick a photo or PDF.' },
+        { target: 'wt-expenses.snap-save', caption: 'Tap Save it. It is read for you, then you check it and post it.' },
       ],
     },
     {

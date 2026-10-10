@@ -1,7 +1,7 @@
 /**
  * TutorsSection — the teaching team (College Hub kit, 7 Oct 2026).
  *
- * Header with "?" → four figures → search and role chips → one row per tutor
+ * Header with "?" (the counts in its one sentence) → search and role chips → one row per tutor
  * with their cohorts, learners, marking waiting and load. Tapping a row opens
  * the staff sheet exactly as before; "Onboard a starter" runs the wizard.
  *
@@ -30,27 +30,60 @@ import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
   COLLEGE_BTN,
   COLLEGE_BTN_PRIMARY,
-  COLLEGE_LIST,
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
 } from '@/components/college/ui/CollegeUi';
-import { FilterChips, NameBadge, PeopleListHead, PeopleRow, SEARCH_CN, isTeachingStaff, norm } from '@/components/college/people/peopleKit';
+import {
+  PEOPLE_LIST,
+  StatusChip,
+  FilterChips,
+  NameBadge,
+  PeopleListHead,
+  PeopleRow,
+  SEARCH_CN,
+  isTeachingStaff,
+  norm,
+} from '@/components/college/people/peopleKit';
+import { keyLabel } from '@/lib/college/labels';
 
 const HELP: PageHelpContent = {
   id: 'college-tutors',
   title: 'Tutors',
   what: 'Your teaching team: who teaches which cohorts, how many learners each has, and how much marking is waiting with them.',
   steps: [
-    { title: 'Onboard a starter', body: 'Walks you through a new tutor: details, qualifications, then their compliance checks (DBS, CPD, qualifications on file).' },
-    { title: 'Quick add', body: 'Just a name and email when you need someone on the list now and will finish their record later.' },
-    { title: 'Open a tutor', body: 'Tap a row for their profile, qualifications and contact details. Edit from there.' },
-    { title: 'Balance the load', body: 'Workload shows every tutor\'s cohorts, lessons this week and marking side by side.' },
+    {
+      title: 'Onboard a starter',
+      body: 'Walks you through a new tutor: details, qualifications, then their compliance checks (DBS, CPD, qualifications on file).',
+    },
+    {
+      title: 'Add one',
+      body: 'Name, email and department when you need someone on the list now. It does not make a login.',
+    },
+    {
+      title: 'Add several with logins',
+      body: 'Paste one line per person. Anyone new gets a login; anyone who already has an Elec-Mate account gets a staff join link by email. You see every row checked before anything is saved.',
+    },
+    {
+      title: 'Open a tutor',
+      body: 'Tap a row for their profile, qualifications and contact details. Edit from there.',
+    },
+    {
+      title: 'Balance the load',
+      body: "Workload shows every tutor's cohorts, lessons this week and marking side by side.",
+    },
   ],
   legend: [
-    { swatch: 'bg-orange-400', label: 'Heavy load', body: 'More than 4 cohorts or more than 3 pieces of marking waiting.' },
-    { swatch: 'bg-red-400', label: 'Overloaded', body: 'More than 6 cohorts or more than 10 waiting.' },
+    {
+      swatch: 'bg-orange-400',
+      label: 'Heavy load',
+      body: 'More than 4 cohorts or more than 3 pieces of marking waiting.',
+    },
+    {
+      swatch: 'bg-red-400',
+      label: 'Overloaded',
+      body: 'More than 6 cohorts or more than 10 waiting.',
+    },
   ],
 };
 
@@ -83,11 +116,7 @@ export function TutorsSection() {
     setEditOpen(true);
   };
 
-  const tutors = useMemo(
-    () =>
-      staff.filter(isTeachingStaff),
-    [staff]
-  );
+  const tutors = useMemo(() => staff.filter(isTeachingStaff), [staff]);
 
   const filteredTutors = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -110,7 +139,9 @@ export function TutorsSection() {
     activeCohorts.filter((c) => c.tutor_id === staffId).length;
   const getLearnerCount = (staffId: string): number => {
     const ids = new Set(activeCohorts.filter((c) => c.tutor_id === staffId).map((c) => c.id));
-    return students.filter((s) => s.cohort_id && ids.has(s.cohort_id) && norm(s.status) === 'active').length;
+    return students.filter(
+      (s) => s.cohort_id && ids.has(s.cohort_id) && norm(s.status) === 'active'
+    ).length;
   };
   const toMark = workload.reduce((sum, w) => sum + w.pending_grading, 0);
   const overloaded = workload.filter((w) => w.load_band === 'red').length;
@@ -131,6 +162,23 @@ export function TutorsSection() {
   };
 
   const hasActiveFilters = !!searchQuery || filterRole !== 'all';
+  const noLogin = tutors.filter((t) => !t.user_id).length;
+
+  // The counts the tiles used to carry, in the one sentence under the title.
+  const summary =
+    tutors.length === 0
+      ? 'Nobody on the teaching team yet. Onboard your first tutor, or add several at once with logins.'
+      : [
+          `${tutors.length} on the teaching team${headCount > 0 ? ` (${headCount} head${headCount === 1 ? '' : 's'} of department)` : ''}`,
+          `about ${learnersPerTutor} learners each`,
+          cohortsWithoutTutor > 0
+            ? `${cohortsWithoutTutor} cohort${cohortsWithoutTutor === 1 ? '' : 's'} without a tutor`
+            : 'every cohort has a tutor',
+          `${toMark} piece${toMark === 1 ? '' : 's'} of marking waiting${overloaded > 0 ? `, ${overloaded} tutor${overloaded === 1 ? '' : 's'} overloaded` : ''}`,
+        ].join(', ') +
+        '.' +
+        (onLeave > 0 ? ` ${onLeave} on leave.` : '') +
+        (noLogin > 0 ? ` ${noLogin} without a login yet.` : '');
 
   const chips: { value: typeof filterRole; label: string; count: number }[] = [
     { value: 'all', label: 'All', count: tutors.length },
@@ -139,26 +187,49 @@ export function TutorsSection() {
   ];
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
       <CollegePageHeader
         eyebrow="People"
         title="Tutors"
-        description="Your teaching team, the cohorts they teach and the marking waiting with them."
+        description={summary}
         help={HELP}
         actions={
           <>
-            <button type="button" className={COLLEGE_BTN} onClick={() => navigate('/college?section=tutorworkload')}>
+            <button
+              type="button"
+              className={cn(COLLEGE_BTN, 'max-sm:flex-1')}
+              onClick={() => navigate('/college?section=tutorworkload')}
+            >
               Workload
             </button>
             {canManageStaff ? (
               <>
-                <button type="button" onClick={() => setAddTutorOpen(true)} className={COLLEGE_BTN}>
-                  Quick add
+                <button
+                  type="button"
+                  onClick={() => setAddTutorOpen(true)}
+                  className={cn(COLLEGE_BTN, 'max-sm:flex-1')}
+                >
+                  Add one
                 </button>
-                <button type="button" onClick={() => setRosterOpen(true)} className={COLLEGE_BTN}>
+                <button
+                  type="button"
+                  onClick={() => setRosterOpen(true)}
+                  // Its own row on a phone: squeezed into a third it wrapped
+                  // to four lines.
+                  className={cn(COLLEGE_BTN, 'max-sm:w-full')}
+                >
                   Add several with logins
                 </button>
-                <button type="button" onClick={() => setOnboardOpen(true)} className={cn(COLLEGE_BTN_PRIMARY, 'order-first lg:order-none')}>
+                <button
+                  type="button"
+                  onClick={() => setOnboardOpen(true)}
+                  className={cn(COLLEGE_BTN_PRIMARY, 'order-first max-sm:w-full lg:order-none')}
+                >
                   Onboard a starter
                 </button>
               </>
@@ -167,37 +238,10 @@ export function TutorsSection() {
         }
       />
 
-      <CollegeStats
-        items={[
-          {
-            label: 'Tutors',
-            value: String(tutors.length),
-            sub: [headCount > 0 ? `${headCount} head${headCount === 1 ? '' : 's'} of department` : null, onLeave > 0 ? `${onLeave} on leave` : null].filter(Boolean).join(' · ') || 'On the teaching team',
-            onClick: () => setFilterRole('all'),
-          },
-          {
-            label: 'Learners per tutor',
-            value: String(learnersPerTutor),
-            sub: `${activeLearners} active learner${activeLearners === 1 ? '' : 's'}`,
-          },
-          {
-            label: 'Cohorts without a tutor',
-            value: String(cohortsWithoutTutor),
-            sub: cohortsWithoutTutor > 0 ? 'Assign one before the class runs' : `All ${activeCohorts.length} covered`,
-            warn: cohortsWithoutTutor > 0,
-            onClick: () => navigate('/college?section=cohorts'),
-          },
-          {
-            label: 'Marking waiting',
-            value: String(toMark),
-            sub: overloaded > 0 ? `${overloaded} tutor${overloaded === 1 ? '' : 's'} overloaded` : 'Across the team',
-            warn: overloaded > 0,
-            onClick: () => navigate('/college?section=tutorworkload'),
-          },
-        ]}
-      />
-
-      <motion.div variants={itemVariants} className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between"
+      >
         <input
           type="search"
           value={searchQuery}
@@ -206,23 +250,46 @@ export function TutorsSection() {
           aria-label="Search tutors"
           className={cn(SEARCH_CN, 'lg:max-w-md')}
         />
-        <FilterChips<typeof filterRole> label="Role" items={chips} value={filterRole} onChange={setFilterRole} />
+        <FilterChips<typeof filterRole>
+          label="Role"
+          items={chips}
+          value={filterRole}
+          onChange={setFilterRole}
+        />
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-3">
         <CollegeSectionTitle
           title="Teaching staff"
-          sub={filteredTutors.length === tutors.length ? `${tutors.length} on the team` : `${filteredTutors.length} of ${tutors.length} shown`}
+          sub={
+            filteredTutors.length === tutors.length
+              ? `${tutors.length} on the team`
+              : `${filteredTutors.length} of ${tutors.length} shown`
+          }
         />
         {isLoading ? (
           <StaffCardSkeletonList count={3} />
         ) : filteredTutors.length === 0 ? (
           <CollegeEmpty
-            title={tutors.length === 0 ? 'No tutors yet' : hasActiveFilters ? 'No tutors match' : 'No tutors'}
-            body={tutors.length === 0 ? 'Onboard a starter, or quick add a tutor by name and email.' : 'Clear the search or pick another chip.'}
+            title={
+              tutors.length === 0
+                ? 'No tutors yet'
+                : hasActiveFilters
+                  ? 'No tutors match'
+                  : 'No tutors'
+            }
+            body={
+              tutors.length === 0
+                ? 'Onboard a starter, or quick add a tutor by name and email.'
+                : 'Clear the search or pick another chip.'
+            }
             action={
               tutors.length === 0 && canManageStaff ? (
-                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => setOnboardOpen(true)}>
+                <button
+                  type="button"
+                  className={COLLEGE_BTN_PRIMARY}
+                  onClick={() => setOnboardOpen(true)}
+                >
                   Onboard a starter
                 </button>
               ) : undefined
@@ -230,13 +297,15 @@ export function TutorsSection() {
           />
         ) : (
           <PullToRefresh onRefresh={handleRefresh}>
-            <div className={COLLEGE_LIST}>
+            <div className={PEOPLE_LIST}>
               <PeopleListHead title="Tutor" figures={['Cohorts', 'Learners', 'To mark']} />
               <ul className="divide-y divide-white/[0.06]">
                 {filteredTutors.map((tutor) => {
                   const status = norm(tutor.status);
                   const load = loadById.get(tutor.id);
-                  const quals = [tutor.teaching_qual, tutor.assessor_qual, tutor.iqa_qual].filter(Boolean);
+                  const quals = [tutor.teaching_qual, tutor.assessor_qual, tutor.iqa_qual].filter(
+                    Boolean
+                  );
                   const sub = [
                     tutor.role === 'head_of_department' ? 'Head of department' : null,
                     tutor.department,
@@ -252,20 +321,37 @@ export function TutorsSection() {
                       title={tutor.name}
                       badge={
                         status && status !== 'active' ? (
-                          <NameBadge>{tutor.status}</NameBadge>
-                        ) : load?.load_band === 'red' ? (
-                          <NameBadge tone="warn">Overloaded</NameBadge>
-                        ) : load?.load_band === 'amber' ? (
-                          <NameBadge tone="warn">Heavy</NameBadge>
+                          <NameBadge>{keyLabel(tutor.status)}</NameBadge>
+                        ) : load?.load_band === 'red' ||
+                          load?.load_band === 'amber' ||
+                          !tutor.user_id ? (
+                          <>
+                            {load?.load_band === 'red' && (
+                              <StatusChip tone="action">Overloaded</StatusChip>
+                            )}
+                            {load?.load_band === 'amber' && (
+                              <StatusChip tone="action">Heavy load</StatusChip>
+                            )}
+                            {!tutor.user_id && <StatusChip>No login yet</StatusChip>}
+                          </>
                         ) : undefined
                       }
                       sub={sub || 'Tutor'}
-                      tone={load?.load_band === 'red' ? 'critical' : load?.load_band === 'amber' ? 'warn' : 'quiet'}
                       onOpen={() => handleSelectStaff(tutor)}
                       figures={[
-                        { label: 'cohorts', value: String(getCohortCount(tutor.id)) },
-                        { label: 'learners', value: String(getLearnerCount(tutor.id)) },
-                        { label: 'to mark', value: load ? String(load.pending_grading) : '—', warn: (load?.pending_grading ?? 0) > 3 },
+                        {
+                          label: getCohortCount(tutor.id) === 1 ? 'cohort' : 'cohorts',
+                          value: String(getCohortCount(tutor.id)),
+                        },
+                        {
+                          label: getLearnerCount(tutor.id) === 1 ? 'learner' : 'learners',
+                          value: String(getLearnerCount(tutor.id)),
+                        },
+                        {
+                          label: 'to mark',
+                          value: load ? String(load.pending_grading) : '—',
+                          warn: (load?.pending_grading ?? 0) > 3,
+                        },
                       ]}
                       menu={[
                         { label: 'Open profile', onClick: () => handleSelectStaff(tutor) },
@@ -277,8 +363,15 @@ export function TutorsSection() {
                             if (tutor.phone) window.location.href = `tel:${tutor.phone}`;
                           },
                         },
-                        { label: 'Email', onClick: () => (window.location.href = `mailto:${tutor.email}`) },
-                        { label: 'Compliance checks', separated: true, onClick: () => setOpenStaffId(tutor.id) },
+                        {
+                          label: 'Email',
+                          onClick: () => (window.location.href = `mailto:${tutor.email}`),
+                        },
+                        {
+                          label: 'Compliance checks',
+                          separated: true,
+                          onClick: () => setOpenStaffId(tutor.id),
+                        },
                       ]}
                     />
                   );
@@ -289,10 +382,18 @@ export function TutorsSection() {
         )}
       </motion.section>
 
-      <AddTutorDialog open={addTutorOpen} onOpenChange={setAddTutorOpen} />
+      <AddTutorDialog
+        open={addTutorOpen}
+        onOpenChange={setAddTutorOpen}
+        onGiveLogin={canManageStaff ? () => setRosterOpen(true) : undefined}
+      />
       {/* ELE-1900: bulk staff with logins and join links (admin / head of department; the function enforces it). */}
       <StaffRosterSheet open={rosterOpen} onOpenChange={setRosterOpen} />
-      <StaffOnboardingWizard open={onboardOpen} onOpenChange={setOnboardOpen} onComplete={(id) => setOpenStaffId(id)} />
+      <StaffOnboardingWizard
+        open={onboardOpen}
+        onOpenChange={setOnboardOpen}
+        onComplete={(id) => setOpenStaffId(id)}
+      />
       <StaffComplianceDrawer
         open={!!openStaffId}
         onOpenChange={(o) => {
@@ -300,7 +401,12 @@ export function TutorsSection() {
         }}
         staffId={openStaffId}
       />
-      <StaffDetailSheet staff={selectedStaff} open={detailOpen} onOpenChange={setDetailOpen} onEdit={handleEditStaff} />
+      <StaffDetailSheet
+        staff={selectedStaff}
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        onEdit={handleEditStaff}
+      />
       <EditStaffSheet staff={selectedStaff} open={editOpen} onOpenChange={setEditOpen} />
     </motion.div>
   );

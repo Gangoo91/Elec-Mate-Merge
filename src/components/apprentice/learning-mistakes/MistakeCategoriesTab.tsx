@@ -119,8 +119,8 @@ const MistakeCategoriesTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">
           Understanding mistake categories
         </span>
         <div className="space-y-5">
@@ -129,17 +129,15 @@ const MistakeCategoriesTab = () => {
               ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 space-y-3'
               : 'rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3';
             const eyebrowClass = category.isSafety
-              ? 'text-[10px] font-medium uppercase tracking-[0.18em] text-red-300'
-              : 'text-[10px] font-medium uppercase tracking-[0.18em] text-white';
+              ? 'text-[13px] font-semibold text-red-300'
+              : 'text-[13px] font-semibold text-white';
 
             return (
               <div key={index} className={containerClass}>
                 <div className="flex items-start justify-between gap-3 flex-wrap">
                   <div className="space-y-1">
                     <h3 className="text-[18px] font-semibold text-white">{category.category}</h3>
-                    <p className="text-[14px] text-white leading-relaxed">
-                      {category.description}
-                    </p>
+                    <p className="text-[14px] text-white leading-relaxed">{category.description}</p>
                   </div>
                   <span className={eyebrowClass}>{category.severity}</span>
                 </div>
@@ -153,26 +151,18 @@ const MistakeCategoriesTab = () => {
                       <h4 className="text-[14px] font-semibold text-white">{example.mistake}</h4>
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                         <div className="space-y-1">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                            Consequence
-                          </span>
-                          <p className="text-[13px] text-white leading-relaxed">
+                          <span className="text-[13px] font-semibold text-white">Consequence</span>
+                          <p className="text-[14px] text-white leading-relaxed">
                             {example.consequence}
                           </p>
                         </div>
                         <div className="space-y-1">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                            Lesson
-                          </span>
-                          <p className="text-[13px] text-white leading-relaxed">
-                            {example.lesson}
-                          </p>
+                          <span className="text-[13px] font-semibold text-white">Lesson</span>
+                          <p className="text-[14px] text-white leading-relaxed">{example.lesson}</p>
                         </div>
                         <div className="space-y-1">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                            Recovery
-                          </span>
-                          <p className="text-[13px] text-white leading-relaxed">
+                          <span className="text-[13px] font-semibold text-white">Recovery</span>
+                          <p className="text-[14px] text-white leading-relaxed">
                             {example.recovery}
                           </p>
                         </div>
@@ -186,10 +176,8 @@ const MistakeCategoriesTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Common mistake patterns
-        </span>
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+        <span className="text-[13px] font-semibold text-white">Common mistake patterns</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {commonPatterns.map((pattern, index) => (
             <div
@@ -199,9 +187,7 @@ const MistakeCategoriesTab = () => {
               <h4 className="text-[16px] font-semibold text-white">{pattern.pattern}</h4>
               <p className="text-[14px] text-white leading-relaxed">{pattern.description}</p>
               <div className="space-y-1.5 pt-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Solutions
-                </span>
+                <span className="text-[13px] font-semibold text-white">Solutions</span>
                 <ul className="space-y-1">
                   {pattern.solutions.map((solution, solutionIndex) => (
                     <li

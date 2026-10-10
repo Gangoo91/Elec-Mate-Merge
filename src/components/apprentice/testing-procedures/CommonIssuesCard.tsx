@@ -1,4 +1,4 @@
-import { PANEL } from '@/components/ui/panel-recipe';
+import { LEARN_CARD } from '@/components/apprentice/learn-ui/learnUi';
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -29,8 +29,8 @@ const CommonIssuesCard = ({ issues }: { issues: Issue[] }) => {
   };
 
   return (
-    <div className={cn(PANEL, "space-y-3")}>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+    <div className={cn(LEARN_CARD, "space-y-3")}>
+      <span className="text-[13px] font-semibold text-white">
         Common issues
       </span>
 
@@ -54,7 +54,7 @@ const CommonIssuesCard = ({ issues }: { issues: Issue[] }) => {
             {expandedIssue === index && (
               <div className="mt-1 mb-2 pl-3 border-l border-white/[0.12] animate-fade-in space-y-1">
                 <p className="text-[13px] text-white leading-relaxed">{issue.description}</p>
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white pt-1">
+                <p className="pt-1 text-[13px] font-semibold text-white">
                   What to check
                 </p>
                 <p className="text-[13px] text-white leading-relaxed">{issue.solution}</p>

@@ -5,6 +5,9 @@ import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { AGE_BAND_LABEL, FigureLine, bandRows } from '@/components/college/QueueFigures';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import {
   INBOX_KIND_LABEL,
   INBOX_KIND_ORDER,
@@ -15,9 +18,11 @@ import {
 import { callOtjStatusEdgeFn } from '@/hooks/useTutorOtjInbox';
 import { useCollegeScope, SCOPE_LABEL } from '@/components/college/scope/useCollegeScope';
 import { CollegeScopeTabs } from '@/components/college/scope/CollegeScopeSwitch';
+import { QuietTabs } from '@/components/college/otj/hoursUi';
 import {
   BulkBar,
   KeyHint,
+  QueueRow,
   SwipeRow,
   useQueueKeys,
   useSelection,
@@ -71,6 +76,7 @@ const KIND_HINT: Record<InboxKind, string> = {
   review: 'Progress reviews to book, write up or sign',
   checkin: 'Learners the risk check flags',
   marking: 'Written quiz answers to sign off',
+  deadline: 'Funding-rules dates due or passed, such as choosing the EPA organisation',
 };
 
 // Old links (?tab=otj etc.) still land somewhere sensible.
@@ -81,24 +87,53 @@ const HELP: PageHelpContent = {
   title: 'Your inbox',
   what: 'Everything at your college that needs a tutor, in one list: hours, app learning, evidence, comments, messages, IQA, progress reviews, check-ins and marking. Each one opens exactly where it is done, and leaves the inbox when it is.',
   steps: [
-    { title: 'Start at the top', body: 'Anything that has waited too long comes first, marked orange. A learner’s hours and evidence start to cost them after a week.' },
-    { title: 'Open and act', body: 'The button says what to do: Verify, Assess, Reply, Book. It takes you straight to that item, not just the learner.' },
-    { title: 'Narrow it down', body: 'Pick a kind on the left, a cohort or how long it has waited, or search for a learner. The switch at the top picks Mine, My cohorts or Whole college for the whole College Hub.' },
-    { title: 'Do several at once', body: 'Tick rows to verify hours or mark them seen together. On a desktop: j and k move, Enter or v opens, Shift+V verifies hours, r replies, x ticks. On a phone, swipe right for the button’s action and left to mark seen.' },
+    {
+      title: 'Start at the top',
+      body: 'Anything that has waited too long comes first, marked orange. A learner’s hours and evidence start to cost them after a week.',
+    },
+    {
+      title: 'Open and act',
+      body: 'The button says what to do: Verify, Assess, Reply, Book. It takes you straight to that item, not just the learner.',
+    },
+    {
+      title: 'Narrow it down',
+      body: 'Pick a kind on the left, a cohort or how long it has waited, or search for a learner. The switch at the top picks Mine, My cohorts or Whole college for the whole College Hub.',
+    },
+    {
+      title: 'Do several at once',
+      body: 'Tick rows to verify hours or mark them seen together. On a desktop: j and k move, Enter or v opens, Shift+V verifies hours, r replies, x ticks. On a phone, swipe right for the button’s action and left to mark seen.',
+    },
   ],
   legend: [
-    { swatch: 'bg-orange-500', label: 'Waiting too long', body: 'Hours or evidence over a week, a message over two days, a review overdue.' },
-    { swatch: 'bg-elec-yellow', label: 'Not seen yet', body: 'A dot until you open it. Doing the work is what clears it.' },
+    {
+      swatch: 'bg-orange-500',
+      label: 'Waiting too long',
+      body: 'Hours or evidence over a week, a message over two days, a review overdue.',
+    },
+    {
+      swatch: 'bg-elec-yellow',
+      label: 'Not seen yet',
+      body: 'A dot until you open it. Doing the work is what clears it.',
+    },
   ],
   notes: [
-    { title: 'The same list everywhere', body: 'The home page’s Needs you and the bell read this list, so the counts always match.' },
+    {
+      title: 'The same list everywhere',
+      body: 'The home page’s Needs you and the bell read this list, so the counts always match.',
+    },
   ],
 };
 
 const waitingText = (i: InboxItem) => {
   if (i.kind === 'review') return i.waitingDays > 0 ? `${i.waitingDays} days overdue` : 'Coming up';
   if (i.kind === 'checkin') return 'Flagged today';
-  return i.waitingDays <= 0 ? 'Today' : i.waitingDays === 1 ? 'Waiting since yesterday' : `Waiting ${i.waitingDays} days`;
+  // The group heading says how long things have waited; the row's own age
+  // reads plainly, in white (showcase pass, 10 Oct).
+  return i.waitingDays <= 0
+    ? 'Sent today'
+    : i.waitingDays === 1
+      ? 'Sent yesterday'
+      : `Sent ${i.waitingDays} days ago`;
 };
 
 const initialsOf = (i: InboxItem) => {
@@ -125,7 +160,9 @@ export default function UnifiedInboxPage() {
     if (t in TAB_ALIAS) return TAB_ALIAS[t];
     return t === 'urgent' || (INBOX_KIND_ORDER as string[]).includes(t) ? (t as Filter) : 'all';
   });
-  const [cohortFilter, setCohortFilter] = useState<string>(() => searchParams.get('cohort') ?? 'all');
+  const [cohortFilter, setCohortFilter] = useState<string>(
+    () => searchParams.get('cohort') ?? 'all'
+  );
   const [age, setAge] = useState<Age>(() => {
     const a = searchParams.get('age');
     return a === 'new' || a === 'days' || a === 'week' ? a : 'any';
@@ -149,11 +186,14 @@ export default function UnifiedInboxPage() {
 
   // "Yours": one of MY learners (the scope's Mine), or an item about no
   // learner that the server marked as the caller's.
+  // Only worth saying on Whole college: in Mine or My cohorts every row is
+  // already yours, and a chip on all ninety rows says nothing (Today does the same).
   const isYours = useCallback(
     (i: InboxItem) =>
-      !i.studentId && !i.userId && !i.cohort
+      scope.level === 'college' &&
+      (!i.studentId && !i.userId && !i.cohort
         ? i.mine
-        : scope.isMine({ studentId: i.studentId, userId: i.userId ?? null, cohortName: i.cohort }),
+        : scope.isMine({ studentId: i.studentId, userId: i.userId ?? null, cohortName: i.cohort })),
     [scope]
   );
   // useUnifiedInbox already narrows to the scope.
@@ -164,18 +204,29 @@ export default function UnifiedInboxPage() {
   );
   // A cohort that left the view (scope changed) stops filtering.
   useEffect(() => {
-    if (cohortFilter !== 'all' && !scope.membership.loading && !loading && !cohortOptions.includes(cohortFilter)) setCohortFilter('all');
+    if (
+      cohortFilter !== 'all' &&
+      !scope.membership.loading &&
+      !loading &&
+      !cohortOptions.includes(cohortFilter)
+    )
+      setCohortFilter('all');
   }, [cohortFilter, cohortOptions, scope.membership.loading, loading]);
   const scoped = useMemo(
     () =>
       inScope.filter(
-        (i) => (cohortFilter === 'all' || i.cohort === cohortFilter) && (age === 'any' || ageOf(i.waitingDays) === age)
+        (i) =>
+          (cohortFilter === 'all' || i.cohort === cohortFilter) &&
+          (age === 'any' || ageOf(i.waitingDays) === age)
       ),
     [inScope, cohortFilter, age]
   );
   const mineCount = useMemo(() => scoped.filter(isYours).length, [scoped, isYours]);
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: scoped.length, urgent: scoped.filter((i) => i.urgent).length };
+    const c: Record<string, number> = {
+      all: scoped.length,
+      urgent: scoped.filter((i) => i.urgent).length,
+    };
     for (const k of INBOX_KIND_ORDER) c[k] = scoped.filter((i) => i.kind === k).length;
     return c;
   }, [scoped]);
@@ -190,8 +241,8 @@ export default function UnifiedInboxPage() {
     );
   }, [scoped, filter, search]);
 
-  const urgentRows = visible.filter((i) => i.urgent);
-  const otherRows = visible.filter((i) => !i.urgent);
+  const groups = useMemo(() => bandRows(visible, (i) => i.waitingDays), [visible]);
+  const oldestDays = scoped.reduce((m, i) => Math.max(m, i.waitingDays ?? 0), 0);
 
   const open = useCallback(
     (i: InboxItem) => {
@@ -202,11 +253,13 @@ export default function UnifiedInboxPage() {
   );
 
   /* ── Bulk, keyboard, swipe (ELE-1889) ── */
-  const ordered = useMemo(() => [...urgentRows, ...otherRows], [urgentRows, otherRows]);
+  const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const keys = useMemo(() => ordered.map((i) => i.key), [ordered]);
   const byKey = useMemo(() => new Map(ordered.map((i) => [i.key, i])), [ordered]);
   const sel = useSelection(keys);
-  const picked = Array.from(sel.selected).map((k) => byKey.get(k)).filter((i): i is InboxItem => !!i);
+  const picked = Array.from(sel.selected)
+    .map((k) => byKey.get(k))
+    .filter((i): i is InboxItem => !!i);
   const pickedHours = picked.filter((i) => i.kind === 'hours');
   const pickedUnseen = picked.filter((i) => i.unread && i.kind !== 'marking');
   const allTicked = keys.length > 0 && keys.every((k) => sel.has(k));
@@ -227,7 +280,9 @@ export default function UnifiedInboxPage() {
       await refresh();
       const ok = rows.length - failed;
       toast({
-        title: failed ? `Verified ${ok}, ${failed} failed` : `Verified ${ok} ${ok === 1 ? 'entry' : 'entries'}`,
+        title: failed
+          ? `Verified ${ok}, ${failed} failed`
+          : `Verified ${ok} ${ok === 1 ? 'entry' : 'entries'}`,
         description: failed ? 'Open the ones left to see why.' : 'The apprentices have been told.',
         variant: failed ? 'destructive' : undefined,
       });
@@ -274,7 +329,8 @@ export default function UnifiedInboxPage() {
         r: (k: string) => {
           const i = byKey.get(k);
           if (i && REPLY_KINDS.includes(i.kind)) open(i);
-          else toast({ title: 'Nothing to reply to', description: 'r opens messages and comments.' });
+          else
+            toast({ title: 'Nothing to reply to', description: 'r opens messages and comments.' });
         },
       }),
       [byKey, open, verifyHours, toast]
@@ -294,7 +350,11 @@ export default function UnifiedInboxPage() {
   const filterOptions: Array<{ key: Filter; label: string; hint?: string }> = [
     { key: 'all', label: 'Everything' },
     { key: 'urgent', label: 'Waiting too long' },
-    ...kindsWithItems.map((k) => ({ key: k as Filter, label: INBOX_KIND_LABEL[k], hint: KIND_HINT[k] })),
+    ...kindsWithItems.map((k) => ({
+      key: k as Filter,
+      label: INBOX_KIND_LABEL[k],
+      hint: KIND_HINT[k],
+    })),
   ];
 
   return (
@@ -309,25 +369,40 @@ export default function UnifiedInboxPage() {
         {/* Hero */}
         <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">Inbox</p>
-            <h1 className="mt-2 text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[36px]">
-              {loading ? 'Gathering your work…' : counts.all === 0 ? 'You’re clear' : `${counts.all} ${counts.all === 1 ? 'thing needs' : 'things need'} you`}
+            <p className="text-[13px] font-semibold text-elec-yellow">Inbox</p>
+            <h1 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
+              {loading
+                ? 'Gathering your work…'
+                : counts.all === 0
+                  ? 'You’re clear'
+                  : `${counts.all} ${counts.all === 1 ? 'thing needs' : 'things need'} you`}
             </h1>
             <p className="mt-2 text-[15px] leading-relaxed text-white">
-              {loading
-                ? 'Hours, evidence, messages, reviews and marking from across your college.'
-                : counts.all === 0
-                  ? 'Nothing is waiting. New hours, evidence, messages and reviews land here as they arrive.'
-                  : [
-                      counts.urgent ? `${counts.urgent} waiting too long` : 'nothing overdue',
-                      scope.level === 'college' && mineCount ? `${mineCount} yours` : null,
-                      stats.unread ? `${stats.unread} not seen yet` : null,
-                    ]
-                      .filter(Boolean)
-                      .join(' · ')}
+              {loading ? (
+                'Hours, evidence, messages, reviews and marking from across your college.'
+              ) : counts.all === 0 ? (
+                'Nothing is waiting. New hours, evidence, messages and reviews land here as they arrive.'
+              ) : (
+                <FigureLine
+                  items={[
+                    counts.urgent
+                      ? { n: counts.urgent, label: 'waiting too long', tone: 'warn' }
+                      : { n: null, label: 'Nothing overdue', tone: 'good' },
+                    oldestDays > 1
+                      ? { n: `${oldestDays} days`, label: 'the oldest' }
+                      : { n: null, label: '' },
+                    scope.level === 'college' && mineCount
+                      ? { n: mineCount, label: 'yours' }
+                      : { n: null, label: '' },
+                    stats.unread
+                      ? { n: stats.unread, label: 'not seen yet' }
+                      : { n: null, label: '' },
+                  ]}
+                />
+              )}
             </p>
           </div>
-          <div className="flex shrink-0 items-center gap-2.5">
+          <div className="flex shrink-0 flex-wrap items-center gap-2.5">
             <CollegeScopeTabs />
             {stats.unread > 0 && (
               <button
@@ -344,7 +419,11 @@ export default function UnifiedInboxPage() {
         {error && (
           <div className="flex items-center justify-between gap-3 rounded-2xl border border-orange-500/40 px-4 py-3">
             <p className="text-[13.5px] text-white">Couldn’t load the inbox: {error}</p>
-            <button type="button" onClick={() => void refresh()} className="h-11 px-3 text-[13px] font-semibold text-elec-yellow">
+            <button
+              type="button"
+              onClick={() => void refresh()}
+              className="h-11 px-3 text-[13px] font-semibold text-elec-yellow"
+            >
               Try again
             </button>
           </div>
@@ -353,23 +432,18 @@ export default function UnifiedInboxPage() {
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]">
           {/* Kinds: a rail on a wide screen, chips on a phone */}
           <nav aria-label="Inbox filters" className="lg:sticky lg:top-16">
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden">
-              {filterOptions.map((f) => (
-                <button
-                  key={f.key}
-                  type="button"
-                  aria-pressed={filter === f.key}
-                  onClick={() => setFilter(f.key)}
-                  className={cn(
-                    'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
-                    filter === f.key ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white'
-                  )}
-                >
-                  {f.label}
-                  <span className="tabular-nums">{counts[f.key] ?? 0}</span>
-                </button>
-              ))}
-            </div>
+            <QuietTabs
+              label="Inbox filters"
+              value={filter}
+              onChange={setFilter}
+              className="lg:hidden"
+              tabs={filterOptions.map((f) => ({
+                key: f.key,
+                label: f.label,
+                count: counts[f.key] ?? 0,
+                warn: f.key === 'urgent',
+              }))}
+            />
             <ul className="hidden overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-2 lg:block">
               {filterOptions.map((f, idx) => (
                 <li key={f.key}>
@@ -386,19 +460,24 @@ export default function UnifiedInboxPage() {
                     <span className="min-w-0 flex-1">
                       <span className="block text-[14px] font-semibold">{f.label}</span>
                       {f.hint && (
-                        <span className={cn('block truncate text-[11.5px]', filter === f.key ? 'text-black' : 'text-white')}>
+                        <span
+                          className={cn(
+                            'block text-[12px] leading-snug',
+                            filter === f.key ? 'text-black' : 'text-white'
+                          )}
+                        >
                           {f.hint}
                         </span>
                       )}
                     </span>
                     <span
                       className={cn(
-                        'shrink-0 rounded-full px-2 py-0.5 text-[12px] font-bold tabular-nums',
-                        f.key === 'urgent' && (counts.urgent ?? 0) > 0
-                          ? 'bg-orange-500 text-black'
-                          : filter === f.key
-                            ? 'bg-black text-white'
-                            : 'bg-white/[0.1] text-white'
+                        'shrink-0 text-[13px] font-bold tabular-nums',
+                        filter === f.key
+                          ? 'text-black'
+                          : f.key === 'urgent' && (counts.urgent ?? 0) > 0
+                            ? 'text-orange-300'
+                            : 'text-white'
                       )}
                     >
                       {counts[f.key] ?? 0}
@@ -412,30 +491,41 @@ export default function UnifiedInboxPage() {
           {/* The list */}
           <section className="min-w-0 space-y-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-            <div className="relative min-w-0 flex-1">
-              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
-              <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Find a learner, cohort or entry"
-                aria-label="Find a learner, cohort or entry"
-                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
-              />
-            </div>
-              <div className="flex shrink-0 gap-2">
+              <div className="relative min-w-0 flex-1">
+                <Search
+                  className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                  aria-hidden="true"
+                />
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Find a learner, cohort or entry"
+                  aria-label="Find a learner, cohort or entry"
+                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                />
+              </div>
+              <div className="flex gap-2 sm:shrink-0">
                 <Pick
                   label={cohortFilter === 'all' ? 'All cohorts' : cohortFilter}
                   active={cohortFilter !== 'all'}
-                  options={[{ key: 'all', label: 'All cohorts' }, ...cohortOptions.map((c) => ({ key: c, label: c }))]}
+                  options={[
+                    { key: 'all', label: 'All cohorts' },
+                    ...cohortOptions.map((c) => ({ key: c, label: c })),
+                  ]}
                   onPick={setCohortFilter}
+                  current={cohortFilter}
                   aria="Filter by cohort"
                 />
                 <Pick
                   label={AGE_LABEL[age]}
                   active={age !== 'any'}
-                  options={(Object.keys(AGE_LABEL) as Age[]).map((k) => ({ key: k, label: AGE_LABEL[k] }))}
+                  options={(Object.keys(AGE_LABEL) as Age[]).map((k) => ({
+                    key: k,
+                    label: AGE_LABEL[k],
+                  }))}
                   onPick={(k) => setAge(k as Age)}
+                  current={age}
                   aria="Filter by how long it has waited"
                 />
               </div>
@@ -481,12 +571,21 @@ export default function UnifiedInboxPage() {
               </div>
             ) : (
               <>
-                {urgentRows.length > 0 && (
-                  <Group title="Waiting too long" tone="urgent" rows={urgentRows} onOpen={open} sel={sel} focus={kb.focus} isYours={isYours} onVerify={(i) => void verifyHours([i])} onSeen={(i) => void seen([i])} />
-                )}
-                {otherRows.length > 0 && (
-                  <Group title={urgentRows.length ? 'Everything else' : 'To do'} rows={otherRows} onOpen={open} sel={sel} focus={kb.focus} isYours={isYours} onVerify={(i) => void verifyHours([i])} onSeen={(i) => void seen([i])} />
-                )}
+                {groups.map((g) => (
+                  <Group
+                    key={g.band}
+                    title={AGE_BAND_LABEL[g.band]}
+                    tone={g.band === 'recent' ? undefined : 'urgent'}
+                    rows={g.rows}
+                    showKind={filter === 'all' || filter === 'urgent'}
+                    onOpen={open}
+                    sel={sel}
+                    focus={kb.focus}
+                    isYours={isYours}
+                    onVerify={(i) => void verifyHours([i])}
+                    onSeen={(i) => void seen([i])}
+                  />
+                ))}
               </>
             )}
           </section>
@@ -511,7 +610,9 @@ export default function UnifiedInboxPage() {
             onClick={() => void verifyHours(pickedHours)}
             className="h-11 rounded-xl bg-elec-yellow px-3.5 text-[13px] font-bold text-black touch-manipulation disabled:opacity-50"
           >
-            {acting ? 'Verifying…' : `Verify ${pickedHours.length} ${pickedHours.length === 1 ? 'entry' : 'entries'}`}
+            {acting
+              ? 'Verifying…'
+              : `Verify ${pickedHours.length} ${pickedHours.length === 1 ? 'entry' : 'entries'}`}
           </button>
         )}
         {pickedHours.length === 0 && pickedUnseen.length === 0 && (
@@ -522,36 +623,92 @@ export default function UnifiedInboxPage() {
   );
 }
 
-/** A compact filter picker (cohort, age) beside the search. */
+/** A compact filter picker (cohort, age) beside the search. A dropdown on
+ *  desktop; a bottom sheet of 44px rows on a phone (college-mobile-standard 7). */
 function Pick({
   label,
   active,
   options,
   onPick,
   aria,
+  current,
 }: {
   label: string;
   active: boolean;
   options: Array<{ key: string; label: string }>;
   onPick: (k: string) => void;
   aria: string;
+  current: string;
 }) {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = useState(false);
+  const trigger = (
+    <button
+      type="button"
+      aria-label={`${aria}: ${label}`}
+      onClick={isMobile ? () => setOpen(true) : undefined}
+      className={cn(
+        'inline-flex h-11 min-w-0 flex-1 items-center justify-between gap-1.5 rounded-xl border px-3.5 text-[13px] font-semibold text-white touch-manipulation active:bg-white/[0.06] sm:max-w-[13rem] sm:flex-none',
+        active ? 'border-white' : 'border-white/[0.14] hover:border-white/[0.3]'
+      )}
+    >
+      <span className="truncate">{label}</span>
+      <ChevronDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+    </button>
+  );
+  if (isMobile) {
+    return (
+      <>
+        {trigger}
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetContent
+            side="bottom"
+            className="max-h-[88dvh] overflow-y-auto overscroll-contain rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0 pb-[env(safe-area-inset-bottom)]"
+          >
+            <div className="mx-auto mt-3 h-1 w-12 rounded-full bg-white/15" aria-hidden />
+            <div className="px-4 pb-4 pt-3">
+              <SheetTitle className="text-left text-[20px] font-semibold tracking-tight text-white">
+                {aria}
+              </SheetTitle>
+              <SheetDescription className="sr-only">Pick one to filter the inbox.</SheetDescription>
+              <ul className="mt-3 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                {options.map((o) => {
+                  const on = o.key === current;
+                  return (
+                    <li key={o.key}>
+                      <button
+                        type="button"
+                        aria-pressed={on}
+                        onClick={() => {
+                          onPick(o.key);
+                          setOpen(false);
+                        }}
+                        className="flex min-h-12 w-full items-center justify-between gap-3 py-2 text-left text-[15px] text-white touch-manipulation active:bg-white/[0.06]"
+                      >
+                        <span className={cn('min-w-0 break-words', on && 'font-semibold')}>
+                          {o.label}
+                        </span>
+                        {on && (
+                          <Check className="h-5 w-5 shrink-0" strokeWidth={1.75} aria-hidden />
+                        )}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </>
+    );
+  }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          aria-label={`${aria}: ${label}`}
-          className={cn(
-            'inline-flex h-11 max-w-[11rem] items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
-            active ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white hover:bg-white/[0.06]'
-          )}
-        >
-          <span className="truncate">{label}</span>
-          <ChevronDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="max-h-80 w-60 overflow-y-auto border-white/[0.12] bg-[hsl(0_0%_10%)] p-1.5 text-white">
+      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        className="max-h-80 w-60 overflow-y-auto border-white/[0.12] bg-[hsl(0_0%_10%)] p-1.5 text-white"
+      >
         {options.map((o) => (
           <DropdownMenuItem
             key={o.key}
@@ -570,6 +727,7 @@ function Group({
   title,
   rows,
   tone,
+  showKind = true,
   onOpen,
   sel,
   focus,
@@ -580,6 +738,7 @@ function Group({
   title: string;
   rows: InboxItem[];
   tone?: 'urgent';
+  showKind?: boolean;
   onOpen: (i: InboxItem) => void;
   sel: { has: (k: string) => boolean; toggle: (k: string) => void };
   focus: string | null;
@@ -590,115 +749,69 @@ function Group({
   return (
     <div className="space-y-2">
       <div className="flex items-baseline justify-between px-1">
-        <h2 className={cn('text-[13px] font-semibold', tone === 'urgent' ? 'text-orange-300' : 'text-white')}>{title}</h2>
+        <h2
+          className={cn(
+            'text-[13px] font-semibold',
+            tone === 'urgent' ? 'text-orange-300' : 'text-white'
+          )}
+        >
+          {title}
+        </h2>
         <span className="text-[12px] tabular-nums text-white">{rows.length}</span>
       </div>
       <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x">
         {rows.map((i) => {
           const ticked = sel.has(i.key);
           return (
-          <li key={i.key} data-qkey={i.key}>
-            <SwipeRow
-              right={{
-                label: i.action,
-                icon: <ChevronRight className="h-5 w-5" aria-hidden="true" />,
-                tone: 'go',
-                onAction: () => (i.kind === 'hours' ? onVerify(i) : onOpen(i)),
-              }}
-              left={
-                i.unread && i.kind !== 'marking'
-                  ? { label: 'Seen', icon: <Eye className="h-5 w-5" aria-hidden="true" />, onAction: () => onSeen(i) }
-                  : { label: ticked ? 'Untick' : 'Tick', icon: <Check className="h-5 w-5" aria-hidden="true" />, onAction: () => sel.toggle(i.key) }
-              }
-            >
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => onOpen(i)}
-              onKeyDown={(e) => {
-                if (e.target !== e.currentTarget) return;
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onOpen(i);
-                }
-              }}
-              className={cn(
-                'flex w-full cursor-pointer items-center gap-3 px-4 py-4 text-left outline-none transition-colors touch-manipulation hover:bg-white/[0.04] focus-visible:bg-white/[0.06] sm:gap-4 sm:px-5',
-                focus === i.key && 'bg-white/[0.06] shadow-[inset_3px_0_0_0_hsl(47_100%_50%)]',
-                ticked && 'bg-white/[0.05]'
-              )}
-            >
-              <button
-                type="button"
-                role="checkbox"
-                aria-checked={ticked}
-                aria-label={ticked ? `Untick ${i.learner ?? i.title}` : `Tick ${i.learner ?? i.title}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  sel.toggle(i.key);
+            <li key={i.key} data-qkey={i.key}>
+              <SwipeRow
+                right={{
+                  label: i.action,
+                  icon: <ChevronRight className="h-5 w-5" aria-hidden="true" />,
+                  tone: 'go',
+                  onAction: () => (i.kind === 'hours' ? onVerify(i) : onOpen(i)),
                 }}
-                className="-my-2 -ml-2 flex h-11 w-11 shrink-0 items-center justify-center touch-manipulation"
+                left={
+                  i.unread && i.kind !== 'marking'
+                    ? {
+                        label: 'Seen',
+                        icon: <Eye className="h-5 w-5" aria-hidden="true" />,
+                        onAction: () => onSeen(i),
+                      }
+                    : {
+                        label: ticked ? 'Untick' : 'Tick',
+                        icon: <Check className="h-5 w-5" aria-hidden="true" />,
+                        onAction: () => sel.toggle(i.key),
+                      }
+                }
               >
-                <span
-                  className={cn(
-                    'flex h-5 w-5 items-center justify-center rounded-md border text-[12px] font-bold',
-                    ticked ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.35]'
-                  )}
-                >
-                  {ticked ? '✓' : ''}
-                </span>
-              </button>
-              <span className="relative shrink-0">
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    'flex h-11 w-11 items-center justify-center rounded-full text-[13.5px] font-bold',
-                    i.urgent ? 'bg-orange-500 text-black' : 'bg-white/[0.1] text-white'
-                  )}
-                >
-                  {initialsOf(i)}
-                </span>
-                {i.unread && (
-                  <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-[hsl(0_0%_14%)] bg-elec-yellow" aria-label="Not seen yet" />
-                )}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span className="truncate text-[15px] font-semibold text-white">{i.learner ?? i.title}</span>
-                  <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[10.5px] font-semibold text-white">
-                    {INBOX_KIND_LABEL[i.kind]}
-                  </span>
-                  {isYours(i) && (
-                    <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10.5px] font-bold text-black">Yours</span>
-                  )}
-                </span>
-                <span className="mt-1 line-clamp-2 block text-[13px] leading-snug text-white">
-                  {i.learner ? (
-                    <>
-                      <span className="font-semibold">{i.title}</span>
-                      {i.body ? <> · {i.body}</> : null}
-                    </>
-                  ) : (
-                    i.body
-                  )}
-                </span>
-                <span className="mt-1 block text-[12px] text-white">
-                  <span className={cn('font-semibold', i.urgent && 'text-orange-300')}>{waitingText(i)}</span>
-                  {i.cohort ? ` · ${i.cohort}` : ''}
-                </span>
-              </span>
-              <span
-                className={cn(
-                  'hidden h-11 w-[104px] shrink-0 items-center justify-center rounded-xl text-[13px] font-bold sm:inline-flex',
-                  i.urgent ? 'bg-elec-yellow text-black' : 'border border-white/[0.18] text-white'
-                )}
-              >
-                {i.action}
-              </span>
-              <ChevronRight className="h-4 w-4 shrink-0 text-white sm:hidden" aria-hidden="true" />
-            </div>
-            </SwipeRow>
-          </li>
+                <QueueRow
+                  name={i.learner ?? i.title}
+                  avatar={initialsOf(i)}
+
+                  mine={isYours(i)}
+                  title={i.learner ? i.title : undefined}
+                  // App learning rows all carry the same explanation; the
+                  // hours say what it is.
+                  body={i.kind === 'app_learning' ? undefined : i.body || undefined}
+                  meta={[
+                    showKind ? INBOX_KIND_LABEL[i.kind] : null,
+                    showKind ? waitingText(i).replace(/^S/, 's') : waitingText(i),
+                    (i.cohort ?? '').replace(/\s*\(.*\)$/, '') || null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                  urgent={false}
+                  unread={i.unread}
+                  action={i.action}
+                  onOpen={() => onOpen(i)}
+                  selectable
+                  selected={ticked}
+                  onToggle={() => sel.toggle(i.key)}
+                  focused={focus === i.key}
+                />
+              </SwipeRow>
+            </li>
           );
         })}
       </ul>

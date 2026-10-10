@@ -3,6 +3,8 @@ import { useQuoteStorage } from './useQuoteStorage';
 import { useInvoiceStorage } from './useInvoiceStorage';
 import { Quote } from '@/types/quote';
 import { isInvoiceOverdue } from '@/utils/invoice-status';
+import { isQuoteExpired, isQuoteLost, isQuoteWon } from '@/utils/quote-status';
+import { decidedCount, winRate as winRateOf } from '@/utils/winRate';
 
 export interface BusinessHubData {
   revenue: number;
@@ -110,12 +112,18 @@ export function useBusinessHubData(): BusinessHubData {
    * actually been rejected — without a single loss on record there is no way
    * to tell "wins everything" from "never writes down a loss".
    */
+  // Gap §4.7: the one win rate (src/utils/winRate.ts) — won of decided, where
+  // an expired, never-answered quote counts as decided. That is also the cure
+  // for the "nobody marks a loss" problem above: a lapsed quote is a loss on
+  // record. The honesty guard stays: at least 5 decided and one not won.
   const winRate = useMemo<number | null>(() => {
-    const accepted = savedQuotes.filter((q) => q.acceptance_status === 'accepted').length;
-    const rejected = savedQuotes.filter((q) => q.acceptance_status === 'rejected').length;
-    const decided = accepted + rejected;
-    if (decided < 5 || rejected === 0) return null;
-    return Math.round((accepted / decided) * 100);
+    const counts = {
+      won: savedQuotes.filter(isQuoteWon).length,
+      lost: savedQuotes.filter(isQuoteLost).length,
+      expired: savedQuotes.filter(isQuoteExpired).length,
+    };
+    if (decidedCount(counts) < 5 || counts.lost + counts.expired === 0) return null;
+    return winRateOf(counts);
   }, [savedQuotes]);
 
   const isLoading = quotesLoading || invoicesLoading;

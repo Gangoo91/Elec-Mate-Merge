@@ -23,6 +23,12 @@ import {
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
 
+/** Today as YYYY-MM-DD in the user's own time zone, not UTC. */
+const localToday = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+
 interface ManualTimeEntryDialogProps {
   trigger?: ReactNode;
   open?: boolean;
@@ -45,7 +51,7 @@ export function ManualTimeEntryDialog({
   const [formData, setFormData] = useState({
     employeeId: '',
     jobId: '',
-    date: new Date().toISOString().split('T')[0],
+    date: localToday(),
     clockIn: '08:00',
     clockOut: '17:00',
     breakMins: '60',
@@ -76,8 +82,11 @@ export function ManualTimeEntryDialog({
       return;
     }
 
-    const clockInISO = `${formData.date}T${formData.clockIn}:00`;
-    const clockOutISO = `${formData.date}T${formData.clockOut}:00`;
+    // Typed times are UK wall-clock times. A bare "YYYY-MM-DDTHH:mm" string is
+    // stored as UTC by Postgres, which shifted every entry an hour in summer;
+    // parse it as local time and send a real instant, as the worker app does.
+    const clockInISO = new Date(`${formData.date}T${formData.clockIn}:00`).toISOString();
+    const clockOutISO = new Date(`${formData.date}T${formData.clockOut}:00`).toISOString();
 
     try {
       await createTimesheet.mutateAsync({
@@ -95,12 +104,13 @@ export function ManualTimeEntryDialog({
       });
 
       const employee = employees.find((e) => e.id === formData.employeeId);
-      toast.success(`${totalHours} hours logged for ${employee?.name || 'employee'}.`);
+      const unit = totalHours === 1 ? 'hour' : 'hours';
+      toast.success(`${totalHours} ${unit} logged for ${employee?.name || 'employee'}.`);
 
       setFormData({
         employeeId: '',
         jobId: '',
-        date: new Date().toISOString().split('T')[0],
+        date: localToday(),
         clockIn: '08:00',
         clockOut: '17:00',
         breakMins: '60',

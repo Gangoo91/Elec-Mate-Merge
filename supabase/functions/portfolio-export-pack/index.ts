@@ -2,7 +2,7 @@
 /**
  * portfolio-export-pack (ELE-1881 / ELE-1883 / ELE-2017)
  *
- * POST { action: 'create', kind: 'evidence_pack' | 'gateway_pack', learnerId? }
+ * POST { action: 'create', kind: 'evidence_pack' | 'gateway_pack', learnerId?, leaveOutPhotos? }
  *   Starts a pack and returns { id } at once; the build runs in the
  *   background and writes its progress to portfolio_exports, which the app
  *   reads (RLS) until status is 'ready' or 'failed'.
@@ -150,6 +150,8 @@ Deno.serve(async (req) => {
       null;
     const requestedByName = (prof?.full_name as string)?.trim() || caller.email || (access === 'learner' ? 'The apprentice' : 'College staff');
     const label = typeof body.label === 'string' ? body.label.slice(0, 80) : null;
+    // "Leave out photos of people and site addresses" (evidence pack only).
+    const leaveOutPhotos = kind === 'evidence_pack' && body.leaveOutPhotos === true;
 
     const { data: row, error: insErr } = await admin
       .from('portfolio_exports')
@@ -164,6 +166,7 @@ Deno.serve(async (req) => {
         requested_by_name: requestedByName,
         requested_role: access,
         label,
+        leave_out_photos_and_sites: kind === 'evidence_pack' ? leaveOutPhotos : null,
       })
       .select('id')
       .single();
@@ -177,7 +180,7 @@ Deno.serve(async (req) => {
     const work = (async () => {
       const startedAt = new Date().toISOString();
       try {
-        const ctx = { admin, asCaller, learnerId, exportId, kind, access, requestedBy: caller.userId, requestedByName, progress };
+        const ctx = { admin, asCaller, learnerId, exportId, kind, access, requestedBy: caller.userId, requestedByName, progress, leaveOutPhotos };
         const rec = await loadRecord(ctx);
         const result = kind === 'gateway_pack' ? await buildGatewayPack(ctx, rec, startedAt) : await buildEvidencePack(ctx, rec, startedAt);
         await admin
@@ -202,7 +205,7 @@ Deno.serve(async (req) => {
           action: kind === 'gateway_pack' ? 'gateway_pack_generated' : 'export_pack_generated',
           object_type: 'portfolio_export',
           object_id: exportId,
-          summary: { kind, requested_by_name: requestedByName, files: result.fileCount, pdf_pages: result.pdfPages, ...result.counts },
+          summary: { kind, requested_by_name: requestedByName, files: result.fileCount, pdf_pages: result.pdfPages, ...(leaveOutPhotos ? { left_out: 'photos and site addresses' } : {}), ...result.counts },
           content_hash: result.zipSha256,
         });
       } catch (e) {

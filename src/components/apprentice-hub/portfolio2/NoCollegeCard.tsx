@@ -39,7 +39,7 @@ export function JoinCollegeSheet({
       title="Join your college"
       description="Your evidence, claims and hours come with you. Once you join, your tutor and assessor can see your portfolio and pass criteria."
     >
-      <div className="grid gap-8 py-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10">
+      <div className="grid grid-cols-1 gap-8 py-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10">
         <CollegeInviteAccept
           onSuccess={() => {
             invalidateMyCollegeContext();
@@ -49,10 +49,13 @@ export function JoinCollegeSheet({
         <div className="space-y-3 text-[13px] leading-relaxed text-white">
           <p className="text-[13.5px] font-semibold">Where do I get a code?</p>
           <p>
-            Your tutor or the college office gives it out, usually at enrolment. It is 8 characters, or a link that
-            fills it in for you.
+            Your tutor or the college office gives it out, usually at enrolment. It is 8 characters,
+            or a link that fills it in for you.
           </p>
-          <p>Your college is not on Elec-Mate yet? You do not need it to be. Invite an assessor instead and keep building your record.</p>
+          <p>
+            Your college is not on Elec-Mate yet? You do not need it to be. Invite an assessor
+            instead and keep building your record.
+          </p>
         </div>
       </div>
     </FormSheet>
@@ -84,8 +87,15 @@ export function NoCollegeCard({
       .eq('status', 'invited')
       .gt('expires_at', new Date().toISOString())
       .order('created_at', { ascending: false });
-    const rows = (data ?? []) as unknown as { assessor_name: string | null; assessor_email: string }[];
-    setPending(rows.length ? { name: rows[0].assessor_name || rows[0].assessor_email, count: rows.length } : null);
+    const rows = (data ?? []) as unknown as {
+      assessor_name: string | null;
+      assessor_email: string;
+    }[];
+    setPending(
+      rows.length
+        ? { name: rows[0].assessor_name || rows[0].assessor_email, count: rows.length }
+        : null
+    );
   }, [user]);
 
   useEffect(() => {
@@ -132,14 +142,15 @@ export function NoCollegeCard({
             You are not linked to a college
           </h2>
           <p className="mt-1.5 text-[13.5px] leading-relaxed text-white">
-            Everything here still works: capture, claiming criteria, witness statements and your export. The one thing
-            that needs someone else is passing a criterion. Only an assessor can do that, so nothing new can be passed
-            until you have one.
+            Everything here still works: capture, claiming criteria, witness statements and your
+            export. The one thing that needs someone else is passing a criterion. Only an assessor
+            can do that, so nothing new can be passed until you have one.
           </p>
           {pending && (
             <p className="mt-3 rounded-xl border border-sky-400/40 bg-sky-500/[0.12] px-3 py-2 text-[13px] text-sky-200">
               Invite sent to {pending.name}
-              {pending.count > 1 ? ` and ${pending.count - 1} more` : ''}. It counts once they accept.
+              {pending.count > 1 ? ` and ${pending.count - 1} more` : ''}. It counts once they
+              accept.
             </p>
           )}
         </div>
@@ -156,10 +167,29 @@ export function NoCollegeCard({
                     : 'border-white/[0.12] bg-white/[0.03] text-white hover:border-white/[0.3]'
                 )}
               >
-                <a.icon className={cn('mt-0.5 h-5 w-5 shrink-0', a.primary ? 'text-black' : 'text-elec-yellow')} />
+                <a.icon
+                  className={cn(
+                    'mt-0.5 h-5 w-5 shrink-0',
+                    a.primary ? 'text-black' : 'text-elec-yellow'
+                  )}
+                />
                 <span className="min-w-0">
-                  <span className={cn('block text-[14px] font-semibold', a.primary ? 'text-black' : 'text-white')}>{a.title}</span>
-                  <span className={cn('block text-[12.5px] leading-snug', a.primary ? 'text-black' : 'text-white')}>{a.body}</span>
+                  <span
+                    className={cn(
+                      'block text-[14px] font-semibold',
+                      a.primary ? 'text-black' : 'text-white'
+                    )}
+                  >
+                    {a.title}
+                  </span>
+                  <span
+                    className={cn(
+                      'block text-[12.5px] leading-snug',
+                      a.primary ? 'text-black' : 'text-white'
+                    )}
+                  >
+                    {a.body}
+                  </span>
                 </span>
               </button>
             </li>

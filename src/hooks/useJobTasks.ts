@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { OFFLINE_FIRST, isOfflineError, offlineSnapshot } from '@/lib/workerOfflineCache';
+import { useWorkerOutbox } from '@/hooks/useWorkerOutbox';
+import { clipWords, submitWorkerAction, type SubmitResult } from '@/lib/workerOutbox';
 
 /**
  * Job task tickets (ELE-1073). Employer creates/manages; assigned workers
@@ -30,6 +33,8 @@ export interface JobTask {
   // joined
   assignee?: { id: string; name: string; avatar_initials: string } | null;
   job?: { id: string; title: string; client: string; location: string } | null;
+  /** ELE-1828: a status change made on this phone, not sent yet. */
+  offline_pending?: boolean;
 }
 
 const SELECT_WITH_JOINS =
@@ -83,7 +88,10 @@ export const useJobTasks = (jobId: string | undefined) => {
 const myActiveEmployeeIds = async (): Promise<string[]> => {
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
+  // No signal is not "no roster rows" — never cache an empty list for it (ELE-1828).
+  if (authError && isOfflineError(authError)) throw authError;
   if (!user) return [];
   const { data, error } = await supabase
     .from('employer_employees')
@@ -106,7 +114,8 @@ export const useMyTasks = () => {
 
   const idsQuery = useQuery({
     queryKey: ['my-active-employee-ids'],
-    queryFn: myActiveEmployeeIds,
+    ...OFFLINE_FIRST,
+    queryFn: () => offlineSnapshot('my-active-employee-ids', myActiveEmployeeIds),
     staleTime: 5 * 60 * 1000,
   });
   const idsKey = (idsQuery.data ?? []).join(',');
@@ -126,9 +135,31 @@ export const useMyTasks = () => {
     };
   }, [idsKey, queryClient]);
 
+  // ELE-1828: a tick still on the phone shows as made, marked waiting.
+  const { pending } = useWorkerOutbox();
+  const ticks = pending.filter((o) => o.kind === 'task_status');
+  const ticksKey = ticks.map((o) => o.id).join(',');
+  const overlay = useCallback(
+    (tasks: JobTask[]): JobTask[] => {
+      if (ticks.length === 0) return tasks;
+      const latest = new Map<string, string>();
+      ticks.forEach((o) => latest.set(String(o.payload.taskId), String(o.payload.status)));
+      return tasks.map((t) =>
+        latest.has(t.id)
+          ? { ...t, status: latest.get(t.id) as TaskStatus, offline_pending: true }
+          : t
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ticksKey]
+  );
+
   return useQuery({
     queryKey: ['my-tasks'],
-    queryFn: async (): Promise<JobTask[]> => {
+    // ELE-1828: tasks open with no signal; ticks go through the outbox.
+    ...OFFLINE_FIRST,
+    select: overlay,
+    queryFn: () => offlineSnapshot('my-tasks', async (): Promise<JobTask[]> => {
       const ids = await myActiveEmployeeIds();
       if (ids.length === 0) return [];
 
@@ -147,7 +178,7 @@ export const useMyTasks = () => {
             (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9) ||
             (priorityRank[a.priority] ?? 9) - (priorityRank[b.priority] ?? 9)
         );
-    },
+    }),
     staleTime: 30 * 1000,
   });
 };
@@ -243,6 +274,24 @@ export const useUpdateTask = () => {
     },
   });
 };
+
+/**
+ * A worker's task tick, through the outbox (ELE-1828): works with no signal,
+ * lands once, in order, guarded on the status the worker saw so an office
+ * change made meanwhile is reported, never overwritten.
+ */
+export async function sendMyTaskStatus(task: JobTask, status: TaskStatus): Promise<SubmitResult> {
+  const verb =
+    status === 'Done' ? 'Done' : status === 'In Progress' ? 'Started' : status === 'Blocked' ? 'Blocked' : 'Back to do';
+  const { result } = await submitWorkerAction({
+    kind: 'task_status',
+    label: `${verb} · ${clipWords(task.title)}`,
+    detail: task.job?.title ?? null,
+    jobId: task.job_id,
+    payload: { taskId: task.id, status, from: task.status },
+  });
+  return result;
+}
 
 export const useDeleteTask = () => {
   const queryClient = useQueryClient();

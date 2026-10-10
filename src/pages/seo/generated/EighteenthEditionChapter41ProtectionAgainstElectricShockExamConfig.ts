@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-06-10';
+const modified = '2026-10-10';
 
 export const EighteenthEditionChapter41ProtectionAgainstElectricShockExamConfig: GeneratedGuideConfig =
   {
@@ -29,7 +29,7 @@ export const EighteenthEditionChapter41ProtectionAgainstElectricShockExamConfig:
       'Maximum Zs values are in Tables 41.3 (for protective devices in BS EN 60898 / BS EN 61009) — memorise the common ones.',
       'Section 415 covers additional protection — 30mA RCDs for sockets up to 32A, supplementary equipotential bonding in special locations.',
       'Section 411.3.3 — RCD additional protection for socket circuits (the famous "30mA RCD" rule).',
-      'A4:2026 changes Chapter 41 slightly — clarifications on TN-C-S (PNB) earthing and RDC-DD for EV circuits.',
+      'A4:2026 lists no main changes to Chapter 41 — its PNB (protective neutral bonding) addition is in Regulation 312.2.1.1, Chapter 31. Regulation 411.3.3 was last redrafted at A2:2022.',
     ],
     sections: [
       {
@@ -72,7 +72,7 @@ export const EighteenthEditionChapter41ProtectionAgainstElectricShockExamConfig:
         blocks: [
           {
             type: 'paragraph',
-            text: '30mA RCD protection is mandatory for: sockets up to 32A in dwellings (Reg 411.3.3). Final circuits supplying mobile equipment ≤32A outdoors. Circuits supplying luminaires in dwellings (Reg 411.3.4). Special locations (700-series). A4:2026 added: Reg 421.1.7.101 — AFDD recommended in HMOs, care homes, residential high-rise (also Chapter 4-related).',
+            text: '30mA RCD protection is mandatory for: sockets up to 32A in dwellings (Reg 411.3.3). Final circuits supplying mobile equipment ≤32A outdoors. Circuits supplying luminaires in dwellings (Reg 411.3.4). Special locations (700-series). Related (Chapter 42): Reg 421.1.7 has required AFDDs on single-phase socket-outlet circuits up to 32 A in HMOs, care homes, purpose-built student accommodation and high rise residential buildings since A2:2022.',
           },
         ],
       },
@@ -193,7 +193,7 @@ export const EighteenthEditionChapter41ProtectionAgainstElectricShockExamConfig:
       },
       {
         href: '/guides/bs-7671-a4-2026-afdd-changes',
-        title: 'AFDD Changes A4:2026',
+        title: 'AFDD Rules (Reg 421.1.7)',
         description:
           'Related guide for electricians studying for the 18th Edition exam — Chapter 41 deep-dive.',
         icon: 'ShieldCheck',

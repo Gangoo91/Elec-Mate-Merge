@@ -9,12 +9,10 @@ interface EnhancedCourseCardProps {
 
 const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-3">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-3 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="flex items-start justify-between gap-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          {course.category}
-        </span>
-        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+        <span className="text-[13px] font-semibold text-white">{course.category}</span>
+        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
           {course.rating}★
         </span>
       </div>
@@ -24,9 +22,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
         <p className="text-[12px] text-white">{course.provider}</p>
       </div>
 
-      <p className="text-[14px] text-white leading-relaxed line-clamp-4">
-        {course.description}
-      </p>
+      <p className="text-[14px] text-white leading-relaxed line-clamp-4">{course.description}</p>
 
       <div className="grid grid-cols-2 gap-2 text-[12px] text-white">
         <div className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1.5">
@@ -59,17 +55,12 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
       </div>
 
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Career outcomes
-        </span>
+        <span className="text-[13px] font-semibold text-white">Career outcomes</span>
         <div className="space-y-1">
           {course.careerOutcomes?.length > 0 ? (
             <>
               {course.careerOutcomes.slice(0, 2).map((outcome, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-2 text-[13px] text-white"
-                >
+                <div key={idx} className="flex items-start gap-2 text-[13px] text-white">
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{outcome}</span>
                 </div>
@@ -87,9 +78,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
       </div>
 
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Available locations
-        </span>
+        <span className="text-[13px] font-semibold text-white">Available locations</span>
         <div className="flex flex-wrap gap-1.5">
           {course.locations?.length > 0 ? (
             <>
@@ -102,9 +91,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                 </span>
               ))}
               {course.locations.length > 4 && (
-                <span className="text-[12px] text-white">
-                  +{course.locations.length - 4} more
-                </span>
+                <span className="text-[12px] text-white">+{course.locations.length - 4} more</span>
               )}
             </>
           ) : (
@@ -114,9 +101,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
       </div>
 
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Accreditations
-        </span>
+        <span className="text-[13px] font-semibold text-white">Accreditations</span>
         <div className="flex flex-wrap gap-1.5">
           {course.accreditation?.length > 0 ? (
             <>
@@ -141,9 +126,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
       </div>
 
       <div className="border-t border-white/[0.06] pt-3 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Upcoming dates
-        </span>
+        <span className="text-[13px] font-semibold text-white">Upcoming dates</span>
         <div className="flex flex-wrap gap-1.5">
           {course.nextDates?.length > 0 ? (
             <>
@@ -156,9 +139,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                 </span>
               ))}
               {course.nextDates.length > 3 && (
-                <span className="text-[12px] text-white">
-                  +{course.nextDates.length - 3} more
-                </span>
+                <span className="text-[12px] text-white">+{course.nextDates.length - 3} more</span>
               )}
             </>
           ) : (
@@ -170,15 +151,15 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
       <div className="flex flex-col gap-3 mt-auto pt-3 border-t border-white/[0.06]">
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
-            <p className="text-[14px] text-white font-mono">{course.price}</p>
+            <p className="text-[14px] text-white">{course.price}</p>
             {course.employerSupport && (
-              <p className="text-[11px] text-white">Employer support available</p>
+              <p className="text-[12.5px] text-white">Employer support available</p>
             )}
           </div>
           <Button
             variant="outline"
             size="sm"
-            className="hidden sm:flex h-10 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+            className="hidden sm:flex h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             onClick={() => onViewDetails(course)}
           >
             View details

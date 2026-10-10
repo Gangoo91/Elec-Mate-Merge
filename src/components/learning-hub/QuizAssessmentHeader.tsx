@@ -15,14 +15,14 @@ const QuizAssessmentHeader = () => {
           <Calendar className="h-3 w-3 mr-1" />
           Updated January 2026
         </Badge>
-        <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
+        <Badge className="bg-white/[0.06] text-elec-yellow border-white/[0.14] text-xs">
           <Brain className="h-3 w-3 mr-1" />
           2391 Style Questions
         </Badge>
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-        <div className="p-3 sm:p-4 bg-elec-yellow/10 rounded-2xl border border-elec-yellow/20">
+        <div className="p-3 sm:p-4 bg-white/[0.06] rounded-2xl border border-white/[0.14]">
           <GraduationCap className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
         </div>
         <div>

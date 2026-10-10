@@ -408,6 +408,51 @@ Deno.serve(async (req) => {
         }
       }
 
+      // 4b. Mock exams the learner sits in the app (ELE-1763). Two signals,
+      // both cautious: a falling run (last three against the three before, by
+      // 10 points, as grades), and a learner who had a mock habit going quiet
+      // for 28 days. Never sitting a mock is not a risk on its own: not every
+      // college uses them. seo_mock_attempts.user_id is the AUTH uid.
+      if (student.user_id) {
+        const { data: mocks } = await sb
+          .from('seo_mock_attempts')
+          .select('percentage, created_at')
+          .eq('user_id', student.user_id)
+          .order('created_at', { ascending: false })
+          .limit(6);
+        if (mocks && mocks.length) {
+          const lastAt = new Date(mocks[0].created_at as string);
+          const quietDays = Math.floor((now.getTime() - lastAt.getTime()) / 86400_000);
+          signals.mock_last_days = quietDays;
+          if (mocks.length >= 4) {
+            const pcts = mocks.map((m) => Number(m.percentage));
+            const recentAvg = (pcts[0] + pcts[1] + pcts[2]) / 3;
+            const prior = pcts.slice(3);
+            const priorAvg = prior.reduce((t, v) => t + v, 0) / prior.length;
+            signals.mock_trend = { recent: Math.round(recentAvg), prior: Math.round(priorAvg) };
+            if (recentAvg < priorAvg - 10) {
+              const sev = Math.min(1, (priorAvg - recentAvg) / 30);
+              factors.push({
+                key: 'mock_drop',
+                label: `Mock exam scores have fallen ${Math.round(priorAvg - recentAvg)} points`,
+                severity: sev,
+                detail: `Last three mocks average ${Math.round(recentAvg)}%, the three before ${Math.round(priorAvg)}%.`,
+              });
+              score += sev * 12;
+            }
+          }
+          if (mocks.length >= 3 && quietDays >= 28) {
+            factors.push({
+              key: 'mock_quiet',
+              label: `No mock exam in ${Math.round(quietDays / 7)} weeks`,
+              severity: Math.min(1, quietDays / 84),
+              detail: `Had been sitting mocks; the last was ${lastAt.toISOString().slice(0, 10)}.`,
+            });
+            score += Math.min(8, 4 + quietDays / 14);
+          }
+        }
+      }
+
       // 5. ILP overdue
       const { data: ilp } = await sb
         .from('college_ilps')

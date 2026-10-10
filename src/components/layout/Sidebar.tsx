@@ -91,8 +91,13 @@ const Sidebar = ({
           // content behind it, so the only thing separating navigation from
           // page was a 10%-white hairline. Lifting it a few points reads as a
           // surface in front, which is what a sidebar is.
-          'backdrop-blur-xl bg-[hsl(0_0%_8%_/_0.95)] border-r border-white/[0.12]',
-          'shadow-2xl shadow-black/50',
+          // 10 Oct (Andrew: "it should be grey throughout"): the sidebar is
+          // the page's own ground (--shell-ground, published by HubPage),
+          // separated by the hairline only. The darker 8% panel and its
+          // desktop shadow read as a black band beside a grey page. The
+          // shadow stays for the phone overlay, where it sits over content.
+          'backdrop-blur-xl bg-[hsl(var(--shell-ground,var(--elec-dark))_/_0.97)] border-r border-white/[0.10]',
+          'shadow-2xl shadow-black/50 lg:shadow-none',
           'transition-transform duration-300 ease-in-out',
           /*
            * Desktop: in the flow, but STICKY to the viewport and one screen
@@ -168,7 +173,7 @@ const Sidebar = ({
           <div className="flex items-center gap-3 px-5 pb-4 pt-1">
             <Avatar className="h-9 w-9">
               <AvatarImage src={profile?.avatar_url || ''} className="object-cover" />
-              <AvatarFallback className="bg-elec-yellow/15 text-elec-yellow font-bold text-xs">
+              <AvatarFallback className="bg-white/[0.08] text-white font-bold text-xs">
                 {getInitials()}
               </AvatarFallback>
             </Avatar>

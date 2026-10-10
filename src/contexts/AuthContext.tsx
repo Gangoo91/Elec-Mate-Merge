@@ -147,13 +147,19 @@ export const useAuth = () => {
  */
 export const AuthOverrideProvider = ({
   profile,
+  user,
   children,
 }: {
   profile: AuthContextType['profile'];
+  /** Optional: support view-as (ELE-1966) also swaps the user id for the subtree. */
+  user?: AuthContextType['user'];
   children: ReactNode;
 }) => {
   const parent = useAuth();
-  const value = useMemo(() => ({ ...parent, profile }), [parent, profile]);
+  const value = useMemo(
+    () => (user ? { ...parent, profile, user } : { ...parent, profile }),
+    [parent, profile, user]
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

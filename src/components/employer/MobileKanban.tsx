@@ -1,17 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ChevronRight, MapPin, Users, ArrowRight, Plus, CheckSquare, Archive } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { QuickStagePills } from './QuickStagePills';
-import {
-  inputClass,
-  PrimaryButton,
-  SecondaryButton,
-  DestructiveButton,
-} from './editorial';
+import { inputClass, PrimaryButton, SecondaryButton, DestructiveButton } from './editorial';
 
 interface KanbanItem {
   id: string;
@@ -46,6 +39,8 @@ interface MobileKanbanProps {
   onArchive?: (itemId: string) => void;
   onQuickAdd?: (title: string, stageId: string) => void;
   renderItem?: (item: KanbanItem) => React.ReactNode;
+  /** Bump to open the quick add on the stage in view (the page's Add job button). */
+  addSignal?: number;
 }
 
 // Stage accent colours for label strips
@@ -97,6 +92,7 @@ export function MobileKanban({
   onArchive,
   onQuickAdd,
   renderItem,
+  addSignal,
 }: MobileKanbanProps) {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const [moveSheetOpen, setMoveSheetOpen] = useState(false);
@@ -162,6 +158,15 @@ export function MobileKanban({
     }
   }, [items, stages]);
 
+  // The page's Add job button opens the quick add on the stage in view.
+  useEffect(() => {
+    if (!addSignal) return;
+    const id = stages[activeStageIndex]?.id;
+    if (id) setQuickAddStage(id);
+    // Only when the signal changes, not when the user swipes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addSignal]);
+
   // Update active stage based on scroll position
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -192,7 +197,17 @@ export function MobileKanban({
     }, 500);
   };
 
+  // A touch is handled by the touch handlers; the click that follows it is
+  // ignored. A mouse or keyboard (a narrow desktop window, a tablet with a
+  // trackpad) only fires click, so that opens the job.
+  const lastTouchAt = useRef(0);
+  const handleCardClick = (item: KanbanItem) => {
+    if (Date.now() - lastTouchAt.current < 800) return;
+    onItemClick?.(item.id);
+  };
+
   const handleTouchEnd = (item: KanbanItem, e: React.TouchEvent) => {
+    lastTouchAt.current = Date.now();
     if (longPressTimer.current) {
       clearTimeout(longPressTimer.current);
       longPressTimer.current = null;
@@ -240,14 +255,32 @@ export function MobileKanban({
 
   return (
     <>
-      {/* Stage Navigation Pills */}
-      <div className="mb-3">
-        <QuickStagePills
-          stages={stages}
-          counts={stageCounts}
-          activeStage={stages[activeStageIndex]?.id}
-          onStageClick={handleStagePillClick}
-        />
+      {/* Stage picker: every stage visible at once, never a sideways scroll. */}
+      <div className="mb-4 grid grid-cols-4 gap-1.5">
+        {stages.map((stage) => {
+          const on = stages[activeStageIndex]?.id === stage.id;
+          return (
+            <button
+              key={stage.id}
+              type="button"
+              onClick={() => handleStagePillClick(stage.id)}
+              aria-pressed={on}
+              className={cn(
+                'flex h-12 min-w-0 flex-col items-center justify-center rounded-xl border px-1 text-center touch-manipulation transition-colors',
+                on
+                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                  : 'border-white/[0.12] bg-white/[0.04] text-white'
+              )}
+            >
+              <span className="w-full truncate text-[11.5px] font-semibold leading-tight">
+                {stage.label}
+              </span>
+              <span className="text-[12px] font-semibold tabular-nums leading-tight">
+                {stageCounts[stage.id] ?? 0}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Horizontal Scrolling Kanban */}
@@ -267,27 +300,26 @@ export function MobileKanban({
               style={{ minWidth: '100%' }}
             >
               {/* Stage Header */}
-              <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/[0.06]">
-                <div className="flex items-center gap-2">
-                  <div
-                    className={cn('w-3 h-3 rounded-full', stage.color || getStageLabelColor(stage.id))}
-                  />
-                  <h3 className="font-semibold text-white">{stage.label}</h3>
-                  <Badge variant="secondary" className="text-xs">
-                    {stageItems.length}
-                  </Badge>
-                </div>
-                <span className="text-xs text-white">
-                  {stageIndex + 1}/{stages.length}
+              <div className="mb-3 flex items-baseline gap-2">
+                <span
+                  aria-hidden
+                  className={cn(
+                    'h-2 w-2 shrink-0 self-center rounded-full',
+                    stage.color || getStageLabelColor(stage.id)
+                  )}
+                />
+                <h3 className="text-[16px] font-semibold tracking-tight text-white">
+                  {stage.label}
+                </h3>
+                <span className="text-[13px] text-white">
+                  {stageItems.length} {stageItems.length === 1 ? 'job' : 'jobs'}
                 </span>
               </div>
 
               {/* Cards */}
-              <div className="space-y-2 min-h-[200px]">
+              <div className="space-y-2 min-h-[160px]">
                 {stageItems.length === 0 ? (
-                  <div className="text-center py-12 border-2 border-dashed border-white/[0.06] rounded-lg">
-                    <p className="text-sm text-white">No jobs</p>
-                  </div>
+                  <p className="py-3 text-[14px] text-white">Nothing at this stage.</p>
                 ) : (
                   stageItems.map((item) => (
                     <Card
@@ -295,12 +327,13 @@ export function MobileKanban({
                       onTouchStart={(e) => handleTouchStart(item, e)}
                       onTouchEnd={(e) => handleTouchEnd(item, e)}
                       onTouchMove={handleTouchMove}
+                      onClick={() => handleCardClick(item)}
                       className={cn(
-                        'bg-[hsl(0_0%_12%)] border border-white/[0.06] shadow-sm cursor-pointer touch-manipulation',
+                        'rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.08] to-white/[0.04] shadow-none cursor-pointer touch-manipulation',
                         'active:scale-[0.98] transition-transform select-none'
                       )}
                     >
-                      <CardContent className="p-3 space-y-2">
+                      <CardContent className="p-4 space-y-1.5">
                         {renderItem ? (
                           renderItem(item)
                         ) : (
@@ -323,7 +356,7 @@ export function MobileKanban({
 
                             {/* Title & Value Row */}
                             <div className="flex items-start justify-between gap-2">
-                              <h4 className="font-semibold text-sm text-white leading-tight line-clamp-2">
+                              <h4 className="text-[15px] font-semibold leading-snug text-white line-clamp-2">
                                 {item.title}
                               </h4>
                               <ChevronRight className="h-4 w-4 text-white shrink-0 mt-0.5" />
@@ -331,9 +364,7 @@ export function MobileKanban({
 
                             {/* Client */}
                             {item.subtitle && (
-                              <p className="text-xs text-white truncate">
-                                {item.subtitle}
-                              </p>
+                              <p className="text-[13px] text-white truncate">{item.subtitle}</p>
                             )}
 
                             {/* Bottom Row: Checklist + Workers */}
@@ -341,7 +372,7 @@ export function MobileKanban({
                               <div className="flex items-center gap-3">
                                 {/* Checklist progress */}
                                 {item.checklistTotal !== undefined && item.checklistTotal > 0 && (
-                                  <div className="flex items-center gap-1 text-xs text-white">
+                                  <div className="flex items-center gap-1 text-[13px] text-white">
                                     <CheckSquare className="h-3.5 w-3.5" />
                                     <span>
                                       {item.checklistCompleted || 0}/{item.checklistTotal}
@@ -351,7 +382,7 @@ export function MobileKanban({
 
                                 {/* Value */}
                                 {item.value && (
-                                  <span className="text-xs font-semibold text-success">
+                                  <span className="text-[13px] font-semibold text-white tabular-nums">
                                     {item.value}
                                   </span>
                                 )}
@@ -366,7 +397,7 @@ export function MobileKanban({
                                       className="w-6 h-6 rounded-full bg-white/[0.06] border-2 border-[hsl(0_0%_12%)] flex items-center justify-center"
                                       title={worker.name}
                                     >
-                                      <span className="text-[10px] font-medium text-elec-yellow">
+                                      <span className="text-[10px] font-semibold text-white">
                                         {worker.initials}
                                       </span>
                                     </div>
@@ -390,7 +421,7 @@ export function MobileKanban({
 
                 {/* Quick Add Card */}
                 {quickAddStage === stage.id ? (
-                  <Card className="bg-[hsl(0_0%_12%)] border border-elec-yellow/30">
+                  <Card className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14]">
                     <CardContent className="p-3">
                       <Input
                         value={quickAddTitle}
@@ -475,9 +506,7 @@ export function MobileKanban({
           className="rounded-t-2xl bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
         >
           <SheetHeader className="pb-4">
-            <SheetTitle className="text-left text-white">
-              Move "{selectedItem?.title}"
-            </SheetTitle>
+            <SheetTitle className="text-left text-white">Move "{selectedItem?.title}"</SheetTitle>
           </SheetHeader>
           <div className="grid grid-cols-2 gap-2 pb-4">
             {stages.map((stage) => (

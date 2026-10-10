@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'What does an EICR on an older Northampton property need to check under 2026 rules?',
     answer:
-      'Under BS 7671:2018+A4:2026, the model forms in Appendix 6 now include specific fields for recording surge protective devices (SPDs) and arc fault detection devices (AFDDs). An EICR on an older Northampton terrace or Victorian property will therefore need to note whether SPDs and AFDDs are present or absent, and code any absence appropriately against current recommendations. Lighting circuits in domestic premises must now have 30 mA RCD protection (Reg 411.3.4); older installations without this will typically attract an observation. Landlords and letting agents commissioning EICRs on Northampton rental stock should ensure the inspector is working to the A4:2026 edition of the standard.',
+      'Under BS 7671:2018+A4:2026, the model forms in Appendix 6 now include specific fields for recording surge protective devices (SPDs) and arc fault detection devices (AFDDs). An EICR on an older Northampton terrace or Victorian property will therefore need to note whether SPDs and AFDDs are present or absent, and code any absence appropriately against current recommendations. Lighting circuits in domestic premises must have 30 mA RCD protection (Reg 411.3.4, since 2018); older installations without this will typically attract an observation. Landlords and letting agents commissioning EICRs on Northampton rental stock should ensure the inspector is working to the A4:2026 edition of the standard.',
   },
 ];
 
@@ -245,8 +245,8 @@ const sections = [
               <span>
                 <strong>Consumer unit replacement</strong> — £420 to £700 including supply
                 isolation, new 18th Edition (BS 7671:2018+A4:2026) compliant unit with RCBOs,
-                testing, and Part P notification. Under A4:2026, the replacement must include 30 mA
-                RCD protection on all lighting circuits (Reg 411.3.4) as well as socket-outlet
+                testing, and Part P notification. Under Reg 411.3.4, the replacement must include 30 mA
+                RCD protection on all lighting circuits (a requirement since 2018) as well as socket-outlet
                 circuits. Arc fault detection devices (AFDDs) are also recommended on AC final
                 circuits (Reg 421.1.7) to mitigate fire risk from arc faults — your electrician
                 should discuss this with you at the quoting stage.
@@ -318,7 +318,7 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Large developments at Upton, Dallington Grange, and the Northampton North SUE
               (Sustainable Urban Extension) add thousands of new homes. These should comply with BS
-              7671:2018+A4:2026, which now requires 30 mA RCD protection on all domestic lighting
+              7671:2018+A4:2026, which requires 30 mA RCD protection on all domestic lighting
               circuits (Reg 411.3.4) and recommends AFDDs on AC final circuits (Reg 421.1.7).
               Snagging issues on new-builds are common — independent EICRs within the warranty
               period are recommended.
@@ -467,7 +467,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection on lighting circuits</strong> — Regulation 411.3.4 (A4:2026)
+                <strong>RCD protection on lighting circuits</strong> — Regulation 411.3.4 (since BS 7671:2018)
                 requires 30 mA RCD protection on all AC final circuits supplying luminaires in
                 domestic premises. This is particularly relevant post-flood, where lighting circuits
                 may have had their insulation compromised by water ingress and the risk of a
@@ -553,7 +553,7 @@ export default function ElectricianNorthamptonPage() {
       title="Electrician in Northampton: 2026 Guide"
       description="Find NICEIC/NAPIT-registered electricians in Northampton. 2026 EICR prices from £170, consumer unit replacements, and NGED connections."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

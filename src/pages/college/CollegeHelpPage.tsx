@@ -15,8 +15,8 @@ import {
   COLLEGE_LIST,
   CollegePageHeader,
   CollegeSectionTitle,
-  chipCn,
 } from '@/components/college/ui/CollegeUi';
+import { QuietTabs } from '@/components/college/quality/QualityChoices';
 
 /* ==========================================================================
    ELE-1980 — the College Hub help page. The twenty things tutors ask, each
@@ -29,9 +29,16 @@ import {
 const REPLY_PROMISE = 'We reply within one working day, usually the same day.';
 
 type Faq = { q: string; a: string; go?: { label: string; to: string }; area: Area };
-type Area = 'Getting started' | 'Every day' | 'Hours and reviews' | 'Assessment' | 'Learners and support';
+type Area =
+  'Getting started' | 'Every day' | 'Hours and reviews' | 'Assessment' | 'Learners and support';
 
-const AREAS: Area[] = ['Getting started', 'Every day', 'Hours and reviews', 'Assessment', 'Learners and support'];
+const AREAS: Area[] = [
+  'Getting started',
+  'Every day',
+  'Hours and reviews',
+  'Assessment',
+  'Learners and support',
+];
 
 const FAQS: Faq[] = [
   {
@@ -60,7 +67,7 @@ const FAQS: Faq[] = [
   {
     area: 'Every day',
     q: 'Where do I see what needs me today?',
-    a: 'Your home page lists everything waiting on you, most urgent first: hours to verify, evidence to assess, messages, reviews to book, quiz answers to mark. The inbox shows the same list in full, with your own learners first.',
+    a: 'Your home page lists everything waiting on you, most urgent first: hours to verify, evidence to assess, messages, reviews to book, quiz answers to mark. The inbox shows the same list in full, longest waiting first. The switch at the top picks Mine, My cohorts or Whole college.',
     go: { label: 'Open the inbox', to: '/college/inbox' },
   },
   {
@@ -84,19 +91,19 @@ const FAQS: Faq[] = [
   {
     area: 'Hours and reviews',
     q: 'How do I verify off-the-job hours?',
-    a: 'Hours a learner sends you appear in your inbox and on the hours page. Open the entry, check it, and verify or send it back with a reason. Verified hours count towards the apprenticeship total straight away.',
-    go: { label: 'Open hours', to: '/college/otj' },
+    a: 'Hours a learner logs appear in your inbox and in Hours to verify. Open the entry, check it, and Verify it or Return it with a note. Tick several to verify them together. Verified hours count towards the apprenticeship total straight away.',
+    go: { label: 'Open hours to verify', to: '/college/otj/inbox' },
   },
   {
     area: 'Hours and reviews',
     q: 'Does learning in the app count as off-the-job?',
     a: 'Yes, once you approve it. Time spent learning in the app is measured as it happens and shown per learner. Approve it in one tap, or leave some out, and it joins their verified hours.',
-    go: { label: 'Open hours', to: '/college/otj' },
+    go: { label: 'Approve app learning', to: '/college/otj' },
   },
   {
     area: 'Hours and reviews',
     q: 'How do I book a progress review?',
-    a: 'Progress reviews shows every learner and when their next review is due (at least every three calendar months). Tap Book, pick a day and time, and choose how you will meet. The learner is told and can add their view before you meet.',
+    a: 'Progress reviews shows every learner and when their next review is due (at least every three calendar months). Tap Book, pick a day and time, and choose how you will meet. The learner is told and can add their view before you meet. After you hold it, write it up and sign; the apprentice and the employer then sign too, so all three have signed.',
     go: { label: 'Open reviews', to: '/college/reviews' },
   },
   {
@@ -114,19 +121,19 @@ const FAQS: Faq[] = [
   {
     area: 'Assessment',
     q: 'How do I record an observation?',
-    a: 'Open the learner\'s profile and choose Observation (or More actions, then Observation). Record what you saw, the criteria it evidences and the outcome; the learner acknowledges it from their phone.',
+    a: "Open the learner's profile and choose Observation (or More actions, then Observation). Record what you saw, the criteria it evidences and the outcome; the learner acknowledges it from their phone.",
     go: { label: 'Open learners', to: '/college?section=students' },
   },
   {
     area: 'Assessment',
     q: 'Where is the funding evidence pack?',
-    a: 'The evidence pack lists everything the funding rules need on file for each learner, live, with what is missing. You can add your college\'s own requirements and file documents against each learner.',
+    a: "The evidence pack lists everything the funding rules need on file for each learner, live, with what is missing. You can add your college's own requirements and file documents against each learner.",
     go: { label: 'Open the evidence pack', to: '/college/evidence-pack' },
   },
   {
     area: 'Learners and support',
     q: 'How do I log a safeguarding concern?',
-    a: 'Open the learner\'s profile, choose More actions, then Safeguarding. The note is restricted: only the designated safeguarding lead and authorised staff can read it.',
+    a: "Open the learner's profile, choose More actions, then Safeguarding. The note is restricted: only the designated safeguarding lead and authorised staff can read it.",
     go: { label: 'Open safeguarding', to: '/college?section=safeguardingqueue' },
   },
   {
@@ -137,13 +144,13 @@ const FAQS: Faq[] = [
   {
     area: 'Learners and support',
     q: 'Why is a learner flagged at risk?',
-    a: 'Risk is worked out from attendance, progress against criteria, hours, portfolio activity and contact. Open the learner\'s Risk card to see the reasons in plain words, and tap a reason to go to the part of the record behind it.',
+    a: "Risk is worked out from attendance, progress against criteria, hours, portfolio activity and contact. Open the learner's Risk card to see the reasons in plain words, and tap a reason to go to the part of the record behind it.",
     go: { label: 'Open learners', to: '/college?section=students' },
   },
   {
     area: 'Learners and support',
-    q: 'How do I print or export a learner\'s record?',
-    a: 'From the learner\'s profile, More actions gives you Print (a learner summary) and the data pack (everything held about them, as a download).',
+    q: "How do I print or export a learner's record?",
+    a: "From the learner's profile, More actions gives you Print (a learner summary) and the data pack (everything held about them, as a download).",
     go: { label: 'Open learners', to: '/college?section=students' },
   },
   {
@@ -151,6 +158,12 @@ const FAQS: Faq[] = [
     q: 'How do I show managers what Elec-Mate is doing for us?',
     a: 'Your month in numbers counts what your staff and learners did this month from your own records: hours verified, evidence assessed, registers, quizzes, messages and more, compared with last month. Print it for a meeting.',
     go: { label: 'Open your month in numbers', to: '/college/value' },
+  },
+  {
+    area: 'Getting started',
+    q: 'Our IT team and DPO need security, DPIA and accessibility documents. Where are they?',
+    a: 'The security and procurement pack has security and data processing, a pre-filled DPIA template, the sub-processor list, a data-flow diagram, how under-18 learners are handled and the accessibility statement. Read them in the hub, download them, or print them to PDF.',
+    go: { label: 'Open the pack', to: '/college/trust' },
   },
 ];
 
@@ -168,21 +181,32 @@ export default function CollegeHelpPage() {
 
   useEffect(() => {
     if (window.location.hash === '#support') {
-      setTimeout(() => document.getElementById('support')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+      setTimeout(
+        () =>
+          document
+            .getElementById('support')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+        300
+      );
     }
   }, []);
 
   const list = useMemo(() => {
     const q = query.trim().toLowerCase();
     return FAQS.filter(
-      (f) => (area === 'All' || f.area === area) && (!q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q))
+      (f) =>
+        (area === 'All' || f.area === area) &&
+        (!q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q))
     );
   }, [query, area]);
 
   const send = async () => {
     if (message.trim().length < 3 || sending) return;
     setSending(true);
-    const { error } = await supabase.rpc('send_college_support_message' as never, { p_message: message, p_screen: screen || null } as never);
+    const { error } = await supabase.rpc(
+      'send_college_support_message' as never,
+      { p_message: message, p_screen: screen || null } as never
+    );
     setSending(false);
     if (error) {
       toast({ title: 'Not sent', description: error.message, variant: 'destructive' });
@@ -206,7 +230,10 @@ export default function CollegeHelpPage() {
           {/* Questions */}
           <section className="min-w-0 space-y-4">
             <div className="relative">
-              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
+              <Search
+                className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                aria-hidden
+              />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -215,20 +242,28 @@ export default function CollegeHelpPage() {
                 className={cn(inputCn, 'pl-7')}
               />
             </div>
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-              {(['All', ...AREAS] as const).map((a) => (
-                <button key={a} type="button" onClick={() => setArea(a)} className={chipCn(area === a)} aria-pressed={area === a}>
-                  {a}
-                </button>
-              ))}
-            </div>
+            <QuietTabs<Area | 'All'>
+              label="Filter questions by topic"
+              tabs={(['All', ...AREAS] as Array<Area | 'All'>).map((a) => ({
+                key: a,
+                label: a,
+                count: a === 'All' ? FAQS.length : FAQS.filter((f) => f.area === a).length,
+              }))}
+              value={area}
+              onChange={setArea}
+            />
 
             {list.length === 0 ? (
               <div className={cn(COLLEGE_CARD, 'text-[13.5px] text-white')}>
                 Nothing matches "{query}". Try another word, or message support below.
               </div>
             ) : (
-              <motion.ul variants={containerVariants} initial="hidden" animate="visible" className={COLLEGE_LIST}>
+              <motion.ul
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className={COLLEGE_LIST}
+              >
                 {list.map((f) => {
                   const isOpen = open === f.q;
                   return (
@@ -240,16 +275,28 @@ export default function CollegeHelpPage() {
                         className="flex min-h-[60px] w-full items-center gap-3 px-5 py-3 text-left touch-manipulation hover:bg-white/[0.04] sm:px-6"
                       >
                         <span className="min-w-0 flex-1">
-                          <span className="block text-[14.5px] font-semibold leading-snug text-white">{f.q}</span>
+                          <span className="block text-[14.5px] font-semibold leading-snug text-white">
+                            {f.q}
+                          </span>
                           <span className="mt-0.5 block text-[12px] text-white">{f.area}</span>
                         </span>
-                        <ChevronDown className={cn('h-4 w-4 shrink-0 text-white transition-transform', isOpen && 'rotate-180')} aria-hidden />
+                        <ChevronDown
+                          className={cn(
+                            'h-4 w-4 shrink-0 text-white transition-transform',
+                            isOpen && 'rotate-180'
+                          )}
+                          aria-hidden
+                        />
                       </button>
                       {isOpen && (
                         <div className="px-5 pb-5 sm:px-6">
                           <p className="max-w-3xl text-[14px] leading-relaxed text-white">{f.a}</p>
                           {f.go && (
-                            <button type="button" onClick={() => navigate(f.go!.to)} className={cn(COLLEGE_LINK, 'mt-1')}>
+                            <button
+                              type="button"
+                              onClick={() => navigate(f.go!.to)}
+                              className={cn(COLLEGE_LINK, 'mt-1')}
+                            >
                               {f.go.label}
                             </button>
                           )}
@@ -270,8 +317,9 @@ export default function CollegeHelpPage() {
                 <div className="space-y-3">
                   <p className="text-[16px] font-semibold text-white">Sent. Thank you.</p>
                   <p className="text-[13.5px] leading-relaxed text-white">
-                    Your message is with the Elec-Mate team, with your college and the screen attached. {REPLY_PROMISE} The reply
-                    comes to your messages in the app and by email.
+                    Your message is with the Elec-Mate team, with your college and the screen
+                    attached. {REPLY_PROMISE} The reply comes to your messages in the app and by
+                    email.
                   </p>
                   <button type="button" onClick={() => setSent(false)} className={COLLEGE_LINK}>
                     Send another
@@ -308,13 +356,18 @@ export default function CollegeHelpPage() {
                     type="button"
                     onClick={() => void send()}
                     disabled={message.trim().length < 3 || sending}
-                    className={cn(COLLEGE_BTN_PRIMARY, 'w-full')}
+                    className={cn(
+                      'w-full',
+                      message.trim().length < 3
+                        ? 'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.14] px-4 text-[13.5px] font-semibold text-white touch-manipulation'
+                        : COLLEGE_BTN_PRIMARY
+                    )}
                   >
                     {sending ? 'Sending…' : 'Send to support'}
                   </button>
                   <p className="text-[12.5px] leading-relaxed text-white">
-                    Goes to the Elec-Mate team with your name, your college and the screen. Please don't include learners'
-                    personal details unless we ask.
+                    Goes to the Elec-Mate team with your name, your college and the screen. Please
+                    don't include learners' personal details unless we ask.
                   </p>
                 </div>
               )}

@@ -123,6 +123,64 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
     setLoading(true);
     setError(null);
     try {
+      // ELE-1912: the portfolio, observation and quiz reads depend only on the
+      // learner, not on the coverage rows, so they start now, together with
+      // the coverage read, instead of one after another below (they were the
+      // 4th to 7th steps of a seven-step waterfall). A query builder only
+      // sends when awaited, so Promise.resolve sends it here; the no-op catch
+      // only stops an early return from leaving an unhandled rejection, the
+      // promise itself is still awaited (and can still throw) further down.
+      const started = <T>(p: PromiseLike<T>): Promise<T> => {
+        const q = Promise.resolve(p);
+        q.catch(() => {});
+        return q;
+      };
+      const portfolioP = studentUserId
+        ? started(
+            supabase
+              .from('portfolio_items')
+              .select('category, file_type, assessment_criteria_met')
+              .eq('user_id', studentUserId)
+          )
+        : null;
+      const obsP = started(
+        supabase
+          .from('college_observations')
+          .select('acs_evidenced')
+          .eq('college_student_id', studentId)
+      );
+      const quizP = studentUserId
+        ? started(
+            (async () => {
+              const counts = new Map<string, number>();
+              try {
+                const { data: attempts } = await supabase
+                  .from('tutor_quiz_attempts')
+                  .select('quiz_id')
+                  .eq('student_id', studentUserId)
+                  .not('completed_at', 'is', null);
+                const quizIds = Array.from(
+                  new Set(((attempts ?? []) as Array<{ quiz_id: string }>).map((a) => a.quiz_id))
+                );
+                if (quizIds.length > 0) {
+                  const { data: questions } = await supabase
+                    .from('tutor_quiz_questions')
+                    .select('quiz_id, ac_ref')
+                    .in('quiz_id', quizIds)
+                    .not('ac_ref', 'is', null);
+                  for (const q of (questions ?? []) as Array<{ ac_ref: string | null }>) {
+                    if (!q.ac_ref) continue;
+                    counts.set(q.ac_ref, (counts.get(q.ac_ref) ?? 0) + 1);
+                  }
+                }
+                return counts;
+              } catch {
+                return new Map<string, number>();
+              }
+            })()
+          )
+        : null;
+
       // 1) Coverage rows (already seeded by the trigger when course_id was set)
       const { data: coverage, error: cErr } = await supabase
         .from('student_ac_coverage')
@@ -161,10 +219,19 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
       // 2) Canonical AC list for the qualification — gives us LO/AC text
       // and unit titles. We join against this to render even ACs that have
       // zero coverage rows (fresh enrolments without a trigger fire).
-      const { data: reqRows } = await supabase
-        .from('qualification_requirements')
-        .select('qualification_code, unit_code, unit_title, lo_number, lo_text, ac_code, ac_text')
-        .eq('qualification_code', qualCode);
+      // (2 and 3 both need only the qualification code: read them together.)
+      const [{ data: reqRows }, { data: ruleRows }] = await Promise.all([
+        supabase
+          .from('qualification_requirements')
+          .select('qualification_code, unit_code, unit_title, lo_number, lo_text, ac_code, ac_text')
+          .eq('qualification_code', qualCode),
+        supabase
+          .from('ac_evidence_rules')
+          .select(
+            'qualification_code, unit_code, ac_code, required_codes, quantity_required, is_mandatory, guidance, example_description'
+          )
+          .eq('qualification_code', qualCode),
+      ]);
       const reqs = (reqRows ?? []) as Array<{
         qualification_code: string;
         unit_code: string;
@@ -178,12 +245,6 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
       // 3) Per-AC evidence rules — keyed properly via `ac_evidence_rules`.
       // Tutors / awarding-body seeds populate this table; absent rows mean
       // "no rule" (graceful — no false gap flags).
-      const { data: ruleRows } = await supabase
-        .from('ac_evidence_rules')
-        .select(
-          'qualification_code, unit_code, ac_code, required_codes, quantity_required, is_mandatory, guidance, example_description'
-        )
-        .eq('qualification_code', qualCode);
       const reqByAc = new Map<string, EvidenceRequirement>();
       for (const r of (ruleRows ?? []) as Array<{
         qualification_code: string;
@@ -210,19 +271,13 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
         file_type: string | null;
         assessment_criteria_met: string[] | null;
       }> = [];
-      if (studentUserId) {
-        const { data: pRows } = await supabase
-          .from('portfolio_items')
-          .select('category, file_type, assessment_criteria_met')
-          .eq('user_id', studentUserId);
+      if (portfolioP) {
+        const { data: pRows } = await portfolioP;
         portfolio = (pRows ?? []) as typeof portfolio;
       }
 
       // 5) Assessor observations — acs_evidenced[] is keyed by college_student_id
-      const { data: obsRows } = await supabase
-        .from('college_observations')
-        .select('acs_evidenced')
-        .eq('college_student_id', studentId);
+      const { data: obsRows } = await obsP;
       const observations = (obsRows ?? []) as Array<{ acs_evidenced: string[] | null }>;
 
       // NB: college_otj_entries only carries `unit_codes`, not specific ACs,
@@ -233,31 +288,7 @@ export function useAcMatrix(studentId: string | null, studentUserId: string | nu
       // 7) Quiz attempts joined to questions with ac_ref. Best-effort —
       //    if either join 404s we treat the count as zero.
       let quizAcCounts = new Map<string, number>();
-      if (studentUserId) {
-        try {
-          const { data: attempts } = await supabase
-            .from('tutor_quiz_attempts')
-            .select('quiz_id')
-            .eq('student_id', studentUserId)
-            .not('completed_at', 'is', null);
-          const quizIds = Array.from(
-            new Set(((attempts ?? []) as Array<{ quiz_id: string }>).map((a) => a.quiz_id))
-          );
-          if (quizIds.length > 0) {
-            const { data: questions } = await supabase
-              .from('tutor_quiz_questions')
-              .select('quiz_id, ac_ref')
-              .in('quiz_id', quizIds)
-              .not('ac_ref', 'is', null);
-            for (const q of (questions ?? []) as Array<{ ac_ref: string | null }>) {
-              if (!q.ac_ref) continue;
-              quizAcCounts.set(q.ac_ref, (quizAcCounts.get(q.ac_ref) ?? 0) + 1);
-            }
-          }
-        } catch {
-          quizAcCounts = new Map();
-        }
-      }
+      if (quizP) quizAcCounts = await quizP;
 
       // ─── Compute per-AC by_type counts ───
       const portfolioTypeCount = new Map<string, Map<EvidenceTypeCode, number>>();

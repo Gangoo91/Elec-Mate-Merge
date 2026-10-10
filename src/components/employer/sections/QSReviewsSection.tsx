@@ -11,11 +11,21 @@ import { QsReviewComments } from '@/components/employer/sections/QsReviewComment
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { formatUKDate } from '@/utils/collegeHelpers';
 import {
+  frameClass,
+  twoColClass,
+  colClass,
+  panel,
+  HeroActions,
+  HeroPrimary,
+  HeroSecondary,
+  PlainEmpty,
+  Segments,
+  SearchField,
+} from '@/components/employer/pageParts/PageParts';
+import {
   PageFrame,
   PageHero,
   StatStrip,
-  FilterBar,
-  EmptyState,
   LoadingBlocks,
   SecondaryButton,
 } from '@/components/employer/editorial';
@@ -31,10 +41,7 @@ import { certificateHref } from '@/utils/certificate-href';
 import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import { QS_REVIEWS_HELP } from '@/components/employer/help/jobs-quality';
 import { QsDecisionPanel, useMyFullName } from '@/components/employer/qs/QsDecisionPanel';
-import {
-  QsStatusBadge,
-  ReturnReasonList,
-} from '@/components/employer/qs/returnReasons';
+import { QsStatusBadge, ReturnReasonList } from '@/components/employer/qs/returnReasons';
 
 /* ==========================================================================
    QS reviews (ELE-1975) — the Employer Hub sign-off queue.
@@ -162,7 +169,7 @@ export function QsQueueCard({
       )}
     >
       <div className="flex items-center gap-2">
-        <span className="shrink-0 rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
+        <span className="shrink-0 rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[12px] font-semibold text-white">
           {QS_TYPE_LABEL[item.report_type] || item.report_type.toUpperCase()}
         </span>
         {item.certificate_number && (
@@ -171,7 +178,10 @@ export function QsQueueCard({
           </span>
         )}
         <span className="ml-auto">
-          <QsStatusBadge status={item.status} label={item.status === 'pending' ? 'Waiting' : undefined} />
+          <QsStatusBadge
+            status={item.status}
+            label={item.status === 'pending' ? 'Waiting' : undefined}
+          />
         </span>
       </div>
       <p className="mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate">
@@ -283,7 +293,16 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
     const ok = await openPrintRegister({
       title: 'QS Review Register',
       subtitle: 'Qualifying Supervisor certificate sign-off record',
-      columns: ['Certificate', 'Type', 'Client', 'Electrician', 'Submitted', 'Status', 'Reviewed by', 'Reviewed'],
+      columns: [
+        'Certificate',
+        'Type',
+        'Client',
+        'Electrician',
+        'Submitted',
+        'Status',
+        'Reviewed by',
+        'Reviewed',
+      ],
       rows: items.map((it) => [
         it.certificate_number || it.report_id,
         QS_TYPE_LABEL[it.report_type] || it.report_type.toUpperCase(),
@@ -308,14 +327,30 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
     });
   }
 
-  const oldest = stats?.oldest_waiting_at ? `Oldest ${waitedFor(stats.oldest_waiting_at)}` : 'All clear';
+  const oldest = stats?.oldest_waiting_at
+    ? `Oldest ${waitedFor(stats.oldest_waiting_at)}`
+    : 'All clear';
   const statStrip = (
     <StatStrip
       columns={4}
       stats={[
-        { label: 'Waiting', value: stats?.waiting ?? counts.pending, sub: oldest, onClick: () => setTab('pending') },
-        { label: 'Returned this month', value: stats?.returned_month ?? 0, onClick: () => setTab('returned') },
-        { label: 'Approved this month', value: stats?.approved_month ?? 0, onClick: () => setTab('approved') },
+        {
+          label: 'Waiting',
+          value: stats?.waiting ?? counts.pending,
+          tone: (stats?.waiting ?? counts.pending) > 0 ? 'yellow' : undefined,
+          sub: oldest,
+          onClick: () => setTab('pending'),
+        },
+        {
+          label: 'Returned this month',
+          value: stats?.returned_month ?? 0,
+          onClick: () => setTab('returned'),
+        },
+        {
+          label: 'Approved this month',
+          value: stats?.approved_month ?? 0,
+          onClick: () => setTab('approved'),
+        },
         {
           label: 'Average sign-off',
           value: formatSignoffTime(stats?.avg_hours_to_signoff),
@@ -325,12 +360,13 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
     />
   );
 
-  const tabs = [
-    { value: 'pending', label: 'Waiting', count: counts.pending },
-    { value: 'returned', label: 'Returned', count: counts.returned },
-    { value: 'approved', label: 'Approved', count: counts.approved },
-    { value: 'all', label: 'All', count: items.length },
-    ...(canSeeTeamCerts ? [{ value: 'team', label: 'Team certificates' }] : []),
+  // The figure strip carries the counts; the tabs carry labels only.
+  const tabs: { value: Tab; label: string }[] = [
+    { value: 'pending', label: 'Waiting' },
+    { value: 'returned', label: 'Returned' },
+    { value: 'approved', label: 'Approved' },
+    { value: 'all', label: 'All' },
+    ...(canSeeTeamCerts ? [{ value: 'team' as Tab, label: 'Team certificates' }] : []),
   ];
 
   const emptyCopy: Record<Exclude<Tab, 'team'>, { title: string; description: string }> = {
@@ -341,7 +377,8 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
     },
     returned: {
       title: 'Nothing sent back',
-      description: 'Certificates you return with reasons show here until the electrician resubmits them.',
+      description:
+        'Certificates you return with reasons show here until the electrician resubmits them.',
     },
     approved: {
       title: 'Nothing approved yet',
@@ -358,8 +395,8 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
   const body = (
     <>
       {!canSign && stats?.has_queue && (
-        <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-3">
-          <p className="text-[13px] text-white">
+        <div className={cn(panel, 'px-4 py-3 sm:px-5')}>
+          <p className="text-[14px] text-white">
             You can see the queue. Only the owner, an admin manager or a team member with the QS
             role can countersign or return.
           </p>
@@ -367,47 +404,70 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
       )}
 
       {isError && tab !== 'team' && (
-        <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-4 space-y-3">
-          <p className="text-sm text-white">
-            Couldn&apos;t load the review queue. Certificates may still be waiting for sign-off.
-          </p>
-          <SecondaryButton onClick={() => refetch()}>Try again</SecondaryButton>
-        </div>
+        <PlainEmpty
+          text="Couldn't load the review queue. Certificates may still be waiting for sign-off."
+          action="Try again"
+          onAction={() => refetch()}
+        />
       )}
 
-      <CommonReturnsPanel stats={stats} />
+      <div className={embedded ? 'space-y-5' : twoColClass}>
+        <div className={embedded ? 'space-y-5' : colClass}>
+          <div
+            data-help="qsreviews.scope"
+            className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between"
+          >
+            <Segments items={tabs} value={tab} onChange={setTab} wrap={tabs.length > 4} />
+            {tab !== 'team' && (
+              <SearchField
+                value={search}
+                onChange={setSearch}
+                placeholder="Search reviews"
+                className="xl:w-60"
+              />
+            )}
+          </div>
 
-      <div data-help="qsreviews.scope">
-        <FilterBar
-          tabs={tabs}
-          activeTab={tab}
-          onTabChange={(v) => setTab(v as Tab)}
-          search={tab === 'team' ? undefined : search}
-          onSearchChange={tab === 'team' ? undefined : setSearch}
-          searchPlaceholder="Search client, address, electrician, job"
-        />
+          {tab === 'team' ? (
+            <TeamCertificatesSection />
+          ) : isLoading ? (
+            <LoadingBlocks />
+          ) : isError ? null : filtered.length === 0 ? (
+            <PlainEmpty
+              text={
+                search.trim()
+                  ? 'No reviews match that client, address, electrician or job.'
+                  : emptyCopy[tab].description
+              }
+              action={!search.trim() && tab === 'all' && isOwnerSide ? 'Open Team' : undefined}
+              onAction={
+                !search.trim() && tab === 'all' && isOwnerSide
+                  ? () => navigate('/employer?section=team')
+                  : undefined
+              }
+            />
+          ) : (
+            <div
+              className={cn('grid grid-cols-1 gap-3 md:grid-cols-2', embedded && 'xl:grid-cols-3')}
+              data-help="qsreviews.list"
+            >
+              {filtered.map((item) => (
+                <QsQueueCard
+                  key={item.review_id}
+                  item={item}
+                  onOpen={() => setOpenId(item.review_id)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {stats?.has_queue && (stats?.decided_recent ?? 0) > 0 && (
+          <div className={embedded ? '' : colClass}>
+            <CommonReturnsPanel stats={stats} />
+          </div>
+        )}
       </div>
-
-      {tab === 'team' ? (
-        <TeamCertificatesSection />
-      ) : isLoading ? (
-        <LoadingBlocks />
-      ) : isError ? null : filtered.length === 0 ? (
-        <EmptyState
-          title={search.trim() ? 'No matching reviews' : emptyCopy[tab].title}
-          description={
-            search.trim() ? 'Try a client, address, electrician or job name.' : emptyCopy[tab].description
-          }
-          action={!search.trim() && tab === 'all' && isOwnerSide ? 'Open Team' : undefined}
-          onAction={!search.trim() && tab === 'all' && isOwnerSide ? () => navigate('/employer?section=team') : undefined}
-        />
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" data-help="qsreviews.list">
-          {filtered.map((item) => (
-            <QsQueueCard key={item.review_id} item={item} onOpen={() => setOpenId(item.review_id)} />
-          ))}
-        </div>
-      )}
 
       <QsReviewDetailSheet
         item={openItem}
@@ -428,7 +488,11 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
           <p className="text-[13px] text-white">
             {counts.pending > 0 ? `${counts.pending} waiting for sign-off` : 'Nothing waiting'}
           </p>
-          <PageHelpButton help={QS_REVIEWS_HELP} blockers={helpBlockers} askContext={{ page: 'qsreviews', tab }} />
+          <PageHelpButton
+            help={QS_REVIEWS_HELP}
+            blockers={helpBlockers}
+            askContext={{ page: 'qsreviews', tab }}
+          />
         </div>
         {statStrip}
         {body}
@@ -436,27 +500,61 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
     );
   }
 
+  const waitingNow = stats?.waiting ?? counts.pending;
+  const liveLine = isLoading
+    ? 'Loading the review queue.'
+    : waitingNow > 0
+      ? `${waitingNow} ${waitingNow === 1 ? 'certificate' : 'certificates'} waiting for sign-off${stats?.oldest_waiting_at ? `, the oldest for ${waitedFor(stats.oldest_waiting_at)}` : ''}.`
+      : items.length > 0
+        ? 'Nothing waiting for sign-off.'
+        : 'Certificates your team sends for QS sign-off land here.';
+  const oldestPending = items
+    .filter((i) => i.status === 'pending')
+    .sort((a, b) => new Date(a.submitted_at).getTime() - new Date(b.submitted_at).getTime())[0];
+
   return (
-    <PageFrame>
+    <PageFrame className={frameClass}>
       <PageHero
-        eyebrow="Quality"
         title="QS reviews"
-        description="Certificates your team sends for Qualifying Supervisor sign-off. Countersign them, or send them back with reasons."
+        description={liveLine}
         actions={
-          <>
-            {items.length > 0 && (
-              <SecondaryButton data-help="qsreviews.export" onClick={exportRegister}>
-                <FileText className="h-4 w-4 mr-2" />
-                Export register
-              </SecondaryButton>
+          <HeroActions>
+            {oldestPending && (
+              <HeroPrimary
+                onClick={() => {
+                  setTab('pending');
+                  setOpenId(oldestPending.review_id);
+                }}
+              >
+                Review the oldest
+              </HeroPrimary>
             )}
-            <PageHelpButton help={QS_REVIEWS_HELP} blockers={helpBlockers} askContext={{ page: 'qsreviews', tab }} />
-          </>
+            {items.length > 0 && (
+              <HeroSecondary
+                data-help="qsreviews.export"
+                label="Export register"
+                labelOnPhone={!oldestPending}
+                onClick={exportRegister}
+                icon={<FileText className="h-4 w-4" />}
+              >
+                Export register
+              </HeroSecondary>
+            )}
+            <PageHelpButton
+              help={QS_REVIEWS_HELP}
+              blockers={helpBlockers}
+              askContext={{ page: 'qsreviews', tab }}
+            />
+          </HeroActions>
         }
       />
-      <HowItWorks help={QS_REVIEWS_HELP} blockers={helpBlockers} askContext={{ page: 'qsreviews', tab }} />
+      <HowItWorks
+        help={QS_REVIEWS_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'qsreviews', tab }}
+      />
       {statStrip}
-      <div className="space-y-5">{body}</div>
+      <div className="space-y-6 sm:space-y-8">{body}</div>
     </PageFrame>
   );
 }
@@ -466,7 +564,7 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
 function DetailField({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="min-w-0">
-      <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-white">{label}</p>
+      <p className="text-[12px] font-medium text-white">{label}</p>
       <p className="mt-0.5 text-[14px] font-medium text-white break-words">{value || '–'}</p>
     </div>
   );
@@ -540,7 +638,9 @@ export function QsReviewDetailSheet({
               <div className="flex flex-wrap items-center gap-2">
                 <QsStatusBadge status={item.status} />
                 {item.status === 'pending' && (
-                  <span className="text-[12.5px] text-white">Waiting {waitedFor(item.submitted_at)}</span>
+                  <span className="text-[12.5px] text-white">
+                    Waiting {waitedFor(item.submitted_at)}
+                  </span>
                 )}
               </div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-3.5">
@@ -551,8 +651,10 @@ export function QsReviewDetailSheet({
               </div>
               {item.submitted_note && (
                 <div className="border-t border-white/[0.1] pt-3">
-                  <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-white">Note from the electrician</p>
-                  <p className="mt-0.5 text-sm text-white whitespace-pre-wrap">{item.submitted_note}</p>
+                  <p className="text-[12px] font-medium text-white">Note from the electrician</p>
+                  <p className="mt-0.5 text-sm text-white whitespace-pre-wrap">
+                    {item.submitted_note}
+                  </p>
                 </div>
               )}
               <div className="flex flex-wrap gap-2">
@@ -586,7 +688,11 @@ export function QsReviewDetailSheet({
             {!decidable && item.status !== 'pending' && (
               <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:p-5 space-y-2">
                 <h4 className="text-[15px] font-semibold text-white">
-                  {item.status === 'approved' ? 'Approved' : item.status === 'returned' ? 'Returned' : 'Cancelled'}
+                  {item.status === 'approved'
+                    ? 'Approved'
+                    : item.status === 'returned'
+                      ? 'Returned'
+                      : 'Cancelled'}
                   {item.reviewer_name ? ` by ${item.reviewer_name}` : ''}
                   {item.reviewed_at ? ` on ${shortDate(item.reviewed_at)}` : ''}
                 </h4>
@@ -596,10 +702,12 @@ export function QsReviewDetailSheet({
                 )}
               </div>
             )}
-            {decidable && (
-              <QsDecisionPanel item={item} canSign={canSign} onDecided={onDecided} />
-            )}
-            <QsReviewComments reviewId={item.review_id} authorName={reviewerName} prefillTarget={commentTarget} />
+            {decidable && <QsDecisionPanel item={item} canSign={canSign} onDecided={onDecided} />}
+            <QsReviewComments
+              reviewId={item.review_id}
+              authorName={reviewerName}
+              prefillTarget={commentTarget}
+            />
           </div>
         </div>
       )}

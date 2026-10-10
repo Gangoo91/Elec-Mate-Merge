@@ -27,25 +27,45 @@ import { containerVariants, itemVariants } from '@/components/college/primitives
 import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
   COLLEGE_BTN_PRIMARY,
-  COLLEGE_LIST,
   CollegeEmpty,
   CollegePageHeader,
   CollegeSectionTitle,
-  CollegeStats,
 } from '@/components/college/ui/CollegeUi';
-import { FilterChips, NameBadge, PeopleRow, SEARCH_CN, isSupportStaff, norm } from '@/components/college/people/peopleKit';
+import {
+  PEOPLE_LIST,
+  StatusChip,
+  FilterChips,
+  NameBadge,
+  PeopleRow,
+  SEARCH_CN,
+  isSupportStaff,
+  norm,
+} from '@/components/college/people/peopleKit';
+import { keyLabel } from '@/lib/college/labels';
 
 const HELP: PageHelpContent = {
   id: 'college-support-staff',
   title: 'Support staff',
   what: 'Everyone who is not teaching: assessors, internal quality assurers (IQA), administrators and learner support.',
   steps: [
-    { title: 'Add someone', body: 'Add staff member takes a name, email and role. Finish their qualifications from their profile.' },
-    { title: 'Filter by role', body: 'The chips narrow the list to assessors, IQA, admin or support.' },
-    { title: 'Open a profile', body: 'Tap a row for their details, qualifications and contact. Compliance checks are in the ⋯ menu.' },
+    {
+      title: 'Add someone',
+      body: 'Add staff member takes a name, email, role and department. It does not make a login: give them one from Add several with logins on the Tutors page.',
+    },
+    {
+      title: 'Filter by role',
+      body: 'The chips narrow the list to assessors, IQA, admin or support.',
+    },
+    {
+      title: 'Open a profile',
+      body: 'Tap a row for their details, qualifications and contact. Compliance checks are in the ⋯ menu.',
+    },
   ],
   notes: [
-    { title: 'Assessors and IQA', body: 'An assessor or IQA needs their qualification on file (for example TAQA, IQA award) before they sign off evidence. Put it on their profile.' },
+    {
+      title: 'Assessors and IQA',
+      body: 'An assessor or IQA needs their qualification on file (for example TAQA, IQA award) before they sign off evidence. Put it on their profile.',
+    },
   ],
 };
 
@@ -55,6 +75,7 @@ const ROLE_CHIPS: { value: string; label: string }[] = [
   { value: 'assessor', label: 'Assessors' },
   { value: 'iqa', label: 'IQA' },
   { value: 'support', label: 'Support' },
+  { value: 'eqa', label: 'EQA' },
 ];
 
 export function SupportStaffSection() {
@@ -81,11 +102,7 @@ export function SupportStaffSection() {
     setEditOpen(true);
   };
 
-  const supportStaff = useMemo(
-    () =>
-      staff.filter(isSupportStaff),
-    [staff]
-  );
+  const supportStaff = useMemo(() => staff.filter(isSupportStaff), [staff]);
 
   const filteredStaff = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -114,40 +131,51 @@ export function SupportStaffSection() {
   const hasActiveFilters = !!searchQuery || filterRole !== 'all';
 
   const missingQual = supportStaff.filter(
-    (m) => ((m.role as string) === 'assessor' && !m.assessor_qual) || ((m.role as string) === 'iqa' && !m.iqa_qual)
+    (m) =>
+      ((m.role as string) === 'assessor' && !m.assessor_qual) ||
+      ((m.role as string) === 'iqa' && !m.iqa_qual)
   ).length;
 
+  const noLogin = supportStaff.filter((m) => !m.user_id).length;
+  // The counts the tiles used to carry, in the one sentence under the title.
+  const summary =
+    supportStaff.length === 0
+      ? 'Everyone who is not teaching: assessors, IQA, administrators and learner support. Nobody added yet.'
+      : `${supportStaff.length} not teaching: ${countForRole('assessor')} assessor${countForRole('assessor') === 1 ? '' : 's'}, ${countForRole('iqa')} IQA, ${countForRole('admin')} admin and ${countForRole('support')} learner support${countForRole('eqa') > 0 ? `, plus ${countForRole('eqa')} external quality assurer${countForRole('eqa') === 1 ? '' : 's'}` : ''}. ` +
+        (missingQual > 0
+          ? `${missingQual} assessor or IQA without their award on file.`
+          : 'Every assessor and IQA has their award on file.') +
+        (noLogin > 0 ? ` ${noLogin} without a login yet.` : '');
+
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
       <CollegePageHeader
         eyebrow="People"
         title="Support staff"
-        description="Assessors, IQA, administrators and learner support: everyone who is not teaching."
+        description={summary}
         help={HELP}
         actions={
           canManageStaff ? (
-            <button type="button" onClick={() => setAddStaffOpen(true)} className={COLLEGE_BTN_PRIMARY}>
+            <button
+              type="button"
+              onClick={() => setAddStaffOpen(true)}
+              className={COLLEGE_BTN_PRIMARY}
+            >
               Add staff member
             </button>
           ) : undefined
         }
       />
 
-      <CollegeStats
-        items={[
-          { label: 'Support staff', value: String(supportStaff.length), sub: 'Not teaching', onClick: () => setFilterRole('all') },
-          { label: 'Assessors', value: String(countForRole('assessor')), sub: 'Sign off evidence', onClick: () => setFilterRole('assessor') },
-          { label: 'IQA', value: String(countForRole('iqa')), sub: 'Sample and check assessments', onClick: () => setFilterRole('iqa') },
-          {
-            label: 'Qualification missing',
-            value: String(missingQual),
-            sub: missingQual > 0 ? 'Assessor or IQA award not on file' : 'Every assessor and IQA has one',
-            warn: missingQual > 0,
-          },
-        ]}
-      />
-
-      <motion.div variants={itemVariants} className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between"
+      >
         <input
           type="search"
           value={searchQuery}
@@ -160,24 +188,47 @@ export function SupportStaffSection() {
           label="Role"
           value={filterRole}
           onChange={setFilterRole}
-          items={ROLE_CHIPS.map((c) => ({ ...c, count: countForRole(c.value) }))}
+          items={ROLE_CHIPS.filter((c) => c.value !== 'eqa' || countForRole('eqa') > 0).map(
+            (c) => ({
+              ...c,
+              count: countForRole(c.value),
+            })
+          )}
         />
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-3">
         <CollegeSectionTitle
           title="Assessors, admin and IQA"
-          sub={filteredStaff.length === supportStaff.length ? `${supportStaff.length} on the team` : `${filteredStaff.length} of ${supportStaff.length} shown`}
+          sub={
+            filteredStaff.length === supportStaff.length
+              ? `${supportStaff.length} on the team`
+              : `${filteredStaff.length} of ${supportStaff.length} shown`
+          }
         />
         {isLoading ? (
           <StaffCardSkeletonList count={3} />
         ) : filteredStaff.length === 0 ? (
           <CollegeEmpty
-            title={supportStaff.length === 0 ? 'No support staff yet' : hasActiveFilters ? 'Nobody matches' : 'No support staff'}
-            body={supportStaff.length === 0 ? 'Add an assessor, administrator or internal quality assurer.' : 'Clear the search or pick another chip.'}
+            title={
+              supportStaff.length === 0
+                ? 'No support staff yet'
+                : hasActiveFilters
+                  ? 'Nobody matches'
+                  : 'No support staff'
+            }
+            body={
+              supportStaff.length === 0
+                ? 'Add an assessor, administrator or internal quality assurer.'
+                : 'Clear the search or pick another chip.'
+            }
             action={
               supportStaff.length === 0 && canManageStaff ? (
-                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => setAddStaffOpen(true)}>
+                <button
+                  type="button"
+                  className={COLLEGE_BTN_PRIMARY}
+                  onClick={() => setAddStaffOpen(true)}
+                >
                   Add staff member
                 </button>
               ) : undefined
@@ -185,13 +236,21 @@ export function SupportStaffSection() {
           />
         ) : (
           <PullToRefresh onRefresh={handleRefresh}>
-            <div className={COLLEGE_LIST}>
+            <div className={PEOPLE_LIST}>
               <ul className="divide-y divide-white/[0.06]">
                 {filteredStaff.map((member) => {
                   const status = norm(member.status);
                   const role = member.role as string;
-                  const noQual = (role === 'assessor' && !member.assessor_qual) || (role === 'iqa' && !member.iqa_qual);
-                  const sub = [getRoleLabel(member.role), member.department, member.assessor_qual, member.iqa_qual, member.email]
+                  const noQual =
+                    (role === 'assessor' && !member.assessor_qual) ||
+                    (role === 'iqa' && !member.iqa_qual);
+                  const sub = [
+                    getRoleLabel(member.role),
+                    member.department,
+                    member.assessor_qual,
+                    member.iqa_qual,
+                    member.email,
+                  ]
                     .filter(Boolean)
                     .join(' · ');
                   return (
@@ -200,13 +259,15 @@ export function SupportStaffSection() {
                       title={member.name}
                       badge={
                         status && status !== 'active' ? (
-                          <NameBadge>{member.status}</NameBadge>
-                        ) : noQual ? (
-                          <NameBadge tone="warn">No qualification on file</NameBadge>
+                          <NameBadge>{keyLabel(member.status)}</NameBadge>
+                        ) : noQual || !member.user_id ? (
+                          <>
+                            {noQual && <StatusChip tone="action">Award not on file</StatusChip>}
+                            {!member.user_id && <StatusChip>No login yet</StatusChip>}
+                          </>
                         ) : undefined
                       }
                       sub={sub}
-                      tone={noQual ? 'warn' : 'quiet'}
                       onOpen={() => handleSelectStaff(member)}
                       menu={[
                         { label: 'Open profile', onClick: () => handleSelectStaff(member) },
@@ -218,8 +279,15 @@ export function SupportStaffSection() {
                             if (member.phone) window.location.href = `tel:${member.phone}`;
                           },
                         },
-                        { label: 'Email', onClick: () => (window.location.href = `mailto:${member.email}`) },
-                        { label: 'Compliance checks', separated: true, onClick: () => setComplianceId(member.id) },
+                        {
+                          label: 'Email',
+                          onClick: () => (window.location.href = `mailto:${member.email}`),
+                        },
+                        {
+                          label: 'Compliance checks',
+                          separated: true,
+                          onClick: () => setComplianceId(member.id),
+                        },
                       ]}
                     />
                   );
@@ -230,8 +298,13 @@ export function SupportStaffSection() {
         )}
       </motion.section>
 
-      <AddTutorDialog open={addStaffOpen} onOpenChange={setAddStaffOpen} />
-      <StaffDetailSheet staff={selectedStaff} open={detailOpen} onOpenChange={setDetailOpen} onEdit={handleEditStaff} />
+      <AddTutorDialog open={addStaffOpen} onOpenChange={setAddStaffOpen} variant="support" />
+      <StaffDetailSheet
+        staff={selectedStaff}
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        onEdit={handleEditStaff}
+      />
       <EditStaffSheet staff={selectedStaff} open={editOpen} onOpenChange={setEditOpen} />
       <StaffComplianceDrawer
         open={!!complianceId}

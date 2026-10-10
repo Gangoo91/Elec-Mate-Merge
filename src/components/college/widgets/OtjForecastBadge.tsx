@@ -60,7 +60,7 @@ export function OtjForecastBadge({ studentId, compact }: Props) {
         <h3 className="text-[15px] font-semibold tracking-tight text-white">
           Off-the-job forecast
         </h3>
-        <span className={cn('text-[11px] font-semibold', RISK_TEXT[forecast.risk])}>
+        <span className={cn('text-[12px] font-semibold', RISK_TEXT[forecast.risk])}>
           {RISK_LABEL[forecast.risk]}
         </span>
       </div>

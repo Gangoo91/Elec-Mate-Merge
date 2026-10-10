@@ -11,9 +11,9 @@ interface AccreditationCardProps {
 
 const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardProps) => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-4">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-4 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
       <div className="space-y-2">
-        <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <div className="flex items-baseline gap-3 text-[13px] font-semibold text-white">
           <span>{accreditation.level}</span>
           {accreditation.onlineAvailable && (
             <>
@@ -32,52 +32,45 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
 
       <div className="grid grid-cols-2 gap-2 text-[12px]">
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white">Duration</div>
+          <div className="text-[13px] text-white">Duration</div>
           <div className="text-white truncate">{accreditation.duration}</div>
         </div>
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white">Cost</div>
+          <div className="text-[13px] text-white">Cost</div>
           <div className="text-white truncate">{accreditation.cost}</div>
         </div>
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white">Locations</div>
+          <div className="text-[13px] text-white">Locations</div>
           <div className="text-white truncate">
             {accreditation.locations.slice(0, 2).join(', ')}
             {accreditation.locations.length > 2 && '...'}
           </div>
         </div>
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white">Popularity</div>
+          <div className="text-[13px] text-white">Popularity</div>
           <div className="text-white">{accreditation.popularity}%</div>
         </div>
       </div>
 
       <div className="space-y-2 flex-1 min-h-0">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Key benefits
-        </span>
+        <span className="text-[13px] font-semibold text-white">Key benefits</span>
         <ul className="space-y-1.5">
           {accreditation.benefits.slice(0, 3).map((benefit, idx) => (
-            <li
-              key={idx}
-              className="text-[13px] text-white leading-relaxed flex items-start gap-2"
-            >
+            <li key={idx} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{benefit}</span>
             </li>
           ))}
         </ul>
         {accreditation.benefits.length > 3 && (
-          <p className="text-[12px] text-white">
-            +{accreditation.benefits.length - 3} more
-          </p>
+          <p className="text-[12px] text-white">+{accreditation.benefits.length - 3} more</p>
         )}
       </div>
 
       <div className="flex gap-2 pt-3 mt-auto border-t border-white/[0.06]">
         <Button
           onClick={() => onViewDetails(accreditation)}
-          className="flex-1 h-10 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-[13px] font-medium touch-manipulation"
+          className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-[13px] font-medium touch-manipulation"
         >
           View details
         </Button>
@@ -85,7 +78,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
           <Button
             variant="outline"
             size="sm"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] px-3 touch-manipulation"
+            className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] px-3 touch-manipulation"
             onClick={() => openExternalUrl(accreditation.website)}
           >
             <ExternalLink className="h-4 w-4" />

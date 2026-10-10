@@ -3,7 +3,14 @@
  * get_employer_home call (see HubAreas.tsx).
  */
 import type { ComponentType } from 'react';
-import { Briefcase, FileText, Handshake, PoundSterling, ShieldCheck, Users } from 'lucide-react';
+import {
+  ClientsIcon,
+  DocsIcon,
+  FinanceIcon,
+  JobsIcon,
+  PeopleIcon,
+  SafetyIcon,
+} from '@/components/employer/overview/HubIcons';
 import type { EmployerHome } from '@/hooks/useEmployerHome';
 import type { Params } from '@/components/employer/overview/HomeSections';
 
@@ -43,14 +50,17 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
       ? 'Add your team to get started'
       : [
           `${team.active} on the team`,
-          toApprove > 0 ? `${toApprove} to approve` : team.not_joined > 0 ? `${team.not_joined} not joined` : null,
+          toApprove > 0
+            ? `${toApprove} to approve`
+            : team.not_joined > 0
+              ? `${team.not_joined} not joined`
+              : null,
         ]
           .filter(Boolean)
           .join(' · ');
 
   /* Jobs */
-  const jobsLine =
-    j.live === 0 ? 'No live jobs yet' : `${j.today} today · ${j.week} this week`;
+  const jobsLine = j.live === 0 ? 'No live jobs yet' : `${j.today} today · ${j.week} this week`;
 
   /* Finance: money only for the owner and admins. */
   const financeLine = m
@@ -74,7 +84,7 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
   /* Clients */
   const clientsLine = [
     hub ? plural(hub.clients, 'client') : 'Customers and leads',
-    g.new_leads > 0 ? plural(g.new_leads, 'new lead') : null,
+    g.new_leads > 0 ? `${plural(g.new_leads, 'enquiry', 'enquiries')} to reply to` : null,
   ]
     .filter(Boolean)
     .join(' · ');
@@ -88,7 +98,7 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
       key: 'people',
       name: 'People',
       section: 'peoplehub',
-      icon: Users,
+      icon: PeopleIcon,
       line: peopleLine,
       shortcuts: [
         {
@@ -121,10 +131,16 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
       key: 'jobs',
       name: 'Jobs',
       section: 'jobshub',
-      icon: Briefcase,
+      icon: JobsIcon,
       line: jobsLine,
       shortcuts: [
-        { key: 'jobs', label: 'All jobs', section: 'jobs', count: j.unstaffed_today, tone: 'urgent' },
+        {
+          key: 'jobs',
+          label: 'All jobs',
+          section: 'jobs',
+          count: j.unstaffed_today,
+          tone: 'urgent',
+        },
         {
           key: 'diary',
           label: 'Diary',
@@ -132,15 +148,27 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
           count: Math.max(0, j.unstaffed_week - j.unstaffed_today) + j.diary_unsent,
           tone: 'action',
         },
-        { key: 'jobpacks', label: 'Job packs', section: 'jobpacks', count: s.signatures_waiting, tone: 'action' },
-        { key: 'qsreviews', label: 'QS sign-off', section: 'qsreviews', count: a.qs, tone: 'action' },
+        {
+          key: 'jobpacks',
+          label: 'Job packs',
+          section: 'jobpacks',
+          count: s.signatures_waiting,
+          tone: 'action',
+        },
+        {
+          key: 'qsreviews',
+          label: 'QS sign-off',
+          section: 'qsreviews',
+          count: a.qs,
+          tone: 'action',
+        },
       ],
     },
     {
       key: 'finance',
       name: 'Finance',
       section: 'financehub',
-      icon: PoundSterling,
+      icon: FinanceIcon,
       line: financeLine,
       warn: !!m && m.overdue_count > 0,
       shortcuts: [
@@ -160,7 +188,13 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
           count: m?.quotes_waiting,
           tone: 'info',
         },
-        { key: 'expenses', label: 'Expenses', section: 'expenses', count: a.expenses, tone: 'action' },
+        {
+          key: 'expenses',
+          label: 'Expenses',
+          section: 'expenses',
+          count: a.expenses,
+          tone: 'action',
+        },
         { key: 'financials', label: 'Job financials', section: 'financials' },
       ],
     },
@@ -168,7 +202,7 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
       key: 'safety',
       name: 'Safety',
       section: 'safetyhub',
-      icon: ShieldCheck,
+      icon: SafetyIcon,
       line: safetyLine,
       warn: s.riddor_due > 0 || s.incidents_unseen > 0,
       shortcuts: [
@@ -188,11 +222,11 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
       key: 'clients',
       name: 'Clients',
       section: 'clientshub',
-      icon: Handshake,
+      icon: ClientsIcon,
       line: clientsLine,
       shortcuts: [
         { key: 'clients', label: 'Clients', section: 'clients' },
-        { key: 'leads', label: 'Leads', section: 'leads', count: g.new_leads, tone: 'action' },
+        { key: 'leads', label: 'Enquiries', section: 'leads', count: g.new_leads, tone: 'action' },
         { key: 'quotepage', label: 'Quote page', section: 'quotepage' },
         {
           key: 'clientportal',
@@ -207,11 +241,11 @@ export function buildHubAreas(h: EmployerHome, clientUnread = 0): HubArea[] {
       key: 'smartdocs',
       name: 'Smart Docs',
       section: 'smartdocs',
-      icon: FileText,
+      icon: DocsIcon,
       line: docsLine,
       shortcuts: [
-        { key: 'airams', label: 'RAMS', section: 'airams' },
-        { key: 'aimethodstatement', label: 'Method statement', section: 'aimethodstatement' },
+        { key: 'airams', label: 'Safety documents', section: 'airams' },
+        { key: 'rams', label: 'RAMS register', section: 'rams' },
         { key: 'aidesignspec', label: 'Design spec', section: 'aidesignspec' },
         { key: 'aiquote', label: 'AI quote', section: 'aiquote' },
       ],

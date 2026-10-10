@@ -9,13 +9,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import {
-  buttonPrimaryCn,
-  buttonSecondaryCn,
-  chipBase,
-  chipOff,
-  chipOn,
-} from '@/components/forms/fieldStyles';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { Loader2, CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
 import { toast } from 'sonner';
 import { useEPAKnowledgeQuiz } from '@/hooks/epa/useEPAKnowledgeQuiz';
@@ -35,11 +29,19 @@ interface EPAKnowledgeQuizProps {
   onActiveChange?: (active: boolean) => void;
 }
 
+/** A small label in sentence case (10 Oct: spaced capitals read as generated). */
 const Eyebrow = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <span className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}>
-    {children}
-  </span>
+  <span className={cn('block text-[13px] font-semibold text-white', className)}>{children}</span>
 );
+
+/** A choice of 2 to 4: one joined toggle, the chosen option white. */
+const SEG_GROUP =
+  'flex w-full rounded-xl border border-white/[0.12] p-0.5 sm:inline-flex sm:w-auto';
+const seg = (on: boolean) =>
+  cn(
+    'inline-flex h-11 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-[10px] px-3 text-[13.5px] font-semibold transition-colors touch-manipulation sm:flex-none sm:px-5',
+    on ? 'bg-white text-black' : 'text-white hover:bg-white/[0.06] active:bg-white/[0.08]'
+  );
 
 export function EPAKnowledgeQuiz({
   qualificationCode,
@@ -246,9 +248,9 @@ export function EPAKnowledgeQuiz({
 
   if (!quiz.currentSession) {
     return (
-      <div className="px-4 sm:px-6 py-6 space-y-6">
+      <div className="space-y-6 py-6">
         <div className="space-y-2">
-          <Eyebrow>Mock knowledge test</Eyebrow>
+          <Eyebrow className="text-elec-yellow">Mock knowledge test</Eyebrow>
           <h2 className="text-[24px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
             {targetAC ? 'Drill a single AC' : 'EPA-style multiple choice'}
           </h2>
@@ -276,9 +278,7 @@ export function EPAKnowledgeQuiz({
             <div className="flex items-baseline gap-2 flex-wrap">
               <span className="text-[12px] font-mono text-elec-yellow">{targetAC.acRef}</span>
               {targetAC.unitCode && (
-                <span className="text-[10px] uppercase tracking-[0.14em] text-white">
-                  Unit {targetAC.unitCode}
-                </span>
+                <span className="text-[12px] font-medium text-white">Unit {targetAC.unitCode}</span>
               )}
             </div>
             <p className="text-[13px] text-white leading-relaxed">{targetAC.acText}</p>
@@ -289,14 +289,17 @@ export function EPAKnowledgeQuiz({
         <div className="space-y-4">
           <div className="space-y-2">
             <Eyebrow>Difficulty</Eyebrow>
-            <div className="flex flex-wrap gap-1.5">
+            <div className={SEG_GROUP} role="radiogroup" aria-label="Difficulty">
               {(['mixed', 'easy', 'medium', 'hard'] as const).map((d) => {
                 const active = difficulty === d;
                 return (
                   <button
                     key={d}
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
                     onClick={() => setDifficulty(d)}
-                    className={cn(chipBase, 'rounded-full px-3.5', active ? chipOn : chipOff)}
+                    className={seg(active)}
                   >
                     {d.charAt(0).toUpperCase() + d.slice(1)}
                   </button>
@@ -307,16 +310,19 @@ export function EPAKnowledgeQuiz({
 
           <div className="space-y-2">
             <Eyebrow>Questions</Eyebrow>
-            <div className="flex flex-wrap gap-1.5">
+            <div className={SEG_GROUP} role="radiogroup" aria-label="Questions">
               {[5, 10, 20, 30].map((n) => {
                 const active = questionCount === n;
                 return (
                   <button
                     key={n}
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
                     onClick={() => setQuestionCount(n)}
-                    className={cn(chipBase, 'rounded-full px-3.5', active ? chipOn : chipOff)}
+                    className={seg(active)}
                   >
-                    {n} Qs
+                    {n}
                   </button>
                 );
               })}
@@ -348,13 +354,11 @@ export function EPAKnowledgeQuiz({
             </div>
             {streamRegs.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Reg sources
-                </span>
+                <span className="text-[12px] font-medium text-white">Reg sources</span>
                 {streamRegs.map((r) => (
                   <span
                     key={r}
-                    className="text-[10px] font-mono text-elec-yellow/85 px-1.5 py-0 rounded-md border border-elec-yellow/20 bg-white/[0.06]"
+                    className="text-[12px] font-mono text-white px-1.5 py-0 rounded-md border border-white/[0.14]"
                   >
                     {r}
                   </span>
@@ -362,7 +366,7 @@ export function EPAKnowledgeQuiz({
               </div>
             )}
             {streamErrors.length > 0 && (
-              <p className="text-[11px] text-red-400/85">
+              <p className="text-[12px] text-red-400">
                 {streamErrors.length} call{streamErrors.length === 1 ? '' : 's'} failed — continuing
                 with the rest.
               </p>
@@ -394,7 +398,10 @@ export function EPAKnowledgeQuiz({
           <button
             onClick={handleGenerate}
             disabled={isGenerating}
-            className={cn(buttonPrimaryCn, 'inline-flex w-full items-center justify-center gap-2')}
+            className={cn(
+              buttonPrimaryCn,
+              'inline-flex w-full items-center justify-center gap-2 sm:w-auto sm:px-8'
+            )}
           >
             {isGenerating ? (
               <>
@@ -422,7 +429,7 @@ export function EPAKnowledgeQuiz({
       pct >= 80 ? 'Distinction' : pct >= 60 ? 'Merit' : pct >= 40 ? 'Pass' : 'Below pass';
 
     return (
-      <div className="px-4 sm:px-6 py-6 space-y-6">
+      <div className="space-y-6 py-6">
         {/* Score */}
         <section className="space-y-2">
           <Eyebrow>Result · {grade}</Eyebrow>
@@ -497,26 +504,24 @@ export function EPAKnowledgeQuiz({
                   className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2"
                 >
                   <div className="flex items-baseline gap-3">
-                    <span className="text-[11px] font-mono text-white flex-shrink-0">
+                    <span className="text-[12px] font-mono text-white flex-shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div className="flex-1 min-w-0 space-y-2">
                       <div className="flex items-baseline gap-2 flex-wrap">
                         {q.regulation && (
-                          <span className="text-[10px] font-mono text-elec-yellow/85 uppercase tracking-[0.14em]">
+                          <span className="text-[12px] font-medium text-elec-yellow/85">
                             {q.regulation}
                           </span>
                         )}
-                        <span className="text-[10px] uppercase tracking-[0.14em] text-white">
-                          {q.category}
-                        </span>
+                        <span className="text-[12px] font-medium text-white">{q.category}</span>
                         {isCorrect ? (
-                          <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow inline-flex items-center gap-1">
+                          <span className="text-[12px] font-medium text-elec-yellow inline-flex items-center gap-1">
                             <CheckCircle2 className="h-3 w-3" />
                             Correct
                           </span>
                         ) : (
-                          <span className="text-[10px] uppercase tracking-[0.14em] text-red-400 inline-flex items-center gap-1">
+                          <span className="text-[12px] font-medium text-red-400 inline-flex items-center gap-1">
                             <XCircle className="h-3 w-3" />
                             Wrong
                           </span>
@@ -570,9 +575,7 @@ export function EPAKnowledgeQuiz({
           <Eyebrow>
             Question {progress.current} / {progress.total}
           </Eyebrow>
-          <span className="text-[10px] font-mono text-white uppercase tracking-[0.18em]">
-            {progress.answered} answered
-          </span>
+          <span className="text-[12px] font-medium text-white">{progress.answered} answered</span>
         </div>
         <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
           <div
@@ -586,19 +589,15 @@ export function EPAKnowledgeQuiz({
       <div className="flex-1 px-4 sm:px-6 py-4 space-y-4">
         <div className="flex items-baseline gap-2 flex-wrap">
           {currentQ.regulation && (
-            <span className="text-[10px] font-mono text-elec-yellow/85 uppercase tracking-[0.14em]">
+            <span className="text-[12px] font-medium text-elec-yellow/85">
               {currentQ.regulation}
             </span>
           )}
           {currentQ.category && (
-            <span className="text-[10px] uppercase tracking-[0.14em] text-white">
-              {currentQ.category}
-            </span>
+            <span className="text-[12px] font-medium text-white">{currentQ.category}</span>
           )}
           {currentQ.difficulty && (
-            <span className="text-[10px] uppercase tracking-[0.14em] text-white">
-              {currentQ.difficulty}
-            </span>
+            <span className="text-[12px] font-medium text-white">{currentQ.difficulty}</span>
           )}
         </div>
 
@@ -629,7 +628,7 @@ export function EPAKnowledgeQuiz({
               >
                 <span
                   className={cn(
-                    'text-[11px] font-mono shrink-0 mt-0.5',
+                    'text-[12px] font-mono shrink-0 mt-0.5',
                     showResult && isCorrect
                       ? 'text-elec-yellow'
                       : showResult && isSelected && !isCorrect

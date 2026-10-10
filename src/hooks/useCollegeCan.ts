@@ -47,13 +47,7 @@ export type CollegeCapability =
   | 'read_only';
 
 export type CollegeStaffRoleKey =
-  | 'tutor'
-  | 'assessor'
-  | 'iqa'
-  | 'eqa'
-  | 'head_of_department'
-  | 'admin'
-  | 'support';
+  'tutor' | 'assessor' | 'iqa' | 'eqa' | 'head_of_department' | 'admin' | 'support';
 
 export interface CollegeCapabilities {
   college_id: string | null;
@@ -99,6 +93,10 @@ export function useCollegeCan(collegeId?: string | null) {
     queryFn: () => fetchCaps(collegeId ?? null),
     enabled: !!uid,
     staleTime: 5 * 60 * 1000,
+    // Every College Hub screen mounts this from several components; the app
+    // default (refetchOnMount 'always') re-asked the server on each mount
+    // (ELE-1912). Within staleTime one answer serves them all.
+    refetchOnMount: true,
   });
 
   const caps = query.data ?? null;

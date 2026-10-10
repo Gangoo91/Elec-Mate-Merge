@@ -29,7 +29,7 @@ const VERDICT_LABEL: Record<string, string> = {
 };
 
 const CHIP =
-  'inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 text-[10px] font-semibold text-white';
+  'inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 text-[12px] font-semibold text-white';
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -72,7 +72,12 @@ export function EpaVerdictHistory({
   const count = `${all.length} entr${all.length === 1 ? 'y' : 'ies'}`;
 
   return (
-    <div className={cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE)}>
+    <div
+      className={cn(
+        'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+        CARD_SURFACE
+      )}
+    >
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}

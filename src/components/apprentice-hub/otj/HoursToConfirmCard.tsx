@@ -11,10 +11,10 @@
  * Renders nothing when there is nothing to confirm and nothing answered
  * recently, so the hours page stays short for most apprentices.
  */
+import { LC_FRAME } from '@/components/apprentice-hub/college-hub/learnerUi';
 import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { FormSheet } from '@/components/forms/FormSheet';
 import {
   buttonPrimaryCn,
@@ -35,13 +35,10 @@ import {
   type OtjProposal,
 } from '@/hooks/useOtjProposals';
 
-const cardCn = cn(
-  '-mx-4 rounded-none border-y border-elec-yellow/35 p-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6',
-  CARD_SURFACE
-);
+const cardCn = cn(LC_FRAME, 'p-4 sm:p-5');
 
 const rowCn =
-  'flex h-full flex-col gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.05] p-4';
+  'flex h-full flex-col gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4';
 
 type HoursAnswer = 'in' | 'outside_paid' | 'outside_unpaid';
 
@@ -109,7 +106,9 @@ export function HoursToConfirmCard({
       return;
     }
     toast({
-      title: res.verified ? `${fmtProposalMinutes(res.minutes)} added and counted` : 'Sent to your tutor',
+      title: res.verified
+        ? `${fmtProposalMinutes(res.minutes)} added and counted`
+        : 'Sent to your tutor',
       description: res.verified
         ? 'Your tutor marked the register, so it counts straight away.'
         : 'It counts once your tutor signs it off.',
@@ -141,7 +140,7 @@ export function HoursToConfirmCard({
         </div>
         {open.length > 0 && (
           <div className="shrink-0 text-right">
-            <p className="text-[22px] font-semibold tabular-nums text-elec-yellow">
+            <p className="text-[22px] font-semibold tabular-nums text-white">
               {openMinutes > 0 ? fmtProposalMinutes(openMinutes) : open.length}
             </p>
             <p className="text-[12px] text-white">
@@ -158,17 +157,17 @@ export function HoursToConfirmCard({
               <div className={rowCn}>
                 <div className="min-w-0 space-y-1">
                   <p className="text-[14px] font-semibold leading-snug text-white">{p.title}</p>
-                  <p className="text-[13px] leading-snug text-elec-yellow">{proposalProvenance(p)}</p>
-                  {p.detail && (
-                    <p className="text-[12.5px] leading-snug text-white">{p.detail}</p>
-                  )}
+                  <p className="text-[13px] font-medium leading-snug text-white">
+                    {proposalProvenance(p)}
+                  </p>
+                  {p.detail && <p className="text-[12.5px] leading-snug text-white">{p.detail}</p>}
                   {!p.proposed_minutes && (
                     <p className="text-[12.5px] leading-snug text-white">
                       We don't know how long it was. Add the hours when you confirm.
                     </p>
                   )}
                   {p.same_day_minutes > 0 && (
-                    <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2 text-[12.5px] leading-snug text-orange-300">
+                    <p className="rounded-xl border border-orange-400/60 px-3 py-2 text-[12.5px] leading-snug text-orange-300">
                       You already have {fmtProposalMinutes(p.same_day_minutes)} logged on this day.
                       Only confirm if this is different time.
                     </p>
@@ -181,7 +180,7 @@ export function HoursToConfirmCard({
                     onClick={() =>
                       oneTap(p) ? void quickConfirm(p) : setSheet({ p, mode: 'confirm' })
                     }
-                    className={cn(buttonPrimaryCn, 'h-11 px-2 text-[13px]')}
+                    className="inline-flex h-11 items-center justify-center rounded-xl border border-elec-yellow px-2 text-[13px] font-semibold text-elec-yellow transition-colors touch-manipulation hover:bg-elec-yellow hover:text-black disabled:opacity-40"
                   >
                     {busy === p.id ? 'Saving…' : 'Confirm'}
                   </button>
@@ -230,7 +229,9 @@ export function HoursToConfirmCard({
                   >
                     <div className="min-w-0">
                       <p className="truncate text-[13.5px] font-semibold text-white">{p.title}</p>
-                      <p className="text-[12.5px] leading-snug text-white">{proposalProvenance(p)}</p>
+                      <p className="text-[12.5px] leading-snug text-white">
+                        {proposalProvenance(p)}
+                      </p>
                       <p
                         className={cn(
                           'mt-0.5 text-[12.5px] font-medium leading-snug',
@@ -305,7 +306,10 @@ function ProposalSheet({
   const minutes = Math.round(parseFloat(hours || '0') * 60);
   const validMinutes = minutes >= 1 && minutes <= 1440;
   const countsNow =
-    p.source === 'register' && !!p.proposed_minutes && validMinutes && minutes <= p.proposed_minutes;
+    p.source === 'register' &&
+    !!p.proposed_minutes &&
+    validMinutes &&
+    minutes <= p.proposed_minutes;
   const presets = Array.from(
     new Set([p.proposed_minutes ? p.proposed_minutes / 60 : null, 1, 2, 3, 6, 7.5].filter(Boolean))
   ) as number[];
@@ -384,7 +388,11 @@ function ProposalSheet({
               type="button"
               aria-pressed={mode === m}
               onClick={() => setMode(m)}
-              className={cn(chipBase, 'inline-flex h-11 items-center justify-center', mode === m ? chipOn : chipOff)}
+              className={cn(
+                chipBase,
+                'inline-flex h-11 items-center justify-center',
+                mode === m ? chipOn : chipOff
+              )}
             >
               {m === 'confirm' ? 'It happened' : 'Not right'}
             </button>
@@ -406,7 +414,11 @@ function ProposalSheet({
                       type="button"
                       aria-pressed={on}
                       onClick={() => setHours(String(h))}
-                      className={cn(chipBase, 'inline-flex h-11 items-center px-4', on ? chipOn : chipOff)}
+                      className={cn(
+                        chipBase,
+                        'inline-flex h-11 items-center px-4',
+                        on ? chipOn : chipOff
+                      )}
                     >
                       {fmtProposalMinutes(Math.round(h * 60))}
                     </button>
@@ -461,8 +473,8 @@ function ProposalSheet({
                 {answer === 'outside_unpaid' && (
                   <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3.5 py-2.5 text-[13px] leading-snug text-orange-300">
                     Training in your own time that you were not paid back for does not count as
-                    off-the-job training. Talk to your employer: if they agree to give you time off in
-                    lieu or extra pay, it can count.
+                    off-the-job training. Talk to your employer: if they agree to give you time off
+                    in lieu or extra pay, it can count.
                   </p>
                 )}
               </div>
@@ -493,7 +505,11 @@ function ProposalSheet({
                   type="button"
                   aria-pressed={reason === r}
                   onClick={() => setReason(r)}
-                  className={cn(chipBase, 'inline-flex h-11 items-center px-4', reason === r ? chipOn : chipOff)}
+                  className={cn(
+                    chipBase,
+                    'inline-flex h-11 items-center px-4',
+                    reason === r ? chipOn : chipOff
+                  )}
                 >
                   {r}
                 </button>
@@ -514,7 +530,7 @@ function ProposalSheet({
 
       <aside className="mt-5 space-y-3 rounded-2xl border border-white/[0.12] bg-white/[0.05] p-4 lg:mt-0">
         <p className="text-[13px] font-semibold text-white">Where this came from</p>
-        <p className="text-[13px] leading-snug text-elec-yellow">{proposalProvenance(p)}</p>
+        <p className="text-[13px] font-medium leading-snug text-white">{proposalProvenance(p)}</p>
         {p.detail && <p className="text-[12.5px] leading-snug text-white">{p.detail}</p>}
         <div className="border-t border-white/[0.1] pt-3 text-[12.5px] leading-snug text-white">
           {mode === 'reject'

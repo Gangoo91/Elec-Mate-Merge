@@ -422,10 +422,17 @@ const PrivacyTab = () => {
           />
           <ListRow
             title={isExporting ? 'Exporting…' : 'Download My Data'}
-            subtitle="Full GDPR data export (Art. 15)"
+            subtitle="Your own personal data (Art. 15)"
             onClick={handleDataDownload}
             trailing={<Arrow />}
             accent="yellow"
+          />
+          {/* Gap §4.12: two exports, two jobs. This one is the person's GDPR copy;
+              a firm's records are the owner's Export everything. */}
+          <ListRow
+            title="Your Firm's Records"
+            subtitle="Owners: Employer Hub, Settings"
+            accent="blue"
           />
           <ListRow
             title={<span className="text-red-400">Delete Account</span>}

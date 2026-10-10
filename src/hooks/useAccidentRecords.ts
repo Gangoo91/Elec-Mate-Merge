@@ -2,8 +2,16 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useRef } from 'react';
+import {
+  applySafetyScope,
+  firmWriteErrorMessage,
+  safetyScopeKey,
+  stampSafetyInsert,
+  useSafetyScope,
+  type FirmRecordFields,
+} from '@/components/electrician-tools/site-safety/common/SafetyScope';
 
-export interface AccidentRecord {
+export interface AccidentRecord extends FirmRecordFields {
   id: string;
   user_id: string;
   injured_name: string;
@@ -67,22 +75,27 @@ export type CreateAccidentRecordInput = Omit<
 > & {
   photos?: string[];
   reporter_signature?: string;
+  /** Firm job (employer_jobs) — shares the record with the firm's managers. */
+  employer_job_id?: string | null;
 };
 
 export function useAccidentRecords() {
+  // Personal: the user's own records. Employer Hub: the firm's (employer_id).
+  // RLS lets only firm managers read firm accident records.
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['accident-records'],
+    queryKey: ['accident-records', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<AccidentRecord[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('accident_records')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('incident_date', { ascending: false });
+      const { data, error } = await applySafetyScope(
+        supabase.from('accident_records').select('*'),
+        scope,
+        user.id
+      ).order('incident_date', { ascending: false });
 
       if (error) throw error;
       return data as AccidentRecord[];
@@ -93,6 +106,7 @@ export function useAccidentRecords() {
 export function useCreateAccidentRecord() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (input: CreateAccidentRecordInput): Promise<AccidentRecord> => {
@@ -103,7 +117,9 @@ export function useCreateAccidentRecord() {
 
       const { data, error } = await supabase
         .from('accident_records')
-        .insert({ ...input, user_id: user.id })
+        // Firm scope stamps employer_id; the database checks it either way.
+        // employer_* columns are live but not yet in the generated types.
+        .insert(stampSafetyInsert({ ...input, user_id: user.id }, scope) as never)
         .select('*')
         .single();
 
@@ -123,7 +139,11 @@ export function useCreateAccidentRecord() {
       }
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
@@ -131,6 +151,7 @@ export function useCreateAccidentRecord() {
 export function useDeleteAccidentRecord() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
@@ -143,11 +164,21 @@ export function useDeleteAccidentRecord() {
       toast({ title: 'Record deleted', description: 'Accident record has been removed.' });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }
 
+/**
+ * Feeds the RIDDOR deadline notifier (`useRIDDORDeadlineCheck`), a background
+ * effect, so it stays scoped to the signed-in person's own records in both
+ * hubs: deadline toasts name the injured person and are not repeated for the
+ * firm's records.
+ */
 export function useRIDDORRecords() {
   return useQuery({
     queryKey: ['accident-records', 'riddor'],
@@ -309,18 +340,20 @@ export function useRIDDORDeadlineCheck() {
  * Fetch RIDDOR-reportable records that have NOT yet been reported.
  */
 export function useRIDDORPendingReports() {
+  const scope = useSafetyScope();
   return useQuery({
-    queryKey: ['accident-records', 'riddor-pending'],
+    queryKey: ['accident-records', 'riddor-pending', ...safetyScopeKey(scope)],
     queryFn: async (): Promise<AccidentRecord[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('accident_records')
-        .select('*')
-        .eq('user_id', user.id)
+      const { data, error } = await applySafetyScope(
+        supabase.from('accident_records').select('*'),
+        scope,
+        user.id
+      )
         .eq('is_riddor_reportable', true)
         .eq('riddor_reported', false)
         .order('incident_date', { ascending: true });
@@ -337,6 +370,7 @@ export function useRIDDORPendingReports() {
 export function useMarkRIDDORReported() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const scope = useSafetyScope();
 
   return useMutation({
     mutationFn: async ({
@@ -367,7 +401,11 @@ export function useMarkRIDDORReported() {
       });
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: firmWriteErrorMessage(scope, error),
+        variant: 'destructive',
+      });
     },
   });
 }

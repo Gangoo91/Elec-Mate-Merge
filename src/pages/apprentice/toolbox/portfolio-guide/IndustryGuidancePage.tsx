@@ -10,8 +10,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, AlertTriangle, Home, Building2, Factory, Shield } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { GuidePage, Eyebrow, SectionHeader } from '@/components/apprentice/shared/GuideKit';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
@@ -198,218 +197,216 @@ const portfolioWeakeners = [
 
 const IndustryGuidancePage = () => {
   return (
-    <HubPage>
-      <HubMasthead
-        section="Apprentice · Portfolio"
-        title="Industry guidance"
-        backTo="/apprentice/toolbox/portfolio-building"
-      />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'Different sectors have different work, evidence, and regulations. Domestic, commercial, industrial — whatever you work in, here’s what to collect.'
-          }
-        </p>
+    <GuidePage
+      section="Apprentice · Portfolio"
+      area="Portfolio building"
+      title="Industry guidance"
+      backTo="/apprentice/toolbox/portfolio-building"
+    >
+      <p className="max-w-3xl text-[14px] leading-relaxed text-white">
+        {
+          'Different sectors have different work, evidence, and regulations. Domestic, commercial, industrial — whatever you work in, here’s what to collect.'
+        }
+      </p>
 
-        {/* ── Intro ───────────────────────────────────────────────── */}
-        <motion.div variants={itemVariants}>
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
-              CARD_SURFACE
-            )}
-          >
-            <Eyebrow>Why sector matters</Eyebrow>
-            <p className="text-[13.5px] text-white leading-relaxed">
-              Different sectors have different evidence types and regulations. Most apprentices
-              experience a mix — collect evidence from all areas you work in to build a well-rounded
-              portfolio.
-            </p>
-          </div>
-        </motion.div>
+      {/* ── Intro ───────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div
+          className={cn(
+            'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2',
+            CARD_SURFACE
+          )}
+        >
+          <Eyebrow>Why sector matters</Eyebrow>
+          <p className="text-[14px] text-white leading-relaxed">
+            Different sectors have different evidence types and regulations. Most apprentices
+            experience a mix — collect evidence from all areas you work in to build a well-rounded
+            portfolio.
+          </p>
+        </div>
+      </motion.div>
 
-        {/* ── Sectors ─────────────────────────────────────────────── */}
-        {sectors.map((sector) => {
-          const Icon = sector.icon;
-          return (
-            <motion.section key={sector.sector} variants={itemVariants} className="space-y-3">
-              <SectionHeader
-                eyebrow={sector.sector.split(' ').slice(0, 1).join(' ')}
-                title={sector.sector}
-                meta={sector.description}
-                action={
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
-                    <Icon className="h-4 w-4 text-elec-yellow" />
-                  </span>
-                }
-              />
-              <div
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="space-y-2">
-                  <Eyebrow>Key work areas to evidence</Eyebrow>
-                  <ul className="space-y-1.5">
-                    {sector.workAreas.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                      >
-                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-                  <Eyebrow>Evidence types</Eyebrow>
-                  <ul className="space-y-1.5">
-                    {sector.evidenceTypes.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                      >
-                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-                  <Eyebrow>Key regulations</Eyebrow>
-                  <ul className="space-y-1.5">
-                    {sector.regulations.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                      >
-                        <Shield className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.section>
-          );
-        })}
-
-        {/* ── Universal requirements ──────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Universal requirements"
-            title="Three categories that apply everywhere"
-            meta="Regardless of which sector you work in"
-          />
-          <ul className="space-y-2">
-            {universalRequirements.map((section) => (
-              <li
-                key={section.category}
-                className={cn(
-                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
-                  CARD_SURFACE
-                )}
-              >
-                <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
-                  {section.category}
-                </h3>
+      {/* ── Sectors ─────────────────────────────────────────────── */}
+      {sectors.map((sector) => {
+        const Icon = sector.icon;
+        return (
+          <motion.section key={sector.sector} variants={itemVariants} className="space-y-3">
+            <SectionHeader
+              eyebrow={sector.sector.split(' ').slice(0, 1).join(' ')}
+              title={sector.sector}
+              meta={sector.description}
+              action={
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.05]">
+                  <Icon className="h-4 w-4 text-elec-yellow" />
+                </span>
+              }
+            />
+            <div
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-4',
+                CARD_SURFACE
+              )}
+            >
+              <div className="space-y-2">
+                <Eyebrow>Key work areas to evidence</Eyebrow>
                 <ul className="space-y-1.5">
-                  {section.items.map((item) => (
+                  {sector.workAreas.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
+                      className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                     >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+              </div>
+              <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+                <Eyebrow>Evidence types</Eyebrow>
+                <ul className="space-y-1.5">
+                  {sector.evidenceTypes.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+                <Eyebrow>Key regulations</Eyebrow>
+                <ul className="space-y-1.5">
+                  {sector.regulations.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                    >
+                      <Shield className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.section>
+        );
+      })}
 
-        {/* ── Maximising exposure ─────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Maximising industry exposure"
-            title="A well-rounded portfolio is stronger"
-            meta="If your employer focuses on one sector, branch out"
-          />
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
-            <ul className="space-y-1.5">
-              {maximisingExposure.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.section>
-
-        {/* ── Assessment tips ─────────────────────────────────────── */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow="Portfolio assessment tips"
-            title="What they look for vs what weakens"
-            meta="A portfolio that confirms gateway readiness vs one that gets sent back"
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
-              <Eyebrow className="text-elec-yellow/85">What assessors look for</Eyebrow>
+      {/* ── Universal requirements ──────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Universal requirements"
+          title="Three categories that apply everywhere"
+          meta="Regardless of which sector you work in"
+        />
+        <ul className="space-y-2">
+          {universalRequirements.map((section) => (
+            <li
+              key={section.category}
+              className={cn(
+                'rounded-2xl border border-white/[0.08] p-4 sm:p-5 space-y-2',
+                CARD_SURFACE
+              )}
+            >
+              <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
+                {section.category}
+              </h3>
               <ul className="space-y-1.5">
-                {assessorsLookFor.map((item) => (
+                {section.items.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
-              <Eyebrow className="text-red-300">What weakens a portfolio</Eyebrow>
-              <ul className="space-y-1.5">
-                {portfolioWeakeners.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
-                  >
-                    <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </motion.section>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {/* ── Confidentiality ─────────────────────────────────────── */}
-        <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
-            <Eyebrow className="text-elec-yellow/85">Client confidentiality</Eyebrow>
-            <p className="text-[13.5px] text-white leading-relaxed">
-              Always respect client confidentiality. Remove or redact client names, addresses, and
-              personal details from certificates and photos. Never share portfolio evidence publicly
-              on social media. If in doubt, ask your employer and the client for permission first.
-            </p>
-            <p className="text-[12.5px] text-white leading-relaxed">
-              Client addresses and personal details are personal data under UK GDPR and the Data
-              Protection Act 2018 — redact them before adding a certificate or photo to your
-              portfolio.
-            </p>
+      {/* ── Maximising exposure ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Maximising industry exposure"
+          title="A well-rounded portfolio is stronger"
+          meta="If your employer focuses on one sector, branch out"
+        />
+        <div className={cn('rounded-2xl border border-white/[0.08] p-4 sm:p-5', CARD_SURFACE)}>
+          <ul className="space-y-1.5">
+            {maximisingExposure.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
+
+      {/* ── Assessment tips ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Portfolio assessment tips"
+          title="What they look for vs what weakens"
+          meta="A portfolio that confirms gateway readiness vs one that gets sent back"
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-3">
+            <Eyebrow className="text-elec-yellow">What assessors look for</Eyebrow>
+            <ul className="space-y-1.5">
+              {assessorsLookFor.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </motion.section>
-      </HubBody>
-    </HubPage>
+          <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+            <Eyebrow className="text-red-300">What weakens a portfolio</Eyebrow>
+            <ul className="space-y-1.5">
+              {portfolioWeakeners.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── Confidentiality ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 sm:p-5 space-y-1.5 max-sm:-mx-4 max-sm:rounded-none max-sm:border-x-0">
+          <Eyebrow className="text-elec-yellow">Client confidentiality</Eyebrow>
+          <p className="text-[14px] text-white leading-relaxed">
+            Always respect client confidentiality. Remove or redact client names, addresses, and
+            personal details from certificates and photos. Never share portfolio evidence publicly
+            on social media. If in doubt, ask your employer and the client for permission first.
+          </p>
+          <p className="text-[14px] text-white leading-relaxed">
+            Client addresses and personal details are personal data under UK GDPR and the Data
+            Protection Act 2018 — redact them before adding a certificate or photo to your
+            portfolio.
+          </p>
+        </div>
+      </motion.section>
+    </GuidePage>
   );
 };
 

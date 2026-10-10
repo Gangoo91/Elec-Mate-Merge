@@ -59,13 +59,16 @@ const IQA_LABEL: Record<NonNullable<IqaOutcome>, string> = {
 };
 
 const CHIP =
-  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[12px] font-semibold tabular-nums';
 const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
 const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
 const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
 const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
 
-const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 
 function formatRelative(iso: string | null): string {
   if (!iso) return '—';
@@ -106,8 +109,8 @@ export function SectionPortfolio({
         <CollegeHeading>Portfolio</CollegeHeading>
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[12.5px] leading-relaxed text-white">
-            No linked apprentice account — connect this learner's app sign-in to see their
-            portfolio submissions.
+            No linked apprentice account. Connect this learner's app sign-in to see their portfolio
+            submissions.
           </p>
         </div>
       </section>
@@ -120,34 +123,41 @@ export function SectionPortfolio({
     <section id={id} className="scroll-mt-20 space-y-3">
       <CollegeHeading>Portfolio</CollegeHeading>
 
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
-        <StatCell
-          label="Submissions"
-          value={String(rollUp.total_submissions)}
-          sub={waiting > 0 ? `${waiting} awaiting review` : 'None awaiting review'}
-          alert={waiting > 0}
-        />
-        <StatCell label="Approved" value={String(rollUp.by_status.approved)} good={rollUp.by_status.approved > 0} />
-        <StatCell
-          label="IQA verified"
-          value={String(rollUp.iqa_verified)}
-          sub={`${rollUp.iqa_sampled} sampled`}
-          good={rollUp.iqa_verified > 0}
-        />
-        <StatCell
-          label="Evidence items"
-          value={String(rollUp.total_items)}
-          sub={`${rollUp.items_supervisor_verified} supervisor-verified`}
-        />
-      </div>
+      {/* One status line: white figures with plain words, hairlines
+          between, 2x2 on a phone (Andrew, 10 Oct: no coloured figures). */}
+      <dl className={cn(CARD, 'grid grid-cols-2 sm:grid-cols-4')}>
+        {[
+          {
+            label: 'Submissions',
+            value: rollUp.total_submissions,
+            sub: waiting > 0 ? `${waiting} awaiting review` : 'None awaiting review',
+            warn: waiting > 0,
+          },
+          { label: 'Approved', value: rollUp.by_status.approved },
+          {
+            label: 'IQA verified',
+            value: rollUp.iqa_verified,
+            sub: `${rollUp.iqa_sampled} sampled`,
+          },
+          {
+            label: 'Evidence items',
+            value: rollUp.total_items,
+            sub: `${rollUp.items_supervisor_verified} supervisor-verified`,
+          },
+        ].map((c, i) => (
+          <StatCell key={c.label} index={i} {...c} />
+        ))}
+      </dl>
 
       {/* Tutor-set requirements */}
       {requirements.length > 0 && (
         <div className={CARD}>
           <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
-            <div className="text-[13px] font-semibold text-white">Evidence requirements you set</div>
+            <div className="text-[13px] font-semibold text-white">
+              Evidence requirements you set
+            </div>
             {rollUp.overdue_requirements > 0 && (
-              <span className="text-[11px] font-semibold tabular-nums text-red-300">
+              <span className="text-[12px] font-semibold tabular-nums text-red-300">
                 {rollUp.overdue_requirements} overdue
               </span>
             )}
@@ -166,25 +176,39 @@ export function SectionPortfolio({
                     aria-hidden
                     className={cn(
                       'h-8 w-[3px] shrink-0 rounded-full',
-                      overdue ? 'bg-red-400' : r.is_mandatory && !done ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                      overdue
+                        ? 'bg-red-400'
+                        : r.is_mandatory && !done
+                          ? 'bg-elec-yellow'
+                          : 'bg-white/[0.25]'
                     )}
                   />
                   <div className="min-w-0 flex-1">
-                    <div className={cn('text-[13px] font-medium text-white', done && 'line-through opacity-70')}>
+                    <div
+                      className={cn(
+                        'text-[13px] font-medium text-white',
+                        done && 'line-through opacity-70'
+                      )}
+                    >
                       {r.title}
                     </div>
-                    <div className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[11px] tabular-nums text-white">
+                    <div className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[12px] tabular-nums text-white">
                       <span>Need {r.quantity_required}</span>
                       {r.due_date && (
                         <span className={cn(overdue && 'font-semibold text-red-300')}>
                           {overdue ? 'Overdue · ' : 'Due '}
-                          {new Date(r.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                          {new Date(r.due_date).toLocaleDateString('en-GB', {
+                            day: 'numeric',
+                            month: 'short',
+                          })}
                         </span>
                       )}
-                      {r.is_mandatory && <span className="font-semibold text-elec-yellow">Mandatory</span>}
+                      {r.is_mandatory && (
+                        <span className="font-semibold text-elec-yellow">Mandatory</span>
+                      )}
                     </div>
                   </div>
-                  {done && <span className="text-[11px] font-semibold text-emerald-300">Done</span>}
+                  {done && <span className="text-[12px] font-semibold text-emerald-300">Done</span>}
                 </li>
               );
             })}
@@ -206,7 +230,7 @@ export function SectionPortfolio({
         <div className={CARD}>
           <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
             <div className="text-[13px] font-semibold text-white">Submissions</div>
-            <div className="text-[11px] tabular-nums text-white">{submissions.length} total</div>
+            <div className="text-[12px] tabular-nums text-white">{submissions.length} total</div>
           </div>
           <ul className="divide-y divide-white/[0.10]">
             {submissions.slice(0, 12).map((s) => (
@@ -214,7 +238,7 @@ export function SectionPortfolio({
             ))}
           </ul>
           {submissions.length > 12 && (
-            <div className="border-t border-white/[0.10] px-4 py-2.5 text-center text-[11px] tabular-nums text-white">
+            <div className="border-t border-white/[0.10] px-4 py-2.5 text-center text-[12px] tabular-nums text-white">
               {submissions.length - 12} more in the learner's app
             </div>
           )}
@@ -266,13 +290,22 @@ function SubmissionRow({
         />
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-1.5">
-            <span className={cn(CHIP, bad ? CHIP_RED : good ? CHIP_GOOD : waiting ? CHIP_VOLT : CHIP_NEUTRAL)}>
+            <span
+              className={cn(
+                CHIP,
+                bad ? CHIP_RED : good ? CHIP_GOOD : waiting ? CHIP_VOLT : CHIP_NEUTRAL
+              )}
+            >
               {STATUS_LABEL[status] ?? submission.status}
             </span>
             {submission.grade && (
-              <span className="text-[11px] font-semibold tabular-nums text-white">{submission.grade}</span>
+              <span className="text-[12px] font-semibold tabular-nums text-white">
+                {submission.grade}
+              </span>
             )}
-            {submission.iqa_sampled && !iqa && <span className={cn(CHIP, CHIP_NEUTRAL)}>IQA sampled</span>}
+            {submission.iqa_sampled && !iqa && (
+              <span className={cn(CHIP, CHIP_NEUTRAL)}>IQA sampled</span>
+            )}
             {iqa && (
               <span
                 className={cn(
@@ -284,15 +317,17 @@ function SubmissionRow({
               </span>
             )}
             {submission.action_required && (
-              <span className="text-[11px] font-semibold text-elec-yellow">Action required</span>
+              <span className="text-[12px] font-semibold text-elec-yellow">Action required</span>
             )}
           </span>
-          <span className="mt-1 flex flex-wrap items-center gap-x-2 text-[11px] tabular-nums text-white">
+          <span className="mt-1 flex flex-wrap items-center gap-x-2 text-[12px] tabular-nums text-white">
             <span>Submitted {formatRelative(submission.submitted_at)}</span>
             {submission.submission_count && submission.submission_count > 1 && (
               <span>Attempt {submission.submission_count}</span>
             )}
-            {submission.reviewed_at && <span>Reviewed {formatRelative(submission.reviewed_at)}</span>}
+            {submission.reviewed_at && (
+              <span>Reviewed {formatRelative(submission.reviewed_at)}</span>
+            )}
           </span>
         </span>
         <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
@@ -305,27 +340,37 @@ function StatCell({
   label,
   value,
   sub,
-  alert,
-  good,
+  warn,
+  index,
 }: {
   label: string;
-  value: string;
+  value: number;
   sub?: string;
-  alert?: boolean;
-  good?: boolean;
+  warn?: boolean;
+  index: number;
 }) {
   return (
-    <div className={cn(CARD, 'px-4 py-3.5')}>
-      <div className="text-[12px] font-medium text-white">{label}</div>
-      <div
-        className={cn(
-          'mt-1 text-[22px] font-semibold leading-none tabular-nums tracking-tight',
-          alert ? 'text-elec-yellow' : good ? 'text-emerald-300' : 'text-white'
-        )}
-      >
-        {value}
-      </div>
-      {sub && <div className="mt-1 text-[11px] tabular-nums text-white">{sub}</div>}
+    <div
+      className={cn(
+        'min-w-0 px-4 py-3.5 sm:px-5',
+        // Hairlines: between the two columns on a phone, between all four from sm:.
+        index % 2 === 1 && 'border-l border-white/[0.08]',
+        index >= 2 && 'border-t border-white/[0.08] sm:border-t-0',
+        index === 2 && 'sm:border-l'
+      )}
+    >
+      <dt className="text-[13px] text-white">{label}</dt>
+      <dd className="mt-1 text-[22px] font-bold leading-none tabular-nums text-white">{value}</dd>
+      {sub && (
+        <dd
+          className={cn(
+            'mt-1 text-[12.5px] tabular-nums',
+            warn ? 'font-semibold text-white' : 'text-white'
+          )}
+        >
+          {sub}
+        </dd>
+      )}
     </div>
   );
 }

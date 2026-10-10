@@ -85,7 +85,7 @@ const faqs = [
   {
     question: 'Is absence of RCD protection on a domestic lighting circuit a C2 or C3?',
     answer:
-      'Since BS 7671:2018+A4:2026 (Regulation 411.3.4), additional protection by an RCD with a rated residual operating current not exceeding 30 mA is mandatory for all AC final circuits supplying luminaires in domestic (household) premises. The regulation uses "shall", creating a firm obligation for new work. For existing installations inspected under an EICR, the absence of this protection is typically classified as C2 rather than C3. Although the circuit may have been compliant when originally installed, the foreseeable risk — a shock or fire fault on an unprotected lighting circuit affecting occupants — is sufficient to justify "Potentially Dangerous". C3 would only be appropriate where there is genuinely no foreseeable risk of injury; given that luminaires are handled by occupants (lamp changes, fitting replacements) and ceiling roses can become live under fault conditions, inspectors and scheme providers generally treat the absence as C2 in domestic premises.',
+      'Since BS 7671:2018 (Regulation 411.3.4, unchanged in A4:2026), additional protection by an RCD with a rated residual operating current not exceeding 30 mA is mandatory for all AC final circuits supplying luminaires in domestic (household) premises. The regulation uses "shall", creating a firm obligation for new work. For existing installations inspected under an EICR, the absence of this protection is typically classified as C2 rather than C3. Although the circuit may have been compliant when originally installed, the foreseeable risk — a shock or fire fault on an unprotected lighting circuit affecting occupants — is sufficient to justify "Potentially Dangerous". C3 would only be appropriate where there is genuinely no foreseeable risk of injury; given that luminaires are handled by occupants (lamp changes, fitting replacements) and ceiling roses can become live under fault conditions, inspectors and scheme providers generally treat the absence as C2 in domestic premises.',
   },
   {
     question: 'How does Elec-Mate Defect Code AI help with observation codes?',
@@ -607,7 +607,7 @@ const sections = [
                 </td>
                 <td className="px-4 py-3 align-top font-semibold text-orange-400">C2</td>
                 <td className="px-4 py-3 align-top">
-                  Reg 411.3.4 (A4:2026) makes 30 mA RCD mandatory for new work; foreseeable risk on
+                  Reg 411.3.4 (since 2018) makes 30 mA RCD mandatory for new work; foreseeable risk on
                   existing circuits
                 </td>
               </tr>
@@ -826,7 +826,7 @@ export default function EICRObservationCodesPage() {
       title="C1 C2 C3 FI EICR Codes Explained: Examples"
       description="EICR codes C1 (Danger Present), C2 (Potentially Dangerous), C3 (Improvement Recommended), FI (Further Investigation) — real examples, BS 7671 cites."
       datePublished="2025-01-15"
-      dateModified="2026-06-10"
+      dateModified="2026-10-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Classification Guide"

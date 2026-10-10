@@ -26,6 +26,7 @@ import {
   raggedAcLines,
   bs7671FacetLines,
   GROUNDING_RULES,
+  callerFrom,
 } from '../_shared/learner-context.ts';
 
 const corsHeaders = {
@@ -973,7 +974,7 @@ Deno.serve(withSentry('ai-notebook', async (req) => {
   const history = ((historyRows ?? []) as MessageRow[]).reverse();
   const isFirstTurn = history.filter((m) => m.role === 'user').length <= 1;
 
-  const ctx = await loadLearnerContext(sb, collegeStudentId);
+  const ctx = await loadLearnerContext(sb, collegeStudentId, { asCaller: callerFrom(req) });
   if (!ctx) {
     return new Response(JSON.stringify({ error: 'student_not_found' }), {
       status: 404,

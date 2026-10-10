@@ -3,14 +3,14 @@ const ZsLookupStandards = () => {
     <div className="space-y-6">
       {/* BS7671 Regulatory References */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           BS 7671 regulatory references
         </span>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-3">
             <div className="space-y-1">
-              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
                 Regulation 411.4.4
               </span>
               <p className="text-[13px] text-white leading-relaxed">
@@ -20,7 +20,7 @@ const ZsLookupStandards = () => {
             </div>
 
             <div className="space-y-1">
-              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
                 Table 41.1 / Reg 411.3.2
               </span>
               <p className="text-[13px] text-white leading-relaxed">
@@ -33,7 +33,7 @@ const ZsLookupStandards = () => {
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
                 Table 41.3
               </span>
               <p className="text-[13px] text-white leading-relaxed">
@@ -43,7 +43,7 @@ const ZsLookupStandards = () => {
             </div>
 
             <div className="space-y-1">
-              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
                 Table 41.4
               </span>
               <p className="text-[13px] text-white leading-relaxed">
@@ -57,7 +57,7 @@ const ZsLookupStandards = () => {
 
       {/* Disconnection Time Requirements */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Disconnection time requirements
         </span>
 
@@ -113,13 +113,13 @@ const ZsLookupStandards = () => {
 
       {/* Origin of Zs Values */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Origin of BS 7671 Zs values
         </span>
 
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Calculation method
             </span>
             <p className="text-[13px] text-white leading-relaxed font-mono">
@@ -139,7 +139,7 @@ const ZsLookupStandards = () => {
           </div>
 
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className="text-[12px] font-medium text-white">
               Temperature considerations
             </span>
             <ul className="space-y-1 text-[13px] text-white">
@@ -157,7 +157,7 @@ const ZsLookupStandards = () => {
 
       {/* TT System Considerations */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           TT system special requirements
         </span>
 
@@ -196,7 +196,7 @@ const ZsLookupStandards = () => {
 
       {/* Voltage Factors */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Voltage factor considerations
         </span>
 
@@ -252,7 +252,7 @@ const ZsLookupStandards = () => {
 
       {/* Related Standards */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[12px] font-medium text-white">
           Related standards & documents
         </span>
 

@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-10-10';
 
 export const howToPriceKitchenRewireConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-kitchen-rewire-as-an-electrician',
@@ -120,7 +120,7 @@ export const howToPriceKitchenRewireConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text: 'BS 7671:2018+A4:2026 (the 18th Edition published 15 April 2026) is the current standard. Any quote that does not factor in current A4:2026 requirements — including AFDDs in HMOs, updated SPD thresholds, and the new Schedule of Tests columns — is under-quoting on certified-compliance work.',
+          text: 'BS 7671:2018+A4:2026 (the 18th Edition published 15 April 2026) is the current standard. Any quote that does not factor in current requirements, including AFDDs in HMOs (required since A2:2022), the SPD risk assessment and the full Schedule of Test Results, is under-quoting on certified-compliance work.',
         },
       ],
     },

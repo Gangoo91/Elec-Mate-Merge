@@ -26,7 +26,13 @@ import JobCostsSection from '@/components/employer/jobs/JobCostsSection';
 import { JobHoursFields } from '@/components/employer/jobs/JobHoursFields';
 import { JobRecurringCard } from '@/components/employer/jobs/JobRecurringCard';
 import { JobCustomerCard } from '@/components/employer/jobs/JobCustomerCard';
+import { CustomerConversationCard } from '@/components/employer/inbox/CustomerConversationCard';
+import { JobTermsCard } from '@/components/employer/jobs/JobTermsCard';
 import { JobTrainingCard } from '@/components/employer/jobs/JobTrainingCard';
+import { JobCompetenceCard } from '@/components/employer/jobs/JobCompetenceCard';
+import { JobToolboxTalkCard } from '@/components/employer/jobs/JobToolboxTalkCard';
+import { JobDoneOnSiteCard } from '@/components/employer/jobs/JobDoneOnSiteCard';
+import { PlanPanel } from '@/components/employer/jobs/PlanRow';
 import { DueDateBadge } from '@/components/employer/DueDateBadge';
 import { toast } from '@/hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
@@ -36,6 +42,7 @@ import { useLogJobActivity } from '@/hooks/useJobComments';
 import { Job, JobStatus } from '@/services/jobService';
 import { JobAttentionPanel } from '@/components/employer/sheets/JobAttentionPanel';
 import { JobControlCentre } from '@/components/employer/sheets/JobControlCentre';
+import { JobPaymentStages } from '@/components/employer/quotes/PaymentStages';
 import { JobShortcuts, type JobShortcutTarget } from '@/components/employer/sheets/JobShortcuts';
 import {
   SiteAccessFields,
@@ -607,10 +614,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                     Close
                   </SecondaryButton>
-                  <PrimaryButton data-help="jobs.edit" onClick={() => setIsEditing(true)} fullWidth>
+                  {/* Viewing a job, editing is a secondary action: the job's own next
+                      step (e.g. Send to the customer on Done on site) stays the one yellow. */}
+                  <SecondaryButton data-help="jobs.edit" onClick={() => setIsEditing(true)} fullWidth>
                     <Edit3 className="h-4 w-4 mr-2" />
                     Edit job
-                  </PrimaryButton>
+                  </SecondaryButton>
                 </>
               }
             >
@@ -648,6 +657,9 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   lands on, not hidden behind Edit. */}
               <JobAttentionPanel jobId={job.id} />
 
+              {/* Gap #3: what the crew did with Job done, and the customer's summary. */}
+              <JobDoneOnSiteCard jobId={job.id} />
+
               <div className="grid grid-cols-3 gap-2">
                 <SecondaryButton onClick={handleCall} fullWidth>
                   <Phone className="h-4 w-4 mr-1" />
@@ -681,12 +693,10 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
 
               <JobShortcuts jobId={job.id} canSeeMoney={canSeeMoney} onSelect={handleShortcut} />
 
-              {!job.is_template && <JobCustomerCard jobId={job.id} />}
-
-              {!job.is_template && <JobRecurringCard job={job} />}
-
-              {!job.is_template && <JobTrainingCard jobId={job.id} />}
-
+              {/* Two columns on desktop (Andrew: always wide): the job itself
+                  on the left, planning, people and activity on the right. */}
+              <div className="grid gap-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-start">
+              <div className="min-w-0 space-y-4">
               <FormCard eyebrow="Progress">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-white">Job progress</span>
@@ -765,6 +775,9 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 }}
               />
 
+              {/* ELE-2065: mark a stage done to raise its invoice (money: owner/admin). */}
+              {canSeeMoney && <JobPaymentStages jobId={job.id} />}
+
               <FormCard eyebrow="Schedule">
                 <div className="flex justify-between items-center">
                   <div>
@@ -793,6 +806,28 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 <FormCard eyebrow="Description">
                   <p className="text-sm text-white leading-relaxed">{job.description}</p>
                 </FormCard>
+              )}
+
+              <JobCostsSection jobId={job.id} />
+              </div>
+
+              {/* On a phone this column comes first: planning and the crew are
+                  what you act on; the money and details follow. */}
+              <div className="min-w-0 space-y-4 order-first lg:order-none">
+              {!job.is_template && (
+                <PlanPanel>
+                  <JobCompetenceCard job={job} />
+                  <JobCustomerCard jobId={job.id} onAddContact={() => setIsEditing(true)} />
+                  <JobTermsCard jobId={job.id} />
+                  <JobRecurringCard job={job} />
+                  <JobTrainingCard jobId={job.id} />
+                  <JobToolboxTalkCard jobId={job.id} />
+                </PlanPanel>
+              )}
+
+              {/* ELE-2070: this job's texts, WhatsApp, email and portal messages. */}
+              {!job.is_template && (
+                <CustomerConversationCard jobId={job.id} title="Customer messages" />
               )}
 
               <Collapsible open={workersOpen} onOpenChange={setWorkersOpen}>
@@ -959,8 +994,6 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 </div>
               </Collapsible>
 
-              <JobCostsSection jobId={job.id} />
-
               <Collapsible open={activityOpen} onOpenChange={setActivityOpen}>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06]">
                   <CollapsibleTrigger asChild>
@@ -984,6 +1017,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </CollapsibleContent>
                 </div>
               </Collapsible>
+              </div>
+              </div>
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>

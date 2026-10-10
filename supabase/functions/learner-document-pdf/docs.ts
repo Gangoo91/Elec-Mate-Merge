@@ -1242,6 +1242,93 @@ export async function buildAuditPack(asCaller: SupabaseClient, college: Row, who
     });
   }
 
+  // ELE-1977: each active learner's starting point. The funding rules and
+  // Ofsted both ask for the initial assessment, English and maths, and the
+  // prior-learning decision that set the off-the-job hours. Read as the
+  // caller, so staff see the learners they are allowed to see.
+  const learners = await must<Row[]>(
+    asCaller
+      .from('college_students')
+      .select('id, name, start_date, otj_required_hours')
+      .eq('college_id', college.id)
+      .eq('status', 'Active')
+      .order('name'),
+    'learners'
+  );
+  const learnerIds = learners.map((l) => l.id);
+  const [starts, fs] = learnerIds.length
+    ? await Promise.all([
+        must<Row[]>(
+          asCaller
+            .from('college_learner_starting_points')
+            .select('student_id, assessed_on, english_level, maths_level, digital_level, rpl_decision, rpl_hours_reduced, rpl_base_hours')
+            .in('student_id', learnerIds),
+          'starting points'
+        ),
+        must<Row[]>(
+          asCaller.from('college_functional_skills').select('student_id, subject, level, status').in('student_id', learnerIds),
+          'English and maths'
+        ),
+      ])
+    : [[], []];
+  const startBy = new Map(starts.map((r) => [r.student_id, r]));
+  const fsBy = new Map(fs.map((r) => [`${r.student_id}|${r.subject}`, r]));
+  const FS_STATUS: Record<string, string> = {
+    exempt: 'Exempt',
+    not_started: 'Not started',
+    in_progress: 'Working towards',
+    pending_results: 'Awaiting result',
+    passed: 'Achieved',
+    failed: 'Not achieved',
+    resit: 'Resit booked',
+  };
+  const fsLevel = (l: unknown) => String(l ?? '').replace(/^entry_(\d)$/, 'Entry $1').replace(/^level_(\d)$/, 'Level $1');
+  const fsCell = (id: string, subject: string) => {
+    const r = fsBy.get(`${id}|${subject}`);
+    if (!r) return 'Not recorded';
+    return `${FS_STATUS[r.status] ?? roleLabel(r.status)}${r.level && r.status !== 'exempt' ? `\n${fsLevel(r.level)}` : ''}`;
+  };
+  const fsMet = (id: string, subject: string) => {
+    const r = fsBy.get(`${id}|${subject}`);
+    return !!r && (r.status === 'exempt' || r.status === 'passed');
+  };
+  const nAssessed = learners.filter((l) => startBy.get(l.id)?.assessed_on).length;
+  const nRpl = learners.filter((l) => (startBy.get(l.id)?.rpl_decision ?? 'not_decided') !== 'not_decided').length;
+  const nReduced = learners.filter((l) => startBy.get(l.id)?.rpl_decision === 'reduced').length;
+  const nFsMet = learners.filter((l) => fsMet(l.id, 'english') && fsMet(l.id, 'maths')).length;
+  const nFsUnknown = learners.filter((l) => !fsBy.has(`${l.id}|english`) || !fsBy.has(`${l.id}|maths`)).length;
+  sections.push({
+    heading: `Learner starting points · ${plural(learners.length, 'learner')}`,
+    new_page: true,
+    intro: learners.length
+      ? `${nAssessed} of ${learners.length} have an initial assessment on record. ${nRpl} have a prior-learning decision (${nReduced} with reduced off-the-job hours). ${nFsMet} have English and maths achieved or exempt${nFsUnknown ? `; ${nFsUnknown} have English or maths not yet recorded` : ''}.`
+      : 'No active learners.',
+    kind: 'table',
+    compact: true,
+    columns: ['Learner', 'Initial assessment', 'English', 'Maths', 'Prior learning', 'Off-the-job hours'],
+    widths: ['', '36mm', '26mm', '26mm', '30mm', '26mm'],
+    rows: learners.map((l) => {
+      const sp = startBy.get(l.id);
+      const levels = sp
+        ? [
+            sp.english_level && `English ${sp.english_level}`,
+            sp.maths_level && `Maths ${sp.maths_level}`,
+            sp.digital_level && `Digital ${sp.digital_level}`,
+          ].filter(Boolean)
+        : [];
+      const ia = sp?.assessed_on ? `${fmtDate(sp.assessed_on)}${levels.length ? `\n${levels.join(', ')}` : ''}` : 'Not recorded';
+      const rpl =
+        !sp || sp.rpl_decision === 'not_decided'
+          ? 'Not decided'
+          : sp.rpl_decision === 'reduced'
+            ? `Reduced by ${Math.round(Number(sp.rpl_hours_reduced))}h`
+            : 'No reduction';
+      const hours = l.otj_required_hours != null ? `${Math.round(Number(l.otj_required_hours))}h` : sp?.rpl_base_hours ? `${Math.round(Number(sp.rpl_base_hours))}h` : 'Course target';
+      return [`${l.name}${l.start_date ? `\nStarted ${fmtDate(l.start_date)}` : ''}`, ia, fsCell(l.id, 'english'), fsCell(l.id, 'maths'), rpl, hours];
+    }),
+    empty: 'No active learners.',
+  });
+
   return {
     learnerId: null,
     folder: `audit_pack/${college.id}`,
@@ -1251,7 +1338,7 @@ export async function buildAuditPack(asCaller: SupabaseClient, college: Row, who
         kind: 'Compliance audit pack',
         series: 'College record',
         title: college.name || 'College',
-        subtitle: 'Single central record, policies, sign-offs, named leads, the IQA chain, standardisation and interventions',
+        subtitle: 'Single central record, policies, sign-offs, named leads, the IQA chain, standardisation, interventions and learner starting points',
         reference: `AP-${String(college.id).slice(0, 8).toUpperCase()}`,
         generated: fmtDateTime(generated),
         generated_by: generatedBy(who),
@@ -1283,6 +1370,7 @@ export async function buildAuditPack(asCaller: SupabaseClient, college: Row, who
         ...(rate ? ['IQA sampling rate'] : []),
         'Standardisation record',
         ...(interventions ? ['Intervention history'] : []),
+        'Learner starting points',
       ],
       alerts:
         (c.expired ?? 0) + (c.missing ?? 0) > 0
