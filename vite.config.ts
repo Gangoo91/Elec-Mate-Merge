@@ -17,6 +17,12 @@ const gitCommit = (() => {
 })();
 
 // https://vitejs.dev/config/
+// Source maps for Sentry are opt-in (10 Oct 2026). With the bundle at its
+// current size, building the maps ran the Vercel build out of memory
+// (heap OOM in vite build). Set SENTRY_SOURCEMAPS=1 alongside
+// SENTRY_AUTH_TOKEN on a build machine with enough memory to turn them back on.
+const sentrySourcemaps = !!process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_SOURCEMAPS === '1';
+
 export default defineConfig(({ mode }) => ({
   define: {
     __SENTRY_RELEASE__: JSON.stringify(`elec-mate@${gitCommit}`),
@@ -79,7 +85,7 @@ export default defineConfig(({ mode }) => ({
     // succeed without uploading anything. Symbolicates minified stack traces
     // in Sentry so issues like RangeError and ReferenceError actually point
     // at real source files instead of `App-qembCcYp.js:507:54649 (pt)`.
-    process.env.SENTRY_AUTH_TOKEN &&
+    sentrySourcemaps &&
       sentryVitePlugin({
         org: 'elec-mate',
         project: 'javascript-react',
@@ -267,7 +273,7 @@ export default defineConfig(({ mode }) => ({
     // auto-loaded by browsers. The Sentry vite plugin then uploads + deletes
     // the .map files from dist. Without a token, no maps are generated at
     // all — guarantees nothing can leak to the deployed bundle.
-    sourcemap: process.env.SENTRY_AUTH_TOKEN ? 'hidden' : false,
+    sourcemap: sentrySourcemaps ? 'hidden' : false,
     minify: 'esbuild',
     chunkSizeWarningLimit: 500,
     rollupOptions: {
